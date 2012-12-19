@@ -1,0 +1,8 @@
+﻿@using BetterCms.Module.MediaManager.Controllers
+@using Microsoft.Web.Mvc
+@model BetterCms.Module.MediaManager.ViewModels.MediaManager.MediaManagerViewModel
+<div class="bcms-insert-content-modal">
+    @{
+        Html.RenderAction<ImagesController>(f => f.ImagesTab(null));
+    }
+</div>

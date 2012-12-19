@@ -1,0 +1,7 @@
+﻿@model BetterCms.Module.Root.Models.Sidebar.SidebarContainerViewModel
+<div id="bcms-sidemenu" class="bcms-sidemenu">
+    @Html.Partial("Side", Model.SideProjections)
+    @Html.Partial("Header", Model.HeaderProjections)
+    @Html.Partial("Body", Model.BodyProjections)
+    @Html.Partial("Footer", Model.Version)
+</div>

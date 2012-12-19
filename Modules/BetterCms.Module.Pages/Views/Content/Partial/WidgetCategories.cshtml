@@ -1,0 +1,14 @@
+﻿@model IList<BetterCms.Module.Pages.ViewModels.Widgets.WidgetCategoryViewModel>
+
+@if (Model != null && Model.Count > 0)
+{
+    foreach (var category in Model)
+    {
+        @Html.Partial("Partial/WidgetCategory", category)
+    }
+}
+else
+{
+    @* Return anything. jQuery doesn't understand empty (null) results. *@
+    @Html.Raw("&nbsp;")
+}

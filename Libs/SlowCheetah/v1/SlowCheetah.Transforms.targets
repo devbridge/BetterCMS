@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+***********************************************************************************************
+SlowCheetah.Transforms.targets
+
+WARNING:  DO NOT MODIFY this file unless you are knowledgeable about MSBuild and have
+          created a backup copy.  Incorrect changes to this file will make it
+          impossible to load or build your web deploy projects from the command-line or the IDE.
+
+This file defines the steps in order to transform XML files.
+
+Copyright (C) Sayed Ibrahim Hashimi, Chuck England 2011. All rights reserved.
+***********************************************************************************************
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <UsingTask TaskName="SlowCheetah.Tasks.TransformXml"
+         AssemblyFile="SlowCheetah.Tasks.dll"/>
+
+  <ItemDefinitionGroup>
+    <!-- Set the default value to false here -->
+    <None>
+      <TransformOnBuild>false</TransformOnBuild>
+      <Link></Link>
+    </None>
+    <Content>
+      <TransformOnBuild>false</TransformOnBuild>
+      <Link></Link>
+    </Content>
+    <Resource>
+      <TransformOnBuild>false</TransformOnBuild>
+      <Link></Link>
+    </Resource>
+    <EmbeddedResource>
+      <TransformOnBuild>false</TransformOnBuild>
+      <Link></Link>
+    </EmbeddedResource>
+
+    <_FilesToTransform>
+      <IsAppConfig>false</IsAppConfig>
+    </_FilesToTransform>
+  </ItemDefinitionGroup>
+
+  <PropertyGroup>
+    <WapProjectTypeGuid>349c5851-65df-11da-9384-00065b846f21</WapProjectTypeGuid>
+    <_IsWap Condition=" '$(WapProjectTypeGuid)' != '' and '$(ProjectTypeGuids)' != '' ">$(ProjectTypeGuids.Contains($(WapProjectTypeGuid)))</_IsWap>
+    <_IsWap Condition=" '$(_IsWap)' == '' ">false</_IsWap>
+    <IsWap Condition=" '$(IsWap)' == ''">$(_IsWap)</IsWap>
+
+    <SlowCheetahImport>$(MSBuildThisFileFullPath)</SlowCheetahImport>
+    <BuildDependsOn Condition=" '$(IsWap)'!='true' ">
+      $(BuildDependsOn);
+      TransformAllFiles
+    </BuildDependsOn>
+    <TransformAllFilesDependsOn>
+      _CopyAppConfigFile;
+      DiscoverFilesToTransform;
+    </TransformAllFilesDependsOn>
+  </PropertyGroup>
+
+  <Target Name="TransformAllFiles"
+          DependsOnTargets="$(TransformAllFilesDependsOn)">
+    <!-- Now we have the item list _FilesToTransformNotAppConfig and _AppConfigToTransform item lists -->
+    <!-- Transform the app.config file -->
+    <ItemGroup>
+      <_AppConfigTarget Include="@(AppConfigWithTargetPath->'$(OutDir)%(TargetPath)')" />
+    </ItemGroup>
+
+    <PropertyGroup>
+      <_AppConfigDest>@(_AppConfigTarget->'%(FullPath)')</_AppConfigDest>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <_TmpLinkFiles Remove="@(_TmpLinkFiles)" />
+      <_TmpLinkFiles Include="@(_FilesToTransformNotAppConfig->'%(Link)')" />
+    </ItemGroup>
+
+    <!-- This will handle non Link files and the second one for link files -->
+    <MakeDir Directories="@(_FilesToTransformNotAppConfig->'$(OutDir)%(RelativeDir)')"
+             Condition="Exists('%(RelativeDir)%(Filename).$(Configuration)%(Extension)')
+             and '%(Link)'=='' " />
+
+    <MakeDir Directories="@(_TmpLinkFiles->'$(OutDir)%(RelativeDir)')"
+                 Condition=" '%(Link)'!='' " />
+
+    <SlowCheetah.Tasks.TransformXml Source="@(_AppConfigToTransform->'%(FullPath)')"
+                  Transform="%(RelativeDir)%(Filename).$(Configuration)%(Extension)"
+                  Destination="$(_AppConfigDest)"
+                  Condition=" Exists('%(RelativeDir)%(Filename).$(Configuration)%(Extension)') " />
+
+    <!-- 
+    For link files this will write the transformed file into the 
+    incorrect location so let's handle those seperately in the transformation underneath this one
+    -->
+    <SlowCheetah.Tasks.TransformXml Source="@(_FilesToTransformNotAppConfig->'%(FullPath)')"
+                  Transform="%(RelativeDir)%(Filename).$(Configuration)%(Extension)"
+                  Destination="@(_FilesToTransformNotAppConfig->'$(OutDir)%(RelativeDir)%(Filename)%(Extension)')"
+                  Condition=" Exists('%(RelativeDir)%(Filename).$(Configuration)%(Extension)')
+                              and '%(Link)'=='' " />
+
+    <!-- Transform the Link files -->
+    <SlowCheetah.Tasks.TransformXml Source="@(_FilesToTransformNotAppConfig->'%(FullPath)')"
+                  Transform="%(RelativeDir)%(Filename).$(Configuration)%(Extension)"
+                  Destination="@(_FilesToTransformNotAppConfig->'$(OutDir)%(Link)')"
+                  Condition="Exists('%(RelativeDir)%(Filename).$(Configuration)%(Extension)')
+                              and '%(Link)'!='' " />
+  </Target>
+
+  <Target Name="DiscoverFilesToTransform">
+    <!-- 
+    This will look through items list: None & Content for those
+    with Metadata <TransformOnBuild>True</TransformOnBuild>.
+    
+    -->
+    <ItemGroup>
+      <_FilesToTransform Include="@(None);@(Content);@(Resource);@(EmbeddedResource)"
+                         Condition=" '%(TransformOnBuild)' == 'true' ">
+        <Link>%(Link)</Link>
+        <!-- Required to remove the item if necessary later -->
+        <OriginalItemSpec>%(Identity)</OriginalItemSpec>
+      </_FilesToTransform>
+    </ItemGroup>
+
+    <PropertyGroup>
+      <_AppConfigFullPath>@(AppConfigWithTargetPath->'%(RootDir)%(Directory)%(Filename)%(Extension)')</_AppConfigFullPath>
+    </PropertyGroup>
+
+    <!-- Now look to see if any of these are the app.config file -->
+    <ItemGroup>
+      <_FilesToTransform Condition=" '%(FullPath)'=='$(_AppConfigFullPath)' ">
+        <IsAppConfig>true</IsAppConfig>
+        <!-- Required to remove the item if necessary later -->
+        <OriginalItemSpec>%(Identity)</OriginalItemSpec>
+      </_FilesToTransform>
+    </ItemGroup>
+
+    <ItemGroup>
+      <_FilesToTransformNotAppConfig Include="@(_FilesToTransform)"
+                                     Condition=" '%(IsAppConfig)'!='true'">
+        <!-- Required to remove the item if necessary later -->
+        <OriginalItemSpec>%(Identity)</OriginalItemSpec>
+        <Link>%(_FilesToTransform.Link)</Link>
+      </_FilesToTransformNotAppConfig>
+
+      <_AppConfigToTransform  Include="@(_FilesToTransform)"
+                              Condition=" '%(IsAppConfig)'=='true'"/>
+    </ItemGroup>
+  </Target>
+
+
+  <!-- ***********************************************************
+  WAP related items below
+  ****************************************************************-->
+  <PropertyGroup Condition=" '$(IsWap)' == 'true' ">
+    <OnAfterPipelinePreDeployCopyAllFilesToOneFolder>
+      $(OnAfterPipelinePreDeployCopyAllFilesToOneFolder);
+      CopyTransformFilesWap;
+    </OnAfterPipelinePreDeployCopyAllFilesToOneFolder>
+    <CopyTransformFilesWapDependsOn>
+      CopyAllFilesToSingleFolderForPackage;
+      DiscoverFilesToTransform;
+    </CopyTransformFilesWapDependsOn>
+    <!-- Required for VS 2012 since the CopyAllFilesToSingleFolderForPackage is no longer being called -->
+    <PipelineMsdeploySpecificTransformPhaseDependsOn>
+      $(PipelineMsdeploySpecificTransformPhaseDependsOn);
+      CopyTransformFilesWap
+    </PipelineMsdeploySpecificTransformPhaseDependsOn>
+  </PropertyGroup>
+
+  <Target Name="CopyTransformFilesWap"
+          DependsOnTargets="$(CopyTransformFilesWapDependsOn)" AfterTargets="CopyAllFilesToSingleFolderForPackage">
+
+    <ItemGroup>
+      <_TmpLinkFiles Remove="@(_TmpLinkFiles)" />
+      <_TmpLinkFiles Include="@(_FilesToTransformNotAppConfig->'%(Link)')" />
+    </ItemGroup>
+
+    <!-- This will ignore link files and the second one will handle them -->
+    <MakeDir Directories="@(_FilesToTransformNotAppConfig->'$(_PackageTempDir)\%(RelativeDir)')"
+         Condition="Exists('%(RelativeDir)%(Filename).$(Configuration)%(Extension)')
+                    and '%(Link)' == '' "/>
+
+    <MakeDir Directories="@(_TmpLinkFiles->'$(OutDir)%(RelativeDir)')"
+                 Condition=" '%(Link)'!='' " />
+
+    <!--Make sure that we do not do this for web.config-->
+    <!-- This usage will skip Link files, the task usage below will handle Link files -->
+    <SlowCheetah.Tasks.TransformXml Source="@(_FilesToTransformNotAppConfig->'%(FullPath)')"
+              Transform="%(RelativeDir)%(Filename).$(Configuration)%(Extension)"
+              Destination="@(_FilesToTransformNotAppConfig->'$(_PackageTempDir)\%(RelativeDir)%(Filename)%(Extension)')"
+              Condition=" '%(Filename)%(Extension)' != 'web.config' and
+                          Exists('%(RelativeDir)%(Filename).$(Configuration)%(Extension)')
+                          and '%(Link)'=='' " />
+
+    <!-- Transform the Link files, they always go into the root directory -->
+    <SlowCheetah.Tasks.TransformXml Source="@(_FilesToTransformNotAppConfig->'%(FullPath)')"
+              Transform="%(RelativeDir)%(Filename).$(Configuration)%(Extension)"
+              Destination="@(_FilesToTransformNotAppConfig->'$(_PackageTempDir)\%(Link)')"
+              Condition=" '%(Filename)%(Extension)' != 'web.config' and
+                          Exists('%(RelativeDir)%(Filename).$(Configuration)%(Extension)')
+                          and '%(Link)'!='' " />
+  </Target>
+
+  <!-- ***********************************************************
+  ClickOnce related items below
+  ****************************************************************-->
+  <Target Name="SlowCheetah_ClickOnceUpdate" BeforeTargets="_DeploymentComputeClickOnceManifestInfo" DependsOnTargets="TransformAllFiles">
+    <PropertyGroup>
+      <_SlowCheetahAppConfigTransformExists Condition="Exists(@(_AppConfigToTransform->'%(RelativeDir)%(Filename).$(Configuration)%(Extension)'))">true</_SlowCheetahAppConfigTransformExists>
+    </PropertyGroup>
+    <PropertyGroup>
+      <_OldAppConfigWithTargetPath>%(AppConfigWithTargetPath.TargetPath)</_OldAppConfigWithTargetPath>
+      <_SCNewAppConfigFile>@(AppConfigWithTargetPath->'$(IntermediateOutputPath)SlowCheetah\%(Filename)%(Extension)')</_SCNewAppConfigFile>
+    </PropertyGroup>
+
+    <Copy SourceFiles="@(AppConfigWithTargetPath->'$(OutDir)%(TargetPath)')" DestinationFiles="$(_SCNewAppConfigFile)" Condition="'$(_SlowCheetahAppConfigTransformExists)'=='true'" />
+    <ItemGroup Condition="'$(_SlowCheetahAppConfigTransformExists)'=='true'">
+      <AppConfigWithTargetPath Remove="@(AppConfigWithTargetPath)" />
+      <AppConfigWithTargetPath Include="$(_SCNewAppConfigFile)">
+        <TargetPath>$(_OldAppConfigWithTargetPath)</TargetPath>
+      </AppConfigWithTargetPath>
+    </ItemGroup>
+
+  </Target>
+
+  <Target Name="SlowCheetah_ClickOnceLooseFileUpdate" AfterTargets="_DeploymentComputeClickOnceManifestInfo" DependsOnTargets="DiscoverFilesToTransform">
+    <!-- For non app.config files which are being transformed we need to remove the original item and replace it with the transformed one -->
+    <ItemGroup>
+      <_DeploymentManifestFiles Remove="%(_FilesToTransformNotAppConfig.OriginalItemSpec)" />
+      <!-- Implementation for non-Link files -->
+      <_DeploymentManifestFiles Include="@(_FilesToTransformNotAppConfig->'$(OutDir)%(RelativeDir)%(Filename)%(Extension)')"
+                                Condition=" '%(_FilesToTransformNotAppConfig.Link)'=='' ">
+        <TargetPath Condition=" '%(_FilesToTransformNotAppConfig.Link)'=='' ">%(RelativeDir)%(Filename)%(Extension)</TargetPath>
+      </_DeploymentManifestFiles>
+
+      <!-- Implementation for Linked files -->
+      <_DeploymentManifestFiles Include="@(_FilesToTransformNotAppConfig->'$(OutDir)%(Link)')"
+                                Condition=" '%(_FilesToTransformNotAppConfig.Link)'!='' ">
+        <TargetPath>%(_FilesToTransformNotAppConfig.Link)</TargetPath>
+      </_DeploymentManifestFiles>
+    </ItemGroup>
+  </Target>
+
+
+  <!-- ***********************************************************
+  Setup project related items below
+  ****************************************************************-->
+  <PropertyGroup>
+    <SlowCheetahEnableSetupProjects Condition=" '$(SlowCheetahEnableSetupProjects)'=='' ">true</SlowCheetahEnableSetupProjects>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(SlowCheetahEnableSetupProjects)'=='true'">
+    <AddAppConfigToBuildOutputs>false</AddAppConfigToBuildOutputs>
+
+    <BuiltProjectOutputGroupDependsOn>
+      $(BuiltProjectOutputGroupDependsOn);
+      AfterBuiltProjectOutputGroup
+    </BuiltProjectOutputGroupDependsOn>
+  </PropertyGroup>
+
+  <Target Name="AfterBuiltProjectOutputGroup" DependsOnTargets="TransformAllFiles">
+    <ItemGroup>
+      <_TmpAppConfig Include="@(AppConfigWithTargetPath->'$(OutDir)%(TargetPath)')" />
+    </ItemGroup>
+    <ItemGroup>
+      <BuiltProjectOutputGroupOutput Include="@(_TmpAppConfig->'%(FullPath)')">
+        <!-- For compatibility with 2.0 -->
+        <OriginalItemSpec>$(AppConfig)</OriginalItemSpec>
+      </BuiltProjectOutputGroupOutput>
+
+      <BuiltProjectOutputGroupOutput Include="@(_FilesToTransformNotAppConfig->'$(OutDir)%(RelativeDir)%(Filename)%(Extension)')"
+                                     Condition=" '%(_FilesToTransformNotAppConfig.Link)'==''">
+        <OriginalItemSpec>@(_FilesToTransformNotAppConfig->'$(OutDir)%(RelativeDir)%(Filename)%(Extension)')</OriginalItemSpec>
+      </BuiltProjectOutputGroupOutput>
+
+      <BuiltProjectOutputGroupOutput Include="@(_FilesToTransformNotAppConfig->'$(OutDir)%(Link)')"
+                                     Condition=" '%(_FilesToTransformNotAppConfig.Link)'!=''">
+        <OriginalItemSpec>@(_FilesToTransformNotAppConfig->'$(OutDir)%(Link)')</OriginalItemSpec>
+      </BuiltProjectOutputGroupOutput>
+    </ItemGroup>
+  </Target>
+</Project>

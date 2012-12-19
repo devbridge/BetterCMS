@@ -1,0 +1,85 @@
+﻿@using BetterCms.Module.Root.Mvc.Helpers
+
+@model BetterCms.Module.Root.ViewModels.Cms.RenderPageViewModel
+
+@{
+    Layout = "RootLayout.cshtml";
+}
+
+@* // TODO: remove after tests *@
+@if (Model.CanManageContent)
+{
+    @:Layout: @Layout
+}
+
+@if (Model.CanManageContent)
+{
+    <div class="bcms-page-content">
+        @RenderBody()
+    </div>
+}
+else
+{
+    @RenderBody()
+}
+
+@section CmsMetaTitle {
+    <title>@Model.Title</title>    
+}
+
+@section CmsMeta {
+    @if (Model.Metadata != null)
+    {
+        foreach (var metaData in Model.Metadata)
+        {
+            metaData.Render(Model, Html);
+        }
+    }
+}
+
+@section CmsHeadStyles {
+    @if (Model.CanManageContent)
+    {
+        <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700|Oswald:400,700" />
+        <link rel="stylesheet" type="text/css" href="@Url.Content("~/file/bcms-root/Content/Styles/base.css")" />
+        <link rel="stylesheet" type="text/css" href="@Url.Content("~/file/bcms-root/Content/Styles/spinner.css")" />
+        
+        @Html.Action("RenderStyleSheetIncludes", "Rendering")
+    }
+
+    @Html.RenderPageCustomCss(Model.Stylesheets)
+}
+
+@section CmsHeadScripts {
+    @if (Model.CanManageContent)
+    {
+        <script type="text/javascript" data-main="@Url.Content("~/file/bcms-root/scripts/main")" src="@Url.Content("~/file/bcms-root/Scripts/require-jquery.js")"></script>
+    }
+}
+
+@section CmsBodyAttributes {@(Html.Raw(Model.CanManageContent ? string.Format(@" data-page-id = ""{0}""", @ViewBag.pageId) : string.Empty))}
+
+@section CmsScripts {
+    @if (Model.CanManageContent)
+    {
+        @Html.Partial("Partial/Region")
+        @Html.Partial("Partial/ContentOverlay")
+        @Html.Action("Container", "Sidebar")        
+        @Html.Partial("Partial/Modal")
+        @Html.Partial("Partial/Alert")
+        @Html.Partial("Partial/Confirm")
+        @Html.Partial("Partial/Info")
+        @Html.Partial("Partial/Tooltip")
+    }
+}
+
+@section Styles {
+    @RenderSection("Styles", false)
+}
+@section HeadScripts {
+    @RenderSection("HeadScripts", false)
+}
+@section Scripts {
+    @RenderSection("Scripts", false)
+}
+@section BodyAttributes {@RenderSection("BodyAttributes", false)}

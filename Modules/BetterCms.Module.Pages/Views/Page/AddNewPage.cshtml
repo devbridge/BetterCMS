@@ -1,0 +1,41 @@
+﻿@using BetterCms.Module.Pages.Content.Resources
+@using BetterCms.Module.Pages.Controllers
+@using BetterCms.Module.Pages.ViewModels.Page
+@using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Mvc.Helpers
+@using BetterCms.Module.Root.Mvc.UI
+@using Microsoft.Web.Mvc
+
+@model AddNewPageViewModel
+
+<div class="bcms-scroll-window">
+    <div class="bcms-padded-content">
+        @using (Html.BeginForm<PageController>(f => f.AddNewPage(null), FormMethod.Post, new { @class = "bcms-ajax-form"}))
+        {
+            @Html.MessagesBox("add-new-page-messages")
+            
+            @Html.HiddenFor(f => f.TemplateId, new {@id = "TemplateId"})
+
+            <div class="bcms-input-list-holder bcms-first-child-holder">
+                @Html.Tooltip(PagesGlobalization.AddNewPage_PageTitle_Tooltip_Title, PagesGlobalization.AddNewPage_PageTitle_Tooltip_Description)
+                <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_PageTitle</div>
+                @Html.TextBoxFor(f => f.PageTitle, new { @class = "bcms-editor-field-box", @style = "width: 815px;", @id = "PageTitle" })
+            </div>
+            
+            @Html.Partial("Partial/AddNewPageEditPermalink")
+            
+                <div class="bcms-addpage-title">
+                @Html.Tooltip(PagesGlobalization.AddNewPage_Template_Tooltip_Title, PagesGlobalization.AddNewPage_Template_Tooltip_Description)
+                <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_Template</div>
+            </div>
+
+            <div class="bcms-info-message-box">
+                <a class="bcms-btn-close" id="bcms-addnewpage-closeinfomessage">@RootGlobalization.Button_Close</a>
+                @Html.Raw(PagesGlobalization.AddNewPage_Template_InfoMessage_Text)
+            </div>
+
+            @Html.Partial("Partial/TemplatesList", Model.Templates)
+            @Html.HiddenSubmit()
+        }
+    </div>
+</div>

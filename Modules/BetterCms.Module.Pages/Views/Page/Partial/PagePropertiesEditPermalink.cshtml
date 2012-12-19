@@ -1,0 +1,28 @@
+﻿@using BetterCms.Module.Pages.Content.Resources
+@using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Mvc.UI
+
+@model BetterCms.Module.Pages.ViewModels.Page.EditPagePropertiesViewModel
+           
+<div class="bcms-input-list-holder">
+    @Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageUrl_Tooltip_Title, PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageUrl_Tooltip_Description)
+    <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageUrl_Title<a onclick="return false" id="bcms-pageproperties-editpermalink">@RootGlobalization.Button_Edit</a></div>
+    <div class="bcms-editseo-urlpath" id="bcms-page-permalink-info">@(string.IsNullOrWhiteSpace(Model.PagePermalink) ? Html.Raw("&nbsp;") : new MvcHtmlString(Html.Encode(Model.PagePermalink)))</div>
+</div>
+
+<div class="bcms-edit-urlpath-box" style="display: none;">
+    <a class="bcms-edit-btn-close">@RootGlobalization.Button_Close</a>
+                
+    @Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_EditUrlPath_Tooltip_Title, PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_EditUrlPath_Tooltip_Description)
+    @Html.Hidden("PagePermalinkHidden", Model.PagePermalink, new { @id = "bcms-page-permalink" })
+    
+    <div class="bcms-content-titles">@PagesGlobalization.PageProperties_EditURLPath_Title</div>
+    @Html.TextBoxFor(model => model.PagePermalink, new { @id = "bcms-page-permalink-edit", @class = "bcms-editor-field-box", @style = "width: 503px;" })
+                
+    <div class="bcms-edit-check-field">
+        @Html.CheckBoxFor(model => model.RedirectFromOldUrl)
+        <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_CreatePermanentRedirectToOldUrl_Title</div>
+    </div>
+    <div class="bcms-btn-small" id="bcms-save-permalink">@RootGlobalization.Button_Save</div>
+    <div class="bcms-btn-links-small">@RootGlobalization.Button_Cancel</div>
+</div>

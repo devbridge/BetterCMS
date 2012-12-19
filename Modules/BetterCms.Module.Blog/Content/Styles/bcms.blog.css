@@ -1,0 +1,169 @@
+﻿/*sidebar buttons*/
+div.bcms-btn-blog-add {
+    padding-right: 35px;
+    margin-bottom: 20px;
+    background: url('images/sprite-blog.png') no-repeat right 8px #1892E4;
+    background: url('images/sprite-blog.png') no-repeat right 8px, linear-gradient(to bottom, #1892E4 0, #0C7FC7 100%);
+    background: url('images/sprite-blog.png') no-repeat right 8px, -moz-linear-gradient(top, #1892E4 0, #0C7FC7 100%);
+    background: url('images/sprite-blog.png') no-repeat right 8px, -webkit-linear-gradient(top, #1892E4 0, #0C7FC7 100%);
+}
+
+    div.bcms-btn-blog-add:active {
+        background: url('images/sprite-blog.png') no-repeat right 8px #0C7FC7;
+    }
+
+/*blog templates grid*/
+.bcms-blog-templates-container .bcms-top-block-holder {
+    border-bottom: 1px solid #c6c6c6;
+    margin-bottom: 10px;
+}
+
+.bcms-blog-templates-holder {
+    display: inline-block;
+    padding: 0 0 10px 11px;
+}
+
+.bcms-blog-templates {
+    position: relative;
+    float: left;
+    width: 217px;
+    height: 286px;
+    padding: 10px 24px 20px;
+    margin-left: 11px;
+    border: 1px solid #c6c6c6;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+    .bcms-blog-templates:first-child {
+        margin-left: 0;
+    }
+
+.bcms-blog-templates-active {
+    border-color: #0097f8;
+    background-color: #eff9fd;
+}
+
+.bcms-blog-templates-active-message-text {
+    color: #0097f8;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.bcms-blog-templates-image-holder {
+    position: relative;
+    height: 145px;
+    width: 165px;
+    margin: 0 auto;
+    border: 1px solid #9b9b9b;
+    background: url('images/bcms-no-image.png') no-repeat;
+    background-size: cover;
+    overflow: hidden;
+}
+
+.bcms-blog-templates-button-holder {
+    padding-top: 20px;
+    line-height: 33px;
+    text-align: center;
+}
+
+.bcms-blog-templates-image-holder:hover > .bcms-zoom-overlay {
+    cursor: pointer;
+    opacity: 1;
+    filter: Alpha(opacity=100);
+}
+
+/*create new blog post*/
+.bcms-new-blog-content {
+    display: inline-block;
+    padding: 20px 0 20px 40px;
+}
+
+.bcms-blog-left {
+    float: left;
+    width: 510px;
+}
+
+.bcms-blog-right {
+    float: left;
+    width: 330px;
+    margin: 20px 0 0 20px;
+    padding: 20px 5px;
+    border-style: solid;
+    border-width: 5px 1px 1px 1px;
+    border-color: #cce0e9 #e4e4e4 #e4e4e4 #e4e4e4;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3);
+}
+
+.bcms-blog-dates-holder {
+    display: inline-block;
+}
+
+    .bcms-blog-dates-holder .bcms-input-field-holder {
+        float: left;
+        margin-left: 20px;
+    }
+
+.bcms-blog-right > .bcms-input-field-holder {
+    margin: 20px 0 0 20px;
+}
+
+.bcms-blog-right > .bcms-create-author-holder {
+    position: relative;
+    margin: 0 0 0 20px;
+}
+
+.bcms-create-author-holder .bcms-tooltip-mark {
+    top: 1px;
+    left: -15px;
+}
+
+.bcms-blog-tags-holder {
+    position: relative;
+    margin: 20px 0 0 20px;
+}
+
+    .bcms-blog-tags-holder .bcms-content-titles {
+        display: inline-block;
+    }
+
+.bcms-uploaded-image {
+    display: inline-block;
+    position: relative;
+    width: 118px;
+    height: 118px;
+    margin-bottom: 5px;
+    border: 2px solid #c6c6c6;
+    overflow: hidden;
+    background: url('images/bcms-blog-no-image.png') no-repeat center center;
+}
+
+.bcms-btn-upload-image {
+    display: inline-block;
+    position: relative;
+    border: 1px solid #b8b8b8;
+    height: 28px;
+    line-height: 28px;
+    vertical-align: middle;
+    padding: 0 15px;
+    font-size: 12px;
+    text-transform: uppercase;
+    cursor: pointer;
+    background-image: linear-gradient(to bottom, #ffffff 0, #f3f3f3 100%);
+    background-image: -moz-linear-gradient(top, #ffffff 0, #f3f3f3 100%);
+    background-image: -webkit-linear-gradient(top, #ffffff 0, #f3f3f3 100%);
+}
+
+    .bcms-btn-upload-image:active {
+        background-image: linear-gradient(to bottom, #f3f3f3 0, #ffffff 100%);
+        background-image: -moz-linear-gradient(top, #f3f3f3 0, #ffffff 100%);
+        background-image: -webkit-linear-gradient(top, #f3f3f3 0, #ffffff 100%);
+    }
+
+.bcms-upload-info {
+    display: inline-block;
+    width: 100px;
+    padding-left: 20px;
+    font-size: 12px;
+    vertical-align: top;
+}

@@ -1,0 +1,9 @@
+﻿@using BetterCms.Module.MediaManager.Mvc
+
+@model BetterCms.Module.MediaManager.ViewModels.MediaManager.MediaPathViewModel
+
+<div class="bcms-breadcrumbs-holder">
+    @Html.Hidden("CurrentFolderId", Model.CurrentFolder != null ? Model.CurrentFolder.Id.ToString() : string.Empty, new {@id = "bcms-current-media-folder-id"})
+    @Html.HiddenFor(f => f.MediaType, new { id = "bcms-current-media-folder-type"})
+    @Html.MediaPathRange(Model)
+</div>

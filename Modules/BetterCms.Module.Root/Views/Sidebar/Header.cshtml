@@ -1,0 +1,7 @@
+﻿@model BetterCms.Module.Root.ViewModels.PageProjectionsViewModel
+<div class="bcms-sidemenu-header">
+        @foreach (var projection in Model.Projections)
+        {
+            projection.Render(Model.Page, Html);
+        }
+</div>

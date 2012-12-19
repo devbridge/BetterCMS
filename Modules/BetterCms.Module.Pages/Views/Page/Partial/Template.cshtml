@@ -1,0 +1,20 @@
+﻿@using BetterCms.Module.Pages.Content.Resources
+@using BetterCms.Module.Root.Controllers
+@using Microsoft.Web.Mvc;
+
+@model BetterCms.Module.Pages.ViewModels.Page.TemplateViewModel
+
+<div class="@(Model.IsActive ? "bcms-grid-box bcms-grid-box-active" : "bcms-grid-box")" data-id="@Model.TemplateId">
+    <div class="bcms-title-holder">
+        <div class="bcms-content-titles">@Model.Title</div>
+    </div>
+    <div class="bcms-grid-image-holder">
+        <img src="@(Html.BuildUrlFromExpression<PreviewController>(f => f.Layout(Model.TemplateId.ToString())))" alt="" />
+         <div class="bcms-zoom-overlay">
+         </div>
+    </div>
+    <div class="bcms-grid-button-holder">
+        <div class="bcms-grid-active-message-text" style="@(Model.IsActive ? "display:" : "display: none;")">@PagesGlobalization.AddNewPage_DefaultTemplate_Title</div>
+        <div class="bcms-btn-grid" style="@(Model.IsActive ? "display: none;" : "display:")">@PagesGlobalization.AddNewPage_SelectTemplateButton_Title</div>
+    </div>
+</div>

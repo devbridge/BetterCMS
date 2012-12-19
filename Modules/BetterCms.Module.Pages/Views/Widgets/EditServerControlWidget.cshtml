@@ -1,0 +1,52 @@
+﻿@using BetterCms.Module.Pages.Content.Resources
+@using BetterCms.Module.Pages.Controllers
+@using BetterCms.Module.Pages.ViewModels.Content
+@using BetterCms.Module.Pages.ViewModels.Widgets
+@using BetterCms.Module.Root.Mvc.Helpers
+@using BetterCms.Module.Root.Mvc.UI
+@using Microsoft.Web.Mvc
+
+@model BetterCms.Module.Pages.ViewModels.Widgets.EditServerControlWidgetViewModel
+
+<div class="bcms-tab-header">
+    <a class="bcms-tab bcms-tab-active" href="#bcms-tab-1">@PagesGlobalization.EditWidget_BasicPropertiesTab_Title</a>
+    <a class="bcms-tab" href="#bcms-tab-2">@PagesGlobalization.EditWidget_OptionsTab_Title</a>
+</div>
+           
+<div class="bcms-scroll-window">
+    <div class="bcms-padded-content">
+        @using (Html.BeginForm<WidgetsController>(c => c.EditServerControlWidget((ServerControlWidgetViewModel)null), FormMethod.Post, new { @id = "bcms-widget-form", @class = "bcms-ajax-form" }))
+        {
+            @Html.MessagesBox("edit-widget-messages")
+            
+            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.Version)
+            
+            <div id="bcms-tab-1" class="bcms-tab-single">
+                <div class="bcms-input-list-holder">
+                    @Html.Tooltip(PagesGlobalization.Widget_Title_Tooltip_Title, PagesGlobalization.Widget_Title_Tooltip_Description)
+                    <div class="bcms-content-titles">@PagesGlobalization.Widget_Title_Title:</div>
+                    @Html.TextBoxFor(model => model.Name, new { @class = "bcms-editor-field-box", @style = "width: 523px;" })
+                </div>
+                
+                <div class="bcms-input-list-holder">
+                    @Html.Tooltip(PagesGlobalization.Widget_Category_Tooltip_Title, PagesGlobalization.Widget_Category_Tooltip_Description)
+                    <div class="bcms-content-titles">@PagesGlobalization.Widget_Category_Title:</div>
+                    @Html.DropDownListFor(model => model.CategoryId, Model.Categories.ToSelectList(Model.CategoryId), PagesGlobalization.Widget_Category_SelectCategory, new {@class = "bcms-global-select"})
+                </div>
+
+                <div class="bcms-input-list-holder">
+                    @Html.Tooltip(PagesGlobalization.Widget_Url_Tooltip_Title, PagesGlobalization.Widget_Url_Tooltip_Description)
+                    <div class="bcms-content-titles">@PagesGlobalization.Widget_Url_Title:</div>
+                    @Html.TextBoxFor(model => model.Url, new { @class = "bcms-editor-field-box", @style = "width: 523px;" })
+                </div>
+            </div>
+                
+            <div id="bcms-tab-2" class="bcms-tab-single">
+                @Html.Partial("Partial/EditContentOptions")
+            </div>
+            
+            @Html.HiddenSubmit()
+        }
+    </div>
+</div>

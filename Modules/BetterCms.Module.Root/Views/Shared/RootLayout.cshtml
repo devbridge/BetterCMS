@@ -1,0 +1,17 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        @RenderSection("CmsMetaTitle", false)
+        @RenderSection("CmsMeta", false)
+        @RenderSection("CmsHeadStyles", false)
+        @RenderSection("CmsHeadScripts", false)
+        
+        @RenderSection("Styles", false)
+        @RenderSection("HeadScripts", false)
+    </head>
+    <body @RenderSection("CmsBodyAttributes", false)@RenderSection("BodyAttributes", false)>
+        @RenderBody()
+        @RenderSection("Scripts", false)
+        @RenderSection("CmsScripts", false)
+    </body>
+</html>

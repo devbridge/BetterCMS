@@ -1,0 +1,48 @@
+# Build and Object Folders
+bin/
+obj/
+Obj/
+
+#User Specific Files
+*.user
+*.suo
+*.userprefs
+*.pidb
+
+
+#Resource Caches
+_ReSharper.*
+*.sln.cache
+*.Cache
+
+#Upgrade Report Files
+_UpgradeReport_Files/
+
+#Nuget
+packages/**
+!packages/repositories.config
+!packages.config
+
+#vim
+*~
+*.swp
+
+#unit tests
+TestResults
+test-results
+/logs/*.log
+logs
+/Sandbox/BetterCms.Sandbox.Mvc3/logs
+/Sandbox/BetterCms.Sandbox.Mvc4/App_Data/BetterCMS/Modules/BetterCms.Module.Root.pdb
+/Sandbox/BetterCms.Sandbox.Mvc4/App_Data/BetterCMS/Modules/BetterCms.Module.Users.dll
+/Sandbox/BetterCms.Sandbox.Mvc4/App_Data/BetterCMS/Modules/BetterCms.Module.Users.pdb
+/Sandbox/BetterCms.Sandbox.Mvc4/App_Data/BetterCMS/Modules/BetterCms.Module.Admin.dll
+/Sandbox/BetterCms.Sandbox.Mvc4/App_Data/BetterCMS/Modules/BetterCms.Module.Admin.pdb
+/Sandbox/BetterCms.Sandbox.Mvc4/App_Data/BetterCMS/Modules/BetterCms.Module.Blog.dll
+/Sandbox/BetterCms.Sandbox.Mvc4/App_Data/BetterCMS/Modules/BetterCms.Module.Blog.pdb
+/Sandbox/BetterCms.Sandbox.Mvc4/App_Data/BetterCMS/Modules/BetterCms.Module.Pages.dll
+/Sandbox/BetterCms.Sandbox.Mvc4/App_Data/BetterCMS/Modules/BetterCms.Module.Pages.pdb
+/Sandbox/BetterCms.Sandbox.Mvc4/App_Data/BetterCMS/Modules/BetterCms.Module.Root.dll
+/Sandbox/BetterCms.Sandbox.Mvc4/App_Data/BetterCMS/Modules/BetterCms.Module.MediaManager.dll
+/Sandbox/BetterCms.Sandbox.Mvc4/App_Data/BetterCMS/Modules/BetterCms.Module.MediaManager.pdb
+/Sandbox/BetterCms.Sandbox.Mvc4/uploads

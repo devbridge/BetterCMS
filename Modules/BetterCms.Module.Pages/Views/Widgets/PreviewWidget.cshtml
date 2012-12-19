@@ -1,0 +1,10 @@
+﻿@using BetterCms.Module.Pages.Content.Resources
+@using BetterCms.Module.Pages.Helpers
+@{
+    ViewBag.Title = PagesGlobalization.WidgetPreview_Title;
+    Layout = "~/Areas/bcms-root/Views/Shared/Layouts/Preview.cshtml";
+}
+@model BetterCms.Module.Pages.ViewModels.Widgets.ServerControlWidgetViewModel
+<div class="bcms-scroll-window">
+    @Html.RenderWidgetPreview(Model.Name, Model.Url)
+</div>

@@ -1,0 +1,17 @@
+﻿@using BetterCms.Module.Pages.Content.Resources
+@using BetterCms.Module.Pages.Controllers
+@using BetterCms.Module.Root.Controllers
+@using BetterCms.Module.Root.Mvc.Helpers
+@using Microsoft.Web.Mvc
+
+@model BetterCms.Module.Pages.ViewModels.Widgets.ServerControlWidgetViewModel
+           
+<div class="bcms-preview-block">
+    <div class="bcms-title-holder">
+        <div class="bcms-content-titles">@Model.Name</div>
+    </div>
+    @Html.PreviewContentBox(Html.BuildUrlFromExpression<WidgetsController>(f => f.PreviewWidget(Model.Id.ToString())), Model.Name)       
+    <div class="bcms-controls-holder">
+        <div class="bcms-btn-small bcms-widget-insert-button" data-id="@Model.Id">@PagesGlobalization.AddPageContent_WidgetTab_InsertButton</div>
+    </div>
+</div>

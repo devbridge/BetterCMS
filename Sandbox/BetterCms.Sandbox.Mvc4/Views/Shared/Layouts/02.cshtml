@@ -1,0 +1,17 @@
+﻿@{
+    Layout = "~/Areas/bcms-Root/Views/Shared/BaseLayout.cshtml";
+}
+
+@RenderBody()
+
+<h1>Two columns layout</h1>
+
+<div style="border: 1px solid black; width: 100%;">
+    <h2>Left Column Section</h2>
+    @RenderSection("CMSLeftColumn", false)
+</div>
+
+<div style="border: 1px solid blue; width: 100%;">
+    <h2>Right Column Section</h2>
+    @RenderSection("CMSRightColumn", false)
+</div>

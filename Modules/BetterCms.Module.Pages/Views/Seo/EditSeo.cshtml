@@ -1,0 +1,42 @@
+﻿@using BetterCms.Module.Pages.Content.Resources
+@using BetterCms.Module.Pages.Controllers
+@using BetterCms.Module.Pages.ViewModels.Seo
+@using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Mvc.Helpers
+@using BetterCms.Module.Root.Mvc.UI
+@using Microsoft.Web.Mvc
+@model BetterCms.Module.Pages.ViewModels.Seo.EditSeoViewModel
+
+<div class="bcms-scroll-window">
+    <div class="bcms-padded-content">
+        <div class="bcms-editseo-window">            
+            @using (Html.BeginForm<SeoController>(f => f.EditSeo((EditSeoViewModel)null), FormMethod.Post, new { @class = "bcms-ajax-form" })) {
+                @Html.HiddenFor(f => f.PageId)
+                @Html.HiddenFor(f => f.Version)
+                @Html.MessagesBox("bcms-editseo-messages")
+                <div class="bcms-input-list-holder bcms-first-child-holder">
+                    @Html.Tooltip(PagesGlobalization.EditSeo_PageTitle_Tooltip_Title, PagesGlobalization.EditSeo_PageTitle_Tooltip_Description)
+                    <div class="bcms-content-titles">@PagesGlobalization.EditSeo_PageTitle</div>
+                    @Html.TextBoxFor(f => f.PageTitle, new { @class = "bcms-editor-field-box"})
+                </div>
+                @Html.Partial("Partial/EditSeoEditUrlPath", Model)
+                <div class="bcms-input-list-holder">
+                    @Html.Tooltip(PagesGlobalization.EditSeo_MetaTitle_Tooltip_Title, PagesGlobalization.EditSeo_MetaTitle_Tooltip_Description)
+                    <div class="bcms-content-titles">@PagesGlobalization.EditSeo_MetaTitle</div>
+                    @Html.TextBoxFor(f => f.MetaTitle, new { @class = "bcms-editor-field-box"})
+                </div>
+                <div class="bcms-input-list-holder">
+                    @Html.Tooltip(PagesGlobalization.EditSeo_MetaKeywords_Tooltip_Title, PagesGlobalization.EditSeo_MetaKeywords_Tooltip_Description)
+                    <div class="bcms-content-titles">@PagesGlobalization.EditSeo_MetaKeywords</div>                
+                    @Html.TextAreaFor(f => f.MetaKeywords, new { @class = "bcms-editor-field-area"})
+                </div>
+                <div class="bcms-input-list-holder">
+                    @Html.Tooltip(PagesGlobalization.EditSeo_MetaDescription_Tooltip_Title, PagesGlobalization.EditSeo_MetaDescription_Tooltip_Description)
+                    <div class="bcms-content-titles">@PagesGlobalization.EditSeo_MetaDescription</div>
+                    @Html.TextAreaFor(f => f.MetaDescription, new { @class = "bcms-editor-field-area"})
+                </div>
+                @Html.HiddenSubmit()
+            }
+        </div>
+    </div>
+</div>

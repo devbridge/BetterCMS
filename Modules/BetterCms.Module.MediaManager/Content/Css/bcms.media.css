@@ -1,0 +1,970 @@
+﻿.bcms-insert-content-modal {
+    padding: 20px 0 0;
+}
+/*image manager*/
+.bcms-file-manager-inner {
+    padding: 20px 55px;
+}
+
+    .bcms-file-manager-inner .bcms-large-titles {
+        border-bottom: 1px solid #e3e3e3;
+    }
+
+.bcms-edit-info-block {
+    padding: 10px 0 20px;
+}
+
+.bcms-croped-block {
+    display: inline-block;
+    width: 428px;
+    min-height: 280px;
+    max-height: 340px;
+    overflow: hidden;
+    vertical-align: top;
+    border: 1px solid #c6c6c6;
+    background: url('images/bcms-no-image.png') no-repeat center center #f5f5f5;
+}
+
+    .bcms-croped-block img {
+        display: block;
+        max-width: 430px;
+        max-height: 340px;
+    }
+
+.bcms-crop-image-block {
+    max-width: 830px;
+    padding: 20px 0;
+}
+
+.bcms-edit-file-info {
+    display: inline-block;
+    width: 382px;
+    margin-left: 15px;
+    vertical-align: top;
+}
+
+.bcms-file-info-text {
+    padding-bottom: 20px;
+}
+
+    .bcms-file-info-text .bcms-btn-links-small {
+        text-transform: none;
+    }
+
+.bcms-file-link {
+    margin-left: 20px;
+    color: #0087dd;
+    font-size: 12px;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.bcms-file-edit {
+    position: relative;
+    display: none;
+    width: 348px;
+    padding: 15px;
+    margin: 20px 0 0;
+    border: 1px solid #a6a6a6;
+    background-color: #f5f5f5;
+}
+
+    .bcms-file-edit .bcms-content-titles {
+        margin: 0 5px 5px 15px;
+    }
+
+    .bcms-file-edit .bcms-editor-field-box {
+        margin: 0 5px;
+    }
+
+.bcms-alignment-controls {
+    padding-top: 8px;
+}
+
+    .bcms-alignment-controls > div {
+        display: inline-block;
+        width: 51px;
+        padding-top: 60px;
+        margin-right: 20px;
+        background: url('images/sprite-media-2.png') no-repeat;
+        text-align: center;
+    }
+
+    .bcms-alignment-controls .bcms-align-left {
+        background-position: 0 0;
+    }
+
+    .bcms-alignment-controls .bcms-align-center {
+        background-position: -104px 0;
+    }
+
+    .bcms-alignment-controls .bcms-align-right {
+        background-position: -208px 0;
+    }
+
+div.bcms-align-left-active {
+    background-position: -52px 0;
+}
+
+div.bcms-align-center-active {
+    background-position: -156px 0;
+}
+
+div.bcms-align-right-active {
+    background-position: -260px 0;
+}
+
+/*file uploader*/
+.bcms-dropzone {
+    height: 150px;
+    margin-bottom: 15px;
+    border-radius: 2px;
+    border: 2px dashed #0C7EC7;
+    background-color: #eeeeee;
+    text-align: center;
+}
+
+    .bcms-dropzone:hover {
+        cursor: pointer;
+    }
+
+.bcms-dropzone-active {
+    border: 2px solid #0C7EC7;
+    box-shadow: 0 0 10px 0 #daf5ff, inset 0 0 10px #daf5ff;
+}
+
+    .bcms-dropzone-active .bcms-dropzone-infotext {
+        margin: 0;
+        line-height: 145px;
+        font-size: 24px;
+        font-weight: 400;
+    }
+
+    .bcms-dropzone-active .btn-upload-files {
+        display: none;
+    }
+
+.bcms-dropzone-infotext {
+    text-align: center;
+    margin-top: 40px;
+    color: #0097f8;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.bcms-upload-cancel-link {
+    float: right;
+    text-transform: uppercase;
+}
+
+    .bcms-upload-cancel-link:hover {
+        text-decoration: underline;
+    }
+
+.btn-upload-files {
+    position: relative;
+    display: inline-block;
+    padding: 0 10px;
+    margin: 15px 0;
+    height: 33px;
+    line-height: 33px;
+    font-size: 12px;
+    font-family: 'Open Sans', sans-serif;
+    color: #FFFFFF;
+    cursor: pointer;
+    overflow: hidden;
+    white-space: nowrap;
+    text-transform: uppercase;
+    box-shadow: 0 0 1px 1px #292929;
+    background-color: #676767;
+    background-image: linear-gradient(to bottom, #676767 0, #555555 100%);
+    background-image: -moz-linear-gradient(top, #676767 0, #555555 100%);
+    background-image: -webkit-linear-gradient(top, #676767 0, #555555 100%);
+}
+
+    .btn-upload-files:active {
+        box-shadow: 0 0 2px 1px #292929;
+        background: #555;
+    }
+
+.bcms-uploader {
+    position: absolute;
+    right: 0;
+    top: 0;
+    border: #000 solid 28px;
+    background: #000;
+    font-size: 30px;
+    margin: 0;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    cursor: pointer;
+}
+
+.bcms-icn-delete-link {
+    float: right;
+}
+
+.bcms-upload-holder .bcms-upload-block:first-child {
+    border-top: 1px solid #e3e3e3;
+}
+
+.bcms-upload-block {
+    height: 39px;
+    background-color: #eff9fd;
+    border-style: none solid solid solid;
+    border-width: 1px;
+    border-color: #e3e3e3;
+    overflow: hidden;
+}
+
+    .bcms-upload-block > div {
+        float: left;
+    }
+
+.bcms-upload-file-titles {
+    width: 210px;
+    padding: 0 15px;
+    line-height: 39px;
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.bcms-upload-bar-holder {
+    width: 304px;
+    padding-right: 15px;
+    line-height: 39px;
+    overflow: hidden;
+}
+
+.bcms-progress-bar {
+    display: inline-block;
+    vertical-align: middle;
+    width: 302px;
+    height: 10px;
+    border: 1px solid #cdcdcd;
+    box-shadow: inset 0 0 5px rgba(170,170,170,0.36);
+    background-color: #e3e3e3;
+}
+
+.bcms-progress-info {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px;
+    line-height: 39px;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.bcms-progress {
+    height: 12px;
+    margin: -1px;
+    background-color: #0C7EC7;
+}
+
+.bcms-uploaded-info {
+    width: 40px;
+    text-align: right;
+    padding-right: 15px;
+    line-height: 39px;
+    font-weight: 700;
+}
+
+.bcms-upload-size-info {
+    width: 95px;
+    padding: 0 10px;
+    border-left: 1px solid #e3e3e3;
+    border-right: 1px solid #e3e3e3;
+    line-height: 39px;
+}
+
+.bcms-media-delete-holder {
+    position: relative;
+    width: 62px;
+    padding: 9px;
+}
+
+/*a.bcms-upload-cancel {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -7px 0 0 -8px;
+    height: 14px;
+    width: 16px;
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAOCAYAAAGHjXZ5AAAAbElEQVQoz5WSSxbAIAgDs/H+B/Qw0xXWys/ueASHhKcAARKgOcRbzCE+0mpY4UYd7QfjnAgRkZAuLXeetBBpPYcKjVlzp/Riii0N7bgsVrR6pYmE6pELlA1Wrq7sZXHU2asgbd4KnH657uKAHm4iCGmg/EKuAAAAAElFTkSuQmCC') no-repeat center center;
+    cursor: pointer;
+    overflow: hidden;
+    text-indent: 9999px;
+    text-decoration: none;
+}*/
+
+.bcms-upload-description {
+    font-size: 12px;
+    font-weight: 700;
+}
+
+div.bcms-upload-failed {
+    background-color: #fcecec;
+}
+
+    div.bcms-upload-failed .bcms-upload-description {
+        color: #d9000d;
+    }
+
+div.bcms-upload-success {
+    background-color: #e8fae5;
+}
+
+    div.bcms-upload-success .bcms-upload-description {
+        color: #117000;
+    }
+
+/*site settings media manager*/
+.bcms-media-controls-holder {
+    float: left;
+    margin-top: -4px;
+}
+
+    .bcms-media-controls-holder a {
+        display: inline-block;
+        color: #1187d2;
+        font-size: 10px;
+        vertical-align: middle;
+        cursor: pointer;
+    }
+
+        .bcms-media-controls-holder a:hover {
+            text-decoration: underline;
+        }
+
+.bcms-select-list {
+    width: 16px;
+    height: 12px;
+    margin-right: 10px;
+    overflow: hidden;
+    text-indent: 9999px;
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAZCAYAAAGZXkRaAAAAe0lEQVQ4y2M4cODAQyD+z/D/PwQjGJE7390D4v8MIHncav6D1cBEMJTgFoAZC8XHyDGDsADMhVB8AEMFNnc9RHMbfncSdAQ2R91DcxjpjsTlQAocRytjaSSJJwj/D4SxxMTaPXxBjAcfoMzmkehsYHw9xBeXePCxkehsAFIWbewiC0rOAAAAAElFTkSuQmCC') no-repeat center 1px;
+}
+
+#bcms-list-view.bcms-select-active {
+    background-position: center -14px;
+}
+
+.bcms-select-grid {
+    width: 16px;
+    height: 12px;
+    margin-right: 10px;
+    overflow: hidden;
+    text-indent: 9999px;
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAZCAYAAAGQteQgAAABE0lEQVQ4y5WTMcoCMRCF9wDCVlYLC54hlUfxAh7AMwiCJwkIVmm02htsJXiJ/2/SCnHe8BLi4IIpvjB5M9mZZGa73e3/KaQOixrTNCUA46GGyEcsAZIuuh2EleC6lFIB7o3QCy5/9SzM2DieGbInaE77ARQQchFOWAtj9pyEuRTMj4RyAVle3FyEK+34keUj46JDEkUm9QR2LI/EOkN5tFwFjtcVfRXxGo6i2g3Hf77I4s20YGzqjn8V0QFHUe2G41WbSrt4kWB9EKMRPYO90f8gboV9xZrBg9Fdcxn3SsA0HRh8MMH3xeFpmrSlHj2rQQNHvu3Z6HNnBJ1MBgfrgzjmXpKewb3Rx/onyHgGe6PHpjLeCnAjENQVvWMAAAAASUVORK5CYII=') no-repeat center -14px;
+}
+
+#bcms-grid-view.bcms-select-active {
+    background-position: center 1px;
+}
+
+.bcms-media-new-folder {
+    margin-left: 10px;
+    padding-left: 29px;
+    background: url('images/sprite-media-1.png') no-repeat -3px -56px;
+}
+
+.bcms-media-new-file {
+    margin-left: 10px;
+    padding-left: 29px;
+    background: url('images/sprite-media-1.png') no-repeat 0 -96px;
+}
+
+.bcms-vertical-separator {
+    display: inline-block;
+    height: 34px;
+    border-left: 1px solid #c0c0c0;
+    vertical-align: middle;
+}
+
+/*breadcrumbs*/
+.bcms-breadcrumbs-holder {
+    height: 20px;
+    margin: -15px 0 10px;
+    padding-left: 30px;
+    line-height: 15px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.bcms-breadcrumbs-root {
+    display: inline-block;
+    max-width: 575px;
+    height: 20px;
+    color: #1187d2;
+    line-height: 20px;
+    text-decoration: none;
+    vertical-align: top;
+    overflow: hidden;
+}
+
+    .bcms-breadcrumbs-root:first-child {
+        padding-left: 21px;
+        background: url('images/sprite-media-1.png') no-repeat -3px -29px;
+        color: #353535;
+    }
+
+        .bcms-breadcrumbs-root:first-child:hover {
+            color: #1187d2;
+        }
+
+/**/
+.bcms-system-folder {
+    display: inline-block;
+    width: 56px;
+    height: 42px;
+    background: url('images/sprite-media-1.png') no-repeat 0 -176px;
+    vertical-align: middle;
+}
+
+div.bcms-system-folder-active {
+    background-position: 0 -235px;
+}
+
+.bcms-media-addfolder-holder {
+    padding: 10px 51px;
+}
+
+.bcms-system-addfolder {
+    display: inline-block;
+    width: 56px;
+    height: 42px;
+    background: url('images/sprite-media-1.png') no-repeat 0 -126px;
+    vertical-align: middle;
+}
+
+.bcms-system-folder-name {
+    line-height: 16px;
+    font-size: 11px;
+    color: #1187d2;
+}
+
+/*default sorting block*/
+.bcms-media-sorting-block {
+    height: 35px;
+    background-color: #fbf9f9;
+    border-top: 1px solid #c6c6c6;
+    border-bottom: 1px solid #c6c6c6;
+}
+
+    .bcms-media-sorting-block > div {
+        float: left;
+        height: 100%;
+    }
+
+    .bcms-media-sorting-block .bcms-media-col-2 {
+        width: 180px;
+        border-left: 1px solid #c6c6c6;
+        border-right: 1px solid #c6c6c6;
+    }
+
+    .bcms-media-sorting-block .bcms-media-col-3 {
+        width: 180px;
+        border-right: 1px solid #c6c6c6;
+    }
+
+    .bcms-media-sorting-block .bcms-media-col-4 {
+        width: 180px;
+        border-right: 1px solid #c6c6c6;
+    }
+
+    .bcms-media-sorting-block .bcms-sort-arrow {
+        margin: 8px 0 0 20px;
+    }
+
+.bcms-media-col-2:hover {
+    background-color: #e5e5e5;
+    cursor: pointer;
+}
+
+.bcms-media-col-3:hover {
+    background-color: #e5e5e5;
+    cursor: pointer;
+}
+
+.bcms-media-col-4:hover {
+    background-color: #e5e5e5;
+    cursor: pointer;
+}
+
+/*folders grid sorting block*/
+.bcms-grid-style .bcms-media-sorting-block .bcms-media-col-1 {
+    display: none;
+}
+
+.bcms-grid-style .bcms-media-sorting-block .bcms-media-col-2 {
+    border-left: 0;
+}
+/*folders in grid*/
+.bcms-grid-style .bcms-media-folder-box {
+    position: relative;
+    float: left;
+    width: 105px;
+    height: 96px;
+    margin: 10px 5px 0;
+    padding: 10px 0;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    text-align: center;
+    overflow: hidden;
+}
+
+    .bcms-grid-style .bcms-media-folder-box:hover > .bcms-media-edit-controls {
+        display: block;
+    }
+
+    .bcms-grid-style .bcms-media-folder-box .bcms-media-edit-controls {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #5abbec;
+        cursor: pointer;
+    }
+
+        .bcms-grid-style .bcms-media-folder-box .bcms-media-edit-controls .bcms-system-folder-name {
+            padding: 5px;
+            color: #fff;
+            line-height: 12px;
+            font-size: 10px;
+            text-align: left;
+            cursor: default;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+    .bcms-grid-style .bcms-media-folder-box .bcms-btn-small {
+        display: none;
+    }
+
+    .bcms-grid-style .bcms-media-folder-box .bcms-btn-links-small {
+        display: none;
+    }
+
+    .bcms-grid-style .bcms-media-folder-box .bcms-icn-edit {
+        position: absolute;
+        bottom: 8px;
+        left: 10px;
+        width: 22px;
+        background: 0;
+        text-indent: 0;
+        font-size: 10px;
+        color: #fff;
+    }
+
+        .bcms-grid-style .bcms-media-folder-box .bcms-icn-edit:hover {
+            color: #303030;
+        }
+
+    .bcms-grid-style .bcms-media-folder-box .bcms-icn-delete {
+        position: absolute;
+        bottom: 8px;
+        right: 10px;
+        padding-right: 0;
+        background: 0;
+        font-size: 10px;
+        color: #fff;
+    }
+
+        .bcms-grid-style .bcms-media-folder-box .bcms-icn-delete:hover {
+            color: #303030;
+            background-position: right -970px;
+        }
+
+    .bcms-grid-style .bcms-media-folder-box input[type="text"] {
+        display: none;
+    }
+
+.bcms-list-style > div.bcms-table-click-active {
+    background-color: #effcfe;
+    transition: all 0.5s ease-out;
+    -moz-transition: all 0.5s ease-out;
+    -webkit-transition: all 0.5s ease-out;
+}
+
+    .bcms-list-style > div.bcms-table-click-active:hover {
+        background-color: #effcfe;
+    }
+
+.bcms-grid-style .bcms-media-row-active input[type="text"] {
+    display: block;
+    width: 90px;
+    margin: 7px auto;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+.bcms-grid-style .bcms-media-row-active .bcms-media-edit-controls .bcms-system-folder-name {
+    display: none;
+}
+
+.bcms-grid-style .bcms-add-media-folder {
+    position: relative;
+    float: left;
+    width: 105px;
+    height: 96px;
+    margin: 10px 5px 0;
+    padding: 10px 0;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    text-align: center;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+/*folders list sorting block*/
+.bcms-list-style .bcms-media-sorting-block .bcms-media-col-1 {
+    width: 40px;
+}
+/*folders in list*/
+.bcms-list-style .bcms-media-folder-box {
+    position: relative;
+    height: 62px;
+    padding: 0 20px 0 40px;
+    border-bottom: 1px solid #e3e3e3;
+}
+
+    .bcms-list-style .bcms-media-folder-box:hover {
+        background-color: #f5f5f5;
+        cursor: pointer;
+    }
+
+        .bcms-list-style .bcms-media-folder-box:hover a.bcms-icn-edit {
+            background-position: center -869px;
+        }
+
+            .bcms-list-style .bcms-media-folder-box:hover a.bcms-icn-edit:active {
+                background-position: center -903px;
+            }
+
+        .bcms-list-style .bcms-media-folder-box:hover div.bcms-system-folder {
+            background-position: 0 -235px;
+        }
+
+    .bcms-list-style .bcms-media-folder-box .bcms-media-items-block {
+        display: inline-block;
+        min-width: 480px;
+        padding: 10px 15px;
+        border-left: 1px solid #e3e3e3;
+        vertical-align: middle;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+    }
+
+    .bcms-list-style .bcms-media-folder-box .bcms-system-folder-name {
+        display: inline-block;
+        max-width: 390px;
+        padding-left: 20px;
+        vertical-align: middle;
+        font-size: 14px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .bcms-list-style .bcms-media-folder-box .bcms-media-edit-controls {
+        float: right;
+        margin-top: 22px;
+    }
+
+        .bcms-list-style .bcms-media-folder-box .bcms-media-edit-controls .bcms-system-folder-name {
+            display: none;
+        }
+
+    .bcms-list-style .bcms-media-folder-box .bcms-media-inner-controls {
+        display: none;
+        position: absolute;
+        top: 50%;
+        right: 20px;
+        width: 130px;
+        margin-top: -17px;
+    }
+
+    .bcms-list-style .bcms-media-folder-box .bcms-icn-edit {
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        margin-top: -10px;
+    }
+
+    .bcms-list-style .bcms-media-folder-box input[type="text"] {
+        display: none;
+        position: absolute;
+        left: 135px;
+        top: 50%;
+        height: 30px;
+        width: 380px;
+        line-height: 18px;
+        padding: 6px;
+        margin: -15px 0 0;
+        border: 1px solid #c0c0c0;
+        font-family: "Open Sans", sans-serif;
+        font-size: 12px;
+        color: #000;
+        vertical-align: middle;
+        background-color: #f5f5f5;
+        border-radius: 0;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+    }
+
+.bcms-list-style .bcms-add-media-folder {
+    position: relative;
+    height: 62px;
+    padding: 0 20px 0 40px;
+    cursor: pointer;
+}
+
+    .bcms-list-style .bcms-add-media-folder .bcms-media-items-block {
+        border-left: 0;
+    }
+
+    .bcms-list-style .bcms-add-media-folder .bcms-media-items-block {
+        display: inline-block;
+        padding: 10px 15px;
+        vertical-align: middle;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+    }
+
+    .bcms-list-style .bcms-add-media-folder .bcms-system-folder-name {
+        display: inline-block;
+        padding-left: 20px;
+        vertical-align: middle;
+        font-size: 14px;
+    }
+
+.bcms-list-style .bcms-media-row-active {
+    background-color: #f5f5f5;
+}
+
+    .bcms-list-style .bcms-media-row-active .bcms-system-folder-name {
+        display: none;
+    }
+
+    .bcms-list-style .bcms-media-row-active input[type="text"] {
+        display: block;
+        background: #fff;
+        border-color: #1894e4;
+        box-shadow: 0 0 3px 0 rgba(24,145,230,0.35);
+        outline: none;
+    }
+
+    .bcms-list-style .bcms-media-row-active div.bcms-system-folder {
+        background-position: 0 -235px;
+    }
+
+    .bcms-list-style .bcms-media-row-active .bcms-icn-edit {
+        background-position: center -869px;
+    }
+
+    .bcms-list-style .bcms-media-row-active a.bcms-icn-delete {
+        display: none;
+    }
+
+    .bcms-list-style .bcms-media-row-active div.bcms-media-inner-controls {
+        display: block;
+    }
+
+.bcms-add-media-folder:hover .bcms-system-addfolder {
+    background-position: 0 -297px;
+}
+
+/*files in grid*/
+.bcms-grid-style .bcms-media-file-box {
+    position: relative;
+    float: left;
+    width: 105px;
+    height: 96px;
+    margin: 10px 5px 0;
+    padding: 10px 0;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    text-align: center;
+    overflow: hidden;
+}
+
+    .bcms-grid-style .bcms-media-file-box .bcms-media-file-holder {
+        width: 103px;
+        height: 94px;
+        background: url('images/bcms-no-thumbnail.png') no-repeat center center;
+        background-size: cover;
+        border: 1px solid #c6c6c6;
+        overflow: hidden;
+    }
+
+        .bcms-grid-style .bcms-media-file-box .bcms-media-file-holder img {
+            display: block;
+            width: 103px;
+            height: 94px;
+        }
+
+    .bcms-grid-style .bcms-media-file-box:hover > .bcms-media-edit-controls {
+        display: block;
+    }
+
+    .bcms-grid-style .bcms-media-file-box .bcms-media-edit-controls {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #5abbec;
+        cursor: pointer;
+    }
+
+        .bcms-grid-style .bcms-media-file-box .bcms-media-edit-controls .bcms-system-folder-name {
+            padding: 5px;
+            color: #fff;
+            line-height: 12px;
+            font-size: 10px;
+            text-align: left;
+            cursor: default;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+    .bcms-grid-style .bcms-media-file-box .bcms-icn-edit {
+        position: absolute;
+        bottom: 8px;
+        left: 10px;
+        background: 0;
+        text-indent: 0;
+        font-size: 10px;
+        color: #fff;
+        overflow: visible;
+    }
+
+        .bcms-grid-style .bcms-media-file-box .bcms-icn-edit:hover {
+            color: #303030;
+        }
+
+    .bcms-grid-style .bcms-media-file-box .bcms-icn-delete {
+        position: absolute;
+        bottom: 8px;
+        right: 10px;
+        padding-right: 0;
+        background: 0;
+        font-size: 10px;
+        color: #fff;
+    }
+
+        .bcms-grid-style .bcms-media-file-box .bcms-icn-delete:hover {
+            color: #303030;
+            background-position: right -970px;
+        }
+
+    .bcms-grid-style .bcms-media-file-box .bcms-media-items-block {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 105px;
+        height: 100px;
+        overflow: hidden;
+    }
+
+        .bcms-grid-style .bcms-media-file-box .bcms-media-items-block .bcms-system-folder-name {
+            display: none;
+        }
+
+/*files in list*/
+.bcms-list-style .bcms-media-file-box {
+    position: relative;
+    height: 62px;
+    padding: 0 20px 0 40px;
+    border-bottom: 1px solid #e3e3e3;
+}
+
+    .bcms-list-style .bcms-media-file-box:hover {
+        background-color: #f5f5f5;
+        cursor: pointer;
+    }
+
+        .bcms-list-style .bcms-media-file-box:hover a.bcms-icn-edit {
+            background-position: center -869px;
+        }
+
+            .bcms-list-style .bcms-media-file-box:hover a.bcms-icn-edit:active {
+                background-position: center -903px;
+            }
+
+    .bcms-list-style .bcms-media-file-box .bcms-icn-edit {
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        margin-top: -10px;
+    }
+
+    .bcms-list-style .bcms-media-file-box .bcms-media-items-block {
+        display: inline-block;
+        padding: 10px 15px;
+        border-left: 1px solid #e3e3e3;
+        vertical-align: middle;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+    }
+
+    .bcms-list-style .bcms-media-file-box .bcms-system-folder-name {
+        display: inline-block;
+        max-width: 420px;
+        padding-left: 20px;
+        vertical-align: middle;
+        font-size: 14px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .bcms-list-style .bcms-media-file-box .bcms-media-edit-controls {
+        float: right;
+        margin-top: 22px;
+    }
+
+        .bcms-list-style .bcms-media-file-box .bcms-media-edit-controls .bcms-system-folder-name {
+            display: none;
+        }
+
+    .bcms-list-style .bcms-media-file-box .bcms-media-file-holder {
+        display: inline-block;
+        width: 54px;
+        height: 40px;
+        background: url('images/bcms-no-thumbnail.png') no-repeat center center;
+        overflow: hidden;
+        vertical-align: middle;
+        border: 1px solid #c6c6c6;
+        background-size: cover;
+    }
+
+        .bcms-list-style .bcms-media-file-box .bcms-media-file-holder img {
+            display: block;
+            width: 54px;
+            height: 40px;
+        }
+
+/*remove when drag&drop is fully developed*/
+/*.bcms-dropzone:active {
+    border: 2px solid #0C7EC7;
+    box-shadow: 0 0 10px 0 #daf5ff, inset 0 0 10px #daf5ff;
+}
+
+    .bcms-dropzone:active .bcms-dropzone-infotext {
+        margin: 0;
+        line-height: 145px;
+        font-size: 24px;
+        font-weight: 400;
+    }
+
+    .bcms-dropzone:active .btn-upload-files {
+        display: none;
+    }*/

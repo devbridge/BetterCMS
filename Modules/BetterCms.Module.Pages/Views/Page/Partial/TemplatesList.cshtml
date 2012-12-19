@@ -1,0 +1,19 @@
+﻿@model IList<BetterCms.Module.Pages.ViewModels.Page.TemplateViewModel> 
+
+@if (Model != null && Model.Count > 0)
+{
+    @Html.Raw("<div class=\"bcms-grid-holder\">")
+
+    for (int i = 0; i < Model.Count; i++)
+    {
+        if (i % 3 == 0 && i != 0)
+        {
+            @Html.Raw("</div>")
+            @Html.Raw("<div class=\"bcms-grid-holder\">")
+        }
+
+        @Html.Partial("Partial/Template", Model[i])
+    }
+
+    @Html.Raw("</div>")
+}

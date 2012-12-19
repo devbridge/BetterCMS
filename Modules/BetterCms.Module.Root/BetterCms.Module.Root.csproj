@@ -1,0 +1,666 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{66E7E4DF-EEEA-4B1E-8663-A1B430EB7375}</ProjectGuid>
+    <ProjectTypeGuids>{E53F8FEA-EAE0-44A6-8774-FFD645390401};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BetterCms.Module.Root</RootNamespace>
+    <AssemblyName>BetterCms.Module.Root</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>false</UseIISExpress>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PrecompileBeforePublish>false</PrecompileBeforePublish>
+    <ExcludeGeneratedDebugSymbol>false</ExcludeGeneratedDebugSymbol>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\..\packages\Autofac.2.6.3.862\lib\NET40\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Configuration">
+      <HintPath>..\..\packages\Autofac.2.6.3.862\lib\NET40\Autofac.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging, Version=2.1.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Common.Logging.2.1.1\lib\net40\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentMigrator">
+      <HintPath>..\..\packages\FluentMigrator.1.0.3.0\lib\40\FluentMigrator.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentNHibernate, Version=1.3.0.733, Culture=neutral, PublicKeyToken=8aa435e3cb308880, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\FluentNHibernate.1.3.0.733\lib\FluentNHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections, Version=1.0.1.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Mvc, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Mvc2Futures.2.0.50217.0\lib\Microsoft.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="MvcContrib, Version=2.0.95.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\MvcContrib.2.0.95.0\lib\MvcContrib.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate, Version=3.3.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\NHibernate.3.3.2.4000\lib\Net35\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Commands\GetPageToRender\GetPageToRenderCommand.cs" />
+    <Compile Include="Content\Resources\RootGlobalization.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RootGlobalization.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\AuthenticationController.cs" />
+    <Compile Include="Controllers\CmsController.cs" />
+    <Compile Include="Controllers\PreviewController.cs" />
+    <Compile Include="Controllers\EmbeddedResourcesController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\RenderingController.cs" />
+    <Compile Include="Controllers\SidebarController.cs" />
+    <Compile Include="Controllers\SiteSettingsController.cs" />
+    <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\Content.cs" />
+    <Compile Include="Models\ContentOption.cs" />
+    <Compile Include="Models\LayoutRegion.cs" />
+    <Compile Include="Models\Maps\CategoryMap.cs" />
+    <Compile Include="Models\Maps\ContentMap.cs" />
+    <Compile Include="Models\Maps\WidgetMap.cs" />
+    <Compile Include="Models\Maps\LayoutRegionMap.cs" />
+    <Compile Include="Models\Maps\PageContentOptionMap.cs" />
+    <Compile Include="Models\Maps\ContentOptionMap.cs" />
+    <Compile Include="Models\Maps\RegionMap.cs" />
+    <Compile Include="Models\Maps\TagMap.cs" />
+    <Compile Include="Models\Migrations\InitialSetup.cs" />
+    <Compile Include="Models\PageContentOption.cs" />
+    <Compile Include="Models\Layout.cs" />
+    <Compile Include="Models\Maps\ModuleMap.cs" />
+    <Compile Include="Models\Maps\LayoutMap.cs" />
+    <Compile Include="Models\Maps\PageContentMap.cs" />
+    <Compile Include="Models\Module.cs" />
+    <Compile Include="Models\Maps\SiteSettingMap.cs" />
+    <Compile Include="Models\PageContent.cs" />
+    <Compile Include="Models\Region.cs" />
+    <Compile Include="Models\SiteSetting.cs" />
+    <Compile Include="Models\Tag.cs" />
+    <Compile Include="Models\Widget.cs" />
+    <Compile Include="Mvc\CommandBase.cs" />
+    <Compile Include="Mvc\CommandHandler.cs" />
+    <Compile Include="Mvc\Converters.cs" />
+    <Compile Include="Mvc\Grids\Extensions\QueryExtensions.cs" />
+    <Compile Include="Mvc\Grids\Extensions\QueryOverExtensions.cs" />
+    <Compile Include="Mvc\Grids\Extensions\GridExtensions.cs" />
+    <Compile Include="Mvc\Grids\GridOptions\GridOptions.cs" />
+    <Compile Include="Mvc\Grids\IEditableGridItem.cs" />
+    <Compile Include="Mvc\Grids\TableRenderers\EditableHtmlTableGridRenderer.cs" />
+    <Compile Include="Mvc\Grids\TableRenderers\HtmlTableGridSingleRowRenderer.cs" />
+    <Compile Include="Mvc\Grids\GridOptions\SearchableGridOptions.cs" />
+    <Compile Include="Mvc\Helpers\LayoutHelper.cs" />
+    <Compile Include="Mvc\Helpers\LayoutRegionWrapper.cs" />
+    <Compile Include="Mvc\Helpers\PreviewHelper.cs" />
+    <Compile Include="Mvc\Helpers\RegionContentWrapper.cs" />
+    <Compile Include="Projections\PageContentProjection.cs" />
+    <Compile Include="Projections\PageContentProjectionFactory.cs" />
+    <Compile Include="Registration\AuthenticationJavaScriptModuleDescriptor.cs" />
+    <Compile Include="Registration\ContentJavaScriptModuleDescriptor.cs" />
+    <Compile Include="Registration\InlineEditorJavaScriptModuleDescriptor.cs" />
+    <Compile Include="Registration\ModalJavaScriptModuleDescriptor.cs" />
+    <Compile Include="Registration\SideMenuJavaScriptModuleDescriptor.cs" />
+    <Compile Include="Registration\SiteSettingsJavaScriptModuleDescriptor.cs" />
+    <Compile Include="Registration\TooltipJavaScriptModuleDescriptor.cs" />
+    <Compile Include="Registration\DatePickerJavaScriptModuleDescriptor.cs" />
+    <Compile Include="Registration\DynamicContentJavaScriptModuleDescriptor.cs" />
+    <Compile Include="Registration\FormsJavaScriptModuleDescriptor.cs" />
+    <Compile Include="Registration\HtmlEditorJavaScriptModuleDescriptor.cs" />
+    <Compile Include="Registration\MessagesJavaScriptModuleDescriptor.cs" />
+    <Compile Include="Models\LookupKeyValue.cs" />
+    <Compile Include="Models\Maps\PageMap.cs" />
+    <Compile Include="Models\Maps\UserMap.cs" />
+    <Compile Include="Models\Migrations\Migration201211121710.cs" />
+    <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />
+    <Compile Include="Models\Page.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Mvc\Helpers\SelectHelper.cs" />
+    <Compile Include="Mvc\UI\DateBoxHelper.cs" />
+    <Compile Include="Models\WireJson.cs" />
+    <Compile Include="Mvc\Helpers\FormHelper.cs" />
+    <Compile Include="Mvc\Helpers\MessagesHelper.cs" />
+    <Compile Include="Registration\TabsJavaScriptModuleDescriptor.cs" />
+    <Compile Include="Services\DefaultSecurityService.cs" />
+    <Compile Include="ViewModels\Authentication\InfoViewModel.cs" />
+    <Compile Include="ViewModels\Cms\CmsRequestViewModel.cs" />
+    <Compile Include="ViewModels\Cms\PageRegionViewModel.cs" />
+    <Compile Include="ViewModels\Cms\RedirectViewModel.cs" />
+    <Compile Include="ViewModels\Cms\RenderPageViewModel.cs" />
+    <Compile Include="ViewModels\PageProjectionsViewModel.cs" />
+    <Compile Include="ViewModels\Rendering\JavaScriptModuleViewModel.cs" />
+    <Compile Include="ViewModels\Rendering\RenderMainJsViewModel.cs" />
+    <Compile Include="ViewModels\Rendering\RenderStyleSheetIncludesViewModel.cs" />
+    <Compile Include="Models\UserMessages.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ViewModels\Shared\MessagesViewModel.cs" />
+    <Compile Include="ViewModels\Sidebar\SidebarContainerViewModel.cs" />
+    <Compile Include="ViewModels\ProjectionsViewModel.cs" />
+    <Compile Include="ViewModels\SiteSettings\SearchableGridViewModel.cs" />
+    <Compile Include="ViewModels\SiteSettings\SiteSettingsContainerViewModel.cs" />
+    <Compile Include="Mvc\Helpers\JavaScriptModulesHelper.cs" />
+    <Compile Include="Mvc\MimeTypeRouteConstraint.cs" />
+    <Compile Include="Mvc\CmsControllerBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mvc\Helpers\TooltipHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RootModuleRegistration.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Content\Resources\RootGlobalization.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RootGlobalization.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Content\Styles\base.css" />
+    <EmbeddedResource Include="Content\Styles\images\icn-zoom.png" />
+    <EmbeddedResource Include="Content\Styles\qunit-1.9.0.css" />
+    <EmbeddedResource Include="Scripts\bcms.content.js" />
+    <EmbeddedResource Include="Scripts\bcms.forms.js" />
+    <EmbeddedResource Include="Scripts\bcms.js" />
+    <EmbeddedResource Include="Scripts\bcms.modal.js" />
+    <EmbeddedResource Include="Scripts\bcms.sidemenu.js" />
+    <EmbeddedResource Include="Scripts\bcms.siteSettings.js" />
+    <None Include="Scripts\jquery-1.7.2.intellisense.js">
+      <DependentUpon>jquery-1.7.2.js</DependentUpon>
+    </None>
+    <EmbeddedResource Include="Scripts\jquery-1.7.2.js" />
+    <EmbeddedResource Include="Content\Styles\images\icn-sidebg.png" />
+    <EmbeddedResource Include="Content\Styles\images\sprite-base-1.png" />
+    <EmbeddedResource Include="Content\Styles\images\sprite-base-2.png" />
+    <EmbeddedResource Include="Scripts\bcms.authentication.js" />
+    <EmbeddedResource Include="Scripts\bcms.tooltip.js" />
+    <EmbeddedResource Include="Content\Styles\images\icn-calendar.png" />
+    <EmbeddedResource Include="Scripts\bcms.messages.js" />
+    <EmbeddedResource Include="Content\Styles\images\icn-upload-images.png" />
+    <EmbeddedResource Include="Content\Styles\images\sprite-dragarrows.png" />
+    <EmbeddedResource Include="Scripts\bcms.datepicker.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\ckeditor-config.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\ckeditor.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\ckeditor_basic.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\ckeditor_basic_source.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\ckeditor_source.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\config.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\contents.css" />
+    <EmbeddedResource Include="Scripts\ckeditor\images\spacer.gif" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\af.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\ar.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\bg.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\bn.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\bs.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\ca.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\cs.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\cy.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\da.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\de.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\el.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\en-au.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\en-ca.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\en-gb.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\en.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\eo.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\es.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\et.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\eu.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\fa.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\fi.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\fo.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\fr-ca.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\fr.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\gl.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\gu.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\he.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\hi.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\hr.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\hu.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\is.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\it.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\ja.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\ka.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\km.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\ko.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\lt.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\lv.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\mn.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\ms.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\nb.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\nl.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\no.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\pl.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\pt-br.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\pt.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\ro.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\ru.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\sk.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\sl.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\sr-latn.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\sr.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\sv.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\th.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\tr.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\uk.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\vi.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\zh-cn.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\zh.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\_languages.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\_translationstatus.txt" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\a11yhelp.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\a11yhelp\lang\en.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\a11yhelp\lang\he.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\about\dialogs\about.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\about\dialogs\logo_ckeditor.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\adobeair\plugin.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\ajax\plugin.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\autogrow\plugin.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\bbcode\plugin.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\clipboard\dialogs\paste.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\cms-imagemanager\icn-img.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\cms-imagemanager\plugin.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\cms-insertdocument\icn-file.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\cms-insertdocument\plugin.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\cms-save\plugin.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\colordialog\dialogs\colordialog.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\devtools\lang\en.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\devtools\plugin.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\dialog\dialogDefinition.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\div\dialogs\div.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\docprops\dialogs\docprops.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\docprops\plugin.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\find\dialogs\find.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\flash\dialogs\flash.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\flash\images\placeholder.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\forms\dialogs\button.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\forms\dialogs\checkbox.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\forms\dialogs\form.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\forms\dialogs\hiddenfield.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\forms\dialogs\radio.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\forms\dialogs\select.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\forms\dialogs\textarea.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\forms\dialogs\textfield.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\forms\images\hiddenfield.gif" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\iframedialog\plugin.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\iframe\dialogs\iframe.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\iframe\images\placeholder.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\image\dialogs\image.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\link\dialogs\anchor.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\link\dialogs\link.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\link\images\anchor.gif" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\liststyle\dialogs\liststyle.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\pagebreak\images\pagebreak.gif" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\pastefromword\filter\default.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\pastetext\dialogs\pastetext.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\placeholder\dialogs\placeholder.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\placeholder\lang\en.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\placeholder\lang\he.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\placeholder\placeholder.gif" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\placeholder\plugin.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\scayt\dialogs\options.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\scayt\dialogs\toolbar.css" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\showblocks\images\block_address.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\showblocks\images\block_blockquote.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\showblocks\images\block_div.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\showblocks\images\block_h1.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\showblocks\images\block_h2.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\showblocks\images\block_h3.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\showblocks\images\block_h4.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\showblocks\images\block_h5.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\showblocks\images\block_h6.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\showblocks\images\block_p.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\showblocks\images\block_pre.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\smiley\dialogs\smiley.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\smiley\images\angel_smile.gif" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\smiley\images\angry_smile.gif" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\smiley\images\broken_heart.gif" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\smiley\images\confused_smile.gif" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\smiley\images\cry_smile.gif" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\smiley\images\devil_smile.gif" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\smiley\images\embaressed_smile.gif" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\smiley\images\envelope.gif" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\smiley\images\heart.gif" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\smiley\images\kiss.gif" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\smiley\images\lightbulb.gif" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\smiley\images\omg_smile.gif" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\smiley\images\regular_smile.gif" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\smiley\images\sad_smile.gif" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\smiley\images\shades_smile.gif" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\smiley\images\teeth_smile.gif" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\smiley\images\thumbs_down.gif" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\smiley\images\thumbs_up.gif" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\smiley\images\tounge_smile.gif" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\smiley\images\whatchutalkingabout_smile.gif" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\smiley\images\wink_smile.gif" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\specialchar\dialogs\specialchar.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\specialchar\lang\en.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\stylesheetparser\plugin.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\styles\styles\default.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\tableresize\plugin.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\tabletools\dialogs\tableCell.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\table\dialogs\table.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\templates\dialogs\templates.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\templates\templates\default.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\templates\templates\images\template1.gif" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\templates\templates\images\template2.gif" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\templates\templates\images\template3.gif" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\uicolor\dialogs\uicolor.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\uicolor\lang\en.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\uicolor\lang\he.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\uicolor\plugin.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\uicolor\uicolor.gif" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\uicolor\yui\assets\hue_bg.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\uicolor\yui\assets\hue_thumb.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\uicolor\yui\assets\picker_mask.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\uicolor\yui\assets\picker_thumb.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\uicolor\yui\assets\yui.css" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\uicolor\yui\yui.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\wsc\dialogs\ciframe.html" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\wsc\dialogs\tmpFrameset.html" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\wsc\dialogs\wsc.css" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\wsc\dialogs\wsc.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\xml\plugin.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\kama\dialog.css" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\kama\editor.css" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\kama\icons.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\kama\icons_rtl.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\kama\images\dialog_sides.gif" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\kama\images\dialog_sides.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\kama\images\dialog_sides_rtl.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\kama\images\mini.gif" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\kama\images\noimage.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\kama\images\sprites.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\kama\images\sprites_ie6.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\kama\images\toolbar_start.gif" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\kama\skin.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\kama\templates.css" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\office2003\dialog.css" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\office2003\editor.css" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\office2003\icons.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\office2003\icons_rtl.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\office2003\images\dialog_sides.gif" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\office2003\images\dialog_sides.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\office2003\images\dialog_sides_rtl.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\office2003\images\mini.gif" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\office2003\images\noimage.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\office2003\images\sprites.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\office2003\images\sprites_ie6.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\office2003\skin.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\office2003\templates.css" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\v2\dialog.css" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\v2\editor.css" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\v2\icons.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\v2\icons_rtl.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\v2\images\dialog_sides.gif" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\v2\images\dialog_sides.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\v2\images\dialog_sides_rtl.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\v2\images\mini.gif" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\v2\images\noimage.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\v2\images\sprites.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\v2\images\sprites_ie6.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\v2\images\toolbar_start.gif" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\v2\skin.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\v2\templates.css" />
+    <EmbeddedResource Include="Scripts\ckeditor\themes\default\theme.js" />
+    <EmbeddedResource Include="Scripts\bcms.htmlEditor.js" />
+    <EmbeddedResource Include="Scripts\spinner.jquery.js" />
+    <EmbeddedResource Include="Content\Styles\spinner.css" />
+    <EmbeddedResource Include="Content\Styles\images\spinner.png" />
+    <EmbeddedResource Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <EmbeddedResource Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <EmbeddedResource Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <EmbeddedResource Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <EmbeddedResource Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <EmbeddedResource Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <EmbeddedResource Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <EmbeddedResource Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <EmbeddedResource Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <EmbeddedResource Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <EmbeddedResource Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <EmbeddedResource Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <EmbeddedResource Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <EmbeddedResource Include="Content\themes\base\jquery-ui.css" />
+    <EmbeddedResource Include="Content\themes\base\jquery.ui.accordion.css" />
+    <EmbeddedResource Include="Content\themes\base\jquery.ui.all.css" />
+    <EmbeddedResource Include="Content\themes\base\jquery.ui.autocomplete.css" />
+    <EmbeddedResource Include="Content\themes\base\jquery.ui.base.css" />
+    <EmbeddedResource Include="Content\themes\base\jquery.ui.button.css" />
+    <EmbeddedResource Include="Content\themes\base\jquery.ui.core.css" />
+    <EmbeddedResource Include="Content\themes\base\jquery.ui.datepicker.css" />
+    <EmbeddedResource Include="Content\themes\base\jquery.ui.dialog.css" />
+    <EmbeddedResource Include="Content\themes\base\jquery.ui.menu.css" />
+    <EmbeddedResource Include="Content\themes\base\jquery.ui.progressbar.css" />
+    <EmbeddedResource Include="Content\themes\base\jquery.ui.resizable.css" />
+    <EmbeddedResource Include="Content\themes\base\jquery.ui.selectable.css" />
+    <EmbeddedResource Include="Content\themes\base\jquery.ui.slider.css" />
+    <EmbeddedResource Include="Content\themes\base\jquery.ui.spinner.css" />
+    <EmbeddedResource Include="Content\themes\base\jquery.ui.tabs.css" />
+    <EmbeddedResource Include="Content\themes\base\jquery.ui.theme.css" />
+    <EmbeddedResource Include="Content\themes\base\jquery.ui.tooltip.css" />
+    <EmbeddedResource Include="Content\themes\base\minified\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <EmbeddedResource Include="Content\themes\base\minified\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <EmbeddedResource Include="Content\themes\base\minified\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <EmbeddedResource Include="Content\themes\base\minified\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <EmbeddedResource Include="Content\themes\base\minified\images\ui-bg_glass_75_dadada_1x400.png" />
+    <EmbeddedResource Include="Content\themes\base\minified\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <EmbeddedResource Include="Content\themes\base\minified\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <EmbeddedResource Include="Content\themes\base\minified\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <EmbeddedResource Include="Content\themes\base\minified\images\ui-icons_222222_256x240.png" />
+    <EmbeddedResource Include="Content\themes\base\minified\images\ui-icons_2e83ff_256x240.png" />
+    <EmbeddedResource Include="Content\themes\base\minified\images\ui-icons_454545_256x240.png" />
+    <EmbeddedResource Include="Content\themes\base\minified\images\ui-icons_888888_256x240.png" />
+    <EmbeddedResource Include="Content\themes\base\minified\images\ui-icons_cd0a0a_256x240.png" />
+    <EmbeddedResource Include="Content\themes\base\minified\jquery-ui.min.css" />
+    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.accordion.min.css" />
+    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.autocomplete.min.css" />
+    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.button.min.css" />
+    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.core.min.css" />
+    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.datepicker.min.css" />
+    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.dialog.min.css" />
+    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.menu.min.css" />
+    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.progressbar.min.css" />
+    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.resizable.min.css" />
+    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.selectable.min.css" />
+    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
+    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.spinner.min.css" />
+    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
+    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
+    <EmbeddedResource Include="Scripts\bcms.dynamicContent.js" />
+    <EmbeddedResource Include="Scripts\bcms.tabs.js" />
+    <EmbeddedResource Include="Content\Styles\images\modal-back.png" />
+    <EmbeddedResource Include="Scripts\bcms.preview.js" />
+    <EmbeddedResource Include="Scripts\bcms.inlineEdit.js" />
+    <EmbeddedResource Include="Scripts\bcms.grid.js" />
+    <EmbeddedResource Include="Content\Styles\images\loading.gif" />
+    <EmbeddedResource Include="Content\Styles\images\no-preview-capture.png" />
+    <EmbeddedResource Include="Content\Styles\images\bcms-sidebar-select.png" />
+    <Content Include="Scripts\jquery-1.7.2.min.js">
+      <DependentUpon>jquery-1.7.2.js</DependentUpon>
+    </Content>
+    <EmbeddedResource Include="Scripts\jquery-ui.min.js" />
+    <EmbeddedResource Include="Scripts\Libs\knockout-2.1.0.js" />
+    <EmbeddedResource Include="Scripts\popup.js" />
+    <EmbeddedResource Include="Scripts\require-jquery.js" />
+    <EmbeddedResource Include="Scripts\require.js" />
+    <EmbeddedResource Include="Scripts\WysiHtml5\wysihtml5-0.3.0.js" />
+    <EmbeddedResource Include="Scripts\WysiHtml5\wysihtml5-parser-rules.js" />
+    <EmbeddedResource Include="Scripts\slides.jquery.js" />
+    <EmbeddedResource Include="Scripts\jquery-ui-1.9.0.js" />
+    <EmbeddedResource Include="Scripts\jquery-ui-1.9.0.min.js" />
+    <EmbeddedResource Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <EmbeddedResource Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <EmbeddedResource Include="Scripts\jquery.validate-vsdoc.js" />
+    <EmbeddedResource Include="Scripts\jquery.validate.js" />
+    <EmbeddedResource Include="Scripts\jquery.validate.min.js" />
+    <EmbeddedResource Include="Scripts\jquery.validate.unobtrusive.js" />
+    <EmbeddedResource Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <EmbeddedResource Include="Scripts\knockout-2.2.0.debug.js" />
+    <EmbeddedResource Include="Scripts\knockout-2.2.0.js" />
+    <Content Include="Views\Web.config" />
+    <EmbeddedResource Include="Views\Shared\Partial\ContentOverlay.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Partial\Modal.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Partial\Region.cshtml" />
+    <EmbeddedResource Include="Views\Sidebar\Container.cshtml" />
+    <EmbeddedResource Include="Views\Shared\RootLayout.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Layouts\OneColumnLayout.cshtml" />
+    <EmbeddedResource Include="Views\Error\PageNotFound.cshtml" />
+    <EmbeddedResource Include="Views\Rendering\RenderMainJsFile.cshtml" />
+    <EmbeddedResource Include="Views\SiteSettings\Container.cshtml" />
+    <EmbeddedResource Include="Views\Sidebar\Header.cshtml" />
+    <EmbeddedResource Include="Views\Sidebar\Side.cshtml" />
+    <EmbeddedResource Include="Views\Rendering\RenderStyleSheetIncludes.cshtml" />
+    <EmbeddedResource Include="Views\Rendering\RenderProcessorJsFile.cshtml" />
+    <EmbeddedResource Include="Views\Sidebar\Footer.cshtml" />
+    <EmbeddedResource Include="Views\Sidebar\Body.cshtml" />
+    <EmbeddedResource Include="Views\Authentication\Info.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Partial\Tooltip.cshtml" />
+    <Content Include="web.config" />
+    <EmbeddedResource Include="Views\Shared\Partial\Messages.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Partial\Alert.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Partial\Confirm.cshtml" />
+    <EmbeddedResource Include="Views\Cms\Index.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Layouts\Preview.cshtml" />
+    <EmbeddedResource Include="Views\Shared\BaseLayout.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Partial\Info.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Data\Entity\" />
+    <Folder Include="Data\Map\" />
+    <Folder Include="Views\Cms\Partial\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\BetterCMS.Configuration\BetterCms.Configuration.csproj">
+      <Project>{DA2B225E-6AEE-4465-8B08-4D5B1C1CED49}</Project>
+      <Name>BetterCms.Configuration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\BetterCMS.Core\BetterCms.Core.csproj">
+      <Project>{694ca5ca-a0e2-4578-a249-648498b058d7}</Project>
+      <Name>BetterCms.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Staging|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Dev|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" />
+</Project>

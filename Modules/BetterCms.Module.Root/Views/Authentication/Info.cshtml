@@ -1,0 +1,6 @@
+﻿@using BetterCms.Module.Root.Content.Resources
+@model BetterCms.Module.Root.Models.Authentication.InfoViewModel
+<div class="bcms-sidemenu-credentials">
+    <div>@RootGlobalization.Sidebar_LoggedInAsTitle</div>
+    <div class="bcms-sidemenu-username">@Html.Encode(Model.UserName)</div>
+</div>

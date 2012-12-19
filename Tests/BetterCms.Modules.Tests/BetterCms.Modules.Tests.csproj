@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{FDB66E62-C630-4055-B3FB-27DAF5B464BB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BetterCms.Test.Module</RootNamespace>
+    <AssemblyName>BetterCms.Modules.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Staging|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Staging\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Dev|AnyCPU'">
+    <OutputPath>bin\Dev\</OutputPath>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\..\packages\Autofac.2.6.3.862\lib\NET40\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Configuration">
+      <HintPath>..\..\packages\Autofac.2.6.3.862\lib\NET40\Autofac.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging, Version=2.1.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Common.Logging.2.1.1\lib\net40\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.NLog">
+      <HintPath>..\..\packages\Common.Logging.NLog.2.0.0\lib\2.0\Common.Logging.NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentNHibernate">
+      <HintPath>..\..\packages\FluentNHibernate.1.3.0.733\lib\FluentNHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Mvc, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Mvc2Futures.2.0.50217.0\lib\Microsoft.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Moq">
+      <HintPath>..\..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="MvcContrib, Version=2.0.95.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\MvcContrib.2.0.95.0\lib\MvcContrib.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate, Version=3.3.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\NHibernate.3.3.2.4000\lib\Net35\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.Logging.CommonLogging">
+      <HintPath>..\..\packages\NHibernate.Logging.1.3.1\lib\net35\NHibernate.Logging.CommonLogging.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\..\packages\NLog.2.0.0.2000\lib\net40\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.6.2.12296, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AmazonS3Storage\AmazonS3StorageServiceTest.cs" />
+    <Compile Include="Common\SerializationTest.cs" />
+    <Compile Include="ControllerTestBase.cs" />
+    <Compile Include="MediaManager\ModelTests\MapTests\MediaFileMapTest.cs" />
+    <Compile Include="MediaManager\ModelTests\MapTests\MediaFolderMapTest.cs" />
+    <Compile Include="MediaManager\ModelTests\MapTests\MediaImageMapTest.cs" />
+    <Compile Include="MediaManager\ModelTests\MapTests\MediaMapTest.cs" />
+    <Compile Include="Pages\CommandTests\ContentTests\SortPageContentCommandIntegrationTest.cs" />
+    <Compile Include="Pages\CommandTests\WidgetTests\DeleteWidgetCommandTest.cs" />
+    <Compile Include="Pages\CommandTests\WidgetTests\GetSiteSettingsWidgetsIntegrationTest.cs" />
+    <Compile Include="Pages\ModelTests\ConcurrencyTests\ConcurrencyTests.cs" />
+    <Compile Include="SerializationTestBase.cs" />
+    <Compile Include="DatabaseTestBase.cs" />
+    <Compile Include="Helpers\HttpContextExtensionMethods.cs" />
+    <Compile Include="Helpers\HttpContextMoq.cs" />
+    <Compile Include="Helpers\RandomTestDataProvider.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Helpers\StubMappingResolver.cs" />
+    <Compile Include="Helpers\Utils.cs" />
+    <Compile Include="Pages\CommandTests\PageTests\GetPageSeoCommandTest.cs" />
+    <Compile Include="Pages\CommandTests\RedirectTests\GetRedirectsListCommandTest.cs" />
+    <Compile Include="Pages\CommandTests\LayoutTests\GetTemplatesCommandTest.cs" />
+    <Compile Include="Pages\CommandTests\WidgetTests\GetSiteSettingsWidgetsCommandTest.cs" />
+    <Compile Include="Pages\ControllerTests\SeoControllerTest.cs" />
+    <Compile Include="Pages\ModelTests\MapTests\AuthorMapTest.cs" />
+    <Compile Include="Pages\ModelTests\MapTests\ServerControlWidgetMapTest.cs" />
+    <Compile Include="Pages\ModelTests\MapTests\HtmlContentWidgetMapTest.cs" />
+    <Compile Include="Pages\ModelTests\MapTests\HtmlContentMapTest.cs" />
+    <Compile Include="Pages\ModelTests\MapTests\PageCategoryMapTest.cs" />
+    <Compile Include="Pages\ModelTests\MapTests\PagePropertiesMapTest.cs" />
+    <Compile Include="Pages\ModelTests\MapTests\PageTagMapTest.cs" />
+    <Compile Include="Pages\ModelTests\MapTests\RedirectMapTest.cs" />
+    <Compile Include="Root\CommandTests\GetPageToRenderCommandTest.cs" />
+    <Compile Include="Root\HelperTests\FormHelperTest.cs" />
+    <Compile Include="Root\HelperTests\MessagesHelperTest.cs" />
+    <Compile Include="Root\ModelTests\MapTests\WidgetMapTest.cs" />
+    <Compile Include="Root\ModelTests\MapTests\EntityBaseMapTest.cs" />
+    <Compile Include="Root\ModelTests\MapTests\CategoryMapTest.cs" />
+    <Compile Include="Root\ModelTests\MapTests\ContentMapTest.cs" />
+    <Compile Include="Root\ModelTests\MapTests\ContentOptionMapTest.cs" />
+    <Compile Include="Root\ModelTests\MapTests\PageContentOptionMapTest.cs" />
+    <Compile Include="Root\ModelTests\MapTests\PageContentMapTest.cs" />
+    <Compile Include="Root\ModelTests\MapTests\ModuleMapTest.cs" />
+    <Compile Include="Root\ModelTests\MapTests\LayoutRegionMapTest.cs" />
+    <Compile Include="Root\ModelTests\MapTests\LayoutMapTest.cs" />
+    <Compile Include="Root\ModelTests\MapTests\RegionMapTest.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Root\ModelTests\MapTests\SiteSettingMapTest.cs" />
+    <Compile Include="Root\ModelTests\MapTests\PageMapTest.cs" />
+    <Compile Include="Root\ModelTests\MapTests\TagMapTest.cs" />
+    <Compile Include="Root\ModelTests\MapTests\UserMapTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Root\ModelTests\ViewModelTests\CmsRequestViewModelTest.cs" />
+    <Compile Include="Root\ProjectionTests\PageContentProjectionTest.cs" />
+    <Compile Include="TestBase.cs" />
+    <Compile Include="Common\ViewModelToStringTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <Content Include="Config\cms.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\connectionStrings.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TransformOnBuild>true</TransformOnBuild>
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Config\nlog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\BetterCMS.Configuration\BetterCms.Configuration.csproj">
+      <Project>{DA2B225E-6AEE-4465-8B08-4D5B1C1CED49}</Project>
+      <Name>BetterCms.Configuration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\BetterCMS.Core\BetterCms.Core.csproj">
+      <Project>{694CA5CA-A0E2-4578-A249-648498B058D7}</Project>
+      <Name>BetterCms.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.MediaManager\BetterCms.Module.MediaManager.csproj">
+      <Project>{f3e41793-e8ed-4ba8-a1ab-cba1e47b0786}</Project>
+      <Name>BetterCms.Module.MediaManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.Pages\BetterCms.Module.Pages.csproj">
+      <Project>{fc04d4c2-8688-498f-b546-292c7e3688a9}</Project>
+      <Name>BetterCms.Module.Pages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.Root\BetterCms.Module.Root.csproj">
+      <Project>{66e7e4df-eeea-4b1e-8663-a1b430eb7375}</Project>
+      <Name>BetterCms.Module.Root</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Users\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <PropertyGroup>
+    <SlowCheetahTargets Condition=" '$(SlowCheetahTargets)'=='' ">$(SolutionDir)\Libs\SlowCheetah\v1\SlowCheetah.Transforms.targets</SlowCheetahTargets>
+  </PropertyGroup>
+  <Import Project="$(SlowCheetahTargets)" Condition="Exists('$(SlowCheetahTargets)')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

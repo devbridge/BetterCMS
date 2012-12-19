@@ -1,0 +1,64 @@
+﻿@using BetterCms.Module.MediaManager.Content.Resources
+@using BetterCms.Module.MediaManager.Controllers
+@using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Mvc.UI
+@using Microsoft.Web.Mvc
+@model BetterCms.Module.MediaManager.ViewModels.Upload.MultiFileUploadViewModel
+<div class="bcms-scroll-window">
+    <div class="bcms-file-manager-inner">
+        @using (Html.BeginForm<UploadController>(f => f.SaveUploads(null)))
+        {
+            <div class="bcms-input-list-holder bcms-first-child-holder">
+                @Html.Tooltip(MediaGlobalization.MultiFileUpload_SelectFolder_Help_Title, MediaGlobalization.MultiFileUpload_SelectFolder_Help_Message)            
+                <div class="bcms-content-titles">@MediaGlobalization.MultiFileUpload_SelectFolder</div>
+                @Html.HiddenFor(f => f.RootFolderId)
+                @Html.DropDownListFor(f => f.SelectedFolderId, 
+                                      Model.Folders.Select(o => new SelectListItem
+                                                                 {
+                                                                     Selected = Model.SelectedFolderId == o.Key,
+                                                                     Text = o.Value,
+                                                                     Value = o.Key.ToString()
+                                                                 }),
+                                      new { @class = "bcms-global-select" })
+            </div>
+
+            <div id="bcms-files-dropzone" class="bcms-dropzone">
+                <div class="bcms-dropzone-infotext">@MediaGlobalization.MultiFileUpload_DragDropBox</div>
+                <div class="btn-upload-files">
+                    <input type="file" multiple="multiple" name="uploadFiles" id="bcms-files-upload-input" class="bcms-uploader">
+                    <span>@MediaGlobalization.MultiFileUpload_UploadButton</span>
+                </div>
+            </div>
+        
+            <div id="bcms-media-uploads" class="bcms-upload-holder" data-bind="template: { name: 'bcms-file-upload-template' }">
+            </div>
+        }
+        <script type="text/html" id="bcms-file-upload-template">
+            <div data-bind="visible: showProgress()">
+                <div class="bcms-content-titles">@MediaGlobalization.MultiFileUpload_Uploading<a class="bcms-upload-cancel-link">@MediaGlobalization.MultiFileUpload_CancelUploading</a></div>
+            </div>
+            <div data-bind="foreach: uploads">
+                <div data-bind="css: { 'bcms-upload-block':true, 'bcms-upload-success':uploadCompleted(), 'bcms-upload-failed':uploadFailed() }">
+                    <div class="bcms-upload-file-titles" data-bind="text: fileName"></div>
+                    <div class="bcms-upload-bar-holder">
+                        <div class="bcms-progress-bar" data-bind="visible: !uploadCompleted() && !uploadFailed()">
+                            <div class="bcms-progress" style="width: 0;" data-bind="style: { width: uploadProgress() + '%' }"></div>
+                        </div>
+                        <div class="bcms-upload-description" data-bind="visible: uploadFailed">
+                            @MediaGlobalization.MultiFileUpload_Failed
+                        </div>
+                        <div class="bcms-upload-description" data-bind="visible: uploadCompleted">
+                            @MediaGlobalization.MultiFileUpload_Success
+                        </div>
+                    </div>
+                    <div class="bcms-uploaded-info" data-bind="text: uploadProgress() + '%'"></div>
+                    <div class="bcms-upload-size-info"><b>@MediaGlobalization.MultiFileUpload_FileSize</b><span data-bind="text: fileSizeFormated"></span></div>
+                    <div class="bcms-media-delete-holder">
+                        <a class="bcms-icn-delete" style="display:none" data-bind="click: function() { $root.cancelUpload($data); }, visible: uploadCompleted() || uploadFailed()">@RootGlobalization.Button_Remove</a>
+                        <a class="bcms-icn-delete" data-bind="click: function() { $root.cancelUpload($data); }, visible: !uploadCompleted() && !uploadFailed()">@RootGlobalization.Button_Cancel</a>
+                    </div>                  
+                </div>
+            </div>
+        </script>
+    </div>
+</div>

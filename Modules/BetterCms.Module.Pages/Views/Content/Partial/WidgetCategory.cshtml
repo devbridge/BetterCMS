@@ -1,0 +1,45 @@
+﻿@using BetterCms.Module.Pages.Content.Resources
+@using BetterCms.Module.Pages.Controllers
+@using BetterCms.Module.Root.Mvc.Helpers
+@using Microsoft.Web.Mvc
+
+@model BetterCms.Module.Pages.ViewModels.Widgets.WidgetCategoryViewModel
+
+<div class="bcms-category bcms-content-sliders">           
+    <div class="bcms-category-titles">@Model.CategoryName</div>
+    <div class="bcms-slider-box">
+        <div class="bcms-slides-container">
+            @if (Model.Widgets != null)
+            {
+                @:<div class="bcms-slides-single-slide">
+                
+                for (int i = 0; i < Model.Widgets.Count; i++)
+                {
+                    if (i % 3 == 0 && i != 0)
+                    {
+                        @:</div>
+                        @:<div class="bcms-slides-single-slide">
+                    }
+
+                    <div class="bcms-preview-block" 
+                         data-id="@Model.Widgets[i].Id"                          
+                         data-version="@Model.Widgets[i].Version"       
+                         data-type="@Model.Widgets[i].WidgetType"
+                         data-category-id="@(Model.Widgets[i].CategoryId ?? Guid.Empty)">
+                        <div class="bcms-title-holder">
+                            <div class="bcms-content-titles">@Model.Widgets[i].Name</div>
+                        </div>
+                        @Html.PreviewContentBox(Html.BuildUrlFromExpression<WidgetsController>(f => f.PreviewHtmlContentWidget(Model.Widgets[i].Id.ToString())), Model.Widgets[i].Name)    
+                        <div class="bcms-controls-holder">
+                            <div class="bcms-btn-small bcms-content-insert-button" >@PagesGlobalization.AddPageContent_WidgetTab_InsertButton</div>
+                            <a class="bcms-icn-edit bcms-content-edit-button">@PagesGlobalization.AddPageContent_WidgetTab_EditButton</a>
+                            <a class="bcms-icn-delete bcms-content-delete-button">@PagesGlobalization.AddPageContent_WidgetTab_DeleteButton</a>
+                        </div>
+                    </div>
+                }
+                
+                @:</div>
+            }
+        </div>
+    </div>
+</div>
