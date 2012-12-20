@@ -56,9 +56,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 listAnyRow: '.bcms-media-folder-box, .bcms-media-file-box',
                 folderNameEditor: '.bcms-editor-item-name',
                 folderNameDiv: '.bcms-system-folder-name',
-                folderNameOldValue: '.bcms-editor-item-old-name',
-                changeFolderLink: '.bcms-media-folder-box .bcms-system-folder-name',
-                pathFolderLink: '.bcms-breadcrumbs-root'
+                folderNameOldValue: '.bcms-editor-item-old-name'
             },
             links = {
                 loadSiteSettingsMediaManagerUrl: null,
@@ -132,7 +130,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             self.path = ko.observable();
 
             self.isRootFolder = function () {
-                if (self.path != null && self.path.folders != null && self.path.folders.length > 1) {
+                if (self.path != null && self.path().folders != null && self.path().folders().length > 1) {
                     return false;
                 }
                 return true;
@@ -160,7 +158,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                     }
                 }
                 if (range.length > 0) {
-                    range[range.length - 1].media.name = '...';
+                    range[0].media().name('...');
                 }
                 return range;
             });
@@ -172,9 +170,9 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
         function MediaViewModel(item) {
             var self = this;
             
-            self.id = item.Id;
-            self.name = item.Name;
-            self.version = item.Version;
+            self.id = ko.observable(item.Id);
+            self.name = ko.observable(item.Name);
+            self.version = ko.observable(item.Version);
             self.type = item.Type;
             self.isActive = ko.observable(false);
             self.contentType = item.ContentType;
@@ -186,6 +184,10 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             self.isFile = function () {
                 return self.contentType == contentTypes.file;
             };
+            
+            self.isImage = function () {
+                return self.contentType == contentTypes.file && self.type == mediaTypes.image;
+            };
         }
 
         /**
@@ -194,7 +196,8 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
         function MediaImageViewModel(item) {
             var self = this;
 
-            self.media = new MediaViewModel(item);
+            self.media = ko.observable();
+            self.media(new MediaViewModel(item));
             
             self.tooltip = item.PreviewUrl;
             self.previewUrl = item.Tooltip;
@@ -210,7 +213,8 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
         function MediaAudioViewModel(item) {
             var self = this;
 
-            self.media = new MediaViewModel(item);
+            self.media = ko.observable();
+            self.media(new MediaViewModel(item));
             
             self.linkClicked = function () {
                 alert('TODO: Audio clicked!');
@@ -223,7 +227,8 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
         function MediaVideoViewModel(item) {
             var self = this;
 
-            self.media = new MediaViewModel(item);
+            self.media = ko.observable();
+            self.media(new MediaViewModel(item));
             
             self.linkClicked = function () {
                 alert('TODO: Video clicked!');
@@ -236,7 +241,8 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
         function MediaFileViewModel(item) {
             var self = this;
 
-            self.media = new MediaViewModel(item);
+            self.media = ko.observable();
+            self.media(new MediaViewModel(item));
             
             self.linkClicked = function () {
                 alert('TODO: File clicked!');
@@ -249,10 +255,15 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
         function MediaFolderViewModel(item) {
             var self = this;
 
-            self.media = new MediaViewModel(item);
+            self.media = ko.observable();
+            self.media(new MediaViewModel(item));
+
+            self.pathName = ko.computed(function() {
+                return '\\' + self.media().name();
+            });
 
             self.linkClicked = function(root, data) {
-                changeFolder(data.media.id, root);
+                changeFolder(data.media().id(), root);
             };
         }
 
@@ -428,11 +439,6 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             tabContainer.find(selectors.switchViewLink).on('click', function () {
                 media.switchView(this, tabContainer);
             });
-
-            // Attach to switch path.
-            /*tabContainer.find(selectors.pathFolderLink).on('click', function () {
-                changeFolder(tabContainer, $(this).data('folderId'));
-            });*/
 
             // Setup inline editor.
             var inlineEditSelectors = {
@@ -662,7 +668,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                             }
                         }
 
-                        folderViewModel.path = pathViewModel;
+                        folderViewModel.path(pathViewModel);
                     }
 
                     // Map media items
