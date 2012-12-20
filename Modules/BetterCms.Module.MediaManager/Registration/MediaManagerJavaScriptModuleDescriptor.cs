@@ -21,7 +21,6 @@ namespace BetterCms.Module.MediaManager.Registration
             Links = new IActionProjection[]
                 {
                     new JavaScriptModuleLinkTo<MediaManagerController>(this, "loadSiteSettingsMediaManagerUrl", c => c.Index(null)),
-                    new JavaScriptModuleLinkTo<ImagesController>(this, "getImageTabUrl", c => c.ImagesTab(null)),
                     new JavaScriptModuleLinkTo<ImagesController>(this, "loadImagesUrl", c => c.GetImagesList(null)),
                     new JavaScriptModuleLinkTo<ImagesController>(this, "insertImageDialogUrl", c => c.ImageInsert(null)),
                     new JavaScriptModuleLinkTo<ImagesController>(this, "deleteImageUrl", c => c.ImageDelete("{0}", "{1}")),

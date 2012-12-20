@@ -30,6 +30,24 @@
     <span>Loading...</span>
 </div>
 
+<script type="text/html" id="bcms-media-list-path-template">
+    <div class="bcms-breadcrumbs-holder">
+        @Html.Hidden("CurrentFolderId", string.Empty, new Dictionary<string, object>
+                                                          {
+                                                              {"id", "bcms-current-media-folder-id"}, 
+                                                              {"data-bind", "value: path.currentFolder().media.id"}
+                                                          })
+        @Html.Hidden("MediaType", string.Empty, new Dictionary<string, object>
+                                                    {
+                                                        {"id", "bcms-current-media-folder-type"}, 
+                                                        {"data-bind", "value: path.currentFolder().media.type"}
+                                                    })
+        <div data-bind="foreach: path.pathFolders">
+            <a class="bcms-breadcrumbs-root" href="#nolink" data-bind="attr: {'data-folder-id': media.id}, text: media.name"></a>
+        </div>
+    </div>
+</script>
+
 <script type="text/html" id="bcms-media-list-template">
     <div id="bcms-view-container" class="bcms-list-style">
         <div class="bcms-media-sorting-block">
@@ -45,19 +63,20 @@
             <div data-bind="css: { 'bcms-media-folder-box': media.isFolder(), 'bcms-media-file-box': media.isFile(), 'bcms-media-row-active': media.isActive }">
                 <div class="bcms-media-items-block">
                     <div data-bind="css: { 'bcms-system-folder': media.isFolder(), 'bcms-media-file-holder': media.isFile() }" />
-                    <div class="bcms-system-folder-name" data-bind="text: media.name"></div>
+                    <div class="bcms-system-folder-name" data-bind="text: media.name, attr: { 'data-id': media.id }, click: linkClicked.bind($data, $root)"></div>
                 </div>
                 <div class="bcms-media-edit-controls">
-                    <div class="bcms-system-folder-name" data-bind="text: media.name" />
+                    <div class="bcms-system-folder-name" data-bind="text: media.name, attr: { 'data-id': media.id }, click: linkClicked.bind($data, $root)" />
                     <input type="text" name="itemname" data-bind="value: media.name" />
                     <div class="bcms-media-inner-controls">
                         <div class="bcms-btn-small">@RootGlobalization.Button_Save</div>
                         <div class="bcms-btn-links-small">@RootGlobalization.Button_Cancel</div>
                     </div>
-                    <a class="bcms-icn-edit">@RootGlobalization.Button_Edit</a>
-                    <a class="bcms-icn-delete">@RootGlobalization.Button_Delete</a>
+                    <a class="bcms-icn-edit" data-bind="attr: { 'data-id': media.id, 'data-version': media.version, 'data-media-type': media.type  }">@RootGlobalization.Button_Edit</a>
+                    <a class="bcms-icn-delete" data-bind="attr: { 'data-id': media.id, 'data-version': media.version, 'data-media-type': media.type, 'data-name': media.name  }">@RootGlobalization.Button_Delete</a>
                 </div>
             </div>
         </div>
     </div>
+
 </script>

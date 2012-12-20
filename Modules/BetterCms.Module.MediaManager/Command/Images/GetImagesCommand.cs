@@ -87,7 +87,8 @@ namespace BetterCms.Module.MediaManager.Command.Images
             query = query.SelectList(select => select
                     .Select(() => alias.Id).WithAlias(() => modelAlias.Id)
                     .Select(() => alias.Title).WithAlias(() => modelAlias.Name)
-                    .Select(() => alias.Version).WithAlias(() => modelAlias.Version))
+                    .Select(() => alias.Version).WithAlias(() => modelAlias.Version)
+                    .Select(() => alias.Type).WithAlias(() => modelAlias.Type))
                 .TransformUsing(Transformers.AliasToBean<MediaFolderViewModel>());
 
             var options = new SearchableGridOptions() { Direction = request.Direction, Column = "Title" };
@@ -161,7 +162,7 @@ namespace BetterCms.Module.MediaManager.Command.Images
                                 MediaType = MediaType.Image,
                                 CurrentFolder = new MediaFolderViewModel(),
                             };
-            var folders = new List<MediaFolderViewModel> { new MediaFolderViewModel { Id = Guid.Empty, Name = string.Empty } };
+            var folders = new List<MediaFolderViewModel> { new MediaFolderViewModel { Id = Guid.Empty, Name = string.Empty, Type = MediaType.Image } };
 
             if (!request.CurrentFolderId.HasDefaultValue())
             {
@@ -174,7 +175,8 @@ namespace BetterCms.Module.MediaManager.Command.Images
                     .SelectList(select => select
                         .Select(() => alias.Id).WithAlias(() => modelAlias.Id)
                         .Select(() => alias.Title).WithAlias(() => modelAlias.Name)
-                        .Select(() => alias.Version).WithAlias(() => modelAlias.Version))
+                        .Select(() => alias.Version).WithAlias(() => modelAlias.Version)
+                        .Select(() => alias.Type).WithAlias(() => modelAlias.Type))
                     .TransformUsing(Transformers.AliasToBean<MediaFolderViewModel>())
                     .SingleOrDefault<MediaFolderViewModel>();
 
@@ -182,7 +184,7 @@ namespace BetterCms.Module.MediaManager.Command.Images
 
                 if (folder != null)
                 {
-                    folders.Add(new MediaFolderViewModel { Id = folder.Id, Name = folder.Name });
+                    folders.Add(new MediaFolderViewModel { Id = folder.Id, Name = folder.Name, Type = folder.Type });
                 }
             }
 

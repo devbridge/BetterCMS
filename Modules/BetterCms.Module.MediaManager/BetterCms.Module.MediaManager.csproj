@@ -233,7 +233,6 @@
     <EmbeddedResource Include="Views\MediaManager\Index.cshtml" />
     <EmbeddedResource Include="Views\Shared\Folder.cshtml" />
     <EmbeddedResource Include="Views\Shared\Image.cshtml" />
-    <EmbeddedResource Include="Views\Images\ImagesTab.cshtml" />
     <EmbeddedResource Include="Views\Files\FilesTab.cshtml" />
     <EmbeddedResource Include="Views\Videos\VideosTab.cshtml" />
     <EmbeddedResource Include="Views\Shared\MediaControl.cshtml" />
@@ -250,6 +249,9 @@
     <Folder Include="Command\MediaManager\" />
     <Folder Include="Command\Videos\" />
     <Folder Include="Helpers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Images\ImagesTab.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
