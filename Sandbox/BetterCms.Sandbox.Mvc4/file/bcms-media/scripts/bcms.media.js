@@ -109,7 +109,12 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             imagesViewModel = null,
             audiosViewModel = null,
             videosViewModel = null,
-            filesViewModel = null;
+            filesViewModel = null,
+            __extends = function (d, b) {
+                function __() { this.constructor = d; }
+                __.prototype = b.prototype;
+                d.prototype = new __();
+            };;
 
         /**
         * Assign objects to module.
@@ -192,28 +197,51 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
         }
 
         /**
-        * Image view model
+        * Media item base view model
         */
-        function MediaImageViewModel(item) {
-            var self = this;
+        var MediaItemBaseViewModel = (function () {
+            function MediaItemBaseViewModel(item) {
+                var self = this;
 
-            self.media = ko.observable();
-            self.media(new MediaViewModel(item));
+                self.media = ko.observable();
+                self.media(new MediaViewModel(item));
+            }
             
-            self.tooltip = item.PreviewUrl;
-            self.previewUrl = item.Tooltip;
-            
-            self.linkClicked = function () {
-                alert('TODO: Image clicked!');
+            MediaItemBaseViewModel.prototype.deleteLinkClicked = function (folderViewModel) {
+                throw new Error("Delete method is not implemented");
             };
             
-            self.deleteLinkClicked = function (root, data) {
-                var url = $.format(links.deleteImageUrl, self.media().id(), self.media().version()),
-                    message = $.format(globalization.deleteImageConfirmMessage, self.media().name());
-
-                deleteMediaItem(url, message, root, data);
+            MediaItemBaseViewModel.prototype.linkClicked = function (folderViewModel) {
+                throw new Error("Link method is not implemented");
             };
-        }
+            
+            return MediaItemBaseViewModel;
+        })();
+
+        /**
+        * Media image view model
+        */
+        var MediaImageViewModel = (function (_super) {
+            __extends(MediaImageViewModel, _super);
+            
+            function MediaImageViewModel(item) {
+                _super.call(this, item);
+                
+                var self = this;
+
+                self.tooltip = item.PreviewUrl;
+                self.previewUrl = item.Tooltip;
+            }
+            
+            MediaImageViewModel.prototype.deleteLinkClicked = function (folderViewModel) {
+                var url = $.format(links.deleteImageUrl, this.media().id(), this.media().version()),
+                    message = $.format(globalization.deleteImageConfirmMessage, this.media().name());
+
+                deleteMediaItem(url, message, folderViewModel, this);
+            };
+            
+            return MediaImageViewModel;
+        })(MediaItemBaseViewModel);
         
         /**
         * Audio view model
@@ -258,29 +286,34 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
         }
 
         /**
-        * Folder view model
+        * Media folder view model
         */
-        function MediaFolderViewModel(item) {
-            var self = this;
+        var MediaFolderViewModel = (function (_super) {
+            __extends(MediaFolderViewModel, _super);
 
-            self.media = ko.observable();
-            self.media(new MediaViewModel(item));
+            function MediaFolderViewModel(item) {
+                _super.call(this, item);
 
-            self.pathName = ko.computed(function() {
-                return '\\' + self.media().name();
-            });
+                var self = this;
 
-            self.linkClicked = function(root, data) {
-                changeFolder(data.media().id(), root);
+                self.pathName = ko.computed(function () {
+                    return '\\' + self.media().name();
+                });
+            }
+
+            MediaFolderViewModel.prototype.deleteLinkClicked = function (folderViewModel) {
+                var url = $.format(links.deleteFolderUrl, this.media().id(), this.media().version()),
+                    message = $.format(globalization.confirmDeleteFolderMessage, this.media().name());
+
+                deleteMediaItem(url, message, folderViewModel, this);
             };
 
-            self.deleteLinkClicked = function(root, data) {
-                var url = $.format(links.deleteFolderUrl, self.media().id(), self.media().version()),
-                    message = $.format(globalization.confirmDeleteFolderMessage, self.media().name());
-                
-                deleteMediaItem(url, message, root, data);
+            MediaFolderViewModel.prototype.linkClicked = function (folderViewModel) {
+                changeFolder(this.media().id(), folderViewModel);
             };
-        }
+
+            return MediaFolderViewModel;
+        })(MediaItemBaseViewModel);
 
         /**
         * Loads a media manager view to the site settings container.
