@@ -535,9 +535,19 @@ SELECT * FROM (
 		'Image3.jpg' As Title, 1 as [Type]
 		, (SELECT top 1 Id FROM bcms_media.Medias WHERE IsDeleted=0 AND Type=1 AND Title='Folder 1') AS FolderId
 		, 1 AS Version, 0 As IsDeleted, getdate() AS CreatedOn, 'Admin' as CreatedByUser, getdate() AS ModifiedOn, 'Admin' as ModifiedByUser, NULL AS DeletedOn, NULL as DeletedByUser
+		
+	UNION SELECT 
+		'Image4.jpg' As Title, 1 as [Type]
+		, NULL AS FolderId
+		, 1 AS Version, 0 As IsDeleted, getdate() AS CreatedOn, 'Admin' as CreatedByUser, getdate() AS ModifiedOn, 'Admin' as ModifiedByUser, NULL AS DeletedOn, NULL as DeletedByUser
+		
+	UNION SELECT 
+		'Image5.jpg' As Title, 1 as [Type]
+		, NULL AS FolderId
+		, 1 AS Version, 0 As IsDeleted, getdate() AS CreatedOn, 'Admin' as CreatedByUser, getdate() AS ModifiedOn, 'Admin' as ModifiedByUser, NULL AS DeletedOn, NULL as DeletedByUser
 	
 ) x
-WHERE NOT EXISTS (SELECT 1 FROM bcms_media.Medias m WHERE m.Title = x.Title AND m.Type = x.Type AND m.IsDeleted = 0)
+WHERE NOT EXISTS (SELECT 1 FROM bcms_media.Medias m WHERE m.Title = x.Title AND m.Type = x.Type AND (x.FolderId = m.FolderId OR (m.FolderId IS NULL AND x.FolderId IS NULL))AND m.IsDeleted = 0)
 
 /*
 * MEDIAS - FILES [bcms_media.MediaFiles]
@@ -559,6 +569,16 @@ SELECT * FROM (
 	
 	UNION SELECT (SELECT top 1 Id FROM bcms_media.Medias WHERE IsDeleted=0 AND Type=1 AND Title = 'Image3.jpg') AS Id,
 		FileName = 'Image3.jpg', 
+		FileUri = 'http://upload.wikimedia.org/wikipedia/commons/c/cd/Panda_Cub_from_Wolong,_Sichuan,_China.JPG', 
+		PublicUrl = 'http://upload.wikimedia.org/wikipedia/commons/c/cd/Panda_Cub_from_Wolong,_Sichuan,_China.JPG', Size = 300, IsTemporary = 0, IsStored = 1
+		
+	UNION SELECT (SELECT top 1 Id FROM bcms_media.Medias WHERE IsDeleted=0 AND Type=1 AND Title = 'Image4.jpg') AS Id,
+		FileName = 'Image4.jpg', 
+		FileUri = 'http://upload.wikimedia.org/wikipedia/commons/c/cd/Panda_Cub_from_Wolong,_Sichuan,_China.JPG', 
+		PublicUrl = 'http://upload.wikimedia.org/wikipedia/commons/c/cd/Panda_Cub_from_Wolong,_Sichuan,_China.JPG', Size = 300, IsTemporary = 0, IsStored = 1
+		
+	UNION SELECT (SELECT top 1 Id FROM bcms_media.Medias WHERE IsDeleted=0 AND Type=1 AND Title = 'Image5.jpg') AS Id,
+		FileName = 'Image5.jpg', 
 		FileUri = 'http://upload.wikimedia.org/wikipedia/commons/c/cd/Panda_Cub_from_Wolong,_Sichuan,_China.JPG', 
 		PublicUrl = 'http://upload.wikimedia.org/wikipedia/commons/c/cd/Panda_Cub_from_Wolong,_Sichuan,_China.JPG', Size = 300, IsTemporary = 0, IsStored = 1
 ) x
@@ -588,6 +608,20 @@ SELECT * FROM (
         'http://upload.wikimedia.org/wikipedia/commons/c/cd/Panda_Cub_from_Wolong,_Sichuan,_China.JPG' AS ThumbnailUri
 	
 	UNION SELECT (SELECT top 1 Id FROM bcms_media.Medias WHERE IsDeleted=0 AND Type=1 AND Title = 'Image3.jpg') AS Id,
+		300 AS Width, 300 AS Height, 
+		300 AS OriginalWidth, 300 AS OriginalHeight, 300 AS OriginalSize, 
+		'http://upload.wikimedia.org/wikipedia/commons/c/cd/Panda_Cub_from_Wolong,_Sichuan,_China.JPG' AS OriginalUri, 
+		50 AS ThumbnailWidth, 50 AS ThumbnailHeight, 50 AS ThumbnailSize, 
+        'http://upload.wikimedia.org/wikipedia/commons/c/cd/Panda_Cub_from_Wolong,_Sichuan,_China.JPG' AS ThumbnailUri
+       
+    UNION SELECT (SELECT top 1 Id FROM bcms_media.Medias WHERE IsDeleted=0 AND Type=1 AND Title = 'Image4.jpg') AS Id,
+		300 AS Width, 300 AS Height, 
+		300 AS OriginalWidth, 300 AS OriginalHeight, 300 AS OriginalSize, 
+		'http://upload.wikimedia.org/wikipedia/commons/c/cd/Panda_Cub_from_Wolong,_Sichuan,_China.JPG' AS OriginalUri, 
+		50 AS ThumbnailWidth, 50 AS ThumbnailHeight, 50 AS ThumbnailSize, 
+        'http://upload.wikimedia.org/wikipedia/commons/c/cd/Panda_Cub_from_Wolong,_Sichuan,_China.JPG' AS ThumbnailUri
+        
+    UNION SELECT (SELECT top 1 Id FROM bcms_media.Medias WHERE IsDeleted=0 AND Type=1 AND Title = 'Image5.jpg') AS Id,
 		300 AS Width, 300 AS Height, 
 		300 AS OriginalWidth, 300 AS OriginalHeight, 300 AS OriginalSize, 
 		'http://upload.wikimedia.org/wikipedia/commons/c/cd/Panda_Cub_from_Wolong,_Sichuan,_China.JPG' AS OriginalUri, 

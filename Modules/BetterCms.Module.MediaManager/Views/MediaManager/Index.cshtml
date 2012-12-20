@@ -73,7 +73,7 @@
                         <div class="bcms-btn-links-small">@RootGlobalization.Button_Cancel</div>
                     </div>
                     <a class="bcms-icn-edit" data-bind="attr: { 'data-id': media().id(), 'data-version': media().version(), 'data-media-type': media().type  }">@RootGlobalization.Button_Edit</a>
-                    <a class="bcms-icn-delete" data-bind="attr: { 'data-id': media().id(), 'data-version': media().version(), 'data-media-type': media().type, 'data-name': media().name()  }">@RootGlobalization.Button_Delete</a>
+                    <a class="bcms-icn-delete" data-bind="attr: { 'data-id': media().id(), 'data-version': media().version(), 'data-media-type': media().type, 'data-name': media().name()  }, click: deleteLinkClicked.bind($data, $root)">@RootGlobalization.Button_Delete</a>
                 </div>
             </div>
         </div>

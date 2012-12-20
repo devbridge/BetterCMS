@@ -34,18 +34,19 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// <summary>
         /// An action to delete a given folder.
         /// </summary>
-        /// <param name="folder">The folder.</param>
+        /// <param name="id">The fodler id.</param>
+        /// <param name="version">The version.</param>
         /// <returns>
         /// Json with status.
         /// </returns>
         [HttpPost]
-        public ActionResult DeleteFolder(MediaFolderViewModel folder)
+        public ActionResult DeleteFolder(string id, string version)
         {
             bool success = GetCommand<DeleteFolderCommand>().ExecuteCommand(
                 new DeleteFolderCommandRequest
                 {
-                    FolderId = folder.Id,
-                    Version = folder.Version
+                    FolderId = id.ToGuidOrDefault(),
+                    Version = version.ToIntOrDefault()
                 });
 
             if (success)
