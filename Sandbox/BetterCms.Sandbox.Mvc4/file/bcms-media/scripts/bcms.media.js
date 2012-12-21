@@ -23,7 +23,6 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 uploadFileLink: '.bcms-media-new-file',
                 firstForm: 'form:first',
                 currentFolderField: '.bcms-breadcrumbs-holder>input:hidden',
-                pathCurrentFolderIdField: '#bcms-current-media-folder-id',
                 pathCurrentFolderTypeField: '#bcms-current-media-folder-type',
                 editingIcon: '.bcms-icn-edit',
                 editMediaItem: '.bcms-media-file-box',
@@ -129,12 +128,34 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             self.medias = ko.observableArray();
             self.path = ko.observable();
             self.container = container;
+            self.sortOptions = ko.observable();
 
             self.isRootFolder = function () {
                 if (self.path != null && self.path().folders != null && self.path().folders().length > 1) {
                     return false;
                 }
                 return true;
+            };
+
+            self.addNewFolder = function () {
+                var newFolder = new MediaFolderViewModel({
+                    isActive: true,
+                    type: self.path().currentFolder().type
+                });
+
+                self.medias.unshift(newFolder);
+            };
+
+            self.uploadMedia = function () {
+                mediaUpload.openUploadFilesDialog(self.path().currentFolder().id(), self.path().currentFolder().type);
+            };
+
+            self.searchMedia = function() {
+                alert("TODO: Search media...");
+            };
+
+            self.sortMedia = function() {
+                alert("TODO: Sort media...");
             };
         }
         
@@ -176,7 +197,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 self.name = ko.observable(item.Name);
                 self.version = ko.observable(item.Version);
                 self.type = item.Type;
-                self.isActive = ko.observable(false);
+                self.isActive = ko.observable(item.IsActive || false);
 
                 self.isFile = function () {
                     return !self.isFolder();
@@ -202,6 +223,14 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 throw new Error("Edit media method is not implemented");
             };
             
+            MediaItemBaseViewModel.prototype.saveMedia = function (folderViewModel) {
+                throw new Error("Save media method is not implemented");
+            };
+            
+            MediaItemBaseViewModel.prototype.cancelEditMedia = function (folderViewModel) {
+                throw new Error("Cancel edit media method is not implemented");
+            };
+            
             return MediaItemBaseViewModel;
         })();
 
@@ -225,6 +254,14 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                     message = $.format(globalization.deleteImageConfirmMessage, this.name());
 
                 deleteMediaItem(url, message, folderViewModel, this);
+            };
+
+            MediaImageViewModel.prototype.editMedia = function (folderViewModel) {
+                var self = this;
+                imageEditor.onEditImage(this.id(), function (data) {
+                    self.version(data.Version);
+                    self.name(data.FileName);
+                });
             };
 
             return MediaImageViewModel;
@@ -316,7 +353,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 onLoad: function (dialog) {
                     dynamicContent.setContentFromUrl(dialog, links.insertImageDialogUrl, {
                         done: function (content) {
-                            media.attachEvents(dialog.container);
+                            attachEvents(dialog.container);
                         },
                     });
                 },
@@ -374,49 +411,6 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
         };
 
         /**
-        * Open image editor.
-        */
-        media.imageEditClicked = function (item) {
-            var id = $(item).data('id');
-            imageEditor.onEditImage(id, function (data) {
-                $(item).data('version', data.Version);
-                $(item).parents(selectors.editMediaItem).find(selectors.editMediaItemFileName).html(data.FileName);
-            });
-        };
-
-        /**
-        * TODO: implement.
-        */
-        media.fileEditClicked = function (item) {
-            alert('Edit file name clicked!');
-            return;
-            var container = $(item).parents(selectors.editMediaItem),
-                showHideEditControls = function(show) {
-                    if (show) {
-                        container.addClass(classes.editableListItem);
-                    }
-                    else {
-                        container.removeClass(classes.editableListItem);
-                    }
-                };
-            showHideEditControls(true);
-
-            // Attach OK and Cancel.
-            container.find(selectors.mediaEditOk).on('click', function() {
-                alert('Ok clicked.');
-                // OK: post to rename, change back GUI.
-                var id = $(item).data('id'),
-                    version = $(item).data('version'),
-                    name = container.find(selectors.mediaEditFileNameInput).val();
-                // TODO: implement.
-                showHideEditControls(false);
-            });
-            container.find(selectors.mediaEditCancel).on('click', function () {
-                showHideEditControls(false);
-            });
-        };
-
-        /**
         * Open delete confirmation and delete media item.
         */
         function deleteMediaItem(url, message, folderViewModel, item) {
@@ -452,14 +446,6 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
         * Attach links to actions.
         */
         function attachEvents(tabContainer) {
-            // Attach to the upload image link.
-            tabContainer.find(selectors.uploadFileLink).on('click', function () {
-                var link = $(this),
-                    currentFolderId = link.parents(selectors.firstForm).find(selectors.pathCurrentFolderIdField).val(),
-                    currentFolderType = link.parents(selectors.firstForm).find(selectors.pathCurrentFolderTypeField).val();
-                mediaUpload.openUploadFilesDialog(currentFolderId, currentFolderType);
-            });
-
             // Attach to switch view layout link.
             tabContainer.find(selectors.switchViewLink).on('click', function () {
                 media.switchView(this, tabContainer);
@@ -494,12 +480,12 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             editor.initialize(tabContainer, inlineEditOpts, inlineEditSelectors);*/
 
             // Attach to add new folder link.
-            tabContainer.find(selectors.addNewFolderLink).on('click', function () {
+            /*tabContainer.find(selectors.addNewFolderLink).on('click', function () {
                 editor.addNewRow(tabContainer);
-            });
+            });*/
 
             // Attach sort events.
-            var form = tabContainer.find(selectors.imageListForm),
+            /*var form = tabContainer.find(selectors.imageListForm),
                 callBack = function (data) {
                     var wasGrid = $(selectors.switchViewLinkActive).hasClass(classes.gridView);
                     form.parent().empty().append(data);
@@ -525,39 +511,10 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 preventedEnter: function () {
                     grid.submitGridForm(form, callBack);
                 },
-            });
-
-            // Attach to the media edit link.
-            tabContainer.find(selectors.editingIcon).on('click', function () {
-                var type = $(this).data('mediaType');
-                if (type == 1) {
-                    media.imageEditClicked(this);
-                } else if (type == 2) {
-                    alert('TODO: edit video file.');
-                } else if (type == 3) {
-                    alert('TODO: edit audio file.');
-                } else if (type == 4) {
-                    media.fileEditClicked(this);
-                }
-            });
-
-            /*
-            // Attach to the media delete link.
-            tabContainer.find(selectors.deletingIconNonFolder).on('click', function () {
-                var type = $(this).data('mediaType');
-                if (type == 1) {
-                    media.imageDeleteClicked(this, tabContainer);
-                } else if (type == 2) {
-                    alert('TODO: delete video file.');
-                } else if (type == 3) {
-                    alert('TODO: delete audio file.');
-                } else if (type == 4) {
-                    alert('TODO: delete file.');
-                }
             });*/
 
             // Attach to the media select.
-            tabContainer.find(selectors.editMediaItem).on('click', function () {
+            /*tabContainer.find(selectors.editMediaItem).on('click', function () {
                 tabContainer.find(selectors.selectedMediaImage).each(function () {
                     $(this).removeClass(classes.activeListItem);
                 });
@@ -565,7 +522,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 if (type == 1) {
                     $(this).addClass(classes.activeListItem);
                 }
-            });
+            });*/
         };
 
         /**
@@ -862,6 +819,14 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             * Subscribe to events.
             */
             bcms.on(htmlEditor.events.insertImage, media.onInsertImage);
+            
+            //
+            // TODO: remove after tests
+            // 
+            $(function() {
+                siteSettings.openSiteSettings();
+                media.loadSiteSettingsMediaManager();
+            });
         };
 
         /**
