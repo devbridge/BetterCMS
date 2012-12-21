@@ -109,12 +109,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             imagesViewModel = null,
             audiosViewModel = null,
             videosViewModel = null,
-            filesViewModel = null,
-            __extends = function (d, b) {
-                function __() { this.constructor = d; }
-                __.prototype = b.prototype;
-                d.prototype = new __();
-            };;
+            filesViewModel = null;
 
         /**
         * Assign objects to module.
@@ -164,36 +159,10 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                     }
                 }
                 if (range.length > 0) {
-                    range[0].media().name('...');
+                    range[0].name('...');
                 }
                 return range;
             });
-        }
-
-        /**
-        * Media view model
-        */
-        function MediaViewModel(item) {
-            var self = this;
-            
-            self.id = ko.observable(item.Id);
-            self.name = ko.observable(item.Name);
-            self.version = ko.observable(item.Version);
-            self.type = item.Type;
-            self.isActive = ko.observable(false);
-            self.contentType = item.ContentType;
-            
-            self.isFolder = function() {
-                return self.contentType == contentTypes.folder;
-            };
-            
-            self.isFile = function () {
-                return self.contentType == contentTypes.file;
-            };
-            
-            self.isImage = function () {
-                return self.contentType == contentTypes.file && self.type == mediaTypes.image;
-            };
         }
 
         /**
@@ -203,16 +172,34 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             function MediaItemBaseViewModel(item) {
                 var self = this;
 
-                self.media = ko.observable();
-                self.media(new MediaViewModel(item));
+                self.id = ko.observable(item.Id);
+                self.name = ko.observable(item.Name);
+                self.version = ko.observable(item.Version);
+                self.type = item.Type;
+                self.isActive = ko.observable(false);
+
+                self.isFile = function () {
+                    return !self.isFolder();
+                };
+
+                /*self.media = ko.observable();
+                self.media(new MediaViewModel(item));*/
             }
             
-            MediaItemBaseViewModel.prototype.deleteLinkClicked = function (folderViewModel) {
+            MediaItemBaseViewModel.prototype.isFolder = function () {
+                return false;
+            };
+
+            MediaItemBaseViewModel.prototype.deleteMedia = function (folderViewModel) {
                 throw new Error("Delete method is not implemented");
             };
             
-            MediaItemBaseViewModel.prototype.linkClicked = function (folderViewModel) {
-                throw new Error("Link method is not implemented");
+            MediaItemBaseViewModel.prototype.openMedia = function (folderViewModel) {
+                throw new Error("Open method is not implemented");
+            };
+            
+            MediaItemBaseViewModel.prototype.editMedia = function (folderViewModel) {
+                throw new Error("Edit media method is not implemented");
             };
             
             return MediaItemBaseViewModel;
@@ -221,95 +208,90 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
         /**
         * Media image view model
         */
-        var MediaImageViewModel = (function (_super) {
-            __extends(MediaImageViewModel, _super);
-            
+        var MediaImageViewModel = (function(_super) {
+            bcms.extendsClass(MediaImageViewModel, _super);
+
             function MediaImageViewModel(item) {
                 _super.call(this, item);
-                
+
                 var self = this;
 
                 self.tooltip = item.PreviewUrl;
                 self.previewUrl = item.Tooltip;
             }
-            
-            MediaImageViewModel.prototype.deleteLinkClicked = function (folderViewModel) {
-                var url = $.format(links.deleteImageUrl, this.media().id(), this.media().version()),
-                    message = $.format(globalization.deleteImageConfirmMessage, this.media().name());
+
+            MediaImageViewModel.prototype.deleteMedia = function (folderViewModel) {
+                var url = $.format(links.deleteImageUrl, this.id(), this.version()),
+                    message = $.format(globalization.deleteImageConfirmMessage, this.name());
 
                 deleteMediaItem(url, message, folderViewModel, this);
             };
-            
+
             return MediaImageViewModel;
         })(MediaItemBaseViewModel);
         
         /**
-        * Audio view model
+        * Media audio view model
         */
-        function MediaAudioViewModel(item) {
-            var self = this;
+        var MediaAudioViewModel = (function(_super) {
+            bcms.extendsClass(MediaAudioViewModel, _super);
 
-            self.media = ko.observable();
-            self.media(new MediaViewModel(item));
-            
-            self.linkClicked = function () {
-                alert('TODO: Audio clicked!');
-            };
-        }
+            function MediaAudioViewModel(item) {
+                _super.call(this, item);
+            }
+        });
         
         /**
-        * Video view model
+        * Media video view model
         */
-        function MediaVideoViewModel(item) {
-            var self = this;
+        var MediaVideoViewModel = (function(_super) {
+            bcms.extendsClass(MediaVideoViewModel, _super);
 
-            self.media = ko.observable();
-            self.media(new MediaViewModel(item));
-            
-            self.linkClicked = function () {
-                alert('TODO: Video clicked!');
-            };
-        }
+            function MediaVideoViewModel(item) {
+                _super.call(this, item);
+            }
+        });
         
         /**
         * File view model
         */
-        function MediaFileViewModel(item) {
-            var self = this;
+        var MediaFileViewModel = (function(_super) {
+            bcms.extendsClass(MediaFileViewModel, _super);
 
-            self.media = ko.observable();
-            self.media(new MediaViewModel(item));
-            
-            self.linkClicked = function () {
-                alert('TODO: File clicked!');
-            };
-        }
+            function MediaFileViewModel(item) {
+                _super.call(this, item);
+            }
+        });
 
         /**
         * Media folder view model
         */
-        var MediaFolderViewModel = (function (_super) {
-            __extends(MediaFolderViewModel, _super);
+        var MediaFolderViewModel = (function(_super) {
+            bcms.extendsClass(MediaFolderViewModel, _super);
 
             function MediaFolderViewModel(item) {
                 _super.call(this, item);
 
                 var self = this;
 
-                self.pathName = ko.computed(function () {
-                    return '\\' + self.media().name();
+                self.pathName = ko.computed(function() {
+                    return '\\' + self.name();
                 });
             }
 
-            MediaFolderViewModel.prototype.deleteLinkClicked = function (folderViewModel) {
-                var url = $.format(links.deleteFolderUrl, this.media().id(), this.media().version()),
-                    message = $.format(globalization.confirmDeleteFolderMessage, this.media().name());
+            MediaFolderViewModel.prototype.isFolder = function () {
+                return true;
+            };
+
+            MediaFolderViewModel.prototype.deleteMedia = function (folderViewModel) {
+                var url = $.format(links.deleteFolderUrl, this.id(), this.version()),
+                    message = $.format(globalization.confirmDeleteFolderMessage, this.name());
 
                 deleteMediaItem(url, message, folderViewModel, this);
             };
 
-            MediaFolderViewModel.prototype.linkClicked = function (folderViewModel) {
-                changeFolder(this.media().id(), folderViewModel);
+            MediaFolderViewModel.prototype.openMedia = function (folderViewModel) {
+                changeFolder(this.id(), folderViewModel);
             };
 
             return MediaFolderViewModel;
