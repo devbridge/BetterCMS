@@ -157,12 +157,13 @@ namespace BetterCms.Module.MediaManager.Command.Images
         /// <returns>Media folder view model</returns>
         private MediaPathViewModel LoadMediaFolder(MediaManagerViewModel request)
         {
+            var emptyFolderViewModel = new MediaFolderViewModel { Id = Guid.Empty, Name = string.Empty, Type = MediaType.Image };
             var model = new MediaPathViewModel
                             {
                                 MediaType = MediaType.Image,
-                                CurrentFolder = new MediaFolderViewModel(),
+                                CurrentFolder = emptyFolderViewModel
                             };
-            var folders = new List<MediaFolderViewModel> { new MediaFolderViewModel { Id = Guid.Empty, Name = string.Empty, Type = MediaType.Image } };
+            var folders = new List<MediaFolderViewModel> { emptyFolderViewModel };
 
             if (!request.CurrentFolderId.HasDefaultValue())
             {
