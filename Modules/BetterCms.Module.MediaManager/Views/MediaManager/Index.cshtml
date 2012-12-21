@@ -60,20 +60,20 @@
             </div>
         </div>
         <div data-bind="foreach: medias">
-            <div data-bind="css: { 'bcms-media-folder-box': isFolder(), 'bcms-media-file-box': isFile(), 'bcms-media-row-active': isActive() }">
+            <div data-bind="css: { 'bcms-media-folder-box': isFolder(), 'bcms-image-box': isImage(), 'bcms-media-file-box': isFile() && !isImage(), 'bcms-media-row-active': isActive(), 'bcms-media-click-active': isSelected() }, click: selectMedia.bind($data, $root)">
                 <div class="bcms-media-items-block">
                     <div data-bind="css: { 'bcms-system-folder': isFolder(), 'bcms-media-file-holder': isFile() }" />
-                    <div class="bcms-system-folder-name" data-bind="text: name(), attr: { 'data-id': id() }, click: openMedia.bind($data, $root)"></div>
+                    <div class="bcms-system-folder-name" data-bind="text: name(), click: openMedia.bind($data, $root)"></div>
                 </div>
                 <div class="bcms-media-edit-controls">
-                    <div class="bcms-system-folder-name" data-bind="text: name(), attr: { 'data-id': id() }, click: openMedia.bind($data, $root)" />
+                    <div class="bcms-system-folder-name" data-bind="text: name(), click: openMedia.bind($data, $root)" />
                     <input type="text" name="itemname" data-bind="value: name()" />
                     <div class="bcms-media-inner-controls">
                         <div class="bcms-btn-small" data-bind="click: saveMedia.bind($data, $root)">@RootGlobalization.Button_Save</div>
                         <div class="bcms-btn-links-small" data-bind="click: cancelEditMedia.bind($data, $root)">@RootGlobalization.Button_Cancel</div>
                     </div>
-                    <a class="bcms-icn-edit" data-bind="attr: { 'data-id': id(), 'data-version': version(), 'data-media-type': type  }, click: editMedia.bind($data, $root)">@RootGlobalization.Button_Edit</a>
-                    <a class="bcms-icn-delete" data-bind="attr: { 'data-id': id(), 'data-version': version(), 'data-media-type': type, 'data-name': name()  }, click: deleteMedia.bind($data, $root)">@RootGlobalization.Button_Delete</a>
+                    <a class="bcms-icn-edit" data-bind="click: editMedia.bind($data, $root)">@RootGlobalization.Button_Edit</a>
+                    <a class="bcms-icn-delete" data-bind="click: deleteMedia.bind($data, $root)">@RootGlobalization.Button_Delete</a>
                 </div>
             </div>
         </div>

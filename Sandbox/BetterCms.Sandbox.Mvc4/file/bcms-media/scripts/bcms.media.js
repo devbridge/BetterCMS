@@ -197,17 +197,20 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 self.name = ko.observable(item.Name);
                 self.version = ko.observable(item.Version);
                 self.type = item.Type;
+                
                 self.isActive = ko.observable(item.IsActive || false);
+                self.isSelected = ko.observable(false);
 
                 self.isFile = function () {
                     return !self.isFolder();
                 };
-
-                /*self.media = ko.observable();
-                self.media(new MediaViewModel(item));*/
             }
             
             MediaItemBaseViewModel.prototype.isFolder = function () {
+                return false;
+            };
+
+            MediaItemBaseViewModel.prototype.isImage = function () {
                 return false;
             };
 
@@ -230,6 +233,10 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             MediaItemBaseViewModel.prototype.cancelEditMedia = function (folderViewModel) {
                 throw new Error("Cancel edit media method is not implemented");
             };
+
+            MediaItemBaseViewModel.prototype.selectMedia = function (folderViewModel) {
+                // Nothing to do
+            };
             
             return MediaItemBaseViewModel;
         })();
@@ -249,6 +256,10 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 self.previewUrl = item.Tooltip;
             }
 
+            MediaImageViewModel.prototype.isImage = function () {
+                return true;
+            };
+
             MediaImageViewModel.prototype.deleteMedia = function (folderViewModel) {
                 var url = $.format(links.deleteImageUrl, this.id(), this.version()),
                     message = $.format(globalization.deleteImageConfirmMessage, this.name());
@@ -262,6 +273,13 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                     self.version(data.Version);
                     self.name(data.FileName);
                 });
+            };
+            
+            MediaItemBaseViewModel.prototype.selectMedia = function (folderViewModel) {
+                for (var i = 0; i < folderViewModel.medias().length; i++) {
+                    folderViewModel.medias()[i].isSelected(false);
+                }
+                this.isSelected(true);
             };
 
             return MediaImageViewModel;
@@ -511,17 +529,6 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 preventedEnter: function () {
                     grid.submitGridForm(form, callBack);
                 },
-            });*/
-
-            // Attach to the media select.
-            /*tabContainer.find(selectors.editMediaItem).on('click', function () {
-                tabContainer.find(selectors.selectedMediaImage).each(function () {
-                    $(this).removeClass(classes.activeListItem);
-                });
-                var type = $(this).find(selectors.editingIcon).data('mediaType');
-                if (type == 1) {
-                    $(this).addClass(classes.activeListItem);
-                }
             });*/
         };
 
