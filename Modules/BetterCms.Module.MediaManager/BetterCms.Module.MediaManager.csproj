@@ -230,7 +230,6 @@
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\MediaManager\Index.cshtml" />
     <EmbeddedResource Include="Views\Shared\Folder.cshtml" />
     <EmbeddedResource Include="Views\Shared\Image.cshtml" />
     <EmbeddedResource Include="Views\Files\FilesTab.cshtml" />
@@ -249,9 +248,7 @@
     <Folder Include="Command\MediaManager\" />
     <Folder Include="Command\Videos\" />
     <Folder Include="Helpers\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Images\ImagesTab.cshtml" />
+    <Folder Include="Views\MediaManager\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

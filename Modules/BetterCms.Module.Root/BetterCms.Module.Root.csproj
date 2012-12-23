@@ -549,6 +549,7 @@
     <EmbeddedResource Include="Content\Styles\images\loading.gif" />
     <EmbeddedResource Include="Content\Styles\images\no-preview-capture.png" />
     <EmbeddedResource Include="Content\Styles\images\bcms-sidebar-select.png" />
+    <EmbeddedResource Include="Content\Styles\images\bcms-logo.png" />
     <Content Include="Scripts\jquery-1.7.2.min.js">
       <DependentUpon>jquery-1.7.2.js</DependentUpon>
     </Content>

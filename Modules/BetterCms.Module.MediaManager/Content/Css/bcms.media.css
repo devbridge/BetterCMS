@@ -140,7 +140,7 @@ div.bcms-align-right-active {
         font-weight: 400;
     }
 
-    .bcms-dropzone-active .btn-upload-files {
+    .bcms-dropzone-active .bcms-btn-upload-files {
         display: none;
     }
 
@@ -161,7 +161,7 @@ div.bcms-align-right-active {
         text-decoration: underline;
     }
 
-.btn-upload-files {
+.bcms-btn-upload-files {
     position: relative;
     display: inline-block;
     padding: 0 10px;
@@ -182,23 +182,10 @@ div.bcms-align-right-active {
     background-image: -webkit-linear-gradient(top, #676767 0, #555555 100%);
 }
 
-    .btn-upload-files:active {
+    .bcms-btn-upload-files:active {
         box-shadow: 0 0 2px 1px #292929;
         background: #555;
     }
-
-.bcms-uploader {
-    position: absolute;
-    right: 0;
-    top: 0;
-    border: #000 solid 28px;
-    background: #000;
-    font-size: 30px;
-    margin: 0;
-    filter: alpha(opacity=0);
-    opacity: 0;
-    cursor: pointer;
-}
 
 .bcms-icn-delete-link {
     float: right;
@@ -284,20 +271,6 @@ div.bcms-align-right-active {
     width: 62px;
     padding: 9px;
 }
-
-/*a.bcms-upload-cancel {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin: -7px 0 0 -8px;
-    height: 14px;
-    width: 16px;
-    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAOCAYAAAGHjXZ5AAAAbElEQVQoz5WSSxbAIAgDs/H+B/Qw0xXWys/ueASHhKcAARKgOcRbzCE+0mpY4UYd7QfjnAgRkZAuLXeetBBpPYcKjVlzp/Riii0N7bgsVrR6pYmE6pELlA1Wrq7sZXHU2asgbd4KnH657uKAHm4iCGmg/EKuAAAAAElFTkSuQmCC') no-repeat center center;
-    cursor: pointer;
-    overflow: hidden;
-    text-indent: 9999px;
-    text-decoration: none;
-}*/
 
 .bcms-upload-description {
     font-size: 12px;
@@ -414,38 +387,19 @@ div.bcms-upload-success {
             color: #1187d2;
         }
 
-/**/
-.bcms-system-folder {
-    display: inline-block;
-    width: 56px;
-    height: 42px;
-    background: url('images/sprite-media-1.png') no-repeat 0 -176px;
-    vertical-align: middle;
-}
-
-div.bcms-system-folder-active {
-    background-position: 0 -235px;
-}
-
-.bcms-media-addfolder-holder {
-    padding: 10px 51px;
-}
-
-.bcms-system-addfolder {
-    display: inline-block;
-    width: 56px;
-    height: 42px;
-    background: url('images/sprite-media-1.png') no-repeat 0 -126px;
-    vertical-align: middle;
-}
-
-.bcms-system-folder-name {
-    line-height: 16px;
-    font-size: 11px;
-    color: #1187d2;
-}
-
 /*default sorting block*/
+.bcms-grid .bcms-media-sorting-block .bcms-media-col-1 {
+    display: none;
+}
+
+.bcms-grid .bcms-media-sorting-block .bcms-media-col-2 {
+    border-left: 0;
+}
+
+.bcms-list .bcms-media-sorting-block .bcms-media-col-1 {
+    width: 40px;
+}
+
 .bcms-media-sorting-block {
     height: 35px;
     background-color: #fbf9f9;
@@ -493,16 +447,8 @@ div.bcms-system-folder-active {
     cursor: pointer;
 }
 
-/*folders grid sorting block*/
-.bcms-grid-style .bcms-media-sorting-block .bcms-media-col-1 {
-    display: none;
-}
-
-.bcms-grid-style .bcms-media-sorting-block .bcms-media-col-2 {
-    border-left: 0;
-}
-/*folders in grid*/
-.bcms-grid-style .bcms-media-folder-box {
+/*images in grid*/
+.bcms-grid .bcms-image-box {
     position: relative;
     float: left;
     width: 105px;
@@ -515,285 +461,7 @@ div.bcms-system-folder-active {
     overflow: hidden;
 }
 
-    .bcms-grid-style .bcms-media-folder-box:hover > .bcms-media-edit-controls {
-        display: block;
-    }
-
-    .bcms-grid-style .bcms-media-folder-box .bcms-media-edit-controls {
-        display: none;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: #5abbec;
-        cursor: pointer;
-    }
-
-        .bcms-grid-style .bcms-media-folder-box .bcms-media-edit-controls .bcms-system-folder-name {
-            padding: 5px;
-            color: #fff;
-            line-height: 12px;
-            font-size: 10px;
-            text-align: left;
-            cursor: default;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-    .bcms-grid-style .bcms-media-folder-box .bcms-btn-small {
-        display: none;
-    }
-
-    .bcms-grid-style .bcms-media-folder-box .bcms-btn-links-small {
-        display: none;
-    }
-
-    .bcms-grid-style .bcms-media-folder-box .bcms-icn-edit {
-        position: absolute;
-        bottom: 8px;
-        left: 10px;
-        width: 22px;
-        background: 0;
-        text-indent: 0;
-        font-size: 10px;
-        color: #fff;
-    }
-
-        .bcms-grid-style .bcms-media-folder-box .bcms-icn-edit:hover {
-            color: #303030;
-        }
-
-    .bcms-grid-style .bcms-media-folder-box .bcms-icn-delete {
-        position: absolute;
-        bottom: 8px;
-        right: 10px;
-        padding-right: 0;
-        background: 0;
-        font-size: 10px;
-        color: #fff;
-    }
-
-        .bcms-grid-style .bcms-media-folder-box .bcms-icn-delete:hover {
-            color: #303030;
-            background-position: right -970px;
-        }
-
-    .bcms-grid-style .bcms-media-folder-box input[type="text"] {
-        display: none;
-    }
-
-.bcms-list-style > div.bcms-table-click-active {
-    background-color: #effcfe;
-    transition: all 0.5s ease-out;
-    -moz-transition: all 0.5s ease-out;
-    -webkit-transition: all 0.5s ease-out;
-}
-
-    .bcms-list-style > div.bcms-table-click-active:hover {
-        background-color: #effcfe;
-    }
-
-.bcms-grid-style .bcms-media-row-active input[type="text"] {
-    display: block;
-    width: 90px;
-    margin: 7px auto;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-}
-
-.bcms-grid-style .bcms-media-row-active .bcms-media-edit-controls .bcms-system-folder-name {
-    display: none;
-}
-
-.bcms-grid-style .bcms-add-media-folder {
-    position: relative;
-    float: left;
-    width: 105px;
-    height: 96px;
-    margin: 10px 5px 0;
-    padding: 10px 0;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    text-align: center;
-    overflow: hidden;
-    cursor: pointer;
-}
-
-/*folders list sorting block*/
-.bcms-list-style .bcms-media-sorting-block .bcms-media-col-1 {
-    width: 40px;
-}
-/*folders in list*/
-.bcms-list-style .bcms-media-folder-box {
-    position: relative;
-    height: 62px;
-    padding: 0 20px 0 40px;
-    border-bottom: 1px solid #e3e3e3;
-}
-
-    .bcms-list-style .bcms-media-folder-box:hover {
-        background-color: #f5f5f5;
-        cursor: pointer;
-    }
-
-        .bcms-list-style .bcms-media-folder-box:hover a.bcms-icn-edit {
-            background-position: center -869px;
-        }
-
-            .bcms-list-style .bcms-media-folder-box:hover a.bcms-icn-edit:active {
-                background-position: center -903px;
-            }
-
-        .bcms-list-style .bcms-media-folder-box:hover div.bcms-system-folder {
-            background-position: 0 -235px;
-        }
-
-    .bcms-list-style .bcms-media-folder-box .bcms-media-items-block {
-        display: inline-block;
-        min-width: 480px;
-        padding: 10px 15px;
-        border-left: 1px solid #e3e3e3;
-        vertical-align: middle;
-        box-sizing: border-box;
-        -moz-box-sizing: border-box;
-    }
-
-    .bcms-list-style .bcms-media-folder-box .bcms-system-folder-name {
-        display: inline-block;
-        max-width: 390px;
-        padding-left: 20px;
-        vertical-align: middle;
-        font-size: 14px;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-    }
-
-    .bcms-list-style .bcms-media-folder-box .bcms-media-edit-controls {
-        float: right;
-        margin-top: 22px;
-    }
-
-        .bcms-list-style .bcms-media-folder-box .bcms-media-edit-controls .bcms-system-folder-name {
-            display: none;
-        }
-
-    .bcms-list-style .bcms-media-folder-box .bcms-media-inner-controls {
-        display: none;
-        position: absolute;
-        top: 50%;
-        right: 20px;
-        width: 130px;
-        margin-top: -17px;
-    }
-
-    .bcms-list-style .bcms-media-folder-box .bcms-icn-edit {
-        position: absolute;
-        left: 16px;
-        top: 50%;
-        margin-top: -10px;
-    }
-
-    .bcms-list-style .bcms-media-folder-box input[type="text"] {
-        display: none;
-        position: absolute;
-        left: 135px;
-        top: 50%;
-        height: 30px;
-        width: 380px;
-        line-height: 18px;
-        padding: 6px;
-        margin: -15px 0 0;
-        border: 1px solid #c0c0c0;
-        font-family: "Open Sans", sans-serif;
-        font-size: 12px;
-        color: #000;
-        vertical-align: middle;
-        background-color: #f5f5f5;
-        border-radius: 0;
-        box-sizing: border-box;
-        -moz-box-sizing: border-box;
-    }
-
-.bcms-list-style .bcms-add-media-folder {
-    position: relative;
-    height: 62px;
-    padding: 0 20px 0 40px;
-    cursor: pointer;
-}
-
-    .bcms-list-style .bcms-add-media-folder .bcms-media-items-block {
-        border-left: 0;
-    }
-
-    .bcms-list-style .bcms-add-media-folder .bcms-media-items-block {
-        display: inline-block;
-        padding: 10px 15px;
-        vertical-align: middle;
-        box-sizing: border-box;
-        -moz-box-sizing: border-box;
-    }
-
-    .bcms-list-style .bcms-add-media-folder .bcms-system-folder-name {
-        display: inline-block;
-        padding-left: 20px;
-        vertical-align: middle;
-        font-size: 14px;
-    }
-
-.bcms-list-style .bcms-media-row-active {
-    background-color: #f5f5f5;
-}
-
-    .bcms-list-style .bcms-media-row-active .bcms-system-folder-name {
-        display: none;
-    }
-
-    .bcms-list-style .bcms-media-row-active input[type="text"] {
-        display: block;
-        background: #fff;
-        border-color: #1894e4;
-        box-shadow: 0 0 3px 0 rgba(24,145,230,0.35);
-        outline: none;
-    }
-
-    .bcms-list-style .bcms-media-row-active div.bcms-system-folder {
-        background-position: 0 -235px;
-    }
-
-    .bcms-list-style .bcms-media-row-active .bcms-icn-edit {
-        background-position: center -869px;
-    }
-
-    .bcms-list-style .bcms-media-row-active a.bcms-icn-delete {
-        display: none;
-    }
-
-    .bcms-list-style .bcms-media-row-active div.bcms-media-inner-controls {
-        display: block;
-    }
-
-.bcms-add-media-folder:hover .bcms-system-addfolder {
-    background-position: 0 -297px;
-}
-
-/*files in grid*/
-.bcms-grid-style .bcms-media-file-box {
-    position: relative;
-    float: left;
-    width: 105px;
-    height: 96px;
-    margin: 10px 5px 0;
-    padding: 10px 0;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    text-align: center;
-    overflow: hidden;
-}
-
-    .bcms-grid-style .bcms-media-file-box .bcms-media-file-holder {
+    .bcms-grid .bcms-image-box .bcms-media-file-holder {
         width: 103px;
         height: 94px;
         background: url('images/bcms-no-thumbnail.png') no-repeat center center;
@@ -802,17 +470,17 @@ div.bcms-system-folder-active {
         overflow: hidden;
     }
 
-        .bcms-grid-style .bcms-media-file-box .bcms-media-file-holder img {
+        .bcms-grid .bcms-image-box .bcms-media-file-holder img {
             display: block;
             width: 103px;
             height: 94px;
         }
 
-    .bcms-grid-style .bcms-media-file-box:hover > .bcms-media-edit-controls {
+    .bcms-grid .bcms-image-box:hover > .bcms-media-edit-controls {
         display: block;
     }
 
-    .bcms-grid-style .bcms-media-file-box .bcms-media-edit-controls {
+    .bcms-grid .bcms-image-box .bcms-media-edit-controls {
         display: none;
         position: absolute;
         top: 0;
@@ -823,7 +491,7 @@ div.bcms-system-folder-active {
         cursor: pointer;
     }
 
-        .bcms-grid-style .bcms-media-file-box .bcms-media-edit-controls .bcms-system-folder-name {
+        .bcms-grid .bcms-image-box .bcms-media-edit-controls .bcms-media-name {
             padding: 5px;
             color: #fff;
             line-height: 12px;
@@ -835,7 +503,7 @@ div.bcms-system-folder-active {
             text-overflow: ellipsis;
         }
 
-    .bcms-grid-style .bcms-media-file-box .bcms-icn-edit {
+    .bcms-grid .bcms-image-box .bcms-icn-edit {
         position: absolute;
         bottom: 8px;
         left: 10px;
@@ -846,11 +514,11 @@ div.bcms-system-folder-active {
         overflow: visible;
     }
 
-        .bcms-grid-style .bcms-media-file-box .bcms-icn-edit:hover {
+        .bcms-grid .bcms-image-box .bcms-icn-edit:hover {
             color: #303030;
         }
 
-    .bcms-grid-style .bcms-media-file-box .bcms-icn-delete {
+    .bcms-grid .bcms-image-box .bcms-icn-delete {
         position: absolute;
         bottom: 8px;
         right: 10px;
@@ -860,12 +528,12 @@ div.bcms-system-folder-active {
         color: #fff;
     }
 
-        .bcms-grid-style .bcms-media-file-box .bcms-icn-delete:hover {
+        .bcms-grid .bcms-image-box .bcms-icn-delete:hover {
             color: #303030;
             background-position: right -970px;
         }
 
-    .bcms-grid-style .bcms-media-file-box .bcms-media-items-block {
+    .bcms-grid .bcms-image-box .bcms-media-items-block {
         position: absolute;
         top: 0;
         left: 0;
@@ -874,39 +542,110 @@ div.bcms-system-folder-active {
         overflow: hidden;
     }
 
-        .bcms-grid-style .bcms-media-file-box .bcms-media-items-block .bcms-system-folder-name {
+        .bcms-grid .bcms-image-box .bcms-media-items-block .bcms-media-name {
             display: none;
         }
 
-/*files in list*/
-.bcms-list-style .bcms-media-file-box {
+/*media manger files*/
+.bcms-list .bcms-grid-input {
+    display: none;
+    position: absolute;
+    left: 135px;
+    top: 50%;
+    height: 30px;
+    width: 380px;
+    line-height: 18px;
+    padding: 6px;
+    margin: -15px 0 0;
+    border: 1px solid #1894e4;
+    box-shadow: 0 0 3px 0 rgba(24,145,230,0.35);
+    font-family: "Open Sans", sans-serif;
+    font-size: 12px;
+    color: #000;
+    vertical-align: middle;
+    background: #fff;
+    border-radius: 0;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+input.bcms-grid-input:focus {
+    outline: none;
+}
+
+.bcms-add-folder:hover .bcms-system-addfolder {
+    background-position: 0 -297px;
+}
+
+.bcms-system-folder {
+    display: inline-block;
+    width: 56px;
+    height: 42px;
+    background: url('images/sprite-media-1.png') no-repeat 0 -176px;
+    vertical-align: middle;
+}
+
+.bcms-system-file {
+    display: inline-block;
+    width: 56px;
+    height: 43px;
+    background: url('images/sprite-media-3.png') no-repeat;
+    vertical-align: middle;
+}
+
+.bcms-media-name {
+    line-height: 16px;
+    font-size: 11px;
+    color: #1187d2;
+}
+
+.bcms-list > div.bcms-media-click-active {
+    background-color: #effcfe;
+    transition: background-color 0.5s ease-out;
+    -moz-transition: background-color 0.5s ease-out;
+    -webkit-transition: background-color 0.5s ease-out;
+}
+
+    .bcms-list > div.bcms-media-click-active:hover {
+        background-color: #effcfe;
+    }
+
+.bcms-grid > div.bcms-media-click-active {
+    background-color: #effcfe;
+    transition: background-color 0.5s ease-out;
+    -moz-transition: background-color 0.5s ease-out;
+    -webkit-transition: background-color 0.5s ease-out;
+}
+
+/*images in list*/
+.bcms-list .bcms-image-box {
     position: relative;
     height: 62px;
     padding: 0 20px 0 40px;
     border-bottom: 1px solid #e3e3e3;
 }
 
-    .bcms-list-style .bcms-media-file-box:hover {
+    .bcms-list .bcms-image-box:hover {
         background-color: #f5f5f5;
         cursor: pointer;
     }
 
-        .bcms-list-style .bcms-media-file-box:hover a.bcms-icn-edit {
+        .bcms-list .bcms-image-box:hover a.bcms-icn-edit {
             background-position: center -869px;
         }
 
-            .bcms-list-style .bcms-media-file-box:hover a.bcms-icn-edit:active {
+            .bcms-list .bcms-image-box:hover a.bcms-icn-edit:active {
                 background-position: center -903px;
             }
 
-    .bcms-list-style .bcms-media-file-box .bcms-icn-edit {
+    .bcms-list .bcms-image-box .bcms-icn-edit {
         position: absolute;
         left: 16px;
         top: 50%;
         margin-top: -10px;
     }
 
-    .bcms-list-style .bcms-media-file-box .bcms-media-items-block {
+    .bcms-list .bcms-image-box .bcms-media-items-block {
         display: inline-block;
         padding: 10px 15px;
         border-left: 1px solid #e3e3e3;
@@ -915,7 +654,7 @@ div.bcms-system-folder-active {
         -moz-box-sizing: border-box;
     }
 
-    .bcms-list-style .bcms-media-file-box .bcms-system-folder-name {
+    .bcms-list .bcms-image-box .bcms-media-name {
         display: inline-block;
         max-width: 420px;
         padding-left: 20px;
@@ -926,16 +665,16 @@ div.bcms-system-folder-active {
         text-overflow: ellipsis;
     }
 
-    .bcms-list-style .bcms-media-file-box .bcms-media-edit-controls {
+    .bcms-list .bcms-image-box .bcms-media-edit-controls {
         float: right;
         margin-top: 22px;
     }
 
-        .bcms-list-style .bcms-media-file-box .bcms-media-edit-controls .bcms-system-folder-name {
+        .bcms-list .bcms-image-box .bcms-media-edit-controls .bcms-media-name {
             display: none;
         }
 
-    .bcms-list-style .bcms-media-file-box .bcms-media-file-holder {
+    .bcms-list .bcms-image-box .bcms-media-file-holder {
         display: inline-block;
         width: 54px;
         height: 40px;
@@ -946,25 +685,621 @@ div.bcms-system-folder-active {
         background-size: cover;
     }
 
-        .bcms-list-style .bcms-media-file-box .bcms-media-file-holder img {
+        .bcms-list .bcms-image-box .bcms-media-file-holder img {
             display: block;
             width: 54px;
             height: 40px;
         }
 
-/*remove when drag&drop is fully developed*/
-/*.bcms-dropzone:active {
-    border: 2px solid #0C7EC7;
-    box-shadow: 0 0 10px 0 #daf5ff, inset 0 0 10px #daf5ff;
+/*folders in grid*/
+.bcms-grid .bcms-folder-box {
+    position: relative;
+    float: left;
+    width: 105px;
+    height: 96px;
+    margin: 10px 5px 0;
+    padding: 10px 0;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    text-align: center;
+    overflow: hidden;
+    cursor: pointer;
 }
 
-    .bcms-dropzone:active .bcms-dropzone-infotext {
-        margin: 0;
-        line-height: 145px;
-        font-size: 24px;
-        font-weight: 400;
+    .bcms-grid .bcms-folder-box .bcms-media-items-block {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 105px;
+        height: 100px;
+        overflow: hidden;
     }
 
-    .bcms-dropzone:active .btn-upload-files {
+    .bcms-grid .bcms-folder-box .bcms-system-folder {
+        margin-top: 15px;
+    }
+
+    .bcms-grid .bcms-folder-box:hover div.bcms-system-folder {
+        background-position: 0 -235px;
+    }
+
+    .bcms-grid .bcms-folder-box .bcms-media-name {
+        position: absolute;
+        bottom: 15px;
+        left: 0;
+        width: 105px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .bcms-grid .bcms-folder-box .bcms-grid-input {
         display: none;
-    }*/
+        position: absolute;
+        bottom: 5px;
+        left: 4px;
+        width: 95px;
+        margin: 0;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+    }
+
+    .bcms-grid .bcms-folder-box .bcms-media-edit-controls {
+        display: none;
+    }
+
+    .bcms-grid .bcms-folder-box .bcms-media-inner-controls {
+        display: none;
+    }
+
+    .bcms-grid .bcms-folder-box .bcms-icn-edit {
+        display: none;
+    }
+
+    .bcms-grid .bcms-folder-box .bcms-icn-delete {
+        display: none;
+    }
+
+/*folders in grid active box*/
+.bcms-grid .bcms-folder-box-active {
+    background-color: #effcfe;
+}
+
+    .bcms-grid .bcms-folder-box-active .bcms-media-name {
+        display: none;
+    }
+
+    .bcms-grid .bcms-folder-box-active input.bcms-grid-input {
+        display: block;
+    }
+
+    .bcms-grid .bcms-folder-box-active div.bcms-media-edit-controls {
+        display: block;
+    }
+
+/*folders in list*/
+.bcms-list .bcms-folder-box {
+    position: relative;
+    height: 62px;
+    padding: 0 20px 0 40px;
+    border-bottom: 1px solid #e3e3e3;
+}
+
+    .bcms-list .bcms-folder-box:hover {
+        background-color: #f5f5f5;
+        cursor: pointer;
+    }
+
+        .bcms-list .bcms-folder-box:hover div.bcms-system-folder {
+            background-position: 0 -235px;
+        }
+
+    .bcms-list .bcms-folder-box .bcms-icn-edit {
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        margin-top: -10px;
+    }
+
+    .bcms-list .bcms-folder-box:hover a.bcms-icn-edit {
+        background-position: center -869px;
+    }
+
+        .bcms-list .bcms-folder-box:hover a.bcms-icn-edit:active {
+            background-position: center -903px;
+        }
+
+    .bcms-list .bcms-folder-box .bcms-media-inner-controls {
+        display: none;
+        position: absolute;
+        top: 50%;
+        right: 20px;
+        width: 130px;
+        margin-top: -17px;
+    }
+
+    .bcms-list .bcms-folder-box .bcms-media-items-block {
+        display: inline-block;
+        min-width: 480px;
+        padding: 10px 15px;
+        border-left: 1px solid #e3e3e3;
+        vertical-align: middle;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+    }
+
+    .bcms-list .bcms-folder-box .bcms-media-name {
+        display: inline-block;
+        max-width: 390px;
+        padding-left: 20px;
+        vertical-align: middle;
+        font-size: 14px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .bcms-list .bcms-folder-box .bcms-media-edit-controls {
+        float: right;
+        margin-top: 22px;
+    }
+
+/*folders in list active box*/
+.bcms-list .bcms-folder-box-active {
+    background-color: #effcfe;
+}
+
+    .bcms-list .bcms-folder-box-active:hover {
+        background-color: #effcfe;
+    }
+
+    .bcms-list .bcms-folder-box-active div.bcms-system-folder {
+        background-position: 0 -235px;
+    }
+
+    .bcms-list .bcms-folder-box-active div.bcms-media-inner-controls {
+        display: block;
+    }
+
+    .bcms-list .bcms-folder-box-active div.bcms-media-name {
+        display: none;
+    }
+
+    .bcms-list .bcms-folder-box-active input.bcms-grid-input {
+        display: block;
+    }
+
+    .bcms-list .bcms-folder-box-active .bcms-icn-edit {
+        background-position: center -869px;
+    }
+
+    .bcms-list .bcms-folder-box-active a.bcms-icn-delete {
+        display: none;
+    }
+
+/*add new folder*/
+.bcms-media-addfolder-holder {
+    padding: 10px 51px;
+}
+
+.bcms-system-addfolder {
+    display: inline-block;
+    width: 56px;
+    height: 42px;
+    background: url('images/sprite-media-1.png') no-repeat 0 -126px;
+    vertical-align: middle;
+}
+
+.bcms-grid .bcms-add-folder {
+    position: relative;
+    float: left;
+    width: 105px;
+    height: 96px;
+    margin: 10px 5px 0;
+    padding: 10px 0;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    text-align: center;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+    .bcms-grid .bcms-add-folder .bcms-media-name {
+        position: absolute;
+        bottom: 10px;
+        left: 0;
+        width: 105px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .bcms-grid .bcms-add-folder .bcms-system-addfolder {
+        margin-top: 5px;
+    }
+
+.bcms-list .bcms-add-folder {
+    position: relative;
+    height: 62px;
+    padding: 0 20px 0 40px;
+    cursor: pointer;
+}
+
+    .bcms-list .bcms-add-folder .bcms-media-items-block {
+        border-left: 0;
+    }
+
+    .bcms-list .bcms-add-folder .bcms-media-items-block {
+        display: inline-block;
+        padding: 10px 15px;
+        vertical-align: middle;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+    }
+
+    .bcms-list .bcms-add-folder .bcms-media-name {
+        display: inline-block;
+        padding-left: 20px;
+        vertical-align: middle;
+        font-size: 14px;
+    }
+
+/*files in grid*/
+.bcms-grid .bcms-file-box {
+    position: relative;
+    float: left;
+    width: 105px;
+    height: 96px;
+    margin: 10px 5px 0;
+    padding: 10px 0;
+    border: 1px solid #c6c6c6;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    text-align: center;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+    .bcms-grid .bcms-file-box .bcms-media-items-block {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 105px;
+        height: 100px;
+        overflow: hidden;
+    }
+
+    .bcms-grid .bcms-file-box .bcms-system-file {
+        margin-top: 20px;
+    }
+
+    .bcms-grid .bcms-file-box .bcms-media-name {
+        position: absolute;
+        bottom: 15px;
+        left: 0;
+        width: 105px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .bcms-grid .bcms-file-box .bcms-grid-input {
+        display: none;
+        position: absolute;
+        bottom: 5px;
+        left: 4px;
+        width: 95px;
+        margin: 0;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+    }
+
+    .bcms-grid .bcms-file-box .bcms-media-edit-controls {
+        display: none;
+    }
+
+    .bcms-grid .bcms-file-box .bcms-media-inner-controls {
+        display: none;
+    }
+
+    .bcms-grid .bcms-file-box .bcms-icn-edit {
+        display: none;
+    }
+
+    .bcms-grid .bcms-file-box .bcms-icn-delete {
+        display: none;
+    }
+
+/*files in grid active box*/
+.bcms-grid .bcms-file-box-active {
+    background-color: #effcfe;
+}
+
+    .bcms-grid .bcms-file-box-active .bcms-media-name {
+        display: none;
+    }
+
+    .bcms-grid .bcms-file-box-active input.bcms-grid-input {
+        display: block;
+    }
+
+    .bcms-grid .bcms-file-box-active div.bcms-media-edit-controls {
+        display: block;
+    }
+
+/*files in list*/
+.bcms-list .bcms-file-box {
+    position: relative;
+    height: 62px;
+    padding: 0 20px 0 40px;
+    border-bottom: 1px solid #e3e3e3;
+}
+
+    .bcms-list .bcms-file-box:hover {
+        background-color: #f5f5f5;
+        cursor: pointer;
+    }
+
+    .bcms-list .bcms-file-box .bcms-icn-edit {
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        margin-top: -10px;
+    }
+
+    .bcms-list .bcms-file-box:hover a.bcms-icn-edit {
+        background-position: center -869px;
+    }
+
+        .bcms-list .bcms-file-box:hover a.bcms-icn-edit:active {
+            background-position: center -903px;
+        }
+
+    .bcms-list .bcms-file-box .bcms-media-inner-controls {
+        display: none;
+        position: absolute;
+        top: 50%;
+        right: 20px;
+        width: 130px;
+        margin-top: -17px;
+    }
+
+    .bcms-list .bcms-file-box .bcms-media-items-block {
+        display: inline-block;
+        min-width: 480px;
+        padding: 10px 15px;
+        border-left: 1px solid #e3e3e3;
+        vertical-align: middle;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+    }
+
+    .bcms-list .bcms-file-box .bcms-media-name {
+        display: inline-block;
+        max-width: 390px;
+        padding-left: 20px;
+        vertical-align: middle;
+        font-size: 14px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .bcms-list .bcms-file-box .bcms-media-edit-controls {
+        float: right;
+        margin-top: 22px;
+    }
+
+/*files in list active box*/
+.bcms-list .bcms-file-box-active {
+    background-color: #effcfe;
+}
+
+    .bcms-list .bcms-file-box-active:hover {
+        background-color: #effcfe;
+    }
+
+    .bcms-list .bcms-file-box-active div.bcms-media-inner-controls {
+        display: block;
+    }
+
+    .bcms-list .bcms-file-box-active div.bcms-media-name {
+        display: none;
+    }
+
+    .bcms-list .bcms-file-box-active input.bcms-grid-input {
+        display: block;
+    }
+
+    .bcms-list .bcms-file-box-active .bcms-icn-edit {
+        background-position: center -869px;
+    }
+
+    .bcms-list .bcms-file-box-active a.bcms-icn-delete {
+        display: none;
+    }
+
+/*additional file types*/
+.bcms-uknown-icn {
+    background-position: 0 0;
+}
+
+.bcms-media-click-active .bcms-uknown-icn {
+    background-position: -84px 0;
+}
+
+.bcms-file-box:hover .bcms-uknown-icn {
+    background-position: -84px 0;
+}
+
+.bcms-file-box-active .bcms-uknown-icn {
+    background-position: -84px 0;
+}
+
+.bcms-pdf-icn {
+    background-position: 0 -112px;
+}
+
+.bcms-media-click-active .bcms-pdf-icn {
+    background-position: -84px -112px;
+}
+
+.bcms-file-box:hover .bcms-pdf-icn {
+    background-position: -84px -112px;
+}
+
+.bcms-file-box-active .bcms-pdf-icn {
+    background-position: -84px -112px;
+}
+
+.bcms-word-icn {
+    background-position: 0 -167px;
+}
+
+.bcms-media-click-active .bcms-word-icn {
+    background-position: -84px -167px;
+}
+
+.bcms-file-box:hover .bcms-word-icn {
+    background-position: -84px -167px;
+}
+
+.bcms-file-box-active .bcms-word-icn {
+    background-position: -84px -167px;
+}
+
+.bcms-mp3-icn {
+    background-position: 0 -279px;
+}
+
+.bcms-media-click-active .bcms-mp3-icn {
+    background-position: -84px -279px;
+}
+
+.bcms-file-box:hover .bcms-mp3-icn {
+    background-position: -84px -279px;
+}
+
+.bcms-file-box-active .bcms-mp3-icn {
+    background-position: -84px -279px;
+}
+
+.bcms-mp4-icn {
+    background-position: 0 -334px;
+}
+
+.bcms-media-click-active .bcms-mp4-icn {
+    background-position: -84px -334px;
+}
+
+.bcms-file-box:hover .bcms-mp4-icn {
+    background-position: -84px -334px;
+}
+
+.bcms-file-box-active .bcms-mp4-icn {
+    background-position: -84px -334px;
+}
+
+.bcms-ppt-icn {
+    background-position: 0 -389px;
+}
+
+.bcms-media-click-active .bcms-ppt-icn {
+    background-position: -84px -389px;
+}
+
+.bcms-file-box:hover .bcms-ppt-icn {
+    background-position: -84px -389px;
+}
+
+.bcms-file-box-active .bcms-ppt-icn {
+    background-position: -84px -389px;
+}
+
+.bcms-xls-icn {
+    background-position: 0 -446px;
+}
+
+.bcms-media-click-active .bcms-xls-icn {
+    background-position: -84px -446px;
+}
+
+.bcms-file-box:hover .bcms-xls-icn {
+    background-position: -84px -446px;
+}
+
+.bcms-file-box-active .bcms-xls-icn {
+    background-position: -84px -446px;
+}
+
+.bcms-rar-icn {
+    background-position: 0 -501px;
+}
+
+.bcms-media-click-active .bcms-rar-icn {
+    background-position: -84px -501px;
+}
+
+.bcms-file-box:hover .bcms-rar-icn {
+    background-position: -84px -501px;
+}
+
+.bcms-file-box-active .bcms-rar-icn {
+    background-position: -84px -501px;
+}
+
+.bcms-wav-icn {
+    background-position: 0 -556px;
+}
+
+.bcms-media-click-active .bcms-wav-icn {
+    background-position: -84px -556px;
+}
+
+.bcms-file-box:hover .bcms-wav-icn {
+    background-position: -84px -556px;
+}
+
+.bcms-file-box-active .bcms-wav-icn {
+    background-position: -84px -556px;
+}
+
+/*context menu*/
+.bcms-media-context {
+    /*display: none;*/
+    position: absolute;
+    width: 80px;
+    padding: 10px 20px;
+    background: #eff9fd;
+    border: 1px solid #c6c6c6;
+}
+
+    .bcms-media-context:after, .bcms-media-context:before {
+        right: 100%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+    }
+
+    .bcms-media-context:after {
+        border-right-color: #eff9fd;
+        border-width: 7px;
+        top: 15%;
+        margin-top: -7px;
+    }
+
+    .bcms-media-context:before {
+        border-right-color: #c6c6c6;
+        border-width: 8px;
+        top: 15%;
+        margin-top: -8px;
+    }
+
+.bcms-media-content-link {
+    display: block;
+    font-size: 14px;
+    line-height: 24px;
+}
