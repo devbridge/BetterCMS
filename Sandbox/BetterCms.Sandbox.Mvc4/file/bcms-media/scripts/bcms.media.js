@@ -116,7 +116,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
         function MediaItemsOptionsViewModel(options) {
             var self = this;
 
-            self.searchQuery = ko.observable(options.SearchQuery);
+            self.searchQuery = ko.observable(options.GridOptions.SearchQuery);
             if (options.GridOptions) {
                 self.column = ko.observable(options.GridOptions.Column);
                 self.isDescending = ko.observable(options.GridOptions.Direction == sortDirections.descending);
