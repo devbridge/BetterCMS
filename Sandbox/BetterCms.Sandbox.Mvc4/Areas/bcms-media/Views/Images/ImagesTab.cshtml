@@ -1,9 +1,13 @@
 ﻿@using BetterCms.Module.Root.Mvc.Helpers
 
-<div class="bcms-data-bind-container">
-    <div data-bind="template: { name: 'bcms-media-list-top-block-template' }"/>
+@* Form is required for unobtrusive validation *@
+@using (Html.BeginForm())
+{
+    <div class="bcms-data-bind-container">
+        <div data-bind="template: { name: 'bcms-media-list-top-block-template' }"/>
 
-    @Html.MessagesBox("bcms-site-settings-media-messages")
+        @Html.MessagesBox("bcms-site-settings-media-messages")
 
-    <div data-bind="template: { name: 'bcms-media-list-template' }" />
-</div>
+        <div data-bind="template: { name: 'bcms-media-list-template' }" />
+    </div>
+}

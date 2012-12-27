@@ -157,8 +157,6 @@
     <Compile Include="Models\MediaImage.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
     <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />
-    <Compile Include="Mvc\List\ListRenderers\MediaListNoHeaderRenderer.cs" />
-    <Compile Include="Mvc\List\ListRenderers\MediaListRenderer.cs" />
     <Compile Include="Registration\ImageEditorJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\MediaUploadJavaScriptModuleDescriptor.cs" />
     <Compile Include="Services\IMediaAudioService.cs" />
@@ -167,7 +165,6 @@
     <Compile Include="Services\IMediaFileService.cs" />
     <Compile Include="Services\DefaultMediaImageService.cs" />
     <Compile Include="Services\IMediaImageService.cs" />
-    <Compile Include="Mvc\Grid\TableRenderers\MediaGridRenderer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registration\MediaManagerJavaScriptModuleDescriptor.cs" />
     <Compile Include="ViewModels\Images\ImageViewModel.cs" />
@@ -240,6 +237,7 @@
     <Folder Include="Command\MediaManager\" />
     <Folder Include="Command\Videos\" />
     <Folder Include="Helpers\" />
+    <Folder Include="Mvc\" />
     <Folder Include="Views\Files\" />
     <Folder Include="Views\MediaManager\" />
   </ItemGroup>
