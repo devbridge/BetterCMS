@@ -257,6 +257,9 @@
   <ItemGroup>
     <Content Include="Areas\bcms-media\Views\Images\ImagesTab.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\bcms-media\Views\Files\FilesTab.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

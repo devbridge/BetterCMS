@@ -70,6 +70,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Upload Audio.
+        /// </summary>
+        public static string AudiosTab_UploadAudio {
+            get {
+                return ResourceManager.GetString("AudiosTab_UploadAudio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Folder created successfully..
         /// </summary>
         public static string CreateFolder_CreatedSuccessfully_Message {
@@ -120,6 +129,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         public static string FilesTab_Title {
             get {
                 return ResourceManager.GetString("FilesTab_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload file.
+        /// </summary>
+        public static string FilesTab_UploadFile {
+            get {
+                return ResourceManager.GetString("FilesTab_UploadFile", resourceCulture);
             }
         }
         
@@ -385,15 +403,6 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add New Folder.
-        /// </summary>
-        public static string ImagesTab_AddNewFolder {
-            get {
-                return ResourceManager.GetString("ImagesTab_AddNewFolder", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Grid.
         /// </summary>
         public static string ImagesTab_Grid {
@@ -408,15 +417,6 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         public static string ImagesTab_List {
             get {
                 return ResourceManager.GetString("ImagesTab_List", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to New Folder.
-        /// </summary>
-        public static string ImagesTab_NewFolder {
-            get {
-                return ResourceManager.GetString("ImagesTab_NewFolder", resourceCulture);
             }
         }
         
@@ -489,6 +489,24 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         public static string MediaList_FileTypeColumn {
             get {
                 return ResourceManager.GetString("MediaList_FileTypeColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add New Folder.
+        /// </summary>
+        public static string MediaManager_AddNewFolder {
+            get {
+                return ResourceManager.GetString("MediaManager_AddNewFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Folder.
+        /// </summary>
+        public static string MediaManager_NewFolder {
+            get {
+                return ResourceManager.GetString("MediaManager_NewFolder", resourceCulture);
             }
         }
         
@@ -615,6 +633,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         public static string VideosTab_Title {
             get {
                 return ResourceManager.GetString("VideosTab_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload Video.
+        /// </summary>
+        public static string VideosTab_UploadVideo {
+            get {
+                return ResourceManager.GetString("VideosTab_UploadVideo", resourceCulture);
             }
         }
     }

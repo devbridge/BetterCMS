@@ -25,10 +25,25 @@
     <span>Loading...</span>
 </div>
 <div id="bcms-tab-4" class="bcms-tab-single">
-    <span>Loading...</span>
+    @{
+        Html.RenderAction<FilesController>(f => f.FilesTab());
+    }
 </div>
 
-<script type="text/html" id="bcms-media-list-path-template">
+<script type="text/html" id="bcms-media-list-top-block-template">
+    <div class="bcms-top-block-holder">
+        <div class="bcms-media-controls-holder">
+            <a id="bcms-list-view" class="bcms-select-list" data-bind="click: switchViewStyle, css: {'bcms-select-active': !isGrid()}"></a>
+            <a id="bcms-grid-view" class="bcms-select-grid" data-bind="click: switchViewStyle, css: {'bcms-select-active': isGrid()}"></a>
+            <div class="bcms-vertical-separator"> </div>
+            <a class="bcms-media-new-folder" data-bind="if:isRootFolder(), click: addNewFolder">@MediaGlobalization.MediaManager_NewFolder</a>
+            <a class="bcms-media-new-file" data-bind="click: uploadMedia, text: uploadButtonTitle()"></a>
+        </div>
+        <div class="bcms-search-block">
+            <input data-bind="value: gridOptions().searchQuery, valueUpdate: 'afterkeydown', enterPress: searchMedia" class="bcms-editor-field-box" type="text" placeholder="@RootGlobalization.WaterMark_Search" />
+            <div class="bcms-btn-search" data-bind="click: searchMedia">@RootGlobalization.Button_Search</div>
+        </div>
+    </div>
     <div class="bcms-breadcrumbs-holder">
         <div data-bind="foreach: path().pathFolders()">
             <a class="bcms-breadcrumbs-root" data-bind="text: pathName(), click: openMedia.bind($data, $root)"></a>
@@ -67,7 +82,7 @@
         <div class="bcms-add-folder" data-bind="if: isRootFolder()">
             <div class="bcms-media-items-block" data-bind="click: addNewFolder">
                 <div class="bcms-system-addfolder"></div>
-                <div class="bcms-media-name">@MediaGlobalization.ImagesTab_AddNewFolder</div>
+                <div class="bcms-media-name">@MediaGlobalization.MediaManager_AddNewFolder</div>
             </div>
         </div>
     </div>

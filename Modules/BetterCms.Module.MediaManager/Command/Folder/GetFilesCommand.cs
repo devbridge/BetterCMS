@@ -8,22 +8,20 @@ using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
-using BetterCms.Module.Root.ViewModels.SiteSettings;
 
-using MvcContrib.Pagination;
 using MvcContrib.Sorting;
 
 using NHibernate.Criterion;
 using NHibernate.Transform;
 
-namespace BetterCms.Module.MediaManager.Command.Images
+namespace BetterCms.Module.MediaManager.Command.Folder
 {
-    public class GetImagesCommand : CommandBase, ICommand<MediaManagerViewModel, MediaManagerItemsViewModel>
+    public class GetFilesCommand : CommandBase, ICommand<MediaManagerViewModel, MediaManagerItemsViewModel>
     {
         /// <summary>
         /// Executes this command.
         /// </summary>
-        /// <param name="request">A filter to search for specific images/folders.</param>
+        /// <param name="request">A filter to search for specific files/folders.</param>
         /// <returns>A list of tags.</returns>
         public MediaManagerItemsViewModel Execute(MediaManagerViewModel request)
         {
@@ -31,14 +29,14 @@ namespace BetterCms.Module.MediaManager.Command.Images
 
             IEnumerable<MediaViewModel> results;
             var folders = GetFolders(request);
-            var images = GetImages(request);
+            var files = GetFiles(request);
             if (request.Direction == SortDirection.Descending)
             {
-                results = images.Cast<MediaViewModel>().Concat(folders);
+                results = files.Cast<MediaViewModel>().Concat(folders);
             }
             else
             {
-                results = folders.Cast<MediaViewModel>().Concat(images);
+                results = folders.Cast<MediaViewModel>().Concat(files);
             }
 
             var model = new MediaManagerItemsViewModel(results, request, results.Count());
@@ -61,7 +59,7 @@ namespace BetterCms.Module.MediaManager.Command.Images
 
             var query = UnitOfWork.Session
                 .QueryOver(() => alias)
-                .Where(() => !alias.IsDeleted && alias.Type == MediaType.Image);
+                .Where(() => !alias.IsDeleted && alias.Type == MediaType.File);
 
             if (!string.IsNullOrWhiteSpace(request.SearchQuery))
             {
@@ -94,27 +92,27 @@ namespace BetterCms.Module.MediaManager.Command.Images
         /// <summary>
         /// Gets the folders.
         /// </summary>
-        /// <param name="request">The request.</param>
+        /// <param name="model">The model.</param>
         /// <returns>
-        /// The list with image view models
+        /// The list with file view models
         /// </returns>
-        private IList<MediaImageViewModel> GetImages(MediaManagerViewModel request)
+        private IList<MediaFileViewModel> GetFiles(MediaManagerViewModel model)
         {
-            MediaImage alias = null;
-            MediaImageViewModel modelAlias = null;
+            MediaFile alias = null;
+            MediaFileViewModel modelAlias = null;
 
             var query = UnitOfWork.Session
                 .QueryOver(() => alias)
-                .Where(() => !alias.IsDeleted && alias.Type == MediaType.Image);
+                .Where(() => !alias.IsDeleted && alias.Type == MediaType.File);
 
-            if (!string.IsNullOrWhiteSpace(request.SearchQuery))
+            if (!string.IsNullOrWhiteSpace(model.SearchQuery))
             {
-                var searchQuery = string.Format("%{0}%", request.SearchQuery);
+                var searchQuery = string.Format("%{0}%", model.SearchQuery);
                 query = query.Where(Restrictions.InsensitiveLike(Projections.Property(() => alias.Title), searchQuery));
             }
-            if (!request.CurrentFolderId.HasDefaultValue())
+            if (!model.CurrentFolderId.HasDefaultValue())
             {
-                query = query.Where(() => alias.Folder.Id == request.CurrentFolderId);
+                query = query.Where(() => alias.Folder.Id == model.CurrentFolderId);
             }
             else
             {
@@ -125,19 +123,13 @@ namespace BetterCms.Module.MediaManager.Command.Images
                     .Select(() => alias.Id).WithAlias(() => modelAlias.Id)
                     .Select(() => alias.Title).WithAlias(() => modelAlias.Name)
                     .Select(() => alias.Version).WithAlias(() => modelAlias.Version)
-
-                    // TODO: ??? Which field should go there?
-                    .Select(() => alias.Title).WithAlias(() => modelAlias.Tooltip)
                     .Select(() => alias.Size).WithAlias(() => modelAlias.Size))
+                .TransformUsing(Transformers.AliasToBean<MediaFileViewModel>());
 
-                    // TODO: ???
-                    //.Select(() => alias.OriginalUri).WithAlias(() => modelAlias.PreviewUrl))
-                .TransformUsing(Transformers.AliasToBean<MediaImageViewModel>());
+            query.AddSortingAndPaging(model);
 
-            query.AddSortingAndPaging(request);
-
-            var images = query.List<MediaImageViewModel>();
-            return images;
+            var files = query.List<MediaFileViewModel>();
+            return files;
         }
 
         /// <summary>
@@ -146,11 +138,11 @@ namespace BetterCms.Module.MediaManager.Command.Images
         /// <returns>Media folder view model</returns>
         private MediaPathViewModel LoadMediaFolder(MediaManagerViewModel request)
         {
-            var emptyFolderViewModel = new MediaFolderViewModel { Id = Guid.Empty, Type = MediaType.Image };
+            var emptyFolderViewModel = new MediaFolderViewModel { Id = Guid.Empty, Type = MediaType.File };
             var model = new MediaPathViewModel
-                            {
-                                CurrentFolder = emptyFolderViewModel
-                            };
+            {
+                CurrentFolder = emptyFolderViewModel
+            };
             var folders = new List<MediaFolderViewModel> { emptyFolderViewModel };
 
             if (!request.CurrentFolderId.HasDefaultValue())

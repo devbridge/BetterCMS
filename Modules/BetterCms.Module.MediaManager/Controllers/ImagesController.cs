@@ -2,7 +2,6 @@
 
 using BetterCms.Module.MediaManager.Command.Images;
 using BetterCms.Module.MediaManager.Content.Resources;
-using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.ViewModels.Images;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 using BetterCms.Module.Root.Models;
@@ -38,7 +37,6 @@ namespace BetterCms.Module.MediaManager.Controllers
             {
                 options = new MediaManagerViewModel();
             }
-            options.FolderType = MediaType.Image;
 
             var model = GetCommand<GetImagesCommand>().ExecuteCommand(options);
             if (model == null)

@@ -56,6 +56,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             links = {
                 loadSiteSettingsMediaManagerUrl: null,
                 loadImagesUrl: null,
+                loadFilesUrl: null,
                 
                 // Other:
                 insertImageDialogUrl: null,
@@ -71,10 +72,16 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 confirmDeleteFolderMessage: null,
                 imageNotSelectedMessageTitle: null,
                 imageNotSelectedMessageMessage: null,
+                
                 imagesTabTitle: null,
                 audiosTabTitle: null,
                 videosTabTitle: null,
                 filesTabTitle: null,
+                
+                uploadImage: null,
+                uploadAudio: null,
+                uploadVideo: null,
+                uploadFile: null,
             },
             events = {
                 mediaEdit: 'mediaEdit'
@@ -201,6 +208,20 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                     return true;
                 }
                 return false;
+            };
+
+            self.uploadButtonTitle = function () {
+                switch (self.path().type) {
+                    case mediaTypes.image:
+                        return globalization.uploadImage;
+                    case mediaTypes.audio:
+                        return globalization.uploadAudio;
+                    case mediaTypes.video:
+                        return globalization.uploadVideo;
+                    case mediaTypes.file:
+                        return globalization.uploadFile;
+                }
+                return null;
             };
         }
         
@@ -610,10 +631,12 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             };
             
             if (folderViewModel != null && folderViewModel.gridOptions() != null) {
+                
                 var query = folderViewModel.gridOptions().searchQuery();
                 if (query) {
                     params.SearchQuery = query;
                 }
+                
                 params.Column = folderViewModel.gridOptions().column();
                 params.Direction = folderViewModel.gridOptions().isDescending()
                     ? sortDirections.descending
@@ -704,7 +727,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
 
                     // Map media path
                     if (json.Data.Path) {
-                        var pathViewModel = new MediaPathViewModel(json.Data.Type);
+                        var pathViewModel = new MediaPathViewModel(json.Data.Path.CurrentFolder.Type);
                         if (json.Data.Path.CurrentFolder) {
                             var currentFolderViewModel = new MediaFolderViewModel(json.Data.Path.CurrentFolder);
                             pathViewModel.currentFolder(currentFolderViewModel);
@@ -721,7 +744,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                     }
 
                     // Map media items
-                    if (json.Data.Items && $.isArray(json.Data.Items)) {
+                    if (json.Data.Items && json.Data.Items && $.isArray(json.Data.Items)) {
 
                         for (i = 0; i < json.Data.Items.length; i++) {
                             var item = json.Data.Items[i],
@@ -868,7 +891,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 var tabContainer = dialogContainer.find(selectors.tabFilesContainer);
                 if (!tabsInitialized.files) {
                     tabsInitialized.files = true;
-                    filesViewModel = new MediaItemsViewModel(tabContainer, null /* TODO: add files url */);
+                    filesViewModel = new MediaItemsViewModel(tabContainer, links.loadFilesUrl);
 
                     initializeTab(filesViewModel, function () {
                         attachEvents(tabContainer);
