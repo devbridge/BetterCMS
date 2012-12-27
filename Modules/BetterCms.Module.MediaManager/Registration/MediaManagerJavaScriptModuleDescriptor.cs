@@ -36,7 +36,12 @@ namespace BetterCms.Module.MediaManager.Registration
                     new JavaScriptModuleGlobalization(this, "insertImageFailureMessageMessage", () => MediaGlobalization.InsertImage_FailureMessage_Message),
                     new JavaScriptModuleGlobalization(this, "deleteImageConfirmMessage", () => MediaGlobalization.DeleteImage_Confirmation_Message),
                     new JavaScriptModuleGlobalization(this, "imageNotSelectedMessageMessage", () => MediaGlobalization.ImageNotSelected_MessageMessage),
-                    new JavaScriptModuleGlobalization(this, "confirmDeleteFolderMessage", () => MediaGlobalization.DeleteFolder_ConfirmationMessage)
+                    new JavaScriptModuleGlobalization(this, "confirmDeleteFolderMessage", () => MediaGlobalization.DeleteFolder_ConfirmationMessage),
+
+                    new JavaScriptModuleGlobalization(this, "imagesTabTitle", () => MediaGlobalization.ImagesTab_Title),
+                    new JavaScriptModuleGlobalization(this, "audiosTabTitle", () => MediaGlobalization.AudiosTab_Title),
+                    new JavaScriptModuleGlobalization(this, "videosTabTitle", () => MediaGlobalization.VideosTab_Title),
+                    new JavaScriptModuleGlobalization(this, "filesTabTitle", () => MediaGlobalization.FilesTab_Title),
                 };
         }
     }

@@ -69,9 +69,12 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 insertImageFailureMessageMessage: null,
                 deleteImageConfirmMessage: null,
                 confirmDeleteFolderMessage: null,
-
                 imageNotSelectedMessageTitle: null,
                 imageNotSelectedMessageMessage: null,
+                imagesTabTitle: null,
+                audiosTabTitle: null,
+                videosTabTitle: null,
+                filesTabTitle: null,
             },
             events = {
                 mediaEdit: 'mediaEdit'
@@ -204,11 +207,12 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
         /**
         * Media path view model
         */
-        function MediaPathViewModel() {
+        function MediaPathViewModel(type) {
             var self = this;
 
             self.currentFolder = ko.observable();
             self.folders = ko.observableArray();
+            self.type = type;
             
             self.pathFolders = ko.computed(function () {
                 var range = self.folders(),
@@ -222,7 +226,20 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                     }
                 }
                 if (range.length > 0) {
-                    range[0].name('...');
+                    switch (self.type) {
+                        case mediaTypes.image:
+                            range[0].name(globalization.imagesTabTitle);
+                            break;
+                        case mediaTypes.audio:
+                            range[0].name(globalization.audiosTabTitle);
+                            break;
+                        case mediaTypes.video:
+                            range[0].name(globalization.videosTabTitle);
+                            break;
+                        case mediaTypes.file:
+                            range[0].name(globalization.filesTabTitle);
+                            break;
+                    }
                 }
                 return range;
             });
@@ -371,8 +388,8 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
 
                 var self = this;
 
-                self.pathName = ko.computed(function() {
-                    return '\\' + self.name();
+                self.pathName = ko.computed(function () {
+                    return self.name() + '/';
                 });
             }
 
@@ -675,7 +692,6 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
         */
         function parseJsonResults(json, folderViewModel) {
             var dialog = siteSettings.getModalDialog(),
-                pathViewModel = new MediaPathViewModel(),
                 i;
 
             messages.refreshBox(dialog.container, json);
@@ -688,6 +704,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
 
                     // Map media path
                     if (json.Data.Path) {
+                        var pathViewModel = new MediaPathViewModel(json.Data.Type);
                         if (json.Data.Path.CurrentFolder) {
                             var currentFolderViewModel = new MediaFolderViewModel(json.Data.Path.CurrentFolder);
                             pathViewModel.currentFolder(currentFolderViewModel);
@@ -714,21 +731,21 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                                 itemViewModel = new MediaFolderViewModel(item);
                             } else {
                                 switch (item.Type) {
-                                case mediaTypes.image:
-                                    itemViewModel = new MediaImageViewModel(item);
-                                    break;
-                                case mediaTypes.audio:
-                                    itemViewModel = new MediaAudioViewModel(item);
-                                    break;
-                                case mediaTypes.video:
-                                    itemViewModel = new MediaVideoViewModel(item);
-                                    break;
-                                case mediaTypes.file:
-                                    itemViewModel = new MediaFileViewModel(item);
-                                    break;
-                                default:
-                                    itemViewModel = null;
-                                    break;
+                                    case mediaTypes.image:
+                                        itemViewModel = new MediaImageViewModel(item);
+                                        break;
+                                    case mediaTypes.audio:
+                                        itemViewModel = new MediaAudioViewModel(item);
+                                        break;
+                                    case mediaTypes.video:
+                                        itemViewModel = new MediaVideoViewModel(item);
+                                        break;
+                                    case mediaTypes.file:
+                                        itemViewModel = new MediaFileViewModel(item);
+                                        break;
+                                    default:
+                                        itemViewModel = null;
+                                        break;
                                 }
                             }
 
