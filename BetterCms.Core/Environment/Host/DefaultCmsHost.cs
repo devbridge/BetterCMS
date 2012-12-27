@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Web;
@@ -7,6 +8,8 @@ using System.Web.Hosting;
 using System.Web.Routing;
 using System.Web.Mvc;
 
+using BetterCms.Core.DataAccess.DataContext.Migrations;
+using BetterCms.Core.Environment.Assemblies;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Host;
 using BetterCms.Core.Modules.Registration;
@@ -31,7 +34,7 @@ namespace BetterCms.Core.Environment.Host
         private volatile Version currentVersion = null;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private IModulesRegistration modulesRegistration;
 
@@ -76,13 +79,14 @@ namespace BetterCms.Core.Environment.Host
                 Logger.Info("BetterCMS host application starting...");
 
                 modulesRegistration.RegisterKnownModuleRoutes(RouteTable.Routes);
-                
+                MigrateDatabase(true);
+
                 Logger.Info("BetterCMS host application started.");
             }
             catch (Exception ex)
-            {                
+            {
                 Logger.Fatal("Failed to start BetterCMS host application.", ex);
-            }            
+            }
         }
 
         /// <summary>
@@ -146,7 +150,7 @@ namespace BetterCms.Core.Environment.Host
 
         /// <summary>
         /// Terminates current application. The application restarts on the next time a request is received for it.
-        /// </summary>        
+        /// </summary>
         public void RestartApplicationHost()
         {
             try
@@ -212,6 +216,33 @@ namespace BetterCms.Core.Environment.Host
             {
                 Logger.Warn("Failed to touch BetterCMS host application \bin folder.", ex);
                 return false;
+            }
+        }
+
+        /// <summary>
+        /// Updates database.
+        /// </summary>
+        /// <param name="up">if set to <c>true</c> [up].</param>
+        private void MigrateDatabase(bool up)
+        {
+            try
+            {
+                var descriptors = modulesRegistration.GetModules().Select(m => m.ModuleDescriptor).ToList();
+
+                descriptors = up
+                    ? descriptors.OrderByDescending(f => f.Order).ToList()
+                    : descriptors.OrderBy(f => f.Order).ToList();
+
+                DefaultMigrationRunner runner = new DefaultMigrationRunner(new DefaultAssemblyLoader());
+
+                foreach (var descriptor in descriptors)
+                {
+                    runner.Migrate(descriptor, up);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex);
             }
         }
     }
