@@ -26,7 +26,7 @@ namespace BetterCms.Module.Pages.ViewModels.Widgets
         /// <value>
         /// The image URL.
         /// </value>        
-        [StringLength(MaxLength.Url)]
+        [StringLength(MaxLength.Url)]        
         public virtual string PreviewImageUrl { get; set; }
 
         /// <summary>

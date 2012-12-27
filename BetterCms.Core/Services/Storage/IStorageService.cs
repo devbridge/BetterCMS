@@ -11,5 +11,9 @@ namespace BetterCms.Core.Services.Storage
         DownloadResponse DownloadObject(Uri uri);
 
         void CopyObject(Uri sourceUri, Uri destinationUri);
+
+        void RemoveObject(Uri uri);
+
+        void RemoveObjectBucket(Uri uri);
     }
 }

@@ -71,6 +71,26 @@ namespace BetterCms.Core.Services.Storage
             }
         }
 
+        public void RemoveObject(Uri uri)
+        {
+            CheckUri(uri);
+            if (File.Exists(uri.LocalPath))
+            {
+                File.Delete(uri.LocalPath);
+            }
+        }
+
+        public void RemoveObjectBucket(Uri uri)
+        {
+            CheckUri(uri);
+            
+            string pathRoot = Path.GetDirectoryName(uri.LocalPath);
+            if (pathRoot != null && !Directory.Exists(pathRoot))
+            {
+                Directory.Delete(pathRoot);
+            }
+        }
+
         private void CheckUri(Uri uri)
         {            
             if (!Uri.CheckSchemeName(uri.Scheme) || !uri.Scheme.Equals(Uri.UriSchemeFile))

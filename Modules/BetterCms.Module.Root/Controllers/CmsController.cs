@@ -51,12 +51,13 @@ namespace BetterCms.Module.Root.Controllers
         public ActionResult Index()
         {
             var virtualPath = HttpUtility.UrlDecode(Http.GetAbsolutePath());
-            
+            bool pageNotFound = false;
             CmsRequestViewModel model = GetPageModel(virtualPath);
            
             if (model == null && !string.IsNullOrWhiteSpace(cmsConfiguration.PageNotFoundUrl))            
             {
                 model = GetPageModel(HttpUtility.UrlDecode(cmsConfiguration.PageNotFoundUrl));
+                pageNotFound = true;
             }
 
             if (model != null)
@@ -67,8 +68,14 @@ namespace BetterCms.Module.Root.Controllers
                 }
                 
                 if (model.RenderPage != null)
-                {                    
+                {
+                    if (pageNotFound)
+                    {
+                        Response.StatusCode = 404;
+                    }
+
                     ViewBag.pageId = model.RenderPage.Id;
+                    
                     return View(model.RenderPage);
                 }
             }

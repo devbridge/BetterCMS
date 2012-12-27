@@ -20,6 +20,11 @@ namespace BetterCms.Module.MediaManager.Services
             this.configuration = configuration;
         }
 
+        public void RemoveFile(MediaFile file)
+        {
+            throw new NotImplementedException();
+        }
+
         /*public MediaFile UploadTemporaryFile(string fileName, Stream inputStream)
         {
             string root = configuration.Storage.ContentRoot;

@@ -18,7 +18,7 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
         links = {
             loadUploadFilesDialogUrl: null,
             uploadFileToServerUrl: null,
-            cancelFileUploadUrl: null
+            undoFileUploadUrl: null
         },
         
         globalization = {
@@ -60,46 +60,53 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
         
     function UploadsViewModel() {
         var self = this,
-            abortUpload = function(fileViewModel) {
-                var file = fileViewModel.file;
-                if (file.uploadCompleted() == false && file.uploadFailed() == false) {
-                    file.abort();
-                }
-                self.uploads.remove(fileViewModel);
-            },
-            removeUploads = function(fileNamesToRemove) {
 
+            undoUpload = function (fileViewModel) {
+                $.ajax({
+                    url: links.undoFileUploadUrl,
+                    data
+                })                    
+            },
+            
+            abortUpload = function (fileViewModel) {
+                self.uploads.remove(fileViewModel);
+                
+                if (self.activeUploads.indexOf(fileViewModel) !== -1) {
+                    self.activeUploads.remove(fileViewModel);
+                }
+                
+                if (fileViewModel.uploadCompleted() === false && fileViewModel.uploadFailed() === false) {
+                    fileViewModel.file.abort();
+                } else if (fileViewModel.uploadCompleted() === true) {
+                    undoUpload(fileViewModel);
+                }                
             };
         
         self.uploads = ko.observableArray();
-        self.showProgress = ko.observable(false);
-
-        self.cancelAllUploads = function () {
-            var fileNamesToRemove = [];
-            $.each(self.uploads, function () {
-                fileNamesToRemove.push(this.fileName);
-                abortUpload(this);
-            });
-            removeUploads(fileNamesToRemove);
+        self.activeUploads = ko.observableArray();
+        
+        self.cancelAllActiveUploads = function () {
+            var uploads = self.activeUploads.removeAll();
+            for (var i = 0; i < uploads.length; i++) {                                                
+                abortUpload(uploads[i]);
+            }
         };
         
-        self.cancelUpload = function (fileViewModel) {
-            var fileNamesToRemove = [];
-            fileNamesToRemove.push(fileViewModel.fileName);
+        self.removeUpload = function (fileViewModel) {            
             abortUpload(fileViewModel);
-            removeUploads(fileNamesToRemove);
         };
     } 
 
     function FileViewModel(file) {
         var self = this;
         self.file = file;
+        self.fileId = ko.observable('');
         self.uploadProgress = ko.observable(0);
         self.uploadCompleted = ko.observable(false);
         self.uploadFailed = ko.observable(false);
         self.uploadSpeedFormatted = ko.observable();
         self.fileName = file.fileName;
-        self.fileSizeFormated = formatFileSize(file.fileSize);
+        self.fileSizeFormated = formatFileSize(file.fileSize);        
     }
         
     function initUploadFilesDialogEvents(dialog, options) {
@@ -137,21 +144,31 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
                 maxSimultaneousUploads: 4,
                 onFileAdded: function (file) {
                     var fileModel = new FileViewModel(file);
+                    uploadsModel.activeUploads.push(fileModel);
                     uploadsModel.uploads.push(fileModel);
                     
                     file.on({
                         // Called after received response from the server
-                        onCompleted: function(response) {
-                            fileModel.uploadCompleted(true);
+                        onCompleted: function (data) {
+                            var result = JSON.parse(data);
+                            if (result.Success) {
+                                //uploadsModel.activeUploads.remove(fileModel);
+                                //fileModel.uploadCompleted(true);
+                                fileModel.fileId(result.Data.FileId);
+                            } else {
+                                fileModel.uploadFailed(true);
+                            }
                         },
 
                         // Called during upload progress, first parameter is decimal value from 0 to 100.
-                        onProgress: function (progress, fileSize, uploadedBytes) {
-                            fileModel.uploadProgress(parseInt(progress, 10));                            
+                        onProgress: function (progress) {
+                            if (progress < 90)
+                            fileModel.uploadProgress(parseInt(progress, 10));
                         },
                         
-                        onError: function(response) {
+                        onError: function () {                            
                             fileModel.uploadFailed(true);
+                            //uploadsModel.activeUploads.remove(fileModel);
                         }
                     });
                 }
@@ -183,7 +200,18 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
         }
 
         return trimTrailingZeros(sizeInBytes / gigaByte) + ' GB';
-    }       
+    }
+        
+    /**
+    * Initializes page module.
+    */
+    mediaUpload.init = function () {        
+    };
+
+    /**
+    * Register initialization
+    */
+    bcms.registerInit(mediaUpload.init);
         
     return mediaUpload;
 });

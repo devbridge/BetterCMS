@@ -35,7 +35,7 @@
         }
         <script type="text/html" id="bcms-file-upload-template">
             <div data-bind="visible: activeUploads().length > 0">
-                <div class="bcms-content-titles">@MediaGlobalization.MultiFileUpload_Uploading<a class="bcms-upload-cancel-link">@MediaGlobalization.MultiFileUpload_CancelUploading</a></div>
+                <div class="bcms-content-titles">@MediaGlobalization.MultiFileUpload_Uploading<a class="bcms-upload-cancel-link" data-bind="click: cancelAllActiveUploads">@MediaGlobalization.MultiFileUpload_CancelUploading</a></div>
             </div>
             <div data-bind="foreach: uploads">
                 <div data-bind="css: { 'bcms-upload-block':true, 'bcms-upload-success':uploadCompleted(), 'bcms-upload-failed':uploadFailed() }">
@@ -54,8 +54,7 @@
                     <div class="bcms-uploaded-info" data-bind="text: uploadProgress() + '%'"></div>
                     <div class="bcms-upload-size-info"><b>@MediaGlobalization.MultiFileUpload_FileSize</b><span data-bind="text: fileSizeFormated"></span></div>
                     <div class="bcms-media-delete-holder">
-                        <a class="bcms-icn-delete" style="display:none" data-bind="click: function() { $root.cancelUpload($data); }, visible: uploadCompleted() || uploadFailed()">@RootGlobalization.Button_Remove</a>
-                        <a class="bcms-icn-delete" data-bind="click: function() { $root.cancelUpload($data); }, visible: !uploadCompleted() && !uploadFailed()">@RootGlobalization.Button_Cancel</a>
+                        <a class="bcms-icn-delete" data-bind="click: function() { $root.removeUpload($data); }, text: uploadCompleted() || uploadFailed() ? '@RootGlobalization.Button_Remove' : '@RootGlobalization.Button_Cancel'"></a>                        
                     </div>                  
                 </div>
             </div>

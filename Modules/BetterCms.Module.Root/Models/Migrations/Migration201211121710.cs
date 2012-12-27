@@ -1,4 +1,5 @@
 ﻿using BetterCms.Core.DataAccess.DataContext.Migrations;
+using BetterCms.Core.Models;
 
 using FluentMigrator;
 
@@ -14,7 +15,6 @@ namespace BetterCms.Module.Root.Models.Migrations
 
         public override void Up()
         {
-          
         }
 
         public override void Down()
