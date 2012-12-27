@@ -19,18 +19,12 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// <summary>
         /// Images tab.
         /// </summary>
-        /// <param name="options">The options.</param>
-        /// <returns>The view.</returns>
-        public ActionResult ImagesTab(MediaManagerViewModel options)
+        /// <returns>
+        /// The view.
+        /// </returns>
+        public ActionResult ImagesTab()
         {
-            if (options == null)
-            {
-                options = new MediaManagerViewModel();
-            }
-            options.FolderType = MediaType.Image;
-
-            var model = GetCommand<GetImagesCommand>().ExecuteCommand(options);
-            return PartialView(model);
+            return PartialView();
         }
 
         /// <summary>

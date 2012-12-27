@@ -4,8 +4,6 @@
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
 
-@model BetterCms.Module.MediaManager.ViewModels.MediaManager.MediaManagerViewModel
-
 <div class="bcms-innertab-header">
     <a class="bcms-tab bcms-tab-active" href="#bcms-tab-1" id="bcms-tab-images">Images</a>
     <a class="bcms-tab" href="#bcms-tab-2" id="bcms-tab-videos">Videos</a>
@@ -17,7 +15,7 @@
 
 <div id="bcms-tab-1" class="bcms-tab-single">
     @{
-        Html.RenderAction<ImagesController>(f => f.ImagesTab(null));
+        Html.RenderAction<ImagesController>(f => f.ImagesTab());
     }
 </div>
 <div id="bcms-tab-2" class="bcms-tab-single">
@@ -32,18 +30,8 @@
 
 <script type="text/html" id="bcms-media-list-path-template">
     <div class="bcms-breadcrumbs-holder">
-        @Html.Hidden("CurrentFolderId", string.Empty, new Dictionary<string, object>
-                                                          {
-                                                              {"id", "bcms-current-media-folder-id"}, 
-                                                              {"data-bind", "value: path().currentFolder().id()"}
-                                                          })
-        @Html.Hidden("MediaType", string.Empty, new Dictionary<string, object>
-                                                    {
-                                                        {"id", "bcms-current-media-folder-type"}, 
-                                                        {"data-bind", "value: path().currentFolder().type"}
-                                                    })
         <div data-bind="foreach: path().pathFolders()">
-            <a class="bcms-breadcrumbs-root" href="#nolink" data-bind="text: pathName(), click: openMedia.bind($data, $root)"></a>
+            <a class="bcms-breadcrumbs-root" data-bind="text: pathName(), click: openMedia.bind($data, $root)"></a>
         </div>
     </div>
 </script>
@@ -53,10 +41,10 @@
         <div class="bcms-media-sorting-block">
             <div class="bcms-media-col-1"></div>
             <div class="bcms-media-col-2">
-                <a class="bcms-sort-arrow" data-bind="click: sortMedia.bind($root, 'Name')">@MediaGlobalization.MediaList_FileNameColumn</a>
+                <a class="bcms-sort-arrow" data-bind="click: sortMedia.bind($root, 'Title'), css: {'bcms-sort-arrow-top': isSortedAscending('Title'), 'bcms-sort-arrow-bottom': isSortedDescending('Title') }">@MediaGlobalization.MediaList_FileNameColumn</a>
             </div>
             <div class="bcms-media-col-3">
-                <a class="bcms-sort-arrow" data-bind="click: sortMedia.bind($root, 'Extension')">@MediaGlobalization.MediaList_FileTypeColumn</a>
+                <a class="bcms-sort-arrow" data-bind="click: sortMedia.bind($root, 'FileExtension'), css: {'bcms-sort-arrow-top': isSortedAscending('FileExtension'), 'bcms-sort-arrow-bottom': isSortedDescending('FileExtension') }">@MediaGlobalization.MediaList_FileTypeColumn</a>
             </div>
         </div>
         <div data-bind="foreach: medias">

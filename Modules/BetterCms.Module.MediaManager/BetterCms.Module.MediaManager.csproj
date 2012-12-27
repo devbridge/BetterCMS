@@ -230,14 +230,8 @@
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\Folder.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Image.cshtml" />
     <EmbeddedResource Include="Views\Files\FilesTab.cshtml" />
     <EmbeddedResource Include="Views\Videos\VideosTab.cshtml" />
-    <EmbeddedResource Include="Views\Shared\MediaControl.cshtml" />
-    <EmbeddedResource Include="Views\Shared\File.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Path.cshtml" />
-    <EmbeddedResource Include="Views\Shared\NewFolder.cshtml" />
     <EmbeddedResource Include="Views\Upload\MultiFileUpload.cshtml" />
     <EmbeddedResource Include="Views\Images\ImageEditor.cshtml" />
     <EmbeddedResource Include="Views\Images\ImageCropper.cshtml" />
