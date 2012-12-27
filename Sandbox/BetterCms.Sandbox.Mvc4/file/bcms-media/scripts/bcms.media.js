@@ -30,11 +30,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 deletingIcon: '.bcms-icn-delete',
                 deletingIconNonFolder: '.bcms-media-file-box .bcms-icn-delete',
                 imageItemParentContainer: '.bcms-media-file-box, .bcms-media-folder-box',
-                switchViewLink: '.bcms-view-switch',
-                switchViewLinkActive: '.bcms-view-switch.bcms-select-active',
-                switchViewLinkGrid: '#bcms-grid-view',
                 selectedMediaImage: '.bcms-table-click-active',
-                switchContainer: '.bcms-grid-style, .bcms-list-style',
                 mediaEditControls: '.bcms-media-edit-controls',
                 imageListForm: '#bcms-images-tag-form',
                 imageListSearch: '.bcms-btn-search',
@@ -81,11 +77,6 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 mediaEdit: 'mediaEdit'
             },
             classes = {
-                gridView: 'bcms-select-grid',
-                listView: 'bcms-select-list',
-                gridViewStyle: 'bcms-grid',
-                listViewStyle: 'bcms-list',
-                activeSwitch: 'bcms-select-active',
                 activeListItem: 'bcms-table-click-active',
                 editableListItem: 'bcms-media-row-active',
                 activeMediaRow: 'bcms-media-row-active'
@@ -139,6 +130,8 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             self.medias = ko.observableArray();
             self.path = ko.observable();
             self.container = container;
+            self.isGrid = ko.observable(false);
+            
             self.gridOptions = ko.observable();
 
             self.isRootFolder = function () {
@@ -167,6 +160,10 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
 
             self.sortMedia = function() {
                 alert("TODO: Sort media...");
+            };
+
+            self.switchViewStyle = function() {
+                self.isGrid(!self.isGrid());
             };
         }
         
@@ -476,9 +473,9 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
         */
         function attachEvents(tabContainer) {
             // Attach to switch view layout link.
-            tabContainer.find(selectors.switchViewLink).on('click', function () {
+            /*tabContainer.find(selectors.switchViewLink).on('click', function () {
                 media.switchView(this, tabContainer);
-            });
+            });*/
 
             // Setup inline editor.
             /*var inlineEditSelectors = {
@@ -563,27 +560,6 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                     parseJsonResults(json, folderViewModel);
                 };
             loadTabData(url, onComplete);
-        };
-
-        /**
-        * Switches items view style.
-        */
-        media.switchView = function (switcher, tabContainer) {
-            switcher = $(switcher);
-            if (!switcher.hasClass(classes.activeSwitch)) {
-                tabContainer.find(selectors.switchViewLink).removeClass(classes.activeSwitch);
-                switcher.addClass(classes.activeSwitch);
-
-                var container = tabContainer.find(selectors.switchContainer);
-                if (switcher.hasClass(classes.gridView)) {
-                    container.removeClass(classes.listViewStyle);
-                    container.addClass(classes.gridViewStyle);
-                }
-                else {
-                    container.removeClass(classes.gridViewStyle);
-                    container.addClass(classes.listViewStyle);
-                }
-            }
         };
 
         /**

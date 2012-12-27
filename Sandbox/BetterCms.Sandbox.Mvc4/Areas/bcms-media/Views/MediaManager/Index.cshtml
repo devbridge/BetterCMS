@@ -49,7 +49,7 @@
 </script>
 
 <script type="text/html" id="bcms-media-list-template">
-    <div id="bcms-view-container" class="bcms-list">
+    <div id="bcms-view-container" data-bind="css: { 'bcms-list': !isGrid(), 'bcms-grid': isGrid() }" class="bcms-list">
         <div class="bcms-media-sorting-block">
             <div class="bcms-media-col-1"></div>
             <div class="bcms-media-col-2">

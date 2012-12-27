@@ -22,8 +22,8 @@
     
     <div class="bcms-top-block-holder">
         <div class="bcms-media-controls-holder">
-            <a id="bcms-list-view" class="bcms-view-switch bcms-select-list bcms-select-active">@MediaGlobalization.ImagesTab_List</a>
-            <a id="bcms-grid-view" class="bcms-view-switch bcms-select-grid">@MediaGlobalization.ImagesTab_Grid</a>
+            <a id="bcms-list-view" class="bcms-select-list" data-bind="click: switchViewStyle, css: {'bcms-select-active': !isGrid()}">@MediaGlobalization.ImagesTab_List</a>
+            <a id="bcms-grid-view" class="bcms-select-grid" data-bind="click: switchViewStyle, css: {'bcms-select-active': isGrid()}">@MediaGlobalization.ImagesTab_Grid</a>
             <div class="bcms-vertical-separator"> </div>
             <a class="bcms-media-new-folder" data-bind="if:isRootFolder(), click: addNewFolder">@MediaGlobalization.ImagesTab_NewFolder</a>
             <a class="bcms-media-new-file" data-bind="click: uploadMedia">@MediaGlobalization.ImagesTab_UploadImage</a>
