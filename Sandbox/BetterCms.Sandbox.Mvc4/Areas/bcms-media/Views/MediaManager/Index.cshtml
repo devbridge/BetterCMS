@@ -49,7 +49,7 @@
 </script>
 
 <script type="text/html" id="bcms-media-list-template">
-    <div id="bcms-view-container" class="bcms-list-style">
+    <div id="bcms-view-container" class="bcms-list">
         <div class="bcms-media-sorting-block">
             <div class="bcms-media-col-1"></div>
             <div class="bcms-media-col-2">
@@ -60,15 +60,14 @@
             </div>
         </div>
         <div data-bind="foreach: medias">
-            <div data-bind="css: { 'bcms-media-folder-box': isFolder(), 'bcms-image-box': isImage(), 'bcms-media-file-box': isFile() && !isImage(), 'bcms-media-row-active': isActive(), 'bcms-media-click-active': isSelected() }, click: selectMedia.bind($data, $root)">
+            <div data-bind="css: { 'bcms-folder-box': isFolder(), 'bcms-image-box': isImage(), 'bcms-file-box': isFile() && !isImage(), 'bcms-folder-box-active': isFolder() && isActive(), 'bcms-media-click-active': isSelected() }, click: selectMedia.bind($data, $root)">
                 <div class="bcms-media-items-block">
                     <div data-bind="css: { 'bcms-system-folder': isFolder(), 'bcms-media-file-holder': isFile() }" />
-                    <div class="bcms-system-folder-name" data-bind="text: name(), click: openMedia.bind($data, $root)"></div>
+                    <div class="bcms-media-name" data-bind="text: name(), click: openMedia.bind($data, $root)"></div>
                 </div>
                 <div class="bcms-media-edit-controls">
-                    <div class="bcms-system-folder-name" data-bind="text: name(), click: openMedia.bind($data, $root)" />
-                    <input type="text" name="itemname" data-bind="value: name()" />
-                    <div class="bcms-media-inner-controls">
+                    <input class="bcms-grid-input" type="text" name="itemname" data-bind="value: name()" />
+                    <div class="bcms-media-inner-controls" data-bind="if: !isImage()">
                         <div class="bcms-btn-small" data-bind="click: saveMedia.bind($data, $root)">@RootGlobalization.Button_Save</div>
                         <div class="bcms-btn-links-small" data-bind="click: cancelEditMedia.bind($data, $root)">@RootGlobalization.Button_Cancel</div>
                     </div>
@@ -77,7 +76,7 @@
                 </div>
             </div>
         </div>
-        <div class="bcms-add-folder" data-bind="visible: isRootFolder()">
+        <div class="bcms-add-folder" data-bind="if: isRootFolder()">
             <div class="bcms-media-items-block" data-bind="click: addNewFolder">
                 <div class="bcms-system-addfolder"></div>
                 <div class="bcms-media-name">@MediaGlobalization.ImagesTab_AddNewFolder</div>

@@ -56,13 +56,13 @@
                         @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_AddTags_Tooltip_Title, PagesGlobalization.EditPageProperties_BasicPropertiesTab_AddTags_Tooltip_Description)
                         <div class="bcms-content-titles">
                             @PagesGlobalization.EditPageProperties_BasicPropertiesTab_AddTags_Title
-                                <div class=" bcms-btn-plus bcms-tag-btn-expand">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PlusButton</div>
-                                <div class="bcms-tags-field-holder" style="display: none;">
-                                    <input type="text" class="bcms-add-tags-field" style="width: 107px;" />
-                                </div>
+                            <div class=" bcms-btn-plus bcms-tag-btn-expand">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PlusButton</div>
+                            <div class="bcms-tags-field-holder" style="display: none;">
+                                <input type="text" class="bcms-add-tags-field" style="width: 107px;" />
+                            </div>
                         </div>
                         <div class="bcms-single-tag-holder" id="bcms-tags-container">
-                           @if (Model.Tags != null )
+                            @if (Model.Tags != null )
                             {
                                 for (int i = 0; i < Model.Tags.Count; i++)
                                 {
@@ -74,6 +74,24 @@
                                     </div>
                                 }
                             }
+                        </div>
+                    </div>
+                    @Html.Partial("Partial/PagePropertiesEditPermalink")
+
+                    <div class="bcms-input-list-holder">
+                        @Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_Tooltip_Title, PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_Tooltip_Description)
+                        <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_Title</div>
+                        <div class="bcms-checkbox-holder">
+                            @Html.CheckBoxFor(model => model.IsVisibleToEveryone)
+                            @PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_VisibleToEveryone
+                        </div>
+                        <div class="bcms-checkbox-holder">
+                            @Html.CheckBoxFor(model => model.UseNoFollow)
+                            @PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseNoFollow
+                        </div>
+                        <div class="bcms-checkbox-holder">
+                            @Html.CheckBoxFor(model => model.UseNoIndex)
+                            @PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseNoIndex
                         </div>
                     </div>
                     <div class="bcms-input-list-holder">
@@ -109,25 +127,7 @@
                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageCss_Title</div>
                     @Html.TextAreaFor(model => model.PageCSS, new { @class = "bcms-editor-field-area", @style = "width: 523px;" })
                 </div>
-
-                @Html.Partial("Partial/PagePropertiesEditPermalink")
-
-                <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_Tooltip_Title, PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_Tooltip_Description)
-                    <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_Title</div>
-                    <div class="bcms-checkbox-holder">
-                        @Html.CheckBoxFor(model => model.IsVisibleToEveryone)
-                        @PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_VisibleToEveryone
-                    </div>
-                    <div class="bcms-checkbox-holder">
-                        @Html.CheckBoxFor(model => model.UseNoFollow)
-                        @PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseNoFollow
-                    </div>
-                    <div class="bcms-checkbox-holder">
-                        @Html.CheckBoxFor(model => model.UseNoIndex)
-                        @PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseNoIndex
-                    </div>
-                </div>
+                
             </div>
 
             <div id="bcms-tab-3" class="bcms-tab-single">

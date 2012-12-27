@@ -421,7 +421,7 @@
     <value>This page is visible to everyone</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_Title" xml:space="preserve">
-    <value>Advanced Properties</value>
+    <value>JavaScript &amp; CSS</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_UseNoFollow" xml:space="preserve">
     <value>No follow</value>
@@ -475,7 +475,7 @@
     <value>Page image</value>
   </data>
   <data name="EditPageProperties_BasicPropertiesTab_PageName_Title" xml:space="preserve">
-    <value>Page name</value>
+    <value>Title</value>
   </data>
   <data name="EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Description" xml:space="preserve">
     <value>Page title</value>
@@ -502,7 +502,7 @@
     <value>Layout</value>
   </data>
   <data name="EditPageProperties_LayoutPropertiesTab_Title" xml:space="preserve">
-    <value>Layout</value>
+    <value>Template</value>
   </data>
   <data name="EditPageProperties_PagePermalink_InvalidMessage" xml:space="preserve">
     <value>Page permalink is invalid. Link must start and end with "/" and can contain only following characters: '0-9', 'a-z', '-', '/', '_'</value>

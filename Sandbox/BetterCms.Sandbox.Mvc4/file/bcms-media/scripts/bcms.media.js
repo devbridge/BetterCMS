@@ -83,8 +83,8 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             classes = {
                 gridView: 'bcms-select-grid',
                 listView: 'bcms-select-list',
-                gridViewStyle: 'bcms-grid-style',
-                listViewStyle: 'bcms-list-style',
+                gridViewStyle: 'bcms-grid',
+                listViewStyle: 'bcms-list',
                 activeSwitch: 'bcms-select-active',
                 activeListItem: 'bcms-table-click-active',
                 editableListItem: 'bcms-media-row-active',
@@ -120,6 +120,17 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
         media.parameterNames = parameterNames;
 
         /**
+        * Media's current folder sort / search / paging option view model
+        */
+        function MediaItemsOptionsViewModel(folder) {
+            var self = this;
+
+            self.searchQuery = ko.observable(folder.SearchQuery);
+            self.column = ko.observable(folder.Column);
+            self.direction = ko.observable(folder.Direction);
+        }
+
+        /**
         * Media's current folder view model
         */
         function MediaItemsViewModel(container) {
@@ -128,7 +139,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             self.medias = ko.observableArray();
             self.path = ko.observable();
             self.container = container;
-            self.sortOptions = ko.observable();
+            self.gridOptions = ko.observable();
 
             self.isRootFolder = function () {
                 if (self.path != null && self.path().folders != null && self.path().folders().length > 1) {
@@ -139,8 +150,8 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
 
             self.addNewFolder = function () {
                 var newFolder = new MediaFolderViewModel({
-                    isActive: true,
-                    type: self.path().currentFolder().type
+                    IsActive: true,
+                    Type: self.path().currentFolder().type
                 });
 
                 self.medias.unshift(newFolder);
