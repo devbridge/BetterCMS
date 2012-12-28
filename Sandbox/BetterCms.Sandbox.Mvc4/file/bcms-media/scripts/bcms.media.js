@@ -559,8 +559,9 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
 
                     // TODO: implement image insert with parameters.
                     if (true) {
-                        dialog.close();
-                        addImageToEditorWithOptions(imgEditor, selectedItem.id());
+                        imageEditor.onInsertImage(selectedItem.id(), function (imageUrl, caption, align) {
+                            addImageToEditor(imgEditor, imageUrl, caption, align);
+                        });
                     } else {
                         var url = $.format(links.getImageUrl, selectedItem.id());
                         $.ajax({
@@ -579,15 +580,6 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                         });
                     }
                 },
-            });
-        };
-
-        /**
-        * Show image insert options.
-        */
-        function addImageToEditorWithOptions(imgEditor, imageId) {
-            imageEditor.onInsertImage(imageId, function (imageUrl, caption, align) {
-                addImageToEditor(imgEditor, imageUrl, caption, align);
             });
         };
 

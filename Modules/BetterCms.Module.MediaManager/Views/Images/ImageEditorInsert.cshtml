@@ -23,17 +23,7 @@
                     <div class="bcms-file-info-text"><b>@MediaGlobalization.ImageEditor_Dialog_FileName:</b> <span id="image-file-name">@(Model.FileName).@Model.FileExtension</span></div>
                     <div class="bcms-file-info-text"><b>@MediaGlobalization.ImageEditor_Dialog_FileSize:</b> <span id="image-file-size">@Model.FileSize</span></div>
                     <div class="bcms-file-info-text">
-                        <b>@MediaGlobalization.ImageEditor_Dialog_Dimentions:</b> <span id="image-dimensions">@Model.ImageWidth x @Model.ImageHeight</span> <a class="bcms-file-link">@RootGlobalization.Button_Edit</a>
-                        <div class="bcms-file-edit" style="display: none;">
-                            <a class="bcms-edit-btn-close">@RootGlobalization.Button_Close</a>
-                            @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_ChangeSize_Tooltip_Title, MediaGlobalization.ImageEditor_Dialog_ChangeSize_Tooltip_Description)
-                            <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_ChangeSize_Title</div>
-                            <b>@MediaGlobalization.ImageEditor_Dialog_ChangeSize_Width:</b>
-                            @Html.TextBoxFor(f => f.ImageWidth, new { @class = "bcms-editor-field-box", @style = "width: 80px;", @id = "image-width" })
-                            <b>@MediaGlobalization.ImageEditor_Dialog_ChangeSize_Height:</b>
-                            @Html.TextBoxFor(f => f.ImageHeight, new { @class = "bcms-editor-field-box", @style = "width: 80px;", @id = "image-height" })
-                            <a class="bcms-btn-small" id="bcms-save-imagesize">@RootGlobalization.Button_Ok</a>
-                        </div>
+                        <b>@MediaGlobalization.ImageEditor_Dialog_Dimentions:</b> <span id="image-dimensions">@Model.ImageWidth x @Model.ImageHeight</span>
                     </div>
                     <div class="bcms-file-info-alignment">
                         <b>@MediaGlobalization.ImageEditor_Dialog_AligmentTitle:</b>
@@ -56,8 +46,6 @@
                 <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_Caption:</div>
                 @Html.TextBoxFor(f => f.Caption, new { @class = "bcms-editor-field-box", @style = "width: 540px;", @id = "Caption" })
             </div>
-            <div class="bcms-btn-main">@MediaGlobalization.ImageEditor_Dialog_LinkToImageCropping</div>
-            @Html.HiddenSubmit()
         }
     </div>
 </div>
