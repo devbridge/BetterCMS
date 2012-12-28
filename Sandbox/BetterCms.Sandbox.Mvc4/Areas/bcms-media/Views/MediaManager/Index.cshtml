@@ -67,19 +67,28 @@
                     <a class="bcms-sort-arrow" data-bind="click: sortMedia.bind($root, 'FileExtension'), css: {'bcms-sort-arrow-top': isSortedAscending('FileExtension'), 'bcms-sort-arrow-bottom': isSortedDescending('FileExtension') }">@MediaGlobalization.MediaList_FileTypeColumn</a>
                 </div>
             </div>
+            
+            <!-- ko if: !isRootFolder() -->
+            <div class="bcms-folder-box">
+                <div class="bcms-media-items-block">
+                    <div class="bcms-system-folder" data-bind="click: openRoot" />
+                    <div class="bcms-media-name" data-bind="click: openRoot">...</div>
+                </div>
+            </div>
+            <!-- /ko -->
+
             <div data-bind="foreach: medias">
                 <div data-bind="css: { 'bcms-folder-box': isFolder(), 'bcms-image-box': isImage(), 'bcms-file-box': isFile() && !isImage(), 'bcms-folder-box-active': isFolder() && isActive(), 'bcms-media-click-active': isSelected() }, click: selectMedia.bind($data, $root)">
                     <div class="bcms-media-items-block">
-                        <div data-bind="css: { 'bcms-system-folder': isFolder(), 'bcms-media-file-holder': isFile() }" />
+                        <div data-bind="css: { 'bcms-system-folder': isFolder(), 'bcms-media-file-holder': isFile() }, click: openMedia.bind($data, $root)" />
                         <div class="bcms-media-name" data-bind="text: name(), click: openMedia.bind($data, $root)"></div>
                     </div>
                     <div class="bcms-media-edit-controls">
                         @Html.TextBoxFor(m => m.Name, new Dictionary<string, object>
                             {
-                                {"data-bind", "value: name, valueUpdate: 'afterkeydown'"},
+                                {"data-bind", "value: name, valueUpdate: 'afterkeydown', enterPress: saveMedia.bind($data, $root), escPress: cancelEditMedia.bind($data, $root), hasfocus: isActive(), event: {blur: blurMediaField.bind($data, $root)}, attr: {id: nameDomId} "},
                                 {"class", "bcms-grid-input"},
                                 {"Name", (string) null},
-                                {"Id", (string) null},
                             })
 
                         <div class="bcms-media-inner-controls" data-bind="if: !isImage()">
@@ -91,6 +100,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="bcms-add-folder" data-bind="if: isRootFolder()">
                 <div class="bcms-media-items-block" data-bind="click: addNewFolder">
                     <div class="bcms-system-addfolder"></div>

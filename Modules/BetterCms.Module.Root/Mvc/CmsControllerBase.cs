@@ -156,6 +156,21 @@ namespace BetterCms.Module.Root.Mvc
         }
 
         /// <summary>
+        /// Creates a <see cref="T:System.Web.Mvc.JsonResult" /> object that serializes the specified object to JavaScript Object Notation (JSON) format.
+        /// </summary>
+        /// <param name="success">The request result.</param>
+        /// <param name="data">The JavaScript object graph to serialize.</param>
+        /// <param name="behavior">Specifies whether HTTP GET requests from the client are allowed.</param>
+        /// <returns>
+        /// The JSON result object that serializes the specified object to JSON format.
+        /// </returns>
+        [NonAction]
+        public virtual JsonResult WireJson(bool success, object data, JsonRequestBehavior behavior = JsonRequestBehavior.DenyGet)
+        {
+            return Json(new WireJson { Success = success, Data = data }, behavior);
+        }
+
+        /// <summary>
         /// Renders the partial view.
         /// </summary>
         /// <param name="model">The model.</param>        
