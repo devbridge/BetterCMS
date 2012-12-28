@@ -230,7 +230,6 @@
     <EmbeddedResource Include="Views\Upload\MultiFileUpload.cshtml" />
     <EmbeddedResource Include="Views\Images\ImageEditor.cshtml" />
     <EmbeddedResource Include="Views\Images\ImageCropper.cshtml" />
-    <EmbeddedResource Include="Views\Images\ImageInsert.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Command\Files\" />
@@ -240,6 +239,9 @@
     <Folder Include="Mvc\" />
     <Folder Include="Views\Files\" />
     <Folder Include="Views\MediaManager\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Images\ImageInsert.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

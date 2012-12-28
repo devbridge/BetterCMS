@@ -16,17 +16,6 @@ namespace BetterCms.Module.MediaManager.Controllers
     public class ImagesController : CmsControllerBase
     {
         /// <summary>
-        /// Images tab.
-        /// </summary>
-        /// <returns>
-        /// The view.
-        /// </returns>
-        public ActionResult ImagesTab()
-        {
-            return PartialView();
-        }
-
-        /// <summary>
         /// Gets the images list.
         /// </summary>
         /// <returns>List of images</returns>
@@ -53,11 +42,22 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// <summary>
         /// Gets images list to insert to content.
         /// </summary>
-        /// <param name="options">The options.</param>
-        /// <returns>The view.</returns>
-        public ActionResult ImageInsert(SearchableGridOptions options)
+        /// <returns>
+        /// The view.
+        /// </returns>
+        public ActionResult ImageInsert()
         {
-            return View();
+            var images = GetCommand<GetImagesCommand>().ExecuteCommand(new MediaManagerViewModel());
+            var json = new
+            {
+                Data = new WireJson
+                {
+                    Success = true,
+                    Data = images
+                },
+                Html = RenderView("ImageInsert", new MediaImageViewModel())
+            };
+            return WireJson(true, json, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>

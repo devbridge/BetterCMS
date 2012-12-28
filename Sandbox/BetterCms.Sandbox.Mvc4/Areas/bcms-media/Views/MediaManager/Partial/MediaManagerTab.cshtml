@@ -1,0 +1,9 @@
+﻿@using BetterCms.Module.Root.Content.Resources
+
+@* Form is required for unobtrusive validation *@
+@using (Html.BeginForm())
+{
+    <div data-bind="template: { name: 'bcms-media-list-template' }" class="bcms-data-bind-container">
+        @RootGlobalization.Message_Loading
+    </div>
+}
