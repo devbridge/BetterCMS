@@ -189,8 +189,6 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Content\Css\bcms.media.css" />
-    <EmbeddedResource Include="Content\Css\Images\bcms-no-image.png" />
-    <EmbeddedResource Include="Content\Css\Images\bcms-no-thumbnail.png" />
     <EmbeddedResource Include="Content\Css\Images\icn-zoom.png" />
     <EmbeddedResource Include="Content\Css\Images\loading.gif" />
     <EmbeddedResource Include="Content\Css\Images\sprite-media-1.png" />
@@ -200,6 +198,9 @@
     <EmbeddedResource Include="Scripts\jquery.Jcrop.js" />
     <EmbeddedResource Include="Content\Css\jquery.Jcrop.css" />
     <EmbeddedResource Include="Content\Css\Images\Jcrop.gif" />
+    <EmbeddedResource Include="Content\Css\Images\sprite-media-3.png" />
+    <EmbeddedResource Include="Content\Css\Images\bcms-no-image.png" />
+    <EmbeddedResource Include="Content\Css\Images\bcms-no-thumbnail.png" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -231,7 +232,6 @@
     <EmbeddedResource Include="Views\Videos\VideosTab.cshtml" />
     <EmbeddedResource Include="Views\Images\ImageEditor.cshtml" />
     <EmbeddedResource Include="Views\Images\ImageCropper.cshtml" />
-    <EmbeddedResource Include="Views\Images\ImageInsert.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Command\Files\" />
@@ -242,6 +242,12 @@
     <Folder Include="Mvc\" />
     <Folder Include="Views\Files\" />
     <Folder Include="Views\MediaManager\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Images\ImageInsert.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Images\ImageEditorInsert.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

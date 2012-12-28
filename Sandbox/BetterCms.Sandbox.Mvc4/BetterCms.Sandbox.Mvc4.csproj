@@ -259,10 +259,10 @@
     <Content Include="Areas\bcms-media\Views\MediaManager\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\bcms-media\Views\Images\ImagesTab.cshtml" />
+    <Content Include="Areas\bcms-media\Views\MediaManager\Partial\MediaManagerTab.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\bcms-media\Views\Files\FilesTab.cshtml" />
+    <Content Include="Areas\bcms-media\Views\MediaManager\Partial\MediaManagerTemplate.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

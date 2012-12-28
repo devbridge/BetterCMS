@@ -1,8 +1,7 @@
-﻿@using BetterCms.Module.MediaManager.Controllers
-@using Microsoft.Web.Mvc
-
-<div class="bcms-insert-content-modal">
-    @{
-        Html.RenderAction<ImagesController>(f => f.ImagesTab());
-    }
+﻿<div class="bcms-insert-content-modal">
+    <div class="bcms-scroll-window">
+        @Html.Partial("../MediaManager/Partial/MediaManagerTab")
+    </div>
 </div>
+
+@Html.Partial("../MediaManager/Partial/MediaManagerTemplate")

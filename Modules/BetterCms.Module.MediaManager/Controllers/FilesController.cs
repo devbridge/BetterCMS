@@ -13,17 +13,6 @@ namespace BetterCms.Module.MediaManager.Controllers
     public class FilesController : CmsControllerBase
     {
         /// <summary>
-        /// Files tab.
-        /// </summary>
-        /// <returns>
-        /// The view.
-        /// </returns>
-        public ActionResult FilesTab()
-        {
-            return PartialView();
-        }
-
-        /// <summary>
         /// Gets the files list.
         /// </summary>
         /// <returns>List of files</returns>

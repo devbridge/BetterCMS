@@ -14,11 +14,13 @@ namespace BetterCms.Module.Root.Models
 
         public virtual IList<ContentOption> ContentOptions { get; set; }
 
+        public virtual string PreviewUrl { get; set; }
+
         public virtual Content Clone()
         {
             return new Content
                 {
-                    Name = Name
+                    Name = Name,
                 };
         }
     }

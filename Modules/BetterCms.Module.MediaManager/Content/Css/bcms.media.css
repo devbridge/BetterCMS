@@ -599,18 +599,18 @@ input.bcms-grid-input:focus {
     color: #1187d2;
 }
 
-.bcms-list > div.bcms-media-click-active {
+.bcms-list div.bcms-media-click-active {
     background-color: #effcfe;
     transition: background-color 0.5s ease-out;
     -moz-transition: background-color 0.5s ease-out;
     -webkit-transition: background-color 0.5s ease-out;
 }
 
-    .bcms-list > div.bcms-media-click-active:hover {
+    .bcms-list div.bcms-media-click-active:hover {
         background-color: #effcfe;
     }
 
-.bcms-grid > div.bcms-media-click-active {
+.bcms-grid div.bcms-media-click-active {
     background-color: #effcfe;
     transition: background-color 0.5s ease-out;
     -moz-transition: background-color 0.5s ease-out;

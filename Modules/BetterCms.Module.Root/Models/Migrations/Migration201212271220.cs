@@ -5,16 +5,19 @@ using FluentMigrator;
 
 namespace BetterCms.Module.Root.Models.Migrations
 {
-    [Migration(201211121710)]
-    public class Migration201211121710 : DefaultMigration
+    [Migration(201212271220)]
+    public class Migration201212271220 : DefaultMigration
     {
-        public Migration201211121710()
+        public Migration201212271220()
             : base(RootModuleDescriptor.ModuleName)
         {
         }
 
         public override void Up()
         {
+            Alter
+                 .Table("Contents").InSchema(SchemaName)
+                 .AddColumn("PreviewUrl").AsAnsiString(MaxLength.Url).Nullable();
         }
 
         public override void Down()

@@ -187,7 +187,7 @@
     <Compile Include="Models\LookupKeyValue.cs" />
     <Compile Include="Models\Maps\PageMap.cs" />
     <Compile Include="Models\Maps\UserMap.cs" />
-    <Compile Include="Models\Migrations\Migration201211121710.cs" />
+    <Compile Include="Models\Migrations\Migration201212271220.cs" />
     <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />
     <Compile Include="Models\Page.cs" />
     <Compile Include="Models\User.cs" />
@@ -250,8 +250,6 @@
     <EmbeddedResource Include="Scripts\bcms.tooltip.js" />
     <EmbeddedResource Include="Content\Styles\images\icn-calendar.png" />
     <EmbeddedResource Include="Scripts\bcms.messages.js" />
-    <EmbeddedResource Include="Content\Styles\images\icn-upload-images.png" />
-    <EmbeddedResource Include="Content\Styles\images\sprite-dragarrows.png" />
     <EmbeddedResource Include="Scripts\bcms.datepicker.js" />
     <EmbeddedResource Include="Scripts\ckeditor\ckeditor-config.js" />
     <EmbeddedResource Include="Scripts\ckeditor\ckeditor.js" />
@@ -548,9 +546,11 @@
     <EmbeddedResource Include="Scripts\bcms.inlineEdit.js" />
     <EmbeddedResource Include="Scripts\bcms.grid.js" />
     <EmbeddedResource Include="Content\Styles\images\loading.gif" />
-    <EmbeddedResource Include="Content\Styles\images\no-preview-capture.png" />
     <EmbeddedResource Include="Content\Styles\images\bcms-sidebar-select.png" />
     <EmbeddedResource Include="Content\Styles\images\bcms-logo.png" />
+    <EmbeddedResource Include="Content\Styles\images\bcms-blog-no-image.png" />
+    <EmbeddedResource Include="Content\Styles\images\bcms-no-image.png" />
+    <EmbeddedResource Include="Content\Styles\images\bcms-no-thumbnail.png" />
     <Content Include="Scripts\jquery-1.7.2.min.js">
       <DependentUpon>jquery-1.7.2.js</DependentUpon>
     </Content>

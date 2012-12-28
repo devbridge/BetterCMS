@@ -40,6 +40,23 @@
                     <div class="bcms-content-titles">@PagesGlobalization.Widget_Url_Title:</div>
                     @Html.TextBoxFor(model => model.Url, new { @class = "bcms-editor-field-box", @style = "width: 523px;" })
                 </div>
+                
+                <div class="bcms-input-list-holder">
+                    @Html.Tooltip(PagesGlobalization.Widget_Preview_Image_Tooltip_Title, PagesGlobalization.WidgetPreviewImageUrl_Tooltip_Description)
+                    <div class="bcms-content-titles">@PagesGlobalization.WidgetPreviewImageUrl_Title:</div>
+                    @Html.TextBoxFor(model => model.PreviewImageUrl, new { @class = "bcms-editor-field-box", @style = "width: 523px;" })
+                </div>
+                
+                <div class="bcms-input-list-holder">
+                     @Html.Tooltip(PagesGlobalization.Widget_Preview_Image_Tooltip_Title, PagesGlobalization.WidgetPreviewImageUrl_Tooltip_Description)
+                    <div class="bcms-content-titles">@PagesGlobalization.WidgetPreviewImage_Title:</div>
+                </div>
+
+                <div class="bcms-thumbnails-preview">
+                    <div class="bcms-preview-module-image">
+                        <img id="bcms-widget-preview-image" src="@Model.PreviewImageUrl" alt="" />
+                    </div>
+                </div>
             </div>
                 
             <div id="bcms-tab-2" class="bcms-tab-single">
