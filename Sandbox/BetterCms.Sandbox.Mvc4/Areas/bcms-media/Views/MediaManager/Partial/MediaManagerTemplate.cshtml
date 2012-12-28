@@ -62,7 +62,7 @@
                     <!-- ko if: !isImage() -->
                     @Html.TextBoxFor(m => m.Name, new Dictionary<string, object>
                                                         {
-                                                            {"data-bind", "value: name, valueUpdate: 'afterkeydown', enterPress: saveMedia.bind($data, $root), escPress: cancelEditMedia.bind($data, $root), hasfocus: isActive(), event: {blur: blurMediaField.bind($data, $root)}, attr: {id: nameDomId} "},
+                                                            {"data-bind", "value: name, valueUpdate: 'afterkeydown', enterPress: saveMedia.bind($data, $root), escPress: cancelEditMedia.bind($data, $root), hasfocus: isActive(), event: {blur: blurMediaField.bind($data, $root)}, attr: {id: nameDomId}, click: stopEvent "},
                                                             {"class", "bcms-grid-input"},
                                                             {"Name", (string) null},
                                                         })

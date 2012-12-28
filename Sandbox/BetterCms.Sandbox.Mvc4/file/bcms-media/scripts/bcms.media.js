@@ -250,6 +250,10 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 self.isFile = function () {
                     return !self.isFolder();
                 };
+
+                self.stopEvent = function(data, event) {
+                    bcms.stopEventPropagation(event);
+                };
             }
             
             MediaItemBaseViewModel.prototype.isFolder = function () {

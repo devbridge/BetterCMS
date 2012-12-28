@@ -267,7 +267,6 @@
     <EmbeddedResource Include="Scripts\bcms.pages.tags.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.redirects.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.widgets.js" />
-    <EmbeddedResource Include="Content\Css\Images\icn-upload-images.png" />
     <EmbeddedResource Include="Content\Css\Images\icn-zoom.png" />
     <EmbeddedResource Include="Content\Css\Images\loading.gif" />
     <EmbeddedResource Include="Content\Css\Images\bcms-blog-no-image.png" />
