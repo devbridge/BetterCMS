@@ -73,6 +73,18 @@ namespace BetterCms.Module.MediaManager.Controllers
         }
 
         /// <summary>
+        /// Image insert editor.
+        /// </summary>
+        /// <param name="imageId">The image id.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult ImageEditorInsert(string imageId)
+        {
+            var model = GetCommand<GetImageCommand>().Execute(imageId.ToGuidOrDefault());
+            return View(model);
+        }
+
+        /// <summary>
         /// Image editor dialog post.
         /// </summary>
         /// <param name="model">The model.</param>

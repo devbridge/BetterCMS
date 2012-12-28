@@ -17,10 +17,11 @@ namespace BetterCms.Module.MediaManager.Registration
         /// <param name="containerModule">The container module.</param>
         public ImageEditorJavaScriptModuleDescriptor(ModuleDescriptor containerModule)
             : base(containerModule, "bcms.media.imageeditor", "/file/bcms-media/scripts/bcms.media.imageeditor")
-        {            
+        {
             Links = new IActionProjection[]
                 {
                     new JavaScriptModuleLinkTo<ImagesController>(this, "imageEditorDialogUrl", c => c.ImageEditor("{0}")),
+                    new JavaScriptModuleLinkTo<ImagesController>(this, "imageEditorInsertDialogUrl", c => c.ImageEditorInsert("{0}")),
                     new JavaScriptModuleLinkTo<ImagesController>(this, "imageEditorCroppingDialogUrl", c => c.ImageCropper("{0}")),
                     new JavaScriptModuleLinkTo<ImagesController>(this, "imageResizeUrl", c => c.ImageResize("{0}", "{1}", "{2}", "{3}")),
                 };

@@ -30,6 +30,7 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
             },
             links = {
                 imageEditorDialogUrl: null,
+                imageEditorInsertDialogUrl: null,
                 imageEditorCroppingDialogUrl: null,
                 imageResizeUrl: null,
             },
@@ -58,6 +59,13 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
         };
 
         /**
+        * Called when image insert needed.
+        */
+        imageEditor.onInsertImage = function (imageId, callback) {
+            imageEditor.showImageEditorInsertDialog(imageId, callback);
+        };
+
+        /**
         * Show image editor dialog.
         */
         imageEditor.showImageEditorDialog = function (imageId, callback) {
@@ -83,6 +91,22 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                             });
                         }
                     });
+                }
+            });
+        };
+
+        /**
+        * Show image insert editor dialog.
+        */
+        imageEditor.showImageEditorInsertDialog = function (imageId, callback) {
+            modal.open({
+                title: globalization.imageEditorDialogTitle,
+                onLoad: function (dialog) {
+                    var url = $.format(links.imageEditorInsertDialogUrl, imageId);
+                    // TODO: implement.
+                    // callback(imageUrl, caption, align);
+                    dialog.close();
+                    callback('https://www.google.lt/images/srpr/logo3w.png', 'Test caption.', 2);
                 }
             });
         };
