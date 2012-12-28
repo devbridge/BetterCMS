@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AudiosTab_Title" xml:space="preserve">
+    <value>Audios</value>
+  </data>
+  <data name="AudiosTab_UploadAudio" xml:space="preserve">
+    <value>Upload Audio</value>
+  </data>
   <data name="CreateFolder_CreatedSuccessfully_Message" xml:space="preserve">
     <value>Folder created successfully.</value>
   </data>
@@ -131,6 +137,12 @@
   </data>
   <data name="DeleteImage_DeletedSuccessfully_Message" xml:space="preserve">
     <value>Image deleted successfully.</value>
+  </data>
+  <data name="FilesTab_Title" xml:space="preserve">
+    <value>Files</value>
+  </data>
+  <data name="FilesTab_UploadFile" xml:space="preserve">
+    <value>Upload file</value>
   </data>
   <data name="ImageEditor_CropFailureMessage_Message" xml:space="preserve">
     <value>Failed to crop image.</value>
@@ -219,17 +231,11 @@
   <data name="ImageNotSelected_MessageTitle" xml:space="preserve">
     <value>Select</value>
   </data>
-  <data name="ImagesTab_AddNewFolder" xml:space="preserve">
-    <value>Add New Folder</value>
-  </data>
   <data name="ImagesTab_Grid" xml:space="preserve">
     <value>Grid</value>
   </data>
   <data name="ImagesTab_List" xml:space="preserve">
     <value>List</value>
-  </data>
-  <data name="ImagesTab_NewFolder" xml:space="preserve">
-    <value>New Folder</value>
   </data>
   <data name="ImagesTab_Title" xml:space="preserve">
     <value>Images</value>
@@ -254,6 +260,12 @@
   </data>
   <data name="MediaList_FileTypeColumn" xml:space="preserve">
     <value>FileType</value>
+  </data>
+  <data name="MediaManager_AddNewFolder" xml:space="preserve">
+    <value>Add New Folder</value>
+  </data>
+  <data name="MediaManager_NewFolder" xml:space="preserve">
+    <value>New Folder</value>
   </data>
   <data name="MultiFileUpload_CancelUploading" xml:space="preserve">
     <value>Cancel All Uploads</value>
@@ -293,5 +305,11 @@
   </data>
   <data name="SiteSettings_MediaManagerMenuItem" xml:space="preserve">
     <value>Media Manager</value>
+  </data>
+  <data name="VideosTab_Title" xml:space="preserve">
+    <value>Videos</value>
+  </data>
+  <data name="VideosTab_UploadVideo" xml:space="preserve">
+    <value>Upload Video</value>
   </data>
 </root>

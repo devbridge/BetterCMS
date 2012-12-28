@@ -120,6 +120,7 @@
     </Compile>
     <Compile Include="Command\Folder\DeleteFolderCommand.cs" />
     <Compile Include="Command\Folder\DeleteFolderCommandRequest.cs" />
+    <Compile Include="Command\Folder\GetFilesCommand.cs" />
     <Compile Include="Command\Folder\SaveFolderCommand.cs" />
     <Compile Include="Command\Images\DeleteMediaCommand.cs" />
     <Compile Include="Command\Images\DeleteMediaCommandRequest.cs" />
@@ -156,9 +157,6 @@
     <Compile Include="Models\MediaImage.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
     <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />
-    <Compile Include="Mvc\HtmlHelpers.cs" />
-    <Compile Include="Mvc\List\ListRenderers\MediaListNoHeaderRenderer.cs" />
-    <Compile Include="Mvc\List\ListRenderers\MediaListRenderer.cs" />
     <Compile Include="Registration\ImageEditorJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\MediaUploadJavaScriptModuleDescriptor.cs" />
     <Compile Include="Services\IMediaAudioService.cs" />
@@ -167,12 +165,10 @@
     <Compile Include="Services\IMediaFileService.cs" />
     <Compile Include="Services\DefaultMediaImageService.cs" />
     <Compile Include="Services\IMediaImageService.cs" />
-    <Compile Include="Mvc\Grid\TableRenderers\MediaGridRenderer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registration\MediaManagerJavaScriptModuleDescriptor.cs" />
-    <Compile Include="ViewModels\Files\FilesTabViewModel.cs" />
     <Compile Include="ViewModels\Images\ImageViewModel.cs" />
-    <Compile Include="ViewModels\Images\ImagesTabViewModel.cs" />
+    <Compile Include="ViewModels\MediaManager\MediaManagerItemsViewModel.cs" />
     <Compile Include="ViewModels\MediaManager\MediaPathViewModel.cs" />
     <Compile Include="ViewModels\MediaManager\MediaViewModel.cs" />
     <Compile Include="ViewModels\MediaManager\MediaFileViewModel.cs" />
@@ -182,7 +178,6 @@
     <Compile Include="ViewModels\MediaManager\MediaManagerViewModel.cs" />
     <Compile Include="ViewModels\MediaManager\UploadViewModel.cs" />
     <Compile Include="ViewModels\Upload\MultiFileUploadViewModel.cs" />
-    <Compile Include="ViewModels\Videos\VideosTabViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Content\Resources\MediaGlobalization.resx">
@@ -231,14 +226,7 @@
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\Folder.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Image.cshtml" />
-    <EmbeddedResource Include="Views\Files\FilesTab.cshtml" />
     <EmbeddedResource Include="Views\Videos\VideosTab.cshtml" />
-    <EmbeddedResource Include="Views\Shared\MediaControl.cshtml" />
-    <EmbeddedResource Include="Views\Shared\File.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Path.cshtml" />
-    <EmbeddedResource Include="Views\Shared\NewFolder.cshtml" />
     <EmbeddedResource Include="Views\Upload\MultiFileUpload.cshtml" />
     <EmbeddedResource Include="Views\Images\ImageEditor.cshtml" />
     <EmbeddedResource Include="Views\Images\ImageCropper.cshtml" />
@@ -249,6 +237,8 @@
     <Folder Include="Command\MediaManager\" />
     <Folder Include="Command\Videos\" />
     <Folder Include="Helpers\" />
+    <Folder Include="Mvc\" />
+    <Folder Include="Views\Files\" />
     <Folder Include="Views\MediaManager\" />
   </ItemGroup>
   <PropertyGroup>

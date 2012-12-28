@@ -60,8 +60,12 @@ define('bcms.dynamicContent', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bc
             url: url,
             cache: false
         })
-        .done(function (content) {
-            dialog.setContent(content);
+        .done(function (content, status, response) {
+            if (response.getResponseHeader('Content-Type').indexOf('application/json') === 0 && content.Data && content.Data.Html) {
+                dialog.setContent(content.Data.Html);
+            } else {
+                dialog.setContent(content);
+            }
 
             if ($.isFunction(options.done)) {
                 options.done(content);
