@@ -38,10 +38,10 @@
         </div>
             
         <!-- ko if: !isRootFolder() -->
-        <div class="bcms-folder-box">
+        <div class="bcms-folder-box" data-bind="click: openRoot">
             <div class="bcms-media-items-block">
-                <div class="bcms-system-folder" data-bind="click: openRoot" />
-                <div class="bcms-media-name" data-bind="click: openRoot">...</div>
+                <div class="bcms-system-folder" />
+                <div class="bcms-media-name">...</div>
             </div>
         </div>
         <!-- /ko -->

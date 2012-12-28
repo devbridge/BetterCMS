@@ -100,6 +100,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             self.medias = ko.observableArray();
             self.path = ko.observable();
             self.isGrid = ko.observable(false);
+            self.canSelectMedia = ko.observable(false);
             
             self.gridOptions = ko.observable();
 
@@ -280,7 +281,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             };
 
             MediaItemBaseViewModel.prototype.selectMedia = function (folderViewModel) {
-                // Nothing to do
+                this.openMedia(folderViewModel);
             };
 
             MediaItemBaseViewModel.prototype.blurMediaField = function (folderViewModel) {
@@ -335,6 +336,12 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             };
             
             MediaImageViewModel.prototype.selectMedia = function (folderViewModel) {
+                // Call base, if view model is not in selectable mode
+                if (!folderViewModel.canSelectMedia()) {
+                    _super.prototype.selectMedia.call(this, folderViewModel);
+                    return;
+                }
+                
                 for (var i = 0; i < folderViewModel.medias().length; i++) {
                     folderViewModel.medias()[i].isSelected(false);
                 }
@@ -505,6 +512,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                     dynamicContent.setContentFromUrl(dialog, links.insertImageDialogUrl, {
                         done: function (content) {
                             imagesViewModel = new MediaItemsViewModel(dialog.container, links.loadImagesUrl, dialog.container);
+                            imagesViewModel.canSelectMedia(true);
                             initializeTab(content.Data.Data, imagesViewModel);
                         },
                     });
