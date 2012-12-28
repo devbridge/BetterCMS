@@ -32,6 +32,9 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
                 enableCustomHtml: '#bcms-enable-custom-html',
                 customHtmlContainer: '#bcms-custom-html-container',
 
+                widgetPreviewImageUrl: '#PreviewImageUrl',
+                widgetPreviewImage: '#bcms-widget-preview-image',
+                
                 htmlContentWidgetContentHtmlEditor: 'bcms-advanced-contenthtml',
 
                 htmlContentWidgetRowTemplate: '#bcms-advanced-content-list-row-template',
@@ -180,6 +183,21 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
 
             dialog.container.find(selectors.addOptionLink).on('click', function () {
                 editor.addNewRow(dialog.container, $(selectors.optionsTable));
+            });
+
+            dialog.container.find(selectors.widgetPreviewImageUrl).blur(function () {
+                var url = dialog.container.find(selectors.widgetPreviewImageUrl).val();
+                var webSiteUrlExp = /^(([\w]+:)?\/\/)?(([\d\w]|%[a-fA-f\d]{2,2})+(:([\d\w]|%[a-fA-f\d]{2,2})+)?@)?([\d\w][-\d\w]{0,253}[\d\w]\.)+[\w]{2,4}(:[\d]+)?(\/([-+_~.\d\w]|%[a-fA-f\d]{2,2})*)*(\?(&?([-+_~.\d\w]|%[a-fA-f\d]{2,2})=?)*)?(#([-+_~.\d\w]|%[a-fA-f\d]{2,2})*)?$/;
+                if (webSiteUrlExp.test(url)) {
+                    dialog.container.find(selectors.widgetPreviewImage).attr({
+                        src: url
+                    });
+                } else {
+                    dialog.container.find(selectors.widgetPreviewImageUrl).val("");
+                    dialog.container.find(selectors.widgetPreviewImage).attr({
+                        src: ""
+                    });
+                }
             });
         };
         

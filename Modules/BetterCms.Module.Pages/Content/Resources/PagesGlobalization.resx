@@ -918,4 +918,16 @@
   <data name="HtmlContentWidget_EnableCustomJS_Title" xml:space="preserve">
     <value>Enable Custom JavaScript (If not Enabled, then &lt;b&gt;JavaScript&lt;/b&gt; will not be added to a Page)</value>
   </data>
+  <data name="WidgetPreviewImageUrl_Title" xml:space="preserve">
+    <value>Preview Image URL</value>
+  </data>
+  <data name="WidgetPreviewImageUrl_Tooltip_Description" xml:space="preserve">
+    <value>Purpose of URL path is ......</value>
+  </data>
+  <data name="WidgetPreviewImage_Title" xml:space="preserve">
+    <value>Preview</value>
+  </data>
+  <data name="Widget_Preview_Image_Tooltip_Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
 </root>

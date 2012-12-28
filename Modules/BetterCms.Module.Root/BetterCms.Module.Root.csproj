@@ -187,7 +187,7 @@
     <Compile Include="Models\LookupKeyValue.cs" />
     <Compile Include="Models\Maps\PageMap.cs" />
     <Compile Include="Models\Maps\UserMap.cs" />
-    <Compile Include="Models\Migrations\Migration201211121710.cs" />
+    <Compile Include="Models\Migrations\Migration201212271220.cs" />
     <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />
     <Compile Include="Models\Page.cs" />
     <Compile Include="Models\User.cs" />

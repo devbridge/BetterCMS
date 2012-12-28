@@ -10,6 +10,7 @@ namespace BetterCms.Module.Root.Models.Maps
             Table("Contents");
 
             Map(x => x.Name).Length(MaxLength.Name).Not.Nullable();
+            Map(x => x.PreviewUrl).Length(MaxLength.Url).Nullable();
 
             HasMany(x => x.PageContents).Inverse().Cascade.SaveUpdate().LazyLoad().Where("IsDeleted = 0");
             HasMany(x => x.ContentOptions).Inverse().Cascade.SaveUpdate().LazyLoad().Where("IsDeleted = 0");
