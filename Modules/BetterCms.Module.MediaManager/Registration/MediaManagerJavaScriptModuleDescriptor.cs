@@ -20,8 +20,9 @@ namespace BetterCms.Module.MediaManager.Registration
         {
             Links = new IActionProjection[]
                 {
-                    new JavaScriptModuleLinkTo<MediaManagerController>(this, "loadSiteSettingsMediaManagerUrl", c => c.Index(null)),
+                    new JavaScriptModuleLinkTo<MediaManagerController>(this, "loadSiteSettingsMediaManagerUrl", c => c.Index()),
                     new JavaScriptModuleLinkTo<ImagesController>(this, "loadImagesUrl", c => c.GetImagesList(null)),
+                    new JavaScriptModuleLinkTo<FilesController>(this, "loadFilesUrl", c => c.GetFilesList(null)),
                     new JavaScriptModuleLinkTo<ImagesController>(this, "insertImageDialogUrl", c => c.ImageInsert(null)),
                     new JavaScriptModuleLinkTo<ImagesController>(this, "deleteImageUrl", c => c.ImageDelete("{0}", "{1}")),
                     new JavaScriptModuleLinkTo<ImagesController>(this, "getImageUrl", c => c.GetImage("{0}")),
@@ -36,7 +37,17 @@ namespace BetterCms.Module.MediaManager.Registration
                     new JavaScriptModuleGlobalization(this, "insertImageFailureMessageMessage", () => MediaGlobalization.InsertImage_FailureMessage_Message),
                     new JavaScriptModuleGlobalization(this, "deleteImageConfirmMessage", () => MediaGlobalization.DeleteImage_Confirmation_Message),
                     new JavaScriptModuleGlobalization(this, "imageNotSelectedMessageMessage", () => MediaGlobalization.ImageNotSelected_MessageMessage),
-                    new JavaScriptModuleGlobalization(this, "confirmDeleteFolderMessage", () => MediaGlobalization.DeleteFolder_ConfirmationMessage)
+                    new JavaScriptModuleGlobalization(this, "confirmDeleteFolderMessage", () => MediaGlobalization.DeleteFolder_ConfirmationMessage),
+
+                    new JavaScriptModuleGlobalization(this, "imagesTabTitle", () => MediaGlobalization.ImagesTab_Title),
+                    new JavaScriptModuleGlobalization(this, "audiosTabTitle", () => MediaGlobalization.AudiosTab_Title),
+                    new JavaScriptModuleGlobalization(this, "videosTabTitle", () => MediaGlobalization.VideosTab_Title),
+                    new JavaScriptModuleGlobalization(this, "filesTabTitle", () => MediaGlobalization.FilesTab_Title),
+
+                    new JavaScriptModuleGlobalization(this, "uploadImage", () => MediaGlobalization.ImagesTab_UploadImage),
+                    new JavaScriptModuleGlobalization(this, "uploadAudio", () => MediaGlobalization.AudiosTab_UploadAudio),
+                    new JavaScriptModuleGlobalization(this, "uploadVideo", () => MediaGlobalization.VideosTab_UploadVideo),
+                    new JavaScriptModuleGlobalization(this, "uploadFile", () => MediaGlobalization.FilesTab_UploadFile),
                 };
         }
     }

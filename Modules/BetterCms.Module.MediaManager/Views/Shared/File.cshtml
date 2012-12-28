@@ -1,9 +1,0 @@
-﻿@model BetterCms.Module.MediaManager.ViewModels.MediaManager.MediaFileViewModel
-
-<div class="bcms-media-folder-box">
-    <div class="bcms-media-items-block">
-        <div class="bcms-system-folder"> </div>
-        <div class="bcms-system-folder-name" title="@Model.SizeKbOrMb">@Html.Encode(Model.Name)</div>
-    </div>
-    @Html.Partial("MediaControl", Model)
-</div>

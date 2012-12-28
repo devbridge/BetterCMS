@@ -62,10 +62,7 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
         var self = this,
 
             undoUpload = function (fileViewModel) {
-                $.ajax({
-                    url: links.undoFileUploadUrl,
-                    data
-                })                    
+                $.post($.format(links.undoFileUploadUrl, fileViewModel.fileId(), fileViewModel.version()));
             },
             
             abortUpload = function (fileViewModel) {
@@ -79,7 +76,7 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
                     fileViewModel.file.abort();
                 } else if (fileViewModel.uploadCompleted() === true) {
                     undoUpload(fileViewModel);
-                }                
+                }
             };
         
         self.uploads = ko.observableArray();
@@ -101,6 +98,7 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
         var self = this;
         self.file = file;
         self.fileId = ko.observable('');
+        self.version = ko.observable(0);
         self.uploadProgress = ko.observable(0);
         self.uploadCompleted = ko.observable(false);
         self.uploadFailed = ko.observable(false);
@@ -152,23 +150,23 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
                         onCompleted: function (data) {
                             var result = JSON.parse(data);
                             if (result.Success) {
-                                //uploadsModel.activeUploads.remove(fileModel);
-                                //fileModel.uploadCompleted(true);
+                                uploadsModel.activeUploads.remove(fileModel);
+                                fileModel.uploadCompleted(true);
                                 fileModel.fileId(result.Data.FileId);
+                                fileModel.version(result.Data.Version);
                             } else {
                                 fileModel.uploadFailed(true);
                             }
                         },
 
                         // Called during upload progress, first parameter is decimal value from 0 to 100.
-                        onProgress: function (progress) {
-                            if (progress < 90)
+                        onProgress: function (progress) {                            
                             fileModel.uploadProgress(parseInt(progress, 10));
                         },
                         
                         onError: function () {                            
                             fileModel.uploadFailed(true);
-                            //uploadsModel.activeUploads.remove(fileModel);
+                            uploadsModel.activeUploads.remove(fileModel);
                         }
                     });
                 }

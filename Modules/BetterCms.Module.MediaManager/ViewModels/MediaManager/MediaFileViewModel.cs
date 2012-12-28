@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Web;
 
 using BetterCms.Module.MediaManager.Models;
-using BetterCms.Module.MediaManager.Mvc.Grid.TableRenderers;
 
 namespace BetterCms.Module.MediaManager.ViewModels.MediaManager
 {

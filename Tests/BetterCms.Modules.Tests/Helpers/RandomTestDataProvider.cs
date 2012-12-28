@@ -486,7 +486,7 @@ namespace BetterCms.Tests.Helpers
             entity.PublicUrl = "http://bettercms.com/files/file?id=100200";
             entity.Size = ProvideRandomNumber(10, 2000);
             entity.Folder = folder ?? CreateNewMediaFolder(true, type);
-            entity.IsStored = true;
+            entity.IsUploaded = true;
             entity.IsTemporary = false;
 
             return entity;

@@ -988,7 +988,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Advanced Properties.
+        ///   Looks up a localized string similar to JavaScript &amp; CSS.
         /// </summary>
         public static string EditPageProperties_AdvancedPropertiesTab_Title {
             get {
@@ -1159,7 +1159,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page name.
+        ///   Looks up a localized string similar to Title.
         /// </summary>
         public static string EditPageProperties_BasicPropertiesTab_PageName_Title {
             get {
@@ -1240,7 +1240,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Layout.
+        ///   Looks up a localized string similar to Template.
         /// </summary>
         public static string EditPageProperties_LayoutPropertiesTab_Title {
             get {

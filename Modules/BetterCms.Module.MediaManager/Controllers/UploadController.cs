@@ -75,7 +75,6 @@ namespace BetterCms.Module.MediaManager.Controllers
                                                                                 Version = version.ToIntOrDefault()
                                                                             });
 
-
             return Json(
                 new
                     {

@@ -1,8 +1,9 @@
 ﻿using System.Web.Mvc;
 
+using BetterCms.Module.MediaManager.Command.Images;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
-using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
 namespace BetterCms.Module.MediaManager.Controllers
 {
@@ -17,13 +18,19 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// <returns>
         /// Rendered media manager tabs container.
         /// </returns>
-        public ActionResult Index(MediaManagerViewModel model)
+        public ActionResult Index()
         {
-//            if (model.Options == null)
-//            {
-//                model.Options = new SearchableGridOptions { Column = "Title" };
-//            }
-            return View(model);
+            var images = GetCommand<GetImagesCommand>().ExecuteCommand(new MediaManagerViewModel());
+            var json = new
+                           {
+                               Data = new WireJson
+                                          {
+                                              Success = true, 
+                                              Data = images
+                                          }, 
+                               Html = RenderView("Index", new MediaImageViewModel())
+                           };
+            return WireJson(true, json, JsonRequestBehavior.AllowGet);
         }
     }
 }
