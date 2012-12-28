@@ -134,6 +134,8 @@ namespace BetterCms.Tests.Helpers
 
             content.Name = ProvideRandomString(MaxLength.Name);
 
+            content.PreviewUrl = ProvideRandomString(MaxLength.Url);
+
             return content;
         }
 

@@ -2385,6 +2385,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Title.
         /// </summary>
+        public static string Widget_Preview_Image_Tooltip_Title {
+            get {
+                return ResourceManager.GetString("Widget_Preview_Image_Tooltip_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
         public static string Widget_Title_Title {
             get {
                 return ResourceManager.GetString("Widget_Title_Title", resourceCulture);
@@ -2460,6 +2469,33 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string WidgetPreview_Title {
             get {
                 return ResourceManager.GetString("WidgetPreview_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preview.
+        /// </summary>
+        public static string WidgetPreviewImage_Title {
+            get {
+                return ResourceManager.GetString("WidgetPreviewImage_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preview Image URL.
+        /// </summary>
+        public static string WidgetPreviewImageUrl_Title {
+            get {
+                return ResourceManager.GetString("WidgetPreviewImageUrl_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Purpose of URL path is .......
+        /// </summary>
+        public static string WidgetPreviewImageUrl_Tooltip_Description {
+            get {
+                return ResourceManager.GetString("WidgetPreviewImageUrl_Tooltip_Description", resourceCulture);
             }
         }
     }
