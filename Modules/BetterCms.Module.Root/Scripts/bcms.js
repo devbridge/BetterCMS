@@ -253,5 +253,9 @@ define('bcms', ['jquery', 'knockout'], function ($, ko) {
         }
     };
 
+    app.stopEventPropagation = function(event) {
+
+    };
+
     return app;
 });

@@ -327,11 +327,11 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 deleteMediaItem(url, message, folderViewModel, this);
             };
 
-            MediaImageViewModel.prototype.editMedia = function (folderViewModel) {
+            MediaImageViewModel.prototype.editMedia = function (folderViewModel, data, event) {
                 var self = this;
-                imageEditor.onEditImage(this.id(), function (data) {
-                    self.version(data.Version);
-                    self.name(data.FileName);
+                imageEditor.onEditImage(this.id(), function (json) {
+                    self.version(json.Version);
+                    self.name(json.FileName);
                 });
             };
             
@@ -415,7 +415,11 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 changeFolder(this.id(), folderViewModel);
             };
             
-            MediaFolderViewModel.prototype.editMedia = function (folderViewModel) {
+            MediaFolderViewModel.prototype.editMedia = function (folderViewModel, data, event) {
+                if (event.stopPropagation) {
+                    event.stopPropagation();
+                    event.preventDefault();
+                }
                 this.isActive(true);
             };
             
@@ -543,7 +547,6 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                             content: globalization.imageNotSelectedMessageMessage,
                             disableCancel: true,
                         });
-                        return false;
                     }
 
                     var url = $.format(links.getImageUrl, selectedItem.id());
@@ -561,41 +564,6 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                     }).fail(function () {
                         alertOnError();
                     });
-
-                    /*var selectedItem = dialog.container.find(selectors.selectedMediaImage);
-                    var editItem = $(selectedItem).find(selectors.editingIcon);
-                    if (editItem.data('mediaType') == 1) {
-                        var imageId = editItem.data('id'),
-                            url = $.format(links.getImageUrl, imageId),
-                            alertOnError = function () {
-                                modal.alert({
-                                    title: globalization.insertImageFailureMessageTitle,
-                                    content: globalization.insertImageFailureMessageMessage,
-                                });
-                            };
-                        $.ajax({
-                            url: url,
-                            type: "POST",
-                            dataType: 'json'
-                        }).done(function (json) {
-                            if (json.Success && json.Data != null) {
-                                media.addImageToEditor(imgEditor, json.Data.Url, json.Data.ImageAlign);
-                                dialog.close();
-                            } else {
-                                alertOnError();
-                            }
-                        }).fail(function () {
-                            alertOnError();
-                        });
-                    } else {
-                        modal.info({
-                            title: globalization.imageNotSelectedMessageTitle,
-                            content: globalization.imageNotSelectedMessageMessage,
-                            disableCancel: true,
-                        });
-                        return false;
-                    }
-                    return true;*/
                 },
             });
         };
