@@ -276,12 +276,9 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 throw new Error("Save media method is not implemented");
             };
             
-            MediaItemBaseViewModel.prototype.cancelEditMedia = function (folderViewModel) {
+            MediaItemBaseViewModel.prototype.cancelEditMedia = function (folderViewModel, data, event) {
+                bcms.stopEventPropagation(event);
                 cancelEditMedia(folderViewModel, this);
-            };
-
-            MediaItemBaseViewModel.prototype.selectMedia = function (folderViewModel) {
-                this.openMedia(folderViewModel);
             };
 
             MediaItemBaseViewModel.prototype.blurMediaField = function (folderViewModel) {
@@ -320,7 +317,9 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 return true;
             };
 
-            MediaImageViewModel.prototype.deleteMedia = function (folderViewModel) {
+            MediaImageViewModel.prototype.deleteMedia = function (folderViewModel, data, event) {
+                bcms.stopEventPropagation(event);
+
                 var url = $.format(links.deleteImageUrl, this.id(), this.version()),
                     message = $.format(globalization.deleteImageConfirmMessage, this.name());
 
@@ -328,6 +327,8 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             };
 
             MediaImageViewModel.prototype.editMedia = function (folderViewModel, data, event) {
+                bcms.stopEventPropagation(event);
+
                 var self = this;
                 imageEditor.onEditImage(this.id(), function (json) {
                     self.version(json.Version);
@@ -335,13 +336,16 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 });
             };
             
-            MediaImageViewModel.prototype.selectMedia = function (folderViewModel) {
-                // Call base, if view model is not in selectable mode
+            MediaImageViewModel.prototype.openMedia = function (folderViewModel, data, event) {
+                bcms.stopEventPropagation(event);
+
+                // Call open, if view model is not in selectable mode
                 if (!folderViewModel.canSelectMedia()) {
-                    _super.prototype.selectMedia.call(this, folderViewModel);
+                    this.editMedia(folderViewModel, data, event);
                     return;
                 }
-                
+
+                // Select item, if view model is in selectable mode
                 for (var i = 0; i < folderViewModel.medias().length; i++) {
                     folderViewModel.medias()[i].isSelected(false);
                 }
@@ -404,26 +408,27 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 return true;
             };
 
-            MediaFolderViewModel.prototype.deleteMedia = function (folderViewModel) {
+            MediaFolderViewModel.prototype.deleteMedia = function (folderViewModel, data, event) {
+                bcms.stopEventPropagation(event);
+
                 var url = $.format(links.deleteFolderUrl, this.id(), this.version()),
                     message = $.format(globalization.confirmDeleteFolderMessage, this.name());
 
                 deleteMediaItem(url, message, folderViewModel, this);
             };
 
-            MediaFolderViewModel.prototype.openMedia = function (folderViewModel) {
+            MediaFolderViewModel.prototype.openMedia = function (folderViewModel, data, event) {
+                bcms.stopEventPropagation(event);
                 changeFolder(this.id(), folderViewModel);
             };
             
             MediaFolderViewModel.prototype.editMedia = function (folderViewModel, data, event) {
-                if (event.stopPropagation) {
-                    event.stopPropagation();
-                    event.preventDefault();
-                }
+                bcms.stopEventPropagation(event);
                 this.isActive(true);
             };
             
-            MediaFolderViewModel.prototype.saveMedia = function (folderViewModel) {
+            MediaFolderViewModel.prototype.saveMedia = function (folderViewModel, data, event) {
+                bcms.stopEventPropagation(event);
                 saveMedia(folderViewModel, this, links.saveFolderUrl);
             };
             

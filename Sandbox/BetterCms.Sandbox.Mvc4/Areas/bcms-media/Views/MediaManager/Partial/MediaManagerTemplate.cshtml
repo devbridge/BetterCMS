@@ -50,14 +50,14 @@
         <!-- /ko -->
 
         <div data-bind="foreach: medias">
-            <div data-bind="css: { 'bcms-folder-box': isFolder(), 'bcms-image-box': isImage(), 'bcms-file-box': isFile() && !isImage(), 'bcms-folder-box-active': isFolder() && isActive(), 'bcms-media-click-active': isSelected() }, click: selectMedia.bind($data, $root)">
+            <div data-bind="css: { 'bcms-folder-box': isFolder(), 'bcms-image-box': isImage(), 'bcms-file-box': isFile() && !isImage(), 'bcms-folder-box-active': isFolder() && isActive(), 'bcms-media-click-active': isSelected() }, click: openMedia.bind($data, $root)">
                 <div class="bcms-media-items-block">
-                    <div data-bind="css: { 'bcms-system-folder': isFolder(), 'bcms-media-file-holder': isFile() }, click: openMedia.bind($data, $root)" />
-                    <div class="bcms-media-name" data-bind="text: name(), click: openMedia.bind($data, $root)"></div>
+                    <div data-bind="css: { 'bcms-system-folder': isFolder(), 'bcms-media-file-holder': isFile() }" />
+                    <div class="bcms-media-name" data-bind="text: name()"></div>
                 </div>
                 <div class="bcms-media-edit-controls">
                     <!-- ko if: isImage() -->
-                    <div class="bcms-media-name" data-bind="text: name(), click: openMedia.bind($data, $root)"></div>
+                    <div class="bcms-media-name" data-bind="text: name()"></div>
                     <!-- /ko -->
                     <!-- ko if: !isImage() -->
                     @Html.TextBoxFor(m => m.Name, new Dictionary<string, object>
