@@ -502,6 +502,24 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Insert Image.
+        /// </summary>
+        public static string MediaManager_ButtonInsertImage {
+            get {
+                return ResourceManager.GetString("MediaManager_ButtonInsertImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Insert Image With Options.
+        /// </summary>
+        public static string MediaManager_ButtonInsertImageWithOptions {
+            get {
+                return ResourceManager.GetString("MediaManager_ButtonInsertImageWithOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Folder.
         /// </summary>
         public static string MediaManager_NewFolder {

@@ -264,6 +264,12 @@
   <data name="MediaManager_AddNewFolder" xml:space="preserve">
     <value>Add New Folder</value>
   </data>
+  <data name="MediaManager_ButtonInsertImage" xml:space="preserve">
+    <value>Insert Image</value>
+  </data>
+  <data name="MediaManager_ButtonInsertImageWithOptions" xml:space="preserve">
+    <value>Insert Image With Options</value>
+  </data>
   <data name="MediaManager_NewFolder" xml:space="preserve">
     <value>New Folder</value>
   </data>

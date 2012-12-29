@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.messages', 'bcms.media.upload', 'bcms.media.imageeditor', 'bcms.htmlEditor', 'knockout'],
-    function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUpload, imageEditor, htmlEditor, ko) {
+define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.messages', 'bcms.media.upload', 'bcms.media.imageeditor', 'bcms.htmlEditor', 'knockout', 'bcms.contextMenu'],
+    function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUpload, imageEditor, htmlEditor, ko, menu) {
         'use strict';
 
         var media = {},
@@ -231,6 +231,32 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
         }
 
         /**
+        * Media item context menu view model
+        */
+        function MediaItemContextMenuViewModel() {
+            var self = this;
+            
+            self.initialized = false;
+            self.domId = 'cmenu_' + staticDomId++;
+            
+            self.show = function (data, event) {
+                var menuContainer = $('#' + self.domId);
+
+                if (!self.initialized) {
+                    self.initialized = true;
+                    menu.initContext(menuContainer, event.target, false);
+                }
+                
+                menu.contextShow(event, menuContainer);
+            };
+
+            self.close = function (data, event) {
+                var menuContainer = $('#' + self.domId);
+                menu.closeContext(menuContainer);
+            };
+        }
+
+        /**
         * Media item base view model
         */
         var MediaItemBaseViewModel = (function () {
@@ -243,17 +269,47 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 self.version = ko.observable(item.Version);
                 self.type = item.Type;
                 self.nameDomId = 'name_' + staticDomId++;
-                
+
                 self.isActive = ko.observable(item.IsActive || false);
                 self.isSelected = ko.observable(false);
+
+                self.contextMenu = new MediaItemContextMenuViewModel();
 
                 self.isFile = function () {
                     return !self.isFolder();
                 };
 
+                self.canBeRenamed = function () {
+                    return self.isFolder() || (self.isFile() && !self.isImage());
+                };
+                
+                self.canBeEdited = function () {
+                    return !self.canBeRenamed();
+                };
+
                 self.stopEvent = function(data, event) {
                     bcms.stopEventPropagation(event);
                 };
+
+                self.classNames = ko.computed(function () {
+                    var classes = '';
+                    if (self.isFolder()) {
+                        classes += ' bcms-folder-box';
+                    }
+                    if (self.isImage()) {
+                        classes += ' bcms-image-box';
+                    }
+                    if (self.isFile() && !self.isImage()) {
+                        classes += ' bcms-file-box';
+                    }
+                    if (self.isFolder() && self.isActive()) {
+                        classes += ' bcms-folder-box-active';
+                    }
+                    if (self.isSelected()) {
+                        classes += ' bcms-media-click-active';
+                    }
+                    return classes;
+                });
             }
             
             MediaItemBaseViewModel.prototype.isFolder = function () {

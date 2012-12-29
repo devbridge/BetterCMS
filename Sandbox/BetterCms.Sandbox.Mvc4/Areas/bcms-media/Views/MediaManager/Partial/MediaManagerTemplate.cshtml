@@ -23,7 +23,7 @@
     </div>
     <div class="bcms-breadcrumbs-holder">
         <div data-bind="foreach: path().pathFolders()">
-            <a class="bcms-breadcrumbs-root" data-bind="text: pathName(), click: openMedia.bind($data, $root)"></a>
+            <a class="bcms-breadcrumbs-root" href="#" data-bind="text: pathName(), click: openMedia.bind($data, $root)"></a>
         </div>
     </div>
 
@@ -50,7 +50,26 @@
         <!-- /ko -->
 
         <div data-bind="foreach: medias">
-            <div data-bind="css: { 'bcms-folder-box': isFolder(), 'bcms-image-box': isImage(), 'bcms-file-box': isFile() && !isImage(), 'bcms-folder-box-active': isFolder() && isActive(), 'bcms-media-click-active': isSelected() }, click: openMedia.bind($data, $root)">
+            <div data-bind="click: openMedia.bind($data, $root), event: { contextmenu: contextMenu.show }, attr: {class: classNames()}">
+                
+                <div class="bcms-media-context" data-bind="click: stopEvent, attr: {id: contextMenu.domId}">
+                    <a class="bcms-btn-close" data-bind="click: contextMenu.close">@RootGlobalization.Button_Close</a>
+                    <!-- ko if: isFolder() -->
+                    <a class="bcms-media-content-link" href="#" data-bind="click: openMedia.bind($data, $root)">@RootGlobalization.Button_Open</a>
+                    <!-- /ko -->
+                    <!-- ko if: canBeRenamed() -->
+                    <a class="bcms-media-content-link" href="#" data-bind="click: editMedia.bind($data, $root)">@RootGlobalization.Button_Rename</a>
+                    <!-- /ko -->
+                    <!-- ko if: canBeEdited() -->
+                    <a class="bcms-media-content-link" href="#" data-bind="click: editMedia.bind($data, $root)">@RootGlobalization.Button_Edit</a>
+                    <!-- /ko -->
+                    <!-- ko if: $root.canSelectMedia() && isImage() -->
+                    <a class="bcms-media-content-link" href="#">@MediaGlobalization.MediaManager_ButtonInsertImage</a>
+                    <a class="bcms-media-content-link" href="#">@MediaGlobalization.MediaManager_ButtonInsertImageWithOptions</a>
+                    <!-- /ko -->
+                    <a class="bcms-media-content-link" href="#" data-bind="click: deleteMedia.bind($data, $root)">@RootGlobalization.Button_Delete</a>
+                </div>
+
                 <div class="bcms-media-items-block">
                     <div data-bind="css: { 'bcms-system-folder': isFolder(), 'bcms-media-file-holder': isFile() }" />
                     <div class="bcms-media-name" data-bind="text: name()"></div>
@@ -59,7 +78,7 @@
                     <!-- ko if: isImage() -->
                     <div class="bcms-media-name" data-bind="text: name()"></div>
                     <!-- /ko -->
-                    <!-- ko if: !isImage() -->
+                    <!-- ko if: canBeRenamed() -->
                     @Html.TextBoxFor(m => m.Name, new Dictionary<string, object>
                                                         {
                                                             {"data-bind", "value: name, valueUpdate: 'afterkeydown', enterPress: saveMedia.bind($data, $root), escPress: cancelEditMedia.bind($data, $root), hasfocus: isActive(), event: {blur: blurMediaField.bind($data, $root)}, attr: {id: nameDomId}, click: stopEvent "},
