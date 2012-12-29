@@ -11,6 +11,7 @@ define('bcms.contextMenu', ['jquery', 'bcms'],
 
         var menu = {},
             selectors = {
+                links: 'a'
             },
             links = {
             },
@@ -46,7 +47,7 @@ define('bcms.contextMenu', ['jquery', 'bcms'],
 
         function setContextMenuContainer(container) {
             if (contextMenuContainer != null) {
-                contextMenuContainer.hide();
+                menu.closeContext();
             }
             contextMenuContainer = container;
         }
@@ -55,10 +56,13 @@ define('bcms.contextMenu', ['jquery', 'bcms'],
         * Init context menu
         */
         menu.initContext = function (menuContainer, targetContainer, bind) {
+            console.log("CM>>>init context");
             setContextMenuContainer(menuContainer);
 
             menuContainer.on('mouseover', function () { mouseOverContext = true; });
             menuContainer.on('mouseout', function () { mouseOverContext = false; });
+
+            menuContainer.find(selectors.links).on('click', menu.closeContext);
 
             if (bind === true) {
                 targetContainer.on('contextmenu', function (event) {
@@ -70,7 +74,7 @@ define('bcms.contextMenu', ['jquery', 'bcms'],
         /**
         * Call from the onMouseDown event, passing the event if standards compliant
         */
-        menu.contextMouseDown = function(event) {
+        menu.contextMouseDown = function (event) {
             if (noContext || mouseOverContext)
                 return;
 
@@ -79,24 +83,23 @@ define('bcms.contextMenu', ['jquery', 'bcms'],
                 event = window.event;
 
             // only show the context menu if the right mouse button is pressed
+            console.log("CM>>>button>>>" + event.button);
             if (event.button == 2)
                 replaceContext = true;
             else if (!mouseOverContext) {
-                if (contextMenuContainer != null) {
-                    contextMenuContainer.hide();
-                }
+                menu.closeContext();
             }
         };
 
         /**
         * Close context menu
         */
-        menu.closeContext = function (menuContainer) {
+        menu.closeContext = function () {
+            console.log("CM>>>close context");
             mouseOverContext = false;
-            if (menuContainer) {
-                setContextMenuContainer(menuContainer);
+            if (contextMenuContainer != null) {
+                contextMenuContainer.hide();
             }
-            contextMenuContainer.hide();
         };
 
         /**
@@ -104,6 +107,7 @@ define('bcms.contextMenu', ['jquery', 'bcms'],
         * if this function returns false, the browser's context menu will not show up
         */
         menu.contextShow = function (event, menuContainer) {
+            console.log("CM>>>show context");
             if (noContext || mouseOverContext)
                 return true;
 
@@ -139,7 +143,7 @@ define('bcms.contextMenu', ['jquery', 'bcms'],
         /**
         * Disables context menu
         */
-        menu.disableContext = function() {
+        menu.disableContext = function () {
             noContext = true;
             menu.closeContext();
 
@@ -162,7 +166,7 @@ define('bcms.contextMenu', ['jquery', 'bcms'],
         menu.init = function () {
             console.log('Initializing bcms.contextMenu module.');
             
-            document.onmousedown = menu.contextMouseDown;
+            $(document).on('mousedown', menu.contextMouseDown);
         };
 
         /**

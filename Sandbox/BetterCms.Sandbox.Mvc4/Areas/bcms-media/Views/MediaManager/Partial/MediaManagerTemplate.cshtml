@@ -53,7 +53,7 @@
             <div data-bind="click: openMedia.bind($data, $root), event: { contextmenu: contextMenu.show }, attr: {class: classNames()}">
                 
                 <div class="bcms-media-context" data-bind="click: stopEvent, attr: {id: contextMenu.domId}">
-                    <a class="bcms-btn-close" data-bind="click: contextMenu.close">@RootGlobalization.Button_Close</a>
+                    <a class="bcms-btn-close">@RootGlobalization.Button_Close</a>
                     <!-- ko if: isFolder() -->
                     <a class="bcms-media-content-link" href="#" data-bind="click: openMedia.bind($data, $root)">@RootGlobalization.Button_Open</a>
                     <!-- /ko -->

@@ -251,8 +251,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             };
 
             self.close = function (data, event) {
-                var menuContainer = $('#' + self.domId);
-                menu.closeContext(menuContainer);
+                menu.closeContext();
             };
         }
 
