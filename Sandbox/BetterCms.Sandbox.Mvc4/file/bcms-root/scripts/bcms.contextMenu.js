@@ -56,7 +56,6 @@ define('bcms.contextMenu', ['jquery', 'bcms'],
         * Init context menu
         */
         menu.initContext = function (menuContainer, targetContainer, bind) {
-            console.log("CM>>>init context");
             setContextMenuContainer(menuContainer);
 
             menuContainer.on('mouseover', function () { mouseOverContext = true; });
@@ -83,7 +82,6 @@ define('bcms.contextMenu', ['jquery', 'bcms'],
                 event = window.event;
 
             // only show the context menu if the right mouse button is pressed
-            console.log("CM>>>button>>>" + event.button);
             if (event.button == 2)
                 replaceContext = true;
             else if (!mouseOverContext) {
@@ -95,7 +93,6 @@ define('bcms.contextMenu', ['jquery', 'bcms'],
         * Close context menu
         */
         menu.closeContext = function () {
-            console.log("CM>>>close context");
             mouseOverContext = false;
             if (contextMenuContainer != null) {
                 contextMenuContainer.hide();
@@ -107,7 +104,6 @@ define('bcms.contextMenu', ['jquery', 'bcms'],
         * if this function returns false, the browser's context menu will not show up
         */
         menu.contextShow = function (event, menuContainer) {
-            console.log("CM>>>show context");
             if (noContext || mouseOverContext)
                 return true;
 
@@ -123,11 +119,20 @@ define('bcms.contextMenu', ['jquery', 'bcms'],
 
                 // hide the menu first to avoid an "up-then-over" visual effect
                 contextMenuContainer.hide();
-
+                
+                // TODO: need more investigation :)
                 var target = $(event.currentTarget);
+                var left = event.pageX - target.offset().left;
+                var top = event.pageY - target.offset().top;
+                var scrollHeight = contextMenuContainer.scrollParent().height();
+                var height = contextMenuContainer.parent().offset().top + top + contextMenuContainer.height();
+                
+                if (height > scrollHeight) {
+                    top = top - contextMenuContainer.height();
+                }
 
-                contextMenuContainer.css('left', (event.pageX - target.offset().left) + 'px');
-                contextMenuContainer.css('top', (event.pageY - target.offset().top) + 'px');
+                contextMenuContainer.css('left', left + 'px');
+                contextMenuContainer.css('top', top + 'px');
 
                 contextMenuContainer.css('z-index', bcms.getHighestZindex() + 1);
                 contextMenuContainer.show();
