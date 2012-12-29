@@ -17,10 +17,11 @@ namespace BetterCms.Module.MediaManager.Registration
         /// <param name="containerModule">The container module.</param>
         public ImageEditorJavaScriptModuleDescriptor(ModuleDescriptor containerModule)
             : base(containerModule, "bcms.media.imageeditor", "/file/bcms-media/scripts/bcms.media.imageeditor")
-        {            
+        {
             Links = new IActionProjection[]
                 {
                     new JavaScriptModuleLinkTo<ImagesController>(this, "imageEditorDialogUrl", c => c.ImageEditor("{0}")),
+                    new JavaScriptModuleLinkTo<ImagesController>(this, "imageEditorInsertDialogUrl", c => c.ImageEditorInsert("{0}")),
                     new JavaScriptModuleLinkTo<ImagesController>(this, "imageEditorCroppingDialogUrl", c => c.ImageCropper("{0}")),
                     new JavaScriptModuleLinkTo<ImagesController>(this, "imageResizeUrl", c => c.ImageResize("{0}", "{1}", "{2}", "{3}")),
                 };
@@ -28,6 +29,8 @@ namespace BetterCms.Module.MediaManager.Registration
             Globalization = new IActionProjection[]
                 {
                     new JavaScriptModuleGlobalization(this, "imageEditorDialogTitle", () => MediaGlobalization.ImageEditor_Dialog_Title),
+                    new JavaScriptModuleGlobalization(this, "imageEditorInsertDialogTitle", () => MediaGlobalization.ImageEditor_InsertDialog_Title),
+                    new JavaScriptModuleGlobalization(this, "imageEditorInsertDialogAcceptButton", () => MediaGlobalization.ImageEditor_InsertDialog_AcceptButton),
                     new JavaScriptModuleGlobalization(this, "imageEditorUpdateFailureMessageTitle", () => MediaGlobalization.ImageEditor_UpdateFailureMessage_Title),
                     new JavaScriptModuleGlobalization(this, "imageEditorUpdateFailureMessageMessage", () => MediaGlobalization.ImageEditor_UpdateFailureMessage_Message),
                     new JavaScriptModuleGlobalization(this, "imageEditorResizeFailureMessageTitle", () => MediaGlobalization.ImageEditor_ResizeFailureMessage_Title),
