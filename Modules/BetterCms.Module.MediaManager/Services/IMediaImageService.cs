@@ -13,6 +13,6 @@ namespace BetterCms.Module.MediaManager.Services
 
         void ResizeImage(Guid mediaImageId, int version, int width, int height);
 
-        void RemoveImageFiles(MediaImage image);
+        void RemoveImageWithFiles(Guid mediaImageId, int version);
     }
 }

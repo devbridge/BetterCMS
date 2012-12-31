@@ -85,7 +85,7 @@ namespace BetterCms.Core.Services.Storage
             CheckUri(uri);
             
             string pathRoot = Path.GetDirectoryName(uri.LocalPath);
-            if (pathRoot != null && !Directory.Exists(pathRoot))
+            if (pathRoot != null && Directory.Exists(pathRoot))
             {
                 Directory.Delete(pathRoot);
             }

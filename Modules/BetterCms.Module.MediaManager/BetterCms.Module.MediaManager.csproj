@@ -122,6 +122,7 @@
     <Compile Include="Command\Folder\DeleteFolderCommandRequest.cs" />
     <Compile Include="Command\Folder\GetFilesCommand.cs" />
     <Compile Include="Command\Folder\SaveFolderCommand.cs" />
+    <Compile Include="Command\Upload\ConfirmUpload\ConfirmUploadCommand.cs" />
     <Compile Include="Command\Images\DeleteMedia\DeleteMediaCommand.cs" />
     <Compile Include="Command\Images\DeleteMedia\DeleteMediaCommandRequest.cs" />
     <Compile Include="Command\Images\ResizeImage\ResizeImageCommandRequest.cs" />
@@ -238,10 +239,10 @@
     <Folder Include="Command\MediaManager\" />
     <Folder Include="Command\Videos\" />
     <Folder Include="Helpers\" />
-    <Folder Include="Views\Upload\" />
     <Folder Include="Mvc\" />
     <Folder Include="Views\Files\" />
     <Folder Include="Views\MediaManager\" />
+    <Folder Include="Views\Upload\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Images\ImageInsert.cshtml" />

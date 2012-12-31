@@ -62,7 +62,7 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
         var self = this,
 
             undoUpload = function (fileViewModel) {
-                $.post($.format(links.undoFileUploadUrl, fileViewModel.fileId(), fileViewModel.version()));
+                $.post($.format(links.undoFileUploadUrl, fileViewModel.fileId(), fileViewModel.version(), fileViewModel.type()));
             },
             
             abortUpload = function (fileViewModel) {
@@ -99,6 +99,7 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
         self.file = file;
         self.fileId = ko.observable('');
         self.version = ko.observable(0);
+        self.type = ko.observable(0);
         self.uploadProgress = ko.observable(0);
         self.uploadCompleted = ko.observable(false);
         self.uploadFailed = ko.observable(false);
@@ -154,6 +155,7 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
                                 fileModel.uploadCompleted(true);
                                 fileModel.fileId(result.Data.FileId);
                                 fileModel.version(result.Data.Version);
+                                fileModel.type(result.Data.Type);
                             } else {
                                 fileModel.uploadFailed(true);
                             }

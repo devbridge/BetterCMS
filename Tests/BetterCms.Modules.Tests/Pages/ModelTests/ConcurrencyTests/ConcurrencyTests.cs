@@ -14,9 +14,8 @@ namespace BetterCms.Test.Module.Pages.ModelTests.ConcurrencyTests
         public void TestConcurencySaveWithoutException()
         {
             var sessionFactory = this.Container.Resolve<ISessionFactoryProvider>();
-            using (var session = sessionFactory.SessionFactory.OpenSession())
+            using (var session = sessionFactory.OpenSession())
             {
-                
                 using (session.BeginTransaction())
                 {
                     // Create layout
@@ -42,7 +41,7 @@ namespace BetterCms.Test.Module.Pages.ModelTests.ConcurrencyTests
         public void TestConcurencySaveWithException()
         {
             var sessionFactory = this.Container.Resolve<ISessionFactoryProvider>();
-            using (var session = sessionFactory.SessionFactory.OpenSession())
+            using (var session = sessionFactory.OpenSession())
             {
                 using (session.BeginTransaction())
                 {

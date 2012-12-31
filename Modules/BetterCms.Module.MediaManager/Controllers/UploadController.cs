@@ -7,8 +7,10 @@ using System.Web.Mvc;
 
 using BetterCms.Core.Services.Storage;
 using BetterCms.Module.MediaManager.Command.Upload;
+using BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload;
 using BetterCms.Module.MediaManager.Command.Upload.UndoUpload;
 using BetterCms.Module.MediaManager.Command.Upload.UploadFile;
+using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels.Upload;
@@ -59,7 +61,8 @@ namespace BetterCms.Module.MediaManager.Controllers
                         new
                             {
                                 FileId = media.Id,
-                                Version = media.Version
+                                Version = media.Version,
+                                Type = (int)rootFolderType
                             }));
             }
 
@@ -67,12 +70,13 @@ namespace BetterCms.Module.MediaManager.Controllers
         }
 
         [HttpPost]
-        public ActionResult RemoveFileUpload(string fileId, string version)
+        public ActionResult RemoveFileUpload(string fileId, string version, string type)
         {
             var result = GetCommand<UndoUploadCommand>().ExecuteCommand(new UndoUploadRequest
                                                                             {
                                                                                 FileId = fileId.ToGuidOrDefault(),
-                                                                                Version = version.ToIntOrDefault()
+                                                                                Version = version.ToIntOrDefault(),
+                                                                                Type = (MediaType)type.ToIntOrDefault()
                                                                             });
 
             return Json(
@@ -82,10 +86,16 @@ namespace BetterCms.Module.MediaManager.Controllers
                     });
         }
 
-
+        [HttpPost]
         public ActionResult SaveUploads(MultiFileUploadViewModel model)
         {
-            return Json(new WireJson(true));
+            var result = GetCommand<ConfirmUploadCommand>().ExecuteCommand(model);
+            if (!result)
+            {
+                Messages.AddError(MediaGlobalization.MultiFileUpload_SaveFailed);
+            }
+
+            return Json(new WireJson(result));
         }
     }
 }

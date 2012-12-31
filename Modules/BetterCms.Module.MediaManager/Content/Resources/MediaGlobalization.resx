@@ -288,6 +288,9 @@
   <data name="MultiFileUpload_FileUploadedMessage" xml:space="preserve">
     <value>Success! Image uploaded.</value>
   </data>
+  <data name="MultiFileUpload_SaveFailed" xml:space="preserve">
+    <value>Failed to save uploaded files.</value>
+  </data>
   <data name="MultiFileUpload_SelectFolder" xml:space="preserve">
     <value>Select Folder where to upload files:</value>
   </data>

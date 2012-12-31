@@ -19,7 +19,7 @@ namespace BetterCms.Test.Module
         protected void RunEntityMapTestsInTransaction<TEntity>(TEntity testEntity, Action<TEntity> resultAssertions = null) where TEntity : Entity
         {  
             var sessionFactory = Container.Resolve<ISessionFactoryProvider>();
-            using (var session = sessionFactory.SessionFactory.OpenSession())
+            using (var session = sessionFactory.OpenSession())
             {
                 using (new TransactionScope())
                 {
@@ -117,7 +117,7 @@ namespace BetterCms.Test.Module
 
             var sessionFactory = Container.Resolve<ISessionFactoryProvider>();
 
-            using (var session = sessionFactory.SessionFactory.OpenSession())
+            using (var session = sessionFactory.OpenSession())
             {
                 using (new TransactionScope())
                 {
@@ -154,7 +154,7 @@ namespace BetterCms.Test.Module
 
             var sessionFactory = Container.Resolve<ISessionFactoryProvider>();
 
-            using (var session = sessionFactory.SessionFactory.OpenSession())
+            using (var session = sessionFactory.OpenSession())
             {
                 using (new TransactionScope())
                 {

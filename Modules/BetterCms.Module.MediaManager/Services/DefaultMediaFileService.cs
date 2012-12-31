@@ -20,7 +20,7 @@ namespace BetterCms.Module.MediaManager.Services
             this.configuration = configuration;
         }
 
-        public void RemoveFile(MediaFile file)
+        public void RemoveFile(Guid fileId, int version)
         {
             throw new NotImplementedException();
         }
@@ -41,10 +41,5 @@ namespace BetterCms.Module.MediaManager.Services
                                                 InputStream = inputStream                                                
                                             });
         }*/
-
-        public MediaFile UploadTemporaryFile(MediaType type, string fileName, Stream inputStream)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

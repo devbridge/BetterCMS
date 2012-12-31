@@ -14,21 +14,15 @@ namespace BetterCms.Module.MediaManager.Command.Upload.UndoUpload
         public IMediaAudioService MediaAudioService { get; set; }
 
         public bool Execute(UndoUploadRequest request)
-        {
-            var file = Repository.FirstOrDefault<MediaFile>(request.FileId);
-            file.Version = request.Version;
-
-            if (file is MediaImage)
+        {            
+            if (request.Type == MediaType.Image)
             {
-                MediaImageService.RemoveImageFiles((MediaImage)file);
+                MediaImageService.RemoveImageWithFiles(request.FileId, request.Version);
             }
             else
             {
-                MediaFileService.RemoveFile(file);
+                MediaFileService.RemoveFile(request.FileId, request.Version);
             }
-            
-            Repository.Delete(file);
-            UnitOfWork.Commit();
             
             return true;
         }
