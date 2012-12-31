@@ -250,8 +250,6 @@
     <EmbeddedResource Include="Scripts\bcms.tooltip.js" />
     <EmbeddedResource Include="Content\Styles\images\icn-calendar.png" />
     <EmbeddedResource Include="Scripts\bcms.messages.js" />
-    <EmbeddedResource Include="Content\Styles\images\icn-upload-images.png" />
-    <EmbeddedResource Include="Content\Styles\images\sprite-dragarrows.png" />
     <EmbeddedResource Include="Scripts\bcms.datepicker.js" />
     <EmbeddedResource Include="Scripts\bcms.htmlEditor.js" />
     <EmbeddedResource Include="Scripts\spinner.jquery.js" />
@@ -324,9 +322,11 @@
     <EmbeddedResource Include="Scripts\bcms.inlineEdit.js" />
     <EmbeddedResource Include="Scripts\bcms.grid.js" />
     <EmbeddedResource Include="Content\Styles\images\loading.gif" />
-    <EmbeddedResource Include="Content\Styles\images\no-preview-capture.png" />
     <EmbeddedResource Include="Content\Styles\images\bcms-sidebar-select.png" />
     <EmbeddedResource Include="Content\Styles\images\bcms-logo.png" />
+    <EmbeddedResource Include="Content\Styles\images\bcms-blog-no-image.png" />
+    <EmbeddedResource Include="Content\Styles\images\bcms-no-image.png" />
+    <EmbeddedResource Include="Content\Styles\images\bcms-no-thumbnail.png" />
     <EmbeddedResource Include="Scripts\ckeditor\build-config.js" />
     <EmbeddedResource Include="Scripts\ckeditor\ckeditor.js" />
     <EmbeddedResource Include="Scripts\ckeditor\config.js" />
