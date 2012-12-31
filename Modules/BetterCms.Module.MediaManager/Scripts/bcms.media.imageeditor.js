@@ -10,10 +10,12 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                 imageEditLink: ".bcms-btn-main",
                 imageToEdit: ".bcms-croped-block img",
                 imageVersionField: "#image-version-field",
+                imageCaption: "#Caption",
                 imageFileName: "#image-file-name",
                 imageFileSize: "#image-file-size",
                 imageDimensions: "#image-dimensions",
-                imageAlignment: ".bcms-alignment-controls",
+                imageAlignment: "input[name=ImageAlign]:checked",
+                imageAlignmentControls: ".bcms-alignment-controls",
 
                 imageSizeEditLink: ".bcms-file-link",
                 imageSizeEditBox: ".bcms-file-edit",
@@ -30,11 +32,14 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
             },
             links = {
                 imageEditorDialogUrl: null,
+                imageEditorInsertDialogUrl: null,
                 imageEditorCroppingDialogUrl: null,
                 imageResizeUrl: null,
             },
             globalization = {
                 imageEditorDialogTitle: null,
+                imageEditorInsertDialogTitle: null,
+                imageEditorInsertDialogAcceptButton: null,
                 imageEditorUpdateFailureMessageTitle: null,
                 imageEditorUpdateFailureMessageMessage: null,
                 imageEditorResizeFailureMessageTitle: null,
@@ -55,6 +60,13 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
         */
         imageEditor.onEditImage = function (imageId, callback) {
             imageEditor.showImageEditorDialog(imageId, callback);
+        };
+
+        /**
+        * Called when image insert needed.
+        */
+        imageEditor.onInsertImage = function (imageId, callback) {
+            imageEditor.showImageEditorInsertDialog(imageId, callback);
         };
 
         /**
@@ -88,6 +100,31 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
         };
 
         /**
+        * Show image insert editor dialog.
+        */
+        imageEditor.showImageEditorInsertDialog = function (imageId, callback) {
+            modal.open({
+                title: globalization.imageEditorInsertDialogTitle,
+                acceptTitle: globalization.imageEditorInsertDialogAcceptButton,
+                onLoad: function (dialog) {
+                    var url = $.format(links.imageEditorInsertDialogUrl, imageId);
+                    dynamicContent.setContentFromUrl(dialog, url, {
+                        done: function (content) {
+                            // NOTE: attach events if needed.
+                        },
+                    });
+                },
+                onAcceptClick: function (dialog) {
+                    var imageUrl = dialog.container.find(selectors.imageToEdit).attr("src"),
+                        caption = dialog.container.find(selectors.imageCaption).val(),
+                        align = dialog.container.find(selectors.imageAlignment).val();
+                    dialog.close();
+                    callback(imageUrl, caption, align);
+                }
+            });
+        };
+
+        /**
         * Initializes ImageEditor dialog events.
         */
         imageEditor.initImageEditorDialogEvents = function (dialog) {
@@ -112,10 +149,10 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                 }
             });
 
-            dialog.container.find(selectors.imageAlignment).children().each(function () {
+            dialog.container.find(selectors.imageAlignmentControls).children().each(function () {
                 var item = this;
                 $(item).on('click', function () {
-                    dialog.container.find(selectors.imageAlignment).children().each(function () {
+                    dialog.container.find(selectors.imageAlignmentControls).children().each(function () {
                         $(this).attr('class', $(this).attr('class').replace('-active', ''));
                         $('input', this).removeAttr('checked');
                     });

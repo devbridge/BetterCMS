@@ -38,8 +38,6 @@ a:focus {
 .bcms-on { /* used to indicate if CMS is in editing mode */
 }
 
-/*modern web support*/
-
 /* Hidden form submit. Can't set display:none because we need to submit form. */
 .bcms-hidden-submit {
     border: 0 none;
@@ -232,15 +230,14 @@ div.bcms-btn-settings {
     display: inline-block;
     vertical-align: middle;
     width: 16px;
-    height: 16px;
     line-height: 16px;
     margin-left: 5px;
-    border-radius: 8px;
-    background-color: #0383df;
-    color: #fff;
+    background: url('images/sprite-base-2.png') no-repeat -44px -179px;
     cursor: pointer;
-    text-align: center;
-    font-size: 17px;
+}
+
+div.bcms-btn-plus-expand {
+    background-position: -64px -179px;
 }
 
 /*blue buttons*/
@@ -316,6 +313,28 @@ a.bcms-icn-preview {
     a.bcms-icn-preview:active {
         background-position: -60px -159px;
         user-select: none;
+    }
+
+/*restore icon*/
+a.bcms-icn-restore {
+    display: inline-block;
+    height: 20px;
+    padding-right: 30px;
+    background: url('images/sprite-base-1.png') no-repeat right -1090px;
+    color: #c0c0c0;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+    a.bcms-icn-restore:hover {
+        color: #303030;
+        background-position: right -1121px;
+    }
+
+    a.bcms-icn-restore:active {
+        color: #df2200;
+        background-position: right -1151px;
     }
 
 /*delete icon*/
@@ -801,7 +820,7 @@ div.bcms-noscroll body {
 
 .bcms-modal-body {
     position: relative;
-    max-width: 940px;
+    width: 940px;
     background: #FFF;
     margin: 0 auto;
 }
@@ -1387,6 +1406,7 @@ a.bcms-btn-close {
 
 .bcms-editor-field-box {
     height: 30px;
+    width: 100%;
     line-height: 18px;
     padding: 6px;
     margin: 0;
@@ -1410,6 +1430,7 @@ a.bcms-btn-close {
 
 .bcms-editor-field-area {
     height: 104px;
+    width: 100%;
     line-height: 18px;
     padding: 6px;
     margin: 0;
@@ -1762,7 +1783,6 @@ a.bcms-btn-close {
     width: 100%;
     background-color: #fff;
     border-spacing: 0;
-    border-collapse: collapse;
     font-size: 12px;
 }
 
@@ -1825,6 +1845,11 @@ tr.bcms-table-row-active td {
 
 .bcms-table-row-active .bcms-icn-preview {
     background-position: -60px -133px;
+}
+
+.bcms-table-row-active .bcms-icn-restore {
+    color: #303030;
+    background-position: right -1121px;
 }
 
 .bcms-table-row-active .bcms-icn-edit {
@@ -1972,13 +1997,13 @@ a.bcms-sort-arrow-top:hover {
     }
 
 /*forms & input fields validation, error messages*/
-.input-validation-error {
-    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAJCAYAAAF8oY2FAAAAZElEQVQY02N45uw8DYi/MsAZ////Z0AQQKH/YA6QYYcsuhxD5D8QO0LpTOyCIAtAElBJO5ClIEYmskoUW2ACMDdgqsRlZgtU5Rcg9kZS4A0VA8m1MCBJZEAlkHEG3G6iFRJrNQAfBNhPNe12LwAAAABJRU5ErkJggg==') no-repeat 98% center #fcecec;
+input[type="text"].input-validation-error {
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAFMLZykAAAAbUlEQVQoz2N45uw8DYi/MsAZ////B2NUBlDqP1wAyLGDcZBVLCeo4j8QO0LpTNIUgBwH44CMBzkYXUEmsgnIkiiuxCZJnAnEuKEFasIXIPZGUuwNFQPJtWCzHiXQgYoyoBqQcQYujdQzgFIvAACFG3m8e8veBgAAAABJRU5ErkJggg==') no-repeat 100% center #fcecec;
     border: 1px solid #e64343;
     box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
 }
 
-    .input-validation-error:focus {
+    input[type="text"].input-validation-error:focus {
         background: #fcecec;
         border: 1px solid #e64343;
         box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);

@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-using BetterCms.Module.MediaManager.Command.Folder;
+using BetterCms.Module.MediaManager.Command.Files;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
@@ -12,17 +12,6 @@ namespace BetterCms.Module.MediaManager.Controllers
     /// </summary>
     public class FilesController : CmsControllerBase
     {
-        /// <summary>
-        /// Files tab.
-        /// </summary>
-        /// <returns>
-        /// The view.
-        /// </returns>
-        public ActionResult FilesTab()
-        {
-            return PartialView();
-        }
-
         /// <summary>
         /// Gets the files list.
         /// </summary>

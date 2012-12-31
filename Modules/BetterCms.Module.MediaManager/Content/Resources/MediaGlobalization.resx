@@ -208,10 +208,16 @@
     <value>Modify This Image</value>
   </data>
   <data name="ImageEditor_Dialog_SubTitle" xml:space="preserve">
-    <value>Edit Image Info</value>
+    <value>Image Info</value>
   </data>
   <data name="ImageEditor_Dialog_Title" xml:space="preserve">
-    <value>Media Manager - Edit Image</value>
+    <value>Edit Image</value>
+  </data>
+  <data name="ImageEditor_InsertDialog_AcceptButton" xml:space="preserve">
+    <value>Insert</value>
+  </data>
+  <data name="ImageEditor_InsertDialog_Title" xml:space="preserve">
+    <value>Insert Image Options</value>
   </data>
   <data name="ImageEditor_ResizeFailureMessage_Message" xml:space="preserve">
     <value>Failed to resize image.</value>
@@ -263,6 +269,12 @@
   </data>
   <data name="MediaManager_AddNewFolder" xml:space="preserve">
     <value>Add New Folder</value>
+  </data>
+  <data name="MediaManager_ButtonInsertImage" xml:space="preserve">
+    <value>Insert Image</value>
+  </data>
+  <data name="MediaManager_ButtonInsertImageWithOptions" xml:space="preserve">
+    <value>Insert Image With Options</value>
   </data>
   <data name="MediaManager_NewFolder" xml:space="preserve">
     <value>New Folder</value>

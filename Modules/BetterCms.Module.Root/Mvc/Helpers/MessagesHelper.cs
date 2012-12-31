@@ -19,8 +19,11 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// </summary>
         /// <param name="html">The HTML helper.</param>
         /// <param name="id">The messages box id.</param>
-        /// <returns>Html string with rendered messages box.</returns>
-        public static IHtmlString MessagesBox(this HtmlHelper html, string id)
+        /// <param name="attributes">The attributes.</param>
+        /// <returns>
+        /// Html string with rendered messages box.
+        /// </returns>
+        public static IHtmlString MessagesBox(this HtmlHelper html, string id, IDictionary<string, string> attributes = null)
         {
             CmsControllerBase controller = html.ViewContext.Controller as CmsControllerBase;
             if (controller == null)
@@ -33,6 +36,13 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             if (!string.IsNullOrEmpty(id))
             {
                 sb.Append(" id=\"" + id + "\"");
+            }
+            if (attributes != null)
+            {
+                foreach (var pair in attributes)
+                {
+                    sb.AppendFormat(" {0}=\"{1}\"", pair.Key, pair.Value);
+                }
             }
             sb.AppendLine(">");
 

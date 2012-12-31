@@ -3,7 +3,7 @@
 namespace BetterCms.Module.MediaManager.ViewModels.MediaManager
 {
     [Serializable]
-    public class MediaVideoViewModel : MediaViewModel
+    public class MediaAudioViewModel : MediaViewModel
     {
     }
 }

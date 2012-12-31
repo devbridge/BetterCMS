@@ -487,13 +487,16 @@ div.bcms-upload-success {
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: #5abbec;
+        background: rgba(90,187,236,0.6);
+        border: 1px solid #c6c6c6;
         cursor: pointer;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
     }
 
         .bcms-grid .bcms-image-box .bcms-media-edit-controls .bcms-media-name {
             padding: 5px;
-            color: #fff;
+            color: #000;
             line-height: 12px;
             font-size: 10px;
             text-align: left;
@@ -510,12 +513,11 @@ div.bcms-upload-success {
         background: 0;
         text-indent: 0;
         font-size: 10px;
-        color: #fff;
         overflow: visible;
     }
 
         .bcms-grid .bcms-image-box .bcms-icn-edit:hover {
-            color: #303030;
+            text-decoration: underline;
         }
 
     .bcms-grid .bcms-image-box .bcms-icn-delete {
@@ -525,11 +527,11 @@ div.bcms-upload-success {
         padding-right: 0;
         background: 0;
         font-size: 10px;
-        color: #fff;
+        color: #000;
     }
 
         .bcms-grid .bcms-image-box .bcms-icn-delete:hover {
-            color: #303030;
+            text-decoration: underline;
             background-position: right -970px;
         }
 
@@ -599,22 +601,27 @@ input.bcms-grid-input:focus {
     color: #1187d2;
 }
 
-.bcms-list > div.bcms-media-click-active {
+.bcms-list div.bcms-media-click-active {
     background-color: #effcfe;
     transition: background-color 0.5s ease-out;
     -moz-transition: background-color 0.5s ease-out;
     -webkit-transition: background-color 0.5s ease-out;
 }
 
-    .bcms-list > div.bcms-media-click-active:hover {
+    .bcms-list div.bcms-media-click-active:hover {
         background-color: #effcfe;
     }
 
-.bcms-grid > div.bcms-media-click-active {
+.bcms-grid div.bcms-media-click-active {
     background-color: #effcfe;
     transition: background-color 0.5s ease-out;
     -moz-transition: background-color 0.5s ease-out;
     -webkit-transition: background-color 0.5s ease-out;
+}
+
+.bcms-grid .bcms-media-click-active > .bcms-media-edit-controls {
+    display: block;
+    background: rgba(90,187,236,0.6);
 }
 
 /*images in list*/
@@ -1266,12 +1273,13 @@ input.bcms-grid-input:focus {
 
 /*context menu*/
 .bcms-media-context {
-    /*display: none;*/
+    display: none;
     position: absolute;
     width: 80px;
     padding: 10px 20px;
     background: #eff9fd;
     border: 1px solid #c6c6c6;
+    z-index: 999;
 }
 
     .bcms-media-context:after, .bcms-media-context:before {
