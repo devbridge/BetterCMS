@@ -17,6 +17,7 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs'], function ($, bcms, tabs) {
             body: '.bcms-modal-body, .bcms-error-frame, .bcms-popinfo-frame',
             content: '.bcms-modal-content-padded, .bcms-error-frame p, .bcms-popinfo-frame p',
             scrollWindow: '.bcms-scroll-window',
+            loader: '.bcms-loader',
 
             // selectors for calculation of modal window size
             elemOuter: '.bcms-modal-body',
@@ -229,6 +230,8 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs'], function ($, bcms, tabs) {
                 .find(selectors.content)
                 .empty()
                 .append(content);
+
+            this.container.find(selectors.loader).remove();
 
             if ($.validator && $.validator.unobtrusive) {
                 $.validator.unobtrusive.parse(this.container);
