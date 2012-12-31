@@ -478,6 +478,8 @@
     <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\close.png" />
     <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\mini.png" />
     <EmbeddedResource Include="Scripts\ckeditor\styles.js" />
+    <EmbeddedResource Include="Scripts\bcms.dynamicContent.js" />
+    <EmbeddedResource Include="Scripts\bcms.siteSettings.js" />
     <Content Include="Scripts\jquery-1.7.2.min.js">
       <DependentUpon>jquery-1.7.2.js</DependentUpon>
     </Content>
