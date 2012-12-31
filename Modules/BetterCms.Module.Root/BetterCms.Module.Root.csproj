@@ -238,7 +238,6 @@
     <EmbeddedResource Include="Scripts\bcms.js" />
     <EmbeddedResource Include="Scripts\bcms.modal.js" />
     <EmbeddedResource Include="Scripts\bcms.sidemenu.js" />
-    <EmbeddedResource Include="Scripts\bcms.siteSettings.js" />
     <None Include="Scripts\jquery-1.7.2.intellisense.js">
       <DependentUpon>jquery-1.7.2.js</DependentUpon>
     </None>
@@ -476,9 +475,6 @@
     <EmbeddedResource Include="Scripts\ckeditor\skins\v2\templates.css" />
     <EmbeddedResource Include="Scripts\ckeditor\themes\default\theme.js" />
     <EmbeddedResource Include="Scripts\bcms.htmlEditor.js" />
-    <EmbeddedResource Include="Scripts\spinner.jquery.js" />
-    <EmbeddedResource Include="Content\Styles\spinner.css" />
-    <EmbeddedResource Include="Content\Styles\images\spinner.png" />
     <EmbeddedResource Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <EmbeddedResource Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <EmbeddedResource Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -539,7 +535,6 @@
     <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
-    <EmbeddedResource Include="Scripts\bcms.dynamicContent.js" />
     <EmbeddedResource Include="Scripts\bcms.tabs.js" />
     <EmbeddedResource Include="Content\Styles\images\modal-back.png" />
     <EmbeddedResource Include="Scripts\bcms.preview.js" />
@@ -573,6 +568,7 @@
     <EmbeddedResource Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <EmbeddedResource Include="Scripts\knockout-2.2.0.debug.js" />
     <EmbeddedResource Include="Scripts\knockout-2.2.0.js" />
+    <EmbeddedResource Include="Scripts\spinner.jquery.js" />
     <Content Include="Views\Web.config" />
     <EmbeddedResource Include="Views\Shared\Partial\ContentOverlay.cshtml" />
     <EmbeddedResource Include="Views\Shared\Partial\Modal.cshtml" />
