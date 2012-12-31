@@ -37,8 +37,8 @@ define('bcms.htmlEditor', ['jquery', 'bcms', 'ckeditor'], function ($, bcms) {
         if (instance) {
             instance.destroy(true);
         }
-
         CKEDITOR.replace(id, options);
+        //CKEDITOR.replace(id);
         CKEDITOR.instances[id].InsertImageClicked = function(editor) {
             bcms.trigger(htmlEditor.events.insertImage, editor);
         };
