@@ -24,6 +24,8 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 loadSiteSettingsMediaManagerUrl: null,
                 loadImagesUrl: null,
                 loadFilesUrl: null,
+                loadAudiosUrl: null,
+                loadVideosUrl: null,
                 insertImageDialogUrl: null,
                 deleteImageUrl: null,
                 getImageUrl: null,
@@ -849,7 +851,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             dialogContainer.find(selectors.tabAudiosSelector).on('click', function () {
                 var tabContainer = dialogContainer.find(selectors.tabAudiosContainer);
                 if (audiosViewModel == null) {
-                    audiosViewModel = new MediaItemsViewModel(tabContainer, null /* TODO: add audios url */, dialogContainer);
+                    audiosViewModel = new MediaItemsViewModel(tabContainer, links.loadAudiosUrl, dialogContainer);
 
                     loadTabData(audiosViewModel.url, null, function (json) {
                         initializeTab(json, audiosViewModel);
@@ -861,7 +863,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             dialogContainer.find(selectors.tabVideosSelector).on('click', function () {
                 var tabContainer = dialogContainer.find(selectors.tabVideosContainer);
                 if (videosViewModel == null) {
-                    videosViewModel = new MediaItemsViewModel(tabContainer, null /* TODO: add video url */, dialogContainer);
+                    videosViewModel = new MediaItemsViewModel(tabContainer, links.loadVideosUrl, dialogContainer);
 
                     loadTabData(videosViewModel.url, null, function (json) {
                         initializeTab(json, videosViewModel);

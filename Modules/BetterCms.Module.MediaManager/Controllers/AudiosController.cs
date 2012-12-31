@@ -1,19 +1,19 @@
 ﻿using System.Web.Mvc;
 
-using BetterCms.Module.MediaManager.Command.Videos;
+using BetterCms.Module.MediaManager.Command.Audios;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
 namespace BetterCms.Module.MediaManager.Controllers
 {
-    public class VideosController : CmsControllerBase
+    public class AudiosController : CmsControllerBase
     {
         /// <summary>
-        /// Gets the videos list.
+        /// Gets the audios list.
         /// </summary>
-        /// <returns>List of videos</returns>
-        public ActionResult GetVideosList(MediaManagerViewModel options)
+        /// <returns>List of audios</returns>
+        public ActionResult GetAudiosList(MediaManagerViewModel options)
         {
             var success = true;
             if (options == null)
@@ -21,7 +21,7 @@ namespace BetterCms.Module.MediaManager.Controllers
                 options = new MediaManagerViewModel();
             }
 
-            var model = GetCommand<GetVideosCommand>().ExecuteCommand(options);
+            var model = GetCommand<GetAudiosCommand>().ExecuteCommand(options);
             if (model == null)
             {
                 success = false;

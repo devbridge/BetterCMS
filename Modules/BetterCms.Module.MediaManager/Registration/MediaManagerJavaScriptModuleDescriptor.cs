@@ -23,6 +23,8 @@ namespace BetterCms.Module.MediaManager.Registration
                     new JavaScriptModuleLinkTo<MediaManagerController>(this, "loadSiteSettingsMediaManagerUrl", c => c.Index()),
                     new JavaScriptModuleLinkTo<ImagesController>(this, "loadImagesUrl", c => c.GetImagesList(null)),
                     new JavaScriptModuleLinkTo<FilesController>(this, "loadFilesUrl", c => c.GetFilesList(null)),
+                    new JavaScriptModuleLinkTo<AudiosController>(this, "loadAudiosUrl", c => c.GetAudiosList(null)),
+                    new JavaScriptModuleLinkTo<VideosController>(this, "loadVideosUrl", c => c.GetVideosList(null)),
                     new JavaScriptModuleLinkTo<ImagesController>(this, "insertImageDialogUrl", c => c.ImageInsert()),
                     new JavaScriptModuleLinkTo<ImagesController>(this, "deleteImageUrl", c => c.ImageDelete("{0}", "{1}")),
                     new JavaScriptModuleLinkTo<ImagesController>(this, "getImageUrl", c => c.GetImage("{0}")),

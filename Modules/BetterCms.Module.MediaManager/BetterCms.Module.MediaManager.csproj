@@ -118,9 +118,10 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Command\Audios\GetAudiosCommand.cs" />
     <Compile Include="Command\Folder\DeleteFolderCommand.cs" />
     <Compile Include="Command\Folder\DeleteFolderCommandRequest.cs" />
-    <Compile Include="Command\Folder\GetFilesCommand.cs" />
+    <Compile Include="Command\Files\GetFilesCommand.cs" />
     <Compile Include="Command\Folder\SaveFolderCommand.cs" />
     <Compile Include="Command\Images\DeleteMediaCommand.cs" />
     <Compile Include="Command\Images\DeleteMediaCommandRequest.cs" />
@@ -132,11 +133,13 @@
     <Compile Include="Command\Images\GetImagesCommand.cs" />
     <Compile Include="Command\Upload\UploadFileRequest.cs" />
     <Compile Include="Command\Upload\UploadFileCommand.cs" />
+    <Compile Include="Command\Videos\GetVideosCommand.cs" />
     <Compile Include="Content\Resources\MediaGlobalization.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MediaGlobalization.resx</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\AudiosController.cs" />
     <Compile Include="Controllers\FolderController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Controllers\ImagesController.cs" />
@@ -168,6 +171,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registration\MediaManagerJavaScriptModuleDescriptor.cs" />
     <Compile Include="ViewModels\Images\ImageViewModel.cs" />
+    <Compile Include="ViewModels\MediaManager\MediaAudioViewModel.cs" />
     <Compile Include="ViewModels\MediaManager\MediaManagerItemsViewModel.cs" />
     <Compile Include="ViewModels\MediaManager\MediaPathViewModel.cs" />
     <Compile Include="ViewModels\MediaManager\MediaViewModel.cs" />
@@ -233,9 +237,7 @@
     <EmbeddedResource Include="Views\Images\ImageCropper.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Command\Files\" />
     <Folder Include="Command\MediaManager\" />
-    <Folder Include="Command\Videos\" />
     <Folder Include="Helpers\" />
     <Folder Include="Mvc\" />
     <Folder Include="Views\Files\" />

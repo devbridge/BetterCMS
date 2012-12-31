@@ -14,7 +14,7 @@ using MvcContrib.Sorting;
 using NHibernate.Criterion;
 using NHibernate.Transform;
 
-namespace BetterCms.Module.MediaManager.Command.Folder
+namespace BetterCms.Module.MediaManager.Command.Files
 {
     public class GetFilesCommand : CommandBase, ICommand<MediaManagerViewModel, MediaManagerItemsViewModel>
     {
