@@ -51,7 +51,7 @@
 
         <div data-bind="foreach: medias">
             <div data-bind="click: openMedia.bind($data, $root), event: { contextmenu: contextMenu.show }, attr: {class: classNames()}">
-                
+
                 <div class="bcms-media-context" data-bind="click: stopEvent, attr: {id: contextMenu.domId}">
                     <a class="bcms-btn-close">@RootGlobalization.Button_Close</a>
                     <!-- ko if: isFolder() -->
@@ -64,8 +64,8 @@
                     <a class="bcms-media-content-link" href="#" data-bind="click: editMedia.bind($data, $root)">@RootGlobalization.Button_Edit</a>
                     <!-- /ko -->
                     <!-- ko if: $root.canSelectMedia() && isImage() -->
-                    <a class="bcms-media-content-link" href="#">@MediaGlobalization.MediaManager_ButtonInsertImage</a>
-                    <a class="bcms-media-content-link" href="#">@MediaGlobalization.MediaManager_ButtonInsertImageWithOptions</a>
+                    <a class="bcms-media-content-link" href="#" data-bind="click: insertMedia.bind($data, $root)">@MediaGlobalization.MediaManager_ButtonInsertImage</a>
+                    <a class="bcms-media-content-link" href="#" data-bind="click: insertMediaWithOptions.bind($data, $root)">@MediaGlobalization.MediaManager_ButtonInsertImageWithOptions</a>
                     <!-- /ko -->
                     <a class="bcms-media-content-link" href="#" data-bind="click: deleteMedia.bind($data, $root)">@RootGlobalization.Button_Delete</a>
                 </div>

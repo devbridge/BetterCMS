@@ -66,7 +66,9 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             audiosViewModel = null,
             videosViewModel = null,
             filesViewModel = null,
-            staticDomId = 1;
+            staticDomId = 1,
+            contentEditor = null,
+            imageInsertDialog = null;
 
         /**
         * Assign objects to module.
@@ -235,10 +237,10 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
         */
         function MediaItemContextMenuViewModel() {
             var self = this;
-            
+
             self.initialized = false;
             self.domId = 'cmenu_' + staticDomId++;
-            
+
             self.show = function (data, event) {
                 var menuContainer = $('#' + self.domId);
 
@@ -246,7 +248,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                     self.initialized = true;
                     menu.initContext(menuContainer, event.target, false);
                 }
-                
+
                 menu.contextShow(event, menuContainer);
             };
 
@@ -281,7 +283,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 self.canBeRenamed = function () {
                     return self.isFolder() || (self.isFile() && !self.isImage());
                 };
-                
+
                 self.canBeEdited = function () {
                     return !self.canBeRenamed();
                 };
@@ -320,19 +322,27 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             };
 
             MediaItemBaseViewModel.prototype.deleteMedia = function (folderViewModel) {
-                throw new Error("Delete method is not implemented");
+                throw new Error("Delete method is not implemented.");
             };
 
             MediaItemBaseViewModel.prototype.openMedia = function (folderViewModel) {
-                throw new Error("Open method is not implemented");
+                throw new Error("Open method is not implemented.");
             };
 
             MediaItemBaseViewModel.prototype.editMedia = function (folderViewModel) {
-                throw new Error("Edit media method is not implemented");
+                throw new Error("Edit media method is not implemented.");
             };
 
             MediaItemBaseViewModel.prototype.saveMedia = function (folderViewModel) {
-                throw new Error("Save media method is not implemented");
+                throw new Error("Save media method is not implemented.");
+            };
+
+            MediaItemBaseViewModel.prototype.insertMedia = function (folderViewModel) {
+                throw new Error("Insert media method is not implemented.");
+            };
+
+            MediaItemBaseViewModel.prototype.insertMediaWithOptions = function (folderViewModel) {
+                throw new Error("Insert media with options method is not implemented.");
             };
 
             MediaItemBaseViewModel.prototype.cancelEditMedia = function (folderViewModel, data, event) {
@@ -341,7 +351,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             };
 
             MediaItemBaseViewModel.prototype.blurMediaField = function (folderViewModel) {
-                throw new Error("Blur editable media field method is not implemented");
+                throw new Error("Blur editable media field method is not implemented.");
             };
 
             MediaItemBaseViewModel.prototype.toJson = function () {
@@ -393,6 +403,16 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                     self.version(json.Version);
                     self.name(json.FileName);
                 });
+            };
+
+            MediaImageViewModel.prototype.insertMedia = function (folderViewModel, data, event) {
+                bcms.stopEventPropagation(event);
+                insertImage(this.id(), false);
+            };
+
+            MediaImageViewModel.prototype.insertMediaWithOptions = function (folderViewModel, data, event) {
+                bcms.stopEventPropagation(event);
+                insertImage(this.id(), true);
             };
 
             MediaImageViewModel.prototype.openMedia = function (folderViewModel, data, event) {
@@ -571,11 +591,13 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
         /**
         * Shows image selection window.
         */
-        media.onInsertImage = function(imgEditor) {
+        media.onInsertImage = function (htmlContentEditor) {
+            contentEditor = htmlContentEditor;
             modal.open({
                 title: globalization.insertImageDialogTitle,
                 acceptTitle: 'Insert',
                 onLoad: function (dialog) {
+                    imageInsertDialog = dialog;
                     dynamicContent.setContentFromUrl(dialog, links.insertImageDialogUrl, {
                         done: function (content) {
                             imagesViewModel = new MediaItemsViewModel(dialog.container, links.loadImagesUrl, dialog.container);
@@ -584,16 +606,10 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                         },
                     });
                 },
-                onAcceptClick: function (dialog) {
+                onAcceptClick: function () {
                     var i,
                         item,
-                        selectedItem = null,
-                        alertOnError = function() {
-                            modal.alert({
-                                title: globalization.insertImageFailureMessageTitle,
-                                content: globalization.insertImageFailureMessageMessage,
-                            });
-                        };
+                        selectedItem = null;
 
                     for (i = 0; i < imagesViewModel.medias().length; i++)
                     {
@@ -610,46 +626,67 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                             content: globalization.imageNotSelectedMessageMessage,
                             disableCancel: true,
                         });
-                    }
-
-                    // TODO: implement image insert with parameters.
-                    if (true) {
-                        imageEditor.onInsertImage(selectedItem.id(), function (imageUrl, caption, align) {
-                            addImageToEditor(imgEditor, imageUrl, caption, align);
-                        });
                     } else {
-                        var url = $.format(links.getImageUrl, selectedItem.id());
-                        $.ajax({
-                            url: url,
-                            type: "POST",
-                            dataType: 'json'
-                        }).done(function (json) {
-                            if (json.Success && json.Data != null) {
-                                addImageToEditor(imgEditor, json.Data.Url, json.Data.Caption, json.Data.ImageAlign);
-                                dialog.close();
-                            } else {
-                                alertOnError();
-                            }
-                        }).fail(function () {
-                            alertOnError();
-                        });
+                        insertImage(selectedItem.id(), false);
                     }
                 },
             });
         };
 
         /**
-        * Insert image to htmlEditor.
+        * Insert media.
         */
-        function addImageToEditor(imgEditor, imageUrl, caption, imageAlign) {
-            var align = "left";
-            if (imageAlign == 2) {
-                align = "center";
+        function insertImage(mediaId, withOptions) {
+            var alertOnError = function () {
+                modal.alert({
+                    title: globalization.insertImageFailureMessageTitle,
+                    content: globalization.insertImageFailureMessageMessage,
+                });
+            };
+            
+            if (withOptions === true) {
+                imageEditor.onInsertImage(mediaId, function(imageUrl, caption, align) {
+                    addImageToEditor(imageUrl, caption, align);
+                    if (imageInsertDialog != null) {
+                        imageInsertDialog.close();
+                        imageInsertDialog = null;
+                    }
+                });
+            } else {
+                var url = $.format(links.getImageUrl, mediaId);
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    dataType: 'json'
+                }).done(function (json) {
+                    if (json.Success && json.Data != null) {
+                        addImageToEditor(json.Data.Url, json.Data.Caption, json.Data.ImageAlign);
+                        if (imageInsertDialog != null) {
+                            imageInsertDialog.close();
+                            imageInsertDialog = null;
+                        }
+                    } else {
+                        alertOnError();
+                    }
+                }).fail(function () {
+                    alertOnError();
+                });
             }
-            else if (imageAlign == 3) {
-                align = "right";
+        };
+        
+        /**
+        * Insert image to html content editor.
+        */
+        function addImageToEditor(imageUrl, caption, imageAlign) {
+            if (contentEditor != null) {
+                var align = "left";
+                if (imageAlign == 2) {
+                    align = "center";
+                } else if (imageAlign == 3) {
+                    align = "right";
+                }
+                contentEditor.insertHtml('<img src="' + imageUrl + '" alt="' + caption + '" align="' + align + '"/>');
             }
-            imgEditor.insertHtml('<img src="' + imageUrl + '" alt="' + caption + '" align="' + align + '"/>');
         };
 
         /**
