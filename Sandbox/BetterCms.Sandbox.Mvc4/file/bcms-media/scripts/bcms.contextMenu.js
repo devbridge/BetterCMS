@@ -120,15 +120,20 @@ define('bcms.contextMenu', ['jquery', 'bcms'],
                 // hide the menu first to avoid an "up-then-over" visual effect
                 contextMenuContainer.hide();
                 
-                // TODO: need more investigation :)
-                var target = $(event.currentTarget);
-                var left = event.pageX - target.offset().left;
-                var top = event.pageY - target.offset().top;
-                var scrollHeight = contextMenuContainer.scrollParent().height();
-                var height = contextMenuContainer.parent().offset().top + top + contextMenuContainer.height();
+                var leftPadding = 12,
+                    topPadding = 13,
+                    target = $(event.currentTarget),
+                    left = event.pageX - target.offset().left + leftPadding,
+                    top = event.pageY - target.offset().top,
+                    scrollHeight = contextMenuContainer.scrollParent().height(),
+                    scrollTop = contextMenuContainer.scrollParent().offset().top,
+                    menuHeight = contextMenuContainer.outerHeight(),
+                    totalHeight = contextMenuContainer.parent().offset().top + top + menuHeight - scrollTop;
                 
-                if (height > scrollHeight) {
-                    top = top - contextMenuContainer.height();
+                if (totalHeight > scrollHeight) {
+                    top = top - menuHeight + topPadding;
+                } else {
+                    top -= topPadding;
                 }
 
                 contextMenuContainer.css('left', left + 'px');

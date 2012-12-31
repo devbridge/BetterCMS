@@ -142,7 +142,6 @@ namespace BetterCms.Module.Root
                     new FormsJavaScriptModuleDescriptor(this),
                     new HtmlEditorJavaScriptModuleDescriptor(this),                     
                     new MessagesJavaScriptModuleDescriptor(this), 
-                    new ContextMenuJavaScriptModuleDescriptor(this), 
                     new ModalJavaScriptModuleDescriptor(this), 
                     new SidemenuJavaScriptModuleDescriptor(this),                     
                     new TabsJavaScriptModuleDescriptor(this), 
