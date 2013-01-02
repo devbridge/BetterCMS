@@ -95,12 +95,12 @@ namespace BetterCms.Module.MediaManager.Controllers
         {
             var result = GetCommand<ConfirmUploadCommand>().ExecuteCommand(model);
 
-            if (!result)
+            if (result == null)
             {
                 Messages.AddError(MediaGlobalization.MultiFileUpload_SaveFailed);
             }
 
-            return Json(new WireJson(result));
+            return Json(new WireJson(true, result));
         }
     }
 }

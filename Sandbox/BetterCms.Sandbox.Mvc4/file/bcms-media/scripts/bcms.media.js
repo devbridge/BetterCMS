@@ -97,11 +97,12 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
         */
         function MediaItemsViewModel(container, url, messagesContainer) {
             var self = this,
-                onUploadFiles = function(mediasArray, newFiles) {
-                    if (newFiles && newFiles.length > 0) {
-                        for (var i = newFiles.length - 1; i >= 0; i--) {
-                            var mediaItem = convertToMediaModel(newFiles[i]);
-                            mediasArray.unshift(mediaItem);
+                onUploadFiles = function(newFilesData) {
+                    if (newFilesData && newFilesData.Data && newFilesData.Data.Medias && newFilesData.Data.Medias.length > 0) {
+                        var medias = newFilesData.Data.Medias;
+                        for (var i = medias.length - 1; i >= 0; i--) {
+                            var mediaItem = convertToMediaModel(medias[i]);
+                            self.medias.unshift(mediaItem);
                         }
                     }
                 };
