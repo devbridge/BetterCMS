@@ -1,7 +1,7 @@
 /*
 * LAYOUTS
 */
-INSERT INTO bcms_root.layouts (
+INSERT INTO bcms_root.Layouts (
 	Name
 	, LayoutPath
 	, Version, IsDeleted
@@ -11,8 +11,8 @@ INSERT INTO bcms_root.layouts (
 )
 SELECT * FROM (
 	SELECT 
-		'One column' AS Name
-		, '~/Views/Shared/Layouts/01.cshtml' AS MasterPagePath
+		'Wide Layout' AS Name
+		, '~/Areas/bcms-Templates/Views/Shared/WideLayout.cshtml' AS MasterPagePath
 		, 1 AS Version, 0 As IsDeleted
 		, getdate() AS CreatedOn, 'Admin' as CreatedByUser
 		, getdate() AS ModifiedOn, 'Admin' as ModifiedByUser
@@ -21,8 +21,8 @@ SELECT * FROM (
 	UNION
 	
 	SELECT 
-		'Two columns' AS Name
-		, '~/Views/Shared/Layouts/02.cshtml' AS MasterPagePath
+		'Two columns Layout' AS Name
+		, '~/Areas/bcms-Templates/Views/Shared/TwoColumnsLayout.cshtml' AS MasterPagePath
 		, 1 AS Version, 0 As IsDeleted
 		, getdate() AS CreatedOn, 'Admin' as CreatedByUser
 		, getdate() AS ModifiedOn, 'Admin' as ModifiedByUser
@@ -31,22 +31,12 @@ SELECT * FROM (
 	UNION
 	
 	SELECT 
-		'Two columns and header' AS Name
-		, '~/Views/Shared/Layouts/03.cshtml' AS MasterPagePath
+		'Three columns layout' AS Name
+		, '~/Areas/bcms-Templates/Views/Shared/ThreeColumnsLayout.cshtml' AS MasterPagePath
 		, 1 AS Version, 0 As IsDeleted
 		, getdate() AS CreatedOn, 'Admin' as CreatedByUser
 		, getdate() AS ModifiedOn, 'Admin' as ModifiedByUser
 		, NULL AS DeletedOn, NULL as DeletedByUser
-		
-	UNION
-	
-	SELECT 
-		'Two columns, header and footer' AS Name
-		, '~/Views/Shared/Layouts/04.cshtml' AS MasterPagePath
-		, 1 AS Version, 0 As IsDeleted
-		, getdate() AS CreatedOn, 'Admin' as CreatedByUser
-		, getdate() AS ModifiedOn, 'Admin' as ModifiedByUser
-		, getdate() AS DeletedOn, 'Admin' as DeletedByUser
 ) x
 WHERE NOT EXISTS (SELECT 1 FROM bcms_root.layouts l WHERE l.name = x.name AND l.IsDeleted = x.IsDeleted)
 
@@ -80,7 +70,7 @@ SELECT * FROM (
 	UNION
 	
 	SELECT 
-		'CMSLeftColumn' AS Name, 'CMSLeftColumn' As RegionIdentifier
+		'CMSLeftSide' AS Name, 'CMSLeftSide' As RegionIdentifier
 		, 1 AS Version, 0 As IsDeleted
 		, getdate() AS CreatedOn, 'Admin' as CreatedByUser
 		, getdate() AS ModifiedOn, 'Admin' as ModifiedByUser
@@ -89,7 +79,16 @@ SELECT * FROM (
 	UNION
 	
 	SELECT 
-		'CMSRightColumn' AS Name, 'CMSRightColumn' As RegionIdentifier
+		'CMSRightSide' AS Name, 'CMSRightSide' As RegionIdentifier
+		, 1 AS Version, 0 As IsDeleted
+		, getdate() AS CreatedOn, 'Admin' as CreatedByUser
+		, getdate() AS ModifiedOn, 'Admin' as ModifiedByUser
+		, NULL AS DeletedOn, NULL as DeletedByUser
+		
+	UNION
+	
+	SELECT 
+		'CMSMainContent' AS Name, 'CMSMainContent' As RegionIdentifier
 		, 1 AS Version, 0 As IsDeleted
 		, getdate() AS CreatedOn, 'Admin' as CreatedByUser
 		, getdate() AS ModifiedOn, 'Admin' as ModifiedByUser
@@ -104,77 +103,99 @@ INSERT INTO bcms_root.LayoutRegions (
 	LayoutId, RegionId, [Version], CreatedByUser,ModifiedByUser
 )
 SELECT * FROM (
-	SELECT (SELECT top 1 Id FROM bcms_root.layouts where IsDeleted=0 AND Name = 'One Column') AS LayoutId
-		, (SELECT top 1 Id FROM bcms_root.regions where IsDeleted=0 AND Name = 'CMSLeftColumn') As RegionId
+	SELECT (SELECT top 1 Id FROM bcms_root.layouts where IsDeleted=0 AND Name = 'Wide Layout') AS LayoutId
+		, (SELECT top 1 Id FROM bcms_root.regions where IsDeleted=0 AND Name = 'CMSHeader') As RegionId
 		, 1 as [Version]
 		, '' as CreatedByUser
 		, '' as ModifiedByUser
 		
 	UNION
 	
-	SELECT (SELECT top 1 Id FROM bcms_root.layouts where IsDeleted=0 AND Name = 'Two Columns') AS LayoutId
-		, (SELECT top 1 Id FROM bcms_root.regions where IsDeleted=0 AND Name = 'CMSLeftColumn') As RegionId
-		, 1 as [Version]
-		, '' as CreatedByUser
-		, '' as ModifiedByUser
-	UNION
-	
-	SELECT (SELECT top 1 Id FROM bcms_root.layouts where IsDeleted=0 AND Name = 'Two Columns') AS LayoutId
-		, (SELECT top 1 Id FROM bcms_root.regions where IsDeleted=0 AND Name = 'CMSRightColumn') As RegionId
-		, 1 as [Version]
-		, '' as CreatedByUser
-		, '' as ModifiedByUser
-	UNION
-	
-	SELECT (SELECT top 1 Id FROM bcms_root.layouts where IsDeleted=0 AND Name = 'Two columns and header') AS LayoutId
-		, (SELECT top 1 Id FROM bcms_root.regions where IsDeleted=0 AND Name = 'CMSHeader') As RegionId
-		, 1 as [Version]
-		, '' as CreatedByUser
-		, '' as ModifiedByUser
-	UNION
-	
-	SELECT (SELECT top 1 Id FROM bcms_root.layouts where IsDeleted=0 AND Name = 'Two columns and header') AS LayoutId
-		, (SELECT top 1 Id FROM bcms_root.regions where IsDeleted=0 AND Name = 'CMSLeftColumn') As RegionId
-		, 1 as [Version]
-		, '' as CreatedByUser
-		, '' as ModifiedByUser
-	UNION
-	
-	SELECT (SELECT top 1 Id FROM bcms_root.layouts where IsDeleted=0 AND Name = 'Two columns and header') AS LayoutId
-		, (SELECT top 1 Id FROM bcms_root.regions where IsDeleted=0 AND Name = 'CMSRightColumn') As RegionId
-		, 1 as [Version]
-		, '' as CreatedByUser
-		, '' as ModifiedByUser
-	UNION
-	
-	SELECT (SELECT top 1 Id FROM bcms_root.layouts where IsDeleted=0 AND Name = 'Two columns, header and footer') AS LayoutId
-		, (SELECT top 1 Id FROM bcms_root.regions where IsDeleted=0 AND Name = 'CMSHeader') As RegionId
-		, 1 as [Version]
-		, '' as CreatedByUser
-		, '' as ModifiedByUser
-	UNION
-	
-	SELECT (SELECT top 1 Id FROM bcms_root.layouts where IsDeleted=0 AND Name = 'Two columns, header and footer') AS LayoutId
-		, (SELECT top 1 Id FROM bcms_root.regions where IsDeleted=0 AND Name = 'CMSLeftColumn') As RegionId
-		, 1 as [Version]
-		, '' as CreatedByUser
-		, '' as ModifiedByUser
-	UNION
-	
-	SELECT (SELECT top 1 Id FROM bcms_root.layouts where IsDeleted=0 AND Name = 'Two columns, header and footer') AS LayoutId
-		, (SELECT top 1 Id FROM bcms_root.regions where IsDeleted=0 AND Name = 'CMSRightColumn') As RegionId
-		, 1 as [Version]
-		, '' as CreatedByUser
-		, '' as ModifiedByUser
-	UNION
-	
-	SELECT (SELECT top 1 Id FROM bcms_root.layouts where IsDeleted=0 AND Name = 'Two columns, header and footer') AS LayoutId
+	SELECT (SELECT top 1 Id FROM bcms_root.layouts where IsDeleted=0 AND Name = 'Wide Layout') AS LayoutId
 		, (SELECT top 1 Id FROM bcms_root.regions where IsDeleted=0 AND Name = 'CMSFooter') As RegionId
 		, 1 as [Version]
 		, '' as CreatedByUser
 		, '' as ModifiedByUser
+	UNION
+	
+	SELECT (SELECT top 1 Id FROM bcms_root.layouts where IsDeleted=0 AND Name = 'Wide Layout') AS LayoutId
+		, (SELECT top 1 Id FROM bcms_root.regions where IsDeleted=0 AND Name = 'CMSMainContent') As RegionId
+		, 1 as [Version]
+		, '' as CreatedByUser
+		, '' as ModifiedByUser
+		
+	UNION
+	
+	SELECT (SELECT top 1 Id FROM bcms_root.layouts where IsDeleted=0 AND Name = 'Two Columns Layout') AS LayoutId
+		, (SELECT top 1 Id FROM bcms_root.regions where IsDeleted=0 AND Name = 'CMSHeader') As RegionId
+		, 1 as [Version]
+		, '' as CreatedByUser
+		, '' as ModifiedByUser
+		
+	UNION
+	
+	SELECT (SELECT top 1 Id FROM bcms_root.layouts where IsDeleted=0 AND Name = 'Two Columns Layout') AS LayoutId
+		, (SELECT top 1 Id FROM bcms_root.regions where IsDeleted=0 AND Name = 'CMSFooter') As RegionId
+		, 1 as [Version]
+		, '' as CreatedByUser
+		, '' as ModifiedByUser
+	UNION
+	
+	SELECT (SELECT top 1 Id FROM bcms_root.layouts where IsDeleted=0 AND Name = 'Two Columns Layout') AS LayoutId
+		, (SELECT top 1 Id FROM bcms_root.regions where IsDeleted=0 AND Name = 'CMSMainContent') As RegionId
+		, 1 as [Version]
+		, '' as CreatedByUser
+		, '' as ModifiedByUser
+		
+	UNION
+	
+	SELECT (SELECT top 1 Id FROM bcms_root.layouts where IsDeleted=0 AND Name = 'Two Columns Layout') AS LayoutId
+		, (SELECT top 1 Id FROM bcms_root.regions where IsDeleted=0 AND Name = 'CMSLeftSide') As RegionId
+		, 1 as [Version]
+		, '' as CreatedByUser
+		, '' as ModifiedByUser
+		
+	UNION
+	
+	SELECT (SELECT top 1 Id FROM bcms_root.layouts where IsDeleted=0 AND Name = 'Three Columns Layout') AS LayoutId
+		, (SELECT top 1 Id FROM bcms_root.regions where IsDeleted=0 AND Name = 'CMSHeader') As RegionId
+		, 1 as [Version]
+		, '' as CreatedByUser
+		, '' as ModifiedByUser
+		
+	UNION
+	
+	SELECT (SELECT top 1 Id FROM bcms_root.layouts where IsDeleted=0 AND Name = 'Three Columns Layout') AS LayoutId
+		, (SELECT top 1 Id FROM bcms_root.regions where IsDeleted=0 AND Name = 'CMSFooter') As RegionId
+		, 1 as [Version]
+		, '' as CreatedByUser
+		, '' as ModifiedByUser
+		
+	UNION
+	
+	SELECT (SELECT top 1 Id FROM bcms_root.layouts where IsDeleted=0 AND Name = 'Three Columns Layout') AS LayoutId
+		, (SELECT top 1 Id FROM bcms_root.regions where IsDeleted=0 AND Name = 'CMSMainContent') As RegionId
+		, 1 as [Version]
+		, '' as CreatedByUser
+		, '' as ModifiedByUser
+		
+	UNION
+	
+	SELECT (SELECT top 1 Id FROM bcms_root.layouts where IsDeleted=0 AND Name = 'Three Columns Layout') AS LayoutId
+		, (SELECT top 1 Id FROM bcms_root.regions where IsDeleted=0 AND Name = 'CMSLeftSide') As RegionId
+		, 1 as [Version]
+		, '' as CreatedByUser
+		, '' as ModifiedByUser
+		
+	UNION
+	
+	SELECT (SELECT top 1 Id FROM bcms_root.layouts where IsDeleted=0 AND Name = 'Three Columns Layout') AS LayoutId
+		, (SELECT top 1 Id FROM bcms_root.regions where IsDeleted=0 AND Name = 'CMSRightSide') As RegionId
+		, 1 as [Version]
+		, '' as CreatedByUser
+		, '' as ModifiedByUser
 ) x
-WHERE NOT EXISTS (SELECT 1 FROM bcms_root.LayoutRegions r WHERE r.RegionId = x.RegionId AND r.LayoutId  = r.LayoutId)
+WHERE NOT EXISTS (SELECT 1 FROM bcms_root.LayoutRegions r WHERE r.RegionId = x.RegionId AND r.LayoutId  = x.LayoutId)
 
 /*
 * AUTHORS
