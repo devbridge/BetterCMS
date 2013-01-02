@@ -6,12 +6,6 @@
     Layout = "RootLayout.cshtml";
 }
 
-@* // TODO: remove after tests *@
-@if (Model.CanManageContent)
-{
-    @:Layout: @Layout
-}
-
 @if (Model.CanManageContent)
 {
     <div class="bcms-page-content">
