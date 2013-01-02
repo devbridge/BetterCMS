@@ -31,7 +31,7 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
     mediaUpload.links = links;
     mediaUpload.globalization = globalization;    
 
-    mediaUpload.openUploadFilesDialog = function (rootFolderId, rootFolderType) {
+    mediaUpload.openUploadFilesDialog = function (rootFolderId, rootFolderType, onSaveCallback) {
         var options = {
             rootFolderId: rootFolderId,
             rootFolderType: rootFolderType
@@ -48,6 +48,12 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
 
                     beforePost: function () {
                         dialog.container.showLoading();
+                    },
+                    
+                    postSuccess: function(json) {
+                        if (onSaveCallback && $.isFunction(onSaveCallback)) {
+                            onSaveCallback(json);
+                        }
                     },
 
                     postComplete: function () {
