@@ -22,7 +22,7 @@
     overflow: hidden;
     vertical-align: top;
     border: 1px solid #c6c6c6;
-    background: url('images/bcms-no-image.png') no-repeat center center #f5f5f5;
+    background: url('images/bcms-no-image-1.png') no-repeat center center #f5f5f5;
 }
 
     .bcms-croped-block img {
@@ -53,7 +53,7 @@
 
 .bcms-file-link {
     margin-left: 20px;
-    color: #0087dd;
+    color: #0383df;
     font-size: 12px;
     font-weight: 400;
     cursor: pointer;
@@ -147,7 +147,7 @@ div.bcms-align-right-active {
 .bcms-dropzone-infotext {
     text-align: center;
     margin-top: 40px;
-    color: #0097f8;
+    color: #24597e;
     font-size: 20px;
     font-weight: 700;
 }
@@ -301,7 +301,7 @@ div.bcms-upload-success {
 
     .bcms-media-controls-holder a {
         display: inline-block;
-        color: #1187d2;
+        color: #0383df;
         font-size: 10px;
         vertical-align: middle;
         cursor: pointer;
@@ -370,7 +370,7 @@ div.bcms-upload-success {
     display: inline-block;
     max-width: 575px;
     height: 20px;
-    color: #1187d2;
+    color: #0383df;
     line-height: 20px;
     text-decoration: none;
     vertical-align: top;
@@ -384,7 +384,7 @@ div.bcms-upload-success {
     }
 
         .bcms-breadcrumbs-root:first-child:hover {
-            color: #1187d2;
+            color: #0383df;
         }
 
 /*default sorting block*/
@@ -402,7 +402,7 @@ div.bcms-upload-success {
 
 .bcms-media-sorting-block {
     height: 35px;
-    background-color: #fbf9f9;
+    background-color: #f5f5f5;
     border-top: 1px solid #c6c6c6;
     border-bottom: 1px solid #c6c6c6;
 }
@@ -464,7 +464,7 @@ div.bcms-upload-success {
     .bcms-grid .bcms-image-box .bcms-media-file-holder {
         width: 103px;
         height: 94px;
-        background: url('images/bcms-no-thumbnail.png') no-repeat center center;
+        background: url('images/bcms-no-image-3.png') no-repeat center center;
         background-size: cover;
         border: 1px solid #c6c6c6;
         overflow: hidden;
@@ -598,7 +598,7 @@ input.bcms-grid-input:focus {
 .bcms-media-name {
     line-height: 16px;
     font-size: 11px;
-    color: #1187d2;
+    color: #0383df;
 }
 
 .bcms-list div.bcms-media-click-active {
@@ -685,7 +685,7 @@ input.bcms-grid-input:focus {
         display: inline-block;
         width: 54px;
         height: 40px;
-        background: url('images/bcms-no-thumbnail.png') no-repeat center center;
+        background: url('images/bcms-no-image-3.png') no-repeat center center;
         overflow: hidden;
         vertical-align: middle;
         border: 1px solid #c6c6c6;
@@ -1275,36 +1275,65 @@ input.bcms-grid-input:focus {
 .bcms-media-context {
     display: none;
     position: absolute;
-    width: 80px;
-    padding: 10px 20px;
+    min-width: 80px;
+    padding: 10px 30px 10px 20px;
     background: #eff9fd;
     border: 1px solid #c6c6c6;
     z-index: 999;
 }
 
-    .bcms-media-context:after, .bcms-media-context:before {
-        right: 100%;
-        border: solid transparent;
-        content: " ";
-        height: 0;
-        width: 0;
-        position: absolute;
-        pointer-events: none;
+    .bcms-media-context a {
+        color: #0383df;
+        cursor: pointer;
     }
 
-    .bcms-media-context:after {
-        border-right-color: #eff9fd;
-        border-width: 7px;
-        top: 15%;
-        margin-top: -7px;
-    }
+        .bcms-media-context a:hover {
+            text-decoration: underline;
+        }
 
-    .bcms-media-context:before {
-        border-right-color: #c6c6c6;
-        border-width: 8px;
-        top: 15%;
-        margin-top: -8px;
-    }
+.bcms-media-context-tl:before {
+    right: 100%;
+    top: 10px;
+    content: " ";
+    height: 8px;
+    width: 5px;
+    position: absolute;
+    pointer-events: none;
+    background: url('images/sprite-media-1.png') no-repeat 0 0;
+}
+
+.bcms-media-context-bl:before {
+    right: 100%;
+    bottom: 10px;
+    content: " ";
+    height: 8px;
+    width: 5px;
+    position: absolute;
+    pointer-events: none;
+    background: url('images/sprite-media-1.png') no-repeat 0 0;
+}
+
+.bcms-media-context-tr:before {
+    left: 100%;
+    top: 10px;
+    content: " ";
+    height: 8px;
+    width: 5px;
+    position: absolute;
+    pointer-events: none;
+    background: url('images/sprite-media-1.png') no-repeat -7px 0;
+}
+
+.bcms-media-context-br:before {
+    left: 100%;
+    bottom: 10px;
+    content: " ";
+    height: 8px;
+    width: 5px;
+    position: absolute;
+    pointer-events: none;
+    background: url('images/sprite-media-1.png') no-repeat -7px 0;
+}
 
 .bcms-media-content-link {
     display: block;

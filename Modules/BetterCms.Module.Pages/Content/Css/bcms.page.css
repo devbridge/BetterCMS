@@ -3,7 +3,7 @@
     margin: 0 auto;
     width: 22px;
     height: 22px;
-    background: url('images/sprite-pages.png') no-repeat center -69px;
+    background: url('images/sprite-pages-1.png') no-repeat center -69px;
     padding-top: 15px;
     margin-bottom: 10px;
 }
@@ -16,7 +16,7 @@ div.bcms-pubstatus-warn {
     margin: 0 auto;
     width: 22px;
     height: 22px;
-    background: url('images/sprite-pages.png') no-repeat center -197px;
+    background: url('images/sprite-pages-1.png') no-repeat center -197px;
     padding-top: 15px;
     margin-bottom: 10px;
 }
@@ -96,7 +96,7 @@ a.bcms-edit-btn-close {
     right: 10px;
     width: 15px;
     height: 14px;
-    background: url('images/sprite-pages.png') no-repeat center -364px;
+    background: url('images/sprite-pages-1.png') no-repeat center -364px;
     overflow: hidden;
     text-indent: 9999px;
     text-decoration: none;
@@ -173,6 +173,10 @@ a.bcms-edit-btn-close {
     padding: 20px;
 }
 
+    .bcms-slider-box:hover a.bcms-slider-prev, .bcms-slider-box:hover a.bcms-slider-next {
+        opacity: 1;
+    }
+
 .bcms-slides-container {
     width: 750px;
     height: 265px;
@@ -186,30 +190,36 @@ a.bcms-edit-btn-close {
 
 a.bcms-slider-prev, a.bcms-slider-next {
     position: absolute;
-    height: 26px;
-    width: 14px;
-    top: 50%;
-    margin-top: -13px;
-    background-image: url('images/sprite-pages.png');
+    height: 100%;
+    width: 44px;
+    top: 0;
+    background: url('images/sprite-pages-2.png');
     background-repeat: no-repeat;
-    text-indent: -99999px;
+    background-color: rgba(0, 0, 0, 0.5);
+    text-indent: -9999px;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.1s ease-in-out;
+    -moz-transition: opacity 0.1s ease-in-out;
+    -webkit-transition: opacity 0.1s ease-in-out;
 }
 
 a.bcms-slider-prev {
-    background-position: -4px -422px;
+    left: 0;
+    background-position: 15px 50%;
 }
 
     a.bcms-slider-prev:active {
-        background-position: -4px -487px;
+        background-position: -27px 50%;
     }
 
 a.bcms-slider-next {
-    right: 20px;
-    background-position: -4px -388px;
+    right: 0;
+    background-position: -70px 50%;
 }
 
     a.bcms-slider-next:active {
-        background-position: -4px -454px;
+        background-position: -112px 50%;
     }
 
 .bcms-slides-single-slide .bcms-preview-block {
@@ -252,7 +262,7 @@ a.bcms-slider-next {
     margin-bottom: 5px;
     border: 2px solid #c6c6c6;
     overflow: hidden;
-    background: url('images/bcms-blog-no-image.png') no-repeat center center #f5f5f5;
+    background: url('images/bcms-no-image-2.png') no-repeat center center #f5f5f5;
 }
 
 .bcms-upload-info {
@@ -280,7 +290,7 @@ a.bcms-slider-next {
 }
 
     .bcms-tags-box-holder .bcms-content-titles:hover {
-        color: #0383df;
+        color: #24597e;
         cursor: pointer;
     }
 
@@ -398,7 +408,7 @@ a.bcms-slider-next {
         max-width: 350px;
         line-height: 16px;
         font-size: 11px;
-        color: #1187d2;
+        color: #0383df;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -428,7 +438,7 @@ a.bcms-expanded-nodes {
     float: right;
     line-height: 16px;
     padding-left: 7px;
-    color: #1187d2;
+    color: #0383df;
     text-decoration: none;
     cursor: pointer;
 }
@@ -529,11 +539,11 @@ hr.bcms-settings-separator {
 }
 
     .bcms-sidebar-link:hover {
-        color: #0097f8;
+        color: #24597e;
     }
 
 .bcms-sidebar-link-active {
-    color: #0097f8;
+    color: #24597e;
 }
 
 /*content*/
@@ -553,7 +563,7 @@ hr.bcms-settings-separator {
     min-height: 350px;
     margin-bottom: 20px;
     border: 1px solid #c6c6c6;
-    background: url('images/bcms-no-image.png') no-repeat center center #f5f5f5;
+    background: url('images/bcms-no-image-1.png') no-repeat center center #f5f5f5;
     overflow: hidden;
 }
 
@@ -639,7 +649,7 @@ hr.bcms-settings-separator {
     min-height: 65px;
     padding-top: 20px;
     margin: 0 20px 20px;
-    border: 2px dashed #0097f8;
+    border: 2px dashed #0383df;
     border-radius: 4px;
 }
 
@@ -665,7 +675,7 @@ hr.bcms-settings-separator {
     width: 100%;
     margin-top: -139px;
     line-height: 1.5em;
-    color: #0097f8;
+    color: #24597e;
     font-size: 19px;
     font-weight: 700;
     text-align: center;
@@ -730,7 +740,7 @@ td.bcms-history-table {
         }
 
 .bcms-published-state {
-    color: #0097f8;
+    color: #24597e;
 }
 
 .bcms-draft-state {
@@ -744,9 +754,9 @@ td.bcms-history-table {
 
 
 /*
-transition: all 0.2s ease-out;
--moz-transition: all 0.2s ease-out;
--webkit-transition: all 0.2s ease-out;
+transition: all 0.1s ease-in-out;
+-moz-transition: all 0.1s ease-in-out;
+-webkit-transition: all 0.1s ease-in-out;
 */
 
 

@@ -236,7 +236,6 @@
     <EmbeddedResource Include="Scripts\bcms.content.js" />
     <EmbeddedResource Include="Scripts\bcms.forms.js" />
     <EmbeddedResource Include="Scripts\bcms.js" />
-    <EmbeddedResource Include="Scripts\bcms.modal.js" />
     <EmbeddedResource Include="Scripts\bcms.sidemenu.js" />
     <None Include="Scripts\jquery-1.7.2.intellisense.js">
       <DependentUpon>jquery-1.7.2.js</DependentUpon>
@@ -319,9 +318,6 @@
     <EmbeddedResource Include="Content\Styles\images\loading.gif" />
     <EmbeddedResource Include="Content\Styles\images\bcms-sidebar-select.png" />
     <EmbeddedResource Include="Content\Styles\images\bcms-logo.png" />
-    <EmbeddedResource Include="Content\Styles\images\bcms-blog-no-image.png" />
-    <EmbeddedResource Include="Content\Styles\images\bcms-no-image.png" />
-    <EmbeddedResource Include="Content\Styles\images\bcms-no-thumbnail.png" />
     <EmbeddedResource Include="Scripts\ckeditor\build-config.js" />
     <EmbeddedResource Include="Scripts\ckeditor\ckeditor.js" />
     <EmbeddedResource Include="Scripts\ckeditor\config.js" />
@@ -478,7 +474,11 @@
     <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\close.png" />
     <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\mini.png" />
     <EmbeddedResource Include="Scripts\ckeditor\styles.js" />
+    <EmbeddedResource Include="Content\Styles\images\bcms-no-image-1.png" />
+    <EmbeddedResource Include="Content\Styles\images\bcms-no-image-2.png" />
+    <EmbeddedResource Include="Content\Styles\images\bcms-no-image-3.png" />
     <EmbeddedResource Include="Scripts\bcms.dynamicContent.js" />
+    <EmbeddedResource Include="Scripts\bcms.modal.js" />
     <EmbeddedResource Include="Scripts\bcms.siteSettings.js" />
     <Content Include="Scripts\jquery-1.7.2.min.js">
       <DependentUpon>jquery-1.7.2.js</DependentUpon>

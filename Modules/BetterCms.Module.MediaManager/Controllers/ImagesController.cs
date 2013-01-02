@@ -1,12 +1,13 @@
 ﻿using System.Web.Mvc;
 
 using BetterCms.Module.MediaManager.Command.Images;
+using BetterCms.Module.MediaManager.Command.Images.GetImages;
 using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.ViewModels.Images;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
+
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
-using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
 namespace BetterCms.Module.MediaManager.Controllers
 {
