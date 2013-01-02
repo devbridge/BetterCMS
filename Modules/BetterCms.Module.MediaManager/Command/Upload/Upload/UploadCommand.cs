@@ -4,9 +4,9 @@ using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Root.Mvc;
 
-namespace BetterCms.Module.MediaManager.Command.Upload.UploadFile
+namespace BetterCms.Module.MediaManager.Command.Upload.Upload
 {
-    public class UploadFileCommand : CommandBase, ICommand<UploadFileRequest, MediaFile>
+    public class UploadCommand : CommandBase, ICommand<UploadFileRequest, MediaFile>
     {
         public IMediaFileService MediaFileService { get; set; }
         public IMediaImageService MediaImageService { get; set; }

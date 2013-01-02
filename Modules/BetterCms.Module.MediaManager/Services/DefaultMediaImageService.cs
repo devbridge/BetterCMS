@@ -18,7 +18,6 @@ using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Mvc;
 
 using NHibernate;
-using NHibernate.Linq;
 
 namespace BetterCms.Module.MediaManager.Services
 {
@@ -191,14 +190,14 @@ namespace BetterCms.Module.MediaManager.Services
 
                 image.Title = Path.GetFileName(fileName);
                 image.Caption = null;
-                image.FileName = fileName;
-                image.PublicUrl = new Uri(Path.Combine(GetContentRoot(configuration.Storage.PublicContentUrlRoot), Path.Combine(ImagesFolderName, folderName, fileName))).AbsolutePath;
+                image.FileName = fileName;                
                 image.Type = MediaType.Image;
 
                 image.Width = size.Width;
                 image.Height = size.Height;
                 image.Size = fileLength;
                 image.FileUri = new Uri(Path.Combine(GetContentRoot(configuration.Storage.ContentRoot), ImagesFolderName, folderName, fileName));
+                image.PublicUrl = GetPublicUrl(folderName, null, fileName);
 
                 image.CropCoordX1 = null;
                 image.CropCoordY1 = null;
@@ -209,11 +208,14 @@ namespace BetterCms.Module.MediaManager.Services
                 image.OriginalHeight = size.Height;
                 image.OriginalSize = fileLength;
                 image.OriginalUri = new Uri(Path.Combine(GetContentRoot(configuration.Storage.ContentRoot), ImagesFolderName, folderName, OriginalImageFilePrefix + fileName));
+                image.PublicOriginallUrl = GetPublicUrl(folderName, OriginalImageFilePrefix, fileName);
+                    
 
                 image.ThumbnailWidth = ThumbnailSize.Width;
                 image.ThumbnailHeight = ThumbnailSize.Height;
                 image.ThumbnailSize = thumbnailImage.Length;
                 image.ThumbnailUri = new Uri(Path.Combine(GetContentRoot(configuration.Storage.ContentRoot), ImagesFolderName, folderName, ThumbnailImageFilePrefix + Path.GetFileName(fileName) + ".png"));
+                image.PublicThumbnailUrl = GetPublicUrl(folderName, ThumbnailImageFilePrefix, Path.GetFileName(fileName) + ".png");
 
                 image.ImageAlign = null;
                 image.IsTemporary = true;
@@ -506,6 +508,15 @@ namespace BetterCms.Module.MediaManager.Services
             }
 
             return rootPath;
+        }
+
+        private string GetPublicUrl(string folderName, string filePrefix, string fileName)
+        {
+            string fullPath = Path.Combine(
+                GetContentRoot(configuration.Storage.PublicContentUrlRoot), 
+                Path.Combine(ImagesFolderName, folderName, filePrefix + fileName));
+
+            return new Uri(fullPath).AbsolutePath;
         }
     }
 }

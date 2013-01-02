@@ -31,6 +31,8 @@ namespace BetterCms.Module.MediaManager.Models
 
         public virtual bool IsOriginalUploaded { get; set; }
 
+        public virtual string PublicOriginallUrl { get; set; }
+
         public virtual int ThumbnailWidth { get; set; }
 
         public virtual int ThumbnailHeight { get; set; }
@@ -41,6 +43,6 @@ namespace BetterCms.Module.MediaManager.Models
 
         public virtual bool IsThumbnailUploaded { get; set; }
 
-        public virtual string PublicThumbnailUrl { get; set; }
+        public virtual string PublicThumbnailUrl { get; set; }        
     }
 }

@@ -3,7 +3,7 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.MediaManager.ViewModels.Images;
 using BetterCms.Module.MediaManager.Services;
 
-namespace BetterCms.Module.MediaManager.Command.Images
+namespace BetterCms.Module.MediaManager.Command.Images.CropImage
 {
     public class CropImageCommand : CommandBase, ICommand<ImageViewModel>
     {
