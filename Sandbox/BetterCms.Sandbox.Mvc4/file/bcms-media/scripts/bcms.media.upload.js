@@ -40,7 +40,7 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
         modal.open({
             title: globalization.uploadFilesDialogTitle,            
             onLoad: function (dialog) {
-                var url = $.format(links.loadUploadFilesDialogUrl, rootFolderId);
+                var url = $.format(links.loadUploadFilesDialogUrl, rootFolderId, rootFolderType);
                 dynamicContent.bindDialog(dialog, url, {
                     contentAvailable: function () {
                         initUploadFilesDialogEvents(dialog, options);

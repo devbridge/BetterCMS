@@ -17,9 +17,9 @@
                 @Html.DropDownListFor(f => f.SelectedFolderId, 
                                       Model.Folders.Select(o => new SelectListItem
                                                                  {
-                                                                     Selected = Model.SelectedFolderId == o.Key,
-                                                                     Text = o.Value,
-                                                                     Value = o.Key.ToString()
+                                                                     Selected = Model.SelectedFolderId == o.Item1,
+                                                                     Text = o.Item2,
+                                                                     Value = o.Item1.ToString()
                                                                  }),
                                       new { @class = "bcms-global-select" })
             </div>

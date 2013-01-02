@@ -46,7 +46,7 @@ namespace BetterCms.Module.Pages.Models.Migrations
         }
 
         private void CreateAuthorsTable()
-        {
+        {            
             Create
                .Table("Authors")
                .InSchema(SchemaName)
