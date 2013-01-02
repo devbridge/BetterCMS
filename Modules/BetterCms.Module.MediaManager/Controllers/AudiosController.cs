@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-using BetterCms.Module.MediaManager.Command.Audios;
+using BetterCms.Module.MediaManager.Command.Audios.GetAudios;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
