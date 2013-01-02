@@ -1,86 +1,27 @@
 ﻿@using BetterCms.Module.MediaManager.Content.Resources
-@using BetterCms.Module.MediaManager.Controllers
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc.Helpers
-@using Microsoft.Web.Mvc
-
-@model BetterCms.Module.MediaManager.ViewModels.MediaManager.MediaManagerViewModel
 
 <div class="bcms-innertab-header">
-    <a class="bcms-tab bcms-tab-active" href="#bcms-tab-1" id="bcms-tab-images">Images</a>
-    <a class="bcms-tab" href="#bcms-tab-2" id="bcms-tab-videos">Videos</a>
-    <a class="bcms-tab" href="#bcms-tab-3" id="bcms-tab-audios">Audios</a>
-    <a class="bcms-tab" href="#bcms-tab-4" id="bcms-tab-files">Files</a>
+    <a class="bcms-tab bcms-tab-active" href="#bcms-tab-1" id="bcms-tab-images">@MediaGlobalization.ImagesTab_Title</a>
+    <a class="bcms-tab" href="#bcms-tab-2" id="bcms-tab-videos">@MediaGlobalization.VideosTab_Title</a>
+    <a class="bcms-tab" href="#bcms-tab-3" id="bcms-tab-audios">@MediaGlobalization.AudiosTab_Title</a>
+    <a class="bcms-tab" href="#bcms-tab-4" id="bcms-tab-files">@MediaGlobalization.FilesTab_Title</a>
 </div>
 
 @Html.MessagesBox("bcms-site-settings-media-messages")
 
 <div id="bcms-tab-1" class="bcms-tab-single">
-    @{
-        Html.RenderAction<ImagesController>(f => f.ImagesTab(null));
-    }
+    @Html.Partial("Partial/MediaManagerTab")
 </div>
 <div id="bcms-tab-2" class="bcms-tab-single">
-    <span>Loading...</span>
+    @Html.Partial("Partial/MediaManagerTab")
 </div>
 <div id="bcms-tab-3" class="bcms-tab-single">
-    <span>Loading...</span>
+    @Html.Partial("Partial/MediaManagerTab")
 </div>
 <div id="bcms-tab-4" class="bcms-tab-single">
-    <span>Loading...</span>
+    @Html.Partial("Partial/MediaManagerTab")
 </div>
 
-<script type="text/html" id="bcms-media-list-path-template">
-    <div class="bcms-breadcrumbs-holder">
-        @Html.Hidden("CurrentFolderId", string.Empty, new Dictionary<string, object>
-                                                          {
-                                                              {"id", "bcms-current-media-folder-id"}, 
-                                                              {"data-bind", "value: path().currentFolder().id()"}
-                                                          })
-        @Html.Hidden("MediaType", string.Empty, new Dictionary<string, object>
-                                                    {
-                                                        {"id", "bcms-current-media-folder-type"}, 
-                                                        {"data-bind", "value: path().currentFolder().type"}
-                                                    })
-        <div data-bind="foreach: path().pathFolders()">
-            <a class="bcms-breadcrumbs-root" href="#nolink" data-bind="text: pathName(), click: openMedia.bind($data, $root)"></a>
-        </div>
-    </div>
-</script>
-
-<script type="text/html" id="bcms-media-list-template">
-    <div id="bcms-view-container" class="bcms-list">
-        <div class="bcms-media-sorting-block">
-            <div class="bcms-media-col-1"></div>
-            <div class="bcms-media-col-2">
-                <a class="bcms-sort-arrow" data-bind="click: sortMedia.bind($root, 'Name')">@MediaGlobalization.MediaList_FileNameColumn</a>
-            </div>
-            <div class="bcms-media-col-3">
-                <a class="bcms-sort-arrow" data-bind="click: sortMedia.bind($root, 'Extension')">@MediaGlobalization.MediaList_FileTypeColumn</a>
-            </div>
-        </div>
-        <div data-bind="foreach: medias">
-            <div data-bind="css: { 'bcms-folder-box': isFolder(), 'bcms-image-box': isImage(), 'bcms-file-box': isFile() && !isImage(), 'bcms-folder-box-active': isFolder() && isActive(), 'bcms-media-click-active': isSelected() }, click: selectMedia.bind($data, $root)">
-                <div class="bcms-media-items-block">
-                    <div data-bind="css: { 'bcms-system-folder': isFolder(), 'bcms-media-file-holder': isFile() }" />
-                    <div class="bcms-media-name" data-bind="text: name(), click: openMedia.bind($data, $root)"></div>
-                </div>
-                <div class="bcms-media-edit-controls">
-                    <input class="bcms-grid-input" type="text" name="itemname" data-bind="value: name()" />
-                    <div class="bcms-media-inner-controls" data-bind="if: !isImage()">
-                        <div class="bcms-btn-small" data-bind="click: saveMedia.bind($data, $root)">@RootGlobalization.Button_Save</div>
-                        <div class="bcms-btn-links-small" data-bind="click: cancelEditMedia.bind($data, $root)">@RootGlobalization.Button_Cancel</div>
-                    </div>
-                    <a class="bcms-icn-edit" data-bind="click: editMedia.bind($data, $root)">@RootGlobalization.Button_Edit</a>
-                    <a class="bcms-icn-delete" data-bind="click: deleteMedia.bind($data, $root)">@RootGlobalization.Button_Delete</a>
-                </div>
-            </div>
-        </div>
-        <div class="bcms-add-folder" data-bind="if: isRootFolder()">
-            <div class="bcms-media-items-block" data-bind="click: addNewFolder">
-                <div class="bcms-system-addfolder"></div>
-                <div class="bcms-media-name">@MediaGlobalization.ImagesTab_AddNewFolder</div>
-            </div>
-        </div>
-    </div>
-</script>
+@Html.Partial("Partial/MediaManagerTemplate")

@@ -1,6 +1,6 @@
 ﻿/*global define, console */
 
-define('bcms', ['jquery'], function ($) {
+define('bcms', ['jquery', 'knockout'], function ($, ko) {
     'use strict';
 
     var app = {},
@@ -217,6 +217,53 @@ define('bcms', ['jquery'], function ($) {
 
         __.prototype = b.prototype;
         d.prototype = new __();
+    };
+
+    /**
+    * Extend knockout handlers: add Enter key press event handler
+    */
+    ko.bindingHandlers.enterPress = {
+        init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+            var allBindings = allBindingsAccessor();
+            $(element).keypress(function (event) {
+                var keyCode = (event.which ? event.which : event.keyCode);
+                if (keyCode === 13) {
+                    allBindings.enterPress.call(viewModel);
+                    return false;
+                }
+                return true;
+            });
+        }
+    };
+    
+    /**
+    * Extend knockout handlers: add Esc key press event handler
+    */
+    ko.bindingHandlers.escPress = {
+        init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+            var allBindings = allBindingsAccessor();
+            $(element).keypress(function (event) {
+                var keyCode = (event.which ? event.which : event.keyCode);
+                if (keyCode === 27) {
+                    allBindings.escPress.call(viewModel);
+                    return false;
+                }
+                return true;
+            });
+        }
+    };
+
+    /**
+    * Stops specified event propagation
+    */
+    app.stopEventPropagation = function (event) {
+        if (event != null) {
+            event.returnValue = false;
+            if (event.stopPropagation) {
+                event.stopPropagation();
+                event.preventDefault();
+            }
+        }
     };
 
     return app;

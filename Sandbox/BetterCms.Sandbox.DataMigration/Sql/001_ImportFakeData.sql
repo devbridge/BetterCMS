@@ -1,182 +1,4 @@
 /*
-* LAYOUTS
-*/
-INSERT INTO bcms_root.layouts (
-	Name
-	, LayoutPath
-	, Version, IsDeleted
-	, CreatedOn, CreatedByUser
-	, ModifiedOn, ModifiedByUser
-	, DeletedOn, DeletedByUser
-)
-SELECT * FROM (
-	SELECT 
-		'One column' AS Name
-		, '~/Views/Shared/Layouts/01.cshtml' AS MasterPagePath
-		, 1 AS Version, 0 As IsDeleted
-		, getdate() AS CreatedOn, 'Admin' as CreatedByUser
-		, getdate() AS ModifiedOn, 'Admin' as ModifiedByUser
-		, NULL AS DeletedOn, NULL as DeletedByUser
-		
-	UNION
-	
-	SELECT 
-		'Two columns' AS Name
-		, '~/Views/Shared/Layouts/02.cshtml' AS MasterPagePath
-		, 1 AS Version, 0 As IsDeleted
-		, getdate() AS CreatedOn, 'Admin' as CreatedByUser
-		, getdate() AS ModifiedOn, 'Admin' as ModifiedByUser
-		, NULL AS DeletedOn, NULL as DeletedByUser
-		
-	UNION
-	
-	SELECT 
-		'Two columns and header' AS Name
-		, '~/Views/Shared/Layouts/03.cshtml' AS MasterPagePath
-		, 1 AS Version, 0 As IsDeleted
-		, getdate() AS CreatedOn, 'Admin' as CreatedByUser
-		, getdate() AS ModifiedOn, 'Admin' as ModifiedByUser
-		, NULL AS DeletedOn, NULL as DeletedByUser
-		
-	UNION
-	
-	SELECT 
-		'Two columns, header and footer' AS Name
-		, '~/Views/Shared/Layouts/04.cshtml' AS MasterPagePath
-		, 1 AS Version, 0 As IsDeleted
-		, getdate() AS CreatedOn, 'Admin' as CreatedByUser
-		, getdate() AS ModifiedOn, 'Admin' as ModifiedByUser
-		, getdate() AS DeletedOn, 'Admin' as DeletedByUser
-) x
-WHERE NOT EXISTS (SELECT 1 FROM bcms_root.layouts l WHERE l.name = x.name AND l.IsDeleted = x.IsDeleted)
-
-/*
-* REGIONS
-*/
-INSERT INTO bcms_root.Regions (
-	Name, RegionIdentifier
-	, Version, IsDeleted
-	, CreatedOn, CreatedByUser
-	, ModifiedOn, ModifiedByUser
-	, DeletedOn, DeletedByUser
-)
-SELECT * FROM (
-	SELECT 
-		'CMSHeader' AS Name, 'CMSHeader' As RegionIdentifier
-		, 1 AS Version, 0 As IsDeleted
-		, getdate() AS CreatedOn, 'Admin' as CreatedByUser
-		, getdate() AS ModifiedOn, 'Admin' as ModifiedByUser
-		, NULL AS DeletedOn, NULL as DeletedByUser
-		
-	UNION
-	
-	SELECT 
-		'CMSFooter' AS Name, 'CMSFooter' As RegionIdentifier
-		, 1 AS Version, 0 As IsDeleted
-		, getdate() AS CreatedOn, 'Admin' as CreatedByUser
-		, getdate() AS ModifiedOn, 'Admin' as ModifiedByUser
-		, NULL AS DeletedOn, NULL as DeletedByUser
-		
-	UNION
-	
-	SELECT 
-		'CMSLeftColumn' AS Name, 'CMSLeftColumn' As RegionIdentifier
-		, 1 AS Version, 0 As IsDeleted
-		, getdate() AS CreatedOn, 'Admin' as CreatedByUser
-		, getdate() AS ModifiedOn, 'Admin' as ModifiedByUser
-		, NULL AS DeletedOn, NULL as DeletedByUser
-		
-	UNION
-	
-	SELECT 
-		'CMSRightColumn' AS Name, 'CMSRightColumn' As RegionIdentifier
-		, 1 AS Version, 0 As IsDeleted
-		, getdate() AS CreatedOn, 'Admin' as CreatedByUser
-		, getdate() AS ModifiedOn, 'Admin' as ModifiedByUser
-		, NULL AS DeletedOn, NULL as DeletedByUser
-) x
-WHERE NOT EXISTS (SELECT 1 FROM bcms_root.Regions r WHERE r.RegionIdentifier = x.RegionIdentifier AND r.IsDeleted = 0)
-
-/*
-* LAYOUT REGIONS
-*/
-INSERT INTO bcms_root.LayoutRegions (
-	LayoutId, RegionId, [Version], CreatedByUser,ModifiedByUser
-)
-SELECT * FROM (
-	SELECT (SELECT top 1 Id FROM bcms_root.layouts where IsDeleted=0 AND Name = 'One Column') AS LayoutId
-		, (SELECT top 1 Id FROM bcms_root.regions where IsDeleted=0 AND Name = 'CMSLeftColumn') As RegionId
-		, 1 as [Version]
-		, '' as CreatedByUser
-		, '' as ModifiedByUser
-		
-	UNION
-	
-	SELECT (SELECT top 1 Id FROM bcms_root.layouts where IsDeleted=0 AND Name = 'Two Columns') AS LayoutId
-		, (SELECT top 1 Id FROM bcms_root.regions where IsDeleted=0 AND Name = 'CMSLeftColumn') As RegionId
-		, 1 as [Version]
-		, '' as CreatedByUser
-		, '' as ModifiedByUser
-	UNION
-	
-	SELECT (SELECT top 1 Id FROM bcms_root.layouts where IsDeleted=0 AND Name = 'Two Columns') AS LayoutId
-		, (SELECT top 1 Id FROM bcms_root.regions where IsDeleted=0 AND Name = 'CMSRightColumn') As RegionId
-		, 1 as [Version]
-		, '' as CreatedByUser
-		, '' as ModifiedByUser
-	UNION
-	
-	SELECT (SELECT top 1 Id FROM bcms_root.layouts where IsDeleted=0 AND Name = 'Two columns and header') AS LayoutId
-		, (SELECT top 1 Id FROM bcms_root.regions where IsDeleted=0 AND Name = 'CMSHeader') As RegionId
-		, 1 as [Version]
-		, '' as CreatedByUser
-		, '' as ModifiedByUser
-	UNION
-	
-	SELECT (SELECT top 1 Id FROM bcms_root.layouts where IsDeleted=0 AND Name = 'Two columns and header') AS LayoutId
-		, (SELECT top 1 Id FROM bcms_root.regions where IsDeleted=0 AND Name = 'CMSLeftColumn') As RegionId
-		, 1 as [Version]
-		, '' as CreatedByUser
-		, '' as ModifiedByUser
-	UNION
-	
-	SELECT (SELECT top 1 Id FROM bcms_root.layouts where IsDeleted=0 AND Name = 'Two columns and header') AS LayoutId
-		, (SELECT top 1 Id FROM bcms_root.regions where IsDeleted=0 AND Name = 'CMSRightColumn') As RegionId
-		, 1 as [Version]
-		, '' as CreatedByUser
-		, '' as ModifiedByUser
-	UNION
-	
-	SELECT (SELECT top 1 Id FROM bcms_root.layouts where IsDeleted=0 AND Name = 'Two columns, header and footer') AS LayoutId
-		, (SELECT top 1 Id FROM bcms_root.regions where IsDeleted=0 AND Name = 'CMSHeader') As RegionId
-		, 1 as [Version]
-		, '' as CreatedByUser
-		, '' as ModifiedByUser
-	UNION
-	
-	SELECT (SELECT top 1 Id FROM bcms_root.layouts where IsDeleted=0 AND Name = 'Two columns, header and footer') AS LayoutId
-		, (SELECT top 1 Id FROM bcms_root.regions where IsDeleted=0 AND Name = 'CMSLeftColumn') As RegionId
-		, 1 as [Version]
-		, '' as CreatedByUser
-		, '' as ModifiedByUser
-	UNION
-	
-	SELECT (SELECT top 1 Id FROM bcms_root.layouts where IsDeleted=0 AND Name = 'Two columns, header and footer') AS LayoutId
-		, (SELECT top 1 Id FROM bcms_root.regions where IsDeleted=0 AND Name = 'CMSRightColumn') As RegionId
-		, 1 as [Version]
-		, '' as CreatedByUser
-		, '' as ModifiedByUser
-	UNION
-	
-	SELECT (SELECT top 1 Id FROM bcms_root.layouts where IsDeleted=0 AND Name = 'Two columns, header and footer') AS LayoutId
-		, (SELECT top 1 Id FROM bcms_root.regions where IsDeleted=0 AND Name = 'CMSFooter') As RegionId
-		, 1 as [Version]
-		, '' as CreatedByUser
-		, '' as ModifiedByUser
-) x
-WHERE NOT EXISTS (SELECT 1 FROM bcms_root.LayoutRegions r WHERE r.RegionId = x.RegionId AND r.LayoutId  = r.LayoutId)
-
-/*
 * AUTHORS
 */
 INSERT INTO bcms_pages.authors (
@@ -554,33 +376,33 @@ WHERE NOT EXISTS (SELECT 1 FROM bcms_media.Medias m WHERE m.Title = x.Title AND 
 */
 INSERT INTO bcms_media.MediaFiles (
 	Id, 
-	FileName, FileUri, PublicUrl, Size, IsTemporary, IsStored
+	FileName, FileUri, PublicUrl, Size, IsTemporary, IsUploaded
 )
 SELECT * FROM (
 	SELECT (SELECT top 1 Id FROM bcms_media.Medias WHERE IsDeleted=0 AND Type=1 AND Title = 'Image1.jpg') AS Id,
 		FileName = 'Image1.jpg', 
 		FileUri = 'http://upload.wikimedia.org/wikipedia/commons/c/cd/Panda_Cub_from_Wolong,_Sichuan,_China.JPG', 
-		PublicUrl = 'http://upload.wikimedia.org/wikipedia/commons/c/cd/Panda_Cub_from_Wolong,_Sichuan,_China.JPG', Size = 300, IsTemporary = 0, IsStored = 1
+		PublicUrl = 'http://upload.wikimedia.org/wikipedia/commons/c/cd/Panda_Cub_from_Wolong,_Sichuan,_China.JPG', Size = 300, IsTemporary = 0, IsUploaded = 1
 	
 	UNION SELECT (SELECT top 1 Id FROM bcms_media.Medias WHERE IsDeleted=0 AND Type=1 AND Title = 'Image2.jpg') AS Id,
 		FileName = 'Image2.jpg', 
 		FileUri = 'http://upload.wikimedia.org/wikipedia/commons/c/cd/Panda_Cub_from_Wolong,_Sichuan,_China.JPG', 
-		PublicUrl = 'http://upload.wikimedia.org/wikipedia/commons/c/cd/Panda_Cub_from_Wolong,_Sichuan,_China.JPG', Size = 300, IsTemporary = 0, IsStored = 1
+		PublicUrl = 'http://upload.wikimedia.org/wikipedia/commons/c/cd/Panda_Cub_from_Wolong,_Sichuan,_China.JPG', Size = 300, IsTemporary = 0, IsUploaded = 1
 	
 	UNION SELECT (SELECT top 1 Id FROM bcms_media.Medias WHERE IsDeleted=0 AND Type=1 AND Title = 'Image3.jpg') AS Id,
 		FileName = 'Image3.jpg', 
 		FileUri = 'http://upload.wikimedia.org/wikipedia/commons/c/cd/Panda_Cub_from_Wolong,_Sichuan,_China.JPG', 
-		PublicUrl = 'http://upload.wikimedia.org/wikipedia/commons/c/cd/Panda_Cub_from_Wolong,_Sichuan,_China.JPG', Size = 300, IsTemporary = 0, IsStored = 1
+		PublicUrl = 'http://upload.wikimedia.org/wikipedia/commons/c/cd/Panda_Cub_from_Wolong,_Sichuan,_China.JPG', Size = 300, IsTemporary = 0, IsUploaded = 1
 		
 	UNION SELECT (SELECT top 1 Id FROM bcms_media.Medias WHERE IsDeleted=0 AND Type=1 AND Title = 'Image4.jpg') AS Id,
 		FileName = 'Image4.jpg', 
 		FileUri = 'http://upload.wikimedia.org/wikipedia/commons/c/cd/Panda_Cub_from_Wolong,_Sichuan,_China.JPG', 
-		PublicUrl = 'http://upload.wikimedia.org/wikipedia/commons/c/cd/Panda_Cub_from_Wolong,_Sichuan,_China.JPG', Size = 300, IsTemporary = 0, IsStored = 1
+		PublicUrl = 'http://upload.wikimedia.org/wikipedia/commons/c/cd/Panda_Cub_from_Wolong,_Sichuan,_China.JPG', Size = 300, IsTemporary = 0, IsUploaded = 1
 		
 	UNION SELECT (SELECT top 1 Id FROM bcms_media.Medias WHERE IsDeleted=0 AND Type=1 AND Title = 'Image5.jpg') AS Id,
 		FileName = 'Image5.jpg', 
 		FileUri = 'http://upload.wikimedia.org/wikipedia/commons/c/cd/Panda_Cub_from_Wolong,_Sichuan,_China.JPG', 
-		PublicUrl = 'http://upload.wikimedia.org/wikipedia/commons/c/cd/Panda_Cub_from_Wolong,_Sichuan,_China.JPG', Size = 300, IsTemporary = 0, IsStored = 1
+		PublicUrl = 'http://upload.wikimedia.org/wikipedia/commons/c/cd/Panda_Cub_from_Wolong,_Sichuan,_China.JPG', Size = 300, IsTemporary = 0, IsUploaded = 1
 ) x
 WHERE NOT EXISTS (SELECT 1 FROM bcms_media.MediaFiles m WHERE m.Id = x.Id)
 

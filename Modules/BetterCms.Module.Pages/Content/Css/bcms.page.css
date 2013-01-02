@@ -3,7 +3,7 @@
     margin: 0 auto;
     width: 22px;
     height: 22px;
-    background: url('images/sprite-pages.png') no-repeat center -69px;
+    background: url('images/sprite-pages-1.png') no-repeat center -69px;
     padding-top: 15px;
     margin-bottom: 10px;
 }
@@ -16,7 +16,7 @@ div.bcms-pubstatus-warn {
     margin: 0 auto;
     width: 22px;
     height: 22px;
-    background: url('images/sprite-pages.png') no-repeat center -197px;
+    background: url('images/sprite-pages-1.png') no-repeat center -197px;
     padding-top: 15px;
     margin-bottom: 10px;
 }
@@ -96,11 +96,17 @@ a.bcms-edit-btn-close {
     right: 10px;
     width: 15px;
     height: 14px;
-    background: url('images/sprite-pages.png') no-repeat center -364px;
+    background: url('images/sprite-pages-1.png') no-repeat center -364px;
     overflow: hidden;
     text-indent: 9999px;
     text-decoration: none;
     cursor: pointer;
+}
+
+.bcms-permissions-column {
+    float: left;
+    width: 170px;
+    padding: 0 30px 20px 0;
 }
 
 .bcms-edit-check-field {
@@ -135,6 +141,7 @@ a.bcms-edit-btn-close {
 
 .bcms-text-editor-holder {
     width: 817px;
+    padding-bottom: 25px;
 }
 
 /*2nd tab*/
@@ -166,6 +173,10 @@ a.bcms-edit-btn-close {
     padding: 20px;
 }
 
+    .bcms-slider-box:hover a.bcms-slider-prev, .bcms-slider-box:hover a.bcms-slider-next {
+        opacity: 1;
+    }
+
 .bcms-slides-container {
     width: 750px;
     height: 265px;
@@ -179,30 +190,36 @@ a.bcms-edit-btn-close {
 
 a.bcms-slider-prev, a.bcms-slider-next {
     position: absolute;
-    height: 26px;
-    width: 14px;
-    top: 50%;
-    margin-top: -13px;
-    background-image: url('images/sprite-pages.png');
+    height: 100%;
+    width: 44px;
+    top: 0;
+    background: url('images/sprite-pages-2.png');
     background-repeat: no-repeat;
-    text-indent: -99999px;
+    background-color: rgba(0, 0, 0, 0.5);
+    text-indent: -9999px;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.1s ease-in-out;
+    -moz-transition: opacity 0.1s ease-in-out;
+    -webkit-transition: opacity 0.1s ease-in-out;
 }
 
 a.bcms-slider-prev {
-    background-position: -4px -422px;
+    left: 0;
+    background-position: 15px 50%;
 }
 
     a.bcms-slider-prev:active {
-        background-position: -4px -487px;
+        background-position: -27px 50%;
     }
 
 a.bcms-slider-next {
-    right: 20px;
-    background-position: -4px -388px;
+    right: 0;
+    background-position: -70px 50%;
 }
 
     a.bcms-slider-next:active {
-        background-position: -4px -454px;
+        background-position: -112px 50%;
     }
 
 .bcms-slides-single-slide .bcms-preview-block {
@@ -235,39 +252,45 @@ a.bcms-slider-next {
 }
 
 /*Edit Page Properties Tabbed Page*/
-.bcms-featured-image-block {
+
+
+.bcms-uploaded-image {
+    display: inline-block;
+    position: relative;
+    width: 124px;
+    height: 124px;
+    margin-bottom: 5px;
+    border: 2px solid #c6c6c6;
+    overflow: hidden;
+    background: url('images/bcms-no-image-2.png') no-repeat center center #f5f5f5;
 }
 
-.bcms-featured-image-holder {
+.bcms-upload-info {
     display: inline-block;
-    vertical-align: bottom;
-    width: 320px;
-    height: 220px;
-    border: 10px solid #fff;
-    box-shadow: 0 0 1px 1px #a6a6a6;
-    background: url('images/bcms-no-image.png') no-repeat center center #f5f5f5;
+    width: 140px;
+    padding-left: 20px;
+    vertical-align: top;
+}
+
+    .bcms-upload-info .bcms-btn-small {
+        margin-top: 10px;
+    }
+
+.bcms-upload-info-text {
+    height: 88px;
+    font-size: 12px;
     overflow: hidden;
 }
 
-.bcms-featured-info-holder {
-    display: inline-block;
-    vertical-align: bottom;
-    padding-left: 20px;
-}
-
-    .bcms-featured-info-holder .bcms-btn-small {
-        margin-top: 4px;
-    }
-
 .bcms-tags-box-holder {
     padding: 25px 0 0 40px;
-    margin-left: -40px;
-    border-top: 1px solid #d7d7d7;
-    border-bottom: 1px solid #d7d7d7;
+    margin: 0 0 20px -40px;
+    border-top: 1px solid #c6c6c6;
+    border-bottom: 1px solid #c6c6c6;
 }
 
     .bcms-tags-box-holder .bcms-content-titles:hover {
-        color: #0383df;
+        color: #24597e;
         cursor: pointer;
     }
 
@@ -345,11 +368,11 @@ a.bcms-slider-next {
     display: block;
     padding: 20px;
     border-top: 1px solid #c6c6c6;
-    overflow: hidden;
 }
 
 .bcms-placement-holder-inner {
-    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAFoTx1HAAAAcUlEQVQoz5WSQQ4AIQgDebkJD5u3dS+rUSIse+il2AJFAwSYAQ7IAJuMJqOXXW8tEoo6A8YyOawP+40ct2LEOGy2MZTZlj3LojoDlUXPpvWY5IRXPa2DjlB73JVwJEmrey91buk/RGly2afwuOMX/MY/hgwMYjRiMmsAAAAASUVORK5CYII=') no-repeat 0 0;
+    /*background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAFoTx1HAAAAcUlEQVQoz5WSQQ4AIQgDebkJD5u3dS+rUSIse+il2AJFAwSYAQ7IAJuMJqOXXW8tEoo6A8YyOawP+40ct2LEOGy2MZTZlj3LojoDlUXPpvWY5IRXPa2DjlB73JVwJEmrey91buk/RGly2afwuOMX/MY/hgwMYjRiMmsAAAAASUVORK5CYII=') no-repeat 0 0;*/
+    border-left: 3px solid #e3e3e3;
 }
 
 .bcms-placement-node {
@@ -385,11 +408,45 @@ a.bcms-slider-next {
         max-width: 350px;
         line-height: 16px;
         font-size: 11px;
-        color: #1187d2;
+        color: #0383df;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
+
+.bcms-expand-collapse-node {
+    position: absolute;
+    left: -8px;
+    top: -8px;
+    width: 16px;
+    height: 16px;
+    background: url('images/sprite-base-2.png') no-repeat -2px -179px;
+    cursor: pointer;
+}
+
+a.bcms-expanded-nodes {
+    background-position: -23px -179px;
+}
+
+.bcms-expand-link-holder {
+    display: inline-block;
+    width: 100%;
+    padding-bottom: 10px;
+}
+
+.bcms-expand-link {
+    float: right;
+    line-height: 16px;
+    padding-left: 7px;
+    color: #0383df;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+    .bcms-expand-link:hover {
+        text-decoration: underline;
+    }
+
 /*TESTING*/
 div.bcms-drag-node { /*THIS CLASS NEEDED FOR DRAGING NODES STYLE*/
     border: 2px dashed #bdbdbd;
@@ -447,7 +504,6 @@ div.ui-sortable-helper { /*THIS CLASS NEEDED FOR DRAGING NODES STYLE*/
         display: block;
     }
 
-
 .bcms-node-controls {
     display: none;
     position: absolute;
@@ -457,10 +513,6 @@ div.ui-sortable-helper { /*THIS CLASS NEEDED FOR DRAGING NODES STYLE*/
     box-sizing: border-box;
 }
 
-    .bcms-node-controls .bcms-icn-edit {
-        margin-right: 5px;
-        background-position: center -869px;
-    }
 /*create menus*/
 .bcms-menu-settings {
     padding: 0 20px 0 40px;
@@ -487,11 +539,11 @@ hr.bcms-settings-separator {
 }
 
     .bcms-sidebar-link:hover {
-        color: #0097f8;
+        color: #24597e;
     }
 
 .bcms-sidebar-link-active {
-    color: #0097f8;
+    color: #24597e;
 }
 
 /*content*/
@@ -505,21 +557,13 @@ hr.bcms-settings-separator {
         padding-top: 5px;
     }
 
-.bcms-thumbnails-preview {
-    display: inline-block;
-}
-
-    .bcms-thumbnails-preview .bcms-preview-box {
-        float: left;
-        margin-left: 33px;
-    }
-
 .bcms-preview-module-image {
     float: left;
-    width: 521px;
+    min-width: 521px;
     min-height: 350px;
+    margin-bottom: 20px;
     border: 1px solid #c6c6c6;
-    background: url('images/bcms-no-image.png') no-repeat center center #f5f5f5;
+    background: url('images/bcms-no-image-1.png') no-repeat center center #f5f5f5;
     overflow: hidden;
 }
 
@@ -605,7 +649,7 @@ hr.bcms-settings-separator {
     min-height: 65px;
     padding-top: 20px;
     margin: 0 20px 20px;
-    border: 2px dashed #0097f8;
+    border: 2px dashed #0383df;
     border-radius: 4px;
 }
 
@@ -631,7 +675,7 @@ hr.bcms-settings-separator {
     width: 100%;
     margin-top: -139px;
     line-height: 1.5em;
-    color: #0097f8;
+    color: #24597e;
     font-size: 19px;
     font-weight: 700;
     text-align: center;
@@ -673,6 +717,10 @@ td.bcms-history-table {
         vertical-align: middle;
     }
 
+    .bcms-scroll-tbody td {
+        vertical-align: middle;
+    }
+
     .bcms-scroll-tbody tr:hover a.bcms-icn-preview {
         background-position: -60px -133px;
     }
@@ -681,8 +729,18 @@ td.bcms-history-table {
             background-position: -60px -159px;
         }
 
+    .bcms-scroll-tbody tr:hover a.bcms-icn-restore {
+        color: #303030;
+        background-position: right -1121px;
+    }
+
+        .bcms-scroll-tbody tr:hover a.bcms-icn-restore:active {
+            color: #df2200;
+            background-position: right -1151px;
+        }
+
 .bcms-published-state {
-    color: #0097f8;
+    color: #24597e;
 }
 
 .bcms-draft-state {
@@ -696,9 +754,9 @@ td.bcms-history-table {
 
 
 /*
-transition: all 0.2s ease-out;
--moz-transition: all 0.2s ease-out;
--webkit-transition: all 0.2s ease-out;
+transition: all 0.1s ease-in-out;
+-moz-transition: all 0.1s ease-in-out;
+-webkit-transition: all 0.1s ease-in-out;
 */
 
 

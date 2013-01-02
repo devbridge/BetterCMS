@@ -21,11 +21,14 @@ namespace BetterCms.Module.MediaManager.Controllers
             if (ModelState.IsValid)
             {
                 var response = GetCommand<SaveFolderCommand>().ExecuteCommand(folder);
-                if (folder.Id.HasDefaultValue())
+                if (response != null)
                 {
-                    Messages.AddSuccess(MediaGlobalization.CreateFolder_CreatedSuccessfully_Message);
+                    if (folder.Id.HasDefaultValue())
+                    {
+                        Messages.AddSuccess(MediaGlobalization.CreateFolder_CreatedSuccessfully_Message);
+                    }
+                    return Json(new WireJson { Success = true, Data = response });
                 }
-                return Json(new WireJson { Success = true, Data = response });
             }
 
             return Json(new WireJson { Success = false });

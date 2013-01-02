@@ -61,6 +61,24 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Audios.
+        /// </summary>
+        public static string AudiosTab_Title {
+            get {
+                return ResourceManager.GetString("AudiosTab_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload Audio.
+        /// </summary>
+        public static string AudiosTab_UploadAudio {
+            get {
+                return ResourceManager.GetString("AudiosTab_UploadAudio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Folder created successfully..
         /// </summary>
         public static string CreateFolder_CreatedSuccessfully_Message {
@@ -102,6 +120,24 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         public static string DeleteImage_DeletedSuccessfully_Message {
             get {
                 return ResourceManager.GetString("DeleteImage_DeletedSuccessfully_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Files.
+        /// </summary>
+        public static string FilesTab_Title {
+            get {
+                return ResourceManager.GetString("FilesTab_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload file.
+        /// </summary>
+        public static string FilesTab_UploadFile {
+            get {
+                return ResourceManager.GetString("FilesTab_UploadFile", resourceCulture);
             }
         }
         
@@ -295,7 +331,7 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit Image Info.
+        ///   Looks up a localized string similar to Image Info.
         /// </summary>
         public static string ImageEditor_Dialog_SubTitle {
             get {
@@ -304,11 +340,29 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Media Manager - Edit Image.
+        ///   Looks up a localized string similar to Edit Image.
         /// </summary>
         public static string ImageEditor_Dialog_Title {
             get {
                 return ResourceManager.GetString("ImageEditor_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Insert.
+        /// </summary>
+        public static string ImageEditor_InsertDialog_AcceptButton {
+            get {
+                return ResourceManager.GetString("ImageEditor_InsertDialog_AcceptButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Insert Image Options.
+        /// </summary>
+        public static string ImageEditor_InsertDialog_Title {
+            get {
+                return ResourceManager.GetString("ImageEditor_InsertDialog_Title", resourceCulture);
             }
         }
         
@@ -367,15 +421,6 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add New Folder.
-        /// </summary>
-        public static string ImagesTab_AddNewFolder {
-            get {
-                return ResourceManager.GetString("ImagesTab_AddNewFolder", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Grid.
         /// </summary>
         public static string ImagesTab_Grid {
@@ -390,15 +435,6 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         public static string ImagesTab_List {
             get {
                 return ResourceManager.GetString("ImagesTab_List", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to New Folder.
-        /// </summary>
-        public static string ImagesTab_NewFolder {
-            get {
-                return ResourceManager.GetString("ImagesTab_NewFolder", resourceCulture);
             }
         }
         
@@ -475,6 +511,42 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add New Folder.
+        /// </summary>
+        public static string MediaManager_AddNewFolder {
+            get {
+                return ResourceManager.GetString("MediaManager_AddNewFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Insert Image.
+        /// </summary>
+        public static string MediaManager_ButtonInsertImage {
+            get {
+                return ResourceManager.GetString("MediaManager_ButtonInsertImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Insert Image With Options.
+        /// </summary>
+        public static string MediaManager_ButtonInsertImageWithOptions {
+            get {
+                return ResourceManager.GetString("MediaManager_ButtonInsertImageWithOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Folder.
+        /// </summary>
+        public static string MediaManager_NewFolder {
+            get {
+                return ResourceManager.GetString("MediaManager_NewFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel All Uploads.
         /// </summary>
         public static string MultiFileUpload_CancelUploading {
@@ -516,6 +588,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         public static string MultiFileUpload_FileUploadedMessage {
             get {
                 return ResourceManager.GetString("MultiFileUpload_FileUploadedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to save uploaded files..
+        /// </summary>
+        public static string MultiFileUpload_SaveFailed {
+            get {
+                return ResourceManager.GetString("MultiFileUpload_SaveFailed", resourceCulture);
             }
         }
         
@@ -588,6 +669,24 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         public static string SiteSettings_MediaManagerMenuItem {
             get {
                 return ResourceManager.GetString("SiteSettings_MediaManagerMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Videos.
+        /// </summary>
+        public static string VideosTab_Title {
+            get {
+                return ResourceManager.GetString("VideosTab_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload Video.
+        /// </summary>
+        public static string VideosTab_UploadVideo {
+            get {
+                return ResourceManager.GetString("VideosTab_UploadVideo", resourceCulture);
             }
         }
     }

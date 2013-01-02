@@ -114,6 +114,10 @@
       <Project>{66e7e4df-eeea-4b1e-8663-a1b430eb7375}</Project>
       <Name>BetterCms.Module.Root</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.Templates\BetterCms.Module.Templates.csproj">
+      <Project>{17BF5CA2-23B6-4796-8EF1-CDDF6D41A4F7}</Project>
+      <Name>BetterCms.Module.Templates</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

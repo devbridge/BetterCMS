@@ -55,13 +55,21 @@ define('bcms.dynamicContent', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bc
             }
         }, options);
 
+        dynamicConent.showLoading(dialog);
+
         $.ajax({
             type: "GET",
             url: url,
             cache: false
         })
-        .done(function (content) {
-            dialog.setContent(content);
+        .done(function (content, status, response) {
+            if (response.getResponseHeader('Content-Type').indexOf('application/json') === 0 && content.Data && content.Data.Html) {
+                dialog.setContent(content.Data.Html);
+            } else {
+                dialog.setContent(content);
+            }
+
+            dynamicConent.hideLoading(dialog);
 
             if ($.isFunction(options.done)) {
                 options.done(content);
@@ -69,6 +77,8 @@ define('bcms.dynamicContent', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bc
         })
         .fail(function (request, status, error) {
             console.log('Failed to load dialog content from ' + url + ' (' + error + ').');
+
+            dynamicConent.hideLoading(dialog);
 
             if ($.isFunction(options.fail)) {
                 options.fail(dialog, globalization.failedLoadDialogMessage, request);
@@ -161,9 +171,29 @@ define('bcms.dynamicContent', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bc
                 if ($.isFunction(options.contentAvailable)) {
                     options.contentAvailable(content);
                 }
-
             }
         });
+    };
+
+    dynamicConent.getLoaderContainer = function (dialog) {
+        if (dialog && dialog.getLoaderContainer) {
+            return dialog.getLoaderContainer();
+        }
+        return null;
+    };
+
+    dynamicConent.showLoading = function (dialog) {
+        var container = dynamicConent.getLoaderContainer(dialog);
+        if (container) {
+            container.showLoading('dynamicContent');
+        }
+    };
+    
+    dynamicConent.hideLoading = function (dialog) {
+        var container = dynamicConent.getLoaderContainer(dialog);
+        if (container) {
+            container.hideLoading('dynamicContent');
+        }
     };
 
     return dynamicConent;

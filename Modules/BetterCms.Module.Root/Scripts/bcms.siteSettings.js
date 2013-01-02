@@ -11,7 +11,8 @@ define('bcms.siteSettings', ['jquery', 'bcms', 'bcms.modal', 'bcms.dynamicConten
             container: '#bcms-site-settings',
             menu: '#bcms-site-settings-menu',
             placeHolder: '#bcms-site-settings-placeholder',
-            firstMenuButton: '#bcms-site-settings-menu .bcms-onclick-action:first'
+            firstMenuButton: '#bcms-site-settings-menu .bcms-onclick-action:first',
+            loaderContainer: '.bcms-rightcol'
         },
 
         links = {
@@ -30,6 +31,7 @@ define('bcms.siteSettings', ['jquery', 'bcms', 'bcms.modal', 'bcms.dynamicConten
     siteSettings.selectors = selectors;
     siteSettings.links = links;
     siteSettings.globalization = globalization;
+    siteSettings.siteSettingsModalWindow = siteSettingsModalWindow;
 
     /**
     * Opens site settings container, loads menu items and selects first one.
@@ -89,6 +91,16 @@ define('bcms.siteSettings', ['jquery', 'bcms', 'bcms.modal', 'bcms.dynamicConten
     */
     siteSettings.getModalDialog = function() {
         return siteSettingsModalWindow;
+    };
+    
+    /**
+    * Returns site settings modal window container.
+    */
+    siteSettings.getLoaderContainer = function () {
+        if (siteSettingsModalWindow) {
+            return siteSettingsModalWindow.container.find(selectors.loaderContainer);
+        }
+        return null;
     };
 
     return siteSettings;

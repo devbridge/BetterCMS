@@ -1,0 +1,147 @@
+﻿html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    line-height: 1.5em;
+    font-family: Arial, sans-serif;
+}
+
+/*default styles*/
+h1 {
+}
+
+h2 {
+}
+
+h3 {
+}
+
+h4 {
+}
+
+ul {
+}
+
+li {
+}
+
+p {
+}
+
+/*style helpers*/
+.clearfix:after {
+    content: ".";
+    visibility: hidden;
+    display: block;
+    height: 0;
+    clear: both;
+}
+
+/*main layout*/
+.page {
+    min-height: 100%;
+    min-width: 980px;
+    margin: 0 0 -66px 0;
+    background-color: #E6E6E6;
+}
+
+.page-header {
+    height: 125px;
+    border-bottom: 1px solid #303030;
+    background-color: #fff;
+}
+
+.page-frame {
+    width: 960px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.page-container {
+    width: 980px;
+    padding: 30px 0 125px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.page-footer {
+    min-width: 980px;
+    background-color: #fff;
+    height: 65px;
+    border-top: 1px solid #303030;
+}
+
+/*one column layout*/
+.page-content-1 {
+}
+
+/*two column layout*/
+.page-left-sidebar-2 {
+    float: left;
+    width: 333px;
+    padding-right: 15px;
+    border-right: 2px solid #fff;
+}
+
+.page-content-2 {
+    float: right;
+    padding-left: 15px;
+    width: 615px;
+}
+
+/*three column layout*/
+.page-left-sidebar-3 {
+    float: left;
+    width: 233px;
+    padding-right: 15px;
+    border-right: 2px solid #fff;
+}
+
+.page-content-3 {
+    float: left;
+    padding: 0 15px;
+    width: 450px;
+}
+
+.page-right-sidebar-3 {
+    float: right;
+    width: 233px;
+    padding-left: 15px;
+    border-left: 2px solid #fff;
+}
+
+/*header*/
+.bcms-logo {
+    float: left;
+    height: 84px;
+    margin: 23px 0 0 0;
+}
+
+.page-header h3 span {
+    color: #ccc;
+    font-weight: 300;
+}
+
+/*footer*/
+.copyright {
+    float: right;
+    margin-top: 10px;
+    color: #2EADD5;
+    font-size: 16px;
+    font-family: 'Oswald', 'Arial', sans-serif;
+}
+
+/*inline editing*/
+div.cke_editable:focus {
+    border: 1px dashed #1894e4;
+    box-shadow: 0 0 3px 0 rgba(24,145,230,0.35);
+    outline: none;
+}
+
+div.cke_editable > * {
+    margin: 0 10px;
+}

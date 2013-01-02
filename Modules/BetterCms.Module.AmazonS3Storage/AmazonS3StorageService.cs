@@ -169,6 +169,52 @@ namespace BetterCms.Module.AmazonS3Storage
             }
         }
 
+        public void RemoveObject(Uri uri)
+        {
+            CheckUri(uri);
+
+            try
+            {
+                var sourceKey = uri.AbsolutePath.TrimStart('/');                
+
+                using (var client = CreateAmazonS3Client())
+                {
+                    var request = new DeleteObjectRequest()
+                        .WithKey(sourceKey)
+                        .WithBucketName(bucketName);
+
+                    client.DeleteObject(request);                    
+                }
+            }
+            catch (Exception e)
+            {
+                throw new StorageException(string.Format("Failed to delete object. Uri: {0}", uri), e);
+            }
+        }
+
+        public void RemoveObjectBucket(Uri uri)
+        {
+            CheckUri(uri);
+
+            try
+            {
+                var sourceKey = uri.AbsolutePath.TrimStart('/');
+
+                using (var client = CreateAmazonS3Client())
+                {
+                    var request = new DeleteObjectRequest()
+                        .WithKey(sourceKey)
+                        .WithBucketName(bucketName);
+
+                    client.DeleteObject(request);
+                }
+            }
+            catch (Exception e)
+            {
+                throw new StorageException(string.Format("Failed to delete object. Uri: {0}", uri), e);
+            }
+        }
+
         private AmazonS3 CreateAmazonS3Client()
         {
             return AWSClientFactory.CreateAmazonS3Client(accessKey, secretKey);

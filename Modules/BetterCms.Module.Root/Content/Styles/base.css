@@ -1,4 +1,11 @@
-﻿body {
+﻿/*basic colors used
+    border: #c6c6c6;
+    background: #f5f5f5;
+    color: #0383df;
+    color hover: #24597e;
+*/
+
+body {
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
 }
@@ -37,8 +44,6 @@ a:focus {
 
 .bcms-on { /* used to indicate if CMS is in editing mode */
 }
-
-/*modern web support*/
 
 /* Hidden form submit. Can't set display:none because we need to submit form. */
 .bcms-hidden-submit {
@@ -232,15 +237,14 @@ div.bcms-btn-settings {
     display: inline-block;
     vertical-align: middle;
     width: 16px;
-    height: 16px;
     line-height: 16px;
     margin-left: 5px;
-    border-radius: 8px;
-    background-color: #0383df;
-    color: #fff;
+    background: url('images/sprite-base-2.png') no-repeat -44px -179px;
     cursor: pointer;
-    text-align: center;
-    font-size: 17px;
+}
+
+div.bcms-btn-plus-expand {
+    background-position: -64px -179px;
 }
 
 /*blue buttons*/
@@ -318,6 +322,28 @@ a.bcms-icn-preview {
         user-select: none;
     }
 
+/*restore icon*/
+a.bcms-icn-restore {
+    display: inline-block;
+    height: 20px;
+    padding-right: 30px;
+    background: url('images/sprite-base-1.png') no-repeat right -1090px;
+    color: #c0c0c0;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+    a.bcms-icn-restore:hover {
+        color: #303030;
+        background-position: right -1121px;
+    }
+
+    a.bcms-icn-restore:active {
+        color: #df2200;
+        background-position: right -1151px;
+    }
+
 /*delete icon*/
 a.bcms-icn-delete {
     display: inline-block;
@@ -328,9 +354,9 @@ a.bcms-icn-delete {
     cursor: pointer;
     font-size: 12px;
     font-weight: 600;
-    transition: all 0.2s ease-out;
-    -moz-transition: all 0.2s ease-out;
-    -webkit-transition: all 0.2s ease-out;
+    transition: all 0.1s ease-in-out;
+    -moz-transition: all 0.1s ease-in-out;
+    -webkit-transition: all 0.1s ease-in-out;
 }
 
     a.bcms-icn-delete:hover {
@@ -801,7 +827,7 @@ div.bcms-noscroll body {
 
 .bcms-modal-body {
     position: relative;
-    max-width: 940px;
+    width: 940px;
     background: #FFF;
     margin: 0 auto;
 }
@@ -821,7 +847,7 @@ div.bcms-noscroll body {
 }
 
 .bcms-modal-title {
-    color: #59BAEE;
+    color: #0383df;
     font-size: 20px;
     font-weight: 700;
 }
@@ -1029,7 +1055,7 @@ a.bcms-error-close {
     padding: 20px;
     position: relative;
     background: #eff9fd;
-    border: 1px solid #cecece;
+    border: 1px solid #c6c6c6;
 }
 
     .bcms-tooltip-box h4 {
@@ -1055,104 +1081,37 @@ a.bcms-tooltip-close {
     text-decoration: none;
 }
 
-/*north east*/
-.bcms-tooltip-ne:after, .bcms-tooltip-ne:before {
+.bcms-tooltip-tl:before, .bcms-tooltip-bl:before, .bcms-tooltip-tr:before, .bcms-tooltip-br:before {
+    position: absolute;
+    height: 7px;
+    width: 12px;
+    content: " ";
+    pointer-events: none;
+    background: url('images/sprite-base-2.png') no-repeat;
+}
+/*top left*/
+.bcms-tooltip-tl:before {
+    left: 19px;
     bottom: 100%;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
+    background-position: -24px -129px;
 }
-
-.bcms-tooltip-ne:after {
-    border-bottom-color: #eff9fd;
-    border-width: 10px;
-    left: 25px;
-    margin-left: -10px;
+/*bottom left*/
+.bcms-tooltip-bl:before {
+    left: 19px;
+    top: 100%;
+    background-position: -24px -137px;
 }
-
-.bcms-tooltip-ne:before {
-    border-bottom-color: #cecece;
-    border-width: 11px;
-    left: 25px;
-    margin-left: -11px;
-}
-
-/*north west*/
-.bcms-tooltip-nw:after, .bcms-tooltip-nw:before {
+/*top right*/
+.bcms-tooltip-tr:before {
+    left: 320px;
     bottom: 100%;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
+    background-position: -24px -129px;
 }
-
-.bcms-tooltip-nw:after {
-    border-bottom-color: #eff9fd;
-    border-width: 10px;
-    left: 325px;
-    margin-left: -10px;
-}
-
-.bcms-tooltip-nw:before {
-    border-bottom-color: #cecece;
-    border-width: 11px;
-    left: 325px;
-    margin-left: -11px;
-}
-
-/*south east*/
-.bcms-tooltip-se:after, .bcms-tooltip-se:before {
+/*bottom right*/
+.bcms-tooltip-br:before {
+    left: 320px;
     top: 100%;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
-}
-
-.bcms-tooltip-se:after {
-    border-top-color: #eff9fd;
-    border-width: 10px;
-    left: 25px;
-    margin-left: -10px;
-}
-
-.bcms-tooltip-se:before {
-    border-top-color: #cecece;
-    border-width: 11px;
-    left: 25px;
-    margin-left: -11px;
-}
-
-/*south west*/
-.bcms-tooltip-sw:after, .bcms-tooltip-sw:before {
-    top: 100%;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
-}
-
-.bcms-tooltip-sw:after {
-    border-top-color: #eff9fd;
-    border-width: 10px;
-    left: 325px;
-    margin-left: -10px;
-}
-
-.bcms-tooltip-sw:before {
-    border-top-color: #cecece;
-    border-width: 11px;
-    left: 325px;
-    margin-left: -11px;
+    background-position: -24px -137px;
 }
 
 /*Buttons*/
@@ -1245,7 +1204,7 @@ a.bcms-tooltip-close {
     padding: 0 10px;
     cursor: pointer;
     vertical-align: middle;
-    color: #5abcec;
+    color: #0383df;
     font-family: "Open Sans", sans-serif;
     font-size: 12px;
     font-weight: 600;
@@ -1253,7 +1212,7 @@ a.bcms-tooltip-close {
 }
 
     .bcms-btn-links-small:hover {
-        color: #59baee;
+        color: #24597e;
     }
 
 .bcms-btn-grid {
@@ -1326,7 +1285,7 @@ a.bcms-btn-close {
 
     .bcms-content-titles a {
         margin-left: 40px;
-        color: #0087dd;
+        color: #0383df;
         font-size: 12px;
         font-weight: 400;
         cursor: pointer;
@@ -1387,6 +1346,7 @@ a.bcms-btn-close {
 
 .bcms-editor-field-box {
     height: 30px;
+    width: 100%;
     line-height: 18px;
     padding: 6px;
     margin: 0;
@@ -1410,6 +1370,7 @@ a.bcms-btn-close {
 
 .bcms-editor-field-area {
     height: 104px;
+    width: 100%;
     line-height: 18px;
     padding: 6px;
     margin: 0;
@@ -1483,9 +1444,9 @@ a.bcms-btn-close {
         font-size: 14px;
         font-weight: 700;
         text-decoration: none;
-        transition: all 0.1s ease-out;
-        -moz-transition: all 0.1s ease-out;
-        -webkit-transition: all 0.1s ease-out;
+        transition: all 0.1s ease-in-out;
+        -moz-transition: all 0.1s ease-in-out;
+        -webkit-transition: all 0.1s ease-in-out;
     }
 
         .bcms-tab-header > .bcms-tab:hover {
@@ -1584,7 +1545,7 @@ a.bcms-btn-close {
     height: 175px;
     margin-bottom: 5px;
     border: 1px solid #c6c6c6;
-    background: url('images/bcms-no-image.png') no-repeat center center #f5f5f5;
+    background: url('images/bcms-no-image-1.png') no-repeat center center #f5f5f5;
     overflow: hidden;
 }
 
@@ -1615,6 +1576,26 @@ a.bcms-btn-close {
     -webkit-transition: all 0.2s ease-in-out;
 }
 
+.bcms-preview-image-border {
+    position: relative;
+    max-width: 860px;
+    padding: 30px;
+    margin: 50px auto 0;
+    background-color: #f5f5f5;
+    border: 1px solid #c6c6c6;
+    box-shadow: 0 0 1px 1px #292929;
+}
+
+.bcms-preview-image-frame {
+    max-width: 860px;
+    overflow: hidden;
+}
+
+    .bcms-preview-image-frame img {
+        display: block;
+        width: 100%;
+    }
+
 /*Features Grid*/
 .bcms-grid-holder {
     display: inline-block;
@@ -1639,12 +1620,12 @@ a.bcms-btn-close {
     }
 
 .bcms-grid-box-active {
-    border-color: #0097f8;
+    border-color: #0383df;
     background-color: #eff9fd;
 }
 
 .bcms-grid-active-message-text {
-    color: #0097f8;
+    color: #0383df;
     font-size: 19px;
     font-weight: 700;
 }
@@ -1654,8 +1635,8 @@ a.bcms-btn-close {
     height: 175px;
     width: 208px;
     margin: 0 auto;
-    border: 1px solid #9b9b9b;
-    background: url('images/bcms-no-image.png') no-repeat center center #f5f5f5;
+    border: 1px solid #c6c6c6;
+    background: url('images/bcms-no-image-1.png') no-repeat center center #f5f5f5;
     overflow: hidden;
 }
 
@@ -1762,7 +1743,6 @@ a.bcms-btn-close {
     width: 100%;
     background-color: #fff;
     border-spacing: 0;
-    border-collapse: collapse;
     font-size: 12px;
 }
 
@@ -1782,7 +1762,7 @@ a.bcms-btn-close {
     .bcms-tables th {
         padding: 10px;
         line-height: 16px;
-        background-color: #fbf9f9;
+        background-color: #f5f5f5;
         border-top: 1px solid #c6c6c6;
         border-bottom: 1px solid #c6c6c6;
         font-weight: 700;
@@ -1800,7 +1780,7 @@ a.bcms-btn-close {
         }
 
 th.bcms-tables-nohover:hover {
-    background-color: #fbf9f9;
+    background-color: #f5f5f5;
     cursor: default;
 }
 
@@ -1825,6 +1805,11 @@ tr.bcms-table-row-active td {
 
 .bcms-table-row-active .bcms-icn-preview {
     background-position: -60px -133px;
+}
+
+.bcms-table-row-active .bcms-icn-restore {
+    color: #303030;
+    background-position: right -1121px;
 }
 
 .bcms-table-row-active .bcms-icn-edit {
@@ -1866,7 +1851,7 @@ table.bcms-tables td:first-child {
 
 .bcms-tables-link {
     line-height: 16px;
-    color: #1187d2;
+    color: #0383df;
     text-decoration: none;
 }
 
@@ -1972,13 +1957,13 @@ a.bcms-sort-arrow-top:hover {
     }
 
 /*forms & input fields validation, error messages*/
-.input-validation-error {
-    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAJCAYAAAF8oY2FAAAAZElEQVQY02N45uw8DYi/MsAZ////Z0AQQKH/YA6QYYcsuhxD5D8QO0LpTOyCIAtAElBJO5ClIEYmskoUW2ACMDdgqsRlZgtU5Rcg9kZS4A0VA8m1MCBJZEAlkHEG3G6iFRJrNQAfBNhPNe12LwAAAABJRU5ErkJggg==') no-repeat 98% center #fcecec;
+input[type="text"].input-validation-error {
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAFMLZykAAAAbUlEQVQoz2N45uw8DYi/MsAZ////B2NUBlDqP1wAyLGDcZBVLCeo4j8QO0LpTNIUgBwH44CMBzkYXUEmsgnIkiiuxCZJnAnEuKEFasIXIPZGUuwNFQPJtWCzHiXQgYoyoBqQcQYujdQzgFIvAACFG3m8e8veBgAAAABJRU5ErkJggg==') no-repeat 100% center #fcecec;
     border: 1px solid #e64343;
     box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
 }
 
-    .input-validation-error:focus {
+    input[type="text"].input-validation-error:focus {
         background: #fcecec;
         border: 1px solid #e64343;
         box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);

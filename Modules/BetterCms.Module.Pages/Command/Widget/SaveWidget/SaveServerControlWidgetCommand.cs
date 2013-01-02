@@ -54,6 +54,7 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
             widget.Name = request.Name;
             widget.Url = request.Url;
             widget.Version = request.Version;
+            widget.PreviewUrl = request.PreviewImageUrl;
 
             // Edits or removes options.
             if (widget.ContentOptions != null && widget.ContentOptions.Any())

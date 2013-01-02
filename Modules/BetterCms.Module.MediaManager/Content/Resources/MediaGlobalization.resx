@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AudiosTab_Title" xml:space="preserve">
+    <value>Audios</value>
+  </data>
+  <data name="AudiosTab_UploadAudio" xml:space="preserve">
+    <value>Upload Audio</value>
+  </data>
   <data name="CreateFolder_CreatedSuccessfully_Message" xml:space="preserve">
     <value>Folder created successfully.</value>
   </data>
@@ -131,6 +137,12 @@
   </data>
   <data name="DeleteImage_DeletedSuccessfully_Message" xml:space="preserve">
     <value>Image deleted successfully.</value>
+  </data>
+  <data name="FilesTab_Title" xml:space="preserve">
+    <value>Files</value>
+  </data>
+  <data name="FilesTab_UploadFile" xml:space="preserve">
+    <value>Upload file</value>
   </data>
   <data name="ImageEditor_CropFailureMessage_Message" xml:space="preserve">
     <value>Failed to crop image.</value>
@@ -196,10 +208,16 @@
     <value>Modify This Image</value>
   </data>
   <data name="ImageEditor_Dialog_SubTitle" xml:space="preserve">
-    <value>Edit Image Info</value>
+    <value>Image Info</value>
   </data>
   <data name="ImageEditor_Dialog_Title" xml:space="preserve">
-    <value>Media Manager - Edit Image</value>
+    <value>Edit Image</value>
+  </data>
+  <data name="ImageEditor_InsertDialog_AcceptButton" xml:space="preserve">
+    <value>Insert</value>
+  </data>
+  <data name="ImageEditor_InsertDialog_Title" xml:space="preserve">
+    <value>Insert Image Options</value>
   </data>
   <data name="ImageEditor_ResizeFailureMessage_Message" xml:space="preserve">
     <value>Failed to resize image.</value>
@@ -219,17 +237,11 @@
   <data name="ImageNotSelected_MessageTitle" xml:space="preserve">
     <value>Select</value>
   </data>
-  <data name="ImagesTab_AddNewFolder" xml:space="preserve">
-    <value>Add New Folder</value>
-  </data>
   <data name="ImagesTab_Grid" xml:space="preserve">
     <value>Grid</value>
   </data>
   <data name="ImagesTab_List" xml:space="preserve">
     <value>List</value>
-  </data>
-  <data name="ImagesTab_NewFolder" xml:space="preserve">
-    <value>New Folder</value>
   </data>
   <data name="ImagesTab_Title" xml:space="preserve">
     <value>Images</value>
@@ -255,6 +267,18 @@
   <data name="MediaList_FileTypeColumn" xml:space="preserve">
     <value>FileType</value>
   </data>
+  <data name="MediaManager_AddNewFolder" xml:space="preserve">
+    <value>Add New Folder</value>
+  </data>
+  <data name="MediaManager_ButtonInsertImage" xml:space="preserve">
+    <value>Insert Image</value>
+  </data>
+  <data name="MediaManager_ButtonInsertImageWithOptions" xml:space="preserve">
+    <value>Insert Image With Options</value>
+  </data>
+  <data name="MediaManager_NewFolder" xml:space="preserve">
+    <value>New Folder</value>
+  </data>
   <data name="MultiFileUpload_CancelUploading" xml:space="preserve">
     <value>Cancel All Uploads</value>
   </data>
@@ -269,6 +293,9 @@
   </data>
   <data name="MultiFileUpload_FileUploadedMessage" xml:space="preserve">
     <value>Success! Image uploaded.</value>
+  </data>
+  <data name="MultiFileUpload_SaveFailed" xml:space="preserve">
+    <value>Failed to save uploaded files.</value>
   </data>
   <data name="MultiFileUpload_SelectFolder" xml:space="preserve">
     <value>Select Folder where to upload files:</value>
@@ -293,5 +320,11 @@
   </data>
   <data name="SiteSettings_MediaManagerMenuItem" xml:space="preserve">
     <value>Media Manager</value>
+  </data>
+  <data name="VideosTab_Title" xml:space="preserve">
+    <value>Videos</value>
+  </data>
+  <data name="VideosTab_UploadVideo" xml:space="preserve">
+    <value>Upload Video</value>
   </data>
 </root>

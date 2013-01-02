@@ -1,0 +1,37 @@
+﻿using BetterCms.Module.MediaManager.Command.MediaManager;
+using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.ViewModels.MediaManager;
+
+using NHibernate.Criterion.Lambda;
+
+namespace BetterCms.Module.MediaManager.Command.Images.GetImages
+{
+    public class GetImagesCommand : GetMediaItemsCommandBase<MediaImageViewModel, MediaImage>
+    {
+        /// <summary>
+        /// Gets the type of the current media items.
+        /// </summary>
+        /// <value>
+        /// The type of the current media items.
+        /// </value>
+        protected override MediaType MediaType
+        {
+            get { return MediaType.Image; }
+        }
+
+        /// <summary>
+        /// Selects the items.
+        /// </summary>
+        /// <param name="builder">The builder.</param>
+        /// <returns></returns>
+        protected override QueryOverProjectionBuilder<MediaImage> SelectItems(QueryOverProjectionBuilder<MediaImage> builder)
+        {
+            return builder
+                    .Select(() => alias.Id).WithAlias(() => modelAlias.Id)
+                    .Select(() => alias.Title).WithAlias(() => modelAlias.Name)
+                    .Select(() => alias.Version).WithAlias(() => modelAlias.Version)
+                    .Select(() => alias.Title).WithAlias(() => modelAlias.Tooltip)
+                    .Select(() => alias.Size).WithAlias(() => modelAlias.Size);
+        }
+    }
+}

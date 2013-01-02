@@ -144,11 +144,20 @@
   <data name="Button_Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
+  <data name="Button_Insert" xml:space="preserve">
+    <value>Insert</value>
+  </data>
   <data name="Button_Ok" xml:space="preserve">
     <value>OK</value>
   </data>
+  <data name="Button_Open" xml:space="preserve">
+    <value>Open</value>
+  </data>
   <data name="Button_Remove" xml:space="preserve">
     <value>Remove</value>
+  </data>
+  <data name="Button_Rename" xml:space="preserve">
+    <value>Rename</value>
   </data>
   <data name="Button_Save" xml:space="preserve">
     <value>Save</value>

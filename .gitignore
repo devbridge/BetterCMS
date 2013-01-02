@@ -45,4 +45,6 @@ logs
 /Sandbox/BetterCms.Sandbox.Mvc4/App_Data/BetterCMS/Modules/BetterCms.Module.Root.dll
 /Sandbox/BetterCms.Sandbox.Mvc4/App_Data/BetterCMS/Modules/BetterCms.Module.MediaManager.dll
 /Sandbox/BetterCms.Sandbox.Mvc4/App_Data/BetterCMS/Modules/BetterCms.Module.MediaManager.pdb
+/Sandbox/BetterCms.Sandbox.Mvc4/App_Data/BetterCMS/Modules/BetterCms.Module.Templates.dll
+/Sandbox/BetterCms.Sandbox.Mvc4/App_Data/BetterCMS/Modules/BetterCms.Module.Templates.pdb
 /Sandbox/BetterCms.Sandbox.Mvc4/uploads

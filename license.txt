@@ -32,3 +32,11 @@ MISCELLANEOUS: Neither this Agreement nor any right or obligation hereunder, inc
 You acknowledge that you have read this Agreement and all additional terms referenced herein and agree to be bound by its terms. This Agreement (including the Order Form, and all schedules and addenda hereto), along with the additional terms referenced herein, contains the entire understanding of the parties with respect to the subject matter hereof and it supersedes any oral or written communications or representations relating hereto. No modification or waiver of this Agreement by you shall be binding unless in writing and signed by DevBridge. The waiver by either party of any breach by the other party of any of its obligations hereunder or the failure of either party to exercise any of its rights in respect of such a breach shall not be deemed to be a waiver of any previous or subsequent breach.
 
 This Agreement will be governed by and construed in accordance with the laws of the State of Illinois without regard to conflict of law principles. All suits, proceedings or claims to enforce the provisions of this Agreement shall be brought in the courts of the State of Illinois in the County of Cook, or in the United States District Court for the Northern District of Illinois, and you hereby consent to the jurisdiction and venue of those courts. If any provision of this Agreement is held by a court of competent jurisdiction to be invalid or unenforceable, such provision or requirement will be enforced only to the extent that it is not in violation of such law or is not otherwise unenforceable and all other provisions and requirements of this Agreement shall remain in full force and effect.
+
+CONTACT:
+DevBridge Group LLC
+1659 W. Hubbard St.
+Chicago, IL 60622
+United States
+tel. (312) 242-1642
+info@bettercms.com

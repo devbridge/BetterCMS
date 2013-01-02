@@ -1,13 +1,13 @@
 ﻿using System.Web.Mvc;
 
 using BetterCms.Module.MediaManager.Command.Images;
+using BetterCms.Module.MediaManager.Command.Images.GetImages;
 using BetterCms.Module.MediaManager.Content.Resources;
-using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.ViewModels.Images;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
+
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
-using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
 namespace BetterCms.Module.MediaManager.Controllers
 {
@@ -16,23 +16,6 @@ namespace BetterCms.Module.MediaManager.Controllers
     /// </summary>
     public class ImagesController : CmsControllerBase
     {
-        /// <summary>
-        /// Images tab.
-        /// </summary>
-        /// <param name="options">The options.</param>
-        /// <returns>The view.</returns>
-        public ActionResult ImagesTab(MediaManagerViewModel options)
-        {
-            if (options == null)
-            {
-                options = new MediaManagerViewModel();
-            }
-            options.FolderType = MediaType.Image;
-
-            var model = GetCommand<GetImagesCommand>().ExecuteCommand(options);
-            return PartialView(model);
-        }
-
         /// <summary>
         /// Gets the images list.
         /// </summary>
@@ -44,7 +27,6 @@ namespace BetterCms.Module.MediaManager.Controllers
             {
                 options = new MediaManagerViewModel();
             }
-            options.FolderType = MediaType.Image;
 
             var model = GetCommand<GetImagesCommand>().ExecuteCommand(options);
             if (model == null)
@@ -61,11 +43,22 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// <summary>
         /// Gets images list to insert to content.
         /// </summary>
-        /// <param name="options">The options.</param>
-        /// <returns>The view.</returns>
-        public ActionResult ImageInsert(SearchableGridOptions options)
+        /// <returns>
+        /// The view.
+        /// </returns>
+        public ActionResult ImageInsert()
         {
-            return View();
+            var images = GetCommand<GetImagesCommand>().ExecuteCommand(new MediaManagerViewModel());
+            var json = new
+            {
+                Data = new WireJson
+                {
+                    Success = true,
+                    Data = images
+                },
+                Html = RenderView("ImageInsert", new MediaImageViewModel())
+            };
+            return WireJson(true, json, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -75,6 +68,18 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// <returns>The view.</returns>
         [HttpGet]
         public ActionResult ImageEditor(string imageId)
+        {
+            var model = GetCommand<GetImageCommand>().Execute(imageId.ToGuidOrDefault());
+            return View(model);
+        }
+
+        /// <summary>
+        /// Image insert editor.
+        /// </summary>
+        /// <param name="imageId">The image id.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult ImageEditorInsert(string imageId)
         {
             var model = GetCommand<GetImageCommand>().Execute(imageId.ToGuidOrDefault());
             return View(model);

@@ -23,10 +23,12 @@ namespace BetterCms.Module.MediaManager.Models.Maps
             Map(f => f.OriginalHeight).Not.Nullable();
             Map(f => f.OriginalSize).Not.Nullable();
             Map(f => f.OriginalUri).Not.Nullable().Length(MaxLength.Uri).LazyLoad();
+            Map(f => f.IsOriginalUploaded).Not.Nullable().Default("0");
             Map(f => f.ThumbnailWidth).Not.Nullable();
             Map(f => f.ThumbnailHeight).Not.Nullable();
             Map(f => f.ThumbnailSize).Not.Nullable();
             Map(f => f.ThumbnailUri).Not.Nullable().Length(MaxLength.Uri).LazyLoad();
+            Map(f => f.IsThumbnailUploaded).Not.Nullable().Default("0");
         }
     }
 }
