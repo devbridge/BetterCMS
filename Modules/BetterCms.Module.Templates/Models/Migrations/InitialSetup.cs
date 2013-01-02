@@ -100,7 +100,7 @@ namespace BetterCms.Module.Templates.Models.Migrations
                 Delete
                     .FromTable(LayoutRegionsTableName)
                     .InSchema(rootSchemaName)
-                    .Row(new { Id = region.Id });
+                    .Row(new { RegionId = region.Id });
             }
 
             foreach (var layout in GetLayouts())
@@ -108,7 +108,7 @@ namespace BetterCms.Module.Templates.Models.Migrations
                 Delete
                     .FromTable(LayoutRegionsTableName)
                     .InSchema(rootSchemaName)
-                    .Row(new { Id = layout.Id });
+                    .Row(new { LayoutId = layout.Id });
             }
         }
 
