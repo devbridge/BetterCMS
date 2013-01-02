@@ -528,6 +528,7 @@ namespace BetterCms.Tests.Helpers
             entity.ThumbnailSize = ProvideRandomNumber(1, 960);
             entity.ThumbnailUri = new Uri(@"C:\Projects\BetterCMS\t_file100.png");
             entity.IsThumbnailUploaded = true;
+            entity.PublicThumbnailUrl = "http://bettercms.com/files/image?id=100200&t=image&p";
 
             return entity;
         }
