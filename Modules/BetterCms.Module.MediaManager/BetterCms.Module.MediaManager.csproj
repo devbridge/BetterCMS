@@ -208,6 +208,7 @@
     <EmbeddedResource Include="Content\Css\Images\bcms-no-image-1.png" />
     <EmbeddedResource Include="Content\Css\Images\bcms-no-image-2.png" />
     <EmbeddedResource Include="Content\Css\Images\bcms-no-image-3.png" />
+    <EmbeddedResource Include="Scripts\bcms.contextMenu.js" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
