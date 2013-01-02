@@ -2,8 +2,6 @@
 Copyright (c) 2003-2012, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
-/*EDITED BY DEVBRIDGE: IF YOU NEED TO SUPPORT OLD BROWSERS OR HAVE DIFFERENT STYLES FOR ALL BROWSERS UNCOMMENT LINE #385*/
-
 (function () {
     if (window.CKEDITOR && window.CKEDITOR.dom) return; window.CKEDITOR || (window.CKEDITOR = function () {
         var b = { timestamp: "CAPD", version: "4.0", revision: "769d96134b", rnd: Math.floor(900 * Math.random()) + 100, _: { pending: [] }, status: "unloaded", basePath: function () {
@@ -1408,7 +1406,7 @@ a[g].$.styleSheet.cssText = a[g].$.styleSheet.cssText + f : a[g].$.innerHTML = a
  Copyright (c) 2003-2012, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
 */
-    CKEDITOR.skin.name = "moono"; //CKEDITOR.skin.ua_editor="ie,ie7,ie8,gecko";CKEDITOR.skin.ua_dialog="ie,ie7,ie8,opera";
+    CKEDITOR.skin.name = "moono"; CKEDITOR.skin.ua_editor = "ie,ie7,ie8,gecko"; CKEDITOR.skin.ua_dialog = "ie,ie7,ie8,opera";
     CKEDITOR.skin.chameleon = function () {
         var b = function () { return function (b, e) { for (var a = b.match(/[^#]./g), c = 0; 3 > c; c++) { var f = a, h = c, d; d = parseInt(a[c], 16); d = ("0" + (0 > e ? 0 | d * (1 + e) : 0 | d + (255 - d) * e).toString(16)).slice(-2); f[h] = d } return "#" + a.join("") } } (), c = function () {
             var b = new CKEDITOR.template("background:#{to};background-image:-webkit-gradient(linear,lefttop,leftbottom,from({from}),to({to}));background-image:-moz-linear-gradient(top,{from},{to});background-image:-webkit-linear-gradient(top,{from},{to});background-image:-o-linear-gradient(top,{from},{to});background-image:-ms-linear-gradient(top,{from},{to});background-image:linear-gradient(top,{from},{to});filter:progid:DXImageTransform.Microsoft.gradient(gradientType=0,startColorstr='{from}',endColorstr='{to}');"); return function (c,
@@ -2506,16 +2504,23 @@ h)), a = a.replace(/<\/head\s*>/, g + "$&"), a = f + a) : a = b.docType + '<html
         }, getData: function (a) {
             if (a) return this.getHtml(); var a = this.editor, c = a.config.fullPage, d = c && a.docType, b = c && a.xmlDeclaration, e = this.getDocument(), c = c ? e.getDocumentElement().getOuterHtml() : e.getBody().getHtml(); CKEDITOR.env.gecko && (c = c.replace(/<br>(?=\s*(:?$|<\/body>))/, "")); a.dataProcessor && (c = a.dataProcessor.toDataFormat(c));
             b && (c = b + "\n" + c); d && (c = d + "\n" + c); return c
-        }, focus: function () { this._.isLoadingData ? this._.isPendingFocus = !0 : k.baseProto.focus.call(this) }, detach: function () {
-            var a = this.editor, c = a.document, d = a.window.getFrame(); k.baseProto.detach.call(this);
-            if (this.editor) {
-                this.clearCustomData();
-                c.getDocumentElement().clearCustomData();
+        }, focus: function () { this._.isLoadingData ? this._.isPendingFocus = !0 : k.baseProto.focus.call(this) }, detach: function() {
+
+            var a = this.editor, c = a.document;
+            var d = a.window.getFrame();
+            k.baseProto.detach.call(this);
+            this.clearCustomData();
+            c.getDocumentElement().clearCustomData();
+            if (d) {
                 d.clearCustomData();
-                CKEDITOR.tools.removeFunction(this._.frameLoadedHandler);
+            }
+            CKEDITOR.tools.removeFunction(this._.frameLoadedHandler);
+            if (d) {
                 (c = d.removeCustomData("onResize")) && c.removeListener();
-                a.fire("contentDomUnload");
-                d.remove();
+            }
+            a.fire("contentDomUnload");
+            if (d) {
+                d.remove()
             }
         }
         }
