@@ -9,13 +9,21 @@ define('bcms.contextMenu', ['jquery', 'bcms'],
     function ($, bcms) {
         'use strict';
 
-        var menu = {},
+        var menu = { },
             selectors = {
                 links: 'a'
             },
             links = {
+                
             },
             globalization = {
+                
+            },
+            classes = {
+                topLeft: 'bcms-media-context-tl',
+                bottomLeft: 'bcms-media-context-bl',
+                topRight: 'bcms-media-context-tr',
+                bottomRight: 'bcms-media-context-br'
             },
             
             /**
@@ -120,21 +128,48 @@ define('bcms.contextMenu', ['jquery', 'bcms'],
                 // hide the menu first to avoid an "up-then-over" visual effect
                 contextMenuContainer.hide();
                 
-                var leftPadding = 12,
-                    topPadding = 13,
+                var leftPadding = 10,
+                    topPadding = 14,
                     target = $(event.currentTarget),
-                    left = event.pageX - target.offset().left + leftPadding,
+                    left = event.pageX - target.offset().left,
                     top = event.pageY - target.offset().top,
                     scrollHeight = contextMenuContainer.scrollParent().height(),
+                    scrollWidth = contextMenuContainer.scrollParent().width(),
                     scrollTop = contextMenuContainer.scrollParent().offset().top,
+                    scrollLeft = contextMenuContainer.scrollParent().offset().left,
                     menuHeight = contextMenuContainer.outerHeight(),
-                    totalHeight = contextMenuContainer.parent().offset().top + top + menuHeight - scrollTop;
+                    menuWidth = contextMenuContainer.outerWidth(),
+                    totalHeight = contextMenuContainer.parent().offset().top + top + menuHeight - scrollTop,
+                    totalWidth = contextMenuContainer.parent().offset().left + left + menuWidth - scrollLeft + leftPadding,
+                    addBottomClass = false,
+                    addRightClass = false,
+                    className;
                 
+                // Calculate top and left
                 if (totalHeight > scrollHeight) {
                     top = top - menuHeight + topPadding;
+                    addBottomClass = true;
                 } else {
                     top -= topPadding;
                 }
+
+                if (totalWidth > scrollWidth) {
+                    left = left - menuWidth - leftPadding;
+                    addRightClass = true;
+                } else {
+                    left += leftPadding;
+                }
+
+                // Switch css class
+                contextMenuContainer.removeClass(classes.bottomLeft);
+                contextMenuContainer.removeClass(classes.bottomRight);
+                contextMenuContainer.removeClass(classes.topLeft);
+                contextMenuContainer.removeClass(classes.topRight);
+                
+                className = (addBottomClass)
+                    ? (addRightClass ? classes.bottomRight : classes.bottomLeft)
+                    : (addRightClass ? classes.topRight : classes.topLeft);
+                contextMenuContainer.addClass(className);
 
                 contextMenuContainer.css('left', left + 'px');
                 contextMenuContainer.css('top', top + 'px');
