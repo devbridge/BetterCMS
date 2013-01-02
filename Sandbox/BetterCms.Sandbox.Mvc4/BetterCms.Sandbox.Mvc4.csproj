@@ -177,6 +177,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Content Include="App_Data\BetterCMS\Modules\readme.txt" />
+    <EmbeddedResource Include="file\bcms-media\scripts\bcms.media.upload.js" />
     <EmbeddedResource Include="file\bcms-media\scripts\bcms.contextMenu.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">
@@ -253,6 +254,9 @@
     <EmbeddedResource Include="file\bcms-media\scripts\bcms.media.js" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\bcms-media\Views\Upload\MultiFileUpload.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Areas\bcms-media\Views\MediaManager\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -260,6 +264,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\bcms-media\Views\MediaManager\Partial\MediaManagerTemplate.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\bcms-templates\Views\Shared\WideLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\bcms-templates\Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\bcms-templates\Views\Shared\TwoColumnsLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\bcms-templates\Views\Shared\ThreeColumnsLayout.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -331,8 +347,12 @@ copy $(SolutionDir)Modules\BetterCms.Module.Pages\bin\BetterCms.Module.Pages.pdb
 
 copy $(SolutionDir)Modules\BetterCms.Module.Users\bin\BetterCms.Module.Users.dll $(ProjectDir)App_Data\BetterCms\Modules /Y
 copy $(SolutionDir)Modules\BetterCms.Module.Users\bin\BetterCms.Module.Users.pdb $(ProjectDir)App_Data\BetterCms\Modules /Y
+
 copy $(SolutionDir)Modules\BetterCms.Module.MediaManager\bin\BetterCms.Module.MediaManager.dll $(ProjectDir)App_Data\BetterCms\Modules /Y
 copy $(SolutionDir)Modules\BetterCms.Module.MediaManager\bin\BetterCms.Module.MediaManager.pdb $(ProjectDir)App_Data\BetterCms\Modules /Y
+
+copy $(SolutionDir)Modules\BetterCms.Module.Templates\bin\BetterCms.Module.Templates.dll $(ProjectDir)App_Data\BetterCms\Modules /Y
+copy $(SolutionDir)Modules\BetterCms.Module.Templates\bin\BetterCms.Module.Templates.pdb $(ProjectDir)App_Data\BetterCms\Modules /Y
 
 </PostBuildEvent>
   </PropertyGroup>

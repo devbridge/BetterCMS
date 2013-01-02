@@ -238,7 +238,6 @@
     <EmbeddedResource Include="Scripts\bcms.js" />
     <EmbeddedResource Include="Scripts\bcms.modal.js" />
     <EmbeddedResource Include="Scripts\bcms.sidemenu.js" />
-    <EmbeddedResource Include="Scripts\bcms.siteSettings.js" />
     <None Include="Scripts\jquery-1.7.2.intellisense.js">
       <DependentUpon>jquery-1.7.2.js</DependentUpon>
     </None>
@@ -252,9 +251,6 @@
     <EmbeddedResource Include="Scripts\bcms.messages.js" />
     <EmbeddedResource Include="Scripts\bcms.datepicker.js" />
     <EmbeddedResource Include="Scripts\bcms.htmlEditor.js" />
-    <EmbeddedResource Include="Scripts\spinner.jquery.js" />
-    <EmbeddedResource Include="Content\Styles\spinner.css" />
-    <EmbeddedResource Include="Content\Styles\images\spinner.png" />
     <EmbeddedResource Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <EmbeddedResource Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <EmbeddedResource Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -315,7 +311,6 @@
     <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
-    <EmbeddedResource Include="Scripts\bcms.dynamicContent.js" />
     <EmbeddedResource Include="Scripts\bcms.tabs.js" />
     <EmbeddedResource Include="Content\Styles\images\modal-back.png" />
     <EmbeddedResource Include="Scripts\bcms.preview.js" />
@@ -324,9 +319,6 @@
     <EmbeddedResource Include="Content\Styles\images\loading.gif" />
     <EmbeddedResource Include="Content\Styles\images\bcms-sidebar-select.png" />
     <EmbeddedResource Include="Content\Styles\images\bcms-logo.png" />
-    <EmbeddedResource Include="Content\Styles\images\bcms-blog-no-image.png" />
-    <EmbeddedResource Include="Content\Styles\images\bcms-no-image.png" />
-    <EmbeddedResource Include="Content\Styles\images\bcms-no-thumbnail.png" />
     <EmbeddedResource Include="Scripts\ckeditor\build-config.js" />
     <EmbeddedResource Include="Scripts\ckeditor\ckeditor.js" />
     <EmbeddedResource Include="Scripts\ckeditor\config.js" />
@@ -483,6 +475,11 @@
     <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\close.png" />
     <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\mini.png" />
     <EmbeddedResource Include="Scripts\ckeditor\styles.js" />
+    <EmbeddedResource Include="Scripts\bcms.dynamicContent.js" />
+    <EmbeddedResource Include="Scripts\bcms.siteSettings.js" />
+    <EmbeddedResource Include="Content\Styles\images\bcms-no-image-1.png" />
+    <EmbeddedResource Include="Content\Styles\images\bcms-no-image-2.png" />
+    <EmbeddedResource Include="Content\Styles\images\bcms-no-image-3.png" />
     <Content Include="Scripts\jquery-1.7.2.min.js">
       <DependentUpon>jquery-1.7.2.js</DependentUpon>
     </Content>
@@ -505,6 +502,7 @@
     <EmbeddedResource Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <EmbeddedResource Include="Scripts\knockout-2.2.0.debug.js" />
     <EmbeddedResource Include="Scripts\knockout-2.2.0.js" />
+    <EmbeddedResource Include="Scripts\spinner.jquery.js" />
     <Content Include="Views\Web.config" />
     <EmbeddedResource Include="Views\Shared\Partial\ContentOverlay.cshtml" />
     <EmbeddedResource Include="Views\Shared\Partial\Modal.cshtml" />

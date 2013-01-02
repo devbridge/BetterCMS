@@ -29,7 +29,22 @@ namespace BetterCms.Core.DataAccess.DataContext
             this.securityService = securityService;            
         }
 
-        public ISessionFactory SessionFactory
+        /// <summary>
+        /// Opens the session.
+        /// </summary>
+        /// <param name="trackEntitiesConcurrency">if set to <c>true</c> tracks entities concurrency.</param>
+        /// <returns>An opened session object.</returns>        
+        public ISession OpenSession(bool trackEntitiesConcurrency = true)
+        {
+            if (trackEntitiesConcurrency)
+            {
+                return SessionFactory.OpenSession(new StaleInterceptor());
+            }
+
+            return SessionFactory.OpenSession();
+        }
+
+        protected virtual ISessionFactory SessionFactory
         {
             get
             {
@@ -82,18 +97,18 @@ namespace BetterCms.Core.DataAccess.DataContext
             mappingResolver.AddAvailableMappings(fluentConfiguration);
 
             var eventListenerHelper = new EventListenerHelper(securityService);
-            var listener = new SaveOrUpdateEventListener(eventListenerHelper);
+            var saveOrUpdateEventListener = new SaveOrUpdateEventListener(eventListenerHelper);
+            var deleteEventListener = new DeleteEventListener(eventListenerHelper);
 
             fluentConfiguration = fluentConfiguration
                 .Mappings(m => m.FluentMappings
                                    .Conventions.Add(ForeignKey.EndsWith("Id"))
                                    .Conventions.Add<EnumConvention>())
-                .ExposeConfiguration(c => c.SetProperty("show_sql", "false"))
-                .ExposeConfiguration(c => c.SetInterceptor(new StaleInterceptor()))
-                .ExposeConfiguration(c => c.SetListener(ListenerType.Delete, new DeleteEventListener(eventListenerHelper)))
-                .ExposeConfiguration(c => c.SetListener(ListenerType.SaveUpdate, listener))
-                .ExposeConfiguration(c => c.SetListener(ListenerType.Save, listener))
-                .ExposeConfiguration(c => c.SetListener(ListenerType.Update, listener));
+                .ExposeConfiguration(c => c.SetProperty("show_sql", "false"))              
+                .ExposeConfiguration(c => c.SetListener(ListenerType.Delete, deleteEventListener))
+                .ExposeConfiguration(c => c.SetListener(ListenerType.SaveUpdate, saveOrUpdateEventListener))
+                .ExposeConfiguration(c => c.SetListener(ListenerType.Save, saveOrUpdateEventListener))
+                .ExposeConfiguration(c => c.SetListener(ListenerType.Update, saveOrUpdateEventListener));
             
             return fluentConfiguration
                         .BuildConfiguration()

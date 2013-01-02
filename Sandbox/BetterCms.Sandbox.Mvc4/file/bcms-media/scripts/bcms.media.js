@@ -18,7 +18,8 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 tabFilesSelector: '#bcms-tab-files',
 
                 templateDataBind: '.bcms-data-bind-container',
-                firstForm: 'form:first'
+                firstForm: 'form:first',
+                spinContainer: '.bcms-rightcol:first'
             },
             links = {
                 loadSiteSettingsMediaManagerUrl: null,
@@ -133,7 +134,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                     onComplete = function (json) {
                         parseJsonResults(json, self);
                     };
-                loadTabData(self.url, params, onComplete);
+                loadTabData(self.url, params, onComplete, self.container);
             };
 
             self.sortMedia = function (column) {
@@ -149,7 +150,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                     onComplete = function (json) {
                         parseJsonResults(json, self);
                     };
-                loadTabData(self.url, params, onComplete);
+                loadTabData(self.url, params, onComplete, self.container);
             };
 
             self.switchViewStyle = function() {
@@ -766,7 +767,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 onComplete = function (json) {
                     parseJsonResults(json, folderViewModel);
                 };
-            loadTabData(folderViewModel.url, params, onComplete);
+            loadTabData(folderViewModel.url, params, onComplete, folderViewModel.container);
         };
 
         /**
@@ -846,7 +847,17 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
         /**
         * Load tab data
         */
-        function loadTabData(url, params, onComplete) {
+        function loadTabData(url, params, complete, container) {
+            var indicatorId = 'mediatab',
+                spinContainer = container.parents(selectors.spinContainer),
+                onComplete = function(result) {
+                    spinContainer.hideLoading(indicatorId);
+                    if ($.isFunction(complete)) {
+                        complete(result);
+                    }
+                };
+            spinContainer.showLoading(indicatorId);
+            
             $.ajax({
                 type: 'POST',
                 cache: false,
@@ -892,7 +903,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
 
                     loadTabData(audiosViewModel.url, null, function (json) {
                         initializeTab(json, audiosViewModel);
-                    });
+                    }, tabContainer);
                 }
             });
 
@@ -904,7 +915,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
 
                     loadTabData(videosViewModel.url, null, function (json) {
                         initializeTab(json, videosViewModel);
-                    });
+                    }, tabContainer);
                 }
             });
 
@@ -916,7 +927,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
 
                     loadTabData(filesViewModel.url, null, function (json) {
                         initializeTab(json, filesViewModel);
-                    });
+                    }, tabContainer);
                 }
             });
 

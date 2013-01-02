@@ -158,6 +158,32 @@ namespace BetterCms.Core.Services.Storage
             }
         }
 
+        public void RemoveObject(Uri uri)
+        {
+            CheckUri(uri);
+
+            var absolutePath = ResolvePath(uri.LocalPath);
+            var serverUri = string.Format("{0}{1}", ftpRoot, absolutePath);
+            FtpWebRequest request = CreateFtpRequest(serverUri);
+            request.Method = WebRequestMethods.Ftp.DeleteFile;
+
+            FtpWebResponse response = (FtpWebResponse)request.GetResponse();            
+            response.Close();            
+        }
+
+        public void RemoveObjectBucket(Uri uri)
+        {
+            CheckUri(uri);
+
+            var absolutePath = ResolvePath(Path.GetDirectoryName(uri.LocalPath));
+            var serverUri = string.Format("{0}{1}", ftpRoot, absolutePath);
+            FtpWebRequest request = CreateFtpRequest(serverUri);
+            request.Method = WebRequestMethods.Ftp.RemoveDirectory;
+
+            FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+            response.Close();
+        }
+
         private void CheckUri(Uri uri)
         {
             if (!Uri.CheckSchemeName(uri.Scheme) || !uri.Scheme.Equals(Uri.UriSchemeFtp))

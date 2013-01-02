@@ -34,7 +34,7 @@
             </div>
         }
         <script type="text/html" id="bcms-file-upload-template">
-            <div data-bind="visible: showProgress()">
+            <div data-bind="visible: activeUploads().length > 0">
                 <div class="bcms-content-titles">@MediaGlobalization.MultiFileUpload_Uploading<a class="bcms-upload-cancel-link">@MediaGlobalization.MultiFileUpload_CancelUploading</a></div>
             </div>
             <div data-bind="foreach: uploads">

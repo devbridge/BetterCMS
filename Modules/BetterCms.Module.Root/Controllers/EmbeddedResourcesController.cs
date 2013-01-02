@@ -1,8 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.IO;
+using System.Web.Hosting;
 using System.Web.Mvc;
 using System.Web.UI;
 
 using BetterCms.Core.Web.EmbeddedResources;
+
+using MvcContrib.UI.InputBuilder.ViewEngine;
 
 namespace BetterCms.Module.Root.Controllers
 {
@@ -71,9 +75,9 @@ namespace BetterCms.Module.Root.Controllers
         {
             string contentType = GetContentType(resourceType);
             if (string.IsNullOrEmpty(contentType))
-            {
+            {                
                 Response.StatusCode = 404;
-                return null;
+                return new EmptyResult();
             }
 
             string[] folders = new[]
@@ -95,12 +99,12 @@ namespace BetterCms.Module.Root.Controllers
                 }
             }
 
-            virtualPath += file + "." + resourceType;            
-         
+            virtualPath += file + "." + resourceType;
+
             if (!embeddedResourcesProvider.IsEmbeddedResourceVirtualPath(virtualPath))
             {
                 Response.StatusCode = 404;
-                return null;
+                return new EmptyResult();
             }
 
             var virtualFile = embeddedResourcesProvider.GetEmbeddedResourceVirtualFile(virtualPath);

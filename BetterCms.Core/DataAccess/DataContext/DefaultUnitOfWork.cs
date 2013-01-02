@@ -31,7 +31,7 @@ namespace BetterCms.Core.DataAccess.DataContext
                     {
                         if (session == null)
                         {
-                            ISession newSession = sessionFactoryProvider.SessionFactory.OpenSession();
+                            ISession newSession = sessionFactoryProvider.OpenSession();
                             newSession.FlushMode = FlushMode.Auto;
 
                             session = newSession;

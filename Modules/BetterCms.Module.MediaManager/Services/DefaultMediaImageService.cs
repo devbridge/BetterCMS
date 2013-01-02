@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -15,6 +16,9 @@ using BetterCms.Core.Services.Storage;
 using BetterCms.Core.Web;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Mvc;
+
+using NHibernate;
+using NHibernate.Linq;
 
 namespace BetterCms.Module.MediaManager.Services
 {
@@ -93,18 +97,72 @@ namespace BetterCms.Module.MediaManager.Services
         }
 
         /// <summary>
-        /// Gets the content root.
+        /// Removes an image related files from the storage.
         /// </summary>
-        /// <param name="rootPath">The root path.</param>
-        /// <returns>Root path.</returns>
-        private string GetContentRoot(string rootPath)
-        {
-            if (configuration.Storage.ServiceType == StorageServiceType.FileSystem && VirtualPathUtility.IsAppRelative(rootPath))
+        /// <param name="mediaImageId">The media image id.</param>
+        /// <param name="version">The version.</param>
+        public void RemoveImageWithFiles(Guid mediaImageId, int version)
+        {   
+            var removeImageFileTasks = new List<Task>();
+            var image = repository.AsQueryable<MediaImage>()
+                          .Where(f => f.Id == mediaImageId)
+                          .Select(f => new
+                                           {
+                                               IsUploaded = f.IsUploaded,
+                                               FileUri = f.FileUri,
+                                               IsOriginalUploaded = f.IsOriginalUploaded,
+                                               OriginalUri = f.OriginalUri,
+                                               IsThumbnailUploaded = f.IsThumbnailUploaded,
+                                               ThumbnailUri = f.ThumbnailUri
+                                           })
+                          .FirstOrDefault();
+
+            if (image == null)
             {
-                return httpContextAccessor.MapPath(rootPath);
+                throw new CmsException(string.Format("Image not found by given id={0}", mediaImageId));
             }
 
-            return rootPath;
+            try
+            {
+                if (image.IsUploaded)
+                {
+                    removeImageFileTasks.Add(
+                        new Task(
+                            () =>
+                                { storageService.RemoveObject(image.FileUri); }));
+                }
+
+                if (image.IsOriginalUploaded)
+                {
+                    removeImageFileTasks.Add(
+                        new Task(
+                            () =>
+                                { storageService.RemoveObject(image.OriginalUri); }));
+                }
+
+                if (image.IsThumbnailUploaded)
+                {
+                    removeImageFileTasks.Add(
+                        new Task(
+                            () =>
+                                { storageService.RemoveObject(image.ThumbnailUri); }));
+                }
+                
+                if (removeImageFileTasks.Count > 0)
+                {
+                    Task.Factory.ContinueWhenAll(
+                        removeImageFileTasks.ToArray(),
+                        result =>
+                            { storageService.RemoveObjectBucket(image.FileUri); });
+
+                    removeImageFileTasks.ForEach(task => task.Start());
+                }
+            }
+            finally
+            {
+                repository.Delete<MediaImage>(mediaImageId, version);
+                unitOfWork.Commit();                
+            }
         }
 
         /// <summary>
@@ -130,6 +188,7 @@ namespace BetterCms.Module.MediaManager.Services
                 {
                     image.Folder = repository.AsProxy<MediaFolder>(rootFolderId);
                 }
+
                 image.Title = Path.GetFileName(fileName);
                 image.Caption = null;
                 image.FileName = fileName;
@@ -158,20 +217,38 @@ namespace BetterCms.Module.MediaManager.Services
 
                 image.ImageAlign = null;
                 image.IsTemporary = true;
-                image.IsStored = false;
+                image.IsUploaded = false;
+                image.IsThumbnailUploaded = false;
+                image.IsOriginalUploaded = false;
 
                 unitOfWork.BeginTransaction();
                 repository.Save(image);
                 unitOfWork.Commit();
 
-                Task imageUpload = UploadImageToStorage(fileStream, image.FileUri);
-                Task originalUpload = UploadImageToStorage(fileStream, image.FileUri);
-                Task thumbnailUpload = UploadImageToStorage(thumbnailImage, image.FileUri);
+                Task imageUpload = UploadImageToStorage(fileStream, image.FileUri, image.Id, img => { img.IsUploaded = true; });
+                Task originalUpload = UploadImageToStorage(fileStream, image.OriginalUri, image.Id, img => { img.IsOriginalUploaded = true; });
+                Task thumbnailUpload = UploadImageToStorage(thumbnailImage, image.ThumbnailUri, image.Id, img => { img.IsThumbnailUploaded = true; });
 
-                Task.Factory.ContinueWhenAll(new[] { imageUpload, originalUpload, thumbnailUpload }, tasks => new[]
-                                                                                                                  {
-                                                                                                                      UpdateImageAsUploadedToStorage(image.Id)
-                                                                                                                  });
+                Task.Factory.ContinueWhenAll(
+                    new[]
+                        {
+                            imageUpload, 
+                            originalUpload, 
+                            thumbnailUpload
+                        },
+                    result =>
+                    {
+                        // During uploading progress Cancel action can by executed. Need to remove uploaded images from the storage.
+                        ExecuteActionOnThreadSeparatedSessionWithNoConcurrencyTracking(session =>
+                            {
+                                var media = session.Get<MediaImage>(image.Id);                                
+                                if (media.IsCanceled && (media.IsUploaded || media.IsThumbnailUploaded || media.IsOriginalUploaded))
+                                {
+                                    RemoveImageWithFiles(media.Id, media.Version);
+                                }
+                            });
+                    });
+
                 imageUpload.Start();
                 originalUpload.Start();
                 thumbnailUpload.Start();
@@ -181,34 +258,17 @@ namespace BetterCms.Module.MediaManager.Services
         }
 
         /// <summary>
-        /// Updates the image as uploaded to storage.
-        /// </summary>
-        /// <param name="mediaId">The media id.</param>
-        /// <returns>Upload task.</returns>
-        private Task UpdateImageAsUploadedToStorage(Guid mediaId)
-        {
-            return Task.Factory.StartNew(
-                () =>
-                    {
-                        using (var session = sessionFactoryProvider.SessionFactory.OpenSession())
-                        {
-                            var media = session.Get<MediaImage>(mediaId);
-                            media.IsStored = true;
-                            session.Flush();
-                            session.Close();
-                        }
-                    });
-        }
-
-        /// <summary>
         /// Uploads the image to storage.
         /// </summary>
         /// <param name="sourceStream">The source stream.</param>
         /// <param name="fileUri">The file URI.</param>
+        /// /// <param name="updateImageAfterUpload">An action to update specific image field after image upload.</param>
         /// <returns>Upload task.</returns>
-        private Task UploadImageToStorage(Stream sourceStream, Uri fileUri)
+        private Task UploadImageToStorage(Stream sourceStream, Uri fileUri, Guid mediaId, Action<MediaImage> updateImageAfterUpload)
         {
             var stream = new MemoryStream();
+
+            sourceStream.Seek(0, SeekOrigin.Begin);
             sourceStream.CopyTo(stream);
 
             var task = new Task(
@@ -222,14 +282,46 @@ namespace BetterCms.Module.MediaManager.Services
                             storageService.UploadObject(upload);
                     });
 
-            task.ContinueWith(
-                task1 =>
-                    {
-                        stream.Close();
-                        stream.Dispose();
-                    });
+            task
+             .ContinueWith(
+                t =>
+                 {
+                     stream.Close();
+                     stream.Dispose();
+                 })
+             .ContinueWith(
+                t =>
+                 {
+                    ExecuteActionOnThreadSeparatedSessionWithNoConcurrencyTracking(session =>
+                        {                   
+                            var media = session.Get<MediaImage>(mediaId);
+
+                            updateImageAfterUpload(media);
+
+                            session.SaveOrUpdate(media);
+                            session.Flush();
+                        });
+                 });            
 
             return task;
+        }
+
+        private void ExecuteActionOnThreadSeparatedSessionWithNoConcurrencyTracking(Action<ISession> work)
+        {
+            using (var session = sessionFactoryProvider.OpenSession(false))
+            {
+                try
+                {
+                    lock (this)
+                    {
+                        work(session);
+                    }
+                }
+                finally
+                {
+                    session.Close();
+                }
+            }
         }
 
         /// <summary>
@@ -241,8 +333,10 @@ namespace BetterCms.Module.MediaManager.Services
         {
             try
             {
+                imageStream.Seek(0, SeekOrigin.Begin);
+
                 using (var img = Image.FromStream(imageStream))
-                {
+                {                    
                     return img.Size;
                 }
             }
@@ -260,29 +354,35 @@ namespace BetterCms.Module.MediaManager.Services
         /// <param name="size">The size.</param>
         private void ResizeImageAndCropToFit(Stream sourceStream, Stream destinationStream, Size size)
         {
-            var image = new WebImage(sourceStream);
-
-            // Make image rectangular.
-            WebImage croppedImage;
-            var diff = (image.Width - image.Height) / 2.0;
-            if (diff > 0)
+            using (var tempStream = new MemoryStream())
             {
-                croppedImage = image.Crop(0, Convert.ToInt32(Math.Floor(diff)), 0, Convert.ToInt32(Math.Ceiling(diff)));
-            }
-            else if (diff < 0)
-            {
-                diff = Math.Abs(diff);
-                croppedImage = image.Crop(Convert.ToInt32(Math.Floor(diff)), 0, Convert.ToInt32(Math.Ceiling(diff)));
-            }
-            else
-            {
-                croppedImage = image;
-            }
+                sourceStream.Seek(0, SeekOrigin.Begin);
+                sourceStream.CopyTo(tempStream);               
 
-            var resizedImage = croppedImage.Resize(size.Width, size.Height);
+                var image = new WebImage(tempStream);
+                
+                // Make image rectangular.
+                WebImage croppedImage;
+                var diff = (image.Width - image.Height) / 2.0;
+                if (diff > 0)
+                {
+                    croppedImage = image.Crop(0, Convert.ToInt32(Math.Floor(diff)), 0, Convert.ToInt32(Math.Ceiling(diff)));
+                }
+                else if (diff < 0)
+                {
+                    diff = Math.Abs(diff);
+                    croppedImage = image.Crop(Convert.ToInt32(Math.Floor(diff)), 0, Convert.ToInt32(Math.Ceiling(diff)));
+                }
+                else
+                {
+                    croppedImage = image;
+                }
 
-            var bytes = resizedImage.GetBytes();
-            destinationStream.Write(bytes, 0, bytes.Length);
+                var resizedImage = croppedImage.Resize(size.Width, size.Height);
+
+                var bytes = resizedImage.GetBytes();
+                destinationStream.Write(bytes, 0, bytes.Length);                
+            }
         }
 
         /// <summary>
@@ -296,7 +396,7 @@ namespace BetterCms.Module.MediaManager.Services
         /// <param name="y2">The y2.</param>
         public void CropImage(Guid mediaImageId, int version, int x1, int y1, int x2, int y2)
         {
-            var imageEntity = this.GetImageEntity(mediaImageId, version);
+            var imageEntity = GetImageEntity(mediaImageId, version);
 
             var downloadResponse = storageService.DownloadObject(imageEntity.OriginalUri);
             var image = new WebImage(downloadResponse.ResponseStream);
@@ -374,6 +474,7 @@ namespace BetterCms.Module.MediaManager.Services
         private MediaImage GetImageEntity(Guid mediaImageId, int version)
         {
             var imageEntity = repository.AsQueryable<MediaImage>().FirstOrDefault(f => f.Id == mediaImageId);
+
             if (imageEntity == null)
             {
                 throw new CmsException(string.Format("Image not found by id={0}.", mediaImageId));
@@ -386,10 +487,25 @@ namespace BetterCms.Module.MediaManager.Services
 
             if (!storageService.ObjectExists(imageEntity.OriginalUri))
             {
-                throw new CmsException(string.Format("Image not found in the storage by uri={0}.", imageEntity.OriginalUri));
+                throw new CmsException(string.Format("Image not found in the storage by URI={0}.", imageEntity.OriginalUri));
             }
 
             return imageEntity;
+        }
+
+        /// <summary>
+        /// Gets the content root.
+        /// </summary>
+        /// <param name="rootPath">The root path.</param>
+        /// <returns>Root path.</returns>
+        private string GetContentRoot(string rootPath)
+        {
+            if (configuration.Storage.ServiceType == StorageServiceType.FileSystem && VirtualPathUtility.IsAppRelative(rootPath))
+            {
+                return httpContextAccessor.MapPath(rootPath);
+            }
+
+            return rootPath;
         }
     }
 }

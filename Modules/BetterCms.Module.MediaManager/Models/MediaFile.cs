@@ -17,6 +17,8 @@ namespace BetterCms.Module.MediaManager.Models
 
         public virtual bool IsTemporary { get; set; }
 
-        public virtual bool IsStored { get; set; }
+        public virtual bool IsUploaded { get; set; }
+
+        public virtual bool IsCanceled { get; set; }
     }
 }

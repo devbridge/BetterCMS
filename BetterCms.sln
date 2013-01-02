@@ -34,6 +34,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.Sandbox.Mvc4", "s
 		{A66A3046-EF60-4C51-ADA7-EB055763419B} = {A66A3046-EF60-4C51-ADA7-EB055763419B}
 		{C530025B-8AB7-402D-B60C-000C9A5D0446} = {C530025B-8AB7-402D-B60C-000C9A5D0446}
 		{F3E41793-E8ED-4BA8-A1AB-CBA1E47B0786} = {F3E41793-E8ED-4BA8-A1AB-CBA1E47B0786}
+		{17BF5CA2-23B6-4796-8EF1-CDDF6D41A4F7} = {17BF5CA2-23B6-4796-8EF1-CDDF6D41A4F7}
 		{FC04D4C2-8688-498F-B546-292C7E3688A9} = {FC04D4C2-8688-498F-B546-292C7E3688A9}
 		{66E7E4DF-EEEA-4B1E-8663-A1B430EB7375} = {66E7E4DF-EEEA-4B1E-8663-A1B430EB7375}
 	EndProjectSection
@@ -53,6 +54,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.Module.Users", "Modules\BetterCms.Module.Users\BetterCms.Module.Users.csproj", "{C530025B-8AB7-402D-B60C-000C9A5D0446}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.Sandbox.DataMigration", "Sandbox\BetterCms.Sandbox.DataMigration\BetterCms.Sandbox.DataMigration.csproj", "{5D0111B2-677B-481C-8F05-C3B26065FEAB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{17BF5CA2-23B6-4796-8EF1-CDDF6D41A4F7} = {17BF5CA2-23B6-4796-8EF1-CDDF6D41A4F7}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.Modules.Tests", "Tests\BetterCms.Modules.Tests\BetterCms.Modules.Tests.csproj", "{FDB66E62-C630-4055-B3FB-27DAF5B464BB}"
 EndProject
@@ -61,6 +65,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.Module.AmazonS3Storage", "Modules\BetterCms.Module.AmazonS3Storage\BetterCms.Module.AmazonS3Storage.csproj", "{42698E7B-A9B1-4C23-8BB0-FC363A3F8B94}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.Module.MediaManager", "Modules\BetterCms.Module.MediaManager\BetterCms.Module.MediaManager.csproj", "{F3E41793-E8ED-4BA8-A1AB-CBA1E47B0786}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.Module.Templates", "Modules\BetterCms.Module.Templates\BetterCms.Module.Templates.csproj", "{17BF5CA2-23B6-4796-8EF1-CDDF6D41A4F7}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
@@ -178,6 +184,14 @@ Global
 		{F3E41793-E8ED-4BA8-A1AB-CBA1E47B0786}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F3E41793-E8ED-4BA8-A1AB-CBA1E47B0786}.Staging|Any CPU.ActiveCfg = Staging|Any CPU
 		{F3E41793-E8ED-4BA8-A1AB-CBA1E47B0786}.Staging|Any CPU.Build.0 = Staging|Any CPU
+		{17BF5CA2-23B6-4796-8EF1-CDDF6D41A4F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17BF5CA2-23B6-4796-8EF1-CDDF6D41A4F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17BF5CA2-23B6-4796-8EF1-CDDF6D41A4F7}.Dev|Any CPU.ActiveCfg = Dev|Any CPU
+		{17BF5CA2-23B6-4796-8EF1-CDDF6D41A4F7}.Dev|Any CPU.Build.0 = Dev|Any CPU
+		{17BF5CA2-23B6-4796-8EF1-CDDF6D41A4F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17BF5CA2-23B6-4796-8EF1-CDDF6D41A4F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17BF5CA2-23B6-4796-8EF1-CDDF6D41A4F7}.Staging|Any CPU.ActiveCfg = Staging|Any CPU
+		{17BF5CA2-23B6-4796-8EF1-CDDF6D41A4F7}.Staging|Any CPU.Build.0 = Staging|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -194,13 +208,11 @@ Global
 		{573925F2-F15F-4CBE-8F13-7C67DA06DF0D} = {35580EFA-13E7-4F08-B5FB-ABBFA899B94C}
 		{42698E7B-A9B1-4C23-8BB0-FC363A3F8B94} = {35580EFA-13E7-4F08-B5FB-ABBFA899B94C}
 		{F3E41793-E8ED-4BA8-A1AB-CBA1E47B0786} = {35580EFA-13E7-4F08-B5FB-ABBFA899B94C}
+		{17BF5CA2-23B6-4796-8EF1-CDDF6D41A4F7} = {35580EFA-13E7-4F08-B5FB-ABBFA899B94C}
 		{5ABF44DC-EE5E-4EDE-B1FF-E5FE65BA7CC1} = {6721A380-251A-4D6F-BCCD-639A6842DFD9}
 		{5D0111B2-677B-481C-8F05-C3B26065FEAB} = {6721A380-251A-4D6F-BCCD-639A6842DFD9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35
-	EndGlobalSection
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal

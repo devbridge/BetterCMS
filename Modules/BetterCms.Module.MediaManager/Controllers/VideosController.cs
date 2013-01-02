@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-using BetterCms.Module.MediaManager.Command.Videos;
+using BetterCms.Module.MediaManager.Command.Videos.GetVideos;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
