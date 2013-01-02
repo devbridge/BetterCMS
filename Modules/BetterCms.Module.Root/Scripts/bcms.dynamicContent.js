@@ -18,7 +18,7 @@ define('bcms.dynamicContent', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bc
 
         globalization = {
             failedLoadDialogMessage: 'Failed to load dialog. Internal server error. Please try again later.'
-        };
+        }
 
     /**
     /* Assign objects to module.
@@ -31,6 +31,8 @@ define('bcms.dynamicContent', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bc
     * Sets dialog content from Url.
     */
     dynamicConent.setContentFromUrl = function (dialog, url, options) {
+        var contentId = dialog.contentId || 0;
+
         options = $.extend({
             done: null,
             fail: function (failedDialog, message, request) {
@@ -64,9 +66,9 @@ define('bcms.dynamicContent', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bc
         })
         .done(function (content, status, response) {
             if (response.getResponseHeader('Content-Type').indexOf('application/json') === 0 && content.Data && content.Data.Html) {
-                dialog.setContent(content.Data.Html);
+                dialog.setContent(content.Data.Html, contentId);
             } else {
-                dialog.setContent(content);
+                dialog.setContent(content, contentId);
             }
 
             dynamicConent.hideLoading(dialog);
@@ -165,6 +167,8 @@ define('bcms.dynamicContent', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bc
             contentAvailable: null
         }, options);
 
+        siteSettings.contentId++;
+        
         dynamicConent.setContentFromUrl(siteSettings, url, {
             done: function (content) {
                 
