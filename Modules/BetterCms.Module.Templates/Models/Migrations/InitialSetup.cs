@@ -21,7 +21,7 @@ namespace BetterCms.Module.Templates.Models.Migrations
         public InitialSetup()
             : base(TemplatesModuleDescriptor.ModuleName)
         {
-            rootSchemaName = (new Root.Models.Migrations.BlogVersionTableMetaData()).SchemaName;
+            rootSchemaName = (new Root.Models.Migrations.RootVersionTableMetaData()).SchemaName;
         }
 
         public override void Up()

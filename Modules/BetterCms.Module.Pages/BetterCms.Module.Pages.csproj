@@ -188,6 +188,7 @@
     <Compile Include="Models\Author.cs" />
     <Compile Include="Models\IHtmlContent.cs" />
     <Compile Include="Models\Maps\HtmlContentMap.cs" />
+    <Compile Include="Models\Migrations\Migration201301020833.cs" />
     <Compile Include="Models\ServerControlWidget.cs" />
     <Compile Include="Models\HtmlContent.cs" />
     <Compile Include="Models\Maps\PageCategoryMap.cs" />
@@ -268,6 +269,7 @@
     <EmbeddedResource Include="Scripts\bcms.pages.widgets.js" />
     <EmbeddedResource Include="Content\Css\Images\icn-zoom.png" />
     <EmbeddedResource Include="Content\Css\Images\loading.gif" />
+    <EmbeddedResource Include="Content\Css\Images\logo.png" />
     <EmbeddedResource Include="Content\Css\Images\bcms-no-image-1.png" />
     <EmbeddedResource Include="Content\Css\Images\bcms-no-image-2.png" />
     <EmbeddedResource Include="Content\Css\Images\bcms-no-image-3.png" />
@@ -290,6 +292,10 @@
     <ProjectReference Include="..\BetterCms.Module.Root\BetterCms.Module.Root.csproj">
       <Project>{66e7e4df-eeea-4b1e-8663-a1b430eb7375}</Project>
       <Name>BetterCms.Module.Root</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BetterCms.Module.Templates\BetterCms.Module.Templates.csproj">
+      <Project>{17BF5CA2-23B6-4796-8EF1-CDDF6D41A4F7}</Project>
+      <Name>BetterCms.Module.Templates</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
