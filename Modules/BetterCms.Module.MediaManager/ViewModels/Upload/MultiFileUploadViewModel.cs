@@ -13,5 +13,7 @@ namespace BetterCms.Module.MediaManager.ViewModels.Upload
         public Guid? SelectedFolderId { get; set; }
 
         public IDictionary<Guid, string> Folders { get; set; }
+
+        public List<Guid> UploadedFiles { get; set; }
     }
 }

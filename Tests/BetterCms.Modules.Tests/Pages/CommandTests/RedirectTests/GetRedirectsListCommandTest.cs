@@ -37,7 +37,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.RedirectTests
 
             SearchableGridViewModel<SiteSettingRedirectViewModel> model;
 
-            using (var session = sessionFactory.SessionFactory.OpenSession())
+            using (var session = sessionFactory.OpenSession())
             {
                 BetterCms.Module.Pages.Models.Redirect alias = null;
                 SiteSettingRedirectViewModel modelAlias = null;

@@ -177,6 +177,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Content Include="App_Data\BetterCMS\Modules\readme.txt" />
+    <EmbeddedResource Include="file\bcms-media\scripts\bcms.media.upload.js" />
     <EmbeddedResource Include="file\bcms-media\scripts\bcms.contextMenu.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">
@@ -252,6 +253,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="file\bcms-media\scripts\bcms.media.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\bcms-media\Views\Upload\MultiFileUpload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\bcms-media\Views\MediaManager\Index.cshtml" />

@@ -488,8 +488,9 @@ namespace BetterCms.Tests.Helpers
             entity.PublicUrl = "http://bettercms.com/files/file?id=100200";
             entity.Size = ProvideRandomNumber(10, 2000);
             entity.Folder = folder ?? CreateNewMediaFolder(true, type);
-            entity.IsStored = true;
-            entity.IsTemporary = false;
+            entity.IsUploaded = true;
+            entity.IsTemporary = true;
+            entity.IsCanceled = true;
 
             return entity;
         }
@@ -521,10 +522,12 @@ namespace BetterCms.Tests.Helpers
             entity.OriginalHeight = ProvideRandomNumber(entity.Height, 1024);
             entity.OriginalSize = ProvideRandomNumber(entity.Size, 4000);
             entity.OriginalUri = new Uri(@"C:\Projects\BetterCMS\o_file100.jpg");
+            entity.IsOriginalUploaded = true;
             entity.ThumbnailWidth = ProvideRandomNumber(1, 96);
             entity.ThumbnailHeight = ProvideRandomNumber(1, 96);
             entity.ThumbnailSize = ProvideRandomNumber(1, 960);
             entity.ThumbnailUri = new Uri(@"C:\Projects\BetterCMS\t_file100.png");
+            entity.IsThumbnailUploaded = true;
 
             return entity;
         }
