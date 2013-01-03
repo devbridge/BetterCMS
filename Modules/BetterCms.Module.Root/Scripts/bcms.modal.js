@@ -19,6 +19,7 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs'], function ($, bcms, tabs) {
             loader: '.bcms-loader',
             scrollWindow: '.bcms-scroll-window',
             previewImage: '.bcms-preview-image-frame img',
+            previewImageContainer: '.bcms-preview-image-border',
 
             // selectors for calculation of modal window size
             elemOuter: '.bcms-modal-body',
@@ -485,6 +486,28 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs'], function ($, bcms, tabs) {
         var img = dialog.container.find(selectors.previewImage);
         img.attr('src', src);
         img.attr('alt', alt || '');
+
+        img.on('load', function () {
+            var imgContainer = dialog.container.find(selectors.previewImageContainer),
+                width = img.width(),
+                visibleWidth = $(window).width() - 150,
+                margin;
+            
+            if (width > visibleWidth) {
+                width = visibleWidth;
+            }
+
+            imgContainer.css('width', width + 'px');
+            img.css('width', width + 'px');
+
+            margin = (width + 50) / -2;
+            imgContainer.css('margin-left', margin + 'px');
+            imgContainer.css('min-height', null);
+            imgContainer.css('min-width', null);
+
+            imgContainer.find(selectors.loader).hide();
+            img.show();
+        });
 
         return dialog;
     };

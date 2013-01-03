@@ -592,6 +592,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Preview image.
+        /// </summary>
+        public static string MediaManager_ButtonPreviewImage {
+            get {
+                return ResourceManager.GetString("MediaManager_ButtonPreviewImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Folder.
         /// </summary>
         public static string MediaManager_NewFolder {

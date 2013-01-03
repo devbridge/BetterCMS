@@ -179,6 +179,7 @@
     <Content Include="App_Data\BetterCMS\Modules\readme.txt" />
     <EmbeddedResource Include="file\bcms-media\scripts\bcms.media.upload.js" />
     <EmbeddedResource Include="file\bcms-media\scripts\bcms.media.imageeditor.js" />
+    <EmbeddedResource Include="file\bcms-root\scripts\bcms.modal.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -186,7 +187,6 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="file\bcms-root\scripts\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
