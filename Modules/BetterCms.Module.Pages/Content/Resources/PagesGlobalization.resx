@@ -310,7 +310,7 @@
     <value>Custom CSS</value>
   </data>
   <data name="HtmlContentWidget_EnableCustomCSS_Title" xml:space="preserve">
-    <value>Enable Custom CSS (If not Enabled, then &lt;b&gt;CSS&lt;/b&gt; will not be added to a Page)</value>
+    <value>Custom CSS (If not Enabled, then &lt;b&gt;CSS&lt;/b&gt; will not be added to a Page)</value>
   </data>
   <data name="CreateHtmlContentWidget_Dialog_Title" xml:space="preserve">
     <value>Create Widget</value>
@@ -913,10 +913,10 @@
     <value>Custom JavaScript</value>
   </data>
   <data name="HtmlContentWidget_EnableCustomHTML_Title" xml:space="preserve">
-    <value>Enable Custom HTML (If not Enabled, then &lt;b&gt;HTML&lt;/b&gt; will not be added to a Page)</value>
+    <value>Custom HTML (If not Enabled, then &lt;b&gt;HTML&lt;/b&gt; will not be added to a Page)</value>
   </data>
   <data name="HtmlContentWidget_EnableCustomJS_Title" xml:space="preserve">
-    <value>Enable Custom JavaScript (If not Enabled, then &lt;b&gt;JavaScript&lt;/b&gt; will not be added to a Page)</value>
+    <value>Custom JavaScript (If not Enabled, then &lt;b&gt;JavaScript&lt;/b&gt; will not be added to a Page)</value>
   </data>
   <data name="WidgetPreviewImageUrl_Title" xml:space="preserve">
     <value>Preview Image URL</value>
