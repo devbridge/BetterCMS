@@ -219,6 +219,7 @@
   <ItemGroup>
     <Content Include="Config\connectionStrings.config">
       <TransformOnBuild>true</TransformOnBuild>
+      <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
