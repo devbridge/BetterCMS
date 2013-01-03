@@ -622,13 +622,11 @@ a.bcms-icn-delete {
 
 .bcms-region-overlay {
     position: absolute;
-    top: 100px;
-    left: 100px;
-    outline: 0 solid #ff0000;
-    width: 2px;
-    height: 2px;
-    overflow: visible;
     display: none;
+    top: 0;
+    left: 0;
+    outline: 0;
+    overflow: visible;
 }
 
 .bcms-on .bcms-region-overlay {
@@ -649,35 +647,25 @@ a.bcms-icn-delete {
 }
 
 .bcms-region-top {
-    top: 0;
-    left: 0;
-    width: 500px;
 }
 
 .bcms-region-right {
-    top: 0;
-    left: 498px;
-    height: 400px;
 }
 
 .bcms-region-bottom {
-    top: 398px;
-    left: 0;
-    width: 500px;
 }
 
 .bcms-region-left {
-    top: 0;
-    left: 0;
-    height: 400px;
 }
 
 .bcms-region-actions {
+    position: absolute;
+    top: 0;
+    right: 0;
     width: 66px;
     height: 26px;
     padding: 2px;
-    position: absolute;
-    top: -28px;
+    z-index: 1010;
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAwNy8yMC8xMlav2uMAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAAAG0lEQVQImWP8////f8bZbxgYGGa9/v/v37//AGf7DAO4mrMxAAAAAElFTkSuQmCC);
 }
 
@@ -727,7 +715,7 @@ a.bcms-icn-delete {
     top: 0;
     left: 0;
     width: 100%;
-    height: 200px;
+    height: 100%;
 }
 /* Content selectors */
 .bcms-content { /* used to find content on the page */
@@ -746,7 +734,7 @@ a.bcms-icn-delete {
 .bcms-content-actions {
     height: 42px;
     border: 2px solid #9ED4F0;
-    background: #009AEB;
+    background: #0383df;
     position: absolute;
     top: 10px;
     left: 10px;
@@ -763,8 +751,8 @@ a.bcms-icn-delete {
 }
 
     .bcms-content-button:hover {
-        background-color: #0E5B90;
-        border-color: #0E5B90;
+        background-color: #24597e;
+        border-left-color: #40B4EF;
     }
 
 .bcms-content-icon {
@@ -1999,6 +1987,7 @@ input[type="text"].input-validation-error {
 
 ul.bcms-success-messages {
     padding: 10px 15px;
+    margin: 10px 20px;
     border: 1px solid #20cd00;
     background-color: #e8fae5;
     font-size: 12px;
@@ -2013,6 +2002,7 @@ ul.bcms-success-messages {
 
 ul.bcms-warning-messages {
     padding: 10px 15px;
+    margin: 10px 20px;
     border: 1px solid #e7d827;
     background-color: #FFFEEC;
     font-size: 12px;
@@ -2026,6 +2016,7 @@ ul.bcms-warning-messages {
 
 ul.bcms-error-messages {
     padding: 10px 15px;
+    margin: 10px 20px;
     border: 1px solid #e64343;
     background-color: #fcecec;
     font-size: 12px;
@@ -2040,6 +2031,7 @@ ul.bcms-error-messages {
 
 ul.bcms-info-messages {
     padding: 10px 15px;
+    margin: 10px 20px;
     border: 1px solid #1891e6;
     background-color: #f0f8fd;
     font-size: 12px;

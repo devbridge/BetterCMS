@@ -32,6 +32,14 @@ li {
 p {
 }
 
+a {
+    color: #2EADD5;
+}
+
+    a:hover {
+        text-decoration: underline;
+    }
+
 /*style helpers*/
 .clearfix:after {
     content: ".";
@@ -57,6 +65,7 @@ p {
 
 .page-frame {
     width: 960px;
+    height: 100%;
     margin: 0 auto;
     position: relative;
 }
@@ -74,6 +83,131 @@ p {
     height: 65px;
     border-top: 1px solid #303030;
 }
+
+.login-block {
+    float: right;
+    margin: 5px 0 0 40px;
+    display: block;
+    position: relative;
+    height: 41px;
+    line-height: 41px;
+    padding: 0 8px;
+    margin-right: 5px;
+    font-size: 12px;
+    color: #f26522;
+    cursor: pointer;
+    z-index: 1005;
+}
+
+    .login-block > a {
+        display: block;
+        max-width: 300px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+.login-active {
+    background: #000000;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+}
+
+.login-block-inner {
+    display: none;
+    position: absolute;
+    top: 41px;
+    right: 0;
+    width: 280px;
+    line-height: 1.5em;
+    min-width: 130px;
+    padding: 10px;
+    background: #000000;
+    background: rgba(0, 0, 0, 0.8);
+    text-align: left;
+}
+
+    .login-block-inner > a {
+        display: block;
+        line-height: 18px;
+    }
+
+    .login-block-inner label {
+        display: inline-block;
+        margin: 5px 10px 5px 0;
+        color: #fff;
+        font-size: 14px;
+    }
+
+.login-holder {
+    padding-bottom: 7px;
+}
+
+label.rem-check {
+    font-size: 12px;
+    line-height: 15px;
+    padding: 5px 0;
+    position: relative;
+}
+
+    label.rem-check input[type="checkbox"] {
+        margin: 0 5px 0 0;
+        vertical-align: text-top;
+    }
+
+.login-submit a {
+    text-transform: uppercase;
+    padding-left: 5px;
+    float: left;
+    margin-top: 5px;
+}
+
+.login-submit button {
+    float: left;
+}
+
+/*buttons, textfields, textareas*/
+.text-field {
+    height: 30px;
+    width: 100%;
+    line-height: 18px;
+    padding: 6px;
+    margin: 0;
+    border: 1px solid #c6c6c6;
+    font-size: 12px;
+    color: #000;
+    vertical-align: middle;
+    background-color: #f5f5f5;
+    border-radius: 0;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+    .text-field:focus {
+        background-color: #fff;
+        border-color: #2dacd4;
+        box-shadow: 0 0 3px 0 rgba(24,145,230,0.35);
+        outline: none;
+    }
+
+.btn-blue {
+    display: inline-block;
+    height: 32px;
+    line-height: 32px;
+    padding: 0 10px;
+    margin: 0;
+    border: 0;
+    cursor: pointer;
+    vertical-align: middle;
+    color: #fff;
+    font-size: 14px;
+    text-transform: uppercase;
+    background-color: #2dacd4;
+}
+
+    .btn-blue:hover {
+        background-color: #258aaa;
+    }
 
 /*one column layout*/
 .page-content-1 {
@@ -128,8 +262,9 @@ p {
 
 /*footer*/
 .copyright {
-    float: right;
-    margin-top: 10px;
+    position: absolute;
+    right: 0;
+    top: 21px;
     color: #2EADD5;
     font-size: 16px;
     font-family: 'Oswald', 'Arial', sans-serif;
