@@ -361,16 +361,23 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 throw new Error("Delete method is not implemented.");
             };
 
-            MediaItemBaseViewModel.prototype.openMedia = function (folderViewModel) {
-                throw new Error("Open method is not implemented.");
+            MediaItemBaseViewModel.prototype.openMedia = function (folderViewModel, data, event) {
+                bcms.stopEventPropagation(event);
+                editOrSelectMedia(folderViewModel, this, data, event);
             };
 
-            MediaItemBaseViewModel.prototype.editMedia = function (folderViewModel) {
-                throw new Error("Edit media method is not implemented.");
+            MediaItemBaseViewModel.prototype.editMedia = function (folderViewModel, data, event) {
+                bcms.stopEventPropagation(event);
+                this.isActive(true);
             };
 
-            MediaItemBaseViewModel.prototype.saveMedia = function (folderViewModel) {
-                throw new Error("Save media method is not implemented.");
+            MediaItemBaseViewModel.prototype.saveMedia = function (folderViewModel, data, event) {
+                bcms.stopEventPropagation(event);
+                saveMedia(folderViewModel, this);
+            };
+
+            MediaItemBaseViewModel.prototype.blurMediaField = function (folderViewModel) {
+                cancelOrSaveMedia(folderViewModel, this);
             };
 
             MediaItemBaseViewModel.prototype.insertMedia = function (folderViewModel) {
@@ -384,10 +391,6 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             MediaItemBaseViewModel.prototype.cancelEditMedia = function (folderViewModel, data, event) {
                 bcms.stopEventPropagation(event);
                 cancelEditMedia(folderViewModel, this);
-            };
-
-            MediaItemBaseViewModel.prototype.blurMediaField = function (folderViewModel) {
-                throw new Error("Blur editable media field method is not implemented.");
             };
 
             MediaItemBaseViewModel.prototype.toJson = function () {
@@ -451,11 +454,6 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 insertImage(this.id(), true);
             };
 
-            MediaImageViewModel.prototype.openMedia = function (folderViewModel, data, event) {
-                bcms.stopEventPropagation(event);
-                editOrSelectMedia(folderViewModel, this, data, event);
-            };
-
             return MediaImageViewModel;
         })(MediaItemBaseViewModel);
 
@@ -468,18 +466,6 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             function MediaAudioViewModel(item) {
                 _super.call(this, item);
             }
-            
-            MediaAudioViewModel.prototype.openMedia = function (folderViewModel, data, event) {
-                bcms.stopEventPropagation(event);
-                // TODO: needs implementation
-                _super.prototype.openMedia.call(this, folderViewModel, data, event);
-            };
-
-            MediaAudioViewModel.prototype.editMedia = function (folderViewModel, data, event) {
-                bcms.stopEventPropagation(event);
-                // TODO: needs implementation
-                _super.prototype.editMedia.call(this, folderViewModel, data, event);
-            };
 
             return MediaAudioViewModel;
         })(MediaItemBaseViewModel);
@@ -494,18 +480,6 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 _super.call(this, item);
             }
 
-            MediaVideoViewModel.prototype.openMedia = function (folderViewModel, data, event) {
-                bcms.stopEventPropagation(event);
-                // TODO: needs implementation
-                _super.prototype.openMedia.call(this, folderViewModel, data, event);
-            };
-            
-            MediaVideoViewModel.prototype.editMedia = function (folderViewModel, data, event) {
-                bcms.stopEventPropagation(event);
-                // TODO: needs implementation
-                _super.prototype.editMedia.call(this, folderViewModel, data, event);
-            };
-
             return MediaVideoViewModel;
         })(MediaItemBaseViewModel);
 
@@ -518,25 +492,6 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             function MediaFileViewModel(item) {
                 _super.call(this, item);
             }
-
-            MediaFileViewModel.prototype.openMedia = function (folderViewModel, data, event) {
-                bcms.stopEventPropagation(event);
-                editOrSelectMedia(folderViewModel, this, data, event);
-            };
-
-            MediaFileViewModel.prototype.editMedia = function (folderViewModel, data, event) {
-                bcms.stopEventPropagation(event);
-                this.isActive(true);
-            };
-            
-            MediaFileViewModel.prototype.saveMedia = function (folderViewModel, data, event) {
-                bcms.stopEventPropagation(event);
-                saveMedia(folderViewModel, this);
-            };
-            
-            MediaFileViewModel.prototype.blurMediaField = function (folderViewModel) {
-                cancelOrSaveMedia(folderViewModel, this);
-            };
 
             return MediaFileViewModel;
         })(MediaItemBaseViewModel);
@@ -574,20 +529,6 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             MediaFolderViewModel.prototype.openMedia = function (folderViewModel, data, event) {
                 bcms.stopEventPropagation(event);
                 changeFolder(this.id(), folderViewModel);
-            };
-
-            MediaFolderViewModel.prototype.editMedia = function (folderViewModel, data, event) {
-                bcms.stopEventPropagation(event);
-                this.isActive(true);
-            };
-
-            MediaFolderViewModel.prototype.saveMedia = function (folderViewModel, data, event) {
-                bcms.stopEventPropagation(event);
-                saveMedia(folderViewModel, this);
-            };
-
-            MediaFolderViewModel.prototype.blurMediaField = function (folderViewModel) {
-                cancelOrSaveMedia(folderViewModel, this);
             };
 
             return MediaFolderViewModel;
