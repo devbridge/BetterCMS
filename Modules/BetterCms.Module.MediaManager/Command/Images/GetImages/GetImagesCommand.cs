@@ -31,6 +31,7 @@ namespace BetterCms.Module.MediaManager.Command.Images.GetImages
                     .Select(() => alias.Title).WithAlias(() => modelAlias.Name)
                     .Select(() => alias.Version).WithAlias(() => modelAlias.Version)
                     .Select(() => alias.Title).WithAlias(() => modelAlias.Tooltip)
+                    .Select(() => alias.FileExtension).WithAlias(() => modelAlias.FileExtension)
                     .Select(() => alias.Size).WithAlias(() => modelAlias.Size);
         }
     }

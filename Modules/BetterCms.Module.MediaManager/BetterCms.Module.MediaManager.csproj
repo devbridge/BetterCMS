@@ -124,6 +124,7 @@
     <Compile Include="Command\Files\GetFiles\GetFilesCommand.cs" />
     <Compile Include="Command\Folder\SaveFolderCommand.cs" />
     <Compile Include="Command\MediaManager\GetMediaItemsCommandBase.cs" />
+    <Compile Include="Command\MediaManager\RenameMedia\RenameMediaCommand.cs" />
     <Compile Include="Command\Upload\ConfirmUpload\ConfirmUploadCommand.cs" />
     <Compile Include="Command\Images\DeleteMedia\DeleteMediaCommand.cs" />
     <Compile Include="Command\Images\DeleteMedia\DeleteMediaCommandRequest.cs" />

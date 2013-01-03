@@ -196,6 +196,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             return builder
                     .Select(() => alias.Id).WithAlias(() => modelAlias.Id)
                     .Select(() => alias.Title).WithAlias(() => modelAlias.Name)
+                    .Select(() => alias.FileExtension).WithAlias(() => modelAlias.FileExtension)
                     .Select(() => alias.Version).WithAlias(() => modelAlias.Version);
         }
     }

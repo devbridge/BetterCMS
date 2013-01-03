@@ -30,7 +30,8 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 insertImageDialogUrl: null,
                 deleteImageUrl: null,
                 getImageUrl: null,
-                saveFolderUrl: null
+                saveFolderUrl: null,
+                renameMediaUrl: null
             },
             globalization = {
                 insertImageDialogTitle: null,
@@ -279,8 +280,10 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 self.name = ko.observable(item.Name);
                 self.oldName = item.Name;
                 self.version = ko.observable(item.Version);
+                self.extension = item.FileExtension;
                 self.type = item.Type;
                 self.nameDomId = 'name_' + staticDomId++;
+                self.updateUrl = links.renameMediaUrl;
 
                 self.isActive = ko.observable(item.IsActive || false);
                 self.isSelected = ko.observable(false);
@@ -303,24 +306,46 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                     bcms.stopEventPropagation(event);
                 };
 
-                self.classNames = ko.computed(function () {
+                self.rowClassNames = ko.computed(function () {
                     var classes = '';
                     if (self.isFolder()) {
                         classes += ' bcms-folder-box';
+                        if (self.isActive()) {
+                            classes += ' bcms-folder-box-active';
+                        }
                     }
                     if (self.isImage()) {
                         classes += ' bcms-image-box';
                     }
                     if (self.isFile() && !self.isImage()) {
                         classes += ' bcms-file-box';
-                    }
-                    if (self.isFolder() && self.isActive()) {
-                        classes += ' bcms-folder-box-active';
+                        if (self.isActive()) {
+                            classes += ' bcms-file-box-active';
+                        }
                     }
                     if (self.isSelected()) {
                         classes += ' bcms-media-click-active';
                     }
-                    return classes;
+                    return classes.trim();
+                });
+
+                self.iconClassNames = ko.computed(function () {
+                    var classes = '';
+                    
+                    if (self.isFolder()) {
+                        classes += ' bcms-system-folder';
+                    }
+                    if (self.isImage()) {
+                        classes += ' bcms-media-file-holder';
+                    }
+                    if (self.isFile() && !self.isImage()) {
+                        classes += ' bcms-system-file';
+                    }
+                    if (!self.isImage() && self.extension) {
+                        classes += getFileExtensionCssClassName(self.extension);
+                    }
+
+                    return classes.trim();
                 });
             }
 
@@ -410,7 +435,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 bcms.stopEventPropagation(event);
 
                 var self = this;
-                imageEditor.onEditImage(this.id(), function (json) {
+                imageEditor.onEditImage(self.id(), function (json) {
                     self.version(json.Version);
                     self.name(json.FileName);
                 });
@@ -428,18 +453,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
 
             MediaImageViewModel.prototype.openMedia = function (folderViewModel, data, event) {
                 bcms.stopEventPropagation(event);
-
-                // Call open, if view model is not in selectable mode
-                if (!folderViewModel.canSelectMedia()) {
-                    this.editMedia(folderViewModel, data, event);
-                    return;
-                }
-
-                // Select item, if view model is in selectable mode
-                for (var i = 0; i < folderViewModel.medias().length; i++) {
-                    folderViewModel.medias()[i].isSelected(false);
-                }
-                this.isSelected(true);
+                editOrSelectMedia(folderViewModel, this, data, event);
             };
 
             return MediaImageViewModel;
@@ -454,6 +468,18 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             function MediaAudioViewModel(item) {
                 _super.call(this, item);
             }
+            
+            MediaAudioViewModel.prototype.openMedia = function (folderViewModel, data, event) {
+                bcms.stopEventPropagation(event);
+                // TODO: needs implementation
+                _super.prototype.openMedia.call(this, folderViewModel, data, event);
+            };
+
+            MediaAudioViewModel.prototype.editMedia = function (folderViewModel, data, event) {
+                bcms.stopEventPropagation(event);
+                // TODO: needs implementation
+                _super.prototype.editMedia.call(this, folderViewModel, data, event);
+            };
 
             return MediaAudioViewModel;
         })(MediaItemBaseViewModel);
@@ -467,7 +493,19 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             function MediaVideoViewModel(item) {
                 _super.call(this, item);
             }
+
+            MediaVideoViewModel.prototype.openMedia = function (folderViewModel, data, event) {
+                bcms.stopEventPropagation(event);
+                // TODO: needs implementation
+                _super.prototype.openMedia.call(this, folderViewModel, data, event);
+            };
             
+            MediaVideoViewModel.prototype.editMedia = function (folderViewModel, data, event) {
+                bcms.stopEventPropagation(event);
+                // TODO: needs implementation
+                _super.prototype.editMedia.call(this, folderViewModel, data, event);
+            };
+
             return MediaVideoViewModel;
         })(MediaItemBaseViewModel);
 
@@ -480,6 +518,25 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             function MediaFileViewModel(item) {
                 _super.call(this, item);
             }
+
+            MediaFileViewModel.prototype.openMedia = function (folderViewModel, data, event) {
+                bcms.stopEventPropagation(event);
+                editOrSelectMedia(folderViewModel, this, data, event);
+            };
+
+            MediaFileViewModel.prototype.editMedia = function (folderViewModel, data, event) {
+                bcms.stopEventPropagation(event);
+                this.isActive(true);
+            };
+            
+            MediaFileViewModel.prototype.saveMedia = function (folderViewModel, data, event) {
+                bcms.stopEventPropagation(event);
+                saveMedia(folderViewModel, this);
+            };
+            
+            MediaFileViewModel.prototype.blurMediaField = function (folderViewModel) {
+                cancelOrSaveMedia(folderViewModel, this);
+            };
 
             return MediaFileViewModel;
         })(MediaItemBaseViewModel);
@@ -494,6 +551,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 _super.call(this, item);
 
                 var self = this;
+                self.updateUrl = links.saveFolderUrl;
 
                 self.pathName = ko.computed(function () {
                     return self.name() + '/';
@@ -525,22 +583,45 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
 
             MediaFolderViewModel.prototype.saveMedia = function (folderViewModel, data, event) {
                 bcms.stopEventPropagation(event);
-                saveMedia(folderViewModel, this, links.saveFolderUrl);
+                saveMedia(folderViewModel, this);
             };
 
             MediaFolderViewModel.prototype.blurMediaField = function (folderViewModel) {
-                var item = this;
-                setTimeout(function () {
-                    if (!item.name() && !item.id()) {
-                        cancelEditMedia(folderViewModel, item);
-                    } else {
-                        saveMedia(folderViewModel, item, links.saveFolderUrl);
-                    }
-                }, 500);
+                cancelOrSaveMedia(folderViewModel, this);
             };
 
             return MediaFolderViewModel;
         })(MediaItemBaseViewModel);
+
+        /**
+        * Opens media for seleting or editing
+        */
+        function editOrSelectMedia(folderViewModel, item, data, event) {
+            // Call open, if view model is not in selectable mode
+            if (!folderViewModel.canSelectMedia()) {
+                item.editMedia(folderViewModel, data, event);
+                return;
+            }
+
+            // Select item, if view model is in selectable mode
+            for (var i = 0; i < folderViewModel.medias().length; i++) {
+                folderViewModel.medias()[i].isSelected(false);
+            }
+            item.isSelected(true);
+        }
+
+        /**
+        * Function is called, when editable item losts focus
+        */
+        function cancelOrSaveMedia(folderViewModel, item) {
+            setTimeout(function () {
+                if (!item.name() && !item.id()) {
+                    cancelEditMedia(folderViewModel, item);
+                } else {
+                    saveMedia(folderViewModel, item);
+                }
+            }, 500);
+        }
 
         /**
         * Cancels inline editing of media
@@ -558,7 +639,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
         /**
         * Saves media after inline edit
         */
-        function saveMedia(folderViewModel, item, url) {
+        function saveMedia(folderViewModel, item) {
             var idSelector = '#' + item.nameDomId,
                 input = folderViewModel.container.find(idSelector);
 
@@ -578,7 +659,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                         params = item.toJson();
 
                     $.ajax({
-                        url: url,
+                        url: item.updateUrl,
                         type: 'POST',
                         dataType: 'json',
                         cache: false,
@@ -593,6 +674,40 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 }
             } else {
                 item.isActive(false);
+            }
+        }
+
+        /**
+        * Returns css class for given file extension
+        */
+        function getFileExtensionCssClassName(extension) {
+            if (extension.indexOf('.') === 0) {
+                extension = extension.substring(1, extension.length);
+            }
+            switch (extension.toLowerCase()) {
+                case "pdf":
+                    return ' bcms-pdf-icn';
+                case "doc":
+                case "docx":
+                    return ' bcms-word-icn';
+                case "xls":
+                case "xlsx":
+                    return ' bcms-xls-icn';
+                case "mp3":
+                    return ' bcms-mp3-icn';
+                case "mp4":
+                    return ' bcms-mp4-icn';
+                case "ppt":
+                case "pptx":
+                    return ' bcms-ppt-icn';
+                case "rar":
+                    return ' bcms-rar-icn';
+                case "wav":
+                    return ' bcms-wav-icn';
+                case "zip":
+                    return ' bcms-zip-icn';
+                default:
+                    return ' bcms-uknown-icn';
             }
         }
 
