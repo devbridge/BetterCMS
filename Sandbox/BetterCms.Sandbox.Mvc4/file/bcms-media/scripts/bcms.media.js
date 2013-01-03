@@ -446,7 +446,9 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             function MediaAudioViewModel(item) {
                 _super.call(this, item);
             }
-        });
+
+            return MediaAudioViewModel;
+        })(MediaItemBaseViewModel);
 
         /**
         * Media video view model
@@ -457,7 +459,9 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             function MediaVideoViewModel(item) {
                 _super.call(this, item);
             }
-        });
+            
+            return MediaVideoViewModel;
+        })(MediaItemBaseViewModel);
 
         /**
         * File view model
@@ -468,7 +472,9 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             function MediaFileViewModel(item) {
                 _super.call(this, item);
             }
-        });
+
+            return MediaFileViewModel;
+        })(MediaItemBaseViewModel);
 
         /**
         * Media folder view model

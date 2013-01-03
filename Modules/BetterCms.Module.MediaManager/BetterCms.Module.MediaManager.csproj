@@ -245,7 +245,6 @@
     <Folder Include="Helpers\" />
     <Folder Include="Mvc\" />
     <Folder Include="Views\Files\" />
-    <Folder Include="Views\MediaManager\" />
     <Folder Include="Views\Upload\" />
   </ItemGroup>
   <ItemGroup>
@@ -253,6 +252,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Images\ImageEditorInsert.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\MediaManager\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

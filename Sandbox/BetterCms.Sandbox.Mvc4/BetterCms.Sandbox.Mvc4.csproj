@@ -253,9 +253,6 @@
     <Content Include="Areas\bcms-media\Views\Upload\MultiFileUpload.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\bcms-media\Views\MediaManager\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Areas\bcms-media\Views\MediaManager\Partial\MediaManagerTab.cshtml" />
   </ItemGroup>
   <ItemGroup>
