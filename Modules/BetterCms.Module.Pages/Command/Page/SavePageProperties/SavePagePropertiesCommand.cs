@@ -65,7 +65,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             UpdatePageTags(page, request.Tags);
             UpdateCategories(page, request.Categories);
 
-            page.Layout = Repository.AsProxy<Layout>(request.TemplateId);
+            page.Layout = Repository.AsProxy<Root.Models.Layout>(request.TemplateId);
             page.Author = request.AuthorId.HasValue ? Repository.AsProxy<Author>(request.AuthorId.Value) : null;
             page.Title = request.PageName;
             page.CustomCss = request.PageCSS;

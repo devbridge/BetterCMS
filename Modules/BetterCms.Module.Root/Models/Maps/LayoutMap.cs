@@ -11,6 +11,7 @@ namespace BetterCms.Module.Root.Models.Maps
 
             Map(x => x.Name).Length(MaxLength.Name).Not.Nullable();
             Map(x => x.LayoutPath).Length(MaxLength.Url).Not.Nullable();
+            Map(x => x.PreviewUrl).Length(MaxLength.Url).Nullable();
 
             References(x => x.Module).Nullable().Cascade.SaveUpdate().LazyLoad();
 

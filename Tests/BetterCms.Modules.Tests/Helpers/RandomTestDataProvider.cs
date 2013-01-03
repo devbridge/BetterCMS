@@ -160,6 +160,7 @@ namespace BetterCms.Tests.Helpers
 
             entity.Name = ProvideRandomString(MaxLength.Name);
             entity.LayoutPath = ProvideRandomString(MaxLength.Url);
+            entity.PreviewUrl = ProvideRandomString(MaxLength.Url);
 
             return entity;
         }

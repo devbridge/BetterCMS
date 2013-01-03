@@ -30,6 +30,7 @@ namespace BetterCms.Module.Pages.Commands.GetTemplates
                     {
                         Title = t.Name,
                         TemplateId = t.Id,
+                        PreviewUrl = t.PreviewUrl
                     })
                 .ToList();
 

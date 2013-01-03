@@ -2248,6 +2248,33 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string SiteSettings_Templates_NameColumn {
+            get {
+                return ResourceManager.GetString("SiteSettings_Templates_NameColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Templates.
+        /// </summary>
+        public static string SiteSettings_Templates_Title {
+            get {
+                return ResourceManager.GetString("SiteSettings_Templates_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Templates.
+        /// </summary>
+        public static string SiteSettings_TemplatesMenuItem {
+            get {
+                return ResourceManager.GetString("SiteSettings_TemplatesMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add New +.
         /// </summary>
         public static string SiteSettings_Widgets_AddNew {

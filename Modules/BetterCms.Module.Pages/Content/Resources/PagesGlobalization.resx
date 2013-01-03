@@ -930,4 +930,13 @@
   <data name="Widget_Preview_Image_Tooltip_Title" xml:space="preserve">
     <value>Title</value>
   </data>
+  <data name="SiteSettings_TemplatesMenuItem" xml:space="preserve">
+    <value>Templates</value>
+  </data>
+  <data name="SiteSettings_Templates_NameColumn" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="SiteSettings_Templates_Title" xml:space="preserve">
+    <value>Templates</value>
+  </data>
 </root>

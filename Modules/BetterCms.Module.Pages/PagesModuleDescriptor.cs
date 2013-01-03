@@ -57,6 +57,8 @@ namespace BetterCms.Module.Pages
         /// </summary>
         private readonly WidgetsJavaScriptModuleDescriptor widgetsJavaScriptModuleDescriptor;
 
+        private readonly TemplatesJavaScriptModuleDescriptor templatesJavaScriptModuleDescriptor;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PagesModuleDescriptor" /> class.
         /// </summary>
@@ -69,6 +71,7 @@ namespace BetterCms.Module.Pages
             widgetsJavaScriptModuleDescriptor = new WidgetsJavaScriptModuleDescriptor(this);
             tagsJavaScriptModuleDescriptor = new TagsJavaScriptModuleDescriptor(this);
             redirectsJavaScriptModuleDescriptor = new RedirectsJavaScriptModuleDescriptor(this);
+            templatesJavaScriptModuleDescriptor = new TemplatesJavaScriptModuleDescriptor(this);
         }
 
         /// <summary>
@@ -148,7 +151,8 @@ namespace BetterCms.Module.Pages
                     redirectsJavaScriptModuleDescriptor,
                     seoJavaScriptModuleDescriptor,
                     tagsJavaScriptModuleDescriptor,
-                    widgetsJavaScriptModuleDescriptor
+                    widgetsJavaScriptModuleDescriptor,
+                    templatesJavaScriptModuleDescriptor
                 };
         }
 
@@ -298,6 +302,13 @@ namespace BetterCms.Module.Pages
                         {
                             Order = 3000,
                             Title = () => PagesGlobalization.SiteSettings_WidgetsMenuItem,
+                            CssClass = page => "bcms-sidebar-link"
+                        },
+                        
+                     new LinkActionProjection(templatesJavaScriptModuleDescriptor, page => "loadSiteSettingsTemplateList")
+                        {
+                            Order = 3100,
+                            Title = () => PagesGlobalization.SiteSettings_TemplatesMenuItem,
                             CssClass = page => "bcms-sidebar-link"
                         },
 

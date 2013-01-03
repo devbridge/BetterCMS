@@ -22,6 +22,14 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// The title.
         /// </value>
         public string Title { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the template preview image url.
+        /// </summary>
+        /// <value>
+        /// The template preview image url.
+        /// </value>
+        public string PreviewUrl { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this instance is active.
