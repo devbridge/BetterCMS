@@ -482,6 +482,7 @@
     <EmbeddedResource Include="Scripts\ckeditor\config.js" />
     <EmbeddedResource Include="Scripts\ckeditor\contents.css" />
     <EmbeddedResource Include="Scripts\ckeditor\styles.js" />
+    <EmbeddedResource Include="Scripts\bcms.modal.js" />
     <Content Include="Scripts\jquery-1.7.2.min.js">
       <DependentUpon>jquery-1.7.2.js</DependentUpon>
     </Content>
