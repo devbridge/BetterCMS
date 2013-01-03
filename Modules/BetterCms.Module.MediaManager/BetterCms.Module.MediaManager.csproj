@@ -205,7 +205,6 @@
     <EmbeddedResource Include="Content\Css\Images\loading.gif" />
     <EmbeddedResource Include="Content\Css\Images\sprite-media-1.png" />
     <EmbeddedResource Include="Content\Css\Images\sprite-media-2.png" />
-    <EmbeddedResource Include="Scripts\bcms.media.imageeditor.js" />
     <EmbeddedResource Include="Scripts\html5Upload.js" />
     <EmbeddedResource Include="Scripts\jquery.Jcrop.js" />
     <EmbeddedResource Include="Content\Css\jquery.Jcrop.css" />

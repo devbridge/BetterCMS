@@ -421,6 +421,13 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
 
                 self.tooltip = item.Tooltip;
                 self.previewUrl = item.PreviewUrl;
+
+                self.getImageUrl = function() {
+                    if (!self.previewUrl) {
+                        return null;
+                    }
+                    return self.previewUrl + '?version=' + self.version();
+                };
             }
 
             MediaImageViewModel.prototype.isImage = function () {
