@@ -90,19 +90,6 @@ div.bcms-first-child-holder {
         box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
     }
 
-a.bcms-edit-btn-close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 15px;
-    height: 14px;
-    background: url('images/sprite-pages-1.png') no-repeat center -364px;
-    overflow: hidden;
-    text-indent: 9999px;
-    text-decoration: none;
-    cursor: pointer;
-}
-
 .bcms-permissions-column {
     float: left;
     width: 170px;

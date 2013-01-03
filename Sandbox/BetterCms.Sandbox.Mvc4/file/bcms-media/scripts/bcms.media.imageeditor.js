@@ -135,6 +135,14 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                 imageEditor.showImageCroppingDialog(dialog);
             });
 
+            dialog.container.find(selectors.imageToEdit).on('click', function () {
+                var img = $(this),
+                    src = img.attr('src');
+                if (src) {
+                    modal.imagePreview(src, img.attr('alt'));
+                }
+            });
+
             dialog.container.find(selectors.imageSizeEditLink).on('click', function () {
                 dialog.container.find(selectors.imageSizeEditBox).show();
                 dialog.container.find(selectors.imageSizeEditLink).hide();

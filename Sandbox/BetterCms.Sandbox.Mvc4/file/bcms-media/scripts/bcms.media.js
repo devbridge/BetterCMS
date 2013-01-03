@@ -29,7 +29,10 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 loadAudiosUrl: null,
                 loadVideosUrl: null,
                 insertImageDialogUrl: null,
+                deleteAudioUrl: null,
+                deleteVideoUrl: null,
                 deleteImageUrl: null,
+                deleteFileUrl: null,
                 getImageUrl: null,
                 saveFolderUrl: null,
                 renameMediaUrl: null
@@ -39,7 +42,10 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 insertImageFailureMessageTitle: null,
                 insertImageFailureMessageMessage: null,
                 deleteImageConfirmMessage: null,
-                confirmDeleteFolderMessage: null,
+                deleteAudioConfirmMessage: null,
+                deleteVideoConfirmMessage: null,
+                deleteFileConfirmMessage: null,
+                deleteFolderConfirmMessage: null,
                 imageNotSelectedMessageTitle: null,
                 imageNotSelectedMessageMessage: null,
 
@@ -476,6 +482,15 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 _super.call(this, item);
             }
 
+            MediaAudioViewModel.prototype.deleteMedia = function (folderViewModel, data, event) {
+                bcms.stopEventPropagation(event);
+
+                var url = $.format(links.deleteAudioUrl, this.id(), this.version()),
+                    message = $.format(globalization.deleteAudioConfirmMessage, this.name());
+
+                deleteMediaItem(url, message, folderViewModel, this);
+            };
+
             return MediaAudioViewModel;
         })(MediaItemBaseViewModel);
 
@@ -489,6 +504,15 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 _super.call(this, item);
             }
 
+            MediaVideoViewModel.prototype.deleteMedia = function (folderViewModel, data, event) {
+                bcms.stopEventPropagation(event);
+
+                var url = $.format(links.deleteVideoUrl, this.id(), this.version()),
+                    message = $.format(globalization.deleteVideoConfirmMessage, this.name());
+
+                deleteMediaItem(url, message, folderViewModel, this);
+            };
+
             return MediaVideoViewModel;
         })(MediaItemBaseViewModel);
 
@@ -501,6 +525,15 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             function MediaFileViewModel(item) {
                 _super.call(this, item);
             }
+
+            MediaFileViewModel.prototype.deleteMedia = function (folderViewModel, data, event) {
+                bcms.stopEventPropagation(event);
+
+                var url = $.format(links.deleteFileUrl, this.id(), this.version()),
+                    message = $.format(globalization.deleteFileConfirmMessage, this.name());
+
+                deleteMediaItem(url, message, folderViewModel, this);
+            };
 
             return MediaFileViewModel;
         })(MediaItemBaseViewModel);
@@ -530,7 +563,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 bcms.stopEventPropagation(event);
 
                 var url = $.format(links.deleteFolderUrl, this.id(), this.version()),
-                    message = $.format(globalization.confirmDeleteFolderMessage, this.name());
+                    message = $.format(globalization.deleteFolderConfirmMessage, this.name());
 
                 deleteMediaItem(url, message, folderViewModel, this);
             };

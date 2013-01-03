@@ -11,7 +11,7 @@
 </div>
 
 <div class="bcms-edit-urlpath-box" style="display: none;">
-    <a class="bcms-edit-btn-close">@RootGlobalization.Button_Close</a>
+    <div class="bcms-edit-btn-close">@RootGlobalization.Button_Close</div>
                 
     @Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_EditUrlPath_Tooltip_Title, PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_EditUrlPath_Tooltip_Description)
     @Html.Hidden("PagePermalinkHidden", Model.PagePermalink, new { @id = "bcms-page-permalink" })
