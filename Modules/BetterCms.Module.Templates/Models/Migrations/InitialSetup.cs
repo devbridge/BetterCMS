@@ -17,6 +17,10 @@ namespace BetterCms.Module.Templates.Models.Migrations
         private const string LayoutsTableName = "Layouts";
 
         private const string LayoutRegionsTableName = "LayoutRegions";
+        
+        private const string SettingsTableName = "Settings";
+        
+        private const string SettingsTableColumnName = "TemplatesApplied";
 
         public InitialSetup()
             : base(TemplatesModuleDescriptor.ModuleName)
@@ -26,19 +30,46 @@ namespace BetterCms.Module.Templates.Models.Migrations
 
         public override void Up()
         {
-            CreateLayouts();
-            CreateRegions();
-            CreateLayoutRegions();
+            if (MustInsertTemplates())
+            {
+                CreateLayouts();
+                CreateRegions();
+                CreateLayoutRegions();
+            }
+            else
+            {
+                UpdateLayoutRegions(false);
+                UpdateLayouts(false);
+                UpdateRegions(false);
+            }
         }
 
         public override void Down()
         {
-            RemoveLayoutRegions();
-            RemoveLayouts();
-            RemoveRegions();
+            UpdateLayoutRegions(true);
+            UpdateLayouts(true);
+            UpdateRegions(true);
         }
 
-        public void CreateLayouts()
+        private bool MustInsertTemplates()
+        {
+            if (Schema.Schema(rootSchemaName).Table(SettingsTableName).Column(SettingsTableColumnName).Exists())
+            {
+                return false;
+            }
+
+            //
+            // Hack: Altering settings table, with adding new column, because FluentMigrator has no
+            // ability to check if record exists in the DB.
+            //
+            Alter
+                .Table(SettingsTableName)
+                .InSchema(rootSchemaName)
+                .AddColumn(SettingsTableColumnName).AsBoolean().Nullable();
+            return true;
+        }
+
+        private void CreateLayouts()
         {
             foreach (var layout in GetLayouts())
             {
@@ -48,8 +79,8 @@ namespace BetterCms.Module.Templates.Models.Migrations
                     .Row(layout);
             }
         }
-        
-        public void CreateRegions()
+
+        private void CreateRegions()
         {
             foreach (var region in GetRegions())
             {
@@ -60,7 +91,7 @@ namespace BetterCms.Module.Templates.Models.Migrations
             }
         }
 
-        public void CreateLayoutRegions()
+        private void CreateLayoutRegions()
         {
             foreach (var layoutRegion in GetLayoutRegions())
             {
@@ -71,44 +102,62 @@ namespace BetterCms.Module.Templates.Models.Migrations
             }
         }
 
-        private void RemoveLayouts()
+        private void UpdateLayouts(bool delete)
         {
             foreach (var layout in GetLayouts())
             {
-                Delete
-                    .FromTable(LayoutsTableName)
+                Update
+                    .Table(LayoutsTableName)
                     .InSchema(rootSchemaName)
-                    .Row(new { Id = layout.Id });
+                    .Set(new Deleted(delete))
+                    .Where(new { Id = layout.Id });
             }
         }
 
-        private void RemoveRegions()
+        private void UpdateRegions(bool delete)
         {
             foreach (var region in GetRegions())
             {
-                Delete
-                    .FromTable(RegionsTableName)
+                Update
+                    .Table(RegionsTableName)
                     .InSchema(rootSchemaName)
-                    .Row(new { Id = region.Id });
+                    .Set(new Deleted(delete))
+                    .Where(new { Id = region.Id });
             }
         }
 
-        private void RemoveLayoutRegions()
+        private void UpdateLayoutRegions(bool delete)
         {
-            foreach (var region in GetRegions())
+            if (delete)
             {
-                Delete
-                    .FromTable(LayoutRegionsTableName)
-                    .InSchema(rootSchemaName)
-                    .Row(new { RegionId = region.Id });
-            }
+                foreach (var region in GetRegions())
+                {
+                    Update
+                        .Table(LayoutRegionsTableName)
+                        .InSchema(rootSchemaName)
+                        .Set(new Deleted(true))
+                        .Where(new { RegionId = region.Id });
+                }
 
-            foreach (var layout in GetLayouts())
+                foreach (var layout in GetLayouts())
+                {
+                    Update
+                        .Table(LayoutRegionsTableName)
+                        .InSchema(rootSchemaName)
+                        .Set(new Deleted(true))
+                        .Where(new { LayoutId = layout.Id });
+                }
+            }
+            else
             {
-                Delete
-                    .FromTable(LayoutRegionsTableName)
-                    .InSchema(rootSchemaName)
-                    .Row(new { LayoutId = layout.Id });
+                foreach (var layoutRegion in GetLayoutRegions())
+                {
+                    Update
+                        .Table(LayoutRegionsTableName)
+                        .InSchema(rootSchemaName)
+                        .Set(new Deleted(false))
+                        .Where(new { LayoutId = layoutRegion.LayoutId, RegionId = layoutRegion.RegionId });
+                }
             }
         }
 
@@ -202,6 +251,23 @@ namespace BetterCms.Module.Templates.Models.Migrations
             layoutRegions.Add(new LayoutRegion { LayoutId = TemplatesModuleConstants.TemplateIds.ThreeColumns, RegionId = TemplatesModuleConstants.RegionIds.RightSide });
 
             return layoutRegions;
+        }
+    }
+
+    public class Deleted
+    {
+        public bool IsDeleted { get; set; }
+        public DateTime? DeletedOn { get; set; }
+        public string DeletedByUser { get; set; }
+
+        public Deleted(bool deleted)
+        {
+            IsDeleted = deleted;
+            if (deleted)
+            {
+                DeletedOn = DateTime.Now;
+                DeletedByUser = "Admin";
+            }
         }
     }
 
