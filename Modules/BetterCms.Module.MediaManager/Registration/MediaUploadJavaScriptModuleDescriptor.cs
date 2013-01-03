@@ -1,6 +1,7 @@
 ﻿using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.JsModule;
 using BetterCms.Core.Modules.Projections;
+using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Controllers;
 
 namespace BetterCms.Module.MediaManager.Registration
@@ -27,6 +28,7 @@ namespace BetterCms.Module.MediaManager.Registration
 
             Globalization = new IActionProjection[]
                 {
+                    new JavaScriptModuleGlobalization(this, "uploadFilesDialogTitle", () => MediaGlobalization.MultiFileUpload_DialogTitle)
                 };
         }
     }

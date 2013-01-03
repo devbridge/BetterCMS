@@ -10,18 +10,20 @@ namespace BetterCms.Module.MediaManager.Command.Upload.UndoUpload
     {
         public IMediaFileService MediaFileService { get; set; }
         public IMediaImageService MediaImageService { get; set; }
-        public IMediaVideoService MediaVideoService { get; set; }
-        public IMediaAudioService MediaAudioService { get; set; }
 
         public bool Execute(UndoUploadRequest request)
-        {            
-            if (request.Type == MediaType.Image)
+        {
+            if (request.Type == MediaType.File || request.Type == MediaType.Audio || request.Type == MediaType.Video)
+            {
+                MediaFileService.RemoveFile(request.FileId, request.Version);
+            }
+            else if (request.Type == MediaType.Image)
             {
                 MediaImageService.RemoveImageWithFiles(request.FileId, request.Version);
             }
             else
             {
-                MediaFileService.RemoveFile(request.FileId, request.Version);
+                throw new CmsException(string.Format("A given media type {0} is not supported to upload.", request.Type));
             }
             
             return true;

@@ -282,6 +282,9 @@
   <data name="MultiFileUpload_CancelUploading" xml:space="preserve">
     <value>Cancel All Uploads</value>
   </data>
+  <data name="MultiFileUpload_DialogTitle" xml:space="preserve">
+    <value>Upload</value>
+  </data>
   <data name="MultiFileUpload_DragDropBox" xml:space="preserve">
     <value>Drag files here to upload</value>
   </data>
