@@ -10,7 +10,7 @@ using BetterCms.Module.MediaManager.Command.Upload;
 using BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload;
 using BetterCms.Module.MediaManager.Command.Upload.GetMultiFileUpload;
 using BetterCms.Module.MediaManager.Command.Upload.UndoUpload;
-using BetterCms.Module.MediaManager.Command.Upload.UploadFile;
+using BetterCms.Module.MediaManager.Command.Upload.Upload;
 using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
@@ -55,7 +55,7 @@ namespace BetterCms.Module.MediaManager.Controllers
             request.FileName = file.FileName;
             request.FileStream = file.InputStream;
 
-            var media = GetCommand<UploadFileCommand>().ExecuteCommand(request);
+            var media = GetCommand<UploadCommand>().ExecuteCommand(request);
 
             if (media != null)
             {

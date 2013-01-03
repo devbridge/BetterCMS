@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 
 using BetterCms.Module.MediaManager.Command.Images;
+using BetterCms.Module.MediaManager.Command.Images.CropImage;
 using BetterCms.Module.MediaManager.Command.Images.GetImages;
 using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.ViewModels.Images;
@@ -112,6 +113,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         public ActionResult ImageCropper(string imageId)
         {
             var model = GetCommand<GetImageCommand>().Execute(imageId.ToGuidOrDefault());
+
             return View(model);
         }
 

@@ -138,8 +138,8 @@
     <Compile Include="Command\Upload\GetMultiFileUpload\GetMultiFileUploadRequest.cs" />
     <Compile Include="Command\Upload\UndoUpload\UndoUploadCommand.cs" />
     <Compile Include="Command\Upload\UndoUpload\UndoUploadRequest.cs" />
-    <Compile Include="Command\Upload\UploadFile\UploadFileRequest.cs" />
-    <Compile Include="Command\Upload\UploadFile\UploadFileCommand.cs" />
+    <Compile Include="Command\Upload\Upload\UploadRequest.cs" />
+    <Compile Include="Command\Upload\Upload\UploadCommand.cs" />
     <Compile Include="Command\Videos\GetVideos\GetVideosCommand.cs" />
     <Compile Include="Content\Resources\MediaGlobalization.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -165,6 +165,7 @@
     <Compile Include="Models\MediaFolder.cs" />
     <Compile Include="Models\Media.cs" />
     <Compile Include="Models\MediaImage.cs" />
+    <Compile Include="Models\Migrations\Migration201301031637.cs" />
     <Compile Include="Models\Migrations\Migration201301031618.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
     <Compile Include="Models\Migrations\Migration201212271611.cs" />

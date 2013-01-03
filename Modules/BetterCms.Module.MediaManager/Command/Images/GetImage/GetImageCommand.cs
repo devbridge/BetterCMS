@@ -28,7 +28,7 @@ namespace BetterCms.Module.MediaManager.Command.Images
                                  {
                                      Id = f.Id.ToString(),
                                      Caption = f.Caption,
-                                     Url = f.FileUri.ToString(),
+                                     Url = f.PublicUrl,
                                      Version = f.Version.ToString(CultureInfo.InvariantCulture),
                                      FileName = f.FileName,
                                      FileExtension = f.FileExtension,
@@ -40,7 +40,7 @@ namespace BetterCms.Module.MediaManager.Command.Images
                                      CropCoordY1 = f.CropCoordY1.HasValue ? f.CropCoordY1.Value.ToString(CultureInfo.InvariantCulture) : "0",
                                      CropCoordX2 = f.CropCoordX2.HasValue ? f.CropCoordX2.Value.ToString(CultureInfo.InvariantCulture) : f.Width.ToString(CultureInfo.InvariantCulture),
                                      CropCoordY2 = f.CropCoordY2.HasValue ? f.CropCoordY2.Value.ToString(CultureInfo.InvariantCulture) : f.Height.ToString(CultureInfo.InvariantCulture),
-                                     OriginalImageUrl = f.OriginalUri.ToString(),
+                                     OriginalImageUrl = f.PublicOriginallUrl,
                                  })
                 .FirstOrDefault();
         }

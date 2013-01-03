@@ -523,6 +523,8 @@ namespace BetterCms.Tests.Helpers
             entity.OriginalSize = ProvideRandomNumber(entity.Size, 4000);
             entity.OriginalUri = new Uri(@"C:\Projects\BetterCMS\o_file100.jpg");
             entity.IsOriginalUploaded = true;
+            entity.PublicThumbnailUrl = "http://bettercms.com/files/image?id=100200&t=image&o";
+
             entity.ThumbnailWidth = ProvideRandomNumber(1, 96);
             entity.ThumbnailHeight = ProvideRandomNumber(1, 96);
             entity.ThumbnailSize = ProvideRandomNumber(1, 960);
