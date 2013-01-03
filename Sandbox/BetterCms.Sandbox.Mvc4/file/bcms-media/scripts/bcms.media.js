@@ -419,8 +419,8 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
 
                 var self = this;
 
-                self.tooltip = item.PreviewUrl;
-                self.previewUrl = item.Tooltip;
+                self.tooltip = item.Tooltip;
+                self.previewUrl = item.PreviewUrl;
             }
 
             MediaImageViewModel.prototype.isImage = function () {
