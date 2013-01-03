@@ -18,8 +18,8 @@
             @Html.HiddenFor(m => m.Version)
 
             <div class="bcms-input-list-holder bcms-first-child-holder">
-                <strong>@PagesGlobalization.ClonePage_Dialog_ConfirmationMessage_Header</strong>
-                <p>@PagesGlobalization.ClonePage_Dialog_ConfirmationMessage_Text</p>
+                <div class="bcms-content-titles">@PagesGlobalization.ClonePage_Dialog_ConfirmationMessage_Header</div>
+                <div>@PagesGlobalization.ClonePage_Dialog_ConfirmationMessage_Text</div>
             </div>
             <div class="bcms-input-list-holder">
                 @Html.Tooltip(PagesGlobalization.ClonePage_Dialog_PageTitle_Tooltip_Title, PagesGlobalization.ClonePage_Dialog_PageTitle_Tooltip_Description)
@@ -27,7 +27,7 @@
                 @Html.TextBoxFor(m => m.PageTitle, new { @class = "bcms-editor-field-box", @style = "width: 815px;" })
             </div>
 
-            <div class="bcms-input-list-holder bcms-first-child-holder">
+            <div class="bcms-input-list-holder">
                 @Html.Tooltip(PagesGlobalization.ClonePage_Dialog_PageUrl_Tooltip_Title, PagesGlobalization.ClonePage_Dialog_PageUrl_Tooltip_Description)
                 <div class="bcms-content-titles">@PagesGlobalization.ClonePage_Dialog_PageUrl</div>
                 @Html.TextBoxFor(m => m.PageUrl, new { @class = "bcms-editor-field-box", @style = "width: 815px;" })
