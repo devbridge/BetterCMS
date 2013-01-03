@@ -52,6 +52,9 @@
 
                 <div class="bcms-media-context" data-bind="click: stopEvent, attr: {id: contextMenu.domId}">
                     <a class="bcms-btn-close">@RootGlobalization.Button_Close</a>
+                    <!-- ko if: isImage() -->
+                    <a class="bcms-media-content-link" href="#" data-bind="click: previewImage.bind($data, $root)">@MediaGlobalization.MediaManager_ButtonPreviewImage</a>
+                    <!-- /ko -->
                     <!-- ko if: isFolder() -->
                     <a class="bcms-media-content-link" href="#" data-bind="click: openMedia.bind($data, $root)">@RootGlobalization.Button_Open</a>
                     <!-- /ko -->
