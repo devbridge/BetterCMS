@@ -19,7 +19,7 @@
             <div class="bcms-input-list-holder bcms-first-child-holder">
                 @Html.Tooltip(PagesGlobalization.AddNewPage_PageTitle_Tooltip_Title, PagesGlobalization.AddNewPage_PageTitle_Tooltip_Description)
                 <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_PageTitle</div>
-                @Html.TextBoxFor(f => f.PageTitle, new { @class = "bcms-editor-field-box", @style = "width: 815px;", @id = "PageTitle" })
+                @Html.TextBoxFor(f => f.PageTitle, new { @class = "bcms-editor-field-box", @id = "PageTitle" })
             </div>
             
             @Html.Partial("Partial/AddNewPageEditPermalink")

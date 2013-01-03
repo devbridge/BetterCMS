@@ -16,10 +16,10 @@ define('bcms.tooltip', ['jquery', 'bcms'], function ($, bcms) {
         },
 
         arrowClasses = {
-            topLeft: 'bcms-tooltip-box bcms-tooltip-ne',
-            topRight: 'bcms-tooltip-box bcms-tooltip-nw',
-            bottomLeft: 'bcms-tooltip-box bcms-tooltip-se',
-            bottomRight: 'bcms-tooltip-box bcms-tooltip-sw'
+            topLeft: 'bcms-tooltip-box bcms-tooltip-tl',
+            topRight: 'bcms-tooltip-box bcms-tooltip-tr',
+            bottomLeft: 'bcms-tooltip-box bcms-tooltip-bl',
+            bottomRight: 'bcms-tooltip-box bcms-tooltip-br'
         };
 
     tooltip.selectors = selectors;
@@ -63,12 +63,6 @@ define('bcms.tooltip', ['jquery', 'bcms'], function ($, bcms) {
 
             container.find(selectors.close).on('click', function () {
                 instance.hide();
-            });
-
-            $(document.body).bind('click', function(e) {
-                if ($(e.target).closest(selectors.arrowContainer).length == 0) {
-                    instance.hide();
-                }
             });
 
             container

@@ -1096,15 +1096,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to -.
-        /// </summary>
-        public static string EditPageProperties_BasicPropertiesTab_MinusButton {
-            get {
-                return ResourceManager.GetString("EditPageProperties_BasicPropertiesTab_MinusButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Change.
         /// </summary>
         public static string EditPageProperties_BasicPropertiesTab_PageImage_ChangeButton {
@@ -1182,15 +1173,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Title {
             get {
                 return ResourceManager.GetString("EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to +.
-        /// </summary>
-        public static string EditPageProperties_BasicPropertiesTab_PlusButton {
-            get {
-                return ResourceManager.GetString("EditPageProperties_BasicPropertiesTab_PlusButton", resourceCulture);
             }
         }
         
@@ -1672,7 +1654,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enable Custom CSS (If not Enabled, then &lt;b&gt;CSS&lt;/b&gt; will not be added to a Page).
+        ///   Looks up a localized string similar to Custom CSS (If not Enabled, then &lt;b&gt;CSS&lt;/b&gt; will not be added to a Page).
         /// </summary>
         public static string HtmlContentWidget_EnableCustomCSS_Title {
             get {
@@ -1681,7 +1663,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enable Custom HTML (If not Enabled, then &lt;b&gt;HTML&lt;/b&gt; will not be added to a Page).
+        ///   Looks up a localized string similar to Custom HTML (If not Enabled, then &lt;b&gt;HTML&lt;/b&gt; will not be added to a Page).
         /// </summary>
         public static string HtmlContentWidget_EnableCustomHTML_Title {
             get {
@@ -1690,7 +1672,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enable Custom JavaScript (If not Enabled, then &lt;b&gt;JavaScript&lt;/b&gt; will not be added to a Page).
+        ///   Looks up a localized string similar to Custom JavaScript (If not Enabled, then &lt;b&gt;JavaScript&lt;/b&gt; will not be added to a Page).
         /// </summary>
         public static string HtmlContentWidget_EnableCustomJS_Title {
             get {

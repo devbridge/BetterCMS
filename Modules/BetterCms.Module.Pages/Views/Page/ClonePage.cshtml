@@ -24,13 +24,13 @@
             <div class="bcms-input-list-holder">
                 @Html.Tooltip(PagesGlobalization.ClonePage_Dialog_PageTitle_Tooltip_Title, PagesGlobalization.ClonePage_Dialog_PageTitle_Tooltip_Description)
                 <div class="bcms-content-titles">@PagesGlobalization.ClonePage_Dialog_PageTitle</div>
-                @Html.TextBoxFor(m => m.PageTitle, new { @class = "bcms-editor-field-box", @style = "width: 815px;" })
+                @Html.TextBoxFor(m => m.PageTitle, new { @class = "bcms-editor-field-box"})
             </div>
 
             <div class="bcms-input-list-holder">
                 @Html.Tooltip(PagesGlobalization.ClonePage_Dialog_PageUrl_Tooltip_Title, PagesGlobalization.ClonePage_Dialog_PageUrl_Tooltip_Description)
                 <div class="bcms-content-titles">@PagesGlobalization.ClonePage_Dialog_PageUrl</div>
-                @Html.TextBoxFor(m => m.PageUrl, new { @class = "bcms-editor-field-box", @style = "width: 815px;" })
+                @Html.TextBoxFor(m => m.PageUrl, new { @class = "bcms-editor-field-box" })
             </div>
             
             @Html.HiddenSubmit()
