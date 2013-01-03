@@ -1566,23 +1566,26 @@ a.bcms-btn-close {
 }
 
 .bcms-preview-image-border {
-    position: relative;
-    max-width: 860px;
+    position: absolute;
+    top: 50px;
+    left: 50%;
     padding: 30px;
-    margin: 50px auto 0;
     background-color: #f5f5f5;
     border: 1px solid #c6c6c6;
     box-shadow: 0 0 1px 1px #292929;
+    min-width: 200px;
+    min-height: 200px;
+    margin-left: -100px;
 }
 
 .bcms-preview-image-frame {
-    max-width: 860px;
     overflow: hidden;
+
 }
 
     .bcms-preview-image-frame img {
         display: block;
-        width: 100%;
+        /*width: 100%;*/
     }
 
 /*Features Grid*/

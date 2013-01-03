@@ -294,6 +294,9 @@
   <data name="MediaManager_ButtonInsertImageWithOptions" xml:space="preserve">
     <value>Insert Image With Options</value>
   </data>
+  <data name="MediaManager_ButtonPreviewImage" xml:space="preserve">
+    <value>Preview image</value>
+  </data>
   <data name="MediaManager_NewFolder" xml:space="preserve">
     <value>New Folder</value>
   </data>
