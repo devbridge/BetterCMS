@@ -74,7 +74,7 @@ namespace BetterCms.Module.MediaManager.Services
         /// <summary>
         /// The HTTP context accessor.
         /// </summary>
-        private IHttpContextAccessor httpContextAccessor;
+        private readonly IHttpContextAccessor httpContextAccessor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultMediaImageService" /> class.
@@ -190,7 +190,8 @@ namespace BetterCms.Module.MediaManager.Services
 
                 image.Title = Path.GetFileName(fileName);
                 image.Caption = null;
-                image.FileName = fileName;                
+                image.FileName = fileName;
+                image.FileExtension = Path.GetExtension(fileName);
                 image.Type = MediaType.Image;
 
                 image.Width = size.Width;

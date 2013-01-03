@@ -25,6 +25,20 @@ namespace BetterCms.Module.MediaManager.Services
             throw new NotImplementedException();
         }
 
+        public string GetFileSizeText(long sizeInBytes)
+        {
+            string[] sizes = { "bytes", "KB", "MB", "GB" };
+            double fileSize = sizeInBytes;
+            int order = 0;
+            while (fileSize >= 1024 && order + 1 < sizes.Length)
+            {
+                order++;
+                fileSize = fileSize / 1024;
+            }
+
+            return string.Format("{0:0.##} {1}", fileSize, sizes[order]);
+        }
+
         /*public MediaFile UploadTemporaryFile(string fileName, Stream inputStream)
         {
             string root = configuration.Storage.ContentRoot;
