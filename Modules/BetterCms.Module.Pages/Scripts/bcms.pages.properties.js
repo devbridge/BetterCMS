@@ -54,14 +54,13 @@ define('bcms.pages.properties', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', '
         },
         globalization = {
             editPagePropertiesModalTitle: null,
-            tagExpandTitle: null,
-            tagCollapse: null
         },
         keys = {
             editPagePropertiesInfoMessageClosed: 'bcms.EditPagePropertiesInfoBoxClosed'
         },
         classes = {
-            pagePropertiesActiveTemplateBox: 'bcms-grid-box-active'
+            pagePropertiesActiveTemplateBox: 'bcms-grid-box-active',
+            tagExpand: 'bcms-btn-plus-expand'
         },
         pagePropertiesTagCounter = 0,
         pagePropertiesCategoryCounter = 0;
@@ -205,11 +204,11 @@ define('bcms.pages.properties', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', '
                 visible = tagsContainer.is(':visible');
 
             if (visible) {
+                button.removeClass(classes.tagExpand);
                 tagsContainer.hide();
-                button.html(globalization.tagExpandTitle);
             } else {
+                button.addClass(classes.tagExpand);
                 tagsContainer.show();
-                button.html(globalization.tagCollapse);
             }
         });
         
@@ -219,11 +218,11 @@ define('bcms.pages.properties', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', '
                 visible = tagsContainer.is(':visible');
 
             if (visible) {
+                button.removeClass(classes.tagExpand);
                 tagsContainer.hide();
-                button.html(globalization.tagExpandTitle);
             } else {
+                button.addClass(classes.tagExpand);
                 tagsContainer.show();
-                button.html(globalization.tagCollapse);
             }
         });
 

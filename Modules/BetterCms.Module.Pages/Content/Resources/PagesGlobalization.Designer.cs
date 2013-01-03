@@ -1096,15 +1096,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to -.
-        /// </summary>
-        public static string EditPageProperties_BasicPropertiesTab_MinusButton {
-            get {
-                return ResourceManager.GetString("EditPageProperties_BasicPropertiesTab_MinusButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Change.
         /// </summary>
         public static string EditPageProperties_BasicPropertiesTab_PageImage_ChangeButton {
@@ -1182,15 +1173,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Title {
             get {
                 return ResourceManager.GetString("EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to +.
-        /// </summary>
-        public static string EditPageProperties_BasicPropertiesTab_PlusButton {
-            get {
-                return ResourceManager.GetString("EditPageProperties_BasicPropertiesTab_PlusButton", resourceCulture);
             }
         }
         

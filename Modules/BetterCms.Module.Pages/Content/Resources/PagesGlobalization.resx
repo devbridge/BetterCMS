@@ -483,9 +483,6 @@
   <data name="EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Title" xml:space="preserve">
     <value>Page title</value>
   </data>
-  <data name="EditPageProperties_BasicPropertiesTab_PlusButton" xml:space="preserve">
-    <value>+</value>
-  </data>
   <data name="EditPageProperties_BasicPropertiesTab_RemoveButton" xml:space="preserve">
     <value>Remove</value>
   </data>
@@ -869,9 +866,6 @@
   </data>
   <data name="SavePagePublishStatus_NoPermission_Message" xml:space="preserve">
     <value>You have no permission to change page publish status.</value>
-  </data>
-  <data name="EditPageProperties_BasicPropertiesTab_MinusButton" xml:space="preserve">
-    <value>-</value>
   </data>
   <data name="SiteSettings_Widgets_RegisterNew" xml:space="preserve">
     <value>Register +</value>
