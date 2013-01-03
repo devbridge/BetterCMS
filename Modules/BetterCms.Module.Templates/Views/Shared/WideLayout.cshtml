@@ -4,6 +4,11 @@
     Layout = "~/Areas/bcms-Root/Views/Shared/BaseLayout.cshtml";
 }
 
+@section Styles {
+    <link rel="stylesheet" type="text/css" href="@Url.Content("/file/bcms-templates/Content/Css/bcms.templates.css")" />
+    @RenderSection("Styles", false)
+}
+
 <div class="page">
     <header class="page-header">
         <div class="page-frame">

@@ -17,7 +17,7 @@
             <div class="bcms-large-titles">@MediaGlobalization.ImageEditor_Dialog_SubTitle</div>
             <div class="bcms-edit-info-block">
                 <div class="bcms-croped-block">
-                    <img src="@Model.Url" data-id="@Model.Id" data-version="@Model.Version">
+                    <img src="@Model.Url?version=@Model.Version" data-id="@Model.Id" data-version="@Model.Version">
                 </div>
                 <div class="bcms-edit-file-info">
                     <div class="bcms-file-info-text"><b>@MediaGlobalization.ImageEditor_Dialog_FileName:</b> <span id="image-file-name">@Model.FileName</span></div>

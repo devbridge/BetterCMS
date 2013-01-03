@@ -19,7 +19,8 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
 
                 templateDataBind: '.bcms-data-bind-container',
                 firstForm: 'form:first',
-                spinContainer: '.bcms-rightcol:first'
+                spinContainer: '.bcms-rightcol:first',
+                insertContentContainer: '.bcms-insert-content-modal:first'
             },
             links = {
                 loadSiteSettingsMediaManagerUrl: null,
@@ -109,8 +110,8 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 };
 
             self.container = container;
-            self.url = url;
             self.messagesContainer = messagesContainer;
+            self.url = url;
 
             self.medias = ko.observableArray();
             self.path = ko.observable();
@@ -144,7 +145,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                     onComplete = function (json) {
                         parseJsonResults(json, self);
                     };
-                loadTabData(self.url, params, onComplete, self.container);
+                loadTabData(self, params, onComplete);
             };
 
             self.sortMedia = function (column) {
@@ -160,7 +161,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                     onComplete = function (json) {
                         parseJsonResults(json, self);
                     };
-                loadTabData(self.url, params, onComplete, self.container);
+                loadTabData(self, params, onComplete);
             };
 
             self.switchViewStyle = function() {
@@ -418,8 +419,15 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
 
                 var self = this;
 
-                self.tooltip = item.PreviewUrl;
-                self.previewUrl = item.Tooltip;
+                self.tooltip = item.Tooltip;
+                self.previewUrl = item.PreviewUrl;
+
+                self.getImageUrl = function() {
+                    if (!self.previewUrl) {
+                        return null;
+                    }
+                    return self.previewUrl + '?version=' + self.version();
+                };
             }
 
             MediaImageViewModel.prototype.isImage = function () {
@@ -676,6 +684,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                         done: function (content) {
                             imagesViewModel = new MediaItemsViewModel(dialog.container, links.loadImagesUrl, dialog.container);
                             imagesViewModel.canSelectMedia(true);
+                            imagesViewModel.spinContainer = dialog.container.find(selectors.insertContentContainer);
                             initializeTab(content.Data.Data, imagesViewModel);
                         },
                     });
@@ -700,9 +709,13 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                             content: globalization.imageNotSelectedMessageMessage,
                             disableCancel: true,
                         });
+                        
+                        return false;
                     } else {
                         insertImage(selectedItem.id(), false);
                     }
+                    
+                    return true;
                 },
             });
         };
@@ -838,7 +851,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 onComplete = function (json) {
                     parseJsonResults(json, folderViewModel);
                 };
-            loadTabData(folderViewModel.url, params, onComplete, folderViewModel.container);
+            loadTabData(folderViewModel, params, onComplete);
         };
 
         /**
@@ -923,9 +936,9 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
         /**
         * Load tab data
         */
-        function loadTabData(url, params, complete, container) {
+        function loadTabData(folderViewModel, params, complete) {
             var indicatorId = 'mediatab',
-                spinContainer = container.parents(selectors.spinContainer),
+                spinContainer = folderViewModel.spinContainer,
                 onComplete = function(result) {
                     spinContainer.hideLoading(indicatorId);
                     if ($.isFunction(complete)) {
@@ -937,7 +950,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             $.ajax({
                 type: 'POST',
                 cache: false,
-                url: url,
+                url: folderViewModel.url,
                 data: params
             })
                 .done(function (result) {
@@ -976,10 +989,11 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 var tabContainer = dialogContainer.find(selectors.tabAudiosContainer);
                 if (audiosViewModel == null) {
                     audiosViewModel = new MediaItemsViewModel(tabContainer, links.loadAudiosUrl, dialogContainer);
+                    audiosViewModel.spinContainer = tabContainer.parents(selectors.spinContainer);
 
-                    loadTabData(audiosViewModel.url, null, function (json) {
+                    loadTabData(audiosViewModel, null, function (json) {
                         initializeTab(json, audiosViewModel);
-                    }, tabContainer);
+                    });
                 }
             });
 
@@ -988,10 +1002,11 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 var tabContainer = dialogContainer.find(selectors.tabVideosContainer);
                 if (videosViewModel == null) {
                     videosViewModel = new MediaItemsViewModel(tabContainer, links.loadVideosUrl, dialogContainer);
+                    videosViewModel.spinContainer = tabContainer.parents(selectors.spinContainer);
 
-                    loadTabData(videosViewModel.url, null, function (json) {
+                    loadTabData(videosViewModel, null, function (json) {
                         initializeTab(json, videosViewModel);
-                    }, tabContainer);
+                    });
                 }
             });
 
@@ -1000,15 +1015,17 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 var tabContainer = dialogContainer.find(selectors.tabFilesContainer);
                 if (filesViewModel == null) {
                     filesViewModel = new MediaItemsViewModel(tabContainer, links.loadFilesUrl, dialogContainer);
+                    filesViewModel.spinContainer = tabContainer.parents(selectors.spinContainer);
 
-                    loadTabData(filesViewModel.url, null, function (json) {
+                    loadTabData(filesViewModel, null, function (json) {
                         initializeTab(json, filesViewModel);
-                    }, tabContainer);
+                    });
                 }
             });
 
             var imagesTabContainer = dialogContainer.find(selectors.tabImagesContainer);
             imagesViewModel = new MediaItemsViewModel(imagesTabContainer, links.loadImagesUrl, dialogContainer);
+            imagesViewModel.spinContainer = imagesTabContainer.parents(selectors.spinContainer);
             initializeTab(content.Data.Data, imagesViewModel);
         };
 

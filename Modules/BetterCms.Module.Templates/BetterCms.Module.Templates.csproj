@@ -117,7 +117,6 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>UsersGlobalization.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Content\Css\bcms.templates.css" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Css\Images\" />
@@ -140,6 +139,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Content\Css\bcms.templates.css" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
