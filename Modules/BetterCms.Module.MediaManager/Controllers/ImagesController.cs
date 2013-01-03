@@ -1,10 +1,10 @@
-﻿using System.Web.Mvc;
-
-using BetterCms.Module.MediaManager.Command.Images;
+﻿using BetterCms.Module.MediaManager.Command.Images;
 using BetterCms.Module.MediaManager.Command.Images.CropImage;
 using BetterCms.Module.MediaManager.Command.Images.GetImage;
 using BetterCms.Module.MediaManager.Command.Images.GetImages;
 using BetterCms.Module.MediaManager.Command.Images.SaveImage;
+
+using BetterCms.Module.MediaManager.Command.MediaManager.DeleteMedia;
 
 using BetterCms.Module.MediaManager.Content.Resources;
 
@@ -13,6 +13,8 @@ using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+
+using System.Web.Mvc;
 
 namespace BetterCms.Module.MediaManager.Controllers
 {

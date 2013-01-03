@@ -126,8 +126,8 @@
     <Compile Include="Command\MediaManager\GetMediaItemsCommandBase.cs" />
     <Compile Include="Command\MediaManager\RenameMedia\RenameMediaCommand.cs" />
     <Compile Include="Command\Upload\ConfirmUpload\ConfirmUploadCommand.cs" />
-    <Compile Include="Command\Images\DeleteMedia\DeleteMediaCommand.cs" />
-    <Compile Include="Command\Images\DeleteMedia\DeleteMediaCommandRequest.cs" />
+    <Compile Include="Command\MediaManager\DeleteMedia\DeleteMediaCommand.cs" />
+    <Compile Include="Command\MediaManager\DeleteMedia\DeleteMediaCommandRequest.cs" />
     <Compile Include="Command\Images\ResizeImage\ResizeImageCommandRequest.cs" />
     <Compile Include="Command\Images\ResizeImage\ResizeImageCommand.cs" />
     <Compile Include="Command\Images\SaveImage\SaveImageDataCommand.cs" />

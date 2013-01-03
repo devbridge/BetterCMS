@@ -2,7 +2,7 @@
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Mvc;
 
-namespace BetterCms.Module.MediaManager.Command.Images
+namespace BetterCms.Module.MediaManager.Command.MediaManager.DeleteMedia
 {
     /// <summary>
     /// Command for delete a media
