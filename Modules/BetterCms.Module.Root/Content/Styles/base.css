@@ -804,7 +804,8 @@ div.bcms-noscroll body {
     font-family: "Open Sans", sans-serif;
     font-size: 13px;
     line-height: 140%;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
     width: 100%;
     height: 100%;
     position: fixed;
@@ -840,7 +841,7 @@ div.bcms-noscroll body {
     font-weight: 700;
 }
 
-a.bcms-modal-close {
+div.bcms-modal-close {
     width: 15px;
     height: 14px;
     position: absolute;
@@ -1056,7 +1057,7 @@ a.bcms-error-close {
         font-family: 'Open Sans', sans-serif;
     }
 
-a.bcms-tooltip-close {
+div.bcms-tip-close {
     position: absolute;
     top: 10px;
     right: 10px;

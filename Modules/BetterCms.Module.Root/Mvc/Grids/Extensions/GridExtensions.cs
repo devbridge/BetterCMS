@@ -73,7 +73,7 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
         {
             var stringBuilder = new StringBuilder();
             stringBuilder.AppendFormat("<a class=\"bcms-icn-delete bcms-grid-item-delete-button\" data-id=\"{{0}}\" data-version=\"{{1}}\">{0}</a>", RootGlobalization.Button_Delete).AppendLine();
-            stringBuilder.AppendFormat("<a style=\"display:none\" class=\"bcms-btn-small\">{0}</a>", @RootGlobalization.Button_Save).AppendLine();
+            stringBuilder.AppendFormat("<div style=\"display:none\" class=\"bcms-btn-small\">{0}</div>", @RootGlobalization.Button_Save).AppendLine();
             stringBuilder.AppendFormat("<a style=\"display:none\" class=\"bcms-btn-links-small\">{0}</a>", @RootGlobalization.Button_Cancel).AppendLine();
             stringBuilder.AppendFormat("<div style=\"display:none\" class=\"bcms-grid-item-message\"></div>");
 

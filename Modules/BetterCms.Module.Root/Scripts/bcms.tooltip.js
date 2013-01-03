@@ -11,7 +11,7 @@ define('bcms.tooltip', ['jquery', 'bcms'], function ($, bcms) {
         selectors = {
             title: 'h4',
             message: 'p',
-            close: 'a.bcms-tooltip-close',
+            close: '.bcms-tip-close',
             arrowContainer: '.bcms-tooltip-box'
         },
 
