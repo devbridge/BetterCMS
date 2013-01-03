@@ -32,6 +32,7 @@ define('bcms.siteSettings', ['jquery', 'bcms', 'bcms.modal', 'bcms.dynamicConten
     siteSettings.links = links;
     siteSettings.globalization = globalization;
     siteSettings.siteSettingsModalWindow = siteSettingsModalWindow;
+    siteSettings.contentId = 0;
 
     /**
     * Opens site settings container, loads menu items and selects first one.
@@ -56,8 +57,8 @@ define('bcms.siteSettings', ['jquery', 'bcms', 'bcms.modal', 'bcms.dynamicConten
     /**
     * Sets site settings content.
     */
-    siteSettings.setContent = function (content) {
-        if (siteSettingsModalWindow) {
+    siteSettings.setContent = function (content, contentId) {
+        if (siteSettingsModalWindow && contentId == siteSettings.contentId) {
             siteSettingsModalWindow.container.find(selectors.placeHolder).empty().append(content);
 
             if ($.validator && $.validator.unobtrusive) {

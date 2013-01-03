@@ -1,6 +1,7 @@
 ﻿using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.JsModule;
 using BetterCms.Core.Modules.Projections;
+using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Controllers;
 
 namespace BetterCms.Module.MediaManager.Registration
@@ -19,7 +20,7 @@ namespace BetterCms.Module.MediaManager.Registration
         {            
             Links = new IActionProjection[]
                 {    
-                    new JavaScriptModuleLinkTo<UploadController>(this, "loadUploadFilesDialogUrl", f => f.MultiFileUpload("{0}")),
+                    new JavaScriptModuleLinkTo<UploadController>(this, "loadUploadFilesDialogUrl", f => f.MultiFileUpload("{0}", "{1}")),
                     new JavaScriptModuleLinkTo<UploadController>(this, "uploadFileToServerUrl", f => f.UploadMedia(null)),
                     new JavaScriptModuleLinkTo<UploadController>(this, "undoFileUploadUrl", f => f.RemoveFileUpload("{0}", "{1}", "{2}"))
                     
@@ -27,6 +28,7 @@ namespace BetterCms.Module.MediaManager.Registration
 
             Globalization = new IActionProjection[]
                 {
+                    new JavaScriptModuleGlobalization(this, "uploadFilesDialogTitle", () => MediaGlobalization.MultiFileUpload_DialogTitle)
                 };
         }
     }

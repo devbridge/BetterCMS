@@ -52,19 +52,5 @@ namespace BetterCms.Module.Templates
                 return int.MaxValue - 100;
             }
         }
-
-        /// <summary>
-        /// Registers the style sheet files.
-        /// </summary>
-        /// <param name="containerBuilder">The container builder.</param>
-        /// <param name="configuration">The configuration.</param>
-        /// <returns>Enumerator of known module style sheet files.</returns>
-        public override IEnumerable<string> RegisterStyleSheetFiles(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
-        {
-            return new[]
-                {
-                    "/file/bcms-templates/Content/Css/bcms.templates.css"
-                };
-        }
     }
 }

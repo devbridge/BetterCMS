@@ -8,8 +8,9 @@ using System.Web.Mvc;
 using BetterCms.Core.Services.Storage;
 using BetterCms.Module.MediaManager.Command.Upload;
 using BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload;
+using BetterCms.Module.MediaManager.Command.Upload.GetMultiFileUpload;
 using BetterCms.Module.MediaManager.Command.Upload.UndoUpload;
-using BetterCms.Module.MediaManager.Command.Upload.UploadFile;
+using BetterCms.Module.MediaManager.Command.Upload.Upload;
 using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
@@ -29,11 +30,14 @@ namespace BetterCms.Module.MediaManager.Controllers
         }
 
         [HttpGet]
-        public ActionResult MultiFileUpload(string folderId)
+        public ActionResult MultiFileUpload(string folderId, string folderType)
         {
-            var model = new MultiFileUploadViewModel();
-            model.RootFolderId = folderId.ToGuidOrDefault();
-            model.Folders = new Dictionary<Guid, string>();
+            var model = GetCommand<GetMultiFileUploadCommand>().ExecuteCommand(
+                new GetMultiFileUploadRequest
+                    {
+                        FolderId = folderId.ToGuidOrDefault(),
+                        Type = (MediaType)Enum.Parse(typeof(MediaType), folderType)
+                    });
 
             return View(model);
         }
@@ -51,7 +55,7 @@ namespace BetterCms.Module.MediaManager.Controllers
             request.FileName = file.FileName;
             request.FileStream = file.InputStream;
 
-            var media = GetCommand<UploadFileCommand>().ExecuteCommand(request);
+            var media = GetCommand<UploadCommand>().ExecuteCommand(request);
 
             if (media != null)
             {
@@ -90,12 +94,13 @@ namespace BetterCms.Module.MediaManager.Controllers
         public ActionResult SaveUploads(MultiFileUploadViewModel model)
         {
             var result = GetCommand<ConfirmUploadCommand>().ExecuteCommand(model);
-            if (!result)
+
+            if (result == null)
             {
                 Messages.AddError(MediaGlobalization.MultiFileUpload_SaveFailed);
             }
 
-            return Json(new WireJson(result));
+            return Json(new WireJson(true, result));
         }
     }
 }

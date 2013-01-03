@@ -556,6 +556,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Upload.
+        /// </summary>
+        public static string MultiFileUpload_DialogTitle {
+            get {
+                return ResourceManager.GetString("MultiFileUpload_DialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Drag files here to upload.
         /// </summary>
         public static string MultiFileUpload_DragDropBox {

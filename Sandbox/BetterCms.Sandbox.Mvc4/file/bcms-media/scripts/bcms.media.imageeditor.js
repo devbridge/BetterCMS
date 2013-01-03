@@ -79,8 +79,11 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                     var url = $.format(links.imageEditorDialogUrl, imageId);
                     dynamicContent.bindDialog(dialog, url, {
                         contentAvailable: imageEditor.initImageEditorDialogEvents,
-                        beforePost: function() {
-                            $(selectors.imageVersionField).val($(selectors.imageToEdit).data('Version'));
+                        beforePost: function () {
+                            var newVersion = $(selectors.imageToEdit).data('version');
+                            if (newVersion > 0) {
+                                $(selectors.imageVersionField).val(newVersion);
+                            }
                         },
                         postSuccess: function (json) {
                             if (json.Success) {
@@ -242,7 +245,7 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
         * Update image and properties.
         */
         imageEditor.updateImage = function(editorDialog, data) {
-            editorDialog.container.find(selectors.imageToEdit).attr('src', data.Url);
+            editorDialog.container.find(selectors.imageToEdit).attr('src', data.Url + '?version=' + Math.random());
             editorDialog.container.find(selectors.imageToEdit).data('version', data.Version);
             editorDialog.container.find(selectors.imageFileName).text(data.FileName + '.' + data.FileExtension);
             editorDialog.container.find(selectors.imageFileSize).text(data.FileSize);

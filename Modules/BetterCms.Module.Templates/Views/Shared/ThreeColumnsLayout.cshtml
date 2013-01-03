@@ -4,6 +4,11 @@
     Layout = "~/Areas/bcms-Root/Views/Shared/BaseLayout.cshtml";
 }
 
+@section Styles {
+    <link rel="stylesheet" type="text/css" href="@Url.Content("/file/bcms-templates/Content/Css/bcms.templates.css")" />
+    @RenderSection("Styles", false)
+}
+
 <div class="page">
     <header class="page-header">
         <div class="page-frame">
@@ -14,14 +19,18 @@
     <div class="page-container clearfix">
         <h1>@Model.Title</h1>
         
-        <aside class="page-left-sidebar-2">
+        <aside class="page-left-sidebar-3">
             @RenderSection("CMSLeftSide", false)
         </aside>
 
-        <section class="page-content-2">
+        <section class="page-content-3">
             @RenderSection("CMSMainContent", false)
             @RenderBody()
         </section>
+
+        <aside class="page-right-sidebar-3">
+            @RenderSection("CMSRightSide", false)
+        </aside>
     </div>
 </div>
 

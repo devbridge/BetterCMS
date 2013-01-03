@@ -6,7 +6,7 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.ViewModels.Images;
 
-namespace BetterCms.Module.MediaManager.Command.Images
+namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
 {
     public class SaveImageDataCommand : CommandBase, ICommand<ImageViewModel>
     {
@@ -15,9 +15,8 @@ namespace BetterCms.Module.MediaManager.Command.Images
         /// </summary>
         public void Execute(ImageViewModel request)
         {
-            // TODO: 
-            return;
-            var mediaImage = this.Repository.AsQueryable<MediaImage>()
+            var mediaImage = Repository
+                .AsQueryable<MediaImage>()
                 .FirstOrDefault(f => f.Id == request.Id.ToGuidOrDefault());
 
             if (mediaImage == null)
@@ -28,7 +27,9 @@ namespace BetterCms.Module.MediaManager.Command.Images
             mediaImage.Caption = request.Caption;
             mediaImage.ImageAlign = request.ImageAlign;
             mediaImage.Version = request.Version.ToIntOrDefault();
-            this.Repository.Save(mediaImage);
+            
+            Repository.Save(mediaImage);
+            UnitOfWork.Commit();
         }
     }
 }

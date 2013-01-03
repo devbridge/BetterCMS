@@ -3,7 +3,7 @@
 }
 /*image manager*/
 .bcms-file-manager-inner {
-    padding: 20px 55px;
+    padding: 20px 35px;
 }
 
     .bcms-file-manager-inner .bcms-large-titles {
@@ -16,20 +16,25 @@
 
 .bcms-croped-block {
     display: inline-block;
-    width: 428px;
+    width: 450px;
     min-height: 280px;
     max-height: 340px;
     overflow: hidden;
     vertical-align: top;
     border: 1px solid #c6c6c6;
-    background: url('images/bcms-no-image-1.png') no-repeat center center #f5f5f5;
+    background-color: #f5f5f5;
 }
 
     .bcms-croped-block img {
         display: block;
-        max-width: 430px;
-        max-height: 340px;
+        max-width: 100%;
     }
+
+.bcms-croped-block-no-preview {
+    background-image: url('images/bcms-no-image-1.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+}
 
 .bcms-crop-image-block {
     max-width: 830px;
@@ -38,13 +43,13 @@
 
 .bcms-edit-file-info {
     display: inline-block;
-    width: 382px;
+    width: 400px;
     margin-left: 15px;
     vertical-align: top;
 }
 
 .bcms-file-info-text {
-    padding-bottom: 20px;
+    padding-bottom: 15px;
 }
 
     .bcms-file-info-text .bcms-btn-links-small {
@@ -64,13 +69,13 @@
     display: none;
     width: 348px;
     padding: 15px;
-    margin: 20px 0 0;
+    margin: 10px 0 0;
     border: 1px solid #a6a6a6;
     background-color: #f5f5f5;
 }
 
     .bcms-file-edit .bcms-content-titles {
-        margin: 0 5px 5px 15px;
+        margin: 0 5px 0 15px;
     }
 
     .bcms-file-edit .bcms-editor-field-box {
@@ -147,7 +152,7 @@ div.bcms-align-right-active {
 .bcms-dropzone-infotext {
     text-align: center;
     margin-top: 40px;
-    color: #24597e;
+    color: #0383df;
     font-size: 20px;
     font-weight: 700;
 }
@@ -209,7 +214,7 @@ div.bcms-align-right-active {
     }
 
 .bcms-upload-file-titles {
-    width: 210px;
+    width: 250px;
     padding: 0 15px;
     line-height: 39px;
     font-size: 12px;
@@ -273,8 +278,11 @@ div.bcms-align-right-active {
 }
 
 .bcms-upload-description {
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 700;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 div.bcms-upload-failed {
@@ -457,8 +465,6 @@ div.bcms-upload-success {
     padding: 10px 0;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
-    text-align: center;
-    overflow: hidden;
 }
 
     .bcms-grid .bcms-image-box .bcms-media-file-holder {
@@ -1340,3 +1346,5 @@ input.bcms-grid-input:focus {
     font-size: 14px;
     line-height: 24px;
 }
+
+

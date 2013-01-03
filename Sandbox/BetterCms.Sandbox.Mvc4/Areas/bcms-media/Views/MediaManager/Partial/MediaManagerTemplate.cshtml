@@ -22,9 +22,7 @@
         </div>
     </div>
     <div class="bcms-breadcrumbs-holder">
-        <div data-bind="foreach: path().pathFolders()">
-            <a class="bcms-breadcrumbs-root" href="#" data-bind="text: pathName(), click: openMedia.bind($data, $root)"></a>
-        </div>
+        <div data-bind="foreach: path().pathFolders()"><a class="bcms-breadcrumbs-root" href="#" data-bind="text: pathName(), click: openMedia.bind($data, $root)"></a></div>
     </div>
 
     @Html.MessagesBox(null, new Dictionary<string, string> { { "data-bind", "attr: { id: domId() }" } })
@@ -50,7 +48,7 @@
         <!-- /ko -->
 
         <div data-bind="foreach: medias">
-            <div data-bind="click: openMedia.bind($data, $root), event: { contextmenu: contextMenu.show }, attr: {class: classNames()}">
+            <div data-bind="click: openMedia.bind($data, $root), event: { contextmenu: contextMenu.show }, attr: {class: rowClassNames()}">
 
                 <div class="bcms-media-context" data-bind="click: stopEvent, attr: {id: contextMenu.domId}">
                     <a class="bcms-btn-close">@RootGlobalization.Button_Close</a>
@@ -71,7 +69,11 @@
                 </div>
 
                 <div class="bcms-media-items-block">
-                    <div data-bind="css: { 'bcms-system-folder': isFolder(), 'bcms-media-file-holder': isFile() }" />
+                    <div data-bind="attr: {class: iconClassNames()}">
+                        <!-- ko if: isImage() -->
+                        <img alt="" data-bind="attr: {alt: tooltip, src: getImageUrl()}" />
+                        <!-- /ko -->
+                    </div>
                     <div class="bcms-media-name" data-bind="text: name()"></div>
                 </div>
                 <div class="bcms-media-edit-controls">

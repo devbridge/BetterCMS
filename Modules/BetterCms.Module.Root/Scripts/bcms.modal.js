@@ -224,7 +224,7 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs'], function ($, bcms, tabs) {
         /**
         * Updates modal window content.
         */
-        setContent: function (content) {
+        setContent: function (content, contentId) {
             this.content = content;
             this.container
                 .find(selectors.content)

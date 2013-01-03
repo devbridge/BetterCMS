@@ -1,8 +1,13 @@
 ﻿using System.Web.Mvc;
 
 using BetterCms.Module.MediaManager.Command.Images;
+using BetterCms.Module.MediaManager.Command.Images.CropImage;
+using BetterCms.Module.MediaManager.Command.Images.GetImage;
 using BetterCms.Module.MediaManager.Command.Images.GetImages;
+using BetterCms.Module.MediaManager.Command.Images.SaveImage;
+
 using BetterCms.Module.MediaManager.Content.Resources;
+
 using BetterCms.Module.MediaManager.ViewModels.Images;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 
@@ -33,6 +38,7 @@ namespace BetterCms.Module.MediaManager.Controllers
             {
                 success = false;
             }
+
             return Json(new WireJson
                             {
                                 Success = success,
@@ -58,6 +64,7 @@ namespace BetterCms.Module.MediaManager.Controllers
                 },
                 Html = RenderView("ImageInsert", new MediaImageViewModel())
             };
+
             return WireJson(true, json, JsonRequestBehavior.AllowGet);
         }
 
@@ -70,6 +77,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         public ActionResult ImageEditor(string imageId)
         {
             var model = GetCommand<GetImageCommand>().Execute(imageId.ToGuidOrDefault());
+
             return View(model);
         }
 
@@ -82,6 +90,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         public ActionResult ImageEditorInsert(string imageId)
         {
             var model = GetCommand<GetImageCommand>().Execute(imageId.ToGuidOrDefault());
+
             return View(model);
         }
 
@@ -95,6 +104,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         {
             GetCommand<SaveImageDataCommand>().Execute(model);
             var result = GetCommand<GetImageCommand>().Execute(model.Id.ToGuidOrDefault());
+
             return Json(new WireJson { Success = true, Data = result });
         }
 
@@ -107,6 +117,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         public ActionResult ImageCropper(string imageId)
         {
             var model = GetCommand<GetImageCommand>().Execute(imageId.ToGuidOrDefault());
+
             return View(model);
         }
 
@@ -120,6 +131,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         {
             GetCommand<CropImageCommand>().Execute(model);
             var result = GetCommand<GetImageCommand>().Execute(model.Id.ToGuidOrDefault());
+
             return Json(new WireJson { Success = true, Data = result });
         }
 
@@ -143,6 +155,7 @@ namespace BetterCms.Module.MediaManager.Controllers
                               };
             GetCommand<ResizeImageCommand>().Execute(request);
             var model = GetCommand<GetImageCommand>().Execute(request.Id);
+
             return Json(new WireJson { Success = true, Data = model });
         }
 
@@ -182,6 +195,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         public ActionResult GetImage(string imageId)
         {
             var result = GetCommand<GetImageCommand>().Execute(imageId.ToGuidOrDefault());
+
             return Json(new WireJson { Success = true, Data = result });
         }
     }

@@ -178,6 +178,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Content Include="App_Data\BetterCMS\Modules\readme.txt" />
     <EmbeddedResource Include="file\bcms-media\scripts\bcms.media.upload.js" />
+    <EmbeddedResource Include="file\bcms-media\scripts\bcms.media.imageeditor.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -185,6 +186,7 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="file\bcms-root\scripts\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
@@ -243,10 +245,6 @@
     <Content Include="Views\Widgets\03.cshtml" />
     <Content Include="Views\Widgets\05.cshtml" />
     <Content Include="Views\Shared\Partial\Hello.cshtml" />
-    <Content Include="Views\Shared\Layouts\01.cshtml" />
-    <Content Include="Views\Shared\Layouts\02.cshtml" />
-    <Content Include="Views\Shared\Layouts\03.cshtml" />
-    <Content Include="Views\Shared\Layouts\04.cshtml" />
     <Content Include="Views\Shared\Partial\TestOptionValues.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -256,25 +254,10 @@
     <Content Include="Areas\bcms-media\Views\Upload\MultiFileUpload.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\bcms-media\Views\MediaManager\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Areas\bcms-media\Views\MediaManager\Partial\MediaManagerTab.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\bcms-media\Views\MediaManager\Partial\MediaManagerTemplate.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\bcms-templates\Views\Shared\WideLayout.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\bcms-templates\Views\Web.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\bcms-templates\Views\Shared\TwoColumnsLayout.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\bcms-templates\Views\Shared\ThreeColumnsLayout.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

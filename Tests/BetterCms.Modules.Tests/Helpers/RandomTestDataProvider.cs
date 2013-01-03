@@ -524,11 +524,14 @@ namespace BetterCms.Tests.Helpers
             entity.OriginalSize = ProvideRandomNumber(entity.Size, 4000);
             entity.OriginalUri = new Uri(@"C:\Projects\BetterCMS\o_file100.jpg");
             entity.IsOriginalUploaded = true;
+            entity.PublicOriginallUrl = "http://bettercms.com/files/image?id=100200&t=image&o";
+
             entity.ThumbnailWidth = ProvideRandomNumber(1, 96);
             entity.ThumbnailHeight = ProvideRandomNumber(1, 96);
             entity.ThumbnailSize = ProvideRandomNumber(1, 960);
             entity.ThumbnailUri = new Uri(@"C:\Projects\BetterCMS\t_file100.png");
             entity.IsThumbnailUploaded = true;
+            entity.PublicThumbnailUrl = "http://bettercms.com/files/image?id=100200&t=image&p";
 
             return entity;
         }

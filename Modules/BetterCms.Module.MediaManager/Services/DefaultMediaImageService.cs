@@ -18,7 +18,6 @@ using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Mvc;
 
 using NHibernate;
-using NHibernate.Linq;
 
 namespace BetterCms.Module.MediaManager.Services
 {
@@ -27,11 +26,6 @@ namespace BetterCms.Module.MediaManager.Services
     /// </summary>
     public class DefaultMediaImageService : IMediaImageService
     {
-        /// <summary>
-        /// The images folder name.
-        /// </summary>
-        private const string ImagesFolderName = "images";
-
         /// <summary>
         /// The thumbnail size.
         /// </summary>
@@ -72,23 +66,20 @@ namespace BetterCms.Module.MediaManager.Services
         /// </summary>
         private readonly ISessionFactoryProvider sessionFactoryProvider;
 
-        /// <summary>
-        /// The HTTP context accessor.
-        /// </summary>
-        private IHttpContextAccessor httpContextAccessor;
+        private readonly IMediaFileService mediaFileService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultMediaImageService" /> class.
         /// </summary>
+        /// <param name="mediaFileService">The media file service.</param>
         /// <param name="storageService">The storage service.</param>
         /// <param name="configuration">The configuration.</param>
         /// <param name="repository">The repository.</param>
         /// <param name="unitOfWork">The unit of work.</param>
         /// <param name="sessionFactoryProvider">The session factory provider.</param>
-        /// <param name="httpContextAccessor">The HTTP context accessor.</param>
-        public DefaultMediaImageService(IStorageService storageService, ICmsConfiguration configuration, IRepository repository, IUnitOfWork unitOfWork, ISessionFactoryProvider sessionFactoryProvider, IHttpContextAccessor httpContextAccessor)
+        public DefaultMediaImageService(IMediaFileService mediaFileService, IStorageService storageService, ICmsConfiguration configuration, IRepository repository, ISessionFactoryProvider sessionFactoryProvider, IUnitOfWork unitOfWork)
         {
-            this.httpContextAccessor = httpContextAccessor;
+            this.mediaFileService = mediaFileService;
             this.sessionFactoryProvider = sessionFactoryProvider;
             this.storageService = storageService;
             this.configuration = configuration;
@@ -175,7 +166,7 @@ namespace BetterCms.Module.MediaManager.Services
         /// <returns>Image entity.</returns>
         public MediaImage UploadImage(Guid rootFolderId, string fileName, long fileLength, Stream fileStream)
         {
-            string folderName = Guid.NewGuid().ToString().Replace("-", string.Empty);
+            string folderName = mediaFileService.CreateRandomFolderName();
 
             Size size = GetImageSize(fileStream);
 
@@ -192,13 +183,14 @@ namespace BetterCms.Module.MediaManager.Services
                 image.Title = Path.GetFileName(fileName);
                 image.Caption = null;
                 image.FileName = fileName;
-                image.PublicUrl = new Uri(Path.Combine(GetContentRoot(configuration.Storage.PublicContentUrlRoot), Path.Combine(ImagesFolderName, folderName, fileName))).AbsolutePath;
+                image.FileExtension = Path.GetExtension(fileName);
                 image.Type = MediaType.Image;
 
                 image.Width = size.Width;
                 image.Height = size.Height;
                 image.Size = fileLength;
-                image.FileUri = new Uri(Path.Combine(GetContentRoot(configuration.Storage.ContentRoot), ImagesFolderName, folderName, fileName));
+                image.FileUri = mediaFileService.GetFileUri(MediaType.Image, folderName, fileName);
+                image.PublicUrl = mediaFileService.GetPublicFileUrl(MediaType.Image, folderName, fileName);
 
                 image.CropCoordX1 = null;
                 image.CropCoordY1 = null;
@@ -208,12 +200,15 @@ namespace BetterCms.Module.MediaManager.Services
                 image.OriginalWidth = size.Width;
                 image.OriginalHeight = size.Height;
                 image.OriginalSize = fileLength;
-                image.OriginalUri = new Uri(Path.Combine(GetContentRoot(configuration.Storage.ContentRoot), ImagesFolderName, folderName, OriginalImageFilePrefix + fileName));
+                image.OriginalUri = mediaFileService.GetFileUri(MediaType.Image, folderName, OriginalImageFilePrefix + fileName);
+                image.PublicOriginallUrl = mediaFileService.GetPublicFileUrl(MediaType.Image, folderName, OriginalImageFilePrefix + fileName);
+                    
 
                 image.ThumbnailWidth = ThumbnailSize.Width;
                 image.ThumbnailHeight = ThumbnailSize.Height;
                 image.ThumbnailSize = thumbnailImage.Length;
-                image.ThumbnailUri = new Uri(Path.Combine(GetContentRoot(configuration.Storage.ContentRoot), ImagesFolderName, folderName, ThumbnailImageFilePrefix + Path.GetFileName(fileName) + ".png"));
+                image.ThumbnailUri = mediaFileService.GetFileUri(MediaType.Image, folderName,  ThumbnailImageFilePrefix + Path.GetFileNameWithoutExtension(fileName) + ".png");
+                image.PublicThumbnailUrl = mediaFileService.GetPublicFileUrl(MediaType.Image, folderName, ThumbnailImageFilePrefix + Path.GetFileNameWithoutExtension(fileName) + ".png");
 
                 image.ImageAlign = null;
                 image.IsTemporary = true;
@@ -225,9 +220,9 @@ namespace BetterCms.Module.MediaManager.Services
                 repository.Save(image);
                 unitOfWork.Commit();
 
-                Task imageUpload = UploadImageToStorage(fileStream, image.FileUri, image.Id, img => { img.IsUploaded = true; });
-                Task originalUpload = UploadImageToStorage(fileStream, image.OriginalUri, image.Id, img => { img.IsOriginalUploaded = true; });
-                Task thumbnailUpload = UploadImageToStorage(thumbnailImage, image.ThumbnailUri, image.Id, img => { img.IsThumbnailUploaded = true; });
+                Task imageUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(fileStream, image.FileUri, image.Id, img => { img.IsUploaded = true; });
+                Task originalUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(fileStream, image.OriginalUri, image.Id, img => { img.IsOriginalUploaded = true; });
+                Task thumbnailUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(thumbnailImage, image.ThumbnailUri, image.Id, img => { img.IsThumbnailUploaded = true; });
 
                 Task.Factory.ContinueWhenAll(
                     new[]
@@ -254,73 +249,6 @@ namespace BetterCms.Module.MediaManager.Services
                 thumbnailUpload.Start();
 
                 return image;
-            }
-        }
-
-        /// <summary>
-        /// Uploads the image to storage.
-        /// </summary>
-        /// <param name="sourceStream">The source stream.</param>
-        /// <param name="fileUri">The file URI.</param>
-        /// /// <param name="updateImageAfterUpload">An action to update specific image field after image upload.</param>
-        /// <returns>Upload task.</returns>
-        private Task UploadImageToStorage(Stream sourceStream, Uri fileUri, Guid mediaId, Action<MediaImage> updateImageAfterUpload)
-        {
-            var stream = new MemoryStream();
-
-            sourceStream.Seek(0, SeekOrigin.Begin);
-            sourceStream.CopyTo(stream);
-
-            var task = new Task(
-                () =>
-                    {
-                            var upload = new UploadRequest();
-                            upload.CreateDirectory = true;
-                            upload.Uri = fileUri;
-                            upload.InputStream = stream;
-
-                            storageService.UploadObject(upload);
-                    });
-
-            task
-             .ContinueWith(
-                t =>
-                 {
-                     stream.Close();
-                     stream.Dispose();
-                 })
-             .ContinueWith(
-                t =>
-                 {
-                    ExecuteActionOnThreadSeparatedSessionWithNoConcurrencyTracking(session =>
-                        {                   
-                            var media = session.Get<MediaImage>(mediaId);
-
-                            updateImageAfterUpload(media);
-
-                            session.SaveOrUpdate(media);
-                            session.Flush();
-                        });
-                 });            
-
-            return task;
-        }
-
-        private void ExecuteActionOnThreadSeparatedSessionWithNoConcurrencyTracking(Action<ISession> work)
-        {
-            using (var session = sessionFactoryProvider.OpenSession(false))
-            {
-                try
-                {
-                    lock (this)
-                    {
-                        work(session);
-                    }
-                }
-                finally
-                {
-                    session.Close();
-                }
             }
         }
 
@@ -493,19 +421,22 @@ namespace BetterCms.Module.MediaManager.Services
             return imageEntity;
         }
 
-        /// <summary>
-        /// Gets the content root.
-        /// </summary>
-        /// <param name="rootPath">The root path.</param>
-        /// <returns>Root path.</returns>
-        private string GetContentRoot(string rootPath)
+        private void ExecuteActionOnThreadSeparatedSessionWithNoConcurrencyTracking(Action<ISession> work)
         {
-            if (configuration.Storage.ServiceType == StorageServiceType.FileSystem && VirtualPathUtility.IsAppRelative(rootPath))
+            using (var session = sessionFactoryProvider.OpenSession(false))
             {
-                return httpContextAccessor.MapPath(rootPath);
+                try
+                {
+                    lock (this)
+                    {
+                        work(session);
+                    }
+                }
+                finally
+                {
+                    session.Close();
+                }
             }
-
-            return rootPath;
         }
     }
 }
