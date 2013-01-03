@@ -13,11 +13,13 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs'], function ($, bcms, tabs) {
             title: '.bcms-modal-title, .bcms-error-frame h4, .bcms-popinfo-frame h4',
             accept: '.bcms-modal-accept, .bcms-popinfo-frame .bcms-success-buttons-holder .bcms-btn-main',
             cancel: '.bcms-modal-cancel, .bcms-popinfo-frame .bcms-success-buttons-holder .bcms-btn-links-main',
-            close: '.bcms-modal-close, .bcms-modal-cancel, .bcms-error-frame .bcms-error-close, .bcms-success-buttons-holder .bcms-btn-links-main, .bcms-popinfo-frame .bcms-btn-close',
+            close: '.bcms-modal-close, .bcms-modal-cancel, .bcms-error-frame .bcms-error-close, .bcms-success-buttons-holder .bcms-btn-links-main, .bcms-popinfo-frame .bcms-btn-close, .bcms-preview-image-border .bcms-btn-close',
             body: '.bcms-modal-body, .bcms-error-frame, .bcms-popinfo-frame',
             content: '.bcms-modal-content-padded, .bcms-error-frame p, .bcms-popinfo-frame p',
-            scrollWindow: '.bcms-scroll-window',
             loader: '.bcms-loader',
+            scrollWindow: '.bcms-scroll-window',
+            previewImage: '.bcms-preview-image-frame img',
+            previewImageContainer: '.bcms-preview-image-border',
 
             // selectors for calculation of modal window size
             elemOuter: '.bcms-modal-body',
@@ -150,7 +152,7 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs'], function ($, bcms, tabs) {
 
             if (disableAnimation || this.options.disableAnimation) {
                 container.show();
-            } else {                
+            } else {
                 container.fadeIn('fast');
             }
 
@@ -232,7 +234,7 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs'], function ($, bcms, tabs) {
                 .append(content);
 
             this.container.find(selectors.loader).remove();
-
+            
             if ($.validator && $.validator.unobtrusive) {
                 $.validator.unobtrusive.parse(this.container);
             }
@@ -316,7 +318,7 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs'], function ($, bcms, tabs) {
             if (this.options.disableAnimation) {
                 this.container.hide().remove();
             } else {
-                this.container.hide(200, function() {
+                this.container.hide(200, function () {
                     $(this).remove();
                 });
             }
@@ -463,7 +465,7 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs'], function ($, bcms, tabs) {
 
         return modal.open(options);
     };
-    
+
     modal.info = function (options) {
         options = $.extend({}, options);
 
@@ -471,6 +473,43 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs'], function ($, bcms, tabs) {
         options.disableAnimation = true;
         options.disableCancel = true;
         return modal.open(options);
+    };
+
+    modal.imagePreview = function (src, alt, options) {
+        options = $.extend({}, options);
+
+        options.templateId = 'bcms-image-preview-template';
+        options.disableAnimation = true;
+
+        var dialog = modal.open(options);
+
+        var img = dialog.container.find(selectors.previewImage);
+        img.attr('src', src);
+        img.attr('alt', alt || '');
+
+        img.on('load', function () {
+            var imgContainer = dialog.container.find(selectors.previewImageContainer),
+                width = img.width(),
+                visibleWidth = $(window).width() - 150,
+                margin;
+            
+            if (width > visibleWidth) {
+                width = visibleWidth;
+            }
+
+            imgContainer.css('width', width + 'px');
+            img.css('width', width + 'px');
+
+            margin = (width + 50) / -2;
+            imgContainer.css('margin-left', margin + 'px');
+            imgContainer.css('min-height', null);
+            imgContainer.css('min-width', null);
+
+            imgContainer.find(selectors.loader).hide();
+            img.show();
+        });
+
+        return dialog;
     };
 
     return modal;

@@ -27,8 +27,6 @@ namespace BetterCms.Module.Pages.Registration
             Globalization = new IActionProjection[]
                 {
                     new JavaScriptModuleGlobalization(this, "editPagePropertiesModalTitle", () => PagesGlobalization.EditPageProperties_Title),
-                    new JavaScriptModuleGlobalization(this, "tagExpandTitle", ()=> PagesGlobalization.EditPageProperties_BasicPropertiesTab_PlusButton),
-                    new JavaScriptModuleGlobalization(this, "tagCollapse", ()=> PagesGlobalization.EditPageProperties_BasicPropertiesTab_MinusButton) 
                 };
         }
     }

@@ -47,7 +47,7 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
                 {
                     PageUrl = request.PagePermalink,
                     Title = request.PageTitle,
-                    Layout = Repository.AsProxy<Layout>(request.TemplateId)
+                    Layout = Repository.AsProxy<Root.Models.Layout>(request.TemplateId)
                 };
                 
             Repository.Save(page);

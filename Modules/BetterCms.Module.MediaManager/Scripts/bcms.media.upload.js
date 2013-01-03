@@ -5,25 +5,25 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
     function ($, bcms, dynamicContent, modal, html5Upload, ko) {
     'use strict';
 
-        var mediaUpload = {},
-            
-        selectors = {
-            dragZone: '#bcms-files-dropzone'
-        },
-        
-        classes = {
-            dragZoneActive: 'bcms-dropzone-active'
-        },
-            
-        links = {
-            loadUploadFilesDialogUrl: null,
-            uploadFileToServerUrl: null,
-            undoFileUploadUrl: null
-        },
-        
-        globalization = {
-           uploadFilesDialogTitle: null
-        };
+    var mediaUpload = {},
+
+    selectors = {
+        dragZone: '#bcms-files-dropzone'
+    },
+
+    classes = {
+        dragZoneActive: 'bcms-dropzone-active'
+    },
+
+    links = {
+        loadUploadFilesDialogUrl: null,
+        uploadFileToServerUrl: null,
+        undoFileUploadUrl: null
+    },
+
+    globalization = {
+        uploadFilesDialogTitle: null
+    };
 
     /**
     * Assign objects to module.
@@ -31,16 +31,17 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
     mediaUpload.links = links;
     mediaUpload.globalization = globalization;    
 
-    mediaUpload.openUploadFilesDialog = function (rootFolderId, rootFolderType) {
+    mediaUpload.openUploadFilesDialog = function (rootFolderId, rootFolderType, onSaveCallback) {
         var options = {
-            rootFolderId: rootFolderId,
-            rootFolderType: rootFolderType
-        };
-        
+                uploads: new UploadsViewModel(),
+                rootFolderId: rootFolderId,
+                rootFolderType: rootFolderType
+            };
+            
         modal.open({
             title: globalization.uploadFilesDialogTitle,            
             onLoad: function (dialog) {
-                var url = $.format(links.loadUploadFilesDialogUrl, rootFolderId);
+                var url = $.format(links.loadUploadFilesDialogUrl, rootFolderId, rootFolderType);
                 dynamicContent.bindDialog(dialog, url, {
                     contentAvailable: function () {
                         initUploadFilesDialogEvents(dialog, options);
@@ -49,11 +50,20 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
                     beforePost: function () {
                         dialog.container.showLoading();
                     },
+                    
+                    postSuccess: function(json) {
+                        if (onSaveCallback && $.isFunction(onSaveCallback)) {
+                            onSaveCallback(json);
+                        }
+                    },
 
                     postComplete: function () {
                         dialog.container.hideLoading();
                     }
                 });
+            },
+            onCancel: function () {
+                uploadsModel.removeAllUploads();
             }
         });
     };
@@ -92,6 +102,13 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
         self.removeUpload = function (fileViewModel) {            
             abortUpload(fileViewModel);
         };
+
+        self.removeAllUploads = function() {
+            var uploads = self.uploads.removeAll();
+            for (var i = 0; i < uploads.length; i++) {
+                abortUpload(uploads[i]);
+            }
+        };
     } 
 
     function FileViewModel(file) {
@@ -109,7 +126,8 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
     }
         
     function initUploadFilesDialogEvents(dialog, options) {
-        var dragZone = dialog.container.find(selectors.dragZone),
+        var uploadsModel = options.uploads,
+            dragZone = dialog.container.find(selectors.dragZone),
             cancelEvent = function (e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -130,9 +148,8 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
         });
 
         if (html5Upload.fileApiSupported()) {
-            
-            var context = document.getElementById('bcms-media-uploads'),
-                uploadsModel = new UploadsViewModel();
+
+            var context = document.getElementById('bcms-media-uploads');
 
             html5Upload.initialize({
                 uploadUrl: links.uploadFileToServerUrl,

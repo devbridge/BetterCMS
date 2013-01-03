@@ -124,19 +124,23 @@
     <Compile Include="Command\Files\GetFiles\GetFilesCommand.cs" />
     <Compile Include="Command\Folder\SaveFolderCommand.cs" />
     <Compile Include="Command\MediaManager\GetMediaItemsCommandBase.cs" />
+    <Compile Include="Command\MediaManager\RenameMedia\RenameMediaCommand.cs" />
     <Compile Include="Command\Upload\ConfirmUpload\ConfirmUploadCommand.cs" />
-    <Compile Include="Command\Images\DeleteMedia\DeleteMediaCommand.cs" />
-    <Compile Include="Command\Images\DeleteMedia\DeleteMediaCommandRequest.cs" />
+    <Compile Include="Command\MediaManager\DeleteMedia\DeleteMediaCommand.cs" />
+    <Compile Include="Command\MediaManager\DeleteMedia\DeleteMediaCommandRequest.cs" />
     <Compile Include="Command\Images\ResizeImage\ResizeImageCommandRequest.cs" />
     <Compile Include="Command\Images\ResizeImage\ResizeImageCommand.cs" />
     <Compile Include="Command\Images\SaveImage\SaveImageDataCommand.cs" />
     <Compile Include="Command\Images\GetImage\GetImageCommand.cs" />
     <Compile Include="Command\Images\CropImage\CropImageCommand.cs" />
     <Compile Include="Command\Images\GetImages\GetImagesCommand.cs" />
+    <Compile Include="Command\Upload\ConfirmUpload\ConfirmUploadResponse.cs" />
+    <Compile Include="Command\Upload\GetMultiFileUpload\GetMultiFileUploadCommand.cs" />
+    <Compile Include="Command\Upload\GetMultiFileUpload\GetMultiFileUploadRequest.cs" />
     <Compile Include="Command\Upload\UndoUpload\UndoUploadCommand.cs" />
     <Compile Include="Command\Upload\UndoUpload\UndoUploadRequest.cs" />
-    <Compile Include="Command\Upload\UploadFile\UploadFileRequest.cs" />
-    <Compile Include="Command\Upload\UploadFile\UploadFileCommand.cs" />
+    <Compile Include="Command\Upload\Upload\UploadRequest.cs" />
+    <Compile Include="Command\Upload\Upload\UploadCommand.cs" />
     <Compile Include="Command\Videos\GetVideos\GetVideosCommand.cs" />
     <Compile Include="Content\Resources\MediaGlobalization.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -162,6 +166,8 @@
     <Compile Include="Models\MediaFolder.cs" />
     <Compile Include="Models\Media.cs" />
     <Compile Include="Models\MediaImage.cs" />
+    <Compile Include="Models\Migrations\Migration201301031637.cs" />
+    <Compile Include="Models\Migrations\Migration201301031618.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
     <Compile Include="Models\Migrations\Migration201212271611.cs" />
     <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />
@@ -199,7 +205,6 @@
     <EmbeddedResource Include="Content\Css\Images\loading.gif" />
     <EmbeddedResource Include="Content\Css\Images\sprite-media-1.png" />
     <EmbeddedResource Include="Content\Css\Images\sprite-media-2.png" />
-    <EmbeddedResource Include="Scripts\bcms.media.imageeditor.js" />
     <EmbeddedResource Include="Scripts\html5Upload.js" />
     <EmbeddedResource Include="Scripts\jquery.Jcrop.js" />
     <EmbeddedResource Include="Content\Css\jquery.Jcrop.css" />
@@ -209,6 +214,9 @@
     <EmbeddedResource Include="Content\Css\Images\bcms-no-image-2.png" />
     <EmbeddedResource Include="Content\Css\Images\bcms-no-image-3.png" />
     <EmbeddedResource Include="Scripts\bcms.contextMenu.js" />
+    <EmbeddedResource Include="Scripts\bcms.media.imageeditor.js" />
+    <EmbeddedResource Include="Scripts\bcms.media.js" />
+    <EmbeddedResource Include="Scripts\bcms.media.upload.js" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -245,14 +253,24 @@
     <Folder Include="Helpers\" />
     <Folder Include="Mvc\" />
     <Folder Include="Views\Files\" />
-    <Folder Include="Views\MediaManager\" />
-    <Folder Include="Views\Upload\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Images\ImageInsert.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Images\ImageEditorInsert.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\MediaManager\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\MediaManager\Partial\MediaManagerTab.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\MediaManager\Partial\MediaManagerTemplate.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Upload\MultiFileUpload.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

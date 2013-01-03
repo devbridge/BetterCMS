@@ -16,7 +16,7 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
             fieldValues: '.bcms-grid-item-info',
             deleteRowLink: 'a.bcms-icn-delete',
             rowMessage: '.bcms-grid-item-message',
-            saveRowLink: 'a.bcms-btn-small',
+            saveRowLink: '.bcms-btn-small',
             cancelLink: 'a.bcms-btn-links-small',
             editRowLink: '.bcms-grid-item-edit-button',
             firstTable: 'table.bcms-tables:first',

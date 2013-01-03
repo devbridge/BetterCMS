@@ -12,6 +12,8 @@ namespace BetterCms.Module.Root.Models
 
         public virtual string LayoutPath { get; set; }
 
+        public virtual string PreviewUrl { get; set; }
+
         public virtual Module Module { get; set; }
 
         public virtual IList<Page> Pages { get; set; }

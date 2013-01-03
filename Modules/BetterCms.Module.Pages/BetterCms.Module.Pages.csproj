@@ -123,6 +123,7 @@
     <Compile Include="Command\Content\GetContent\GetContentCommand.cs" />
     <Compile Include="Command\Content\SortPageContent\SortPageContentResponse.cs" />
     <Compile Include="Command\Content\SortPageContent\SortPageContentCommand.cs" />
+    <Compile Include="Command\Layout\GetSiteSettingsTemplates\GetSiteSettingsTemplatesCommand.cs" />
     <Compile Include="Command\Page\ClonePage\ClonePageCommand.cs" />
     <Compile Include="Command\Page\GetPageForCloning\GetPageForDeleteCommand.cs" />
     <Compile Include="Command\Widget\DeleteWidget\DeleteWidgetCommand.cs" />
@@ -173,6 +174,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PagesGlobalization.resx</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\TemplatesController.cs" />
     <Compile Include="Controllers\WidgetsController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\RedirectController.cs" />
@@ -211,6 +213,7 @@
     <Compile Include="Projections\HtmlContentRenderer.cs" />
     <Compile Include="Projections\PageStylesProjection.cs" />
     <Compile Include="Projections\ServerControlWidgetRenderer.cs" />
+    <Compile Include="Registration\TemplatesJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\PagesContentJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\PageTagsJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\RedirectsJavaScriptModuleDescriptor.cs" />
@@ -224,6 +227,8 @@
     <Compile Include="ViewModels\Content\ContentOptionViewModel.cs" />
     <Compile Include="ViewModels\Content\ContentViewModel.cs" />
     <Compile Include="ViewModels\Content\PageContentSortViewModel.cs" />
+    <Compile Include="ViewModels\SiteSettings\SiteSettingTemplateItemViewModel.cs" />
+    <Compile Include="ViewModels\SiteSettings\SiteSettingTemplateListViewModel.cs" />
     <Compile Include="ViewModels\Widgets\EditHtmlContentWidgetViewModel.cs" />
     <Compile Include="ViewModels\Widgets\EditServerControlWidgetViewModel.cs" />
     <Compile Include="ViewModels\Widgets\HtmlContentWidgetViewModel.cs" />
@@ -275,6 +280,7 @@
     <EmbeddedResource Include="Content\Css\Images\bcms-no-image-3.png" />
     <EmbeddedResource Include="Content\Css\Images\sprite-pages-1.png" />
     <EmbeddedResource Include="Content\Css\Images\sprite-pages-2.png" />
+    <EmbeddedResource Include="Scripts\bcms.pages.template.js" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -369,6 +375,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Shared\" />
+    <Folder Include="Views\Templates\Partial\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Templates\Templates.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Templates\EditTemplate.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

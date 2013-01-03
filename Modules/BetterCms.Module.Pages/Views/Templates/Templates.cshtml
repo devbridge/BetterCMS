@@ -1,0 +1,64 @@
+﻿@using BetterCms.Module.Pages.Content.Resources
+@using BetterCms.Module.Pages.Controllers
+@using BetterCms.Module.Pages.ViewModels.SiteSettings
+@using BetterCms.Module.Root.Mvc.Grids.Extensions
+@using BetterCms.Module.Root.Mvc.Grids.TableRenderers
+@using BetterCms.Module.Root.Mvc.Helpers
+@using Microsoft.Web.Mvc
+@using MvcContrib
+@using MvcContrib.UI.Grid
+
+@model SiteSettingTemplateListViewModel
+           
+@{
+    Action<ColumnBuilder<SiteSettingTemplateItemViewModel>> columns = column =>
+    {
+        column.EditButtonColumn(renderId:false);
+
+        column.For(f => string.Format("<a class=\"bcms-tables-link bcms-grid-item-edit-button bcms-widget-name\" data-id=\"{0}\">{1}</a>", f.Id, f.TemplateName))
+            .Named(PagesGlobalization.SiteSettings_Templates_NameColumn)
+            .SortColumnName("TemplateName")
+            .Encode(false);
+            
+        column.DeleteButtonColumn(renderId:false);
+    };
+}
+
+@using (Html.BeginForm<TemplatesController>(f => f.Templates(null), FormMethod.Post, new { @id = "bcms-widgets-form" }))
+{
+    @Html.HiddenGridOptions(Model.GridOptions)
+    
+    <div class="bcms-twocols-title-block">
+        <div class="bcms-large-titles">@PagesGlobalization.SiteSettings_Templates_Title</div>
+        <div class="bcms-btn-links-main" id="bcms-register-template-button">@PagesGlobalization.SiteSettings_Widgets_RegisterNew</div>
+        <div class="bcms-search-block">
+            @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box" })
+            <div class="bcms-btn-search" id="bcms-template-search-btn">@PagesGlobalization.SiteSettings_Widgets_Search</div>
+        </div>
+        @Html.MessagesBox("bcms-templates-messages")
+    </div>    
+    @(Html
+          .Grid(Model.Items)
+          .Sort(Model.GridOptions)
+          .Columns(columns)
+          .Attributes(@class => "bcms-tables")          
+          .RowAttributes(delegate(GridRowViewData<SiteSettingTemplateItemViewModel> row)
+                  {
+                      return new Dictionary<string, object>
+                              {
+                                    {"data-id", row.Item.Id},
+                                    {"data-type", row.Item.TemplateName},
+                                    {"data-version", row.Item.Version}
+                              };
+              })
+              .RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingTemplateItemViewModel>()))
+}
+
+<script type="text/html" id="bcms-template-list-row-template">
+    @(Html
+                        .Grid(new List<SiteSettingTemplateItemViewModel> { new SiteSettingTemplateItemViewModel() })
+        .Columns(columns)
+        .Attributes(@class => "bcms-tables")
+        .RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingTemplateItemViewModel>()))
+</script>
+

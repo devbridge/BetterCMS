@@ -7,7 +7,7 @@ using BetterCms.Module.Root.Mvc.Grids;
 
 namespace BetterCms.Module.MediaManager.ViewModels.MediaManager
 {
-    public abstract class MediaViewModel : IEditableGridItem
+    public class MediaViewModel : IEditableGridItem
     {
         public virtual Guid Id { get; set; }
 
@@ -20,6 +20,8 @@ namespace BetterCms.Module.MediaManager.ViewModels.MediaManager
         public virtual MediaType Type { get; set; }
         
         public virtual MediaContentType ContentType { get; set; }
+
+        public virtual string FileExtension { get; set; }
 
         public MediaViewModel()
         {

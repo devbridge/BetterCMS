@@ -45,8 +45,7 @@ namespace BetterCms.Core.DataAccess.DataContext.Interceptors
             ISessionImplementor sessionImplementation = session.GetSessionImplementation();
             IPersistenceContext persistenceContext = sessionImplementation.PersistenceContext;
             EntityEntry entityEntry = persistenceContext.GetEntry(entity);
-            string entityName = entityEntry.EntityName;
-            IEntityPersister persister = sessionImplementation.GetEntityPersister(entityName, null);
+            IEntityPersister persister = entityEntry.Persister;
             
             if (persister.IsVersioned && entityEntry.ExistsInDatabase)
             {

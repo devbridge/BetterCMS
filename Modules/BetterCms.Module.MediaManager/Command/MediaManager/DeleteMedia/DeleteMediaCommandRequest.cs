@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BetterCms.Module.MediaManager.Command.Images
+namespace BetterCms.Module.MediaManager.Command.MediaManager.DeleteMedia
 {
     public class DeleteMediaCommandRequest
     {
