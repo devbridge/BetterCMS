@@ -40,5 +40,7 @@ namespace BetterCms.Module.MediaManager.Models
         public virtual Uri ThumbnailUri { get; set; }
 
         public virtual bool IsThumbnailUploaded { get; set; }
+
+        public virtual string PublicThumbnailUrl { get; set; }
     }
 }

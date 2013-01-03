@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+
+using BetterCms.Module.MediaManager.Models;
 
 namespace BetterCms.Module.MediaManager.ViewModels.Upload
 {
@@ -10,10 +10,12 @@ namespace BetterCms.Module.MediaManager.ViewModels.Upload
     {
         public Guid RootFolderId { get; set; }
 
+        public MediaType RootFolderType { get; set; }
+
         public Guid? SelectedFolderId { get; set; }
 
-        public IDictionary<Guid, string> Folders { get; set; }
+        public IList<Tuple<Guid, string>> Folders { get; set; }
 
-        public List<Guid> UploadedFiles { get; set; }
+        public IList<Guid> UploadedFiles { get; set; }
     }
 }

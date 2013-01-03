@@ -133,6 +133,8 @@
     <Compile Include="Command\Images\GetImage\GetImageCommand.cs" />
     <Compile Include="Command\Images\CropImage\CropImageCommand.cs" />
     <Compile Include="Command\Images\GetImages\GetImagesCommand.cs" />
+    <Compile Include="Command\Upload\GetMultiFileUpload\GetMultiFileUploadCommand.cs" />
+    <Compile Include="Command\Upload\GetMultiFileUpload\GetMultiFileUploadRequest.cs" />
     <Compile Include="Command\Upload\UndoUpload\UndoUploadCommand.cs" />
     <Compile Include="Command\Upload\UndoUpload\UndoUploadRequest.cs" />
     <Compile Include="Command\Upload\UploadFile\UploadFileRequest.cs" />
@@ -162,6 +164,7 @@
     <Compile Include="Models\MediaFolder.cs" />
     <Compile Include="Models\Media.cs" />
     <Compile Include="Models\MediaImage.cs" />
+    <Compile Include="Models\Migrations\Migration201301031618.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
     <Compile Include="Models\Migrations\Migration201212271611.cs" />
     <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />

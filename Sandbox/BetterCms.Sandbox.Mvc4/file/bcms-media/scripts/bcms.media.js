@@ -96,7 +96,15 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
         * Media's current folder view model
         */
         function MediaItemsViewModel(container, url, messagesContainer) {
-            var self = this;
+            var self = this,
+                onUploadFiles = function(mediasArray, newFiles) {
+                    if (newFiles && newFiles.length > 0) {
+                        for (var i = newFiles.length - 1; i >= 0; i--) {
+                            var mediaItem = convertToMediaModel(newFiles[i]);
+                            mediasArray.unshift(mediaItem);
+                        }
+                    }
+                };
 
             self.container = container;
             self.url = url;
@@ -126,7 +134,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             };
 
             self.uploadMedia = function () {
-                mediaUpload.openUploadFilesDialog(self.path().currentFolder().id(), self.path().currentFolder().type);
+                mediaUpload.openUploadFilesDialog(self.path().currentFolder().id(), self.path().currentFolder().type, onUploadFiles);
             };
 
             self.searchMedia = function () {
@@ -810,32 +818,10 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                     if (json.Data.Items && json.Data.Items && $.isArray(json.Data.Items)) {
                         for (i = 0; i < json.Data.Items.length; i++) {
                             var item = json.Data.Items[i],
-                                itemViewModel;
+                                model = convertToMediaModel(item);                            
 
-                            if (item.ContentType == contentTypes.folder) {
-                                itemViewModel = new MediaFolderViewModel(item);
-                            } else {
-                                switch (item.Type) {
-                                    case mediaTypes.image:
-                                        itemViewModel = new MediaImageViewModel(item);
-                                        break;
-                                    case mediaTypes.audio:
-                                        itemViewModel = new MediaAudioViewModel(item);
-                                        break;
-                                    case mediaTypes.video:
-                                        itemViewModel = new MediaVideoViewModel(item);
-                                        break;
-                                    case mediaTypes.file:
-                                        itemViewModel = new MediaFileViewModel(item);
-                                        break;
-                                    default:
-                                        itemViewModel = null;
-                                        break;
-                                }
-                            }
-
-                            if (itemViewModel != null) {
-                                folderViewModel.medias.push(itemViewModel);
+                            if (model != null) {
+                                folderViewModel.medias.push(model);
                             }
                         }
                     }
@@ -850,6 +836,33 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             return false;
         }
 
+        function convertToMediaModel(item) {
+            var model;            
+            if (item.ContentType == contentTypes.folder) {
+                model = new MediaFolderViewModel(item);
+            } else {
+                switch (item.Type) {
+                    case mediaTypes.image:
+                        model = new MediaImageViewModel(item);
+                        break;
+                    case mediaTypes.audio:
+                        model = new MediaAudioViewModel(item);
+                        break;
+                    case mediaTypes.video:
+                        model = new MediaVideoViewModel(item);
+                        break;
+                    case mediaTypes.file:
+                        model = new MediaFileViewModel(item);
+                        break;
+                    default:
+                        model = null;
+                        break;
+                }
+            }
+
+            return model;
+        }
+        
         /**
         * Load tab data
         */

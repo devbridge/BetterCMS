@@ -7,24 +7,7 @@ namespace BetterCms.Module.MediaManager.ViewModels.MediaManager
     [Serializable]
     public class MediaFileViewModel : MediaViewModel
     {
-        public virtual Guid FolderId { get; set; }
-
         public virtual long Size { get; set; }
-
-        public virtual string SizeKbOrMb
-        {
-            get
-            {
-
-                long sizeKb = (long)Math.Round(Size / 1024f, 0);
-                if (sizeKb <= 1024)
-                {
-                    return sizeKb + " KB";
-                }
-
-                return (long)Math.Round(sizeKb / 1024f, 0) + " MB";
-            }
-        }
 
         public MediaFileViewModel()
         {
