@@ -70,7 +70,8 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
             {
                 var imageFile = (MediaImage)file;
                 model = new MediaImageViewModel {
-                                                    PreviewUrl = imageFile.PublicThumbnailUrl,
+                                                    ThumbnailUrl = imageFile.PublicThumbnailUrl,
+                                                    PreviewUrl = imageFile.PublicUrl,
                                                     Tooltip = imageFile.Title
                                                 };
             }
