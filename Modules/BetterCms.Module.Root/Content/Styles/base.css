@@ -805,7 +805,6 @@ div.bcms-noscroll body {
     font-size: 13px;
     line-height: 140%;
     overflow-y: auto;
-    overflow-x: hidden;
     width: 100%;
     height: 100%;
     position: fixed;
@@ -1573,19 +1572,17 @@ a.bcms-btn-close {
     background-color: #f5f5f5;
     border: 1px solid #c6c6c6;
     box-shadow: 0 0 1px 1px #292929;
-    min-width: 200px;
-    min-height: 200px;
-    margin-left: -100px;
+    width: 170px;
+    min-height: 170px;
+    margin-left: -116px;
 }
 
 .bcms-preview-image-frame {
     overflow: hidden;
-
 }
 
     .bcms-preview-image-frame img {
         display: block;
-        /*width: 100%;*/
     }
 
 /*Features Grid*/

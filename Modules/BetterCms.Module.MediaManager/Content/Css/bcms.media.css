@@ -712,11 +712,10 @@ input.bcms-grid-input:focus {
     height: 96px;
     margin: 10px 5px 0;
     padding: 10px 0;
+    text-align: center;
+    cursor: pointer;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
-    text-align: center;
-    overflow: hidden;
-    cursor: pointer;
 }
 
     .bcms-grid .bcms-folder-box .bcms-media-items-block {
@@ -1346,5 +1345,3 @@ input.bcms-grid-input:focus {
     font-size: 14px;
     line-height: 24px;
 }
-
-

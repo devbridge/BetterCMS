@@ -492,18 +492,16 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs'], function ($, bcms, tabs) {
                 width = img.width(),
                 visibleWidth = $(window).width() - 150,
                 margin;
-            
+
             if (width > visibleWidth) {
                 width = visibleWidth;
             }
 
             imgContainer.css('width', width + 'px');
-            img.css('width', width + 'px');
+            img.css('width', '100%');
 
             margin = (width + 50) / -2;
             imgContainer.css('margin-left', margin + 'px');
-            imgContainer.css('min-height', null);
-            imgContainer.css('min-width', null);
 
             imgContainer.find(selectors.loader).hide();
             img.show();
