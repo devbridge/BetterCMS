@@ -71,7 +71,7 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
                 var imageFile = (MediaImage)file;
                 model = new MediaImageViewModel {
                                                     ThumbnailUrl = imageFile.PublicThumbnailUrl,
-                                                    PreviewUrl = imageFile.PublicUrl,
+                                                    PublicUrl = imageFile.PublicUrl,
                                                     Tooltip = imageFile.Title
                                                 };
             }

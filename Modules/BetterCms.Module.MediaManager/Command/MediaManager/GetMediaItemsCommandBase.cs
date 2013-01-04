@@ -18,7 +18,7 @@ using NHibernate.Transform;
 namespace BetterCms.Module.MediaManager.Command.MediaManager
 {
     public abstract class GetMediaItemsCommandBase<TModel, TEntity> : CommandBase, ICommand<MediaManagerViewModel, MediaManagerItemsViewModel>
-        where TModel: MediaViewModel
+        where TModel: MediaFileViewModel
         where TEntity: MediaFile
     {
         /// <summary>
@@ -197,6 +197,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
                     .Select(() => alias.Id).WithAlias(() => modelAlias.Id)
                     .Select(() => alias.Title).WithAlias(() => modelAlias.Name)
                     .Select(() => alias.FileExtension).WithAlias(() => modelAlias.FileExtension)
+                    .Select(() => alias.PublicUrl).WithAlias(() => modelAlias.PublicUrl)
                     .Select(() => alias.Version).WithAlias(() => modelAlias.Version);
         }
     }

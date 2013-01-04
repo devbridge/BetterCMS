@@ -213,11 +213,8 @@
     <EmbeddedResource Include="Content\Css\Images\bcms-no-image-1.png" />
     <EmbeddedResource Include="Content\Css\Images\bcms-no-image-2.png" />
     <EmbeddedResource Include="Content\Css\Images\bcms-no-image-3.png" />
-    <EmbeddedResource Include="Scripts\bcms.contextMenu.js" />
     <EmbeddedResource Include="Scripts\bcms.media.imageeditor.js" />
-    <EmbeddedResource Include="Scripts\bcms.media.js" />
     <EmbeddedResource Include="Scripts\bcms.media.upload.js" />
-    <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BetterCMS.Configuration\BetterCms.Configuration.csproj">
@@ -242,12 +239,9 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Scripts\bcms.contextMenu.js" />
+    <EmbeddedResource Include="Scripts\bcms.media.js" />
     <Content Include="web.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Videos\VideosTab.cshtml" />
-    <EmbeddedResource Include="Views\Images\ImageEditor.cshtml" />
-    <EmbeddedResource Include="Views\Images\ImageCropper.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />
@@ -255,10 +249,16 @@
     <Folder Include="Views\Files\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Images\ImageInsert.cshtml" />
+    <EmbeddedResource Include="Views\Images\ImageCropper.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Images\ImageEditor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Images\ImageEditorInsert.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Images\ImageInsert.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\MediaManager\Index.cshtml" />
@@ -271,6 +271,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Upload\MultiFileUpload.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Videos\VideosTab.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Web.config" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
