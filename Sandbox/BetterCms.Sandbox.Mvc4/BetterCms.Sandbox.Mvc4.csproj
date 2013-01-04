@@ -177,6 +177,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Content Include="App_Data\BetterCMS\Modules\readme.txt" />
+    <EmbeddedResource Include="file\bcms-root\scripts\bcms.inlineEdit.js" />
+    <EmbeddedResource Include="file\bcms-pages\scripts\bcms.pages.tags.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

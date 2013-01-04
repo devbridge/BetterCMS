@@ -315,7 +315,6 @@
     <EmbeddedResource Include="Scripts\bcms.tabs.js" />
     <EmbeddedResource Include="Content\Styles\images\modal-back.png" />
     <EmbeddedResource Include="Scripts\bcms.preview.js" />
-    <EmbeddedResource Include="Scripts\bcms.inlineEdit.js" />
     <EmbeddedResource Include="Scripts\bcms.grid.js" />
     <EmbeddedResource Include="Content\Styles\images\loading.gif" />
     <EmbeddedResource Include="Content\Styles\images\bcms-sidebar-select.png" />

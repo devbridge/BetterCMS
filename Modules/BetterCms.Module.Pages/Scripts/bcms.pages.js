@@ -38,6 +38,7 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             siteSettingsPageRowTemplateFirstRow: 'tr:first',
             siteSettingsPageParentRow: 'tr:first',
             siteSettingsPagesTableFirstRow: 'table.bcms-tables > tbody > tr:first',
+            siteSettingsRowCells: 'td',
             
             siteSettingPageTitleCell: '.bcms-page-title',
             siteSettingPageCreatedCell: '.bcms-page-created',
@@ -345,11 +346,13 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             page.addSiteSettingsPage(container);
         });
 
-        container.find(selectors.siteSettingsPageEditButton).on('click', function () {
-            page.editSiteSettingsPage($(this));
+        container.find(selectors.siteSettingsRowCells).on('click', function () {
+            var editButton = $(this).parents(selectors.siteSettingsPageParentRow).find(selectors.siteSettingsPageEditButton);
+            page.editSiteSettingsPage(editButton);
         });
 
-        container.find(selectors.siteSettingsPageDeleteButton).on('click', function () {
+        container.find(selectors.siteSettingsPageDeleteButton).on('click', function (event) {
+            bcms.stopEventPropagation(event);
             page.deleteSiteSettingsPage($(this), container);
         });
     };

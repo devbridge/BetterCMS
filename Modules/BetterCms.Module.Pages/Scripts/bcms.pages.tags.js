@@ -69,7 +69,7 @@ define('bcms.pages.tags', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSe
     /**
     * Initializes site settings tags list and list items events
     */
-    tags.initSiteSettingsTagsEvents = function() {
+    tags.initSiteSettingsTagsEvents = function () {
         var dialog = siteSettings.getModalDialog(),
             container = dialog.container;
         
