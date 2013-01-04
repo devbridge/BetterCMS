@@ -50,9 +50,9 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
             return response;
         }
 
-        private MediaViewModel Convert(MediaFile file)
+        private MediaFileViewModel Convert(MediaFile file)
         {
-            MediaViewModel model;
+            MediaFileViewModel model;
 
             if (file.Type == MediaType.File)
             {
@@ -71,7 +71,6 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
                 var imageFile = (MediaImage)file;
                 model = new MediaImageViewModel {
                                                     ThumbnailUrl = imageFile.PublicThumbnailUrl,
-                                                    PublicUrl = imageFile.PublicUrl,
                                                     Tooltip = imageFile.Title
                                                 };
             }
@@ -85,6 +84,8 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
             model.Type = file.Type;
             model.Version = file.Version;
             model.ContentType = MediaContentType.File;
+            model.PublicUrl = file.PublicUrl;
+            model.FileExtension = file.FileExtension;
 
             return model;
         }
