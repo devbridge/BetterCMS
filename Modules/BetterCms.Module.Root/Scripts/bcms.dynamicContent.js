@@ -18,7 +18,7 @@ define('bcms.dynamicContent', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bc
 
         globalization = {
             failedLoadDialogMessage: 'Failed to load dialog. Internal server error. Please try again later.'
-        }
+        };
 
     /**
     /* Assign objects to module.
