@@ -288,6 +288,9 @@
   <data name="MediaManager_AddNewFolder" xml:space="preserve">
     <value>Add New Folder</value>
   </data>
+  <data name="MediaManager_ButtonDownload" xml:space="preserve">
+    <value>Download</value>
+  </data>
   <data name="MediaManager_ButtonInsertImage" xml:space="preserve">
     <value>Insert Image</value>
   </data>
