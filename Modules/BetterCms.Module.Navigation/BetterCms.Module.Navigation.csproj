@@ -118,11 +118,13 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Command\Sitemap\GetSitemap\GetSitemapCommand.cs" />
     <Compile Include="Content\Resources\NavigationGlobalization.Designer.cs">
       <DependentUpon>NavigationGlobalization.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Controllers\SitemapController.cs" />
     <Compile Include="Models\SitemapNode.cs" />
     <Compile Include="Models\Maps\SitemapNodeMap.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
@@ -130,6 +132,10 @@
     <Compile Include="Registration\SitemapJavaScriptModuleDescriptor.cs" />
     <Compile Include="NavigationModuleDescriptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\DefaultSitemapService.cs" />
+    <Compile Include="Services\ISitemapService.cs" />
+    <Compile Include="ViewModels\Sitemap\SearchableSitemapViewModel.cs" />
+    <Compile Include="ViewModels\Sitemap\SitemapNodeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Content\Resources\NavigationGlobalization.resx">
@@ -167,13 +173,12 @@
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Command\" />
     <Folder Include="Content\Css\Images\" />
-    <Folder Include="Controllers\" />
     <Folder Include="Projections\" />
-    <Folder Include="Services\" />
-    <Folder Include="ViewModels\" />
     <Folder Include="Views\Shared\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Sitemap\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

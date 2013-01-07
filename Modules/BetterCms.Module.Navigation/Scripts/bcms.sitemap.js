@@ -11,6 +11,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         },
         
         links = {
+            loadSiteSettingsSitmapUrl: null,
         },
         
         globalization = {
@@ -27,6 +28,23 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
     */
     sitemap.links = links;
     sitemap.globalization = globalization;
+
+    /**
+    * Loads a media manager view to the site settings container.
+    */
+    sitemap.loadSiteSettingsSitmap = function () {
+        dynamicContent.bindSiteSettings(siteSettings, links.loadSiteSettingsSitmapUrl, {
+            contentAvailable: initializeSiteSettingsSitemap
+        });
+    };
+
+    /**
+    * Initializes media manager.
+    */
+    function initializeSiteSettingsSitemap(content) {
+        // TODO: implement.
+        alert("Implement sitemap!");
+    };
 
     /**
     * Initializes page module.

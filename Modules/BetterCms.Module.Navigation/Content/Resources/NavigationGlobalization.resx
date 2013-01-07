@@ -117,4 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Sitemap_Dialog_NodeTitle_RequiredMessage" xml:space="preserve">
+    <value>Title is required.</value>
+  </data>
+  <data name="Sitemap_Dialog_NodeUrl_RequiredMessage" xml:space="preserve">
+    <value>Url is required.</value>
+  </data>
+  <data name="SiteSettings_SitemapMenuItem" xml:space="preserve">
+    <value>Site Map</value>
+  </data>
+  <data name="Sitemap_Dialog_Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Sitemap_Dialog_Search" xml:space="preserve">
+    <value>Search...</value>
+  </data>
+  <data name="Sitemap_Dialog_Title" xml:space="preserve">
+    <value>Sitemap</value>
+  </data>
 </root>

@@ -59,5 +59,59 @@ namespace BetterCms.Module.Navigation.Content.Resources {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string Sitemap_Dialog_Edit {
+            get {
+                return ResourceManager.GetString("Sitemap_Dialog_Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title is required..
+        /// </summary>
+        public static string Sitemap_Dialog_NodeTitle_RequiredMessage {
+            get {
+                return ResourceManager.GetString("Sitemap_Dialog_NodeTitle_RequiredMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Url is required..
+        /// </summary>
+        public static string Sitemap_Dialog_NodeUrl_RequiredMessage {
+            get {
+                return ResourceManager.GetString("Sitemap_Dialog_NodeUrl_RequiredMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search....
+        /// </summary>
+        public static string Sitemap_Dialog_Search {
+            get {
+                return ResourceManager.GetString("Sitemap_Dialog_Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sitemap.
+        /// </summary>
+        public static string Sitemap_Dialog_Title {
+            get {
+                return ResourceManager.GetString("Sitemap_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Site Map.
+        /// </summary>
+        public static string SiteSettings_SitemapMenuItem {
+            get {
+                return ResourceManager.GetString("SiteSettings_SitemapMenuItem", resourceCulture);
+            }
+        }
     }
 }
