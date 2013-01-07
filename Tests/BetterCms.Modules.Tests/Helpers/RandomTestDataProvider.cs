@@ -5,6 +5,7 @@ using BetterCms.Core.Models;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Navigation.Models;
 
 namespace BetterCms.Tests.Helpers
 {
@@ -532,6 +533,19 @@ namespace BetterCms.Tests.Helpers
             entity.ThumbnailUri = new Uri(@"C:\Projects\BetterCMS\t_file100.png");
             entity.IsThumbnailUploaded = true;
             entity.PublicThumbnailUrl = "http://bettercms.com/files/image?id=100200&t=image&p";
+
+            return entity;
+        }
+
+        public SitemapNode CreateNewSitemapNode()
+        {
+            var entity = new SitemapNode();
+
+            PopulateBaseFields(entity);
+
+            entity.Title = ProvideRandomString(MaxLength.Name);
+            entity.Url = ProvideRandomString(MaxLength.Url);
+            entity.DisplayOrder = ProvideRandomNumber(0, int.MaxValue);
 
             return entity;
         }

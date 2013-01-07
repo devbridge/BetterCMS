@@ -1,5 +1,7 @@
 ﻿using BetterCms.Core.Modules;
+using BetterCms.Core.Modules.JsModule;
 using BetterCms.Core.Modules.Projections;
+using BetterCms.Module.Blog.Controllers;
 
 namespace BetterCms.Module.Blog.Registration
 {
@@ -15,7 +17,10 @@ namespace BetterCms.Module.Blog.Registration
         public BlogJavaScriptModuleDescriptor(ModuleDescriptor containerModule)
             : base(containerModule, "bcms.blog", "/file/bcms-blog/scripts/bcms.blog")
         {
-            Links = new IActionProjection[] { };
+            Links = new IActionProjection[]
+                        {
+                            new JavaScriptModuleLinkTo<BlogController>(this, "loadSiteSettingsBlogsUrl", c => c.Index())
+                        };
 
             Globalization = new IActionProjection[] { };
         }

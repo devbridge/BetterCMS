@@ -10,6 +10,7 @@ using BetterCms.Module.Blog;
 using BetterCms.Module.MediaManager;
 using BetterCms.Module.Pages;
 using BetterCms.Module.Root;
+using BetterCms.Module.Navigation;
 using BetterCms.Module.Templates;
 
 using Common.Logging;
@@ -28,6 +29,7 @@ namespace BetterCms.Sandbox.DataMigration
                     (new ModuleDescriptor[]
                     {
                         new BlogModuleDescriptor(),
+                        new NavigationModuleDescriptor(),
                         new TemplatesModuleDescriptor(),
                         new MediaManagerModuleDescriptor(),
                         new PagesModuleDescriptor(),
@@ -59,7 +61,7 @@ namespace BetterCms.Sandbox.DataMigration
         {
             try
             {
-                //Console.WriteLine("-- Migrate DOWN --");
+                Console.WriteLine("-- Migrate DOWN --");
                 
                 Migrate(false);
 
