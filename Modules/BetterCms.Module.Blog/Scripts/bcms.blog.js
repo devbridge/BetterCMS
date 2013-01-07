@@ -8,7 +8,9 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     var blog = { },
         selectors = { },
         links = {
-            loadSiteSettingsBlogsUrl: null
+            loadSiteSettingsBlogsUrl: null,
+            loadCreateNewPostDialogUrl: null,
+            loadEditPostDialogUrl: null
         },
         globalization = { };
 
@@ -16,6 +18,9 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     blog.links = links;
     blog.globalization = globalization;
     blog.selectors = selectors;
+
+    function initEditBlogPostDialogEvents() {
+    }
 
     function initializeSiteSettingsBlogs(content) {
     }
@@ -33,6 +38,14 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     * Posts new blog article
     */
     blog.postNewArticle = function () {
+        modal.open({
+            title: globalization.createNewPostDialogTitle,
+            onLoad: function (dialog) {
+                dynamicContent.bindDialog(dialog, links.loadCreateNewPostDialogUrl, {
+                    contentAvailable: initEditBlogPostDialogEvents
+                });
+            }
+        });
     };
 
     /**

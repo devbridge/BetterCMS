@@ -61,6 +61,15 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create New Post.
+        /// </summary>
+        internal static string CreateNewPost_Dialog_Title {
+            get {
+                return ResourceManager.GetString("CreateNewPost_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Post new article.
         /// </summary>
         internal static string Sidebar_AddNewPostButtonTitle {

@@ -1,6 +1,7 @@
 ﻿using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.JsModule;
 using BetterCms.Core.Modules.Projections;
+using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.Blog.Controllers;
 
 namespace BetterCms.Module.Blog.Registration
@@ -19,10 +20,15 @@ namespace BetterCms.Module.Blog.Registration
         {
             Links = new IActionProjection[]
                         {
-                            new JavaScriptModuleLinkTo<BlogController>(this, "loadSiteSettingsBlogsUrl", c => c.Index())
+                            new JavaScriptModuleLinkTo<BlogController>(this, "loadSiteSettingsBlogsUrl", c => c.Index()),
+                            new JavaScriptModuleLinkTo<BlogController>(this, "loadCreateNewPostDialogUrl", c => c.CreatePost()),
+                            new JavaScriptModuleLinkTo<BlogController>(this, "loadEditPostDialogUrl", c => c.EditPost("{0}"))
                         };
 
-            Globalization = new IActionProjection[] { };
+            Globalization = new IActionProjection[]
+                                {
+                                    new JavaScriptModuleGlobalization(this, "createNewPostDialogTitle", () => BlogGlobalization.CreateNewPost_Dialog_Title)
+                                };
         }
     }
 }

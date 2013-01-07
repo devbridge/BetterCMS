@@ -1,0 +1,94 @@
+﻿@using BetterCms.Module.Root.Mvc.UI
+
+<div class="bcms-new-blog-content">
+
+    <div class="bcms-blog-left">
+
+        <div class="bcms-input-list-holder bcms-first-child-holder">
+            @Html.Tooltip("Meta Keywords", "Purpose of meta keywords is ......")
+            <div class="bcms-content-titles">Title of the Post</div>
+            <input type="text" class="bcms-editor-field-box" style="width: 510px;" />
+        </div>
+        <div class="bcms-input-list-holder">
+            @Html.Tooltip("Meta Keywords", "Purpose of meta keywords is ......")
+            <div class="bcms-content-titles">Intro / Featured Text</div>
+            <textarea class="bcms-editor-field-area" style="width: 510px; height: 170px;"></textarea>
+        </div>
+        <div class="bcms-input-list-holder">
+            @Html.Tooltip("Meta Keywords", "Purpose of meta keywords is ......")
+            <div class="bcms-content-titles">Full Post</div>
+            <div id="text-editor" style="display: none;">
+            </div>
+        </div>
+
+    </div>
+    <div class="bcms-blog-right">
+
+        <div class="bcms-blog-dates-holder">
+            <div class="bcms-input-field-holder">
+                @Html.Tooltip("Meta Keywords", "Purpose of meta keywords is ......")
+                <div class="bcms-content-titles">Live From:</div>
+                <input type="text" id="datefrom" class="bcms-editor-field-box" placeholder="7/2/2012" style="width: 127px;" />
+            </div>
+            <div class="bcms-input-field-holder">
+                <div class="bcms-content-titles">Live To:</div>
+                <input type="text" id="dateto" class="bcms-editor-field-box" placeholder="7/5/2012" style="width: 127px;" />
+            </div>
+        </div>
+
+        <div class="bcms-input-field-holder">
+            @Html.Tooltip("Meta Keywords", "Purpose of meta keywords is ......")
+            <div class="bcms-content-titles">Featured Image:</div>
+            <div class="bcms-uploaded-image">
+                @*//captured image should be inserted here//*@
+            </div>
+            <div class="bcms-upload-info">
+                <div class="bcms-upload-info-text">Make sure to size this imageto 200x125 pixels. It will be displayed as a thumbnail with your post.</div>
+                <div class="bcms-btn-small" id="OpenUploader">Select Image</div>
+            </div>
+        </div>
+
+        <div class="bcms-input-field-holder">
+            @Html.Tooltip("Meta Keywords", "Purpose of meta keywords is ......")
+            <div class="bcms-content-titles">Author:</div>
+            <select class="bcms-global-select" style="width: 245px;">
+                <option value="">... Select Author ...</option>
+                <option value="1">Aurimas Adomavicius</option>
+                <option value="2">Paulius Maciulis</option>
+                <option value="3">Paul Gabronis</option>
+                <option value="4">Adomas Tautkus</option>
+            </select>
+        </div>
+
+        <div class="bcms-input-field-holder">
+            @Html.Tooltip("Meta Keywords", "Purpose of meta keywords is ......")
+            <div class="bcms-content-titles">Category:</div>
+            <select class="bcms-global-select" style="width: 245px;">
+                <option value="">... Select Category ...</option>
+                <option value="1">CMS</option>
+                <option value="2">E-commerce</option>
+                <option value="3">Products</option>
+                <option value="4">Clients</option>
+            </select>
+        </div>
+
+        <div class="bcms-blog-tags-holder">
+            <div class="bcms-input-list-holder">
+                @Html.Tooltip("Meta Keywords", "Purpose of meta keywords is ......")
+                <div class="bcms-content-titles">
+                    Add Tags
+                    <div class="bcms-btn-plus">&nbsp;</div>
+                    <div class="bcms-tags-field-holder">
+                        <input type="text" class="bcms-add-tags-field" style="width: 107px;">
+                    </div>
+                </div>
+                <div class="bcms-single-tag-holder" id="bcms-categories-container">
+                    <div class="bcms-single-tag">Fonts<a>Remove</a></div>
+                    <div class="bcms-single-tag">DevBridge<a>Remove</a></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
