@@ -120,4 +120,7 @@
   <data name="Sidebar_AddNewPostButtonTitle" xml:space="preserve">
     <value>Post new article</value>
   </data>
+  <data name="SiteSettings_BlogsMenuItem" xml:space="preserve">
+    <value>Blogs</value>
+  </data>
 </root>

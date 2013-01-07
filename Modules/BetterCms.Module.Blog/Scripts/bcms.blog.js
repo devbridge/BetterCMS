@@ -63,7 +63,6 @@ define('bcms.page', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, modal) 
         $.ajax(page.links.loadPagesListUrl).done(function() {
             alert("fill modal");
         });
-        
     };
     
     /**
