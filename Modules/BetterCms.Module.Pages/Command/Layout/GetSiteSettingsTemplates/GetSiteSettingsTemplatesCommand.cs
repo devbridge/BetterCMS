@@ -34,8 +34,6 @@ namespace BetterCms.Module.Pages.Command.Layout.GetSiteSettingsTemplates
                                  Id = f.Id,
                                  Version = f.Version,
                                  TemplateName = f.Name,
-                                 PreviewUrl = f.PreviewUrl,
-                                 //WidgetEntityType = f.GetType()
                              });
 
             if (gridOptions != null)

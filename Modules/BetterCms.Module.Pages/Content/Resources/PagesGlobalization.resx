@@ -933,4 +933,40 @@
   <data name="SiteSettings_Templates_Title" xml:space="preserve">
     <value>Templates</value>
   </data>
+  <data name="EditTemplate_BasicPropertiesTab_Title" xml:space="preserve">
+    <value>Basic Properties</value>
+  </data>
+  <data name="EditTemplate_OptionsTab_Title" xml:space="preserve">
+    <value>Template Options</value>
+  </data>
+  <data name="TemplatePreviewImageUrl_Title" xml:space="preserve">
+    <value>Preview Image URL</value>
+  </data>
+  <data name="TemplatePreviewImageUrl_Tooltip_Description" xml:space="preserve">
+    <value>Preview</value>
+  </data>
+  <data name="TemplatePreviewImage_Title" xml:space="preserve">
+    <value>Preview</value>
+  </data>
+  <data name="Template_Preview_Image_Tooltip_Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="Template_Title_Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="Template_Title_Tooltip_Description" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="Template_Title_Tooltip_Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="Template_Url_Title" xml:space="preserve">
+    <value>Template Path</value>
+  </data>
+  <data name="Template_Url_Tooltip_Description" xml:space="preserve">
+    <value>Template Path</value>
+  </data>
+  <data name="Template_Url_Tooltip_Title" xml:space="preserve">
+    <value>Template Path</value>
+  </data>
 </root>

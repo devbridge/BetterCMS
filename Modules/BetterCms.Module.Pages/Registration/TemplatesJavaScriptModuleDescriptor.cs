@@ -21,8 +21,9 @@ namespace BetterCms.Module.Pages.Registration
                             new JavaScriptModuleLinkTo<TemplatesController>(this, "loadSiteSettingsTemplateListUrl", controller => controller.Templates(null)),
                            
                             new JavaScriptModuleLinkTo<TemplatesController>(this, "loadRegisterTemplateDialogUrl", controller => controller.RegisterTemplate()),
-                           /* new JavaScriptModuleLinkTo<WidgetsController>(this, "loadEditServerControlWidgetDialogUrl", controller => controller.EditServerControlWidget("{0}")),
-                            new JavaScriptModuleLinkTo<WidgetsController>(this, "deleteWidgetUrl", controller => controller.DeleteWidget("{0}", "{1}")),*/
+                            new JavaScriptModuleLinkTo<TemplatesController>(this, "loadEditServerControlWidgetDialogUrl", controller => controller.EditTemplate("{0}")),
+                            //new JavaScriptModuleLinkTo<TemplatesController>(this, "deleteWidgetUrl", controller => controller.SaveTemplate("{0}"),
+                            //new JavaScriptModuleLinkTo<TemplatesController>(this, "deleteWidgetUrl", controller => controller.DeleteWidget("{0}", "{1}"))
                             new JavaScriptModuleLinkTo<ContentController>(this, "loadPageContentOptionsDialogUrl", controller => controller.PageContentOptions("{0}"))
                         };
 

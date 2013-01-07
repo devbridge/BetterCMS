@@ -8,11 +8,11 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
         var template = {},
             links = {
                 loadSiteSettingsTemplateListUrl: null,
-                
+
                 loadCreateHtmlContentWidgetDialogUrl: null,
                 loadEditHtmlContentWidgetDialogUrl: null,
-                
-                loadCreateServerControlWidgetDialogUrl: null,
+
+                loadRegisterTemplateDialogUrl: null,
                 loadEditServerControlWidgetDialogUrl: null,
                 deleteWidgetUrl: null,
                 loadPageContentOptionsDialogUrl: null
@@ -27,13 +27,6 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
                 editPageWidgetOptionsTitle: null
             },
             selectors = {
-                enableCustomCss: '#bcms-enable-custom-css',
-                customCssContainer: '#bcms-custom-css-container',
-                enableCustomJs: '#bcms-enable-custom-js',
-                customJsContainer: '#bcms-custom-js-container',
-                enableCustomHtml: '#bcms-enable-custom-html',
-                customHtmlContainer: '#bcms-custom-html-container',
-
                 widgetPreviewImageUrl: '#PreviewImageUrl',
                 widgetPreviewImage: '#bcms-widget-preview-image',
 
@@ -44,20 +37,20 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
                 htmlContentWidgetTableFirstRow: 'table.bcms-tables > tbody > tr:first',
 
                 widgetsSearchButton: '#bcms-widget-search-btn',
-                widgetCreateButton: '#bcms-create-widget-button',
-                widgetRegisterButton: '#bcms-register-widget-button',
-                widgetRowEditButtons: '.bcms-grid-item-edit-button',
+
+                templateRegisterButton: '#bcms-register-template-button',
+                templateRowEditButtons: '.bcms-grid-item-edit-button',
+
                 widgetsRowDeleteButtons: '.bcms-grid-item-delete-button',
                 widgetParentRow: 'tr:first',
-                widgetNameCell: '.bcms-widget-name',
-                widgetCategoryNameCell: '.bcms-category-name',
-                widgetRowDeleteButtons: '.bcms-grid-item-delete-button',
-                widgetRowTemplate: '#bcms-widget-list-row-template',
-                widgetRowTemplateFirstRow: 'tr:first',
-                widgetsTableFirstRow: 'table.bcms-tables > tbody > tr:first',
-                widgetInsertButtons: '.bcms-widget-insert-button',
+                templateNameCell: '.bcms-template-name',
+                templateRowDeleteButtons: '.bcms-grid-item-delete-button',
+                templateRowTemplate: '#bcms-template-list-row-template',
+                templateRowTemplateFirstRow: 'tr:first',
+                templateTableFirstRow: 'table.bcms-tables > tbody > tr:first',
+                templateInsertButtons: '.bcms-template-insert-button',
 
-                siteSettingsWidgetsListForm: '#bcms-widgets-form',
+                templatesListForm: '#bcms-templates-form',
 
                 addOptionLink: '#bcms-add-option-button',
                 optionsTable: '#bcms-options-grid'
@@ -73,54 +66,14 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
 
 
         /**
-        * Opens dialog with a create html content widget form.
-        */
-        template.openCreateHtmlContentWidgetDialog = function (postSuccess) {
-            modal.open({
-                title: globalization.createHtmlContentWidgetDialogTitle,
-                onLoad: function (childDialog) {
-                    dynamicContent.bindDialog(childDialog, links.loadCreateHtmlContentWidgetDialogUrl, {
-                        contentAvailable: initializeEditHtmlContentWidgetForm,
-
-                        beforePost: function () {
-                            htmlEditor.updateEditorContent(selectors.htmlContentWidgetContentHtmlEditor);
-                        },
-
-                        postSuccess: postSuccess
-                    });
-                }
-            });
-        };
-
-        /**
-        * Opens dialog with an edit html content widget form.
-        */
-        template.openEditHtmlContentWidgetDialog = function (id, postSuccess) {
-            modal.open({
-                title: globalization.editAdvancedContentDialogTitle,
-                onLoad: function (childDialog) {
-                    dynamicContent.bindDialog(childDialog, $.format(links.loadEditHtmlContentWidgetDialogUrl, id), {
-                        contentAvailable: initializeEditHtmlContentWidgetForm,
-
-                        beforePost: function () {
-                            htmlEditor.updateEditorContent(selectors.htmlContentWidgetContentHtmlEditor);
-                        },
-
-                        postSuccess: postSuccess
-                    });
-                }
-            });
-        };
-
-        /**
         * Opens ServerControlWidget edit dialog.
         */
-        template.openEditServerControlWidgetDialog = function (widgetId, onSaveCallback) {
+        template.openEditTemplateDialog = function (widgetId, onSaveCallback) {
             modal.open({
                 title: globalization.editWidgetDialogTitle,
                 onLoad: function (childDialog) {
                     dynamicContent.bindDialog(childDialog, $.format(links.loadEditServerControlWidgetDialogUrl, widgetId), {
-                        contentAvailable: initializeEditServerControlWidgetForm,
+                        contentAvailable: initializeEditTemplateForm,
 
                         beforePost: function (form) {
                             editor.resetAutoGenerateNameId();
@@ -134,14 +87,14 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
         };
 
         /**
-        * Opens widget create form from site settings widgets list
+        * Opens template create form from site settings widgets list
         */
         template.openRegisterTemplateDialog = function (onSaveCallback) {
             modal.open({
                 title: globalization.createWidgetDialogTitle,
                 onLoad: function (childDialog) {
-                    dynamicContent.bindDialog(childDialog, links.loadCreateServerControlWidgetDialogUrl, {
-                        contentAvailable: initializeEditServerControlWidgetForm,
+                    dynamicContent.bindDialog(childDialog, links.loadRegisterTemplateDialogUrl, {
+                        contentAvailable: initializeEditTemplateForm,
 
                         postSuccess: onSaveCallback
                     });
@@ -150,33 +103,9 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
         };
 
         /**
-        * Initializes 'Edit Html Content Widget' dialog form.
+        * Initializes template form
         */
-        function initializeEditHtmlContentWidgetForm(dialog) {
-            dialog.container.find(selectors.enableCustomCss).on('click', function () {
-                showHideCustomCssText(dialog);
-            });
-
-            dialog.container.find(selectors.enableCustomJs).on('click', function () {
-                showHideCustomJsText(dialog);
-            });
-
-            dialog.container.find(selectors.enableCustomHtml).on('click', function () {
-                showHideCustomHtmlText(dialog);
-            });
-
-            htmlEditor.initializeHtmlEditor(selectors.htmlContentWidgetContentHtmlEditor);
-            htmlEditor.setSourceMode(selectors.htmlContentWidgetContentHtmlEditor);
-
-            showHideCustomCssText(dialog);
-            showHideCustomJsText(dialog);
-            showHideCustomHtmlText(dialog);
-        };
-
-        /**
-        * Initializes widget form
-        */
-        function initializeEditServerControlWidgetForm(dialog) {
+        function initializeEditTemplateForm(dialog) {
             editor.initialize(dialog.container, {
                 deleteRowMessageExtractor: function () {
                     return globalization.deleteOptionConfirmMessage;
@@ -204,17 +133,11 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
         };
 
         /*
-        * Open a widget edit dialog by the specified widget type.
+        * Open a template edit dialog by the specified widget type.
         */
-        template.editWidget = function (widgetId, widgetType, onSaveCallback) {
-            if (widgetType === 'ServerControl') {
-                template.openEditServerControlWidgetDialog(widgetId, onSaveCallback);
-            }
-            else if (widgetType === 'HtmlContent') {
-                template.openEditHtmlContentWidgetDialog(widgetId, onSaveCallback);
-            } else {
-                throw new Error($.format('A widget type "{0}" is unknown and edit action is imposible.', widgetType));
-            }
+        template.editWidget = function (widgetId, onSaveCallback) {
+            template.openEditTemplateDialog(widgetId, onSaveCallback);
+
         };
 
         /**
@@ -291,18 +214,19 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
         function initializeSiteSettingsWidgetsList() {
             var dialog = siteSettings.getModalDialog(),
                 container = dialog.container,
-                onWidgetCreated = function (json) {
+                onTemplateCreated = function (json) {
+                    alert("cia");
                     if (json.Success && json.Data != null) {
-                        var template = $(selectors.widgetRowTemplate),
-                            newRow = $(template.html()).find(selectors.widgetRowTemplateFirstRow);
+                        var rowtemplate = $(selectors.templateRowTemplate),
+                            newRow = $(rowtemplate.html()).find(selectors.templateRowTemplateFirstRow);
                         setWidgetFields(newRow, json);
-                        newRow.insertBefore($(selectors.widgetsTableFirstRow, container));
-                        initializeSiteSettingsWidgetListEvents(newRow);
+                        newRow.insertBefore($(selectors.templateTableFirstRow, container));
+                        initializeTemplateListEvents(newRow);
                         grid.showHideEmptyRow(container);
                     }
                 };
 
-            var form = dialog.container.find(selectors.siteSettingsWidgetsListForm);
+            var form = dialog.container.find(selectors.templatesListForm);
             grid.bindGridForm(form, function (data) {
                 siteSettings.setContent(data);
                 template.initializeSiteSettingsWidgetsList(data);
@@ -318,15 +242,11 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
                 searchSiteSettingsWidgets(form);
             });
 
-            container.find(selectors.widgetCreateButton).on('click', function () {
-                template.openCreateHtmlContentWidgetDialog(onWidgetCreated);
+            container.find(selectors.templateRegisterButton).on('click', function () {
+                template.openRegisterTemplateDialog(onTemplateCreated);
             });
 
-            container.find(selectors.widgetRegisterButton).on('click', function () {
-                template.openCreateServerControlWidgetDialog(onWidgetCreated);
-            });
-
-            initializeSiteSettingsWidgetListEvents(container);
+            initializeTemplateListEvents(container);
         };
 
         /**
@@ -342,8 +262,8 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
         /**
         * Initializes site settings widgets list items.
         */
-        function initializeSiteSettingsWidgetListEvents(container) {
-            container.find(selectors.widgetRowEditButtons).on('click', function () {
+        function initializeTemplateListEvents(container) {
+            container.find(selectors.templateRowEditButtons).on('click', function () {
                 editSiteSettingsWidget(container, $(this));
             });
 
@@ -357,10 +277,9 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
         */
         function editSiteSettingsWidget(container, self) {
             var row = self.parents(selectors.widgetParentRow),
-                id = row.data('id'),
-                widgetType = row.data('type');
+                id = row.data('id');
 
-            template.editWidget(id, widgetType, function (data) {
+            template.editWidget(id, function (data) {
                 if (data.Data != null) {
                     setWidgetFields(row, data);
                     grid.showHideEmptyRow(container);
@@ -374,8 +293,7 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
         function deleteSiteSettingsWidget(container, self) {
             var row = self.parents(selectors.widgetParentRow),
                 id = row.data('id'),
-                version = row.data('version'),
-                name = row.find(selectors.widgetNameCell).html();
+                name = row.find(selectors.templateNameCell).html();
 
             template.deleteWidget(id, version, name, function (data) {
                 messages.refreshBox(container, data);
@@ -392,36 +310,8 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
         function setWidgetFields(row, json) {
             row.data('id', json.Data.Id);
             row.data('version', json.Data.Version);
-            row.data('type', json.Data.WidgetType);
-            row.find(selectors.widgetNameCell).html(json.Data.WidgetName);
-            row.find(selectors.widgetCategoryNameCell).html(json.Data.CategoryName);
-        };
-
-        /**
-        * Shows/hides custom css field in a html content widget edit form
-        */
-        function showHideCustomCssText(dialog) {
-            if (dialog.container.find(selectors.enableCustomCss).attr('checked')) {
-                dialog.container.find(selectors.customCssContainer).show();
-            } else {
-                dialog.container.find(selectors.customCssContainer).hide();
-            }
-        };
-
-        function showHideCustomJsText(dialog) {
-            if (dialog.container.find(selectors.enableCustomJs).attr('checked')) {
-                dialog.container.find(selectors.customJsContainer).show();
-            } else {
-                dialog.container.find(selectors.customJsContainer).hide();
-            }
-        };
-
-        function showHideCustomHtmlText(dialog) {
-            if (dialog.container.find(selectors.enableCustomHtml).attr('checked')) {
-                dialog.container.find(selectors.customHtmlContainer).show();
-            } else {
-                dialog.container.find(selectors.customHtmlContainer).hide();
-            }
+            row.find(selectors.templateNameCell).html(json.Data.WidgetName);
+            // row.find(selectors.templateCategoryNameCell).html(json.Data.CategoryName);
         };
 
         return template;

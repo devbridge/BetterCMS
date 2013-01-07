@@ -1521,6 +1521,24 @@ namespace BetterCms.Module.Pages.Content.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Basic Properties.
         /// </summary>
+        public static string EditTemplate_BasicPropertiesTab_Title {
+            get {
+                return ResourceManager.GetString("EditTemplate_BasicPropertiesTab_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Template Options.
+        /// </summary>
+        public static string EditTemplate_OptionsTab_Title {
+            get {
+                return ResourceManager.GetString("EditTemplate_OptionsTab_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Basic Properties.
+        /// </summary>
         public static string EditWidget_BasicPropertiesTab_Title {
             get {
                 return ResourceManager.GetString("EditWidget_BasicPropertiesTab_Title", resourceCulture);
@@ -2334,6 +2352,96 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string SortPageContent_FailureMessage_Title {
             get {
                 return ResourceManager.GetString("SortPageContent_FailureMessage_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string Template_Preview_Image_Tooltip_Title {
+            get {
+                return ResourceManager.GetString("Template_Preview_Image_Tooltip_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string Template_Title_Title {
+            get {
+                return ResourceManager.GetString("Template_Title_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string Template_Title_Tooltip_Description {
+            get {
+                return ResourceManager.GetString("Template_Title_Tooltip_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string Template_Title_Tooltip_Title {
+            get {
+                return ResourceManager.GetString("Template_Title_Tooltip_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Template Path.
+        /// </summary>
+        public static string Template_Url_Title {
+            get {
+                return ResourceManager.GetString("Template_Url_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Template Path.
+        /// </summary>
+        public static string Template_Url_Tooltip_Description {
+            get {
+                return ResourceManager.GetString("Template_Url_Tooltip_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Template Path.
+        /// </summary>
+        public static string Template_Url_Tooltip_Title {
+            get {
+                return ResourceManager.GetString("Template_Url_Tooltip_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preview.
+        /// </summary>
+        public static string TemplatePreviewImage_Title {
+            get {
+                return ResourceManager.GetString("TemplatePreviewImage_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preview Image URL.
+        /// </summary>
+        public static string TemplatePreviewImageUrl_Title {
+            get {
+                return ResourceManager.GetString("TemplatePreviewImageUrl_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preview.
+        /// </summary>
+        public static string TemplatePreviewImageUrl_Tooltip_Description {
+            get {
+                return ResourceManager.GetString("TemplatePreviewImageUrl_Tooltip_Description", resourceCulture);
             }
         }
         

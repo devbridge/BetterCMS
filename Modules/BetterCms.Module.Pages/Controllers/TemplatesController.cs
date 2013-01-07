@@ -1,15 +1,10 @@
 ﻿using System.Web.Mvc;
-
-using BetterCms.Module.Pages.Command.Content.GetPageContentOptions;
 using BetterCms.Module.Pages.Command.Layout.GetSiteSettingsTemplates;
+using BetterCms.Module.Pages.Command.Layout.GetTemplatesForEdit;
+using BetterCms.Module.Pages.Command.Layout.SaveTemplate;
 using BetterCms.Module.Pages.Command.Widget.DeleteWidget;
-using BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit;
-using BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit;
-using BetterCms.Module.Pages.Command.Widget.GetSiteSettingsWidgets;
-using BetterCms.Module.Pages.Command.Widget.SaveWidget;
 using BetterCms.Module.Pages.Content.Resources;
-using BetterCms.Module.Pages.ViewModels.Content;
-using BetterCms.Module.Pages.ViewModels.Widgets;
+using BetterCms.Module.Pages.ViewModels.Templates;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
@@ -48,16 +43,55 @@ namespace BetterCms.Module.Pages.Controllers
     
 
         /// <summary>
-        /// Creates modal dialog for creating a new widget.
+        /// Creates modal dialog for creating a new template.
         /// </summary>
         /// <returns>
-        /// ViewResult to render new widget modal dialog.
+        /// ViewResult to render new template modal dialog.
         /// </returns>
         [HttpGet]
         public ActionResult RegisterTemplate()
         {
-            var model = GetCommand<GetServerControlWidgetForEditCommand>().ExecuteCommand(null);
+            var model = GetCommand<GetTemplatesForEditCommand>().ExecuteCommand(null);
             return PartialView("EditTemplate", model);
+        }
+
+        /// <summary>
+        /// Validates and saves Template.
+        /// </summary>
+        /// <param name="model">The Template view model.</param>
+        /// <returns>
+        /// Json with result status.
+        /// </returns>
+        [HttpPost]
+        public ActionResult RegisterTemplate(TemplateEditViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var response = GetCommand<SaveTemplateCommand>().ExecuteCommand(model);
+                if (response != null)
+                {
+                    if (model.Id.HasDefaultValue())
+                    {
+                        Messages.AddSuccess(PagesGlobalization.SaveWidget_CreatedSuccessfully_Message);
+                    }
+                    return Json(new WireJson { Success = true, Data = response });
+                }
+            }
+
+            return Json(new WireJson { Success = false });
+        }
+
+        /// <summary>
+        /// Creates modal dialog for editing a widget.
+        /// </summary>
+        /// <returns>
+        /// ViewResult to render editing widget modal dialog.
+        /// </returns>
+        [HttpGet]
+        public ActionResult EditTemplate(string id)
+        {
+            var model = GetCommand<GetTemplatesForEditCommand>().ExecuteCommand(id.ToGuidOrDefault());
+            return PartialView(model);
         }
 /*
         /// <summary>

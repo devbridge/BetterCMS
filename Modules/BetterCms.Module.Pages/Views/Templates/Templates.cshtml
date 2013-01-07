@@ -15,7 +15,7 @@
     {
         column.EditButtonColumn(renderId:false);
 
-        column.For(f => string.Format("<a class=\"bcms-tables-link bcms-grid-item-edit-button bcms-widget-name\" data-id=\"{0}\">{1}</a>", f.Id, f.TemplateName))
+        column.For(f => string.Format("<a class=\"bcms-tables-link bcms-grid-item-edit-button bcms-template-name\" data-id=\"{0}\">{1}</a>", f.Id, f.TemplateName))
             .Named(PagesGlobalization.SiteSettings_Templates_NameColumn)
             .SortColumnName("TemplateName")
             .Encode(false);
@@ -24,7 +24,7 @@
     };
 }
 
-@using (Html.BeginForm<TemplatesController>(f => f.Templates(null), FormMethod.Post, new { @id = "bcms-widgets-form" }))
+@using (Html.BeginForm<TemplatesController>(f => f.Templates(null), FormMethod.Post, new { @id = "bcms-templates-form" }))
 {
     @Html.HiddenGridOptions(Model.GridOptions)
     
