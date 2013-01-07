@@ -118,8 +118,8 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Content\Resources\SitemapGlobalization.Designer.cs">
-      <DependentUpon>SitemapGlobalization.resx</DependentUpon>
+    <Compile Include="Content\Resources\NavigationGlobalization.Designer.cs">
+      <DependentUpon>NavigationGlobalization.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -132,9 +132,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Content\Resources\SitemapGlobalization.resx">
+    <EmbeddedResource Include="Content\Resources\NavigationGlobalization.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>SitemapGlobalization.Designer.cs</LastGenOutput>
+      <LastGenOutput>NavigationGlobalization.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Scripts\bcms.sitemap.js" />
