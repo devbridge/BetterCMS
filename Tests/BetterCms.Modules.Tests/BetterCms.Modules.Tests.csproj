@@ -160,6 +160,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Root\ModelTests\ViewModelTests\CmsRequestViewModelTest.cs" />
     <Compile Include="Root\ProjectionTests\PageContentProjectionTest.cs" />
+    <Compile Include="Sitemap\ModelTests\MapTests\SitemapNodeMapTest.cs" />
     <Compile Include="TestBase.cs" />
     <Compile Include="Common\ViewModelToStringTest.cs" />
   </ItemGroup>
@@ -198,6 +199,10 @@
     <ProjectReference Include="..\..\Modules\BetterCms.Module.Root\BetterCms.Module.Root.csproj">
       <Project>{66e7e4df-eeea-4b1e-8663-a1b430eb7375}</Project>
       <Name>BetterCms.Module.Root</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.Sitemap\BetterCms.Module.Sitemap.csproj">
+      <Project>{5383227a-9cb8-4978-91d1-8168ec817d16}</Project>
+      <Name>BetterCms.Module.Sitemap</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
