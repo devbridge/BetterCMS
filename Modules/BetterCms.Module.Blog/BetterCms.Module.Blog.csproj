@@ -104,6 +104,7 @@
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Models\Blog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Registration\BlogJavaScriptModuleDescriptor.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Content\Resources\BlogGlobalization.resx">

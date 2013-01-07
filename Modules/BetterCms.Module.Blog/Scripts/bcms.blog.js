@@ -1,109 +1,58 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.page', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, modal) {
+define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent'],
+    function ($, bcms, modal, siteSettings, dynamicContent) {
     'use strict';
 
-    var page = { },
-        module = {
-            name: 'bcms.page',
-            actions: {
-                editPageProperties: 'editPageProperties',
-                addNewPage: 'addNewPage',
-                deleteCurrentPage: 'deleteCurrentPage'
-            }
-        },
+    var blog = { },
+        selectors = { },
         links = {
-            loadEditPropertiesUrl : null,
-            loadPagesListUrl : null
+            loadSiteSettingsBlogsUrl: null
         },
-        globalization = {
-            editPagePropertiesModalTitle : null
-        };
+        globalization = { };
 
     // Assign objects to module.
-    page.links = links;
-    page.globalization = globalization;
-           
+    blog.links = links;
+    blog.globalization = globalization;
+    blog.selectors = selectors;
+
+    function initializeSiteSettingsBlogs(content) {
+    }
+
     /**
-    * Loads edit properties dialog:
+    * Loads a media manager view to the site settings container.
     */
-    page.loadEditProperties = function (popup) {
-        console.log('Loading Edit Properties');
-
-        $.ajax({
-            url: page.links.loadEditPropertiesUrl
-        }).done(function (content) {
-            console.log('Done Loading Edit Properties');            
-            popup.setTitle('Edit Page Properties');
-            popup.resize(900, function () {
-                popup.setContent(content);
-            });
-        });
-    };
-
-    page.loadAddNew = function(popup) {
-        console.log('Loading Add New Page');
-
-        $.ajax({
-            url : '/add-new-page'
-        }).done(function (content) {
-            console.log('Done Loading Add New Page');
-            popup.setTitle('Add New Page');
-            popup.setContent(content);            
-        });
-    };
-
-    page.loadDeleteCurrentPageConfirmation = function() {
-        console.log('Loading Delete Current Page Confirmation');
-        confirm("Are you sure you want to delete current page?");
-    };
-
-    page.allPagesList = function() {
-        $.ajax(page.links.loadPagesListUrl).done(function() {
-            alert("fill modal");
-        });
-        
-    };
-    
-    /**
-    * Initializes page module.
-    */
-    page.initActions = function () {
-        bcms.on(bcms.events.onClickAction, function(data) {
-            if (data.module === module.name) {
-                
-                if (data.action === module.actions.editPageProperties) {
-                    modal.open({
-                        title: 'Edit Page Properties - Loading...',
-                        onLoad: page.loadEditProperties
-                    });                    
-                }
-                else if (data.action === module.actions.addNewPage) {
-                    modal.open({
-                        title: 'Add New Page - Loading...',
-                        onLoad: page.loadAddNew
-                    });
-                }
-                else if (data.action === module.actions.deleteCurrentPage) {
-                    page.loadDeleteCurrentPageConfirmation();
-                }
-            }
+    blog.loadSiteSettingsBlogs = function () {
+        dynamicContent.bindSiteSettings(siteSettings, links.loadSiteSettingsBlogsUrl, {
+            contentAvailable: initializeSiteSettingsBlogs
         });
     };
 
     /**
-    * Initializes page module.
+    * Posts new blog article
     */
-    page.init = function () {
-        console.log('Initializing page module');
-        page.initActions();
+    blog.postNewArticle = function () {
+    };
+
+    /**
+    * Initializes blog module.
+    */
+    blog.initActions = function () {
+    };
+
+    /**
+    * Initializes blog module.
+    */
+    blog.init = function () {
+        console.log('Initializing blog module');
+        blog.initActions();
     };
     
     /**
     * Register initialization
     */
-    bcms.registerInit(page.init);
+    bcms.registerInit(blog.init);
     
-    return page;
+    return blog;
 });

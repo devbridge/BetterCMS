@@ -9,7 +9,7 @@
 @RenderBody()
 
 @section CmsMetaTitle {
-    <title>@Model.Title</title>    
+    <title>@Model.Title</title>
 }
 
 @section CmsMeta {
@@ -31,7 +31,9 @@
         @Html.Action("RenderStyleSheetIncludes", "Rendering")
     }
 
-    @Html.RenderPageCustomCss(Model.Stylesheets)
+    @if (Model.Stylesheets != null) {
+        @Html.RenderPageCustomCss(Model.Stylesheets)
+    }
 }
 
 @section CmsHeadScripts {
