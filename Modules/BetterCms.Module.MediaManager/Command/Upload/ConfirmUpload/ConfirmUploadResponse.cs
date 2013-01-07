@@ -6,11 +6,11 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
 {    
     public class ConfirmUploadResponse
     {
-        public List<MediaViewModel> Medias { get; set; }
+        public List<MediaFileViewModel> Medias { get; set; }
 
         public ConfirmUploadResponse()
         {
-            Medias = new List<MediaViewModel>();
+            Medias = new List<MediaFileViewModel>();
         }
     }
 }
