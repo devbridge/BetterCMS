@@ -1,12 +1,19 @@
-﻿using System;
-using Page = BetterCms.Module.Pages.Models.PageProperties;
+﻿using System.Collections.Generic;
 
-namespace BetterCms.Module.Pages.Services
+using BetterCms.Module.Navigation.Models;
+
+namespace BetterCms.Module.Navigation.Services
 {
     /// <summary>
-    /// </summary>    
-    public interface IPageService
-    {        
-        void ValidatePageUrl(string url, Guid? pageId = null);
+    /// Sitemap service.
+    /// </summary>
+    public interface ISitemapService
+    {
+        /// <summary>
+        /// Gets the root nodes.
+        /// </summary>
+        /// <param name="search">The search.</param>
+        /// <returns>Sitemap node list.</returns>
+        IList<SitemapNode> GetRootNodes(string search);
     }
 }

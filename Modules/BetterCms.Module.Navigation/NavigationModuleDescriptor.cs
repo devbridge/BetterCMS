@@ -5,6 +5,7 @@ using Autofac;
 
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
+using BetterCms.Module.Navigation.Content.Resources;
 using BetterCms.Module.Navigation.Registration;
 
 namespace BetterCms.Module.Navigation
@@ -103,28 +104,6 @@ namespace BetterCms.Module.Navigation
         }
 
         /// <summary>
-        /// Registers the sidebar main projections.
-        /// </summary>
-        /// <param name="containerBuilder">The container builder.</param>
-        /// <param name="configuration">The configuration.</param>
-        /// <returns>Returns list of the <see cref="IPageActionProjection" /> items.</returns>
-        public override IEnumerable<IPageActionProjection> RegisterSidebarMainProjections(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
-        {
-            return new IPageActionProjection[] { };
-        }
-
-        /// <summary>
-        /// Registers the sidebar side projections.
-        /// </summary>
-        /// <param name="containerBuilder">The container builder.</param>
-        /// <param name="configuration">The configuration.</param>
-        /// <returns>Returns list of the <see cref="IPageActionProjection" /> items.</returns>
-        public override IEnumerable<IPageActionProjection> RegisterSidebarSideProjections(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
-        {
-            return new IPageActionProjection[] { };
-        }
-
-        /// <summary>
         /// Registers the site settings projections.
         /// </summary>
         /// <param name="containerBuilder">The container builder.</param>
@@ -132,7 +111,15 @@ namespace BetterCms.Module.Navigation
         /// <returns>Returns list of the <see cref="IPageActionProjection" /> items.</returns>
         public override IEnumerable<IPageActionProjection> RegisterSiteSettingsProjections(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
         {
-            return new IPageActionProjection[] { };
+            return new IPageActionProjection[]
+                {
+                    new LinkActionProjection(sitemapJavaScriptModuleDescriptor, page => "loadSiteSettingsSitmap")
+                        {
+                            Order = 4500,
+                            Title = () => NavigationGlobalization.SiteSettings_SitemapMenuItem,
+                            CssClass = page => "bcms-sidebar-link"
+                        }                                      
+                };
         }
     }
 }
