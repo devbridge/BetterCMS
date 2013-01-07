@@ -1,6 +1,4 @@
-﻿using System;
-
-using BetterCms.Core.Models;
+﻿using BetterCms.Core.Models;
 
 namespace BetterCms.Module.Navigation.Models.Maps
 {
