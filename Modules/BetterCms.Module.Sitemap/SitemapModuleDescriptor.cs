@@ -1,0 +1,138 @@
+﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+
+using Autofac;
+
+using BetterCms.Core.Modules;
+using BetterCms.Core.Modules.Projections;
+using BetterCms.Module.Sitemap.Registration;
+
+namespace BetterCms.Module.Sitemap
+{
+    /// <summary>
+    /// Pages module descriptor.
+    /// </summary>
+    public class SitemapModuleDescriptor : ModuleDescriptor
+    {
+        /// <summary>
+        /// The module name.
+        /// </summary>
+        internal const string ModuleName = "sitemap";
+
+        /// <summary>
+        /// bcms.sitemap.js java script module descriptor.
+        /// </summary>
+        private readonly SitemapJavaScriptModuleDescriptor sitemapJavaScriptModuleDescriptor;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SitemapModuleDescriptor" /> class.
+        /// </summary>
+        public SitemapModuleDescriptor()
+        {
+            sitemapJavaScriptModuleDescriptor = new SitemapJavaScriptModuleDescriptor(this);
+        }
+
+        /// <summary>
+        /// Gets the name of module.
+        /// </summary>
+        /// <value>
+        /// The name of pages module.
+        /// </value>
+        public override string Name
+        {
+            get
+            {
+                return ModuleName;
+            }
+        }
+
+        /// <summary>
+        /// Gets the description.
+        /// </summary>
+        /// <value>
+        /// The module description.
+        /// </value>
+        public override string Description
+        {
+            get
+            {
+                return "Sitemap module for BetterCMS.";
+            }
+        }
+
+        /// <summary>
+        /// Registers module types.
+        /// </summary>
+        /// <param name="context">The area registration context.</param>
+        /// <param name="containerBuilder">The container builder.</param>
+        /// <param name="configuration">The configuration.</param>
+        public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        {
+            // TODO: register module types.
+            // RegisterContentRendererType<HtmlContentAccessor, HtmlContent>(containerBuilder);
+            // containerBuilder.RegisterType<DefaultSitemapService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+        }
+
+        /// <summary>
+        /// Registers the style sheet files.
+        /// </summary>
+        /// <param name="containerBuilder">The container builder.</param>
+        /// <param name="configuration">The configuration.</param>
+        /// <returns>Enumerator of known module style sheet files.</returns>
+        public override IEnumerable<string> RegisterStyleSheetFiles(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        {
+            return new[]
+                {
+                    "/file/bcms-sitemap/Content/Css/bcms.sitemap.css"
+                };
+        }
+
+        /// <summary>
+        /// Gets known client side modules in page module.
+        /// </summary>
+        /// <param name="containerBuilder">The container builder.</param>
+        /// <param name="configuration">The CMS configuration.</param>
+        /// <returns>List of known client side modules in page module.</returns>
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
+        public override IEnumerable<JavaScriptModuleDescriptor> RegisterJavaScriptModules(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        {
+            return new JavaScriptModuleDescriptor[]
+                {
+                    sitemapJavaScriptModuleDescriptor
+                };
+        }
+
+        /// <summary>
+        /// Registers the sidebar main projections.
+        /// </summary>
+        /// <param name="containerBuilder">The container builder.</param>
+        /// <param name="configuration">The configuration.</param>
+        /// <returns>Returns list of the <see cref="IPageActionProjection" /> items.</returns>
+        public override IEnumerable<IPageActionProjection> RegisterSidebarMainProjections(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        {
+            return new IPageActionProjection[] { };
+        }
+
+        /// <summary>
+        /// Registers the sidebar side projections.
+        /// </summary>
+        /// <param name="containerBuilder">The container builder.</param>
+        /// <param name="configuration">The configuration.</param>
+        /// <returns>Returns list of the <see cref="IPageActionProjection" /> items.</returns>
+        public override IEnumerable<IPageActionProjection> RegisterSidebarSideProjections(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        {
+            return new IPageActionProjection[] { };
+        }
+
+        /// <summary>
+        /// Registers the site settings projections.
+        /// </summary>
+        /// <param name="containerBuilder">The container builder.</param>
+        /// <param name="configuration">The configuration.</param>
+        /// <returns>Returns list of the <see cref="IPageActionProjection" /> items.</returns>
+        public override IEnumerable<IPageActionProjection> RegisterSiteSettingsProjections(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        {
+            return new IPageActionProjection[] { };
+        }
+    }
+}
