@@ -2,7 +2,7 @@
 using BetterCms.Core.Modules.JsModule;
 using BetterCms.Core.Modules.Projections;
 
-namespace BetterCms.Module.Sitemap.Registration
+namespace BetterCms.Module.Navigation.Registration
 {
     /// <summary>
     /// bcms.sitemap.js module descriptor.

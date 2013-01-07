@@ -1,6 +1,6 @@
 ﻿using FluentMigrator.VersionTableInfo;
 
-namespace BetterCms.Module.Sitemap.Models.Migrations
+namespace BetterCms.Module.Navigation.Models.Migrations
 {
     /// <summary>
     /// The blog version table meta data.

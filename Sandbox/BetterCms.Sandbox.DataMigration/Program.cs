@@ -8,7 +8,7 @@ using BetterCms.Core.Modules;
 using BetterCms.Module.MediaManager;
 using BetterCms.Module.Pages;
 using BetterCms.Module.Root;
-using BetterCms.Module.Sitemap;
+using BetterCms.Module.Navigation;
 using BetterCms.Module.Templates;
 
 using Common.Logging;

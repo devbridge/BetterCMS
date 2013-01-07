@@ -46,7 +46,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.Module.Pages", "M
 		{66E7E4DF-EEEA-4B1E-8663-A1B430EB7375} = {66E7E4DF-EEEA-4B1E-8663-A1B430EB7375}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.Module.Navigation", "Modules\BetterCms.Module.Sitemap\BetterCms.Module.Navigation.csproj", "{5383227A-9CB8-4978-91D1-8168EC817D16}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.Module.Navigation", "Modules\BetterCms.Module.Navigation\BetterCms.Module.Navigation.csproj", "{5383227A-9CB8-4978-91D1-8168EC817D16}"
 	ProjectSection(ProjectDependencies) = postProject
 		{66E7E4DF-EEEA-4B1E-8663-A1B430EB7375} = {66E7E4DF-EEEA-4B1E-8663-A1B430EB7375}
 	EndProjectSection

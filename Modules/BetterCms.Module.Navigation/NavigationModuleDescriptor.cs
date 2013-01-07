@@ -5,9 +5,9 @@ using Autofac;
 
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
-using BetterCms.Module.Sitemap.Registration;
+using BetterCms.Module.Navigation.Registration;
 
-namespace BetterCms.Module.Sitemap
+namespace BetterCms.Module.Navigation
 {
     /// <summary>
     /// Pages module descriptor.

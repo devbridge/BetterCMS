@@ -1,6 +1,6 @@
 ﻿using BetterCms.Core.Models;
 
-namespace BetterCms.Module.Sitemap.Models.Maps
+namespace BetterCms.Module.Navigation.Models.Maps
 {
     /// <summary>
     /// The sitemap node entity map.

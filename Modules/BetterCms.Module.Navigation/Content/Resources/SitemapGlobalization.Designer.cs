@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BetterCms.Module.Sitemap.Content.Resources {
+namespace BetterCms.Module.Navigation.Content.Resources {
     using System;
     
     

@@ -3,7 +3,7 @@ using BetterCms.Core.Models;
 
 using FluentMigrator;
 
-namespace BetterCms.Module.Sitemap.Models.Migrations
+namespace BetterCms.Module.Navigation.Models.Migrations
 {
     /// <summary>
     /// Database structure setup.

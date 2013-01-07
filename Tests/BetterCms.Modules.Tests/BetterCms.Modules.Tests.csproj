@@ -160,7 +160,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Root\ModelTests\ViewModelTests\CmsRequestViewModelTest.cs" />
     <Compile Include="Root\ProjectionTests\PageContentProjectionTest.cs" />
-    <Compile Include="Sitemap\ModelTests\MapTests\SitemapNodeMapTest.cs" />
+    <Compile Include="Navigation\ModelTests\MapTests\SitemapNodeMapTest.cs" />
     <Compile Include="TestBase.cs" />
     <Compile Include="Common\ViewModelToStringTest.cs" />
   </ItemGroup>

@@ -5,7 +5,7 @@ using BetterCms.Core.Models;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
-using BetterCms.Module.Sitemap.Models;
+using BetterCms.Module.Navigation.Models;
 
 namespace BetterCms.Tests.Helpers
 {

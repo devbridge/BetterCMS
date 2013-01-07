@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace BetterCms.Test.Module.Sitemap.ModelTests.MapTests
+namespace BetterCms.Test.Module.Navigation.ModelTests.MapTests
 {
     [TestFixture]
     public class SitemapNodeMapTest : DatabaseTestBase

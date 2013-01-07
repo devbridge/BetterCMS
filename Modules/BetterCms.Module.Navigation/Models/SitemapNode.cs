@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using BetterCms.Core.Models;
 
-namespace BetterCms.Module.Sitemap.Models
+namespace BetterCms.Module.Navigation.Models
 {
     /// <summary>
     /// Sitemap node class.
