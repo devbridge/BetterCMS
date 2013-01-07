@@ -14,8 +14,12 @@ namespace BetterCms.Module.Sitemap.Models.Maps
         {
             Table("SitemapNodes");
 
-            // Map(x => x.FirstName).Not.Nullable().Length(MaxLength.Name);
-            // Map(x => x.LongDescription).Nullable().Length(MaxLength.Max).LazyLoad();
+            Map(x => x.Title).Not.Nullable().Length(MaxLength.Name);
+            Map(x => x.Url).Not.Nullable().Length(MaxLength.Url);
+            Map(x => x.DisplayOrder).Not.Nullable();
+
+            References(f => f.ParentNode).Cascade.SaveUpdate().LazyLoad().Nullable();
+            HasMany(f => f.ChildNodes).KeyColumn("ParentNodeId").Inverse().Cascade.SaveUpdate().LazyLoad().Where("IsDeleted = 0");
         }
     }
 }
