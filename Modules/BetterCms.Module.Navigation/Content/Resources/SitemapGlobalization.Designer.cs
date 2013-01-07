@@ -39,7 +39,7 @@ namespace BetterCms.Module.Navigation.Content.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BetterCms.Module.Sitemap.Content.Resources.SitemapGlobalization", typeof(SitemapGlobalization).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BetterCms.Module.Navigation.Content.Resources.SitemapGlobalization", typeof(SitemapGlobalization).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
