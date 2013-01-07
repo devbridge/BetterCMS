@@ -10,7 +10,7 @@ namespace BetterCms.Module.Sitemap.Models.Maps
         /// <summary>
         /// Initializes a new instance of the <see cref="SitemapNodeMap"/> class.
         /// </summary>
-        public SitemapNodeMap() : base(SitemapModuleDescriptor.ModuleName)
+        public SitemapNodeMap() : base(NavigationModuleDescriptor.ModuleName)
         {
             Table("SitemapNodes");
 

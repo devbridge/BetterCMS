@@ -200,9 +200,9 @@
       <Project>{66e7e4df-eeea-4b1e-8663-a1b430eb7375}</Project>
       <Name>BetterCms.Module.Root</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Modules\BetterCms.Module.Sitemap\BetterCms.Module.Sitemap.csproj">
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.Sitemap\BetterCms.Module.Navigation.csproj">
       <Project>{5383227a-9cb8-4978-91d1-8168ec817d16}</Project>
-      <Name>BetterCms.Module.Sitemap</Name>
+      <Name>BetterCms.Module.Navigation</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

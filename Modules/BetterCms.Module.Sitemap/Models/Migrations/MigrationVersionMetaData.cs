@@ -15,7 +15,7 @@ namespace BetterCms.Module.Sitemap.Models.Migrations
         {
             get
             {
-                return "bcms_" + SitemapModuleDescriptor.ModuleName;
+                return "bcms_" + NavigationModuleDescriptor.ModuleName;
             }
         }
 
@@ -48,7 +48,7 @@ namespace BetterCms.Module.Sitemap.Models.Migrations
         {
             get
             {
-                return "uc_VersionInfo_Verion_" + SitemapModuleDescriptor.ModuleName;
+                return "uc_VersionInfo_Verion_" + NavigationModuleDescriptor.ModuleName;
             }
         }
     }

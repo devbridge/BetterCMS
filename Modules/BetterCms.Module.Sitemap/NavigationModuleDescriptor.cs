@@ -12,12 +12,12 @@ namespace BetterCms.Module.Sitemap
     /// <summary>
     /// Pages module descriptor.
     /// </summary>
-    public class SitemapModuleDescriptor : ModuleDescriptor
+    public class NavigationModuleDescriptor : ModuleDescriptor
     {
         /// <summary>
         /// The module name.
         /// </summary>
-        internal const string ModuleName = "sitemap";
+        internal const string ModuleName = "navigation";
 
         /// <summary>
         /// bcms.sitemap.js java script module descriptor.
@@ -25,9 +25,9 @@ namespace BetterCms.Module.Sitemap
         private readonly SitemapJavaScriptModuleDescriptor sitemapJavaScriptModuleDescriptor;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SitemapModuleDescriptor" /> class.
+        /// Initializes a new instance of the <see cref="NavigationModuleDescriptor" /> class.
         /// </summary>
-        public SitemapModuleDescriptor()
+        public NavigationModuleDescriptor()
         {
             sitemapJavaScriptModuleDescriptor = new SitemapJavaScriptModuleDescriptor(this);
         }
@@ -83,7 +83,7 @@ namespace BetterCms.Module.Sitemap
         {
             return new[]
                 {
-                    "/file/bcms-sitemap/Content/Css/bcms.sitemap.css"
+                    "/file/bcms-navigation/Content/Css/bcms.navigation.css"
                 };
         }
 

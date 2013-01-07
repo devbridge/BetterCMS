@@ -26,7 +26,7 @@ namespace BetterCms.Sandbox.DataMigration
              descriptors = 
                     (new ModuleDescriptor[]
                     {
-                        new SitemapModuleDescriptor(),
+                        new NavigationModuleDescriptor(),
                         new TemplatesModuleDescriptor(),
                         new MediaManagerModuleDescriptor(),
                         new PagesModuleDescriptor(),

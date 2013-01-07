@@ -14,7 +14,7 @@ namespace BetterCms.Module.Sitemap.Models.Migrations
         /// <summary>
         /// Initializes a new instance of the <see cref="InitialSetup"/> class.
         /// </summary>
-        public InitialSetup() : base(SitemapModuleDescriptor.ModuleName)
+        public InitialSetup() : base(NavigationModuleDescriptor.ModuleName)
         {
         }
 
