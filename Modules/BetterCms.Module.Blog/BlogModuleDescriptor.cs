@@ -17,7 +17,7 @@ namespace BetterCms.Module.Blog
         /// <summary>
         /// The module name.
         /// </summary>
-        internal const string ModuleName = "Blog";
+        internal const string ModuleName = "blog";
 
         /// <summary>
         /// The blog java script module descriptor

@@ -120,6 +120,87 @@
   <data name="CreateNewPost_Dialog_Title" xml:space="preserve">
     <value>Create New Post</value>
   </data>
+  <data name="EditBlockPost_AddTags_Title" xml:space="preserve">
+    <value>Add Tags</value>
+  </data>
+  <data name="EditBlockPost_Author_Title" xml:space="preserve">
+    <value>Author</value>
+  </data>
+  <data name="EditBlockPost_Author_Tooltip_Description" xml:space="preserve">
+    <value>Author</value>
+  </data>
+  <data name="EditBlockPost_Author_Tooltip_Title" xml:space="preserve">
+    <value>Author</value>
+  </data>
+  <data name="EditBlockPost_Category_Title" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="EditBlockPost_Category_Tooltip_Description" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="EditBlockPost_Category_Tooltip_Title" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="EditBlockPost_Content_Title" xml:space="preserve">
+    <value>Full Post</value>
+  </data>
+  <data name="EditBlockPost_Content_Tooltip_Description" xml:space="preserve">
+    <value>Full Post</value>
+  </data>
+  <data name="EditBlockPost_Content_Tooltip_Title" xml:space="preserve">
+    <value>Full Post</value>
+  </data>
+  <data name="EditBlockPost_FeaturedImage_Title" xml:space="preserve">
+    <value>Featured Image</value>
+  </data>
+  <data name="EditBlockPost_FeaturedImage_Tooltip_Description" xml:space="preserve">
+    <value>Featured Image</value>
+  </data>
+  <data name="EditBlockPost_FeaturedImage_Tooltip_Title" xml:space="preserve">
+    <value>Featured Image</value>
+  </data>
+  <data name="EditBlockPost_IntroText_Title" xml:space="preserve">
+    <value>Intro / Featured Text</value>
+  </data>
+  <data name="EditBlockPost_IntroText_Tooltip_Description" xml:space="preserve">
+    <value>Intro / Featured Text</value>
+  </data>
+  <data name="EditBlockPost_IntroText_Tooltip_Title" xml:space="preserve">
+    <value>Intro / Featured Text</value>
+  </data>
+  <data name="EditBlockPost_LiveDates_Tooltip_Description" xml:space="preserve">
+    <value>Live dates</value>
+  </data>
+  <data name="EditBlockPost_LiveDates_Tooltip_Title" xml:space="preserve">
+    <value>Live dates</value>
+  </data>
+  <data name="EditBlockPost_LiveFrom_Title" xml:space="preserve">
+    <value>Live From</value>
+  </data>
+  <data name="EditBlockPost_LiveTo_Title" xml:space="preserve">
+    <value>Live To</value>
+  </data>
+  <data name="EditBlockPost_SelectImage_Button_Title" xml:space="preserve">
+    <value>Select Image</value>
+  </data>
+  <data name="EditBlockPost_Tags_Tooltip_Description" xml:space="preserve">
+    <value>Add Tags</value>
+  </data>
+  <data name="EditBlockPost_Tags_Tooltip_Title" xml:space="preserve">
+    <value>Add Tags</value>
+  </data>
+  <data name="EditBlockPost_Title_Title" xml:space="preserve">
+    <value>Title of the Post</value>
+  </data>
+  <data name="EditBlockPost_Title_Tooltip_Description" xml:space="preserve">
+    <value>Title of the Post</value>
+  </data>
+  <data name="EditBlockPost_Title_Tooltip_Title" xml:space="preserve">
+    <value>Title of the Post</value>
+  </data>
+  <data name="SaveBlogPost_RegionNotFound_Message" xml:space="preserve">
+    <value>Region {0} not found. It's the default region for blog post content.</value>
+  </data>
   <data name="Sidebar_AddNewPostButtonTitle" xml:space="preserve">
     <value>Post new article</value>
   </data>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 using BetterCms.Core.Models;
 using BetterCms.Module.Root.Models;
@@ -28,6 +29,14 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         public virtual int Version { get; set; }
 
         /// <summary>
+        /// Gets or sets the page URL.
+        /// </summary>
+        /// <value>
+        /// The page URL.
+        /// </value>
+        public virtual string PageUrl { get; set; }
+
+        /// <summary>
         /// Gets or sets the blog title.
         /// </summary>
         /// <value>
@@ -52,7 +61,7 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// <value>
         /// The blog content.
         /// </value>
-        [Required]
+        [AllowHtml]
         public virtual string Content { get; set; }
 
         /// <summary>
@@ -61,6 +70,7 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// <value>
         /// The live from date.
         /// </value>
+        [Required]
         public virtual DateTime LiveFromDate { get; set; }
 
         /// <summary>
@@ -69,7 +79,7 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// <value>
         /// The live to date.
         /// </value>
-        public virtual DateTime LiveToDate { get; set; }
+        public virtual DateTime? LiveToDate { get; set; }
 
         /// <summary>
         /// Gets or sets the author.
@@ -77,8 +87,7 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// <value>
         /// The author.
         /// </value>
-        [Required]
-        public virtual Guid AuthorId { get; set; }
+        public virtual Guid? AuthorId { get; set; }
 
         /// <summary>
         /// Gets or sets the cathegory.
@@ -86,8 +95,7 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// <value>
         /// The cathegory.
         /// </value>
-        [Required]
-        public virtual Guid CategoryId { get; set; }
+        public virtual Guid? CategoryId { get; set; }
 
         /// <summary>
         /// Gets or sets the post tags.

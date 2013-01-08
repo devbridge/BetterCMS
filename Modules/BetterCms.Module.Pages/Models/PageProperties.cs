@@ -12,7 +12,6 @@ namespace BetterCms.Module.Pages.Models
         public virtual string CanonicalUrl { get; set; }
         public virtual string CustomCss { get; set; }
 
-        public virtual bool ShowTitle { get; set; }
         public virtual bool UseCanonicalUrl { get; set; }
         public virtual bool UseCustomCss { get; set; }
         public virtual bool UseNoFollow { get; set; }
@@ -23,5 +22,6 @@ namespace BetterCms.Module.Pages.Models
         public virtual IList<PageCategory> PageCategories { get; set; }
         
         public virtual Author Author { get; set; }
+        public virtual Category Category { get; set; }
     }
 }

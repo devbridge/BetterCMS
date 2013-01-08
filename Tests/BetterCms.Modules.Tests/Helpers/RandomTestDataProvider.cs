@@ -2,6 +2,7 @@
 using System.Text;
 
 using BetterCms.Core.Models;
+using BetterCms.Module.Blog.Models;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
@@ -109,6 +110,22 @@ namespace BetterCms.Tests.Helpers
         {
             var entity = new PageProperties();
 
+            PopulatePageProperties(entity, layout);
+
+            return entity;
+        }
+
+        public BlogPost CreateNewBlogPost()
+        {
+            var entity = new BlogPost();
+
+            PopulatePageProperties(entity);
+
+            return entity;
+        }
+
+        private void PopulatePageProperties(PageProperties entity, Layout layout = null)
+        {
             PopulateBaseFields(entity);
 
             entity.IsPublished = ProvideRandomBooleanValue();
@@ -123,8 +140,6 @@ namespace BetterCms.Tests.Helpers
             entity.MetaDescription = ProvideRandomString(MaxLength.Text);
 
             entity.Layout = layout ?? CreateNewLayout();
-
-            return entity;
         }
 
         public Content CreateNewContent()

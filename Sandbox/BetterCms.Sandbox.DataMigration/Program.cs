@@ -61,9 +61,9 @@ namespace BetterCms.Sandbox.DataMigration
         {
             try
             {
-                Console.WriteLine("-- Migrate DOWN --");
+                // Console.WriteLine("-- Migrate DOWN --");
                 
-                Migrate(false);
+                // Migrate(false);
 
                 Console.WriteLine("-- Migrate  UP --");
 

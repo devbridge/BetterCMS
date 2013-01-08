@@ -105,6 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AmazonS3Storage\AmazonS3StorageServiceTest.cs" />
+    <Compile Include="Blog\ModelTests\MapTests\BlogPostMapTest.cs" />
     <Compile Include="Common\SerializationTest.cs" />
     <Compile Include="ControllerTestBase.cs" />
     <Compile Include="MediaManager\ModelTests\MapTests\MediaFileMapTest.cs" />
@@ -187,6 +188,10 @@
     <ProjectReference Include="..\..\BetterCMS.Core\BetterCms.Core.csproj">
       <Project>{694CA5CA-A0E2-4578-A249-648498B058D7}</Project>
       <Name>BetterCms.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCMS.Module.Blog\BetterCms.Module.Blog.csproj">
+      <Project>{a66a3046-ef60-4c51-ada7-eb055763419b}</Project>
+      <Name>BetterCms.Module.Blog</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCms.Module.MediaManager\BetterCms.Module.MediaManager.csproj">
       <Project>{f3e41793-e8ed-4ba8-a1ab-cba1e47b0786}</Project>

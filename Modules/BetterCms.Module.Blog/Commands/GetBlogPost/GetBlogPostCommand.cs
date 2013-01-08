@@ -43,6 +43,15 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
         {
             var model = new BlogPostViewModel();
 
+            if (!id.HasDefaultValue())
+            {
+                
+            }
+            else
+            {
+                model.LiveFromDate = DateTime.Today;
+            }
+
             model.Authors = authorService.GetAuthors();
             model.Categories = categoryService.GetCategories();
 
