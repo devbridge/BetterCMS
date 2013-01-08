@@ -2,13 +2,9 @@
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
 
-@model BetterCms.Module.Blog.ViewModels.Blog.BlogPostViewModel
-
 <div class="bcms-scroll-window">
-    @Html.MessagesBox("bcms-blog-post-messages")
-        
     @using (Html.BeginForm<BlogController>(c => c.CreatePost(null), FormMethod.Post, new { @id = "bcms-blog-post-form", @class = "bcms-ajax-form" }))
     {
-        @Html.Partial("Partial/BlogPostForm", Model)
+        @Html.Partial("Partial/BlogPostForm")
     }
 </div>

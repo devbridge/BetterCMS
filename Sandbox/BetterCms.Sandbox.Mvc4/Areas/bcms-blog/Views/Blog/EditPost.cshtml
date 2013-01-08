@@ -3,10 +3,8 @@
 @using Microsoft.Web.Mvc
 
 <div class="bcms-scroll-window">
-    @Html.MessagesBox("bcms-blog-post-messages")
-        
     @using (Html.BeginForm<BlogController>(c => c.EditPost((string)null), FormMethod.Post, new { @id = "bcms-blog-post-form", @class = "bcms-ajax-form" }))
     {
-        @Html.Partial("Partial/BlogPostForm", Model)
+        @Html.Partial("Partial/BlogPostForm")
     }
 </div>

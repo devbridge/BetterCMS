@@ -190,6 +190,7 @@
     <Compile Include="Models\Author.cs" />
     <Compile Include="Models\IHtmlContent.cs" />
     <Compile Include="Models\Maps\HtmlContentMap.cs" />
+    <Compile Include="Models\Migrations\Migration201301081200.cs" />
     <Compile Include="Models\Migrations\Migration201301020833.cs" />
     <Compile Include="Models\ServerControlWidget.cs" />
     <Compile Include="Models\HtmlContent.cs" />

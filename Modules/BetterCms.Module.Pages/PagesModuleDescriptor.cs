@@ -323,5 +323,19 @@ namespace BetterCms.Module.Pages
                         }
                 };
         }
+
+        /// <summary>
+        /// Gets the order.
+        /// </summary>
+        /// <value>
+        /// The order.
+        /// </value>
+        public override int Order
+        {
+            get
+            {
+                return int.MaxValue - 200;
+            }
+        }
     }
 }

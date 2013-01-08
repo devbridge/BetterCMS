@@ -13,7 +13,6 @@ namespace BetterCms.Module.Pages.Models.Maps
             Map(x => x.ImageUrl).Nullable();
             Map(x => x.CanonicalUrl).Nullable();
             Map(x => x.CustomCss).Nullable();
-            Map(x => x.ShowTitle).Not.Nullable();
             Map(x => x.UseCanonicalUrl).Not.Nullable();
             Map(x => x.UseCustomCss).Not.Nullable();
             Map(x => x.UseNoFollow).Not.Nullable();
