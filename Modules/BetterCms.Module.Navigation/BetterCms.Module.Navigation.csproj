@@ -145,6 +145,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Scripts\bcms.sitemap.js" />
     <EmbeddedResource Include="Content\Css\bcms.navigation.css" />
+    <EmbeddedResource Include="Content\Css\Images\sprite-base-2.png" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -173,12 +174,14 @@
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Content\Css\Images\" />
     <Folder Include="Projections\" />
     <Folder Include="Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Sitemap\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Sitemap\Partial\Sitemap.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

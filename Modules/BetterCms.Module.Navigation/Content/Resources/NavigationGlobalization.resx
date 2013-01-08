@@ -135,4 +135,16 @@
   <data name="Sitemap_Dialog_Title" xml:space="preserve">
     <value>Sitemap</value>
   </data>
+  <data name="Sitemap_NodeEdit_Title_Tooltip_Message" xml:space="preserve">
+    <value>Enter page title.</value>
+  </data>
+  <data name="Sitemap_NodeEdit_Title_Tooltip_Title" xml:space="preserve">
+    <value>Page Title</value>
+  </data>
+  <data name="Sitemap_NodeEdit_Url_Tooltip_Message" xml:space="preserve">
+    <value>Enter URL path.</value>
+  </data>
+  <data name="Sitemap_NodeEdit_Url_Tooltip_Title" xml:space="preserve">
+    <value>Permalink</value>
+  </data>
 </root>
