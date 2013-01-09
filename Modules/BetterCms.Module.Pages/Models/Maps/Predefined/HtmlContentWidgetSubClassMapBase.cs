@@ -1,14 +1,14 @@
 using BetterCms.Core.Models;
 
-namespace BetterCms.Module.Pages.Models.Maps
+namespace BetterCms.Module.Pages.Models.Maps.Predefined
 {
-    public class HtmlControlWidgetMap : EntitySubClassMapBase<HtmlContentWidget>
+    public abstract class HtmlContentWidgetSubClassMapBase<THtmlContentWidget> : EntitySubClassMapBase<THtmlContentWidget> where THtmlContentWidget : IHtmlContentWidget
     {
-        public HtmlControlWidgetMap()
-            : base(PagesModuleDescriptor.ModuleName)
+        protected HtmlContentWidgetSubClassMapBase(string moduleName, string tableName)
+            : base(moduleName)
         {
-            Table("HtmlContentWidgets");
-            
+            Table(tableName);
+
             Map(x => x.Html).Not.Nullable().Length(int.MaxValue).LazyLoad();
             Map(x => x.UseHtml).Not.Nullable();
             Map(x => x.CustomCss).Nullable().Length(int.MaxValue).LazyLoad();

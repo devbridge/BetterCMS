@@ -1,18 +1,12 @@
-using BetterCms.Core.Models;
+using BetterCms.Module.Root.Models.Maps.Predefined;
 
 namespace BetterCms.Module.Root.Models.Maps
 {
-    public class ContentOptionMap : EntityMapBase<ContentOption>
+    public class ContentOptionMap : ContentOptionEntityMapBase<ContentOption>
     {
         public ContentOptionMap()
-            : base(RootModuleDescriptor.ModuleName)
+            : base(RootModuleDescriptor.ModuleName, "ContentOptions")
         {
-            Table("ContentOptions");
-
-            Map(x => x.Key, "[Key]").Length(MaxLength.Name).Not.Nullable();
-            Map(x => x.Type).Not.Nullable();
-            Map(x => x.DefaultValue).Length(MaxLength.Max).Nullable().LazyLoad();
-            
             References(x => x.Content).Cascade.SaveUpdate().LazyLoad();
         }
     }

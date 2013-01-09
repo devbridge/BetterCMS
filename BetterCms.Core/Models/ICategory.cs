@@ -3,10 +3,8 @@
     /// <summary>
     /// Defines interface to access basic content properties.
     /// </summary>
-    public interface IContent : IEntity
+    public interface ICategory : IEntity
     {
         string Name { get; }
-
-        string PreviewUrl { get; }
     }
 }

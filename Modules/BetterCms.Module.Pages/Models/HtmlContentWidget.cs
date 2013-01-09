@@ -1,11 +1,12 @@
 using System;
 
+using BetterCms.Core.Models;
 using BetterCms.Module.Root.Models;
 
 namespace BetterCms.Module.Pages.Models
 {
     [Serializable]
-    public class HtmlContentWidget : Widget, IHtmlContent
+    public class HtmlContentWidget : Widget, IHtmlContentWidget
     {
         public virtual string CustomCss { get; set; }
 

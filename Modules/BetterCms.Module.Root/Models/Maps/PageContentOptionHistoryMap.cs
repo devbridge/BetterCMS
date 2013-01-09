@@ -2,10 +2,10 @@ using BetterCms.Module.Root.Models.Maps.Predefined;
 
 namespace BetterCms.Module.Root.Models.Maps
 {
-    public class PageContentOptionMap : PageContentOptionEntityMapBase<PageContentOption>
+    public class PageContentOptionHistoryMap : PageContentOptionEntityMapBase<PageContentOptionHistory>
     {
-        public PageContentOptionMap()
-            : base(RootModuleDescriptor.ModuleName, "PageContentOptions")
+        public PageContentOptionHistoryMap()
+            : base(RootModuleDescriptor.ModuleName, "PageContentOptionHistory")
         {
             References(x => x.ContentOption).Cascade.SaveUpdate().LazyLoad();
             References(x => x.PageContent).Cascade.SaveUpdate().LazyLoad();

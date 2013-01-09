@@ -188,7 +188,16 @@
     <Compile Include="Helpers\ListModelBindingExtensions.cs" />
     <Compile Include="Helpers\RenderHelper.cs" />
     <Compile Include="Models\Author.cs" />
-    <Compile Include="Models\IHtmlContent.cs" />
+    <Compile Include="Models\IServerControlWidget.cs" />
+    <Compile Include="Models\Maps\Predefined\ServerControlWidgetSubClassMapBase.cs" />
+    <Compile Include="Models\Maps\Predefined\HtmlContentWidgetSubClassMapBase.cs" />
+    <Compile Include="Models\Maps\Predefined\HtmlContentSubClassMapBase.cs" />
+    <Compile Include="Models\Maps\HtmlContentHistoryMap.cs" />
+    <Compile Include="Models\Maps\HtmlContentWidgetHistoryMap.cs" />
+    <Compile Include="Models\Maps\ServerControlWidgetHistoryMap.cs" />
+    <Compile Include="Models\ServerControlWidgetHistory.cs" />
+    <Compile Include="Models\HtmlContentWidgetHistory.cs" />
+    <Compile Include="Models\HtmlContentHistory.cs" />
     <Compile Include="Models\Maps\HtmlContentMap.cs" />
     <Compile Include="Models\Migrations\Migration201301020833.cs" />
     <Compile Include="Models\ServerControlWidget.cs" />
@@ -199,7 +208,7 @@
     <Compile Include="Models\HtmlContentWidget.cs" />
     <Compile Include="Models\Maps\AuthorMap.cs" />
     <Compile Include="Models\Maps\ServerControlWidgetMap.cs" />
-    <Compile Include="Models\Maps\HtmlControlWidgetMap.cs" />
+    <Compile Include="Models\Maps\HtmlContentWidgetMap.cs" />
     <Compile Include="Models\Maps\PagePropertiesMap.cs" />
     <Compile Include="Models\Maps\PageTagMap.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />

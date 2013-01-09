@@ -7,7 +7,7 @@ namespace BetterCms.Core.Models
     /// </summary>
     /// <typeparam name="TEntity">The type of the entity to map.</typeparam>
     public abstract class EntityMapBase<TEntity> : ClassMap<TEntity>
-        where TEntity : Entity
+        where TEntity : IEntity
     {
         private string moduleName;
 

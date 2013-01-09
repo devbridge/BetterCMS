@@ -22,7 +22,7 @@ namespace BetterCms.Module.Root.Models.Migrations
 
         public override void Down()
         {
-          
+            Delete.Column("PreviewUrl").FromTable("Layouts").InSchema(SchemaName);
         }     
     }
 }

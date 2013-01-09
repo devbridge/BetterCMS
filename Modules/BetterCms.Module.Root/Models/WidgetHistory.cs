@@ -5,7 +5,7 @@ using BetterCms.Core.Models;
 namespace BetterCms.Module.Root.Models
 {
     [Serializable]
-    public class Widget : Content, IWidget
+    public class WidgetHistory : ContentHistory, IWidget
     {
         public virtual Category Category { get; set; }
 
@@ -15,15 +15,6 @@ namespace BetterCms.Module.Root.Models
             {
                 return Category;
             }
-        }
-
-        public override Content Clone()
-        {
-            return new Widget
-                {
-                    Name = Name,
-                    Category = Category
-                };
         }
     }
 }

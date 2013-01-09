@@ -1,18 +1,20 @@
-﻿using System;
-
-namespace BetterCms.Core.Models
+﻿namespace BetterCms.Core.Models
 {
     /// <summary>
     /// Defines interface to access a basic page content properties.
     /// </summary>
-    public interface IPageContent
+    public interface IPageContent : IEntity
     {
-        Guid Id { get; }
+        int Order { get; }
 
         IPage Page { get; }
 
         IContent Content { get; }
 
         IRegion Region { get; }
+
+      //  bool IsDraft { get; set; }
+
+     //   bool IsArchived { get; set; }
     }
 }

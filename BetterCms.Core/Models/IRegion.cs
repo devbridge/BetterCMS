@@ -5,8 +5,10 @@ namespace BetterCms.Core.Models
     /// <summary>
     /// Defines interface to access basic content properties.
     /// </summary>
-    public interface IRegion
+    public interface IRegion : IEntity
     {
-        Guid Id { get; }
+        string Name { get; }
+
+        string RegionIdentifier { get; }
     }
 }
