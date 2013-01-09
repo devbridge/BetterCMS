@@ -26,7 +26,7 @@
            .HeaderAttributes(@style => "width: 100px;")
            .Attributes(@class => "bcms-page-created");
 
-        column.For(m => m.CreatedOn)
+        column.For(m => m.ModifiedOn)
            .Named(PagesGlobalization.SiteSettings_Pages_ModifiedColumn)
            .SortColumnName("ModifiedOn")
            .HeaderAttributes(@style => "width: 100px;")
