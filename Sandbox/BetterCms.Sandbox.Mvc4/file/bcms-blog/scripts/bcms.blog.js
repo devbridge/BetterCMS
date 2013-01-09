@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.grid', 'bcms.pages'],
-    function ($, bcms, modal, siteSettings, dynamicContent, datepicker, htmlEditor, grid, pages) {
+define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.grid', 'bcms.pages', 'knockout', 'bcms.media'],
+    function ($, bcms, modal, siteSettings, dynamicContent, datepicker, htmlEditor, grid, pages, ko, media) {
     'use strict';
 
     var blog = { },
@@ -40,6 +40,31 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     blog.globalization = globalization;
     blog.selectors = selectors;
 
+    function BlogPostViewModel(blogPost) {
+        var self = this;
+
+        self.imageId = ko.observable(blogPost.ImageId);
+        self.imageUrl = ko.observable(blogPost.ImageUrl);
+        self.thumbnailUrl = ko.observable(blogPost.ThumbnailUrl);
+        self.imageTooltip = ko.observable(blogPost.ImageTooltip);
+
+        self.selectImage = function() {
+            media.openImageInsertDialog(function (imageViewModel) {
+                self.thumbnailUrl(imageViewModel.thumbnailUrl);
+                self.imageUrl(imageViewModel.publicUrl());
+                self.imageTooltip(imageViewModel.tooltip);
+                self.imageId(imageViewModel.id());
+            }, false);
+        };
+
+        self.previewImage = function () {
+            var previewUrl = self.imageUrl();
+            if (previewUrl) {
+                modal.imagePreview(previewUrl, self.imageTooltip());
+            }
+        };
+    }
+
     /**
     * Opens blog edit form
     */
@@ -63,10 +88,13 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     /**
     * Initializes blog edit form
     */
-    function initEditBlogPostDialogEvents(dialog) {
+    function initEditBlogPostDialogEvents(dialog, content) {
         dialog.container.find(selectors.datePickers).initializeDatepicker();
         
         htmlEditor.initializeHtmlEditor(selectors.htmlEditor);
+
+        var viewModel = new BlogPostViewModel(content.Data.Data);
+        ko.applyBindings(viewModel, dialog.container.get(0));
     }
 
     /**

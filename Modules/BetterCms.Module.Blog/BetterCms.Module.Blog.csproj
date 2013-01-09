@@ -147,7 +147,6 @@
     <EmbeddedResource Include="Content\Styles\Images\bcms-no-image-3.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Scripts\bcms.blog.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -158,6 +157,10 @@
     <ProjectReference Include="..\..\BetterCMS.Core\BetterCms.Core.csproj">
       <Project>{694ca5ca-a0e2-4578-a249-648498b058d7}</Project>
       <Name>BetterCms.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BetterCms.Module.MediaManager\BetterCms.Module.MediaManager.csproj">
+      <Project>{f3e41793-e8ed-4ba8-a1ab-cba1e47b0786}</Project>
+      <Name>BetterCms.Module.MediaManager</Name>
     </ProjectReference>
     <ProjectReference Include="..\BetterCms.Module.Root\BetterCms.Module.Root.csproj">
       <Project>{66e7e4df-eeea-4b1e-8663-a1b430eb7375}</Project>
@@ -172,7 +175,9 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Scripts\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

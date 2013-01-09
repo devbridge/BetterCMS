@@ -90,6 +90,38 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         public virtual Guid? CategoryId { get; set; }
 
         /// <summary>
+        /// Gets or sets the image id.
+        /// </summary>
+        /// <value>
+        /// The image id.
+        /// </value>
+        public virtual Guid? ImageId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the image URL.
+        /// </summary>
+        /// <value>
+        /// The image URL.
+        /// </value>
+        public virtual string ImageUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the thumbnail URL.
+        /// </summary>
+        /// <value>
+        /// The thumbnail URL.
+        /// </value>
+        public virtual string ThumbnailUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the image tooltip.
+        /// </summary>
+        /// <value>
+        /// The image tooltip.
+        /// </value>
+        public virtual string ImageTooltip { get; set; }
+
+        /// <summary>
         /// Gets or sets the post tags.
         /// </summary>
         /// <value>

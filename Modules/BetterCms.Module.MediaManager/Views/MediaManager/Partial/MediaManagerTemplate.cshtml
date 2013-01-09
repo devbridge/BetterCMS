@@ -65,7 +65,7 @@
                     <!-- ko if: canBeDownloaded() -->
                     <a class="bcms-media-content-link" href="#" data-bind="click: downloadMedia">@MediaGlobalization.MediaManager_ButtonDownload</a>
                     <!-- /ko -->
-                    <!-- ko if: $root.canSelectMedia() && isImage() -->
+                    <!-- ko if: $root.canInsertMedia() && isImage() -->
                     <a class="bcms-media-content-link" href="#" data-bind="click: insertMedia.bind($data, $root)">@MediaGlobalization.MediaManager_ButtonInsertImage</a>
                     <a class="bcms-media-content-link" href="#" data-bind="click: insertMediaWithOptions.bind($data, $root)">@MediaGlobalization.MediaManager_ButtonInsertImageWithOptions</a>
                     <!-- /ko -->

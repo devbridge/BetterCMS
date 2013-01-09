@@ -76,6 +76,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             blogPost.Title = request.Title;
             blogPost.Description = request.IntroText;
             blogPost.Version = request.Version;
+            blogPost.ImageUrl = request.ImageUrl;
 
             // TODO
             if (isNew)

@@ -240,7 +240,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Scripts\bcms.contextMenu.js" />
-    <EmbeddedResource Include="Scripts\bcms.media.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>

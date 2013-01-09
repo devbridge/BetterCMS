@@ -123,6 +123,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             self.path = ko.observable();
             self.isGrid = ko.observable(false);
             self.canSelectMedia = ko.observable(false);
+            self.canInsertMedia = ko.observable(false);
 
             self.gridOptions = ko.observable();
 
@@ -730,8 +731,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
         /**
         * Shows image selection window.
         */
-        media.onInsertImage = function (htmlContentEditor) {
-            contentEditor = htmlContentEditor;
+        media.openImageInsertDialog = function (onAccept, canInsertMedia) {
             modal.open({
                 title: globalization.insertImageDialogTitle,
                 acceptTitle: 'Insert',
@@ -741,6 +741,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                         done: function (content) {
                             imagesViewModel = new MediaItemsViewModel(dialog.container, links.loadImagesUrl, dialog.container);
                             imagesViewModel.canSelectMedia(true);
+                            imagesViewModel.canInsertMedia(canInsertMedia);
                             imagesViewModel.spinContainer = dialog.container.find(selectors.insertContentContainer);
                             initializeTab(content.Data.Data, imagesViewModel);
                         },
@@ -769,13 +770,25 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                         
                         return false;
                     } else {
-                        insertImage(selectedItem.id(), false);
+                        if ($.isFunction(onAccept)) {
+                            onAccept(selectedItem);
+                        }
                     }
                     
                     return true;
                 },
             });
         };
+
+        /**
+        * Function is called, when inserting image event is trigerred
+        */ 
+        function onOpenImageInsertDialog(htmlContentEditor) {
+            contentEditor = htmlContentEditor;
+            media.openImageInsertDialog(function(imageViewModel) {
+                insertImage(imageViewModel.id(), false);
+            }, true);
+        }
 
         /**
         * Insert media.
@@ -1095,7 +1108,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             /**
             * Subscribe to events.
             */
-            bcms.on(htmlEditor.events.insertImage, media.onInsertImage);
+            bcms.on(htmlEditor.events.insertImage, onOpenImageInsertDialog);
         };
 
         /**
