@@ -130,8 +130,8 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                            Title = blogPost.Title,
                            PageUrl = blogPost.PageUrl,
                            ModifiedByUser = blogPost.ModifiedByUser,
-                           ModifiedOn = blogPost.ModifiedOn.ToFormattedDateTimeString(),
-                           CreatedOn = blogPost.CreatedOn.ToFormattedDateTimeString(),
+                           ModifiedOn = blogPost.ModifiedOn.ToFormattedDateString(),
+                           CreatedOn = blogPost.CreatedOn.ToFormattedDateString(),
                            IsPublished = blogPost.IsPublished
                        };
         }

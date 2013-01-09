@@ -25,6 +25,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         },
         links = {
             loadSiteSettingsBlogsUrl: null,
+            loadSiteSettingsBlogListsUrl: null,
             loadCreateNewPostDialogUrl: null,
             loadEditPostDialogUrl: null
         },
@@ -118,6 +119,9 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         }
     }
 
+    /**
+    * Adds boolean template to specified container
+    */
     function siteSettingsSetBooleanTemplate (container, value) {
         var template = (value === true) ? $(selectors.siteSettingsBlogBooleanTemplateTrue) : $(selectors.siteSettingsBlogBooleanTemplateFalse),
             html = $(template.html());

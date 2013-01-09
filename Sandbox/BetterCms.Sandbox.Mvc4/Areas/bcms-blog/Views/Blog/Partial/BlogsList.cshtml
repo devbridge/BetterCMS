@@ -1,6 +1,7 @@
 ﻿@using BetterCms.Module.Blog.Content.Resources
 @using BetterCms.Module.Blog.Controllers
 @using BetterCms.Module.Blog.ViewModels.Blog
+@using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc.Grids.Extensions
 @using BetterCms.Module.Root.Mvc.Grids.TableRenderers
 @using BetterCms.Module.Root.Mvc.Helpers
@@ -20,12 +21,12 @@
             .SortColumnName("Title")
             .Encode(false);
 
-        column.For(m => m.CreatedOn.ToFormattedDateTimeString())
+        column.For(m => m.CreatedOn.ToFormattedDateString())
            .Named(BlogGlobalization.SiteSettings_Blogs_CreatedColumn)
            .SortColumnName("CreatedOn")
            .Attributes(@class => "bcms-blog-CreatedOn");
 
-        column.For(m => m.ModifiedOn.ToFormattedDateTimeString())
+        column.For(m => m.ModifiedOn.ToFormattedDateString())
            .Named(BlogGlobalization.SiteSettings_Blogs_ModifiedColumn)
            .SortColumnName("ModifiedOn")
            .Attributes(@class => "bcms-blog-ModifiedOn");
@@ -45,14 +46,14 @@
     };
 }
 
-@using (Html.BeginForm<BlogController>(f => f.Index(null), FormMethod.Post, new { @id = "bcms-blogs-form" }))
+@using (Html.BeginForm<BlogController>(f => f.BlogsList(null), FormMethod.Post, new { @id = "bcms-blogs-form" }))
 {
     @Html.HiddenGridOptions(Model.GridOptions)
 
-    <div class="bcms-twocols-title-block">
+    <div class="bcms-top-block-holder">
         <div class="bcms-btn-links-main" id="bcms-create-blog-button">@BlogGlobalization.SiteSettings_Blogs_AddNew</div>
         <div class="bcms-search-block">
-            @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box" })
+            @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box", @placeholder = RootGlobalization.WaterMark_Search })
             <div class="bcms-btn-search" id="bcms-blogs-search-btn">@BlogGlobalization.SiteSettings_Blogs_Search</div>
         </div>
         @Html.MessagesBox("bcms-blogs-messages")

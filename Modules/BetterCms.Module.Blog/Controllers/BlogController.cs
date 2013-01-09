@@ -14,10 +14,16 @@ namespace BetterCms.Module.Blog.Controllers
 {
     public class BlogController : CmsControllerBase
     {
-        public virtual ActionResult Index(SearchableGridOptions request)
+        public virtual ActionResult Index()
+        {
+            var model = GetCommand<GetBlogPostListCommand>().ExecuteCommand(new SearchableGridOptions());
+            return View(model);
+        }
+
+        public virtual ActionResult BlogsList(SearchableGridOptions request)
         {
             var model = GetCommand<GetBlogPostListCommand>().ExecuteCommand(request);
-            return View(model);
+            return PartialView("Partial/BlogsList", model);
         }
 
         [HttpGet]
