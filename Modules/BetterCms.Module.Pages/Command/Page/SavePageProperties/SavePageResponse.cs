@@ -3,6 +3,7 @@ using System.Globalization;
 
 using BetterCms.Core.Models;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Root.Mvc;
 
 namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
 {
@@ -80,8 +81,8 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         {
             PageId = page.Id;
             Title = page.Title;
-            CreatedOn = page.CreatedOn.ToString(CultureInfo.CurrentCulture);
-            ModifiedOn = page.ModifiedOn.ToString(CultureInfo.CurrentCulture);
+            CreatedOn = page.CreatedOn.ToFormattedDateString();
+            ModifiedOn = page.ModifiedOn.ToFormattedDateString();
             IsPublished = page.IsPublished;
             HasSEO = ((IPage)page).HasSEO;
             PageUrl = page.PageUrl;
