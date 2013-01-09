@@ -2,19 +2,22 @@
 using System.Web.Mvc;
 
 using BetterCms.Module.Blog.Commands.GetBlogPost;
+using BetterCms.Module.Blog.Commands.GetBlogPostList;
 using BetterCms.Module.Blog.Commands.SaveBlogPost;
 using BetterCms.Module.Blog.ViewModels.Blog;
+
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
 namespace BetterCms.Module.Blog.Controllers
 {
     public class BlogController : CmsControllerBase
     {
-        public virtual ActionResult Index()
+        public virtual ActionResult Index(SearchableGridOptions request)
         {
-            var model = new BlogPostViewModel();
-            return View();
+            var model = GetCommand<GetBlogPostListCommand>().ExecuteCommand(request);
+            return View(model);
         }
 
         [HttpGet]
@@ -37,9 +40,9 @@ namespace BetterCms.Module.Blog.Controllers
         [HttpPost]
         public virtual ActionResult CreatePost(BlogPostViewModel model)
         {
-            model = GetCommand<SaveBlogPostCommand>().ExecuteCommand(model);
+            var response = GetCommand<SaveBlogPostCommand>().ExecuteCommand(model);
 
-            return WireJson(model != null, model);
+            return WireJson(response != null, response);
         }
         
         [HttpGet]
@@ -62,9 +65,9 @@ namespace BetterCms.Module.Blog.Controllers
         [HttpPost]
         public virtual ActionResult EditPost(BlogPostViewModel model)
         {
-            model = GetCommand<SaveBlogPostCommand>().ExecuteCommand(model);
+            var response = GetCommand<SaveBlogPostCommand>().ExecuteCommand(model);
 
-            return WireJson(model != null, model);
+            return WireJson(response != null, response);
         }
     }
 }

@@ -120,6 +120,9 @@
   <data name="CreateNewPost_Dialog_Title" xml:space="preserve">
     <value>Create New Post</value>
   </data>
+  <data name="DeletePost_Dialog_Title" xml:space="preserve">
+    <value>Delete Blog</value>
+  </data>
   <data name="EditBlockPost_AddTags_Title" xml:space="preserve">
     <value>Add Tags</value>
   </data>
@@ -198,6 +201,9 @@
   <data name="EditBlockPost_Title_Tooltip_Title" xml:space="preserve">
     <value>Title of the Post</value>
   </data>
+  <data name="EditPost_Dialog_Title" xml:space="preserve">
+    <value>Edit article</value>
+  </data>
   <data name="SaveBlogPost_RegionNotFound_Message" xml:space="preserve">
     <value>Region {0} not found. It's the default region for blog post content.</value>
   </data>
@@ -206,5 +212,26 @@
   </data>
   <data name="SiteSettings_BlogsMenuItem" xml:space="preserve">
     <value>Blogs</value>
+  </data>
+  <data name="SiteSettings_Blogs_AddNew" xml:space="preserve">
+    <value>Add New +</value>
+  </data>
+  <data name="SiteSettings_Blogs_CreatedColumn" xml:space="preserve">
+    <value>Created</value>
+  </data>
+  <data name="SiteSettings_Blogs_IsPublishedColumn" xml:space="preserve">
+    <value>Published</value>
+  </data>
+  <data name="SiteSettings_Blogs_ModifiedByColumn" xml:space="preserve">
+    <value>LastEdited By</value>
+  </data>
+  <data name="SiteSettings_Blogs_ModifiedColumn" xml:space="preserve">
+    <value>Last Edited</value>
+  </data>
+  <data name="SiteSettings_Blogs_Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="SiteSettings_Blogs_TitleColumn" xml:space="preserve">
+    <value>Posts Title</value>
   </data>
 </root>

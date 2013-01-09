@@ -372,12 +372,11 @@
     <EmbeddedResource Include="Views\Category\Categories.cshtml" />
     <EmbeddedResource Include="Views\Widgets\EditServerControlWidget.cshtml" />
     <EmbeddedResource Include="Views\Widgets\Partial\EditContentOptions.cshtml" />
-    <EmbeddedResource Include="Views\Page\EditorTemplates\SiteSettingBoolean.cshtml" />
+    <EmbeddedResource Include="Views\Shared\EditorTemplates\SiteSettingBoolean.cshtml" />
     <EmbeddedResource Include="Views\Content\PageContentOptions.cshtml" />
     <EmbeddedResource Include="Views\Content\EditPageContent.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\Shared\" />
     <Folder Include="Views\Templates\Partial\" />
   </ItemGroup>
   <ItemGroup>
