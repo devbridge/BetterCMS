@@ -79,6 +79,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
 
             self.editSitemapNode = function (parent, event) {
                 bcms.stopEventPropagation(event);
+                self.isActive(true);
                 editSitemapNode(self);
             };
             
@@ -90,11 +91,13 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             self.saveSitemapNode = function (parent, data, event) {
                 bcms.stopEventPropagation(event);
                 saveSitemapNode(self);
+                self.isActive(false);
             };
             
             self.cancelEditSitemapNode = function (parent, data, event) {
                 bcms.stopEventPropagation(event);
                 cancelEditSitemapNode(self);
+                self.isActive(false);
             };
         };
 
@@ -108,12 +111,12 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         
         function editSitemapNode(sitemapNodeViewModel) {
             // TODO: implement.
-            alert('Edit node "' + sitemapNodeViewModel.title() + '"!');
+            //alert('Edit node "' + sitemapNodeViewModel.title() + '"!');
         };
 
         function deleteSitemapNode(sitemapNodeViewModel) {
             // TODO: implement.
-            alert('Delete node "' + sitemapNodeViewModel.title() + '"!');
+            //alert('Delete node "' + sitemapNodeViewModel.title() + '"!');
         };
 
         /**
@@ -121,7 +124,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         */
         function cancelEditSitemapNode(sitemapNodeViewModel) {
             // TODO: implement.
-            alert('Cancel node edit "' + sitemapNodeViewModel.title() + '"!');
+            //alert('Cancel node edit "' + sitemapNodeViewModel.title() + '"!');
         };
 
         function makeSitemapNodeViewModel(jsonSitemapNode) {
@@ -200,11 +203,57 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             initializeSiteMap(content.Data.Data, sitemapViewModel);
         }
 
+        function addSortableBinding() {
+            ko.bindingHandlers.sortable = {
+                init: function (element, valueAccessor) {
+                    var startIndex = -1,
+                        sourceArray = valueAccessor();
+                    var sortableSetup = {
+                        start: function(event, ui) {
+                            startIndex = ui.item.index();
+                            ui.item.find("input:focus").change();
+                        },
+                        stop: function(event, ui) {
+                            var newIndex = ui.item.index(),
+                                renewDisplayOrder = function(nodesToReorder) {
+                                    for (var i = 0; i < nodesToReorder.length; i++) {
+                                        var node = nodesToReorder[i];
+                                        if (node.displayOrder() != i) {
+                                            node.displayOrder(i);
+                                            // TODO: node.saveSitemapNode();
+                                        }
+                                    }
+                                };
+                            
+                            if (startIndex > -1) {
+                                var context = ko.contextFor(ui.item.parent()[0]),
+                                    destinationArray = context.$data.childNodes || context.$data.sitemapNodes,
+                                    item = sourceArray()[startIndex];
+                                
+                                sourceArray.remove(item);
+                                destinationArray.splice(newIndex, 0, item);
+                                ui.item.remove();
+                                
+                                renewDisplayOrder(sourceArray());
+                                renewDisplayOrder(destinationArray());
+                            }
+                        },
+                        connectWith: '.bcms-connected-sortable',
+                        placeholder: 'bcms-placement-dropzone',
+                        dropOnEmpty: true
+                    };
+                    $(element).sortable(sortableSetup);
+                    $(element).disableSelection();
+                }
+            };
+        }
+
         /**
         * Initializes module.
         */
         sitemap.init = function() {
             console.log('Initializing bcms.sitemap module.');
+            addSortableBinding();
         };
     
         /**
