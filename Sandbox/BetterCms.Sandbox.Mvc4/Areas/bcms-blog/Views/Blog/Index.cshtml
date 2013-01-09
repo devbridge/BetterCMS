@@ -1,1 +1,71 @@
-﻿<b>BLOG INDEX</b>
+﻿@using BetterCms.Module.Blog.Content.Resources
+@using BetterCms.Module.Blog.Controllers
+@using BetterCms.Module.Blog.ViewModels.Blog
+@using BetterCms.Module.Root.Mvc.Grids.Extensions
+@using BetterCms.Module.Root.Mvc.Grids.TableRenderers
+@using BetterCms.Module.Root.Mvc.Helpers
+@using Microsoft.Web.Mvc
+@using MvcContrib.UI.Grid
+
+@model BetterCms.Module.Root.ViewModels.SiteSettings.SearchableGridViewModel<SiteSettingBlogPostViewModel>
+           
+@{
+    Action<ColumnBuilder<SiteSettingBlogPostViewModel>> columns = column =>
+    {
+        column.EditButtonColumn();
+
+        column.For(m => string.Format("<a class=\"bcms-tables-link bcms-grid-item-edit-button bcms-blog-title\" data-id=\"{0}\">{1}</a>", m.Id, m.Title))
+            .Named(BlogGlobalization.SiteSettings_Blogs_TitleColumn)
+            .SortColumnName("Title")
+            .Encode(false);
+
+        column.For(m => m.CreatedOn)
+           .Named(BlogGlobalization.SiteSettings_Blogs_CreatedColumn)
+           .SortColumnName("CreatedOn")
+           .Attributes(@class => "bcms-blog-created");
+
+        column.For(m => m.ModifiedOn)
+           .Named(BlogGlobalization.SiteSettings_Blogs_ModifiedColumn)
+           .SortColumnName("ModifiedOn")
+           .Attributes(@class => "bcms-blog-modified");
+        
+        column.For(m => m.ModifiedByUser)
+           .Named(BlogGlobalization.SiteSettings_Blogs_ModifiedByColumn)
+           .SortColumnName("ModifiedByUser")
+           .Attributes(@class => "bcms-blog-modifiedBy");
+
+        column.For(m => Html.EditorFor(e => m.IsPublished, "SiteSettingBoolean"))
+           .Named(BlogGlobalization.SiteSettings_Blogs_IsPublishedColumn)
+           .SortColumnName("IsPublished")
+           .HeaderAttributes(@style => "width: 65px; text-align: center")
+           .Attributes(@class => "bcms-blog-ispublished");
+
+        column.DeleteButtonColumn();
+    };
+}
+
+@using (Html.BeginForm<BlogController>(f => f.Index(null), FormMethod.Post, new { @id = "bcms-blogs-form" }))
+{
+    @Html.HiddenGridOptions(Model.GridOptions)
+
+    <div class="bcms-twocols-title-block">
+        <div class="bcms-btn-links-main" id="bcms-create-blog-button">@BlogGlobalization.SiteSettings_Blogs_AddNew</div>
+        <div class="bcms-search-block">
+            @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box" })
+            <div class="bcms-btn-search" id="bcms-blogs-search-btn">@BlogGlobalization.SiteSettings_Blogs_Search</div>
+        </div>
+        @Html.MessagesBox("bcms-blogs-messages")
+    </div>
+
+    @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingBlogPostViewModel>())
+}
+
+<script type="text/html" id="bcms-blogs-list-row-template">
+    @Html.Grid(new List<SiteSettingBlogPostViewModel> {new SiteSettingBlogPostViewModel()}).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingBlogPostViewModel>())
+</script>
+<script type="text/html" id="bcms-boolean-true-template">
+    @Html.Partial("EditorTemplates/SiteSettingBoolean", true)
+</script>
+<script type="text/html" id="bcms-boolean-false-template">
+    @Html.Partial("EditorTemplates/SiteSettingBoolean", false)
+</script>

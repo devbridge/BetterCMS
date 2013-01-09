@@ -1,20 +1,22 @@
 ﻿using System;
 using System.Web.Mvc;
 
+using BetterCms.Module.Blog.Commands.GetBlogList;
 using BetterCms.Module.Blog.Commands.GetBlogPost;
 using BetterCms.Module.Blog.Commands.SaveBlogPost;
 using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
 namespace BetterCms.Module.Blog.Controllers
 {
     public class BlogController : CmsControllerBase
     {
-        public virtual ActionResult Index()
+        public virtual ActionResult Index(SearchableGridOptions request)
         {
-            var model = new BlogPostViewModel();
-            return View();
+            var model = GetCommand<GetBlogListCommand>().ExecuteCommand(request);
+            return View(model);
         }
 
         [HttpGet]

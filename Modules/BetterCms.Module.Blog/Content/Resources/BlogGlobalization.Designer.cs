@@ -304,6 +304,15 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit article.
+        /// </summary>
+        public static string EditPost_Dialog_Title {
+            get {
+                return ResourceManager.GetString("EditPost_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Region {0} not found. It&apos;s the default region for blog post content..
         /// </summary>
         public static string SaveBlogPost_RegionNotFound_Message {
@@ -318,6 +327,69 @@ namespace BetterCms.Module.Blog.Content.Resources {
         public static string Sidebar_AddNewPostButtonTitle {
             get {
                 return ResourceManager.GetString("Sidebar_AddNewPostButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add New +.
+        /// </summary>
+        public static string SiteSettings_Blogs_AddNew {
+            get {
+                return ResourceManager.GetString("SiteSettings_Blogs_AddNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Created.
+        /// </summary>
+        public static string SiteSettings_Blogs_CreatedColumn {
+            get {
+                return ResourceManager.GetString("SiteSettings_Blogs_CreatedColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Published.
+        /// </summary>
+        public static string SiteSettings_Blogs_IsPublishedColumn {
+            get {
+                return ResourceManager.GetString("SiteSettings_Blogs_IsPublishedColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LastEdited By.
+        /// </summary>
+        public static string SiteSettings_Blogs_ModifiedByColumn {
+            get {
+                return ResourceManager.GetString("SiteSettings_Blogs_ModifiedByColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Edited.
+        /// </summary>
+        public static string SiteSettings_Blogs_ModifiedColumn {
+            get {
+                return ResourceManager.GetString("SiteSettings_Blogs_ModifiedColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string SiteSettings_Blogs_Search {
+            get {
+                return ResourceManager.GetString("SiteSettings_Blogs_Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Posts Title.
+        /// </summary>
+        public static string SiteSettings_Blogs_TitleColumn {
+            get {
+                return ResourceManager.GetString("SiteSettings_Blogs_TitleColumn", resourceCulture);
             }
         }
         

@@ -116,6 +116,7 @@
     </Compile>
     <Compile Include="BlogModuleConstants.cs" />
     <Compile Include="BlogModuleDescriptor.cs" />
+    <Compile Include="Commands\GetBlogList\GetBlogListCommand.cs" />
     <Compile Include="Commands\GetBlogPost\GetBlogPostCommand.cs" />
     <Compile Include="Commands\SaveBlogPost\SaveBlogPostCommand.cs" />
     <Compile Include="Content\Resources\BlogGlobalization.Designer.cs">
@@ -131,10 +132,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registration\BlogJavaScriptModuleDescriptor.cs" />
     <Compile Include="ViewModels\Blog\BlogPostViewModel.cs" />
+    <Compile Include="ViewModels\Blog\SiteSettingBlogPostViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Content\Resources\BlogGlobalization.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>BlogGlobalization.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Content\Styles\bcms.blog.css" />
