@@ -6,6 +6,7 @@ using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.ViewModels.Blog;
+using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
@@ -76,7 +77,6 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             blogPost.Title = request.Title;
             blogPost.Description = request.IntroText;
             blogPost.Version = request.Version;
-            blogPost.ImageUrl = request.ImageUrl;
 
             // TODO
             if (isNew)
@@ -105,6 +105,15 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             else
             {
                 blogPost.Category = null;
+            }
+
+            if (request.ImageId.HasValue)
+            {
+                blogPost.Image = Repository.AsProxy<MediaImage>(request.ImageId.Value);
+            }
+            else
+            {
+                blogPost.Image = null;
             }
 
             Repository.Save(blogPost);
