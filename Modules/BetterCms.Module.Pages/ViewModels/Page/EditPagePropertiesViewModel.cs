@@ -104,7 +104,7 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// <value>
         /// The list of authors.
         /// </value>
-        public IList<LookupKeyValue> Authors { get; set; }
+        public IEnumerable<LookupKeyValue> Authors { get; set; }
 
         /// <summary>
         /// Gets or sets the page custom CSS.

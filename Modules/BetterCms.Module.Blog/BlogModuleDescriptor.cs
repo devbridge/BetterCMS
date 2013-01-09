@@ -1,27 +1,57 @@
-﻿using BetterCms.Core.Modules;
+﻿using System.Collections.Generic;
+
+using Autofac;
+
+using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
-using BetterCms.Core.Modules.Registration;
 using BetterCms.Module.Blog.Content.Resources;
+using BetterCms.Module.Blog.Registration;
 
 namespace BetterCms.Module.Blog
 {
+    /// <summary>
+    /// Blog module descriptor
+    /// </summary>
     public class BlogModuleDescriptor : ModuleDescriptor
     {
-        private JavaScriptModuleDescriptor blogJavaScriptModuleDescriptor;
+        /// <summary>
+        /// The module name.
+        /// </summary>
+        internal const string ModuleName = "blog";
 
+        /// <summary>
+        /// The blog java script module descriptor
+        /// </summary>
+        private BlogJavaScriptModuleDescriptor blogJavaScriptModuleDescriptor;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlogModuleDescriptor" /> class.
+        /// </summary>
         public BlogModuleDescriptor()
         {
-            InitializeBlogJavaScriptModule();
+            blogJavaScriptModuleDescriptor = new BlogJavaScriptModuleDescriptor(this);
         }
 
+        /// <summary>
+        /// Gets the module name.
+        /// </summary>
+        /// <value>
+        /// The module name.
+        /// </value>
         public override string Name
         {
             get
             {
-                return "Blog";
+                return ModuleName;
             }
         }
 
+        /// <summary>
+        /// Gets the module escription.
+        /// </summary>
+        /// <value>
+        /// The module description.
+        /// </value>
         public override string Description
         {
             get
@@ -30,7 +60,13 @@ namespace BetterCms.Module.Blog
             }
         }
 
-        public override System.Collections.Generic.IEnumerable<IPageActionProjection> RegisterSidebarMainProjections(Autofac.ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        /// <summary>
+        /// Registers the sidebar main projections.
+        /// </summary>
+        /// <param name="containerBuilder">The container builder.</param>
+        /// <param name="configuration">The configuration.</param>
+        /// <returns></returns>
+        public override IEnumerable<IPageActionProjection> RegisterSidebarMainProjections(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
         {
             return new IPageActionProjection[]
                 {
@@ -43,7 +79,15 @@ namespace BetterCms.Module.Blog
                 };
         }
 
-        public override System.Collections.Generic.IEnumerable<JavaScriptModuleDescriptor> RegisterJavaScriptModules(Autofac.ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        /// <summary>
+        /// Registers java script modules.
+        /// </summary>
+        /// <param name="containerBuilder">The container builder.</param>
+        /// <param name="configuration">The CMS configuration.</param>
+        /// <returns>
+        /// Enumerator of known JS modules list.
+        /// </returns>
+        public override IEnumerable<JavaScriptModuleDescriptor> RegisterJavaScriptModules(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
         {
             return new[]
                 {
@@ -51,7 +95,13 @@ namespace BetterCms.Module.Blog
                 };
         }
 
-        public override System.Collections.Generic.IEnumerable<string> RegisterStyleSheetFiles(Autofac.ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        /// <summary>
+        /// Registers the style sheet files.
+        /// </summary>
+        /// <param name="containerBuilder">The container builder.</param>
+        /// <param name="configuration">The configuration.</param>
+        /// <returns>Enumerator of known module style sheet files.</returns>
+        public override IEnumerable<string> RegisterStyleSheetFiles(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
         {
             return new[]
                 {
@@ -59,9 +109,23 @@ namespace BetterCms.Module.Blog
                 };
         }
 
-        private void InitializeBlogJavaScriptModule()
+        /// <summary>
+        /// Registers the site settings projections.
+        /// </summary>
+        /// <param name="containerBuilder">The container builder.</param>
+        /// <param name="configuration">The configuration.</param>
+        /// <returns>List of page action projections.</returns>
+        public override IEnumerable<IPageActionProjection> RegisterSiteSettingsProjections(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
         {
-            blogJavaScriptModuleDescriptor = new JavaScriptModuleDescriptor(this, "bcms.blog", "/file/bcms-blog/scripts/bcms.blog");          
+            return new IPageActionProjection[]
+                {
+                    new LinkActionProjection(blogJavaScriptModuleDescriptor, page => "loadSiteSettingsBlogs")
+                        {
+                            Order = 1200,
+                            Title = () => BlogGlobalization.SiteSettings_BlogsMenuItem,
+                            CssClass = page => "bcms-sidebar-link"
+                        }                                      
+                };
         }
     }
 }

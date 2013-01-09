@@ -2,9 +2,11 @@
 using System.Text;
 
 using BetterCms.Core.Models;
+using BetterCms.Module.Blog.Models;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Navigation.Models;
 
 namespace BetterCms.Tests.Helpers
 {
@@ -108,6 +110,22 @@ namespace BetterCms.Tests.Helpers
         {
             var entity = new PageProperties();
 
+            PopulatePageProperties(entity, layout);
+
+            return entity;
+        }
+
+        public BlogPost CreateNewBlogPost()
+        {
+            var entity = new BlogPost();
+
+            PopulatePageProperties(entity);
+
+            return entity;
+        }
+
+        private void PopulatePageProperties(PageProperties entity, Layout layout = null)
+        {
             PopulateBaseFields(entity);
 
             entity.IsPublished = ProvideRandomBooleanValue();
@@ -122,8 +140,6 @@ namespace BetterCms.Tests.Helpers
             entity.MetaDescription = ProvideRandomString(MaxLength.Text);
 
             entity.Layout = layout ?? CreateNewLayout();
-
-            return entity;
         }
 
         public Content CreateNewContent()
@@ -532,6 +548,19 @@ namespace BetterCms.Tests.Helpers
             entity.ThumbnailUri = new Uri(@"C:\Projects\BetterCMS\t_file100.png");
             entity.IsThumbnailUploaded = true;
             entity.PublicThumbnailUrl = "http://bettercms.com/files/image?id=100200&t=image&p";
+
+            return entity;
+        }
+
+        public SitemapNode CreateNewSitemapNode()
+        {
+            var entity = new SitemapNode();
+
+            PopulateBaseFields(entity);
+
+            entity.Title = ProvideRandomString(MaxLength.Name);
+            entity.Url = ProvideRandomString(MaxLength.Url);
+            entity.DisplayOrder = ProvideRandomNumber(0, int.MaxValue);
 
             return entity;
         }

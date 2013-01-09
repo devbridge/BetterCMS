@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
 using NHibernate;
-using NHibernate.Criterion;
 using NHibernate.Transform;
 
 namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
@@ -18,6 +18,20 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
     /// </summary>
     public class GetPagePropertiesCommand : CommandBase, ICommand<Guid, EditPagePropertiesViewModel>
     {
+        /// <summary>
+        /// The author service
+        /// </summary>
+        private IAuthorService authorService;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetPagePropertiesCommand" /> class.
+        /// </summary>
+        /// <param name="authorService">The author service.</param>
+        public GetPagePropertiesCommand(IAuthorService authorService)
+        {
+            this.authorService = authorService;
+        }
+
         /// <summary>
         /// Executes the specified request.
         /// </summary>
@@ -62,7 +76,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                 model = new EditPagePropertiesViewModel();
             }
 
-            model.Authors = GetAuthorsList(UnitOfWork.Session);
+            model.Authors = authorService.GetAuthors();
 
 
             return model;
@@ -90,21 +104,6 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                 .JoinAlias(f => f.Category, () => categoryAlias)
                 .SelectList(select => select.Select(() => categoryAlias.Name))
                 .List<string>();
-        }
-
-        private IList<LookupKeyValue> GetAuthorsList(ISession session)
-        {
-            Author alias = null;
-            LookupKeyValue lookupAlias = null;
-
-            return session
-                .QueryOver(() => alias)
-                .SelectList(select => select
-                    .Select(NHibernate.Criterion.Projections.Cast(NHibernateUtil.String, NHibernate.Criterion.Projections.Property<Author>(c => c.Id))).WithAlias(() => lookupAlias.Key)
-                    .Select(() => alias.DisplayName).WithAlias(() => lookupAlias.Value))
-                .OrderBy(o => o.DisplayName).Asc()
-                .TransformUsing(Transformers.AliasToBean<LookupKeyValue>())
-                .List<LookupKeyValue>();
         }
     }
 }
