@@ -7,8 +7,8 @@ namespace BetterCms.Module.Root.Models.Maps
         public PageContentOptionHistoryMap()
             : base(RootModuleDescriptor.ModuleName, "PageContentOptionHistory")
         {
-            References(x => x.ContentOption).Cascade.SaveUpdate().LazyLoad();
-            References(x => x.PageContent).Cascade.SaveUpdate().LazyLoad();
+            References(x => x.ContentOptionHistory).Cascade.SaveUpdate().LazyLoad();
+            References(x => x.PageContentHistory).Cascade.SaveUpdate().LazyLoad();
         }
     }
 }

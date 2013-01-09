@@ -195,6 +195,7 @@
     <Compile Include="Models\Maps\HtmlContentHistoryMap.cs" />
     <Compile Include="Models\Maps\HtmlContentWidgetHistoryMap.cs" />
     <Compile Include="Models\Maps\ServerControlWidgetHistoryMap.cs" />
+    <Compile Include="Models\Migrations\Migration201301091317.cs" />
     <Compile Include="Models\ServerControlWidgetHistory.cs" />
     <Compile Include="Models\HtmlContentWidgetHistory.cs" />
     <Compile Include="Models\HtmlContentHistory.cs" />

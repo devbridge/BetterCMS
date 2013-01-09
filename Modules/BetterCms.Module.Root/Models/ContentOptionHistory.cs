@@ -15,7 +15,7 @@ namespace BetterCms.Module.Root.Models
 
         public virtual string DefaultValue { get; set; }
 
-        public IContent Content
+        IContent IContentOption.Content
         {
             get
             {

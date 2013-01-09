@@ -24,14 +24,14 @@ namespace BetterCms.Test.Module.Root.ModelTests.MapTests
                     TestDataProvider.CreateNewPageContentOption(pageContent),
                     TestDataProvider.CreateNewPageContentOption(pageContent)
                 };
-            pageContent.PageContentOptions = pageContentOptions;
+            pageContent.Options = pageContentOptions;
 
             SaveEntityAndRunAssertionsInTransaction(
                 pageContent,
                 result =>
                 {
                     Assert.AreEqual(pageContent, result);
-                    Assert.AreEqual(pageContentOptions.OrderBy(f => f.Id), result.PageContentOptions.OrderBy(f => f.Id));
+                    Assert.AreEqual(pageContentOptions.OrderBy(f => f.Id), result.Options.OrderBy(f => f.Id));
                 });
         }
     }

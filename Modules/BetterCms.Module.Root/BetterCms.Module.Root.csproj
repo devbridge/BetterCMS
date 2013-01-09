@@ -126,7 +126,6 @@
     <Compile Include="Controllers\CmsController.cs" />
     <Compile Include="Controllers\PreviewController.cs" />
     <Compile Include="Controllers\EmbeddedResourcesController.cs" />
-    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\RenderingController.cs" />
     <Compile Include="Controllers\SidebarController.cs" />
     <Compile Include="Controllers\SiteSettingsController.cs" />
@@ -529,7 +528,6 @@
     <EmbeddedResource Include="Views\Sidebar\Container.cshtml" />
     <EmbeddedResource Include="Views\Shared\RootLayout.cshtml" />
     <EmbeddedResource Include="Views\Shared\Layouts\OneColumnLayout.cshtml" />
-    <EmbeddedResource Include="Views\Error\PageNotFound.cshtml" />
     <EmbeddedResource Include="Views\Rendering\RenderMainJsFile.cshtml" />
     <EmbeddedResource Include="Views\SiteSettings\Container.cshtml" />
     <EmbeddedResource Include="Views\Sidebar\Header.cshtml" />

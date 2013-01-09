@@ -12,7 +12,7 @@ namespace BetterCms.Module.Root.Models.Maps
             References(x => x.ContentHistory).Cascade.SaveUpdate().LazyLoad();
             References(x => x.Page).Cascade.SaveUpdate().LazyLoad();
 
-            HasMany(x => x.PageContentOptionHistory).Cascade.SaveUpdate().Inverse().LazyLoad().Where("IsDeleted = 0");
+            HasMany(x => x.Options).KeyColumn("PageContentHistoryId").Cascade.SaveUpdate().Inverse().LazyLoad().Where("IsDeleted = 0");
         }
     }
 }

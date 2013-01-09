@@ -44,7 +44,7 @@ namespace BetterCms.Module.Root.Projections
                     .ResolveKeyed<IContentAccessor>(key, new Parameter[]
                                                              {
                                                                  new PositionalParameter(0, pageContent.Content),
-                                                                 new PositionalParameter(1, pageContent.PageContentOptions.Cast<IPageContentOption>().ToList())
+                                                                 new PositionalParameter(1, pageContent.Options.Cast<IPageContentOption>().ToList())
                                                              });
             }
 

@@ -97,7 +97,7 @@ namespace BetterCms.Module.Root.Models.Migrations
                 .WithColumn("CategoryId").AsGuid().Nullable();
 
             Create
-                .ForeignKey("FK_Cms_WidgetHistory_Id_Content_Id")
+                .ForeignKey("FK_Cms_WidgetHistory_Id_ContentHistory_Id")
                 .FromTable("WidgetHistory").InSchema(SchemaName).ForeignColumn("Id")
                 .ToTable("ContentHistory").InSchema(SchemaName).PrimaryColumn("Id");
 
@@ -110,7 +110,7 @@ namespace BetterCms.Module.Root.Models.Migrations
         private void RemoveWidgetHistoryTable()
         {
             Delete.ForeignKey("FK_Cms_WidgetHistory_Id_Category_Id").OnTable("WidgetHistory").InSchema(SchemaName);
-            Delete.ForeignKey("FK_Cms_WidgetHistory_Id_Content_Id").OnTable("WidgetHistory").InSchema(SchemaName);
+            Delete.ForeignKey("FK_Cms_WidgetHistory_Id_ContentHistory_Id").OnTable("WidgetHistory").InSchema(SchemaName);
             Delete.Table("WidgetHistory").InSchema(SchemaName);
         }
       
@@ -147,9 +147,10 @@ namespace BetterCms.Module.Root.Models.Migrations
         }
 
         private void RemovePageContentHistoryTable()
-        {            
+        {
+            Delete.ForeignKey("FK_Cms_PageContentHistory_PageContentId_PageContents_Id").OnTable("PageContentHistory").InSchema(SchemaName);
             Delete.ForeignKey("FK_Cms_PageContentHistory_PageId_Pages_Id").OnTable("PageContentHistory").InSchema(SchemaName);
-            Delete.ForeignKey("FK_Cms_PageContentHistory_ContentId_Contents_Id").OnTable("PageContentHistory").InSchema(SchemaName);
+            Delete.ForeignKey("FK_Cms_PageContentHistory_ContentHistoryId_ContentHistory_Id").OnTable("PageContentHistory").InSchema(SchemaName);
             Delete.ForeignKey("FK_Cms_PageContentHistory_RegionId_Regions_Id").OnTable("PageContentHistory").InSchema(SchemaName);
             Delete.Table("PageContentHistory").InSchema(SchemaName);
         }
@@ -160,25 +161,25 @@ namespace BetterCms.Module.Root.Models.Migrations
                 .Table("PageContentOptionHistory")
                 .InSchema(SchemaName)
                 .WithCmsBaseColumns()
-                .WithColumn("PageContentId").AsGuid().NotNullable()
-                .WithColumn("ContentOptionId").AsGuid().NotNullable()
+                .WithColumn("PageContentHistoryId").AsGuid().NotNullable()
+                .WithColumn("ContentOptionHistoryId").AsGuid().NotNullable()
                 .WithColumn("Value").AsString(MaxLength.Max).Nullable();
 
             Create
-                .ForeignKey("FK_Cms_PageContentOptionHistory_PageContentId_Cms_PageContentHistory_Id")
-                .FromTable("PageContentOptionHistory").InSchema(SchemaName).ForeignColumn("PageContentId")
+                .ForeignKey("FK_Cms_PageContentOptionHistory_PageContentHistoryId_PageContentHistory_Id")
+                .FromTable("PageContentOptionHistory").InSchema(SchemaName).ForeignColumn("PageContentHistoryId")
                 .ToTable("PageContentHistory").InSchema(SchemaName).PrimaryColumn("Id");
 
             Create
-                .ForeignKey("FK_Cms_PageContentOptionHistory_ContentOptionId_Cms_ContentOptionId_Id")
-                .FromTable("PageContentOptionHistory").InSchema(SchemaName).ForeignColumn("ContentOptionId")
+                .ForeignKey("FK_Cms_PageContentOptionHistory_ContentOptionHistoryId_ContentOptionHistory_Id")
+                .FromTable("PageContentOptionHistory").InSchema(SchemaName).ForeignColumn("ContentOptionHistoryId")
                 .ToTable("ContentOptionHistory").InSchema(SchemaName).PrimaryColumn("Id");
         }
 
         private void RemovePageContentOptionHistoryTable()
         {
-            Delete.ForeignKey("FK_Cms_PageContentOptionHistory_PageContentId_Cms_PageContentHistory_Id").OnTable("PageContentOptionHistory").InSchema(SchemaName);
-            Delete.ForeignKey("FK_Cms_PageContentOptionHistory_ContentOptionId_Cms_ContentOptionId_Id").OnTable("PageContentOptionHistory").InSchema(SchemaName);
+            Delete.ForeignKey("FK_Cms_PageContentOptionHistory_PageContentHistoryId_PageContentHistory_Id").OnTable("PageContentOptionHistory").InSchema(SchemaName);
+            Delete.ForeignKey("FK_Cms_PageContentOptionHistory_ContentOptionHistoryId_ContentOptionHistory_Id").OnTable("PageContentOptionHistory").InSchema(SchemaName);
             Delete.Table("PageContentOptionHistory").InSchema(SchemaName);
         }
     }

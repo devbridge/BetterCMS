@@ -16,7 +16,10 @@ namespace BetterCms.Module.Root.Models
 
         public virtual Region Region { get; set; }
 
-        public virtual IList<PageContentOption> PageContentOptions { get; set; }
+        public virtual IList<PageContentOption> Options { get; set; }
+
+        public virtual IList<PageContentHistory> History { get; set; }
+
 
         IPage IPageContent.Page
         {

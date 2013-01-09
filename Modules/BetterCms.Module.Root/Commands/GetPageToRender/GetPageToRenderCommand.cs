@@ -47,8 +47,8 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                           .Fetch(f => f.Layout.LayoutRegions[0].Region).Eager
                           .Fetch(f => f.PageContents).Eager
                           .Fetch(f => f.PageContents[0].Content).Eager
-                          .Fetch(f => f.PageContents[0].PageContentOptions).Eager
-                          .Fetch(f => f.PageContents[0].PageContentOptions[0].ContentOption).Eager
+                          .Fetch(f => f.PageContents[0].Options).Eager
+                          .Fetch(f => f.PageContents[0].Options[0].ContentOption).Eager
                           .SingleOrDefault();
 
             if (page == null)

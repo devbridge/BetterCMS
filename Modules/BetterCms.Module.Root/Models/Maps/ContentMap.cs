@@ -1,4 +1,3 @@
-using BetterCms.Core.Models;
 using BetterCms.Module.Root.Models.Maps.Predefined;
 
 namespace BetterCms.Module.Root.Models.Maps

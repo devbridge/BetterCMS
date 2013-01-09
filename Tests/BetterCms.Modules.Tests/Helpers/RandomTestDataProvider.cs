@@ -149,7 +149,18 @@ namespace BetterCms.Tests.Helpers
             PopulateBaseFields(content);
 
             content.Name = ProvideRandomString(MaxLength.Name);
+            content.PreviewUrl = ProvideRandomString(MaxLength.Url);
 
+            return content;
+        }
+
+        public ContentHistory CreateNewContentHistory()
+        {
+            var content = new ContentHistory();
+
+            PopulateBaseFields(content);
+
+            content.Name = ProvideRandomString(MaxLength.Name);
             content.PreviewUrl = ProvideRandomString(MaxLength.Url);
 
             return content;
@@ -316,7 +327,23 @@ namespace BetterCms.Tests.Helpers
             entity.Content = content ?? CreateNewContent();
             entity.Page = page ?? CreateNewPage();
             entity.Region = region ?? CreateNewRegion();
-            entity.PageContentOptions = null;
+            entity.Options = null;
+
+            return entity;
+        }
+
+        public PageContentHistory CreateNewPageContentHistory(ContentHistory content = null, Page page = null, Region region = null)
+        {
+            var entity = new PageContentHistory();
+
+            PopulateBaseFields(entity);
+
+            entity.Order = 1;
+            entity.PageContent = CreateNewPageContent(null, page, region);
+            entity.ContentHistory = content ?? CreateNewContentHistory();
+            entity.Page = page ?? CreateNewPage();
+            entity.Region = region ?? CreateNewRegion();
+            entity.Options = null;
 
             return entity;
         }
@@ -335,6 +362,20 @@ namespace BetterCms.Tests.Helpers
             return entity;
         }
 
+        public ContentOptionHistory CreateNewContentOptionHistory(ContentHistory content = null)
+        {
+            var entity = new ContentOptionHistory();
+
+            PopulateBaseFields(entity);
+
+            entity.Key = ProvideRandomString(MaxLength.Name);
+            entity.ContentHistory = content ?? CreateNewContentHistory();
+            entity.Type = ProvideRandomEnumValue<ContentOptionType>();
+            entity.DefaultValue = ProvideRandomString(100);
+
+            return entity;
+        }
+
         public PageContentOption CreateNewPageContentOption(PageContent pageContent = null, ContentOption contentOption = null)
         {
             var entity = new PageContentOption();
@@ -343,6 +384,19 @@ namespace BetterCms.Tests.Helpers
 
             entity.PageContent = pageContent ?? CreateNewPageContent();
             entity.ContentOption = contentOption ?? CreateNewContentOption();
+            entity.Value = ProvideRandomString(100);
+
+            return entity;
+        }
+
+        public PageContentOptionHistory CreateNewPageContentOptionHistory(PageContentHistory pageContentHistory = null, ContentOptionHistory contentOptionHistory = null)
+        {
+            var entity = new PageContentOptionHistory();
+
+            PopulateBaseFields(entity);
+
+            entity.PageContentHistory = pageContentHistory ?? CreateNewPageContentHistory();
+            entity.ContentOptionHistory = contentOptionHistory ?? CreateNewContentOptionHistory();
             entity.Value = ProvideRandomString(100);
 
             return entity;
@@ -364,6 +418,18 @@ namespace BetterCms.Tests.Helpers
         public Widget CreateNewWidget(Category category = null)
         {
             var entity = new Widget();
+
+            PopulateBaseFields(entity);
+
+            entity.Name = ProvideRandomString(MaxLength.Name);
+            entity.Category = category ?? CreateNewCategory();
+
+            return entity;
+        }
+
+        public WidgetHistory CreateNewWidgetHistory(Category category = null)
+        {
+            var entity = new WidgetHistory();
 
             PopulateBaseFields(entity);
 
@@ -422,6 +488,19 @@ namespace BetterCms.Tests.Helpers
             return entity;
         }
 
+        public ServerControlWidgetHistory CreateNewServerControlWidgetHistory()
+        {
+            var entity = new ServerControlWidgetHistory();
+
+            PopulateBaseFields(entity);
+
+            entity.Category = CreateNewCategory();
+            entity.Name = ProvideRandomString(MaxLength.Name);
+            entity.Url = ProvideRandomString(MaxLength.Url);
+
+            return entity;
+        }
+
         public HtmlContentWidget CreateNewHtmlContentWidget()
         {
             var entity = new HtmlContentWidget();
@@ -440,9 +519,45 @@ namespace BetterCms.Tests.Helpers
             return entity;
         }
 
+        public HtmlContentWidgetHistory CreateNewHtmlContentWidgetHistory()
+        {
+            var entity = new HtmlContentWidgetHistory();
+
+            PopulateBaseFields(entity);
+
+            entity.Category = CreateNewCategory();
+
+            entity.Name = ProvideRandomString(MaxLength.Name);
+            entity.Html = ProvideRandomString(100);
+            entity.UseCustomCss = true;
+            entity.CustomCss = ProvideRandomString(100);
+            entity.UseCustomJs = true;
+            entity.CustomJs = ProvideRandomString(100);
+
+            return entity;
+        }
+
         public HtmlContent CreateNewHtmlContent()
         {
             var entity = new HtmlContent();
+
+            PopulateBaseFields(entity);
+
+            entity.ActivationDate = ProvideRandomDateTime();
+            entity.ExpirationDate = ProvideRandomDateTime();
+            entity.Name = ProvideRandomString(MaxLength.Name);
+            entity.Html = ProvideRandomString(100);
+            entity.UseCustomCss = true;
+            entity.CustomCss = ProvideRandomString(100);
+            entity.UseCustomJs = true;
+            entity.CustomJs = ProvideRandomString(100);
+
+            return entity;
+        }
+
+        public HtmlContentHistory CreateNewHtmlContentHistory()
+        {
+            var entity = new HtmlContentHistory();
 
             PopulateBaseFields(entity);
 

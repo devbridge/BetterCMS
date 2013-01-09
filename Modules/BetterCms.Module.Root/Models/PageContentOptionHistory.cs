@@ -7,9 +7,9 @@ namespace BetterCms.Module.Root.Models
     [Serializable]
     public class PageContentOptionHistory : EquatableEntity<PageContentOptionHistory>, IPageContentOption
     {
-        public virtual ContentOptionHistory ContentOption { get; set; }
+        public virtual ContentOptionHistory ContentOptionHistory { get; set; }
 
-        public virtual PageContentHistory PageContent { get; set; }
+        public virtual PageContentHistory PageContentHistory { get; set; }
 
         public virtual string Value { get; set; }
 
@@ -17,7 +17,7 @@ namespace BetterCms.Module.Root.Models
         {
             get
             {
-                return PageContent;
+                return PageContentHistory;
             }
         }
 
@@ -25,7 +25,7 @@ namespace BetterCms.Module.Root.Models
         {
             get
             {
-                return ContentOption;
+                return ContentOptionHistory;
             }
         }
     }
