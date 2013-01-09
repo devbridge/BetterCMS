@@ -2,7 +2,6 @@
 using System.Linq;
 
 using BetterCms.Core.Modules.Projections;
-using BetterCms.Core.Mvc;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Services;
 using BetterCms.Module.Root.Models;
@@ -42,6 +41,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             var page =
                 UnitOfWork.Session.QueryOver(() => pageAlias)
                           .Where(pageFilter)
+                          .Where(p => !p.IsDeleted)
                           .Fetch(f => f.Layout).Eager
                           .Fetch(f => f.Layout.LayoutRegions).Eager
                           .Fetch(f => f.Layout.LayoutRegions[0].Region).Eager
