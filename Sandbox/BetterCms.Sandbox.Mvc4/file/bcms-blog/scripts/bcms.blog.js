@@ -93,7 +93,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         
         htmlEditor.initializeHtmlEditor(selectors.htmlEditor);
 
-        var viewModel = new BlogPostViewModel(content.Data.Data);
+        var viewModel = new BlogPostViewModel(content.Data.Data.Data);
         ko.applyBindings(viewModel, dialog.container.get(0));
     }
 
