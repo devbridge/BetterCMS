@@ -1,4 +1,5 @@
 ﻿@using BetterCms.Module.Blog.Content.Resources
+@using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc.Helpers
 @using BetterCms.Module.Root.Mvc.UI
 
@@ -76,14 +77,14 @@
                 @Html.Tooltip(BlogGlobalization.EditBlockPost_Tags_Tooltip_Title, BlogGlobalization.EditBlockPost_Tags_Tooltip_Description)
                 <div class="bcms-content-titles">
                     @BlogGlobalization.EditBlockPost_AddTags_Title
-                    <div class="bcms-btn-plus">&nbsp;</div>
-                    <div class="bcms-tags-field-holder">
-                        <input type="text" class="bcms-add-tags-field" style="width: 107px;">
+                    <div class="bcms-btn-plus" data-bind="css: {'bcms-btn-plus-expand': tags.isExpanded()}, click: tags.expandCollapse">&nbsp;</div>
+                    <div class="bcms-tags-field-holder" data-bind="visible: tags.isExpanded()">
+                        <input type="text" class="bcms-add-tags-field" style="width: 107px;" data-bind="value: tags.newTag, valueUpdate: 'afterkeydown', hasfocus: tags.isExpanded()" />
                     </div>
                 </div>
-                <div class="bcms-single-tag-holder" id="bcms-categories-container">
-                    <div class="bcms-single-tag">Fonts<a>Remove</a></div>
-                    <div class="bcms-single-tag">DevBridge<a>Remove</a></div>
+                <div class="bcms-single-tag-holder" id="bcms-categories-container" data-bind="foreach: tags.tags()">
+                    <div class="bcms-single-tag"><span data-bind="text: name()"></span><a data-bind="click: remove">@RootGlobalization.Button_Remove</a></div>
+                    <input type="hidden" data-bind="attr:{ name: getTagInputName($index()) }" />
                 </div>
             </div>
         </div>

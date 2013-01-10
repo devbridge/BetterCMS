@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.grid', 'bcms.pages', 'knockout', 'bcms.media'],
-    function ($, bcms, modal, siteSettings, dynamicContent, datepicker, htmlEditor, grid, pages, ko, media) {
+define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.grid', 'bcms.pages', 'knockout', 'bcms.media', 'bcms.pages.tags'],
+    function ($, bcms, modal, siteSettings, dynamicContent, datepicker, htmlEditor, grid, pages, ko, media, tags) {
     'use strict';
 
     var blog = { },
@@ -40,9 +40,10 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     blog.globalization = globalization;
     blog.selectors = selectors;
 
-    function BlogPostViewModel(blogPost) {
+    function BlogPostViewModel(blogPost, tagsViewModel) {
         var self = this;
 
+        self.tags = tagsViewModel;
         self.imageId = ko.observable(blogPost.ImageId);
         self.imageUrl = ko.observable(blogPost.ImageUrl);
         self.thumbnailUrl = ko.observable(blogPost.ThumbnailUrl);
@@ -93,8 +94,18 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         
         htmlEditor.initializeHtmlEditor(selectors.htmlEditor);
 
-        var viewModel = new BlogPostViewModel(content.Data.Data.Data);
-        ko.applyBindings(viewModel, dialog.container.get(0));
+        var tagsViewModel = new tags.TagsListViewModel();
+        var blogViewModel = new BlogPostViewModel(content.Data.Data.Data, tagsViewModel);
+        ko.applyBindings(blogViewModel, dialog.container.get(0));
+        
+        bcms.preventInputFromSubmittingForm(dialog.container.find('.bcms-add-tags-field'), {
+            preventedEnter: function () {
+                blogViewModel.tags.addTag();
+            },
+            preventedEsc: function () {
+                blogViewModel.tags.clearTag();
+            }
+        });
     }
 
     /**

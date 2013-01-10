@@ -1,7 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.pages.tags', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.inlineEdit', 'bcms.grid'], function ($, bcms, dynamicContent, siteSettings, editor, grid) {
+define('bcms.pages.tags', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.inlineEdit', 'bcms.grid', 'knockout'],
+    function ($, bcms, dynamicContent, siteSettings, editor, grid, ko) {
     'use strict';
 
     var tags = {},
@@ -209,6 +210,60 @@ define('bcms.pages.tags', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSe
                 tags.initSiteSettingsTagsEvents();
             }
         });
+    };
+
+    /**
+    * Tags list view model
+    */
+    tags.TagsListViewModel = function() {
+        var self = this;
+
+        self.isExpanded = ko.observable(false);
+        self.tags = ko.observableArray();
+        self.newTag = ko.observable();
+
+        self.expandCollapse = function () {
+            self.isExpanded(!self.isExpanded());
+            self.clearTag();
+        };
+
+        self.addTag = function () {
+            var newTag = self.newTag();
+            if (newTag) {
+                for (var i = 0; i < self.tags().length; i ++) {
+                    if (self.tags()[i].name() == newTag) {
+                        return;
+                    }
+                }
+                var tagViewModel = new tags.TagViewModel(self, newTag);
+                self.tags.push(tagViewModel);
+            }
+            self.clearTag();
+        };
+
+        self.clearTag = function() {
+            self.newTag(null);
+        };
+    };
+    
+    /**
+    * Tag view model
+    */
+    tags.TagViewModel = function (parent, tagName) {
+        var self = this;
+
+        self.parent = parent;
+        self.pattern = 'Tags[{0}]';
+
+        self.name = ko.observable(tagName);
+
+        self.remove = function () {
+            parent.tags.remove(self);
+        };
+        
+        self.getTagInputName = function (index) {
+            return $.format(self.pattern, index);
+        };
     };
 
     /**
