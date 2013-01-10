@@ -4,9 +4,11 @@ using System.Linq;
 
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Mvc.Commands;
+
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
+
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
@@ -27,14 +29,21 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         private readonly IRedirectService redirectService;
 
         /// <summary>
+        /// The tag service
+        /// </summary>
+        private readonly ITagService tagService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SavePagePropertiesCommand" /> class.
         /// </summary>
         /// <param name="pageService">The page service.</param>
         /// <param name="redirectService">The redirect service.</param>
-        public SavePagePropertiesCommand(IPageService pageService, IRedirectService redirectService)
+        /// <param name="tagService">The tag service.</param>
+        public SavePagePropertiesCommand(IPageService pageService, IRedirectService redirectService, ITagService tagService)
         {
             this.pageService = pageService;
             this.redirectService = redirectService;
+            this.tagService = tagService;
         }
 
         /// <summary>
@@ -62,7 +71,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                 }
             }
 
-            UpdatePageTags(page, request.Tags);
+            tagService.SavePageTags(page, request.Tags);
             UpdateCategories(page, request.Categories);
 
             page.Layout = Repository.AsProxy<Root.Models.Layout>(request.TemplateId);
@@ -145,76 +154,6 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                         }
 
                         UnitOfWork.Session.SaveOrUpdate(pageCategory);
-                    }
-                }
-            }
-
-        }
-
-        private void UpdatePageTags(PageProperties page, IList<string> tags)
-        {
-            Root.Models.Tag tagAlias = null;
-
-            // Tags merge:
-            IList<PageTag> pageTags = UnitOfWork.Session.QueryOver<PageTag>()
-                                                    .Where(tag => !tag.IsDeleted && tag.Page.Id == page.Id)
-                                                    .Fetch(tag => tag.Tag).Eager
-                                                    .List<PageTag>();
-
-            // Remove deleted tags:
-            for (int i = pageTags.Count - 1; i >= 0; i--)
-            {
-                string tag = null;
-                if (tags != null)
-                {
-                    tag = tags.FirstOrDefault(s => s.ToLower() == pageTags[i].Tag.Name.ToLower());
-                }
-                if (tag == null)
-                {
-                    UnitOfWork.Session.Delete(pageTags[i]);
-                }
-            }
-
-            // Add new tags:
-            if (tags != null)
-            {
-                List<string> tagsInsert = new List<string>();
-                foreach (string tag in tags)
-                {
-                    PageTag existPageTag = pageTags.FirstOrDefault(pageTag => pageTag.Tag.Name.ToLower() == tag.ToLower());
-                    if (existPageTag == null)
-                    {
-                        tagsInsert.Add(tag);
-                    }
-                }
-
-                if (tagsInsert.Count > 0)
-                {
-                    // Get existing tags:
-                    IList<Root.Models.Tag> existingTags = UnitOfWork.Session.QueryOver(() => tagAlias)
-                                                                .Where(Restrictions.In(NHibernate.Criterion.Projections.Property(() => tagAlias.Name), tagsInsert))
-                                                                .List<Root.Models.Tag>();
-
-                    foreach (string tag in tagsInsert)
-                    {
-                        PageTag pageTag = new PageTag();
-                        pageTag.Page = page;
-
-                        Root.Models.Tag existTag = existingTags.FirstOrDefault(t => t.Name.ToLower() == tag.ToLower());
-                        if (existTag != null)
-                        {
-                            pageTag.Tag = existTag;
-                        }
-                        else
-                        {
-                            Root.Models.Tag newTag = new Root.Models.Tag();
-                            newTag.Name = tag;
-                            UnitOfWork.Session.SaveOrUpdate(newTag);
-
-                            pageTag.Tag = newTag;
-                        }
-
-                        UnitOfWork.Session.SaveOrUpdate(pageTag);
                     }
                 }
             }

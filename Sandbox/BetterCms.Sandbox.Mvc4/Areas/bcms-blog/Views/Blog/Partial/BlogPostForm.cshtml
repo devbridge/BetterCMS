@@ -84,7 +84,7 @@
                 </div>
                 <div class="bcms-single-tag-holder" id="bcms-categories-container" data-bind="foreach: tags.tags()">
                     <div class="bcms-single-tag"><span data-bind="text: name()"></span><a data-bind="click: remove">@RootGlobalization.Button_Remove</a></div>
-                    <input type="hidden" data-bind="attr:{ name: getTagInputName($index()) }" />
+                    <input type="hidden" data-bind="attr:{ name: getTagInputName($index()), value: name() }" />
                 </div>
             </div>
         </div>

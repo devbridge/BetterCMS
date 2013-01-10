@@ -3,11 +3,16 @@ using System.Linq;
 
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
+
 using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.ViewModels.Blog;
+
 using BetterCms.Module.MediaManager.Models;
+
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.Services;
+
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
@@ -18,7 +23,24 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
     /// </summary>
     public class SaveBlogPostCommand : CommandBase, ICommand<BlogPostViewModel, SaveBlogPostCommandResponse>
     {
+        /// <summary>
+        /// The blog post region identifier
+        /// </summary>
         private const string regionIdentifier = BlogModuleConstants.BlogPostMainContentRegionIdentifier;
+
+        /// <summary>
+        /// The tag service
+        /// </summary>
+        private readonly ITagService tagService;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SaveBlogPostCommand" /> class.
+        /// </summary>
+        /// <param name="tagService">The tag service.</param>
+        public SaveBlogPostCommand(ITagService tagService)
+        {
+            this.tagService = tagService;
+        }
 
         /// <summary>
         /// Executes the specified request.
@@ -129,6 +151,9 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
 
             Repository.Save(content);
             Repository.Save(pageContent);
+
+            // Save tags
+            tagService.SavePageTags(blogPost, request.Tags);
 
             // Commit
             UnitOfWork.Commit();

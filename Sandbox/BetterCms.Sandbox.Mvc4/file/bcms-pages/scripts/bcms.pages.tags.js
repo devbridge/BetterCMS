@@ -215,12 +215,18 @@ define('bcms.pages.tags', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSe
     /**
     * Tags list view model
     */
-    tags.TagsListViewModel = function() {
+    tags.TagsListViewModel = function(tagsList) {
         var self = this;
 
         self.isExpanded = ko.observable(false);
         self.tags = ko.observableArray();
         self.newTag = ko.observable();
+
+        if (tagsList) {
+            for (var i = 0; i < tagsList.length; i ++) {
+                self.tags.push(new tags.TagViewModel(self, tagsList[i]));
+            }
+        }
 
         self.expandCollapse = function () {
             self.isExpanded(!self.isExpanded());

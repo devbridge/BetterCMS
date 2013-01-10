@@ -31,14 +31,21 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
         private IAuthorService authorService;
 
         /// <summary>
+        /// The tag service
+        /// </summary>
+        private readonly ITagService tagService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="GetBlogPostCommand" /> class.
         /// </summary>
         /// <param name="categoryService">The category service.</param>
         /// <param name="authorService">The author service.</param>
-        public GetBlogPostCommand(ICategoryService categoryService, IAuthorService authorService)
+        /// <param name="tagService">The tag service.</param>
+        public GetBlogPostCommand(ICategoryService categoryService, IAuthorService authorService, ITagService tagService)
         {
             this.categoryService = categoryService;
             this.authorService = authorService;
+            this.tagService = tagService;
         }
 
         /// <summary>
@@ -108,6 +115,8 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
                         model.LiveFromDate = content.LiveFromDate;
                         model.LiveToDate = content.LiveToDate;
                     }
+
+                    model.Tags = tagService.GetPageTagNames(id);
                 }
                 else
                 {

@@ -90,12 +90,15 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     * Initializes blog edit form
     */
     function initEditBlogPostDialogEvents(dialog, content) {
+        var data = content.Data.Data.Data,
+            tagsList = content.Data.Data.Data.Tags;
         dialog.container.find(selectors.datePickers).initializeDatepicker();
         
         htmlEditor.initializeHtmlEditor(selectors.htmlEditor);
 
-        var tagsViewModel = new tags.TagsListViewModel();
-        var blogViewModel = new BlogPostViewModel(content.Data.Data.Data, tagsViewModel);
+        var tagsViewModel = new tags.TagsListViewModel(tagsList);
+
+        var blogViewModel = new BlogPostViewModel(data, tagsViewModel);
         ko.applyBindings(blogViewModel, dialog.container.get(0));
         
         bcms.preventInputFromSubmittingForm(dialog.container.find('.bcms-add-tags-field'), {
