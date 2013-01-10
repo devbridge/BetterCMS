@@ -117,6 +117,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Commands\GetPageToRender\GetPageToRenderCommand.cs" />
+    <Compile Include="Commands\GetPageToRender\GetPageToRenderRequest.cs" />
     <Compile Include="Content\Resources\RootGlobalization.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -144,6 +145,7 @@
     <Compile Include="Models\Maps\Predefined\PageContentOptionEntityMapBase.cs" />
     <Compile Include="Models\Maps\Predefined\PageContentEntityMapBase.cs" />
     <Compile Include="Models\Maps\WidgetHistoryMap.cs" />
+    <Compile Include="Models\Migrations\Migration201301101840.cs" />
     <Compile Include="Models\Migrations\Migration201301091219.cs" />
     <Compile Include="Models\WidgetHistory.cs" />
     <Compile Include="Models\PageContentOptionHistory.cs" />

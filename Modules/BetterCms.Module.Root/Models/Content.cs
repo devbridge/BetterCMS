@@ -11,7 +11,7 @@ namespace BetterCms.Module.Root.Models
         public virtual string Name { get; set; }
 
         public virtual string PreviewUrl { get; set; }
-
+        
         public virtual IList<PageContent> PageContents { get; set; }
 
         public virtual IList<ContentOption> ContentOptions { get; set; }

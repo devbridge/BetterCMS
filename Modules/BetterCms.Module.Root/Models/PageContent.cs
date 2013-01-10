@@ -10,6 +10,8 @@ namespace BetterCms.Module.Root.Models
     {
         public virtual int Order { get; set; }
 
+        public virtual ContentStatus Status { get; set; }
+
         public virtual Content Content { get; set; }
 
         public virtual Page Page { get; set; }
@@ -19,8 +21,7 @@ namespace BetterCms.Module.Root.Models
         public virtual IList<PageContentOption> Options { get; set; }
 
         public virtual IList<PageContentHistory> History { get; set; }
-
-
+        
         IPage IPageContent.Page
         {
             get

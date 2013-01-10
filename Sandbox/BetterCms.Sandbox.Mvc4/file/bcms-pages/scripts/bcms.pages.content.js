@@ -13,6 +13,7 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                 deletePageContentUrl: null,
                 editPageContentUrl: null,
                 sortPageContentUrl: null,
+                previewPageUrl: null
             },
             globalization = {
                 addNewContentDialogTitle: null,
@@ -75,7 +76,16 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
         * Open dialog with add new content form
         */
         pagesContent.onAddNewContent = function(regionId) {
+            var extraButtons = [];
+            
+            extraButtons.push(new modal.button('Save & Publish', 'bcms-btn-small bcms-btn-gray', 2));
+            extraButtons.push(new modal.button('Preview', 'bcms-btn-small bcms-btn-gray', 3, function () {
+                window.open('http://www.pageresource.com/jscript/jex5.htm', 'mywindow', 'width=400,height=200,toolbar=yes, location=yes,directories=yes,status=yes,menubar=yes,scrollbars=yes,copyhistory=yes, resizable=yes');
+            }));
+            
             modal.open({
+                buttons: extraButtons,
+                acceptTitle: 'Save Draft',
                 title: globalization.addNewContentDialogTitle,
                 onLoad: function(dialog) {
                     var url = $.format(links.loadAddNewHtmlContentDialogUrl, bcms.pageId, regionId);

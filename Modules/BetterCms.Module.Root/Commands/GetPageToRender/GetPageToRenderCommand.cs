@@ -15,7 +15,7 @@ using NHibernate.Criterion;
 
 namespace BetterCms.Module.Root.Commands.GetPageToRender
 {
-    public class GetPageToRenderCommand : CommandBase, ICommand<string, CmsRequestViewModel>
+    public class GetPageToRenderCommand : CommandBase, ICommand<GetPageToRenderRequest, CmsRequestViewModel>
     {
         private IPageAccessor pageAccessor;
 
@@ -30,14 +30,14 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
         /// <summary>
         /// Executes this command.
         /// </summary>
-        /// <param name="virtualPath">The request url.</param>
+        /// <param name="request">The request data with page data.</param>
         /// <returns>Executed command result.</returns>
-        public CmsRequestViewModel Execute(string virtualPath)
+        public CmsRequestViewModel Execute(GetPageToRenderRequest request)
         {
             Page pageAlias = null;
             ICriterion pageFilter = Restrictions.Eq(
                 NHibernate.Criterion.Projections.SqlFunction("lower", NHibernateUtil.String, NHibernate.Criterion.Projections.Property(() => pageAlias.PageUrl)),
-                virtualPath.ToLowerInvariant());
+                request.VirtualPath.ToLowerInvariant());
 
             var page =
                 UnitOfWork.Session.QueryOver(() => pageAlias)
@@ -53,7 +53,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
             if (page == null)
             {
-                var redirect = pageAccessor.GetRedirect(virtualPath);
+                var redirect = pageAccessor.GetRedirect(request.VirtualPath);
                 if (!string.IsNullOrWhiteSpace(redirect))
                 {
                     return new CmsRequestViewModel(new RedirectViewModel(redirect));

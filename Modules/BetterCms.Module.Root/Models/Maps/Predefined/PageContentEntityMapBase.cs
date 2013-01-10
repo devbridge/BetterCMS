@@ -9,7 +9,8 @@ namespace BetterCms.Module.Root.Models.Maps.Predefined
         {
             Table(tableName);
 
-            Map(x => x.Order, "[Order]").Not.Nullable();           
+            Map(x => x.Order, "[Order]").Not.Nullable();
+            Map(x => x.Status).Not.Nullable();
         }
     }
 }

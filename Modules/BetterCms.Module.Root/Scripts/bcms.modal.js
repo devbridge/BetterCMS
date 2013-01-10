@@ -90,6 +90,8 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'knockout'], function ($, b
         var self = this;        
         self.buttons = ko.observableArray();
     }
+
+    modal.button = ButtonViewModel;
     
     /**
     * ModalWindow instance constructor:

@@ -13,8 +13,9 @@
 
         IRegion Region { get; }
 
-      //  bool IsDraft { get; set; }
-
-     //   bool IsArchived { get; set; }
+        /// <summary>
+        /// Gets a value indicating this content publishing status (auto saved for preview, draft, published, archived).
+        /// </summary>        
+        ContentStatus Status { get; }
     }
 }

@@ -130,6 +130,7 @@
     <Compile Include="Dependencies\PerWebRequestLifetimeModule.cs" />
     <Compile Include="Environment\Assemblies\DefaultAssemblyManager.cs" />
     <Compile Include="Environment\Assemblies\IAssemblyManager.cs" />
+    <Compile Include="Models\ContentStatus.cs" />
     <Compile Include="Models\IEntity.cs" />
     <Compile Include="Models\ICategory.cs" />
     <Compile Include="Models\IHtmlContent.cs" />

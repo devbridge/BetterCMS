@@ -10,6 +10,8 @@ namespace BetterCms.Module.Root.Models
     {
         public virtual int Order { get; set; }
 
+        public virtual ContentStatus Status { get; set; }
+
         public virtual PageContent PageContent { get; set; }
 
         public virtual ContentHistory ContentHistory { get; set; }

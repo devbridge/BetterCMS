@@ -149,7 +149,7 @@ namespace BetterCms.Tests.Helpers
             PopulateBaseFields(content);
 
             content.Name = ProvideRandomString(MaxLength.Name);
-            content.PreviewUrl = ProvideRandomString(MaxLength.Url);
+            content.PreviewUrl = ProvideRandomString(MaxLength.Url);            
 
             return content;
         }
@@ -161,7 +161,7 @@ namespace BetterCms.Tests.Helpers
             PopulateBaseFields(content);
 
             content.Name = ProvideRandomString(MaxLength.Name);
-            content.PreviewUrl = ProvideRandomString(MaxLength.Url);
+            content.PreviewUrl = ProvideRandomString(MaxLength.Url);            
 
             return content;
         }
@@ -324,6 +324,7 @@ namespace BetterCms.Tests.Helpers
             PopulateBaseFields(entity);
 
             entity.Order = 1;
+            entity.Status = ContentStatus.Archived;
             entity.Content = content ?? CreateNewContent();
             entity.Page = page ?? CreateNewPage();
             entity.Region = region ?? CreateNewRegion();
@@ -338,7 +339,8 @@ namespace BetterCms.Tests.Helpers
 
             PopulateBaseFields(entity);
 
-            entity.Order = 1;
+            entity.Order = 2;
+            entity.Status = ContentStatus.Archived;
             entity.PageContent = CreateNewPageContent(null, page, region);
             entity.ContentHistory = content ?? CreateNewContentHistory();
             entity.Page = page ?? CreateNewPage();
