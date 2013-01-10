@@ -253,6 +253,7 @@
     <EmbeddedResource Include="Scripts\bcms.content.js" />
     <EmbeddedResource Include="Scripts\bcms.forms.js" />
     <EmbeddedResource Include="Scripts\bcms.js" />
+    <EmbeddedResource Include="Scripts\bcms.modal.js" />
     <EmbeddedResource Include="Scripts\bcms.sidemenu.js" />
     <None Include="Scripts\jquery-1.7.2.intellisense.js">
       <DependentUpon>jquery-1.7.2.js</DependentUpon>
@@ -496,7 +497,6 @@
     <EmbeddedResource Include="Scripts\ckeditor\styles.js" />
     <EmbeddedResource Include="Scripts\bcms.dynamicContent.js" />
     <EmbeddedResource Include="Scripts\bcms.inlineEdit.js" />
-    <EmbeddedResource Include="Scripts\bcms.modal.js" />
     <EmbeddedResource Include="Scripts\bcms.siteSettings.js" />
     <Content Include="Scripts\jquery-1.7.2.min.js">
       <DependentUpon>jquery-1.7.2.js</DependentUpon>
@@ -522,8 +522,19 @@
     <EmbeddedResource Include="Scripts\knockout-2.2.0.js" />
     <EmbeddedResource Include="Scripts\spinner.jquery.js" />
     <Content Include="Views\Web.config" />
+    <EmbeddedResource Include="Views\Shared\Partial\Alert.cshtml">
+      <SubType>Code</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Shared\Partial\Confirm.cshtml">
+      <SubType>Code</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Shared\Partial\ContentOverlay.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Partial\Modal.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Partial\Info.cshtml">
+      <SubType>Code</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Shared\Partial\Modal.cshtml">
+      <SubType>Code</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Shared\Partial\Region.cshtml" />
     <EmbeddedResource Include="Views\Sidebar\Container.cshtml" />
     <EmbeddedResource Include="Views\Shared\RootLayout.cshtml" />
@@ -540,11 +551,8 @@
     <EmbeddedResource Include="Views\Shared\Partial\Tooltip.cshtml" />
     <Content Include="web.config" />
     <EmbeddedResource Include="Views\Shared\Partial\Messages.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Partial\Alert.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Partial\Confirm.cshtml" />
     <EmbeddedResource Include="Views\Cms\Index.cshtml" />
     <EmbeddedResource Include="Views\Shared\Layouts\Preview.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Partial\Info.cshtml" />
     <EmbeddedResource Include="Views\Shared\Partial\ImagePreview.cshtml" />
     <EmbeddedResource Include="Views\Shared\BaseLayout.cshtml" />
   </ItemGroup>
