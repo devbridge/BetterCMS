@@ -392,6 +392,13 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         AuthorViewModel.prototype.getDeleteConfirmationMessage = function () {
             return $.format(globalization.deleteAuthorDialogTitle, this.name());
         };
+        
+        AuthorViewModel.prototype.getSaveParams = function () {
+            var params = _super.prototype.getSaveParams.call(this);
+            params.Name = this.name();
+
+            return params;
+        };
 
         return AuthorViewModel;
         

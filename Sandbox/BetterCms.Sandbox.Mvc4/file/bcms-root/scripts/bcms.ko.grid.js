@@ -403,47 +403,59 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.mod
                 });
         };
 
-        grid.ItemViewModel.prototype.saveItem = function () {
-            if (this.isActive() && this.hasChanges() && this.isValid()) {
-                alert("Saving!");
-            } else {
-                this.isActive(false);
-            }
-            /*var idSelector = '#' + item.nameDomId,
-                input = folderViewModel.container.find(idSelector);
+        grid.ItemViewModel.prototype.getSaveParams = function () {
+            return {
+                Id: this.id(),
+                Version: this.version()
+            };
+        };
 
-            if (item.oldName != item.name() && item.isActive() && input != null) {
-                if (input.valid()) {
-                    var onSaveCompleted = function (json) {
-                        messages.refreshBox(folderViewModel.container, json);
+        grid.ItemViewModel.prototype.saveItem = function () {
+            var self = this,
+                url = self.parent.saveUrl,
+                canSave = url && this.isActive() && this.hasChanges() && this.isValid(),
+                removeFromList = this.isActive() && !this.hasChanges() && !this.id();
+
+            if (!url) {
+                console.log("Save url is not specified");
+            }
+
+            if (canSave) {
+                var onSaveCompleted = function(json) {
+                        if (self.parent.container) {
+                            messages.refreshBox(self.parent.container, json);
+                        }
+
                         if (json.Success) {
                             if (json.Data) {
-                                item.version(json.Data.Version);
-                                item.id(json.Data.Id);
-                                item.oldName = item.name();
+                                self.version(json.Data.Version);
+                                self.id(json.Data.Id);
                             }
-                            item.isActive(false);
+                            self.isActive(false);
                         }
                     },
-                        params = item.toJson();
+                    params = self.getSaveParams();
 
-                    $.ajax({
-                        url: item.updateUrl,
-                        type: 'POST',
-                        dataType: 'json',
-                        cache: false,
-                        data: params
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    dataType: 'json',
+                    cache: false,
+                    data: params
+                })
+                    .done(function(json) {
+                        onSaveCompleted(json);
                     })
-                        .done(function (json) {
-                            onSaveCompleted(json);
-                        })
-                        .fail(function (response) {
-                            onSaveCompleted(bcms.parseFailedResponse(response));
-                        });
-                }
+                    .fail(function(response) {
+                        onSaveCompleted(bcms.parseFailedResponse(response));
+                    });
             } else {
-                item.isActive(false);
-            }*/
+                this.isActive(false);
+                
+                if (removeFromList) {
+                    this.parent.items.remove(this);
+                }
+            }
         };
 
         grid.ItemViewModel.prototype.cancelEditItem = function () {
