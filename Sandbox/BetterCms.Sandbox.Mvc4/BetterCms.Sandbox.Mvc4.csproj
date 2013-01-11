@@ -180,6 +180,7 @@
     <EmbeddedResource Include="file\bcms-blog\scripts\bcms.blog.js" />
     <EmbeddedResource Include="file\bcms-media\scripts\bcms.media.js" />
     <EmbeddedResource Include="file\bcms-pages\scripts\bcms.pages.tags.js" />
+    <EmbeddedResource Include="file\bcms-root\scripts\bcms.ko.grid.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -187,7 +188,6 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="file\bcms-root\scripts\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
@@ -269,6 +269,21 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\bcms-blog\Views\Blog\Partial\BlogsList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\bcms-blog\Views\Author\Partial\ListTemplate.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\bcms-root\Views\Shared\EditableGrid\Grid.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\bcms-root\Views\Shared\EditableGrid\Partial\Cell.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\bcms-root\Views\Shared\EditableGrid\Partial\Header.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\bcms-root\Views\Shared\EditableGrid\Partial\TopBlock.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

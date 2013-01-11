@@ -132,6 +132,9 @@
   <data name="Boolean_Yes" xml:space="preserve">
     <value>Yes</value>
   </data>
+  <data name="Button_AddNew" xml:space="preserve">
+    <value>AddNew +</value>
+  </data>
   <data name="Button_Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>

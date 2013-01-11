@@ -640,7 +640,6 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 folderViewModel.medias.remove(item);
             } else {
                 item.name(item.oldName);
-                item.isActive(false);
             }
         }
 

@@ -61,11 +61,38 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Author created successfully.
+        /// </summary>
+        public static string CreateAuthor_CreatedSuccessfully_Message {
+            get {
+                return ResourceManager.GetString("CreateAuthor_CreatedSuccessfully_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create New Post.
         /// </summary>
         public static string CreateNewPost_Dialog_Title {
             get {
                 return ResourceManager.GetString("CreateNewPost_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete author {0}?.
+        /// </summary>
+        public static string DeleteAuthor_Confirmation_Message {
+            get {
+                return ResourceManager.GetString("DeleteAuthor_Confirmation_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Author deleted successfully.
+        /// </summary>
+        public static string DeleteAuthor_DeletedSuccessfully_Message {
+            get {
+                return ResourceManager.GetString("DeleteAuthor_DeletedSuccessfully_Message", resourceCulture);
             }
         }
         
@@ -336,6 +363,24 @@ namespace BetterCms.Module.Blog.Content.Resources {
         public static string Sidebar_AddNewPostButtonTitle {
             get {
                 return ResourceManager.GetString("Sidebar_AddNewPostButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Picture.
+        /// </summary>
+        public static string SiteSettings_AuthorsTab_AuthorImage_Title {
+            get {
+                return ResourceManager.GetString("SiteSettings_AuthorsTab_AuthorImage_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string SiteSettings_AuthorsTab_AuthorName_Title {
+            get {
+                return ResourceManager.GetString("SiteSettings_AuthorsTab_AuthorName_Title", resourceCulture);
             }
         }
         

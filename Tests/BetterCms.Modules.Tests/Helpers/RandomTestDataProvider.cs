@@ -132,7 +132,6 @@ namespace BetterCms.Tests.Helpers
             entity.PageUrl = ProvideRandomString(MaxLength.Url);
             entity.Title = ProvideRandomString(MaxLength.Name);
             entity.Description = ProvideRandomString(2000);
-            entity.ImageUrl = ProvideRandomString(MaxLength.Url);
             entity.CanonicalUrl = ProvideRandomString(MaxLength.Url);
             entity.CustomCss = ProvideRandomString(2000);
             entity.MetaTitle = ProvideRandomString(MaxLength.Name);

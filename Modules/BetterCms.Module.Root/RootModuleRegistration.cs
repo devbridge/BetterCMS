@@ -146,7 +146,8 @@ namespace BetterCms.Module.Root
                     new SidemenuJavaScriptModuleDescriptor(this),                     
                     new TabsJavaScriptModuleDescriptor(this), 
                     new TooltipJavaScriptModuleDescriptor(this),
-                    new InlineEditorJavaScriptModuleDescriptor(this)
+                    new InlineEditorJavaScriptModuleDescriptor(this),
+                    new JavaScriptModuleDescriptor(this, "bcms.ko.grid", "/file/bcms-root/scripts/bcms.ko.grid")
                 };
         }
 
