@@ -10,7 +10,7 @@ define('bcms.pages.properties', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', '
 
             editPermalink: '#bcms-pageproperties-editpermalink',
             editPermalinkBox: '.bcms-edit-urlpath-box',
-            editPermalinkClose: 'div.bcms-edit-urlpath-box .bcms-edit-btn-close, div.bcms-edit-urlpath-box .bcms-btn-links-small',
+            editPermalinkClose: 'div.bcms-edit-urlpath-box .bcms-tip-close, div.bcms-edit-urlpath-box .bcms-btn-links-small',
             editPermalinkSave: '#bcms-save-permalink',
             permalinkHiddenField: '#bcms-page-permalink',
             permalinkEditField: '#bcms-page-permalink-edit',
