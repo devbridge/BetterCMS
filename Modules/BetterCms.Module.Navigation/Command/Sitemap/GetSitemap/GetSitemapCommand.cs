@@ -49,7 +49,7 @@ namespace BetterCms.Module.Navigation.Command.Sitemap.GetSitemap
                                         ChildNodes =
                                             new List<SitemapNodeViewModel>()
                                                 {
-                                                    new SitemapNodeViewModel() { Id = Guid.NewGuid(), Version = 0, Title = "2", Url = "/2", DisplayOrder = 2 },
+                                                    new SitemapNodeViewModel() { Id = Guid.NewGuid(), Version = 0, Title = "2", Url = "/2", DisplayOrder = 0 },
                                                     new SitemapNodeViewModel() { Id = Guid.NewGuid(), Version = 0, Title = "1", Url = "/1", DisplayOrder = 1 }
                                                 }
                                     },
@@ -59,18 +59,18 @@ namespace BetterCms.Module.Navigation.Command.Sitemap.GetSitemap
                                         Version = 0,
                                         Title = "all",
                                         Url = "/all",
-                                        DisplayOrder = 0,
+                                        DisplayOrder = 1,
                                         ChildNodes =
                                             new List<SitemapNodeViewModel>()
                                                 {
-                                                    new SitemapNodeViewModel() { Id = Guid.NewGuid(), Version = 0, Title = "3", Url = "/2", DisplayOrder = 2 },
+                                                    new SitemapNodeViewModel() { Id = Guid.NewGuid(), Version = 0, Title = "3", Url = "/2", DisplayOrder = 0 },
                                                     new SitemapNodeViewModel() { Id = Guid.NewGuid(), Version = 0, Title = "4", Url = "/1", DisplayOrder = 1 },
                                                     new SitemapNodeViewModel() { Id = Guid.NewGuid(), Version = 0, Title = "2", Url = "/2", DisplayOrder = 2 },
-                                                    new SitemapNodeViewModel() { Id = Guid.NewGuid(), Version = 0, Title = "1", Url = "/1", DisplayOrder = 1 }
+                                                    new SitemapNodeViewModel() { Id = Guid.NewGuid(), Version = 0, Title = "1", Url = "/1", DisplayOrder = 3 }
                                                 }
                                     },
-                                new SitemapNodeViewModel() { Id = Guid.NewGuid(), Version = 0, Title = "Not found 404", Url = "/404", DisplayOrder = 0 },
-                                new SitemapNodeViewModel() { Id = Guid.NewGuid(), Version = 0, Title = "x", Url = "/x/x/x/x/x/x/xx/xxxxxxxxx/", DisplayOrder = 0 }
+                                new SitemapNodeViewModel() { Id = Guid.NewGuid(), Version = 0, Title = "Not found 404", Url = "/404", DisplayOrder = 2 },
+                                new SitemapNodeViewModel() { Id = Guid.NewGuid(), Version = 0, Title = "x", Url = "/x/x/x/x/x/x/xx/xxxxxxxxx/", DisplayOrder = 3 }
                             }
                 };
         }

@@ -29,13 +29,18 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             });
         };
 
+        /**
+        * Sitemap view model.
+        */
         function SitemapViewModel(container) {
-            var self = this;
+            var self = this,
+                isRootModel = true;
 
             self.container = container;
             self.messagesContainer = container;
 
             self.sitemapNodes = ko.observableArray([]);
+            self.isDragStarted = ko.observable(false);
         
             self.expandAll = function() {
                 alert("Expand all clicked!"); // TODO: implement.
@@ -46,9 +51,13 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             };
         };
 
+        /**
+        * Sitemap node view model.
+        */
         function SitemapNodeViewModel() {
-            var self = this;
-            
+            var self = this,
+                isRootModel = false;
+
             self.id = ko.observable();
             self.version = ko.observable();
             self.title = ko.observable();
@@ -64,15 +73,13 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             self.hasChildNodes = function () {
                 return self.childNodes().length > 0;
             };
-       
+            
             self.expandChildNodes = function () {
                 self.isExpanded(true);
             };
-
             self.collapseChildNodes = function () {
                 self.isExpanded(false);
             };
-
             self.expandOrCollapseChildNodes = function () {
                 self.isExpanded(!self.isExpanded());
             };
@@ -80,7 +87,6 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             self.editSitemapNode = function (parent, event) {
                 bcms.stopEventPropagation(event);
                 self.isActive(true);
-                editSitemapNode(self);
             };
             
             self.deleteSitemapNode = function (parent, data, event) {
@@ -102,18 +108,16 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         };
 
         /**
-        * Saves sitemap node after inline edit.
+        * Saves sitemap node.
         */
         function saveSitemapNode(sitemapNodeViewModel) {
             // TODO: implement.
             alert('Save node "' + sitemapNodeViewModel.title() + '"!');
         };
         
-        function editSitemapNode(sitemapNodeViewModel) {
-            // TODO: implement.
-            //alert('Edit node "' + sitemapNodeViewModel.title() + '"!');
-        };
-
+        /**
+        * Delete sitemap node.
+        */
         function deleteSitemapNode(sitemapNodeViewModel) {
             // TODO: implement.
             //alert('Delete node "' + sitemapNodeViewModel.title() + '"!');
@@ -127,6 +131,9 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             //alert('Cancel node edit "' + sitemapNodeViewModel.title() + '"!');
         };
 
+        /**
+        * Make site map node view model.
+        */
         function makeSitemapNodeViewModel(jsonSitemapNode) {
             var sitemapNodeViewModel = new SitemapNodeViewModel();
 
@@ -203,39 +210,60 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             initializeSiteMap(content.Data.Data, sitemapViewModel);
         }
 
+        /**
+        * Sortable binding to handle node ordering.
+        */
         function addSortableBinding() {
             ko.bindingHandlers.sortable = {
-                init: function (element, valueAccessor) {
+                init: function(element, valueAccessor) {
                     var startIndex = -1,
                         sourceArray = valueAccessor();
                     var sortableSetup = {
                         start: function(event, ui) {
+                            ko.contextFor(ui.item[0]).$root.isDragStarted(true);
                             startIndex = ui.item.index();
                             ui.item.find("input:focus").change();
                         },
                         stop: function(event, ui) {
+                            ko.contextFor(ui.item[0]).$root.isDragStarted(false);
                             var newIndex = ui.item.index(),
-                                renewDisplayOrder = function(nodesToReorder) {
+                                renewNodeData = function (nodesToReorder, parentNode) {
                                     for (var i = 0; i < nodesToReorder.length; i++) {
-                                        var node = nodesToReorder[i];
+                                        var node = nodesToReorder[i],
+                                            nodeUpdated = false;
+                                        // Update order index.
                                         if (node.displayOrder() != i) {
                                             node.displayOrder(i);
-                                            // TODO: node.saveSitemapNode();
+                                            nodeUpdated = true;
+                                        }
+                                        // Update parent node.
+                                        if (parentNode != null && node.parentNode != parentNode) {
+                                            if (parentNode.isRootModel) {
+                                                node.parentNode = null;
+                                            } else {
+                                                node.parentNode = parentNode;
+                                            }
+                                            nodeUpdated = true;
+                                        }
+                                        // Save changes if any.
+                                        if (nodeUpdated) {
+                                            node.saveSitemapNode();
                                         }
                                     }
                                 };
-                            
+
                             if (startIndex > -1) {
                                 var context = ko.contextFor(ui.item.parent()[0]),
-                                    destinationArray = context.$data.childNodes || context.$data.sitemapNodes,
+                                    destinationParent = context.$data,
+                                    destinationArray = destinationParent.childNodes || destinationParent.sitemapNodes,
                                     item = sourceArray()[startIndex];
-                                
+
                                 sourceArray.remove(item);
                                 destinationArray.splice(newIndex, 0, item);
                                 ui.item.remove();
-                                
-                                renewDisplayOrder(sourceArray());
-                                renewDisplayOrder(destinationArray());
+
+                                renewNodeData(sourceArray(), null);
+                                renewNodeData(destinationArray(), destinationParent);
                             }
                         },
                         connectWith: '.bcms-connected-sortable',
@@ -247,6 +275,26 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 }
             };
         }
+
+// TODO: Remove or update for better node dragging appearance.
+//        /**
+//        * Hover binding to handle node adding to node without child nodes.
+//        */
+//        function addHoverCssBinding() {
+//            ko.bindingHandlers.hovercss = {
+//                update: function(element, valueAccessor) {
+//                    var css = valueAccessor();
+//
+//                    ko.utils.registerEventHandler(element, "mouseover", function () {
+//                        ko.utils.toggleDomNodeCssClass(element, ko.utils.unwrapObservable(css), true);
+//                    });
+//                    
+//                    ko.utils.registerEventHandler(element, "mouseout", function () {
+//                        ko.utils.toggleDomNodeCssClass(element, ko.utils.unwrapObservable(css), false);
+//                    });
+//                }
+//            };
+//        }
 
         /**
         * Initializes module.
