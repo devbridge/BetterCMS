@@ -15,13 +15,9 @@ namespace BetterCms.Module.Pages.ViewModels.SiteSettings
 
         public string TemplateName { get; set; }
 
-        public string PreviewUrl { get; set; }
-
-        public string Path { get; set; }
-
         public override string ToString()
         {
-            return string.Format("Id: {0}, Version: {1}, TemplateName: {2}, CategoryName: {3}", Id, Version, TemplateName);
+            return string.Format("Id: {0}, Version: {1}, TemplateName: {2}", Id, Version, TemplateName);
         }
     }
 }

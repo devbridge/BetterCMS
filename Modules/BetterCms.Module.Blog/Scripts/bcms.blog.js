@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.grid'],
-    function ($, bcms, modal, siteSettings, dynamicContent, datepicker, htmlEditor, grid) {
+define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.grid', 'bcms.pages'],
+    function ($, bcms, modal, siteSettings, dynamicContent, datepicker, htmlEditor, grid, pages) {
     'use strict';
 
     var blog = { },
@@ -15,7 +15,13 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             siteSettingsBlogDeleteButton: '.bcms-grid-item-delete-button',
             siteSettingsBlogParentRow: 'tr:first',
             siteSettingsBlogEditButton: '.bcms-grid-item-edit-button',
-            siteSettingsRowCells: 'td'
+            siteSettingsRowCells: 'td',
+            siteSettingsBlogCellPrefix: '.bcms-blog-',
+            siteSettingsBlogBooleanTemplateFalse: '#bcms-boolean-false-template',
+            siteSettingsBlogBooleanTemplateTrue: '#bcms-boolean-true-template',
+            siteSettingsBlogRowTemplate: '#bcms-blogs-list-row-template',
+            siteSettingsBlogRowTemplateFirstRow: 'tr:first',
+            siteSettingsBlogsTableFirstRow: 'table.bcms-tables > tbody > tr:first'
         },
         links = {
             loadSiteSettingsBlogsUrl: null,
@@ -23,7 +29,9 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             loadEditPostDialogUrl: null
         },
         globalization = {
-            createNewPostDialogTitle: null
+            createNewPostDialogTitle: null,
+            editPostDialogTitle: null,
+            deleteBlogDialogTitle: null
         };
 
     // Assign objects to module.
@@ -72,6 +80,9 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         createBlogPost(postSuccess);
     };
 
+    /**
+    * Created new blog post
+    */
     function createBlogPost(postSuccess) {
         var url = links.loadCreateNewPostDialogUrl,
             title = globalization.createNewPostDialogTitle;
@@ -79,6 +90,9 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         openBlogEditForm(url, title, postSuccess);
     }
         
+    /**
+    * Edits blog post
+    */
     function editBlogPost(id, postSuccess) {
         var url = $.format(links.loadEditPostDialogUrl, id),
             title = globalization.editPostDialogTitle;
@@ -86,9 +100,29 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         openBlogEditForm(url, title, postSuccess);
     }
 
-    function onAfterSiteSettingsBlogPostSaved(json) {
-        
+    /**
+    * Called after successfull blog post save
+    */
+    function onAfterSiteSettingsBlogPostSaved(json, row) {
+        if (json.Data != null) {
+            row.find(selectors.siteSettingsBlogCellPrefix + 'Title').html(json.Data.Title);
+            row.find(selectors.siteSettingsBlogCellPrefix + 'ModifiedOn').html(json.Data.ModifiedOn);
+            row.find(selectors.siteSettingsBlogCellPrefix + 'ModifiedByUser').html(json.Data.ModifiedByUser);
+            row.find(selectors.siteSettingsBlogCellPrefix + 'CreatedOn').html(json.Data.CreatedOn);
+            
+            row.find(selectors.siteSettingsBlogEditButton).data('id', json.Data.Id);
+            row.find(selectors.siteSettingsBlogDeleteButton).data('id', json.Data.Id);
+            row.find(selectors.siteSettingsBlogDeleteButton).data('version', json.Data.Version);
+
+            siteSettingsSetBooleanTemplate(row.find(selectors.siteSettingsBlogCellPrefix + 'IsPublished'), json.Data.IsPublished);
+        }
     }
+
+    function siteSettingsSetBooleanTemplate (container, value) {
+        var template = (value === true) ? $(selectors.siteSettingsBlogBooleanTemplateTrue) : $(selectors.siteSettingsBlogBooleanTemplateFalse),
+            html = $(template.html());
+        container.html(html);
+    };
 
     /**
     * Initializes site settings blogs list
@@ -114,7 +148,16 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         });
 
         container.find(selectors.siteSettingsBlogCreateButton).on('click', function () {
-            createBlogPost(onAfterSiteSettingsBlogPostSaved);
+            createBlogPost(function (json) {
+                var template = $(selectors.siteSettingsBlogRowTemplate),
+                    newRow = $(template.html()).find(selectors.siteSettingsBlogRowTemplateFirstRow);
+
+                onAfterSiteSettingsBlogPostSaved(json, newRow);
+                
+                newRow.insertBefore($(selectors.siteSettingsBlogsTableFirstRow, container));
+                initializeSiteSettingsBlogsListItems(newRow);
+                grid.showHideEmptyRow(container);
+            });
         });
 
         initializeSiteSettingsBlogsListItems(container);
@@ -125,13 +168,23 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     */
     function initializeSiteSettingsBlogsListItems(container) {
         container.find(selectors.siteSettingsRowCells).on('click', function () {
-            var editButton = $(this).parents(selectors.siteSettingsBlogParentRow).find(selectors.siteSettingsBlogEditButton);
-            editBlogPost(editButton.data("id"), onAfterSiteSettingsBlogPostSaved);
+            var row = $(this).parents(selectors.siteSettingsBlogParentRow),
+                id = row.find(selectors.siteSettingsBlogEditButton).data("id");
+
+            editBlogPost(id, function (json) {
+                onAfterSiteSettingsBlogPostSaved(json, row);
+            });
         });
 
         container.find(selectors.siteSettingsBlogDeleteButton).on('click', function (event) {
             bcms.stopEventPropagation(event);
-            alert("TODO: delete post!");
+            
+            var self = $(this),
+                id = self.data('id');
+            pages.deletePage(id, function () {
+                self.parents(selectors.siteSettingsBlogParentRow).remove();
+                grid.showHideEmptyRow(container);
+            }, globalization.deleteBlogDialogTitle);
         });
     }
         

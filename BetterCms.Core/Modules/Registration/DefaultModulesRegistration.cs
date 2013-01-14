@@ -45,49 +45,44 @@ namespace BetterCms.Core.Modules.Registration
         private readonly IControllerExtensions controllerExtensions;
 
         /// <summary>
-        /// Routes collection.
-        /// </summary>
-        private readonly IRouteTable routeTable;
-
-        /// <summary>
         /// Thread safe known module types.
         /// </summary>
-        private readonly ConcurrentDictionary<string, Type> knownModuleDescriptorTypes;
+        private readonly Dictionary<string, Type> knownModuleDescriptorTypes;
 
         /// <summary>
         /// Thread safe modules dictionary.
         /// </summary>
-        private readonly ConcurrentDictionary<string, ModuleRegistrationContext> knownModules;
+        private readonly Dictionary<string, ModuleRegistrationContext> knownModules;
 
         /// <summary>
         /// Thread safe list of known java script modules dictionary.
         /// </summary>
-        private readonly ConcurrentDictionary<string, JavaScriptModuleDescriptor> knownJavaScriptModules;
+        private readonly Dictionary<string, JavaScriptModuleDescriptor> knownJavaScriptModules;
 
         /// <summary>
         /// Thread safe list of registered action projections for a sidebar main content.
         /// </summary>
-        private readonly ConcurrentBag<IPageActionProjection> knownSidebarBodyContentItems;
+        private readonly List<IPageActionProjection> knownSidebarBodyContentItems;
 
         /// <summary>
         /// Thread safe list of registered action projections for a sidebar left content.
         /// </summary>
-        private readonly ConcurrentBag<IPageActionProjection> knownSidebarContentItems;
+        private readonly List<IPageActionProjection> knownSidebarContentItems;
 
         /// <summary>
         /// Thread safe list of registered action projections for a sidebar left content.
         /// </summary>
-        private readonly ConcurrentBag<IPageActionProjection> knownSidebarHeadContentItems;
+        private readonly List<IPageActionProjection> knownSidebarHeadContentItems;
 
         /// <summary>
         /// Thread safe list of registered action projections for a sidebar left content.
         /// </summary>
-        private readonly ConcurrentBag<IPageActionProjection> knownSiteSettingsItems;
+        private readonly List<IPageActionProjection> knownSiteSettingsItems;
 
         /// <summary>
         /// Thread safe style sheet files collection.
         /// </summary>
-        private readonly ConcurrentBag<string> knownStyleSheetFiles;        
+        private readonly List<string> knownStyleSheetFiles;        
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultModulesRegistration" /> class.
@@ -101,16 +96,15 @@ namespace BetterCms.Core.Modules.Registration
             this.assemblyLoader = assemblyLoader;
             this.cmsConfiguration = cmsConfiguration;
             this.controllerExtensions = controllerExtensions;
-            this.routeTable = routeTable;
 
-            knownModuleDescriptorTypes = new ConcurrentDictionary<string, Type>();
-            knownModules = new ConcurrentDictionary<string, ModuleRegistrationContext>();
-            knownJavaScriptModules = new ConcurrentDictionary<string, JavaScriptModuleDescriptor>();
-            knownSidebarHeadContentItems = new ConcurrentBag<IPageActionProjection>();
-            knownSidebarContentItems = new ConcurrentBag<IPageActionProjection>();
-            knownSidebarBodyContentItems = new ConcurrentBag<IPageActionProjection>();
-            knownSiteSettingsItems = new ConcurrentBag<IPageActionProjection>();
-            knownStyleSheetFiles = new ConcurrentBag<string>();            
+            knownModuleDescriptorTypes = new Dictionary<string, Type>();
+            knownModules = new Dictionary<string, ModuleRegistrationContext>();
+            knownJavaScriptModules = new Dictionary<string, JavaScriptModuleDescriptor>();
+            knownSidebarHeadContentItems = new List<IPageActionProjection>();
+            knownSidebarContentItems = new List<IPageActionProjection>();
+            knownSidebarBodyContentItems = new List<IPageActionProjection>();
+            knownSiteSettingsItems = new List<IPageActionProjection>();
+            knownStyleSheetFiles = new List<string>();            
         }
 
         /// <summary>
@@ -132,7 +126,10 @@ namespace BetterCms.Core.Modules.Registration
                     Log.TraceFormat("Adds module descriptor {0} from the assembly {1}.", moduleRegistrationType.Name, assembly.FullName);
                 }
 
-                knownModuleDescriptorTypes.TryAdd(moduleRegistrationType.Name, moduleRegistrationType);
+                if (!knownModuleDescriptorTypes.ContainsKey(moduleRegistrationType.Name))
+                {
+                    knownModuleDescriptorTypes.Add(moduleRegistrationType.Name, moduleRegistrationType);
+                }
             }
         }
 
@@ -245,14 +242,14 @@ namespace BetterCms.Core.Modules.Registration
 
             ContextScopeProvider.RegisterTypes(containerBuilder);
 
-            knownModules.TryAdd(moduleDescriptor.AreaName.ToLowerInvariant(), registrationContext);
+            knownModules.Add(moduleDescriptor.AreaName.ToLowerInvariant(), registrationContext);
             
             var jsModules = moduleDescriptor.RegisterJavaScriptModules(containerBuilder, cmsConfiguration);            
             if (jsModules != null)
             {
                 foreach (var jsModuleDescriptor in jsModules)
                 {
-                    knownJavaScriptModules.TryAdd(jsModuleDescriptor.Name, jsModuleDescriptor);
+                    knownJavaScriptModules.Add(jsModuleDescriptor.Name, jsModuleDescriptor);
                 }
             }
 
@@ -362,7 +359,7 @@ namespace BetterCms.Core.Modules.Registration
         /// <typeparam name="T">Type of elements.</typeparam>
         /// <param name="bag">The bag.</param>
         /// <param name="enumerator">The enumerator.</param>
-        private static void UpdateConcurrentBagWithEnumerator<T>(ConcurrentBag<T> bag, IEnumerable<T> enumerator)
+        private static void UpdateConcurrentBagWithEnumerator<T>(List<T> bag, IEnumerable<T> enumerator)
         {            
             if (enumerator != null)
             {

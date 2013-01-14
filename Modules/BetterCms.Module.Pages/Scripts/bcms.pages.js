@@ -10,7 +10,7 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
         selectors = {
             editPermalink: '#bcms-addnewpage-editpermalink',
             editPermalinkBox: '.bcms-edit-urlpath-box',
-            editPermalinkClose: 'div.bcms-edit-urlpath-box .bcms-edit-btn-close',
+            editPermalinkClose: 'div.bcms-edit-urlpath-box .bcms-tip-close',
             editPermalinkSave: '#bcms-save-permalink',
             permalinkHiddenField: '#bcms-page-permalink',
             permalinkEditField: '#bcms-page-permalink-edit',
@@ -272,9 +272,10 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
     /**
     * Deletes page
     */
-    page.deletePage = function(id, postSuccess) {
+    page.deletePage = function (id, postSuccess, title) {
+        title = title || globalization.deletePageDialogTitle;
         modal.open({
-            title: globalization.deletePageDialogTitle,
+            title: title,
             onLoad: function(dialog) {
                 var url = $.format(links.deletePageConfirmationUrl, id);
                 dynamicContent.bindDialog(dialog, url, {

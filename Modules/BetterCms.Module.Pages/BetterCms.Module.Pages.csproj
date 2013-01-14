@@ -123,7 +123,12 @@
     <Compile Include="Command\Content\GetContent\GetContentCommand.cs" />
     <Compile Include="Command\Content\SortPageContent\SortPageContentResponse.cs" />
     <Compile Include="Command\Content\SortPageContent\SortPageContentCommand.cs" />
+    <Compile Include="Command\Layout\DeleteTemplate\DeleteTemplateCommand.cs" />
+    <Compile Include="Command\Layout\DeleteTemplate\DeleteTemplateCommandRequest.cs" />
     <Compile Include="Command\Layout\GetSiteSettingsTemplates\GetSiteSettingsTemplatesCommand.cs" />
+    <Compile Include="Command\Layout\GetTemplatesForEdit\GetTemplatesForEditCommand.cs" />
+    <Compile Include="Command\Layout\SaveTemplate\SaveTemplateCommand.cs" />
+    <Compile Include="Command\Layout\SaveTemplate\SaveTemplateResponse.cs" />
     <Compile Include="Command\Page\ClonePage\ClonePageCommand.cs" />
     <Compile Include="Command\Page\GetPageForCloning\GetPageForDeleteCommand.cs" />
     <Compile Include="Command\Widget\DeleteWidget\DeleteWidgetCommand.cs" />
@@ -242,6 +247,8 @@
     <Compile Include="ViewModels\Content\PageContentSortViewModel.cs" />
     <Compile Include="ViewModels\SiteSettings\SiteSettingTemplateItemViewModel.cs" />
     <Compile Include="ViewModels\SiteSettings\SiteSettingTemplateListViewModel.cs" />
+    <Compile Include="ViewModels\Templates\TemplateEditViewModel.cs" />
+    <Compile Include="ViewModels\Templates\TemplateRegionItemViewModel.cs" />
     <Compile Include="ViewModels\Widgets\EditHtmlContentWidgetViewModel.cs" />
     <Compile Include="ViewModels\Widgets\EditServerControlWidgetViewModel.cs" />
     <Compile Include="ViewModels\Widgets\HtmlContentWidgetViewModel.cs" />
@@ -386,13 +393,15 @@
     <EmbeddedResource Include="Views\Content\EditPageContent.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\Templates\Partial\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Templates\Templates.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Templates\EditTemplate.cshtml" />
+    <EmbeddedResource Include="Views\Templates\EditTemplate.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Templates\Partial\EditTemplateRegions.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

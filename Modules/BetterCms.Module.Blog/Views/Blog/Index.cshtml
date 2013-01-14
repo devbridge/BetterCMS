@@ -4,6 +4,7 @@
 @using BetterCms.Module.Root.Mvc.Grids.Extensions
 @using BetterCms.Module.Root.Mvc.Grids.TableRenderers
 @using BetterCms.Module.Root.Mvc.Helpers
+@using BetterCms.Module.Root.Mvc
 @using Microsoft.Web.Mvc
 @using MvcContrib.UI.Grid
 
@@ -14,31 +15,31 @@
     {
         column.EditButtonColumn();
 
-        column.For(m => string.Format("<a class=\"bcms-tables-link bcms-grid-item-edit-button bcms-blog-title\" data-id=\"{0}\">{1}</a>", m.Id, m.Title))
+        column.For(m => string.Format("<a class=\"bcms-tables-link bcms-grid-item-edit-button bcms-blog-Title\" data-id=\"{0}\">{1}</a>", m.Id, m.Title))
             .Named(BlogGlobalization.SiteSettings_Blogs_TitleColumn)
             .SortColumnName("Title")
             .Encode(false);
 
-        column.For(m => m.CreatedOn)
+        column.For(m => m.CreatedOn.ToFormattedDateTimeString())
            .Named(BlogGlobalization.SiteSettings_Blogs_CreatedColumn)
            .SortColumnName("CreatedOn")
-           .Attributes(@class => "bcms-blog-created");
+           .Attributes(@class => "bcms-blog-CreatedOn");
 
-        column.For(m => m.ModifiedOn)
+        column.For(m => m.ModifiedOn.ToFormattedDateTimeString())
            .Named(BlogGlobalization.SiteSettings_Blogs_ModifiedColumn)
            .SortColumnName("ModifiedOn")
-           .Attributes(@class => "bcms-blog-modified");
+           .Attributes(@class => "bcms-blog-ModifiedOn");
         
         column.For(m => m.ModifiedByUser)
            .Named(BlogGlobalization.SiteSettings_Blogs_ModifiedByColumn)
            .SortColumnName("ModifiedByUser")
-           .Attributes(@class => "bcms-blog-modifiedBy");
+           .Attributes(@class => "bcms-blog-ModifiedByUser");
 
         column.For(m => Html.EditorFor(e => m.IsPublished, "SiteSettingBoolean"))
            .Named(BlogGlobalization.SiteSettings_Blogs_IsPublishedColumn)
            .SortColumnName("IsPublished")
            .HeaderAttributes(@style => "width: 65px; text-align: center")
-           .Attributes(@class => "bcms-blog-ispublished");
+           .Attributes(@class => "bcms-blog-IsPublished");
 
         column.DeleteButtonColumn();
     };

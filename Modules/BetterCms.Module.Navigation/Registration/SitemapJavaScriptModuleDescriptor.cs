@@ -19,7 +19,7 @@ namespace BetterCms.Module.Navigation.Registration
         {            
             Links = new IActionProjection[]
                 {
-                    new JavaScriptModuleLinkTo<SitemapController>(this, "loadSiteSettingsSitmapUrl", c => c.Index(null))
+                    new JavaScriptModuleLinkTo<SitemapController>(this, "loadSiteSettingsSitemapUrl", c => c.Index(null))
                 };
 
             Globalization = new IActionProjection[]

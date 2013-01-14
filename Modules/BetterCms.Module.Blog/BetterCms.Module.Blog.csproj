@@ -116,9 +116,10 @@
     </Compile>
     <Compile Include="BlogModuleConstants.cs" />
     <Compile Include="BlogModuleDescriptor.cs" />
-    <Compile Include="Commands\GetBlogList\GetBlogListCommand.cs" />
+    <Compile Include="Commands\GetBlogPostList\GetBlogPostListCommand.cs" />
     <Compile Include="Commands\GetBlogPost\GetBlogPostCommand.cs" />
     <Compile Include="Commands\SaveBlogPost\SaveBlogPostCommand.cs" />
+    <Compile Include="Commands\SaveBlogPost\SaveBlogPostCommandResponse.cs" />
     <Compile Include="Content\Resources\BlogGlobalization.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -146,6 +147,7 @@
     <EmbeddedResource Include="Content\Styles\Images\bcms-no-image-3.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Scripts\bcms.blog.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -170,8 +172,24 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Scripts\" />
+    <EmbeddedResource Include="Views\Blog\CreatePost.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Blog\EditPost.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Blog\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Blog\Partial\BlogPostForm.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\EditorTemplates\SiteSettingBoolean.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Web.config" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

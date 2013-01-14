@@ -29,14 +29,6 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         public virtual int Version { get; set; }
 
         /// <summary>
-        /// Gets or sets the page URL.
-        /// </summary>
-        /// <value>
-        /// The page URL.
-        /// </value>
-        public virtual string PageUrl { get; set; }
-
-        /// <summary>
         /// Gets or sets the blog title.
         /// </summary>
         /// <value>
