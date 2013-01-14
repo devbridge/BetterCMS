@@ -184,7 +184,8 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\bcms-media\" />
+    <Folder Include="Areas\bcms-blog\" />
+    <Folder Include="file\bcms-blog\scripts\" />
     <Folder Include="file\bcms-media\scripts\" />
     <Folder Include="file\bcms-pages\scripts\" />
     <Folder Include="file\bcms-root\scripts\" />

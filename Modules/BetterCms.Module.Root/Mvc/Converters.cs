@@ -48,5 +48,17 @@ namespace BetterCms.Module.Root.Mvc
             }
             return default(int);
         }
+
+        /// <summary>
+        /// Converts date source to formatted datetime string.
+        /// </summary>
+        /// <param name="dateTime">The date time.</param>
+        /// <returns>
+        /// Formatted date.
+        /// </returns>
+        public static string ToFormattedDateTimeString(this DateTime dateTime)
+        {
+            return dateTime.ToString("g");
+        }
     }
 }

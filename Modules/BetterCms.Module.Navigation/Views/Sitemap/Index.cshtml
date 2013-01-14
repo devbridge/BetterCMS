@@ -1,0 +1,21 @@
+﻿@using BetterCms.Module.Navigation.Content.Resources
+@using BetterCms.Module.Navigation.Controllers
+@using BetterCms.Module.Navigation.ViewModels.Sitemap
+@using BetterCms.Module.Root.Mvc.Helpers
+@using Microsoft.Web.Mvc
+
+@model SearchableSitemapViewModel
+
+@using (Html.BeginForm<SitemapController>(f => f.Index(null), FormMethod.Post, new { @id = "bcms-sitemap-form" }))
+{
+    <div class="bcms-twocols-title-block">
+        <div class="bcms-large-titles">@NavigationGlobalization.Sitemap_Dialog_Title</div>
+        <div class="bcms-btn-links-main" id="bcms-btn-sitemap-edit">@NavigationGlobalization.Sitemap_Dialog_Edit</div>
+        <div class="bcms-search-block">
+            @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box" })
+            <div class="bcms-btn-search" id="bcms-btn-sitemap-search">@NavigationGlobalization.Sitemap_Dialog_Search</div>
+        </div>
+        @Html.MessagesBox("bcms-pages-messages")
+    </div>
+    @Html.Partial("Partial/Sitemap", new SitemapNodeViewModel())
+}

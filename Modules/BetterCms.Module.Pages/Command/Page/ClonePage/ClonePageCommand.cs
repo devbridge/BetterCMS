@@ -91,7 +91,6 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
                 IsPublished = false,
 
                 // Cloned data:
-                ShowTitle = page.ShowTitle,
                 MetaTitle = page.MetaTitle,                
                 MetaKeywords = page.MetaKeywords,
                 MetaDescription = page.MetaDescription,

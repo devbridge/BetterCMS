@@ -117,4 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Sitemap_Dialog_NodeTitle_RequiredMessage" xml:space="preserve">
+    <value>Title is required.</value>
+  </data>
+  <data name="Sitemap_Dialog_NodeUrl_RequiredMessage" xml:space="preserve">
+    <value>Url is required.</value>
+  </data>
+  <data name="SiteSettings_SitemapMenuItem" xml:space="preserve">
+    <value>Site Map</value>
+  </data>
+  <data name="Sitemap_Dialog_Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Sitemap_Dialog_Search" xml:space="preserve">
+    <value>Search...</value>
+  </data>
+  <data name="Sitemap_Dialog_Title" xml:space="preserve">
+    <value>Sitemap</value>
+  </data>
+  <data name="Sitemap_NodeEdit_Title_Tooltip_Message" xml:space="preserve">
+    <value>Enter page title.</value>
+  </data>
+  <data name="Sitemap_NodeEdit_Title_Tooltip_Title" xml:space="preserve">
+    <value>Page Title</value>
+  </data>
+  <data name="Sitemap_NodeEdit_Url_Tooltip_Message" xml:space="preserve">
+    <value>Enter URL path.</value>
+  </data>
+  <data name="Sitemap_NodeEdit_Url_Tooltip_Title" xml:space="preserve">
+    <value>Permalink</value>
+  </data>
 </root>

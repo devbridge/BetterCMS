@@ -1,6 +1,7 @@
 ﻿using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.JsModule;
 using BetterCms.Core.Modules.Projections;
+using BetterCms.Module.Navigation.Controllers;
 
 namespace BetterCms.Module.Navigation.Registration
 {
@@ -18,8 +19,7 @@ namespace BetterCms.Module.Navigation.Registration
         {            
             Links = new IActionProjection[]
                 {
-                    // TODO:
-                    // new JavaScriptModuleLinkTo<PageController>(this, "loadAddNewPageDialogUrl", c => c.AddNewPage()),
+                    new JavaScriptModuleLinkTo<SitemapController>(this, "loadSiteSettingsSitemapUrl", c => c.Index(null))
                 };
 
             Globalization = new IActionProjection[]

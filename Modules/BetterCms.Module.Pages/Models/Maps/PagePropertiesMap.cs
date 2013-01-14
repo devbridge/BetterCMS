@@ -13,7 +13,6 @@ namespace BetterCms.Module.Pages.Models.Maps
             Map(x => x.ImageUrl).Nullable();
             Map(x => x.CanonicalUrl).Nullable();
             Map(x => x.CustomCss).Nullable();
-            Map(x => x.ShowTitle).Not.Nullable();
             Map(x => x.UseCanonicalUrl).Not.Nullable();
             Map(x => x.UseCustomCss).Not.Nullable();
             Map(x => x.UseNoFollow).Not.Nullable();
@@ -21,6 +20,7 @@ namespace BetterCms.Module.Pages.Models.Maps
             Map(x => x.IsPublic).Not.Nullable();
 
             References(x => x.Author).Cascade.SaveUpdate().LazyLoad();
+            References(x => x.Category).Cascade.SaveUpdate().LazyLoad();
 
             HasMany(x => x.PageTags).KeyColumn("PageId").Cascade.SaveUpdate().Inverse().LazyLoad().Where("IsDeleted = 0");
             HasMany(x => x.PageCategories).KeyColumn("PageId").Cascade.SaveUpdate().Inverse().LazyLoad().Where("IsDeleted = 0");             

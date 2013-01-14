@@ -118,6 +118,7 @@ namespace BetterCms.Module.Pages
             containerBuilder.RegisterType<DefaultRedirectService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultCategoryService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultWidgetsService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultAuthorService>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
 
         /// <summary>
@@ -321,6 +322,20 @@ namespace BetterCms.Module.Pages
                             CssClass = page => "bcms-sidebar-link"
                         }
                 };
+        }
+
+        /// <summary>
+        /// Gets the order.
+        /// </summary>
+        /// <value>
+        /// The order.
+        /// </value>
+        public override int Order
+        {
+            get
+            {
+                return int.MaxValue - 200;
+            }
         }
     }
 }

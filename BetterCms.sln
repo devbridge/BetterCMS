@@ -22,6 +22,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sandbox", "Sandbox", "{6721
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.Module.Blog", "Modules\BetterCMS.Module.Blog\BetterCms.Module.Blog.csproj", "{A66A3046-EF60-4C51-ADA7-EB055763419B}"
 	ProjectSection(ProjectDependencies) = postProject
+		{FC04D4C2-8688-498F-B546-292C7E3688A9} = {FC04D4C2-8688-498F-B546-292C7E3688A9}
 		{66E7E4DF-EEEA-4B1E-8663-A1B430EB7375} = {66E7E4DF-EEEA-4B1E-8663-A1B430EB7375}
 	EndProjectSection
 EndProject

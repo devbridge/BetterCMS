@@ -531,9 +531,9 @@
     <EmbeddedResource Include="Views\Shared\Partial\Confirm.cshtml" />
     <EmbeddedResource Include="Views\Cms\Index.cshtml" />
     <EmbeddedResource Include="Views\Shared\Layouts\Preview.cshtml" />
-    <EmbeddedResource Include="Views\Shared\BaseLayout.cshtml" />
     <EmbeddedResource Include="Views\Shared\Partial\Info.cshtml" />
     <EmbeddedResource Include="Views\Shared\Partial\ImagePreview.cshtml" />
+    <EmbeddedResource Include="Views\Shared\BaseLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\Entity\" />

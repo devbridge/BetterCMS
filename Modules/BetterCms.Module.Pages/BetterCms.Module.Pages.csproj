@@ -195,6 +195,7 @@
     <Compile Include="Models\Author.cs" />
     <Compile Include="Models\IHtmlContent.cs" />
     <Compile Include="Models\Maps\HtmlContentMap.cs" />
+    <Compile Include="Models\Migrations\Migration201301081200.cs" />
     <Compile Include="Models\Migrations\Migration201301020833.cs" />
     <Compile Include="Models\ServerControlWidget.cs" />
     <Compile Include="Models\HtmlContent.cs" />
@@ -222,6 +223,8 @@
     <Compile Include="Registration\PagesContentJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\PageTagsJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\RedirectsJavaScriptModuleDescriptor.cs" />
+    <Compile Include="Services\DefaultAuthorService.cs" />
+    <Compile Include="Services\IAuthorService.cs" />
     <Compile Include="Services\DefaultWidgetsService.cs" />
     <Compile Include="Services\IWidgetsService.cs" />
     <Compile Include="Services\DefaultCategoryService.cs" />
@@ -376,12 +379,11 @@
     <EmbeddedResource Include="Views\Category\Categories.cshtml" />
     <EmbeddedResource Include="Views\Widgets\EditServerControlWidget.cshtml" />
     <EmbeddedResource Include="Views\Widgets\Partial\EditContentOptions.cshtml" />
-    <EmbeddedResource Include="Views\Page\EditorTemplates\SiteSettingBoolean.cshtml" />
+    <EmbeddedResource Include="Views\Shared\EditorTemplates\SiteSettingBoolean.cshtml" />
     <EmbeddedResource Include="Views\Content\PageContentOptions.cshtml" />
     <EmbeddedResource Include="Views\Content\EditPageContent.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Templates\Templates.cshtml" />
