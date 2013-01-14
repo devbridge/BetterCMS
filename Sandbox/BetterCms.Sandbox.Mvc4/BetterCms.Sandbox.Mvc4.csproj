@@ -181,6 +181,7 @@
     <EmbeddedResource Include="file\bcms-media\scripts\bcms.media.js" />
     <EmbeddedResource Include="file\bcms-pages\scripts\bcms.pages.tags.js" />
     <EmbeddedResource Include="file\bcms-root\scripts\bcms.ko.grid.js" />
+    <EmbeddedResource Include="file\bcms-root\scripts\bcms.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

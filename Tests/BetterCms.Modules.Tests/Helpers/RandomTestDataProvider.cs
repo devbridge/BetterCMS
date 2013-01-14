@@ -8,6 +8,8 @@ using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Navigation.Models;
 
+using BlogOption = BetterCms.Module.Blog.Models.Option;
+
 namespace BetterCms.Tests.Helpers
 {
     public class RandomTestDataProvider
@@ -120,6 +122,17 @@ namespace BetterCms.Tests.Helpers
             var entity = new BlogPost();
 
             PopulatePageProperties(entity);
+
+            return entity;
+        }
+
+        public BlogOption CreateNewBlogOption()
+        {
+            var entity = new BlogOption();
+
+            PopulateBaseFields(entity);
+
+            entity.DefaultLayout = CreateNewLayout();
 
             return entity;
         }

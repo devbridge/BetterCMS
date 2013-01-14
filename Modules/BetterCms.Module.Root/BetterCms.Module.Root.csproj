@@ -240,7 +240,6 @@
     <EmbeddedResource Include="Content\Styles\qunit-1.9.0.css" />
     <EmbeddedResource Include="Scripts\bcms.content.js" />
     <EmbeddedResource Include="Scripts\bcms.forms.js" />
-    <EmbeddedResource Include="Scripts\bcms.js" />
     <EmbeddedResource Include="Scripts\bcms.sidemenu.js" />
     <None Include="Scripts\jquery-1.7.2.intellisense.js">
       <DependentUpon>jquery-1.7.2.js</DependentUpon>
