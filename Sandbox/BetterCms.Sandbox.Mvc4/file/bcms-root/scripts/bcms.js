@@ -225,13 +225,11 @@ define('bcms', ['jquery', 'knockout'], function ($, ko) {
     ko.bindingHandlers.enterPress = {
         init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
             var allBindings = allBindingsAccessor();
-            $(element).keypress(function (event) {
-                var keyCode = (event.which ? event.which : event.keyCode);
-                if (keyCode === 13) {
+           
+            app.preventInputFromSubmittingForm($(element), {
+                preventedEnter: function () {
                     allBindings.enterPress.call(viewModel);
-                    return false;
                 }
-                return true;
             });
         }
     };
@@ -242,13 +240,11 @@ define('bcms', ['jquery', 'knockout'], function ($, ko) {
     ko.bindingHandlers.escPress = {
         init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
             var allBindings = allBindingsAccessor();
-            $(element).keypress(function (event) {
-                var keyCode = (event.which ? event.which : event.keyCode);
-                if (keyCode === 27) {
+            
+            app.preventInputFromSubmittingForm($(element), {
+                preventedEsc: function () {
                     allBindings.escPress.call(viewModel);
-                    return false;
                 }
-                return true;
             });
         }
     };

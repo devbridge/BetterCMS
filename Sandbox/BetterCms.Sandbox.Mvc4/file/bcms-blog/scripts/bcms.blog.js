@@ -9,6 +9,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         selectors = {
             datePickers: '.bcms-datepicker',
             htmlEditor: 'bcms-contenthtml',
+            addTagsField: '.bcms-add-tags-field',
             siteSettingsBlogsListForm: '#bcms-blogs-form',
             siteSettingsBlogsSearchButton: '#bcms-blogs-search-btn',
             siteSettingsBlogCreateButton: '#bcms-create-blog-button',
@@ -26,7 +27,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             siteSettingsTemplatesTabLink: '.bcms-tab[href="#bcms-tab-3"]',
             siteSettingsBlogsTab: '#bcms-tab-1',
             siteSettingsAuthorsTab: '#bcms-tab-2',
-            siteSettingsTemplatesTab: '#bcms-tab-3',
+            siteSettingsTemplatesTab: '#bcms-tab-3'
         },
         links = {
             loadSiteSettingsBlogsUrl: null,
@@ -147,7 +148,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         var blogViewModel = new BlogPostViewModel(data, tagsViewModel);
         ko.applyBindings(blogViewModel, dialog.container.get(0));
         
-        bcms.preventInputFromSubmittingForm(dialog.container.find('.bcms-add-tags-field'), {
+        bcms.preventInputFromSubmittingForm(dialog.container.find(selectors.addTagsField), {
             preventedEnter: function () {
                 blogViewModel.tags.addTag();
             },
