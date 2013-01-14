@@ -247,6 +247,7 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.mod
             self.id = ko.observable(item.Id);
             self.version = ko.observable(item.Version);
             self.isActive = ko.observable(item.IsActive || false);
+            self.hasFocus = ko.observable(true);
             self.isSelected = false;
             self.registeredFields = [];
             

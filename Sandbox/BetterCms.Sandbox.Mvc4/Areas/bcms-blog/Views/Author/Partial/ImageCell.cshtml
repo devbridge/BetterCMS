@@ -8,6 +8,6 @@
     </div>
 
     <!-- ko if: isActive() -->
-    <div class="bcms-blog-browse-images" data-bind="click: image().select">Browse</div>
+    <div class="bcms-blog-browse-images" data-bind="click: image().select.bind($data.image())">Browse</div>
     <!-- /ko -->
 </td>
