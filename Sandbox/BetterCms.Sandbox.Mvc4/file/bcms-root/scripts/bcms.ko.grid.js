@@ -51,152 +51,151 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.mod
             self.items = ko.observableArray();
             self.options = ko.observable();
             self.container = container;
-
-            // Set items
-            if (items && $.isArray(items)) {
-                this.setItems(items);
-            }
-
-            // Set options
-            if (gridOptions) {
-                this.setOptions(gridOptions);
-            }
             
             self.messagesDomId = function () {
                 var id = staticDomId++;
                 return 'bcms-editable-grid-messages-' + id;
             };
-        };
+            
+            self.setOptions = function (newGridOptions) {
+                if (!newGridOptions) {
+                    return;
+                }
+                var options = new grid.OptionsViewModel(newGridOptions);
+                self.options(options);
+            };
 
-        grid.ListViewModel.prototype.setOptions = function (gridOptions) {
-            if (!gridOptions) {
-                return;
+            self.setItems = function (itemsList) {
+                if (!itemsList) {
+                    return;
+                }
+                for (var i = 0; i < itemsList.length; i++) {
+                    self.setItem(itemsList[i]);
+                }
+            };
+
+            self.setItem = function (item) {
+                var itemViewModel = self.createItem(item);
+
+                self.items.push(itemViewModel);
+            };
+
+            self.addNewItem = function () {
+                var newItem = self.createItem({
+                    IsActive: true,
+                    IsNew: true
+                });
+                self.items.unshift(newItem);
+            };
+            
+            self.searchItems = function () {
+                var params = self.toJson();
+                self.load(params);
+            };
+
+            self.sortItems = function (column) {
+                var columnBefore = self.options().column(),
+                        wasDescending = self.options().isDescending();
+                if (columnBefore == column) {
+                    self.options().isDescending(!wasDescending);
+                } else {
+                    self.options().isDescending(false);
+                }
+                self.options().column(column);
+
+                var params = self.toJson();
+                self.load(params);
+            };
+
+            self.isSortedAscending = function (column) {
+                if (column == self.options().column() && !self.options().isDescending()) {
+                    return true;
+                }
+                return false;
+            };
+
+            self.isSortedDescending = function (column) {
+                if (column == self.options().column() && self.options().isDescending()) {
+                    return true;
+                }
+                return false;
+            };
+
+            self.toJson = function () {
+                var params = {
+                    SearchQuery: self.options().searchQuery(),
+                    Column: self.options().column(),
+                    Direction: self.options().isDescending() ? sortDirections.descending : sortDirections.ascending
+                };
+
+                return params;
+            };
+
+            self.load = function (params) {
+                var indicatorId = 'koGridList',
+                    spinContainer = self.container,
+                    onComplete = function (json) {
+                        if (spinContainer) {
+                            spinContainer.hideLoading(indicatorId);
+                        }
+
+                        self.parseResults(json);
+                    };
+                if (spinContainer) {
+                    spinContainer.showLoading(indicatorId);
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    cache: false,
+                    url: self.loadUrl,
+                    data: params
+                })
+                    .done(function (result) {
+                        onComplete(result);
+                    })
+                    .fail(function (response) {
+                        onComplete(bcms.parseFailedResponse(response));
+                    });
+            };
+
+            self.parseResults = function (json) {
+                if (self.container) {
+                    messages.refreshBox(self.container, json);
+                }
+
+                if (json.Success) {
+                    self.items.removeAll();
+
+                    if (json.Data) {
+
+                        // Map media items
+                        if (json.Data.Items && json.Data.Items && $.isArray(json.Data.Items)) {
+                            self.setItems(json.Data.Items);
+                        }
+
+                        // Map grid options
+                        if (json.Data.GridOptions) {
+                            self.setOptions(json.Data.GridOptions);
+                        }
+                    }
+                }
+            };
+            
+            // Set items
+            if (items && $.isArray(items)) {
+                self.setItems(items);
             }
-            var options = new grid.OptionsViewModel(gridOptions);
-            this.options(options);
-        };
 
-        grid.ListViewModel.prototype.setItems = function (items) {
-            if (!items) {
-                return;
+            // Set options
+            if (gridOptions) {
+                self.setOptions(gridOptions);
             }
-            for (var i = 0; i < items.length; i++) {
-                this.setItem(items[i]);
-            }
-        };
-
-        grid.ListViewModel.prototype.setItem = function(item) {
-            var itemViewModel = this.createItem(item);
-
-            this.items.push(itemViewModel);
-        };
-
-        grid.ListViewModel.prototype.addNewItem = function () {
-            var newItem = this.createItem({
-                IsActive: true,
-                IsNew: true
-            });
-            this.items.unshift(newItem);
         };
 
         grid.ListViewModel.prototype.createItem = function(item) {
             var newItem = new grid.ItemViewModel(this, item);
             return newItem;
-        };
-
-        grid.ListViewModel.prototype.searchItems = function () {
-            var params = this.toJson();
-            this.load(params);
-        };
-
-        grid.ListViewModel.prototype.sortItems = function (column) {
-            var columnBefore = this.options().column(),
-                    wasDescending = this.options().isDescending();
-            if (columnBefore == column) {
-                this.options().isDescending(!wasDescending);
-            } else {
-                this.options().isDescending(false);
-            }
-            this.options().column(column);
-            
-            var params = this.toJson();
-            this.load(params);
-        };
-        
-        grid.ListViewModel.prototype.isSortedAscending = function (column) {
-            if (column == this.options().column() && !this.options().isDescending()) {
-                return true;
-            }
-            return false;
-        };
-
-        grid.ListViewModel.prototype.isSortedDescending = function (column) {
-            if (column == this.options().column() && this.options().isDescending()) {
-                return true;
-            }
-            return false;
-        };
-        
-        grid.ListViewModel.prototype.toJson = function () {
-            var params = {
-                SearchQuery: this.options().searchQuery(),
-                Column: this.options().column(),
-                Direction: this.options().isDescending() ? sortDirections.descending : sortDirections.ascending
-            };
-            
-            return params;
-        };
-
-        grid.ListViewModel.prototype.load = function (params) {
-            var indicatorId = 'koGridList',
-                container = this.container,
-                self = this,
-                onComplete = function (json) {
-                    if (container) {
-                        container.hideLoading(indicatorId);
-                    }
-
-                    self.parseResults(json);
-                };
-            if (container) {
-                container.showLoading(indicatorId);
-            }
-            
-            $.ajax({
-                type: 'POST',
-                cache: false,
-                url: this.loadUrl,
-                data: params
-            })
-                .done(function (result) {
-                    onComplete(result);
-                })
-                .fail(function (response) {
-                    onComplete(bcms.parseFailedResponse(response));
-                });
-        };
-
-        grid.ListViewModel.prototype.parseResults = function(json) {
-            if (this.messagesContainer) {
-                messages.refreshBox(this.messagesContainer, json);
-            }
-            
-            if (json.Success) {
-                this.items.removeAll();
-
-                if (json.Data) {
-
-                    // Map media items
-                    if (json.Data.Items && json.Data.Items && $.isArray(json.Data.Items)) {
-                        this.setItems(json.Data.Items);
-                    }
-
-                    // Map grid options
-                    if (json.Data.GridOptions) {
-                        this.setOptions(json.Data.GridOptions);
-                    }
-                }
-            }
         };
 
         return grid.ListViewModel;
@@ -264,37 +263,37 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.mod
             
             self.onOpen = function (data, event) {
                 bcms.stopEventPropagation(event);
-                this.openItem();
+                self.openItem();
             };
 
             self.onEdit = function (data, event) {
                 bcms.stopEventPropagation(event);
-                this.editItem();
+                self.editItem();
             };
 
             self.onDelete = function (data, event) {
                 bcms.stopEventPropagation(event);
-                this.deleteItem();
+                self.deleteItem();
             };
 
             self.onCancelEdit = function (data, event) {
                 bcms.stopEventPropagation(event);
-                this.cancelEditItem();
+                self.cancelEditItem();
             };
 
             self.onSave = function (data, event) {
                 bcms.stopEventPropagation(event);
-                this.saveItem();
+                self.saveItem();
             };
 
             self.onStopEvent = function (data, event) {
-                this.isSelected = true;
+                self.isSelected = true;
                 bcms.stopEventPropagation(event);
             };
 
             self.onBlurField = function (data, event) {
-                this.isSelected = false;
-                this.blurField();
+                self.isSelected = false;
+                self.blurField();
             };
 
             self.registerFields = function() {
@@ -308,16 +307,16 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.mod
             };
 
             self.restoreOldValues = function () {
-                for (var i = 0; i < this.registeredFields.length; i++) {
-                    var field = this.registeredFields[i];
+                for (var i = 0; i < self.registeredFields.length; i++) {
+                    var field = self.registeredFields[i];
                     
                     field.restoreOldValue();
                 }
             };
 
             self.isValid = function () {
-                for (var i = 0; i < this.registeredFields.length; i++) {
-                    var field = this.registeredFields[i];
+                for (var i = 0; i < self.registeredFields.length; i++) {
+                    var field = self.registeredFields[i];
                     
                     if (!field.isValid()) {
                         return false;
