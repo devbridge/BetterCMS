@@ -124,7 +124,6 @@
     </Compile>
     <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\CmsController.cs" />
-    <Compile Include="Controllers\PreviewController.cs" />
     <Compile Include="Controllers\EmbeddedResourcesController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\RenderingController.cs" />
