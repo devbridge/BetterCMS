@@ -1,0 +1,49 @@
+﻿@using BetterCms.Module.Pages.Content.Resources
+@using BetterCms.Module.Pages.ViewModels.Templates
+@using BetterCms.Module.Root.Mvc.Grids.Extensions
+@using BetterCms.Module.Root.Mvc.Grids.TableRenderers
+@using MvcContrib.UI.Grid
+
+
+@model BetterCms.Module.Pages.ViewModels.Templates.TemplateEditViewModel
+           
+@{
+    Action<ColumnBuilder<TemplateRegionItemViewModel>> columns = column =>
+    {
+        column.EditButtonColumn();
+
+        column.For(model => Html.InlineEditColumnWithNamePattern(m => model.Identifier, "bcms-option-key", "bcms-old-option-key", "RegionOptions[{0}].Identifier"))
+            .Named(PagesGlobalization.TemplateOptions_IndetificatorColumn)
+            .Sortable(false)
+            .Attributes(@class => "bcms-option-key");
+
+        column.For(model => Html.InlineEditColumnWithNamePattern(m => model.Description, "bcms-option-description", "bcms-old-option-description", "RegionOptions[{0}].Description"))
+           .Named(PagesGlobalization.TemplateOptions_DescriptionColumn)
+           .Sortable(false)
+           .Attributes(@class => "bcms-option-value");
+
+        column.InlineEditControlsColumn();
+    };
+}
+
+<div class="bcms-top-block-holder">
+    <div class="bcms-btn-links-main" id="bcms-add-option-button">@PagesGlobalization.TemplateOptions_AddNewRegion</div>
+</div>
+
+@Html.Grid(Model.RegionOptions).Columns(columns).Attributes(@class => "bcms-tables", @id => "bcms-options-grid").RowAttributes(delegate(GridRowViewData<TemplateRegionItemViewModel> row)
+                  {
+                      return new Dictionary<string, object>
+                              {
+                                    {"data-id", row.Item.Id},
+                                    {"data-version", row.Item.Version}
+                              };
+              }).RenderUsing(new EditableHtmlTableGridRenderer<TemplateRegionItemViewModel>())
+
+                                              <script type="text/html" id="bcms-editable-row-template">
+      @(Html
+        .Grid(new List<TemplateRegionItemViewModel> { new TemplateRegionItemViewModel() })
+        .Columns(columns)
+        .Attributes(@class => "bcms-tables")
+        .RenderUsing(new HtmlTableGridSingleRowRenderer<TemplateRegionItemViewModel>()))
+</script>
+

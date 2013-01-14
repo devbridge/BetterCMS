@@ -145,6 +145,7 @@
     <Compile Include="Models\Migrations\Migration201301021540.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
     <Compile Include="Models\Migrations\Migration201301021106.cs" />
+    <Compile Include="Models\Migrations\Migration201301131434.cs" />
     <Compile Include="Models\PageContentOption.cs" />
     <Compile Include="Models\Layout.cs" />
     <Compile Include="Models\Maps\ModuleMap.cs" />

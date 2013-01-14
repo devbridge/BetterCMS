@@ -70,6 +70,15 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete Blog.
+        /// </summary>
+        public static string DeletePost_Dialog_Title {
+            get {
+                return ResourceManager.GetString("DeletePost_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Tags.
         /// </summary>
         public static string EditBlockPost_AddTags_Title {

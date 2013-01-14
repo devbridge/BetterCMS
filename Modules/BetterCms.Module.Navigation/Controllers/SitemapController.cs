@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 using BetterCms.Module.Navigation.Command.Sitemap.GetSitemap;
 using BetterCms.Module.Navigation.ViewModels.Sitemap;

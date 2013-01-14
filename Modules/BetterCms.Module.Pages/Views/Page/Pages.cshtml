@@ -1,6 +1,7 @@
 ﻿@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.SiteSettings
+@using BetterCms.Module.Root.Mvc
 @using BetterCms.Module.Root.Mvc.Grids.Extensions
 @using BetterCms.Module.Root.Mvc.Grids.TableRenderers
 @using BetterCms.Module.Root.Mvc.Helpers
@@ -20,13 +21,13 @@
             .Attributes()
             .Encode(false);
 
-        column.For(m => m.CreatedOn)
+        column.For(m => m.CreatedOn.ToFormattedDateTimeString())
            .Named(PagesGlobalization.SiteSettings_Pages_CreatedColumn)
            .SortColumnName("CreatedOn")
            .HeaderAttributes(@style => "width: 100px;")
            .Attributes(@class => "bcms-page-created");
 
-        column.For(m => m.ModifiedOn)
+        column.For(m => m.ModifiedOn.ToFormattedDateTimeString())
            .Named(PagesGlobalization.SiteSettings_Pages_ModifiedColumn)
            .SortColumnName("ModifiedOn")
            .HeaderAttributes(@style => "width: 100px;")

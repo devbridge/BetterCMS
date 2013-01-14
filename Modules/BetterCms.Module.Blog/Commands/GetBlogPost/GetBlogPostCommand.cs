@@ -62,7 +62,6 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
                         .Select(() => blogAlias.Id).WithAlias(() => blogModelAlias.Id)
                         .Select(() => blogAlias.Title).WithAlias(() => blogModelAlias.Title)
                         .Select(() => blogAlias.Version).WithAlias(() => blogModelAlias.Version)
-                        .Select(() => blogAlias.PageUrl).WithAlias(() => blogModelAlias.PageUrl)
                         .Select(() => blogAlias.Description).WithAlias(() => blogModelAlias.IntroText)
                         .Select(() => blogAlias.Author.Id).WithAlias(() => blogModelAlias.AuthorId)
                         .Select(() => blogAlias.Category.Id).WithAlias(() => blogModelAlias.CategoryId))

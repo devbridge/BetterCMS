@@ -11,12 +11,12 @@ using BetterCms.Module.Root.ViewModels.SiteSettings;
 using NHibernate.Criterion;
 using NHibernate.Transform;
 
-namespace BetterCms.Module.Blog.Commands.GetBlogList
+namespace BetterCms.Module.Blog.Commands.GetBlogPostList
 {
     /// <summary>
     /// A command for get blogs list by filter.
     /// </summary>
-    public class GetBlogListCommand : CommandBase, ICommand<SearchableGridOptions, SearchableGridViewModel<SiteSettingBlogPostViewModel>>
+    public class GetBlogPostListCommand : CommandBase, ICommand<SearchableGridOptions, SearchableGridViewModel<SiteSettingBlogPostViewModel>>
     {
         /// <summary>
         /// Executes the specified request.

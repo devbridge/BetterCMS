@@ -196,35 +196,35 @@ namespace BetterCms.Module.Templates.Models.Migrations
             regions.Add(new Region
             {
                 Id = TemplatesModuleConstants.RegionIds.MainContent,
-                Name = "Main Content",
+                Description = "Main Content",
                 RegionIdentifier = "CMSMainContent"
             });
 
             regions.Add(new Region
             {
                 Id = TemplatesModuleConstants.RegionIds.Header,
-                Name = "Header",
+                Description = "Header",
                 RegionIdentifier = "CMSHeader"
             });
 
             regions.Add(new Region
             {
                 Id = TemplatesModuleConstants.RegionIds.Footer,
-                Name = "Footer",
+                Description = "Footer",
                 RegionIdentifier = "CMSFooter"
             });
 
             regions.Add(new Region
             {
                 Id = TemplatesModuleConstants.RegionIds.LeftSide,
-                Name = "Left Side",
+                Description = "Left Side",
                 RegionIdentifier = "CMSLeftSide"
             });
 
             regions.Add(new Region
             {
                 Id = TemplatesModuleConstants.RegionIds.RightSide,
-                Name = "Right Side",
+                Description = "Right Side",
                 RegionIdentifier = "CMSRightSide"
             });
 
@@ -299,7 +299,7 @@ namespace BetterCms.Module.Templates.Models.Migrations
 
     public class Region : BaseModel
     {
-        public string Name { get; set; }
+        public string Description { get; set; }
         public string RegionIdentifier { get; set; }
     }
     
