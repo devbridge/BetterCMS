@@ -145,6 +145,7 @@
     <Compile Include="Models\Migrations\Migration201301021540.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
     <Compile Include="Models\Migrations\Migration201301021106.cs" />
+    <Compile Include="Models\Migrations\Migration201301131434.cs" />
     <Compile Include="Models\PageContentOption.cs" />
     <Compile Include="Models\Layout.cs" />
     <Compile Include="Models\Maps\ModuleMap.cs" />
@@ -315,7 +316,6 @@
     <EmbeddedResource Include="Scripts\bcms.tabs.js" />
     <EmbeddedResource Include="Content\Styles\images\modal-back.png" />
     <EmbeddedResource Include="Scripts\bcms.preview.js" />
-    <EmbeddedResource Include="Scripts\bcms.inlineEdit.js" />
     <EmbeddedResource Include="Scripts\bcms.grid.js" />
     <EmbeddedResource Include="Content\Styles\images\loading.gif" />
     <EmbeddedResource Include="Content\Styles\images\bcms-sidebar-select.png" />
@@ -474,15 +474,16 @@
     <EmbeddedResource Include="Content\Styles\images\bcms-no-image-1.png" />
     <EmbeddedResource Include="Content\Styles\images\bcms-no-image-2.png" />
     <EmbeddedResource Include="Content\Styles\images\bcms-no-image-3.png" />
-    <EmbeddedResource Include="Scripts\bcms.dynamicContent.js" />
-    <EmbeddedResource Include="Scripts\bcms.siteSettings.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\cms-imagemanager\plugin.js" />
     <EmbeddedResource Include="Scripts\ckeditor\build-config.js" />
     <EmbeddedResource Include="Scripts\ckeditor\ckeditor.js" />
     <EmbeddedResource Include="Scripts\ckeditor\config.js" />
     <EmbeddedResource Include="Scripts\ckeditor\contents.css" />
     <EmbeddedResource Include="Scripts\ckeditor\styles.js" />
+    <EmbeddedResource Include="Scripts\bcms.dynamicContent.js" />
+    <EmbeddedResource Include="Scripts\bcms.inlineEdit.js" />
     <EmbeddedResource Include="Scripts\bcms.modal.js" />
+    <EmbeddedResource Include="Scripts\bcms.siteSettings.js" />
     <Content Include="Scripts\jquery-1.7.2.min.js">
       <DependentUpon>jquery-1.7.2.js</DependentUpon>
     </Content>

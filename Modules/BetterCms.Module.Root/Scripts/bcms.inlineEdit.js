@@ -8,6 +8,7 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
         selectors = {},
         defaultSelectors = {
             row: 'tr',
+            rowCells: 'td',
             firstRow: 'tr:first',
             firstCell: 'td:first',
             firstForm: 'form:first',
@@ -110,22 +111,30 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
     * Initializes rows events
     */
     editor.initRowEvents = function(initContainer) {
-        initContainer.find(selectors.editRowLink).on('click', function () {
+        initContainer.find(selectors.rowCells).on('click', function (event) {
+            bcms.stopEventPropagation(event);
+            
             var row = $(this).parents(selectors.firstRow);
             editor.editRow(row, initContainer);
         });
 
-        initContainer.find(selectors.saveRowLink).on('click', function () {
+        initContainer.find(selectors.saveRowLink).on('click', function (event) {
+            bcms.stopEventPropagation(event);
+            
             var row = $(this).parents(selectors.firstRow);
             editor.saveRow(row, initContainer);
         });
 
-        initContainer.find(selectors.cancelLink).on('click', function () {
+        initContainer.find(selectors.cancelLink).on('click', function (event) {
+            bcms.stopEventPropagation(event);
+            
             var row = $(this).parents(selectors.firstRow);
             editor.cancelRowEdit(row);
         });
         
-        initContainer.find(selectors.deleteRowLink).on('click', function () {
+        initContainer.find(selectors.deleteRowLink).on('click', function (event) {
+            bcms.stopEventPropagation(event);
+            
             var row = $(this).parents(selectors.firstRow);
             editor.deleteRow(row);
         });

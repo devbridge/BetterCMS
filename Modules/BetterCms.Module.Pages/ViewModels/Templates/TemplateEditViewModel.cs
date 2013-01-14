@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
-
 using BetterCms.Core.Models;
+using BetterCms.Module.Root.Mvc.Grids;
 
 namespace BetterCms.Module.Pages.ViewModels.Templates
 {
-    public class TemplateEditViewModel
+    public class TemplateEditViewModel :  IEditableGridItem
     {
         /// <summary>
         /// Gets or sets the id.
@@ -53,6 +51,8 @@ namespace BetterCms.Module.Pages.ViewModels.Templates
         [Required]
         [StringLength(MaxLength.Url)]
         public string Url { get; set; }
+
+        public IList<TemplateRegionItemViewModel> RegionOptions { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

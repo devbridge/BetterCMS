@@ -51,6 +51,7 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
                 widgetCategoryNameCell: '.bcms-category-name',
                 widgetRowDeleteButtons: '.bcms-grid-item-delete-button',
                 widgetRowTemplate: '#bcms-widget-list-row-template',
+                widgetRowCells: 'td',
                 widgetRowTemplateFirstRow: 'tr:first',
                 widgetsTableFirstRow: 'table.bcms-tables > tbody > tr:first',
                 widgetInsertButtons: '.bcms-widget-insert-button',
@@ -341,11 +342,13 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
         * Initializes site settings widgets list items.
         */
         function initializeSiteSettingsWidgetListEvents(container) {
-            container.find(selectors.widgetRowEditButtons).on('click', function() {
-                editSiteSettingsWidget(container, $(this));
+            container.find(selectors.widgetRowCells).on('click', function () {
+                var editButton = $(this).parents(selectors.widgetParentRow).find(selectors.widgetRowEditButtons);
+                editSiteSettingsWidget(container, editButton);
             });
 
-            container.find(selectors.widgetsRowDeleteButtons).on('click', function() {
+            container.find(selectors.widgetsRowDeleteButtons).on('click', function (event) {
+                bcms.stopEventPropagation(event);
                 deleteSiteSettingsWidget(container, $(this));
             });
         };

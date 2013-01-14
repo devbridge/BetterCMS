@@ -33,7 +33,7 @@
         <div class="bcms-btn-links-main" id="bcms-register-template-button">@PagesGlobalization.SiteSettings_Widgets_RegisterNew</div>
         <div class="bcms-search-block">
             @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box" })
-            <div class="bcms-btn-search" id="bcms-template-search-btn">@PagesGlobalization.SiteSettings_Widgets_Search</div>
+            <div class="bcms-btn-search" id="bcms-template-search-btn">@PagesGlobalization.SiteSettings_Template_Search</div>
         </div>
         @Html.MessagesBox("bcms-templates-messages")
     </div>    
@@ -47,7 +47,6 @@
                       return new Dictionary<string, object>
                               {
                                     {"data-id", row.Item.Id},
-                                    {"data-type", row.Item.TemplateName},
                                     {"data-version", row.Item.Version}
                               };
               })
@@ -56,7 +55,7 @@
 
 <script type="text/html" id="bcms-template-list-row-template">
     @(Html
-                        .Grid(new List<SiteSettingTemplateItemViewModel> { new SiteSettingTemplateItemViewModel() })
+        .Grid(new List<SiteSettingTemplateItemViewModel> { new SiteSettingTemplateItemViewModel() })
         .Columns(columns)
         .Attributes(@class => "bcms-tables")
         .RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingTemplateItemViewModel>()))

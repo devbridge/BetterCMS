@@ -288,6 +288,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 self.name = ko.observable(item.Name);
                 self.oldName = item.Name;
                 self.version = ko.observable(item.Version);
+                self.publicUrl = ko.observable(item.PublicUrl);
                 self.extension = item.FileExtension;
                 self.type = item.Type;
                 self.nameDomId = 'name_' + staticDomId++;
@@ -302,16 +303,22 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                     return !self.isFolder();
                 };
 
-                self.canBeRenamed = function () {
-                    return self.isFolder() || (self.isFile() && !self.isImage());
+                self.canBeEdited = function () {
+                    return self.isImage();
                 };
 
-                self.canBeEdited = function () {
-                    return !self.canBeRenamed();
+                self.canBeDownloaded = function () {
+                    return self.publicUrl();
                 };
 
                 self.stopEvent = function(data, event) {
                     bcms.stopEventPropagation(event);
+                };
+
+                self.downloadMedia = function() {
+                    if (self.publicUrl()) {
+                        window.open(self.publicUrl(), '_newtab');
+                    }
                 };
 
                 self.rowClassNames = ko.computed(function () {
@@ -322,14 +329,14 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                             classes += ' bcms-folder-box-active';
                         }
                     }
+                    if (self.isFile()) {
+                        classes += ' bcms-file-box';
+                    }
                     if (self.isImage()) {
                         classes += ' bcms-image-box';
                     }
-                    if (self.isFile() && !self.isImage()) {
-                        classes += ' bcms-file-box';
-                        if (self.isActive()) {
-                            classes += ' bcms-file-box-active';
-                        }
+                    if (self.isFile() && self.isActive()) {
+                        classes += ' bcms-file-box-active';
                     }
                     if (self.isSelected()) {
                         classes += ' bcms-media-click-active';
@@ -376,7 +383,17 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
 
             MediaItemBaseViewModel.prototype.editMedia = function (folderViewModel, data, event) {
                 bcms.stopEventPropagation(event);
+                this.renameMedia(folderViewModel, data, event);
+            };
+            
+            MediaItemBaseViewModel.prototype.renameMedia = function (folderViewModel, data, event) {
+                bcms.stopEventPropagation(event);
                 this.isActive(true);
+            };
+            
+            MediaItemBaseViewModel.prototype.openMedia = function (folderViewModel, data, event) {
+                bcms.stopEventPropagation(event);
+                editOrSelectMedia(folderViewModel, this, data, event);
             };
 
             MediaItemBaseViewModel.prototype.saveMedia = function (folderViewModel, data, event) {
@@ -426,7 +443,6 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 var self = this;
 
                 self.tooltip = item.Tooltip;
-                self.previewUrl = item.PreviewUrl;
                 self.thumbnailUrl = item.ThumbnailUrl;
 
                 self.getImageUrl = function() {
@@ -437,8 +453,9 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 };
 
                 self.previewImage = function () {
-                    if (self.previewUrl) {
-                        modal.imagePreview(self.previewUrl, self.tooltip);
+                    var previewUrl = self.publicUrl();
+                    if (previewUrl) {
+                        modal.imagePreview(previewUrl, self.tooltip);
                     }
                 };
             }

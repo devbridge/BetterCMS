@@ -43,7 +43,7 @@
 
 .bcms-edit-file-info {
     display: inline-block;
-    width: 400px;
+    width: 395px;
     margin-left: 15px;
     vertical-align: top;
 }
@@ -513,18 +513,8 @@ div.bcms-upload-success {
         }
 
     .bcms-grid .bcms-image-box .bcms-icn-edit {
-        position: absolute;
-        bottom: 8px;
-        left: 10px;
-        background: 0;
-        text-indent: 0;
-        font-size: 10px;
-        overflow: visible;
+        display: none;
     }
-
-        .bcms-grid .bcms-image-box .bcms-icn-edit:hover {
-            text-decoration: underline;
-        }
 
     .bcms-grid .bcms-image-box .bcms-icn-delete {
         position: absolute;
@@ -712,11 +702,10 @@ input.bcms-grid-input:focus {
     height: 96px;
     margin: 10px 5px 0;
     padding: 10px 0;
+    text-align: center;
+    cursor: pointer;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
-    text-align: center;
-    overflow: hidden;
-    cursor: pointer;
 }
 
     .bcms-grid .bcms-folder-box .bcms-media-items-block {
@@ -969,7 +958,6 @@ input.bcms-grid-input:focus {
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     text-align: center;
-    overflow: hidden;
     cursor: pointer;
 }
 
@@ -1282,7 +1270,7 @@ input.bcms-grid-input:focus {
     display: none;
     position: absolute;
     min-width: 80px;
-    padding: 10px 30px 10px 20px;
+    padding: 10px 40px 10px 20px;
     background: #eff9fd;
     border: 1px solid #c6c6c6;
     z-index: 999;
@@ -1290,7 +1278,9 @@ input.bcms-grid-input:focus {
 
     .bcms-media-context a {
         color: #0383df;
+        white-space: nowrap;
         cursor: pointer;
+        text-align: left;
     }
 
         .bcms-media-context a:hover {
@@ -1346,5 +1336,3 @@ input.bcms-grid-input:focus {
     font-size: 14px;
     line-height: 24px;
 }
-
-

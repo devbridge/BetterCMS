@@ -1,8 +1,6 @@
 ﻿@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
-@using BetterCms.Module.Pages.ViewModels.Content
 @using BetterCms.Module.Pages.ViewModels.Templates
-@using BetterCms.Module.Pages.ViewModels.Widgets
 @using BetterCms.Module.Root.Mvc.Helpers
 @using BetterCms.Module.Root.Mvc.UI
 @using Microsoft.Web.Mvc
@@ -43,19 +41,24 @@
                 </div>
                 
                 <div class="bcms-input-list-holder">
-                     @Html.Tooltip(PagesGlobalization.Template_Preview_Image_Tooltip_Title, PagesGlobalization.TemplatePreviewImageUrl_Tooltip_Description)
+                    @Html.Tooltip(PagesGlobalization.Template_Preview_Image_Tooltip_Title, PagesGlobalization.TemplatePreviewImageUrl_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.TemplatePreviewImage_Title:</div>
                 </div>
 
                 <div class="bcms-thumbnails-preview">
                     <div class="bcms-preview-module-image">
-                        <img id="bcms-widget-preview-image" src="@Model.PreviewImageUrl" alt="" />
+                        <img id="bcms-template-preview-image" src="@Model.PreviewImageUrl" alt="" />
                     </div>
                 </div>
             </div>
               
+            <div id="bcms-tab-2" class="bcms-tab-single">
+                @Html.Partial("Partial/EditTemplateRegions")
+        </div>
             
             @Html.HiddenSubmit()
-        }
+        } 
+        
     </div>
+     
 </div>

@@ -1,48 +1,39 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages', 'bcms.preview', 'bcms.grid', 'bcms.inlineEdit', 'slides.jquery'],
-    function ($, bcms, modal, datepicker, htmlEditor, dynamicContent, siteSettings, messages, preview, grid, editor) {
+define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages', 'bcms.preview', 'bcms.grid', 'bcms.inlineEdit', 'slides.jquery'],
+    function ($, bcms, modal, datepicker, dynamicContent, siteSettings, messages, preview, grid, editor) {
         'use strict';
 
         var template = {},
             links = {
                 loadSiteSettingsTemplateListUrl: null,
-
-                loadCreateHtmlContentWidgetDialogUrl: null,
-                loadEditHtmlContentWidgetDialogUrl: null,
-
                 loadRegisterTemplateDialogUrl: null,
-                loadEditServerControlWidgetDialogUrl: null,
-                deleteWidgetUrl: null,
-                loadPageContentOptionsDialogUrl: null
+                loadEditTemplateDialogUrl: null,
+                deleteTemplateUrl: null,
+                loadTemplateRegionDialogUrl: null
             },
             globalization = {
-                createHtmlContentWidgetDialogTitle: null,
-                editAdvancedContentDialogTitle: null,
-                createWidgetDialogTitle: null,
-                editWidgetDialogTitle: null,
-                deleteWidgetConfirmMessage: null,
-                deleteOptionConfirmMessage: null,
-                editPageWidgetOptionsTitle: null
+                createTemplateDialogTitle: null,
+                editTemplateDialogTitle: null,
+                deleteTemplateConfirmMessage: null,
+                deleteRegionConfirmMessage: null,
+                editTemplateRegionTitle: null
             },
             selectors = {
-                widgetPreviewImageUrl: '#PreviewImageUrl',
-                widgetPreviewImage: '#bcms-widget-preview-image',
+                templatePreviewImageUrl: '#PreviewImageUrl',
+                templatePreviewImage: '#bcms-template-preview-image',
+                htmlContentTemplateRowTemplate: '#bcms-advanced-content-list-row-template',
+                htmlContentTemplateRowTemplateFirstRow: 'tr:first',
+                htmlContentTemplateTableFirstRow: 'table.bcms-tables > tbody > tr:first',
 
-                htmlContentWidgetContentHtmlEditor: 'bcms-advanced-contenthtml',
-
-                htmlContentWidgetRowTemplate: '#bcms-advanced-content-list-row-template',
-                htmlContentWidgetRowTemplateFirstRow: 'tr:first',
-                htmlContentWidgetTableFirstRow: 'table.bcms-tables > tbody > tr:first',
-
-                widgetsSearchButton: '#bcms-widget-search-btn',
+                templateSearchButton: '#bcms-template-search-btn',
 
                 templateRegisterButton: '#bcms-register-template-button',
                 templateRowEditButtons: '.bcms-grid-item-edit-button',
 
-                widgetsRowDeleteButtons: '.bcms-grid-item-delete-button',
-                widgetParentRow: 'tr:first',
+                templatesRowDeleteButtons: '.bcms-grid-item-delete-button',
+                templateParentRow: 'tr:first',
                 templateNameCell: '.bcms-template-name',
                 templateRowDeleteButtons: '.bcms-grid-item-delete-button',
                 templateRowTemplate: '#bcms-template-list-row-template',
@@ -50,6 +41,7 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
                 templateTableFirstRow: 'table.bcms-tables > tbody > tr:first',
                 templateInsertButtons: '.bcms-template-insert-button',
 
+                addNewRegionButton: '#bcms-template-options-add-region',
                 templatesListForm: '#bcms-templates-form',
 
                 addOptionLink: '#bcms-add-option-button',
@@ -68,11 +60,11 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
         /**
         * Opens ServerControlWidget edit dialog.
         */
-        template.openEditTemplateDialog = function (widgetId, onSaveCallback) {
+        template.openEditTemplateDialog = function (templateId, onSaveCallback) {
             modal.open({
-                title: globalization.editWidgetDialogTitle,
+                title: globalization.editTemplateDialogTitle,
                 onLoad: function (childDialog) {
-                    dynamicContent.bindDialog(childDialog, $.format(links.loadEditServerControlWidgetDialogUrl, widgetId), {
+                    dynamicContent.bindDialog(childDialog, $.format(links.loadEditTemplateDialogUrl, templateId), {
                         contentAvailable: initializeEditTemplateForm,
 
                         beforePost: function (form) {
@@ -87,11 +79,11 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
         };
 
         /**
-        * Opens template create form from site settings widgets list
+        * Opens template create form from site settings template list
         */
         template.openRegisterTemplateDialog = function (onSaveCallback) {
             modal.open({
-                title: globalization.createWidgetDialogTitle,
+                title: globalization.createTemplateDialogTitle,
                 onLoad: function (childDialog) {
                     dynamicContent.bindDialog(childDialog, links.loadRegisterTemplateDialogUrl, {
                         contentAvailable: initializeEditTemplateForm,
@@ -108,7 +100,7 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
         function initializeEditTemplateForm(dialog) {
             editor.initialize(dialog.container, {
                 deleteRowMessageExtractor: function () {
-                    return globalization.deleteOptionConfirmMessage;
+                    return globalization.deleteRegionConfirmMessage;
                 }
             });
 
@@ -116,16 +108,20 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
                 editor.addNewRow(dialog.container, $(selectors.optionsTable));
             });
 
-            dialog.container.find(selectors.widgetPreviewImageUrl).blur(function () {
-                var url = dialog.container.find(selectors.widgetPreviewImageUrl).val();
+            dialog.container.find(selectors.addNewRegionButton).on('click', function () {
+                editor.addNewRow(dialog.container, $(selectors.optionsTable));
+            });
+
+            dialog.container.find(selectors.templatePreviewImageUrl).blur(function () {
+                var url = dialog.container.find(selectors.templatePreviewImageUrl).val();
                 var webSiteUrlExp = /^(([\w]+:)?\/\/)?(([\d\w]|%[a-fA-f\d]{2,2})+(:([\d\w]|%[a-fA-f\d]{2,2})+)?@)?([\d\w][-\d\w]{0,253}[\d\w]\.)+[\w]{2,4}(:[\d]+)?(\/([-+_~.\d\w]|%[a-fA-f\d]{2,2})*)*(\?(&?([-+_~.\d\w]|%[a-fA-f\d]{2,2})=?)*)?(#([-+_~.\d\w]|%[a-fA-f\d]{2,2})*)?$/;
                 if (webSiteUrlExp.test(url)) {
-                    dialog.container.find(selectors.widgetPreviewImage).attr({
+                    dialog.container.find(selectors.templatePreviewImage).attr({
                         src: url
                     });
                 } else {
-                    dialog.container.find(selectors.widgetPreviewImageUrl).val("");
-                    dialog.container.find(selectors.widgetPreviewImage).attr({
+                    dialog.container.find(selectors.templatePreviewImageUrl).val("");
+                    dialog.container.find(selectors.templatePreviewImage).attr({
                         src: ""
                     });
                 }
@@ -133,19 +129,19 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
         };
 
         /*
-        * Open a template edit dialog by the specified widget type.
+        * Open a template edit dialog by the specified tempalte type.
         */
-        template.editWidget = function (widgetId, onSaveCallback) {
-            template.openEditTemplateDialog(widgetId, onSaveCallback);
+        template.editTemplate = function (templateId, onSaveCallback) {
+            template.openEditTemplateDialog(templateId, onSaveCallback);
 
         };
 
         /**
-        * Deletes widget.
+        * Deletes template.
         */
-        template.deleteWidget = function (widgetId, widgetVersion, widgetName, onDeleteCallback) {
-            var url = $.format(links.deleteWidgetUrl, widgetId, widgetVersion),
-                message = $.format(globalization.deleteWidgetConfirmMessage, widgetName),
+        template.deleteTemplate = function (templateId, templateVersion, templateName, onDeleteCallback) {
+            var url = $.format(links.deleteTemplateUrl, templateId, templateVersion),
+                message = $.format(globalization.deleteTemplateConfirmMessage, templateName),
                 onDeleteCompleted = function (json) {
                     try {
                         if (json.Success && $.isFunction(onDeleteCallback)) {
@@ -177,13 +173,13 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
         };
 
         /**
-        * Opens dialog for editing widget options 
+        * Opens dialog for editing template options 
         */
         template.configureWidget = function (pageContentId, onSaveCallback) {
             modal.open({
-                title: globalization.editPageWidgetOptionsTitle,
+                title: globalization.editTemplateRegionTitle,
                 onLoad: function (dialog) {
-                    var url = $.format(links.loadPageContentOptionsDialogUrl, pageContentId);
+                    var url = $.format(links.loadTemplateRegionDialogUrl, pageContentId);
                     dynamicContent.bindDialog(dialog, url, {
                         contentAvailable: function (contentDialog) {
                             editor.initialize(contentDialog.container, {});
@@ -200,26 +196,25 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
         };
 
         /**
-        * Opens site settings widgets list dialog
+        * Opens site settings template list dialog
         */
         template.loadSiteSettingsTemplateList = function () {
             dynamicContent.bindSiteSettings(siteSettings, links.loadSiteSettingsTemplateListUrl, {
-                contentAvailable: initializeSiteSettingsWidgetsList
+                contentAvailable: initializeTemplatesList
             });
         };
 
         /**
-        * Initializes site settings widgets list and list items
+        * Initializes site settings template list and list items
         */
-        function initializeSiteSettingsWidgetsList() {
+        function initializeTemplatesList() {
             var dialog = siteSettings.getModalDialog(),
                 container = dialog.container,
                 onTemplateCreated = function (json) {
-                    alert("cia");
                     if (json.Success && json.Data != null) {
                         var rowtemplate = $(selectors.templateRowTemplate),
                             newRow = $(rowtemplate.html()).find(selectors.templateRowTemplateFirstRow);
-                        setWidgetFields(newRow, json);
+                        setTemplateFields(newRow, json);
                         newRow.insertBefore($(selectors.templateTableFirstRow, container));
                         initializeTemplateListEvents(newRow);
                         grid.showHideEmptyRow(container);
@@ -229,17 +224,17 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
             var form = dialog.container.find(selectors.templatesListForm);
             grid.bindGridForm(form, function (data) {
                 siteSettings.setContent(data);
-                template.initializeSiteSettingsWidgetsList(data);
+                initializeTemplatesList();
             });
 
             form.on('submit', function (event) {
                 event.preventDefault();
-                searchSiteSettingsWidgets(form);
+                searchTemplates(form);
                 return false;
             });
 
-            form.find(selectors.widgetsSearchButton).on('click', function () {
-                searchSiteSettingsWidgets(form);
+            form.find(selectors.templateSearchButton).on('click', function () {
+                searchTemplates(form);
             });
 
             container.find(selectors.templateRegisterButton).on('click', function () {
@@ -250,52 +245,53 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
         };
 
         /**
-        * Search site settings widgets.
+        * Search site settings template.
         */
-        function searchSiteSettingsWidgets(form) {
+        function searchTemplates(form) {
             grid.submitGridForm(form, function (data) {
                 siteSettings.setContent(data);
-                initializeSiteSettingsWidgetsList();
+                initializeTemplatesList();
             });
         };
 
         /**
-        * Initializes site settings widgets list items.
+        * Initializes site settings template list items.
         */
         function initializeTemplateListEvents(container) {
             container.find(selectors.templateRowEditButtons).on('click', function () {
-                editSiteSettingsWidget(container, $(this));
+                editTemplate(container, $(this));
             });
 
-            container.find(selectors.widgetsRowDeleteButtons).on('click', function () {
-                deleteSiteSettingsWidget(container, $(this));
+            container.find(selectors.templatesRowDeleteButtons).on('click', function () {
+                deleteTemplates(container, $(this));
             });
         };
 
         /**
-        * Calls function, which opens dialog for a widget editing.
+        * Calls function, which opens dialog for a template editing.
         */
-        function editSiteSettingsWidget(container, self) {
-            var row = self.parents(selectors.widgetParentRow),
+        function editTemplate(container, self) {
+            var row = self.parents(selectors.templateParentRow),
                 id = row.data('id');
 
-            template.editWidget(id, function (data) {
+            template.editTemplate(id, function (data) {
                 if (data.Data != null) {
-                    setWidgetFields(row, data);
+                    setTemplateFields(row, data);
                     grid.showHideEmptyRow(container);
                 }
             });
         };
 
         /**
-        * Deletes widget from site settings widgets list.
+        * Deletes template from site settings template list.
         */
-        function deleteSiteSettingsWidget(container, self) {
-            var row = self.parents(selectors.widgetParentRow),
+        function deleteTemplates(container, self) {
+            var row = self.parents(selectors.templateParentRow),
                 id = row.data('id'),
+                version = row.data('version'),
                 name = row.find(selectors.templateNameCell).html();
 
-            template.deleteWidget(id, version, name, function (data) {
+            template.deleteTemplate(id, version, name, function (data) {
                 messages.refreshBox(container, data);
                 if (data.Success) {
                     row.remove();
@@ -307,10 +303,10 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
         /**
         * Set values, returned from server to row fields
         */
-        function setWidgetFields(row, json) {
+        function setTemplateFields(row, json) {
             row.data('id', json.Data.Id);
             row.data('version', json.Data.Version);
-            row.find(selectors.templateNameCell).html(json.Data.WidgetName);
+            row.find(selectors.templateNameCell).html(json.Data.TemplateName);
             // row.find(selectors.templateCategoryNameCell).html(json.Data.CategoryName);
         };
 
