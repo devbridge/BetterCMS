@@ -19,5 +19,10 @@ namespace BetterCms.Module.Root.ViewModels.Shared
             AddNewTitle = RootGlobalization.Button_AddNew;
             Columns = new List<EditableGridColumn>();
         }
+
+        public override string ToString()
+        {
+            return string.Format("Columns count: {0}", Columns.Count);
+        }
     }
 }

@@ -1,18 +1,17 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-using BetterCms.Core.Models;
-using BetterCms.Module.MediaManager.ViewModels;
+using BetterCms.Module.Root.Mvc.Grids;
 
-namespace BetterCms.Module.Blog.ViewModels.Author
+namespace BetterCms.Module.MediaManager.ViewModels
 {
-    public class AuthorViewModel : EntityWithImageViewModel
+    public class EntityWithImageViewModel : IEditableGridItem
     {
         /// <summary>
-        /// Gets or sets the author id.
+        /// Gets or sets the entity id.
         /// </summary>
         /// <value>
-        /// The author id.
+        /// The entity id.
         /// </value>
         [Required]
         public virtual Guid Id { get; set; }
@@ -25,16 +24,6 @@ namespace BetterCms.Module.Blog.ViewModels.Author
         /// </value>
         [Required]
         public virtual int Version { get; set; }
-
-        /// <summary>
-        /// Gets or sets the author name.
-        /// </summary>
-        /// <value>
-        /// The author name.
-        /// </value>
-        [Required]
-        [StringLength(MaxLength.Name)]
-        public virtual string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the image id.
@@ -59,5 +48,24 @@ namespace BetterCms.Module.Blog.ViewModels.Author
         /// The thumbnail URL.
         /// </value>
         public virtual string ThumbnailUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the image tooltip.
+        /// </summary>
+        /// <value>
+        /// The image tooltip.
+        /// </value>
+        public virtual string ImageTooltip { get; set; }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format("Id: {0}, Version: {1}, Image: {2}", Id, Version, ImageId);
+        }
     }
 }

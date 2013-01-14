@@ -18,7 +18,8 @@
             <th style="width: 145px;" class="bcms-tables-nohover">&nbsp;</th>
         </tr>
     </thead>
-    <tbody data-bind="foreach: items">
+    <tbody>
+        <!-- ko foreach: items -->
         <tr data-bind="click: onOpen">
             <td><a class="bcms-icn-edit" data-bind="click: onEdit">@RootGlobalization.Button_Edit</a></td>
             @foreach (var column in Model.Columns)
@@ -35,5 +36,11 @@
                 <!-- /ko -->
             </td>
         </tr>
+        <!-- /ko -->
+        <!-- ko if: items().length == 0 -->
+        <tr>
+            <td colspan="@(Model.Columns.Count + 2)">@RootGlobalization.Grid_NoDataAvailable_Message</td>
+        </tr>
+        <!-- /ko -->
     </tbody>
 </table>

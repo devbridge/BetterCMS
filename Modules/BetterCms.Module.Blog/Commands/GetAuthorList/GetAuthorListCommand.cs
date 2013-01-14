@@ -3,6 +3,7 @@
 using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.Blog.ViewModels.Author;
+using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Models;
 
 using BetterCms.Module.Root.Mvc;
@@ -26,25 +27,31 @@ namespace BetterCms.Module.Blog.Commands.GetAuthorList
         {
             SearchableGridViewModel<AuthorViewModel> model;
 
-            request.SetDefaultSortingOptions("Title");
+            request.SetDefaultSortingOptions("Name");
 
             Author alias = null;
             AuthorViewModel modelAlias = null;
+            MediaImage imageAlias = null;
 
             var query = UnitOfWork.Session
                 .QueryOver(() => alias)
+                .Left.JoinQueryOver(() => alias.Image, () => imageAlias)
                 .Where(() => !alias.IsDeleted);
 
             if (!string.IsNullOrWhiteSpace(request.SearchQuery))
             {
                 var searchQuery = string.Format("%{0}%", request.SearchQuery);
-                query = query.Where(Restrictions.InsensitiveLike(Projections.Property(() => alias.DisplayName), searchQuery));
+                query = query.Where(Restrictions.InsensitiveLike(Projections.Property(() => alias.Name), searchQuery));
             }
 
             query = query
                 .SelectList(select => select
                     .Select(() => alias.Id).WithAlias(() => modelAlias.Id)
-                    .Select(() => alias.DisplayName).WithAlias(() => modelAlias.Name)
+                    .Select(() => alias.Name).WithAlias(() => modelAlias.Name)
+                    .Select(() => imageAlias.Id).WithAlias(() => modelAlias.ImageId)
+                    .Select(() => imageAlias.PublicUrl).WithAlias(() => modelAlias.ImageUrl)
+                    .Select(() => imageAlias.PublicThumbnailUrl).WithAlias(() => modelAlias.ThumbnailUrl)
+                    .Select(() => imageAlias.Caption).WithAlias(() => modelAlias.ImageTooltip)
                     .Select(() => alias.Version).WithAlias(() => modelAlias.Version))
                 .TransformUsing(Transformers.AliasToBean<AuthorViewModel>());
 

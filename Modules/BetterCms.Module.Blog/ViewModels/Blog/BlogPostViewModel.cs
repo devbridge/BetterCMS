@@ -4,30 +4,13 @@ using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 using BetterCms.Core.Models;
+using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Root.Models;
 
 namespace BetterCms.Module.Blog.ViewModels.Blog
 {
-    public class BlogPostViewModel
+    public class BlogPostViewModel : EntityWithImageViewModel
     {
-        /// <summary>
-        /// Gets or sets the blog id.
-        /// </summary>
-        /// <value>
-        /// The blog id.
-        /// </value>
-        [Required]
-        public virtual Guid Id { get; set; }
-
-        /// <summary>
-        /// Gets or sets the entity version.
-        /// </summary>
-        /// <value>
-        /// The entity version.
-        /// </value>
-        [Required]
-        public virtual int Version { get; set; }
-
         /// <summary>
         /// Gets or sets the blog title.
         /// </summary>
@@ -88,38 +71,6 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// The cathegory.
         /// </value>
         public virtual Guid? CategoryId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the image id.
-        /// </summary>
-        /// <value>
-        /// The image id.
-        /// </value>
-        public virtual Guid? ImageId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the image URL.
-        /// </summary>
-        /// <value>
-        /// The image URL.
-        /// </value>
-        public virtual string ImageUrl { get; set; }
-
-        /// <summary>
-        /// Gets or sets the thumbnail URL.
-        /// </summary>
-        /// <value>
-        /// The thumbnail URL.
-        /// </value>
-        public virtual string ThumbnailUrl { get; set; }
-
-        /// <summary>
-        /// Gets or sets the image tooltip.
-        /// </summary>
-        /// <value>
-        /// The image tooltip.
-        /// </value>
-        public virtual string ImageTooltip { get; set; }
 
         /// <summary>
         /// Gets or sets the post tags.

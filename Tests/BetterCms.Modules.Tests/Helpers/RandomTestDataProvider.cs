@@ -198,16 +198,8 @@ namespace BetterCms.Tests.Helpers
 
             PopulateBaseFields(entity);
 
-            entity.FirstName = ProvideRandomString(MaxLength.Name);
-            entity.LastName = ProvideRandomString(MaxLength.Name);
-            entity.DisplayName = ProvideRandomString(MaxLength.Name);
-            entity.Title = ProvideRandomString(MaxLength.Name);
-            entity.Email = ProvideRandomString(MaxLength.Email);
-            entity.Twitter = ProvideRandomString(MaxLength.Name);
-            entity.ProfileImageUrl = ProvideRandomString(MaxLength.Url);
-            entity.ProfileThumbnailUrl = ProvideRandomString(MaxLength.Url);
-            entity.ShortDescription = ProvideRandomString(MaxLength.Text);
-            entity.LongDescription = ProvideRandomStringMaxLength();
+            entity.Name = ProvideRandomString(MaxLength.Name);
+            entity.Image = CreateNewMediaImage();
 
             return entity;
         }
