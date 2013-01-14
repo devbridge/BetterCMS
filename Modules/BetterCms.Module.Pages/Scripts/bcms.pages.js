@@ -10,7 +10,7 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
         selectors = {
             editPermalink: '#bcms-addnewpage-editpermalink',
             editPermalinkBox: '.bcms-edit-urlpath-box',
-            editPermalinkClose: 'div.bcms-edit-urlpath-box .bcms-edit-btn-close',
+            editPermalinkClose: 'div.bcms-edit-urlpath-box .bcms-tip-close',
             editPermalinkSave: '#bcms-save-permalink',
             permalinkHiddenField: '#bcms-page-permalink',
             permalinkEditField: '#bcms-page-permalink-edit',
