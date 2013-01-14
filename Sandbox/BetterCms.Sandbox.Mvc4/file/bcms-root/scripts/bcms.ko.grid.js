@@ -93,7 +93,8 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.mod
 
         grid.ListViewModel.prototype.addNewItem = function () {
             var newItem = this.createItem({
-                IsActive: true
+                IsActive: true,
+                IsNew: true
             });
             this.items.unshift(newItem);
         };
@@ -258,6 +259,7 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.mod
             self.hasFocus = ko.observable(true);
             self.hasError = ko.observable(false);
             self.isSelected = false;
+            self.isNew = ko.observable(item.IsNew || false);
             self.registeredFields = [];
             
             self.onOpen = function (data, event) {
@@ -424,6 +426,9 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.mod
                 canSave = url && this.isActive() && this.hasChanges() && this.isValid(),
                 removeFromList = this.isActive() && !this.hasChanges() && !this.id(),
                 keepActive = !this.isValid();
+
+            // Mark item as no new anymore, if trying to save
+            self.isNew(false);
 
             if (!url) {
                 console.log("Save url is not specified");

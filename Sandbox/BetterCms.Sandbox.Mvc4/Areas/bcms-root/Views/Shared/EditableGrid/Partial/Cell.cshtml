@@ -6,7 +6,7 @@
     <!-- /ko -->
     <!-- ko if: isActive() -->
     <input type="text" class="bcms-editor-field-box" data-bind="
-        css: { 'input-validation-error': @(Model.ValueBind).hasError && @(Model.ValueBind).hasError() },
+        css: { 'input-validation-error': !isNew() && @(Model.ValueBind).hasError && @(Model.ValueBind).hasError() },
         value: @Model.ValueBind, 
         valueUpdate: 'afterkeydown', 
         enterPress: onSave, 
