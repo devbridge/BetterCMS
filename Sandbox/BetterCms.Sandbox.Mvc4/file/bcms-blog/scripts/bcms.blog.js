@@ -439,7 +439,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
 
             var self = this;
 
-            self.name = ko.observable();
+            self.name = ko.observable().extend({ required: "" });
             self.image = ko.observable(new AuthorImageViewModel(self));
             self.oldImageId = item.ImageId;
 

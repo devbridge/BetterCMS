@@ -232,6 +232,14 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.mod
             
             self.field(oldValue);
         };
+
+        self.isValid = function () {
+            if (self.field.hasError && self.field.hasError()) {
+                return false;
+            }
+
+            return true;
+        };
     };
         
     /**
@@ -248,6 +256,7 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.mod
             self.version = ko.observable(item.Version);
             self.isActive = ko.observable(item.IsActive || false);
             self.hasFocus = ko.observable(true);
+            self.hasError = ko.observable(false);
             self.isSelected = false;
             self.registeredFields = [];
             
@@ -305,17 +314,14 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.mod
             };
 
             self.isValid = function () {
-                var valid = true;
-                /*for (var i = 0; i < this.registeredFields.length; i++) {
-                    var field = this.registeredFields[i].field;
+                for (var i = 0; i < this.registeredFields.length; i++) {
+                    var field = this.registeredFields[i];
                     
-                    if (field.isValid && $.isFunction(field.isValid)) {
-                        if (!field.isValid()) {
-                            valid = false;
-                        }
+                    if (!field.isValid()) {
+                        return false;
                     }
-                }*/
-                return valid;
+                }
+                return true;
             };
         };
 
@@ -416,7 +422,8 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.mod
             var self = this,
                 url = self.parent.saveUrl,
                 canSave = url && this.isActive() && this.hasChanges() && this.isValid(),
-                removeFromList = this.isActive() && !this.hasChanges() && !this.id();
+                removeFromList = this.isActive() && !this.hasChanges() && !this.id(),
+                keepActive = !this.isValid();
 
             if (!url) {
                 console.log("Save url is not specified");
@@ -452,7 +459,9 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.mod
                         onSaveCompleted(bcms.parseFailedResponse(response));
                     });
             } else {
-                this.isActive(false);
+                if (!keepActive) {
+                    this.isActive(false);
+                }
                 
                 if (removeFromList) {
                     this.parent.items.remove(this);

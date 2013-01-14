@@ -33,7 +33,7 @@ namespace BetterCms.Module.Blog.Controllers
             var response = GetCommand<SaveAuthorCommand>().ExecuteCommand(model);
             if (response != null)
             {
-                if (!model.Id.HasDefaultValue())
+                if (model.Id.HasDefaultValue())
                 {
                     Messages.AddSuccess(BlogGlobalization.CreateAuthor_CreatedSuccessfully_Message);
                 }
