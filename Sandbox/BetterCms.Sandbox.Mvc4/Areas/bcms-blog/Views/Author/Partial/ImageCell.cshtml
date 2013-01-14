@@ -1,0 +1,13 @@
+﻿@model BetterCms.Module.Root.Mvc.Grids.EditableGridColumn
+
+<td @Html.Raw(Model.Attributes)>
+    <div class="bcms-author-picture">
+        <!-- ko if: image().url() -->
+        <a href="#" data-bind="click: image().preview"><img data-bind="attr: {src: image().thumbnailUrl(), alt: image().tooltip() }" /></a>
+        <!-- /ko -->
+    </div>
+
+    <!-- ko if: isActive() -->
+    <div class="bcms-blog-browse-images" data-bind="click: image().select">Browse</div>
+    <!-- /ko -->
+</td>

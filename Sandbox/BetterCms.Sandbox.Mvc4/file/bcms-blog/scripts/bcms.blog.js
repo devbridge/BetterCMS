@@ -53,30 +53,51 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     blog.authorsViewModel = null;
     blog.templatesViewModel = null;
 
+    function ImageViewModel(image) {
+        var self = this;
+        
+        self.id = ko.observable();
+        self.url = ko.observable();
+        self.thumbnailUrl = ko.observable();
+        self.tooltip = ko.observable();
+
+        self.select = function (data, event) {
+            bcms.stopEventPropagation(event);
+            
+            media.openImageInsertDialog(function (insertedImage) {
+                self.thumbnailUrl(insertedImage.thumbnailUrl);
+                self.url(insertedImage.publicUrl());
+                self.tooltip(insertedImage.tooltip);
+                self.id(insertedImage.id());
+            }, false);
+        };
+
+        self.preview = function (data, event) {
+            bcms.stopEventPropagation(event);
+            
+            var previewUrl = self.url();
+            if (previewUrl) {
+                modal.imagePreview(previewUrl, self.tooltip());
+            }
+        };
+
+        self.setImage = function (imageData) {
+            self.thumbnailUrl(imageData.ThumbnailUrl);
+            self.url(imageData.ImageUrl);
+            self.tooltip(imageData.ImageTooltip);
+            self.id(imageData.ImageId);
+        };
+        
+        if (image) {
+            self.setImage(image);
+        }
+    }
+
     function BlogPostViewModel(blogPost, tagsViewModel) {
         var self = this;
 
         self.tags = tagsViewModel;
-        self.imageId = ko.observable(blogPost.ImageId);
-        self.imageUrl = ko.observable(blogPost.ImageUrl);
-        self.thumbnailUrl = ko.observable(blogPost.ThumbnailUrl);
-        self.imageTooltip = ko.observable(blogPost.ImageTooltip);
-
-        self.selectImage = function() {
-            media.openImageInsertDialog(function (imageViewModel) {
-                self.thumbnailUrl(imageViewModel.thumbnailUrl);
-                self.imageUrl(imageViewModel.publicUrl());
-                self.imageTooltip(imageViewModel.tooltip);
-                self.imageId(imageViewModel.id());
-            }, false);
-        };
-
-        self.previewImage = function () {
-            var previewUrl = self.imageUrl();
-            if (previewUrl) {
-                modal.imagePreview(previewUrl, self.imageTooltip());
-            }
-        };
+        self.image = ko.observable(new ImageViewModel(blogPost));
     }
 
     /**
@@ -380,13 +401,14 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
 
             var self = this;
 
-            self.name = ko.observable().extend({ required: true, max: 5 });
-            self.imageId = ko.observable().extend({ required: true, max: 5 });
+            self.name = ko.observable();
+            self.image = ko.observable(new ImageViewModel());
+            self.oldImageId = item.ImageId;
 
-            self.registerFields(self.name, self.imageId);
+            self.registerFields(self.name, self.image().id);
 
             self.name(item.Name);
-            self.imageId(item.ImageId);
+            self.image().setImage(item);
         }
 
         AuthorViewModel.prototype.getDeleteConfirmationMessage = function () {
@@ -398,6 +420,15 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             params.Name = this.name();
 
             return params;
+        };
+
+        AuthorViewModel.prototype.hasChanges = function () {
+            var hasChanges = _super.prototype.hasChanges.call(this);
+            if (!hasChanges) {
+                hasChanges = this.image().id() != this.oldImageId;
+            }
+
+            return hasChanges;
         };
 
         return AuthorViewModel;

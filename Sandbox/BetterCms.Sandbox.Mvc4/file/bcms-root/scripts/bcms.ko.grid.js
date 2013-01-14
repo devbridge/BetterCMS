@@ -215,7 +215,7 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.mod
         self.field.subscribe(function () {
             var oldValue = self.field() ? self.field() : '';
             if (!self.parent.isActive() && oldValue != self.oldValue) {
-                // console.log('Changing value of item ' + id + ' from "' + self.oldValue + '" to "' + oldValue + '"');
+                console.log('Changing value of item ' + id + ' from "' + self.oldValue + '" to "' + oldValue + '"');
                 self.oldValue = oldValue;
             }
         });
@@ -294,17 +294,6 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.mod
                     }
                 }
             };
-            
-            self.hasChanges = function () {
-                for (var i = 0; i < this.registeredFields.length; i++) {
-                    var field = this.registeredFields[i];
-
-                    if (field.hasChanges()) {
-                        return true;
-                    }
-                }
-                return false;
-            };
 
             self.restoreOldValues = function () {
                 for (var i = 0; i < this.registeredFields.length; i++) {
@@ -327,6 +316,17 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.mod
                 }*/
                 return valid;
             };
+        };
+
+        grid.ItemViewModel.prototype.hasChanges = function () {
+            for (var i = 0; i < this.registeredFields.length; i++) {
+                var field = this.registeredFields[i];
+
+                if (field.hasChanges()) {
+                    return true;
+                }
+            }
+            return false;
         };
 
         grid.ItemViewModel.prototype.blurField = function() {

@@ -10,7 +10,8 @@
             {
                 new EditableGridColumn(BlogGlobalization.SiteSettings_AuthorsTab_AuthorImage_Title, "", "imageId")
                     {
-                        HeaderAttributes = "style=\"width: 105px;\""
+                        HeaderAttributes = "style=\"width: 105px;\"",
+                        CellView = "Partial/ImageCell"
                     },
                     
                 new EditableGridColumn(BlogGlobalization.SiteSettings_AuthorsTab_AuthorName_Title, "DisplayName", "name")
