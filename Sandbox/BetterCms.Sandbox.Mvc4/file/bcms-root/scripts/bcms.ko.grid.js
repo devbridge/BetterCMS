@@ -215,7 +215,7 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.mod
         self.field.subscribe(function () {
             var oldValue = self.field() ? self.field() : '';
             if (!self.parent.isActive() && oldValue != self.oldValue) {
-                console.log('Changing value of item ' + id + ' from "' + self.oldValue + '" to "' + oldValue + '"');
+                // console.log('Changing value of item ' + id + ' from "' + self.oldValue + '" to "' + oldValue + '"');
                 self.oldValue = oldValue;
             }
         });
@@ -340,6 +340,7 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.mod
 
         grid.ItemViewModel.prototype.editItem = function () {
             this.isActive(true);
+            this.hasFocus(true);
         };
 
         grid.ItemViewModel.prototype.cancelOrSaveItem = function () {
