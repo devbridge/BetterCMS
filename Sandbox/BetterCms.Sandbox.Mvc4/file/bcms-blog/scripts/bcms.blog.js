@@ -444,7 +444,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             self.image = ko.observable(new AuthorImageViewModel(self));
             self.oldImageId = item.ImageId;
 
-            self.registerFields(self.name, self.image().id);
+            self.registerFields(self.name, self.image().id, self.image().url, self.image().thumbnailUrl, self.image().tooltip);
 
             self.name(item.Name);
             self.image().setImage(item);
@@ -469,6 +469,12 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             }
 
             return hasChanges;
+        };
+
+        AuthorViewModel.prototype.onAfterItemSaved = function (json) {
+            _super.prototype.onAfterItemSaved.call(this, json);
+
+            this.oldImageId = this.image().id();
         };
 
         return AuthorViewModel;

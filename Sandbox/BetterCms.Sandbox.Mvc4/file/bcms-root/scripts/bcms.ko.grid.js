@@ -435,20 +435,7 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.mod
             }
 
             if (canSave) {
-                var onSaveCompleted = function(json) {
-                        if (self.parent.container) {
-                            messages.refreshBox(self.parent.container, json);
-                        }
-
-                        if (json.Success) {
-                            if (json.Data) {
-                                self.version(json.Data.Version);
-                                self.id(json.Data.Id);
-                            }
-                            self.isActive(false);
-                        }
-                    },
-                    params = self.getSaveParams();
+                var params = self.getSaveParams();
 
                 $.ajax({
                     url: url,
@@ -458,10 +445,10 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.mod
                     data: params
                 })
                     .done(function(json) {
-                        onSaveCompleted(json);
+                        self.onAfterItemSaved(json);
                     })
                     .fail(function(response) {
-                        onSaveCompleted(bcms.parseFailedResponse(response));
+                        self.onAfterItemSaved(bcms.parseFailedResponse(response));
                     });
             } else {
                 if (!keepActive) {
@@ -470,6 +457,28 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.mod
                 
                 if (removeFromList) {
                     this.parent.items.remove(this);
+                }
+            }
+        };
+
+        grid.ItemViewModel.prototype.onAfterItemSaved = function (json) {
+            var self = this;
+
+            if (self.parent.container) {
+                messages.refreshBox(self.parent.container, json);
+            }
+
+            if (json.Success) {
+                if (json.Data) {
+                    self.version(json.Data.Version);
+                    self.id(json.Data.Id);
+                }
+                self.isActive(false);
+                
+                for (var i = 0; i < this.registeredFields.length; i++) {
+                    var field = this.registeredFields[i];
+
+                    field.oldValue = field.field() || '';
                 }
             }
         };
