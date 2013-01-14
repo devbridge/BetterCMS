@@ -39,18 +39,34 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                 NHibernate.Criterion.Projections.SqlFunction("lower", NHibernateUtil.String, NHibernate.Criterion.Projections.Property(() => pageAlias.PageUrl)),
                 request.VirtualPath.ToLowerInvariant());
 
-            var page =
-                UnitOfWork.Session.QueryOver(() => pageAlias)
-                          .Where(pageFilter)
-                          .Fetch(f => f.Layout).Eager
-                          .Fetch(f => f.Layout.LayoutRegions).Eager
-                          .Fetch(f => f.Layout.LayoutRegions[0].Region).Eager
-                          .Fetch(f => f.PageContents).Eager
-                          .Fetch(f => f.PageContents[0].Content).Eager
-                          .Fetch(f => f.PageContents[0].Options).Eager
-                          .Fetch(f => f.PageContents[0].Options[0].ContentOption).Eager
-                          .SingleOrDefault();
 
+            Page page;
+            if (request.PreviewPageContentId == null)
+            {
+                page = UnitOfWork.Session.QueryOver(() => pageAlias)
+                              .Where(pageFilter)
+                              .Fetch(f => f.Layout)
+                              .Eager.Fetch(f => f.Layout.LayoutRegions)
+                              .Eager.Fetch(f => f.Layout.LayoutRegions[0].Region)
+                              .Eager.Fetch(f => f.PageContents)
+                              .Eager.Fetch(f => f.PageContents[0].Content)
+                              .Eager.Fetch(f => f.PageContents[0].Options)
+                              .Eager.Fetch(f => f.PageContents[0].Options[0].ContentOption)
+                              .Eager.SingleOrDefault();
+            }
+            else
+            {
+                page = UnitOfWork.Session.QueryOver(() => pageAlias)
+                              .Where(pageFilter)
+                              .Fetch(f => f.Layout)
+                              .Eager.Fetch(f => f.Layout.LayoutRegions)
+                              .Eager.Fetch(f => f.Layout.LayoutRegions[0].Region)
+                              .Eager.Fetch(f => f.PageContents)
+                              .Eager.Fetch(f => f.PageContents[0].Content)
+                              .Eager.Fetch(f => f.PageContents[0].Options)
+                              .Eager.Fetch(f => f.PageContents[0].Options[0].ContentOption)
+                              .Eager.SingleOrDefault();
+            }
             if (page == null)
             {
                 var redirect = pageAccessor.GetRedirect(request.VirtualPath);

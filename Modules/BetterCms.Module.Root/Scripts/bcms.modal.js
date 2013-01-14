@@ -72,13 +72,15 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'knockout'], function ($, b
     */
     function ButtonViewModel(title, css, order, onClickCallback) {
         var self = this;
+        
+        self.dialog = null;
         self.order = order || 0;
         self.title = ko.observable(title || '');
         self.css = ko.observable(css || '');
-        self.disabled = ko.observable(false);
+        self.disabled = ko.observable(false);        
         self.click = function () {
             if (onClickCallback && $.isFunction(onClickCallback)) {
-                onClickCallback(self);
+                onClickCallback(self.dialog, self);
             }
         };
     }
@@ -190,7 +192,9 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'knockout'], function ($, b
         
         if (options.buttons && options.buttons.length > 0) {
             for (var i = 0; i < options.buttons.length; i++) {
-                model.buttons.push(options.buttons[i]);
+                var button = options.buttons[i];
+                button.dialog = this;
+                model.buttons.push(button);
             }
         }
         model.buttons.sort(function (left, right) {

@@ -32,8 +32,9 @@ define('bcms.messages', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, mod
     /**
     * Messages box instance constructor.
     */
+
     function MessagesBox(options) {
-        var container;
+        var container = null;
 
         this.options = $.extend({
             container: null,
@@ -44,17 +45,22 @@ define('bcms.messages', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, mod
         }, options);
 
         if (options.container) {
-            if (options.container instanceof $) {
-                container = options.container.find(selectors.messages);
-            } else {
-                container = $(options.container).find(selectors.messages);
-            }
+            var parentContainer = options.container;
+            do {
+                if (options.container instanceof $) {
+                    container = parentContainer.find(selectors.messages);
+                } else {
+                    container = $(parentContainer).find(selectors.messages);
+                }
+                if (container.length === 0) {
+                    parentContainer = parentContainer.parent();
+                }
+            } while (container.length === 0 && parentContainer.length !== 0);
         } else if (options.containerId) {
             container = $('#' + options.containerId).find(selectors.messages);
         } else if (options.messageBoxId) {
             container = $('#' + options.messageBoxId);
-        }
-        else {
+        } else {
             container = $(selectors.messages);
         }
 

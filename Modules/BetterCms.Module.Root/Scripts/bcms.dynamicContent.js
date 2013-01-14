@@ -103,6 +103,7 @@ define('bcms.dynamicContent', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bc
                         options.beforeSubmit(form);
                     }
                 },
+                
                 success: function (json) {
                     if ($.isFunction(options.success)) {
                         if (options.success(json, dialog) !== false) {
@@ -127,8 +128,17 @@ define('bcms.dynamicContent', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bc
             });
         });
 
-        dialog.options.onAcceptClick = function () {
+        dialog.submitForm = function() {
             dialogForm.submit();
+        };
+        
+        var oldOnAcceptClick = dialog.options.onAcceptClick;
+        dialog.options.onAcceptClick = function () {
+            if ($.isFunction(oldOnAcceptClick)) {
+                oldOnAcceptClick(dialog);
+            }
+
+            dialog.submitForm();
             return false;
         };
     };

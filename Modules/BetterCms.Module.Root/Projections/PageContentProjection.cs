@@ -2,6 +2,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Web.Mvc;
 
+using BetterCms.Core.Models;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Root.Models;
 
@@ -10,10 +11,10 @@ namespace BetterCms.Module.Root.Projections
     [Serializable]
     public class PageContentProjection : IStylesheetAccessor, IHtmlAccessor, IJavaScriptAccessor, ISerializable
     {
-        private readonly PageContent pageContent;
+        private readonly IPageContent pageContent;
         private readonly IContentAccessor contentAccessor;
 
-        public PageContentProjection(PageContent pageContent, IContentAccessor contentAccessor)
+        public PageContentProjection(IPageContent pageContent, IContentAccessor contentAccessor)
         {
             this.pageContent = pageContent;
             this.contentAccessor = contentAccessor;

@@ -23,7 +23,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// <returns>
         /// Html string with rendered messages box.
         /// </returns>
-        public static IHtmlString MessagesBox(this HtmlHelper html, string id, IDictionary<string, string> attributes = null)
+        public static IHtmlString MessagesBox(this HtmlHelper html, string id = null, IDictionary<string, string> attributes = null)
         {
             CmsControllerBase controller = html.ViewContext.Controller as CmsControllerBase;
             if (controller == null)

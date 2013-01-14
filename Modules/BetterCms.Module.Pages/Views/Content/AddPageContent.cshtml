@@ -17,10 +17,10 @@
             
         <div id="bcms-tab-1" class="bcms-tab-single">
             @using (Html.BeginForm<ContentController>(c => c.AddPageContent(null), FormMethod.Post, new { @id = "bcms-content-form", @class = "bcms-ajax-form" }))
-            {
+            {                
                 @Html.HiddenFor(model => model.PageId)
-                @Html.HiddenFor(model => model.RegionId, new { @id = "AddContentToRegionId" })
-                //@Html.HiddenFor(modal => modal.)
+                @Html.HiddenFor(model => model.RegionId, new { @id = "bcmsAddContentToRegionId" })
+                @Html.HiddenFor(modal => modal.DesirableStatus, new { @id = "bcmsAddContentDesirableStatus"})
                 @Html.Partial("Partial/EditRegularContent", Model)
             }
         </div>

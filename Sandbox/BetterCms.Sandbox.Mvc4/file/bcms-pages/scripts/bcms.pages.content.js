@@ -6,36 +6,15 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
         'use strict';
 
         var pagesContent = {},
-            links = {
-                loadWidgetsUrl: null,                
-                loadAddNewHtmlContentDialogUrl: null,                
-                insertContentToPageUrl: null,
-                deletePageContentUrl: null,
-                editPageContentUrl: null,
-                sortPageContentUrl: null,
-                previewPageUrl: null
-            },
-            globalization = {
-                addNewContentDialogTitle: null,
-                editContentDialogTitle: null,
-                deleteContentConfirmationTitle: null,
-                deleteContentConfirmationMessage: null,
-                deleteContentSuccessMessageTitle: null,
-                deleteContentSuccessMessageMessage: null,
-                deleteContentFailureMessageTitle: null,
-                deleteContentFailureMessageMessage: null,
-                sortPageContentFailureMessageTitle: null,
-                sortPageContentFailureMessageMessage: null,
-            },
             selectors = {
                 sliderBoxes: '.bcms-slider-box',
                 sliderContainer: 'bcms-slides-container',
-                
-                contentFormRegionId: '#AddContentToRegionId',
-                
+
+                contentFormRegionId: '#bcmsAddContentToRegionId',
+                desirableStatus: '#bcmsAddContentDesirableStatus',
                 dataPickers: '.bcms-datepicker',
                 htmlEditor: 'bcms-contenthtml',
-                
+
                 widgetsSearchButton: '#bcms-advanced-content-search-btn',
                 widgetsSearchInput: '#bcms-advanced-content-search',
                 widgetsContainer: '#bcms-advanced-contents-container',
@@ -46,24 +25,59 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                 widgetContainerBlock: '.bcms-preview-block',
                 widgetCategory: '.bcms-category',
                 widgetName: '.bcms-title-holder > .bcms-content-titles',
-                
+
                 widgetsContent: '.bcms-widgets',
-                
+
                 overlayEdit: '.bcms-content-edit',
                 overlayConfigure: '.bcms-content-configure',
                 overlay: '.bcms-content-overlay',
                 
-                insertingWidgetInfoMessage: null,
-                insertingWidgetInfoHeader: null,
-                insertingWidgetErrorMessage: null,
-                errorTitle: null,
+
             },
+            
             classes = {
                 sliderPrev: 'bcms-slider-prev',
                 sliderNext: 'bcms-slider-next',
                 regionContent: 'bcms-content-regular',
                 regionAdvancedContent: 'bcms-content-advanced',
-                regionWidget: 'bcms-content-widget'
+                regionWidget: 'bcms-content-widget',
+                grayButton: 'bcms-btn-small bcms-btn-gray'
+            },
+            
+            links = {
+                loadWidgetsUrl: null,
+                loadAddNewHtmlContentDialogUrl: null,
+                insertContentToPageUrl: null,
+                deletePageContentUrl: null,
+                editPageContentUrl: null,
+                sortPageContentUrl: null,
+                previewPageUrl: null
+            },
+
+            globalization = {
+                saveDraft: null,
+                saveAndPublish: null,
+                preview: null,
+                addNewContentDialogTitle: null,
+                editContentDialogTitle: null,
+                deleteContentConfirmationTitle: null,
+                deleteContentConfirmationMessage: null,
+                deleteContentSuccessMessageTitle: null,
+                deleteContentSuccessMessageMessage: null,
+                deleteContentFailureMessageTitle: null,
+                deleteContentFailureMessageMessage: null,
+                sortPageContentFailureMessageTitle: null,
+                sortPageContentFailureMessageMessage: null,
+                errorTitle: null,                
+                insertingWidgetInfoMessage: null,
+                insertingWidgetInfoHeader: null,
+                insertingWidgetErrorMessage: null                
+            },
+            
+            contentStatus = {
+                published: 'Published',
+                draft: 'Draft',
+                preview: 'Preview'
             };
 
         /**
@@ -76,17 +90,29 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
         * Open dialog with add new content form
         */
         pagesContent.onAddNewContent = function(regionId) {
-            var extraButtons = [];
+            var extraButtons = [],
+                changeContentDesirableStatus = function(dialog, status) {
+                    dialog.container.find(selectors.desirableStatus).val(status);                    
+                },
+                saveAndPublishButton = new modal.button(globalization.saveAndPublish, classes.grayButton, 2, function(dialog) {
+                    changeContentDesirableStatus(dialog, contentStatus.published);
+                    dialog.submitForm();
+                }),
+                saveDraftButton = new modal.button(globalization.preview, classes.grayButton, 3, function(dialog) {
+                    changeContentDesirableStatus(dialog, contentStatus.preview);
+                    dialog.submitForm();
+                });
             
-            extraButtons.push(new modal.button('Save & Publish', 'bcms-btn-small bcms-btn-gray', 2));
-            extraButtons.push(new modal.button('Preview', 'bcms-btn-small bcms-btn-gray', 3, function () {
-                window.open('http://www.pageresource.com/jscript/jex5.htm', 'mywindow', 'width=400,height=200,toolbar=yes, location=yes,directories=yes,status=yes,menubar=yes,scrollbars=yes,copyhistory=yes, resizable=yes');
-            }));
+            extraButtons.push(saveDraftButton);            
+            extraButtons.push(saveAndPublishButton);
             
             modal.open({
                 buttons: extraButtons,
-                acceptTitle: 'Save Draft',
+                acceptTitle: globalization.saveDraft,
                 title: globalization.addNewContentDialogTitle,
+                onAcceptClick: function (dialog) {
+                    changeContentDesirableStatus(dialog, contentStatus.draft);
+                },
                 onLoad: function(dialog) {
                     var url = $.format(links.loadAddNewHtmlContentDialogUrl, bcms.pageId, regionId);
                     dynamicContent.bindDialog(dialog, url, {
@@ -96,13 +122,22 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                             htmlEditor.updateEditorContent();
                         },
 
-                        postSuccess: function() {
-                            bcms.reload();
+                        postSuccess: function (json) {                            
+                            if (json.desirableStatus === contentStatus.preview) {
+                                openPreviewPageContentWindow(json.Data.PageContentId);
+                            } else {
+                                bcms.reload();
+                            }                            
                         }
                     });
                 }
             });
         };
+
+        function openPreviewPageContentWindow(pageContentId) {
+            var link = $.format(links.previewPageUrl, bcms.pageId);
+            window.open(link, bcms.previewWindow, 'toolbar=yes,location=yes,directories=yes,status=yes,menubar=yes,scrollbars=yes,copyhistory=yes,resizable=yes');
+        }
 
         /**
         * Save content order after sorting.
