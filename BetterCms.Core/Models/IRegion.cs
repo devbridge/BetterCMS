@@ -1,13 +1,11 @@
-﻿using System;
-
-namespace BetterCms.Core.Models
+﻿namespace BetterCms.Core.Models
 {
     /// <summary>
     /// Defines interface to access basic content properties.
     /// </summary>
     public interface IRegion : IEntity
     {
-        string Name { get; }
+        string Description { get; }
 
         string RegionIdentifier { get; }
     }
