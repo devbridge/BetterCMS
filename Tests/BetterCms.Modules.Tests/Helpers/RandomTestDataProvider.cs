@@ -408,19 +408,6 @@ namespace BetterCms.Tests.Helpers
             return entity;
         }
 
-        public SiteSetting CreateNewSiteSettings()
-        {
-            var entity = new SiteSetting();
-
-            PopulateBaseFields(entity);
-
-            entity.Name = ProvideRandomString(MaxLength.Name);
-            entity.Url = ProvideRandomString(MaxLength.Url);
-            entity.ImagePath = ProvideRandomString(MaxLength.Url);
-
-            return entity;
-        }
-
         public Widget CreateNewWidget(Category category = null)
         {
             var entity = new Widget();

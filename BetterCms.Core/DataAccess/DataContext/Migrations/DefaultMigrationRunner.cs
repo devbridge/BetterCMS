@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
+using System.Transactions;
 
 using BetterCms.Core.Environment.Assemblies;
 using BetterCms.Core.Modules;
@@ -60,38 +61,53 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
         /// </summary>
         public void Migrate(IList<ModuleDescriptor> moduleDescriptors, bool up)
         {
-            List<Tuple<long, ModuleDescriptor>> versions = new List<Tuple<long, ModuleDescriptor>>();
+            IList<long> versions = new List<long>();
+            IDictionary<ModuleDescriptor, IList<Type>> moduleWithMigrations = new Dictionary<ModuleDescriptor, IList<Type>>();
 
             foreach (var moduleDescriptor in moduleDescriptors)
             {
                 var migrationTypes = assemblyLoader.GetLoadableTypes(moduleDescriptor.GetType().Assembly, typeof(Migration));
-                foreach (var migrationType in migrationTypes)
-                {                  
-                  var migrationAttributes = migrationType.GetCustomAttributes(typeof(MigrationAttribute), true);
-                    if (migrationAttributes.Length > 0)
+                if (migrationTypes != null)
+                {
+                    var types = migrationTypes as IList<Type> ?? migrationTypes.ToList();
+                    moduleWithMigrations.Add(moduleDescriptor, types);
+
+                    foreach (var migrationType in types)
                     {
-                        var attribute = migrationAttributes[0] as MigrationAttribute;
-                        if (attribute != null)
+                        var migrationAttributes = migrationType.GetCustomAttributes(typeof(MigrationAttribute), true);
+                        if (migrationAttributes.Length > 0)
                         {
-                            versions.Add(new Tuple<long, ModuleDescriptor>(attribute.Version, moduleDescriptor));
+                            var attribute = migrationAttributes[0] as MigrationAttribute;
+                            if (attribute != null)
+                            {
+                                versions.Add(attribute.Version);
+                            }
                         }
                     }
-                }        
+                }
             }
 
             if (up)
             {
-                versions = versions.OrderBy(f => f.Item1).ThenByDescending(f => f.Item2.Order).ToList();
+                versions = versions.OrderBy(f => f).ToList();
             }
             else
             {
-                versions = versions.OrderByDescending(f => f.).ThenBy(f => f.Value.Order).ToList();
+                versions.Add(0);
+                versions = versions.OrderByDescending(f => f).ToList();
             }
 
-            foreach (var version in versions)
-            {
-                Migrate(version.Value, up, version.Key);
-            }
+            //using (var transactionScope = new TransactionScope())
+            //{
+                foreach (var version in versions)
+                {
+                    foreach (var moduleWithMigration in moduleWithMigrations)
+                    {
+                        Migrate(moduleWithMigration.Key, moduleWithMigration.Value, up, version);
+                    }                    
+                }
+             //   transactionScope.Complete();
+            //}
         }
 
         /// <summary>
@@ -99,7 +115,7 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
         /// </summary>
         /// <param name="moduleDescriptor">The module descriptor.</param>        
         /// <param name="up">if set to <c>true</c> migrates up; otherwise migrates down.</param>
-        public void Migrate(ModuleDescriptor moduleDescriptor, bool up = true, long? version = null)
+        public void Migrate(ModuleDescriptor moduleDescriptor, IEnumerable<Type> migrationTypes = null, bool up = true, long? version = null)
         {
             var announcer = new TextWriterAnnouncer(
                 s =>
@@ -112,9 +128,12 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
 
             var assembly = moduleDescriptor.GetType().Assembly;
 
-            var migrationTypes = assemblyLoader.GetLoadableTypes(assembly, typeof(Migration)).ToList();
+            if (migrationTypes == null)
+            {
+                migrationTypes = assemblyLoader.GetLoadableTypes(assembly, typeof(Migration));
+            }
 
-            if (!migrationTypes.Any())
+            if (migrationTypes == null || !migrationTypes.Any())
             {
                 Log.Info(string.Concat("Migration on ", moduleDescriptor.Name, ". No migrations found."));
                 return;

@@ -40,23 +40,9 @@ namespace BetterCms.Sandbox.DataMigration
         }
 
         private static void Migrate(bool up)
-        {
-            if (up)
-            {
-                descriptors = descriptors.OrderByDescending(f => f.Order).ToList();
-            }
-            else
-            {
-                descriptors = descriptors.OrderBy(f => f.Order).ToList();
-            }
-
+        {            
             DefaultMigrationRunner runner = new DefaultMigrationRunner(new DefaultAssemblyLoader());
-            runner.Migrate(descriptors, true);
-            
-            foreach (var descriptor in descriptors)
-            {
-                //runner.Migrate(descriptor, up);                
-            }            
+            runner.Migrate(descriptors, up);
         }
 
         private static void Main(string[] args)

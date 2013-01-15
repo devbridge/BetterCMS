@@ -36,11 +36,14 @@ namespace BetterCms.Core.Environment.Host
         /// <summary>
         ///
         /// </summary>
-        private IModulesRegistration modulesRegistration;
+        private readonly IModulesRegistration modulesRegistration;
 
-        public DefaultCmsHost(IModulesRegistration modulesRegistration)
+        private readonly IMigrationRunner migrationRunner;
+
+        public DefaultCmsHost(IModulesRegistration modulesRegistration, IMigrationRunner migrationRunner)
         {
             this.modulesRegistration = modulesRegistration;
+            this.migrationRunner = migrationRunner;
         }
 
         /// <summary>
@@ -226,16 +229,8 @@ namespace BetterCms.Core.Environment.Host
         {
             try
             {
-                var descriptors = modulesRegistration.GetModules().Select(m => m.ModuleDescriptor).ToList();
-
-                descriptors = descriptors.OrderByDescending(f => f.Order).ToList();                    
-
-                DefaultMigrationRunner runner = new DefaultMigrationRunner(new DefaultAssemblyLoader());
-
-                foreach (var descriptor in descriptors)
-                {
-                    runner.Migrate(descriptor, true);
-                }
+                var descriptors = modulesRegistration.GetModules().Select(m => m.ModuleDescriptor).ToList();                
+                migrationRunner.Migrate(descriptors, true);
             }
             catch (Exception ex)
             {

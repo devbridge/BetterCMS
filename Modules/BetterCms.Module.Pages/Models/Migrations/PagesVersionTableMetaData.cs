@@ -3,7 +3,7 @@
 namespace BetterCms.Module.Pages.Models.Migrations
 {
     [VersionTableMetaData]
-    public class BlogVersionTableMetaData : IVersionTableMetaData
+    public class PagesVersionTableMetaData : IVersionTableMetaData
     {
         public string SchemaName
         {

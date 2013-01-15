@@ -48,7 +48,7 @@ namespace BetterCms.Module.Blog
         }
 
         /// <summary>
-        /// Gets the module escription.
+        /// Gets the module description.
         /// </summary>
         /// <value>
         /// The module description.
