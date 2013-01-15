@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
@@ -121,11 +122,9 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             blogPost.Description = request.IntroText;
             blogPost.Version = request.Version;
 
-            // TODO
             if (isNew)
             {
-                // TODO: generate?
-                blogPost.PageUrl = "/" + Guid.NewGuid().ToString() + "/";
+                blogPost.PageUrl = GeneratePageUrl(request.Title);
                 blogPost.IsPublished = true;
                 blogPost.PublishedOn = DateTime.Now;
                 blogPost.IsPublic = true;
@@ -190,6 +189,36 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                            CreatedOn = blogPost.CreatedOn.ToFormattedDateString(),
                            IsPublished = blogPost.IsPublished
                        };
+        }
+
+        /// <summary>
+        /// Generates the page URL.
+        /// </summary>
+        /// <returns>Generated page Url</returns>
+        private string GeneratePageUrl(string title)
+        {
+            var url = title.ToLowerInvariant();
+
+            var rgx = new Regex("[^\\w ]");
+            url = rgx.Replace(url, "").Trim();
+
+            rgx = new Regex("[ ]");
+            url = rgx.Replace(url, "-");
+
+            var fullUrl = string.Format("/{0}/", url);
+
+            // Check, if such record exists
+            var exists = UnitOfWork.Session
+                .QueryOver<Page>()
+                .Where(p => !p.IsDeleted && p.PageUrl == fullUrl)
+                .Select(p => p.Id)
+                .RowCount();
+            if (exists > 0)
+            {
+                fullUrl = string.Format("/{0}-{1}/", url, DateTime.Now.ToString("yyMMdd-hhmmss"));
+            }
+
+            return fullUrl;
         }
 
         /// <summary>
