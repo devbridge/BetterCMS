@@ -8,6 +8,8 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         var sitemap = {},
             selectors = {
                 templateDataBind: ".bcms-sitemap-data-bind-container",
+                sitemapForm: "#bcms-sitemap-form",
+                sitemapNodeSearchButton: "#bcms-btn-sitemap-search",
             },
             links = {
                 loadSiteSettingsSitemapUrl: null,
@@ -242,19 +244,47 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         }
 
         /**
+        * Search sitemap node.
+        */
+        function searchSitemapNodes(form) {
+            $.ajax({
+                type: 'POST',
+                cache: false,
+                url: form.attr('action'),
+                data: form.serialize(),
+
+                success: function (data) {
+                    siteSettings.setContent(data.Data.Html);
+                    initializeSiteSettingsSitemap(data);
+                }
+            });
+
+        }
+
+        /**
         * Attach links to actions.
         */
         function attachEvents(container) {
-            var form = container.find(selectors.firstForm);
+            var form = container.find(selectors.sitemapForm);
             if ($.validator && $.validator.unobtrusive) {
                 form.removeData("validator");
                 form.removeData("unobtrusiveValidation");
                 $.validator.unobtrusive.parse(form);
             }
+            
+            form.on('submit', function (event) {
+                bcms.stopEventPropagation(event);
+                searchSitemapNodes(form);
+                return false;
+            });
+
+            form.find(selectors.sitemapNodeSearchButton).on('click', function () {
+                searchSitemapNodes(form);
+            });
         }
 
         /**
-        * Initializes tab, when data is loaded
+        * Initializes tab, when data is loaded.
         */
         function initializeSiteMap(json, sitemapViewModel) {
             var context = sitemapViewModel.container.find(selectors.templateDataBind).get(0);
@@ -276,7 +306,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             
             initializeSiteMap(content.Data.Data, sitemapViewModel);
         }
-
+        
         /**
         * Sortable binding to handle node ordering.
         */
