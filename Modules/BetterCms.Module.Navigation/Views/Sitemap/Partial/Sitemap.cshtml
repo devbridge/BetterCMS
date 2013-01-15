@@ -18,7 +18,7 @@
 
 <script type="text/html" id="bcms-navigation-sitemapnode-template">
     <div>
-        <div class="bcms-placement-node" data-bind="css: {'bcms-placement-node-edit': isActive()}">
+        <div class="bcms-placement-node" data-bind="attr: { id: containerId() }, css: {'bcms-placement-node-edit': isActive()}">
             <!-- ko if: hasChildNodes() -->
             <a class="bcms-expand-collapse-node" data-bind="click: expandOrCollapseChildNodes, css: {'bcms-expanded-nodes': isExpanded()}">&nbsp;</a>
             <!-- /ko -->
