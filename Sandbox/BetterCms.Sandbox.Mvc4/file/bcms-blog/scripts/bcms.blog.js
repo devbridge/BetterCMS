@@ -466,6 +466,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
 
         self.templates = ko.observableArray();
         self.templateRows = ko.observableArray();
+        self.searchQuery = ko.observable();
         
         if (templates != null) {
             for (var i = 0; i < templates.length; i++) {
@@ -474,22 +475,33 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             }
         }
 
-        self.fillTemplateRows = function() {
-            var rows = ko.observableArray(),
-                row = new TemplateRowViewModel();
+        self.fillTemplateRows = function () {
+            self.templateRows.removeAll();
+
+            var row = new TemplateRowViewModel(),
+                query = (self.searchQuery() || '').toLowerCase(),
+                items = 0;
 
             for (var j = 0; j < self.templates().length; j++) {
-                if (j == 0 || j % 3 == 0) {
-                    row = new TemplateRowViewModel();
-                    rows.push(row);
+                var currentTemplate = self.templates()[j];
+                if (query && currentTemplate.title.toLowerCase().indexOf(query) < 0) {
+                    continue;
                 }
 
-                row.templates.push(self.templates()[j]);
-            }
+                if (items == 0 || items % 3 == 0) {
+                    row = new TemplateRowViewModel();
+                    self.templateRows.push(row);
+                }
 
-            self.templateRows = rows;
+                items++;
+                row.templates.push(currentTemplate);
+            }
         };
-        
+
+        self.search = function() {
+            self.fillTemplateRows();
+        };
+
         self.fillTemplateRows();
     }
 

@@ -9,8 +9,8 @@
     <div class="bcms-top-block-holder">
         <div class="bcms-large-titles">@BlogGlobalization.SiteSettings_Templates_Title</div>
         <div class="bcms-search-block">
-            <input type="text" class="bcms-editor-field-box" placeholder="@RootGlobalization.WaterMark_Search">
-            <div class="bcms-btn-search">@RootGlobalization.Button_Search</div>
+            <input type="text" class="bcms-editor-field-box" placeholder="@RootGlobalization.WaterMark_Search" data-bind="value: searchQuery, valueUpdate: 'afterkeydown', enterPress: search">
+            <div class="bcms-btn-search" data-bind="click: search">@RootGlobalization.Button_Search</div>
         </div>
     </div>
 
