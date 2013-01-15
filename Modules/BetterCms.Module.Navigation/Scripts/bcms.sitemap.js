@@ -16,7 +16,8 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 saveSitemapNodeUrl: null,
                 deleteSitemapNodeUrl: null,
             },
-            globalization = {};
+            globalization = {},
+            messagesContainer = null;
 
         /**
         * Assign objects to module.
@@ -41,7 +42,6 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             self.isRootModel = true;
 
             self.container = container;
-            self.messagesContainer = container;
 
             self.sitemapNodes = ko.observableArray([]);
             self.isDragStarted = ko.observable(false);
@@ -148,7 +148,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         function saveSitemapNode(sitemapNodeViewModel) {
             var params = sitemapNodeViewModel.toJson(),
                 onSaveCompleted = function(json) {
-                    //messages.refreshBox(sitemapNodeViewModel.container, json);
+                    messages.refreshBox(messagesContainer, json);
                     if (json.Success) {
                         if (json.Data) {
                             sitemapNodeViewModel.id(json.Data.Id);
@@ -178,7 +178,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         function deleteSitemapNode(sitemapNodeViewModel, parent) {
             var params = sitemapNodeViewModel.toJson(),
                 onDeleteCompleted = function (json) {
-                    //messages.refreshBox(sitemapNodeViewModel.container, json);
+                    messages.refreshBox(messagesContainer, json);
                     if (json.Success) {
                         var childNodes = parent.childNodes || parent.sitemapNodes;
                         childNodes.remove(sitemapNodeViewModel);
@@ -229,7 +229,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         * Parse json result and map data to view model.
         */
         function parseJsonResults(json, sitemapViewModel) {
-            messages.refreshBox(sitemapViewModel.messagesContainer, json);
+            messages.refreshBox(messagesContainer, json);
             
             if (json.Success) {
                 var nodes = [];
@@ -301,7 +301,8 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         */
         function initializeSiteSettingsSitemap(content) {
             var dialogContainer = siteSettings.getModalDialog().container;
-
+            messagesContainer = dialogContainer;
+            
             var sitemapViewModel = new SitemapViewModel(dialogContainer);
             
             initializeSiteMap(content.Data.Data, sitemapViewModel);

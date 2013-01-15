@@ -22,9 +22,9 @@ namespace BetterCms.Module.Navigation.Controllers
         /// <returns>
         /// Rendered sitemap container.
         /// </returns>
-        public ActionResult Index(string search)
+        public ActionResult Index(string searchQuery)
         {
-            var sitemap = GetCommand<GetSitemapCommand>().ExecuteCommand(search);
+            var sitemap = GetCommand<GetSitemapCommand>().ExecuteCommand(searchQuery);
             var json = new
                            {
                                Data = new WireJson
@@ -69,7 +69,7 @@ namespace BetterCms.Module.Navigation.Controllers
 
             if (success)
             {
-//                Messages.AddSuccess(NavigationGlobalization.DeleteSitemapNode_DeletedSuccessfully_Message);
+                Messages.AddSuccess(NavigationGlobalization.Sitemap_NodeDeletedSuccessfully_Message);
             }
 
             return Json(new WireJson(success));
