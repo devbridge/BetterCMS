@@ -1,4 +1,7 @@
-﻿using BetterCms.Core.Mvc.Commands;
+﻿using System;
+
+using BetterCms.Core.Mvc.Commands;
+using BetterCms.Module.Navigation.Models;
 using BetterCms.Module.Navigation.Services;
 using BetterCms.Module.Navigation.ViewModels.Sitemap;
 using BetterCms.Module.Root.Mvc;
@@ -25,7 +28,11 @@ namespace BetterCms.Module.Navigation.Command.Sitemap.DeleteSitemapNode
         /// <returns>Execution result.</returns>
         public bool Execute(SitemapNodeViewModel request)
         {
-            // TODO: implement.
+            var node = Repository.AsProxy<SitemapNode>(request.Id);
+            node.Version = request.Version;
+
+            Repository.Delete(node);
+            UnitOfWork.Commit();
 
             return true;
         }
