@@ -13,7 +13,7 @@ define('bcms.pages.seo', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', 'bcms
             editPageUrlLink: '#bcms-editseo-editurlpath',
             editUrlPathBox: '.bcms-edit-urlpath-box',
             editUrlSave: '#bcms-editseo-editurlpath-save',
-            editUrlCancel: '#bcms-editseo-editurlpath-cancel, .bcms-edit-urlpath-box .bcms-edit-btn-close',
+            editUrlCancel: '#bcms-editseo-editurlpath-cancel, .bcms-edit-urlpath-box .bcms-tip-close',
             editUrlTextBox: '.bcms-edit-urlpath-box .bcms-editor-field-box',
             editSeoForm: 'form:first'
         },

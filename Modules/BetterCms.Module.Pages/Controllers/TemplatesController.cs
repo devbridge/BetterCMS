@@ -1,15 +1,12 @@
 ﻿using System.Web.Mvc;
 
-using BetterCms.Module.Pages.Command.Content.GetPageContentOptions;
+using BetterCms.Module.Pages.Command.Layout.DeleteTemplate;
 using BetterCms.Module.Pages.Command.Layout.GetSiteSettingsTemplates;
+using BetterCms.Module.Pages.Command.Layout.GetTemplatesForEdit;
+using BetterCms.Module.Pages.Command.Layout.SaveTemplate;
 using BetterCms.Module.Pages.Command.Widget.DeleteWidget;
-using BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit;
-using BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit;
-using BetterCms.Module.Pages.Command.Widget.GetSiteSettingsWidgets;
-using BetterCms.Module.Pages.Command.Widget.SaveWidget;
 using BetterCms.Module.Pages.Content.Resources;
-using BetterCms.Module.Pages.ViewModels.Content;
-using BetterCms.Module.Pages.ViewModels.Widgets;
+using BetterCms.Module.Pages.ViewModels.Templates;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
@@ -29,68 +26,54 @@ namespace BetterCms.Module.Pages.Controllers
         [HttpPost]
         public ActionResult DeleteTemplate(string id, string version)
         {
-            var request = new DeleteWidgetRequest
+            var request = new DeleteTemplateCommandRequest
             {
-                WidgetId = id.ToGuidOrDefault(),
+                TemplateId = id.ToGuidOrDefault(),
                 Version = version.ToIntOrDefault()
             };
-            if (GetCommand<DeleteWidgetCommand>().ExecuteCommand(request))
+            if (GetCommand<DeleteTemplateCommand>().ExecuteCommand(request))
             {
-                Messages.AddSuccess(PagesGlobalization.DeleteWidget_DeletedSuccessfully_Message);
+                Messages.AddSuccess(PagesGlobalization.DeleteTemplate_DeletedSuccessfully_Message);
                 return Json(new WireJson
                 {
                     Success = true
                 });
             }
-
             return Json(new WireJson { Success = false });
         }
     
 
         /// <summary>
-        /// Creates modal dialog for creating a new widget.
+        /// Creates modal dialog for creating a new template.
         /// </summary>
         /// <returns>
-        /// ViewResult to render new widget modal dialog.
+        /// ViewResult to render new template modal dialog.
         /// </returns>
         [HttpGet]
         public ActionResult RegisterTemplate()
         {
-            var model = GetCommand<GetServerControlWidgetForEditCommand>().ExecuteCommand(null);
+            var model = GetCommand<GetTemplatesForEditCommand>().ExecuteCommand(null);
             return PartialView("EditTemplate", model);
-        }
-/*
-        /// <summary>
-        /// Creates modal dialog for editing a widget.
-        /// </summary>
-        /// <returns>
-        /// ViewResult to render editing widget modal dialog.
-        /// </returns>
-        [HttpGet]
-        public ActionResult EditServerControlWidget(string id)
-        {
-            var model = GetCommand<GetServerControlWidgetForEditCommand>().ExecuteCommand(id.ToGuidOrDefault());
-            return PartialView(model);
         }
 
         /// <summary>
-        /// Validates and saves widget.
+        /// Validates and saves template.
         /// </summary>
-        /// <param name="model">The widget view model.</param>
+        /// <param name="model">The template view model.</param>
         /// <returns>
         /// Json with result status.
         /// </returns>
         [HttpPost]
-        public ActionResult EditServerControlWidget(ServerControlWidgetViewModel model)
+        public ActionResult RegisterTemplate(TemplateEditViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var response = GetCommand<SaveServerControlWidgetCommand>().ExecuteCommand(model);
+                var response = GetCommand<SaveTemplateCommand>().ExecuteCommand(model);
                 if (response != null)
                 {
                     if (model.Id.HasDefaultValue())
                     {
-                        Messages.AddSuccess(PagesGlobalization.SaveWidget_CreatedSuccessfully_Message);
+                        Messages.AddSuccess(PagesGlobalization.SaveTemplate_CreatedSuccessfully_Message);
                     }
                     return Json(new WireJson { Success = true, Data = response });
                 }
@@ -99,26 +82,28 @@ namespace BetterCms.Module.Pages.Controllers
             return Json(new WireJson { Success = false });
         }
 
-        // TODO: remote it. use previewUrl.
+        /// <summary>
+        /// Creates modal dialog for edit a template.
+        /// </summary>
+        /// <returns>
+        /// ViewResult to render editing tempate modal dialog.
+        /// </returns>
         [HttpGet]
-        public ActionResult PreviewHtmlContentWidget(string contentId)
+        public ActionResult EditTemplate(string id)
         {
-            HtmlContentWidgetViewModel model = GetCommand<GetHtmlContentWidgetForEditCommand>().ExecuteCommand(contentId.ToGuidOrDefault());
-            return View(model);
+            var model = GetCommand<GetTemplatesForEditCommand>().ExecuteCommand(id.ToGuidOrDefault());
+            return PartialView(model);
         }
 
-        // TODO: remote it. use previewUrl.
-        [HttpGet]
-        public ActionResult PreviewWidget(string widgetId)
+        public ActionResult SaveTemplateRegions(TemplateRegionItemViewModel model)
         {
-            ServerControlWidgetViewModel model = GetCommand<GetServerControlWidgetForEditCommand>().ExecuteCommand(widgetId.ToGuidOrDefault());
-            return View(model);
-        }*/
+            return Json(new WireJson { Success = false });
+        }
 
         /// <summary>
-        /// Renders a widgets list for the site settings dialog.
+        /// Renders a templates list for the site settings dialog.
         /// </summary>
-        /// <returns>Rendered widgets list.</returns>
+        /// <returns>Rendered templates list.</returns>
         public ActionResult Templates(SearchableGridOptions request)
         {
             var model = GetCommand<GetSiteSettingsTemplatesCommand>().ExecuteCommand(request);

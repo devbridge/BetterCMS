@@ -22,7 +22,7 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                 imageSizeEditBoxWidth: "#image-width",
                 imageSizeEditBoxHeight: "#image-height",
                 imageSizeEditBoxOk: "#bcms-save-imagesize",
-                imageSizeEditBoxClose: "div.bcms-file-edit .bcms-edit-btn-close",
+                imageSizeEditBoxClose: "div.bcms-file-edit .bcms-tip-close",
 
                 imageToCrop: ".bcms-crop-image-block img",
                 imageToCropCoordX1: ".bcms-crop-image-x1",

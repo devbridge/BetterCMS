@@ -9,7 +9,7 @@ namespace BetterCms.Module.Root.Models.Maps
         {
             Table("Regions");
 
-            Map(x => x.Name).Not.Nullable().Length(MaxLength.Name);
+            Map(x => x.Description).Nullable().Length(MaxLength.Name);
             Map(x => x.RegionIdentifier).Not.Nullable().Length(MaxLength.Name);
 
             HasMany(x => x.PageContents).Inverse().Cascade.SaveUpdate().LazyLoad().Where("IsDeleted = 0");

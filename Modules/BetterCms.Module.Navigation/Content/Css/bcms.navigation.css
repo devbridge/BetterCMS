@@ -258,4 +258,10 @@ div.ui-sortable-helper { /*THIS CLASS NEEDED FOR DRAGING NODES STYLE*/
 .ui-sortable-helper:hover > div.bcms-node-controls {
     display: none;
 }
+
+div.bcms-drag-hover-emptylist .bcms-placement-holder-inner {
+    display: block;
+    min-height: 45px;
+    margin-bottom: 15px;
+}
 /*END OF TESTING*/

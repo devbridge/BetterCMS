@@ -628,6 +628,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Register Template.
+        /// </summary>
+        public static string CreatTemplate_Dialog_Title {
+            get {
+                return ResourceManager.GetString("CreatTemplate_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Category deleted successfully..
         /// </summary>
         public static string DeleteCategory_DeletedSuccessfully_Message {
@@ -826,11 +835,29 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete this region?.
+        /// </summary>
+        public static string DeleteRegion_Confirmation_Message {
+            get {
+                return ResourceManager.GetString("DeleteRegion_Confirmation_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tag removed successfully..
         /// </summary>
         public static string DeleteTag_DeletedSuccessfully_Message {
             get {
                 return ResourceManager.GetString("DeleteTag_DeletedSuccessfully_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Template deleted successfully.
+        /// </summary>
+        public static string DeleteTemplate_DeletedSuccessfully_Message {
+            get {
+                return ResourceManager.GetString("DeleteTemplate_DeletedSuccessfully_Message", resourceCulture);
             }
         }
         
@@ -1521,6 +1548,33 @@ namespace BetterCms.Module.Pages.Content.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Basic Properties.
         /// </summary>
+        public static string EditTemplate_BasicPropertiesTab_Title {
+            get {
+                return ResourceManager.GetString("EditTemplate_BasicPropertiesTab_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Template.
+        /// </summary>
+        public static string EditTemplate_Dialog_Title {
+            get {
+                return ResourceManager.GetString("EditTemplate_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Regions.
+        /// </summary>
+        public static string EditTemplate_OptionsTab_Title {
+            get {
+                return ResourceManager.GetString("EditTemplate_OptionsTab_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Basic Properties.
+        /// </summary>
         public static string EditWidget_BasicPropertiesTab_Title {
             get {
                 return ResourceManager.GetString("EditWidget_BasicPropertiesTab_Title", resourceCulture);
@@ -1830,6 +1884,24 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string SaveRedirect_RedirectExists_Message {
             get {
                 return ResourceManager.GetString("SaveRedirect_RedirectExists_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Template created succesfully..
+        /// </summary>
+        public static string SaveTemplate_CreatedSuccessfully_Message {
+            get {
+                return ResourceManager.GetString("SaveTemplate_CreatedSuccessfully_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Template view doesn&apos;t exists by given url ({0}). Url should start with tilde(~) and direct to views folder in the web application root folder (for example, ~/Views/Shared/Example.cshtml). Check if url is valid and if file exists and try again..
+        /// </summary>
+        public static string SaveTemplate_VirtualPathNotExists_Message {
+            get {
+                return ResourceManager.GetString("SaveTemplate_VirtualPathNotExists_Message", resourceCulture);
             }
         }
         
@@ -2230,6 +2302,33 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete the {0} template?.
+        /// </summary>
+        public static string SiteSettings_Template_DeleteCategoryMessage {
+            get {
+                return ResourceManager.GetString("SiteSettings_Template_DeleteCategoryMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Register +.
+        /// </summary>
+        public static string SiteSettings_Template_RegisterNew {
+            get {
+                return ResourceManager.GetString("SiteSettings_Template_RegisterNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string SiteSettings_Template_Search {
+            get {
+                return ResourceManager.GetString("SiteSettings_Template_Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         public static string SiteSettings_Templates_NameColumn {
@@ -2334,6 +2433,132 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string SortPageContent_FailureMessage_Title {
             get {
                 return ResourceManager.GetString("SortPageContent_FailureMessage_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string Template_Preview_Image_Tooltip_Title {
+            get {
+                return ResourceManager.GetString("Template_Preview_Image_Tooltip_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string Template_Title_Title {
+            get {
+                return ResourceManager.GetString("Template_Title_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string Template_Title_Tooltip_Description {
+            get {
+                return ResourceManager.GetString("Template_Title_Tooltip_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string Template_Title_Tooltip_Title {
+            get {
+                return ResourceManager.GetString("Template_Title_Tooltip_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Template Path.
+        /// </summary>
+        public static string Template_Url_Title {
+            get {
+                return ResourceManager.GetString("Template_Url_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Template Path.
+        /// </summary>
+        public static string Template_Url_Tooltip_Description {
+            get {
+                return ResourceManager.GetString("Template_Url_Tooltip_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Template Path.
+        /// </summary>
+        public static string Template_Url_Tooltip_Title {
+            get {
+                return ResourceManager.GetString("Template_Url_Tooltip_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add New Region +.
+        /// </summary>
+        public static string TemplateOptions_AddNewRegion {
+            get {
+                return ResourceManager.GetString("TemplateOptions_AddNewRegion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string TemplateOptions_DescriptionColumn {
+            get {
+                return ResourceManager.GetString("TemplateOptions_DescriptionColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Identificator.
+        /// </summary>
+        public static string TemplateOptions_IndetificatorColumn {
+            get {
+                return ResourceManager.GetString("TemplateOptions_IndetificatorColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string TemplateOptions_Region_Search {
+            get {
+                return ResourceManager.GetString("TemplateOptions_Region_Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preview.
+        /// </summary>
+        public static string TemplatePreviewImage_Title {
+            get {
+                return ResourceManager.GetString("TemplatePreviewImage_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preview Image URL.
+        /// </summary>
+        public static string TemplatePreviewImageUrl_Title {
+            get {
+                return ResourceManager.GetString("TemplatePreviewImageUrl_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preview.
+        /// </summary>
+        public static string TemplatePreviewImageUrl_Tooltip_Description {
+            get {
+                return ResourceManager.GetString("TemplatePreviewImageUrl_Tooltip_Description", resourceCulture);
             }
         }
         

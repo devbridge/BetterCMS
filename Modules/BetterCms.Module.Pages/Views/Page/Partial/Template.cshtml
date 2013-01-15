@@ -9,7 +9,7 @@
         <div class="bcms-content-titles">@Model.Title</div>
     </div>
     <div class="bcms-grid-image-holder">
-        <img src="@(Html.BuildUrlFromExpression<PreviewController>(f => f.Layout(Model.TemplateId.ToString())))" alt="" />
+        <img src="@Model.PreviewUrl" alt="" />
          <div class="bcms-zoom-overlay">
          </div>
     </div>
