@@ -200,15 +200,10 @@
     <Compile Include="Models\Maps\HtmlContentHistoryMap.cs" />
     <Compile Include="Models\Maps\HtmlContentWidgetHistoryMap.cs" />
     <Compile Include="Models\Maps\ServerControlWidgetHistoryMap.cs" />
-    <Compile Include="Models\Migrations\Migration201301091317.cs" />
     <Compile Include="Models\ServerControlWidgetHistory.cs" />
     <Compile Include="Models\HtmlContentWidgetHistory.cs" />
     <Compile Include="Models\HtmlContentHistory.cs" />
     <Compile Include="Models\Maps\HtmlContentMap.cs" />
-    <Compile Include="Models\Migrations\Migration201301140930.cs" />
-    <Compile Include="Models\Migrations\Migration201301091700.cs" />
-    <Compile Include="Models\Migrations\Migration201301081200.cs" />
-    <Compile Include="Models\Migrations\Migration201301020833.cs" />
     <Compile Include="Models\ServerControlWidget.cs" />
     <Compile Include="Models\HtmlContent.cs" />
     <Compile Include="Models\Maps\PageCategoryMap.cs" />
@@ -221,7 +216,7 @@
     <Compile Include="Models\Maps\PagePropertiesMap.cs" />
     <Compile Include="Models\Maps\PageTagMap.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
-    <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />
+    <Compile Include="Models\Migrations\PagesVersionTableMetaData.cs" />
     <Compile Include="Models\PageProperties.cs" />
     <Compile Include="Models\PageTag.cs" />
     <Compile Include="Models\Redirect.cs" />

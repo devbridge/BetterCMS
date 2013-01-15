@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using Autofac;
-using BetterCms.Core.Modules;
+﻿using BetterCms.Core.Modules;
 
 namespace BetterCms.Module.Templates
 {
