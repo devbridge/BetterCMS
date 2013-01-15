@@ -6,6 +6,7 @@ using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.Blog.Registration;
+using BetterCms.Module.Blog.Services;
 
 namespace BetterCms.Module.Blog
 {
@@ -126,6 +127,17 @@ namespace BetterCms.Module.Blog
                             CssClass = page => "bcms-sidebar-link"
                         }                                      
                 };
+        }
+
+        /// <summary>
+        /// Registers module types.
+        /// </summary>
+        /// <param name="context">The area registration context.</param>
+        /// <param name="containerBuilder">The container builder.</param>
+        /// <param name="configuration">The configuration.</param>
+        public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        {
+            containerBuilder.RegisterType<DefaultOptionService>().AsImplementedInterfaces().SingleInstance();
         }
     }
 }

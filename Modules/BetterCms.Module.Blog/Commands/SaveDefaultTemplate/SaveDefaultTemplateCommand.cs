@@ -17,7 +17,7 @@ namespace BetterCms.Module.Blog.Commands.SaveDefaultTemplate
         /// <returns><c>True</c>, if save successful</returns>
         public bool Execute(Guid request)
         {
-            var option = Repository.AsQueryable<Option>().FirstOrDefault();
+            var option = Repository.AsQueryable<Option>().OrderByDescending(o => o.CreatedOn).FirstOrDefault(o => !o.IsDeleted);
             if (option == null)
             {
                 option = new Option();

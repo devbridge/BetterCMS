@@ -4,6 +4,7 @@ using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Blog.Models;
+using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
@@ -14,6 +15,20 @@ namespace BetterCms.Module.Blog.Commands.GetTemplatesList
 {
     public class GetTemplatesCommand : CommandBase, ICommand<bool, IList<BlogTemplateViewModel>>
     {
+        /// <summary>
+        /// The options service
+        /// </summary>
+        private readonly IOptionService optionService;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetTemplatesCommand" /> class.
+        /// </summary>
+        /// <param name="optionService">The option service.</param>
+        public GetTemplatesCommand(IOptionService optionService)
+        {
+            this.optionService = optionService;
+        }
+
         /// <summary>
         /// Executes the specified request.
         /// </summary>
@@ -57,20 +72,11 @@ namespace BetterCms.Module.Blog.Commands.GetTemplatesList
             }
 
             // Load default template
-            Option optionAlias = null;
+            var defaultTemplateId = optionService.GetDefaultTemplateId();
 
-            var options = UnitOfWork.Session
-                .QueryOver(() => optionAlias)
-                .Left.JoinQueryOver(() => optionAlias.DefaultLayout, () => layoutAlias)
-                .Where(() => !optionAlias.IsDeleted)
-                .OrderBy(() => optionAlias.CreatedOn).Desc
-                .Select(select => select.DefaultLayout.Id)
-                .Take(1)
-                .List<Guid>();
-
-            if (options != null && options.Count > 0)
+            if (defaultTemplateId.HasValue)
             {
-                var defaultTemplate = templates.FirstOrDefault(t => t.TemplateId == options[0]);
+                var defaultTemplate = templates.FirstOrDefault(t => t.TemplateId == defaultTemplateId.Value);
                 if (defaultTemplate != null)
                 {
                     defaultTemplate.IsActive = true;

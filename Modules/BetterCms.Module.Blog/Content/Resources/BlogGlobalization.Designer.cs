@@ -349,6 +349,15 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There are no compatible layouts for blogs..
+        /// </summary>
+        public static string SaveBlogPost_LayoutNotFound_Message {
+            get {
+                return ResourceManager.GetString("SaveBlogPost_LayoutNotFound_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Region {0} not found. It&apos;s the default region for blog post content..
         /// </summary>
         public static string SaveBlogPost_RegionNotFound_Message {

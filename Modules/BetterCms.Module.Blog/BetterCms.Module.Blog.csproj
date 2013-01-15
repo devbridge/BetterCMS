@@ -142,6 +142,8 @@
     <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registration\BlogJavaScriptModuleDescriptor.cs" />
+    <Compile Include="Services\DefaultOptionService.cs" />
+    <Compile Include="Services\IOptionService.cs" />
     <Compile Include="ViewModels\Author\AuthorViewModel.cs" />
     <Compile Include="ViewModels\Blog\BlogPostViewModel.cs" />
     <Compile Include="ViewModels\Blog\BlogTemplateViewModel.cs" />

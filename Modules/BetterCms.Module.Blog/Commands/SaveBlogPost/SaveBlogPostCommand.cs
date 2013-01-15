@@ -6,6 +6,7 @@ using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.Blog.Models;
+using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Blog.ViewModels.Blog;
 
 using BetterCms.Module.MediaManager.Models;
@@ -34,12 +35,19 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         private readonly ITagService tagService;
 
         /// <summary>
+        /// The option service
+        /// </summary>
+        private readonly IOptionService optionService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SaveBlogPostCommand" /> class.
         /// </summary>
         /// <param name="tagService">The tag service.</param>
-        public SaveBlogPostCommand(ITagService tagService)
+        /// <param name="optionService">The option service.</param>
+        public SaveBlogPostCommand(ITagService tagService, IOptionService optionService)
         {
             this.tagService = tagService;
+            this.optionService = optionService;
         }
 
         /// <summary>
@@ -49,11 +57,24 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         /// <returns>Blog post view model</returns>
         public SaveBlogPostCommandResponse Execute(BlogPostViewModel request)
         {
-            // TODO: pass layout from UI
-            // TODO: validate layout
-            // TODO: load region
-            var layoutId = Repository.AsQueryable<Layout>(l => !l.IsDeleted && l.Name == "Default Two Columns").Select(s => s.Id).FirstOrDefault();
-            var layout = Repository.AsProxy<Layout>(layoutId);
+            // Load layout
+            Layout layout;
+            var layoutId = optionService.GetDefaultTemplateId();
+
+            if (layoutId.HasValue)
+            {
+                layout = Repository.AsProxy<Layout>(layoutId.Value);
+            } 
+            else
+            {
+                layout = GetFirstCompatibleLayout();
+            }
+            if (layout == null)
+            {
+                var message = BlogGlobalization.SaveBlogPost_LayoutNotFound_Message;
+                var logMessage = "Failed to save blog post. No compatible layouts found.";
+                throw new ValidationException(e => message, logMessage);
+            }
 
             // Loading region
             var regionId = Repository.AsQueryable<Region>(r => !r.IsDeleted && r.RegionIdentifier == regionIdentifier).Select(s => s.Id).FirstOrDefault();
@@ -169,6 +190,33 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                            CreatedOn = blogPost.CreatedOn.ToFormattedDateString(),
                            IsPublished = blogPost.IsPublished
                        };
+        }
+
+        /// <summary>
+        /// Gets the first compatible layout.
+        /// </summary>
+        /// <returns>Layout</returns>
+        private Layout GetFirstCompatibleLayout()
+        {
+            LayoutRegion layoutRegionAlias = null;
+            Region regionAlias = null;
+
+            var compatibleLayouts = UnitOfWork.Session
+               .QueryOver(() => layoutRegionAlias)
+               .Inner.JoinQueryOver(() => layoutRegionAlias.Region, () => regionAlias)
+               .Where(() => !layoutRegionAlias.IsDeleted
+                   && !regionAlias.IsDeleted
+                   && regionAlias.RegionIdentifier == BlogModuleConstants.BlogPostMainContentRegionIdentifier)
+               .Select(select => select.Layout.Id)
+               .Take(1)
+               .List<Guid>();
+            
+            if (compatibleLayouts != null && compatibleLayouts.Count > 0)
+            {
+                return Repository.AsProxy<Layout>(compatibleLayouts[0]);
+            }
+
+            return null;
         }
     }
 }
