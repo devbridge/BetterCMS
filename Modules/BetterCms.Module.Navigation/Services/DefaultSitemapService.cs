@@ -71,6 +71,7 @@ namespace BetterCms.Module.Navigation.Services
             }
 
             queryableNodes = queryableNodes.Where(n => n.ParentNode == null);
+
             return queryableNodes.ToList();
         }
 

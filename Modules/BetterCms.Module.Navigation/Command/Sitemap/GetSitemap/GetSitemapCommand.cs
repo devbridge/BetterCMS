@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Navigation.Models;
@@ -59,7 +60,7 @@ namespace BetterCms.Module.Navigation.Command.Sitemap.GetSitemap
                     });
             }
 
-            return nodeList;
+            return nodeList.OrderBy(n => n.DisplayOrder).ToList();
         }
     }
 }

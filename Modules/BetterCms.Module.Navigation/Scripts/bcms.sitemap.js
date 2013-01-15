@@ -35,8 +35,8 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         * Sitemap view model.
         */
         function SitemapViewModel(container) {
-            var self = this,
-                isRootModel = true;
+            var self = this;
+            self.isRootModel = true;
 
             self.container = container;
             self.messagesContainer = container;
@@ -63,8 +63,8 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         * Sitemap node view model.
         */
         function SitemapNodeViewModel() {
-            var self = this,
-                isRootModel = false;
+            var self = this;
+            self.isRootModel = false;
 
             self.id = ko.observable();
             self.version = ko.observable();
@@ -134,7 +134,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                     Title: self.title(),
                     Url: self.url(),
                     DisplayOrder: self.displayOrder(),
-                    ParentId: self.parentNode != null ? self.parentNode.id() : null,
+                    ParentId: self.parentNode != null ? self.parentNode.id() : '00000000-0000-0000-0000-000000000000',
                 };
                 return params;
             };
