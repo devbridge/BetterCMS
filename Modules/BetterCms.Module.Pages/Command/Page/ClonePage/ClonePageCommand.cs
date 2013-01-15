@@ -99,11 +99,11 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
                 CustomCss = page.CustomCss,
                 UseCustomCss = page.UseCustomCss,
                 Description = page.Description,
-                ImageUrl = page.ImageUrl,
                 UseNoFollow = page.UseNoFollow,
                 UseNoIndex = page.UseNoIndex,
                 Layout = page.Layout,
-                Author = page.Author                
+                Author = page.Author,
+                Image = page.Image,
             };
 
             Repository.Save(newPage);

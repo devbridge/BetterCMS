@@ -63,9 +63,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Common.Logging.2.1.1\lib\net40\Common.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="FluentMigrator, Version=1.0.0.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
+    <Reference Include="FluentMigrator, Version=1.0.6.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\FluentMigrator.1.0.3.0\lib\40\FluentMigrator.dll</HintPath>
+      <HintPath>..\..\packages\FluentMigrator.1.0.6.0\lib\40\FluentMigrator.dll</HintPath>
     </Reference>
     <Reference Include="FluentNHibernate, Version=1.3.0.733, Culture=neutral, PublicKeyToken=8aa435e3cb308880, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -125,7 +125,6 @@
     </Compile>
     <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\CmsController.cs" />
-    <Compile Include="Controllers\PreviewController.cs" />
     <Compile Include="Controllers\EmbeddedResourcesController.cs" />
     <Compile Include="Controllers\RenderingController.cs" />
     <Compile Include="Controllers\SidebarController.cs" />
@@ -159,6 +158,7 @@
     <Compile Include="Models\Maps\ContentOptionMap.cs" />
     <Compile Include="Models\Maps\RegionMap.cs" />
     <Compile Include="Models\Maps\TagMap.cs" />
+    <Compile Include="Models\Migrations\Migration201301141504.cs" />
     <Compile Include="Models\Migrations\Migration201301021540.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
     <Compile Include="Models\Migrations\Migration201301021106.cs" />
@@ -217,6 +217,7 @@
     <Compile Include="Mvc\Helpers\FormHelper.cs" />
     <Compile Include="Mvc\Helpers\MessagesHelper.cs" />
     <Compile Include="Registration\TabsJavaScriptModuleDescriptor.cs" />
+    <Compile Include="RootModuleConstants.cs" />
     <Compile Include="Services\DefaultSecurityService.cs" />
     <Compile Include="ViewModels\Authentication\InfoViewModel.cs" />
     <Compile Include="ViewModels\Cms\CmsRequestViewModel.cs" />
@@ -230,6 +231,8 @@
     <Compile Include="Models\UserMessages.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Mvc\Grids\EditableGridColumn.cs" />
+    <Compile Include="ViewModels\Shared\EditableGridViewModel.cs" />
     <Compile Include="ViewModels\Shared\MessagesViewModel.cs" />
     <Compile Include="ViewModels\Sidebar\SidebarContainerViewModel.cs" />
     <Compile Include="ViewModels\ProjectionsViewModel.cs" />
@@ -255,7 +258,6 @@
     <EmbeddedResource Include="Content\Styles\qunit-1.9.0.css" />
     <EmbeddedResource Include="Scripts\bcms.content.js" />
     <EmbeddedResource Include="Scripts\bcms.forms.js" />
-    <EmbeddedResource Include="Scripts\bcms.js" />
     <EmbeddedResource Include="Scripts\bcms.modal.js" />
     <EmbeddedResource Include="Scripts\bcms.sidemenu.js" />
     <None Include="Scripts\jquery-1.7.2.intellisense.js">
@@ -498,8 +500,10 @@
     <EmbeddedResource Include="Scripts\ckeditor\config.js" />
     <EmbeddedResource Include="Scripts\ckeditor\contents.css" />
     <EmbeddedResource Include="Scripts\ckeditor\styles.js" />
-    <EmbeddedResource Include="Scripts\bcms.dynamicContent.js" />
     <EmbeddedResource Include="Scripts\bcms.inlineEdit.js" />
+    <EmbeddedResource Include="Scripts\bcms.dynamicContent.js" />
+    <EmbeddedResource Include="Scripts\bcms.js" />
+    <EmbeddedResource Include="Scripts\bcms.ko.grid.js" />
     <EmbeddedResource Include="Scripts\bcms.siteSettings.js" />
     <Content Include="Scripts\jquery-1.7.2.min.js">
       <DependentUpon>jquery-1.7.2.js</DependentUpon>
@@ -540,7 +544,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Shared\Partial\Region.cshtml" />
     <EmbeddedResource Include="Views\Sidebar\Container.cshtml" />
-    <EmbeddedResource Include="Views\Shared\RootLayout.cshtml" />
     <EmbeddedResource Include="Views\Shared\Layouts\OneColumnLayout.cshtml" />
     <EmbeddedResource Include="Views\Rendering\RenderMainJsFile.cshtml" />
     <EmbeddedResource Include="Views\SiteSettings\Container.cshtml" />
@@ -552,12 +555,20 @@
     <EmbeddedResource Include="Views\Sidebar\Body.cshtml" />
     <EmbeddedResource Include="Views\Authentication\Info.cshtml" />
     <EmbeddedResource Include="Views\Shared\Partial\Tooltip.cshtml" />
-    <Content Include="web.config" />
+    <Content Include="web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <EmbeddedResource Include="Views\Shared\Partial\Messages.cshtml" />
     <EmbeddedResource Include="Views\Cms\Index.cshtml" />
     <EmbeddedResource Include="Views\Shared\Layouts\Preview.cshtml" />
     <EmbeddedResource Include="Views\Shared\Partial\ImagePreview.cshtml" />
     <EmbeddedResource Include="Views\Shared\BaseLayout.cshtml" />
+    <EmbeddedResource Include="Views\Shared\RootLayout.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Partial\SiteSettingTab.cshtml" />
+    <EmbeddedResource Include="Views\Shared\EditableGrid\Grid.cshtml" />
+    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\Cell.cshtml" />
+    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\Header.cshtml" />
+    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\TopBlock.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\Entity\" />

@@ -8,6 +8,8 @@ using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Navigation.Models;
 
+using BlogOption = BetterCms.Module.Blog.Models.Option;
+
 namespace BetterCms.Tests.Helpers
 {
     public class RandomTestDataProvider
@@ -124,6 +126,17 @@ namespace BetterCms.Tests.Helpers
             return entity;
         }
 
+        public BlogOption CreateNewBlogOption()
+        {
+            var entity = new BlogOption();
+
+            PopulateBaseFields(entity);
+
+            entity.DefaultLayout = CreateNewLayout();
+
+            return entity;
+        }
+
         private void PopulatePageProperties(PageProperties entity, Layout layout = null)
         {
             PopulateBaseFields(entity);
@@ -132,7 +145,6 @@ namespace BetterCms.Tests.Helpers
             entity.PageUrl = ProvideRandomString(MaxLength.Url);
             entity.Title = ProvideRandomString(MaxLength.Name);
             entity.Description = ProvideRandomString(2000);
-            entity.ImageUrl = ProvideRandomString(MaxLength.Url);
             entity.CanonicalUrl = ProvideRandomString(MaxLength.Url);
             entity.CustomCss = ProvideRandomString(2000);
             entity.MetaTitle = ProvideRandomString(MaxLength.Name);
@@ -197,8 +209,7 @@ namespace BetterCms.Tests.Helpers
             var entity = new Region();
 
             PopulateBaseFields(entity);
-
-            entity.Description = ProvideRandomString(MaxLength.Name);
+            
             entity.RegionIdentifier = ProvideRandomString(MaxLength.Name);
 
             return entity;
@@ -210,16 +221,8 @@ namespace BetterCms.Tests.Helpers
 
             PopulateBaseFields(entity);
 
-            entity.FirstName = ProvideRandomString(MaxLength.Name);
-            entity.LastName = ProvideRandomString(MaxLength.Name);
-            entity.DisplayName = ProvideRandomString(MaxLength.Name);
-            entity.Title = ProvideRandomString(MaxLength.Name);
-            entity.Email = ProvideRandomString(MaxLength.Email);
-            entity.Twitter = ProvideRandomString(MaxLength.Name);
-            entity.ProfileImageUrl = ProvideRandomString(MaxLength.Url);
-            entity.ProfileThumbnailUrl = ProvideRandomString(MaxLength.Url);
-            entity.ShortDescription = ProvideRandomString(MaxLength.Text);
-            entity.LongDescription = ProvideRandomStringMaxLength();
+            entity.Name = ProvideRandomString(MaxLength.Name);
+            entity.Image = CreateNewMediaImage();
 
             return entity;
         }
@@ -311,6 +314,7 @@ namespace BetterCms.Tests.Helpers
 
             PopulateBaseFields(entity);
 
+            entity.Description = ProvideRandomString(MaxLength.Name);
             entity.Layout = layout ?? CreateNewLayout();
             entity.Region = region ?? CreateNewRegion();
 

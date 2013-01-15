@@ -1,0 +1,16 @@
+﻿<script type="text/html" id="bcms-site-setting-tab-template">
+    <div class="bcms-innertab-header">
+        <!-- ko foreach: tabs -->
+        <a class="bcms-tab" data-bind="
+            text: title, 
+            attr: {href: href}, 
+            click: load"></a>
+        <!-- /ko -->
+    </div>
+    <!-- ko foreach: tabs -->
+    <div class="bcms-tab-single" data-bind="attr: {id: tabId}, stopBinding: true">
+        @* Creating child Div, because parent binding is stopped *@
+        <div></div>
+    </div>
+    <!-- /ko -->
+</script>

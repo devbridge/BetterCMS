@@ -8,11 +8,16 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         var sitemap = {},
             selectors = {
                 templateDataBind: ".bcms-sitemap-data-bind-container",
+                sitemapForm: "#bcms-sitemap-form",
+                sitemapNodeSearchButton: "#bcms-btn-sitemap-search",
             },
             links = {
                 loadSiteSettingsSitemapUrl: null,
+                saveSitemapNodeUrl: null,
+                deleteSitemapNodeUrl: null,
             },
-            globalization = {};
+            globalization = {},
+            messagesContainer = null;
 
         /**
         * Assign objects to module.
@@ -29,26 +34,40 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             });
         };
 
+        /**
+        * Sitemap view model.
+        */
         function SitemapViewModel(container) {
             var self = this;
+            self.isRootModel = true;
 
             self.container = container;
-            self.messagesContainer = container;
 
             self.sitemapNodes = ko.observableArray([]);
+            self.isDragStarted = ko.observable(false);
         
-            self.expandAll = function() {
-                alert("Expand all clicked!"); // TODO: implement.
+            self.expandAll = function () {
+                var nodes = self.sitemapNodes();
+                for (var i in nodes) {
+                    nodes[i].expandAll();
+                }
             };
             
             self.collapseAll = function () {
-                alert("Expand all clicked!"); // TODO: implement.
+                var nodes = self.sitemapNodes();
+                for (var i in nodes) {
+                    nodes[i].collapseAll();
+                }
             };
         };
 
+        /**
+        * Sitemap node view model.
+        */
         function SitemapNodeViewModel() {
             var self = this;
-            
+            self.isRootModel = false;
+
             self.id = ko.observable();
             self.version = ko.observable();
             self.title = ko.observable();
@@ -56,7 +75,11 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             self.displayOrder = ko.observable(0);
             self.childNodes = ko.observableArray([]);
             self.parentNode = null;
-            
+
+            self.containerId = function() {
+                return "id-" + self.id();
+            };
+
             self.isEditable = ko.observable(true);
             self.isActive = ko.observable(false);
             self.isExpanded = ko.observable(false);
@@ -64,69 +87,128 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             self.hasChildNodes = function () {
                 return self.childNodes().length > 0;
             };
-       
+            
             self.expandChildNodes = function () {
                 self.isExpanded(true);
             };
-
             self.collapseChildNodes = function () {
                 self.isExpanded(false);
             };
-
             self.expandOrCollapseChildNodes = function () {
                 self.isExpanded(!self.isExpanded());
+            };
+            self.expandAll = function () {
+                self.isExpanded(true);
+                var nodes = self.childNodes();
+                for (var i in nodes) {
+                    nodes[i].expandAll();
+                }
+            };
+            self.collapseAll = function () {
+                self.isExpanded(false);
+                var nodes = self.childNodes();
+                for (var i in nodes) {
+                    nodes[i].collapseAll();
+                }
             };
 
             self.editSitemapNode = function (parent, event) {
                 bcms.stopEventPropagation(event);
                 self.isActive(true);
-                editSitemapNode(self);
             };
             
             self.deleteSitemapNode = function (parent, data, event) {
                 bcms.stopEventPropagation(event);
-                deleteSitemapNode(self);
+                deleteSitemapNode(self, parent);
             };
             
             self.saveSitemapNode = function (parent, data, event) {
                 bcms.stopEventPropagation(event);
-                saveSitemapNode(self);
-                self.isActive(false);
+                if ($('input', '#' + self.containerId()).valid()) {
+                    saveSitemapNode(self);
+                    self.isActive(false);
+                }
             };
             
             self.cancelEditSitemapNode = function (parent, data, event) {
                 bcms.stopEventPropagation(event);
-                cancelEditSitemapNode(self);
                 self.isActive(false);
+            };
+            
+            self.toJson = function () {
+                var params = {
+                    Id: self.id(),
+                    Version: self.version(),
+                    Title: self.title(),
+                    Url: self.url(),
+                    DisplayOrder: self.displayOrder(),
+                    ParentId: self.parentNode != null ? self.parentNode.id() : '00000000-0000-0000-0000-000000000000',
+                };
+                return params;
             };
         };
 
         /**
-        * Saves sitemap node after inline edit.
+        * Saves sitemap node.
         */
         function saveSitemapNode(sitemapNodeViewModel) {
-            // TODO: implement.
-            alert('Save node "' + sitemapNodeViewModel.title() + '"!');
+            var params = sitemapNodeViewModel.toJson(),
+                onSaveCompleted = function(json) {
+                    messages.refreshBox(messagesContainer, json);
+                    if (json.Success) {
+                        if (json.Data) {
+                            sitemapNodeViewModel.id(json.Data.Id);
+                            sitemapNodeViewModel.version(json.Data.Version);
+                        }
+                    }
+                };
+            
+            $.ajax({
+                url: links.saveSitemapNodeUrl,
+                type: 'POST',
+                dataType: 'json',
+                cache: false,
+                data: params
+            })
+                .done(function(json) {
+                    onSaveCompleted(json);
+                })
+                .fail(function(response) {
+                    onSaveCompleted(bcms.parseFailedResponse(response));
+                });
         };
         
-        function editSitemapNode(sitemapNodeViewModel) {
-            // TODO: implement.
-            //alert('Edit node "' + sitemapNodeViewModel.title() + '"!');
-        };
+        /**
+        * Delete sitemap node.
+        */
+        function deleteSitemapNode(sitemapNodeViewModel, parent) {
+            var params = sitemapNodeViewModel.toJson(),
+                onDeleteCompleted = function (json) {
+                    messages.refreshBox(messagesContainer, json);
+                    if (json.Success) {
+                        var childNodes = parent.childNodes || parent.sitemapNodes;
+                        childNodes.remove(sitemapNodeViewModel);
+                    }
+                };
 
-        function deleteSitemapNode(sitemapNodeViewModel) {
-            // TODO: implement.
-            //alert('Delete node "' + sitemapNodeViewModel.title() + '"!');
+            $.ajax({
+                url: links.deleteSitemapNodeUrl,
+                type: 'POST',
+                dataType: 'json',
+                cache: false,
+                data: params
+            })
+                .done(function (json) {
+                    onDeleteCompleted(json);
+                })
+                .fail(function (response) {
+                    onDeleteCompleted(bcms.parseFailedResponse(response));
+                });
         };
 
         /**
-        * Cancels inline editing of sitemap node.
+        * Make site map node view model.
         */
-        function cancelEditSitemapNode(sitemapNodeViewModel) {
-            // TODO: implement.
-            //alert('Cancel node edit "' + sitemapNodeViewModel.title() + '"!');
-        };
-
         function makeSitemapNodeViewModel(jsonSitemapNode) {
             var sitemapNodeViewModel = new SitemapNodeViewModel();
 
@@ -153,7 +235,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         * Parse json result and map data to view model.
         */
         function parseJsonResults(json, sitemapViewModel) {
-            messages.refreshBox(sitemapViewModel.messagesContainer, json);
+            messages.refreshBox(messagesContainer, json);
             
             if (json.Success) {
                 var nodes = [];
@@ -168,19 +250,47 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         }
 
         /**
+        * Search sitemap node.
+        */
+        function searchSitemapNodes(form) {
+            $.ajax({
+                type: 'POST',
+                cache: false,
+                url: form.attr('action'),
+                data: form.serialize(),
+
+                success: function (data) {
+                    siteSettings.setContent(data.Data.Html);
+                    initializeSiteSettingsSitemap(data);
+                }
+            });
+
+        }
+
+        /**
         * Attach links to actions.
         */
         function attachEvents(container) {
-            var form = container.find(selectors.firstForm);
+            var form = container.find(selectors.sitemapForm);
             if ($.validator && $.validator.unobtrusive) {
                 form.removeData("validator");
                 form.removeData("unobtrusiveValidation");
                 $.validator.unobtrusive.parse(form);
             }
+            
+            form.on('submit', function (event) {
+                bcms.stopEventPropagation(event);
+                searchSitemapNodes(form);
+                return false;
+            });
+
+            form.find(selectors.sitemapNodeSearchButton).on('click', function () {
+                searchSitemapNodes(form);
+            });
         }
 
         /**
-        * Initializes tab, when data is loaded
+        * Initializes tab, when data is loaded.
         */
         function initializeSiteMap(json, sitemapViewModel) {
             var context = sitemapViewModel.container.find(selectors.templateDataBind).get(0);
@@ -197,45 +307,67 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         */
         function initializeSiteSettingsSitemap(content) {
             var dialogContainer = siteSettings.getModalDialog().container;
-
+            messagesContainer = dialogContainer;
+            
             var sitemapViewModel = new SitemapViewModel(dialogContainer);
             
             initializeSiteMap(content.Data.Data, sitemapViewModel);
         }
-
+        
+        /**
+        * Sortable binding to handle node ordering.
+        */
         function addSortableBinding() {
             ko.bindingHandlers.sortable = {
-                init: function (element, valueAccessor) {
+                init: function(element, valueAccessor) {
                     var startIndex = -1,
                         sourceArray = valueAccessor();
                     var sortableSetup = {
                         start: function(event, ui) {
+                            ko.contextFor(ui.item[0]).$root.isDragStarted(true);
                             startIndex = ui.item.index();
                             ui.item.find("input:focus").change();
                         },
                         stop: function(event, ui) {
+                            ko.contextFor(ui.item[0]).$root.isDragStarted(false);
                             var newIndex = ui.item.index(),
-                                renewDisplayOrder = function(nodesToReorder) {
+                                renewNodeData = function (nodesToReorder, parentNode) {
                                     for (var i = 0; i < nodesToReorder.length; i++) {
-                                        var node = nodesToReorder[i];
+                                        var node = nodesToReorder[i],
+                                            nodeUpdated = false;
+                                        // Update order index.
                                         if (node.displayOrder() != i) {
                                             node.displayOrder(i);
-                                            // TODO: node.saveSitemapNode();
+                                            nodeUpdated = true;
+                                        }
+                                        // Update parent node.
+                                        if (parentNode != null && node.parentNode != parentNode) {
+                                            if (parentNode.isRootModel) {
+                                                node.parentNode = null;
+                                            } else {
+                                                node.parentNode = parentNode;
+                                            }
+                                            nodeUpdated = true;
+                                        }
+                                        // Save changes if any.
+                                        if (nodeUpdated) {
+                                            node.saveSitemapNode();
                                         }
                                     }
                                 };
-                            
+
                             if (startIndex > -1) {
                                 var context = ko.contextFor(ui.item.parent()[0]),
-                                    destinationArray = context.$data.childNodes || context.$data.sitemapNodes,
+                                    destinationParent = context.$data,
+                                    destinationArray = destinationParent.childNodes || destinationParent.sitemapNodes,
                                     item = sourceArray()[startIndex];
-                                
+
                                 sourceArray.remove(item);
                                 destinationArray.splice(newIndex, 0, item);
                                 ui.item.remove();
-                                
-                                renewDisplayOrder(sourceArray());
-                                renewDisplayOrder(destinationArray());
+
+                                renewNodeData(sourceArray(), null);
+                                renewNodeData(destinationArray(), destinationParent);
                             }
                         },
                         connectWith: '.bcms-connected-sortable',
@@ -247,6 +379,26 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 }
             };
         }
+
+// TODO: Remove or update for better node dragging appearance.
+//        /**
+//        * Hover binding to handle node adding to node without child nodes.
+//        */
+//        function addHoverCssBinding() {
+//            ko.bindingHandlers.hovercss = {
+//                update: function(element, valueAccessor) {
+//                    var css = valueAccessor();
+//
+//                    ko.utils.registerEventHandler(element, "mouseover", function () {
+//                        ko.utils.toggleDomNodeCssClass(element, ko.utils.unwrapObservable(css), true);
+//                    });
+//                    
+//                    ko.utils.registerEventHandler(element, "mouseout", function () {
+//                        ko.utils.toggleDomNodeCssClass(element, ko.utils.unwrapObservable(css), false);
+//                    });
+//                }
+//            };
+//        }
 
         /**
         * Initializes module.

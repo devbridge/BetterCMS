@@ -24,12 +24,19 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
         private IAuthorService authorService;
 
         /// <summary>
+        /// The tag service
+        /// </summary>
+        private readonly ITagService tagService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="GetPagePropertiesCommand" /> class.
         /// </summary>
         /// <param name="authorService">The author service.</param>
-        public GetPagePropertiesCommand(IAuthorService authorService)
+        /// <param name="tagService">The tag service.</param>
+        public GetPagePropertiesCommand(IAuthorService authorService, ITagService tagService)
         {
             this.authorService = authorService;
+            this.tagService = tagService;
         }
 
         /// <summary>
@@ -68,7 +75,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                 model.FileSize = "TODO: FileSize"; // TODO
                 model.RedirectFromOldUrl = true; // TODO: 
 
-                model.Tags = GetTags(UnitOfWork.Session, id);
+                model.Tags = tagService.GetPageTagNames(id);
                 model.Categories = GetCategories(UnitOfWork.Session, id);
             }
             else
@@ -80,18 +87,6 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
 
 
             return model;
-        }
-
-        private IList<string>  GetTags(ISession session, Guid id)
-        {
-            Root.Models.Tag tagAlias = null;
-
-            return session
-                .QueryOver<PageTag>()
-                .Where(w => w.Page.Id == id && !w.IsDeleted)
-                .JoinAlias(f => f.Tag, () => tagAlias)
-                .SelectList(select => select.Select(() => tagAlias.Name))
-                .List<string>();
         }
 
         private IList<string> GetCategories(ISession session, Guid id)

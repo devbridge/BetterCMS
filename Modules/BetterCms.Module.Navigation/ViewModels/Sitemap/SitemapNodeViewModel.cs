@@ -57,6 +57,14 @@ namespace BetterCms.Module.Navigation.ViewModels.Sitemap
         public int DisplayOrder { get; set; }
 
         /// <summary>
+        /// Gets or sets the parent id.
+        /// </summary>
+        /// <value>
+        /// The parent id.
+        /// </value>
+        public Guid ParentId { get; set; }
+
+        /// <summary>
         /// Gets or sets the child nodes.
         /// </summary>
         /// <value>

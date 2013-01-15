@@ -106,6 +106,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add New +.
+        /// </summary>
+        public static string Button_AddNew {
+            get {
+                return ResourceManager.GetString("Button_AddNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string Button_Cancel {

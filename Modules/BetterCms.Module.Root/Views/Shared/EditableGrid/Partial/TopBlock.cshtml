@@ -1,0 +1,11 @@
+﻿@using BetterCms.Module.Root.Content.Resources
+
+@model BetterCms.Module.Root.ViewModels.Shared.EditableGridViewModel
+
+<div class="bcms-top-block-holder">
+    <div class="bcms-btn-links-main" data-bind="click: addNewItem">@Model.AddNewTitle</div>
+    <div class="bcms-search-block">
+        <input data-bind="value: options().searchQuery, valueUpdate: 'afterkeydown', enterPress: searchItems" type="text" class="bcms-editor-field-box" placeholder="@RootGlobalization.WaterMark_Search" />
+        <div data-bind="click: searchItems" class="bcms-btn-search">@RootGlobalization.Button_Search</div>
+    </div>
+</div>

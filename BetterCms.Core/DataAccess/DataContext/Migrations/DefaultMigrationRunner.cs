@@ -1,5 +1,9 @@
-﻿using System.Configuration;
+﻿using System.CodeDom.Compiler;
+using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
+using System.Reflection;
+using System.Reflection.Emit;
 
 using BetterCms.Core.Environment.Assemblies;
 using BetterCms.Core.Modules;
@@ -11,6 +15,8 @@ using FluentMigrator.Runner.Announcers;
 using FluentMigrator.Runner.Initialization;
 using FluentMigrator.Runner.Processors;
 using Common.Logging;
+
+using Microsoft.CSharp;
 
 namespace BetterCms.Core.DataAccess.DataContext.Migrations
 {    
@@ -50,11 +56,50 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
         }
 
         /// <summary>
+        /// Runs migrations from the specified assemblies.
+        /// </summary>
+        public void Migrate(IList<ModuleDescriptor> moduleDescriptors, bool up)
+        {
+            List<Tuple<long, ModuleDescriptor>> versions = new List<Tuple<long, ModuleDescriptor>>();
+
+            foreach (var moduleDescriptor in moduleDescriptors)
+            {
+                var migrationTypes = assemblyLoader.GetLoadableTypes(moduleDescriptor.GetType().Assembly, typeof(Migration));
+                foreach (var migrationType in migrationTypes)
+                {                  
+                  var migrationAttributes = migrationType.GetCustomAttributes(typeof(MigrationAttribute), true);
+                    if (migrationAttributes.Length > 0)
+                    {
+                        var attribute = migrationAttributes[0] as MigrationAttribute;
+                        if (attribute != null)
+                        {
+                            versions.Add(new Tuple<long, ModuleDescriptor>(attribute.Version, moduleDescriptor));
+                        }
+                    }
+                }        
+            }
+
+            if (up)
+            {
+                versions = versions.OrderBy(f => f.Item1).ThenByDescending(f => f.Item2.Order).ToList();
+            }
+            else
+            {
+                versions = versions.OrderByDescending(f => f.).ThenBy(f => f.Value.Order).ToList();
+            }
+
+            foreach (var version in versions)
+            {
+                Migrate(version.Value, up, version.Key);
+            }
+        }
+
+        /// <summary>
         /// Runs database migrations of the specified module descriptor.
         /// </summary>
         /// <param name="moduleDescriptor">The module descriptor.</param>        
         /// <param name="up">if set to <c>true</c> migrates up; otherwise migrates down.</param>
-        public void Migrate(ModuleDescriptor moduleDescriptor, bool up = true)
+        public void Migrate(ModuleDescriptor moduleDescriptor, bool up = true, long? version = null)
         {
             var announcer = new TextWriterAnnouncer(
                 s =>
@@ -67,7 +112,7 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
 
             var assembly = moduleDescriptor.GetType().Assembly;
 
-            var migrationTypes = assemblyLoader.GetLoadableTypes(assembly, typeof(Migration));
+            var migrationTypes = assemblyLoader.GetLoadableTypes(assembly, typeof(Migration)).ToList();
 
             if (!migrationTypes.Any())
             {
@@ -109,16 +154,27 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
             {
                 throw new NotSupportedException(string.Format("Database type {0} is not supported for data migrations.", databaseType));
             }
-
+            
             var runner = new MigrationRunner(assembly, migrationContext, processor);
+            runner.ValidateVersionOrder();
+
             if (up)
             {
-                runner.MigrateUp();
+                if (version != null)
+                {
+                    runner.MigrateUp(version.Value);
+                }
+                else
+                {
+                    runner.MigrateUp();
+                }
             }
             else
-            {
-                runner.MigrateDown(0);                
+            {               
+                runner.MigrateDown(version ?? 0);                
             }
         }
+
+
     }
 }

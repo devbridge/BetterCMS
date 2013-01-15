@@ -7,6 +7,7 @@ using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Navigation.Content.Resources;
 using BetterCms.Module.Navigation.Registration;
+using BetterCms.Module.Navigation.Services;
 
 namespace BetterCms.Module.Navigation
 {
@@ -69,9 +70,7 @@ namespace BetterCms.Module.Navigation
         /// <param name="configuration">The configuration.</param>
         public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder, ICmsConfiguration configuration)
         {
-            // TODO: register module types.
-            // RegisterContentRendererType<HtmlContentAccessor, HtmlContent>(containerBuilder);
-            // containerBuilder.RegisterType<DefaultSitemapService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultSitemapService>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
 
         /// <summary>

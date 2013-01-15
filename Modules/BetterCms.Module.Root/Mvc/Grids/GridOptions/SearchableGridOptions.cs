@@ -1,5 +1,8 @@
-﻿namespace BetterCms.Module.Root.Mvc.Grids.GridOptions
+﻿using System;
+
+namespace BetterCms.Module.Root.Mvc.Grids.GridOptions
 {
+    [Serializable]
     public class SearchableGridOptions : GridOptions
     {
         /// <summary>

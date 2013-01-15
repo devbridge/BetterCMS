@@ -3,6 +3,7 @@
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.ViewModels.Blog;
+using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Models;
@@ -30,14 +31,21 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
         private IAuthorService authorService;
 
         /// <summary>
+        /// The tag service
+        /// </summary>
+        private readonly ITagService tagService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="GetBlogPostCommand" /> class.
         /// </summary>
         /// <param name="categoryService">The category service.</param>
         /// <param name="authorService">The author service.</param>
-        public GetBlogPostCommand(ICategoryService categoryService, IAuthorService authorService)
+        /// <param name="tagService">The tag service.</param>
+        public GetBlogPostCommand(ICategoryService categoryService, IAuthorService authorService, ITagService tagService)
         {
             this.categoryService = categoryService;
             this.authorService = authorService;
+            this.tagService = tagService;
         }
 
         /// <summary>
@@ -53,10 +61,12 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
             if (!id.HasDefaultValue())
             {
                 BlogPost blogAlias = null;
+                MediaImage imageAlias = null;
                 BlogPostViewModel blogModelAlias = null;
 
                 model = UnitOfWork.Session
                     .QueryOver(() => blogAlias)
+                    .Left.JoinQueryOver(() => blogAlias.Image, () => imageAlias)
                     .Where(() => !blogAlias.IsDeleted && blogAlias.Id == id)
                     .SelectList(select => select
                         .Select(() => blogAlias.Id).WithAlias(() => blogModelAlias.Id)
@@ -64,7 +74,11 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
                         .Select(() => blogAlias.Version).WithAlias(() => blogModelAlias.Version)
                         .Select(() => blogAlias.Description).WithAlias(() => blogModelAlias.IntroText)
                         .Select(() => blogAlias.Author.Id).WithAlias(() => blogModelAlias.AuthorId)
-                        .Select(() => blogAlias.Category.Id).WithAlias(() => blogModelAlias.CategoryId))
+                        .Select(() => blogAlias.Category.Id).WithAlias(() => blogModelAlias.CategoryId)
+                        .Select(() => imageAlias.Id).WithAlias(() => blogModelAlias.ImageId)
+                        .Select(() => imageAlias.PublicThumbnailUrl).WithAlias(() => blogModelAlias.ThumbnailUrl)
+                        .Select(() => imageAlias.PublicUrl).WithAlias(() => blogModelAlias.ImageUrl)
+                        .Select(() => imageAlias.Caption).WithAlias(() => blogModelAlias.ImageTooltip))
                     .TransformUsing(Transformers.AliasToBean<BlogPostViewModel>())
                     .SingleOrDefault<BlogPostViewModel>();
 
@@ -101,6 +115,8 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
                         model.LiveFromDate = content.LiveFromDate;
                         model.LiveToDate = content.LiveToDate;
                     }
+
+                    model.Tags = tagService.GetPageTagNames(id);
                 }
                 else
                 {
