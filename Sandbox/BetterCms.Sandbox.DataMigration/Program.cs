@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 
 using BetterCms.Core.DataAccess.DataContext.Migrations;
 using BetterCms.Core.Environment.Assemblies;
@@ -50,10 +51,11 @@ namespace BetterCms.Sandbox.DataMigration
             }
 
             DefaultMigrationRunner runner = new DefaultMigrationRunner(new DefaultAssemblyLoader());
-
+            runner.Migrate(descriptors, true);
+            
             foreach (var descriptor in descriptors)
             {
-                runner.Migrate(descriptor, up);
+                //runner.Migrate(descriptor, up);                
             }            
         }
 
@@ -63,7 +65,7 @@ namespace BetterCms.Sandbox.DataMigration
             {
                 // Console.WriteLine("-- Migrate DOWN --");
                 
-                // Migrate(false);
+                 Migrate(false);
 
                 Console.WriteLine("-- Migrate  UP --");
 

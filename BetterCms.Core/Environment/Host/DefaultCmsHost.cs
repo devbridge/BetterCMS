@@ -79,7 +79,7 @@ namespace BetterCms.Core.Environment.Host
                 Logger.Info("BetterCMS host application starting...");
 
                 modulesRegistration.RegisterKnownModuleRoutes(RouteTable.Routes);
-                MigrateDatabase(true);
+                MigrateDatabase();
 
                 Logger.Info("BetterCMS host application started.");
             }
@@ -221,23 +221,20 @@ namespace BetterCms.Core.Environment.Host
 
         /// <summary>
         /// Updates database.
-        /// </summary>
-        /// <param name="up">if set to <c>true</c> [up].</param>
-        private void MigrateDatabase(bool up)
+        /// </summary>        
+        private void MigrateDatabase()
         {
             try
             {
                 var descriptors = modulesRegistration.GetModules().Select(m => m.ModuleDescriptor).ToList();
 
-                descriptors = up
-                    ? descriptors.OrderByDescending(f => f.Order).ToList()
-                    : descriptors.OrderBy(f => f.Order).ToList();
+                descriptors = descriptors.OrderByDescending(f => f.Order).ToList();                    
 
                 DefaultMigrationRunner runner = new DefaultMigrationRunner(new DefaultAssemblyLoader());
 
                 foreach (var descriptor in descriptors)
                 {
-                    runner.Migrate(descriptor, up);
+                    runner.Migrate(descriptor, true);
                 }
             }
             catch (Exception ex)

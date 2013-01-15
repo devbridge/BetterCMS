@@ -186,8 +186,7 @@ namespace BetterCms.Tests.Helpers
             var entity = new Region();
 
             PopulateBaseFields(entity);
-
-            entity.Description = ProvideRandomString(MaxLength.Name);
+            
             entity.RegionIdentifier = ProvideRandomString(MaxLength.Name);
 
             return entity;
@@ -300,6 +299,7 @@ namespace BetterCms.Tests.Helpers
 
             PopulateBaseFields(entity);
 
+            entity.Description = ProvideRandomString(MaxLength.Name);
             entity.Layout = layout ?? CreateNewLayout();
             entity.Region = region ?? CreateNewRegion();
 

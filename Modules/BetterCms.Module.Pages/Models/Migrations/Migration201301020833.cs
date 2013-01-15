@@ -174,9 +174,9 @@ namespace BetterCms.Module.Pages.Models.Migrations
         /// </summary>
         private void RemoveDefaultPage()
         {
-            RemoveContent(PagesConstants.ContentIds.PageDefaultHeader);
-            RemoveContent(PagesConstants.ContentIds.PageDefaultBody);
-            RemoveContent(PagesConstants.ContentIds.PageDefaultFooter);
+            RemovePageContent(PagesConstants.ContentIds.PageDefaultHeader);
+            RemovePageContent(PagesConstants.ContentIds.PageDefaultBody);
+            RemovePageContent(PagesConstants.ContentIds.PageDefaultFooter);
             RemovePage(PagesConstants.PageIds.PageDefault);
         }
 
@@ -185,9 +185,9 @@ namespace BetterCms.Module.Pages.Models.Migrations
         /// </summary>
         private void RemovePage404()
         {
-            RemoveContent(PagesConstants.ContentIds.Page404Header);
-            RemoveContent(PagesConstants.ContentIds.Page404Body);
-            RemoveContent(PagesConstants.ContentIds.Page404Footer);
+            RemovePageContent(PagesConstants.ContentIds.Page404Header);
+            RemovePageContent(PagesConstants.ContentIds.Page404Body);
+            RemovePageContent(PagesConstants.ContentIds.Page404Footer);
             RemovePage(PagesConstants.PageIds.Page404);
         }
 
@@ -196,9 +196,9 @@ namespace BetterCms.Module.Pages.Models.Migrations
         /// </summary>
         private void RemovePage500()
         {
-            RemoveContent(PagesConstants.ContentIds.Page500Header);
-            RemoveContent(PagesConstants.ContentIds.Page500Body);
-            RemoveContent(PagesConstants.ContentIds.Page500Footer);
+            RemovePageContent(PagesConstants.ContentIds.Page500Header);
+            RemovePageContent(PagesConstants.ContentIds.Page500Body);
+            RemovePageContent(PagesConstants.ContentIds.Page500Footer);
             RemovePage(PagesConstants.PageIds.Page500);
         }
 
@@ -313,6 +313,11 @@ namespace BetterCms.Module.Pages.Models.Migrations
         private void RemovePage(Guid pageId)
         {
             Delete
+                .FromTable("PageContents")
+                .InSchema(rootSchemaName)
+                .Row(new { PageId = pageId });
+
+            Delete
                 .FromTable("Pages")
                 .InSchema(SchemaName)
                 .Row(new { Id = pageId });
@@ -327,7 +332,7 @@ namespace BetterCms.Module.Pages.Models.Migrations
         /// Removes the content.
         /// </summary>
         /// <param name="contentId">The content id.</param>
-        private void RemoveContent(Guid contentId)
+        private void RemovePageContent(Guid contentId)
         {
             Delete
                 .FromTable("PageContents")

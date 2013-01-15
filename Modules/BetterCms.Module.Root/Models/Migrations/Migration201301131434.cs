@@ -16,8 +16,10 @@ namespace BetterCms.Module.Root.Models.Migrations
         public override void Up()
         {
             Alter
-                  .Table("Regions").InSchema(SchemaName).AddColumn("Description").AsAnsiString(MaxLength.Name).Nullable();
-                  Delete.Column("Name").FromTable("Regions").InSchema(SchemaName);
+                  .Table("Regions").InSchema(SchemaName)
+                  .AddColumn("Description").AsAnsiString(MaxLength.Name).Nullable();
+
+            Delete.Column("Name").FromTable("Regions").InSchema(SchemaName);
         }
 
         public override void Down()
