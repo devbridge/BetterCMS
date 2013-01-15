@@ -182,6 +182,8 @@
     <EmbeddedResource Include="file\bcms-pages\scripts\bcms.pages.tags.js" />
     <EmbeddedResource Include="file\bcms-root\scripts\bcms.ko.grid.js" />
     <EmbeddedResource Include="file\bcms-root\scripts\bcms.js" />
+    <EmbeddedResource Include="file\bcms-root\scripts\bcms.siteSettings.js" />
+    <EmbeddedResource Include="file\bcms-root\scripts\bcms.dynamicContent.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -300,6 +302,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\bcms-media\Views\MediaManager\Partial\MediaManagerTemplate.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\bcms-root\Views\Shared\RootLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\bcms-root\Views\Shared\BaseLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\bcms-root\Views\Shared\Partial\SiteSettingTab.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -309,28 +309,22 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     * Loads a media manager view to the site settings container.
     */
     blog.loadSiteSettingsBlogs = function () {
-        dynamicContent.bindSiteSettings(siteSettings, links.loadSiteSettingsBlogsUrl, {
+        /*dynamicContent.bindSiteSettings(siteSettings, links.loadSiteSettingsBlogsUrl, {
             contentAvailable: initializeSiteSettingsBlogsList
-        });
+        });*/
 
-        /*
-        // TODO
+        // TODO: add tabs to globalization
         var tabs = [];
-        tabs.push({
-            title: globalization.postsTitle,
-            url: links.postsUrl,
-            onContentAvailable: function (tabContainer) {
-                
-            }
-        });
-        tabs.push({
-            title: globalization.optionsTitle,
-            url: links.optionsUrl,
-            onContentAvailable: function(tabContainer) {
 
-            }
-        });
-        siteSettings.initContentTabs(tabs);*/
+        var blogs = new siteSettings.TabViewModel("TODO:POSTS", links.loadSiteSettingsBlogsUrl, initializeSiteSettingsBlogsList);
+        var authors = new siteSettings.TabViewModel("TODO:AUTHORS", links.loadAuthorsTemplateUrl, initializeSiteSettingsAuthorsList);
+        var templates = new siteSettings.TabViewModel("TODO:TEMPLATES", links.loadTemplatesUrl, initializeSiteSettingsTemplatesList);
+        
+        tabs.push(blogs);
+        tabs.push(authors);
+        tabs.push(templates);
+        
+        siteSettings.initContentTabs(tabs);
     };
 
     /**

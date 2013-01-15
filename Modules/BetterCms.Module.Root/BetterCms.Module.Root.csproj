@@ -481,10 +481,8 @@
     <EmbeddedResource Include="Scripts\ckeditor\config.js" />
     <EmbeddedResource Include="Scripts\ckeditor\contents.css" />
     <EmbeddedResource Include="Scripts\ckeditor\styles.js" />
-    <EmbeddedResource Include="Scripts\bcms.dynamicContent.js" />
     <EmbeddedResource Include="Scripts\bcms.inlineEdit.js" />
     <EmbeddedResource Include="Scripts\bcms.modal.js" />
-    <EmbeddedResource Include="Scripts\bcms.siteSettings.js" />
     <Content Include="Scripts\jquery-1.7.2.min.js">
       <DependentUpon>jquery-1.7.2.js</DependentUpon>
     </Content>
@@ -513,7 +511,6 @@
     <EmbeddedResource Include="Views\Shared\Partial\Modal.cshtml" />
     <EmbeddedResource Include="Views\Shared\Partial\Region.cshtml" />
     <EmbeddedResource Include="Views\Sidebar\Container.cshtml" />
-    <EmbeddedResource Include="Views\Shared\RootLayout.cshtml" />
     <EmbeddedResource Include="Views\Shared\Layouts\OneColumnLayout.cshtml" />
     <EmbeddedResource Include="Views\Error\PageNotFound.cshtml" />
     <EmbeddedResource Include="Views\Rendering\RenderMainJsFile.cshtml" />
@@ -534,7 +531,6 @@
     <EmbeddedResource Include="Views\Shared\Layouts\Preview.cshtml" />
     <EmbeddedResource Include="Views\Shared\Partial\Info.cshtml" />
     <EmbeddedResource Include="Views\Shared\Partial\ImagePreview.cshtml" />
-    <EmbeddedResource Include="Views\Shared\BaseLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\Entity\" />
