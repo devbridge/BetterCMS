@@ -61,7 +61,7 @@ namespace BetterCms.Module.Navigation.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit.
+        ///   Looks up a localized string similar to Add Node +.
         /// </summary>
         public static string Sitemap_Dialog_Edit {
             get {
@@ -102,6 +102,15 @@ namespace BetterCms.Module.Navigation.Content.Resources {
         public static string Sitemap_Dialog_Title {
             get {
                 return ResourceManager.GetString("Sitemap_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add New Node.
+        /// </summary>
+        public static string Sitemap_EditorDialog_Title {
+            get {
+                return ResourceManager.GetString("Sitemap_EditorDialog_Title", resourceCulture);
             }
         }
         

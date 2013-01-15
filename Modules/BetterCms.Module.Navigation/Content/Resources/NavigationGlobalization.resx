@@ -127,7 +127,7 @@
     <value>Site Map</value>
   </data>
   <data name="Sitemap_Dialog_Edit" xml:space="preserve">
-    <value>Edit</value>
+    <value>Add Node +</value>
   </data>
   <data name="Sitemap_Dialog_Search" xml:space="preserve">
     <value>Search...</value>
@@ -149,5 +149,8 @@
   </data>
   <data name="Sitemap_NodeDeletedSuccessfully_Message" xml:space="preserve">
     <value>Sitemap node deleted successfully.</value>
+  </data>
+  <data name="Sitemap_EditorDialog_Title" xml:space="preserve">
+    <value>Add New Node</value>
   </data>
 </root>
