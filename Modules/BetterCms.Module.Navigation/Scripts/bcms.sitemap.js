@@ -75,7 +75,11 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             self.displayOrder = ko.observable(0);
             self.childNodes = ko.observableArray([]);
             self.parentNode = null;
-            
+
+            self.containerId = function() {
+                return "id-" + self.id();
+            };
+
             self.isEditable = ko.observable(true);
             self.isActive = ko.observable(false);
             self.isExpanded = ko.observable(false);
@@ -120,8 +124,10 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             
             self.saveSitemapNode = function (parent, data, event) {
                 bcms.stopEventPropagation(event);
-                saveSitemapNode(self);
-                self.isActive(false);
+                if ($('input', '#' + self.containerId()).valid()) {
+                    saveSitemapNode(self);
+                    self.isActive(false);
+                }
             };
             
             self.cancelEditSitemapNode = function (parent, data, event) {
