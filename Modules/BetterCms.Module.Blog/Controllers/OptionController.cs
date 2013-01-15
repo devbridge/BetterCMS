@@ -1,5 +1,4 @@
-﻿using System;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 using BetterCms.Module.Blog.Commands.GetTemplatesList;
 using BetterCms.Module.Blog.Commands.SaveDefaultTemplate;
@@ -11,14 +10,16 @@ namespace BetterCms.Module.Blog.Controllers
     {
         public virtual ActionResult Templates()
         {
-            var response = GetCommand<GetTemplatesCommand>().ExecuteCommand(true);
-            return Json(response, JsonRequestBehavior.AllowGet);
+            var templates = GetCommand<GetTemplatesCommand>().ExecuteCommand(true);
+            var view = RenderView("Templates");
+            
+            return ComboWireJson(templates != null, view, templates, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public virtual ActionResult SaveDefaultTemplate(Guid id)
+        public virtual ActionResult SaveDefaultTemplate(string id)
         {
-            var response = GetCommand<SaveDefaultTemplateCommand>().ExecuteCommand(id);
+            var response = GetCommand<SaveDefaultTemplateCommand>().ExecuteCommand(id.ToGuidOrDefault());
 
             return WireJson(response);
         }

@@ -482,5 +482,41 @@ namespace BetterCms.Module.Blog.Content.Resources {
                 return ResourceManager.GetString("SiteSettings_BlogsMenuItem", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default Template.
+        /// </summary>
+        public static string SiteSettings_Templates_DefaultTemplate {
+            get {
+                return ResourceManager.GetString("SiteSettings_Templates_DefaultTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not Compatible.
+        /// </summary>
+        public static string SiteSettings_Templates_IncompatibleTemplate {
+            get {
+                return ResourceManager.GetString("SiteSettings_Templates_IncompatibleTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select.
+        /// </summary>
+        public static string SiteSettings_Templates_SelectButton {
+            get {
+                return ResourceManager.GetString("SiteSettings_Templates_SelectButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Default Blog Template.
+        /// </summary>
+        public static string SiteSettings_Templates_Title {
+            get {
+                return ResourceManager.GetString("SiteSettings_Templates_Title", resourceCulture);
+            }
+        }
     }
 }

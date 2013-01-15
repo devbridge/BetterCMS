@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.grid', 'bcms.pages', 'knockout', 'bcms.media', 'bcms.pages.tags', 'bcms.ko.grid'],
-    function ($, bcms, modal, siteSettings, dynamicContent, datepicker, htmlEditor, grid, pages, ko, media, tags, kogrid) {
+define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.grid', 'bcms.pages', 'knockout', 'bcms.media', 'bcms.pages.tags', 'bcms.ko.grid', 'bcms.messages'],
+    function ($, bcms, modal, siteSettings, dynamicContent, datepicker, htmlEditor, grid, pages, ko, media, tags, kogrid, messages) {
     'use strict';
 
     var blog = { },
@@ -37,7 +37,9 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             loadAuthorsTemplateUrl: null,
             loadAuthorsUrl: null,
             deleteAuthorsUrl: null,
-            saveAuthorsUrl: null
+            saveAuthorsUrl: null,
+            loadTemplatesUrl: null,
+            saveDefaultTemplateUrl: null,
         },
         globalization = {
             createNewPostDialogTitle: null,
@@ -330,7 +332,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     */
     function openAuthorsTab() {
         if (blog.authorsViewModel == null) {
-            loadTabData(links.loadAuthorsTemplateUrl, null, initializeSiteSettingsAuthorsList);
+            loadTabData(links.loadAuthorsTemplateUrl, initializeSiteSettingsAuthorsList);
         }
     }
 
@@ -339,20 +341,18 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     */
     function openTemplatesTab() {
         if (blog.templatesViewModel == null) {
-            blog.templatesViewModel = '// TODO: needs implementation';
-            alert('// TODO: needs implementation');
+            loadTabData(links.loadTemplatesUrl, initializeSiteSettingsTemplatesList);
         }
     }
 
     /**
     * Loads tab data
     */
-    function loadTabData(url, params, onComplete) {
+    function loadTabData(url, onComplete) {
         $.ajax({
             type: 'POST',
             cache: false,
-            url: url,
-            data: params
+            url: url
         })
             .done(function(result) {
                 onComplete(result);
@@ -480,6 +480,113 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         return AuthorViewModel;
         
     })(kogrid.ItemViewModel);
+
+    /**
+    * Initializes site settings templates tab
+    */
+    function initializeSiteSettingsTemplatesList(json) {
+        var dialog = siteSettings.getModalDialog(),
+            container = dialog.container.find(selectors.siteSettingsTemplatesTab),
+            html = json.Data.Html,
+            templates = json.Data.Data.Data;
+
+        container.html(html);
+
+        blog.templatesViewModel = new TemplatesListViewModel(templates, container);
+
+        ko.applyBindings(blog.templatesViewModel, container.get(0));
+    }
+
+    /**
+    * Template row view model
+    */
+    function TemplateRowViewModel() {
+        var self = this;
+        
+        self.templates = ko.observableArray();
+    }
+
+    /**
+    * Templates list view model
+    */
+    function TemplatesListViewModel(templates, container) {
+        var self = this;
+
+        self.templates = ko.observableArray();
+        self.templateRows = ko.observableArray();
+        
+        for (var i = 0; i < templates.length; i ++) {
+            var template = new TemplateViewModel(templates[i], self, container);
+            self.templates.push(template);
+        }
+
+        self.fillTemplateRows = function() {
+            var rows = ko.observableArray(),
+                row = new TemplateRowViewModel();
+
+            for (var j = 0; j < self.templates().length; j++) {
+                if (j == 0 || j % 3 == 0) {
+                    row = new TemplateRowViewModel();
+                    rows.push(row);
+                }
+
+                row.templates.push(self.templates()[j]);
+            }
+
+            self.templateRows = rows;
+        };
+        
+        self.fillTemplateRows();
+    }
+
+    /**
+    * Template view model
+    */
+    function TemplateViewModel(template, parent, container) {
+        var self = this;
+
+        self.id = template.TemplateId;
+        self.parent = parent;
+        self.previewUrl = template.PreviewUrl;
+        self.title = template.Title;
+        self.container = container;
+        
+        self.isActive = ko.observable(template.IsActive);
+        self.isCompatible = template.IsCompatible;
+
+        self.select = function () {
+            var url = $.format(links.saveDefaultTemplateUrl, self.id),
+                onComplete = function (json) {
+                    container.hideLoading();
+                    messages.refreshBox(self.container, json);
+                    if (json.Success == true) {
+                        for (var i = 0; i < self.parent.templates().length; i++) {
+                            self.parent.templates()[i].unselect();
+                        }
+
+                        self.isActive(true);
+                    }
+                };
+
+            container.showLoading();
+
+            $.ajax({
+                type: 'POST',
+                cache: false,
+                url: url
+            })
+                .done(function(result) {
+                    onComplete(result);
+                })
+                .fail(function(response) {
+                    onComplete(bcms.parseFailedResponse(response));
+                });
+        };
+
+        self.unselect = function() {
+            self.isActive(false);
+        };
+    }
 
     /**
     * Initializes blog module.

@@ -159,6 +159,7 @@
     <EmbeddedResource Include="Content\Styles\Images\bcms-no-image-3.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Content\Styles\Images\icn-zoom-notcompatible.png" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>

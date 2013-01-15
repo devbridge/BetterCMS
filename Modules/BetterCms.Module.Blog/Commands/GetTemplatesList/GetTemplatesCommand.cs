@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
@@ -53,6 +54,27 @@ namespace BetterCms.Module.Blog.Commands.GetTemplatesList
                     .Where(t => t.TemplateId == id)
                     .ToList()
                     .ForEach(t => t.IsCompatible = true);
+            }
+
+            // Load default template
+            Option optionAlias = null;
+
+            var defaultTemplateId = UnitOfWork.Session
+                .QueryOver(() => optionAlias)
+                .Left.JoinQueryOver(() => optionAlias.DefaultLayout, () => layoutAlias)
+                .Where(() => !optionAlias.IsDeleted)
+                .OrderBy(() => optionAlias.CreatedOn).Desc
+                .Select(select => select.DefaultLayout.Id)
+                .Take(1)
+                .SingleOrDefault<Guid>();
+
+            if (!defaultTemplateId.HasDefaultValue())
+            {
+                var defaultTemplate = templates.FirstOrDefault(t => t.TemplateId == defaultTemplateId);
+                if (defaultTemplate != null)
+                {
+                    defaultTemplate.IsActive = true;
+                }
             }
 
             return templates;
