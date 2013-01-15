@@ -1,0 +1,46 @@
+﻿@using BetterCms.Module.Blog.Content.Resources
+@using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Mvc.Helpers
+
+@* TODO: need to implement templates preview *@
+
+<div class="bcms-blog-templates-container">
+    
+    <div class="bcms-top-block-holder">
+        <div class="bcms-large-titles">@BlogGlobalization.SiteSettings_Templates_Title</div>
+        <div class="bcms-search-block">
+            <input type="text" class="bcms-editor-field-box" placeholder="@RootGlobalization.WaterMark_Search" data-bind="value: searchQuery, valueUpdate: 'afterkeydown', enterPress: search">
+            <div class="bcms-btn-search" data-bind="click: search">@RootGlobalization.Button_Search</div>
+        </div>
+    </div>
+
+    @Html.MessagesBox("bcms-blog-templates-messages")
+                    
+    <div class="bcms-blog-templates-container">
+        <!-- ko foreach: templateRows -->
+        <div class="bcms-blog-templates-holder">
+            <!-- ko foreach: templates() -->
+            <div class="bcms-blog-templates" data-bind="css: {'bcms-blog-templates-active': isCompatible && isActive(), 'bcms-blog-templates-notcompatible': !isCompatible }">
+                <div class="bcms-title-holder">
+                    <div class="bcms-content-titles" data-bind="text: title"></div>
+                </div>
+                <div class="bcms-blog-templates-image-holder">
+                    <div class="bcms-zoom-overlay"></div>
+                </div>
+                <div class="bcms-blog-templates-button-holder">
+                    <!-- ko if: isCompatible && isActive() -->
+                    <div class="bcms-blog-templates-active-text">@BlogGlobalization.SiteSettings_Templates_DefaultTemplate</div>
+                    <!-- /ko -->
+                    <!-- ko if: isCompatible && !isActive() -->
+                    <div class="bcms-btn-grid" data-bind="click: select">@BlogGlobalization.SiteSettings_Templates_SelectButton</div>
+                    <!-- /ko -->
+                    <!-- ko if: !isCompatible -->
+                    <div class="bcms-blog-templates-notcompatible-text">@BlogGlobalization.SiteSettings_Templates_IncompatibleTemplate</div>
+                    <!-- /ko -->
+                </div>
+            </div>
+            <!-- /ko -->
+        </div>
+        <!-- /ko -->
+    </div>
+</div>

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+
+using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Models;
 
 namespace BetterCms.Module.Pages.Models
@@ -8,7 +10,6 @@ namespace BetterCms.Module.Pages.Models
     public class PageProperties : Page
     {
         public virtual string Description { get; set; }
-        public virtual string ImageUrl { get; set; }
         public virtual string CanonicalUrl { get; set; }
         public virtual string CustomCss { get; set; }
 
@@ -23,5 +24,6 @@ namespace BetterCms.Module.Pages.Models
         
         public virtual Author Author { get; set; }
         public virtual Category Category { get; set; }
+        public virtual MediaImage Image { get; set; }
     }
 }

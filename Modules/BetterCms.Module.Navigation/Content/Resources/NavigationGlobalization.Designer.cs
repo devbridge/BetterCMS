@@ -106,6 +106,15 @@ namespace BetterCms.Module.Navigation.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sitemap node deleted successfully..
+        /// </summary>
+        public static string Sitemap_NodeDeletedSuccessfully_Message {
+            get {
+                return ResourceManager.GetString("Sitemap_NodeDeletedSuccessfully_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter page title..
         /// </summary>
         public static string Sitemap_NodeEdit_Title_Tooltip_Message {

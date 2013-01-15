@@ -4,30 +4,13 @@ using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 using BetterCms.Core.Models;
+using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Root.Models;
 
 namespace BetterCms.Module.Blog.ViewModels.Blog
 {
-    public class BlogPostViewModel
+    public class BlogPostViewModel : EntityWithImageViewModel
     {
-        /// <summary>
-        /// Gets or sets the blog id.
-        /// </summary>
-        /// <value>
-        /// The blog id.
-        /// </value>
-        [Required]
-        public virtual Guid Id { get; set; }
-
-        /// <summary>
-        /// Gets or sets the entity version.
-        /// </summary>
-        /// <value>
-        /// The entity version.
-        /// </value>
-        [Required]
-        public virtual int Version { get; set; }
-
         /// <summary>
         /// Gets or sets the blog title.
         /// </summary>

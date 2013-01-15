@@ -16,7 +16,7 @@ namespace BetterCms.Module.Blog.Controllers
     {
         public virtual ActionResult Index(SearchableGridOptions request)
         {
-            var model = GetCommand<GetBlogPostListCommand>().ExecuteCommand(request);
+            var model = GetCommand<GetBlogPostListCommand>().ExecuteCommand(request ?? new SearchableGridOptions());
             return View(model);
         }
 
