@@ -61,11 +61,38 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Author created successfully.
+        /// </summary>
+        public static string CreateAuthor_CreatedSuccessfully_Message {
+            get {
+                return ResourceManager.GetString("CreateAuthor_CreatedSuccessfully_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create New Post.
         /// </summary>
         public static string CreateNewPost_Dialog_Title {
             get {
                 return ResourceManager.GetString("CreateNewPost_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete author {0}?.
+        /// </summary>
+        public static string DeleteAuthor_Confirmation_Message {
+            get {
+                return ResourceManager.GetString("DeleteAuthor_Confirmation_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Author deleted successfully.
+        /// </summary>
+        public static string DeleteAuthor_DeletedSuccessfully_Message {
+            get {
+                return ResourceManager.GetString("DeleteAuthor_DeletedSuccessfully_Message", resourceCulture);
             }
         }
         
@@ -322,6 +349,15 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There are no compatible layouts for blogs..
+        /// </summary>
+        public static string SaveBlogPost_LayoutNotFound_Message {
+            get {
+                return ResourceManager.GetString("SaveBlogPost_LayoutNotFound_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Region {0} not found. It&apos;s the default region for blog post content..
         /// </summary>
         public static string SaveBlogPost_RegionNotFound_Message {
@@ -340,11 +376,38 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Picture.
+        /// </summary>
+        public static string SiteSettings_AuthorsTab_AuthorImage_Title {
+            get {
+                return ResourceManager.GetString("SiteSettings_AuthorsTab_AuthorImage_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string SiteSettings_AuthorsTab_AuthorName_Title {
+            get {
+                return ResourceManager.GetString("SiteSettings_AuthorsTab_AuthorName_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add New +.
         /// </summary>
         public static string SiteSettings_Blogs_AddNew {
             get {
                 return ResourceManager.GetString("SiteSettings_Blogs_AddNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Authors.
+        /// </summary>
+        public static string SiteSettings_Blogs_AuthorsTab_Title {
+            get {
+                return ResourceManager.GetString("SiteSettings_Blogs_AuthorsTab_Title", resourceCulture);
             }
         }
         
@@ -385,11 +448,29 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Posts.
+        /// </summary>
+        public static string SiteSettings_Blogs_PostsTab_Title {
+            get {
+                return ResourceManager.GetString("SiteSettings_Blogs_PostsTab_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
         public static string SiteSettings_Blogs_Search {
             get {
                 return ResourceManager.GetString("SiteSettings_Blogs_Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Templates.
+        /// </summary>
+        public static string SiteSettings_Blogs_TemplatesTab_Title {
+            get {
+                return ResourceManager.GetString("SiteSettings_Blogs_TemplatesTab_Title", resourceCulture);
             }
         }
         
@@ -408,6 +489,42 @@ namespace BetterCms.Module.Blog.Content.Resources {
         public static string SiteSettings_BlogsMenuItem {
             get {
                 return ResourceManager.GetString("SiteSettings_BlogsMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default Template.
+        /// </summary>
+        public static string SiteSettings_Templates_DefaultTemplate {
+            get {
+                return ResourceManager.GetString("SiteSettings_Templates_DefaultTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not Compatible.
+        /// </summary>
+        public static string SiteSettings_Templates_IncompatibleTemplate {
+            get {
+                return ResourceManager.GetString("SiteSettings_Templates_IncompatibleTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select.
+        /// </summary>
+        public static string SiteSettings_Templates_SelectButton {
+            get {
+                return ResourceManager.GetString("SiteSettings_Templates_SelectButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Default Blog Template.
+        /// </summary>
+        public static string SiteSettings_Templates_Title {
+            get {
+                return ResourceManager.GetString("SiteSettings_Templates_Title", resourceCulture);
             }
         }
     }

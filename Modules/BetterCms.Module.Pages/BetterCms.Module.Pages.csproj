@@ -195,6 +195,8 @@
     <Compile Include="Models\Author.cs" />
     <Compile Include="Models\IHtmlContent.cs" />
     <Compile Include="Models\Maps\HtmlContentMap.cs" />
+    <Compile Include="Models\Migrations\Migration201301140930.cs" />
+    <Compile Include="Models\Migrations\Migration201301091700.cs" />
     <Compile Include="Models\Migrations\Migration201301081200.cs" />
     <Compile Include="Models\Migrations\Migration201301020833.cs" />
     <Compile Include="Models\ServerControlWidget.cs" />
@@ -224,8 +226,10 @@
     <Compile Include="Registration\PageTagsJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\RedirectsJavaScriptModuleDescriptor.cs" />
     <Compile Include="Services\DefaultAuthorService.cs" />
+    <Compile Include="Services\DefaultTagService.cs" />
     <Compile Include="Services\IAuthorService.cs" />
     <Compile Include="Services\DefaultWidgetsService.cs" />
+    <Compile Include="Services\ITagService.cs" />
     <Compile Include="Services\IWidgetsService.cs" />
     <Compile Include="Services\DefaultCategoryService.cs" />
     <Compile Include="Services\DefaultRedirectService.cs" />
@@ -288,9 +292,9 @@
     <EmbeddedResource Include="Content\Css\Images\sprite-pages-2.png" />
     <EmbeddedResource Include="Scripts\bcms.pages.content.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.js" />
-    <EmbeddedResource Include="Scripts\bcms.pages.tags.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.template.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.widgets.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.tags.js" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -304,6 +308,10 @@
     <ProjectReference Include="..\..\BetterCMS.Core\BetterCms.Core.csproj">
       <Project>{694ca5ca-a0e2-4578-a249-648498b058d7}</Project>
       <Name>BetterCms.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BetterCms.Module.MediaManager\BetterCms.Module.MediaManager.csproj">
+      <Project>{f3e41793-e8ed-4ba8-a1ab-cba1e47b0786}</Project>
+      <Name>BetterCms.Module.MediaManager</Name>
     </ProjectReference>
     <ProjectReference Include="..\BetterCms.Module.Root\BetterCms.Module.Root.csproj">
       <Project>{66e7e4df-eeea-4b1e-8663-a1b430eb7375}</Project>

@@ -1,12 +1,20 @@
 ﻿using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
+
 using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.Blog.Models;
+using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Blog.ViewModels.Blog;
+
+using BetterCms.Module.MediaManager.Models;
+
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.Services;
+
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
@@ -17,7 +25,31 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
     /// </summary>
     public class SaveBlogPostCommand : CommandBase, ICommand<BlogPostViewModel, SaveBlogPostCommandResponse>
     {
+        /// <summary>
+        /// The blog post region identifier
+        /// </summary>
         private const string regionIdentifier = BlogModuleConstants.BlogPostMainContentRegionIdentifier;
+
+        /// <summary>
+        /// The tag service
+        /// </summary>
+        private readonly ITagService tagService;
+
+        /// <summary>
+        /// The option service
+        /// </summary>
+        private readonly IOptionService optionService;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SaveBlogPostCommand" /> class.
+        /// </summary>
+        /// <param name="tagService">The tag service.</param>
+        /// <param name="optionService">The option service.</param>
+        public SaveBlogPostCommand(ITagService tagService, IOptionService optionService)
+        {
+            this.tagService = tagService;
+            this.optionService = optionService;
+        }
 
         /// <summary>
         /// Executes the specified request.
@@ -26,11 +58,24 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         /// <returns>Blog post view model</returns>
         public SaveBlogPostCommandResponse Execute(BlogPostViewModel request)
         {
-            // TODO: pass layout from UI
-            // TODO: validate layout
-            // TODO: load region
-            var layoutId = Repository.AsQueryable<Layout>(l => !l.IsDeleted && l.Name == "Default Two Columns").Select(s => s.Id).FirstOrDefault();
-            var layout = Repository.AsProxy<Layout>(layoutId);
+            // Load layout
+            Layout layout;
+            var layoutId = optionService.GetDefaultTemplateId();
+
+            if (layoutId.HasValue)
+            {
+                layout = Repository.AsProxy<Layout>(layoutId.Value);
+            } 
+            else
+            {
+                layout = GetFirstCompatibleLayout();
+            }
+            if (layout == null)
+            {
+                var message = BlogGlobalization.SaveBlogPost_LayoutNotFound_Message;
+                var logMessage = "Failed to save blog post. No compatible layouts found.";
+                throw new ValidationException(e => message, logMessage);
+            }
 
             // Loading region
             var regionId = Repository.AsQueryable<Region>(r => !r.IsDeleted && r.RegionIdentifier == regionIdentifier).Select(s => s.Id).FirstOrDefault();
@@ -77,11 +122,9 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             blogPost.Description = request.IntroText;
             blogPost.Version = request.Version;
 
-            // TODO
             if (isNew)
             {
-                // TODO: generate?
-                blogPost.PageUrl = "/" + Guid.NewGuid().ToString() + "/";
+                blogPost.PageUrl = GeneratePageUrl(request.Title);
                 blogPost.IsPublished = true;
                 blogPost.PublishedOn = DateTime.Now;
                 blogPost.IsPublic = true;
@@ -106,6 +149,15 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                 blogPost.Category = null;
             }
 
+            if (request.ImageId.HasValue)
+            {
+                blogPost.Image = Repository.AsProxy<MediaImage>(request.ImageId.Value);
+            }
+            else
+            {
+                blogPost.Image = null;
+            }
+
             Repository.Save(blogPost);
 
             // Saving content
@@ -113,12 +165,15 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             {
                 content.Name = request.Title;
             }
-            content.Html = request.Content;
+            content.Html = request.Content ?? string.Empty;
             content.ActivationDate = request.LiveFromDate;
             content.ExpirationDate = request.LiveToDate;
 
             Repository.Save(content);
             Repository.Save(pageContent);
+
+            // Save tags
+            tagService.SavePageTags(blogPost, request.Tags);
 
             // Commit
             UnitOfWork.Commit();
@@ -130,10 +185,67 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                            Title = blogPost.Title,
                            PageUrl = blogPost.PageUrl,
                            ModifiedByUser = blogPost.ModifiedByUser,
-                           ModifiedOn = blogPost.ModifiedOn.ToFormattedDateTimeString(),
-                           CreatedOn = blogPost.CreatedOn.ToFormattedDateTimeString(),
+                           ModifiedOn = blogPost.ModifiedOn.ToFormattedDateString(),
+                           CreatedOn = blogPost.CreatedOn.ToFormattedDateString(),
                            IsPublished = blogPost.IsPublished
                        };
+        }
+
+        /// <summary>
+        /// Generates the page URL.
+        /// </summary>
+        /// <returns>Generated page Url</returns>
+        private string GeneratePageUrl(string title)
+        {
+            var url = title.ToLowerInvariant();
+
+            var rgx = new Regex("[^\\w ]");
+            url = rgx.Replace(url, "").Trim();
+
+            rgx = new Regex("[ ]");
+            url = rgx.Replace(url, "-");
+
+            var fullUrl = string.Format("/{0}/", url);
+
+            // Check, if such record exists
+            var exists = UnitOfWork.Session
+                .QueryOver<Page>()
+                .Where(p => !p.IsDeleted && p.PageUrl == fullUrl)
+                .Select(p => p.Id)
+                .RowCount();
+            if (exists > 0)
+            {
+                fullUrl = string.Format("/{0}-{1}/", url, DateTime.Now.ToString("yyMMdd-hhmmss"));
+            }
+
+            return fullUrl;
+        }
+
+        /// <summary>
+        /// Gets the first compatible layout.
+        /// </summary>
+        /// <returns>Layout</returns>
+        private Layout GetFirstCompatibleLayout()
+        {
+            LayoutRegion layoutRegionAlias = null;
+            Region regionAlias = null;
+
+            var compatibleLayouts = UnitOfWork.Session
+               .QueryOver(() => layoutRegionAlias)
+               .Inner.JoinQueryOver(() => layoutRegionAlias.Region, () => regionAlias)
+               .Where(() => !layoutRegionAlias.IsDeleted
+                   && !regionAlias.IsDeleted
+                   && regionAlias.RegionIdentifier == BlogModuleConstants.BlogPostMainContentRegionIdentifier)
+               .Select(select => select.Layout.Id)
+               .Take(1)
+               .List<Guid>();
+            
+            if (compatibleLayouts != null && compatibleLayouts.Count > 0)
+            {
+                return Repository.AsProxy<Layout>(compatibleLayouts[0]);
+            }
+
+            return null;
         }
     }
 }

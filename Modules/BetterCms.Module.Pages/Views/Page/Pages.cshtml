@@ -21,13 +21,13 @@
             .Attributes()
             .Encode(false);
 
-        column.For(m => m.CreatedOn.ToFormattedDateTimeString())
+        column.For(m => m.CreatedOn.ToFormattedDateString())
            .Named(PagesGlobalization.SiteSettings_Pages_CreatedColumn)
            .SortColumnName("CreatedOn")
            .HeaderAttributes(@style => "width: 100px;")
            .Attributes(@class => "bcms-page-created");
 
-        column.For(m => m.ModifiedOn.ToFormattedDateTimeString())
+        column.For(m => m.ModifiedOn.ToFormattedDateString())
            .Named(PagesGlobalization.SiteSettings_Pages_ModifiedColumn)
            .SortColumnName("ModifiedOn")
            .HeaderAttributes(@style => "width: 100px;")

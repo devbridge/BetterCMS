@@ -1,0 +1,12 @@
+﻿@model BetterCms.Module.Root.Mvc.Grids.EditableGridColumn
+
+<th @Html.Raw(Model.HeaderAttributes)>
+    @if (!string.IsNullOrEmpty(Model.SortColumn))
+    {
+        <a data-bind="click: sortItems.bind($root, '@Model.SortColumn'), css: {'bcms-sort-arrow-top': isSortedAscending('@Model.SortColumn'), 'bcms-sort-arrow-bottom': isSortedDescending('@Model.SortColumn') }" class="bcms-sort-arrow">@Model.HeaderTitle</a>
+    }
+    else
+    {
+        @Model.HeaderTitle
+    }
+</th>

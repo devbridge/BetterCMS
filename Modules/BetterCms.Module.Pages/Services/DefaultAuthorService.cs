@@ -42,8 +42,8 @@ namespace BetterCms.Module.Pages.Services
                 .QueryOver(() => alias)
                 .SelectList(select => select
                     .Select(NHibernate.Criterion.Projections.Cast(NHibernateUtil.String, NHibernate.Criterion.Projections.Property<Author>(c => c.Id))).WithAlias(() => lookupAlias.Key)
-                    .Select(() => alias.DisplayName).WithAlias(() => lookupAlias.Value))
-                .OrderBy(o => o.DisplayName).Asc()
+                    .Select(() => alias.Name).WithAlias(() => lookupAlias.Value))
+                .OrderBy(o => o.Name).Asc()
                 .TransformUsing(Transformers.AliasToBean<LookupKeyValue>())
                 .List<LookupKeyValue>();
         }
