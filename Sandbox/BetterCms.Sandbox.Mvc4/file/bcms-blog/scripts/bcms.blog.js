@@ -488,7 +488,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         var dialog = siteSettings.getModalDialog(),
             container = dialog.container.find(selectors.siteSettingsTemplatesTab),
             html = json.Data.Html,
-            templates = json.Data.Data.Data;
+            templates = (json.Success == true) ? json.Data.Data.Data : null;
 
         container.html(html);
 
@@ -515,9 +515,11 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         self.templates = ko.observableArray();
         self.templateRows = ko.observableArray();
         
-        for (var i = 0; i < templates.length; i ++) {
-            var template = new TemplateViewModel(templates[i], self, container);
-            self.templates.push(template);
+        if (templates != null) {
+            for (var i = 0; i < templates.length; i++) {
+                var template = new TemplateViewModel(templates[i], self, container);
+                self.templates.push(template);
+            }
         }
 
         self.fillTemplateRows = function() {

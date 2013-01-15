@@ -59,18 +59,18 @@ namespace BetterCms.Module.Blog.Commands.GetTemplatesList
             // Load default template
             Option optionAlias = null;
 
-            var defaultTemplateId = UnitOfWork.Session
+            var options = UnitOfWork.Session
                 .QueryOver(() => optionAlias)
                 .Left.JoinQueryOver(() => optionAlias.DefaultLayout, () => layoutAlias)
                 .Where(() => !optionAlias.IsDeleted)
                 .OrderBy(() => optionAlias.CreatedOn).Desc
                 .Select(select => select.DefaultLayout.Id)
                 .Take(1)
-                .SingleOrDefault<Guid>();
+                .List<Guid>();
 
-            if (!defaultTemplateId.HasDefaultValue())
+            if (options != null && options.Count > 0)
             {
-                var defaultTemplate = templates.FirstOrDefault(t => t.TemplateId == defaultTemplateId);
+                var defaultTemplate = templates.FirstOrDefault(t => t.TemplateId == options[0]);
                 if (defaultTemplate != null)
                 {
                     defaultTemplate.IsActive = true;

@@ -6,8 +6,6 @@
 
 <div class="bcms-blog-templates-container">
     
-    @Html.MessagesBox("bcms-blog-templates-messages")
-
     <div class="bcms-top-block-holder">
         <div class="bcms-large-titles">@BlogGlobalization.SiteSettings_Templates_Title</div>
         <div class="bcms-search-block">
@@ -15,6 +13,8 @@
             <div class="bcms-btn-search">@RootGlobalization.Button_Search</div>
         </div>
     </div>
+
+    @Html.MessagesBox("bcms-blog-templates-messages")
                     
     <div class="bcms-blog-templates-container">
         <!-- ko foreach: templateRows -->
