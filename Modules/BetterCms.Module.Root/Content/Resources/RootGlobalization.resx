@@ -133,7 +133,7 @@
     <value>Yes</value>
   </data>
   <data name="Button_AddNew" xml:space="preserve">
-    <value>AddNew +</value>
+    <value>Add New +</value>
   </data>
   <data name="Button_Cancel" xml:space="preserve">
     <value>Cancel</value>

@@ -22,12 +22,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             siteSettingsBlogBooleanTemplateTrue: '#bcms-boolean-true-template',
             siteSettingsBlogRowTemplate: '#bcms-blogs-list-row-template',
             siteSettingsBlogRowTemplateFirstRow: 'tr:first',
-            siteSettingsBlogsTableFirstRow: 'table.bcms-tables > tbody > tr:first',
-            siteSettingsAuthorsTabLink: '.bcms-tab[href="#bcms-tab-2"]',
-            siteSettingsTemplatesTabLink: '.bcms-tab[href="#bcms-tab-3"]',
-            siteSettingsBlogsTab: '#bcms-tab-1',
-            siteSettingsAuthorsTab: '#bcms-tab-2',
-            siteSettingsTemplatesTab: '#bcms-tab-3'
+            siteSettingsBlogsTableFirstRow: 'table.bcms-tables > tbody > tr:first'
         },
         links = {
             loadSiteSettingsBlogsUrl: null,
@@ -39,13 +34,16 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             deleteAuthorsUrl: null,
             saveAuthorsUrl: null,
             loadTemplatesUrl: null,
-            saveDefaultTemplateUrl: null,
+            saveDefaultTemplateUrl: null
         },
         globalization = {
             createNewPostDialogTitle: null,
             editPostDialogTitle: null,
             deleteBlogDialogTitle: null,
-            deleteAuthorDialogTitle: null
+            deleteAuthorDialogTitle: null,
+            blogPostsTabTitle: null,
+            authorsTabTitle: null,
+            templatesTabTitle: null
         };
 
     // Assign objects to module.
@@ -56,6 +54,9 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     blog.authorsViewModel = null;
     blog.templatesViewModel = null;
 
+    /**
+    * Image view model
+    */
     var ImageViewModel = (function () {
         
         ImageViewModel = function (image) {
@@ -114,6 +115,9 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         return ImageViewModel;
     })();
 
+    /**
+    * Blog post view model
+    */
     function BlogPostViewModel(blogPost, tagsViewModel) {
         var self = this;
 
@@ -228,24 +232,22 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     /**
     * Initializes site settings blogs list
     */
-    function initializeSiteSettingsBlogsList() {
-        var dialog = siteSettings.getModalDialog(),
-            container = dialog.container.find(selectors.siteSettingsBlogsTab);
-
+    function initializeSiteSettingsBlogsList(container, content) {
+        
         var form = container.find(selectors.siteSettingsBlogsListForm);
         grid.bindGridForm(form, function (data) {
-            siteSettings.setContent(data);
-            initializeSiteSettingsBlogsList(data);
+            container.html(data);
+            initializeSiteSettingsBlogsList(container, data);
         });
 
         form.on('submit', function (event) {
             bcms.stopEventPropagation(event);
-            searchSiteSettingsBlogs(form);
+            searchSiteSettingsBlogs(container, form);
             return false;
         });
 
         form.find(selectors.siteSettingsBlogsSearchButton).on('click', function () {
-            searchSiteSettingsBlogs(form);
+            searchSiteSettingsBlogs(container, form);
         });
 
         container.find(selectors.siteSettingsBlogCreateButton).on('click', function () {
@@ -262,12 +264,6 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         });
 
         initializeSiteSettingsBlogsListItems(container);
-
-        // Init other tabs
-        blog.authorsViewModel = null;
-        blog.templatesViewModel = null;
-        dialog.container.find(selectors.siteSettingsAuthorsTabLink).on('click', openAuthorsTab);
-        dialog.container.find(selectors.siteSettingsTemplatesTabLink).on('click', openTemplatesTab);
     }
      
     /**
@@ -298,10 +294,10 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     /**
     * Search site settings blogs
     */
-    function searchSiteSettingsBlogs(form) {
+    function searchSiteSettingsBlogs(container, form) {
         grid.submitGridForm(form, function (data) {
-            siteSettings.setContent(data);
-            initializeSiteSettingsBlogsList(data);
+            container.html(data);
+            initializeSiteSettingsBlogsList(container, data);
         });
     }
 
@@ -309,16 +305,11 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     * Loads a media manager view to the site settings container.
     */
     blog.loadSiteSettingsBlogs = function () {
-        /*dynamicContent.bindSiteSettings(siteSettings, links.loadSiteSettingsBlogsUrl, {
-            contentAvailable: initializeSiteSettingsBlogsList
-        });*/
-
-        // TODO: add tabs to globalization
         var tabs = [];
 
-        var blogs = new siteSettings.TabViewModel("TODO:POSTS", links.loadSiteSettingsBlogsUrl, initializeSiteSettingsBlogsList);
-        var authors = new siteSettings.TabViewModel("TODO:AUTHORS", links.loadAuthorsTemplateUrl, initializeSiteSettingsAuthorsList);
-        var templates = new siteSettings.TabViewModel("TODO:TEMPLATES", links.loadTemplatesUrl, initializeSiteSettingsTemplatesList);
+        var blogs = new siteSettings.TabViewModel(globalization.blogPostsTabTitle, links.loadSiteSettingsBlogsUrl, initializeSiteSettingsBlogsList);
+        var authors = new siteSettings.TabViewModel(globalization.authorsTabTitle, links.loadAuthorsTemplateUrl, initializeSiteSettingsAuthorsList);
+        var templates = new siteSettings.TabViewModel(globalization.templatesTabTitle, links.loadTemplatesUrl, initializeSiteSettingsTemplatesList);
         
         tabs.push(blogs);
         tabs.push(authors);
@@ -328,48 +319,11 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     };
 
     /**
-    * Loads authors tab
-    */
-    function openAuthorsTab() {
-        if (blog.authorsViewModel == null) {
-            loadTabData(links.loadAuthorsTemplateUrl, initializeSiteSettingsAuthorsList);
-        }
-    }
-
-    /**
-    * Loads templates tab
-    */
-    function openTemplatesTab() {
-        if (blog.templatesViewModel == null) {
-            loadTabData(links.loadTemplatesUrl, initializeSiteSettingsTemplatesList);
-        }
-    }
-
-    /**
-    * Loads tab data
-    */
-    function loadTabData(url, onComplete) {
-        $.ajax({
-            type: 'POST',
-            cache: false,
-            url: url
-        })
-            .done(function(result) {
-                onComplete(result);
-            })
-            .fail(function(response) {
-                onComplete(bcms.parseFailedResponse(response));
-            });
-    }
-
-    /**
     * Initializes site settings authors tab
     */
-    function initializeSiteSettingsAuthorsList(json) {
-        var dialog = siteSettings.getModalDialog(),
-            container = dialog.container.find(selectors.siteSettingsAuthorsTab),
-            html = json.Data.Html,
-            data = json.Data.Data.Data;
+    function initializeSiteSettingsAuthorsList(container, json) {
+        var html = json.Data.Html,
+            data = (json.Success == true) ? json.Data.Data.Data : null;
 
         container.html(html);
 
@@ -484,10 +438,8 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     /**
     * Initializes site settings templates tab
     */
-    function initializeSiteSettingsTemplatesList(json) {
-        var dialog = siteSettings.getModalDialog(),
-            container = dialog.container.find(selectors.siteSettingsTemplatesTab),
-            html = json.Data.Html,
+    function initializeSiteSettingsTemplatesList(container, json) {
+        var html = json.Data.Html,
             templates = (json.Success == true) ? json.Data.Data.Data : null;
 
         container.html(html);

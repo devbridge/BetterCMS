@@ -20,7 +20,7 @@ namespace BetterCms.Module.Blog.Registration
         {
             Links = new IActionProjection[]
                         {
-                            new JavaScriptModuleLinkTo<BlogController>(this, "loadSiteSettingsBlogsUrl", c => c.Index()),
+                            new JavaScriptModuleLinkTo<BlogController>(this, "loadSiteSettingsBlogsUrl", c => c.Index(null)),
                             new JavaScriptModuleLinkTo<BlogController>(this, "loadCreateNewPostDialogUrl", c => c.CreatePost()),
                             new JavaScriptModuleLinkTo<BlogController>(this, "loadEditPostDialogUrl", c => c.EditPost("{0}")),
                             new JavaScriptModuleLinkTo<AuthorController>(this, "loadAuthorsTemplateUrl", c => c.ListTemplate()),
@@ -37,6 +37,9 @@ namespace BetterCms.Module.Blog.Registration
                             new JavaScriptModuleGlobalization(this, "editPostDialogTitle", () => BlogGlobalization.EditPost_Dialog_Title),
                             new JavaScriptModuleGlobalization(this, "deleteBlogDialogTitle", () => BlogGlobalization.DeletePost_Dialog_Title),
                             new JavaScriptModuleGlobalization(this, "deleteAuthorDialogTitle", () => BlogGlobalization.DeleteAuthor_Confirmation_Message),
+                            new JavaScriptModuleGlobalization(this, "blogPostsTabTitle", () => BlogGlobalization.SiteSettings_Blogs_PostsTab_Title),
+                            new JavaScriptModuleGlobalization(this, "authorsTabTitle", () => BlogGlobalization.SiteSettings_Blogs_AuthorsTab_Title),
+                            new JavaScriptModuleGlobalization(this, "templatesTabTitle", () => BlogGlobalization.SiteSettings_Blogs_TemplatesTab_Title),
                         };
         }
     }

@@ -250,6 +250,15 @@ define('bcms', ['jquery', 'knockout'], function ($, ko) {
     };
 
     /**
+    * Extend knockout handlers: stop binding to child elements
+    */
+    ko.bindingHandlers.stopBindings = {
+        init: function () {
+            return { controlsDescendantBindings: true };
+        }
+    };
+
+    /**
     * Extend knockout: add required value validation
     */
     ko.extenders.required = function (target, overrideMessage) {

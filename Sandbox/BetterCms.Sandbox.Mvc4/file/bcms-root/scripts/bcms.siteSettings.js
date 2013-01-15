@@ -14,7 +14,8 @@ define('bcms.siteSettings', ['jquery', 'bcms', 'bcms.modal', 'bcms.dynamicConten
             placeHolder: '#bcms-site-settings-placeholder',
             firstMenuButton: '#bcms-site-settings-menu .bcms-onclick-action:first',
             loaderContainer: '.bcms-rightcol',
-            tabsTemplate: '#bcms-site-setting-tab-template'
+            tabsTemplate: '#bcms-site-setting-tab-template',
+            tabsTemplateChildDiv: 'div'
         },
 
         links = {
@@ -116,7 +117,8 @@ define('bcms.siteSettings', ['jquery', 'bcms', 'bcms.modal', 'bcms.dynamicConten
         
         for (var i = 0; i < tabViewModels.length; i++) {
             var tab = tabViewModels[i];
-            tab.id = i + 1;
+            tab.tabId = 'bcms-tab-' + (i+1);
+            tab.href = '#' + tab.tabId;
             
             self.tabs.push(tab);
         }
@@ -129,40 +131,45 @@ define('bcms.siteSettings', ['jquery', 'bcms', 'bcms.modal', 'bcms.dynamicConten
         var self = this;
 
         self.title = title;
-        self.id = null;
         self.url = url;
-        self.onContentAvailable = onContentAvailable || function (tabContainer) { };
-        self.isActive = ko.observable(false);
         self.isInitialized = false;
+        self.container = false;
+        self.spinContainer = false;
         self.parent = null;
-        self.container = null;
+        self.tabId = null;
+        self.href = null;
+        self.contentId = null;
 
-        self.href = function() {
-            return '#' + self.tabId();
-        };
-        
-        self.tabId = function () {
-            return 'bcms-tab-' + self.id;
+        self.onContentAvailable = function (content) {
+            if (self.contentId == siteSettings.contentId) {
+                self.isInitialized = true;
+
+                if (onContentAvailable && $.isFunction(onContentAvailable)) {
+                    onContentAvailable(self.container, content);
+                }
+            }
         };
 
         self.load = function () {
             if (!self.isInitialized) {
-                self.isInitialized = true;
+                self.spinContainer = siteSettingsModalWindow.container.find(selectors.loaderContainer);
+                self.container = siteSettingsModalWindow.container.find(self.href).find(selectors.tabsTemplateChildDiv);
+                self.contentId = siteSettings.contentId;
 
-                dynamicContent.setContentFromUrl(self, self.url);
+                dynamicContent.setContentFromUrl(self, self.url, {
+                    done: self.onContentAvailable
+                });
             }
-            self.isActive(true);
         };
 
         self.getLoaderContainer = function () {
-            if (self.container == null) {
-                self.container = siteSettingsModalWindow.container.find(self.href());
-            }
-            return self.container;
+            return self.spinContainer;
         };
 
-        self.setContent = function(content) {
-            self.container.html(content);
+        self.setContent = function (content) {
+            if (self.contentId == siteSettings.contentId) {
+                self.container.html(content);
+            }
         };
     };
 
