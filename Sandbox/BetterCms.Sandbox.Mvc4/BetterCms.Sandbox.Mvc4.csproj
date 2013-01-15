@@ -177,13 +177,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Content Include="App_Data\BetterCMS\Modules\readme.txt" />
-    <EmbeddedResource Include="file\bcms-blog\scripts\bcms.blog.js" />
-    <EmbeddedResource Include="file\bcms-media\scripts\bcms.media.js" />
-    <EmbeddedResource Include="file\bcms-pages\scripts\bcms.pages.tags.js" />
-    <EmbeddedResource Include="file\bcms-root\scripts\bcms.ko.grid.js" />
-    <EmbeddedResource Include="file\bcms-root\scripts\bcms.js" />
-    <EmbeddedResource Include="file\bcms-root\scripts\bcms.siteSettings.js" />
-    <EmbeddedResource Include="file\bcms-root\scripts\bcms.dynamicContent.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -191,6 +184,8 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\bcms-blog\" />
+    <Folder Include="file\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
@@ -251,66 +246,6 @@
     <Content Include="Views\Widgets\05.cshtml" />
     <Content Include="Views\Shared\Partial\Hello.cshtml" />
     <Content Include="Views\Shared\Partial\TestOptionValues.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\bcms-blog\Views\Blog\CreatePost.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\bcms-blog\Views\Blog\EditPost.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\bcms-blog\Views\Blog\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\bcms-blog\Views\Blog\Partial\BlogPostForm.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\bcms-blog\Views\Shared\EditorTemplates\SiteSettingBoolean.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\bcms-blog\Views\Web.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\bcms-blog\Views\Blog\Partial\BlogsList.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\bcms-blog\Views\Author\Partial\ListTemplate.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\bcms-root\Views\Shared\EditableGrid\Grid.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\bcms-root\Views\Shared\EditableGrid\Partial\Cell.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\bcms-root\Views\Shared\EditableGrid\Partial\Header.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\bcms-root\Views\Shared\EditableGrid\Partial\TopBlock.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\bcms-blog\Views\Author\Partial\ImageCell.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\bcms-blog\Views\Option\Templates.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\bcms-media\Views\MediaManager\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\bcms-media\Views\MediaManager\Partial\MediaManagerTab.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\bcms-media\Views\MediaManager\Partial\MediaManagerTemplate.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\bcms-root\Views\Shared\RootLayout.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\bcms-root\Views\Shared\BaseLayout.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\bcms-root\Views\Shared\Partial\SiteSettingTab.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

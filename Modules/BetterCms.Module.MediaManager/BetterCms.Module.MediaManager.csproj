@@ -241,6 +241,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Scripts\bcms.contextMenu.js" />
+    <EmbeddedResource Include="Scripts\bcms.media.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -268,6 +269,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\MediaManager\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\MediaManager\Partial\MediaManagerTab.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\MediaManager\Partial\MediaManagerTemplate.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

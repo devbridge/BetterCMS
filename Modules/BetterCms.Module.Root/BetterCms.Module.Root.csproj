@@ -483,6 +483,10 @@
     <EmbeddedResource Include="Scripts\ckeditor\styles.js" />
     <EmbeddedResource Include="Scripts\bcms.inlineEdit.js" />
     <EmbeddedResource Include="Scripts\bcms.modal.js" />
+    <EmbeddedResource Include="Scripts\bcms.dynamicContent.js" />
+    <EmbeddedResource Include="Scripts\bcms.js" />
+    <EmbeddedResource Include="Scripts\bcms.ko.grid.js" />
+    <EmbeddedResource Include="Scripts\bcms.siteSettings.js" />
     <Content Include="Scripts\jquery-1.7.2.min.js">
       <DependentUpon>jquery-1.7.2.js</DependentUpon>
     </Content>
@@ -531,6 +535,13 @@
     <EmbeddedResource Include="Views\Shared\Layouts\Preview.cshtml" />
     <EmbeddedResource Include="Views\Shared\Partial\Info.cshtml" />
     <EmbeddedResource Include="Views\Shared\Partial\ImagePreview.cshtml" />
+    <EmbeddedResource Include="Views\Shared\BaseLayout.cshtml" />
+    <EmbeddedResource Include="Views\Shared\RootLayout.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Partial\SiteSettingTab.cshtml" />
+    <EmbeddedResource Include="Views\Shared\EditableGrid\Grid.cshtml" />
+    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\Cell.cshtml" />
+    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\Header.cshtml" />
+    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\TopBlock.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\Entity\" />
