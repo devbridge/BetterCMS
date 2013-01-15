@@ -40,7 +40,7 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs'], function ($, bcms, tabs) {
     modal.selectors = selectors;
     modal.links = links;
     modal.globalization = globalization;
-
+    var isResized = false;
     /**
     * Returns count of currently open modal windows.
     */
@@ -196,6 +196,7 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs'], function ($, bcms, tabs) {
         close: function () {
             if (this.onAction(this.options.onClose) === true) {
                 this.destroy();
+                this.changeFirstModalWindowSize();
             }
         },
 
@@ -234,7 +235,7 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs'], function ($, bcms, tabs) {
                 .append(content);
 
             this.container.find(selectors.loader).remove();
-            
+
             if ($.validator && $.validator.unobtrusive) {
                 $.validator.unobtrusive.parse(this.container);
             }
@@ -361,6 +362,13 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs'], function ($, bcms, tabs) {
                 elemContent.css({ 'height': (viewportHeight - (elemHeader.outerHeight() + elemFooter.outerHeight() + elemTabsHeader.outerHeight())) + 'px' });
             } else {
                 elemContent.css({ 'height': (viewportHeight - (elemHeader.outerHeight() + elemFooter.outerHeight())) + 'px' });
+            }            
+        },
+
+        changeFirstModalWindowSize: function () {
+            var dialog = modal.last();
+            if (dialog && isResized) {
+                dialog.maximizeHeight();
             }
         }
     };
@@ -376,6 +384,7 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs'], function ($, bcms, tabs) {
                 var topModal = modal.last();
                 if (topModal) {
                     topModal.maximizeHeight();
+                    isResized = true;
                 }
 
                 if (modal.getCount() < 1) {
@@ -407,7 +416,7 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs'], function ($, bcms, tabs) {
                         topModal.closeClick();
                     }
                 }
-                    // If Enter pressed and accept action is not disabled in the modal dialog.
+                // If Enter pressed and accept action is not disabled in the modal dialog.
                 else if (e.keyCode === 13 && !topModal.options.disableAccept) {
                     if (canHandleKeyPress()) {
                         e.preventDefault();
