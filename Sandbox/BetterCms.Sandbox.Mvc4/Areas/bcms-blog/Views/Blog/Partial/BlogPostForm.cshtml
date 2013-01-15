@@ -56,7 +56,7 @@
             </div>
             <div class="bcms-upload-info">
                 <div class="bcms-upload-info-text">@* TODO: which text should go there? *@Make sure to size this imageto 200x125 pixels. It will be displayed as a thumbnail with your post.</div>
-                <div class="bcms-btn-small" data-bind="click: image().select">@BlogGlobalization.EditBlockPost_SelectImage_Button_Title</div>
+                <div class="bcms-btn-small" data-bind="click: image().select.bind(image())">@BlogGlobalization.EditBlockPost_SelectImage_Button_Title</div>
             </div>
         </div>
 

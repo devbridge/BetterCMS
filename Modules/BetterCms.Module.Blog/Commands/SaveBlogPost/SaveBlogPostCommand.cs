@@ -165,7 +165,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             {
                 content.Name = request.Title;
             }
-            content.Html = request.Content;
+            content.Html = request.Content ?? string.Empty;
             content.ActivationDate = request.LiveFromDate;
             content.ExpirationDate = request.LiveToDate;
 

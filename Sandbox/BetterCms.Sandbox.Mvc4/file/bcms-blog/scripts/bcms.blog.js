@@ -89,17 +89,23 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         };
 
         ImageViewModel.prototype.select = function (data, event) {
-            var self = this;
+            var self = this,
+                onMediaSelect = function (insertedImage) {
+                    self.thumbnailUrl(insertedImage.thumbnailUrl);
+                    self.url(insertedImage.publicUrl());
+                    self.tooltip(insertedImage.tooltip);
+                    self.id(insertedImage.id());
+
+                    self.onAfterSelect();
+                },
+                mediasViewModelExtender = {
+                    onMediaSelect: function (image) {
+                        onMediaSelect(image);
+                    }
+                };
             bcms.stopEventPropagation(event);
 
-            media.openImageInsertDialog(function (insertedImage) {
-                self.thumbnailUrl(insertedImage.thumbnailUrl);
-                self.url(insertedImage.publicUrl());
-                self.tooltip(insertedImage.tooltip);
-                self.id(insertedImage.id());
-
-                self.onAfterSelect();
-            }, false);
+            media.openImageInsertDialog(onMediaSelect, false, mediasViewModelExtender);
         };
 
         ImageViewModel.prototype.onAfterSelect = function() {

@@ -261,15 +261,6 @@
     <EmbeddedResource Include="Views\Images\ImageInsert.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\MediaManager\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\MediaManager\Partial\MediaManagerTab.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\MediaManager\Partial\MediaManagerTemplate.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Views\Upload\MultiFileUpload.cshtml" />
   </ItemGroup>
   <ItemGroup>
