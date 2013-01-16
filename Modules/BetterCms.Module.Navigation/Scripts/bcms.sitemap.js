@@ -94,6 +94,34 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                     nodes[i].collapseAll();
                 }
             };
+
+            self.updateNodesOrderAndParent = function () {
+                // For all nodes update display order and parent node info.
+                self.updateNodes(self.sitemapNodes(), null);
+            };
+
+            self.updateNodes = function(nodes, parent) {
+                for (var i in nodes) {
+                    var node = nodes[i],
+                        saveIt = false;
+
+                    if (node.displayOrder() != i) {
+                        saveIt = true;
+                        node.displayOrder(i);
+                    }
+
+                    if (node.parentNode != parent) {
+                        saveIt = true;
+                        node.parentNode = parent;
+                    }
+
+                    if (saveIt) {
+                        saveSitemapNode(node);
+                    }
+
+                    self.updateNodes(node.childNodes(), node);
+                }
+            };
         };
 
         /**
@@ -440,32 +468,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                             },
                             stop: function(event, ui) {
                                 ko.contextFor(ui.item[0]).$root.isDragStarted(false);
-                                var newIndex = ui.item.index(),
-                                    renewNodeData = function(nodesToReorder, parentNode) {
-                                        for (var i = 0; i < nodesToReorder.length; i++) {
-                                            var node = nodesToReorder[i],
-                                                nodeUpdated = false;
-                                            // Update order index.
-                                            if (node.displayOrder() != i) {
-                                                node.displayOrder(i);
-                                                nodeUpdated = true;
-                                            }
-                                            // Update parent node.
-                                            if (parentNode != null && node.parentNode != parentNode) {
-                                                if (parentNode.isRootModel) {
-                                                    node.parentNode = null;
-                                                } else {
-                                                    node.parentNode = parentNode;
-                                                }
-                                                nodeUpdated = true;
-                                            }
-                                            // Save changes if any.
-                                            if (nodeUpdated) {
-                                                saveSitemapNode(node);
-                                            }
-                                        }
-                                    };
-
+                                var newIndex = ui.item.index();
                                 if (startIndex > -1) {
                                     var context = ko.contextFor(ui.item.parent()[0]),
                                         destinationParent = context.$data,
@@ -476,10 +479,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                                     destinationArray.splice(newIndex, 0, item);
                                     ui.item.remove();
 
-                                    if (destinationArray != sourceArray) {
-                                        renewNodeData(sourceArray(), null);
-                                    }
-                                    renewNodeData(destinationArray(), destinationParent);
+                                    context.$root.updateNodesOrderAndParent();
                                 }
                             },
                             connectWith: selectors.sitemapChildNodesList,
@@ -518,8 +518,12 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                                     sitemapNode.title(pageLink.title());
                                     sitemapNode.url(pageLink.url());
                                     sitemapNode.displayOrder(newIndex);
+                                    sitemapNode.parentNode = destinationParent != context.$root ? destinationParent : null;
+                                    // TODO: save new node.
 
                                     destinationArray.splice(newIndex, 0, sitemapNode);
+                                    
+                                    context.$root.updateNodesOrderAndParent();
                                 }
                                 return false;
                             }
