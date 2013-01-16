@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Models;
@@ -18,6 +17,9 @@ using BetterCms.Module.Pages.Services;
 
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Mvc.Helpers;
+
+using NHibernate.Criterion;
 
 namespace BetterCms.Module.Blog.Commands.SaveBlogPost
 {
@@ -195,36 +197,6 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         }
 
         /// <summary>
-        /// Generates the page URL.
-        /// </summary>
-        /// <returns>Generated page Url</returns>
-        private string GeneratePageUrl(string title)
-        {
-            var url = title.ToLowerInvariant();
-
-            var rgx = new Regex("[^\\w ]");
-            url = rgx.Replace(url, "").Trim();
-
-            rgx = new Regex("[ ]");
-            url = rgx.Replace(url, "-");
-
-            var fullUrl = string.Format("/{0}/", url);
-
-            // Check, if such record exists
-            var exists = UnitOfWork.Session
-                .QueryOver<Page>()
-                .Where(p => !p.IsDeleted && p.PageUrl == fullUrl)
-                .Select(p => p.Id)
-                .RowCount();
-            if (exists > 0)
-            {
-                fullUrl = string.Format("/{0}-{1}/", url, DateTime.Now.ToString("yyMMdd-hhmmss"));
-            }
-
-            return fullUrl;
-        }
-
-        /// <summary>
         /// Gets the first compatible layout.
         /// </summary>
         /// <returns>Layout</returns>
@@ -249,6 +221,99 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Generates the page URL.
+        /// </summary>
+        /// <param name="title">The title.</param>
+        /// <returns>Url path</returns>
+        private string GeneratePageUrl(string title)
+        {
+            var url = title.Transliterate();
+            url = AddUrlPathSuffixIfNeeded(url);
+
+            return url;
+        }
+
+        /// <summary>
+        /// Pathes the exists in db.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <returns>Url path</returns>
+        private bool PathExistsInDb(string url)
+        {
+            var exists = UnitOfWork.Session
+                .QueryOver<Page>()
+                .Where(p => !p.IsDeleted && p.PageUrl == url)
+                .Select(p => p.Id)
+                .RowCount();
+            return exists > 0;
+        }
+
+        /// <summary>
+        /// Adds the URL path sufix if needed.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <returns>Url path</returns>
+        private string AddUrlPathSuffixIfNeeded(string url)
+        {
+            var fullUrl = string.Format("/{0}/", url);
+
+            // Check, if such record exists
+            var exists = PathExistsInDb(fullUrl);
+
+            if (exists)
+            {
+                // Load all titles
+                var urlToReplace = string.Format("/{0}-", url);
+                var urlToSearch = string.Format("{0}%", urlToReplace);
+                Page alias = null;
+
+                var paths = UnitOfWork.Session
+                    .QueryOver(() => alias)
+                    .Where(p => !p.IsDeleted)
+                    .Where(Restrictions.InsensitiveLike(Projections.Property(() => alias.PageUrl), urlToSearch))
+                    .Select(p => p.PageUrl)
+                    .List<string>();
+
+                int maxNr = 0;
+                var recheckInDb = false;
+                foreach (var path in paths)
+                {
+                    int pathNr;
+                    if (int.TryParse(path.Replace(urlToReplace, null).Trim('/'), out pathNr))
+                    {
+                        if (pathNr > maxNr)
+                        {
+                            maxNr = pathNr;
+                        }
+                    }
+                    else
+                    {
+                        recheckInDb = true;
+                    }
+                }
+
+                if (maxNr == int.MaxValue)
+                {
+                    recheckInDb = true;
+                }
+                else
+                {
+                    maxNr++;
+                }
+
+                fullUrl = string.Format("/{0}-{1}/", url, maxNr);
+
+                if (recheckInDb)
+                {
+                    url = string.Format(fullUrl.Trim('/'));
+                    return AddUrlPathSuffixIfNeeded(url);
+                }
+            }
+
+            return fullUrl;
         }
     }
 }

@@ -183,6 +183,7 @@
     <Compile Include="Mvc\Helpers\LayoutRegionWrapper.cs" />
     <Compile Include="Mvc\Helpers\PreviewHelper.cs" />
     <Compile Include="Mvc\Helpers\RegionContentWrapper.cs" />
+    <Compile Include="Mvc\Helpers\StringHelper.cs" />
     <Compile Include="Projections\PageContentProjection.cs" />
     <Compile Include="Projections\PageContentProjectionFactory.cs" />
     <Compile Include="Registration\AuthenticationJavaScriptModuleDescriptor.cs" />
