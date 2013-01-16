@@ -32,6 +32,19 @@ namespace BetterCms.Module.Navigation.Controllers
         }
 
         /// <summary>
+        /// Edits the sitemap.
+        /// </summary>
+        /// <returns>Rendered sitemap container.</returns>
+        public ActionResult EditSitemap()
+        {
+            var sitemap = GetCommand<GetSitemapCommand>().ExecuteCommand(string.Empty);
+            var success = sitemap != null;
+            var view = RenderView("Edit", null);
+
+            return ComboWireJson(success, view, sitemap, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
         /// Saves the sitemap node.
         /// </summary>
         /// <param name="node">The node.</param>

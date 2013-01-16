@@ -10,13 +10,20 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 templateDataBind: ".bcms-sitemap-data-bind-container",
                 sitemapForm: "#bcms-sitemap-form",
                 sitemapNodeSearchButton: "#bcms-btn-sitemap-search",
+                sitemapEditButton: "#bcms-btn-sitemap-edit",
+                
+                templatePageLinksDataBind: "#bcms-pagelinks-data-bind-container",
             },
             links = {
                 loadSiteSettingsSitemapUrl: null,
                 saveSitemapNodeUrl: null,
                 deleteSitemapNodeUrl: null,
+                sitemapEditDialogUrl: null,
             },
-            globalization = {},
+            globalization = {
+                sitemapEditorDialogTitle: null,
+                sitemapEditorDialogClose: null,
+            },
             messagesContainer = null;
 
         /**
@@ -26,13 +33,35 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         sitemap.globalization = globalization;
 
         /**
-        * Loads a media manager view to the site settings container.
+        * Loads a sitemap view to the site settings container.
         */
         sitemap.loadSiteSettingsSitmap = function () {
             dynamicContent.bindSiteSettings(siteSettings, links.loadSiteSettingsSitemapUrl, {
                 contentAvailable: initializeSiteSettingsSitemap
             });
         };
+
+        /**
+        * Opens sitemap edit dialog.
+        */
+        sitemap.showSitemapEditDialog = function() {
+            modal.open({
+                title: globalization.sitemapEditorDialogTitle,
+                cancelTitle: globalization.sitemapEditorDialogClose,
+                disableAccept: true,
+                onLoad: function(dialog) {
+                    dynamicContent.setContentFromUrl(dialog, links.sitemapEditDialogUrl, {
+                        done: function (content) {
+                            initializeSitemapEditDialog(content, dialog);
+                        },
+                    });
+                },
+                onAcceptClick: function (dialog) {
+                    dialog.close();
+                }
+            });
+        };
+
 
         /**
         * Sitemap view model.
@@ -268,22 +297,21 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         }
 
         /**
-        * Attach links to actions.
+        * Attach events.
         */
         function attachEvents(container) {
+            container.find(selectors.sitemapEditButton).on('click', function () {
+                sitemap.showSitemapEditDialog();
+            });
+
             var form = container.find(selectors.sitemapForm);
-            if ($.validator && $.validator.unobtrusive) {
-                form.removeData("validator");
-                form.removeData("unobtrusiveValidation");
-                $.validator.unobtrusive.parse(form);
-            }
             
             form.on('submit', function (event) {
                 bcms.stopEventPropagation(event);
                 searchSitemapNodes(form);
                 return false;
             });
-
+            
             form.find(selectors.sitemapNodeSearchButton).on('click', function () {
                 searchSitemapNodes(form);
             });
@@ -297,9 +325,18 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
 
             if (parseJsonResults(json, sitemapViewModel)) {
                 ko.applyBindings(sitemapViewModel, context);
-
-                attachEvents(sitemapViewModel.container);
+                
+                var form = sitemapViewModel.container.find(selectors.sitemapForm);
+                if ($.validator && $.validator.unobtrusive) {
+                    form.removeData("validator");
+                    form.removeData("unobtrusiveValidation");
+                    $.validator.unobtrusive.parse(form);
+                }
+                
+                return true;
             }
+            
+            return false;
         }
 
         /**
@@ -307,10 +344,20 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         */
         function initializeSiteSettingsSitemap(content) {
             var dialogContainer = siteSettings.getModalDialog().container;
-            messagesContainer = dialogContainer;
+            
+            messagesContainer = dialogContainer; // TODO: move to private.
             
             var sitemapViewModel = new SitemapViewModel(dialogContainer);
-            
+            if (initializeSiteMap(content, sitemapViewModel)) {
+                attachEvents(dialogContainer);
+            };
+        }
+        
+        /**
+        * Initializes sitemap edit dialog.
+        */
+        function initializeSitemapEditDialog(content, dialog) {
+            var sitemapViewModel = new SitemapViewModel(dialog.container);
             initializeSiteMap(content, sitemapViewModel);
         }
         
@@ -351,7 +398,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                                         }
                                         // Save changes if any.
                                         if (nodeUpdated) {
-                                            node.saveSitemapNode();
+                                            saveSitemapNode(node);
                                         }
                                     }
                                 };
@@ -366,7 +413,9 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                                 destinationArray.splice(newIndex, 0, item);
                                 ui.item.remove();
 
-                                renewNodeData(sourceArray(), null);
+                                if (destinationArray != sourceArray) {
+                                    renewNodeData(sourceArray(), null);
+                                }
                                 renewNodeData(destinationArray(), destinationParent);
                             }
                         },

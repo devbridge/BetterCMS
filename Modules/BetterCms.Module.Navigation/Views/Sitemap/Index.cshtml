@@ -17,5 +17,7 @@
         </div>
         @Html.MessagesBox("bcms-messages-box")
     </div>
-    @Html.Partial("Partial/Sitemap", new SitemapNodeViewModel())
+    <div class="bcms-placement-holder bcms-sitemap-nodes">
+        @Html.Partial("Partial/Sitemap", new SitemapNodeViewModel())
+    </div>
 }

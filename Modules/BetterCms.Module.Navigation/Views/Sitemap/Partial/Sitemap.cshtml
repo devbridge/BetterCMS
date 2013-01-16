@@ -6,14 +6,12 @@
 <div data-bind='template: { name: "bcms-navigation-sitemap-template" }' class="bcms-sitemap-data-bind-container"></div>
 
 <script type="text/html" id="bcms-navigation-sitemap-template">
-    <div class="bcms-placement-holder bcms-sitemap-nodes">
         <div class="bcms-expand-link-holder">
             <div class="bcms-expand-link" data-bind="click: expandAll">Expand All</div>
             <div class="bcms-expand-link" data-bind="click: collapseAll">Collapse All</div>
         </div>
         <div class="bcms-parent-node bcms-connected-sortable"
             data-bind='template: { name: "bcms-navigation-sitemapnode-template", foreach: sitemapNodes }, sortable: sitemapNodes, css: {"bcms-drag-hover-emptylist": isDragStarted()}'></div>
-    </div>
 </script>
 
 <script type="text/html" id="bcms-navigation-sitemapnode-template">
