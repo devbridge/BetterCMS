@@ -57,17 +57,10 @@ namespace BetterCms.Module.MediaManager.Controllers
         public ActionResult ImageInsert()
         {
             var images = GetCommand<GetImagesCommand>().ExecuteCommand(new MediaManagerViewModel());
-            var json = new
-            {
-                Data = new WireJson
-                {
-                    Success = true,
-                    Data = images
-                },
-                Html = RenderView("ImageInsert", new MediaImageViewModel())
-            };
+            var success = images != null;
+            var view = RenderView("ImageInsert", new MediaImageViewModel());
 
-            return WireJson(true, json, JsonRequestBehavior.AllowGet);
+            return ComboWireJson(success, view, images, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>

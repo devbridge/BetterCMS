@@ -311,7 +311,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             
             var sitemapViewModel = new SitemapViewModel(dialogContainer);
             
-            initializeSiteMap(content.Data.Data, sitemapViewModel);
+            initializeSiteMap(content, sitemapViewModel);
         }
         
         /**

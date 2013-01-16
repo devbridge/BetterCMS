@@ -149,8 +149,8 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     * Initializes blog edit form
     */
     function initEditBlogPostDialogEvents(dialog, content) {
-        var data = content.Data.Data.Data,
-            tagsList = content.Data.Data.Data.Tags;
+        var data = content.Data,
+            tagsList = data.Tags;
         dialog.container.find(selectors.datePickers).initializeDatepicker();
         
         htmlEditor.initializeHtmlEditor(selectors.htmlEditor);
@@ -322,8 +322,8 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     * Initializes site settings authors tab
     */
     function initializeSiteSettingsAuthorsList(container, json) {
-        var html = json.Data.Html,
-            data = (json.Success == true) ? json.Data.Data.Data : null;
+        var html = json.Html,
+            data = (json.Success == true) ? json.Data : null;
 
         container.html(html);
 
@@ -439,8 +439,8 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     * Initializes site settings templates tab
     */
     function initializeSiteSettingsTemplatesList(container, json) {
-        var html = json.Data.Html,
-            templates = (json.Success == true) ? json.Data.Data.Data : null;
+        var html = json.Html,
+            templates = (json.Success == true) ? json.Data : null;
 
         container.html(html);
 

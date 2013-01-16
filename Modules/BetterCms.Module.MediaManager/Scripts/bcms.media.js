@@ -748,7 +748,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                             if (folderViewModelOptions) {
                                 imagesViewModel = $.extend(imagesViewModel, folderViewModelOptions);
                             }
-                            initializeTab(content.Data.Data, imagesViewModel);
+                            initializeTab(content, imagesViewModel);
                         },
                     });
                 },
@@ -1105,7 +1105,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             var imagesTabContainer = dialogContainer.find(selectors.tabImagesContainer);
             imagesViewModel = new MediaItemsViewModel(imagesTabContainer, links.loadImagesUrl, dialogContainer);
             imagesViewModel.spinContainer = imagesTabContainer.parents(selectors.spinContainer);
-            initializeTab(content.Data.Data, imagesViewModel);
+            initializeTab(content, imagesViewModel);
         };
 
         /**
