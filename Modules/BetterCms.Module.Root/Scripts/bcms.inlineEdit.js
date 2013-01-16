@@ -13,6 +13,7 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
             firstCell: 'td:first',
             firstForm: 'form:first',
             firstEditableInput: 'input[type="text"]:first',
+            editableInput: 'input[type="text"]',
             fieldInputs: 'td > input.bcms-editor-field-box',
             fieldValues: '.bcms-grid-item-info',
             deleteRowLink: 'a.bcms-icn-delete',
@@ -459,7 +460,10 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
         
         row.find(selectors.fieldValues).hide();
         row.find(selectors.fieldInputs).show();
-        row.find(selectors.firstEditableInput).focus();
+        
+        if (!row.find(selectors.editableInput).eq(1).is(":focus")) {
+            row.find(selectors.firstEditableInput).focus();    
+        }
 
         row.find(selectors.deleteRowLink).hide();
         row.find(selectors.saveRowLink).show();
