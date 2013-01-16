@@ -299,6 +299,7 @@
     <EmbeddedResource Include="Scripts\bcms.pages.template.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.widgets.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.tags.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.content.js" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
