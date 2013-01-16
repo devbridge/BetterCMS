@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
+using BetterCms.Core.Models;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.ViewModels.Widgets;
 
@@ -28,6 +29,14 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// The entity version.
         /// </value>
         public int Version { get; set; }
+
+        /// <summary>
+        /// Gets or sets the desirable status.
+        /// </summary>
+        /// <value>
+        /// The desirable status.
+        /// </value>
+        public ContentStatus DesirableStatus { get; set; }
 
         /// <summary>
         /// Gets or sets the page id.

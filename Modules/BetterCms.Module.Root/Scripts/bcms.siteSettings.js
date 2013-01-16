@@ -1,7 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define */
 
-define('bcms.siteSettings', ['jquery', 'bcms', 'bcms.modal', 'bcms.dynamicContent', 'bcms.tabs'], function ($, bcms, modal, dynamicContent, tabs) {
+define('bcms.siteSettings', ['jquery', 'bcms', 'bcms.modal', 'bcms.dynamicContent', 'bcms.tabs', 'knockout'],
+    function ($, bcms, modal, dynamicContent, tabs, ko) {
     'use strict';
 
     var siteSettings = {},
@@ -12,7 +13,9 @@ define('bcms.siteSettings', ['jquery', 'bcms', 'bcms.modal', 'bcms.dynamicConten
             menu: '#bcms-site-settings-menu',
             placeHolder: '#bcms-site-settings-placeholder',
             firstMenuButton: '#bcms-site-settings-menu .bcms-onclick-action:first',
-            loaderContainer: '.bcms-rightcol'
+            loaderContainer: '.bcms-rightcol',
+            tabsTemplate: '#bcms-site-setting-tab-template',
+            tabsTemplateChildDiv: 'div'
         },
 
         links = {
@@ -102,6 +105,92 @@ define('bcms.siteSettings', ['jquery', 'bcms', 'bcms.modal', 'bcms.dynamicConten
             return siteSettingsModalWindow.container.find(selectors.loaderContainer);
         }
         return null;
+    };
+
+    /**
+    * Site settings tab list view model
+    */
+    siteSettings.TabListViewModel = function (tabViewModels) {
+        var self = this;
+
+        self.tabs = [];
+        
+        for (var i = 0; i < tabViewModels.length; i++) {
+            var tab = tabViewModels[i];
+            tab.tabId = 'bcms-tab-' + (i+1);
+            tab.href = '#' + tab.tabId;
+            
+            self.tabs.push(tab);
+        }
+    };
+
+    /**
+    * Site settings tab view model
+    */
+    siteSettings.TabViewModel = function (title, url, onContentAvailable) {
+        var self = this;
+
+        self.title = title;
+        self.url = url;
+        self.isInitialized = false;
+        self.container = false;
+        self.spinContainer = false;
+        self.parent = null;
+        self.tabId = null;
+        self.href = null;
+        self.contentId = null;
+
+        self.onContentAvailable = function (content) {
+            if (self.contentId == siteSettings.contentId) {
+                self.isInitialized = true;
+
+                if (onContentAvailable && $.isFunction(onContentAvailable)) {
+                    onContentAvailable(self.container, content);
+                }
+            }
+        };
+
+        self.load = function () {
+            if (!self.isInitialized) {
+                self.spinContainer = siteSettingsModalWindow.container.find(selectors.loaderContainer);
+                self.container = siteSettingsModalWindow.container.find(self.href).find(selectors.tabsTemplateChildDiv);
+                self.contentId = siteSettings.contentId;
+
+                dynamicContent.setContentFromUrl(self, self.url, {
+                    done: self.onContentAvailable
+                });
+            }
+        };
+
+        self.getLoaderContainer = function () {
+            return self.spinContainer;
+        };
+
+        self.setContent = function (content) {
+            if (self.contentId == siteSettings.contentId) {
+                self.container.html(content);
+            }
+        };
+    };
+
+    /**
+    * Inits site settings tabs
+    */
+    siteSettings.initContentTabs = function (tabViewModels) {
+        siteSettings.contentId++;
+
+        var tabsViewModel = new siteSettings.TabListViewModel(tabViewModels),
+            content = $($(selectors.tabsTemplate).html());
+
+        siteSettings.setContent(content);
+        
+        ko.applyBindings(tabsViewModel, siteSettingsModalWindow.container.find(selectors.placeHolder).get(0));
+
+        tabs.initTabPanel(siteSettingsModalWindow.container);
+        
+        if (tabViewModels.length > 0) {
+            tabViewModels[0].load();
+        }
     };
 
     return siteSettings;

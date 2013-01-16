@@ -8,6 +8,7 @@ using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.ViewModels.Templates;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+
 using NHibernate.Linq;
 
 namespace BetterCms.Module.Pages.Command.Layout.SaveTemplate
@@ -55,15 +56,13 @@ namespace BetterCms.Module.Pages.Command.Layout.SaveTemplate
             {
                 foreach (var region in template.LayoutRegions)
                 {
-                    var requestRegions = request.RegionOptions != null
-                                                   ? request.RegionOptions.FirstOrDefault(
-                                                       f => f.Identifier == region.Region.RegionIdentifier)
+                    var requestRegion = request.RegionOptions != null
+                                                   ? request.RegionOptions.FirstOrDefault(f => f.Identifier == region.Region.RegionIdentifier)
                                                    : null;
 
-                    if (requestRegions != null)
+                    if (requestRegion != null && region.Description != requestRegion.Description)
                     {
-                        region.Region.Description = requestRegions.Description;
-                        region.Region.RegionIdentifier = requestRegions.Identifier;
+                        region.Description = requestRegion.Description;                        
                         Repository.Save(region);
                     }
                     else
@@ -76,29 +75,46 @@ namespace BetterCms.Module.Pages.Command.Layout.SaveTemplate
             // Adds new region.
             if (request.RegionOptions != null)
             {
-                var regions = GetRegions(request.RegionOptions.ToList());
-                foreach (var requestRegionOptions in request.RegionOptions)
+                var regions = GetRegions(request.RegionOptions);
+
+                foreach (var requestRegionOption in request.RegionOptions)
                 {
                     if (template.LayoutRegions == null)
                     {
                         template.LayoutRegions = new List<LayoutRegion>();
                     }
-                    if (!template.LayoutRegions.Any(f => f.Region.RegionIdentifier.Equals(requestRegionOptions.Identifier, StringComparison.InvariantCultureIgnoreCase)))
+
+                    if (!template.LayoutRegions.Any(f => f.Region.RegionIdentifier.Equals(requestRegionOption.Identifier, StringComparison.InvariantCultureIgnoreCase)))
                     {
-                        var region = regions.Find(f => f.RegionIdentifier.Equals(requestRegionOptions.Identifier, StringComparison.InvariantCultureIgnoreCase));
+                        var region = regions.Find(f => f.RegionIdentifier.Equals(requestRegionOption.Identifier, StringComparison.InvariantCultureIgnoreCase));
+
                         if (region == null)
                         {
-                            if (requestRegionOptions.Description == null)
+                            if (requestRegionOption.Description == null)
                             {
-                                requestRegionOptions.Description = string.Empty;
+                                requestRegionOption.Description = string.Empty;
                             }
-                            var regionOption = new Region { Description = requestRegionOptions.Description, RegionIdentifier = requestRegionOptions.Identifier };
-                            template.LayoutRegions.Add(new LayoutRegion() { Region = regionOption, Layout = template });
+
+                            var regionOption = new Region
+                                                   {                                                    
+                                                       RegionIdentifier = requestRegionOption.Identifier
+                                                   };
+
+                            template.LayoutRegions.Add(new LayoutRegion
+                                                           {
+                                                               Description = requestRegionOption.Description,
+                                                               Region = regionOption, 
+                                                               Layout = template
+                                                           });
                             Repository.Save(regionOption);
                         }
                         else
                         {
-                            var layoutRegion = new LayoutRegion() { Region = region, Layout = template };
+                            var layoutRegion = new LayoutRegion
+                                                   {
+                                                       Region = region, 
+                                                       Layout = template
+                                                   };
                             template.LayoutRegions.Add(layoutRegion);
                             Repository.Save(layoutRegion);
                         }
@@ -117,11 +133,13 @@ namespace BetterCms.Module.Pages.Command.Layout.SaveTemplate
             };
         }
 
-        private List<Region> GetRegions(List<TemplateRegionItemViewModel> reg)
+        private List<Region> GetRegions(IList<TemplateRegionItemViewModel> regionOptions)
         {            
-            var array = reg.Select(r => r.Identifier).ToArray();
+            var identifiers = regionOptions.Select(r => r.Identifier).ToArray();
 
-            var regions = UnitOfWork.Session.Query<Region>().Where(r => !r.IsDeleted && (array.Contains(r.RegionIdentifier))).ToList(); 
+            var regions = UnitOfWork.Session.Query<Region>()
+                                    .Where(r => !r.IsDeleted && identifiers.Contains(r.RegionIdentifier))
+                                    .ToList(); 
 
             return regions;
         }

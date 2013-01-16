@@ -65,8 +65,8 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
         /**
         * Called when image insert needed.
         */
-        imageEditor.onInsertImage = function (imageId, callback) {
-            imageEditor.showImageEditorInsertDialog(imageId, callback);
+        imageEditor.onInsertImage = function (image, callback) {
+            imageEditor.showImageEditorInsertDialog(image, callback);
         };
 
         /**
@@ -105,12 +105,12 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
         /**
         * Show image insert editor dialog.
         */
-        imageEditor.showImageEditorInsertDialog = function (imageId, callback) {
+        imageEditor.showImageEditorInsertDialog = function (image, callback) {
             modal.open({
                 title: globalization.imageEditorInsertDialogTitle,
                 acceptTitle: globalization.imageEditorInsertDialogAcceptButton,
                 onLoad: function (dialog) {
-                    var url = $.format(links.imageEditorInsertDialogUrl, imageId);
+                    var url = $.format(links.imageEditorInsertDialogUrl, image.id());
                     dynamicContent.setContentFromUrl(dialog, url, {
                         done: function (content) {
                             // NOTE: attach events if needed.
@@ -122,7 +122,7 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                         caption = dialog.container.find(selectors.imageCaption).val(),
                         align = dialog.container.find(selectors.imageAlignment).val();
                     dialog.close();
-                    callback(imageUrl, caption, align);
+                    callback(image, imageUrl, caption, align);
                 }
             });
         };

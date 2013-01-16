@@ -17,7 +17,7 @@ namespace BetterCms.Test.Module.Root.ProjectionTests
         {
             var pageContent = TestDataProvider.CreateNewPageContent();
             pageContent.Content = TestDataProvider.CreateNewHtmlContent();
-            pageContent.PageContentOptions = new[]
+            pageContent.Options = new[]
                                                  {
                                                      TestDataProvider.CreateNewPageContentOption(pageContent),
                                                      TestDataProvider.CreateNewPageContentOption(pageContent),
@@ -25,7 +25,7 @@ namespace BetterCms.Test.Module.Root.ProjectionTests
                                                  };
 
             PageContentProjection original = new PageContentProjection(
-                pageContent, new HtmlContentAccessor((HtmlContent)pageContent.Content, pageContent.PageContentOptions.Cast<IPageContentOption>().ToList()));
+                pageContent, new HtmlContentAccessor((HtmlContent)pageContent.Content, pageContent.Options.Cast<IPageContentOption>().ToList()));
 
             RunSerializationAndDeserialization(original,
                 projection =>

@@ -15,7 +15,7 @@
             @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box" })
             <div class="bcms-btn-search" id="bcms-btn-sitemap-search">@NavigationGlobalization.Sitemap_Dialog_Search</div>
         </div>
-        @Html.MessagesBox("bcms-pages-messages")
+        @Html.MessagesBox("bcms-messages-box")
     </div>
     @Html.Partial("Partial/Sitemap", new SitemapNodeViewModel())
 }

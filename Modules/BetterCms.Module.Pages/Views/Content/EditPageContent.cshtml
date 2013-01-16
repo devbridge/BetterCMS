@@ -16,7 +16,7 @@
             @using (Html.BeginForm<ContentController>(c => c.AddPageContent(null), FormMethod.Post, new { @id = "bcms-content-form", @class = "bcms-ajax-form" }))
             {
                 @Html.HiddenFor(model => model.PageId)
-                @Html.HiddenFor(model => model.RegionId, new { @id = "AddContentToRegionId" })
+                @Html.HiddenFor(model => model.RegionId, new { @id = "bcmsAddContentToRegionId" })
                 @Html.Partial("Partial/EditRegularContent", Model)
             }
         </div>

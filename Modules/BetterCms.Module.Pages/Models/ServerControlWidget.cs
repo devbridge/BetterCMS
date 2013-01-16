@@ -6,7 +6,7 @@ using BetterCms.Module.Root.Models;
 namespace BetterCms.Module.Pages.Models
 {
     [Serializable]
-    public class ServerControlWidget : Widget
+    public class ServerControlWidget : Widget, IServerControlWidget
     {
         public virtual string Url { get; set; }
 

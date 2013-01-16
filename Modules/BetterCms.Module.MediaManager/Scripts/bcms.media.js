@@ -118,11 +118,14 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             self.container = container;
             self.messagesContainer = messagesContainer;
             self.url = url;
+            self.onMediaSelect = null;
 
             self.medias = ko.observableArray();
             self.path = ko.observable();
             self.isGrid = ko.observable(false);
             self.canSelectMedia = ko.observable(false);
+            self.canInsertMedia = ko.observable(false);
+            self.canInsertMediaWithOptions = ko.observable(false);
 
             self.gridOptions = ko.observable();
 
@@ -485,12 +488,12 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
 
             MediaImageViewModel.prototype.insertMedia = function (folderViewModel, data, event) {
                 bcms.stopEventPropagation(event);
-                insertImage(this.id(), false);
+                insertImage(this, false, folderViewModel.onMediaSelect);
             };
 
             MediaImageViewModel.prototype.insertMediaWithOptions = function (folderViewModel, data, event) {
                 bcms.stopEventPropagation(event);
-                insertImage(this.id(), true);
+                insertImage(this, true, folderViewModel.onMediaSelect);
             };
 
             return MediaImageViewModel;
@@ -639,7 +642,6 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 folderViewModel.medias.remove(item);
             } else {
                 item.name(item.oldName);
-                item.isActive(false);
             }
         }
 
@@ -730,8 +732,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
         /**
         * Shows image selection window.
         */
-        media.onInsertImage = function (htmlContentEditor) {
-            contentEditor = htmlContentEditor;
+        media.openImageInsertDialog = function (onAccept, canInsertWithOptions, folderViewModelOptions) {
             modal.open({
                 title: globalization.insertImageDialogTitle,
                 acceptTitle: 'Insert',
@@ -741,8 +742,13 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                         done: function (content) {
                             imagesViewModel = new MediaItemsViewModel(dialog.container, links.loadImagesUrl, dialog.container);
                             imagesViewModel.canSelectMedia(true);
+                            imagesViewModel.canInsertMedia(true);
+                            imagesViewModel.canInsertMediaWithOptions(canInsertWithOptions);
                             imagesViewModel.spinContainer = dialog.container.find(selectors.insertContentContainer);
-                            initializeTab(content.Data.Data, imagesViewModel);
+                            if (folderViewModelOptions) {
+                                imagesViewModel = $.extend(imagesViewModel, folderViewModelOptions);
+                            }
+                            initializeTab(content, imagesViewModel);
                         },
                     });
                 },
@@ -769,7 +775,9 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                         
                         return false;
                     } else {
-                        insertImage(selectedItem.id(), false);
+                        if ($.isFunction(onAccept)) {
+                            onAccept(selectedItem);
+                        }
                     }
                     
                     return true;
@@ -778,24 +786,42 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
         };
 
         /**
+        * Function is called, when inserting image event is trigerred
+        */ 
+        function onOpenImageInsertDialog(htmlContentEditor) {
+            contentEditor = htmlContentEditor;
+            media.openImageInsertDialog(function(imageViewModel) {
+                insertImage(imageViewModel, false);
+            }, true);
+        }
+
+        /**
         * Insert media.
         */
-        function insertImage(mediaId, withOptions) {
-            var alertOnError = function () {
-                modal.alert({
-                    title: globalization.insertImageFailureMessageTitle,
-                    content: globalization.insertImageFailureMessageMessage,
-                });
-            };
-            
-            if (withOptions === true) {
-                imageEditor.onInsertImage(mediaId, function(imageUrl, caption, align) {
-                    addImageToEditor(imageUrl, caption, align);
+        function insertImage(selectedMedia, withOptions, onImageInsert) {
+            var mediaId = selectedMedia.id(),
+                alertOnError = function() {
+                    modal.alert({
+                        title: globalization.insertImageFailureMessageTitle,
+                        content: globalization.insertImageFailureMessageMessage,
+                    });
+                },
+                imageInsert = function(selectedMedia, url, caption, align) {
+
+                    if ($.isFunction(onImageInsert)) {
+                        onImageInsert(selectedMedia, url, caption, align);
+                    } else {
+                        addImageToEditor(url, caption, align);
+                    }
+
                     if (imageInsertDialog != null) {
                         imageInsertDialog.close();
                         imageInsertDialog = null;
                     }
-                });
+                };
+            
+            if (withOptions === true) {
+                imageEditor.onInsertImage(selectedMedia, imageInsert);
             } else {
                 var url = $.format(links.getImageUrl, mediaId);
                 $.ajax({
@@ -804,11 +830,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                     dataType: 'json'
                 }).done(function (json) {
                     if (json.Success && json.Data != null) {
-                        addImageToEditor(json.Data.Url, json.Data.Caption, json.Data.ImageAlign);
-                        if (imageInsertDialog != null) {
-                            imageInsertDialog.close();
-                            imageInsertDialog = null;
-                        }
+                        imageInsert(selectedMedia, json.Data.Url, json.Data.Caption, json.Data.ImageAlign);
                     } else {
                         alertOnError();
                     }
@@ -1083,7 +1105,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             var imagesTabContainer = dialogContainer.find(selectors.tabImagesContainer);
             imagesViewModel = new MediaItemsViewModel(imagesTabContainer, links.loadImagesUrl, dialogContainer);
             imagesViewModel.spinContainer = imagesTabContainer.parents(selectors.spinContainer);
-            initializeTab(content.Data.Data, imagesViewModel);
+            initializeTab(content, imagesViewModel);
         };
 
         /**
@@ -1095,7 +1117,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             /**
             * Subscribe to events.
             */
-            bcms.on(htmlEditor.events.insertImage, media.onInsertImage);
+            bcms.on(htmlEditor.events.insertImage, onOpenImageInsertDialog);
         };
 
         /**

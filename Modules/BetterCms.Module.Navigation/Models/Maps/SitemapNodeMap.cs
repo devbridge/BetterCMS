@@ -19,7 +19,7 @@ namespace BetterCms.Module.Navigation.Models.Maps
             Map(x => x.DisplayOrder).Not.Nullable();
 
             References(f => f.ParentNode).Cascade.SaveUpdate()/*.LazyLoad()*/.Nullable();
-            HasMany(f => f.ChildNodes).Table("SitemapNodes").KeyColumn("Id").Inverse().Cascade.SaveUpdate()/*.LazyLoad()*/.Where("IsDeleted = 0");
+            HasMany(f => f.ChildNodes).Table("SitemapNodes").KeyColumn("ParentNodeId").Inverse().Cascade.SaveUpdate()/*.LazyLoad()*/.Where("IsDeleted = 0");
         }
     }
 }

@@ -43,6 +43,10 @@ define('bcms', ['jquery', 'knockout'], function ($, ko) {
     app.errorTrace = errorTrace;
 
     /**
+    */
+    app.previewWindow = '__bcmsPreview';
+    
+    /**
     * Indicates if edit mode is ON:
     */
     app.editModeIsOn = function () {
@@ -225,13 +229,11 @@ define('bcms', ['jquery', 'knockout'], function ($, ko) {
     ko.bindingHandlers.enterPress = {
         init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
             var allBindings = allBindingsAccessor();
-            $(element).keypress(function (event) {
-                var keyCode = (event.which ? event.which : event.keyCode);
-                if (keyCode === 13) {
+           
+            app.preventInputFromSubmittingForm($(element), {
+                preventedEnter: function () {
                     allBindings.enterPress.call(viewModel);
-                    return false;
                 }
-                return true;
             });
         }
     };
@@ -242,15 +244,46 @@ define('bcms', ['jquery', 'knockout'], function ($, ko) {
     ko.bindingHandlers.escPress = {
         init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
             var allBindings = allBindingsAccessor();
-            $(element).keypress(function (event) {
-                var keyCode = (event.which ? event.which : event.keyCode);
-                if (keyCode === 27) {
+            
+            app.preventInputFromSubmittingForm($(element), {
+                preventedEsc: function () {
                     allBindings.escPress.call(viewModel);
-                    return false;
                 }
-                return true;
             });
         }
+    };
+
+    /**
+    * Extend knockout handlers: stop binding to child elements
+    */
+    ko.bindingHandlers.stopBindings = {
+        init: function () {
+            return { controlsDescendantBindings: true };
+        }
+    };
+
+    /**
+    * Extend knockout: add required value validation
+    */
+    ko.extenders.required = function (target, overrideMessage) {
+        // add some sub-observables to our observable
+        target.hasError = ko.observable();
+        target.validationMessage = ko.observable();
+
+        // define a function to do validation
+        function validate(newValue) {
+            target.hasError(newValue ? false : true);
+            target.validationMessage(newValue ? "" : overrideMessage || "This field is required");
+        }
+
+        // initial validation
+        validate(target());
+
+        // validate whenever the value changes
+        target.subscribe(validate);
+
+        // return the original observable
+        return target;
     };
 
     /**

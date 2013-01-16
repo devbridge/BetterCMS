@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Projections;
 using BetterCms.Module.Root.ViewModels.Cms;
 
@@ -17,10 +18,11 @@ namespace BetterCms.Test.Module.Root.ModelTests.ViewModelTests
             CmsRequestViewModel original = new CmsRequestViewModel
                                                {
                                                    Redirect = new RedirectViewModel(TestDataProvider.ProvideRandomString(100)),
-                                                   RenderPage = new RenderPageViewModel
-                                                                    {
-                                                                        Id = Guid.NewGuid()
-                                                                    }
+                                                   RenderPage = new RenderPageViewModel(
+                                                                    new Page
+                                                                            {
+                                                                                Id = Guid.NewGuid()
+                                                                            })
                                                };
 
             RunSerializationAndDeserialization(original, 

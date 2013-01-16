@@ -11,53 +11,52 @@
             <div class="bcms-expand-link" data-bind="click: expandAll">Expand All</div>
             <div class="bcms-expand-link" data-bind="click: collapseAll">Collapse All</div>
         </div>
-        <div class="bcms-parent-node bcms-connected-sortable" data-bind='template: { name: "bcms-navigation-sitemapnode-template", foreach: sitemapNodes }, sortable: sitemapNodes'></div>
+        <div class="bcms-parent-node bcms-connected-sortable"
+            data-bind='template: { name: "bcms-navigation-sitemapnode-template", foreach: sitemapNodes }, sortable: sitemapNodes, css: {"bcms-drag-hover-emptylist": isDragStarted()}'></div>
     </div>
 </script>
 
 <script type="text/html" id="bcms-navigation-sitemapnode-template">
     <div>
-    <div class="bcms-placement-node" data-bind="css: {'bcms-placement-node-edit': isActive()}">
-        <!-- ko if: hasChildNodes() -->
-        <a class="bcms-expand-collapse-node" data-bind="click: expandOrCollapseChildNodes, css: {'bcms-expanded-nodes': isExpanded()}">&nbsp;</a>
-        <!-- /ko -->
-        <div class="bcms-node-info">
-            <div class="bcms-placement-title" data-bind='text: title'></div>
-            <div class="bcms-placement-path" data-bind='text: url'></div>
-        </div>
-        <!-- ko if: isEditable() -->
-        <div class="bcms-edit-node">
-            <div class="bcms-edit-node-holder">
-                <div class="bcms-tooltip-mark" data-title="@NavigationGlobalization.Sitemap_NodeEdit_Title_Tooltip_Title" data-message="@NavigationGlobalization.Sitemap_NodeEdit_Title_Tooltip_Message"></div>
-                @Html.TextBoxFor(m => m.Title, new {
-                    data_bind = "value: title, valueUpdate: 'afterkeydown', enterPress: saveSitemapNode.bind($data, $root), escPress: cancelEditSitemapNode.bind($data, $root), hasfocus: isActive()",
-                    @class = "bcms-editor-field-box",
-                    Title = (string) null,
-                    style = "width: 65%;",
-                })
+        <div class="bcms-placement-node" data-bind="attr: { id: containerId() }, css: {'bcms-placement-node-edit': isActive()}">
+            <!-- ko if: hasChildNodes() -->
+            <a class="bcms-expand-collapse-node" data-bind="click: expandOrCollapseChildNodes, css: {'bcms-expanded-nodes': isExpanded()}">&nbsp;</a>
+            <!-- /ko -->
+            <div class="bcms-node-info">
+                <div class="bcms-placement-title" data-bind='text: title'></div>
+                <div class="bcms-placement-path" data-bind='text: url'></div>
             </div>
-            <div class="bcms-edit-node-holder">
-                <div class="bcms-tooltip-mark" data-title="@NavigationGlobalization.Sitemap_NodeEdit_Url_Tooltip_Title" data-message="@NavigationGlobalization.Sitemap_NodeEdit_Url_Tooltip_Message"></div>
-                @Html.TextBoxFor(m => m.Url, new {
-                    data_bind = "value: url, valueUpdate: 'afterkeydown', enterPress: saveSitemapNode.bind($data, $root), escPress: cancelEditSitemapNode.bind($data, $root)",
-                    @class = "bcms-editor-field-box",
-                    Url = (string) null,
-                    style = "width: 65%;",
-                })
-                <div class="bcms-btn-small" data-bind="click: saveSitemapNode.bind($data, $root)">@RootGlobalization.Button_Save</div>
-                <div class="bcms-btn-links-small" data-bind="click: cancelEditSitemapNode.bind($data, $root)">@RootGlobalization.Button_Cancel</div>
+            <!-- ko if: isEditable() -->
+            <div class="bcms-edit-node">
+                <div class="bcms-edit-node-holder">
+                    <div class="bcms-tooltip-mark" data-title="@NavigationGlobalization.Sitemap_NodeEdit_Title_Tooltip_Title" data-message="@NavigationGlobalization.Sitemap_NodeEdit_Title_Tooltip_Message"></div>
+                    @Html.TextBoxFor(m => m.Title, new {
+                        data_bind = "value: title, valueUpdate: 'afterkeydown', enterPress: saveSitemapNode.bind($data, $root), escPress: cancelEditSitemapNode.bind($data, $root), hasfocus: isActive()",
+                        @class = "bcms-editor-field-box",
+                        Title = (string) null,
+                        style = "width: 65%;",
+                    })
+                </div>
+                <div class="bcms-edit-node-holder">
+                    <div class="bcms-tooltip-mark" data-title="@NavigationGlobalization.Sitemap_NodeEdit_Url_Tooltip_Title" data-message="@NavigationGlobalization.Sitemap_NodeEdit_Url_Tooltip_Message"></div>
+                    @Html.TextBoxFor(m => m.Url, new {
+                        data_bind = "value: url, valueUpdate: 'afterkeydown', enterPress: saveSitemapNode.bind($data, $root), escPress: cancelEditSitemapNode.bind($data, $root)",
+                        @class = "bcms-editor-field-box",
+                        Url = (string) null,
+                        style = "width: 65%;",
+                    })
+                    <div class="bcms-btn-small" data-bind="click: saveSitemapNode.bind($data, $root)">@RootGlobalization.Button_Save</div>
+                    <div class="bcms-btn-links-small" data-bind="click: cancelEditSitemapNode.bind($data, $root)">@RootGlobalization.Button_Cancel</div>
+                </div>
             </div>
+            <div class="bcms-node-controls">
+                <a class="bcms-icn-edit" data-bind="click: editSitemapNode.bind($data, $root)">@RootGlobalization.Button_Edit</a>
+                <a class="bcms-icn-delete" data-bind="click: deleteSitemapNode.bind($data, $root)">@RootGlobalization.Button_Delete</a>
+            </div>
+            <!-- /ko -->
         </div>
-        <div class="bcms-node-controls">
-            <a class="bcms-icn-edit" data-bind="click: editSitemapNode.bind($data, $root)">@RootGlobalization.Button_Edit</a>
-            <a class="bcms-icn-delete" data-bind="click: deleteSitemapNode.bind($data, $root)">@RootGlobalization.Button_Delete</a>
+        <div class="bcms-placement-holder-inner bcms-sitemap-nodes-inner bcms-connected-sortable" style="padding-left: 20px;"
+             data-bind='visible: isExpanded() || !hasChildNodes(), template: { name: "bcms-navigation-sitemapnode-template", foreach: childNodes }, sortable: childNodes'>
         </div>
-        <!-- /ko -->
-    </div>
-    <!-- ko if: hasChildNodes() -->
-    <div class="bcms-placement-holder-inner bcms-sitemap-nodes-inner bcms-connected-sortable" style="padding-left: 20px;"
-         data-bind='visible: isExpanded, template: { name: "bcms-navigation-sitemapnode-template", foreach: childNodes }, sortable: childNodes'>
-    </div>
-    <!-- /ko -->
     </div>
 </script>

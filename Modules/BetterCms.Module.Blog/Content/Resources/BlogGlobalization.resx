@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CreateAuthor_CreatedSuccessfully_Message" xml:space="preserve">
+    <value>Author created successfully</value>
+  </data>
   <data name="CreateNewPost_Dialog_Title" xml:space="preserve">
     <value>Create New Post</value>
+  </data>
+  <data name="DeleteAuthor_Confirmation_Message" xml:space="preserve">
+    <value>Are you sure you want to delete author {0}?</value>
+  </data>
+  <data name="DeleteAuthor_DeletedSuccessfully_Message" xml:space="preserve">
+    <value>Author deleted successfully</value>
   </data>
   <data name="DeletePost_Dialog_Title" xml:space="preserve">
     <value>Delete Blog</value>
@@ -204,17 +213,29 @@
   <data name="EditPost_Dialog_Title" xml:space="preserve">
     <value>Edit article</value>
   </data>
+  <data name="SaveBlogPost_LayoutNotFound_Message" xml:space="preserve">
+    <value>There are no compatible layouts for blogs.</value>
+  </data>
   <data name="SaveBlogPost_RegionNotFound_Message" xml:space="preserve">
     <value>Region {0} not found. It's the default region for blog post content.</value>
   </data>
   <data name="Sidebar_AddNewPostButtonTitle" xml:space="preserve">
     <value>Post new article</value>
   </data>
+  <data name="SiteSettings_AuthorsTab_AuthorImage_Title" xml:space="preserve">
+    <value>Picture</value>
+  </data>
+  <data name="SiteSettings_AuthorsTab_AuthorName_Title" xml:space="preserve">
+    <value>Name</value>
+  </data>
   <data name="SiteSettings_BlogsMenuItem" xml:space="preserve">
     <value>Blogs</value>
   </data>
   <data name="SiteSettings_Blogs_AddNew" xml:space="preserve">
     <value>Add New +</value>
+  </data>
+  <data name="SiteSettings_Blogs_AuthorsTab_Title" xml:space="preserve">
+    <value>Authors</value>
   </data>
   <data name="SiteSettings_Blogs_CreatedColumn" xml:space="preserve">
     <value>Created</value>
@@ -228,10 +249,28 @@
   <data name="SiteSettings_Blogs_ModifiedColumn" xml:space="preserve">
     <value>Last Edited</value>
   </data>
+  <data name="SiteSettings_Blogs_PostsTab_Title" xml:space="preserve">
+    <value>Posts</value>
+  </data>
   <data name="SiteSettings_Blogs_Search" xml:space="preserve">
     <value>Search</value>
   </data>
+  <data name="SiteSettings_Blogs_TemplatesTab_Title" xml:space="preserve">
+    <value>Templates</value>
+  </data>
   <data name="SiteSettings_Blogs_TitleColumn" xml:space="preserve">
     <value>Posts Title</value>
+  </data>
+  <data name="SiteSettings_Templates_DefaultTemplate" xml:space="preserve">
+    <value>Default Template</value>
+  </data>
+  <data name="SiteSettings_Templates_IncompatibleTemplate" xml:space="preserve">
+    <value>Not Compatible</value>
+  </data>
+  <data name="SiteSettings_Templates_SelectButton" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="SiteSettings_Templates_Title" xml:space="preserve">
+    <value>Select Default Blog Template</value>
   </data>
 </root>

@@ -42,11 +42,10 @@ namespace BetterCms.Module.Pages.Command.Layout.GetTemplatesForEdit
                   var regions = UnitOfWork.Session
                       .QueryOver(() => layoutRegionAlias)
                       .Inner.JoinAlias(c => c.Region, () => regionAlias)
-                      .Where(() => layoutRegionAlias.Layout.Id == templateId
-                          && !regionAlias.IsDeleted && !layoutRegionAlias.IsDeleted)
+                      .Where(() => layoutRegionAlias.Layout.Id == templateId && !regionAlias.IsDeleted && !layoutRegionAlias.IsDeleted)
                       .SelectList(select => select
                           .Select(() => regionAlias.Id).WithAlias(() => templateRegionAlias.Id)
-                          .Select(() => regionAlias.Description).WithAlias(() => templateRegionAlias.Description)
+                          .Select(() => layoutRegionAlias.Description).WithAlias(() => templateRegionAlias.Description)
                           .Select(() => regionAlias.Version).WithAlias(() => templateRegionAlias.Version)
                           .Select(() => regionAlias.RegionIdentifier).WithAlias(() => templateRegionAlias.Identifier))                          
                       .TransformUsing(Transformers.AliasToBean<TemplateRegionItemViewModel>())

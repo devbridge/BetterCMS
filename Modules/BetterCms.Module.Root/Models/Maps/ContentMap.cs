@@ -1,17 +1,12 @@
-using BetterCms.Core.Models;
+using BetterCms.Module.Root.Models.Maps.Predefined;
 
 namespace BetterCms.Module.Root.Models.Maps
 {
-    public class ContentMap : EntityMapBase<Content>
+    public class ContentMap : ContentEntityMapBase<Content>
     {
         public ContentMap()
-            : base(RootModuleDescriptor.ModuleName)
+            : base(RootModuleDescriptor.ModuleName, "Contents")
         {
-            Table("Contents");
-
-            Map(x => x.Name).Length(MaxLength.Name).Not.Nullable();
-            Map(x => x.PreviewUrl).Length(MaxLength.Url).Nullable();
-
             HasMany(x => x.PageContents).Inverse().Cascade.SaveUpdate().LazyLoad().Where("IsDeleted = 0");
             HasMany(x => x.ContentOptions).Inverse().Cascade.SaveUpdate().LazyLoad().Where("IsDeleted = 0");
         }

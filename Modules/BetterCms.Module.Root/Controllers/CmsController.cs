@@ -1,4 +1,5 @@
-﻿using System.Security.Principal;
+﻿using System;
+using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
 
@@ -47,16 +48,21 @@ namespace BetterCms.Module.Root.Controllers
         /// <summary>
         /// Default entry point for all CMS pages.
         /// </summary>
-        /// <returns>Returns page or redirect or page not found result.</returns>
-        public ActionResult Index()
+        /// <param name="preview">If given defines a page content id to preview.</param>
+        /// <returns>
+        /// Returns page or redirect or page not found result.
+        /// </returns>
+        public ActionResult Index(string preview)
         {
             var virtualPath = HttpUtility.UrlDecode(Http.GetAbsolutePath());
             bool pageNotFound = false;
-            CmsRequestViewModel model = GetPageModel(virtualPath);
+            Guid? previewPageContentId = string.IsNullOrEmpty(preview) ? (Guid?)null : preview.ToGuidOrDefault();
+
+            CmsRequestViewModel model = GetPageModel(virtualPath, previewPageContentId);
            
             if (model == null && !string.IsNullOrWhiteSpace(cmsConfiguration.PageNotFoundUrl))            
             {
-                model = GetPageModel(HttpUtility.UrlDecode(cmsConfiguration.PageNotFoundUrl));
+                model = GetPageModel(HttpUtility.UrlDecode(cmsConfiguration.PageNotFoundUrl), previewPageContentId);
                 pageNotFound = true;
             }
 
@@ -83,24 +89,26 @@ namespace BetterCms.Module.Root.Controllers
             return HttpNotFound();
         }
 
-        private CmsRequestViewModel GetPageModel(string virtualPath)
+        private CmsRequestViewModel GetPageModel(string virtualPath, Guid? previewPageContentId)
         {
-            CmsRequestViewModel model = null;
-            virtualPath = VirtualPathUtility.AppendTrailingSlash(virtualPath);
-            string cacheKey = "CMS_" + virtualPath + "_050cc001f75942648e57e58359140d1a";
+            CmsRequestViewModel model;
+            virtualPath = VirtualPathUtility.AppendTrailingSlash(virtualPath);            
             IPrincipal principal = securityService.GetCurrentPrincipal();
             bool canManageContent = securityService.CanManageContent(principal);
 
-            var useCaching = cmsConfiguration.Cache.Enabled && !canManageContent;
+            var useCaching = cmsConfiguration.Cache.Enabled && !canManageContent && previewPageContentId == null;
+
+            GetPageToRenderRequest getPageToRenderRequest = new GetPageToRenderRequest(virtualPath, previewPageContentId);
 
             if (useCaching)
             {
-
-                model = cacheService.Get(cacheKey, cmsConfiguration.Cache.Timeout, () => GetCommand<GetPageToRenderCommand>().ExecuteCommand(virtualPath));
+                string cacheKey = "CMS_" + virtualPath + "_050cc001f75942648e57e58359140d1a";
+                
+                model = cacheService.Get(cacheKey, cmsConfiguration.Cache.Timeout, () => GetCommand<GetPageToRenderCommand>().ExecuteCommand(getPageToRenderRequest));
             }
             else
             {
-                model = GetCommand<GetPageToRenderCommand>().ExecuteCommand(virtualPath);
+                model = GetCommand<GetPageToRenderCommand>().ExecuteCommand(getPageToRenderRequest);
             }
 
             if (model != null && model.RenderPage != null)

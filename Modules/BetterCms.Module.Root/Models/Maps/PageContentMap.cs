@@ -1,21 +1,18 @@
-using BetterCms.Core.Models;
+using BetterCms.Module.Root.Models.Maps.Predefined;
 
 namespace BetterCms.Module.Root.Models.Maps
 {
-    public class PageContentMap : EntityMapBase<PageContent>
+    public class PageContentMap : PageContentEntityMapBase<PageContent>
     {
         public PageContentMap()
-            : base(RootModuleDescriptor.ModuleName)
+            : base(RootModuleDescriptor.ModuleName, "PageContents")
         {
-            Table("PageContents");
-
-            Map(x => x.Order, "[Order]").Not.Nullable();
-            
             References(x => x.Region).Cascade.SaveUpdate().LazyLoad();
             References(x => x.Content).Cascade.SaveUpdate().LazyLoad();
             References(x => x.Page).Cascade.SaveUpdate().LazyLoad();
 
-            HasMany(x => x.PageContentOptions).Cascade.SaveUpdate().Inverse().LazyLoad().Where("IsDeleted = 0");
+            HasMany(x => x.Options).KeyColumn("PageContentId").Cascade.SaveUpdate().Inverse().LazyLoad().Where("IsDeleted = 0");
+            HasMany(x => x.History).KeyColumn("PageContentId").Cascade.SaveUpdate().Inverse().LazyLoad().Where("IsDeleted = 0");
         }
     }
 }

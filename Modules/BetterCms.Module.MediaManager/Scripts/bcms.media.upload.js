@@ -63,7 +63,7 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
                 });
             },
             onCancel: function () {
-                uploadsModel.removeAllUploads();
+                options.uploads.removeAllUploads();
             }
         });
     };

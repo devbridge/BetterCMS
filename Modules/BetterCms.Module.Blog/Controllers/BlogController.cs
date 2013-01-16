@@ -16,7 +16,7 @@ namespace BetterCms.Module.Blog.Controllers
     {
         public virtual ActionResult Index(SearchableGridOptions request)
         {
-            var model = GetCommand<GetBlogPostListCommand>().ExecuteCommand(request);
+            var model = GetCommand<GetBlogPostListCommand>().ExecuteCommand(request ?? new SearchableGridOptions());
             return View(model);
         }
 
@@ -24,17 +24,10 @@ namespace BetterCms.Module.Blog.Controllers
         public virtual ActionResult CreatePost()
         {
             var model = GetCommand<GetBlogPostCommand>().ExecuteCommand(Guid.Empty);
-            var json = new
-            {
-                Data = new WireJson
-                {
-                    Success = true,
-                    Data = model
-                },
-                Html = RenderView("CreatePost", model)
-            };
+            var view = RenderView("CreatePost", model);
+            var success = model != null;
 
-            return WireJson(true, json, JsonRequestBehavior.AllowGet);
+            return ComboWireJson(success, view, model, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -49,17 +42,10 @@ namespace BetterCms.Module.Blog.Controllers
         public virtual ActionResult EditPost(string id)
         {
             var model = GetCommand<GetBlogPostCommand>().ExecuteCommand(id.ToGuidOrDefault());
-            var json = new
-            {
-                Data = new WireJson
-                {
-                    Success = true,
-                    Data = model
-                },
-                Html = RenderView("EditPost", model)
-            };
+            var view = RenderView("EditPost", model);
+            var success = model != null;
 
-            return WireJson(true, json, JsonRequestBehavior.AllowGet);
+            return ComboWireJson(success, view, model, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
