@@ -15,8 +15,16 @@ namespace BetterCms.Module.Root.Models
 
         public virtual string DefaultValue { get; set; }
 
-        public virtual ContentOption Clone()
+        IContent IContentOption.Content
         {
+            get
+            {
+                return Content;
+            }
+        }
+
+        public virtual ContentOption Clone()
+        {                
             return new ContentOption
                        {
                            Key = Key,

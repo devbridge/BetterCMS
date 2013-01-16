@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 
+using BetterCms.Core.Models;
 using BetterCms.Module.Pages.Command.Content.GetPageContentOptions;
 using BetterCms.Module.Pages.Command.Content.InsertContent;
 using BetterCms.Module.Pages.Command.Content.SaveContent;
@@ -115,9 +116,19 @@ namespace BetterCms.Module.Pages.Controllers
         [HttpPost]
         public ActionResult AddPageContent(PageContentViewModel model)
         {
-            if (GetCommand<SaveContentCommand>().ExecuteCommand(model))
+            Guid pageContentId = GetCommand<SaveContentCommand>().ExecuteCommand(model);
+            if (pageContentId != Guid.Empty)
             {
-                return Json(new WireJson { Success = true });
+                return Json(
+                    new WireJson
+                        {
+                            Success = true,
+                            Data = new
+                                       {
+                                           PageContentId = pageContentId,
+                                           DesirableStatus = model.DesirableStatus.ToString()
+                                       }
+                        });
             }
 
             return Json(new WireJson { Success = false });

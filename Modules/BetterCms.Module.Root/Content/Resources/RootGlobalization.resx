@@ -156,6 +156,9 @@
   <data name="Button_Open" xml:space="preserve">
     <value>Open</value>
   </data>
+  <data name="Button_Preview" xml:space="preserve">
+    <value>Preview</value>
+  </data>
   <data name="Button_Remove" xml:space="preserve">
     <value>Remove</value>
   </data>
@@ -164,6 +167,12 @@
   </data>
   <data name="Button_Save" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="Button_SaveAndPublish" xml:space="preserve">
+    <value>Save &amp; Publish</value>
+  </data>
+  <data name="Button_SaveDraft" xml:space="preserve">
+    <value>Save Draft</value>
   </data>
   <data name="Button_Search" xml:space="preserve">
     <value>Search</value>

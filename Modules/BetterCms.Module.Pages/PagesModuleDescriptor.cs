@@ -103,6 +103,20 @@ namespace BetterCms.Module.Pages
         }
 
         /// <summary>
+        /// Gets the order.
+        /// </summary>
+        /// <value>
+        /// The order.
+        /// </value>
+        public override int Order
+        {
+            get
+            {
+                return int.MaxValue - 300;
+            }
+        }
+
+        /// <summary>
         /// Registers module types.
         /// </summary>
         /// <param name="context">The area registration context.</param>
@@ -323,20 +337,6 @@ namespace BetterCms.Module.Pages
                             CssClass = page => "bcms-sidebar-link"
                         }
                 };
-        }
-
-        /// <summary>
-        /// Gets the order.
-        /// </summary>
-        /// <value>
-        /// The order.
-        /// </value>
-        public override int Order
-        {
-            get
-            {
-                return int.MaxValue - 200;
-            }
-        }
+        }       
     }
 }

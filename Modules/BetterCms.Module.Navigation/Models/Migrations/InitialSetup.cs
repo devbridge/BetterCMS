@@ -8,7 +8,7 @@ namespace BetterCms.Module.Navigation.Models.Migrations
     /// <summary>
     /// Database structure setup.
     /// </summary>
-    [Migration(1)]
+    [Migration(201301151921)]
     public class InitialSetup : DefaultMigration
     {
         /// <summary>

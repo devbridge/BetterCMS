@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 
 using BetterCms.Core.DataAccess.DataContext.Migrations;
 using BetterCms.Core.Environment.Assemblies;
@@ -39,22 +40,9 @@ namespace BetterCms.Sandbox.DataMigration
         }
 
         private static void Migrate(bool up)
-        {
-            if (up)
-            {
-                descriptors = descriptors.OrderByDescending(f => f.Order).ToList();
-            }
-            else
-            {
-                descriptors = descriptors.OrderBy(f => f.Order).ToList();
-            }
-
+        {            
             DefaultMigrationRunner runner = new DefaultMigrationRunner(new DefaultAssemblyLoader());
-
-            foreach (var descriptor in descriptors)
-            {
-                runner.Migrate(descriptor, up);
-            }            
+            runner.Migrate(descriptors, up);
         }
 
         private static void Main(string[] args)
@@ -63,7 +51,7 @@ namespace BetterCms.Sandbox.DataMigration
             {
                 // Console.WriteLine("-- Migrate DOWN --");
                 
-                // Migrate(false);
+                 Migrate(false);
 
                 Console.WriteLine("-- Migrate  UP --");
 

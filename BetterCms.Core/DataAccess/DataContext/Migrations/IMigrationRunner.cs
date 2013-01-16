@@ -1,4 +1,6 @@
-﻿using BetterCms.Core.Modules;
+﻿using System.Collections.Generic;
+
+using BetterCms.Core.Modules;
 
 namespace BetterCms.Core.DataAccess.DataContext.Migrations
 {
@@ -8,10 +10,8 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
     public interface IMigrationRunner
     {
         /// <summary>
-        /// Runs database migrations of the specified module descriptor.
+        /// Runs migrations from the specified modules.
         /// </summary>
-        /// <param name="moduleDescriptor">The module descriptor.</param>
-        /// <param name="up">if set to <c>true</c> migrates up; otherwise migrates down.</param>
-        void Migrate(ModuleDescriptor moduleDescriptor, bool up = true);
+        void Migrate(IList<ModuleDescriptor> moduleDescriptors, bool up = true);
     }
 }

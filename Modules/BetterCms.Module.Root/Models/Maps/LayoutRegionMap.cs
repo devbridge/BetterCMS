@@ -9,6 +9,8 @@ namespace BetterCms.Module.Root.Models.Maps
         {
             Table("LayoutRegions");
 
+            Map(x => x.Description).Nullable().Length(MaxLength.Name);
+
             References(f => f.Layout).Cascade.SaveUpdate().LazyLoad().Not.Nullable();
             References(f => f.Region).Cascade.SaveUpdate().LazyLoad().Not.Nullable();
         }

@@ -178,6 +178,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Preview.
+        /// </summary>
+        public static string Button_Preview {
+            get {
+                return ResourceManager.GetString("Button_Preview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove.
         /// </summary>
         public static string Button_Remove {
@@ -201,6 +210,24 @@ namespace BetterCms.Module.Root.Content.Resources {
         public static string Button_Save {
             get {
                 return ResourceManager.GetString("Button_Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save &amp; Publish.
+        /// </summary>
+        public static string Button_SaveAndPublish {
+            get {
+                return ResourceManager.GetString("Button_SaveAndPublish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save Draft.
+        /// </summary>
+        public static string Button_SaveDraft {
+            get {
+                return ResourceManager.GetString("Button_SaveDraft", resourceCulture);
             }
         }
         

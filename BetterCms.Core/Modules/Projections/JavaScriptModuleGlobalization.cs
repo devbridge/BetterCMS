@@ -62,7 +62,7 @@ namespace BetterCms.Core.Modules.Projections
                 var resourceObject = resource();
                 if (resourceObject != null)
                 {
-                    string globalization = string.Format("{0}.globalization.{1} = '{2}';", javaScriptModule.FriendlyName, name, html.Encode(resourceObject));
+                    string globalization = string.Format("{0}.globalization.{1} = '{2}';", javaScriptModule.FriendlyName, name, resourceObject);
                     html.ViewContext.Writer.WriteLine(globalization);
                 }
                 else

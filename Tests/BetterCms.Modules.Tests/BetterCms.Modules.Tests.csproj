@@ -117,6 +117,14 @@
     <Compile Include="Pages\CommandTests\WidgetTests\DeleteWidgetCommandTest.cs" />
     <Compile Include="Pages\CommandTests\WidgetTests\GetSiteSettingsWidgetsIntegrationTest.cs" />
     <Compile Include="Pages\ModelTests\ConcurrencyTests\ConcurrencyTests.cs" />
+    <Compile Include="Pages\ModelTests\MapTests\HtmlContentHistoryMapTest.cs" />
+    <Compile Include="Pages\ModelTests\MapTests\HtmlContentWidgetHistoryMapTest.cs" />
+    <Compile Include="Pages\ModelTests\MapTests\ServerControlWidgetHistoryMapTest.cs" />
+    <Compile Include="Root\ModelTests\MapTests\ContentHistoryMapTest.cs" />
+    <Compile Include="Root\ModelTests\MapTests\ContentOptionHistoryMapTest.cs" />
+    <Compile Include="Root\ModelTests\MapTests\WidgetHistoryMapTest.cs" />
+    <Compile Include="Root\ModelTests\MapTests\PageContentOptionHistoryMapTest.cs" />
+    <Compile Include="Root\ModelTests\MapTests\PageContentHistoryMapTest.cs" />
     <Compile Include="SerializationTestBase.cs" />
     <Compile Include="DatabaseTestBase.cs" />
     <Compile Include="Helpers\HttpContextExtensionMethods.cs" />
@@ -155,7 +163,6 @@
     <Compile Include="Root\ModelTests\MapTests\RegionMapTest.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Root\ModelTests\MapTests\SiteSettingMapTest.cs" />
     <Compile Include="Root\ModelTests\MapTests\PageMapTest.cs" />
     <Compile Include="Root\ModelTests\MapTests\TagMapTest.cs" />
     <Compile Include="Root\ModelTests\MapTests\UserMapTest.cs" />

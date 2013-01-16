@@ -63,9 +63,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Common.Logging.2.1.1\lib\net40\Common.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="FluentMigrator, Version=1.0.0.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
+    <Reference Include="FluentMigrator, Version=1.0.6.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\FluentMigrator.1.0.3.0\lib\40\FluentMigrator.dll</HintPath>
+      <HintPath>..\..\packages\FluentMigrator.1.0.6.0\lib\40\FluentMigrator.dll</HintPath>
     </Reference>
     <Reference Include="FluentNHibernate, Version=1.3.0.733, Culture=neutral, PublicKeyToken=8aa435e3cb308880, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -117,6 +117,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Commands\GetPageToRender\GetPageToRenderCommand.cs" />
+    <Compile Include="Commands\GetPageToRender\GetPageToRenderRequest.cs" />
     <Compile Include="Content\Resources\RootGlobalization.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -125,13 +126,27 @@
     <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\CmsController.cs" />
     <Compile Include="Controllers\EmbeddedResourcesController.cs" />
-    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\RenderingController.cs" />
     <Compile Include="Controllers\SidebarController.cs" />
     <Compile Include="Controllers\SiteSettingsController.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Content.cs" />
     <Compile Include="Models\ContentOption.cs" />
+    <Compile Include="Models\ContentBase.cs" />
+    <Compile Include="Models\ContentHistory.cs" />
+    <Compile Include="Models\ContentOptionHistory.cs" />
+    <Compile Include="Models\Maps\ContentHistoryMap.cs" />
+    <Compile Include="Models\Maps\ContentOptionHistoryMap.cs" />
+    <Compile Include="Models\Maps\PageContentHistoryMap.cs" />
+    <Compile Include="Models\Maps\PageContentOptionHistoryMap.cs" />
+    <Compile Include="Models\Maps\Predefined\ContentEntityMapBase.cs" />
+    <Compile Include="Models\Maps\Predefined\ContentOptionEntityMapBase.cs" />
+    <Compile Include="Models\Maps\Predefined\PageContentOptionEntityMapBase.cs" />
+    <Compile Include="Models\Maps\Predefined\PageContentEntityMapBase.cs" />
+    <Compile Include="Models\Maps\WidgetHistoryMap.cs" />
+    <Compile Include="Models\WidgetHistory.cs" />
+    <Compile Include="Models\PageContentOptionHistory.cs" />
+    <Compile Include="Models\PageContentHistory.cs" />
     <Compile Include="Models\LayoutRegion.cs" />
     <Compile Include="Models\Maps\CategoryMap.cs" />
     <Compile Include="Models\Maps\ContentMap.cs" />
@@ -141,20 +156,15 @@
     <Compile Include="Models\Maps\ContentOptionMap.cs" />
     <Compile Include="Models\Maps\RegionMap.cs" />
     <Compile Include="Models\Maps\TagMap.cs" />
-    <Compile Include="Models\Migrations\Migration201301021540.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
-    <Compile Include="Models\Migrations\Migration201301021106.cs" />
-    <Compile Include="Models\Migrations\Migration201301131434.cs" />
     <Compile Include="Models\PageContentOption.cs" />
     <Compile Include="Models\Layout.cs" />
     <Compile Include="Models\Maps\ModuleMap.cs" />
     <Compile Include="Models\Maps\LayoutMap.cs" />
     <Compile Include="Models\Maps\PageContentMap.cs" />
     <Compile Include="Models\Module.cs" />
-    <Compile Include="Models\Maps\SiteSettingMap.cs" />
     <Compile Include="Models\PageContent.cs" />
     <Compile Include="Models\Region.cs" />
-    <Compile Include="Models\SiteSetting.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\Widget.cs" />
     <Compile Include="Mvc\CommandBase.cs" />
@@ -189,7 +199,6 @@
     <Compile Include="Models\LookupKeyValue.cs" />
     <Compile Include="Models\Maps\PageMap.cs" />
     <Compile Include="Models\Maps\UserMap.cs" />
-    <Compile Include="Models\Migrations\Migration201212271220.cs" />
     <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />
     <Compile Include="Models\Page.cs" />
     <Compile Include="Models\User.cs" />
@@ -240,6 +249,7 @@
     <EmbeddedResource Include="Content\Styles\qunit-1.9.0.css" />
     <EmbeddedResource Include="Scripts\bcms.content.js" />
     <EmbeddedResource Include="Scripts\bcms.forms.js" />
+    <EmbeddedResource Include="Scripts\bcms.modal.js" />
     <EmbeddedResource Include="Scripts\bcms.sidemenu.js" />
     <None Include="Scripts\jquery-1.7.2.intellisense.js">
       <DependentUpon>jquery-1.7.2.js</DependentUpon>
@@ -482,7 +492,6 @@
     <EmbeddedResource Include="Scripts\ckeditor\contents.css" />
     <EmbeddedResource Include="Scripts\ckeditor\styles.js" />
     <EmbeddedResource Include="Scripts\bcms.inlineEdit.js" />
-    <EmbeddedResource Include="Scripts\bcms.modal.js" />
     <EmbeddedResource Include="Scripts\bcms.dynamicContent.js" />
     <EmbeddedResource Include="Scripts\bcms.js" />
     <EmbeddedResource Include="Scripts\bcms.ko.grid.js" />
@@ -511,12 +520,22 @@
     <EmbeddedResource Include="Scripts\knockout-2.2.0.js" />
     <EmbeddedResource Include="Scripts\spinner.jquery.js" />
     <Content Include="Views\Web.config" />
+    <EmbeddedResource Include="Views\Shared\Partial\Alert.cshtml">
+      <SubType>Code</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Shared\Partial\Confirm.cshtml">
+      <SubType>Code</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Shared\Partial\ContentOverlay.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Partial\Modal.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Partial\Info.cshtml">
+      <SubType>Code</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Shared\Partial\Modal.cshtml">
+      <SubType>Code</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Shared\Partial\Region.cshtml" />
     <EmbeddedResource Include="Views\Sidebar\Container.cshtml" />
     <EmbeddedResource Include="Views\Shared\Layouts\OneColumnLayout.cshtml" />
-    <EmbeddedResource Include="Views\Error\PageNotFound.cshtml" />
     <EmbeddedResource Include="Views\Rendering\RenderMainJsFile.cshtml" />
     <EmbeddedResource Include="Views\SiteSettings\Container.cshtml" />
     <EmbeddedResource Include="Views\Sidebar\Header.cshtml" />
@@ -527,13 +546,12 @@
     <EmbeddedResource Include="Views\Sidebar\Body.cshtml" />
     <EmbeddedResource Include="Views\Authentication\Info.cshtml" />
     <EmbeddedResource Include="Views\Shared\Partial\Tooltip.cshtml" />
-    <Content Include="web.config" />
+    <Content Include="web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <EmbeddedResource Include="Views\Shared\Partial\Messages.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Partial\Alert.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Partial\Confirm.cshtml" />
     <EmbeddedResource Include="Views\Cms\Index.cshtml" />
     <EmbeddedResource Include="Views\Shared\Layouts\Preview.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Partial\Info.cshtml" />
     <EmbeddedResource Include="Views\Shared\Partial\ImagePreview.cshtml" />
     <EmbeddedResource Include="Views\Shared\BaseLayout.cshtml" />
     <EmbeddedResource Include="Views\Shared\RootLayout.cshtml" />

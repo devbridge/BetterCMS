@@ -43,6 +43,10 @@ define('bcms', ['jquery', 'knockout'], function ($, ko) {
     app.errorTrace = errorTrace;
 
     /**
+    */
+    app.previewWindow = '__bcmsPreview';
+    
+    /**
     * Indicates if edit mode is ON:
     */
     app.editModeIsOn = function () {
