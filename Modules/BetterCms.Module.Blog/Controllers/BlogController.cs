@@ -21,7 +21,7 @@ namespace BetterCms.Module.Blog.Controllers
         }
 
         [HttpGet]
-        public virtual ActionResult CreatePost()
+        public virtual ActionResult CreateBlogPost()
         {
             var model = GetCommand<GetBlogPostCommand>().ExecuteCommand(Guid.Empty);
             var view = RenderView("CreatePost", model);
@@ -30,16 +30,8 @@ namespace BetterCms.Module.Blog.Controllers
             return ComboWireJson(success, view, model, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost]
-        public virtual ActionResult CreatePost(BlogPostViewModel model)
-        {
-            var response = GetCommand<SaveBlogPostCommand>().ExecuteCommand(model);
-
-            return WireJson(response != null, response);
-        }
-        
         [HttpGet]
-        public virtual ActionResult EditPost(string id)
+        public virtual ActionResult EditBlogPost(string id)
         {
             var model = GetCommand<GetBlogPostCommand>().ExecuteCommand(id.ToGuidOrDefault());
             var view = RenderView("EditPost", model);
@@ -49,7 +41,7 @@ namespace BetterCms.Module.Blog.Controllers
         }
 
         [HttpPost]
-        public virtual ActionResult EditPost(BlogPostViewModel model)
+        public virtual ActionResult SaveBlogPost(BlogPostViewModel model)
         {
             var response = GetCommand<SaveBlogPostCommand>().ExecuteCommand(model);
 

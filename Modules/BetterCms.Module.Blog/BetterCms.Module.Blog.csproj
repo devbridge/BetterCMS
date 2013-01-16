@@ -191,7 +191,9 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Blog\Partial\" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Author\Partial\ImageCell.cshtml" />
   </ItemGroup>
@@ -199,16 +201,10 @@
     <EmbeddedResource Include="Views\Author\Partial\ListTemplate.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Blog\CreatePost.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Blog\EditPost.cshtml" />
+    <EmbeddedResource Include="Views\Blog\EditBlogPost.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Blog\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Blog\Partial\BlogPostForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Option\Templates.cshtml" />
