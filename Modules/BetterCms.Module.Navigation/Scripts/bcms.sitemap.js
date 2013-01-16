@@ -11,6 +11,8 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 sitemapForm: "#bcms-sitemap-form",
                 sitemapNodeSearchButton: "#bcms-btn-sitemap-search",
                 sitemapEditButton: "#bcms-btn-sitemap-edit",
+                
+                templatePageLinksDataBind: "#bcms-pagelinks-data-bind-container",
             },
             links = {
                 loadSiteSettingsSitemapUrl: null,

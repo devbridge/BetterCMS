@@ -51,7 +51,7 @@ namespace BetterCms.Module.Navigation.Controllers
                                               Success = true,
                                               Data = sitemap
                                           },
-                               Html = RenderView("Edit", new SearchableSitemapViewModel())
+                               Html = RenderView("Edit", null)
                            };
             return WireJson(true, json, JsonRequestBehavior.AllowGet);
         }
