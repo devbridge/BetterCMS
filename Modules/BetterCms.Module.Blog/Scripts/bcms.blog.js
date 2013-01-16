@@ -10,6 +10,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             datePickers: '.bcms-datepicker',
             htmlEditor: 'bcms-contenthtml',
             addTagsField: '.bcms-add-tags-field',
+            firstForm: 'form:first',
             siteSettingsBlogsListForm: '#bcms-blogs-form',
             siteSettingsBlogsSearchButton: '#bcms-blogs-search-btn',
             siteSettingsBlogCreateButton: '#bcms-create-blog-button',
@@ -149,8 +150,8 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     * Initializes blog edit form
     */
     function initEditBlogPostDialogEvents(dialog, content) {
-        var data = content.Data.Data.Data,
-            tagsList = content.Data.Data.Data.Tags;
+        var data = content.Data,
+            tagsList = data.Tags;
         dialog.container.find(selectors.datePickers).initializeDatepicker();
         
         htmlEditor.initializeHtmlEditor(selectors.htmlEditor);
@@ -158,7 +159,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         var tagsViewModel = new tags.TagsListViewModel(tagsList);
 
         var blogViewModel = new BlogPostViewModel(data, tagsViewModel);
-        ko.applyBindings(blogViewModel, dialog.container.get(0));
+        ko.applyBindings(blogViewModel, dialog.container.find(selectors.firstForm).get(0));
         
         bcms.preventInputFromSubmittingForm(dialog.container.find(selectors.addTagsField), {
             preventedEnter: function () {
@@ -322,8 +323,8 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     * Initializes site settings authors tab
     */
     function initializeSiteSettingsAuthorsList(container, json) {
-        var html = json.Data.Html,
-            data = (json.Success == true) ? json.Data.Data.Data : null;
+        var html = json.Html,
+            data = (json.Success == true) ? json.Data : null;
 
         container.html(html);
 
@@ -439,8 +440,8 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     * Initializes site settings templates tab
     */
     function initializeSiteSettingsTemplatesList(container, json) {
-        var html = json.Data.Html,
-            templates = (json.Success == true) ? json.Data.Data.Data : null;
+        var html = json.Html,
+            templates = (json.Success == true) ? json.Data : null;
 
         container.html(html);
 

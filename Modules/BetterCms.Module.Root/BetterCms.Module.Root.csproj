@@ -135,6 +135,7 @@
     <Compile Include="Models\ContentBase.cs" />
     <Compile Include="Models\ContentHistory.cs" />
     <Compile Include="Models\ContentOptionHistory.cs" />
+    <Compile Include="Models\ComboWireJson.cs" />
     <Compile Include="Models\Maps\ContentHistoryMap.cs" />
     <Compile Include="Models\Maps\ContentOptionHistoryMap.cs" />
     <Compile Include="Models\Maps\PageContentHistoryMap.cs" />
@@ -249,7 +250,6 @@
     <EmbeddedResource Include="Content\Styles\qunit-1.9.0.css" />
     <EmbeddedResource Include="Scripts\bcms.content.js" />
     <EmbeddedResource Include="Scripts\bcms.forms.js" />
-    <EmbeddedResource Include="Scripts\bcms.modal.js" />
     <EmbeddedResource Include="Scripts\bcms.sidemenu.js" />
     <None Include="Scripts\jquery-1.7.2.intellisense.js">
       <DependentUpon>jquery-1.7.2.js</DependentUpon>
@@ -492,9 +492,10 @@
     <EmbeddedResource Include="Scripts\ckeditor\contents.css" />
     <EmbeddedResource Include="Scripts\ckeditor\styles.js" />
     <EmbeddedResource Include="Scripts\bcms.inlineEdit.js" />
-    <EmbeddedResource Include="Scripts\bcms.dynamicContent.js" />
     <EmbeddedResource Include="Scripts\bcms.js" />
     <EmbeddedResource Include="Scripts\bcms.ko.grid.js" />
+    <EmbeddedResource Include="Scripts\bcms.dynamicContent.js" />
+    <EmbeddedResource Include="Scripts\bcms.modal.js" />
     <EmbeddedResource Include="Scripts\bcms.siteSettings.js" />
     <Content Include="Scripts\jquery-1.7.2.min.js">
       <DependentUpon>jquery-1.7.2.js</DependentUpon>
@@ -530,9 +531,6 @@
     <EmbeddedResource Include="Views\Shared\Partial\Info.cshtml">
       <SubType>Code</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\Shared\Partial\Modal.cshtml">
-      <SubType>Code</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Views\Shared\Partial\Region.cshtml" />
     <EmbeddedResource Include="Views\Sidebar\Container.cshtml" />
     <EmbeddedResource Include="Views\Shared\Layouts\OneColumnLayout.cshtml" />
@@ -555,11 +553,12 @@
     <EmbeddedResource Include="Views\Shared\Partial\ImagePreview.cshtml" />
     <EmbeddedResource Include="Views\Shared\BaseLayout.cshtml" />
     <EmbeddedResource Include="Views\Shared\RootLayout.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Partial\SiteSettingTab.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditableGrid\Grid.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\Cell.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\Header.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\TopBlock.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Partial\Modal.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Partial\SiteSettingTab.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\Entity\" />

@@ -348,7 +348,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             messagesContainer = dialogContainer; // TODO: move to private.
             
             var sitemapViewModel = new SitemapViewModel(dialogContainer);
-            if (initializeSiteMap(content.Data.Data, sitemapViewModel)) {
+            if (initializeSiteMap(content, sitemapViewModel)) {
                 attachEvents(dialogContainer);
             };
         }
@@ -358,7 +358,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         */
         function initializeSitemapEditDialog(content, dialog) {
             var sitemapViewModel = new SitemapViewModel(dialog.container);
-            initializeSiteMap(content.Data.Data, sitemapViewModel);
+            initializeSiteMap(content, sitemapViewModel);
         }
         
         /**
@@ -398,7 +398,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                                         }
                                         // Save changes if any.
                                         if (nodeUpdated) {
-                                            node.saveSitemapNode();
+                                            saveSitemapNode(node);
                                         }
                                     }
                                 };
@@ -413,7 +413,9 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                                 destinationArray.splice(newIndex, 0, item);
                                 ui.item.remove();
 
-                                renewNodeData(sourceArray(), null);
+                                if (destinationArray != sourceArray) {
+                                    renewNodeData(sourceArray(), null);
+                                }
                                 renewNodeData(destinationArray(), destinationParent);
                             }
                         },
