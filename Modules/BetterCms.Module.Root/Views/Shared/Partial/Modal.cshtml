@@ -11,10 +11,8 @@
                 <div class="bcms-modal-content-padded"></div>
             </div>
             <div class="bcms-modal-footer">
-                <div data-bind="foreach: buttons">
-                    <!-- ko if: disabled() === false -->
+                <div class="bcms-modal-footer-buttons" style="float: left" data-bind="foreach: buttons">
                     <div data-bind="text: title, css: css, click: click, visible: !disabled()"></div>
-                    <!-- /ko -->
                 </div>
                 <div class="bcms-modal-cmslogo"></div>
             </div>
