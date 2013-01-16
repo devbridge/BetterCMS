@@ -119,6 +119,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Command\Sitemap\DeleteSitemapNode\DeleteSitemapNodeCommand.cs" />
+    <Compile Include="Command\Sitemap\GetPageLinks\GetPageLinksCommand.cs" />
     <Compile Include="Command\Sitemap\GetSitemap\GetSitemapCommand.cs" />
     <Compile Include="Command\Sitemap\SaveSitemapNode\SaveSitemapNodeCommand.cs" />
     <Compile Include="Content\Resources\NavigationGlobalization.Designer.cs">
@@ -136,6 +137,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DefaultSitemapService.cs" />
     <Compile Include="Services\ISitemapService.cs" />
+    <Compile Include="ViewModels\Sitemap\SitemapAndPageLinksViewModel.cs" />
+    <Compile Include="ViewModels\Sitemap\PageLinkViewModel.cs" />
     <Compile Include="ViewModels\Sitemap\SearchableSitemapViewModel.cs" />
     <Compile Include="ViewModels\Sitemap\SitemapNodeViewModel.cs" />
   </ItemGroup>

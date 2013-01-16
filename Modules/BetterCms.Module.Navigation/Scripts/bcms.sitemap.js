@@ -11,6 +11,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 sitemapForm: "#bcms-sitemap-form",
                 sitemapNodeSearchButton: "#bcms-btn-sitemap-search",
                 sitemapEditButton: "#bcms-btn-sitemap-edit",
+                sitemapChildNodesList: '.bcms-connected-sortable',
                 
                 templatePageLinksDataBind: "#bcms-pagelinks-data-bind-container",
             },
@@ -23,6 +24,9 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             globalization = {
                 sitemapEditorDialogTitle: null,
                 sitemapEditorDialogClose: null,
+            },
+            cssclass = {
+                sitemapNodeDropZone: 'bcms-placement-dropzone',
             },
             messagesContainer = null;
 
@@ -58,9 +62,11 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 },
                 onAcceptClick: function (dialog) {
                     dialog.close();
+                    // TODO: reload sitemap.
                 }
             });
         };
+
 
 
         /**
@@ -353,14 +359,71 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             };
         }
         
+
+
         /**
         * Initializes sitemap edit dialog.
         */
         function initializeSitemapEditDialog(content, dialog) {
             var sitemapViewModel = new SitemapViewModel(dialog.container);
             initializeSiteMap(content, sitemapViewModel);
+            initializePageLinks(content, dialog.container);
         }
         
+        /**
+        * Initializes page links.
+        */
+        function initializePageLinks(content, container) {
+            var pageLinks = new PageLinksViewModel(container);
+            if (jsonToPageLinksModel(content, pageLinks)) {
+                var context = container.find(selectors.templatePageLinksDataBind).get(0);
+                ko.applyBindings(pageLinks, context);
+            }
+        }
+        
+        /**
+        * Parse json result and map data to view model.
+        */
+        function jsonToPageLinksModel(json, pageLinksViewModel) {
+            messages.refreshBox(pageLinksViewModel.messagesContainer, json);
+            if (json.Success) {
+                var pageLinks = [];
+                for (var i in json.Data.PageLinks) {
+                    var pageLink = json.Data.PageLinks[i];
+                    pageLinks.push(new PageLinkViewModel(pageLink.Title, pageLink.Url));
+                }
+                pageLinksViewModel.pageLinks(pageLinks);
+                return true;
+            }
+            return false;
+        }
+
+        /**
+        * Page links view model.
+        */
+        function PageLinksViewModel(container) {
+            var self = this;
+            self.messagesContainer = container;
+            
+            self.searchText = ko.observable();
+            self.pageLinks = ko.observableArray([]);
+
+            self.searchPageLinks = function() {
+                // TODO: implement.
+            };
+        }
+
+        /**
+        * Page link view model.
+        */
+        function PageLinkViewModel(title, url) {
+            var self = this;
+            self.title = ko.observable(title);
+            self.url = ko.observable(url);
+        }
+
+
+
         /**
         * Sortable binding to handle node ordering.
         */
@@ -368,62 +431,100 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             ko.bindingHandlers.sortable = {
                 init: function(element, valueAccessor) {
                     var startIndex = -1,
-                        sourceArray = valueAccessor();
-                    var sortableSetup = {
-                        start: function(event, ui) {
-                            ko.contextFor(ui.item[0]).$root.isDragStarted(true);
-                            startIndex = ui.item.index();
-                            ui.item.find("input:focus").change();
-                        },
-                        stop: function(event, ui) {
-                            ko.contextFor(ui.item[0]).$root.isDragStarted(false);
-                            var newIndex = ui.item.index(),
-                                renewNodeData = function (nodesToReorder, parentNode) {
-                                    for (var i = 0; i < nodesToReorder.length; i++) {
-                                        var node = nodesToReorder[i],
-                                            nodeUpdated = false;
-                                        // Update order index.
-                                        if (node.displayOrder() != i) {
-                                            node.displayOrder(i);
-                                            nodeUpdated = true;
-                                        }
-                                        // Update parent node.
-                                        if (parentNode != null && node.parentNode != parentNode) {
-                                            if (parentNode.isRootModel) {
-                                                node.parentNode = null;
-                                            } else {
-                                                node.parentNode = parentNode;
+                        sourceArray = valueAccessor(),
+                        sortableSetup = {
+                            start: function(event, ui) {
+                                ko.contextFor(ui.item[0]).$root.isDragStarted(true);
+                                startIndex = ui.item.index();
+                                ui.item.find("input:focus").change();
+                            },
+                            stop: function(event, ui) {
+                                ko.contextFor(ui.item[0]).$root.isDragStarted(false);
+                                var newIndex = ui.item.index(),
+                                    renewNodeData = function(nodesToReorder, parentNode) {
+                                        for (var i = 0; i < nodesToReorder.length; i++) {
+                                            var node = nodesToReorder[i],
+                                                nodeUpdated = false;
+                                            // Update order index.
+                                            if (node.displayOrder() != i) {
+                                                node.displayOrder(i);
+                                                nodeUpdated = true;
                                             }
-                                            nodeUpdated = true;
+                                            // Update parent node.
+                                            if (parentNode != null && node.parentNode != parentNode) {
+                                                if (parentNode.isRootModel) {
+                                                    node.parentNode = null;
+                                                } else {
+                                                    node.parentNode = parentNode;
+                                                }
+                                                nodeUpdated = true;
+                                            }
+                                            // Save changes if any.
+                                            if (nodeUpdated) {
+                                                saveSitemapNode(node);
+                                            }
                                         }
-                                        // Save changes if any.
-                                        if (nodeUpdated) {
-                                            saveSitemapNode(node);
-                                        }
+                                    };
+
+                                if (startIndex > -1) {
+                                    var context = ko.contextFor(ui.item.parent()[0]),
+                                        destinationParent = context.$data,
+                                        destinationArray = destinationParent.childNodes || destinationParent.sitemapNodes,
+                                        item = sourceArray()[startIndex];
+
+                                    sourceArray.remove(item);
+                                    destinationArray.splice(newIndex, 0, item);
+                                    ui.item.remove();
+
+                                    if (destinationArray != sourceArray) {
+                                        renewNodeData(sourceArray(), null);
                                     }
-                                };
-
-                            if (startIndex > -1) {
-                                var context = ko.contextFor(ui.item.parent()[0]),
-                                    destinationParent = context.$data,
-                                    destinationArray = destinationParent.childNodes || destinationParent.sitemapNodes,
-                                    item = sourceArray()[startIndex];
-
-                                sourceArray.remove(item);
-                                destinationArray.splice(newIndex, 0, item);
-                                ui.item.remove();
-
-                                if (destinationArray != sourceArray) {
-                                    renewNodeData(sourceArray(), null);
+                                    renewNodeData(destinationArray(), destinationParent);
                                 }
-                                renewNodeData(destinationArray(), destinationParent);
-                            }
-                        },
-                        connectWith: '.bcms-connected-sortable',
-                        placeholder: 'bcms-placement-dropzone',
-                        dropOnEmpty: true
-                    };
+                            },
+                            connectWith: selectors.sitemapChildNodesList,
+                            placeholder: cssclass.sitemapNodeDropZone,
+                            dropOnEmpty: true
+                        };
                     $(element).sortable(sortableSetup);
+                    $(element).disableSelection();
+                }
+            };
+        }
+        
+        function addDraggableBinding() {
+            ko.bindingHandlers.draggable = {
+                init: function (element, valueAccessor) {
+                    var startIndex = -1,
+                        sourceArray = valueAccessor(),
+                        draggableSetup = {
+                            placeholder: cssclass.sitemapNodeDropZone,
+                            connectWith: selectors.sitemapChildNodesList,
+                            start: function(event, ui) {
+                                startIndex = ui.item.index();
+                            },
+                            stop: function(event, ui) {
+                                if (startIndex > -1) {
+                                    var newIndex = ui.item.index(),
+                                        context = ko.contextFor(ui.item.parent()[0]),
+                                        destinationParent = context.$data,
+                                        destinationArray = destinationParent.childNodes || destinationParent.sitemapNodes,
+                                        pageLink = sourceArray()[startIndex];
+
+                                    // Create new sitemap node.
+                                    var sitemapNode = new SitemapNodeViewModel();
+                                    sitemapNode.id('00000000-0000-0000-0000-000000000000');
+                                    sitemapNode.version(1);
+                                    sitemapNode.title(pageLink.title());
+                                    sitemapNode.url(pageLink.url());
+                                    sitemapNode.displayOrder(newIndex);
+
+                                    destinationArray.splice(newIndex, 0, sitemapNode);
+                                }
+                                return false;
+                            }
+                        };
+                    $(element).sortable(draggableSetup);
                     $(element).disableSelection();
                 }
             };
@@ -455,6 +556,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         sitemap.init = function() {
             console.log('Initializing bcms.sitemap module.');
             addSortableBinding();
+            addDraggableBinding();
         };
     
         /**

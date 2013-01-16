@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 
 using BetterCms.Module.Navigation.Command.Sitemap.DeleteSitemapNode;
+using BetterCms.Module.Navigation.Command.Sitemap.GetPageLinks;
 using BetterCms.Module.Navigation.Command.Sitemap.GetSitemap;
 using BetterCms.Module.Navigation.Command.Sitemap.SaveSitemapNode;
 using BetterCms.Module.Navigation.Content.Resources;
@@ -38,10 +39,34 @@ namespace BetterCms.Module.Navigation.Controllers
         public ActionResult EditSitemap()
         {
             var sitemap = GetCommand<GetSitemapCommand>().ExecuteCommand(string.Empty);
-            var success = sitemap != null;
+            var pageLinks = GetCommand<GetPageLinksCommand>().ExecuteCommand(string.Empty);
+            var success = sitemap != null & pageLinks != null;
             var view = RenderView("Edit", null);
 
-            return ComboWireJson(success, view, sitemap, JsonRequestBehavior.AllowGet);
+            var data = new SitemapAndPageLinksViewModel();
+            if (success)
+            {
+                data.RootNodes = sitemap.RootNodes;
+                data.PageLinks = pageLinks;
+            }
+
+            return ComboWireJson(success, view, data, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Gets the page links.
+        /// </summary>
+        /// <param name="searchQuery">The search query.</param>
+        /// <returns>JSON result.</returns>
+        public ActionResult GetPageLinks(string searchQuery)
+        {
+            var response = GetCommand<GetPageLinksCommand>().ExecuteCommand(searchQuery);
+            if (response != null)
+            {
+                var data = new SitemapAndPageLinksViewModel { PageLinks = response };
+                return Json(new WireJson { Success = true, Data = data });
+            }
+            return Json(new WireJson { Success = false });
         }
 
         /// <summary>
@@ -69,6 +94,11 @@ namespace BetterCms.Module.Navigation.Controllers
             return Json(new WireJson { Success = false });
         }
 
+        /// <summary>
+        /// Deletes the sitemap node.
+        /// </summary>
+        /// <param name="node">The node.</param>
+        /// <returns>JSON result.</returns>
         [HttpPost]
         public ActionResult DeleteSitemapNode(SitemapNodeViewModel node)
         {
