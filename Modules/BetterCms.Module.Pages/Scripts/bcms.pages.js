@@ -53,7 +53,8 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             loadAddNewPageDialogUrl: null,
             deletePageConfirmationUrl: null,
             changePublishStatusUrl: null,
-            clonePageDialogUrl: null
+            clonePageDialogUrl: null,
+            convertStringToSlugUrl: null
         },
         
         globalization = {
@@ -79,6 +80,7 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
     */
     page.links = links;
     page.globalization = globalization;
+    page.senderId = 0;
 
     /**
     * Initializes AddNewPage dialog events.
@@ -285,23 +287,40 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
         });
     };
 
+    /**
+    * Changes page slug
+    */
     page.changeUrlSlug = function (dialog) {
-        var slug = page.createSlug(dialog.container.find(selectors.addNewPageTitleInput).val()),
-            prefix = window.location.pathname,
-            url = prefix + (slug ? slug + '/' : '');
+        var oldText = dialog.container.find(selectors.addNewPageTitleInput).val().trim();
+        setTimeout(function() {
+            var text = dialog.container.find(selectors.addNewPageTitleInput).val().trim(),
+                senderId = page.senderId++,
+                onComplete = function (json) {
+                    if (json && json.SenderId == senderId && json.Url) {
+                        var slug = json.Url,
+                            prefix = window.location.pathname,
+                            url = prefix + (slug ? slug + '/' : '');
 
-        dialog.container.find(selectors.permalinkEditField).val(url);
-        dialog.container.find(selectors.permalinkHiddenField).val(url);
-        dialog.container.find(selectors.permalinkInfoField).html(url);
-    };
+                        dialog.container.find(selectors.permalinkEditField).val(url);
+                        dialog.container.find(selectors.permalinkHiddenField).val(url);
+                        dialog.container.find(selectors.permalinkInfoField).html(url);
+                    }
+                };
 
-    page.createSlug = function(title) {
-        var slug = $.trim(title).toLowerCase().replace(/[^a-z0-9]+/g, '-');
-        // Replace multiple dashes with a single dash, also multiple slashes with a single slash:
-        slug = slug.replace(/-{2,}/g, '-').replace(/\/{2,}/g, '/');
-        // Trim start and end:
-        slug = slug.replace(/^-/, '').replace(/-$/, '');
-        return slug;
+            if (text && oldText == text) {
+                $.ajax({
+                    type: 'GET',
+                    url: $.format(links.convertStringToSlugUrl, encodeURIComponent(text), senderId),
+                    dataType: 'json',
+                })
+                    .done(function(result) {
+                        onComplete(result);
+                    })
+                    .fail(function(response) {
+                        onComplete(response);
+                    });
+            }
+        }, 400);
     };
 
     /**
@@ -458,7 +477,32 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             }
         });
     };
-    
+
+    /**
+    * Converts string to url
+    */
+    page.convertStringToSlug = function (delay, text, canChange, onComplete) {
+        var url = $.format(links.convertStringToSlugUrl, text);
+
+        setTimeout(function () {
+            bcms.reload();
+        }, 200);
+
+        /*$.ajax({
+            type: 'POST',
+            url: links.changePublishStatusUrl,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            data: JSON.stringify(data)
+        })
+            .done(function (result) {
+                onComplete(result);
+            })
+            .fail(function (response) {
+                onComplete(bcms.parseFailedResponse(response));
+            });*/
+    };
+
     /**
     * Initializes page module.
     */
