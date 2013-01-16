@@ -25,9 +25,10 @@
         column.InlineEditControlsColumn();
     };
 }
+<div class="bcms-top-block-holder">
+    <div class="bcms-btn-links-main" id="bcms-add-option-button">@PagesGlobalization.ContentOptions_AddNew</div>
+</div>
 
-<div class="bcms-btn-links-main" id="bcms-add-option-button">@PagesGlobalization.ContentOptions_AddNew</div>
-    
 @Html.Grid(Model.ContentOptions).Columns(columns).Attributes(@class => "bcms-tables", @id => "bcms-options-grid").RenderUsing(new EditableHtmlTableGridRenderer<ContentOptionViewModel>())
 
 <script type="text/html" id="bcms-editable-row-template">

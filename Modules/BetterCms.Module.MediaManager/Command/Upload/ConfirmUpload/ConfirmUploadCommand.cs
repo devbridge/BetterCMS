@@ -85,7 +85,7 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
             model.Version = file.Version;
             model.ContentType = MediaContentType.File;
             model.PublicUrl = file.PublicUrl;
-            model.FileExtension = file.FileExtension;
+            model.FileExtension = file.OriginalFileExtension;
 
             return model;
         }
