@@ -1,7 +1,9 @@
 ﻿using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.JsModule;
 using BetterCms.Core.Modules.Projections;
+using BetterCms.Module.Navigation.Content.Resources;
 using BetterCms.Module.Navigation.Controllers;
+using BetterCms.Module.Root.Content.Resources;
 
 namespace BetterCms.Module.Navigation.Registration
 {
@@ -21,13 +23,14 @@ namespace BetterCms.Module.Navigation.Registration
                 {
                     new JavaScriptModuleLinkTo<SitemapController>(this, "loadSiteSettingsSitemapUrl", c => c.Index(null)),
                     new JavaScriptModuleLinkTo<SitemapController>(this, "saveSitemapNodeUrl", c => c.SaveSitemapNode(null)),
-                    new JavaScriptModuleLinkTo<SitemapController>(this, "deleteSitemapNodeUrl", c => c.DeleteSitemapNode(null))
+                    new JavaScriptModuleLinkTo<SitemapController>(this, "deleteSitemapNodeUrl", c => c.DeleteSitemapNode(null)),
+                    new JavaScriptModuleLinkTo<SitemapController>(this, "sitemapEditDialogUrl", c => c.EditSitemap())
                 };
 
             Globalization = new IActionProjection[]
                 {
-                    // TODO:
-                    // new JavaScriptModuleGlobalization(this, "addNewPageDialogTitle", () => PagesGlobalization.AddNewPage_Dialog_Title),
+                    new JavaScriptModuleGlobalization(this, "sitemapEditorDialogTitle", () => NavigationGlobalization.Sitemap_EditorDialog_Title),
+                    new JavaScriptModuleGlobalization(this, "sitemapEditorDialogClose", () => RootGlobalization.Button_Close),
                 };
         }
     }

@@ -181,18 +181,9 @@ namespace BetterCms.Module.Root.Mvc
         /// The JSON result object that serializes the specified object to JSON format combined with Html.
         /// </returns>
         [NonAction]
-        public virtual JsonResult ComboWireJson(bool success, string html, object data, JsonRequestBehavior behavior = JsonRequestBehavior.DenyGet)
+        public virtual JsonResult ComboWireJson(bool success, string html, dynamic data, JsonRequestBehavior behavior = JsonRequestBehavior.DenyGet)
         {
-            var json = new
-            {
-                Data = new WireJson
-                {
-                    Success = success,
-                    Data = data
-                },
-                Html = html
-            };
-            return WireJson(success, json, behavior);
+            return Json(new ComboWireJson(success, html, data), behavior);
         }
 
         /// <summary>

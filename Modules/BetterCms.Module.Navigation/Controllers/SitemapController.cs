@@ -18,23 +18,30 @@ namespace BetterCms.Module.Navigation.Controllers
         /// <summary>
         /// Renders sitemap container.
         /// </summary>
-        /// <param name="search">Sitemap node search text.</param>
+        /// <param name="searchQuery">The search query.</param>
         /// <returns>
         /// Rendered sitemap container.
         /// </returns>
         public ActionResult Index(string searchQuery)
         {
             var sitemap = GetCommand<GetSitemapCommand>().ExecuteCommand(searchQuery);
-            var json = new
-                           {
-                               Data = new WireJson
-                                          {
-                                              Success = true,
-                                              Data = sitemap
-                                          },
-                               Html = RenderView("Index", new SearchableSitemapViewModel())
-                           };
-            return WireJson(true, json, JsonRequestBehavior.AllowGet);
+            var success = sitemap != null;
+            var view = RenderView("Index", new SearchableSitemapViewModel());
+
+            return ComboWireJson(success, view, sitemap, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Edits the sitemap.
+        /// </summary>
+        /// <returns>Rendered sitemap container.</returns>
+        public ActionResult EditSitemap()
+        {
+            var sitemap = GetCommand<GetSitemapCommand>().ExecuteCommand(string.Empty);
+            var success = sitemap != null;
+            var view = RenderView("Edit", null);
+
+            return ComboWireJson(success, view, sitemap, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>

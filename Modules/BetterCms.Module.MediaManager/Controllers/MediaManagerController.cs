@@ -23,16 +23,10 @@ namespace BetterCms.Module.MediaManager.Controllers
         public ActionResult Index()
         {
             var images = GetCommand<GetImagesCommand>().ExecuteCommand(new MediaManagerViewModel());
-            var json = new
-                           {
-                               Data = new WireJson
-                                          {
-                                              Success = true, 
-                                              Data = images
-                                          }, 
-                               Html = RenderView("Index", new MediaImageViewModel())
-                           };
-            return WireJson(true, json, JsonRequestBehavior.AllowGet);
+            var success = images != null;
+            var view = RenderView("Index", new MediaImageViewModel());
+            
+            return ComboWireJson(success, view, images, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
