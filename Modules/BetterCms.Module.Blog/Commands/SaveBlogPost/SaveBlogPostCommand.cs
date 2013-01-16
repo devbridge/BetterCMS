@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 
 using BetterCms.Core.Exceptions.Mvc;
+using BetterCms.Core.Models;
 using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.Blog.Content.Resources;
@@ -129,6 +130,8 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                 blogPost.PublishedOn = DateTime.Now;
                 blogPost.IsPublic = true;
                 blogPost.Layout = layout;
+
+                pageContent.Status = ContentStatus.Published;
             }
 
             if (request.AuthorId.HasValue)

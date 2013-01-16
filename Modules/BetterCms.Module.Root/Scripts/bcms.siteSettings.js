@@ -184,7 +184,7 @@ define('bcms.siteSettings', ['jquery', 'bcms', 'bcms.modal', 'bcms.dynamicConten
 
         siteSettings.setContent(content);
         
-        ko.applyBindings(tabsViewModel, siteSettingsModalWindow.container.get(0));
+        ko.applyBindings(tabsViewModel, siteSettingsModalWindow.container.find(selectors.placeHolder).get(0));
 
         tabs.initTabPanel(siteSettingsModalWindow.container);
         
