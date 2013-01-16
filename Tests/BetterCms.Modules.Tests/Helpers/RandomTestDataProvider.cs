@@ -607,8 +607,8 @@ namespace BetterCms.Tests.Helpers
 
             entity.Type = type;
             entity.Title = ProvideRandomString(MaxLength.Name);
-            entity.FileName = ProvideRandomString(MaxLength.Name);
-            entity.FileExtension = ProvideRandomString(10);
+            entity.OriginalFileName = ProvideRandomString(MaxLength.Name);
+            entity.OriginalFileExtension = ProvideRandomString(10);
             entity.FileUri = new Uri(@"C:\web\test\content\100200\file.png");
             entity.PublicUrl = "http://bettercms.com/files/file?id=100200";
             entity.Size = ProvideRandomNumber(10, 2000);
@@ -628,8 +628,8 @@ namespace BetterCms.Tests.Helpers
 
             entity.Type = type;
             entity.Title = ProvideRandomString(MaxLength.Name);
-            entity.FileName = ProvideRandomString(MaxLength.Name);
-            entity.FileExtension = ProvideRandomString(10);
+            entity.OriginalFileName = ProvideRandomString(MaxLength.Name);
+            entity.OriginalFileExtension = ProvideRandomString(10);
             entity.FileUri = new Uri(@"C:\Projects\BetterCMS\file100.png");
             entity.PublicUrl = "http://bettercms.com/files/image?id=100200&t=image;";
             entity.Size = ProvideRandomNumber(10, 2000);

@@ -5,9 +5,9 @@ namespace BetterCms.Module.MediaManager.Models
     [Serializable]
     public class MediaFile : Media
     {
-        public virtual string FileName { get; set; }
+        public virtual string OriginalFileName { get; set; }
 
-        public virtual string FileExtension { get; set; }
+        public virtual string OriginalFileExtension { get; set; }
 
         public virtual Uri FileUri { get; set; }
 

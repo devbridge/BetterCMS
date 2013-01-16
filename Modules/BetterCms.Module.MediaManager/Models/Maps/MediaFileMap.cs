@@ -9,8 +9,8 @@ namespace BetterCms.Module.MediaManager.Models.Maps
         {
             Table("MediaFiles");            
 
-            Map(f => f.FileName).Not.Nullable().Length(MaxLength.Name);
-            Map(f => f.FileExtension).Nullable().Length(MaxLength.Name);
+            Map(f => f.OriginalFileName).Not.Nullable().Length(MaxLength.Name);
+            Map(f => f.OriginalFileExtension).Nullable().Length(MaxLength.Name);
             Map(f => f.FileUri).Not.Nullable().Length(MaxLength.Uri);//.LazyLoad();
             Map(f => f.PublicUrl).Not.Nullable().Length(MaxLength.Url);//.LazyLoad();
             Map(f => f.Size).Not.Nullable();
