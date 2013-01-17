@@ -17,5 +17,10 @@
         /// The tooltip description.
         /// </value>
         public string TooltipDescription { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("Tooltip title: {0}, Tooltip description: {1}", TooltipTitle, TooltipDescription);
+        }
     }
 }
