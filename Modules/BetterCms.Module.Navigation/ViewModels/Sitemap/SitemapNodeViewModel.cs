@@ -8,7 +8,7 @@ using BetterCms.Module.Navigation.Content.Resources;
 namespace BetterCms.Module.Navigation.ViewModels.Sitemap
 {
     /// <summary>
-    /// View model for image media data.
+    /// View model for sitemap node data.
     /// </summary>
     public class SitemapNodeViewModel
     {

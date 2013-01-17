@@ -103,7 +103,7 @@
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Web.WebSitemap, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
@@ -119,6 +119,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Command\Sitemap\DeleteSitemapNode\DeleteSitemapNodeCommand.cs" />
+    <Compile Include="Command\Sitemap\GetPageLinks\GetPageLinksCommand.cs" />
     <Compile Include="Command\Sitemap\GetSitemap\GetSitemapCommand.cs" />
     <Compile Include="Command\Sitemap\SaveSitemapNode\SaveSitemapNodeCommand.cs" />
     <Compile Include="Content\Resources\NavigationGlobalization.Designer.cs">
@@ -136,6 +137,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DefaultSitemapService.cs" />
     <Compile Include="Services\ISitemapService.cs" />
+    <Compile Include="ViewModels\Sitemap\SitemapAndPageLinksViewModel.cs" />
+    <Compile Include="ViewModels\Sitemap\PageLinkViewModel.cs" />
     <Compile Include="ViewModels\Sitemap\SearchableSitemapViewModel.cs" />
     <Compile Include="ViewModels\Sitemap\SitemapNodeViewModel.cs" />
   </ItemGroup>
@@ -158,6 +161,10 @@
     <ProjectReference Include="..\..\BetterCMS.Core\BetterCms.Core.csproj">
       <Project>{694ca5ca-a0e2-4578-a249-648498b058d7}</Project>
       <Name>BetterCms.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BetterCms.Module.Pages\BetterCms.Module.Pages.csproj">
+      <Project>{FC04D4C2-8688-498F-B546-292C7E3688A9}</Project>
+      <Name>BetterCms.Module.Pages</Name>
     </ProjectReference>
     <ProjectReference Include="..\BetterCms.Module.Root\BetterCms.Module.Root.csproj">
       <Project>{66e7e4df-eeea-4b1e-8663-a1b430eb7375}</Project>

@@ -43,7 +43,7 @@
         <input type="text" class="bcms-editor-field-box" placeholder="@NavigationGlobalization.Sitemap_EditDialog_AddPageLink_SearchPlaceHolder" style="width: 166px;">
         <div class="bcms-btn-search" data-bind="click: searchPageLinks">@NavigationGlobalization.Sitemap_EditDialog_AddPageLink_SearchButton</div>
     </div>
-    <div class="bcms-sitemap-nodes" data-bind="template: { name: 'bcms-navigation-pagelink-template', foreach: pageNodes }"></div>
+    <div class="bcms-sitemap-nodes" data-bind="template: { name: 'bcms-navigation-pagelink-template', foreach: pageLinks }, draggable: pageLinks"></div>
 </script>
 <script type="text/html" id="bcms-navigation-pagelink-template">
     <div class="bcms-placement-node">

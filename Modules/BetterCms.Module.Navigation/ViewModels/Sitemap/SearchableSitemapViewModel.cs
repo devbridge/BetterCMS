@@ -3,7 +3,7 @@
 namespace BetterCms.Module.Navigation.ViewModels.Sitemap
 {
     /// <summary>
-    /// View model for image media data.
+    /// View model for sitemap data.
     /// </summary>
     public class SearchableSitemapViewModel
     {
