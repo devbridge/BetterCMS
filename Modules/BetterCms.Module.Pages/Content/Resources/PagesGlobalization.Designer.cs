@@ -1600,6 +1600,42 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Custom CSS.
+        /// </summary>
+        public static string HtmlContent_CustomCss_Title {
+            get {
+                return ResourceManager.GetString("HtmlContent_CustomCss_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Custom JavaScript.
+        /// </summary>
+        public static string HtmlContent_CustomJs_Title {
+            get {
+                return ResourceManager.GetString("HtmlContent_CustomJS_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable Custom CSS (If not Enabled, then &lt;b&gt;CSS&lt;/b&gt; will not be added to a Page).
+        /// </summary>
+        public static string HtmlContent_EnableCustomCss_Title {
+            get {
+                return ResourceManager.GetString("HtmlContent_EnableCustomCss_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable Custom JavaScript (If not Enabled, then &lt;b&gt;JavaScript&lt;/b&gt; will not be added to a Page).
+        /// </summary>
+        public static string HtmlContent_EnableCustomJs_Title {
+            get {
+                return ResourceManager.GetString("HtmlContent_EnableCustomJs_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ... Select category ....
         /// </summary>
         public static string HtmlContentWidget_Category_SelectCategory {

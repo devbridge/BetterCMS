@@ -33,6 +33,10 @@ namespace BetterCms.Module.Pages.Command.Content.GetContent
                                       LiveTo = ((HtmlContent)f.Content).ExpirationDate,
                                       PageContent = ((HtmlContent)f.Content).Html,
                                       Version = f.Version,
+                                      CustomCss = ((HtmlContent)f.Content).CustomCss,
+                                      CustomJs = ((HtmlContent)f.Content).CustomJs,
+                                      EanbledCustomJs = ((HtmlContent)f.Content).UseCustomJs,
+                                      EnabledCustomCss = ((HtmlContent)f.Content).UseCustomCss
                                   })
                           .FirstOrDefault();
         }
