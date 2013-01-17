@@ -1,8 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Navigation.ViewModels.Sitemap;
+using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Mvc;
+
+using NHibernate.Criterion;
+using NHibernate.Transform;
 
 namespace BetterCms.Module.Navigation.Command.Sitemap.GetPageLinks
 {
@@ -18,8 +23,30 @@ namespace BetterCms.Module.Navigation.Command.Sitemap.GetPageLinks
         /// <returns>Sitemap root nodes.</returns>
         public IList<PageLinkViewModel> Execute(string request)
         {
-            // TODO: implement.
-            return new List<PageLinkViewModel> { new PageLinkViewModel { Title = "Test1", Url = "/test" } };
+            PageProperties alias = null;
+            PageLinkViewModel modelAlias = null;
+
+            var query = UnitOfWork.Session
+                .QueryOver(() => alias)
+                .Where(() => !alias.IsDeleted);
+
+            if (!string.IsNullOrWhiteSpace(request))
+            {
+                var searchQuery = string.Format("%{0}%", request);
+                query = query.Where(Restrictions.Disjunction()
+                                        .Add(Restrictions.InsensitiveLike(Projections.Property(() => alias.Title), searchQuery))
+                                        .Add(Restrictions.InsensitiveLike(Projections.Property(() => alias.PageUrl), searchQuery)));
+            }
+
+            query = query
+                .SelectList(select => select
+                    .Select(() => alias.Title).WithAlias(() => modelAlias.Title)
+                    .Select(() => alias.PageUrl).WithAlias(() => modelAlias.Url))
+                .TransformUsing(Transformers.AliasToBean<PageLinkViewModel>());
+
+            query.UnderlyingCriteria.AddOrder(new Order("Title", true));
+
+            return query.Future<PageLinkViewModel>().ToList();
         }
     }
 }
