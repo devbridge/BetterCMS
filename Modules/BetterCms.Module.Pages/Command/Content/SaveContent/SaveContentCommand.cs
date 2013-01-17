@@ -38,7 +38,11 @@ namespace BetterCms.Module.Pages.Command.Content.SaveContent
                     ActivationDate = request.LiveFrom, 
                     ExpirationDate = request.LiveTo, 
                     Html = request.PageContent ?? string.Empty, 
-                    Version = request.Version                    
+                    Version = request.Version,
+                    UseCustomCss = request.EnabledCustomCss,
+                    UseCustomJs = request.EanbledCustomJs,
+                    CustomCss = request.CustomCss,
+                    CustomJs = request.CustomJs
                 };
 
             Repository.Save(pageContent);

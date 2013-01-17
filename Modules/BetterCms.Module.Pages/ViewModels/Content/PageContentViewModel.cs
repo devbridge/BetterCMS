@@ -90,6 +90,14 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         [AllowHtml]
         public string PageContent { get; set; }
 
+        public bool EanbledCustomJs { get; set; }
+
+        public bool EnabledCustomCss { get; set; }
+
+        public string CustomJs { get; set; }
+
+        public string CustomCss { get; set; }
+
         /// <summary>
         /// Gets or sets the list of the widget categories.
         /// </summary>

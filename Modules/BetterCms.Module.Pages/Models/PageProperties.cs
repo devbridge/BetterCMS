@@ -20,7 +20,6 @@ namespace BetterCms.Module.Pages.Models
         public virtual bool IsPublic { get; set; }
 
         public virtual IList<PageTag> PageTags { get; set; }
-        public virtual IList<PageCategory> PageCategories { get; set; }
         
         public virtual Author Author { get; set; }
         public virtual Category Category { get; set; }

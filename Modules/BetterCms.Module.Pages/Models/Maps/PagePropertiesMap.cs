@@ -23,7 +23,6 @@ namespace BetterCms.Module.Pages.Models.Maps
             References(x => x.Image).Cascade.SaveUpdate().LazyLoad();
 
             HasMany(x => x.PageTags).KeyColumn("PageId").Cascade.SaveUpdate().Inverse().LazyLoad().Where("IsDeleted = 0");
-            HasMany(x => x.PageCategories).KeyColumn("PageId").Cascade.SaveUpdate().Inverse().LazyLoad().Where("IsDeleted = 0");             
         }
     }
 }

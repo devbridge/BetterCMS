@@ -304,7 +304,15 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                     maxNr++;
                 }
 
-                fullUrl = string.Format("/{0}-{1}/", url, maxNr);
+                if (string.IsNullOrWhiteSpace(url))
+                {
+                    fullUrl = "-";
+                    recheckInDb = true;
+                }
+                else
+                {
+                    fullUrl = string.Format("/{0}-{1}/", url, maxNr);
+                }
 
                 if (recheckInDb)
                 {
