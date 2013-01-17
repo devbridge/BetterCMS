@@ -23,3 +23,21 @@
 <div class="bcms-text-editor-holder">
     @Html.TextAreaFor(model => model.PageContent, new { @id = "bcms-contenthtml" })
 </div>
+
+<div class="bcms-edit-check-field">
+    @Html.CheckBoxFor(model => model.EnabledCustomCss, new { @id = "bcms-enable-custom-css" })
+    <div class="bcms-edit-label">@Html.Raw(PagesGlobalization.HtmlContent_EnableCustomCss_Title)</div>
+</div>
+<div class="bcms-input-list-holder" id="bcms-custom-css-container">
+    <div class="bcms-content-titles">@PagesGlobalization.HtmlContent_CustomCss_Title</div>
+    @Html.TextAreaFor(model => model.CustomCss, new { @class = "bcms-editor-field-area", @style = "width:820px;" })
+</div>
+
+<div class="bcms-edit-check-field">
+    @Html.CheckBoxFor(model => model.EanbledCustomJs, new { @id = "bcms-enable-custom-js" })
+    <div class="bcms-edit-label">@Html.Raw(PagesGlobalization.HtmlContent_EnableCustomJs_Title)</div>
+</div>
+<div class="bcms-input-list-holder" id="bcms-custom-js-container">
+    <div class="bcms-content-titles">@PagesGlobalization.HtmlContent_CustomJs_Title</div>
+    @Html.TextAreaFor(model => model.CustomJs, new { @class = "bcms-editor-field-area", @style = "width:820px;" })
+</div>

@@ -187,7 +187,7 @@
     <value>Select a template</value>
   </data>
   <data name="AddPageContent_WidgetTab_AddNewButton" xml:space="preserve">
-    <value>Add New</value>
+    <value>Add New +</value>
   </data>
   <data name="AddPageContent_WidgetTab_DeleteButton" xml:space="preserve">
     <value>Delete</value>
@@ -1007,5 +1007,17 @@
   </data>
   <data name="SaveTemplate_VirtualPathNotExists_Message" xml:space="preserve">
     <value>Template view doesn't exists by given url ({0}). Url should start with tilde(~) and direct to views folder in the web application root folder (for example, ~/Views/Shared/Example.cshtml). Check if url is valid and if file exists and try again.</value>
+  </data>
+  <data name="HtmlContent_CustomCss_Title" xml:space="preserve">
+    <value>Custom CSS</value>
+  </data>
+  <data name="HtmlContent_CustomJS_Title" xml:space="preserve">
+    <value>Custom JavaScript</value>
+  </data>
+  <data name="HtmlContent_EnableCustomCss_Title" xml:space="preserve">
+    <value>Enable Custom CSS (If not Enabled, then &lt;b&gt;CSS&lt;/b&gt; will not be added to a Page)</value>
+  </data>
+  <data name="HtmlContent_EnableCustomJs_Title" xml:space="preserve">
+    <value>Enable Custom JavaScript (If not Enabled, then &lt;b&gt;JavaScript&lt;/b&gt; will not be added to a Page)</value>
   </data>
 </root>
