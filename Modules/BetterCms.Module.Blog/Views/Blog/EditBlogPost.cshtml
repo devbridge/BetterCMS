@@ -7,6 +7,14 @@
 
 @model BetterCms.Module.Blog.ViewModels.Blog.BlogPostViewModel
 
+@{
+    var tagsTemplateViewModel = new BetterCms.Module.Pages.ViewModels.Tags.TagsTemplateViewModel
+    {
+        TooltipTitle = BlogGlobalization.EditBlockPost_Tags_Tooltip_Title,
+        TooltipDescription = BlogGlobalization.EditBlockPost_Tags_Tooltip_Description
+    };
+}
+
 <div class="bcms-scroll-window">
     @using (Html.BeginForm<BlogController>(c => c.SaveBlogPost(null), FormMethod.Post, new { @id = "bcms-blog-post-form", @class = "bcms-ajax-form" }))
     {
@@ -77,21 +85,8 @@
                     @Html.DropDownListFor(model => model.CategoryId, Model.Categories.ToSelectList(Model.CategoryId), string.Empty, new { @class = "bcms-global-select", @style = "width: 245px;" })
                 </div>
 
-                <div class="bcms-blog-tags-holder">
-                    <div class="bcms-input-list-holder">
-                        @Html.Tooltip(BlogGlobalization.EditBlockPost_Tags_Tooltip_Title, BlogGlobalization.EditBlockPost_Tags_Tooltip_Description)
-                        <div class="bcms-content-titles">
-                            @BlogGlobalization.EditBlockPost_AddTags_Title
-                            <div class="bcms-btn-plus" data-bind="css: {'bcms-btn-plus-expand': tags.isExpanded()}, click: tags.expandCollapse">&nbsp;</div>
-                            <div class="bcms-tags-field-holder" data-bind="visible: tags.isExpanded()">
-                                <input type="text" class="bcms-add-tags-field" style="width: 107px;" data-bind="value: tags.newTag, valueUpdate: 'afterkeydown', hasfocus: tags.isExpanded()" />
-                            </div>
-                        </div>
-                        <div class="bcms-single-tag-holder" id="bcms-categories-container" data-bind="foreach: tags.tags()">
-                            <div class="bcms-single-tag"><span data-bind="text: name()"></span><a data-bind="click: remove">@RootGlobalization.Button_Remove</a></div>
-                            <input type="hidden" data-bind="attr:{ name: getTagInputName($index()), value: name() }" />
-                        </div>
-                    </div>
+                <div class="bcms-blog-tags-holder" data-bind="with: tags">
+                    @Html.Partial("~/Areas/bcms-pages/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel)
                 </div>
             </div>
         </div>

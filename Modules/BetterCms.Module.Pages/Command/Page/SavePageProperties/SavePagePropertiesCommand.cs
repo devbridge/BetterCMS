@@ -71,9 +71,6 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                 }
             }
 
-            tagService.SavePageTags(page, request.Tags);
-            UpdateCategories(page, request.Categories);
-
             page.Layout = Repository.AsProxy<Root.Models.Layout>(request.TemplateId);
             page.Author = request.AuthorId.HasValue ? Repository.AsProxy<Author>(request.AuthorId.Value) : null;
             page.Title = request.PageName;
@@ -85,6 +82,11 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             page.Version = request.Version;
 
             Repository.Save(page);
+
+            // Save tags
+            tagService.SavePageTags(page, request.Tags);
+            UpdateCategories(page, request.Categories);
+
             UnitOfWork.Commit();
 
             return new SavePageResponse(page);

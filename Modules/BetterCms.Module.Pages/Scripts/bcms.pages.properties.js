@@ -1,7 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.pages.properties', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bcms.dynamicContent'], function ($, bcms, modal, forms, dynamicContent) {
+define('bcms.pages.properties', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bcms.dynamicContent', 'bcms.pages.tags', 'knockout'],
+    function ($, bcms, modal, forms, dynamicContent, tags, ko) {
     'use strict';
 
     var page = {},
@@ -155,9 +156,23 @@ define('bcms.pages.properties', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', '
     }
     
     /**
+    * Page view model
+    */
+    function PageViewModel(tagsViewModel) {
+        var self = this;
+
+        self.tags = tagsViewModel;
+    }
+
+    /**
     * Initializes EditPageProperties dialog events.
     */
-    page.initEditPagePropertiesDialogEvents = function (dialog) {
+    page.initEditPagePropertiesDialogEvents = function (dialog, content) {
+        var tagsViewModel = new tags.TagsListViewModel(content.Data.Tags),
+            pageViewModel = new PageViewModel(tagsViewModel),
+            form = dialog.container.find(selectors.pagePropertiesForm);
+        ko.applyBindings(pageViewModel, form.get(0));
+
         dialog.container.find(selectors.editPermalink).on('click', function () {
             page.showPagePropertiesEditPermalinkBox(dialog);
         });
@@ -170,7 +185,7 @@ define('bcms.pages.properties', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', '
             page.savePagePropertiesEditPermalinkBox(dialog);
         });
 
-        dialog.container.find(selectors.pagePropertiesForm).on('submit', function () {
+        form.on('submit', function () {
             if (!dialog.container.find(selectors.permalinkEditField).valid()) {
                 page.showPagePropertiesEditPermalinkBox(dialog);
             }
@@ -190,15 +205,15 @@ define('bcms.pages.properties', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', '
             page.highlightPagePropertiesActiveTemplate(dialog, this);
         });
 
-        dialog.container.find(selectors.addTagField).on('blur', function () {
+        /*dialog.container.find(selectors.addTagField).on('blur', function () {
             addNewTag(dialog);
         });
 
         dialog.container.find(selectors.addCategoryField).on('blur', function () {
             addNewCategory(dialog);
-        });
+        });*/
 
-        dialog.container.find(selectors.buttonTagExpand).on('click', function () {
+        /*dialog.container.find(selectors.buttonTagExpand).on('click', function () {
             var button = $(this),
                 tagsContainer = button.siblings(selectors.tagsInputHolder),
                 visible = tagsContainer.is(':visible');
@@ -210,9 +225,9 @@ define('bcms.pages.properties', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', '
                 button.addClass(classes.tagExpand);
                 tagsContainer.show();
             }
-        });
+        });*/
         
-        dialog.container.find(selectors.buttonCategoryExpand).on('click', function () {
+        /*dialog.container.find(selectors.buttonCategoryExpand).on('click', function () {
             var button = $(this),
                 tagsContainer = button.siblings(selectors.tagsInputHolder),
                 visible = tagsContainer.is(':visible');
@@ -224,9 +239,9 @@ define('bcms.pages.properties', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', '
                 button.addClass(classes.tagExpand);
                 tagsContainer.show();
             }
-        });
+        });*/
 
-        dialog.container.find(selectors.tagRemoveLink).on('click', removeTag);
+        /*dialog.container.find(selectors.tagRemoveLink).on('click', removeTag);*/
 
         bcms.preventInputFromSubmittingForm(dialog.container.find(selectors.permalinkEditField), {
             preventedEnter: function () {
@@ -239,7 +254,7 @@ define('bcms.pages.properties', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', '
             }
         });
 
-        bcms.preventInputFromSubmittingForm(dialog.container.find(selectors.addTagField), {
+        /*bcms.preventInputFromSubmittingForm(dialog.container.find(selectors.addTagField), {
             preventedEnter: function () {
                 dialog.container.find(selectors.addTagField).blur();
             },
@@ -257,10 +272,10 @@ define('bcms.pages.properties', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', '
                 $(selectors.addCategoryField).val('');
                 dialog.container.find(selectors.addCategoryField).blur();
             }
-        });
+        });*/
 
-        pagePropertiesTagCounter = $(selectors.tagsContainer).find(selectors.addedTagClass).length;
-        pagePropertiesCategoryCounter = $(selectors.categoriesContainer).find(selectors.addedCategoryClass).length;
+        /*pagePropertiesTagCounter = $(selectors.tagsContainer).find(selectors.addedTagClass).length;
+        pagePropertiesCategoryCounter = $(selectors.categoriesContainer).find(selectors.addedCategoryClass).length;*/
     };
 
     /**

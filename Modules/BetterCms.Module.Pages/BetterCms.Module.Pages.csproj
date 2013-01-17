@@ -246,6 +246,7 @@
     <Compile Include="ViewModels\Content\PageContentSortViewModel.cs" />
     <Compile Include="ViewModels\SiteSettings\SiteSettingTemplateItemViewModel.cs" />
     <Compile Include="ViewModels\SiteSettings\SiteSettingTemplateListViewModel.cs" />
+    <Compile Include="ViewModels\Tags\TagsTemplateViewModel.cs" />
     <Compile Include="ViewModels\Templates\TemplateEditViewModel.cs" />
     <Compile Include="ViewModels\Templates\TemplateRegionItemViewModel.cs" />
     <Compile Include="ViewModels\Widgets\EditHtmlContentWidgetViewModel.cs" />
@@ -295,11 +296,11 @@
     <EmbeddedResource Include="Content\Css\Images\sprite-pages-2.png" />
     <EmbeddedResource Include="Scripts\bcms.pages.template.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.widgets.js" />
-    <EmbeddedResource Include="Scripts\bcms.pages.tags.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.content.js" />
-    <EmbeddedResource Include="Scripts\bcms.pages.properties.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.seo.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.properties.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.tags.js" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -334,9 +335,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Page\EditPageProperties.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Page\AddNewPage.cshtml" />
@@ -397,6 +395,7 @@
     <EmbeddedResource Include="Views\Content\EditPageContent.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Views\Page\EditPageProperties.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Templates\Templates.cshtml" />
@@ -406,6 +405,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Templates\Partial\EditTemplateRegions.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Tags\TagsTemplate.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

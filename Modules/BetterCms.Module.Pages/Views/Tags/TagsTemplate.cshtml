@@ -1,0 +1,20 @@
+﻿@using BetterCms.Module.Pages.Content.Resources
+@using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Mvc.UI
+
+@model BetterCms.Module.Pages.ViewModels.Tags.TagsTemplateViewModel
+
+<div class="bcms-input-list-holder">
+    @Html.Tooltip(Model.TooltipTitle, Model.TooltipDescription)
+    <div class="bcms-content-titles">
+        @PagesGlobalization.TagsTemplate_AddTags_Title
+        <div class="bcms-btn-plus" data-bind="css: {'bcms-btn-plus-expand': isExpanded()}, click: expandCollapse">&nbsp;</div>
+        <div class="bcms-tags-field-holder" data-bind="visible: isExpanded()">
+            <input type="text" class="bcms-add-tags-field" style="width: 107px;" data-bind="value: newTag, valueUpdate: 'afterkeydown', hasfocus: isExpanded(), enterPress: addTag, escPress: clearTag" />
+        </div>
+    </div>
+    <div class="bcms-single-tag-holder" data-bind="foreach: tags()">
+        <div class="bcms-single-tag"><span data-bind="text: name()"></span><a data-bind="click: remove">@RootGlobalization.Button_Remove</a></div>
+        <input type="hidden" data-bind="attr:{ name: getTagInputName($index()), value: name() }" />
+    </div>
+</div>

@@ -92,14 +92,22 @@ namespace BetterCms.Module.Pages.Controllers
         [HttpGet]
         public ActionResult EditPageProperties(string pageId)
         {
-            EditPagePropertiesViewModel model = GetCommand<GetPagePropertiesCommand>().ExecuteCommand(pageId.ToGuidOrDefault());
-            model.Templates = GetCommand<GetTemplatesCommand>().ExecuteCommand(new GetTemplatesRequest()).Templates;
-            if (!model.TemplateId.HasDefaultValue())
+            var model = GetCommand<GetPagePropertiesCommand>().ExecuteCommand(pageId.ToGuidOrDefault());
+            var success = model != null;
+
+            if (success)
             {
-                model.Templates.Where(x => x.TemplateId == model.TemplateId).ToList().ForEach(x => x.IsActive = true);
+                model.Templates = GetCommand<GetTemplatesCommand>().ExecuteCommand(new GetTemplatesRequest()).Templates;
+                if (!model.TemplateId.HasDefaultValue())
+                {
+                    model.Templates.Where(x => x.TemplateId == model.TemplateId).ToList().ForEach(x => x.IsActive = true);
+                }
             }
 
-            return View(model);
+            var view = RenderView("EditPageProperties", model);
+            var json = new { Tags = success ? model.Tags : null };
+
+            return ComboWireJson(success, view, json, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>

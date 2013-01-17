@@ -1069,15 +1069,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add Tags.
-        /// </summary>
-        public static string EditPageProperties_BasicPropertiesTab_AddTags_Title {
-            get {
-                return ResourceManager.GetString("EditPageProperties_BasicPropertiesTab_AddTags_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Add tags.
         /// </summary>
         public static string EditPageProperties_BasicPropertiesTab_AddTags_Tooltip_Description {
@@ -2433,6 +2424,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string SortPageContent_FailureMessage_Title {
             get {
                 return ResourceManager.GetString("SortPageContent_FailureMessage_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Tags.
+        /// </summary>
+        public static string TagsTemplate_AddTags_Title {
+            get {
+                return ResourceManager.GetString("TagsTemplate_AddTags_Title", resourceCulture);
             }
         }
         
