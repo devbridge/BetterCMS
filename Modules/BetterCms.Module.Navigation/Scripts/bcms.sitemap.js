@@ -214,7 +214,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         /**
         * Saves sitemap node.
         */
-        function saveSitemapNode(sitemapNodeViewModel) {
+        function saveSitemapNode(sitemapNodeViewModel, onSuccessCallBack, onFailCallBack) {
             var params = sitemapNodeViewModel.toJson(),
                 onSaveCompleted = function(json) {
                     messages.refreshBox(messagesContainer, json);
@@ -222,6 +222,13 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                         if (json.Data) {
                             sitemapNodeViewModel.id(json.Data.Id);
                             sitemapNodeViewModel.version(json.Data.Version);
+                        }
+                        if (onSuccessCallBack && $.isFunction(onSuccessCallBack)) {
+                            onSuccessCallBack();
+                        }
+                    } else {
+                        if (onFailCallBack && $.isFunction(onFailCallBack)) {
+                            onFailCallBack();
                         }
                     }
                 };
@@ -514,16 +521,21 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                                     // Create new sitemap node.
                                     var sitemapNode = new SitemapNodeViewModel();
                                     sitemapNode.id('00000000-0000-0000-0000-000000000000');
-                                    sitemapNode.version(1);
+                                    sitemapNode.version(0);
                                     sitemapNode.title(pageLink.title());
                                     sitemapNode.url(pageLink.url());
                                     sitemapNode.displayOrder(newIndex);
                                     sitemapNode.parentNode = destinationParent != context.$root ? destinationParent : null;
-                                    // TODO: save new node.
-
-                                    destinationArray.splice(newIndex, 0, sitemapNode);
                                     
-                                    context.$root.updateNodesOrderAndParent();
+
+                                    // TODO: add spinner in the node.
+                                    saveSitemapNode(sitemapNode, function() {
+                                        destinationArray.splice(newIndex, 0, sitemapNode);
+                                        context.$root.updateNodesOrderAndParent();
+                                        // TODO: remove spinner.
+                                    }, function () {
+                                        // TODO: remove spinner.
+                                    });
                                 }
                                 return false;
                             }

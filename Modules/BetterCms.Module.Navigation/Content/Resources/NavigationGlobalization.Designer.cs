@@ -178,6 +178,15 @@ namespace BetterCms.Module.Navigation.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sitemap node created successfully..
+        /// </summary>
+        public static string Sitemap_NodeCreatedSuccessfully_Message {
+            get {
+                return ResourceManager.GetString("Sitemap_NodeCreatedSuccessfully_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sitemap node deleted successfully..
         /// </summary>
         public static string Sitemap_NodeDeletedSuccessfully_Message {

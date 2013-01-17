@@ -19,7 +19,7 @@ namespace BetterCms.Module.Navigation.Command.Sitemap.SaveSitemapNode
         /// <returns>Execution result.</returns>
         public SitemapNodeViewModel Execute(SitemapNodeViewModel request)
         {
-            var node = request.Id == default(Guid)
+            var node = request.Id.HasDefaultValue()
                 ? new SitemapNode()
                 : Repository.AsProxy<SitemapNode>(request.Id);
 
@@ -27,9 +27,9 @@ namespace BetterCms.Module.Navigation.Command.Sitemap.SaveSitemapNode
             node.Title = request.Title;
             node.Url = request.Url;
             node.DisplayOrder = request.DisplayOrder;
-            node.ParentNode = request.ParentId != default(Guid)
-                ? Repository.AsProxy<SitemapNode>(request.ParentId)
-                : null;
+            node.ParentNode = request.ParentId.HasDefaultValue()
+                ? null
+                : Repository.AsProxy<SitemapNode>(request.ParentId);
 
             Repository.Save(node);
             UnitOfWork.Commit();

@@ -84,7 +84,7 @@ namespace BetterCms.Module.Navigation.Controllers
                 {
                     if (node.Id.HasDefaultValue())
                     {
-//                        Messages.AddSuccess(NavigationGlobalization.CreateSitemapNode_CreatedSuccessfully_Message);
+                        Messages.AddSuccess(NavigationGlobalization.Sitemap_NodeCreatedSuccessfully_Message);
                     }
 
                     return Json(new WireJson { Success = true, Data = response });
