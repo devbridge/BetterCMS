@@ -17,6 +17,7 @@ using BetterCms.Module.Pages.ViewModels.Page;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
+using BetterCms.Module.Root.Mvc.Helpers;
 
 namespace BetterCms.Module.Pages.Controllers
 {
@@ -198,6 +199,15 @@ namespace BetterCms.Module.Pages.Controllers
                 Messages.AddError(message);
             }
             return Json(new WireJson { Success = success });
+        }
+
+        /// <summary>
+        /// Converts the string to slug.
+        /// </summary>
+        /// <returns>URL, created from text</returns>
+        public ActionResult ConvertStringToSlug(string text, string senderId)
+        {
+            return Json(new { Text = text, Url = text.Transliterate(false), SenderId = senderId }, JsonRequestBehavior.AllowGet);
         }
     }
 }
