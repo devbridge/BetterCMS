@@ -10,14 +10,14 @@
 {
     <div class="bcms-twocols-title-block">
         <div class="bcms-large-titles">@NavigationGlobalization.Sitemap_Dialog_Title</div>
-        <div class="bcms-btn-links-main" id="bcms-btn-sitemap-edit">@NavigationGlobalization.Sitemap_Dialog_Edit</div>
+        <div class="bcms-btn-links-main" id="bcms-btn-sitemap-edit" data-bind="click: editSitemapClicked">@NavigationGlobalization.Sitemap_Dialog_Edit</div>
         <div class="bcms-search-block">
             @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box" })
-            <div class="bcms-btn-search" id="bcms-btn-sitemap-search">@NavigationGlobalization.Sitemap_Dialog_Search</div>
+            <div class="bcms-btn-search" id="bcms-btn-sitemap-search" data-bind="click: searchForNodes">@NavigationGlobalization.Sitemap_Dialog_Search</div>
         </div>
         @Html.MessagesBox("bcms-messages-box")
     </div>
-    <div class="bcms-placement-holder bcms-sitemap-nodes">
+    <div class="bcms-placement-holder @*bcms-sitemap-nodes*@">
         @Html.Partial("Partial/Sitemap", new SitemapNodeViewModel())
     </div>
 }

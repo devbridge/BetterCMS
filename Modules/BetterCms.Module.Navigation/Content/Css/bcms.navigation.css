@@ -110,23 +110,57 @@
         padding-bottom: 20px;
     }
 
-/*right content*/
+/*nodes tree*/
+.bcms-placement-node + .bcms-zone-holder {
+    margin-top: 10px;
+}
+
+.bcms-zone-holder {
+    border-left: 3px solid #e3e3e3;
+    padding: 0 0 0 20px;
+    overflow: hidden;
+}
+
+.bcms-nodes-dropzone + .bcms-zone-holder {
+    margin-top: 0;
+}
+
+/*dropzone*/
+.bcms-nodes-dropzone {
+    height: 6px;
+    margin: 2px 0;
+}
+
+.bcms-nodes-dropzone-active {
+    height: 30px;
+    padding: 8px 15px;
+    margin: 10px 0;
+    border: 1px dashed #bdbdbd;
+    border-radius: 2px;
+}
+
+    .bcms-nodes-dropzone-active .bcms-node-infotext {
+        display: block;
+    }
+
+.bcms-node-infotext {
+    display: none;
+    line-height: 30px;
+    color: #bdbdbd;
+    font-size: 16px;
+    font-weight: bold;
+}
+
 .bcms-placement-holder {
     display: block;
     padding: 20px;
     border-top: 1px solid #c6c6c6;
 }
 
-.bcms-placement-holder-inner {
-    /*background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAFoTx1HAAAAcUlEQVQoz5WSQQ4AIQgDebkJD5u3dS+rUSIse+il2AJFAwSYAQ7IAJuMJqOXXW8tEoo6A8YyOawP+40ct2LEOGy2MZTZlj3LojoDlUXPpvWY5IRXPa2DjlB73JVwJEmrey91buk/RGly2afwuOMX/MY/hgwMYjRiMmsAAAAASUVORK5CYII=') no-repeat 0 0;*/
-    border-left: 3px solid #e3e3e3;
-}
-
 .bcms-placement-node {
     position: relative;
     height: 30px;
     padding: 8px 15px;
-    margin-bottom: 15px;
     border: 1px solid #bdbdbd;
     border-radius: 2px;
     background-color: #f5f5f5;
@@ -161,6 +195,21 @@
         text-overflow: ellipsis;
     }
 
+.bcms-placement-node-drag {
+    border: 1px dashed #bdbdbd;
+    background: #effcfe;
+    opacity: 0.5;
+    filter: alpha(opacity = 50);
+}
+
+    .bcms-placement-node-drag a.bcms-icn-edit {
+        display: none;
+    }
+
+    .bcms-placement-node-drag a.bcms-icn-delete {
+        display: none;
+    }
+
 .bcms-expand-collapse-node {
     position: absolute;
     left: -8px;
@@ -169,6 +218,7 @@
     height: 16px;
     background: url('images/sprite-base-2.png') no-repeat -2px -179px;
     cursor: pointer;
+    text-indent: -9999px;
 }
 
 a.bcms-expanded-nodes {
@@ -244,24 +294,11 @@ a.bcms-expanded-nodes {
     box-sizing: border-box;
 }
 
-/*TESTING*/
-div.bcms-drag-node { /*THIS CLASS NEEDED FOR DRAGING NODES STYLE*/
-    border: 2px dashed #bdbdbd;
-    background-color: #effcfe;
-}
 
-div.ui-sortable-helper { /*THIS CLASS NEEDED FOR DRAGING NODES STYLE*/
-    border: 2px dashed #bdbdbd;
-    background-color: #effcfe;
-}
+/*OUTDATED DO NOT DEETE UNTIL SITEMAP IS FULLY IMPLEMNTED*/
+/*
 
-.ui-sortable-helper:hover > div.bcms-node-controls {
-    display: none;
-}
-
-div.bcms-drag-hover-emptylist .bcms-placement-holder-inner {
-    display: block;
-    min-height: 45px;
-    margin-bottom: 15px;
-}
-/*END OF TESTING*/
+.bcms-placement-holder-inner {
+    border-left: 3px solid #e3e3e3;
+    padding-left: 20px;
+}*/

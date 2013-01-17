@@ -7,7 +7,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
 
         var sitemap = {},
             selectors = {
-                sitemapSearchDataBind: "#bcms-sitemap-search-data-bind-container",
+                sitemapSearchDataBind: "#bcms-sitemap-form",
 //                templateDataBind: ".bcms-sitemap-data-bind-container",
 //                sitemapForm: "#bcms-sitemap-form",
 //                sitemapNodeSearchButton: "#bcms-btn-sitemap-search",
@@ -99,7 +99,13 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 if(sitemap)
                 {
                     // TODO: implement.
+                    alert('searchForNodes()!');
                 }
+            };
+
+            self.editSitemapClicked = function() {
+                // TODO: implement.
+                alert('editSitemapClicked()!');
             };
         }
         
@@ -108,6 +114,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             var self = this;
             self.id = function() { return defaultIdValue; };
             self.childNodes = ko.observableArray([]);
+            self.someNodeIsOver = ko.observable(false);     // Someone is dragging some node over the sitemap, but not over the particular node.
 
             // Expanding or collapsing nodes.
             self.expandAll = function () {
@@ -178,8 +185,13 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             self.parentNode = null;
             
             // For behavior.
-            self.isActive = ko.observable(false);   // If TRUE - show edit fields.
-            self.isExpanded = ko.observable(false); // If TRUE - show child nodes.
+            self.isActive = ko.observable(false);           // If TRUE - show edit fields.
+            self.isExpanded = ko.observable(false);         // If TRUE - show child nodes.
+            self.toggleExpand = function () {
+                self.isExpanded(!self.isExpanded());
+            };
+            self.isBeingDragged = ko.observable(false);     // Someone is dragging the node.
+            self.someNodeIsOver = ko.observable(false);     // Someone is dragging some node over this one.
             self.hasChildNodes = function () {
                 return self.childNodes().length > 0;
             };
@@ -189,18 +201,18 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             self.isSearchResult = ko.observable(false);
             
             // Data manipulation.
-            self.startEditSitemapNode = function (parent, event) {
+            self.startEditSitemapNode = function (event) {
                 bcms.stopEventPropagation(event);
                 self.isActive(true);
             };
-            self.cancelEditSitemapNode = function (parent, data, event) {
+            self.cancelEditSitemapNode = function (event) {
                 bcms.stopEventPropagation(event);
                 self.isActive(false);
                 if (self.id() == defaultIdValue) {
                     self.parentNode.childNodes.remove(self);
                 }
             };
-            self.saveSitemapNodeWithValidation = function (parent, data, event) {
+            self.saveSitemapNodeWithValidation = function (event) {
                 bcms.stopEventPropagation(event);
                 if ($('input', '#' + self.containerId()).valid()) {
                     self.saveSitemapNode();
@@ -241,7 +253,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                         onSaveCompleted(bcms.parseFailedResponse(response));
                     });
             };
-            self.deleteSitemapNode = function (parent, data, event) {
+            self.deleteSitemapNode = function (event) {
                 bcms.stopEventPropagation(event);
                 var params = self.toJson(),
                     onDeleteCompleted = function (json) {
