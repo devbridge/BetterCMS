@@ -207,7 +207,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// <returns>URL, created from text</returns>
         public ActionResult ConvertStringToSlug(string text, string senderId)
         {
-            return Json(new { Text = text, Url = text.Transliterate(false), SenderId = senderId }, JsonRequestBehavior.AllowGet);
+            return Json(new { Text = text, Url = text.Transliterate(), SenderId = senderId }, JsonRequestBehavior.AllowGet);
         }
     }
 }
