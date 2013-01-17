@@ -85,80 +85,10 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
 
             // Save tags
             tagService.SavePageTags(page, request.Tags);
-            UpdateCategories(page, request.Categories);
 
             UnitOfWork.Commit();
 
             return new SavePageResponse(page);
-        }
-
-        private void UpdateCategories(PageProperties page, IList<string> categories)
-        {
-            Category categoryAlias = null;
-
-            IList<PageCategory> pageCategories = UnitOfWork.Session.QueryOver<PageCategory>()
-                                                                   .Fetch(category => category.Category).Eager
-                                                                   .Where(category => !category.IsDeleted && category.Page.Id == page.Id)
-                                                                   .List<PageCategory>();
-
-            // Remove categories
-            for (int i = pageCategories.Count-1; i >= 0; i--)
-            {
-                string category = null;
-                if (categories != null)
-                {
-                    category = categories.FirstOrDefault(s => s.ToLower() == pageCategories[i].Category.Name.ToLower());
-                }
-                if (category == null)
-                {
-                    UnitOfWork.Session.Delete(pageCategories[i]);
-                }
-            }
-
-            // Add new categories:
-            if (categories != null)
-            {
-                List<string> categoriesInsert = new List<string>();
-                foreach (string category in categories)
-                {
-                    PageCategory existPageCategory = pageCategories.FirstOrDefault(pageCategory => pageCategory.Category.Name.ToLower() == category.ToLower());
-                    if (existPageCategory == null)
-                    {
-                        categoriesInsert.Add(category);
-                    }
-                }
-
-                if (categoriesInsert.Count > 0)
-                {
-                    // Get existing categories:
-                    IList<Category> existingCategories = UnitOfWork.Session.QueryOver(() => categoryAlias)
-                                                                               .Where(Restrictions.In(NHibernate.Criterion.Projections.Property(() => categoryAlias.Name), categoriesInsert))
-                                                                               .List<Category>();
-
-                    foreach (string category in categoriesInsert)
-                    {
-                        PageCategory pageCategory = new PageCategory();
-                        pageCategory.Page = page;
-
-                        Category existCategory = existingCategories.FirstOrDefault(x => x.Name.ToLower() == category.ToLower());
-                        if (existCategory != null)
-                        {
-                            pageCategory.Category = existCategory;
-                        }
-                        else
-                        {
-                            Category newCategory = new Category();
-                            newCategory.Name = category;
-
-                            UnitOfWork.Session.SaveOrUpdate(newCategory);
-
-                            pageCategory.Category = newCategory;
-                        }
-
-                        UnitOfWork.Session.SaveOrUpdate(pageCategory);
-                    }
-                }
-            }
         }
     }
 }

@@ -76,7 +76,6 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                 model.RedirectFromOldUrl = true; // TODO: 
 
                 model.Tags = tagService.GetPageTagNames(id);
-                model.Categories = GetCategories(UnitOfWork.Session, id);
             }
             else
             {
@@ -87,18 +86,6 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
 
 
             return model;
-        }
-
-        private IList<string> GetCategories(ISession session, Guid id)
-        {
-            Category categoryAlias = null;
-
-            return session
-                .QueryOver<PageCategory>()
-                .Where(w => w.Page.Id == id && !w.IsDeleted)
-                .JoinAlias(f => f.Category, () => categoryAlias)
-                .SelectList(select => select.Select(() => categoryAlias.Name))
-                .List<string>();
         }
     }
 }

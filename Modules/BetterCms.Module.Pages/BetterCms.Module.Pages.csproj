@@ -200,15 +200,14 @@
     <Compile Include="Models\Maps\HtmlContentHistoryMap.cs" />
     <Compile Include="Models\Maps\HtmlContentWidgetHistoryMap.cs" />
     <Compile Include="Models\Maps\ServerControlWidgetHistoryMap.cs" />
+    <Compile Include="Models\Migrations\Migration201301171330.cs" />
     <Compile Include="Models\ServerControlWidgetHistory.cs" />
     <Compile Include="Models\HtmlContentWidgetHistory.cs" />
     <Compile Include="Models\HtmlContentHistory.cs" />
     <Compile Include="Models\Maps\HtmlContentMap.cs" />
     <Compile Include="Models\ServerControlWidget.cs" />
     <Compile Include="Models\HtmlContent.cs" />
-    <Compile Include="Models\Maps\PageCategoryMap.cs" />
     <Compile Include="Models\Maps\RedirectMap.cs" />
-    <Compile Include="Models\PageCategory.cs" />
     <Compile Include="Models\HtmlContentWidget.cs" />
     <Compile Include="Models\Maps\AuthorMap.cs" />
     <Compile Include="Models\Maps\ServerControlWidgetMap.cs" />

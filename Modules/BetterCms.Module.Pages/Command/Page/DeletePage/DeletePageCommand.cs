@@ -66,10 +66,6 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
             {
                 Repository.Delete(pageTag);
             }
-            foreach (var pageCategory in page.PageCategories)
-            {
-                Repository.Delete(pageCategory);
-            }
             foreach (var pageContent in page.PageContents)
             {
                 Repository.Delete(pageContent);

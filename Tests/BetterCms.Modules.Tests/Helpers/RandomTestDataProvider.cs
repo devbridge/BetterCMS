@@ -456,18 +456,6 @@ namespace BetterCms.Tests.Helpers
             return entity;
         }
 
-        public PageCategory CreateNewPageCategory(PageProperties page = null, Category category = null)
-        {
-            var entity = new PageCategory();
-
-            PopulateBaseFields(entity);
-
-            entity.Page = page ?? CreateNewPageProperties();
-            entity.Category = category ?? CreateNewCategory();
-
-            return entity;
-        }
-
         public ServerControlWidget CreateNewServerControlWidget()
         {
             var entity = new ServerControlWidget();
