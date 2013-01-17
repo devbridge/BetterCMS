@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.pages.properties', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bcms.dynamicContent', 'bcms.pages.tags', 'knockout'],
-    function ($, bcms, modal, forms, dynamicContent, tags, ko) {
+define('bcms.pages.properties', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bcms.dynamicContent', 'bcms.pages.tags', 'knockout', 'bcms.media'],
+    function ($, bcms, modal, forms, dynamicContent, tags, ko, media) {
     'use strict';
 
     var page = {},
@@ -49,10 +49,11 @@ define('bcms.pages.properties', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', '
     /**
     * Page view model
     */
-    function PageViewModel(tagsViewModel) {
+    function PageViewModel(image, tagsViewModel) {
         var self = this;
 
         self.tags = tagsViewModel;
+        self.image = ko.observable(new media.ImageSelectorViewModel(image));
     }
 
     /**
@@ -60,7 +61,7 @@ define('bcms.pages.properties', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', '
     */
     page.initEditPagePropertiesDialogEvents = function (dialog, content) {
         var tagsViewModel = new tags.TagsListViewModel(content.Data.Tags),
-            pageViewModel = new PageViewModel(tagsViewModel),
+            pageViewModel = new PageViewModel(content.Data.Image, tagsViewModel),
             form = dialog.container.find(selectors.pagePropertiesForm);
         ko.applyBindings(pageViewModel, form.get(0));
 

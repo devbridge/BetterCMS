@@ -217,12 +217,15 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'knockout'], function ($, b
             var instance = this,
                 container = instance.container,
                 model = instance.model,
-                zindex = bcms.getHighestZindex() + 1;
+                zindex = bcms.getHighestZindex() + 1,
+                footerDom = container.find(selectors.footer).get(0);
 
             this.options.id = zindex;
             
-            ko.applyBindings(model, container.find(selectors.footer).get(0));
-            
+            if (footerDom) {
+                ko.applyBindings(model, footerDom);
+            }
+
             modalStack.push(this);
 
             container.find(selectors.close).on('click', function () {

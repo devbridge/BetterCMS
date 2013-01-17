@@ -1,18 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Mvc.Commands;
-
+using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
-
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
-
-using NHibernate.Criterion;
 
 namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
 {
@@ -72,7 +67,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             }
 
             page.Layout = Repository.AsProxy<Root.Models.Layout>(request.TemplateId);
-            page.Author = request.AuthorId.HasValue ? Repository.AsProxy<Author>(request.AuthorId.Value) : null;
+            page.Category = request.CategoryId.HasValue ? Repository.AsProxy<Category>(request.CategoryId.Value) : null;
             page.Title = request.PageName;
             page.CustomCss = request.PageCSS;
             page.PageUrl = request.PagePermalink;
@@ -80,6 +75,15 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             page.UseNoFollow = request.UseNoFollow;
             page.UseNoIndex = request.UseNoIndex;
             page.Version = request.Version;
+
+            if (request.Image != null && request.Image.ImageId.HasValue)
+            {
+                page.Image = Repository.AsProxy<MediaImage>(request.Image.ImageId.Value);
+            }
+            else
+            {
+                page.Image = null;
+            }
 
             Repository.Save(page);
 

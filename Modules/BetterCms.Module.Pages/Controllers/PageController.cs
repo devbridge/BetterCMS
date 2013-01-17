@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 
+using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Command.Page.ClonePage;
 using BetterCms.Module.Pages.Command.Page.CreatePage;
 using BetterCms.Module.Pages.Command.Page.DeletePage;
@@ -105,7 +106,11 @@ namespace BetterCms.Module.Pages.Controllers
             }
 
             var view = RenderView("EditPageProperties", model);
-            var json = new { Tags = success ? model.Tags : null };
+            var json = new
+                           {
+                               Tags = success ? model.Tags : null,
+                               Image = success ? model.Image : new ImageSelectorViewModel()
+                           };
 
             return ComboWireJson(success, view, json, JsonRequestBehavior.AllowGet);
         }
