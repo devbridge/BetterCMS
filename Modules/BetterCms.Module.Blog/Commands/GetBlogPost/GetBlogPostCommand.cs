@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
+
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.ViewModels.Blog;
-using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Models;
@@ -60,27 +62,29 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
 
             if (!id.HasDefaultValue())
             {
-                BlogPost blogAlias = null;
-                MediaImage imageAlias = null;
                 BlogPostViewModel blogModelAlias = null;
 
-                model = UnitOfWork.Session
-                    .QueryOver(() => blogAlias)
-                    .Left.JoinQueryOver(() => blogAlias.Image, () => imageAlias)
-                    .Where(() => !blogAlias.IsDeleted && blogAlias.Id == id)
-                    .SelectList(select => select
-                        .Select(() => blogAlias.Id).WithAlias(() => blogModelAlias.Id)
-                        .Select(() => blogAlias.Title).WithAlias(() => blogModelAlias.Title)
-                        .Select(() => blogAlias.Version).WithAlias(() => blogModelAlias.Version)
-                        .Select(() => blogAlias.Description).WithAlias(() => blogModelAlias.IntroText)
-                        .Select(() => blogAlias.Author.Id).WithAlias(() => blogModelAlias.AuthorId)
-                        .Select(() => blogAlias.Category.Id).WithAlias(() => blogModelAlias.CategoryId)
-                        .Select(() => imageAlias.Id).WithAlias(() => blogModelAlias.ImageId)
-                        .Select(() => imageAlias.PublicThumbnailUrl).WithAlias(() => blogModelAlias.ThumbnailUrl)
-                        .Select(() => imageAlias.PublicUrl).WithAlias(() => blogModelAlias.ImageUrl)
-                        .Select(() => imageAlias.Caption).WithAlias(() => blogModelAlias.ImageTooltip))
-                    .TransformUsing(Transformers.AliasToBean<BlogPostViewModel>())
-                    .SingleOrDefault<BlogPostViewModel>();
+                model = Repository.AsQueryable<BlogPost>()
+                    .Where(bp => bp.Id == id)
+                    .Select(bp =>
+                        new BlogPostViewModel
+                            {
+                                Id = bp.Id,
+                                Version = bp.Version,
+                                Title = bp.Title,
+                                IntroText = bp.Description,
+                                AuthorId = bp.Author.Id,
+                                CategoryId = bp.Category.Id,
+                                Image =
+                                    new ImageSelectorViewModel
+                                    {
+                                        ImageId = bp.Image.Id,
+                                        ImageUrl = bp.Image.PublicUrl,
+                                        ThumbnailUrl = bp.Image.PublicThumbnailUrl,
+                                        ImageTooltip = bp.Image.Caption
+                                    }
+                            })
+                    .FirstOrDefault();
 
                 if (model != null)
                 {
@@ -122,8 +126,6 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
                 {
                     model = new BlogPostViewModel();
                 }
-
-                // Tags
             }
             else
             {

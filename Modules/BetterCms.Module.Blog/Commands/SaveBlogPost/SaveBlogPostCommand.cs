@@ -154,9 +154,9 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                 blogPost.Category = null;
             }
 
-            if (request.ImageId.HasValue)
+            if (request.Image != null && request.Image.ImageId.HasValue)
             {
-                blogPost.Image = Repository.AsProxy<MediaImage>(request.ImageId.Value);
+                blogPost.Image = Repository.AsProxy<MediaImage>(request.Image.ImageId.Value);
             }
             else
             {

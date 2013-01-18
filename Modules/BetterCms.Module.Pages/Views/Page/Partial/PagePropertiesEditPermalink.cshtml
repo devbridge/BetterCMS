@@ -18,11 +18,11 @@
     
     <div class="bcms-content-titles">@PagesGlobalization.PageProperties_EditURLPath_Title</div>
     @Html.TextBoxFor(model => model.PagePermalink, new { @id = "bcms-page-permalink-edit", @class = "bcms-editor-field-box", @style = "width: 503px;" })
-                
+
+    <div class="bcms-btn-small" id="bcms-save-permalink">@RootGlobalization.Button_Ok</div>
+    <div class="bcms-btn-links-small">@RootGlobalization.Button_Cancel</div>                
     <div class="bcms-edit-check-field">
         @Html.CheckBoxFor(model => model.RedirectFromOldUrl)
         <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_CreatePermanentRedirectToOldUrl_Title</div>
     </div>
-    <div class="bcms-btn-small" id="bcms-save-permalink">@RootGlobalization.Button_Save</div>
-    <div class="bcms-btn-links-small">@RootGlobalization.Button_Cancel</div>
 </div>

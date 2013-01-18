@@ -25,9 +25,9 @@ namespace BetterCms.Module.Blog.Commands.SaveAuthor
             author.Name = request.Name;
             author.Version = request.Version;
 
-            if (request.ImageId.HasValue)
+            if (request.Image != null && request.Image.ImageId.HasValue)
             {
-                author.Image = Repository.AsProxy<MediaImage>(request.ImageId.Value);
+                author.Image = Repository.AsProxy<MediaImage>(request.Image.ImageId.Value);
             }
             else
             {
