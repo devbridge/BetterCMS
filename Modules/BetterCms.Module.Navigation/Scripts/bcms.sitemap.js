@@ -8,8 +8,8 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         var sitemap = {},
             selectors = {
                 sitemapSearchDataBind: "#bcms-sitemap-form",
-//                templateDataBind: ".bcms-sitemap-data-bind-container",
                 sitemapForm: "#bcms-sitemap-form",
+//                templateDataBind: ".bcms-sitemap-data-bind-container",
 //                sitemapNodeSearchButton: "#bcms-btn-sitemap-search",
 //                sitemapEditButton: "#bcms-btn-sitemap-edit",
 //                sitemapChildNodesList: '.bcms-connected-sortable',
@@ -85,6 +85,63 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         
 
         // --- Helpers --------------------------------------------------------
+        function addDraggableBinding() {
+            ko.bindingHandlers.draggable = {
+                init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+                    var dragObject = viewModel,
+                        setup = {
+                            addClasses: true,
+                            //refreshPositions: true,
+                            appendTo: "body",
+                            start: function(event, ui) {
+                                dragObject.isBeingDragged(true);
+                            },
+                            stop: function(event, ui) {
+                                dragObject.isBeingDragged(false);
+                            }
+                        };
+                    $(element).draggable(setup);
+                    $(element).disableSelection();
+                }
+            };
+        }
+        function addDroppableBinding() {
+            var ActionType = {
+                addAsFirstChild_overZone: "addAsFirstChild_overZone",
+                addAsFirstChild_overNode: "addAsFirstChild_overNode",
+                addNextToMe_overZone: "addNextToMe_overZone"
+            };
+            ko.bindingHandlers.droppable = {
+                init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+                    var dropZoneObject = viewModel,
+                        actionType = valueAccessor(),
+                        setup = {
+                            addClasses: true,
+                            tolerance: "pointer", // "touch"    TODO: test, which feels right.
+                            over: function(event, ui) {
+                                // ui.draggable
+                                if (actionType == ActionType.addAsFirstChild_overZone) {
+                                    dropZoneObject.someNodeIsOverDropZone(true);
+                                }
+                                else if (actionType == ActionType.addAsFirstChild_overNode) {
+                                    dropZoneObject.someNodeIsOverNode(true);
+                                }
+                                else if (actionType == ActionType.addNextToMe_overZone) {
+                                    dropZoneObject.someNodeIsOverDropZone(true);
+                                }
+                            },
+                            out: function(event, ui) {
+                                dropZoneObject.someNodeIsOverDropZone(false);
+                                dropZoneObject.someNodeIsOverNode(false);
+                            },
+                            drop: function(event, ui) {
+                                // ui.draggable
+                            }
+                        };
+                    $(element).droppable(setup);
+                }
+            };
+        }
         // --------------------------------------------------------------------
         
 
@@ -114,7 +171,12 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             var self = this;
             self.id = function() { return defaultIdValue; };
             self.childNodes = ko.observableArray([]);
-            self.someNodeIsOver = ko.observable(false);     // Someone is dragging some node over the sitemap, but not over the particular node.
+//            self.someNodeIsOver = ko.observable(false);     // Someone is dragging some node over the sitemap, but not over the particular node.
+            self.hasChildNodes = function () {
+                return self.childNodes().length > 0;
+            };
+            self.someNodeIsOverNode = ko.observable(false);
+            self.someNodeIsOverDropZone = ko.observable(false);
 
             // Expanding or collapsing nodes.
             self.expandAll = function () {
@@ -191,7 +253,8 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 self.isExpanded(!self.isExpanded());
             };
             self.isBeingDragged = ko.observable(false);     // Someone is dragging the node.
-            self.someNodeIsOver = ko.observable(false);     // Someone is dragging some node over this one.
+            self.someNodeIsOverNode = ko.observable(false);
+            self.someNodeIsOverDropZone = ko.observable(false);
             self.hasChildNodes = function () {
                 return self.childNodes().length > 0;
             };
@@ -219,7 +282,6 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 }
             };
             self.saveSitemapNodeWithValidation = function () {
-                // TODO: bcms.stopEventPropagation(event);
                 if ($('input', '#' + self.containerId()).valid()) {
                     self.saveSitemapNode();
                     self.isActive(false);
@@ -260,7 +322,6 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                     });
             };
             self.deleteSitemapNode = function () {
-                // TODO: bcms.stopEventPropagation(event);
                 var params = self.toJson(),
                     onDeleteCompleted = function (json) {
                         // TODO: messages.refreshBox(messagesContainer, json);
@@ -585,8 +646,8 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         */
         sitemap.init = function() {
             console.log('Initializing bcms.sitemap module.');
-//            addSortableBinding();
-//            addDraggableBinding();
+            addDraggableBinding();
+            addDroppableBinding();
         };
     
         /**
