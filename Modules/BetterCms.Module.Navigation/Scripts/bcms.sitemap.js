@@ -9,7 +9,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             selectors = {
                 sitemapSearchDataBind: "#bcms-sitemap-form",
 //                templateDataBind: ".bcms-sitemap-data-bind-container",
-//                sitemapForm: "#bcms-sitemap-form",
+                sitemapForm: "#bcms-sitemap-form",
 //                sitemapNodeSearchButton: "#bcms-btn-sitemap-search",
 //                sitemapEditButton: "#bcms-btn-sitemap-edit",
 //                sitemapChildNodesList: '.bcms-connected-sortable',
@@ -195,25 +195,31 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             self.hasChildNodes = function () {
                 return self.childNodes().length > 0;
             };
+            self.containerId = function () {
+                // User for validation.
+                return "id-" + self.id();
+            };
             
             // For search results.
             self.isVisible = ko.observable(true);
             self.isSearchResult = ko.observable(false);
             
             // Data manipulation.
-            self.startEditSitemapNode = function (event) {
-                bcms.stopEventPropagation(event);
+            self.startEditSitemapNode = function () {
+                self.titleOldValue = self.title();
+                self.urlOldValue = self.url();
                 self.isActive(true);
             };
-            self.cancelEditSitemapNode = function (event) {
-                bcms.stopEventPropagation(event);
+            self.cancelEditSitemapNode = function () {
                 self.isActive(false);
+                self.title(self.titleOldValue);
+                self.url(self.urlOldValue);
                 if (self.id() == defaultIdValue) {
                     self.parentNode.childNodes.remove(self);
                 }
             };
-            self.saveSitemapNodeWithValidation = function (event) {
-                bcms.stopEventPropagation(event);
+            self.saveSitemapNodeWithValidation = function () {
+                // TODO: bcms.stopEventPropagation(event);
                 if ($('input', '#' + self.containerId()).valid()) {
                     self.saveSitemapNode();
                     self.isActive(false);
@@ -253,13 +259,13 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                         onSaveCompleted(bcms.parseFailedResponse(response));
                     });
             };
-            self.deleteSitemapNode = function (event) {
-                bcms.stopEventPropagation(event);
+            self.deleteSitemapNode = function () {
+                // TODO: bcms.stopEventPropagation(event);
                 var params = self.toJson(),
                     onDeleteCompleted = function (json) {
                         // TODO: messages.refreshBox(messagesContainer, json);
                         if (json.Success) {
-                            self.parent.childNodes.remove(self);
+                            self.parentNode.childNodes.remove(self);
                         }
                         // TODO: unlock screen.
                     };

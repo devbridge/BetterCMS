@@ -16,8 +16,8 @@
         <div class="bcms-node-infotext">Place your new page here</div>
     </div>
     <!-- ko foreach: childNodes -->
-    <div>
-        <div class="bcms-placement-node" data-bind="css: { 'bcms-placement-node-drag': isBeingDragged() }">
+    <div data-bind="attr: { id: containerId() }">
+        <div class="bcms-placement-node" data-bind="css: { 'bcms-placement-node-drag': isBeingDragged(), 'bcms-placement-node-edit': isActive() }">
             <!-- ko if: hasChildNodes() -->
             <a class="bcms-expand-collapse-node" data-bind="click: toggleExpand, css: { 'bcms-expanded-nodes': isExpanded() }">&nbsp;</a>
             <!-- /ko -->
@@ -43,7 +43,7 @@
                         Url = (string) null,
                         style = "width: 65%;",
                     })
-                    <div class="bcms-btn-small" data-bind="click: saveSitemapNode">@RootGlobalization.Button_Save</div>
+                    <div class="bcms-btn-small" data-bind="click: saveSitemapNodeWithValidation">@RootGlobalization.Button_Save</div>
                     <div class="bcms-btn-links-small" data-bind="click: cancelEditSitemapNode">@RootGlobalization.Button_Cancel</div>
                 </div>
             </div>
