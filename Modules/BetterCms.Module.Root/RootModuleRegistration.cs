@@ -115,12 +115,25 @@ namespace BetterCms.Module.Root
                         controller = "Rendering",
                         action = "RenderProcessorJsFile"
                     },  
-                new[] { typeof(RenderingController).Namespace }); 
+                new[] { typeof(RenderingController).Namespace });            
+            
+            context.MapRoute(
+                "bcms_" + AreaName + "_PreviewPage",
+                "bcms/preview/{pageId}/{pageContentId}",
+                new
+                {
+                    area = AreaName,
+                    controller = "Preview",
+                    action = "Index"
+                },
+                new[] { typeof(PreviewController).Namespace });
+
 
             CreateEmbeddedResourcesRoutes(context);
 
             // All CMS Pages:
-            context.MapRoute("bcms_" + AreaName + "_AllPages", "{*data}", 
+            context.MapRoute("bcms_" + AreaName + "_AllPages", 
+                "{*data}", 
                 new
                     {
                         area = AreaName, 
@@ -132,7 +145,7 @@ namespace BetterCms.Module.Root
 
         public override IEnumerable<JavaScriptModuleDescriptor> RegisterJavaScriptModules(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
         {
-            return new JavaScriptModuleDescriptor[]
+            return new []
                 {
                     authenticationScriptModuleDescriptor,
                     siteSettingsJavaScriptModuleDescriptor,
@@ -147,6 +160,7 @@ namespace BetterCms.Module.Root
                     new TabsJavaScriptModuleDescriptor(this), 
                     new TooltipJavaScriptModuleDescriptor(this),
                     new InlineEditorJavaScriptModuleDescriptor(this),
+                    new PreviewJavaScriptModuleDescriptor(this), 
                     new JavaScriptModuleDescriptor(this, "bcms.ko.grid", "/file/bcms-root/scripts/bcms.ko.grid")
                 };
         }

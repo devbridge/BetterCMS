@@ -57,7 +57,15 @@ namespace BetterCms.Module.Pages
         /// </summary>
         private readonly WidgetsJavaScriptModuleDescriptor widgetsJavaScriptModuleDescriptor;
 
+        /// <summary>
+        /// bcms.pages.templates.js java script module descriptor.
+        /// </summary>
         private readonly TemplatesJavaScriptModuleDescriptor templatesJavaScriptModuleDescriptor;
+
+        /// <summary>
+        /// bcms.pages.history.js java script module descriptor.
+        /// </summary>
+        private readonly HistoryJavaScriptModuleDescriptor historyJavaScriptModuleDescriptor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PagesModuleDescriptor" /> class.
@@ -72,6 +80,7 @@ namespace BetterCms.Module.Pages
             tagsJavaScriptModuleDescriptor = new TagsJavaScriptModuleDescriptor(this);
             redirectsJavaScriptModuleDescriptor = new RedirectsJavaScriptModuleDescriptor(this);
             templatesJavaScriptModuleDescriptor = new TemplatesJavaScriptModuleDescriptor(this);
+            historyJavaScriptModuleDescriptor = new HistoryJavaScriptModuleDescriptor(this);
         }
 
         /// <summary>
@@ -168,7 +177,8 @@ namespace BetterCms.Module.Pages
                     seoJavaScriptModuleDescriptor,
                     tagsJavaScriptModuleDescriptor,
                     widgetsJavaScriptModuleDescriptor,
-                    templatesJavaScriptModuleDescriptor
+                    templatesJavaScriptModuleDescriptor,
+                    historyJavaScriptModuleDescriptor
                 };
         }
 
@@ -330,7 +340,7 @@ namespace BetterCms.Module.Pages
 
                     new SeparatorProjection(3500), 
 
-                    new LinkActionProjection(this.redirectsJavaScriptModuleDescriptor, page => "loadSiteSettingsRedirectList")
+                    new LinkActionProjection(redirectsJavaScriptModuleDescriptor, page => "loadSiteSettingsRedirectList")
                         {
                             Order = 4000,
                             Title = () => PagesGlobalization.SiteSettings_Redirects,

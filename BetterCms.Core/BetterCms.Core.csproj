@@ -133,11 +133,13 @@
     <Compile Include="Environment\Assemblies\DefaultAssemblyManager.cs" />
     <Compile Include="Environment\Assemblies\IAssemblyManager.cs" />
     <Compile Include="Models\ContentStatus.cs" />
+    <Compile Include="Models\IHistorical.cs" />
     <Compile Include="Models\IEntity.cs" />
     <Compile Include="Models\ICategory.cs" />
     <Compile Include="Models\IHtmlContent.cs" />
     <Compile Include="Models\IHtmlContentWidget.cs" />
     <Compile Include="Models\IWidget.cs" />
+    <Compile Include="Mvc\Attributes\IgnoreAutoRouteAttribute.cs" />
     <Compile Include="Services\Storage\FtpStorageService.cs" />
     <Compile Include="Services\Storage\DownloadResponse.cs" />
     <Compile Include="Services\Storage\FileSystemStorageService.cs" />

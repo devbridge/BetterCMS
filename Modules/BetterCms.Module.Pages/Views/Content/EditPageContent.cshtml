@@ -17,6 +17,7 @@
             {
                 @Html.HiddenFor(model => model.PageId)
                 @Html.HiddenFor(model => model.RegionId, new { @id = "bcmsAddContentToRegionId" })
+                @Html.HiddenFor(modal => modal.DesirableStatus, new { @id = "bcmsAddContentDesirableStatus"})
                 @Html.Partial("Partial/EditRegularContent", Model)
             }
         </div>

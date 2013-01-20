@@ -1,7 +1,5 @@
 ﻿using System;
 
-using BetterCms.Module.Pages.Models;
-
 namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
 {
     public class SaveWidgetResponse

@@ -38,13 +38,13 @@ namespace BetterCms.Core.Mvc.Extensions
         /// </summary>
         /// <param name="controllerType">Type of the controller.</param>
         /// <returns>Controller action names.</returns>
-        IEnumerable<string> GetControllerActions(Type controllerType);
+        IEnumerable<MethodInfo> GetControllerActions(Type controllerType);
 
         /// <summary>
         /// Gets all actions from given controller type.
         /// </summary>
         /// <typeparam name="TController">The type of the controller.</typeparam>
         /// <returns>Controller action names.</returns>
-        IEnumerable<string> GetControllerActions<TController>() where TController : ControllerBase;        
+        IEnumerable<MethodInfo> GetControllerActions<TController>() where TController : ControllerBase; 
     }
 }

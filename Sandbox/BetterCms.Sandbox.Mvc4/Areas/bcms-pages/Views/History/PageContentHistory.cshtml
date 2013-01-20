@@ -1,0 +1,88 @@
+﻿@using BetterCms.Core.Models
+@using BetterCms.Module.Pages.Command.History.GetPageContentHistory
+@using BetterCms.Module.Pages.Content.Resources
+@using BetterCms.Module.Pages.Controllers
+@using BetterCms.Module.Pages.ViewModels.History
+@using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Mvc
+@using BetterCms.Module.Root.Mvc.Grids
+@using BetterCms.Module.Root.Mvc.Grids.Extensions
+@using BetterCms.Module.Root.Mvc.Grids.TableRenderers
+@using BetterCms.Module.Root.Mvc.Helpers
+@using BetterCms.Module.Root.ViewModels.Shared
+@using Microsoft.Web.Mvc
+@using MvcContrib.UI.Grid
+@model BetterCms.Module.Pages.ViewModels.History.PageContentHistoryViewModel
+
+@helper PreviewLink(PageContentHistoryItem item)
+{
+    <a class="bcms-icn-preview" data-id="@item.Id">@RootGlobalization.Button_Preview</a>
+}
+
+@helper RestoreLink(PageContentHistoryItem item)
+{
+    <a class="bcms-icn-restore" data-id="@item.Id">@RootGlobalization.Button_Restore</a>
+}
+@{
+    Action<ColumnBuilder<PageContentHistoryItem>> columns = column =>
+    {
+        column.For(f => PreviewLink(f)).Encode(false).Named(string.Empty).Sortable(false).HeaderAttributes(@style => "width: 50px;  padding: 10px;", @class => "bcms-tables-nohover");
+
+        column.For(m => m.PublishedOn.ToFormattedDateString())
+               .Named("Date Published")
+               .SortColumnName("PublishedOn")
+               .HeaderAttributes(@style => "width: 150px;");
+
+        column.For(m => m.PublishedByUser)
+               .Named("By")
+               .SortColumnName("PublishedByUser")
+               .HeaderAttributes(@style => "width: 95px;");
+
+        column.For(m => m.ArchivedOn.ToFormattedDateString())
+               .Named("Archived")
+               .SortColumnName("ArchivedOn")
+               .HeaderAttributes(@style => "width: 125px;");
+
+        column.For(m => m.DisplayedFor.ToFormatedTimeString())
+               .Named("Displayed For")
+               .SortColumnName("DisplayedFor")
+               ;
+
+        column.For(m => m.Status.ToString())
+               .Named("Status")
+               .SortColumnName("Status")
+               ;
+
+        column.For(f => RestoreLink(f)).Encode(false).Named(string.Empty).Sortable(false).HeaderAttributes(@style => "width: 225px;", @class => "bcms-tables-nohover");            
+    };
+}
+      
+<div class="bcms-scroll-window">
+    <div class="bcms-history-preview-holder">
+        <div class="bcms-history-preview">
+            <div class="bcms-history-info" style="display: block;">@PagesGlobalization.PageContentHistory_SelectVersionToPreviewMessage</div>
+            <div class="bcms-history-content"></div>
+        </div>
+
+    </div>
+
+    <div class="bcms-history-table-holder">
+                       
+        @using (Html.BeginForm<HistoryController>(f => f.PageContentHistory((GetPageContentHistoryRequest)null), FormMethod.Post, new { @id = "bcms-pagecontenthistory-form" }))
+        {                        
+            @Html.HiddenGridOptions(Model.GridOptions)
+            <div class="bcms-history-table-top">
+                <div class="bcms-large-titles">@PagesGlobalization.PageContentHistory_OlderVersions</div>
+                <div class="bcms-search-block">                    
+                    @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box", @placeholder = RootGlobalization.WaterMark_Search })
+                    <div class="bcms-btn-search" id="bcms-pagecontenthistory-search-btn">@RootGlobalization.Button_Search</div>
+                </div>
+            </div>                        
+            @Html.MessagesBox("bcms-pagecontenthistory-messages")
+            @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new ScrollableEditableHtmlTableGridRenderer<PageContentHistoryItem>()
+                                                                                                                                 {
+                                                                                                                                     InterncalTableCssClass = "bcms-history-table"
+                                                                                                                                 })
+        }    
+    </div>
+</div>

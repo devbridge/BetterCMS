@@ -1008,4 +1008,13 @@
   <data name="SaveTemplate_VirtualPathNotExists_Message" xml:space="preserve">
     <value>Template view doesn't exists by given url ({0}). Url should start with tilde(~) and direct to views folder in the web application root folder (for example, ~/Views/Shared/Example.cshtml). Check if url is valid and if file exists and try again.</value>
   </data>
+  <data name="PageContentHistory_DialogTitle" xml:space="preserve">
+    <value>History - Content Versions</value>
+  </data>
+  <data name="PageContentHistory_OlderVersions" xml:space="preserve">
+    <value>Older Versions</value>
+  </data>
+  <data name="PageContentHistory_SelectVersionToPreviewMessage" xml:space="preserve">
+    <value>Select Version to preview history</value>
+  </data>
 </root>

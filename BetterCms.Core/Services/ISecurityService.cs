@@ -43,6 +43,14 @@ namespace BetterCms.Core.Services
         IPrincipal GetCurrentPrincipal();
 
         /// <summary>
+        /// Gets the name of the get current principal.
+        /// </summary>
+        /// <value>
+        /// The name of the get current principal.
+        /// </value>
+        string CurrentPrincipalName { get; }
+
+        /// <summary>
         /// Determines whether specified principal can manage page content.
         /// </summary>
         /// <returns>

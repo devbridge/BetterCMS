@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 using BetterCms.Core.Models;
+using BetterCms.Module.Pages.Command.Base;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.ViewModels.Widgets;
 
@@ -12,7 +13,7 @@ namespace BetterCms.Module.Pages.ViewModels.Content
     /// <summary>
     /// Add/Edit page content view model
     /// </summary>
-    public class PageContentViewModel
+    public class PageContentViewModel : ISaveContentHistory
     {
         /// <summary>
         /// Gets or sets the page content id.

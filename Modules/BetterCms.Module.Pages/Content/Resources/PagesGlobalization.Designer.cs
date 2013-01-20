@@ -1762,6 +1762,33 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to History - Content Versions.
+        /// </summary>
+        public static string PageContentHistory_DialogTitle {
+            get {
+                return ResourceManager.GetString("PageContentHistory_DialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Older Versions.
+        /// </summary>
+        public static string PageContentHistory_OlderVersions {
+            get {
+                return ResourceManager.GetString("PageContentHistory_OlderVersions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Version to preview history.
+        /// </summary>
+        public static string PageContentHistory_SelectVersionToPreviewMessage {
+            get {
+                return ResourceManager.GetString("PageContentHistory_SelectVersionToPreviewMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit URL Path.
         /// </summary>
         public static string PageProperties_EditURLPath_Title {

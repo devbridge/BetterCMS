@@ -111,7 +111,11 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
 
             if (content == null)
             {
-                content = new HtmlContent { Name = request.Title };
+                content = new HtmlContent
+                              {
+                                  Name = request.Title,
+                                  Status = ContentStatus.Published
+                              };
             }
 
             if (pageContent == null)
@@ -130,8 +134,6 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                 blogPost.PublishedOn = DateTime.Now;
                 blogPost.IsPublic = true;
                 blogPost.Layout = layout;
-
-                pageContent.Status = ContentStatus.Published;
             }
 
             if (request.AuthorId.HasValue)

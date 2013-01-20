@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
+using BetterCms.Core.Models;
+using BetterCms.Module.Pages.Command.Base;
 using BetterCms.Module.Pages.Content.Resources;
 
 namespace BetterCms.Module.Pages.ViewModels.Widgets
@@ -8,8 +10,16 @@ namespace BetterCms.Module.Pages.ViewModels.Widgets
     /// <summary>
     /// A widget view model.
     /// </summary>
-    public class HtmlContentWidgetViewModel : WidgetViewModel
-    {        
+    public class HtmlContentWidgetViewModel : WidgetViewModel, ISaveContentHistory
+    {
+        /// <summary>
+        /// Gets or sets the desirable status for the saved widget.
+        /// </summary>
+        /// <value>
+        /// The desirable status.
+        /// </value>
+        public ContentStatus DesirableStatus { get; set; }
+
         /// <summary>
         /// Gets or sets the content name.
         /// </summary>

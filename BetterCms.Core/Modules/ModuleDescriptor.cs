@@ -9,6 +9,7 @@ using Autofac;
 using BetterCms.Core.Models;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Core.Mvc;
+using BetterCms.Core.Mvc.Attributes;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Mvc.Extensions;
 
@@ -149,7 +150,7 @@ namespace BetterCms.Core.Modules
 
             if (controllerTypes != null)
             {
-                var allModuleActions = new Dictionary<Type, IEnumerable<string>>();
+                var allModuleActions = new Dictionary<Type, IEnumerable<MethodInfo>>();
                 foreach (Type controllerType in controllerTypes)
                 {
                     string key = (AreaName + "-" + controllerType.Name).ToUpperInvariant();                    
@@ -170,20 +171,27 @@ namespace BetterCms.Core.Modules
                 }
 
                 foreach (var item in allModuleActions)
-                {
+                {                 
                     var controllerName = controllerExtensions.GetControllerName(item.Key);
-                    var actionNames = item.Value;
+                    var controllerActions = item.Value;
 
-                    foreach (var actionName in actionNames)
+                    foreach (var actionMethod in controllerActions)
                     {
+                        var ignoreAutoRouteAttribute = actionMethod.GetCustomAttributes(typeof(IgnoreAutoRouteAttribute), false);
+                        var nonActionAttribute = actionMethod.GetCustomAttributes(typeof(NonActionAttribute), false);
+                        if (ignoreAutoRouteAttribute.Length > 0 || nonActionAttribute.Length > 0)
+                        {
+                            continue;
+                        }
+                        
                         registrationContext.MapRoute(
-                            string.Format("bcms_{0}_{1}_{2}", AreaName, controllerName, actionName),
-                            string.Format("{0}/{1}/{2}", AreaName, controllerName, actionName),
+                            string.Format("bcms_{0}_{1}_{2}", AreaName, controllerName, actionMethod.Name),
+                            string.Format("{0}/{1}/{2}", AreaName, controllerName, actionMethod.Name),
                             new
                             {
                                 area = AreaName,
                                 controller = controllerName,
-                                action = actionName
+                                action = actionMethod.Name
                             },
                             new[] { item.Key.Namespace });                        
                     }

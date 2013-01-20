@@ -509,7 +509,7 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'knockout'], function ($, b
         }
 
         return modalWindow;
-    };
+    };       
 
     modal.alert = function (options) {
         options = $.extend({

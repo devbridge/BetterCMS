@@ -1,13 +1,11 @@
 ﻿using System.Web.Mvc;
 
-using BetterCms.Module.Pages.Command.Content.GetPageContentOptions;
 using BetterCms.Module.Pages.Command.Widget.DeleteWidget;
 using BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit;
 using BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit;
 using BetterCms.Module.Pages.Command.Widget.GetSiteSettingsWidgets;
 using BetterCms.Module.Pages.Command.Widget.SaveWidget;
 using BetterCms.Module.Pages.Content.Resources;
-using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Pages.ViewModels.Widgets;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
@@ -58,6 +56,7 @@ namespace BetterCms.Module.Pages.Controllers
             model.EnableCustomCSS = true;
             model.EnableCustomHtml = true;
             model.EnableCustomJS = true;
+
             return PartialView("EditHtmlContentWidget", model);
         }
 
@@ -71,6 +70,7 @@ namespace BetterCms.Module.Pages.Controllers
         public ActionResult EditHtmlContentWidget(string id)
         {
             var model = GetCommand<GetHtmlContentWidgetForEditCommand>().ExecuteCommand(id.ToGuidOrDefault());
+
             return PartialView(model);
         }
 
@@ -110,6 +110,7 @@ namespace BetterCms.Module.Pages.Controllers
         public ActionResult CreateServerControlWidget()
         {
             var model = GetCommand<GetServerControlWidgetForEditCommand>().ExecuteCommand(null);
+
             return PartialView("EditServerControlWidget", model);
         }
 
@@ -123,6 +124,7 @@ namespace BetterCms.Module.Pages.Controllers
         public ActionResult EditServerControlWidget(string id)
         {
             var model = GetCommand<GetServerControlWidgetForEditCommand>().ExecuteCommand(id.ToGuidOrDefault());
+
             return PartialView(model);
         }
 
@@ -145,6 +147,7 @@ namespace BetterCms.Module.Pages.Controllers
                     {
                         Messages.AddSuccess(PagesGlobalization.SaveWidget_CreatedSuccessfully_Message);
                     }
+
                     return Json(new WireJson { Success = true, Data = response });
                 }
             }
@@ -157,6 +160,7 @@ namespace BetterCms.Module.Pages.Controllers
         public ActionResult PreviewHtmlContentWidget(string contentId)
         {
             HtmlContentWidgetViewModel model = GetCommand<GetHtmlContentWidgetForEditCommand>().ExecuteCommand(contentId.ToGuidOrDefault());
+
             return View(model);
         }
 
@@ -165,6 +169,7 @@ namespace BetterCms.Module.Pages.Controllers
         public ActionResult PreviewWidget(string widgetId)
         {
             ServerControlWidgetViewModel model = GetCommand<GetServerControlWidgetForEditCommand>().ExecuteCommand(widgetId.ToGuidOrDefault());
+
             return View(model);
         }
 

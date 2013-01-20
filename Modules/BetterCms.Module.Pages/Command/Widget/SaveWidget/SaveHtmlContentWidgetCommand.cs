@@ -1,7 +1,4 @@
-﻿using System;
-
-using BetterCms.Core.Mvc.Commands;
-using BetterCms.Module.Pages.Models;
+﻿using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Widgets;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
@@ -18,10 +15,31 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
         /// <exception cref="System.NotImplementedException"></exception>
         public override SaveWidgetResponse Execute(HtmlContentWidgetViewModel request)
         {
+            // 1.
             var content = !request.Id.HasDefaultValue()
                 ? Repository.First<HtmlContentWidget>(request.Id) 
                 : new HtmlContentWidget();
 
+            // 2.
+            UpdateWidget(content, request);
+
+            // 3.
+            UnitOfWork.BeginTransaction();
+            Repository.Save(content);
+            UnitOfWork.Commit();
+
+            return new SaveWidgetResponse
+                {
+                    Id = content.Id,
+                    WidgetName = content.Name,
+                    CategoryName = content.Category != null ? content.Category.Name : null,
+                    Version = content.Version,
+                    WidgetType = WidgetType.HtmlContent.ToString()
+                };
+        }
+
+        private HtmlContentWidget UpdateWidget(HtmlContentWidget content, HtmlContentWidgetViewModel request)
+        {
             if (request.CategoryId.HasValue && !request.CategoryId.Value.HasDefaultValue())
             {
                 content.Category = Repository.FirstOrDefault<Category>(request.CategoryId.Value);
@@ -40,17 +58,7 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
             content.CustomJs = request.CustomJS;
             content.Version = request.Version;
 
-            Repository.Save(content);
-            UnitOfWork.Commit();
-
-            return new SaveWidgetResponse
-                {
-                    Id = content.Id,
-                    WidgetName = content.Name,
-                    CategoryName = content.Category != null ? content.Category.Name : null,
-                    Version = content.Version,
-                    WidgetType = WidgetType.HtmlContent.ToString()
-                };
+            return content;
         }
     }
 }

@@ -118,11 +118,18 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Command\Base\ISaveContentResponse.cs" />
+    <Compile Include="Command\Base\ISaveContentHistory.cs" />
+    <Compile Include="Command\Base\SaveContentCommandBase.cs" />
     <Compile Include="Command\Content\DeletePageContent\DeletePageContentCommand.cs" />
     <Compile Include="Command\Content\DeletePageContent\DeletePageContentCommandRequest.cs" />
     <Compile Include="Command\Content\GetContent\GetContentCommand.cs" />
+    <Compile Include="Command\Content\SavePageHtmlContent\SavePageHtmlContentResponse.cs" />
     <Compile Include="Command\Content\SortPageContent\SortPageContentResponse.cs" />
     <Compile Include="Command\Content\SortPageContent\SortPageContentCommand.cs" />
+    <Compile Include="Command\History\GetContentHistory\GetContentHistoryCommand.cs" />
+    <Compile Include="Command\History\GetContentHistory\GetContentHistoryRequest.cs" />
+    <Compile Include="Command\History\RestoreContentVersion\GetContentHistoryCommand.cs" />
     <Compile Include="Command\Layout\DeleteTemplate\DeleteTemplateCommand.cs" />
     <Compile Include="Command\Layout\DeleteTemplate\DeleteTemplateCommandRequest.cs" />
     <Compile Include="Command\Layout\GetSiteSettingsTemplates\GetSiteSettingsTemplatesCommand.cs" />
@@ -168,7 +175,7 @@
     <Compile Include="Command\Content\InsertContent\InsertContentToPageCommand.cs" />
     <Compile Include="Command\Content\InsertContent\InsertContentToPageRequest.cs" />
     <Compile Include="Command\Widget\SaveWidget\SaveHtmlContentWidgetCommand.cs" />
-    <Compile Include="Command\Content\SaveContent\SaveContentCommand.cs" />
+    <Compile Include="Command\Content\SavePageHtmlContent\SavePageHtmlContentCommand.cs" />
     <Compile Include="Command\Page\SavePageProperties\SavePagePropertiesCommand.cs" />
     <Compile Include="Command\Page\SavePageSeo\SavePageSeoCommand.cs" />
     <Compile Include="Command\Widget\SaveWidget\SaveServerControlWidgetCommand.cs" />
@@ -179,6 +186,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PagesGlobalization.resx</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\HistoryController.cs" />
     <Compile Include="Controllers\TemplatesController.cs" />
     <Compile Include="Controllers\WidgetsController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
@@ -194,15 +202,6 @@
     <Compile Include="Helpers\RenderHelper.cs" />
     <Compile Include="Models\Author.cs" />
     <Compile Include="Models\IServerControlWidget.cs" />
-    <Compile Include="Models\Maps\Predefined\ServerControlWidgetSubClassMapBase.cs" />
-    <Compile Include="Models\Maps\Predefined\HtmlContentWidgetSubClassMapBase.cs" />
-    <Compile Include="Models\Maps\Predefined\HtmlContentSubClassMapBase.cs" />
-    <Compile Include="Models\Maps\HtmlContentHistoryMap.cs" />
-    <Compile Include="Models\Maps\HtmlContentWidgetHistoryMap.cs" />
-    <Compile Include="Models\Maps\ServerControlWidgetHistoryMap.cs" />
-    <Compile Include="Models\ServerControlWidgetHistory.cs" />
-    <Compile Include="Models\HtmlContentWidgetHistory.cs" />
-    <Compile Include="Models\HtmlContentHistory.cs" />
     <Compile Include="Models\Maps\HtmlContentMap.cs" />
     <Compile Include="Models\ServerControlWidget.cs" />
     <Compile Include="Models\HtmlContent.cs" />
@@ -226,6 +225,7 @@
     <Compile Include="Projections\HtmlContentRenderer.cs" />
     <Compile Include="Projections\PageStylesProjection.cs" />
     <Compile Include="Projections\ServerControlWidgetRenderer.cs" />
+    <Compile Include="Registration\HistoryJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\TemplatesJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\PagesContentJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\PageTagsJavaScriptModuleDescriptor.cs" />
@@ -244,6 +244,8 @@
     <Compile Include="ViewModels\Content\ContentOptionViewModel.cs" />
     <Compile Include="ViewModels\Content\ContentViewModel.cs" />
     <Compile Include="ViewModels\Content\PageContentSortViewModel.cs" />
+    <Compile Include="ViewModels\History\PageContentHistoryItem.cs" />
+    <Compile Include="ViewModels\History\PageContentHistoryViewModel.cs" />
     <Compile Include="ViewModels\SiteSettings\SiteSettingTemplateItemViewModel.cs" />
     <Compile Include="ViewModels\SiteSettings\SiteSettingTemplateListViewModel.cs" />
     <Compile Include="ViewModels\Templates\TemplateEditViewModel.cs" />
@@ -299,7 +301,6 @@
     <EmbeddedResource Include="Scripts\bcms.pages.template.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.widgets.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.tags.js" />
-    <EmbeddedResource Include="Scripts\bcms.pages.content.js" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -397,6 +398,7 @@
     <EmbeddedResource Include="Views\Content\EditPageContent.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Views\History\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Templates\Templates.cshtml" />

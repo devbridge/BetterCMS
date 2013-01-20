@@ -30,7 +30,7 @@ namespace BetterCms.Module.Pages.Registration
                     new JavaScriptModuleLinkTo<ContentController>(this, "deletePageContentUrl", controller => controller.DeletePageContent("{0}", "{1}", "{2}")),
                     new JavaScriptModuleLinkTo<ContentController>(this, "editPageContentUrl", controller => controller.EditPageContent("{0}")),
                     new JavaScriptModuleLinkTo<ContentController>(this, "sortPageContentUrl", controller => controller.SortPageContent(null)),
-                    new JavaScriptModuleLinkTo<CmsController>(this, "previewPageUrl", controller => controller.Index("{0}"))
+                   
                 };
 
             Globalization = new IActionProjection[]

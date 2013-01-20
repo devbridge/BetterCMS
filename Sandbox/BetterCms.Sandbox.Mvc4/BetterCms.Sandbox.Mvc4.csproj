@@ -177,6 +177,9 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Content Include="App_Data\BetterCMS\Modules\readme.txt" />
+    <EmbeddedResource Include="file\bcms-pages\scripts\bcms.pages.content.js" />
+    <EmbeddedResource Include="file\bcms-root\scripts\bcms.preview.js" />
+    <EmbeddedResource Include="file\bcms-pages\scripts\bcms.pages.history.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -185,11 +188,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\bcms-blog\" />
+    <Folder Include="Areas\bcms-pages\Views\Shared\Partial\" />
     <Folder Include="Areas\bcms-root\Views\Shared\Partial\" />
     <Folder Include="file\bcms-blog\scripts\" />
     <Folder Include="file\bcms-media\scripts\" />
-    <Folder Include="file\bcms-pages\scripts\" />
-    <Folder Include="file\bcms-root\scripts\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
@@ -250,6 +252,9 @@
     <Content Include="Views\Widgets\05.cshtml" />
     <Content Include="Views\Shared\Partial\Hello.cshtml" />
     <Content Include="Views\Shared\Partial\TestOptionValues.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\bcms-pages\Views\History\PageContentHistory.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

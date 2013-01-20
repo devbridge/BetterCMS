@@ -2,11 +2,10 @@
 using System.Linq;
 using System.Web.Mvc;
 
-using BetterCms.Core.Models;
 using BetterCms.Module.Pages.Command.Content.GetPageContentOptions;
 using BetterCms.Module.Pages.Command.Content.InsertContent;
-using BetterCms.Module.Pages.Command.Content.SaveContent;
 using BetterCms.Module.Pages.Command.Content.SavePageContentOptions;
+using BetterCms.Module.Pages.Command.Content.SavePageHtmlContent;
 using BetterCms.Module.Pages.Command.Content.SortPageContent;
 using BetterCms.Module.Pages.Command.Content.DeletePageContent;
 using BetterCms.Module.Pages.Command.Content.GetContent;
@@ -111,13 +110,14 @@ namespace BetterCms.Module.Pages.Controllers
         /// </summary>
         /// <param name="model">The model.</param>
         /// <returns>
-        /// Json with result status and redirect Url.
+        /// JSON with result status and redirect URL.
         /// </returns>
         [HttpPost]
         public ActionResult AddPageContent(PageContentViewModel model)
         {
-            Guid pageContentId = GetCommand<SaveContentCommand>().ExecuteCommand(model);
-            if (pageContentId != Guid.Empty)
+            var result = GetCommand<SavePageHtmlContentCommand>().ExecuteCommand(model);
+
+            if (result != null)
             {
                 return Json(
                     new WireJson
@@ -125,7 +125,7 @@ namespace BetterCms.Module.Pages.Controllers
                             Success = true,
                             Data = new
                                        {
-                                           PageContentId = pageContentId,
+                                           PageContentId = result.PageContentId,
                                            DesirableStatus = model.DesirableStatus.ToString()
                                        }
                         });
@@ -181,17 +181,19 @@ namespace BetterCms.Module.Pages.Controllers
         /// Deletes page content.
         /// </summary>
         /// <param name="pageContentId">Page content id.</param>
+        /// <param name="pageContentVersion">The page content version.</param>
+        /// <param name="contentVersion">The content version.</param>
         /// <returns>
         /// Json with result status.
         /// </returns>
         [HttpPost]
-        public ActionResult DeletePageContent(string pageContentId, string pageContentVersion, string ContentVersion)
+        public ActionResult DeletePageContent(string pageContentId, string pageContentVersion, string contentVersion)
         {
             var request = new DeletePageContentCommandRequest
                               {
                                   pageContentId = pageContentId.ToGuidOrDefault(),
                                   PageContentVersion = pageContentVersion.ToIntOrDefault(),
-                                  ContentVersion = ContentVersion.ToIntOrDefault(),
+                                  ContentVersion = contentVersion.ToIntOrDefault(),
                               };
 
             bool success = GetCommand<DeletePageContentCommand>().ExecuteCommand(request);

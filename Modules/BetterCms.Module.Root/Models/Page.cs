@@ -89,14 +89,6 @@ namespace BetterCms.Module.Root.Models
         /// <value>
         /// The page contents.
         /// </value>
-        public virtual IList<PageContent> PageContents { get; set; }
-
-        /// <summary>
-        /// Gets or sets a contents history for this page.
-        /// </summary>
-        /// <value>
-        /// A contents history for this page.
-        /// </value>
-        public virtual IList<PageContentHistory> PageContentHistory { get; set; }
+        public virtual IList<PageContent> PageContents { get; set; }        
     }
 }

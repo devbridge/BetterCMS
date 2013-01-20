@@ -165,6 +165,9 @@
   <data name="Button_Rename" xml:space="preserve">
     <value>Rename</value>
   </data>
+  <data name="Button_Restore" xml:space="preserve">
+    <value>Restore</value>
+  </data>
   <data name="Button_Save" xml:space="preserve">
     <value>Save</value>
   </data>
