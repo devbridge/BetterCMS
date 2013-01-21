@@ -65,6 +65,9 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                     // Bind models.
                     var context = self.container.find(selectors.sitemapSearchDataBind).get(0);
                     if (context) {
+                        // Add additional bindings for sitemap nodes Drag'n'Drop.
+                        addDraggableBinding();
+                        addDroppableBinding(sitemapModel);
                         ko.applyBindings(self.sitemapSearchModel, context);
 
                         // Update validation.
@@ -101,7 +104,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 }
             };
         }
-        function addDroppableBinding() {
+        function addDroppableBinding(sitemapModel) {
             ko.bindingHandlers.droppable = {
                 init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
                     var dropZoneObject = viewModel,
@@ -130,6 +133,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                                     dropZoneObject.parentNode.childNodes.splice(index + 1, 0, dragObject);
                                 }
                                 dropZoneObject.activeZone(DropZoneTypes.None);
+                                sitemapModel.updateNodesOrderAndParent();
                             }
                         };
                     $(element).droppable(setup);
@@ -185,10 +189,10 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             
             // Updating display order and parent node info.
             self.updateNodesOrderAndParent = function () {
-                self.updateNodes(self.sitemapNodes(), null);
+                self.updateNodes(self.childNodes(), self);
             };
             self.updateNodes = function (nodes, parent) {
-                for (var i in nodes) {
+                for (var i = 0; i < nodes.length; i++) {
                     var node = nodes[i],
                         saveIt = false;
                     
@@ -205,7 +209,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                     }
 
                     if (saveIt) {
-                        saveSitemapNode(node);
+                        node.saveSitemapNode();
                     }
 
                     self.updateNodes(node.childNodes(), node);
@@ -640,8 +644,6 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         */
         sitemap.init = function() {
             console.log('Initializing bcms.sitemap module.');
-            addDraggableBinding();
-            addDroppableBinding();
         };
     
         /**
