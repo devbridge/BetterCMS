@@ -65,10 +65,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Common.Logging.2.1.1\lib\net40\Common.Logging.dll</HintPath>
     </Reference>
+    <Reference Include="FluentMigrator, Version=1.0.6.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentMigrator.1.0.6.0\lib\40\FluentMigrator.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Mvc, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Mvc2Futures.2.0.50217.0\lib\Microsoft.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="MvcContrib, Version=2.0.95.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MvcContrib.2.0.95.0\lib\MvcContrib.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -112,8 +117,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>UsersGlobalization.resx</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Models\Migrations\InitialSetup.cs" />
+    <Compile Include="Models\Migrations\Migration201301181130.cs" />
+    <Compile Include="Models\Migrations\UsersVersionTableMetaData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Registration\UserJavaScriptModuleDescriptor.cs" />
     <Compile Include="UsersModuleDescriptor.cs" />
+    <Compile Include="ViewModels\EditUserViewModel.cs" />
+    <Compile Include="ViewModels\SearchableUserViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Content\Resources\UsersGlobalization.en-US.resx">
@@ -134,8 +147,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Css\Images\" />
-    <Folder Include="Controllers\" />
-    <Folder Include="Models\" />
     <Folder Include="Provider\" />
   </ItemGroup>
   <ItemGroup>
@@ -148,7 +159,7 @@
       <Name>BetterCms.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\BetterCms.Module.Root\BetterCms.Module.Root.csproj">
-      <Project>{66e7e4df-eeea-4b1e-8663-a1b430eb7375}</Project>
+      <Project>{66E7E4DF-EEEA-4B1E-8663-A1B430EB7375}</Project>
       <Name>BetterCms.Module.Root</Name>
     </ProjectReference>
   </ItemGroup>
@@ -162,6 +173,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\User\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\User\EditUserView.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

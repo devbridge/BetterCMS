@@ -117,4 +117,106 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="EditUser_Email_Title" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="EditUser_Email_Tooltip_Description" xml:space="preserve">
+    <value />
+  </data>
+  <data name="EditUser_Email_Tooltip_Title" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="EditUser_FirstName_Title" xml:space="preserve">
+    <value>First name</value>
+  </data>
+  <data name="EditUser_FirstName_Tooltip_Description" xml:space="preserve">
+    <value />
+  </data>
+  <data name="EditUser_FirstName_Tooltip_Title" xml:space="preserve">
+    <value>First name</value>
+  </data>
+  <data name="EditUser_Image_Title" xml:space="preserve">
+    <value>User Image</value>
+  </data>
+  <data name="EditUser_LastName" xml:space="preserve">
+    <value>Last name</value>
+  </data>
+  <data name="EditUser_LastName_Tooltip_Description" xml:space="preserve">
+    <value />
+  </data>
+  <data name="EditUser_LastName_Tooltip_Title" xml:space="preserve">
+    <value>Last name</value>
+  </data>
+  <data name="EditUser_Password_Title" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="EditUser_Password_Tooltip_Description" xml:space="preserve">
+    <value />
+  </data>
+  <data name="EditUser_Password_Tooltip_Title" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="EditUser_RetypePassword_Title" xml:space="preserve">
+    <value>Retype password</value>
+  </data>
+  <data name="EditUser_RetypePassword_Tooltip_Description" xml:space="preserve">
+    <value />
+  </data>
+  <data name="EditUser_RetypePassword_Tooltip_Title" xml:space="preserve">
+    <value>Retype password</value>
+  </data>
+  <data name="EditUser_Role_Title" xml:space="preserve">
+    <value>Role</value>
+  </data>
+  <data name="EditUser_Role_Tooltip_Description" xml:space="preserve">
+    <value />
+  </data>
+  <data name="EditUser_Role_Tooltip_Title" xml:space="preserve">
+    <value>Role</value>
+  </data>
+  <data name="EditUser_UploadImage_Button_Title" xml:space="preserve">
+    <value>Select Image</value>
+  </data>
+  <data name="EditUser_UploadImage_Info" xml:space="preserve">
+    <value>Make sure to size this image to 200x125 pixels. It will be displayed as a thumbnail with your post.</value>
+  </data>
+  <data name="EditUser_UserImage_Tooltip_Description" xml:space="preserve">
+    <value />
+  </data>
+  <data name="EditUser_UserImage_Tooltip_Title" xml:space="preserve">
+    <value>User Image</value>
+  </data>
+  <data name="EditUser_UserName_Title" xml:space="preserve">
+    <value>User name</value>
+  </data>
+  <data name="EditUser_UserName_Tooltip_Description" xml:space="preserve">
+    <value>User name</value>
+  </data>
+  <data name="EditUser_UserName_Tooltip_Title" xml:space="preserve">
+    <value>User name</value>
+  </data>
+  <data name="EditUser_Window_Title" xml:space="preserve">
+    <value>Add New User</value>
+  </data>
+  <data name="SiteSettings_UserMenuItem" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="SiteSettings_Users_ListTab_Title" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="SiteSettings_Users_NameColumn" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="SiteSettings_Users_RoleColumn" xml:space="preserve">
+    <value>Roles</value>
+  </data>
+  <data name="User_Dialog_AddNew" xml:space="preserve">
+    <value>Add New +</value>
+  </data>
+  <data name="User_Dialog_Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="User_Dialog_Title" xml:space="preserve">
+    <value>Users</value>
+  </data>
 </root>
