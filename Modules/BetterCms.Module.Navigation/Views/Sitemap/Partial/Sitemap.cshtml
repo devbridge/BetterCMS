@@ -20,63 +20,64 @@
     <!-- /ko -->
 
     <!-- ko foreach: childNodes -->
-    <div>
-    <div data-bind="attr: { id: containerId() }, draggable: $parentContext.$index@*, style: { position: !isBeingDragged() ? 'relative' : 'absolute' }*@">
-        <!-- ko if: isFirstNode() -->
-        <div class="bcms-nodes-dropzone" data-bind="css: { 'bcms-nodes-dropzone-active': activeZone() == 'topZone'  }, droppable: 'topZone'">
-            <div class="bcms-node-infotext">Place your new page here</div>
-        </div>
-        <!-- /ko -->
-
-        <div class="bcms-placement-node" data-bind="css: { 'bcms-placement-node-drag': isBeingDragged(), 'bcms-placement-node-edit': isActive() }, droppable: 'middleZone'">
-            <!-- ko if: hasChildNodes() -->
-            <a class="bcms-expand-collapse-node" data-bind="click: toggleExpand, css: { 'bcms-expanded-nodes': isExpanded() }">&nbsp;</a>
-            <!-- /ko -->
-            <div class="bcms-node-info">
-                <div class="bcms-placement-title" data-bind='text: title'></div>
-                <div class="bcms-placement-path" data-bind='text: url'></div>
-            </div>
-            <div class="bcms-edit-node">
-                <div class="bcms-edit-node-holder">
-                    <div class="bcms-tooltip-mark" data-title="@NavigationGlobalization.Sitemap_NodeEdit_Title_Tooltip_Title" data-message="@NavigationGlobalization.Sitemap_NodeEdit_Title_Tooltip_Message"></div>
-                    @Html.TextBoxFor(m => m.Title, new {
-                        data_bind = "value: title, valueUpdate: 'afterkeydown', enterPress: saveSitemapNode, escPress: cancelEditSitemapNode, hasfocus: isActive()",
-                        @class = "bcms-editor-field-box",
-                        Title = (string) null,
-                        style = "width: 65%;",
-                    })
-                </div>
-                <div class="bcms-edit-node-holder">
-                    <div class="bcms-tooltip-mark" data-title="@NavigationGlobalization.Sitemap_NodeEdit_Url_Tooltip_Title" data-message="@NavigationGlobalization.Sitemap_NodeEdit_Url_Tooltip_Message"></div>
-                    @Html.TextBoxFor(m => m.Url, new {
-                        data_bind = "value: url, valueUpdate: 'afterkeydown', enterPress: saveSitemapNode, escPress: cancelEditSitemapNode",
-                        @class = "bcms-editor-field-box",
-                        Url = (string) null,
-                        style = "width: 65%;",
-                    })
-                    <div class="bcms-btn-small" data-bind="click: saveSitemapNodeWithValidation">@RootGlobalization.Button_Save</div>
-                    <div class="bcms-btn-links-small" data-bind="click: cancelEditSitemapNode">@RootGlobalization.Button_Cancel</div>
-                </div>
-            </div>
-            <div class="bcms-node-controls">
-                <a class="bcms-icn-edit" data-bind="click: startEditSitemapNode">@RootGlobalization.Button_Edit</a>
-                <a class="bcms-icn-delete" data-bind="click: deleteSitemapNode">@RootGlobalization.Button_Delete</a>
-            </div>
-        </div>
-        <!-- ko if: activeZone() == 'middleZone' -->
-        <div class="bcms-zone-holder">
-            <div class="bcms-nodes-dropzone bcms-nodes-dropzone-active">
+    <div class="bcms-tree-holder">
+        <div data-bind="attr: { id: containerId() }, draggable: $parentContext.$index, style: { position: !isBeingDragged() ? 'relative' : 'absolute', zIndex: !isBeingDragged() ? '0' : '10' }">
+            <!-- ko if: isFirstNode() -->
+            <div class="bcms-nodes-dropzone" data-bind="css: { 'bcms-nodes-dropzone-active': activeZone() == 'topZone'  }, droppable: 'topZone'">
                 <div class="bcms-node-infotext">Place your new page here</div>
             </div>
-        </div>
-        <!-- /ko -->
-        <div class="bcms-zone-holder" data-bind="visible: isExpanded() && hasChildNodes(), template: { name: 'bcms-navigation-sitemapnode-template' }"></div>
+            <!-- /ko -->
 
-        <!-- ko if: !isBeingDragged() -->
-        <div class="bcms-nodes-dropzone" data-bind="css: { 'bcms-nodes-dropzone-active': activeZone() == 'bottomZone' }, droppable: 'bottomZone'">
-            <div class="bcms-node-infotext">Place your new page here</div>
+            <div class="bcms-placement-node" data-bind="css: { 'bcms-placement-node-drag': isBeingDragged(), 'bcms-placement-node-edit': isActive() }, droppable: 'middleZone'">
+                <!-- ko if: hasChildNodes() -->
+                <a class="bcms-expand-collapse-node" data-bind="click: toggleExpand, css: { 'bcms-expanded-nodes': isExpanded() }">&nbsp;</a>
+                <!-- /ko -->
+                <div class="bcms-node-info">
+                    <div class="bcms-placement-title" data-bind='text: title'></div>
+                    <div class="bcms-placement-path" data-bind='text: url'></div>
+                </div>
+                <div class="bcms-edit-node">
+                    <div class="bcms-edit-node-holder">
+                        <div class="bcms-tooltip-mark" data-title="@NavigationGlobalization.Sitemap_NodeEdit_Title_Tooltip_Title" data-message="@NavigationGlobalization.Sitemap_NodeEdit_Title_Tooltip_Message"></div>
+                        @Html.TextBoxFor(m => m.Title, new {
+                            data_bind = "value: title, valueUpdate: 'afterkeydown', enterPress: saveSitemapNode, escPress: cancelEditSitemapNode, hasfocus: isActive()",
+                            @class = "bcms-editor-field-box",
+                            Title = (string) null,
+                            style = "width: 65%;",
+                        })
+                    </div>
+                    <div class="bcms-edit-node-holder">
+                        <div class="bcms-tooltip-mark" data-title="@NavigationGlobalization.Sitemap_NodeEdit_Url_Tooltip_Title" data-message="@NavigationGlobalization.Sitemap_NodeEdit_Url_Tooltip_Message"></div>
+                        @Html.TextBoxFor(m => m.Url, new {
+                            data_bind = "value: url, valueUpdate: 'afterkeydown', enterPress: saveSitemapNode, escPress: cancelEditSitemapNode",
+                            @class = "bcms-editor-field-box",
+                            Url = (string) null,
+                            style = "width: 65%;",
+                        })
+                        <div class="bcms-btn-small" data-bind="click: saveSitemapNodeWithValidation">@RootGlobalization.Button_Save</div>
+                        <div class="bcms-btn-links-small" data-bind="click: cancelEditSitemapNode">@RootGlobalization.Button_Cancel</div>
+                    </div>
+                </div>
+                <div class="bcms-node-controls">
+                    <a class="bcms-icn-edit" data-bind="click: startEditSitemapNode">@RootGlobalization.Button_Edit</a>
+                    <a class="bcms-icn-delete" data-bind="click: deleteSitemapNode">@RootGlobalization.Button_Delete</a>
+                </div>
+            </div>
+            <!-- ko if: activeZone() == 'middleZone' -->
+            <div class="bcms-zone-holder">
+                <div class="bcms-nodes-dropzone bcms-nodes-dropzone-active">
+                    <div class="bcms-node-infotext">Place your new page here</div>
+                </div>
+            </div>
+            <!-- /ko -->
+            <div class="bcms-zone-holder" data-bind="visible: isExpanded() && hasChildNodes(), template: { name: 'bcms-navigation-sitemapnode-template' }"></div>
+
+            <!-- ko if: !isBeingDragged() -->
+            <div class="bcms-nodes-dropzone" data-bind="css: { 'bcms-nodes-dropzone-active': activeZone() == 'bottomZone' }, droppable: 'bottomZone'">
+                <div class="bcms-node-infotext">Place your new page here</div>
+            </div>
+            <!-- /ko -->
         </div>
-        <!-- /ko -->
-    </div></div>
+    </div>
     <!-- /ko -->
 </script>
