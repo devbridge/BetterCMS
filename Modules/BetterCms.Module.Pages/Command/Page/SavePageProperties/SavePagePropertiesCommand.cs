@@ -70,7 +70,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             page.Category = request.CategoryId.HasValue ? Repository.AsProxy<Category>(request.CategoryId.Value) : null;
             page.Title = request.PageName;
             page.CustomCss = request.PageCSS;
-            page.CustomJavaScript = request.PageJavascript;
+            page.CustomJS = request.PageJavascript;
             page.PageUrl = request.PagePermalink;
             page.IsPublic = request.IsVisibleToEveryone;
             page.UseNoFollow = request.UseNoFollow;

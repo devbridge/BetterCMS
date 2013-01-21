@@ -20,7 +20,7 @@ namespace BetterCms.Module.Pages.Projections
 
         public string GetCustomStyles(HtmlHelper html)
         {
-            if (page != null && page.UseCustomCss)
+            if (page != null)
             {
                 return page.CustomCss;
             }

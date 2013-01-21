@@ -27,15 +27,24 @@ namespace BetterCms.Module.Pages.Models.Migrations
         {
             Alter
                 .Table("Pages").InSchema(SchemaName)
-                .AddColumn("CustomJavaScript")
+                .AddColumn("CustomJS")
                 .AsString(MaxLength.Max).Nullable();
+
+            Delete
+                .Column("UseCustomCSS")
+                .FromTable("Pages").InSchema(SchemaName);
         }
 
         private void AlterPagesTableDown()
         {
             Delete
-                .Column("CustomJavaScript")
+                .Column("CustomJS")
                 .FromTable("Pages").InSchema(SchemaName);
+
+            Alter
+                .Table("Pages").InSchema(SchemaName)
+                .AddColumn("UseCustomCSS")
+                .AsBoolean().NotNullable().WithDefaultValue(true);
         }
     }
 }
