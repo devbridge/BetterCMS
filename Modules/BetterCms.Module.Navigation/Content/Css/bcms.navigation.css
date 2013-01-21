@@ -98,15 +98,11 @@
 
 /*dropzone*/
 .bcms-nodes-dropzone {
-    height: 8px;
+    padding: 4px 0;
 }
 
 .bcms-nodes-dropzone-active {
-    height: 30px;
-    padding: 8px 15px;
-    margin: 8px 0;
-    border: 1px dashed #bdbdbd;
-    border-radius: 2px;
+    padding: 8px 0;
 }
 
     .bcms-nodes-dropzone-active .bcms-node-infotext {
@@ -115,8 +111,12 @@
 
 .bcms-node-infotext {
     display: none;
+    height: 30px;
     line-height: 30px;
+    padding: 8px 15px;
     color: #bdbdbd;
+    border: 1px dashed #bdbdbd;
+    border-radius: 2px;
     font-size: 16px;
     font-weight: bold;
 }
