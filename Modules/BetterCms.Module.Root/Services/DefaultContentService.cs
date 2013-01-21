@@ -1,138 +1,191 @@
 ﻿using System;
+using System.Linq;
 
+using BetterCms.Core.DataAccess;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Models;
 using BetterCms.Core.Services;
-using BetterCms.Module.Root.Models;
-using BetterCms.Module.Root.Mvc;
+
+using NHibernate.Linq;
 
 namespace BetterCms.Module.Root.Services
 {
     public class DefaultContentService : IContentService
     {
         /// <summary>
-        /// The security service.
+        /// A security service.
         /// </summary>
         private readonly ISecurityService securityService;
 
-        public DefaultContentService(ISecurityService securityService)
+        /// <summary>
+        /// A repository contract.
+        /// </summary>
+        private readonly IRepository repository;
+
+        public DefaultContentService(ISecurityService securityService, IRepository repository)
         {
             this.securityService = securityService;
+            this.repository = repository;
         }
 
-        public virtual Models.Content Execute(Models.Content content)
+        public Models.Content SaveContentWithStatusUpdate(Models.Content updatedContent, ContentStatus requestedStatus)
         {
-            if (request.DesirableStatus == ContentStatus.Archived)
+            if (updatedContent == null)
             {
-                throw new CmsException(string.Format("Can't save a content using an Archived status directly."));
+                throw new CmsException("Nothing to save.", new ArgumentNullException("updatedContent"));
             }
 
-            if (request.Id.HasDefaultValue())
+            if (requestedStatus == ContentStatus.Archived)
             {
-                content = AddNewContent(request);
-            }
-            else
-            {
-                content = EditContent(request);
+                throw new CmsException(string.Format("Can't switch a content to the Archived state directly."));
             }
 
-            return content.Id;
-        }
 
-          private IPageContent AddNewContent(PageContentViewModel request)
-        {
-            var max = Repository.AsQueryable<PageContent>().Where(f => f.Page.Id == request.PageId && !f.IsDeleted).Select(f => (int?)f.Order).Max();
-
-            if (max == null)
+            if (updatedContent.Id == default(Guid))
             {
-                max = -1;
+                /* Just create a new content with requested status.*/
+                if (requestedStatus == ContentStatus.Published)
+                {
+                    updatedContent.PublishedOn = DateTime.Now;
+                    updatedContent.PublishedByUser = securityService.CurrentPrincipalName;
+                }
+                updatedContent.Status = requestedStatus;
+                repository.Save(updatedContent);
+
+                return updatedContent;
+            }
+            /* Update existing content. */
+            var originalContent =
+                repository.AsQueryable<Models.Content>()
+                          .Fetch(f => f.Original)
+                          .FetchMany(f => f.History)
+                          .Where(f => f.Id == updatedContent.Id && !f.IsDeleted)
+                          .ToList()
+                          .FirstOrDefault();
+
+            if (originalContent == null)
+            {
+                throw new CmsException(string.Format("An original content was not found by id={0}.", updatedContent.Id));
             }
 
-            var pageContent = new PageContent();
-            pageContent.Page = Repository.AsProxy<Root.Models.Page>(request.PageId);
-            pageContent.Region = Repository.AsProxy<Region>(request.RegionId);
-            pageContent.Order = max.Value + 1;
-        
-            pageContent.Content = new HtmlContent
+            switch (originalContent.Status)
             {
-                Name = request.ContentName,
-                ActivationDate = request.LiveFrom,
-                ExpirationDate = request.LiveTo,
-                Html = request.PageContent ?? string.Empty,
-                Status = request.DesirableStatus
-            };
-            
-            if (request.DesirableStatus == ContentStatus.Published)
-            {
-                pageContent.Content.PublishedOn = DateTime.Now;
-                pageContent.Content.PublishedByUser = securityService.CurrentPrincipalName;
-            }
-
-            UnitOfWork.BeginTransaction();
-            Repository.Save(pageContent);
-            UnitOfWork.Commit();
-
-            return pageContent;
-        }
-
-        private IPageContent EditContent(PageContentViewModel request)
-        {
-            var pageContent = Repository.AsQueryable<PageContent>()
-                    .Fetch(f => f.Content)
-                    .First(f => !f.IsDeleted && f.Id == request.Id);
-
-            if (pageContent.Content.Status == ContentStatus.Archived)
-            {
-                throw new CmsException(string.Format("Can't directly edit a content in the Archived state."));
-            }
-
-            switch (request.DesirableStatus)
-            {
-                case ContentStatus.Preview:
-                    EditContentSaveAsPreview(pageContent, request);
+                case ContentStatus.Published:
+                    SavePublishedContentWithStatusUpdate(originalContent, updatedContent, requestedStatus);
                     break;
 
                 case ContentStatus.Draft:
-                    EditContentSaveAsDraft(pageContent, request);
+                    SaveDraftContentWithStatusUpdate(originalContent, updatedContent, requestedStatus);
                     break;
 
-                case ContentStatus.Published:
-                    EditContentSaveAndPublish(pageContent, request);
-                    break;
+                case ContentStatus.Preview:
+                case ContentStatus.Archived:
+                    throw new CmsException(string.Format("Can't edit a content in the {0} state.", originalContent.Status));
 
                 default:
-                    throw new CmsException(string.Format("A content status {0} is unknown as desirable status for a content.", request.DesirableStatus));
+                    throw new CmsException(string.Format("Unknown content status {0}.", updatedContent.Status), new NotSupportedException());
             }
 
-            UnitOfWork.BeginTransaction();
-            Repository.Save(pageContent);
-            UnitOfWork.Commit();
-
-            return pageContent;
+            return originalContent;
         }
 
-        private IPageContent EditContentSaveAsDraft(PageContent pageContent, PageContentViewModel request)
-        {
-            IContent content 
-            if (pageContent.Content.Status != ContentStatus.Published && pageContent.Content.Status != ContentStatus.Draft)
+        private void SavePublishedContentWithStatusUpdate(Models.Content originalContent, Models.Content updatedContent, ContentStatus requestedStatus)
+        {            
+            /* 
+             * Edit published content:
+             * -> Save as draft, preview - look for draft|preview version in history list or create a new history version with requested status (draft, preview) with reference to an original content.
+             * -> Publish - current published version should be cloned to archive version with reference to original (archive state) and original updated with new data (published state).
+             *              Look for preview|draft versions - if exists remote it.
+             */
+            if (requestedStatus == ContentStatus.Preview || requestedStatus == ContentStatus.Draft)
             {
-                pageContent.Content.Name = request.ContentName,
-                ActivationDate = request.LiveFrom,
-                ExpirationDate = request.LiveTo,
-                Html = request.PageContent ?? string.Empty,
-                Status = request.DesirableStatus
+                var contentVersionOfRequestedStatus = originalContent.History.FirstOrDefault(f => f.Status == requestedStatus && !f.IsDeleted);
+                if (contentVersionOfRequestedStatus == null)
+                {
+                    contentVersionOfRequestedStatus = originalContent.Clone();                                        
+                }
+
+                updatedContent.CopyDataTo(contentVersionOfRequestedStatus);
+                contentVersionOfRequestedStatus.Original = originalContent;
+                contentVersionOfRequestedStatus.Status = requestedStatus;
+                repository.Save(contentVersionOfRequestedStatus);                
             }
+            
+            if (requestedStatus == ContentStatus.Published)
+            {
+                var originalToArchive = originalContent.Clone();
+                originalToArchive.Status = ContentStatus.Archived;
+                originalToArchive.Original = originalContent;
+                repository.Save(originalToArchive);
+
+                updatedContent.CopyDataTo(originalContent);
+                originalContent.Status = requestedStatus;
+                originalContent.PublishedOn = DateTime.Now;
+                originalContent.PublishedByUser = securityService.CurrentPrincipalName;
+                repository.Save(originalContent);
+
+                foreach (var previewOrDraftVersionContent in originalContent.History.Where(f => f.Status == ContentStatus.Preview || f.Status == ContentStatus.Draft))
+                {
+                    repository.Delete(previewOrDraftVersionContent);
+                }
             }
         }
 
-        private IPageContent EditContentSaveAndPublish(PageContent pageContent, PageContentViewModel request)
+        private void SaveDraftContentWithStatusUpdate(Models.Content originalContent, Models.Content updatedContent, ContentStatus requestedStatus)
         {
+            /* 
+             * Edit draft content:
+             * -> Save as preview - look for preview version in history list or create new history version with requested preview status with reference to an original content.
+             * -> Save draft - just update field and save.
+             * -> Publish - look if the published content (look for original) exists:
+             *              - published content exits:
+             *                  | create a history content version of the published (clone it). update original with draft data and remove draft|preview.
+             *              - published content not exists:
+             *                  | save draft content as published
+             */
+            if (requestedStatus == ContentStatus.Preview || requestedStatus == ContentStatus.Draft)
+            {
+                var previewContentVersion = originalContent.History.FirstOrDefault(f => f.Status == requestedStatus && !f.IsDeleted);
+                if (previewContentVersion == null)
+                {
+                    previewContentVersion = originalContent.Clone();
+                }
 
-        }
+                updatedContent.CopyDataTo(previewContentVersion);
+                previewContentVersion.Original = originalContent;
+                previewContentVersion.Status = requestedStatus;
+                repository.Save(previewContentVersion); 
+            }
+            else if (requestedStatus == ContentStatus.Draft)
+            {
+                updatedContent.CopyDataTo(originalContent);
+                repository.Save(originalContent);
+            }
+            else if (requestedStatus == ContentStatus.Published)
+            {
+                var publishedVersion = originalContent.History.FirstOrDefault(f => f.Status == requestedStatus && !f.IsDeleted);
+                if (publishedVersion != null)
+                {
+                    var originalToArchive = originalContent.Clone();
+                    originalToArchive.Status = ContentStatus.Archived;
+                    originalToArchive.Original = originalContent;
+                    repository.Save(originalToArchive);
 
-        private IPageContent EditContentSaveAsPreview(PageContent pageContent, PageContentViewModel request)
-        {
-
+                    updatedContent.CopyDataTo(originalContent);
+                    originalContent.Status = requestedStatus;
+                    originalContent.PublishedOn = DateTime.Now;
+                    originalContent.PublishedByUser = securityService.CurrentPrincipalName;
+                    repository.Save(originalContent);
+                }
+                else
+                {
+                    updatedContent.CopyDataTo(originalContent);
+                    originalContent.Status = requestedStatus;
+                    originalContent.PublishedOn = DateTime.Now;
+                    originalContent.PublishedByUser = securityService.CurrentPrincipalName;
+                    repository.Save(originalContent);
+                }
+            }
         }
     }
 }

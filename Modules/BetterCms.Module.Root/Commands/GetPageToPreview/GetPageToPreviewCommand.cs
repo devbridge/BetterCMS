@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.Models;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Services;
@@ -10,8 +9,7 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Projections;
 using BetterCms.Module.Root.ViewModels.Cms;
 
-using NHibernate.Criterion;
-using NHibernate.SqlCommand;
+using NHibernate.Linq;
 
 namespace BetterCms.Module.Root.Commands.GetPageToPreview
 {
@@ -34,22 +32,14 @@ namespace BetterCms.Module.Root.Commands.GetPageToPreview
         /// <returns>Executed command result.</returns>
         public RenderPageViewModel Execute(GetPageToPreviewRequest request)
         {
-            Page pageAlias = null;
-            PageContent pageContentAlias = null;
-            Root.Models.Content contentAlias = null;
-
-            Page page = UnitOfWork.Session.QueryOver(() => pageAlias)
-                              .JoinAlias(() => pageAlias.PageContents, () => pageContentAlias, JoinType.LeftOuterJoin, Restrictions.Where(() => !pageContentAlias.IsDeleted))
-                              .JoinAlias(() => pageContentAlias.Content, () => contentAlias, JoinType.LeftOuterJoin, Restrictions.Where(() => !contentAlias.IsDeleted && contentAlias.Status == ContentStatus.Preview))
-                              .Where(f => f.Id == request.PageId && !f.IsDeleted)
-                              .Fetch(f => f.Layout)
-                              .Eager.Fetch(f => f.Layout.LayoutRegions)
-                              .Eager.Fetch(f => f.Layout.LayoutRegions[0].Region)
-                              .Eager.Fetch(f => f.PageContents)
-                              .Eager.Fetch(f => f.PageContents[0].Content)
-                              .Eager.Fetch(f => f.PageContents[0].Options)
-                              .Eager.Fetch(f => f.PageContents[0].Options[0].ContentOption)
-                              .Eager.SingleOrDefault();
+            Page page = Repository.AsQueryable<Page>()
+                            .Where(f => !f.IsDeleted)
+                            .Where(f => f.Id == request.PageId)
+                            .Fetch(f => f.Layout).ThenFetchMany(f => f.LayoutRegions).ThenFetch(f => f.Region)
+                            .FetchMany(f => f.PageContents).ThenFetch(f => f.Content).ThenFetchMany(f => f.ContentOptions)
+                            .FetchMany(f => f.PageContents).ThenFetchMany(f => f.Options)
+                            .ToList()
+                            .FirstOrDefault();
            
             if (page == null)
             {

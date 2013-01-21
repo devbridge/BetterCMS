@@ -3,12 +3,12 @@ using System.Linq;
 using System.Web.Mvc;
 
 using BetterCms.Module.Pages.Command.Content.GetPageContentOptions;
+using BetterCms.Module.Pages.Command.Content.GetPageHtmlContent;
 using BetterCms.Module.Pages.Command.Content.InsertContent;
 using BetterCms.Module.Pages.Command.Content.SavePageContentOptions;
 using BetterCms.Module.Pages.Command.Content.SavePageHtmlContent;
 using BetterCms.Module.Pages.Command.Content.SortPageContent;
 using BetterCms.Module.Pages.Command.Content.DeletePageContent;
-using BetterCms.Module.Pages.Command.Content.GetContent;
 using BetterCms.Module.Pages.Command.Widget.GetWidgetCategory;
 using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Root.Models;
@@ -90,7 +90,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// ViewResult to render add page content modal dialog.
         /// </returns>
         [HttpGet]
-        public ActionResult AddPageContent(string pageId, string regionId)
+        public ActionResult AddPageHtmlContent(string pageId, string regionId)
         {
             var viewModel = new PageContentViewModel
             {
@@ -113,7 +113,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// JSON with result status and redirect URL.
         /// </returns>
         [HttpPost]
-        public ActionResult AddPageContent(PageContentViewModel model)
+        public ActionResult SavePageHtmlContent(PageContentViewModel model)
         {
             var result = GetCommand<SavePageHtmlContentCommand>().ExecuteCommand(model);
 
@@ -126,6 +126,7 @@ namespace BetterCms.Module.Pages.Controllers
                             Data = new
                                        {
                                            PageContentId = result.PageContentId,
+                                           ContentId = result.ContentId,
                                            DesirableStatus = model.DesirableStatus.ToString()
                                        }
                         });
@@ -142,9 +143,10 @@ namespace BetterCms.Module.Pages.Controllers
         /// ViewResult to render edit page content modal dialog.
         /// </returns>
         [HttpGet]
-        public ActionResult EditPageContent(string contentId)
+        public ActionResult EditPageHtmlContent(string contentId)
         {
-            var viewModel = GetCommand<GetContentCommand>().ExecuteCommand(contentId.ToGuidOrDefault());
+            var viewModel = GetCommand<GetPageHtmlContentCommand>().ExecuteCommand(contentId.ToGuidOrDefault());
+
             return View(viewModel);
         }
 

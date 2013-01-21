@@ -1,5 +1,5 @@
 ﻿@using BetterCms.Core.Models
-@using BetterCms.Module.Pages.Command.History.GetPageContentHistory
+@using BetterCms.Module.Pages.Command.History.GetContentHistory
 @using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.History
@@ -68,7 +68,7 @@
 
     <div class="bcms-history-table-holder">
                        
-        @using (Html.BeginForm<HistoryController>(f => f.PageContentHistory((GetPageContentHistoryRequest)null), FormMethod.Post, new { @id = "bcms-pagecontenthistory-form" }))
+        @using (Html.BeginForm<HistoryController>(f => f.PageContentHistory((GetContentHistoryRequest)null), FormMethod.Post, new { @id = "bcms-pagecontenthistory-form" }))
         {                        
             @Html.HiddenGridOptions(Model.GridOptions)
             <div class="bcms-history-table-top">

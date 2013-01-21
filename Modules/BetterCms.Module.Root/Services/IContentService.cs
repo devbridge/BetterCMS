@@ -1,6 +1,11 @@
-﻿namespace BetterCms.Module.Root.Services
+﻿using System;
+
+using BetterCms.Core.Models;
+
+namespace BetterCms.Module.Root.Services
 {
-    interface IContentService
+    public interface IContentService
     {
+        Models.Content SaveContentWithStatusUpdate(Models.Content updatedContent, ContentStatus requestedStatus);
     }
 }

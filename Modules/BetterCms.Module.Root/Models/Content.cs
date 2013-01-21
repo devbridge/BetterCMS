@@ -29,13 +29,28 @@ namespace BetterCms.Module.Root.Models
 
         public virtual Content Clone()
         {
-            return new Content
-                {
-                    Name = Name,
-                    PreviewUrl = PreviewUrl,
-                    Status = Status,
-                    Original = Original
-                };
+            return CopyDataTo(new Content());
+        }
+
+        public virtual Content CopyDataTo(Content content)
+        {
+            content.CreatedOn = CreatedOn;
+            content.CreatedByUser = CreatedByUser;
+            content.ModifiedOn = ModifiedOn;
+            content.ModifiedByUser = ModifiedByUser;
+            content.DeletedOn = DeletedOn;
+            content.DeletedByUser = DeletedByUser;
+            content.IsDeleted = IsDeleted;
+
+            content.Name = Name;
+            content.PreviewUrl = PreviewUrl;
+            content.PublishedOn = PublishedOn;
+            content.PublishedByUser = PublishedByUser;
+            content.Status = Status;
+            content.Original = Original;
+            content.ContentOptions = ContentOptions != null ? ContentOptions.Select(f => f.Clone()).ToList() : null;
+
+            return content;
         }
     }
 }

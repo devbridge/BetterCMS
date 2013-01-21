@@ -313,6 +313,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed To Render Content..
+        /// </summary>
+        public static string Message_FailedToRenderContent {
+            get {
+                return ResourceManager.GetString("Message_FailedToRenderContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unable to save information. Please retry..
         /// </summary>
         public static string Message_FailedToSaveData {

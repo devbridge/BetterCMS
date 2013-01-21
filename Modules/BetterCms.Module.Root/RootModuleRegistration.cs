@@ -85,6 +85,7 @@ namespace BetterCms.Module.Root
         {
             containerBuilder.RegisterType<DefaultSecurityService>().AsImplementedInterfaces().SingleInstance();
             containerBuilder.RegisterType<PageContentProjectionFactory>().AsSelf().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultContentService>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
 
         /// <summary>

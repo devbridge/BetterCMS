@@ -7,9 +7,9 @@ using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
-namespace BetterCms.Module.Pages.Command.Content.GetContent
+namespace BetterCms.Module.Pages.Command.Content.GetPageHtmlContent
 {
-    public class GetContentCommand : CommandBase, ICommand<Guid, PageContentViewModel>
+    public class GetPageHtmlContentCommand : CommandBase, ICommand<Guid, PageContentViewModel>
     {
         /// <summary>
         /// Executes the specified request.
@@ -20,7 +20,7 @@ namespace BetterCms.Module.Pages.Command.Content.GetContent
         {
             return
                 Repository.AsQueryable<PageContent>()
-                          .Where(f => f.Id == pageContentId)
+                          .Where(f => f.Id == pageContentId && !f.IsDeleted && !f.Content.IsDeleted)
                           .Select(
                               f =>
                               new PageContentViewModel
@@ -28,6 +28,7 @@ namespace BetterCms.Module.Pages.Command.Content.GetContent
                                       Id = f.Id,
                                       PageId = f.Page.Id,
                                       RegionId = f.Region.Id,
+                                      ContentId = f.Content.Id,
                                       ContentName = f.Content.Name,
                                       LiveFrom = ((HtmlContent)f.Content).ActivationDate,
                                       LiveTo = ((HtmlContent)f.Content).ExpirationDate,

@@ -118,12 +118,9 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Command\Base\ISaveContentResponse.cs" />
-    <Compile Include="Command\Base\ISaveContentHistory.cs" />
-    <Compile Include="Command\Base\SaveContentCommandBase.cs" />
     <Compile Include="Command\Content\DeletePageContent\DeletePageContentCommand.cs" />
     <Compile Include="Command\Content\DeletePageContent\DeletePageContentCommandRequest.cs" />
-    <Compile Include="Command\Content\GetContent\GetContentCommand.cs" />
+    <Compile Include="Command\Content\GetPageHtmlContent\GetPageHtmlContentCommand.cs" />
     <Compile Include="Command\Content\SavePageHtmlContent\SavePageHtmlContentResponse.cs" />
     <Compile Include="Command\Content\SortPageContent\SortPageContentResponse.cs" />
     <Compile Include="Command\Content\SortPageContent\SortPageContentCommand.cs" />
@@ -355,7 +352,7 @@
     <EmbeddedResource Include="Views\Page\Partial\AddNewPageEditPermalink.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Content\AddPageContent.cshtml" />
+    <EmbeddedResource Include="Views\Content\AddPageHtmlContent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Widgets\Partial\Widget.cshtml" />
@@ -370,7 +367,7 @@
     <EmbeddedResource Include="Views\Widgets\EditHtmlContentWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Content\Partial\EditRegularContent.cshtml" />
+    <EmbeddedResource Include="Views\Content\Partial\EditHtmlContent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Page\Partial\TemplatesList.cshtml" />
@@ -395,7 +392,7 @@
     <EmbeddedResource Include="Views\Widgets\Partial\EditContentOptions.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\SiteSettingBoolean.cshtml" />
     <EmbeddedResource Include="Views\Content\PageContentOptions.cshtml" />
-    <EmbeddedResource Include="Views\Content\EditPageContent.cshtml" />
+    <EmbeddedResource Include="Views\Content\EditPageHtmlContent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\History\" />

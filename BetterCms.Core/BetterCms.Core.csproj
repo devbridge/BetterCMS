@@ -139,6 +139,7 @@
     <Compile Include="Models\IHtmlContent.cs" />
     <Compile Include="Models\IHtmlContentWidget.cs" />
     <Compile Include="Models\IWidget.cs" />
+    <Compile Include="Modules\Projections\EmptyContentAccessor.cs" />
     <Compile Include="Mvc\Attributes\IgnoreAutoRouteAttribute.cs" />
     <Compile Include="Services\Storage\FtpStorageService.cs" />
     <Compile Include="Services\Storage\DownloadResponse.cs" />

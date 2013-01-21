@@ -10,6 +10,8 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                 sliderBoxes: '.bcms-slider-box',
                 sliderContainer: 'bcms-slides-container',
 
+                contentId: '#bcmsContentId',
+                pageContentId: '#bcmsPageContentId',
                 contentFormRegionId: '#bcmsAddContentToRegionId',
                 desirableStatus: '#bcmsAddContentDesirableStatus',
                 dataPickers: '.bcms-datepicker',
@@ -121,7 +123,9 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
 
                         postSuccess: function (json) {                            
                             if (json.Data.DesirableStatus === contentStatus.preview) {
-                                try {
+                                try {                                    
+                                    $(selectors.contentId).val(json.Data.ContentId);
+                                    $(selectors.pageContentId).val(json.Data.PageContentId);
                                     preview.previewPageContent(json.Data.PageContentId);
                                 } finally  {
                                     return false;
@@ -335,7 +339,10 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                 overlay.find(selectors.overlayConfigure).hide();
             } else if (element.hasClass(classes.regionWidget)) {
                 overlay.find(selectors.overlayEdit).hide();
-            }            
+            } else {
+                overlay.find(selectors.overlayEdit).hide();
+                overlay.find(selectors.overlayConfigure).hide();
+            }
         };
 
         /**
@@ -438,6 +445,7 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                         postSuccess: function (json) {
                             if (json.Data.DesirableStatus === contentStatus.preview) {
                                 try {
+                                    
                                     preview.previewPageContent(json.Data.PageContentId);
                                 } finally {
                                     return false;

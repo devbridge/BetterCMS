@@ -11,10 +11,10 @@ namespace BetterCms.Module.Pages.Models.Maps
 
             Map(x => x.ActivationDate).Not.Nullable();
             Map(x => x.ExpirationDate).Nullable();
-            Map(x => x.Html).Not.Nullable().Length(int.MaxValue).LazyLoad();
-            Map(x => x.CustomCss).Nullable().Length(int.MaxValue).LazyLoad();
+            Map(x => x.Html).Not.Nullable().Length(int.MaxValue);
+            Map(x => x.CustomCss).Nullable().Length(int.MaxValue);
             Map(x => x.UseCustomCss).Not.Nullable();
-            Map(x => x.CustomJs).Nullable().Length(int.MaxValue).LazyLoad();
+            Map(x => x.CustomJs).Nullable().Length(int.MaxValue);
             Map(x => x.UseCustomJs).Not.Nullable(); 
         }
     }

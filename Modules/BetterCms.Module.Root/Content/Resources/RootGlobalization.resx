@@ -201,6 +201,9 @@
   <data name="Message_FailedToLoadDialog" xml:space="preserve">
     <value>Failed to load dialog. Please retry.</value>
   </data>
+  <data name="Message_FailedToRenderContent" xml:space="preserve">
+    <value>Failed To Render Content.</value>
+  </data>
   <data name="Message_FailedToSaveData" xml:space="preserve">
     <value>Unable to save information. Please retry.</value>
   </data>
