@@ -8,16 +8,27 @@
     <div class="bcms-expand-link" data-bind="click: expandAll">Expand All</div>
     <div class="bcms-expand-link" data-bind="click: collapseAll">Collapse All</div>
 </div>
+
 <div data-bind='template: { name: "bcms-navigation-sitemapnode-template" }'></div>
 <!-- /ko -->
 
 <script type="text/html" id="bcms-navigation-sitemapnode-template">
-    <div class="bcms-nodes-dropzone" data-bind="css: { 'bcms-nodes-dropzone-active': someNodeIsOverDropZone() || !hasChildNodes() || someNodeIsOverNode()  }, droppable: 'addAsFirstChild_overZone'">
+    <!-- ko if: childNodes().length == 0 -->
+    <div class="bcms-nodes-dropzone bcms-nodes-dropzone-active" data-bind="droppable: 'emptyListZone'">
         <div class="bcms-node-infotext">Place your new page here</div>
     </div>
+    <!-- /ko -->
+
     <!-- ko foreach: childNodes -->
-    <div data-bind="attr: { id: containerId() }, draggable: $parentContext.$index, droppable: 'addAsFirstChild_overNode'">
-        <div class="bcms-placement-node" data-bind="css: { 'bcms-placement-node-drag': isBeingDragged(), 'bcms-placement-node-edit': isActive() }">
+    <div>
+    <div data-bind="attr: { id: containerId() }, draggable: $parentContext.$index@*, style: { position: !isBeingDragged() ? 'relative' : 'absolute' }*@">
+        <!-- ko if: isFirstNode() -->
+        <div class="bcms-nodes-dropzone" data-bind="css: { 'bcms-nodes-dropzone-active': activeZone() == 'topZone'  }, droppable: 'topZone'">
+            <div class="bcms-node-infotext">Place your new page here</div>
+        </div>
+        <!-- /ko -->
+
+        <div class="bcms-placement-node" data-bind="css: { 'bcms-placement-node-drag': isBeingDragged(), 'bcms-placement-node-edit': isActive() }, droppable: 'middleZone'">
             <!-- ko if: hasChildNodes() -->
             <a class="bcms-expand-collapse-node" data-bind="click: toggleExpand, css: { 'bcms-expanded-nodes': isExpanded() }">&nbsp;</a>
             <!-- /ko -->
@@ -52,10 +63,20 @@
                 <a class="bcms-icn-delete" data-bind="click: deleteSitemapNode">@RootGlobalization.Button_Delete</a>
             </div>
         </div>
-        <div class="bcms-zone-holder" data-bind='visible: isExpanded() && hasChildNodes() || someNodeIsOverNode(), template: { name: "bcms-navigation-sitemapnode-template" }'></div>
-    </div>
-    <div class="bcms-nodes-dropzone" data-bind="css: { 'bcms-nodes-dropzone-active': someNodeIsOverDropZone() }, droppable: 'addNextToMe_overZone'">
-        <div class="bcms-node-infotext">Place your new page here</div>
-    </div>
+        <!-- ko if: activeZone() == 'middleZone' -->
+        <div class="bcms-zone-holder">
+            <div class="bcms-nodes-dropzone bcms-nodes-dropzone-active">
+                <div class="bcms-node-infotext">Place your new page here</div>
+            </div>
+        </div>
+        <!-- /ko -->
+        <div class="bcms-zone-holder" data-bind="visible: isExpanded() && hasChildNodes(), template: { name: 'bcms-navigation-sitemapnode-template' }"></div>
+
+        <!-- ko if: !isBeingDragged() -->
+        <div class="bcms-nodes-dropzone" data-bind="css: { 'bcms-nodes-dropzone-active': activeZone() == 'bottomZone' }, droppable: 'bottomZone'">
+            <div class="bcms-node-infotext">Place your new page here</div>
+        </div>
+        <!-- /ko -->
+    </div></div>
     <!-- /ko -->
 </script>
