@@ -64,7 +64,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                         },
                     });
                 },
-                onClose: function (dialog) {
+                onClose: function () {
                     sitemap.loadSiteSettingsSitemap();
                 }
             });
@@ -75,6 +75,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         sitemap.showMessage = function (content) {
             messages.refreshBox(sitemap.activeMessageContainer, content);
         };
+
 
         // --- Controllers ----------------------------------------------------
         function SiteSettingsMapController() {
@@ -155,7 +156,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                         setup = {
                             revert: true,
                             revertDuration: 0,
-                            start: function (event, ui) {
+                            start: function () {
                                 if (dragObject.isExpanded) {
                                     dragObject.isExpanded(false);
                                 }
@@ -163,7 +164,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                                     dragObject.isBeingDragged(true);
                                 }
                             },
-                            stop: function (event, ui) {
+                            stop: function () {
                                 if (dragObject.isBeingDragged) {
                                     dragObject.isBeingDragged(false);
                                     
@@ -182,10 +183,10 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                         dropZoneType = valueAccessor(),
                         setup = {
                             tolerance: "pointer",
-                            over: function(event, ui) {
+                            over: function() {
                                 dropZoneObject.activeZone(dropZoneType);
                             },
-                            out: function(event, ui) {
+                            out: function() {
                                 dropZoneObject.activeZone(DropZoneTypes.None);
                             },
                             drop: function (event, ui) {
@@ -565,168 +566,6 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         }
         // --------------------------------------------------------------------
 
-
-
-
-
-
-
-
-// SITE MAP REFACTORING!
-        
-/*
-        function searchSitemapNodes(form) {
-            $.ajax({
-                type: 'POST',
-                cache: false,
-                url: form.attr('action'),
-                data: form.serialize(),
-
-                success: function (data) {
-                    siteSettings.setContent(data.Data.Html);
-                    initializeSiteSettingsSitemap(data);
-                }
-            });
-
-        }
-        function initializePageLinks(content, container) {
-            var pageLinks = new PageLinksViewModel(container);
-            if (jsonToPageLinksModel(content, pageLinks)) {
-                var context = container.find(selectors.templatePageLinksDataBind).get(0);
-                ko.applyBindings(pageLinks, context);
-            }
-        }
-        function jsonToPageLinksModel(json, pageLinksViewModel) {
-            messages.refreshBox(pageLinksViewModel.messagesContainer, json);
-            if (json.Success) {
-                var pageLinks = [];
-                for (var i in json.Data.PageLinks) {
-                    var pageLink = json.Data.PageLinks[i];
-                    pageLinks.push(new PageLinkViewModel(pageLink.Title, pageLink.Url));
-                }
-                pageLinksViewModel.pageLinks(pageLinks);
-                return true;
-            }
-            return false;
-        }
-        function PageLinksViewModel(container) {
-            var self = this;
-            self.messagesContainer = container;
-            
-            self.searchText = ko.observable();
-            self.pageLinks = ko.observableArray([]);
-
-            self.searchPageLinks = function() {
-                // TODO: implement.
-            };
-        }
-        function PageLinkViewModel(title, url) {
-            var self = this;
-            self.title = ko.observable(title);
-            self.url = ko.observable(url);
-        }
-        function addSortableBinding() {
-            ko.bindingHandlers.sortable = {
-                init: function(element, valueAccessor) {
-                    var startIndex = -1,
-                        sourceArray = valueAccessor(),
-                        sortableSetup = {
-                            start: function(event, ui) {
-                                ko.contextFor(ui.item[0]).$root.isDragStarted(true);
-                                startIndex = ui.item.index();
-                                ui.item.find("input:focus").change();
-                            },
-                            stop: function(event, ui) {
-                                ko.contextFor(ui.item[0]).$root.isDragStarted(false);
-                                var newIndex = ui.item.index();
-                                if (startIndex > -1) {
-                                    var context = ko.contextFor(ui.item.parent()[0]),
-                                        destinationParent = context.$data,
-                                        destinationArray = destinationParent.childNodes || destinationParent.sitemapNodes,
-                                        item = sourceArray()[startIndex];
-
-                                    sourceArray.remove(item);
-                                    destinationArray.splice(newIndex, 0, item);
-                                    ui.item.remove();
-
-                                    context.$root.updateNodesOrderAndParent();
-                                }
-                            },
-                            connectWith: selectors.sitemapChildNodesList,
-                            placeholder: cssclass.sitemapNodeDropZone,
-                            dropOnEmpty: true
-                        };
-                    $(element).sortable(sortableSetup);
-                    $(element).disableSelection();
-                }
-            };
-        }
-        function addDraggableBinding() {
-            ko.bindingHandlers.draggable = {
-                init: function (element, valueAccessor) {
-                    var startIndex = -1,
-                        sourceArray = valueAccessor(),
-                        draggableSetup = {
-                            placeholder: cssclass.sitemapNodeDropZone,
-                            connectWith: selectors.sitemapChildNodesList,
-                            start: function(event, ui) {
-                                startIndex = ui.item.index();
-                            },
-                            stop: function(event, ui) {
-                                if (startIndex > -1) {
-                                    var newIndex = ui.item.index(),
-                                        context = ko.contextFor(ui.item.parent()[0]),
-                                        destinationParent = context.$data,
-                                        destinationArray = destinationParent.childNodes || destinationParent.sitemapNodes,
-                                        pageLink = sourceArray()[startIndex];
-
-                                    // Create new sitemap node.
-                                    var sitemapNode = new SitemapNodeViewModel();
-                                    sitemapNode.id('00000000-0000-0000-0000-000000000000');
-                                    sitemapNode.version(0);
-                                    sitemapNode.title(pageLink.title());
-                                    sitemapNode.url(pageLink.url());
-                                    sitemapNode.displayOrder(newIndex);
-                                    sitemapNode.parentNode = destinationParent != context.$root ? destinationParent : null;
-                                    
-
-                                    // TODO: add spinner in the node.
-                                    saveSitemapNode(sitemapNode, function() {
-                                        destinationArray.splice(newIndex, 0, sitemapNode);
-                                        context.$root.updateNodesOrderAndParent();
-                                        // TODO: remove spinner.
-                                    }, function () {
-                                        // TODO: remove spinner.
-                                    });
-                                }
-                                return false;
-                            }
-                        };
-                    $(element).sortable(draggableSetup);
-                    $(element).disableSelection();
-                }
-            };
-        }
-*/
-// TODO: Remove or update for better node dragging appearance.
-//        /**
-//        * Hover binding to handle node adding to node without child nodes.
-//        */
-//        function addHoverCssBinding() {
-//            ko.bindingHandlers.hovercss = {
-//                update: function(element, valueAccessor) {
-//                    var css = valueAccessor();
-//
-//                    ko.utils.registerEventHandler(element, "mouseover", function () {
-//                        ko.utils.toggleDomNodeCssClass(element, ko.utils.unwrapObservable(css), true);
-//                    });
-//                    
-//                    ko.utils.registerEventHandler(element, "mouseout", function () {
-//                        ko.utils.toggleDomNodeCssClass(element, ko.utils.unwrapObservable(css), false);
-//                    });
-//                }
-//            };
-//        }
 
         /**
         * Initializes module.
