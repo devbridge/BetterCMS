@@ -62,5 +62,20 @@ namespace BetterCms.Module.MediaManager.Controllers
 
             return Json(new WireJson { Success = false });
         }
+
+        /// <summary>
+        /// Gets files list to insert to content.
+        /// </summary>
+        /// <returns>
+        /// The view.
+        /// </returns>
+        public ActionResult FileInsert()
+        {
+            var files = GetCommand<GetFilesCommand>().ExecuteCommand(new MediaManagerViewModel());
+            var success = files != null;
+            var view = RenderView("FileInsert", new MediaImageViewModel());
+
+            return ComboWireJson(success, view, files, JsonRequestBehavior.AllowGet);
+        }
     }
 }

@@ -71,6 +71,9 @@
                     <!-- ko if: isImage() && $root.canInsertMediaWithOptions() -->
                     <a class="bcms-media-content-link" href="#" data-bind="click: insertMediaWithOptions.bind($data, $root)">@MediaGlobalization.MediaManager_ButtonInsertImageWithOptions</a>
                     <!-- /ko -->
+                    <!-- ko if: !isImage() && $root.canInsertMedia() -->
+                    <a class="bcms-media-content-link" href="#" data-bind="click: insertMedia.bind($data, $root)">@MediaGlobalization.MediaManager_ButtonInsertFile</a>
+                    <!-- /ko -->
                     <a class="bcms-media-content-link" href="#" data-bind="click: deleteMedia.bind($data, $root)">@RootGlobalization.Button_Delete</a>
                 </div>
 
