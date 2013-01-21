@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 
 using BetterCms.Core.Exceptions;
+using BetterCms.Core.Models;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
@@ -37,7 +38,10 @@ namespace BetterCms.Module.Pages.Command.Content.InsertContent
             {
                 Page = page,
                 Content = content,
-                Region = region
+                Region = region,
+
+                // TODO: set correct status
+                Status = ContentStatus.Published
             };
 
             foreach (var contentOption in content.ContentOptions)
