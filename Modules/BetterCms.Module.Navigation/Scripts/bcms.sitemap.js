@@ -71,6 +71,10 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         };
 
         sitemap.activeMapModel = null;
+        sitemap.activeMessageContainer = null;
+        sitemap.showMessage = function (content) {
+            messages.refreshBox(sitemap.activeMessageContainer, content);
+        };
 
         // --- Controllers ----------------------------------------------------
         function SiteSettingsMapController() {
@@ -80,8 +84,9 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
 
             self.initialize = function(content) {
                 self.container = siteSettings.getModalDialog().container;
-
-                messages.refreshBox(self.container, content);
+                sitemap.activeMessageContainer = self.container;
+                    
+                sitemap.showMessage(content);
                 if (content.Success) {
                     // Create data models.
                     var sitemapModel = new SitemapViewModel();
@@ -112,7 +117,8 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
 
             self.initialize = function (content, dialog) {
                 self.container = dialog.container;
-                
+                sitemap.activeMessageContainer = self.container;
+
                 messages.refreshBox(self.container, content);
                 if (content.Success) {
                     // Create data models.
@@ -332,7 +338,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                         node.parentNode = parent;
                     }
 
-                    if (saveIt) {
+                    if (saveIt || node.id() == defaultIdValue) {
                         node.saveSitemapNode();
                     }
 
@@ -411,7 +417,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             self.saveSitemapNode = function () {
                 var params = self.toJson(),
                     onSaveCompleted = function (json) {
-                        // TODO: messages.refreshBox(messagesContainer, json);
+                        sitemap.showMessage(json);
                         if (json.Success) {
                             if (json.Data) {
                                 self.id(json.Data.Id);
@@ -445,7 +451,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             self.deleteSitemapNode = function () {
                 var params = self.toJson(),
                     onDeleteCompleted = function (json) {
-                        // TODO: messages.refreshBox(messagesContainer, json);
+                        sitemap.showMessage(json);
                         if (json.Success) {
                             self.parentNode.childNodes.remove(self);
                         }
