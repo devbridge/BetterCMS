@@ -118,6 +118,8 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Accessors\PageStylesheetAccessor.cs" />
+    <Compile Include="Accessors\PageJavaScriptAccessor.cs" />
     <Compile Include="Command\Content\DeletePageContent\DeletePageContentCommand.cs" />
     <Compile Include="Command\Content\DeletePageContent\DeletePageContentCommandRequest.cs" />
     <Compile Include="Command\Content\GetContent\GetContentCommand.cs" />
@@ -222,10 +224,9 @@
     <Compile Include="Models\Redirect.cs" />
     <Compile Include="Models\WidgetType.cs" />
     <Compile Include="PagesConstants.cs" />
-    <Compile Include="Projections\HtmlContentWidgetRenderer.cs" />
-    <Compile Include="Projections\HtmlContentRenderer.cs" />
-    <Compile Include="Projections\PageStylesProjection.cs" />
-    <Compile Include="Projections\ServerControlWidgetRenderer.cs" />
+    <Compile Include="Accessors\HtmlContentWidgetAccessor.cs" />
+    <Compile Include="Accessors\HtmlContentAccessor.cs" />
+    <Compile Include="Accessors\ServerControlWidgetAccessor.cs" />
     <Compile Include="Registration\TemplatesJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\PagesContentJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\PageTagsJavaScriptModuleDescriptor.cs" />

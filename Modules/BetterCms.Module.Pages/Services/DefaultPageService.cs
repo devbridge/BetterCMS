@@ -14,10 +14,6 @@ using BetterCms.Core.Services.Caching;
 using BetterCms.Core.Web;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
-using BetterCms.Module.Pages.Projections;
-using BetterCms.Module.Root.Models;
-using BetterCms.Module.Root.Mvc;
-using BetterCms.Module.Root.Projections;
 
 using NHibernate.Linq;
 

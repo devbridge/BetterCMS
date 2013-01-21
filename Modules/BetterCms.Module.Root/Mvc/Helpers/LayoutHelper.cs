@@ -51,6 +51,12 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             }
         }
 
+        /// <summary>
+        /// Renders the section as layout region.
+        /// </summary>
+        /// <param name="webPage">The web page.</param>
+        /// <param name="partialViewHtml">The partial view HTML.</param>
+        /// <param name="sectionName">Name of the section.</param>
         private static void RenderSectionAsLayoutRegion(WebPageBase webPage, string partialViewHtml, string sectionName)
         {
             webPage.DefineSection(
@@ -62,9 +68,9 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                     webPage.Write(result);
                 });
         }
-
+        
         /// <summary>
-        /// Renders the page custom CSS.
+        /// Renders the page custom JavaScript.
         /// </summary>
         /// <param name="htmlHelper">The HTML helper.</param>
         /// <param name="styles">The styles.</param>
@@ -88,6 +94,37 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                 if (!string.IsNullOrWhiteSpace(css))
                 {
                     return new HtmlString(string.Format(@"<style type=""text/css"">{0}</style>", css));
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Renders the page custom JavaScript.
+        /// </summary>
+        /// <param name="htmlHelper">The HTML helper.</param>
+        /// <param name="scripts">The scripts.</param>
+        /// <returns></returns>
+        public static IHtmlString RenderPageCustomJavaScript(this HtmlHelper htmlHelper, IEnumerable<IJavaScriptAccessor> scripts)
+        {
+            if (scripts != null)
+            {
+                var jsBuilder = new StringBuilder();
+
+                foreach (var content in scripts)
+                {
+                    var contentJs = content.GetCustomJavaScript(htmlHelper);
+                    if (!string.IsNullOrWhiteSpace(contentJs))
+                    {
+                        jsBuilder.Append(contentJs);
+                    }
+                }
+
+                var js = jsBuilder.ToString();
+                if (!string.IsNullOrWhiteSpace(js))
+                {
+                    return new HtmlString(string.Format(@"<script type=""text/javascript"" language=""javascript"">{0}</script>", js));
                 }
             }
 

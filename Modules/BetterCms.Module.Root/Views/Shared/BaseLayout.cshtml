@@ -58,6 +58,10 @@
         @Html.Partial("Partial/Tooltip")
         @Html.Partial("Partial/ImagePreview")
         @Html.Partial("Partial/SiteSettingTab")
+
+        if (Model.JavaScripts != null) {
+            @Html.RenderPageCustomJavaScript(Model.JavaScripts)
+        }
     }
 }
 
