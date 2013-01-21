@@ -63,8 +63,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                         },
                     });
                 },
-                onAcceptClick: function (dialog) {
-                    dialog.close();
+                onClose: function (dialog) {
                     sitemap.loadSiteSettingsSitemap();
                 }
             });
