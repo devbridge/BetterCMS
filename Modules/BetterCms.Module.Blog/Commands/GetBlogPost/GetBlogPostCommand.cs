@@ -4,6 +4,7 @@ using System.Linq;
 using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.Blog.Models;
+using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Models;

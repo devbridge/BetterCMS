@@ -21,7 +21,6 @@ namespace BetterCms.Module.Pages.Models
 
         public virtual IList<PageTag> PageTags { get; set; }
         
-        public virtual Author Author { get; set; }
         public virtual Category Category { get; set; }
         public virtual MediaImage Image { get; set; }
     }

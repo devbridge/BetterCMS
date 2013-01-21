@@ -92,10 +92,6 @@ namespace BetterCms.Module.Pages.Services
             try
             {
                 var query = repository.AsQueryable<PageProperties>(x => x.Id == id);
-                if (loadFull)
-                {
-                    query = query.Fetch(x => x.Author).Fetch(x => x.Layout);
-                }
                 var page = query.First();
                 if (loadFull)
                 {

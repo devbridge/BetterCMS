@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 
 using BetterCms.Core.DataAccess.DataContext;
-using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Root.Models;
 
 using NHibernate;
 using NHibernate.Criterion;
 using NHibernate.Transform;
 
-namespace BetterCms.Module.Pages.Services
+namespace BetterCms.Module.Blog.Services
 {
     public class DefaultAuthorService : IAuthorService
     {
@@ -41,7 +41,7 @@ namespace BetterCms.Module.Pages.Services
             return unitOfWork.Session
                 .QueryOver(() => alias)
                 .SelectList(select => select
-                    .Select(NHibernate.Criterion.Projections.Cast(NHibernateUtil.String, NHibernate.Criterion.Projections.Property<Author>(c => c.Id))).WithAlias(() => lookupAlias.Key)
+                    .Select(Projections.Cast(NHibernateUtil.String, Projections.Property<Author>(c => c.Id))).WithAlias(() => lookupAlias.Key)
                     .Select(() => alias.Name).WithAlias(() => lookupAlias.Value))
                 .OrderBy(o => o.Name).Asc()
                 .TransformUsing(Transformers.AliasToBean<LookupKeyValue>())

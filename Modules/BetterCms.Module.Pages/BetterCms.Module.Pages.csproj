@@ -194,7 +194,6 @@
     <Compile Include="Helpers\HttpHelper.cs" />
     <Compile Include="Helpers\ListModelBindingExtensions.cs" />
     <Compile Include="Helpers\RenderHelper.cs" />
-    <Compile Include="Models\Author.cs" />
     <Compile Include="Models\IServerControlWidget.cs" />
     <Compile Include="Models\Maps\Predefined\ServerControlWidgetSubClassMapBase.cs" />
     <Compile Include="Models\Maps\Predefined\HtmlContentWidgetSubClassMapBase.cs" />
@@ -212,7 +211,6 @@
     <Compile Include="Models\HtmlContent.cs" />
     <Compile Include="Models\Maps\RedirectMap.cs" />
     <Compile Include="Models\HtmlContentWidget.cs" />
-    <Compile Include="Models\Maps\AuthorMap.cs" />
     <Compile Include="Models\Maps\ServerControlWidgetMap.cs" />
     <Compile Include="Models\Maps\HtmlContentWidgetMap.cs" />
     <Compile Include="Models\Maps\PagePropertiesMap.cs" />
@@ -231,9 +229,7 @@
     <Compile Include="Registration\PagesContentJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\PageTagsJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\RedirectsJavaScriptModuleDescriptor.cs" />
-    <Compile Include="Services\DefaultAuthorService.cs" />
     <Compile Include="Services\DefaultTagService.cs" />
-    <Compile Include="Services\IAuthorService.cs" />
     <Compile Include="Services\DefaultWidgetsService.cs" />
     <Compile Include="Services\ITagService.cs" />
     <Compile Include="Services\IWidgetsService.cs" />

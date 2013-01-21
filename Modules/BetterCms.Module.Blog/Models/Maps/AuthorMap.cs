@@ -1,11 +1,11 @@
 ﻿using BetterCms.Core.Models;
 
-namespace BetterCms.Module.Pages.Models.Maps
+namespace BetterCms.Module.Blog.Models.Maps
 {
     public class AuthorMap : EntityMapBase<Author>
     {
         public AuthorMap()
-            : base(PagesModuleDescriptor.ModuleName)
+            : base(BlogModuleDescriptor.ModuleName)
         {
             Table("Authors");
 

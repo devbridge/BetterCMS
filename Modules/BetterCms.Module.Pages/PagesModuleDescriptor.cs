@@ -135,7 +135,6 @@ namespace BetterCms.Module.Pages
             containerBuilder.RegisterType<DefaultRedirectService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultCategoryService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultWidgetsService>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            containerBuilder.RegisterType<DefaultAuthorService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultTagService>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
 

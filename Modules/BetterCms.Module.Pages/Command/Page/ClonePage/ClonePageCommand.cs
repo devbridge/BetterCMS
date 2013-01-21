@@ -85,7 +85,6 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
                 UseNoFollow = page.UseNoFollow,
                 UseNoIndex = page.UseNoIndex,
                 Layout = page.Layout,
-                Author = page.Author,
                 Image = page.Image,
                 Category = page.Category,
             };
