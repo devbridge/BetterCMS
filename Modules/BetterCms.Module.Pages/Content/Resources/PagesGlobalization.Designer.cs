@@ -1629,9 +1629,9 @@ namespace BetterCms.Module.Pages.Content.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Custom JavaScript.
         /// </summary>
-        public static string HtmlContent_CustomJS_Title {
+        public static string HtmlContent_CustomJs_Title {
             get {
-                return ResourceManager.GetString("HtmlContent_CustomJS_Title", resourceCulture);
+                return ResourceManager.GetString("HtmlContent_CustomJs_Title", resourceCulture);
             }
         }
         
