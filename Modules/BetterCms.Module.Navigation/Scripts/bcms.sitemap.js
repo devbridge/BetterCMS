@@ -246,15 +246,41 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         // Responsible for searching in sitemap.
         function SearchSitemapViewModel(sitemapViewModel) {
             var self = this;
-            self.searchQuery = ko.observable();
+            self.searchQuery = ko.observable("");
             self.sitemap = sitemapViewModel;
-            
-            self.searchForNodes = function () {
-                if(sitemap)
-                {
-                    // TODO: implement.
-                    alert('searchForNodes()!');
+
+            self.searchForNodes = function() {
+                if (self.sitemap) {
+                    var showAll = $.trim(self.searchQuery()).length === 0,
+                        searchQuery = self.searchQuery().toLowerCase();
+
+                    self.searchInNodes(self.sitemap.childNodes(), searchQuery, showAll);
                 }
+            };
+            self.searchInNodes = function (nodes, searchQuery, showAll) {
+                var hasResult = false;
+                for (var i in nodes) {
+                    var node = nodes[i];
+                    if (showAll) {
+                        node.isVisible(true);
+                        self.searchInNodes(node.childNodes(), searchQuery, showAll);
+                    } else {
+                        node.isVisible(false);
+                        node.isExpanded(false);
+                        if (node.title().toLowerCase().indexOf(searchQuery) !== -1 || node.url().toLowerCase().indexOf(searchQuery) !== -1) {
+                            node.isVisible(true);
+                            self.searchInNodes(node.childNodes(), "", true);
+                            hasResult = true;
+                        } else {
+                            if (self.searchInNodes(node.childNodes(), searchQuery, showAll)) {
+                                node.isVisible(true);
+                                node.isExpanded(true);
+                                hasResult = true;
+                            }
+                        }
+                    }
+                }
+                return hasResult;
             };
 
             self.editSitemapClicked = function() {

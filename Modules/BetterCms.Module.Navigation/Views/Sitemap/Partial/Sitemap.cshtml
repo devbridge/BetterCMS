@@ -20,6 +20,7 @@
     <!-- /ko -->
 
     <!-- ko foreach: childNodes -->
+    <!-- ko if: isVisible() -->
     <div class="bcms-tree-holder">
         <div data-bind="attr: { id: containerId() }, draggable: $parentContext.$index, style: { position: !isBeingDragged() ? 'relative' : 'absolute', zIndex: !isBeingDragged() ? '0' : '10' }">
             <!-- ko if: isFirstNode() -->
@@ -79,5 +80,6 @@
             <!-- /ko -->
         </div>
     </div>
+    <!-- /ko -->
     <!-- /ko -->
 </script>
