@@ -478,7 +478,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         // Responsible for page searching.
         function SearchPageLinksViewModel(sitemapViewModel) {
             var self = this;
-            self.searchQuery = ko.observable();
+            self.searchQuery = ko.observable("");
             self.pageLinks = ko.observableArray([]);
             self.sitemap = sitemapViewModel;
 

@@ -27,14 +27,17 @@
 <script type="text/html" id="bcms-navigation-pagelinks-template">
     <div class="bcms-plain-text">@NavigationGlobalization.Sitemap_EditDialog_PageLink_Header</div>
     <div class="bcms-sidebar-search">
-        <input type="text" class="bcms-editor-field-box" placeholder="@NavigationGlobalization.Sitemap_EditDialog_AddPageLink_SearchPlaceHolder" style="width: 166px;">
+        <input type="text" class="bcms-editor-field-box" placeholder="@NavigationGlobalization.Sitemap_EditDialog_AddPageLink_SearchPlaceHolder" style="width: 166px;"
+            data-bind="value: searchQuery, valueUpdate: 'afterkeydown', enterPress: searchForPageLinks">
         <div class="bcms-btn-search" data-bind="click: searchForPageLinks">@NavigationGlobalization.Sitemap_EditDialog_AddPageLink_SearchButton</div>
     </div>
     <div data-bind="template: { name: 'bcms-navigation-pagelink-template', foreach: pageLinks }"></div>
 </script>
 <script type="text/html" id="bcms-navigation-pagelink-template">
+    <!-- ko if: isVisible() || isCustom() -->
     <div class="bcms-placement-node" data-bind="draggable: $parentContext.$index">
         <div class="bcms-placement-title" data-bind="text: title()"></div>
         <div class="bcms-placement-path" data-bind="text: url()"></div>
     </div>
+    <!-- /ko -->
 </script>
