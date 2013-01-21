@@ -20,6 +20,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             globalization = {
                 sitemapEditorDialogTitle: null,
                 sitemapEditorDialogClose: null,
+                sitemapEditorDialogCustomLinkTitle: null,
             },
             defaultIdValue = '00000000-0000-0000-0000-000000000000',
             DropZoneTypes = {
@@ -192,6 +193,11 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                                     var node = new NodeViewModel();
                                     node.title(dragObject.title());
                                     node.url(dragObject.url());
+                                    if (dropZoneType == DropZoneTypes.EmptyListZone || dropZoneType == DropZoneTypes.MiddleZone) {
+                                        node.parentNode = dropZoneObject;
+                                    } else {
+                                        node.parentNode = dropZoneObject.parentNode;
+                                    }
                                     if (dragObject.isCustom()) {
                                         updateOrder = false;
                                         node.startEditSitemapNode();
@@ -494,7 +500,14 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             
             // Parse.
             self.parseJsonLinks = function (jsonLinks) {
-                var pageLinks = [];
+                var pageLinks = [],
+                    customLink = new PageLinkViewModel();
+                
+                customLink.title(globalization.sitemapEditorDialogCustomLinkTitle);
+                customLink.url('/../');
+                customLink.isCustom(true);
+                pageLinks.push(customLink);
+                
                 for (var i = 0; i < jsonLinks.length; i++) {
                     var link = new PageLinkViewModel();
                     link.fromJson(jsonLinks[i]);

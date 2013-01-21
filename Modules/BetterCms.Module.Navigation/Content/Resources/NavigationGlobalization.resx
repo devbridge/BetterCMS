@@ -165,4 +165,7 @@
   <data name="Sitemap_EditDialog_PageLink_Header" xml:space="preserve">
     <value>Drag &amp; Drop your page where you want to place it.</value>
   </data>
+  <data name="Sitemap_EditorDialog_CustomLinkTitle" xml:space="preserve">
+    <value>Add Custom URL</value>
+  </data>
 </root>

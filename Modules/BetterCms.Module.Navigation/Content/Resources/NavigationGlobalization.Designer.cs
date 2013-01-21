@@ -133,6 +133,15 @@ namespace BetterCms.Module.Navigation.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Custom URL.
+        /// </summary>
+        public static string Sitemap_EditorDialog_CustomLinkTitle {
+            get {
+                return ResourceManager.GetString("Sitemap_EditorDialog_CustomLinkTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add New Node.
         /// </summary>
         public static string Sitemap_EditorDialog_Title {
