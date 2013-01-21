@@ -144,6 +144,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             return true;
         };
 
+        self.showNoDataInfoDiv = function () {
+            return self.isRootFolder() && self.medias().length == 0;
+        };
+
         self.addNewFolder = function () {
             var newFolder = new MediaFolderViewModel({
                 IsActive: true,

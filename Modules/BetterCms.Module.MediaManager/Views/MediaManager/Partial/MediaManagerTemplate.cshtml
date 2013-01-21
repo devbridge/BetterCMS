@@ -46,8 +46,12 @@
             </div>
         </div>
         <!-- /ko -->
+        
+        <!-- ko if: showNoDataInfoDiv() -->
+        <div class="bcms-nomedia-data">@RootGlobalization.Grid_NoDataAvailable_Message</div>
+        <!-- /ko -->
 
-        <div data-bind="foreach: medias">
+        <div data-bind="foreach: medias()">
             <div data-bind="click: openMedia.bind($data, $root), event: { contextmenu: contextMenu.show }, attr: {class: rowClassNames()}">
 
                 <div class="bcms-media-context" data-bind="click: stopEvent, attr: {id: contextMenu.domId}">
