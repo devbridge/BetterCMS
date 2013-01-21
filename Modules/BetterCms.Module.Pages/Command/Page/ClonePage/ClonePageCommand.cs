@@ -80,6 +80,7 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
                 IsPublic = page.IsPublic,
                 UseCanonicalUrl = page.UseCanonicalUrl,
                 CustomCss = page.CustomCss,
+                CustomJavaScript = page.CustomJavaScript,
                 UseCustomCss = page.UseCustomCss,
                 Description = page.Description,
                 UseNoFollow = page.UseNoFollow,

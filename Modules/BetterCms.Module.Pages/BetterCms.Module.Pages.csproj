@@ -200,6 +200,7 @@
     <Compile Include="Models\Maps\HtmlContentHistoryMap.cs" />
     <Compile Include="Models\Maps\HtmlContentWidgetHistoryMap.cs" />
     <Compile Include="Models\Maps\ServerControlWidgetHistoryMap.cs" />
+    <Compile Include="Models\Migrations\Migration201301210830.cs" />
     <Compile Include="Models\Migrations\Migration201301171330.cs" />
     <Compile Include="Models\ServerControlWidgetHistory.cs" />
     <Compile Include="Models\HtmlContentWidgetHistory.cs" />

@@ -12,6 +12,7 @@ namespace BetterCms.Module.Pages.Models
         public virtual string Description { get; set; }
         public virtual string CanonicalUrl { get; set; }
         public virtual string CustomCss { get; set; }
+        public virtual string CustomJavaScript { get; set; }
 
         public virtual bool UseCanonicalUrl { get; set; }
         public virtual bool UseCustomCss { get; set; }
