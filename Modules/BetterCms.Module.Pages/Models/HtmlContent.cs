@@ -2,6 +2,9 @@ using System;
 
 using BetterCms.Core.Models;
 
+using NHibernate.Proxy;
+using NHibernate.Proxy.DynamicProxy;
+
 namespace BetterCms.Module.Pages.Models
 {
     [Serializable]

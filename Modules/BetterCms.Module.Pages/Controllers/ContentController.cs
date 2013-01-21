@@ -138,14 +138,14 @@ namespace BetterCms.Module.Pages.Controllers
         /// <summary>
         /// Creates edit page content modal dialog for given page.
         /// </summary>
-        /// <param name="contentId">The content id.</param>
+        /// <param name="pageContentId">The page content id.</param>
         /// <returns>
-        /// ViewResult to render edit page content modal dialog.
+        /// ViewResult to render an edit content dialog.
         /// </returns>
         [HttpGet]
-        public ActionResult EditPageHtmlContent(string contentId)
+        public ActionResult EditPageHtmlContent(string pageContentId)
         {
-            var viewModel = GetCommand<GetPageHtmlContentCommand>().ExecuteCommand(contentId.ToGuidOrDefault());
+            var viewModel = GetCommand<GetPageHtmlContentCommand>().ExecuteCommand(pageContentId.ToGuidOrDefault());
 
             return View(viewModel);
         }

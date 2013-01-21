@@ -38,6 +38,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToPreview
                             .Fetch(f => f.Layout).ThenFetchMany(f => f.LayoutRegions).ThenFetch(f => f.Region)
                             .FetchMany(f => f.PageContents).ThenFetch(f => f.Content).ThenFetchMany(f => f.ContentOptions)
                             .FetchMany(f => f.PageContents).ThenFetchMany(f => f.Options)
+                            .FetchMany(f => f.PageContents).ThenFetch(f => f.Content).ThenFetchMany(f => f.History)
                             .ToList()
                             .FirstOrDefault();
            

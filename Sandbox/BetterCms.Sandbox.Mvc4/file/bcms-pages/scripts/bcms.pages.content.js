@@ -444,8 +444,7 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
 
                         postSuccess: function (json) {
                             if (json.Data.DesirableStatus === contentStatus.preview) {
-                                try {
-                                    
+                                try {                                    
                                     preview.previewPageContent(json.Data.PageContentId);
                                 } finally {
                                     return false;

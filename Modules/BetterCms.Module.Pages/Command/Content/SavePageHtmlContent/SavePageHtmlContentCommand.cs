@@ -19,23 +19,32 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
         }
 
         public SavePageHtmlContentResponse Execute(PageContentViewModel request)
-        {            
-            var pageContent = new PageContent();
-            pageContent.Page = Repository.AsProxy<Root.Models.Page>(request.PageId);
-            pageContent.Region = Repository.AsProxy<Region>(request.RegionId);
-
+        {                       
             UnitOfWork.BeginTransaction();
 
-            var max = Repository.AsQueryable<PageContent>().Where(f => f.Page.Id == request.PageId && !f.IsDeleted).Select(f => (int?)f.Order).Max();
-            if (max == null)
+            PageContent pageContent = null;            
+
+            if (!request.Id.HasDefaultValue())
             {
-                pageContent.Order = 0;
-            }
-            else
-            {
-                pageContent.Order = max.Value + 1;
+                pageContent = Repository.AsQueryable<PageContent>().FirstOrDefault(f => f.Id == request.Id && !f.IsDeleted);
             }
 
+            if (pageContent == null || request.Id.HasDefaultValue())
+            {              
+                pageContent = new PageContent();
+                var max = Repository.AsQueryable<PageContent>().Where(f => f.Page.Id == request.PageId && !f.IsDeleted).Select(f => (int?)f.Order).Max();
+                if (max == null)
+                {
+                    pageContent.Order = 0;
+                }
+                else
+                {
+                    pageContent.Order = max.Value + 1;
+                }
+            }
+
+            pageContent.Page = Repository.AsProxy<Root.Models.Page>(request.PageId);
+            pageContent.Region = Repository.AsProxy<Region>(request.RegionId);
             pageContent.Content = contentService.SaveContentWithStatusUpdate(
                 new HtmlContent
                     {

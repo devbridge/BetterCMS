@@ -49,12 +49,13 @@ namespace BetterCms.Module.Root.Services
                     updatedContent.PublishedOn = DateTime.Now;
                     updatedContent.PublishedByUser = securityService.CurrentPrincipalName;
                 }
+
                 updatedContent.Status = requestedStatus;
                 repository.Save(updatedContent);
 
                 return updatedContent;
             }
-            /* Update existing content. */
+            
             var originalContent =
                 repository.AsQueryable<Models.Content>()
                           .Fetch(f => f.Original)
@@ -68,17 +69,20 @@ namespace BetterCms.Module.Root.Services
                 throw new CmsException(string.Format("An original content was not found by id={0}.", updatedContent.Id));
             }
 
+            originalContent = repository.UnProxy(originalContent);
+
+            /* Update existing content. */
             switch (originalContent.Status)
             {
                 case ContentStatus.Published:
                     SavePublishedContentWithStatusUpdate(originalContent, updatedContent, requestedStatus);
                     break;
 
+                case ContentStatus.Preview:
                 case ContentStatus.Draft:
-                    SaveDraftContentWithStatusUpdate(originalContent, updatedContent, requestedStatus);
+                    SavePreviewOrDraftContentWithStatusUpdate(originalContent, updatedContent, requestedStatus);
                     break;
 
-                case ContentStatus.Preview:
                 case ContentStatus.Archived:
                     throw new CmsException(string.Format("Can't edit a content in the {0} state.", originalContent.Status));
 
@@ -102,7 +106,7 @@ namespace BetterCms.Module.Root.Services
                 var contentVersionOfRequestedStatus = originalContent.History.FirstOrDefault(f => f.Status == requestedStatus && !f.IsDeleted);
                 if (contentVersionOfRequestedStatus == null)
                 {
-                    contentVersionOfRequestedStatus = originalContent.Clone();                                        
+                    contentVersionOfRequestedStatus = originalContent.Clone();
                 }
 
                 updatedContent.CopyDataTo(contentVersionOfRequestedStatus);
@@ -131,11 +135,11 @@ namespace BetterCms.Module.Root.Services
             }
         }
 
-        private void SaveDraftContentWithStatusUpdate(Models.Content originalContent, Models.Content updatedContent, ContentStatus requestedStatus)
+        private void SavePreviewOrDraftContentWithStatusUpdate(Models.Content originalContent, Models.Content updatedContent, ContentStatus requestedStatus)
         {
             /* 
-             * Edit draft content:
-             * -> Save as preview - look for preview version in history list or create new history version with requested preview status with reference to an original content.
+             * Edit preview or draft content:
+             * -> Save as preview or draft - look for preview or draft version in a history list or create a new history version with requested preview status with reference to an original content.
              * -> Save draft - just update field and save.
              * -> Publish - look if the published content (look for original) exists:
              *              - published content exits:
@@ -145,22 +149,24 @@ namespace BetterCms.Module.Root.Services
              */
             if (requestedStatus == ContentStatus.Preview || requestedStatus == ContentStatus.Draft)
             {
-                var previewContentVersion = originalContent.History.FirstOrDefault(f => f.Status == requestedStatus && !f.IsDeleted);
-                if (previewContentVersion == null)
+                var previewOrDraftContentVersion = originalContent.History.FirstOrDefault(f => f.Status == requestedStatus && !f.IsDeleted);
+                if (previewOrDraftContentVersion == null)
                 {
-                    previewContentVersion = originalContent.Clone();
+                    if (originalContent.Original == null)
+                    {
+                        previewOrDraftContentVersion = originalContent;
+                    }
+                    else
+                    {
+                        previewOrDraftContentVersion = originalContent.Clone();
+                        previewOrDraftContentVersion.Original = originalContent;
+                    }
                 }
 
-                updatedContent.CopyDataTo(previewContentVersion);
-                previewContentVersion.Original = originalContent;
-                previewContentVersion.Status = requestedStatus;
-                repository.Save(previewContentVersion); 
-            }
-            else if (requestedStatus == ContentStatus.Draft)
-            {
-                updatedContent.CopyDataTo(originalContent);
-                repository.Save(originalContent);
-            }
+                updatedContent.CopyDataTo(previewOrDraftContentVersion);                
+                previewOrDraftContentVersion.Status = requestedStatus;
+                repository.Save(previewOrDraftContentVersion); 
+            }            
             else if (requestedStatus == ContentStatus.Published)
             {
                 var publishedVersion = originalContent.History.FirstOrDefault(f => f.Status == requestedStatus && !f.IsDeleted);

@@ -34,14 +34,6 @@ namespace BetterCms.Module.Root.Models
 
         public virtual Content CopyDataTo(Content content)
         {
-            content.CreatedOn = CreatedOn;
-            content.CreatedByUser = CreatedByUser;
-            content.ModifiedOn = ModifiedOn;
-            content.ModifiedByUser = ModifiedByUser;
-            content.DeletedOn = DeletedOn;
-            content.DeletedByUser = DeletedByUser;
-            content.IsDeleted = IsDeleted;
-
             content.Name = Name;
             content.PreviewUrl = PreviewUrl;
             content.PublishedOn = PublishedOn;
