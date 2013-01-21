@@ -200,15 +200,15 @@
     <Compile Include="Models\Maps\HtmlContentHistoryMap.cs" />
     <Compile Include="Models\Maps\HtmlContentWidgetHistoryMap.cs" />
     <Compile Include="Models\Maps\ServerControlWidgetHistoryMap.cs" />
+    <Compile Include="Models\Migrations\Migration201301210830.cs" />
+    <Compile Include="Models\Migrations\Migration201301171330.cs" />
     <Compile Include="Models\ServerControlWidgetHistory.cs" />
     <Compile Include="Models\HtmlContentWidgetHistory.cs" />
     <Compile Include="Models\HtmlContentHistory.cs" />
     <Compile Include="Models\Maps\HtmlContentMap.cs" />
     <Compile Include="Models\ServerControlWidget.cs" />
     <Compile Include="Models\HtmlContent.cs" />
-    <Compile Include="Models\Maps\PageCategoryMap.cs" />
     <Compile Include="Models\Maps\RedirectMap.cs" />
-    <Compile Include="Models\PageCategory.cs" />
     <Compile Include="Models\HtmlContentWidget.cs" />
     <Compile Include="Models\Maps\AuthorMap.cs" />
     <Compile Include="Models\Maps\ServerControlWidgetMap.cs" />
@@ -299,8 +299,8 @@
     <EmbeddedResource Include="Scripts\bcms.pages.content.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.seo.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.js" />
-    <EmbeddedResource Include="Scripts\bcms.pages.properties.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.tags.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.properties.js" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -373,9 +373,6 @@
     <EmbeddedResource Include="Views\Page\Partial\TemplatesList.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Page\Partial\PagePropertiesEditPermalink.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -395,9 +392,6 @@
     <EmbeddedResource Include="Views\Content\EditPageContent.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Page\EditPageProperties.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Views\Templates\Templates.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -408,6 +402,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Tags\TagsTemplate.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Page\Partial\PagePropertiesEditPermalink.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Page\EditPageProperties.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

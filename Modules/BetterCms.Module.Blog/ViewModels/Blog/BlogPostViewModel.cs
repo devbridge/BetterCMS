@@ -9,8 +9,26 @@ using BetterCms.Module.Root.Models;
 
 namespace BetterCms.Module.Blog.ViewModels.Blog
 {
-    public class BlogPostViewModel : EntityWithImageViewModel
+    public class BlogPostViewModel
     {
+        /// <summary>
+        /// Gets or sets the blog post id.
+        /// </summary>
+        /// <value>
+        /// The blog post id.
+        /// </value>
+        [Required]
+        public virtual Guid Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the entity version.
+        /// </summary>
+        /// <value>
+        /// The entity version.
+        /// </value>
+        [Required]
+        public virtual int Version { get; set; }
+
         /// <summary>
         /// Gets or sets the blog title.
         /// </summary>
@@ -95,5 +113,21 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// The list of categories.
         /// </value>
         public IEnumerable<LookupKeyValue> Categories { get; set; }
+
+        /// <summary>
+        /// Gets or sets the image view model.
+        /// </summary>
+        /// <value>
+        /// The image view model.
+        /// </value>
+        public ImageSelectorViewModel Image { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlogPostViewModel" /> class.
+        /// </summary>
+        public BlogPostViewModel()
+        {
+            Image = new ImageSelectorViewModel();
+        }
     }
 }

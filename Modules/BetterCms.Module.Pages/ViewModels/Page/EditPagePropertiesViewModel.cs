@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
+using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Content.Resources;
 
 using BetterCms.Module.Root.Models;
@@ -49,38 +50,14 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         [RegularExpression(PagesConstants.PageUrlRegularExpression, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "EditPageProperties_PagePermalink_InvalidMessage")]
         [StringLength(1000, MinimumLength = 1, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "EditPageProperties_PagePermalink_MaxLengthMessage")]
         public string PagePermalink { get; set; }
-
+        
         /// <summary>
-        /// Gets or sets the featured page image URL.
+        /// Gets or sets the category.
         /// </summary>
         /// <value>
-        /// The featured page image URL.
+        /// The category.
         /// </value>
-        public string FeaturedPageImageUrl { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name of the file.
-        /// </summary>
-        /// <value>
-        /// The name of the file.
-        /// </value>
-        public string FileName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the size of the file.
-        /// </summary>
-        /// <value>
-        /// The size of the file.
-        /// </value>
-        public string FileSize { get; set; }
-
-        /// <summary>
-        /// Gets or sets the author.
-        /// </summary>
-        /// <value>
-        /// The author.
-        /// </value>
-        public Guid? AuthorId { get; set; }
+        public Guid? CategoryId { get; set; }
 
         /// <summary>
         /// Gets or sets the tags.
@@ -91,20 +68,12 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public IList<string> Tags { get; set; }
 
         /// <summary>
-        /// Gets or sets the categories.
+        /// Gets or sets the list of categories.
         /// </summary>
         /// <value>
-        /// The categories.
+        /// The list of categories.
         /// </value>
-        public IList<string> Categories { get; set; }
-
-        /// <summary>
-        /// Gets or sets the list of authors.
-        /// </summary>
-        /// <value>
-        /// The list of authors.
-        /// </value>
-        public IEnumerable<LookupKeyValue> Authors { get; set; }
+        public IEnumerable<LookupKeyValue> Categories { get; set; }
 
         /// <summary>
         /// Gets or sets the page custom CSS.
@@ -113,6 +82,14 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// The page custom CSS.
         /// </value>
         public string PageCSS { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the page custom JavaScript.
+        /// </summary>
+        /// <value>
+        /// The page custom JavaScript.
+        /// </value>
+        public string PageJavascript { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to create permanent redirect from old URL to new URL.
@@ -161,6 +138,22 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// The template id.
         /// </value>
         public Guid TemplateId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the image view model.
+        /// </summary>
+        /// <value>
+        /// The image view model.
+        /// </value>
+        public ImageSelectorViewModel Image { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EditPagePropertiesViewModel" /> class.
+        /// </summary>
+        public EditPagePropertiesViewModel()
+        {
+            Image = new ImageSelectorViewModel();
+        }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

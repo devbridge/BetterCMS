@@ -147,6 +147,7 @@ namespace BetterCms.Tests.Helpers
             entity.Description = ProvideRandomString(2000);
             entity.CanonicalUrl = ProvideRandomString(MaxLength.Url);
             entity.CustomCss = ProvideRandomString(2000);
+            entity.CustomJS = ProvideRandomString(2000);
             entity.MetaTitle = ProvideRandomString(MaxLength.Name);
             entity.MetaKeywords = ProvideRandomString(MaxLength.Text);
             entity.MetaDescription = ProvideRandomString(MaxLength.Text);
@@ -452,18 +453,6 @@ namespace BetterCms.Tests.Helpers
 
             entity.Page = page ?? CreateNewPageProperties();
             entity.Tag = tag ?? CreateNewTag();
-
-            return entity;
-        }
-
-        public PageCategory CreateNewPageCategory(PageProperties page = null, Category category = null)
-        {
-            var entity = new PageCategory();
-
-            PopulateBaseFields(entity);
-
-            entity.Page = page ?? CreateNewPageProperties();
-            entity.Category = category ?? CreateNewCategory();
 
             return entity;
         }

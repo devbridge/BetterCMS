@@ -32,11 +32,6 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
                 .Fetch(x => x.Content)
                 .ToList();
 
-            var pageCategories = Repository.AsQueryable<PageCategory>()
-                .Where(x => x.Page.Id == page.Id)
-                .Fetch(x => x.Category)
-                .ToList();
-
             var pageTags = Repository.AsQueryable<PageTag>()
                 .Where(x => x.Page.Id == page.Id)
                 .Fetch(x => x.Tag)
@@ -50,24 +45,12 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
 
             // Clone HTML contents and Controls:
             pageContents.ForEach(pageContent => ClonePageContent(pageContent, newPage));
-            pageCategories.ForEach(pageCategory => ClonePageCategories(pageCategory, newPage));
             pageTags.ForEach(pageTag => ClonePageTags(pageTag, newPage));
             //pageContentOptions.ForEach(pageContentOption => ClonePageContentOptions(pageContentOption, newPage));
 
             UnitOfWork.Commit();
 
             return true;
-        }
-
-        private void ClonePageCategories(PageCategory pageCategory, PageProperties newPage)
-        {
-            var newPageHtmlControl = new PageCategory
-            {
-                Page = newPage,
-                Category = pageCategory.Category
-            };
-
-            Repository.Save(newPageHtmlControl);
         }
 
         private void ClonePageTags(PageTag pageTag, PageProperties newPage)
@@ -97,13 +80,14 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
                 IsPublic = page.IsPublic,
                 UseCanonicalUrl = page.UseCanonicalUrl,
                 CustomCss = page.CustomCss,
-                UseCustomCss = page.UseCustomCss,
+                CustomJS = page.CustomJS,
                 Description = page.Description,
                 UseNoFollow = page.UseNoFollow,
                 UseNoIndex = page.UseNoIndex,
                 Layout = page.Layout,
                 Author = page.Author,
                 Image = page.Image,
+                Category = page.Category,
             };
 
             Repository.Save(newPage);

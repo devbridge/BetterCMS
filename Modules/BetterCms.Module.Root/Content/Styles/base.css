@@ -798,8 +798,8 @@ a.bcms-icn-delete {
 
 .bcms-padded-content {
     height: 100%;
-    padding-left: 60px;
-    max-width: 820px;
+    padding-left: 50px;
+    max-width: 830px;
 }
 
 div.bcms-noscroll body {
@@ -1246,18 +1246,6 @@ a.bcms-btn-close {
     text-decoration: none;
 }
 
-.bcms-uploader {
-    position: absolute;
-    right: 0;
-    top: 0;
-    border: #000 solid 28px;
-    background: #000;
-    font-size: 30px;
-    margin: 0;
-    filter: alpha(opacity=0);
-    opacity: 0;
-    cursor: pointer;
-}
 /*Titles*/
 .bcms-large-titles {
     padding-bottom: 10px;
@@ -1455,14 +1443,6 @@ a.bcms-btn-close {
         .bcms-tab-header > a.bcms-tab-active:hover {
             background-color: #FFFFFF;
         }
-
-.bcms-tab-single {
-    padding: 20px 0;
-}
-
-    .bcms-tab-single .bcms-edit-urlpath-box {
-        width: 503px;
-    }
 
 /*Inner Tabed View*/
 .bcms-innertab-header {
@@ -1732,6 +1712,21 @@ a.bcms-btn-close {
         overflow: hidden;
         cursor: pointer;
     }
+
+/*search*/
+.bcms-search-block {
+    float: right;
+}
+
+    .bcms-search-block > .bcms-editor-field-box {
+        width: 287px;
+        margin-right: -4px;
+        border-right: 0;
+    }
+
+        .bcms-search-block > .bcms-editor-field-box:focus {
+            border-right: 0;
+        }
 
 /*Tables*/
 .bcms-tables {

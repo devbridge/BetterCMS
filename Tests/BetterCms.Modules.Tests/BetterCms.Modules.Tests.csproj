@@ -144,7 +144,6 @@
     <Compile Include="Pages\ModelTests\MapTests\ServerControlWidgetMapTest.cs" />
     <Compile Include="Pages\ModelTests\MapTests\HtmlContentWidgetMapTest.cs" />
     <Compile Include="Pages\ModelTests\MapTests\HtmlContentMapTest.cs" />
-    <Compile Include="Pages\ModelTests\MapTests\PageCategoryMapTest.cs" />
     <Compile Include="Pages\ModelTests\MapTests\PagePropertiesMapTest.cs" />
     <Compile Include="Pages\ModelTests\MapTests\PageTagMapTest.cs" />
     <Compile Include="Pages\ModelTests\MapTests\RedirectMapTest.cs" />

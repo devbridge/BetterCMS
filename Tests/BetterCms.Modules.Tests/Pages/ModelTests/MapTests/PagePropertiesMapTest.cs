@@ -36,28 +36,5 @@ namespace BetterCms.Test.Module.Pages.ModelTests.MapTests
                     Assert.AreEqual(pageTags.OrderBy(f => f.Id), result.PageTags.OrderBy(f => f.Id));
                 });
         }
-
-        [Test]
-        public void Should_Insert_And_Retrieve_PageProperties_PageCategories_Successfully()
-        {
-            var page = TestDataProvider.CreateNewPageProperties();
-
-            var pageCategories = new[]
-                {
-                    TestDataProvider.CreateNewPageCategory(page),
-                    TestDataProvider.CreateNewPageCategory(page),
-                    TestDataProvider.CreateNewPageCategory(page)
-                };
-
-            page.PageCategories = pageCategories;
-
-            SaveEntityAndRunAssertionsInTransaction(
-                page,
-                result =>
-                {
-                    Assert.AreEqual(page, result);
-                    Assert.AreEqual(pageCategories.OrderBy(f => f.Id), result.PageCategories.OrderBy(f => f.Id));
-                });
-        }
     }
 }
