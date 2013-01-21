@@ -22,7 +22,7 @@
     <!-- ko foreach: childNodes -->
     <!-- ko if: isVisible() -->
     <div class="bcms-tree-holder">
-        <div data-bind="attr: { id: containerId() }, draggable: $parentContext.$index, style: { position: !isBeingDragged() ? 'relative' : 'absolute', zIndex: !isBeingDragged() ? '0' : '10' }">
+        <div data-bind="attr: { id: containerId() }, draggable: $parentContext.$index, style: { @*position: !isBeingDragged() ? 'relative' : 'absolute', *@zIndex: !isBeingDragged() ? '0' : '10' }">
             <!-- ko if: isFirstNode() -->
             <div class="bcms-nodes-dropzone" data-bind="css: { 'bcms-nodes-dropzone-active': activeZone() == 'topZone'  }, droppable: 'topZone'">
                 <div class="bcms-node-infotext">Place your new page here</div>

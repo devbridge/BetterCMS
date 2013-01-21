@@ -156,18 +156,33 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                         setup = {
                             revert: true,
                             revertDuration: 0,
-                            start: function () {
+//                            helper: "clone",
+                            appendTo: "body",
+                            helper: function () {
                                 if (dragObject.isExpanded) {
                                     dragObject.isExpanded(false);
                                 }
                                 if (dragObject.isBeingDragged) {
                                     dragObject.isBeingDragged(true);
                                 }
+
+                                return $(this).clone().width($(this).width()).css({ zIndex: 999999 });
                             },
-                            stop: function () {
+                            start: function (event, ui) {
+//                                if (dragObject.isExpanded) {
+//                                    dragObject.isExpanded(false);
+//                                }
+//                                if (dragObject.isBeingDragged) {
+//                                    dragObject.isBeingDragged(true);
+//                                }
+                                $(this).hide();
+                            },
+                            stop: function (event, ui) {
+                                ui.helper.remove();
+                                $(this).show();
                                 if (dragObject.isBeingDragged) {
                                     dragObject.isBeingDragged(false);
-                                    
+
                                 }
                             }
                         };
@@ -192,7 +207,8 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                             drop: function (event, ui) {
                                 var dragObject = $(ui.draggable).data("dragObject"),
                                     updateOrder = true;
-                                
+                                ui.helper.remove();
+
                                 if (dragObject.parentNode) {
                                     dragObject.parentNode.childNodes.remove(dragObject);
                                 } else {
