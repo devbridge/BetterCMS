@@ -9,6 +9,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             selectors = {
                 sitemapSearchDataBind: "#bcms-sitemap-form",
                 sitemapAddNodeDataBind: "#bcms-sitemap-addnode",
+                sitemapAddNewPageDataBind: "#bcms-sitemap-addnewpage",
                 sitemapForm: "#bcms-sitemap-form",
             },
             links = {
@@ -16,11 +17,14 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 saveSitemapNodeUrl: null,
                 deleteSitemapNodeUrl: null,
                 sitemapEditDialogUrl: null,
+                sitemapAddNewPageDialogUrl: null,
             },
             globalization = {
                 sitemapEditorDialogTitle: null,
                 sitemapEditorDialogClose: null,
                 sitemapEditorDialogCustomLinkTitle: null,
+                sitemapAddNewPageDialogTitle: null,
+                sitemapAddNewPageDialogClose: null,
             },
             defaultIdValue = '00000000-0000-0000-0000-000000000000',
             DropZoneTypes = {
@@ -71,6 +75,27 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                     sitemap.loadSiteSettingsSitemap();
                 }
             });
+        };
+
+        /**
+        * Shows add new page to sitemap dialog.
+        */
+        sitemap.loadAddNewPageDialog = function (data) {
+            if (data && data.Data && data.Data.Title && data.Data.PageUrl) {
+                var addPageController = new AddNewPageMapController(data.Data.Title, data.Data.PageUrl);
+                modal.open({
+                    title: globalization.sitemapAddNewPageDialogTitle,
+                    cancelTitle: globalization.sitemapAddNewPageDialogClose,
+                    disableAccept: true,
+                    onLoad: function (dialog) {
+                        dynamicContent.setContentFromUrl(dialog, links.sitemapAddNewPageDialogUrl, {
+                            done: function (content) {
+                                addPageController.initialize(content, dialog);
+                            },
+                        });
+                    }
+                });
+            }
         };
 
 
@@ -139,6 +164,53 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                     var context = self.container.find(selectors.sitemapAddNodeDataBind).get(0);
                     if (context) {
                         ko.applyBindings(self.pageLinksModel, context);
+
+                        // Update validation.
+                        var form = self.container.find('FORM');
+                        if ($.validator && $.validator.unobtrusive) {
+                            form.removeData("validator");
+                            form.removeData("unobtrusiveValidation");
+                            $.validator.unobtrusive.parse(form);
+                        }
+                    }
+                }
+            };
+        }
+        
+        /**
+        * Controller for sitemap add new page dialog.
+        */
+        function AddNewPageMapController(title, url) {
+            var self = this;
+            self.container = null;
+            self.newPageModel = null;
+            
+            self.pageLinkModel = new PageLinkViewModel();
+            self.pageLinkModel.title(title);
+            self.pageLinkModel.url(url);
+
+            self.initialize = function (content, dialog) {
+                self.container = dialog.container;
+                sitemap.activeMessageContainer = self.container;
+                sitemap.activeLoadingContainer = self.container.find(selectors.sitemapAddNewPageDataBind);
+
+                messages.refreshBox(self.container, content);
+                if (content.Success) {
+                    var onSkip = function () {
+                        dialog.close();
+                    };
+                    
+                    // Create data models.
+                    var sitemapModel = new SitemapViewModel();
+                    sitemapModel.parseJsonNodes(content.Data.RootNodes);
+                    self.newPageModel = new AddNewPageViewModel(sitemapModel, self.pageLinkModel, onSkip);
+                    
+                    sitemap.activeMapModel = sitemapModel;
+
+                    // Bind models.
+                    var context = self.container.find(selectors.sitemapAddNewPageDataBind).get(0);
+                    if (context) {
+                        ko.applyBindings(self.newPageModel, context);
 
                         // Update validation.
                         var form = self.container.find('FORM');
@@ -619,6 +691,22 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 self.url(json.Url);
             };
         }
+        
+        /**
+        * Responsible for new page data and sitemap.
+        */
+        function AddNewPageViewModel(sitemapViewModel, pageLinkViewModel, onSkip) {
+            var self = this;
+            self.pageLink = pageLinkViewModel;
+            self.sitemap = sitemapViewModel;
+            self.onSkipClick = onSkip;
+
+            self.skipClicked = function () {
+                if (self.onSkipClick && $.isFunction(self.onSkipClick)) {
+                    self.onSkipClick();
+                }
+            };
+        }
         // --------------------------------------------------------------------
 
 
@@ -631,6 +719,9 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             // Bindings for sitemap nodes Drag'n'Drop.
             addDraggableBinding();
             addDroppableBinding();
+            
+            // Subscribe to events.
+            bcms.on(bcms.events.pageCreated, sitemap.loadAddNewPageDialog);
         };
     
         /**

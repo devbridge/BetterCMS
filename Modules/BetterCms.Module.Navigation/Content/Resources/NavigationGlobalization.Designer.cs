@@ -61,6 +61,78 @@ namespace BetterCms.Module.Navigation.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Drag &amp; Drop.
+        /// </summary>
+        public static string Sitemap_AddNewPageDialog_DragButton {
+            get {
+                return ResourceManager.GetString("Sitemap_AddNewPageDialog_DragButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Page Name:.
+        /// </summary>
+        public static string Sitemap_AddNewPageDialog_PageName {
+            get {
+                return ResourceManager.GetString("Sitemap_AddNewPageDialog_PageName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can always place this page later..
+        /// </summary>
+        public static string Sitemap_AddNewPageDialog_PageNodeFooter {
+            get {
+                return ResourceManager.GetString("Sitemap_AddNewPageDialog_PageNodeFooter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Drag your page where you want to place it..
+        /// </summary>
+        public static string Sitemap_AddNewPageDialog_PageNodeHeader {
+            get {
+                return ResourceManager.GetString("Sitemap_AddNewPageDialog_PageNodeHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to URL:.
+        /// </summary>
+        public static string Sitemap_AddNewPageDialog_PageUrl {
+            get {
+                return ResourceManager.GetString("Sitemap_AddNewPageDialog_PageUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Page Placement.
+        /// </summary>
+        public static string Sitemap_AddNewPageDialog_SitemapHeader {
+            get {
+                return ResourceManager.GetString("Sitemap_AddNewPageDialog_SitemapHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Skip.
+        /// </summary>
+        public static string Sitemap_AddNewPageDialog_SkipButton {
+            get {
+                return ResourceManager.GetString("Sitemap_AddNewPageDialog_SkipButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Page - Placement.
+        /// </summary>
+        public static string Sitemap_AddNewPageDialog_Title {
+            get {
+                return ResourceManager.GetString("Sitemap_AddNewPageDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Node +.
         /// </summary>
         public static string Sitemap_Dialog_Edit {

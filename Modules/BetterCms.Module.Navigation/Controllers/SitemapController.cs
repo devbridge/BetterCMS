@@ -54,6 +54,19 @@ namespace BetterCms.Module.Navigation.Controllers
         }
 
         /// <summary>
+        /// Adds the new page.
+        /// </summary>
+        /// <returns>Rendered sitemap container.</returns>
+        public ActionResult AddNewPage()
+        {
+            var sitemap = GetCommand<GetSitemapCommand>().ExecuteCommand(string.Empty);
+            var success = sitemap != null;
+            var view = RenderView("NewPage", new SearchableSitemapViewModel());
+
+            return ComboWireJson(success, view, sitemap, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
         /// Gets the page links.
         /// </summary>
         /// <param name="searchQuery">The search query.</param>
