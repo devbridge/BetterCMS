@@ -53,13 +53,13 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
 
             var page = Repository.First<PageProperties>(request.Id);
 
-            request.PagePermalink = redirectService.FixUrl(request.PagePermalink);
+            request.PageUrl = redirectService.FixUrl(request.PageUrl);
 
-            pageService.ValidatePageUrl(request.PagePermalink, request.Id);
+            pageService.ValidatePageUrl(request.PageUrl, request.Id);
 
-            if (request.RedirectFromOldUrl && !string.Equals(page.PageUrl, request.PagePermalink, StringComparison.OrdinalIgnoreCase))
+            if (request.RedirectFromOldUrl && !string.Equals(page.PageUrl, request.PageUrl, StringComparison.OrdinalIgnoreCase))
             {
-                var redirect = redirectService.CreateRedirectEntity(page.PageUrl, request.PagePermalink);
+                var redirect = redirectService.CreateRedirectEntity(page.PageUrl, request.PageUrl);
                 if (redirect != null)
                 {
                     Repository.Save(redirect);
@@ -71,7 +71,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             page.Title = request.PageName;
             page.CustomCss = request.PageCSS;
             page.CustomJS = request.PageJavascript;
-            page.PageUrl = request.PagePermalink;
+            page.PageUrl = request.PageUrl;
             page.IsPublic = request.IsVisibleToEveryone;
             page.UseNoFollow = request.UseNoFollow;
             page.UseNoIndex = request.UseNoIndex;

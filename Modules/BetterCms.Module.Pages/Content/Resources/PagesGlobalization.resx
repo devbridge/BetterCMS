@@ -126,9 +126,6 @@
   <data name="AddNewPageProperties_PagePermalink_MaxLengthMessage" xml:space="preserve">
     <value>Page permalink max length exceeded.</value>
   </data>
-  <data name="AddNewPageProperties_PagePermalink_RequiredMessage" xml:space="preserve">
-    <value>Page permalink is required.</value>
-  </data>
   <data name="AddNewPageProperties_PageTitle_MaxLengthMessage" xml:space="preserve">
     <value>Page title max length exceeded.</value>
   </data>
@@ -163,7 +160,7 @@
     <value>Create  a page title</value>
   </data>
   <data name="AddNewPage_Permalink" xml:space="preserve">
-    <value>Page URL</value>
+    <value>Change Page URL</value>
   </data>
   <data name="AddNewPage_Permalink_Tooltip_Description" xml:space="preserve">
     <value>Edit Page URL</value>

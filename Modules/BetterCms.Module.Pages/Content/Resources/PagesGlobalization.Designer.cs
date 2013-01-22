@@ -142,7 +142,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page URL.
+        ///   Looks up a localized string similar to Change Page URL.
         /// </summary>
         public static string AddNewPage_Permalink {
             get {
@@ -228,15 +228,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string AddNewPageProperties_PagePermalink_MaxLengthMessage {
             get {
                 return ResourceManager.GetString("AddNewPageProperties_PagePermalink_MaxLengthMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Page permalink is required..
-        /// </summary>
-        public static string AddNewPageProperties_PagePermalink_RequiredMessage {
-            get {
-                return ResourceManager.GetString("AddNewPageProperties_PagePermalink_RequiredMessage", resourceCulture);
             }
         }
         

@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
+using BetterCms.Core.Models;
 using BetterCms.Module.Pages.Content.Resources;
+using BetterCms.Module.Pages.Mvc.Attributes;
 
 namespace BetterCms.Module.Pages.ViewModels.Page
 {
@@ -22,15 +24,14 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public string PageTitle { get; set; }
 
         /// <summary>
-        /// Gets or sets the page permalink.
+        /// Gets or sets the page URL.
         /// </summary>
         /// <value>
-        /// The page permalink.
+        /// The page URL.
         /// </value>
-        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "AddNewPageProperties_PagePermalink_RequiredMessage")]
-        [StringLength(1000, MinimumLength = 1, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "AddNewPageProperties_PagePermalink_MaxLengthMessage")]
-        [RegularExpression(PagesConstants.PageUrlRegularExpression, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "AddNewPageProperties_PagePermalink_InvalidMessage")]
-        public string PagePermalink { get; set; }
+        [CustomPageUrlValidation]
+        [StringLength(MaxLength.Url, MinimumLength = 1, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "AddNewPageProperties_PagePermalink_MaxLengthMessage")]
+        public string PageUrl { get; set; }
 
         /// <summary>
         /// Gets or sets the templates.
