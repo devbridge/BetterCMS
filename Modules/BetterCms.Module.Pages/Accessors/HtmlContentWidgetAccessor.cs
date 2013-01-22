@@ -8,19 +8,19 @@ using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Mvc.Helpers;
 
-namespace BetterCms.Module.Pages.Projections
+namespace BetterCms.Module.Pages.Accessors
 {
     [Serializable]
-    public class HtmlContentAccessor : ContentAccessor<HtmlContent>
+    public class HtmlContentWidgetAccessor : ContentAccessor<HtmlContentWidget>
     {
-        public HtmlContentAccessor(HtmlContent content, IList<IPageContentOption> options)
+        public HtmlContentWidgetAccessor(HtmlContentWidget content, IList<IPageContentOption> options)
             : base(content, options)
         {
         }
 
         public override string GetRegionWrapperCssClass(HtmlHelper html)
         {
-            return "bcms-content-regular";
+            return "bcms-content-advanced";
         }
 
         public override string GetHtml(HtmlHelper html)

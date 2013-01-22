@@ -123,6 +123,8 @@ namespace BetterCms.Tests.Helpers
 
             PopulatePageProperties(entity);
 
+            entity.Author = CreateNewAuthor();
+
             return entity;
         }
 

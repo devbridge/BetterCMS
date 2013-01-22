@@ -232,6 +232,38 @@ namespace BetterCms.Core.Modules
                 .InstancePerDependency();
         }
 
+        protected void RegisterJavaScriptRendererType<TJavaScriptRenderer, TContent>(ContainerBuilder containerBuilder)
+            where TJavaScriptRenderer : IJavaScriptAccessor
+            where TContent : class
+        {
+            Type jsRendererType = typeof(TJavaScriptRenderer);
+            Type contentType = typeof(TContent);
+
+            string key = ("JavaScriptRenderer-" + contentType.Name).ToUpperInvariant();
+            containerBuilder
+                .RegisterType(jsRendererType)
+                .AsSelf()
+                .Keyed<IJavaScriptAccessor>(key)
+                .WithMetadata("JavaScriptRendererType", jsRendererType)
+                .InstancePerDependency();
+        }
+        
+        protected void RegisterStylesheetRendererType<TStyleSheetRenderer, TContent>(ContainerBuilder containerBuilder)
+            where TStyleSheetRenderer : IStylesheetAccessor
+            where TContent : class
+        {
+            Type styleRendererType = typeof(TStyleSheetRenderer);
+            Type contentType = typeof(TContent);
+
+            string key = ("StyleSheetRenderer-" + contentType.Name).ToUpperInvariant();
+            containerBuilder
+                .RegisterType(styleRendererType)
+                .AsSelf()
+                .Keyed<IStylesheetAccessor>(key)
+                .WithMetadata("StylesheetRendererType", styleRendererType)
+                .InstancePerDependency();
+        }
+
         /// <summary>
         /// Determines whether given type is assignable to generic type.
         /// </summary>

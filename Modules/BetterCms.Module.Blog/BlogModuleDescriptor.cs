@@ -137,7 +137,8 @@ namespace BetterCms.Module.Blog
         /// <param name="configuration">The configuration.</param>
         public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder, ICmsConfiguration configuration)
         {
-            containerBuilder.RegisterType<DefaultOptionService>().AsImplementedInterfaces().SingleInstance();
+            containerBuilder.RegisterType<DefaultOptionService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultAuthorService>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
     }
 }

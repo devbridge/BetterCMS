@@ -62,6 +62,8 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
                 optionsTable: '#bcms-options-grid'
             },
             classes = {
+                regionAdvancedContent: 'bcms-content-advanced',
+                regionWidget: 'bcms-content-widget',
             };
 
         /**
@@ -425,6 +427,40 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
             }
         };
         
+        /**
+        * Called when editing page content
+        */
+        function onEditContent(sender) {
+            var element = $(sender),
+                contentId = element.data('contentId'),
+                onSuccess = function () {
+                    bcms.reload();
+                };
+
+            if (element.hasClass(classes.regionWidget)) {
+                widgets.openEditServerControlWidgetDialog(contentId, onSuccess);
+            } else if (element.hasClass(classes.regionAdvancedContent)) {
+                widgets.openEditHtmlContentWidgetDialog(contentId, onSuccess);
+            }
+        }
+
+        /**
+        * Initializes widgets module.
+        */
+        widgets.init = function () {
+            console.log('Initializing bcms.pages.widgets module.');
+
+            /**
+            * Subscribe to events
+            */
+            bcms.on(bcms.events.editContent, onEditContent);
+        };
+
+        /**
+        * Register initialization
+        */
+        bcms.registerInit(widgets.init);
+
         return widgets;
     });
 
