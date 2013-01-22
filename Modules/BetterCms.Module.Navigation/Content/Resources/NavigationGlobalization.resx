@@ -168,4 +168,28 @@
   <data name="Sitemap_EditorDialog_CustomLinkTitle" xml:space="preserve">
     <value>Add Custom URL</value>
   </data>
+  <data name="Sitemap_AddNewPageDialog_Title" xml:space="preserve">
+    <value>New Page - Placement</value>
+  </data>
+  <data name="Sitemap_AddNewPageDialog_DragButton" xml:space="preserve">
+    <value>Drag &amp; Drop</value>
+  </data>
+  <data name="Sitemap_AddNewPageDialog_PageName" xml:space="preserve">
+    <value>Page Name:</value>
+  </data>
+  <data name="Sitemap_AddNewPageDialog_PageNodeFooter" xml:space="preserve">
+    <value>You can always place this page later.</value>
+  </data>
+  <data name="Sitemap_AddNewPageDialog_PageNodeHeader" xml:space="preserve">
+    <value>Drag your page where you want to place it.</value>
+  </data>
+  <data name="Sitemap_AddNewPageDialog_PageUrl" xml:space="preserve">
+    <value>URL:</value>
+  </data>
+  <data name="Sitemap_AddNewPageDialog_SitemapHeader" xml:space="preserve">
+    <value>Page Placement</value>
+  </data>
+  <data name="Sitemap_AddNewPageDialog_SkipButton" xml:space="preserve">
+    <value>Skip</value>
+  </data>
 </root>

@@ -21,6 +21,7 @@ define('bcms', ['jquery', 'knockout'], function ($, ko) {
             configureContent: 'configureContent',
             deleteContent: 'deleteContent',
             contentHistory: 'contentHistory',
+            pageCreated: 'pageCreated',
         },
 
         eventListeners = {},

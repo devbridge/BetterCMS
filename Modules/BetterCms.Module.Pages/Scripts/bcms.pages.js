@@ -240,14 +240,19 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             });
     };
 
-    page.openCreatePageDialog = function(postSuccess) {
+    page.openCreatePageDialog = function (postSuccess) {
         modal.open({
             title: globalization.addNewPageDialogTitle,
             onLoad: function (dialog) {
                 dynamicContent.bindDialog(dialog, links.loadAddNewPageDialogUrl, {
                     contentAvailable: page.initAddNewPageDialogEvents,
 
-                    postSuccess: postSuccess
+                    postSuccess: function(data) {
+                        bcms.trigger(bcms.events.pageCreated, data);
+                        if (postSuccess && $.isFunction(postSuccess)) {
+                            postSuccess(data);
+                        }
+                    }
                 });
             }
         });
@@ -256,9 +261,13 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
     page.addNewPage = function() {
         page.openCreatePageDialog(function (data) {
             // Redirect
-            if (data.Data && data.Data.PageUrl) {
-                window.location.href = data.Data.PageUrl;
-            }
+// TODO: we can not reload the page.
+//       Some addition functionality could be working (example: add page to sitemap dialog is open).
+//       Can not move this to sitemap, because sitemap does not know if new page was created in site settings dialog.
+            
+//            if (data.Data && data.Data.PageUrl) {
+//                window.location.href = data.Data.PageUrl;
+//            }
         });
     };
     
