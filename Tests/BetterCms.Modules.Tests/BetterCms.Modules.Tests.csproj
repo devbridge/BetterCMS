@@ -140,7 +140,7 @@
     <Compile Include="Pages\CommandTests\LayoutTests\GetTemplatesCommandTest.cs" />
     <Compile Include="Pages\CommandTests\WidgetTests\GetSiteSettingsWidgetsCommandTest.cs" />
     <Compile Include="Pages\ControllerTests\SeoControllerTest.cs" />
-    <Compile Include="Pages\ModelTests\MapTests\AuthorMapTest.cs" />
+    <Compile Include="Blog\ModelTests\MapTests\AuthorMapTest.cs" />
     <Compile Include="Pages\ModelTests\MapTests\ServerControlWidgetMapTest.cs" />
     <Compile Include="Pages\ModelTests\MapTests\HtmlContentWidgetMapTest.cs" />
     <Compile Include="Pages\ModelTests\MapTests\HtmlContentMapTest.cs" />

@@ -538,7 +538,9 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'knockout'], function ($, b
     };
 
     modal.info = function (options) {
-        options = $.extend({}, options);
+        options = $.extend({
+            acceptTitle: globalization.ok
+        }, options);
 
         options.templateId = 'bcms-modal-info-template';
         options.disableAnimation = true;

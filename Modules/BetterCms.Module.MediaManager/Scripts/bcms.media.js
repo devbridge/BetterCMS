@@ -5,7 +5,7 @@ define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
 function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUpload, imageEditor, htmlEditor, ko, menu) {
     'use strict';
 
-    var media = {},
+    var media = { },
         selectors = {
             tabImagesContainer: '#bcms-tab-1',
             tabVideosContainer: '#bcms-tab-2',
@@ -29,26 +29,33 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             loadAudiosUrl: null,
             loadVideosUrl: null,
             insertImageDialogUrl: null,
+            insertFileDialogUrl: null,
             deleteAudioUrl: null,
             deleteVideoUrl: null,
             deleteImageUrl: null,
             deleteFileUrl: null,
             getImageUrl: null,
             saveFolderUrl: null,
-            renameMediaUrl: null
+            renameMediaUrl: null,
+            getMediaUrl: null
         },
         globalization = {
-            insertImageDialogTitle: null,
-            insertImageFailureMessageTitle: null,
-            insertImageFailureMessageMessage: null,
             deleteImageConfirmMessage: null,
             deleteAudioConfirmMessage: null,
             deleteVideoConfirmMessage: null,
             deleteFileConfirmMessage: null,
             deleteFolderConfirmMessage: null,
-            imageNotSelectedMessageTitle: null,
+            
+            insertImageDialogTitle: null,
+            insertImageFailureMessageTitle: null,
+            insertImageFailureMessageMessage: null,
             imageNotSelectedMessageMessage: null,
 
+            insertFileFailureMessageTitle: null,
+            insertFileFailureMessageMessage: null,
+            insertFileDialogTitle: null,
+            fileNotSelectedMessageMessage: null,
+                
             imagesTabTitle: null,
             audiosTabTitle: null,
             videosTabTitle: null,
@@ -79,7 +86,8 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         filesViewModel = null,
         staticDomId = 1,
         contentEditor = null,
-        imageInsertDialog = null;
+        imageInsertDialog = null,
+        fileInsertDialog = null;
 
     /**
     * Assign objects to module.
@@ -134,6 +142,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 return false;
             }
             return true;
+        };
+
+        self.showNoDataInfoDiv = function () {
+            return self.isRootFolder() && self.medias().length == 0;
         };
 
         self.addNewFolder = function () {
@@ -562,6 +574,11 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             deleteMediaItem(url, message, folderViewModel, this);
         };
 
+        MediaFileViewModel.prototype.insertMedia = function (folderViewModel, data, event) {
+            bcms.stopEventPropagation(event);
+            insertFile(this);
+        };
+
         return MediaFileViewModel;
     })(MediaItemBaseViewModel);
 
@@ -768,7 +785,6 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
                 if (selectedItem == null) {
                     modal.info({
-                        title: globalization.imageNotSelectedMessageTitle,
                         content: globalization.imageNotSelectedMessageMessage,
                         disableCancel: true,
                     });
@@ -786,7 +802,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     };
 
     /**
-    * Function is called, when inserting image event is trigerred
+    * Function is called, when insert image event is trigerred
     */ 
     function onOpenImageInsertDialog(htmlContentEditor) {
         contentEditor = htmlContentEditor;
@@ -796,7 +812,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     }
 
     /**
-    * Insert media.
+    * Called when image is selected from images list.
     */
     function insertImage(selectedMedia, withOptions, onImageInsert) {
         var mediaId = selectedMedia.id(),
@@ -852,6 +868,87 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 align = "right";
             }
             contentEditor.insertHtml('<img src="' + imageUrl + '" alt="' + caption + '" align="' + align + '"/>');
+        }
+    };
+
+    /**
+    * Shows file selection window.
+    */
+    media.openFileInsertDialog = function (onAccept) {
+        modal.open({
+            title: globalization.insertFileDialogTitle,
+            acceptTitle: 'Insert',
+            onLoad: function (dialog) {
+                fileInsertDialog = dialog;
+                dynamicContent.setContentFromUrl(dialog, links.insertFileDialogUrl, {
+                    done: function (content) {
+                        filesViewModel = new MediaItemsViewModel(dialog.container, links.loadFilesUrl, dialog.container);
+                        filesViewModel.canSelectMedia(true);
+                        filesViewModel.canInsertMedia(true);
+                        filesViewModel.spinContainer = dialog.container.find(selectors.insertContentContainer);
+                        initializeTab(content, filesViewModel);
+                    },
+                });
+            },
+            onAcceptClick: function () {
+                var i,
+                    item,
+                    selectedItem = null;
+
+                for (i = 0; i < filesViewModel.medias().length; i++) {
+                    item = filesViewModel.medias()[i];
+                    if (item.isSelected() && item.type == mediaTypes.file) {
+                        selectedItem = item;
+                        break;
+                    }
+                }
+
+                if (selectedItem == null) {
+                    modal.info({
+                        content: globalization.fileNotSelectedMessageMessage,
+                        disableCancel: true,
+                    });
+
+                    return false;
+                } else {
+                    if ($.isFunction(onAccept)) {
+                        onAccept(selectedItem);
+                    }
+                }
+
+                return true;
+            },
+        });
+    };
+
+    /**
+    * Called when file is selected from files list.
+    */
+    function insertFile(selectedMedia) {
+        addFileToEditor(selectedMedia.publicUrl(), selectedMedia.name());
+
+        if (fileInsertDialog != null) {
+            fileInsertDialog.close();
+            fileInsertDialog = null;
+        }
+    };
+
+    /**
+    * Function is called, when insert file event is trigerred
+    */
+    function onOpenFileInsertDialog(htmlContentEditor) {
+        contentEditor = htmlContentEditor;
+        media.openFileInsertDialog(function (fileViewModel) {
+            insertFile(fileViewModel);
+        });
+    }
+
+    /**
+    * Insert file to html content editor.
+    */
+    function addFileToEditor(fileUrl, fileName) {
+        if (contentEditor != null) {
+            contentEditor.insertHtml('<a href="' + fileUrl + '">' + fileName + '</a>');
         }
     };
 
@@ -1178,6 +1275,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         * Subscribe to events.
         */
         bcms.on(htmlEditor.events.insertImage, onOpenImageInsertDialog);
+        bcms.on(htmlEditor.events.insertFile, onOpenFileInsertDialog);
     };
 
     /**

@@ -23,7 +23,7 @@ namespace BetterCms.Module.Root.ViewModels.Cms
             Version = page.Version;
             HasSEO = page.HasSEO;
             Title = page.Title;
-            PageUrl = page.PageUrl;
+            PageUrl = page.PageUrl;            
         }
 
         public Guid Id { get; private set; }
@@ -91,6 +91,14 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         /// The page style projections.
         /// </value>
         public IList<IStylesheetAccessor> Stylesheets { get; set; }
+
+        /// <summary>
+        /// Gets or sets the java scripts.
+        /// </summary>
+        /// <value>
+        /// The java scripts.
+        /// </value>
+        public IList<IJavaScriptAccessor> JavaScripts { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether current user can manage page content.

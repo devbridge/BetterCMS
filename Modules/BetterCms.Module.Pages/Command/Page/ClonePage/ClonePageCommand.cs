@@ -80,12 +80,11 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
                 IsPublic = page.IsPublic,
                 UseCanonicalUrl = page.UseCanonicalUrl,
                 CustomCss = page.CustomCss,
-                UseCustomCss = page.UseCustomCss,
+                CustomJS = page.CustomJS,
                 Description = page.Description,
                 UseNoFollow = page.UseNoFollow,
                 UseNoIndex = page.UseNoIndex,
                 Layout = page.Layout,
-                Author = page.Author,
                 Image = page.Image,
                 Category = page.Category,
             };

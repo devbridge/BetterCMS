@@ -356,10 +356,8 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
             if (element.hasClass(classes.regionContent)) {
                 overlay.find(selectors.overlayConfigure).hide();
             } else if (element.hasClass(classes.regionAdvancedContent)) {
-                overlay.find(selectors.overlayEdit).hide();
                 overlay.find(selectors.overlayConfigure).hide();
             } else if (element.hasClass(classes.regionWidget)) {
-                overlay.find(selectors.overlayEdit).hide();
             }            
         };
 
@@ -383,7 +381,6 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
             if (element.hasClass(classes.regionContent)) {
                 pagesContent.editPageContent(contentId);
             }
-            ;
         };
 
         /**
@@ -411,7 +408,6 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
             } else if (element.hasClass(classes.regionWidget)) {
                 pagesContent.showServerControlWidgetHistory(contentId);
             }
-            ;
         };
 
         /**

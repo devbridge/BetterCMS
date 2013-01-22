@@ -1,10 +1,9 @@
 ﻿using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
-
+using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.ViewModels.Author;
 using BetterCms.Module.MediaManager.ViewModels;
-using BetterCms.Module.Pages.Models;
 
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;

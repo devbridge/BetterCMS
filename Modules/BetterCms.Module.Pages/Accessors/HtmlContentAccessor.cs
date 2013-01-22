@@ -6,22 +6,21 @@ using BetterCms.Core.Models;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
-using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc.Helpers;
 
-namespace BetterCms.Module.Pages.Projections
+namespace BetterCms.Module.Pages.Accessors
 {
     [Serializable]
-    public class HtmlContentWidgetAccessor : ContentAccessor<HtmlContentWidget>
+    public class HtmlContentAccessor : ContentAccessor<HtmlContent>
     {
-        public HtmlContentWidgetAccessor(HtmlContentWidget content, IList<IPageContentOption> options)
+        public HtmlContentAccessor(HtmlContent content, IList<IPageContentOption> options)
             : base(content, options)
         {
         }
 
         public override string GetRegionWrapperCssClass(HtmlHelper html)
         {
-            return "bcms-content-advanced";
+            return "bcms-content-regular";
         }
 
         public override string GetHtml(HtmlHelper html)
@@ -36,7 +35,7 @@ namespace BetterCms.Module.Pages.Projections
 
         public override string GetCustomStyles(HtmlHelper html)
         {
-            if (Content.UseCustomCss)
+            if (Content.UseCustomCss && !string.IsNullOrWhiteSpace(Content.CustomCss))
             {
                 var selectorPrefix = string.Concat("#", string.Format(RegionContentWrapper.PageContentIdPattern, Content.Id));
                 var css = CssHelper.PrefixCssSelectors(Content.CustomCss, selectorPrefix);
@@ -51,7 +50,7 @@ namespace BetterCms.Module.Pages.Projections
 
         public override string GetCustomJavaScript(HtmlHelper html)
         {
-            if (Content.UseCustomJs)
+            if (Content.UseCustomJs && !string.IsNullOrWhiteSpace(Content.CustomJs))
             {
                 return Content.CustomJs;
             }

@@ -123,6 +123,8 @@ namespace BetterCms.Tests.Helpers
 
             PopulatePageProperties(entity);
 
+            entity.Author = CreateNewAuthor();
+
             return entity;
         }
 
@@ -147,6 +149,7 @@ namespace BetterCms.Tests.Helpers
             entity.Description = ProvideRandomString(2000);
             entity.CanonicalUrl = ProvideRandomString(MaxLength.Url);
             entity.CustomCss = ProvideRandomString(2000);
+            entity.CustomJS = ProvideRandomString(2000);
             entity.MetaTitle = ProvideRandomString(MaxLength.Name);
             entity.MetaKeywords = ProvideRandomString(MaxLength.Text);
             entity.MetaDescription = ProvideRandomString(MaxLength.Text);

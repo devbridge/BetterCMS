@@ -2,7 +2,7 @@
 
 using BetterCms.Module.Root.Models;
 
-namespace BetterCms.Module.Pages.Services
+namespace BetterCms.Module.Blog.Services
 {
     public interface IAuthorService
     {

@@ -60,7 +60,7 @@ namespace BetterCms.Module.Pages.ViewModels.Seo
         /// Gets or sets a value indicating whether need to create permanent redirect.
         /// </summary>
         /// <value>
-        /// <c>true</c> if[create permanent redirect; otherwise, <c>false</c>.
+        /// <c>true</c> if create permanent redirect; otherwise, <c>false</c>.
         /// </value>
         public bool CreatePermanentRedirect { get; set; }
 
