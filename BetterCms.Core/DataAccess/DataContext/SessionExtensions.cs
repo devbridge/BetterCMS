@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 
+using BetterCms.Core.Models;
+
 using NHibernate;
 using NHibernate.Engine;
 using NHibernate.Persister.Entity;
@@ -43,68 +45,25 @@ namespace BetterCms.Core.DataAccess.DataContext
             return (dirtyProps != null && dirtyProps.Length > 0);
         }
 
-        private static bool ValuesAreEqual(object value1, object value2)
+        /// <summary>
+        /// Checks, if values the are equal.
+        /// </summary>
+        /// <param name="oldValue">The old value.</param>
+        /// <param name="currentValue">The current value.</param>
+        /// <returns><c>true</c>, if values are equal, else <c>false</c></returns>
+        private static bool ValuesAreEqual(object oldValue, object currentValue)
         {
-            if (value1 == null)
+            // If property is not loaded, it has no changes
+            if (!NHibernateUtil.IsInitialized(oldValue))
             {
-                return value2 == null;
-            }
-            return value1.Equals(value2);
-        }
-
-        public static Boolean IsDirtyProperty(this ISession session, Object entity, String propertyName)
-        {
-            ISessionImplementor sessionImpl = session.GetSessionImplementation();
-            IPersistenceContext persistenceContext = sessionImpl.PersistenceContext;
-            EntityEntry oldEntry = persistenceContext.GetEntry(entity);
-            string className = oldEntry.EntityName;
-            IEntityPersister persister = sessionImpl.Factory.GetEntityPersister(className);
-
-            if ((oldEntry == null) && (entity is INHibernateProxy))
-            {
-                INHibernateProxy proxy = entity as INHibernateProxy;
-                Object obj = sessionImpl.PersistenceContext.Unproxy(proxy);
-                oldEntry = sessionImpl.PersistenceContext.GetEntry(obj);
+                return true;
             }
 
-            Object[] oldState = oldEntry.LoadedState;
-            if (oldState == null)
+            if (oldValue == null)
             {
-                return false;
+                return currentValue == null;
             }
-
-            Object[] currentState = persister.GetPropertyValues(entity, sessionImpl.EntityMode);
-            Int32[] dirtyProps = persister.FindDirty(currentState, oldState, entity, sessionImpl);
-            Int32 index = Array.IndexOf(persister.PropertyNames, propertyName);
-
-            Boolean isDirty = (dirtyProps != null) ? (Array.IndexOf(dirtyProps, index) != -1) : false;
-
-            return (isDirty);
-        }
-
-        public static Object GetOriginalEntityProperty(this ISession session, Object entity, String propertyName)
-        {
-            ISessionImplementor sessionImpl = session.GetSessionImplementation();
-            IPersistenceContext persistenceContext = sessionImpl.PersistenceContext;
-            EntityEntry oldEntry = persistenceContext.GetEntry(entity);
-            string className = oldEntry.EntityName;
-            IEntityPersister persister = sessionImpl.Factory.GetEntityPersister(className);
-
-            if ((oldEntry == null) && (entity is INHibernateProxy))
-            {
-                INHibernateProxy proxy = entity as INHibernateProxy;
-                Object obj = sessionImpl.PersistenceContext.Unproxy(proxy);
-                oldEntry = sessionImpl.PersistenceContext.GetEntry(obj);
-            }
-
-            Object[] oldState = oldEntry.LoadedState;
-            Object[] currentState = persister.GetPropertyValues(entity, sessionImpl.EntityMode);
-            Int32[] dirtyProps = persister.FindDirty(currentState, oldState, entity, sessionImpl);
-            Int32 index = Array.IndexOf(persister.PropertyNames, propertyName);
-
-            Boolean isDirty = (dirtyProps != null) ? (Array.IndexOf(dirtyProps, index) != -1) : false;
-
-            return ((isDirty == true) ? oldState[index] : currentState[index]);
+            return oldValue.Equals(currentValue);
         }
     }
 }
