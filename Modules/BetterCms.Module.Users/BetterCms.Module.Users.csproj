@@ -117,6 +117,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>UsersGlobalization.resx</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
     <Compile Include="Models\Migrations\Migration201301181130.cs" />
@@ -125,6 +126,10 @@
     <Compile Include="Registration\UserJavaScriptModuleDescriptor.cs" />
     <Compile Include="UsersModuleDescriptor.cs" />
     <Compile Include="ViewModels\EditUserViewModel.cs" />
+    <Compile Include="ViewModels\Role\EditRoleViewModel.cs" />
+    <Compile Include="ViewModels\Role\Premission.cs" />
+    <Compile Include="ViewModels\Role\RoleItemViewModel.cs" />
+    <Compile Include="ViewModels\Role\SiteSettingRoleListViewModel.cs" />
     <Compile Include="ViewModels\SearchableUserViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
@@ -179,6 +184,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\User\EditUserView.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Role\RolesListView.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Role\EditRoleView.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

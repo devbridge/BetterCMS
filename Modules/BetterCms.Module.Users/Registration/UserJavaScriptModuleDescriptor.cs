@@ -21,13 +21,17 @@ namespace BetterCms.Module.Blog.Registration
             Links = new IActionProjection[]
                         {
                             new JavaScriptModuleLinkTo<UserController>(this, "loadSiteSettingsUsersUrl", c => c.Index(null)),
-                            new JavaScriptModuleLinkTo<UserController>(this, "loadEditUserUrl", c=> c.EditUser()) 
+                            new JavaScriptModuleLinkTo<UserController>(this, "loadEditUserUrl", c=> c.EditUser()), 
+                            new JavaScriptModuleLinkTo<RoleController>(this, "loadEditRoleUrl", c => c.EditRoleView(null)),
+                            new JavaScriptModuleLinkTo<RoleController>(this, "loadSiteSettingsRoleUrl", c => c.RolesListView(null)) 
                         };
 
             Globalization = new IActionProjection[]
                         {
                             new JavaScriptModuleGlobalization(this, "usersListTabTitle", () => UsersGlobalization.SiteSettings_Users_ListTab_Title), 
-                            new JavaScriptModuleGlobalization(this, "usersAddNewTitle", () => UsersGlobalization.EditUser_Window_Title)
+                            new JavaScriptModuleGlobalization(this, "usersAddNewTitle", () => UsersGlobalization.EditUser_Window_Title),
+                            new JavaScriptModuleGlobalization(this, "rolesListTabTitle", () => UsersGlobalization.SiteSettings_Roles_ListTab_Title),
+                            new JavaScriptModuleGlobalization(this, "rolesAddNewTitle", () => UsersGlobalization.Role_AddNeww_Dialog_Title) 
                         };
         }
     }

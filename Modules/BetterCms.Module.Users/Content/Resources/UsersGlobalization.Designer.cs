@@ -304,6 +304,69 @@ namespace BetterCms.Module.Users.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Role Name.
+        /// </summary>
+        public static string Role_AddNew_Dialog_RoleName_Title {
+            get {
+                return ResourceManager.GetString("Role_AddNew_Dialog_RoleName_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Role Name.
+        /// </summary>
+        public static string Role_AddNew_Dialog_RoleTooltip_Title {
+            get {
+                return ResourceManager.GetString("Role_AddNew_Dialog_RoleTooltip_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Purpose of role name.
+        /// </summary>
+        public static string Role_AddNew_Dialog_Tooltip_Description {
+            get {
+                return ResourceManager.GetString("Role_AddNew_Dialog_Tooltip_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set Role Premissions.
+        /// </summary>
+        public static string Role_AddNeww_Dialog_Title {
+            get {
+                return ResourceManager.GetString("Role_AddNeww_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add New +.
+        /// </summary>
+        public static string Role_Dialog_AddNew {
+            get {
+                return ResourceManager.GetString("Role_Dialog_AddNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Roles.
+        /// </summary>
+        public static string SiteSettings_Roles_ListTab_Title {
+            get {
+                return ResourceManager.GetString("SiteSettings_Roles_ListTab_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Roles.
+        /// </summary>
+        public static string SiteSettings_Roles_RoleColumn {
+            get {
+                return ResourceManager.GetString("SiteSettings_Roles_RoleColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Users.
         /// </summary>
         public static string SiteSettings_UserMenuItem {

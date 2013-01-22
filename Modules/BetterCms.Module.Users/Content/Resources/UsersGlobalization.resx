@@ -198,6 +198,27 @@
   <data name="EditUser_Window_Title" xml:space="preserve">
     <value>Add New User</value>
   </data>
+  <data name="Role_AddNeww_Dialog_Title" xml:space="preserve">
+    <value>Set Role Premissions</value>
+  </data>
+  <data name="Role_AddNew_Dialog_RoleName_Title" xml:space="preserve">
+    <value>Role Name</value>
+  </data>
+  <data name="Role_AddNew_Dialog_RoleTooltip_Title" xml:space="preserve">
+    <value>Role Name</value>
+  </data>
+  <data name="Role_AddNew_Dialog_Tooltip_Description" xml:space="preserve">
+    <value>Purpose of role name</value>
+  </data>
+  <data name="Role_Dialog_AddNew" xml:space="preserve">
+    <value>Add New +</value>
+  </data>
+  <data name="SiteSettings_Roles_ListTab_Title" xml:space="preserve">
+    <value>Roles</value>
+  </data>
+  <data name="SiteSettings_Roles_RoleColumn" xml:space="preserve">
+    <value>Roles</value>
+  </data>
   <data name="SiteSettings_UserMenuItem" xml:space="preserve">
     <value>Users</value>
   </data>
