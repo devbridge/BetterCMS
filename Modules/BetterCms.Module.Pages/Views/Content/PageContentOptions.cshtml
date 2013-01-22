@@ -37,6 +37,8 @@
         <div class="bcms-input-list-holder bcms-first-child-holder">
             @using (Html.BeginForm<ContentController>(c => c.PageContentOptions((PageContentOptionsViewModel)null), FormMethod.Post, new { @id = "bcms-options-form", @class = "bcms-ajax-form" }))
             {
+                @Html.HiddenFor(model => model.PageContentId)
+                
                 @Html.Grid(Model.WidgetOptions).Columns(columns).Attributes(@class => "bcms-tables", @id => "bcms-options-grid").RenderUsing(new EditableHtmlTableGridRenderer<PageContentOptionViewModel>())
             }
         </div>

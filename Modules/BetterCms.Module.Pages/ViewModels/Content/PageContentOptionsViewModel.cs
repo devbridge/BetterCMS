@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace BetterCms.Module.Pages.ViewModels.Content
@@ -15,6 +16,14 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// The list of page content options.
         /// </value>
         public IList<PageContentOptionViewModel> WidgetOptions { get; set; }
+
+        /// <summary>
+        /// Gets or sets the page content id.
+        /// </summary>
+        /// <value>
+        /// The page content id.
+        /// </value>
+        public Guid PageContentId { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
