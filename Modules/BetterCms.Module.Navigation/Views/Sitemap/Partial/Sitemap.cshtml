@@ -41,7 +41,7 @@
                     <div class="bcms-edit-node-holder">
                         <div class="bcms-tooltip-mark" data-title="@NavigationGlobalization.Sitemap_NodeEdit_Title_Tooltip_Title" data-message="@NavigationGlobalization.Sitemap_NodeEdit_Title_Tooltip_Message"></div>
                         @Html.TextBoxFor(m => m.Title, new {
-                            data_bind = "value: title, valueUpdate: 'afterkeydown', enterPress: saveSitemapNode, escPress: cancelEditSitemapNode, hasfocus: isActive()",
+                            data_bind = "value: title, valueUpdate: 'afterkeydown', enterPress: saveSitemapNodeWithValidation, escPress: cancelEditSitemapNode, hasfocus: isActive()",
                             @class = "bcms-editor-field-box",
                             Title = (string) null,
                             style = "width: 65%;",
@@ -50,7 +50,7 @@
                     <div class="bcms-edit-node-holder">
                         <div class="bcms-tooltip-mark" data-title="@NavigationGlobalization.Sitemap_NodeEdit_Url_Tooltip_Title" data-message="@NavigationGlobalization.Sitemap_NodeEdit_Url_Tooltip_Message"></div>
                         @Html.TextBoxFor(m => m.Url, new {
-                            data_bind = "value: url, valueUpdate: 'afterkeydown', enterPress: saveSitemapNode, escPress: cancelEditSitemapNode",
+                            data_bind = "value: url, valueUpdate: 'afterkeydown', enterPress: saveSitemapNodeWithValidation, escPress: cancelEditSitemapNode",
                             @class = "bcms-editor-field-box",
                             Url = (string) null,
                             style = "width: 65%;",
