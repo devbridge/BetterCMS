@@ -3,10 +3,11 @@ using System.ComponentModel.DataAnnotations;
 
 using BetterCms.Core.Models;
 using BetterCms.Module.MediaManager.ViewModels;
+using BetterCms.Module.Root.Mvc.Grids;
 
 namespace BetterCms.Module.Blog.ViewModels.Author
 {
-    public class AuthorViewModel : EntityWithImageViewModel
+    public class AuthorViewModel : IEditableGridItem
     {
         /// <summary>
         /// Gets or sets the author id.
@@ -37,27 +38,19 @@ namespace BetterCms.Module.Blog.ViewModels.Author
         public virtual string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the image id.
+        /// Gets or sets the image view model.
         /// </summary>
         /// <value>
-        /// The image id.
+        /// The image view model.
         /// </value>
-        public virtual Guid? ImageId { get; set; }
+        public ImageSelectorViewModel Image { get; set; }
 
         /// <summary>
-        /// Gets or sets the image URL.
+        /// Initializes a new instance of the <see cref="AuthorViewModel" /> class.
         /// </summary>
-        /// <value>
-        /// The image URL.
-        /// </value>
-        public virtual string ImageUrl { get; set; }
-
-        /// <summary>
-        /// Gets or sets the thumbnail URL.
-        /// </summary>
-        /// <value>
-        /// The thumbnail URL.
-        /// </value>
-        public virtual string ThumbnailUrl { get; set; }
+        public AuthorViewModel()
+        {
+            Image = new ImageSelectorViewModel();
+        }
     }
 }

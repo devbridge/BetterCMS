@@ -10,7 +10,7 @@ using BetterCms.Module.Root.Mvc;
 namespace BetterCms.Module.Navigation.Command.Sitemap.GetSitemap
 {
     /// <summary>
-    /// Command to get media image data.
+    /// Command to get sitemap data.
     /// </summary>
     public class GetSitemapCommand : CommandBase, ICommand<string, SearchableSitemapViewModel>
     {

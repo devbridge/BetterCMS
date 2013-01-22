@@ -187,7 +187,7 @@
     <value>Select a template</value>
   </data>
   <data name="AddPageContent_WidgetTab_AddNewButton" xml:space="preserve">
-    <value>Add New</value>
+    <value>Add New +</value>
   </data>
   <data name="AddPageContent_WidgetTab_DeleteButton" xml:space="preserve">
     <value>Delete</value>
@@ -438,7 +438,7 @@
   <data name="EditPageProperties_BasicPropertiesTab_AddCategories_Tooltip_Title" xml:space="preserve">
     <value>Add Categories</value>
   </data>
-  <data name="EditPageProperties_BasicPropertiesTab_AddTags_Title" xml:space="preserve">
+  <data name="TagsTemplate_AddTags_Title" xml:space="preserve">
     <value>Add Tags</value>
   </data>
   <data name="EditPageProperties_BasicPropertiesTab_AddTags_Tooltip_Description" xml:space="preserve">
@@ -447,26 +447,8 @@
   <data name="EditPageProperties_BasicPropertiesTab_AddTags_Tooltip_Title" xml:space="preserve">
     <value>Add tags</value>
   </data>
-  <data name="EditPageProperties_BasicPropertiesTab_Author_Title" xml:space="preserve">
-    <value>Author</value>
-  </data>
-  <data name="EditPageProperties_BasicPropertiesTab_Author_Tooltip_Description" xml:space="preserve">
-    <value>Author</value>
-  </data>
-  <data name="EditPageProperties_BasicPropertiesTab_Author_Tooltip_Title" xml:space="preserve">
-    <value>Author</value>
-  </data>
-  <data name="EditPageProperties_BasicPropertiesTab_PageImage_ChangeButton" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="EditPageProperties_BasicPropertiesTab_PageImage_FileName" xml:space="preserve">
-    <value>File Name:</value>
-  </data>
-  <data name="EditPageProperties_BasicPropertiesTab_PageImage_FileSize" xml:space="preserve">
-    <value>Size:</value>
-  </data>
   <data name="EditPageProperties_BasicPropertiesTab_PageImage_Title" xml:space="preserve">
-    <value>Featured Page Image</value>
+    <value>Featured Image</value>
   </data>
   <data name="EditPageProperties_BasicPropertiesTab_PageImage_Tooltip_Description" xml:space="preserve">
     <value>Page description</value>
@@ -475,7 +457,7 @@
     <value>Page image</value>
   </data>
   <data name="EditPageProperties_BasicPropertiesTab_PageName_Title" xml:space="preserve">
-    <value>Title</value>
+    <value>Page Name</value>
   </data>
   <data name="EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Description" xml:space="preserve">
     <value>Page title</value>
@@ -499,7 +481,7 @@
     <value>Layout</value>
   </data>
   <data name="EditPageProperties_LayoutPropertiesTab_Title" xml:space="preserve">
-    <value>Template</value>
+    <value>Layout</value>
   </data>
   <data name="EditPageProperties_PagePermalink_InvalidMessage" xml:space="preserve">
     <value>Page permalink is invalid. Link must start and end with "/" and can contain only following characters: '0-9', 'a-z', '-', '/', '_'</value>
@@ -1016,5 +998,44 @@
   </data>
   <data name="PageContentHistory_SelectVersionToPreviewMessage" xml:space="preserve">
     <value>Select Version to preview history</value>
+  </data>
+  <data name="HtmlContent_CustomCss_Title" xml:space="preserve">
+    <value>Custom CSS</value>
+  </data>
+  <data name="HtmlContent_CustomJs_Title" xml:space="preserve">
+    <value>Custom JavaScript</value>
+  </data>
+  <data name="HtmlContent_EnableCustomCss_Title" xml:space="preserve">
+    <value>Enable Custom CSS (If not Enabled, then &lt;b&gt;CSS&lt;/b&gt; will not be added to a Page)</value>
+  </data>
+  <data name="HtmlContent_EnableCustomJs_Title" xml:space="preserve">
+    <value>Enable Custom JavaScript (If not Enabled, then &lt;b&gt;JavaScript&lt;/b&gt; will not be added to a Page)</value>
+  </data>
+  <data name="EditPageProperties_BasicPropertiesTab_PageImage_Description" xml:space="preserve">
+    <value>Image will be displayed as a thumbnail with the page.</value>
+  </data>
+  <data name="EditPageProperties_BasicPropertiesTab_SelectImage_ButtonTitle" xml:space="preserve">
+    <value>Select Image</value>
+  </data>
+  <data name="EditPageProperties_BasicPropertiesTab_Category_Title" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="EditPageProperties_BasicPropertiesTab_Category_Tooltip_Description" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="EditPageProperties_BasicPropertiesTab_Category_Tooltip_Title" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="EditPageProperties_AdvancedPropertiesTab_PageJavascript_Title" xml:space="preserve">
+    <value>Custom JavaScript</value>
+  </data>
+  <data name="EditPageProperties_AdvancedPropertiesTab_PageJavascript_Tooltip_Description" xml:space="preserve">
+    <value>Custom JavaScript</value>
+  </data>
+  <data name="EditPageProperties_AdvancedPropertiesTab_PageJavascript_Tooltip_Title" xml:space="preserve">
+    <value>Custom JavaScript</value>
+  </data>
+  <data name="EditPageProperties_LayoutPropertiesTab_ChooseLayout_Title" xml:space="preserve">
+    <value>Choose Page Layout</value>
   </data>
 </root>

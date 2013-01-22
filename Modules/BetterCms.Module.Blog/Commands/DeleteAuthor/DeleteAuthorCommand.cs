@@ -1,6 +1,6 @@
 ﻿using BetterCms.Core.Mvc.Commands;
+using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.ViewModels.Author;
-using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Mvc;
 
 namespace BetterCms.Module.Blog.Commands.DeleteAuthor

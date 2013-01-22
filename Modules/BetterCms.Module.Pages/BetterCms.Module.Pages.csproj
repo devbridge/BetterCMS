@@ -118,6 +118,8 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Accessors\PageStylesheetAccessor.cs" />
+    <Compile Include="Accessors\PageJavaScriptAccessor.cs" />
     <Compile Include="Command\Content\DeletePageContent\DeletePageContentCommand.cs" />
     <Compile Include="Command\Content\DeletePageContent\DeletePageContentCommandRequest.cs" />
     <Compile Include="Command\Content\GetPageHtmlContent\GetPageHtmlContentCommand.cs" />
@@ -197,16 +199,12 @@
     <Compile Include="Helpers\HttpHelper.cs" />
     <Compile Include="Helpers\ListModelBindingExtensions.cs" />
     <Compile Include="Helpers\RenderHelper.cs" />
-    <Compile Include="Models\Author.cs" />
     <Compile Include="Models\IServerControlWidget.cs" />
     <Compile Include="Models\Maps\HtmlContentMap.cs" />
     <Compile Include="Models\ServerControlWidget.cs" />
     <Compile Include="Models\HtmlContent.cs" />
-    <Compile Include="Models\Maps\PageCategoryMap.cs" />
     <Compile Include="Models\Maps\RedirectMap.cs" />
-    <Compile Include="Models\PageCategory.cs" />
     <Compile Include="Models\HtmlContentWidget.cs" />
-    <Compile Include="Models\Maps\AuthorMap.cs" />
     <Compile Include="Models\Maps\ServerControlWidgetMap.cs" />
     <Compile Include="Models\Maps\HtmlContentWidgetMap.cs" />
     <Compile Include="Models\Maps\PagePropertiesMap.cs" />
@@ -218,18 +216,15 @@
     <Compile Include="Models\Redirect.cs" />
     <Compile Include="Models\WidgetType.cs" />
     <Compile Include="PagesConstants.cs" />
-    <Compile Include="Projections\HtmlContentWidgetRenderer.cs" />
-    <Compile Include="Projections\HtmlContentRenderer.cs" />
-    <Compile Include="Projections\PageStylesProjection.cs" />
-    <Compile Include="Projections\ServerControlWidgetRenderer.cs" />
+    <Compile Include="Accessors\HtmlContentWidgetAccessor.cs" />
+    <Compile Include="Accessors\HtmlContentAccessor.cs" />
+    <Compile Include="Accessors\ServerControlWidgetAccessor.cs" />
     <Compile Include="Registration\HistoryJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\TemplatesJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\PagesContentJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\PageTagsJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\RedirectsJavaScriptModuleDescriptor.cs" />
-    <Compile Include="Services\DefaultAuthorService.cs" />
     <Compile Include="Services\DefaultTagService.cs" />
-    <Compile Include="Services\IAuthorService.cs" />
     <Compile Include="Services\DefaultWidgetsService.cs" />
     <Compile Include="Services\ITagService.cs" />
     <Compile Include="Services\IWidgetsService.cs" />
@@ -245,6 +240,7 @@
     <Compile Include="ViewModels\History\PageContentHistoryViewModel.cs" />
     <Compile Include="ViewModels\SiteSettings\SiteSettingTemplateItemViewModel.cs" />
     <Compile Include="ViewModels\SiteSettings\SiteSettingTemplateListViewModel.cs" />
+    <Compile Include="ViewModels\Tags\TagsTemplateViewModel.cs" />
     <Compile Include="ViewModels\Templates\TemplateEditViewModel.cs" />
     <Compile Include="ViewModels\Templates\TemplateRegionItemViewModel.cs" />
     <Compile Include="ViewModels\Widgets\EditHtmlContentWidgetViewModel.cs" />
@@ -282,9 +278,7 @@
       <LastGenOutput>PagesGlobalization.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\bcms.pages.properties.js" />
     <EmbeddedResource Include="Content\Css\bcms.page.css" />
-    <EmbeddedResource Include="Scripts\bcms.pages.seo.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.redirects.js" />
     <EmbeddedResource Include="Content\Css\Images\icn-zoom.png" />
     <EmbeddedResource Include="Content\Css\Images\loading.gif" />
@@ -294,10 +288,13 @@
     <EmbeddedResource Include="Content\Css\Images\bcms-no-image-3.png" />
     <EmbeddedResource Include="Content\Css\Images\sprite-pages-1.png" />
     <EmbeddedResource Include="Content\Css\Images\sprite-pages-2.png" />
-    <EmbeddedResource Include="Scripts\bcms.pages.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.template.js" />
-    <EmbeddedResource Include="Scripts\bcms.pages.widgets.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.seo.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.tags.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.properties.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.content.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.widgets.js" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -332,9 +329,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Page\EditPageProperties.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Page\AddNewPage.cshtml" />
@@ -373,9 +367,6 @@
     <EmbeddedResource Include="Views\Page\Partial\TemplatesList.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Page\Partial\PagePropertiesEditPermalink.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -405,6 +396,15 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Templates\Partial\EditTemplateRegions.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Tags\TagsTemplate.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Page\Partial\PagePropertiesEditPermalink.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Page\EditPageProperties.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

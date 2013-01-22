@@ -5,6 +5,7 @@ using BetterCms.Core.Models;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Services;
+
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Projections;
@@ -23,9 +24,16 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
         private readonly PageContentProjectionFactory pageContentProjectionFactory;
 
-        public GetPageToRenderCommand(IPageAccessor pageAccessor, PageContentProjectionFactory pageContentProjectionFactory)
+        private PageJavaScriptProjectionFactory pageJavaScriptProjectionFactory;
+
+        private PageStylesheetProjectionFactory pageStylesheetProjectionFactory;
+
+        public GetPageToRenderCommand(IPageAccessor pageAccessor, PageContentProjectionFactory pageContentProjectionFactory,
+            PageStylesheetProjectionFactory pageStylesheerProjectionFactory, PageJavaScriptProjectionFactory pageJavaScriptProjectionFactory)
         {
             this.pageContentProjectionFactory = pageContentProjectionFactory;
+            this.pageStylesheetProjectionFactory = pageStylesheerProjectionFactory;
+            this.pageJavaScriptProjectionFactory = pageJavaScriptProjectionFactory;
             this.pageAccessor = pageAccessor;
         }
 
@@ -57,7 +65,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             }
 
             var contentProjections = page.PageContents.Distinct().Select(f => pageContentProjectionFactory.Create(f)).ToList();
-
+            
             RenderPageViewModel renderPageViewModel = new RenderPageViewModel(page);
             
             renderPageViewModel.LayoutPath = page.Layout.LayoutPath;
@@ -71,9 +79,20 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                                                       .ToList();
 
             renderPageViewModel.Contents = contentProjections;
-            renderPageViewModel.Stylesheets = new List<IStylesheetAccessor>(contentProjections);
             renderPageViewModel.Metadata = pageAccessor.GetPageMetaData(page).ToList();
-            
+
+            // Styles
+            var styles = new List<IStylesheetAccessor>();
+            styles.Add(pageStylesheetProjectionFactory.Create(page));
+            styles.AddRange(contentProjections);
+            renderPageViewModel.Stylesheets = styles;
+
+            // JavaScripts
+            var js = new List<IJavaScriptAccessor>();
+            js.Add(pageJavaScriptProjectionFactory.Create(page));
+            js.AddRange(contentProjections);
+            renderPageViewModel.JavaScripts = js;
+
             return new CmsRequestViewModel(renderPageViewModel);
         }
     }

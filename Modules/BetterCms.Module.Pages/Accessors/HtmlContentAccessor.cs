@@ -4,9 +4,11 @@ using System.Web.Mvc;
 
 using BetterCms.Core.Models;
 using BetterCms.Core.Modules.Projections;
+using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Root.Mvc.Helpers;
 
-namespace BetterCms.Module.Pages.Projections
+namespace BetterCms.Module.Pages.Accessors
 {
     [Serializable]
     public class HtmlContentAccessor : ContentAccessor<HtmlContent>
@@ -33,11 +35,26 @@ namespace BetterCms.Module.Pages.Projections
 
         public override string GetCustomStyles(HtmlHelper html)
         {
+            if (Content.UseCustomCss && !string.IsNullOrWhiteSpace(Content.CustomCss))
+            {
+                var selectorPrefix = string.Concat("#", string.Format(RegionContentWrapper.PageContentIdPattern, Content.Id));
+                var css = CssHelper.PrefixCssSelectors(Content.CustomCss, selectorPrefix);
+                if (!string.IsNullOrWhiteSpace(css))
+                {
+                    return css;
+                }
+            }
+
             return null;
         }
 
         public override string GetCustomJavaScript(HtmlHelper html)
         {
+            if (Content.UseCustomJs && !string.IsNullOrWhiteSpace(Content.CustomJs))
+            {
+                return Content.CustomJs;
+            }
+
             return null;
         }
     }

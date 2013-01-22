@@ -1,7 +1,7 @@
 ﻿using BetterCms.Core.Mvc.Commands;
+using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.ViewModels.Author;
 using BetterCms.Module.MediaManager.Models;
-using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Mvc;
 
 namespace BetterCms.Module.Blog.Commands.SaveAuthor
@@ -25,9 +25,9 @@ namespace BetterCms.Module.Blog.Commands.SaveAuthor
             author.Name = request.Name;
             author.Version = request.Version;
 
-            if (request.ImageId.HasValue)
+            if (request.Image != null && request.Image.ImageId.HasValue)
             {
-                author.Image = Repository.AsProxy<MediaImage>(request.ImageId.Value);
+                author.Image = Repository.AsProxy<MediaImage>(request.Image.ImageId.Value);
             }
             else
             {

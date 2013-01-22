@@ -32,7 +32,12 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
 
                 overlayEdit: '.bcms-content-edit',
                 overlayConfigure: '.bcms-content-configure',
-                overlay: '.bcms-content-overlay'               
+                overlay: '.bcms-content-overlay',
+                
+                enableCustomJs: '#bcms-enable-custom-js',
+                enableCustomCss: '#bcms-enable-custom-css',
+                customJsContainer: '#bcms-custom-js-container',
+                customCssContainer: '#bcms-custom-css-container'
             },
             
             classes = {
@@ -200,6 +205,8 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
             htmlEditor.initializeHtmlEditor(selectors.htmlEditor);
 
             preview.initialize(dialog.container.find(selectors.widgetsContent));
+
+            pagesContent.initializeCustomTextArea(dialog);
         };
         
         /**
@@ -208,6 +215,22 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
         pagesContent.initializeEditContentForm = function (dialog) {
             dialog.container.find(selectors.dataPickers).initializeDatepicker();
             htmlEditor.initializeHtmlEditor(selectors.htmlEditor);
+            pagesContent.initializeCustomTextArea(dialog);
+        };
+
+         /**
+        * Initializes custom css and js text fields.
+        */
+        pagesContent.initializeCustomTextArea = function(dialog) {
+            dialog.container.find(selectors.enableCustomCss).on('click', function() {
+                showHideCustomCssText(dialog);
+            });
+
+            dialog.container.find(selectors.enableCustomJs).on('click', function() {
+                showHideCustomJsText(dialog);
+            });
+            showHideCustomCssText(dialog);
+            showHideCustomJsText(dialog);
         };
 
         /**
@@ -335,10 +358,8 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
             if (element.hasClass(classes.regionContent)) {
                 overlay.find(selectors.overlayConfigure).hide();
             } else if (element.hasClass(classes.regionAdvancedContent)) {
-                overlay.find(selectors.overlayEdit).hide();
                 overlay.find(selectors.overlayConfigure).hide();
             } else if (element.hasClass(classes.regionWidget)) {
-                overlay.find(selectors.overlayEdit).hide();
             } else {
                 overlay.find(selectors.overlayEdit).hide();
                 overlay.find(selectors.overlayConfigure).hide();
@@ -365,7 +386,6 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
             if (element.hasClass(classes.regionContent)) {
                 pagesContent.editPageContent(contentId);
             }
-            ;
         };
 
         /**
@@ -507,6 +527,25 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                     }
                 });
         };    
+        
+         /**
+        * Shows/hides custom css field in a content edit form
+        */
+        function showHideCustomCssText(dialog) {
+            if (dialog.container.find(selectors.enableCustomCss).attr('checked')) {
+                dialog.container.find(selectors.customCssContainer).show();
+            } else {
+                dialog.container.find(selectors.customCssContainer).hide();
+            }
+        };
+
+        function showHideCustomJsText(dialog) {
+            if (dialog.container.find(selectors.enableCustomJs).attr('checked')) {
+                dialog.container.find(selectors.customJsContainer).show();
+            } else {
+                dialog.container.find(selectors.customJsContainer).hide();
+            }
+        };
 
         /**
         * Initializes page module.

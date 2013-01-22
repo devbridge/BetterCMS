@@ -162,6 +162,9 @@
   <data name="EditBlockPost_Content_Tooltip_Title" xml:space="preserve">
     <value>Full Post</value>
   </data>
+  <data name="EditBlockPost_FeaturedImage_Description" xml:space="preserve">
+    <value>Image will be displayed as a thumbnail with your post.</value>
+  </data>
   <data name="EditBlockPost_FeaturedImage_Title" xml:space="preserve">
     <value>Featured Image</value>
   </data>

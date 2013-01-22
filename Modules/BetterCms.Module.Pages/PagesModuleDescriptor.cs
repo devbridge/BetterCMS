@@ -7,9 +7,9 @@ using Autofac;
 using BetterCms.Core.Models;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
+using BetterCms.Module.Pages.Accessors;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
-using BetterCms.Module.Pages.Projections;
 using BetterCms.Module.Pages.Registration;
 using BetterCms.Module.Pages.Services;
 
@@ -133,6 +133,9 @@ namespace BetterCms.Module.Pages
         /// <param name="configuration">The configuration.</param>
         public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder, ICmsConfiguration configuration)
         {
+            RegisterStylesheetRendererType<PageStylesheetAccessor, PageProperties>(containerBuilder);
+            RegisterJavaScriptRendererType<PageJavaScriptAccessor, PageProperties>(containerBuilder);
+
             RegisterContentRendererType<HtmlContentAccessor, HtmlContent>(containerBuilder);
             RegisterContentRendererType<HtmlContentWidgetAccessor, HtmlContentWidget>(containerBuilder);
             RegisterContentRendererType<ServerControlWidgetAccessor, ServerControlWidget>(containerBuilder);            
@@ -141,7 +144,6 @@ namespace BetterCms.Module.Pages
             containerBuilder.RegisterType<DefaultRedirectService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultCategoryService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultWidgetsService>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            containerBuilder.RegisterType<DefaultAuthorService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultTagService>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
 

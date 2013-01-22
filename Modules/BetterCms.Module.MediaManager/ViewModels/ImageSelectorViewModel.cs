@@ -1,30 +1,9 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
-
-using BetterCms.Module.Root.Mvc.Grids;
 
 namespace BetterCms.Module.MediaManager.ViewModels
 {
-    public class EntityWithImageViewModel : IEditableGridItem
+    public class ImageSelectorViewModel
     {
-        /// <summary>
-        /// Gets or sets the entity id.
-        /// </summary>
-        /// <value>
-        /// The entity id.
-        /// </value>
-        [Required]
-        public virtual Guid Id { get; set; }
-
-        /// <summary>
-        /// Gets or sets the entity version.
-        /// </summary>
-        /// <value>
-        /// The entity version.
-        /// </value>
-        [Required]
-        public virtual int Version { get; set; }
-
         /// <summary>
         /// Gets or sets the image id.
         /// </summary>
@@ -65,7 +44,7 @@ namespace BetterCms.Module.MediaManager.ViewModels
         /// </returns>
         public override string ToString()
         {
-            return string.Format("Id: {0}, Version: {1}, Image: {2}", Id, Version, ImageId);
+            return string.Format("ImageId: {0}, Url: {1}, Thumbnail: {2}", ImageId, ImageUrl, ThumbnailUrl);
         }
     }
 }

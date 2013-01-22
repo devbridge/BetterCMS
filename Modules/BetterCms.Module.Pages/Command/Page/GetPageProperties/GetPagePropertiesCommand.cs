@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
-using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
-
-using NHibernate;
-using NHibernate.Transform;
 
 namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
 {
@@ -19,9 +16,9 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
     public class GetPagePropertiesCommand : CommandBase, ICommand<Guid, EditPagePropertiesViewModel>
     {
         /// <summary>
-        /// The author service
+        /// The category service
         /// </summary>
-        private IAuthorService authorService;
+        private ICategoryService categoryService;
 
         /// <summary>
         /// The tag service
@@ -31,12 +28,12 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
         /// <summary>
         /// Initializes a new instance of the <see cref="GetPagePropertiesCommand" /> class.
         /// </summary>
-        /// <param name="authorService">The author service.</param>
         /// <param name="tagService">The tag service.</param>
-        public GetPagePropertiesCommand(IAuthorService authorService, ITagService tagService)
+        /// <param name="categoryService">The category service.</param>
+        public GetPagePropertiesCommand(ITagService tagService, ICategoryService categoryService)
         {
-            this.authorService = authorService;
             this.tagService = tagService;
+            this.categoryService = categoryService;
         }
 
         /// <summary>
@@ -49,56 +46,45 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
         {
             EditPagePropertiesViewModel model;
 
-            PageProperties alias = null;
-            EditPagePropertiesViewModel modelAlias = null;
-
-            model = UnitOfWork.Session.QueryOver(() => alias)
-                    .Where(p => p.Id == id)
-                    .SelectList(select => select
-                        .Select(() => alias.Id).WithAlias(() => modelAlias.Id)
-                        .Select(() => alias.Title).WithAlias(() => modelAlias.PageName)
-                        .Select(() => alias.PageUrl).WithAlias(() => modelAlias.PagePermalink)
-                        .Select(() => alias.Version).WithAlias(() => modelAlias.Version)
-                        .Select(() => alias.CustomCss).WithAlias(() => modelAlias.PageCSS)
-                        .Select(() => alias.UseNoFollow).WithAlias(() => modelAlias.UseNoFollow)
-                        .Select(() => alias.UseNoIndex).WithAlias(() => modelAlias.UseNoIndex)
-                        .Select(() => alias.IsPublic).WithAlias(() => modelAlias.IsVisibleToEveryone)
-                        .Select(() => alias.Layout.Id).WithAlias(() => modelAlias.TemplateId)
-                        .Select(() => alias.Author.Id).WithAlias(() => modelAlias.AuthorId))
-                    .TransformUsing(Transformers.AliasToBean<EditPagePropertiesViewModel>())
-                    .SingleOrDefault<EditPagePropertiesViewModel>();
+            model = Repository
+                .AsQueryable<PageProperties>()
+                .Where(p => p.Id == id)
+                .Select(page => new EditPagePropertiesViewModel
+                            {
+                                Id = page.Id,
+                                Version = page.Version,
+                                PageName = page.Title,
+                                PagePermalink = page.PageUrl,
+                                PageCSS = page.CustomCss,
+                                PageJavascript = page.CustomJS,
+                                UseNoFollow = page.UseNoFollow,
+                                UseNoIndex = page.UseNoIndex,
+                                IsVisibleToEveryone = page.IsPublic,
+                                TemplateId = page.Layout.Id,
+                                CategoryId = page.Category.Id,
+                                Image = new ImageSelectorViewModel
+                                            {
+                                                ImageId = page.Image.Id,
+                                                ImageUrl = page.Image.PublicUrl,
+                                                ThumbnailUrl = page.Image.PublicThumbnailUrl,
+                                                ImageTooltip = page.Image.Caption
+                                            }
+                            })
+                .FirstOrDefault();
 
             if (model != null)
             {
-                model.FeaturedPageImageUrl = "http://www.agileturas.lt/assets/img/kaunas_sponsors/devbridge_sponsor_logo.png"; // TODO: url ???
-                model.FileName = "TODO: FileName"; // TODO
-                model.FileSize = "TODO: FileSize"; // TODO
-                model.RedirectFromOldUrl = true; // TODO: 
-
                 model.Tags = tagService.GetPageTagNames(id);
-                model.Categories = GetCategories(UnitOfWork.Session, id);
+                model.RedirectFromOldUrl = true;
             }
             else
             {
                 model = new EditPagePropertiesViewModel();
             }
 
-            model.Authors = authorService.GetAuthors();
-
+            model.Categories = categoryService.GetCategories();
 
             return model;
-        }
-
-        private IList<string> GetCategories(ISession session, Guid id)
-        {
-            Category categoryAlias = null;
-
-            return session
-                .QueryOver<PageCategory>()
-                .Where(w => w.Page.Id == id && !w.IsDeleted)
-                .JoinAlias(f => f.Category, () => categoryAlias)
-                .SelectList(select => select.Select(() => categoryAlias.Name))
-                .List<string>();
         }
     }
 }

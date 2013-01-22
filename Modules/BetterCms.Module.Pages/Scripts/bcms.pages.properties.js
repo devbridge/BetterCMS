@@ -1,7 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.pages.properties', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bcms.dynamicContent'], function ($, bcms, modal, forms, dynamicContent) {
+define('bcms.pages.properties', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bcms.dynamicContent', 'bcms.pages.tags', 'knockout', 'bcms.media'],
+    function ($, bcms, modal, forms, dynamicContent, tags, ko, media) {
     'use strict';
 
     var page = {},
@@ -16,37 +17,14 @@ define('bcms.pages.properties', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', '
             permalinkEditField: '#bcms-page-permalink-edit',
             permalinkInfoField: '#bcms-page-permalink-info',
 
-            addTagField: '.bcms-add-tags-field',
-            addTagTemplate: '#bcms-add-page-tag-template',
-            addedTagClass: '.bcms-single-tag',
-            tagsContainer: '#bcms-tags-container',
-            tagRemoveLink: '.bcms-single-tag a',
-            tagHiddenValue: '.bcms-single-tag-hidden-value',
-            tagHiddenIndex: '.bcms-single-tag-hidden-indexer',
-
-            addCategoryField: '#bcms-add-categories-field',
             pagePropertiesTemplateSelect: '.bcms-btn-grid',
             pagePropertiesTemplateId: '#TemplateId',
-
-            addCategoryTemplate: '#bcms-add-page-category-template',
-            addedCategoryClass: '.bcms-single-tag',
-            categoryHiddenValue: '.bcms-single-category-hidden-value',
-            categoryHiddenIndex: '.bcms-single-category-hidden-indexer',
-            categoriesContainer: '#bcms-categories-container',
-
-            buttonTagExpand: '.bcms-tag-btn-expand',
-            buttonCategoryExpand: '.bcms-categories-btn-expand',
-            tagsInputHolder: '.bcms-tags-field-holder',
 
             pagePropertiesActiveTemplateBox: '.bcms-grid-box-active',
             pagePropertiesTemplateBox: '.bcms-grid-box',
             pagePropertiesActiveTemplateMessage: '.bcms-grid-active-message-text',
 
-            pagePropertiesForm: 'form:first',
-
-            firstInvalidFormInput: ':input.input-validation-error:first',
-            firstInvalidFormInputParentTab: '.bcms-tab-single',
-            firstInvalidFormInputParentTabClick: '.bcms-tab[href="#{0}"]'
+            pagePropertiesForm: 'form:first'
 
         },
         links = {
@@ -59,11 +37,8 @@ define('bcms.pages.properties', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', '
             editPagePropertiesInfoMessageClosed: 'bcms.EditPagePropertiesInfoBoxClosed'
         },
         classes = {
-            pagePropertiesActiveTemplateBox: 'bcms-grid-box-active',
-            tagExpand: 'bcms-btn-plus-expand'
-        },
-        pagePropertiesTagCounter = 0,
-        pagePropertiesCategoryCounter = 0;
+            pagePropertiesActiveTemplateBox: 'bcms-grid-box-active'
+        };
 
     /**
     * Assign objects to module.
@@ -71,93 +46,25 @@ define('bcms.pages.properties', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', '
     page.links = links;
     page.globalization = globalization;
 
-    /*
-   * Remove page tag or category from PageProperties dialog.
-   */
-    function removeTag() {
-        $(this).closest(selectors.addedTagClass).remove();
-    }
-
-    /*
-   * Add page tag in PageProperties dialog.
-   */
-    function addNewTag(dialog) {
-        var template = dialog.container.find(selectors.addTagTemplate),
-            templateBlock = $(template.html()),
-            removeLink = templateBlock.find('a'),
-            hiddenTemplateInput = templateBlock.find(selectors.tagHiddenValue),
-            hiddenTemplateIndexer = templateBlock.find(selectors.tagHiddenIndex),
-            tagField = dialog.container.find(selectors.addTagField),
-            tagName = tagField.val(),
-            tagsHolder = dialog.container.find(selectors.tagsContainer),
-            tagNames = [];
-
-        if (tagName) {
-            tagsHolder.find(selectors.addedTagClass).each(function (index, value) {
-                tagNames.push($(value).data('name').toLowerCase());
-            });
-
-            if ($.inArray(tagName.toLowerCase(), tagNames) < 0) {
-                removeLink.before(tagName);
-                removeLink.on('click', removeTag);
-                templateBlock.attr('data-name', tagName);
-                tagsHolder.append(templateBlock);
-
-                hiddenTemplateInput.attr('id', hiddenTemplateInput.attr('id').replace("0", pagePropertiesTagCounter));
-                hiddenTemplateInput.attr('name', hiddenTemplateInput.attr('name').replace("0", pagePropertiesTagCounter));
-                hiddenTemplateInput.val(tagName);
-
-                hiddenTemplateIndexer.val(pagePropertiesTagCounter);
-
-                pagePropertiesTagCounter = pagePropertiesTagCounter + 1;
-            }
-
-            tagField.val('');
-        }
-    }
-
-    /*
-    * Add new category
+    /**
+    * Page view model
     */
-    function addNewCategory(dialog) {
-        var template = dialog.container.find(selectors.addCategoryTemplate),
-            templateBlock = $(template.html()),
-            removeLink = templateBlock.find('a'),
-            hiddenTemplateInput = templateBlock.find(selectors.categoryHiddenValue),
-            hiddenTemplateIndexer = templateBlock.find(selectors.categoryHiddenIndex),
-            categoryField = dialog.container.find(selectors.addCategoryField),
-            categoryName = categoryField.val(),
-            categoriesHolder = dialog.container.find(selectors.categoriesContainer),
-            categories = [];
+    function PageViewModel(image, tagsViewModel) {
+        var self = this;
 
-        if (categoryName) {
-            categoriesHolder.find(selectors.addedCategoryClass).each(function (index, value) {
-                categories.push($(value).data('name').toLowerCase());
-            });
-
-            if ($.inArray(categoryName.toLowerCase(), categories) < 0) {
-                removeLink.before(categoryName);
-                removeLink.on('click', removeTag);
-                templateBlock.attr('data-name', categoryName);
-                categoriesHolder.append(templateBlock);
-
-                hiddenTemplateInput.attr('id', hiddenTemplateInput.attr('id').replace("0", pagePropertiesCategoryCounter));
-                hiddenTemplateInput.attr('name', hiddenTemplateInput.attr('name').replace("0", pagePropertiesCategoryCounter));
-                hiddenTemplateInput.val(categoryName);
-
-                hiddenTemplateIndexer.val(pagePropertiesCategoryCounter);
-
-                pagePropertiesCategoryCounter = pagePropertiesCategoryCounter + 1;
-            }
-
-            categoryField.val('');
-        }
+        self.tags = tagsViewModel;
+        self.image = ko.observable(new media.ImageSelectorViewModel(image));
     }
-    
+
     /**
     * Initializes EditPageProperties dialog events.
     */
-    page.initEditPagePropertiesDialogEvents = function (dialog) {
+    page.initEditPagePropertiesDialogEvents = function (dialog, content) {
+        var tagsViewModel = new tags.TagsListViewModel(content.Data.Tags),
+            pageViewModel = new PageViewModel(content.Data.Image, tagsViewModel),
+            form = dialog.container.find(selectors.pagePropertiesForm);
+        ko.applyBindings(pageViewModel, form.get(0));
+
         dialog.container.find(selectors.editPermalink).on('click', function () {
             page.showPagePropertiesEditPermalinkBox(dialog);
         });
@@ -170,7 +77,7 @@ define('bcms.pages.properties', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', '
             page.savePagePropertiesEditPermalinkBox(dialog);
         });
 
-        dialog.container.find(selectors.pagePropertiesForm).on('submit', function () {
+        form.on('submit', function () {
             if (!dialog.container.find(selectors.permalinkEditField).valid()) {
                 page.showPagePropertiesEditPermalinkBox(dialog);
             }
@@ -190,44 +97,6 @@ define('bcms.pages.properties', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', '
             page.highlightPagePropertiesActiveTemplate(dialog, this);
         });
 
-        dialog.container.find(selectors.addTagField).on('blur', function () {
-            addNewTag(dialog);
-        });
-
-        dialog.container.find(selectors.addCategoryField).on('blur', function () {
-            addNewCategory(dialog);
-        });
-
-        dialog.container.find(selectors.buttonTagExpand).on('click', function () {
-            var button = $(this),
-                tagsContainer = button.siblings(selectors.tagsInputHolder),
-                visible = tagsContainer.is(':visible');
-
-            if (visible) {
-                button.removeClass(classes.tagExpand);
-                tagsContainer.hide();
-            } else {
-                button.addClass(classes.tagExpand);
-                tagsContainer.show();
-            }
-        });
-        
-        dialog.container.find(selectors.buttonCategoryExpand).on('click', function () {
-            var button = $(this),
-                tagsContainer = button.siblings(selectors.tagsInputHolder),
-                visible = tagsContainer.is(':visible');
-
-            if (visible) {
-                button.removeClass(classes.tagExpand);
-                tagsContainer.hide();
-            } else {
-                button.addClass(classes.tagExpand);
-                tagsContainer.show();
-            }
-        });
-
-        dialog.container.find(selectors.tagRemoveLink).on('click', removeTag);
-
         bcms.preventInputFromSubmittingForm(dialog.container.find(selectors.permalinkEditField), {
             preventedEnter: function () {
                 dialog.container.find(selectors.permalinkEditField).blur();
@@ -238,29 +107,6 @@ define('bcms.pages.properties', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', '
                 page.closePagePropertiesEditPermalinkBox(dialog);
             }
         });
-
-        bcms.preventInputFromSubmittingForm(dialog.container.find(selectors.addTagField), {
-            preventedEnter: function () {
-                dialog.container.find(selectors.addTagField).blur();
-            },
-            preventedEsc: function () {
-                $(selectors.addTagField).val('');
-                dialog.container.find(selectors.addTagField).blur();
-            }
-        });
-
-        bcms.preventInputFromSubmittingForm(dialog.container.find(selectors.addCategoryField), {
-            preventedEnter: function () {
-                dialog.container.find(selectors.addCategoryField).blur();
-            },
-            preventedEsc: function () {
-                $(selectors.addCategoryField).val('');
-                dialog.container.find(selectors.addCategoryField).blur();
-            }
-        });
-
-        pagePropertiesTagCounter = $(selectors.tagsContainer).find(selectors.addedTagClass).length;
-        pagePropertiesCategoryCounter = $(selectors.categoriesContainer).find(selectors.addedCategoryClass).length;
     };
 
     /**

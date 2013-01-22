@@ -14,7 +14,7 @@ namespace BetterCms.Tests.Helpers
     {
         public void AddAvailableMappings(FluentConfiguration fluentConfiguration)
         {
-            fluentConfiguration.Mappings(mc => mc.FluentMappings.AddFromAssemblyOf<AuthorMap>());
+            fluentConfiguration.Mappings(mc => mc.FluentMappings.AddFromAssemblyOf<PagePropertiesMap>());
             fluentConfiguration.Mappings(mc => mc.FluentMappings.AddFromAssemblyOf<UserMap>());
             fluentConfiguration.Mappings(mc => mc.FluentMappings.AddFromAssemblyOf<MediaMap>());
             fluentConfiguration.Mappings(mc => mc.FluentMappings.AddFromAssemblyOf<SitemapNodeMap>());

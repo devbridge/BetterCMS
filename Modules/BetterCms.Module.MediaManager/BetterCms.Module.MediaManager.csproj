@@ -167,6 +167,7 @@
     <Compile Include="Models\Media.cs" />
     <Compile Include="Models\MediaImage.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
+    <Compile Include="Models\Migrations\Migration201301161410.cs" />
     <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />
     <Compile Include="Registration\ImageEditorJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\MediaUploadJavaScriptModuleDescriptor.cs" />
@@ -178,7 +179,7 @@
     <Compile Include="Services\IMediaImageService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registration\MediaManagerJavaScriptModuleDescriptor.cs" />
-    <Compile Include="ViewModels\EntityWithImageViewModel.cs" />
+    <Compile Include="ViewModels\ImageSelectorViewModel.cs" />
     <Compile Include="ViewModels\Images\ImageViewModel.cs" />
     <Compile Include="ViewModels\MediaManager\MediaAudioViewModel.cs" />
     <Compile Include="ViewModels\MediaManager\MediaManagerItemsViewModel.cs" />
@@ -211,7 +212,6 @@
     <EmbeddedResource Include="Content\Css\Images\bcms-no-image-1.png" />
     <EmbeddedResource Include="Content\Css\Images\bcms-no-image-2.png" />
     <EmbeddedResource Include="Content\Css\Images\bcms-no-image-3.png" />
-    <EmbeddedResource Include="Scripts\bcms.media.imageeditor.js" />
     <EmbeddedResource Include="Scripts\bcms.media.upload.js" />
   </ItemGroup>
   <ItemGroup>
@@ -238,13 +238,13 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Scripts\bcms.contextMenu.js" />
+    <EmbeddedResource Include="Scripts\bcms.media.imageeditor.js" />
     <EmbeddedResource Include="Scripts\bcms.media.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />
     <Folder Include="Mvc\" />
-    <Folder Include="Views\Files\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Images\ImageCropper.cshtml" />
@@ -275,6 +275,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\MediaManager\Partial\MediaManagerTemplate.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Files\FileInsert.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

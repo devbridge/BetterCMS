@@ -123,6 +123,8 @@ namespace BetterCms.Tests.Helpers
 
             PopulatePageProperties(entity);
 
+            entity.Author = CreateNewAuthor();
+
             return entity;
         }
 
@@ -147,6 +149,7 @@ namespace BetterCms.Tests.Helpers
             entity.Description = ProvideRandomString(2000);
             entity.CanonicalUrl = ProvideRandomString(MaxLength.Url);
             entity.CustomCss = ProvideRandomString(2000);
+            entity.CustomJS = ProvideRandomString(2000);
             entity.MetaTitle = ProvideRandomString(MaxLength.Name);
             entity.MetaKeywords = ProvideRandomString(MaxLength.Text);
             entity.MetaDescription = ProvideRandomString(MaxLength.Text);
@@ -395,18 +398,6 @@ namespace BetterCms.Tests.Helpers
             return entity;
         }
 
-        public PageCategory CreateNewPageCategory(PageProperties page = null, Category category = null)
-        {
-            var entity = new PageCategory();
-
-            PopulateBaseFields(entity);
-
-            entity.Page = page ?? CreateNewPageProperties();
-            entity.Category = category ?? CreateNewCategory();
-
-            return entity;
-        }
-
         public ServerControlWidget CreateNewServerControlWidget()
         {
             var entity = new ServerControlWidget();
@@ -509,8 +500,8 @@ namespace BetterCms.Tests.Helpers
 
             entity.Type = type;
             entity.Title = ProvideRandomString(MaxLength.Name);
-            entity.FileName = ProvideRandomString(MaxLength.Name);
-            entity.FileExtension = ProvideRandomString(10);
+            entity.OriginalFileName = ProvideRandomString(MaxLength.Name);
+            entity.OriginalFileExtension = ProvideRandomString(10);
             entity.FileUri = new Uri(@"C:\web\test\content\100200\file.png");
             entity.PublicUrl = "http://bettercms.com/files/file?id=100200";
             entity.Size = ProvideRandomNumber(10, 2000);
@@ -530,8 +521,8 @@ namespace BetterCms.Tests.Helpers
 
             entity.Type = type;
             entity.Title = ProvideRandomString(MaxLength.Name);
-            entity.FileName = ProvideRandomString(MaxLength.Name);
-            entity.FileExtension = ProvideRandomString(10);
+            entity.OriginalFileName = ProvideRandomString(MaxLength.Name);
+            entity.OriginalFileExtension = ProvideRandomString(10);
             entity.FileUri = new Uri(@"C:\Projects\BetterCMS\file100.png");
             entity.PublicUrl = "http://bettercms.com/files/image?id=100200&t=image;";
             entity.Size = ProvideRandomNumber(10, 2000);

@@ -178,6 +178,24 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Click on file to select it..
+        /// </summary>
+        public static string FileNotSelected_MessageMessage {
+            get {
+                return ResourceManager.GetString("FileNotSelected_MessageMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select file.
+        /// </summary>
+        public static string FileNotSelected_MessageTitle {
+            get {
+                return ResourceManager.GetString("FileNotSelected_MessageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Files.
         /// </summary>
         public static string FilesTab_Title {
@@ -511,6 +529,33 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Insert File.
+        /// </summary>
+        public static string InsertFile_Dialog_Title {
+            get {
+                return ResourceManager.GetString("InsertFile_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to get files list..
+        /// </summary>
+        public static string InsertFile_FailureMessage_Message {
+            get {
+                return ResourceManager.GetString("InsertFile_FailureMessage_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failure.
+        /// </summary>
+        public static string InsertFile_FailureMessage_Title {
+            get {
+                return ResourceManager.GetString("InsertFile_FailureMessage_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Insert Image.
         /// </summary>
         public static string InsertImage_Dialog_Title {
@@ -579,6 +624,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         public static string MediaManager_ButtonDownload {
             get {
                 return ResourceManager.GetString("MediaManager_ButtonDownload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Insert File.
+        /// </summary>
+        public static string MediaManager_ButtonInsertFile {
+            get {
+                return ResourceManager.GetString("MediaManager_ButtonInsertFile", resourceCulture);
             }
         }
         

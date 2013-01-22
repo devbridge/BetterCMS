@@ -12,6 +12,7 @@ define('bcms.htmlEditor', ['jquery', 'bcms', 'ckeditor'], function ($, bcms) {
         globalization = {},
         events = {
             insertImage: 'insertImage',
+            insertFile: 'insertFile',
         };
 
     // Assign objects to module
@@ -38,8 +39,13 @@ define('bcms.htmlEditor', ['jquery', 'bcms', 'ckeditor'], function ($, bcms) {
             instance.destroy(true);
         }
         CKEDITOR.replace(id, options);
+        
         CKEDITOR.instances[id].InsertImageClicked = function(editor) {
             bcms.trigger(htmlEditor.events.insertImage, editor);
+        };
+        
+        CKEDITOR.instances[id].InsertFileClicked = function (editor) {
+            bcms.trigger(htmlEditor.events.insertFile, editor);
         };
     };
 

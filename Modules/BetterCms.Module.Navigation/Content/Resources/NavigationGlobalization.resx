@@ -174,4 +174,7 @@
   <data name="Sitemap_EditDialog_AddPageLink_SearchPlaceHolder" xml:space="preserve">
     <value>Search...</value>
   </data>
+  <data name="Sitemap_NodeCreatedSuccessfully_Message" xml:space="preserve">
+    <value>Sitemap node created successfully.</value>
+  </data>
 </root>

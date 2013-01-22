@@ -307,7 +307,6 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
             row.data('id', json.Data.Id);
             row.data('version', json.Data.Version);
             row.find(selectors.templateNameCell).html(json.Data.TemplateName);
-            // row.find(selectors.templateCategoryNameCell).html(json.Data.CategoryName);
         };
 
         return template;

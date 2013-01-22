@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using NUnit.Framework;
 
-using BetterCms.Module.Root.Models;
-
-using NHibernate.Linq;
-
-using NUnit.Framework;
-
-namespace BetterCms.Test.Module.Pages.ModelTests.MapTests
+namespace BetterCms.Test.Module.Blog.ModelTests.MapTests
 {
     [TestFixture]
     public class AuthorMapTest : DatabaseTestBase
