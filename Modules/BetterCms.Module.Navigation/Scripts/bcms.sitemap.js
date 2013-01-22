@@ -75,6 +75,9 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
 
 
         // --- Controllers ----------------------------------------------------
+        /**
+        * Controller for sitemap in site settings dialog.
+        */
         function SiteSettingsMapController() {
             var self = this;
             self.container = null;
@@ -109,6 +112,10 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 }
             };
         }
+        
+        /**
+        * Controller for sitemap add node dialog.
+        */
         function AddNodeMapController() {
             var self = this;
             self.container = null;
@@ -148,9 +155,16 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         
 
         // --- Helpers --------------------------------------------------------
+        /**
+        * Helper function to show json messages.
+        */
         sitemap.showMessage = function (content) {
             messages.refreshBox(sitemap.activeMessageContainer, content);
         };
+        
+        /**
+        * Helper function to show loading.
+        */
         sitemap.showLoading = function (loading) {
             if (loading) {
                 $(sitemap.activeLoadingContainer).showLoading();
@@ -158,9 +172,13 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 $(sitemap.activeLoadingContainer).hideLoading();
             }
         };
+        
+        /**
+        * Helper function to add knockout binding 'draggable'.
+        */
         function addDraggableBinding() {
             ko.bindingHandlers.draggable = {
-                init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+                init: function(element, valueAccessor, allBindingsAccessor, viewModel) {
                     var dragObject = viewModel,
                         setup = {
                             revert: true,
@@ -175,7 +193,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                                 }
                                 return $(this).clone().width($(this).width()).css({ zIndex: 9999 });
                             },
-                            start: function(event, ui) {
+                            start: function() {
                                 $(this).hide();
                             },
                             stop: function(event, ui) {
@@ -192,9 +210,13 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 }
             };
         }
+        
+        /**
+        * Helper function to add knockout binding 'droppable'.
+        */
         function addDroppableBinding() {
             ko.bindingHandlers.droppable = {
-                init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+                init: function(element, valueAccessor, allBindingsAccessor, viewModel) {
                     var dropZoneObject = viewModel,
                         dropZoneType = valueAccessor(),
                         setup = {
@@ -236,13 +258,15 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                                     dragObject = node;
                                 }
                                 
-                                // Add node to tree.
                                 dragObject.isBeingDragged(false);
+                                
+                                // Add node to tree.
+                                var index;
                                 if (dropZoneType == DropZoneTypes.EmptyListZone) {
                                     dropZoneObject.childNodes.splice(0, 0, dragObject);
                                 }
                                 else if (dropZoneType == DropZoneTypes.TopZone) {
-                                    var index = dropZoneObject.parentNode.childNodes().indexOf(dropZoneObject);
+                                    index = dropZoneObject.parentNode.childNodes().indexOf(dropZoneObject);
                                     dropZoneObject.parentNode.childNodes.splice(index, 0, dragObject);
                                 }
                                 else if (dropZoneType == DropZoneTypes.MiddleZone) {
@@ -250,7 +274,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                                     dropZoneObject.isExpanded(true);
                                 }
                                 else if (dropZoneType == DropZoneTypes.BottomZone) {
-                                    var index = dropZoneObject.parentNode.childNodes().indexOf(dropZoneObject);
+                                    index = dropZoneObject.parentNode.childNodes().indexOf(dropZoneObject);
                                     dropZoneObject.parentNode.childNodes.splice(index + 1, 0, dragObject);
                                 }
                                 dropZoneObject.activeZone(DropZoneTypes.None);
@@ -259,6 +283,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                                     sitemap.activeMapModel.updateNodesOrderAndParent();
                                 }
 
+                                // Fix for jQuery drag object.
                                 $(ui.draggable).data('draggable', forFix);
                             }
                         };
@@ -270,7 +295,9 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         
 
         // --- View Models ----------------------------------------------------
-        // Responsible for searching in sitemap.
+        /**
+        * Responsible for searching in sitemap.
+        */
         function SearchSitemapViewModel(sitemapViewModel) {
             var self = this;
             self.searchQuery = ko.observable("");
@@ -315,7 +342,9 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             };
         }
         
-        // Responsible for sitemap structure.
+        /**
+        * Responsible for sitemap structure.
+        */
         function SitemapViewModel() {
             var self = this;
             self.id = function() { return defaultIdValue; };
@@ -381,7 +410,9 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             };
         }
         
-        // Responsible for sitemap node data.
+        /**
+        * Responsible for sitemap node data.
+        */
         function NodeViewModel() {
             var self = this;
             
@@ -528,7 +559,9 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             };
         }
 
-        // Responsible for page searching.
+        /**
+        * Responsible for page searching.
+        */
         function SearchPageLinksViewModel(sitemapViewModel) {
             var self = this;
             self.searchQuery = ko.observable("");
@@ -570,7 +603,9 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             };
         }
         
-        // Responsible for page link data.
+        /**
+        * Responsible for page link data.
+        */
         function PageLinkViewModel() {
             var self = this;
             self.title = ko.observable();
