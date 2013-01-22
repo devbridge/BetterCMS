@@ -47,6 +47,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageSeo
                 model.MetaTitle = page.MetaTitle;
                 model.MetaKeywords = page.MetaKeywords;
                 model.MetaDescription = page.MetaDescription;
+                model.CreatePermanentRedirect = true;
             }
 
             return model;

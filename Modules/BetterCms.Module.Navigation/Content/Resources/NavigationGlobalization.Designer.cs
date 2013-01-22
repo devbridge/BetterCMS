@@ -106,51 +106,6 @@ namespace BetterCms.Module.Navigation.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add Custom Link.
-        /// </summary>
-        public static string Sitemap_EditDialog_AddCustomLink_Header {
-            get {
-                return ResourceManager.GetString("Sitemap_EditDialog_AddCustomLink_Header", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Drag your page where you want to place it..
-        /// </summary>
-        public static string Sitemap_EditDialog_AddCustomLink_Text {
-            get {
-                return ResourceManager.GetString("Sitemap_EditDialog_AddCustomLink_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Title.
-        /// </summary>
-        public static string Sitemap_EditDialog_AddCustomLink_Title {
-            get {
-                return ResourceManager.GetString("Sitemap_EditDialog_AddCustomLink_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to URL Path.
-        /// </summary>
-        public static string Sitemap_EditDialog_AddCustomLink_UrlPath {
-            get {
-                return ResourceManager.GetString("Sitemap_EditDialog_AddCustomLink_UrlPath", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add Page Link.
-        /// </summary>
-        public static string Sitemap_EditDialog_AddPageLink_Header {
-            get {
-                return ResourceManager.GetString("Sitemap_EditDialog_AddPageLink_Header", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
         public static string Sitemap_EditDialog_AddPageLink_SearchButton {
@@ -165,6 +120,24 @@ namespace BetterCms.Module.Navigation.Content.Resources {
         public static string Sitemap_EditDialog_AddPageLink_SearchPlaceHolder {
             get {
                 return ResourceManager.GetString("Sitemap_EditDialog_AddPageLink_SearchPlaceHolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Drag &amp; Drop your page where you want to place it..
+        /// </summary>
+        public static string Sitemap_EditDialog_PageLink_Header {
+            get {
+                return ResourceManager.GetString("Sitemap_EditDialog_PageLink_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Custom URL.
+        /// </summary>
+        public static string Sitemap_EditorDialog_CustomLinkTitle {
+            get {
+                return ResourceManager.GetString("Sitemap_EditorDialog_CustomLinkTitle", resourceCulture);
             }
         }
         

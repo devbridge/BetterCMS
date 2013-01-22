@@ -88,7 +88,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change Permalink.
+        ///   Looks up a localized string similar to Page URL.
         /// </summary>
         public static string AddNewPage_EditPermalink_Title {
             get {
@@ -97,7 +97,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change Permalink. Link must start and end with &quot;/&quot; and can contain only following characters: &apos;0-9&apos;, &apos;a-z&apos;, &apos;-&apos;, &apos;/, &apos;_&apos;.
+        ///   Looks up a localized string similar to Page URL must start and end with &quot;/&quot; and can contain only following characters: &apos;0-9&apos;, &apos;a-z&apos;, &apos;-&apos;, &apos;/, &apos;_&apos;.
         /// </summary>
         public static string AddNewPage_EditPermalink_Tooltip_Description {
             get {
@@ -106,7 +106,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change Permalink.
+        ///   Looks up a localized string similar to Edit Page URL.
         /// </summary>
         public static string AddNewPage_EditPermalink_Tooltip_Title {
             get {
@@ -142,7 +142,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 2. Permalink.
+        ///   Looks up a localized string similar to Page URL.
         /// </summary>
         public static string AddNewPage_Permalink {
             get {
@@ -151,7 +151,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Permalink Edit.
+        ///   Looks up a localized string similar to Edit Page URL.
         /// </summary>
         public static string AddNewPage_Permalink_Tooltip_Description {
             get {
@@ -160,7 +160,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Permalink Edit.
+        ///   Looks up a localized string similar to Edit Page URL.
         /// </summary>
         public static string AddNewPage_Permalink_Tooltip_Title {
             get {
@@ -466,7 +466,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New Page Url.
+        ///   Looks up a localized string similar to New Page URL.
         /// </summary>
         public static string ClonePage_Dialog_PageUrl {
             get {
@@ -475,7 +475,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New page url.
+        ///   Looks up a localized string similar to New Page URL.
         /// </summary>
         public static string ClonePage_Dialog_PageUrl_Tooltip_Description {
             get {
@@ -484,7 +484,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page url.
+        ///   Looks up a localized string similar to Page URL.
         /// </summary>
         public static string ClonePage_Dialog_PageUrl_Tooltip_Title {
             get {
@@ -529,7 +529,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New page url is invalid. Url must start and end with &quot;/&quot; and can contain only following characters: &apos;0-9&apos;, &apos;a-z&apos;, &apos;-&apos;, &apos;/&apos;, &apos;_&apos;.
+        ///   Looks up a localized string similar to New page URL is invalid. Url must start and end with &quot;/&quot; and can contain only following characters: &apos;0-9&apos;, &apos;a-z&apos;, &apos;-&apos;, &apos;/&apos;, &apos;_&apos;.
         /// </summary>
         public static string ClonePage_PageUrl_InvalidMessage {
             get {
@@ -538,7 +538,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page url max length exceeded..
+        ///   Looks up a localized string similar to Page URL max length exceeded..
         /// </summary>
         public static string ClonePage_PageUrl_MaxLengthMessage {
             get {
@@ -547,7 +547,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page url is required..
+        ///   Looks up a localized string similar to Page URL is required..
         /// </summary>
         public static string ClonePage_PageUrl_RequiredMessage {
             get {
@@ -907,7 +907,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change Page URL. Link must start and end with &quot;/&quot; and can contain only following characters: &apos;0-9&apos;, &apos;a-z&apos;, &apos;-&apos;, &apos;/&apos;, &apos;_&apos;.
+        ///   Looks up a localized string similar to Page URL must start and end with &quot;/&quot; and can contain only following characters: &apos;0-9&apos;, &apos;a-z&apos;, &apos;-&apos;, &apos;/&apos;, &apos;_&apos;.
         /// </summary>
         public static string EditPageProperties_AdvancedPropertiesTab_EditUrlPath_Tooltip_Description {
             get {
@@ -916,7 +916,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit URL Path.
+        ///   Looks up a localized string similar to Edit Page URL.
         /// </summary>
         public static string EditPageProperties_AdvancedPropertiesTab_EditUrlPath_Tooltip_Title {
             get {
@@ -979,7 +979,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page URL:.
+        ///   Looks up a localized string similar to Page URL.
         /// </summary>
         public static string EditPageProperties_AdvancedPropertiesTab_PageUrl_Title {
             get {
@@ -988,7 +988,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page Url.
+        ///   Looks up a localized string similar to Edit Page URL.
         /// </summary>
         public static string EditPageProperties_AdvancedPropertiesTab_PageUrl_Tooltip_Description {
             get {
@@ -997,7 +997,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page Url.
+        ///   Looks up a localized string similar to Edit Page URL.
         /// </summary>
         public static string EditPageProperties_AdvancedPropertiesTab_PageUrl_Tooltip_Title {
             get {
@@ -1285,7 +1285,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to URL path max length exceeded..
+        ///   Looks up a localized string similar to Page URL max length exceeded..
         /// </summary>
         public static string EditPageProperties_PagePermalink_MaxLengthMessage {
             get {
@@ -1294,7 +1294,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to URL path is required..
+        ///   Looks up a localized string similar to Page URL is required..
         /// </summary>
         public static string EditPageProperties_PagePermalink_RequiredMessage {
             get {
@@ -1366,7 +1366,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit URL Path.
+        ///   Looks up a localized string similar to Page URL.
         /// </summary>
         public static string EditSeo_EditUrlPath_Title {
             get {
@@ -1375,7 +1375,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit Url.
+        ///   Looks up a localized string similar to Page URL must start and end with &quot;/&quot; and can contain only following characters: &apos;0-9&apos;, &apos;a-z&apos;, &apos;-&apos;, &apos;/&apos;, &apos;_&apos;.
         /// </summary>
         public static string EditSeo_EditUrlPath_Tooltip_Description {
             get {
@@ -1384,7 +1384,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit Url.
+        ///   Looks up a localized string similar to Edit Page URL.
         /// </summary>
         public static string EditSeo_EditUrlPath_Tooltip_Title {
             get {
@@ -1537,7 +1537,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to URL Path.
+        ///   Looks up a localized string similar to Page URL.
         /// </summary>
         public static string EditSeo_UrlPath {
             get {
@@ -1546,7 +1546,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Url path is for....
+        ///   Looks up a localized string similar to Edit Page URL.
         /// </summary>
         public static string EditSeo_UrlPath_Tooltip_Description {
             get {
@@ -1555,7 +1555,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Url Path.
+        ///   Looks up a localized string similar to Edit Page URL.
         /// </summary>
         public static string EditSeo_UrlPath_Tooltip_Title {
             get {
@@ -1816,7 +1816,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit URL Path.
+        ///   Looks up a localized string similar to Page URL.
         /// </summary>
         public static string PageProperties_EditURLPath_Title {
             get {
@@ -1915,7 +1915,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page url is not a valid url..
+        ///   Looks up a localized string similar to Page URL is not a valid url..
         /// </summary>
         public static string SaveRedirect_InvalidPageUrl_Message {
             get {
@@ -1924,7 +1924,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Redirect url is not a valid url..
+        ///   Looks up a localized string similar to Redirect URL is not a valid url..
         /// </summary>
         public static string SaveRedirect_InvalidRedirectUrl_Message {
             get {
@@ -2626,7 +2626,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid URL path. Please update URL (path) and try again..
+        ///   Looks up a localized string similar to Invalid page URL. Please update URL (path) and try again..
         /// </summary>
         public static string ValidatePageUrlCommand_InvalidUrlPath_Message {
             get {
@@ -2788,7 +2788,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Purpose of URL path is .......
+        ///   Looks up a localized string similar to Purpose of Page URL is .......
         /// </summary>
         public static string WidgetPreviewImageUrl_Tooltip_Description {
             get {

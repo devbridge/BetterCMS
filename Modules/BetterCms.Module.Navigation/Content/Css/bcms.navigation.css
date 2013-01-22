@@ -1,33 +1,4 @@
 ﻿/* sitemap page "add new node"*/
-.bcms-sitemap-links-header {
-    padding: 25px 20px 0;
-}
-
-    .bcms-sitemap-links-header > .bcms-content-titles {
-        cursor: pointer;
-    }
-
-.bcms-add-custom-link {
-    position: relative;
-    padding: 2px 15px 15px;
-    margin: 10px 0;
-    border: 1px solid #bdbdbd;
-    border-radius: 4px;
-    background-color: #fff;
-    cursor: move;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    user-select: none;
-}
-
-    .bcms-add-custom-link:hover {
-        border: 1px dashed #a4a4a4;
-    }
-
-    .bcms-add-custom-link .bcms-content-titles {
-        padding: 10px 0 5px;
-    }
-
 .bcms-sitemap-links-holder {
     padding: 10px 20px;
 }
@@ -37,6 +8,7 @@
     }
 
     .bcms-sitemap-links-holder .bcms-placement-node {
+        width: 195px;
         margin-bottom: 5px;
     }
 
@@ -45,7 +17,7 @@
     }
 
 .bcms-sidebar-search {
-    padding-bottom: 15px;
+    padding: 15px 0;
 }
 
     .bcms-sidebar-search .bcms-editor-field-box {
@@ -60,15 +32,10 @@
     min-height: 52px;
     display: block;
     padding: 0 20px 4px;
-    overflow: hidden;
 }
 
 .bcms-sitemap-holder {
     padding-top: 20px;
-}
-
-.bcms-sitemap-links-block .bcms-placement-node {
-    width: 195px;
 }
 
 .bcms-drop-area {
@@ -84,7 +51,7 @@
 .bcms-dropable-page-box {
     position: relative;
     padding: 15px;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     border: 1px solid #bdbdbd;
     border-radius: 4px;
     background-color: #fff;
@@ -110,23 +77,60 @@
         padding-bottom: 20px;
     }
 
-/*right content*/
+/*nodes tree*/
+.bcms-tree-holder > div {
+    position: relative;
+}
+
+.bcms-placement-node + .bcms-zone-holder {
+    margin-top: 8px;
+}
+
+.bcms-zone-holder {
+    position: relative;
+    border-left: 3px solid #e3e3e3;
+    padding: 0 0 0 20px;
+}
+
+.bcms-nodes-dropzone + .bcms-zone-holder {
+    margin-top: 0;
+}
+
+/*dropzone*/
+.bcms-nodes-dropzone {
+    padding: 4px 0;
+}
+
+.bcms-nodes-dropzone-active {
+    padding: 8px 0;
+}
+
+    .bcms-nodes-dropzone-active .bcms-node-infotext {
+        display: block;
+    }
+
+.bcms-node-infotext {
+    display: none;
+    height: 30px;
+    line-height: 30px;
+    padding: 8px 15px;
+    color: #bdbdbd;
+    border: 1px dashed #bdbdbd;
+    border-radius: 2px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
 .bcms-placement-holder {
     display: block;
     padding: 20px;
     border-top: 1px solid #c6c6c6;
 }
 
-.bcms-placement-holder-inner {
-    /*background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAFoTx1HAAAAcUlEQVQoz5WSQQ4AIQgDebkJD5u3dS+rUSIse+il2AJFAwSYAQ7IAJuMJqOXXW8tEoo6A8YyOawP+40ct2LEOGy2MZTZlj3LojoDlUXPpvWY5IRXPa2DjlB73JVwJEmrey91buk/RGly2afwuOMX/MY/hgwMYjRiMmsAAAAASUVORK5CYII=') no-repeat 0 0;*/
-    border-left: 3px solid #e3e3e3;
-}
-
 .bcms-placement-node {
     position: relative;
     height: 30px;
     padding: 8px 15px;
-    margin-bottom: 15px;
     border: 1px solid #bdbdbd;
     border-radius: 2px;
     background-color: #f5f5f5;
@@ -161,6 +165,21 @@
         text-overflow: ellipsis;
     }
 
+.bcms-placement-node-drag {
+    border: 1px dashed #bdbdbd;
+    background: #effcfe;
+    opacity: 0.5;
+    filter: alpha(opacity = 50);
+}
+
+    .bcms-placement-node-drag a.bcms-icn-edit {
+        display: none;
+    }
+
+    .bcms-placement-node-drag a.bcms-icn-delete {
+        display: none;
+    }
+
 .bcms-expand-collapse-node {
     position: absolute;
     left: -8px;
@@ -169,6 +188,7 @@
     height: 16px;
     background: url('images/sprite-base-2.png') no-repeat -2px -179px;
     cursor: pointer;
+    text-indent: -9999px;
 }
 
 a.bcms-expanded-nodes {
@@ -244,24 +264,42 @@ a.bcms-expanded-nodes {
     box-sizing: border-box;
 }
 
-/*TESTING*/
-div.bcms-drag-node { /*THIS CLASS NEEDED FOR DRAGING NODES STYLE*/
-    border: 2px dashed #bdbdbd;
-    background-color: #effcfe;
+
+/*OUTDATED DO NOT DEETE UNTIL SITEMAP IS FULLY IMPLEMNTED*/
+/*
+
+.bcms-placement-holder-inner {
+    border-left: 3px solid #e3e3e3;
+    padding-left: 20px;
+}*/
+
+
+/*
+    .bcms-sitemap-links-header {
+    padding: 25px 20px 0;
 }
 
-div.ui-sortable-helper { /*THIS CLASS NEEDED FOR DRAGING NODES STYLE*/
-    border: 2px dashed #bdbdbd;
-    background-color: #effcfe;
+    .bcms-sitemap-links-header > .bcms-content-titles {
+        cursor: pointer;
+    }
+
+    .bcms-add-custom-link {
+    position: relative;
+    padding: 2px 15px 15px;
+    margin: 10px 0;
+    border: 1px solid #bdbdbd;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: move;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
-.ui-sortable-helper:hover > div.bcms-node-controls {
-    display: none;
-}
+    .bcms-add-custom-link:hover {
+        border: 1px dashed #a4a4a4;
+    }
 
-div.bcms-drag-hover-emptylist .bcms-placement-holder-inner {
-    display: block;
-    min-height: 45px;
-    margin-bottom: 15px;
-}
-/*END OF TESTING*/
+    .bcms-add-custom-link .bcms-content-titles {
+        padding: 10px 0 5px;
+    }*/
