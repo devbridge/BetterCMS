@@ -24,6 +24,7 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             addNewPageActiveTemplateBox: '.bcms-grid-box-active',
             addNewPageTemplateBox: '.bcms-grid-box',
             addNewPageActiveTemplateMessage: '.bcms-grid-active-message-text',
+            addNewPageTemplatePreviewLink: '.bcms-preview-template',
             
             addNewPageForm: 'form:first',
             
@@ -120,6 +121,14 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
 
         dialog.container.find(selectors.addNewPageTemplateSelect).on('click', function () {
             page.highlightAddNewPageActiveTemplate(dialog, this);
+        });
+        
+        dialog.container.find(selectors.addNewPageTemplatePreviewLink).on('click', function () {
+            var template = $(this),
+                url = template.data('url'),
+                alt = template.data('alt');
+
+            modal.imagePreview(url, alt);
         });
         
         bcms.preventInputFromSubmittingForm(dialog.container.find(selectors.permalinkEditField), {

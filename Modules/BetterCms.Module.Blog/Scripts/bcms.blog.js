@@ -486,6 +486,10 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         self.unselect = function() {
             self.isActive(false);
         };
+
+        self.previewImage = function() {
+            modal.imagePreview(self.previewUrl, self.title);
+        };
     }
 
     /**

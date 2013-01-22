@@ -19,10 +19,10 @@ define('bcms.pages.properties', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', '
 
             pagePropertiesTemplateSelect: '.bcms-btn-grid',
             pagePropertiesTemplateId: '#TemplateId',
-
             pagePropertiesActiveTemplateBox: '.bcms-grid-box-active',
             pagePropertiesTemplateBox: '.bcms-grid-box',
             pagePropertiesActiveTemplateMessage: '.bcms-grid-active-message-text',
+            pagePropertiesTemplatePreviewLink: '.bcms-preview-template',
 
             pagePropertiesForm: 'form:first'
 
@@ -95,6 +95,14 @@ define('bcms.pages.properties', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', '
 
         dialog.container.find(selectors.pagePropertiesTemplateSelect).on('click', function () {
             page.highlightPagePropertiesActiveTemplate(dialog, this);
+        });
+
+        dialog.container.find(selectors.pagePropertiesTemplatePreviewLink).on('click', function () {
+            var template = $(this),
+                url = template.data('url'),
+                alt = template.data('alt');
+            
+            modal.imagePreview(url, alt);
         });
 
         bcms.preventInputFromSubmittingForm(dialog.container.find(selectors.permalinkEditField), {

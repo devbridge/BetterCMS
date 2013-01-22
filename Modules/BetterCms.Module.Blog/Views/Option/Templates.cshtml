@@ -25,7 +25,10 @@
                     <div class="bcms-content-titles" data-bind="text: title"></div>
                 </div>
                 <div class="bcms-blog-templates-image-holder">
-                    <div class="bcms-zoom-overlay"></div>
+                    <!-- ko if: previewUrl -->
+                    <div class="bcms-zoom-overlay" data-bind="click: previewImage"></div>
+                    <img data-bind="attr:{src: previewUrl, alt: title}" />
+                    <!-- /ko -->
                 </div>
                 <div class="bcms-blog-templates-button-holder">
                     <!-- ko if: isCompatible && isActive() -->
