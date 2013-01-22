@@ -7,6 +7,7 @@ using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Navigation.Models;
+using BetterCms.Module.Users.Models;
 
 using BlogOption = BetterCms.Module.Blog.Models.Option;
 
@@ -660,6 +661,40 @@ namespace BetterCms.Tests.Helpers
             entity.Title = ProvideRandomString(MaxLength.Name);
             entity.Url = ProvideRandomString(MaxLength.Url);
             entity.DisplayOrder = ProvideRandomNumber(0, int.MaxValue);
+
+            return entity;
+        }
+
+        public Role CreateNewRole()
+        {
+            var entity = new Role();
+
+            PopulateBaseFields(entity);
+
+            entity.Name = ProvideRandomString(MaxLength.Name);
+
+            return entity;
+        }
+
+        public Premission CreateNewPremission()
+        {
+            var entity = new Premission();
+
+            PopulateBaseFields(entity);
+
+            entity.Name = ProvideRandomString(MaxLength.Name);
+
+            return entity;
+        }
+
+        public RolePremissions CreateNewRolePremission(Role role = null, Premission premission = null)
+        {
+            var entity = new RolePremissions();
+
+            PopulateBaseFields(entity);
+
+            entity.Role = role ?? CreateNewRole();
+            entity.Premission = premission ?? CreateNewPremission();
 
             return entity;
         }
