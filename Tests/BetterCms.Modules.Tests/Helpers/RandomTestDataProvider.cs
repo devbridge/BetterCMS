@@ -128,6 +128,15 @@ namespace BetterCms.Tests.Helpers
             return entity;
         }
 
+        public BlogPostContent CreateNewBlogPostContent()
+        {
+            var entity = new BlogPostContent();
+
+            PopulateHtmlContentProperties(entity);
+
+            return entity;
+        }
+
         public BlogOption CreateNewBlogOption()
         {
             var entity = new BlogOption();
@@ -525,6 +534,13 @@ namespace BetterCms.Tests.Helpers
         {
             var entity = new HtmlContent();
 
+            PopulateHtmlContentProperties(entity);
+
+            return entity;
+        }
+
+        private void PopulateHtmlContentProperties(HtmlContent entity)
+        {
             PopulateBaseFields(entity);
 
             entity.ActivationDate = ProvideRandomDateTime();
@@ -535,8 +551,6 @@ namespace BetterCms.Tests.Helpers
             entity.CustomCss = ProvideRandomString(100);
             entity.UseCustomJs = true;
             entity.CustomJs = ProvideRandomString(100);
-
-            return entity;
         }
 
         public HtmlContentHistory CreateNewHtmlContentHistory()

@@ -7,7 +7,6 @@ using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.MediaManager.ViewModels;
-using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
@@ -96,19 +95,19 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
                         .FutureValue<Guid>();
 
                     PageContent pageContentAlias = null;
-                    HtmlContent htmlContentAlias = null;
+                    BlogPostContent blogPostContentAlias = null;
 
                     var contents = UnitOfWork.Session
-                        .QueryOver(() => htmlContentAlias)
+                        .QueryOver(() => blogPostContentAlias)
                         .Inner.JoinAlias(c => c.PageContents, () => pageContentAlias)
                         .Where(() => pageContentAlias.Page.Id == id
                             && !pageContentAlias.IsDeleted
                             && pageContentAlias.Region.Id == regionId.Value)
                         .OrderBy(() => pageContentAlias.CreatedOn).Asc
                         .SelectList(select => select
-                            .Select(() => htmlContentAlias.Html).WithAlias(() => blogModelAlias.Content)
-                            .Select(() => htmlContentAlias.ActivationDate).WithAlias(() => blogModelAlias.LiveFromDate)
-                            .Select(() => htmlContentAlias.ExpirationDate).WithAlias(() => blogModelAlias.LiveToDate))
+                            .Select(() => blogPostContentAlias.Html).WithAlias(() => blogModelAlias.Content)
+                            .Select(() => blogPostContentAlias.ActivationDate).WithAlias(() => blogModelAlias.LiveFromDate)
+                            .Select(() => blogPostContentAlias.ExpirationDate).WithAlias(() => blogModelAlias.LiveToDate))
                         .TransformUsing(Transformers.AliasToBean<BlogPostViewModel>())
                         .Take(1)
                         .List<BlogPostViewModel>();
@@ -119,6 +118,10 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
                         model.Content = content.Content;
                         model.LiveFromDate = content.LiveFromDate;
                         model.LiveToDate = content.LiveToDate;
+                    }
+                    else
+                    {
+                        model.LiveFromDate = DateTime.Today;
                     }
 
                     model.Tags = tagService.GetPageTagNames(id);

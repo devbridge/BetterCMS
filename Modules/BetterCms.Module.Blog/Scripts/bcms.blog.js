@@ -22,7 +22,10 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             siteSettingsBlogBooleanTemplateTrue: '#bcms-boolean-true-template',
             siteSettingsBlogRowTemplate: '#bcms-blogs-list-row-template',
             siteSettingsBlogRowTemplateFirstRow: 'tr:first',
-            siteSettingsBlogsTableFirstRow: 'table.bcms-tables > tbody > tr:first'
+            siteSettingsBlogsTableFirstRow: 'table.bcms-tables > tbody > tr:first',
+            overlayConfigure: '.bcms-content-configure',
+            overlayDelete: '.bcms-content-delete',
+            overlay: '.bcms-content-overlay'
         },
         links = {
             loadSiteSettingsBlogsUrl: null,
@@ -44,6 +47,9 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             blogPostsTabTitle: null,
             authorsTabTitle: null,
             templatesTabTitle: null
+        },
+        classes = {
+            regionBlogPostContent: 'bcms-blog-post-content',
         };
 
     // Assign objects to module.
@@ -493,9 +499,41 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     }
 
     /**
-    * Initializes blog module.
+    * Called when edit overlay is shown
     */
-    blog.initActions = function () {
+    function onShowOverlay(sender) {
+        var element = $(sender),
+            overlay = $(selectors.overlay);
+
+        if (element.hasClass(classes.regionBlogPostContent)) {
+            overlay.find(selectors.overlayConfigure).hide();
+            overlay.find(selectors.overlayDelete).hide();
+        }
+    }
+        
+    /**
+    * Called when editing page content
+    */
+    function onEditContent(sender) {
+        var element = $(sender);
+
+        if (element.hasClass(classes.regionBlogPostContent)) {
+            editBlogPost(bcms.pageId, function () {
+                bcms.reload();
+            });
+        }
+    };
+        
+    /**
+    * Called when showing content history
+    */
+    function onContentHistory(sender) {
+        var element = $(sender),
+            contentId = element.data('id');
+
+        if (element.hasClass(classes.regionBlogPostContent)) {
+            alert('TODO: implement blog content history');
+        }
     };
 
     /**
@@ -503,7 +541,10 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     */
     blog.init = function () {
         console.log('Initializing blog module');
-        blog.initActions();
+        
+        bcms.on(bcms.events.showOverlay, onShowOverlay);
+        bcms.on(bcms.events.editContent, onEditContent);
+        bcms.on(bcms.events.contentHistory, onContentHistory);
     };
     
     /**

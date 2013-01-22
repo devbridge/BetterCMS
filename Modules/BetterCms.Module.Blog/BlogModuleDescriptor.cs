@@ -4,9 +4,12 @@ using Autofac;
 
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
+using BetterCms.Module.Blog.Accessors;
 using BetterCms.Module.Blog.Content.Resources;
+using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.Registration;
 using BetterCms.Module.Blog.Services;
+using BetterCms.Module.Pages.Accessors;
 
 namespace BetterCms.Module.Blog
 {
@@ -137,6 +140,10 @@ namespace BetterCms.Module.Blog
         /// <param name="configuration">The configuration.</param>
         public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder, ICmsConfiguration configuration)
         {
+            RegisterContentRendererType<BlogPostContentAccessor, BlogPostContent>(containerBuilder);
+            RegisterStylesheetRendererType<PageStylesheetAccessor, BlogPost>(containerBuilder);
+            RegisterJavaScriptRendererType<PageJavaScriptAccessor, BlogPost>(containerBuilder);
+
             containerBuilder.RegisterType<DefaultOptionService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultAuthorService>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }

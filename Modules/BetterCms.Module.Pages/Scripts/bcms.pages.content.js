@@ -30,6 +30,7 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
 
                 overlayEdit: '.bcms-content-edit',
                 overlayConfigure: '.bcms-content-configure',
+                overlayDelete: '.bcms-content-delete',
                 overlay: '.bcms-content-overlay',
                 
                 enableCustomJs: '#bcms-enable-custom-js',
@@ -369,6 +370,7 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
 
             overlay.find(selectors.overlayEdit).show();
             overlay.find(selectors.overlayConfigure).show();
+            overlay.find(selectors.overlayDelete).show();
         };
 
         /**
@@ -391,6 +393,7 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                 pageContentId = element.data('pageContentId'),
                 pageContentVersion = element.data('pageContentVersion'),
                 contentVersion = element.data('contentVersion');
+            
             pagesContent.removeContentFromPage(pageContentId, pageContentVersion, contentVersion);
         };
 
