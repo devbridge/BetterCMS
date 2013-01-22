@@ -36,6 +36,9 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         */
         sitemap.links = links;
         sitemap.globalization = globalization;
+        sitemap.activeMapModel = null;
+        sitemap.activeLoadingContainer = null;
+        sitemap.activeMessageContainer = null;
 
         /**
         * Loads a sitemap view to the site settings container.
@@ -70,12 +73,6 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             });
         };
 
-        sitemap.activeMapModel = null;
-        sitemap.activeMessageContainer = null;
-        sitemap.showMessage = function (content) {
-            messages.refreshBox(sitemap.activeMessageContainer, content);
-        };
-
 
         // --- Controllers ----------------------------------------------------
         function SiteSettingsMapController() {
@@ -86,6 +83,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             self.initialize = function(content) {
                 self.container = siteSettings.getModalDialog().container;
                 sitemap.activeMessageContainer = self.container;
+                sitemap.activeLoadingContainer = self.container.find(selectors.sitemapSearchDataBind);
                     
                 sitemap.showMessage(content);
                 if (content.Success) {
@@ -119,6 +117,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             self.initialize = function (content, dialog) {
                 self.container = dialog.container;
                 sitemap.activeMessageContainer = self.container;
+                sitemap.activeLoadingContainer = self.container.find(selectors.sitemapAddNodeDataBind);
 
                 messages.refreshBox(self.container, content);
                 if (content.Success) {
@@ -149,6 +148,16 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         
 
         // --- Helpers --------------------------------------------------------
+        sitemap.showMessage = function (content) {
+            messages.refreshBox(sitemap.activeMessageContainer, content);
+        };
+        sitemap.showLoading = function (loading) {
+            if (loading) {
+                $(sitemap.activeLoadingContainer).showLoading();
+            } else {
+                $(sitemap.activeLoadingContainer).hideLoading();
+            }
+        };
         function addDraggableBinding() {
             ko.bindingHandlers.draggable = {
                 init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
@@ -443,9 +452,9 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                                 self.callbackAfterFailSaving(self);
                             }
                         }
-                        // TODO: unlock screen.
+                        sitemap.showLoading(false);
                     };
-                // TODO: lock screen.
+                sitemap.showLoading(true);
                 $.ajax({
                     url: links.saveSitemapNodeUrl,
                     type: 'POST',
@@ -467,9 +476,9 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                         if (json.Success) {
                             self.parentNode.childNodes.remove(self);
                         }
-                        // TODO: unlock screen.
+                        sitemap.showLoading(false);
                     };
-                // TODO: lock screen.
+                sitemap.showLoading(true);
                 $.ajax({
                     url: links.deleteSitemapNodeUrl,
                     type: 'POST',
