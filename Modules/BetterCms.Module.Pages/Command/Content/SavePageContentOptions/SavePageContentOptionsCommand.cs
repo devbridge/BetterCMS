@@ -8,6 +8,8 @@ using BetterCms.Module.Root.Mvc;
 
 using NHibernate.Linq;
 
+using ContentEntity = BetterCms.Module.Root.Models.Content;
+
 namespace BetterCms.Module.Pages.Command.Content.SavePageContentOptions
 {
     public class SavePageContentOptionsCommand : CommandBase, ICommand<PageContentOptionsViewModel, bool>
@@ -23,8 +25,16 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageContentOptions
             {
                 UnitOfWork.BeginTransaction();
 
+                // Load content and page content as proxies
+                var contentId = Repository
+                    .AsQueryable<PageContent>(c => c.Id == model.PageContentId)
+                    .Select(c => c.Content.Id)
+                    .First();
+
+                var content = Repository.AsProxy<ContentEntity>(contentId);
                 var pageContent = Repository.AsProxy<PageContent>(model.PageContentId);
 
+                // Load saved page options
                 var keys = model.WidgetOptions
                     .Select(o => o.OptionKey.ToLowerInvariant())
                     .ToArray();
@@ -32,28 +42,39 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageContentOptions
                 var savedPageOptions = Repository
                     .AsQueryable<PageContentOption>(f => keys.Contains(f.ContentOption.Key.ToLower()) 
                         && f.PageContent == pageContent)
-                    .Fetch(f => f.ContentOption)
-                    .Fetch(f => f.PageContent)
+                    .Select(c => new
+                                     {
+                                         OptionKey = c.ContentOption.Key,
+                                         PageOption = c
+                                     })
                     .ToList();
 
-                IList<ContentOption> allContentOptions = null;
+                // Load all content options
+                var allContentOptions = Repository
+                    .AsQueryable<ContentOption>(c => c.Content == content)
+                    .Select(c => new
+                                     {
+                                         Key = c.Key,
+                                         Id = c.Id
+                                     })
+                    .ToList();
 
                 // Save option changes
                 foreach (var option in model.WidgetOptions)
                 {
-                    var savedPageOption = savedPageOptions.FirstOrDefault(o => o.ContentOption.Key == option.OptionKey);
+                    var savedPageOption = savedPageOptions.FirstOrDefault(o => o.OptionKey == option.OptionKey);
                     if (savedPageOption != null)
                     {
-                        if (savedPageOption.Value != option.OptionValue)
+                        if (savedPageOption.PageOption.Value != option.OptionValue)
                         {
                             if (string.IsNullOrWhiteSpace(option.OptionValue))
                             {
-                                Repository.Delete(savedPageOption);
+                                Repository.Delete(savedPageOption.PageOption);
                             }
                             else
                             {
-                                savedPageOption.Value = option.OptionValue;
-                                Repository.Save(savedPageOption);
+                                savedPageOption.PageOption.Value = option.OptionValue;
+                                Repository.Save(savedPageOption.PageOption);
                             }
                         }
                     }
@@ -61,22 +82,15 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageContentOptions
                     {
                         if (!string.IsNullOrWhiteSpace(option.OptionValue))
                         {
-                            // Load all available content options
-                            if (allContentOptions == null)
-                            {
-                                allContentOptions = Repository
-                                    .AsQueryable<ContentOption>(c => c.Content == pageContent.Content)
-                                    .ToList();
-                            }
-
-                            var contentOption = allContentOptions.FirstOrDefault(o => o.Key.ToLowerInvariant() == option.OptionKey.ToLowerInvariant());
+                            var contentOption = allContentOptions
+                                .FirstOrDefault(o => o.Key.ToLowerInvariant() == option.OptionKey.ToLowerInvariant());
 
                             if (contentOption != null) {
 
                                 var newOption = new PageContentOption
                                                     {
                                                         PageContent = pageContent,
-                                                        ContentOption = contentOption,
+                                                        ContentOption = Repository.AsProxy<ContentOption>(contentOption.Id),
                                                         Value = option.OptionValue
                                                     };
                                 Repository.Save(newOption);

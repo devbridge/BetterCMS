@@ -33,13 +33,13 @@ namespace BetterCms.Core.Models
 
             Map(x => x.IsDeleted).Not.Nullable();
             
-            Map(x => x.CreatedOn).Not.Nullable().LazyLoad();
-            Map(x => x.ModifiedOn).Not.Nullable().LazyLoad();
-            Map(x => x.DeletedOn).Nullable().LazyLoad();
+            Map(x => x.CreatedOn).Not.Nullable();
+            Map(x => x.ModifiedOn).Not.Nullable();
+            Map(x => x.DeletedOn).Nullable();
 
-            Map(x => x.CreatedByUser).Not.Nullable().Length(MaxLength.Name).LazyLoad();
-            Map(x => x.ModifiedByUser).Not.Nullable().Length(MaxLength.Name).LazyLoad();
-            Map(x => x.DeletedByUser).Nullable().Length(MaxLength.Name).LazyLoad();
+            Map(x => x.CreatedByUser).Not.Nullable().Length(MaxLength.Name);
+            Map(x => x.ModifiedByUser).Not.Nullable().Length(MaxLength.Name);
+            Map(x => x.DeletedByUser).Nullable().Length(MaxLength.Name);
             
             Version(x => x.Version);
 
