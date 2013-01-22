@@ -145,13 +145,13 @@
     <value>Add New Page</value>
   </data>
   <data name="AddNewPage_EditPermalink_Title" xml:space="preserve">
-    <value>Change Permalink</value>
+    <value>Page URL</value>
   </data>
   <data name="AddNewPage_EditPermalink_Tooltip_Description" xml:space="preserve">
-    <value>Change Permalink. Link must start and end with "/" and can contain only following characters: '0-9', 'a-z', '-', '/, '_'</value>
+    <value>Page URL must start and end with "/" and can contain only following characters: '0-9', 'a-z', '-', '/, '_'</value>
   </data>
   <data name="AddNewPage_EditPermalink_Tooltip_Title" xml:space="preserve">
-    <value>Change Permalink</value>
+    <value>Edit Page URL</value>
   </data>
   <data name="AddNewPage_PageTitle" xml:space="preserve">
     <value>1. Create a page title (H1)</value>
@@ -163,13 +163,13 @@
     <value>Create  a page title</value>
   </data>
   <data name="AddNewPage_Permalink" xml:space="preserve">
-    <value>2. Permalink</value>
+    <value>Page URL</value>
   </data>
   <data name="AddNewPage_Permalink_Tooltip_Description" xml:space="preserve">
-    <value>Permalink Edit</value>
+    <value>Edit Page URL</value>
   </data>
   <data name="AddNewPage_Permalink_Tooltip_Title" xml:space="preserve">
-    <value>Permalink Edit</value>
+    <value>Edit Page URL</value>
   </data>
   <data name="AddNewPage_SelectTemplateButton_Title" xml:space="preserve">
     <value>Select</value>
@@ -280,13 +280,13 @@
     <value>Title</value>
   </data>
   <data name="ClonePage_Dialog_PageUrl" xml:space="preserve">
-    <value>New Page Url</value>
+    <value>New Page URL</value>
   </data>
   <data name="ClonePage_Dialog_PageUrl_Tooltip_Description" xml:space="preserve">
-    <value>New page url</value>
+    <value>New Page URL</value>
   </data>
   <data name="ClonePage_Dialog_PageUrl_Tooltip_Title" xml:space="preserve">
-    <value>Page url</value>
+    <value>Page URL</value>
   </data>
   <data name="ClonePage_Dialog_Title" xml:space="preserve">
     <value>Clone Page</value>
@@ -298,13 +298,13 @@
     <value>Page title is required.</value>
   </data>
   <data name="ClonePage_PageUrl_InvalidMessage" xml:space="preserve">
-    <value>New page url is invalid. Url must start and end with "/" and can contain only following characters: '0-9', 'a-z', '-', '/', '_'</value>
+    <value>New page URL is invalid. Url must start and end with "/" and can contain only following characters: '0-9', 'a-z', '-', '/', '_'</value>
   </data>
   <data name="ClonePage_PageUrl_MaxLengthMessage" xml:space="preserve">
-    <value>Page url max length exceeded.</value>
+    <value>Page URL max length exceeded.</value>
   </data>
   <data name="ClonePage_PageUrl_RequiredMessage" xml:space="preserve">
-    <value>Page url is required.</value>
+    <value>Page URL is required.</value>
   </data>
   <data name="HtmlContentWidget_CustomCSS_Title" xml:space="preserve">
     <value>Custom CSS</value>
@@ -385,10 +385,10 @@
     <value>Create permanent redirect entry from old URL to new URL</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_EditUrlPath_Tooltip_Description" xml:space="preserve">
-    <value>Change Page URL. Link must start and end with "/" and can contain only following characters: '0-9', 'a-z', '-', '/', '_'</value>
+    <value>Page URL must start and end with "/" and can contain only following characters: '0-9', 'a-z', '-', '/', '_'</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_EditUrlPath_Tooltip_Title" xml:space="preserve">
-    <value>Edit URL Path</value>
+    <value>Edit Page URL</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_PageCss_Title" xml:space="preserve">
     <value>Page CSS</value>
@@ -400,13 +400,13 @@
     <value>Page Css</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_PageUrl_Title" xml:space="preserve">
-    <value>Page URL:</value>
+    <value>Page URL</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_PageUrl_Tooltip_Description" xml:space="preserve">
-    <value>Page Url</value>
+    <value>Edit Page URL</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_PageUrl_Tooltip_Title" xml:space="preserve">
-    <value>Page Url</value>
+    <value>Edit Page URL</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_Privacy_Title" xml:space="preserve">
     <value>Privacy</value>
@@ -487,10 +487,10 @@
     <value>Page permalink is invalid. Link must start and end with "/" and can contain only following characters: '0-9', 'a-z', '-', '/', '_'</value>
   </data>
   <data name="EditPageProperties_PagePermalink_MaxLengthMessage" xml:space="preserve">
-    <value>URL path max length exceeded.</value>
+    <value>Page URL max length exceeded.</value>
   </data>
   <data name="EditPageProperties_PagePermalink_RequiredMessage" xml:space="preserve">
-    <value>URL path is required.</value>
+    <value>Page URL is required.</value>
   </data>
   <data name="EditPageProperties_PageTitle" xml:space="preserve">
     <value>Page properties</value>
@@ -514,13 +514,13 @@
     <value>Create permanent redirect entry from old URL to new URL</value>
   </data>
   <data name="EditSeo_EditUrlPath_Title" xml:space="preserve">
-    <value>Edit URL Path</value>
+    <value>Page URL</value>
   </data>
   <data name="EditSeo_EditUrlPath_Tooltip_Description" xml:space="preserve">
-    <value>Edit Url</value>
+    <value>Page URL must start and end with "/" and can contain only following characters: '0-9', 'a-z', '-', '/', '_'</value>
   </data>
   <data name="EditSeo_EditUrlPath_Tooltip_Title" xml:space="preserve">
-    <value>Edit Url</value>
+    <value>Edit Page URL</value>
   </data>
   <data name="EditSeo_MetaDescription" xml:space="preserve">
     <value>Meta Description</value>
@@ -571,13 +571,13 @@
     <value>Meta Description</value>
   </data>
   <data name="EditSeo_UrlPath" xml:space="preserve">
-    <value>URL Path</value>
+    <value>Page URL</value>
   </data>
   <data name="EditSeo_UrlPath_Tooltip_Description" xml:space="preserve">
-    <value>Url path is for...</value>
+    <value>Edit Page URL</value>
   </data>
   <data name="EditSeo_UrlPath_Tooltip_Title" xml:space="preserve">
-    <value>Url Path</value>
+    <value>Edit Page URL</value>
   </data>
   <data name="EditWidget_BasicPropertiesTab_Title" xml:space="preserve">
     <value>Basic Properties</value>
@@ -598,7 +598,7 @@
     <value>Live from date is required.</value>
   </data>
   <data name="PageProperties_EditURLPath_Title" xml:space="preserve">
-    <value>Edit URL Path</value>
+    <value>Page URL</value>
   </data>
   <data name="PublishPage_FailedToPublishPage_Message" xml:space="preserve">
     <value>Failed to publish CMS page.</value>
@@ -616,10 +616,10 @@
     <value>Cannot save redirect. Circular redirect loop detected.</value>
   </data>
   <data name="SaveRedirect_InvalidPageUrl_Message" xml:space="preserve">
-    <value>Page url is not a valid url.</value>
+    <value>Page URL is not a valid url.</value>
   </data>
   <data name="SaveRedirect_InvalidRedirectUrl_Message" xml:space="preserve">
-    <value>Redirect url is not a valid url.</value>
+    <value>Redirect URL is not a valid url.</value>
   </data>
   <data name="SaveRedirect_RedirectExists_Message" xml:space="preserve">
     <value>Redirect from URL "{0}" already exists.</value>
@@ -775,7 +775,7 @@
     <value>Widgets</value>
   </data>
   <data name="ValidatePageUrlCommand_InvalidUrlPath_Message" xml:space="preserve">
-    <value>Invalid URL path. Please update URL (path) and try again.</value>
+    <value>Invalid page URL. Please update URL (path) and try again.</value>
   </data>
   <data name="ValidatePageUrlCommand_UrlAlreadyExists_Message" xml:space="preserve">
     <value>Page with entered URL already exists. Please update URL (path) and try again.</value>
@@ -898,7 +898,7 @@
     <value>Preview Image URL</value>
   </data>
   <data name="WidgetPreviewImageUrl_Tooltip_Description" xml:space="preserve">
-    <value>Purpose of URL path is ......</value>
+    <value>Purpose of Page URL is ......</value>
   </data>
   <data name="WidgetPreviewImage_Title" xml:space="preserve">
     <value>Preview</value>
