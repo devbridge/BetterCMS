@@ -153,21 +153,6 @@
   <data name="Sitemap_EditorDialog_Title" xml:space="preserve">
     <value>Add New Node</value>
   </data>
-  <data name="Sitemap_EditDialog_AddCustomLink_Header" xml:space="preserve">
-    <value>Add Custom Link</value>
-  </data>
-  <data name="Sitemap_EditDialog_AddCustomLink_Text" xml:space="preserve">
-    <value>Drag your page where you want to place it.</value>
-  </data>
-  <data name="Sitemap_EditDialog_AddCustomLink_Title" xml:space="preserve">
-    <value>Title</value>
-  </data>
-  <data name="Sitemap_EditDialog_AddCustomLink_UrlPath" xml:space="preserve">
-    <value>URL Path</value>
-  </data>
-  <data name="Sitemap_EditDialog_AddPageLink_Header" xml:space="preserve">
-    <value>Add Page Link</value>
-  </data>
   <data name="Sitemap_EditDialog_AddPageLink_SearchButton" xml:space="preserve">
     <value>Search</value>
   </data>
@@ -176,5 +161,11 @@
   </data>
   <data name="Sitemap_NodeCreatedSuccessfully_Message" xml:space="preserve">
     <value>Sitemap node created successfully.</value>
+  </data>
+  <data name="Sitemap_EditDialog_PageLink_Header" xml:space="preserve">
+    <value>Drag &amp; Drop your page where you want to place it.</value>
+  </data>
+  <data name="Sitemap_EditorDialog_CustomLinkTitle" xml:space="preserve">
+    <value>Add Custom URL</value>
   </data>
 </root>

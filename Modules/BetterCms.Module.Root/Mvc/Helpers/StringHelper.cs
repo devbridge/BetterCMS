@@ -162,8 +162,8 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                 symbolsMap.Add('Я', 'A');
                 symbolsMap.Add('я', 'a');
 
-                symbolsMap.Add('ь', '\'');
-                symbolsMap.Add('Ь', '\'');
+                symbolsMap.Add('ь', 'j');
+                symbolsMap.Add('Ь', 'J');
 
                 symbolsMap.Add('т', 't');
                 symbolsMap.Add('Т', 'T');

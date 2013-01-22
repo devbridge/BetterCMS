@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 
 using BetterCms.Core.Models;
+using BetterCms.Module.Pages.Accessors;
 using BetterCms.Module.Pages.Models;
-using BetterCms.Module.Pages.Projections;
 using BetterCms.Module.Root.Projections;
 
 using NUnit.Framework;

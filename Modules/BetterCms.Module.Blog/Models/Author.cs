@@ -3,7 +3,7 @@
 using BetterCms.Core.Models;
 using BetterCms.Module.MediaManager.Models;
 
-namespace BetterCms.Module.Pages.Models
+namespace BetterCms.Module.Blog.Models
 {
     [Serializable]
     public class Author : EquatableEntity<Author>

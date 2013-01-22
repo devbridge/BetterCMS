@@ -36,7 +36,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.PageTests
             Assert.AreEqual(page1.Title, model.PageTitle);
             Assert.AreEqual(page1.PageUrl, model.PageUrlPath);
             Assert.AreEqual(page1.PageUrl, model.ChangedUrlPath);
-            Assert.IsFalse(model.CreatePermanentRedirect);
+            Assert.IsTrue(model.CreatePermanentRedirect);
             Assert.AreEqual(page1.MetaTitle, model.MetaTitle);
             Assert.AreEqual(page1.MetaKeywords, model.MetaKeywords);
             Assert.AreEqual(page1.MetaDescription, model.MetaDescription);                 

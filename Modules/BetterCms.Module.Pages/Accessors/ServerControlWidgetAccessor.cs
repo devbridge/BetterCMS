@@ -6,9 +6,8 @@ using System.Web.Mvc;
 using BetterCms.Core.Models;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Pages.Models;
-using BetterCms.Module.Root.Models;
 
-namespace BetterCms.Module.Pages.Projections
+namespace BetterCms.Module.Pages.Accessors
 {
     [Serializable]
     public class ServerControlWidgetAccessor : ContentAccessor<ServerControlWidget>

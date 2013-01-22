@@ -8,13 +8,13 @@ CKEDITOR.editorConfig = function (config) {
     // For the complete reference:
     // http://docs.ckeditor.com/#!/api/CKEDITOR.config
 
-    config.extraPlugins = 'cms-imagemanager';
+    config.extraPlugins = 'cms-imagemanager,cms-filemanager';
 
     // The toolbar groups arrangement, optimized for two toolbar rows.
     config.toolbar = [
         { name: 'clipboard', items: ['PasteText', 'PasteFromWord', 'Undo', 'Redo'] },
         { name: 'links', items: ['Link', 'Unlink'] },
-        { name: 'insert', items: ['CmsImageManager', 'Table', 'SpecialChar'] },
+        { name: 'insert', items: ['CmsImageManager', 'CmsFileManager', 'Table', 'SpecialChar'] },
         { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'RemoveFormat'] },
         { name: 'paragraph', items: ['NumberedList', 'BulletedList'] },
         { name: 'styles', items: ['Styles', 'Format'] },

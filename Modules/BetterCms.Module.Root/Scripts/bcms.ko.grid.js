@@ -439,9 +439,10 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.mod
                 $.ajax({
                     url: url,
                     type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
                     dataType: 'json',
                     cache: false,
-                    data: params
+                    data: JSON.stringify(params)
                 })
                     .done(function(json) {
                         self.onAfterItemSaved(json);

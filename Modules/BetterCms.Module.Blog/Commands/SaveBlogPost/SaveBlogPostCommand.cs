@@ -154,9 +154,9 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                 blogPost.Category = null;
             }
 
-            if (request.ImageId.HasValue)
+            if (request.Image != null && request.Image.ImageId.HasValue)
             {
-                blogPost.Image = Repository.AsProxy<MediaImage>(request.ImageId.Value);
+                blogPost.Image = Repository.AsProxy<MediaImage>(request.Image.ImageId.Value);
             }
             else
             {
@@ -304,7 +304,15 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                     maxNr++;
                 }
 
-                fullUrl = string.Format("/{0}-{1}/", url, maxNr);
+                if (string.IsNullOrWhiteSpace(url))
+                {
+                    fullUrl = "-";
+                    recheckInDb = true;
+                }
+                else
+                {
+                    fullUrl = string.Format("/{0}-{1}/", url, maxNr);
+                }
 
                 if (recheckInDb)
                 {

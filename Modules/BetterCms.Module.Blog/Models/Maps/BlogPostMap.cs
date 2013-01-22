@@ -8,6 +8,8 @@ namespace BetterCms.Module.Blog.Models.Maps
             : base(BlogModuleDescriptor.ModuleName)
         {
             Table("BlogPosts");
+
+            References(x => x.Author).Cascade.SaveUpdate().LazyLoad();
         }
     }
 }

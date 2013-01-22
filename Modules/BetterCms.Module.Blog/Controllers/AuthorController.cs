@@ -16,15 +16,15 @@ namespace BetterCms.Module.Blog.Controllers
         public virtual ActionResult ListTemplate()
         {
             var view = RenderView("Partial/ListTemplate", null);
-            var blogPosts = GetCommand<GetAuthorListCommand>().ExecuteCommand(new SearchableGridOptions());
+            var authors = GetCommand<GetAuthorListCommand>().ExecuteCommand(new SearchableGridOptions());
 
-            return ComboWireJson(true, view, blogPosts, JsonRequestBehavior.AllowGet);
+            return ComboWireJson(authors != null, view, authors, JsonRequestBehavior.AllowGet);
         }
 
         public virtual ActionResult AuthorsList(SearchableGridOptions request)
         {
             var model = GetCommand<GetAuthorListCommand>().ExecuteCommand(request);
-            return WireJson(true, model);
+            return WireJson(model != null, model);
         }
 
         [HttpPost]

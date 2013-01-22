@@ -248,7 +248,7 @@ define('bcms.pages.tags', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSe
         };
 
         self.clearTag = function() {
-            self.newTag(null);
+            self.newTag('');
         };
     };
     
