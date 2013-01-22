@@ -31,6 +31,7 @@ namespace BetterCms.Module.Navigation.Registration
                 {
                     new JavaScriptModuleGlobalization(this, "sitemapEditorDialogTitle", () => NavigationGlobalization.Sitemap_EditorDialog_Title),
                     new JavaScriptModuleGlobalization(this, "sitemapEditorDialogClose", () => RootGlobalization.Button_Close),
+                    new JavaScriptModuleGlobalization(this, "sitemapEditorDialogCustomLinkTitle", () => NavigationGlobalization.Sitemap_EditorDialog_CustomLinkTitle),
                 };
         }
     }

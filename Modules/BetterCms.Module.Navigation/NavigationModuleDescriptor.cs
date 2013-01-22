@@ -112,7 +112,7 @@ namespace BetterCms.Module.Navigation
         {
             return new IPageActionProjection[]
                 {
-                    new LinkActionProjection(sitemapJavaScriptModuleDescriptor, page => "loadSiteSettingsSitmap")
+                    new LinkActionProjection(sitemapJavaScriptModuleDescriptor, page => "loadSiteSettingsSitemap")
                         {
                             Order = 4500,
                             Title = () => NavigationGlobalization.SiteSettings_SitemapMenuItem,
