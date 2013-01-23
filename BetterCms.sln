@@ -1,16 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataTier", "DataTier", "{5EAFEC61-67C3-43FA-8EC6-F5C146CC12C0}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{C8C2334D-ED3B-4623-BAD2-DA8A5AEDB165}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2725CEED-4CBD-4924-BD36-38E93209562B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{F01C795A-76DA-4AE3-8CFC-C2450D2AC921}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{DF71B145-A0F9-410F-80DC-768B670CF6BF}"
 	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
 		SharedAssemblyInfo.cs = SharedAssemblyInfo.cs
 	EndProjectSection
 EndProject
@@ -51,11 +48,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.Module.Navigation", "Modules\BetterCms.Module.Navigation\BetterCms.Module.Navigation.csproj", "{5383227A-9CB8-4978-91D1-8168EC817D16}"
 	ProjectSection(ProjectDependencies) = postProject
 		{66E7E4DF-EEEA-4B1E-8663-A1B430EB7375} = {66E7E4DF-EEEA-4B1E-8663-A1B430EB7375}
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F12717F0-6E58-4FA1-A1F4-5C37AB3FD7BC}"
-	ProjectSection(SolutionItems) = preProject
-		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.Module.Users", "Modules\BetterCms.Module.Users\BetterCms.Module.Users.csproj", "{C530025B-8AB7-402D-B60C-000C9A5D0446}"

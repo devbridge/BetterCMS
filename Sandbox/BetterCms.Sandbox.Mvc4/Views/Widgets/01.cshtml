@@ -1,8 +1,6 @@
-﻿Widget (01).
-Current time @DateTime.Now
-<br/>
-Render partial:
-<br/>
-
-
-Option 'aaa'='@ViewBag.aaa'
+﻿<div class="cart-summary">
+    <div class="cart-summary-title">
+        Cart Summary (@DateTime.Now)    
+    </div>    
+    @Html.RenderAction("Cart", "Summary", new { keyA = ViewBag.AnyCustomKeyA})    
+</div>

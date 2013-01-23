@@ -12,7 +12,7 @@ using BetterCms.Module.Navigation.Services;
 namespace BetterCms.Module.Navigation
 {
     /// <summary>
-    /// Pages module descriptor.
+    /// A navigation module descriptor.
     /// </summary>
     public class NavigationModuleDescriptor : ModuleDescriptor
     {

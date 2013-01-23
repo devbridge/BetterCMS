@@ -38,10 +38,7 @@ namespace BetterCms.Module.Pages.Command.Content.InsertContent
             {
                 Page = page,
                 Content = content,
-                Region = region,
-
-                // TODO: set correct status
-                Status = ContentStatus.Published
+                Region = region
             };
 
             foreach (var contentOption in content.ContentOptions)
