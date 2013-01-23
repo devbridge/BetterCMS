@@ -340,6 +340,42 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please wait while page is redirecting..
+        /// </summary>
+        public static string Redirect_Message {
+            get {
+                return ResourceManager.GetString("Redirect_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Redirecting.
+        /// </summary>
+        public static string Redirect_Title {
+            get {
+                return ResourceManager.GetString("Redirect_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please wait while page is reloading..
+        /// </summary>
+        public static string Reload_Message {
+            get {
+                return ResourceManager.GetString("Reload_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reloading page.
+        /// </summary>
+        public static string Reload_Title {
+            get {
+                return ResourceManager.GetString("Reload_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Drag to adjust sidebar position.
         /// </summary>
         public static string Sidebar_DragTitle {

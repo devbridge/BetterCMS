@@ -149,7 +149,8 @@ namespace BetterCms.Module.Root
                     new TabsJavaScriptModuleDescriptor(this), 
                     new TooltipJavaScriptModuleDescriptor(this),
                     new InlineEditorJavaScriptModuleDescriptor(this),
-                    new JavaScriptModuleDescriptor(this, "bcms.ko.grid", "/file/bcms-root/scripts/bcms.ko.grid")
+                    new JavaScriptModuleDescriptor(this, "bcms.ko.grid", "/file/bcms-root/scripts/bcms.ko.grid"),
+                    new RedirectJavaScriptModuleDescriptor(this)
                 };
         }
 

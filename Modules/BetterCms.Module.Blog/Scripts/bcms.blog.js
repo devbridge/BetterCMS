@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.grid', 'bcms.pages', 'knockout', 'bcms.media', 'bcms.pages.tags', 'bcms.ko.grid', 'bcms.messages'],
-    function ($, bcms, modal, siteSettings, dynamicContent, datepicker, htmlEditor, grid, pages, ko, media, tags, kogrid, messages) {
+define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.grid', 'bcms.pages', 'knockout', 'bcms.media', 'bcms.pages.tags', 'bcms.ko.grid', 'bcms.messages', 'bcms.redirect'],
+    function ($, bcms, modal, siteSettings, dynamicContent, datepicker, htmlEditor, grid, pages, ko, media, tags, kogrid, messages, redirect) {
     'use strict';
 
     var blog = { },
@@ -113,7 +113,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     blog.postNewArticle = function () {
         var postSuccess = function(json) {
             if (json && json.Data && json.Data.PageUrl) {
-                window.location.href = json.Data.PageUrl;
+                redirect.RedirectWithAlert(json.Data.PageUrl);
             }
         };
         createBlogPost(postSuccess);
@@ -519,7 +519,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
 
         if (element.hasClass(classes.regionBlogPostContent)) {
             editBlogPost(bcms.pageId, function () {
-                bcms.reload();
+                redirect.ReloadWithAlert();
             });
         }
     };

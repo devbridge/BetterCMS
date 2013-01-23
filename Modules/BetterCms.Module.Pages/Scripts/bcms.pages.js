@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.pages.properties', 'bcms.messages', 'bcms.grid'],
-    function ($, bcms, modal, siteSettings, forms, dynamicContent, pageProperties, messages, grid) {
+define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.pages.properties', 'bcms.messages', 'bcms.grid', 'bcms.redirect'],
+    function ($, bcms, modal, siteSettings, forms, dynamicContent, pageProperties, messages, grid, redirect) {
     'use strict';
 
         var page = { },            
@@ -282,10 +282,10 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             // Redirect
 // TODO: we can not reload the page.
 //       Some addition functionality could be working (example: add page to sitemap dialog is open).
-//       Can not move this to sitemap, because sitemap does not know if new page was created in site settings dialog.
+            //       Can not move this to sitemap, because sitemap does not know if new page was created in site settings dialog.
             
 //            if (data.Data && data.Data.PageUrl) {
-//                window.location.href = data.Data.PageUrl;
+//                redirect.RedirectWithAlert(data.Data.PageUrl);
 //            }
         });
     };
@@ -297,14 +297,10 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
         var id = bcms.pageId;
 
         page.deletePage(id, function () {
-            modal.alert({
+            redirect.RedirectWithAlert('/', {
                 title: globalization.pageDeletedTitle,
-                content: globalization.pageDeletedMessage,
-                disableCancel: true,
-                disableAccept: true,
+                message: globalization.pageDeletedMessage
             });
-            
-            window.location.href = "/";
         });
     };
 

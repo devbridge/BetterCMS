@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages', 'bcms.preview', 'bcms.grid', 'bcms.inlineEdit', 'slides.jquery'],
-    function($, bcms, modal, datepicker, htmlEditor, dynamicContent, siteSettings, messages, preview, grid, editor) {
+define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages', 'bcms.preview', 'bcms.grid', 'bcms.inlineEdit', 'slides.jquery', 'bcms.redirect'],
+    function($, bcms, modal, datepicker, htmlEditor, dynamicContent, siteSettings, messages, preview, grid, editor, slides, redirect) {
         'use strict';
 
         var widgets = {},
@@ -434,7 +434,7 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
             var element = $(sender),
                 contentId = element.data('contentId'),
                 onSuccess = function () {
-                    bcms.reload();
+                    redirect.ReloadWithAlert();
                 };
 
             if (element.hasClass(classes.regionWidget)) {

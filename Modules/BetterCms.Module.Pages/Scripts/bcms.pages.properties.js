@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.pages.properties', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bcms.dynamicContent', 'bcms.pages.tags', 'knockout', 'bcms.media'],
-    function ($, bcms, modal, forms, dynamicContent, tags, ko, media) {
+define('bcms.pages.properties', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bcms.dynamicContent', 'bcms.pages.tags', 'knockout', 'bcms.media', 'bcms.redirect'],
+    function ($, bcms, modal, forms, dynamicContent, tags, ko, media, redirect) {
     'use strict';
 
     var page = {},
@@ -214,7 +214,7 @@ define('bcms.pages.properties', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', '
         page.openEditPageDialog(bcms.pageId, function (data) {
             // Redirect
             if (data.Data && data.Data.PageUrl) {
-                window.location.href = data.Data.PageUrl;
+                redirect.RedirectWithAlert(data.Data.PageUrl);
             }
         });
     };
