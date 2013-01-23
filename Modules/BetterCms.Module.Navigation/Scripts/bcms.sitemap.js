@@ -91,10 +91,15 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                         dynamicContent.setContentFromUrl(dialog, links.sitemapAddNewPageDialogUrl, {
                             done: function (content) {
                                 addPageController.initialize(content, dialog);
-                            },
+                            }
                         });
+                    },
+                    onClose: function() {
+                    if (data.Callback && $.isFunction(data.Callback)) {
+                        data.Callback(data);
                     }
-                });
+                }
+            });
             }
         };
 

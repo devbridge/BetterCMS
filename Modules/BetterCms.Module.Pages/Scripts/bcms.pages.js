@@ -266,10 +266,11 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                         }
                     },
 
-                    postSuccess: function(data) {
-                        bcms.trigger(bcms.events.pageCreated, data);
-                        if (postSuccess && $.isFunction(postSuccess)) {
-                            postSuccess(data);
+                    postSuccess: function (data) {
+                        if (bcms.trigger(bcms.events.pageCreated, { Data: data.Data, Callback: postSuccess }) <= 0) {
+                            if (postSuccess && $.isFunction(postSuccess)) {
+                                postSuccess(data);
+                            }
                         }
                     }
                 });
@@ -279,14 +280,9 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
 
     page.addNewPage = function() {
         page.openCreatePageDialog(function (data) {
-            // Redirect
-// TODO: we can not reload the page.
-//       Some addition functionality could be working (example: add page to sitemap dialog is open).
-            //       Can not move this to sitemap, because sitemap does not know if new page was created in site settings dialog.
-            
-//            if (data.Data && data.Data.PageUrl) {
-//                redirect.RedirectWithAlert(data.Data.PageUrl);
-//            }
+            if (data.Data && data.Data.PageUrl) {
+                redirect.RedirectWithAlert(data.Data.PageUrl);
+            }
         });
     };
     
