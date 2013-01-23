@@ -1,7 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.pages.seo', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', 'bcms.dynamicContent'], function ($, bcms, modal, messages, dynamicContent) {
+define('bcms.pages.seo', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', 'bcms.dynamicContent', 'bcms.redirect'],
+    function ($, bcms, modal, messages, dynamicContent, redirect) {
     'use strict';
 
     var seo = {},
@@ -124,8 +125,11 @@ define('bcms.pages.seo', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', 'bcms
                         dialog.container.showLoading();
                     },
                                    
-                    postComplete: function () {
+                    postComplete: function (data) {
                         dialog.container.hideLoading();
+                        if (data.Data && data.Data.PageUrlPath) {
+                            redirect.RedirectWithAlert(data.Data.PageUrlPath);
+                        }
                     }
                 });
                 
