@@ -69,7 +69,7 @@ namespace BetterCms.Test.Module.Pages.ControllerTests
             Mock<IPageService> pageService = new Mock<IPageService>();
             Mock<SavePageSeoCommand> savePageSeoCommandMock = new Mock<SavePageSeoCommand>(redirectService.Object, pageService.Object);
 
-            savePageSeoCommandMock.Setup(f => f.Execute(It.IsAny<EditSeoViewModel>())).Returns(true).Verifiable();
+            savePageSeoCommandMock.Setup(f => f.Execute(It.IsAny<EditSeoViewModel>())).Returns(new EditSeoViewModel()).Verifiable();
 
             SeoController seoController = new SeoController();
             seoController.CommandResolver = GetMockedCommandResolver(mock =>

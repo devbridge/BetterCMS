@@ -192,6 +192,7 @@
     <Compile Include="Projections\PageJavaScriptProjection.cs" />
     <Compile Include="Registration\AuthenticationJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\ContentJavaScriptModuleDescriptor.cs" />
+    <Compile Include="Registration\RedirectJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\InlineEditorJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\ModalJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\SideMenuJavaScriptModuleDescriptor.cs" />
@@ -340,10 +341,8 @@
     <EmbeddedResource Include="Content\Styles\images\bcms-no-image-2.png" />
     <EmbeddedResource Include="Content\Styles\images\bcms-no-image-3.png" />
     <EmbeddedResource Include="Scripts\bcms.inlineEdit.js" />
-    <EmbeddedResource Include="Scripts\bcms.js" />
     <EmbeddedResource Include="Scripts\bcms.ko.grid.js" />
     <EmbeddedResource Include="Scripts\bcms.dynamicContent.js" />
-    <EmbeddedResource Include="Scripts\bcms.modal.js" />
     <EmbeddedResource Include="Scripts\bcms.siteSettings.js" />
     <EmbeddedResource Include="Scripts\ckeditor\build-config.js" />
     <EmbeddedResource Include="Scripts\ckeditor\ckeditor.js" />
@@ -503,6 +502,9 @@
     <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\close.png" />
     <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\mini.png" />
     <EmbeddedResource Include="Scripts\ckeditor\styles.js" />
+    <EmbeddedResource Include="Scripts\bcms.js" />
+    <EmbeddedResource Include="Scripts\bcms.modal.js" />
+    <EmbeddedResource Include="Scripts\bcms.redirect.js" />
     <Content Include="Scripts\jquery-1.7.2.min.js">
       <DependentUpon>jquery-1.7.2.js</DependentUpon>
     </Content>

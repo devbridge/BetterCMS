@@ -54,7 +54,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                                 Id = page.Id,
                                 Version = page.Version,
                                 PageName = page.Title,
-                                PagePermalink = page.PageUrl,
+                                PageUrl = page.PageUrl,
                                 PageCSS = page.CustomCss,
                                 PageJavascript = page.CustomJS,
                                 UseNoFollow = page.UseNoFollow,

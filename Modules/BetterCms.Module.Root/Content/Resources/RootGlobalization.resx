@@ -210,6 +210,18 @@
   <data name="Message_Saving" xml:space="preserve">
     <value>Saving ...</value>
   </data>
+  <data name="Redirect_Message" xml:space="preserve">
+    <value>Please wait while page is redirecting.</value>
+  </data>
+  <data name="Redirect_Title" xml:space="preserve">
+    <value>Redirecting</value>
+  </data>
+  <data name="Reload_Message" xml:space="preserve">
+    <value>Please wait while page is reloading.</value>
+  </data>
+  <data name="Reload_Title" xml:space="preserve">
+    <value>Reloading page</value>
+  </data>
   <data name="Sidebar_DragTitle" xml:space="preserve">
     <value>Drag to adjust sidebar position</value>
   </data>

@@ -126,6 +126,7 @@
     <Compile Include="DataAccess\DataContext\Migrations\IMigrationRunner.cs" />
     <Compile Include="DataAccess\DataContext\Migrations\MigrationExtensions.cs" />
     <Compile Include="DataAccess\DataContext\RestrictionsExtensions.cs" />
+    <Compile Include="DataAccess\DataContext\SessionExtensions.cs" />
     <Compile Include="Dependencies\ContextScopeProvider.cs" />
     <Compile Include="Environment\ApplicationStart\BetterCmsEntrypoint.cs" />
     <Compile Include="Dependencies\PerWebRequestContainerProvider.cs" />

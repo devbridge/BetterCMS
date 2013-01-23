@@ -103,7 +103,6 @@
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
@@ -221,6 +220,7 @@
     <Compile Include="Models\PageTag.cs" />
     <Compile Include="Models\Redirect.cs" />
     <Compile Include="Models\WidgetType.cs" />
+    <Compile Include="Mvc\Attributes\CustomPageUrlValidationAttribute.cs" />
     <Compile Include="PagesConstants.cs" />
     <Compile Include="Accessors\HtmlContentWidgetAccessor.cs" />
     <Compile Include="Accessors\HtmlContentAccessor.cs" />
@@ -282,7 +282,6 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Content\Css\bcms.page.css" />
-    <EmbeddedResource Include="Scripts\bcms.pages.redirects.js" />
     <EmbeddedResource Include="Content\Css\Images\icn-zoom.png" />
     <EmbeddedResource Include="Content\Css\Images\loading.gif" />
     <EmbeddedResource Include="Content\Css\Images\logo.png" />
@@ -291,12 +290,13 @@
     <EmbeddedResource Include="Content\Css\Images\bcms-no-image-3.png" />
     <EmbeddedResource Include="Content\Css\Images\sprite-pages-1.png" />
     <EmbeddedResource Include="Content\Css\Images\sprite-pages-2.png" />
-    <EmbeddedResource Include="Scripts\bcms.pages.template.js" />
-    <EmbeddedResource Include="Scripts\bcms.pages.seo.js" />
-    <EmbeddedResource Include="Scripts\bcms.pages.js" />
-    <EmbeddedResource Include="Scripts\bcms.pages.tags.js" />
-    <EmbeddedResource Include="Scripts\bcms.pages.properties.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.content.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.properties.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.redirects.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.seo.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.tags.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.template.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.widgets.js" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
@@ -344,9 +344,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Page\Partial\Template.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Page\Partial\AddNewPageEditPermalink.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Content\AddPageContent.cshtml" />
@@ -406,6 +403,10 @@
   <ItemGroup>
     <EmbeddedResource Include="Views\Page\EditPageProperties.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Page\Partial\AddNewPageEditPermalink.cshtml" />
+  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
