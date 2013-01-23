@@ -128,7 +128,8 @@
     <Compile Include="Command\Content\SortPageContent\SortPageContentCommand.cs" />
     <Compile Include="Command\History\GetContentHistory\GetContentHistoryCommand.cs" />
     <Compile Include="Command\History\GetContentHistory\GetContentHistoryRequest.cs" />
-    <Compile Include="Command\History\RestoreContentVersion\GetContentHistoryCommand.cs" />
+    <Compile Include="Command\History\GetContentVersion\GetContentVersionCommand.cs" />
+    <Compile Include="Command\History\RestoreContentVersion\RestoreContentVersionCommand.cs" />
     <Compile Include="Command\Layout\DeleteTemplate\DeleteTemplateCommand.cs" />
     <Compile Include="Command\Layout\DeleteTemplate\DeleteTemplateCommandRequest.cs" />
     <Compile Include="Command\Layout\GetSiteSettingsTemplates\GetSiteSettingsTemplatesCommand.cs" />

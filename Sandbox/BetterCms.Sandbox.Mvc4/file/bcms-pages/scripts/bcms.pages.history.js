@@ -9,11 +9,19 @@ define('bcms.pages.history', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', '
         classes = {
         },
         
-        selectors = {          
+        selectors = {
+            gridRestoreLinks: '#bcms-pagecontenthistory-form .bcms-history-table a.bcms-icn-restore',
+            gridCells: '#bcms-pagecontenthistory-form .bcms-history-table tbody td',
+            gridRowPreviewLink: 'a.bcms-icn-preview:first',
+            firstRow: 'tr:first',
+            versionPreviewContainer: '.bcms-history-preview',
+            versionPreviewTemplate: '#bcms-history-preview-template'
         },
         
         links = {
-            loadPageContentHistoryDialogUrl: null
+            loadPageContentHistoryDialogUrl: null,
+            loadPageContentVersionPreviewUrl: null,
+            restorePageContentVersionUrl: null
         },
         
         globalization = {
@@ -26,12 +34,43 @@ define('bcms.pages.history', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', '
     history.links = links;
     history.globalization = globalization;
 
+    /**
+    * Preview specified content version
+    */
+    function previewVersion(container, id) {
+        var url = $.format(links.loadPageContentVersionPreviewUrl, id),
+            template = $(container.find(selectors.versionPreviewTemplate).html()).attr('src', url),
+            previewContainer = container.find(selectors.versionPreviewContainer);
+
+        previewContainer.html(template);
+    }
+
+    /**
+    * Restores specified version from history
+    */
+    function restoreVersion(id) {
+        alert('TODO: restore version');
+    }
    
     /**
     * Initializes EditSeo dialog events.
     */
-    history.initPageContentHistoryDialogEvents = function (dialog) {                
-     
+    history.initPageContentHistoryDialogEvents = function (dialog) {
+        var container = dialog.container;
+
+        container.find(selectors.gridRestoreLinks).on('click', function (event) {
+            bcms.stopEventPropagation(event);
+            
+            restoreVersion($(this).data('id'));
+        });
+        
+        container.find(selectors.gridCells).on('click', function () {
+            var self = $(this),
+                previewLink = self.parents(selectors.firstRow).find(selectors.gridRowPreviewLink),
+                id = previewLink.data('id');
+
+            previewVersion(container, id);
+        });
     };   
     
     /**
