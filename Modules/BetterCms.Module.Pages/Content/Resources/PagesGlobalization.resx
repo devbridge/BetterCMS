@@ -1026,4 +1026,7 @@
   <data name="EditPageProperties_LayoutPropertiesTab_ChooseLayout_Title" xml:space="preserve">
     <value>Choose Page Layout</value>
   </data>
+  <data name="DeletePage_Dialog_DeleteButton" xml:space="preserve">
+    <value>Delete</value>
+  </data>
 </root>

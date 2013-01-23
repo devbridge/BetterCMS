@@ -673,6 +673,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string DeletePage_Dialog_DeleteButton {
+            get {
+                return ResourceManager.GetString("DeletePage_Dialog_DeleteButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Redirect URL (optional).
         /// </summary>
         public static string DeletePage_Dialog_RedirectUrl {

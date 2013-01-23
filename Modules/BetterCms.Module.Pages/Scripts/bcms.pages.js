@@ -62,7 +62,8 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 pageDeletedTitle: null,
                 pageDeletedMessage: null,
                 clonePageDialogTitle: null,
-                cloneButtonTitle: null
+                cloneButtonTitle: null,
+                deleteButtonTitle: null
             },        
             keys = {
                 addNewPageInfoMessageClosed: 'bcms.addNewPageInfoBoxClosed'
@@ -307,6 +308,7 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
         title = title || globalization.deletePageDialogTitle;
         modal.open({
             title: title,
+            acceptTitle: globalization.deleteButtonTitle,
             onLoad: function(dialog) {
                 var url = $.format(links.deletePageConfirmationUrl, id);
                 dynamicContent.bindDialog(dialog, url, {
