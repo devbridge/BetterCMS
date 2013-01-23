@@ -8,8 +8,11 @@ define('bcms.user', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         selectors = {
             siteSettingsUserCreateButton: "#bcms-create-user-button",
             siteSettingsRoleCreatButton: "#bcms-create-role-button",
-            usersTable: '#bcms-users-grid'
+            usersTable: '#bcms-users-grid',
 
+            roleForm: '#bcms-role-form',
+            roleRowEditButtons: '.bcms-grid-item-edit-button',
+            roleParentRow: 'tr:first'
         },
 
         links = {
@@ -17,8 +20,9 @@ define('bcms.user', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             loadSiteSettingsUserUrl: null,
             loadSiteSettingsRoleUrl: null,
             loadEditUserUrl: null,
+            loadCreatRoleUrl: null,
             loadEditRoleUrl: null
-            
+
         },
 
         globalization = {
@@ -64,6 +68,10 @@ define('bcms.user', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         container.find(selectors.siteSettingsRoleCreatButton).on('click', function () {
             user.openCreatRoleDialog();
         });
+
+        container.find(selectors.roleRowEditButtons).on('click', function () {
+            editRole(container, $(this));
+        });
     }
 
     /**
@@ -85,7 +93,7 @@ define('bcms.user', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         modal.open({
             title: globalization.usersAddNewTitle,
             onLoad: function (childDialog) {
-                dynamicContent.bindDialog(childDialog, links.loadEditRoleUrl, {
+                dynamicContent.bindDialog(childDialog, links.loadEditUserUrl, {
                     //contentAvailable: initializeEditTemplateForm,
 
                     //postSuccess: onSaveCallback
@@ -98,14 +106,49 @@ define('bcms.user', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         modal.open({
             title: globalization.rolesAddNewTitle,
             onLoad: function (childDialog) {
-                dynamicContent.bindDialog(childDialog, links.loadEditRoleUrl, {
-                    //contentAvailable: initializeEditTemplateForm,
+                dynamicContent.bindDialog(childDialog, links.loadCreatRoleUrl, {
+                    contentAvailable: initializeEditRoleForm
 
                     //postSuccess: onSaveCallback
                 });
             }
         });
     };
+
+    function initializeEditRoleForm() {
+        var dialog = siteSettings.getModalDialog(),
+            container = dialog.container;
+        var form = container.find(selectors.roleForm);
+
+        form.on('submit', function (event) {
+            event.preventDefault();
+            // searchTemplates(form);
+            return false;
+        });
+    }
+
+    /**
+    * Calls function, which opens dialog for a template editing.
+    */
+    function editRole(container, self) {
+        var row = self.parents(selectors.roleParentRow),
+                id = row.data('id');
+
+        /*role.editRole(id, function (data) {
+            if (data.Data != null) {
+                //setRoleFields(row, data);
+                grid.showHideEmptyRow(container);
+            }
+        });*/
+    };
+
+    /*
+    * Open a template edit dialog by the specified tempalte type.
+    */
+    /*user.editRole = function (templateId, onSaveCallback) {
+        //template.openEditTemplateDialog(templateId, onSaveCallback);
+
+    };*/
 
     bcms.registerInit(user.init);
 

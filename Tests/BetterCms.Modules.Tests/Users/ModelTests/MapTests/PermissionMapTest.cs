@@ -4,12 +4,12 @@ using NUnit.Framework;
 namespace BetterCms.Test.Module.Users.ModelTests.MapTests
 {
     [TestFixture]
-    public class RolePremissionMapTest : DatabaseTestBase
+    public class PermissionMapTest : DatabaseTestBase
     {
         [Test]
-        public void Should_Insert_And_Retrieve_RolePremission_Successfully()
+        public void Should_Insert_And_Retrieve_Premissions_Successfully()
         {
-            var entity = TestDataProvider.CreateNewRolePremission();
+            var entity = TestDataProvider.CreateNewPermission();
             RunEntityMapTestsInTransaction(entity);
         }
     }

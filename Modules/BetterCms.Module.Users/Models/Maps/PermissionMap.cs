@@ -7,12 +7,12 @@ using BetterCms.Core.Models;
 
 namespace BetterCms.Module.Users.Models.Maps
 {
-    public class PremissionMap : EntityMapBase<Premission>
+    public class PermissionMap : EntityMapBase<Permission>
     {
-        public PremissionMap()
+        public PermissionMap()
             : base(UsersModuleDescriptor.ModuleName)
         {
-            Table("Premissions");
+            Table("Permissions");
 
             Map(x => x.Name).Length(MaxLength.Name).Not.Nullable();
         }

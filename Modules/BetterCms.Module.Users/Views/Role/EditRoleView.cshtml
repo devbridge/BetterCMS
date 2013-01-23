@@ -1,30 +1,26 @@
-﻿@using BetterCms.Module.Root.Mvc.UI
+﻿@using BetterCms.Module.Root.Mvc.Helpers
+@using BetterCms.Module.Root.Mvc.UI
 @using BetterCms.Module.Users.Content.Resources
+@using BetterCms.Module.Users.Controllers
+@using BetterCms.Module.Users.ViewModels.Role
+@using Microsoft.Web.Mvc
 
 @model BetterCms.Module.Users.ViewModels.Role.EditRoleViewModel
             
 <div class="bcms-scroll-window">
     <div class="bcms-padded-content">
-
-    <div class="bcms-input-list-holder bcms-first-child-holder">
-        @Html.Tooltip(UsersGlobalization.Role_AddNew_Dialog_RoleTooltip_Title, UsersGlobalization.Role_AddNew_Dialog_Tooltip_Description)
-        <div class="bcms-content-titles">@UsersGlobalization.Role_AddNew_Dialog_RoleName_Title</div>
-        @Html.TextBoxFor(m => m.RoleName, new { @class = "bcms-editor-field-box" })
-    </div>
-        <div class="bcms-permissions-column">
-            @for (int i = 0, j =0; i < Model.PremissionsList.Count; i++, j++)
-            {
-                if (j == 5)
-                {
-                    j = 0;
-                    @:</div>
-                    @:<div class="bcms-permissions-column">
-                }
-                <div class="bcms-edit-check-field">
-                    @Html.CheckBoxFor(a => Model.PremissionsList[i].IsSelected, new { @class = "bcms-edit-label" }) 
-                    <div class="bcms-edit-label">@Model.PremissionsList[i].Name</div>
-                </div>
-            }
+    
+    @using (Html.BeginForm<RoleController>(f => f.CreateRole((EditRoleViewModel)null), FormMethod.Post, new { @id = "bcms-role-form", @class = "bcms-ajax-form" }))
+    {
+        <div class="bcms-input-list-holder bcms-first-child-holder">
+            @Html.Tooltip(UsersGlobalization.Role_AddNew_Dialog_RoleTooltip_Title, UsersGlobalization.Role_AddNew_Dialog_Tooltip_Description)
+            <div class="bcms-content-titles">@UsersGlobalization.Role_AddNew_Dialog_RoleName_Title</div>
+            @Html.TextBoxFor(m => m.RoleName, new { @class = "bcms-editor-field-box" })  
+            @Html.HiddenFor(m => m.Id)
+            @Html.HiddenFor(m => m.Version)           
+            @Html.Partial("Partial/PermissionsView", Model)
         </div>
+        @Html.HiddenSubmit()
+    }
     </div>
 </div>

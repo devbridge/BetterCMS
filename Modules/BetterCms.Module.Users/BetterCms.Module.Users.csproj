@@ -111,6 +111,10 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Commands\Role\GetRoles\GetRolesCommand.cs" />
+    <Compile Include="Commands\Role\SaveRole\SaveRoleCommand.cs" />
+    <Compile Include="Commands\Role\SaveRole\SaveRoleResponse.cs" />
+    <Compile Include="Commands\Role\GetPremissions\GetPremissionsCommand.cs" />
     <Compile Include="Content\Resources\UsersGlobalization.en-US.Designer.cs">
       <DependentUpon>UsersGlobalization.en-US.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -128,21 +132,21 @@
     </Compile>
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Models\Maps\PremissionMap.cs" />
+    <Compile Include="Models\Maps\PermissionMap.cs" />
     <Compile Include="Models\Maps\RoleMap.cs" />
-    <Compile Include="Models\Maps\RolePremissionMap.cs" />
+    <Compile Include="Models\Maps\RolePermissionMap.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
     <Compile Include="Models\Migrations\Migration201301221015.cs" />
     <Compile Include="Models\Migrations\UsersVersionTableMetaData.cs" />
-    <Compile Include="Models\Premission.cs" />
+    <Compile Include="Models\Permission.cs" />
     <Compile Include="Models\Role.cs" />
-    <Compile Include="Models\RolePremissions.cs" />
+    <Compile Include="Models\RolePermissions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registration\UserJavaScriptModuleDescriptor.cs" />
     <Compile Include="UsersModuleDescriptor.cs" />
     <Compile Include="ViewModels\EditUserViewModel.cs" />
     <Compile Include="ViewModels\Role\EditRoleViewModel.cs" />
-    <Compile Include="ViewModels\Role\Premission.cs" />
+    <Compile Include="ViewModels\Role\PermissionViewModel.cs" />
     <Compile Include="ViewModels\Role\RoleItemViewModel.cs" />
     <Compile Include="ViewModels\Role\SiteSettingRoleListViewModel.cs" />
     <Compile Include="ViewModels\SearchableUserViewModel.cs" />
@@ -205,6 +209,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Role\EditRoleView.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Role\Partial\PermissionsView.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\EditorTemplates\PermissionViewModel.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

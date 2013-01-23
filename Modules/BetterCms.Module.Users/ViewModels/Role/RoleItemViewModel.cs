@@ -15,6 +15,8 @@ namespace BetterCms.Module.Users.ViewModels.Role
 
         public string RoleName { get; set; }
 
+        public IList<PermissionViewModel> PremissionsList { get; set; } 
+
         public override string  ToString()
         {
  	        return string.Format("Id: {0}, Version: {1}, RoleName: {2}", Id, Version, RoleName);

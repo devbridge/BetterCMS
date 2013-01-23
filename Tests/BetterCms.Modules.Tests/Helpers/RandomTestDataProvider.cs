@@ -676,9 +676,9 @@ namespace BetterCms.Tests.Helpers
             return entity;
         }
 
-        public Premission CreateNewPremission()
+        public Permission CreateNewPermission()
         {
-            var entity = new Premission();
+            var entity = new Permission();
 
             PopulateBaseFields(entity);
 
@@ -687,14 +687,14 @@ namespace BetterCms.Tests.Helpers
             return entity;
         }
 
-        public RolePremissions CreateNewRolePremission(Role role = null, Premission premission = null)
+        public RolePermissions CreateNewRolePermission(Role role = null, Permission permission = null)
         {
-            var entity = new RolePremissions();
+            var entity = new RolePermissions();
 
             PopulateBaseFields(entity);
 
             entity.Role = role ?? CreateNewRole();
-            entity.Premission = premission ?? CreateNewPremission();
+            entity.Permission = permission ?? CreateNewPermission();
 
             return entity;
         }

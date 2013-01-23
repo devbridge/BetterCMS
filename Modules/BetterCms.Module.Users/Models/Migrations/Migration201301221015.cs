@@ -18,7 +18,7 @@ namespace BetterCms.Module.Users.Models.Migrations
         public override void Up()
         {
             Create.Table("Roles").InSchema(SchemaName).WithCmsBaseColumns().WithColumn("Name").AsAnsiString(MaxLength.Name).NotNullable();
-            Create.Table("Premissions").InSchema(SchemaName).WithCmsBaseColumns().WithColumn("Name").AsAnsiString(MaxLength.Name).NotNullable();
+            Create.Table("Permissions").InSchema(SchemaName).WithCmsBaseColumns().WithColumn("Name").AsAnsiString(MaxLength.Name).NotNullable();
             CreateRolePremissions();
             InsertPremission(new Guid("B638896E-B8BB-472F-8DFF-A0B83FF1F36F"), "Administrator");
             InsertPremission(new Guid("A638896E-B8BB-472F-8DFF-A0B83FF1F36F"), "Owner");
@@ -29,44 +29,44 @@ namespace BetterCms.Module.Users.Models.Migrations
         {
             DeleteRolePremissions();
             Delete.Table("Roles").InSchema(SchemaName);
-            Delete.Table("Premissions").InSchema(SchemaName);
+            Delete.Table("Permissions").InSchema(SchemaName);
         }
 
         private void CreateRolePremissions()
         {
-            Create.Table("RolePremissions").InSchema(SchemaName)
+            Create.Table("RolePermissions").InSchema(SchemaName)
                 .WithCmsBaseColumns()
                 .WithColumn("RoleId").AsGuid().NotNullable()
-                .WithColumn("PremissionId").AsGuid().NotNullable();
+                .WithColumn("PermissionId").AsGuid().NotNullable();
 
             Create
-                .UniqueConstraint("UX_Cms_RolePremissions_RoleId_PremissionId")
-                .OnTable("RolePremissions").WithSchema(SchemaName)
-                .Columns(new[] { "RoleId", "PremissionId", "DeletedOn" });
+                .UniqueConstraint("UX_Cms_RolePermissions_RoleId_PermissionId")
+                .OnTable("RolePermissions").WithSchema(SchemaName)
+                .Columns(new[] { "RoleId", "PermissionId", "DeletedOn" });
 
             Create
-                .ForeignKey("FK_Cms_RolePremissions_Cms_Roles")
-                .FromTable("RolePremissions").InSchema(SchemaName).ForeignColumn("RoleId")
+                .ForeignKey("FK_Cms_RolePermissions_Cms_Roles")
+                .FromTable("RolePermissions").InSchema(SchemaName).ForeignColumn("RoleId")
                 .ToTable("Roles").InSchema(SchemaName).PrimaryColumn("Id");
 
             Create
-                .ForeignKey("FK_Cms_RolePremissions_Cms_Premissions")
-                .FromTable("RolePremissions").InSchema(SchemaName).ForeignColumn("PremissionId")
-                .ToTable("Premissions").InSchema(SchemaName).PrimaryColumn("Id");
+                .ForeignKey("FK_Cms_RolePermissions_Cms_Permissions")
+                .FromTable("RolePermissions").InSchema(SchemaName).ForeignColumn("PermissionId")
+                .ToTable("Permissions").InSchema(SchemaName).PrimaryColumn("Id");
         }
 
         private void DeleteRolePremissions()
         {
-            Delete.UniqueConstraint("UX_Cms_RolePremissions_RoleId_PremissionId").FromTable("RolePremissions").InSchema(SchemaName);
-            Delete.ForeignKey("FK_Cms_RolePremissions_Cms_Roles").OnTable("RolePremissions").InSchema(SchemaName);
-            Delete.ForeignKey("FK_Cms_RolePremissions_Cms_Premissions").OnTable("RolePremissions").InSchema(SchemaName);
-            Delete.Table("RolePremissions").InSchema(SchemaName);
+            Delete.UniqueConstraint("UX_Cms_RolePermissions_RoleId_PermissionId").FromTable("RolePermissions").InSchema(SchemaName);
+            Delete.ForeignKey("FK_Cms_RolePermissions_Cms_Roles").OnTable("RolePermissions").InSchema(SchemaName);
+            Delete.ForeignKey("FK_Cms_RolePermissions_Cms_Permissions").OnTable("RolePermissions").InSchema(SchemaName);
+            Delete.Table("RolePermissions").InSchema(SchemaName);
         }
 
          private void InsertPremission(Guid premissionId, string name)
          {
              Insert
-               .IntoTable("Premissions").InSchema(SchemaName)
+               .IntoTable("Permissions").InSchema(SchemaName)
                .Row(new
                {
                    Id = premissionId,

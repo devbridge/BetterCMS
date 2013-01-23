@@ -13,7 +13,7 @@ namespace BetterCms.Module.Users.ViewModels.Role
 
         public string RoleName { get; set; }
 
-        public IList<Premission> PremissionsList { get; set; }
+        public IList<PermissionViewModel> PermissionsList { get; set; }
 
         public override string ToString()
         {

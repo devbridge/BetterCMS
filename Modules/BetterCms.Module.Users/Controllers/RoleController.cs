@@ -4,36 +4,60 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
+using BetterCms.Module.Users.Commands.Role.EditRole;
+using BetterCms.Module.Users.Commands.Role.GetPremissions;
+using BetterCms.Module.Users.Commands.Role.GetRoles;
+using BetterCms.Module.Users.Content.Resources;
 using BetterCms.Module.Users.ViewModels.Role;
 
 namespace BetterCms.Module.Users.Controllers
 {
     public class RoleController : CmsControllerBase
     {
-        public ActionResult EditRoleView(Guid? id)
+        public ActionResult CreatRoleView()
         {
             var model = new EditRoleViewModel();
-            var premissionList = new List<Premission>();
-            for (int i = 0; i < 6; i++)
-            {
-                premissionList.Add(new Premission() { Name = "Owner" });
-                premissionList.Add(new Premission() { Name = "Administrator" });
-                premissionList.Add(new Premission() { Name = "Publisher" });
-                premissionList.Add(new Premission() { Name = "Content Creator" });
-                premissionList.Add(new Premission() { Name = "Content Editor" });
-            }
-            model.PremissionsList = premissionList;
+            model.PermissionsList = GetCommand<GetPremissionsCommand>().ExecuteCommand(null);
+
+            return PartialView("EditRoleView",model);
+        }
+
+        public ActionResult EditRoleView(string id)
+        {
+            var model = new EditRoleViewModel();
+            model.PermissionsList = GetCommand<GetPremissionsCommand>().ExecuteCommand(id.ToGuidOrDefault());
 
             return PartialView(model);
         }
 
+        [HttpPost]
+        public ActionResult CreateRole(EditRoleViewModel model)
+        {
+
+            if (ModelState.IsValid)
+            {
+                var response = GetCommand<SaveRoleCommand>().ExecuteCommand(model);
+                if (response != null)
+                {
+                   if (model.Id.HasDefaultValue())
+                    {
+                                Messages.AddSuccess(UsersGlobalization.SaveRole_CreatedSuccessfully_Message);
+                    }
+                    return Json(new WireJson { Success = true, Data = response });
+                }
+            }
+
+            return Json(new WireJson { Success = false });
+        }
+
+        
+
         public ActionResult RolesListView(SearchableGridOptions request)
         {
-            var roleList = new List<RoleItemViewModel>();
-            roleList.Add(new RoleItemViewModel(){RoleName = "admin"});
-            roleList.Add(new RoleItemViewModel() { RoleName = "user" });
+            var roleList = GetCommand<GetRolesCommand>().Execute(null);            
             var model = new SiteSettingRoleListViewModel(roleList, new SearchableGridOptions(), roleList.Count);
             return View(model);
         }

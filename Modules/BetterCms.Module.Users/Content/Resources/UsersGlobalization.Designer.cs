@@ -331,7 +331,7 @@ namespace BetterCms.Module.Users.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Set Role Premissions.
+        ///   Looks up a localized string similar to Set Role Permissions.
         /// </summary>
         public static string Role_AddNeww_Dialog_Title {
             get {
@@ -345,6 +345,15 @@ namespace BetterCms.Module.Users.Content.Resources {
         public static string Role_Dialog_AddNew {
             get {
                 return ResourceManager.GetString("Role_Dialog_AddNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Role created successfully..
+        /// </summary>
+        public static string SaveRole_CreatedSuccessfully_Message {
+            get {
+                return ResourceManager.GetString("SaveRole_CreatedSuccessfully_Message", resourceCulture);
             }
         }
         

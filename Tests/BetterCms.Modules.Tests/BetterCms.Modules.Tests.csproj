@@ -172,9 +172,9 @@
     <Compile Include="Navigation\ModelTests\MapTests\SitemapNodeMapTest.cs" />
     <Compile Include="TestBase.cs" />
     <Compile Include="Common\ViewModelToStringTest.cs" />
-    <Compile Include="Users\ModelTests\MapTests\PremissionMapTest.cs" />
+    <Compile Include="Users\ModelTests\MapTests\PermissionMapTest.cs" />
     <Compile Include="Users\ModelTests\MapTests\RoleMapTest.cs" />
-    <Compile Include="Users\ModelTests\MapTests\RolePremissionMapTest.cs" />
+    <Compile Include="Users\ModelTests\MapTests\RolePermissionMapTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

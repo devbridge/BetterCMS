@@ -7,15 +7,15 @@ using BetterCms.Core.Models;
 
 namespace BetterCms.Module.Users.Models.Maps
 {
-    public class RolePremissionMap : EntityMapBase<RolePremissions>
+    public class RolePermissionMap : EntityMapBase<RolePermissions>
     {
-        public RolePremissionMap()
+        public RolePermissionMap()
             : base(UsersModuleDescriptor.ModuleName)
         {
-            Table("RolePremissions");
+            Table("RolePermissions");
 
             References(f => f.Role).Cascade.SaveUpdate().LazyLoad().Not.Nullable();
-            References(f => f.Premission).Cascade.SaveUpdate().LazyLoad().Not.Nullable();
+            References(f => f.Permission).Cascade.SaveUpdate().LazyLoad().Not.Nullable();
         }
     }
 }
