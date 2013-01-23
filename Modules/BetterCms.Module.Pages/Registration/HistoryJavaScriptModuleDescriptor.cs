@@ -21,7 +21,9 @@ namespace BetterCms.Module.Pages.Registration
 
             Links = new IActionProjection[]
                 {
-                    new JavaScriptModuleLinkTo<HistoryController>(this, "loadPageContentHistoryDialogUrl", controller => controller.PageContentHistory("{0}", "{1}", "{2}", "{3}"))     
+                    new JavaScriptModuleLinkTo<HistoryController>(this, "loadPageContentHistoryDialogUrl", controller => controller.PageContentHistory("{0}", "{1}", "{2}", "{3}")),
+                    new JavaScriptModuleLinkTo<HistoryController>(this, "loadPageContentVersionPreviewUrl", controller => controller.PageContentVersion("{0}")),
+                    new JavaScriptModuleLinkTo<HistoryController>(this, "restorePageContentVersionUrl", controller => controller.RestorePageContentVersion("{0}", "{1}"))
                 };
 
             Globalization = new IActionProjection[]

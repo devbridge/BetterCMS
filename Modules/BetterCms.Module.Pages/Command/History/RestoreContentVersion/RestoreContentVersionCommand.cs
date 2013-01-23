@@ -10,7 +10,7 @@ using BetterCms.Module.Root.Mvc;
 namespace BetterCms.Module.Pages.Command.History.RestoreContentVersion
 {
     /// <summary>
-    /// Command for loading  sorted/filtered list of redirect view models
+    /// Command for restoring page content version
     /// </summary>
     public class RestorePageContentVersionCommand : CommandBase, ICommand<Guid, bool>
     {
