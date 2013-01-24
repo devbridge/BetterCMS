@@ -8,6 +8,7 @@ define('bcms.pages.history', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', '
     var history = {},
         
         classes = {
+            tableActiveRow: 'bcms-table-row-active'
         },
         
         selectors = {
@@ -15,6 +16,7 @@ define('bcms.pages.history', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', '
             gridCells: '#bcms-pagecontenthistory-form .bcms-history-table tbody td',
             gridRowPreviewLink: 'a.bcms-icn-preview:first',
             firstRow: 'tr:first',
+            gridRows: '#bcms-pagecontenthistory-form .bcms-history-table tbody tr',
             versionPreviewContainer: '.bcms-history-preview',
             versionPreviewTemplate: '#bcms-history-preview-template'
         },
@@ -94,8 +96,12 @@ define('bcms.pages.history', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', '
         
         container.find(selectors.gridCells).on('click', function () {
             var self = $(this),
-                previewLink = self.parents(selectors.firstRow).find(selectors.gridRowPreviewLink),
+                row = self.parents(selectors.firstRow),
+                previewLink = row.find(selectors.gridRowPreviewLink),
                 id = previewLink.data('id');
+
+            container.find(selectors.gridRows).removeClass(classes.tableActiveRow);
+            row.addClass(classes.tableActiveRow);
 
             previewVersion(container, id);
         });
