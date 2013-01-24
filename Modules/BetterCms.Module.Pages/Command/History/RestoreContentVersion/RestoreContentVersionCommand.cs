@@ -1,61 +1,45 @@
 ﻿using System;
+using System.Linq;
 
-using BetterCms.Core.Exceptions;
-using BetterCms.Core.Models;
 using BetterCms.Core.Mvc.Commands;
-using BetterCms.Module.Pages.ViewModels.History;
-using BetterCms.Module.Root.Models;
+
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Services;
+
+using NHibernate.Linq;
 
 namespace BetterCms.Module.Pages.Command.History.RestoreContentVersion
 {
     /// <summary>
     /// Command for restoring page content version
     /// </summary>
-    public class RestorePageContentVersionCommand : CommandBase, ICommand<Guid, bool>
+    public class RestoreContentVersionCommand : CommandBase, ICommand<Guid, bool>
     {
+        /// <summary>
+        /// Gets or sets the content service.
+        /// </summary>
+        /// <value>
+        /// The content service.
+        /// </value>
+        public IContentService contentService { get; set; }
+
         /// <summary>
         /// Executes the specified request.
         /// </summary>
         /// <param name="pageContentId">The id of the archived page content version.</param>
-        /// <returns></returns>
-        /// <exception cref="System.NotImplementedException"></exception>
+        /// <returns>True, if restore is successfull</returns>
         public bool Execute(Guid pageContentId)
         {
-            var pageContent = Repository.First<PageContent>(pageContentId);
-            
-            if (pageContent.Content.Status == ContentStatus.Archived)
-            {
+            var content = Repository
+                .AsQueryable<Root.Models.Content>(p => p.Id == pageContentId)
+                .Fetch(f => f.Original)
+                .First();
 
-            }
-            else
-            {
-                throw new CmsException(string.Format("A page content can be restored only from the archived version."));
-            }
+            contentService.RestoreContentFromArchive(content);
+
+            UnitOfWork.Commit();
 
             return true;
         }
-
-        private bool IsValidHistoricalContent(IHistorical f)
-        {
-            return !f.IsDeleted && (f.Status == ContentStatus.Published || f.Status == ContentStatus.Draft || f.Status == ContentStatus.Archived);
-        }
-
-        private PageContentHistoryItem Convert(IHistorical content)
-        {
-            return new PageContentHistoryItem
-                       {
-                           Id = content.Id,
-                           Version = content.Version,                           
-                           Status = content.Status,
-                           ArchivedByUser = content.Status == ContentStatus.Archived ? content.CreatedByUser : null,
-                           ArchivedOn = content.Status == ContentStatus.Archived ? content.CreatedOn : (DateTime?)null,
-                           DisplayedFor = content.Status == ContentStatus.Archived && content.PublishedOn != null
-                                   ? content.CreatedOn - content.PublishedOn.Value
-                                   : (TimeSpan?)null,
-                           PublishedByUser = content.Status == ContentStatus.Published ? content.PublishedByUser : null,
-                           PublishedOn = content.Status == ContentStatus.Published ? content.PublishedOn : null                           
-                       };
-        }        
     }
 }
