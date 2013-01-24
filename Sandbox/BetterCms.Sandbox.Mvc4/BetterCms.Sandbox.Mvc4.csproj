@@ -188,8 +188,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\bcms-blog\Views\Blog\" />
-    <Folder Include="Areas\bcms-pages\Views\Page\Partial\" />
-    <Folder Include="Areas\bcms-pages\Views\Shared\Partial\" />
     <Folder Include="Areas\bcms-root\Views\Shared\Partial\" />
     <Folder Include="file\bcms-blog\scripts\" />
     <Folder Include="file\bcms-media\scripts\" />
@@ -261,7 +259,7 @@
     <Content Include="Areas\bcms-pages\Views\History\PageContentVersion.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\bcms-pages\Views\History\PageContentVersionLayout.cshtml" />
+    <Content Include="Areas\bcms-pages\Views\Shared\Layouts\ContentVersionLayout.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
