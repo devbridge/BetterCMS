@@ -30,6 +30,34 @@
         @:&nbsp;
     }
 }
+
+@helper DisplayStatus(ContentStatus status)
+{
+    var statusName = status.ToString();
+    
+    switch (status)
+    {
+        case ContentStatus.Archived:
+            @:<div class="bcms-archived-state">@statusName</div>
+
+            break;
+
+        case ContentStatus.Draft:
+            @:<div class="bcms-draft-state">@statusName</div>
+        
+            break;
+
+        case ContentStatus.Published:
+            @:<div class="bcms-published-state">@statusName</div>    
+        
+            break;
+            
+        default:
+            @:statusName.ToString()
+            break;
+    }
+}
+
 @{
     Action<ColumnBuilder<PageContentHistoryItem>> columns = column =>
     {
@@ -52,13 +80,12 @@
 
         column.For(m => m.DisplayedFor.ToFormatedTimeString())
                .Named("Displayed For")
-               .SortColumnName("DisplayedFor")
-               ;
+               .SortColumnName("DisplayedFor");
 
-        column.For(m => m.Status.ToString())
+        column.For(m => DisplayStatus(m.Status))
                .Named("Status")
                .SortColumnName("Status")
-               ;
+               .Encode(false);
 
         column.For(f => RestoreLink(f)).Encode(false).Named(string.Empty).Sortable(false).HeaderAttributes(@style => "width: 225px;", @class => "bcms-tables-nohover");            
     };

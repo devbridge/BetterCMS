@@ -2,6 +2,7 @@
 
 using BetterCms.Module.Pages.Command.History.GetContentHistory;
 using BetterCms.Module.Pages.Command.History.GetContentVersion;
+using BetterCms.Module.Pages.Command.History.RestoreContentVersion;
 using BetterCms.Module.Root.Mvc;
 
 namespace BetterCms.Module.Pages.Controllers
@@ -38,11 +39,11 @@ namespace BetterCms.Module.Pages.Controllers
         }
         
         [HttpPost]
-        public ActionResult RestorePageContentVersion(string id, string version)
+        public ActionResult RestorePageContentVersion(string id)
         {
-            // TODO
+            var result = GetCommand<RestoreContentVersionCommand>().ExecuteCommand(id.ToGuidOrDefault());
 
-            return WireJson(true);
+            return WireJson(result);
         }
     }
 }

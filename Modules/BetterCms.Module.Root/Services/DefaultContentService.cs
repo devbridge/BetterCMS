@@ -193,5 +193,28 @@ namespace BetterCms.Module.Root.Services
                 }
             }
         }
+
+        public void RestoreContentFromArchive(Models.Content restoreFrom)
+        {
+            if (restoreFrom == null)
+            {
+                throw new CmsException("Nothing to restore from.", new ArgumentNullException("restoreFrom"));
+            }
+
+            if (restoreFrom.Status != ContentStatus.Archived)
+            {
+                throw new CmsException("A page content can be restored only from the archived version.");
+            }
+
+            // Replace original version with restored entity data
+            var originalContent = restoreFrom.Clone();
+            originalContent.Id = restoreFrom.Original.Id;
+            originalContent.Version = restoreFrom.Original.Version;
+            originalContent.Status = ContentStatus.Published;
+            originalContent.Original = null;
+
+            // Save entities
+            SaveContentWithStatusUpdate(originalContent, ContentStatus.Published);
+        }
     }
 }

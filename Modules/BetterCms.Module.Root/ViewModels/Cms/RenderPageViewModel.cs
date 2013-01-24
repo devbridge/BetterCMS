@@ -21,6 +21,10 @@ namespace BetterCms.Module.Root.ViewModels.Cms
             IsPublished = page.IsPublished;
         }
 
+        public RenderPageViewModel()
+        {
+        }
+
         public Guid Id { get; private set; }
 
         public bool IsDeleted { get; private set; }
@@ -41,7 +45,6 @@ namespace BetterCms.Module.Root.ViewModels.Cms
             }
         }
 
-
         DateTime? IEntity.DeletedOn
         {
             get
@@ -50,7 +53,6 @@ namespace BetterCms.Module.Root.ViewModels.Cms
             }
         }
 
-
         string IEntity.CreatedByUser
         {
             get
@@ -58,7 +60,6 @@ namespace BetterCms.Module.Root.ViewModels.Cms
                 throw new NotSupportedException();
             }
         }
-
 
         string IEntity.ModifiedByUser
         {
@@ -75,7 +76,6 @@ namespace BetterCms.Module.Root.ViewModels.Cms
                 throw new NotSupportedException();
             }
         }
-
 
         public int Version { get; private set; }
 

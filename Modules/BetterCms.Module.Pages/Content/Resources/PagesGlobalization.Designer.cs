@@ -1843,6 +1843,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to restore to older version? Restored content will be immediately published..
+        /// </summary>
+        public static string PageContentVersion_Restore_ConfirmationMessage {
+            get {
+                return ResourceManager.GetString("PageContentVersion_Restore_ConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit URL Path.
         /// </summary>
         public static string PageProperties_EditURLPath_Title {

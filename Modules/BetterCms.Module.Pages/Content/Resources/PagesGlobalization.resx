@@ -1038,4 +1038,7 @@
   <data name="EditPageProperties_LayoutPropertiesTab_ChooseLayout_Title" xml:space="preserve">
     <value>Choose Page Layout</value>
   </data>
+  <data name="PageContentVersion_Restore_ConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to restore to older version? Restored content will be immediately published.</value>
+  </data>
 </root>

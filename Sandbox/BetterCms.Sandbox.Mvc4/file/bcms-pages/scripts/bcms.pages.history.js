@@ -1,12 +1,14 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.pages.history', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', 'bcms.dynamicContent'], function ($, bcms, modal, messages, dynamicContent) {
+define('bcms.pages.history', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', 'bcms.dynamicContent'/*, 'bcms.redirect'*/],
+    function ($, bcms, modal, messages, dynamicContent/*, redirect*/) {
     'use strict';
 
     var history = {},
         
         classes = {
+            tableActiveRow: 'bcms-table-row-active'
         },
         
         selectors = {
@@ -14,6 +16,7 @@ define('bcms.pages.history', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', '
             gridCells: '#bcms-pagecontenthistory-form .bcms-history-table tbody td',
             gridRowPreviewLink: 'a.bcms-icn-preview:first',
             firstRow: 'tr:first',
+            gridRows: '#bcms-pagecontenthistory-form .bcms-history-table tbody tr',
             versionPreviewContainer: '.bcms-history-preview',
             versionPreviewTemplate: '#bcms-history-preview-template'
         },
@@ -25,7 +28,8 @@ define('bcms.pages.history', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', '
         },
         
         globalization = {
-            pageContentHistoryDialogTitle: null            
+            pageContentHistoryDialogTitle: null,
+            pageContentVersionRestoryConfirmation: null
         };
 
     /**
@@ -48,8 +52,34 @@ define('bcms.pages.history', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', '
     /**
     * Restores specified version from history
     */
-    function restoreVersion(id) {
-        alert('TODO: restore version');
+    function restoreVersion(container, id) {
+        modal.confirm({
+            content: globalization.pageContentVersionRestoryConfirmation,
+            onAccept: function () {
+                
+                var url = $.format(links.restorePageContentVersionUrl, id),
+                        onComplete = function (json) {
+                            messages.refreshBox(container, json);
+                            
+                            if (json.Success) {
+                                // TODO: add redirect window
+                                bcms.reload();
+                            }
+                        };
+
+                $.ajax({
+                    type: 'POST',
+                    cache: false,
+                    url: url,
+                })
+                    .done(function (result) {
+                        onComplete(result);
+                    })
+                    .fail(function (response) {
+                        onComplete(bcms.parseFailedResponse(response));
+                    });
+            }
+        });
     }
    
     /**
@@ -61,13 +91,17 @@ define('bcms.pages.history', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', '
         container.find(selectors.gridRestoreLinks).on('click', function (event) {
             bcms.stopEventPropagation(event);
             
-            restoreVersion($(this).data('id'));
+            restoreVersion(container, $(this).data('id'));
         });
         
         container.find(selectors.gridCells).on('click', function () {
             var self = $(this),
-                previewLink = self.parents(selectors.firstRow).find(selectors.gridRowPreviewLink),
+                row = self.parents(selectors.firstRow),
+                previewLink = row.find(selectors.gridRowPreviewLink),
                 id = previewLink.data('id');
+
+            container.find(selectors.gridRows).removeClass(classes.tableActiveRow);
+            row.addClass(classes.tableActiveRow);
 
             previewVersion(container, id);
         });
