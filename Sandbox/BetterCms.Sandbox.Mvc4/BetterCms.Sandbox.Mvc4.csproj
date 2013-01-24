@@ -177,7 +177,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Content Include="App_Data\BetterCMS\Modules\readme.txt" />
-    <EmbeddedResource Include="file\bcms-pages\scripts\bcms.pages.content.js" />
     <EmbeddedResource Include="file\bcms-root\scripts\bcms.preview.js" />
     <EmbeddedResource Include="file\bcms-pages\scripts\bcms.pages.history.js" />
     <Content Include="Global.asax" />
