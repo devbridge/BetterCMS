@@ -106,6 +106,7 @@
   <ItemGroup>
     <Compile Include="AmazonS3Storage\AmazonS3StorageServiceTest.cs" />
     <Compile Include="Blog\ModelTests\MapTests\BlogPostMapTest.cs" />
+    <Compile Include="Blog\ModelTests\MapTests\BlogPostContentMapTest.cs" />
     <Compile Include="Blog\ModelTests\MapTests\OptionMapTest.cs" />
     <Compile Include="Common\SerializationTest.cs" />
     <Compile Include="ControllerTestBase.cs" />
@@ -164,6 +165,9 @@
     <Compile Include="Navigation\ModelTests\MapTests\SitemapNodeMapTest.cs" />
     <Compile Include="TestBase.cs" />
     <Compile Include="Common\ViewModelToStringTest.cs" />
+    <Compile Include="Users\ModelTests\MapTests\PermissionMapTest.cs" />
+    <Compile Include="Users\ModelTests\MapTests\RoleMapTest.cs" />
+    <Compile Include="Users\ModelTests\MapTests\RolePermissionMapTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -209,10 +213,12 @@
       <Project>{5383227a-9cb8-4978-91d1-8168ec817d16}</Project>
       <Name>BetterCms.Module.Navigation</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.Users\BetterCms.Module.Users.csproj">
+      <Project>{C530025B-8AB7-402D-B60C-000C9A5D0446}</Project>
+      <Name>BetterCms.Module.Users</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Users\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <PropertyGroup>

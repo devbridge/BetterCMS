@@ -21,6 +21,7 @@ define('bcms', ['jquery', 'knockout'], function ($, ko) {
             configureContent: 'configureContent',
             deleteContent: 'deleteContent',
             contentHistory: 'contentHistory',
+            pageCreated: 'pageCreated',
         },
 
         eventListeners = {},
@@ -119,6 +120,7 @@ define('bcms', ['jquery', 'knockout'], function ($, ko) {
     * Trigger an event. All registered handlers will be executed.
     */
     app.trigger = function (event, data) {
+        var countSuccess = 0;
         $.each(eventListeners[event] || [], function (i, fn) {
             try {
                 if (data) {
@@ -126,10 +128,12 @@ define('bcms', ['jquery', 'knockout'], function ($, ko) {
                 } else {
                     fn();
                 }
+                countSuccess++;
             } catch (e) {
                 $.error(e.message);
             }
         });
+        return countSuccess;
     };
 
     /**

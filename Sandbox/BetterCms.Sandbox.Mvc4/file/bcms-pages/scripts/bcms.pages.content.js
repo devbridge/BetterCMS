@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'bcms.pages.widgets', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages', 'bcms.preview', 'bcms.pages.history', 'bcms.grid', 'bcms.inlineEdit', 'slides.jquery'],
-    function($, bcms, modal, content, widgets, datepicker, htmlEditor, dynamicContent, siteSettings, messages, preview, history, grid, editor) {
+define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'bcms.pages.widgets', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages', 'bcms.preview', 'bcms.grid', 'bcms.inlineEdit', 'slides.jquery', 'bcms.redirect'],
+    function($, bcms, modal, content, widgets, datepicker, htmlEditor, dynamicContent, siteSettings, messages, preview, grid, editor, slides, redirect) {
         'use strict';
 
         var pagesContent = {},
@@ -32,6 +32,7 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
 
                 overlayEdit: '.bcms-content-edit',
                 overlayConfigure: '.bcms-content-configure',
+                overlayDelete: '.bcms-content-delete',
                 overlay: '.bcms-content-overlay',
                 
                 enableCustomJs: '#bcms-enable-custom-js',
@@ -136,7 +137,7 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                                     return false;
                                 }                                 
                             } else {
-                                bcms.reload();
+                                redirect.ReloadWithAlert();
                             }                            
                         }
                     });
@@ -314,7 +315,7 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                 success: function (data) {
                     dialog.close();
                     if (data && data.Success) {
-                        bcms.reload();
+                        redirect.ReloadWithAlert();
                     } else {
                         modal.alert({
                             title: globalization.errorTitle,
@@ -374,6 +375,7 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
 
             overlay.find(selectors.overlayEdit).show();
             overlay.find(selectors.overlayConfigure).show();
+            overlay.find(selectors.overlayDelete).show();
         };
 
         /**
@@ -396,6 +398,7 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                 pageContentId = element.data('pageContentId'),
                 pageContentVersion = element.data('pageContentVersion'),
                 contentVersion = element.data('contentVersion');
+            
             pagesContent.removeContentFromPage(pageContentId, pageContentVersion, contentVersion);
         };
 
@@ -421,7 +424,7 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
 
             if (element.hasClass(classes.regionWidget)) {
                 widgets.configureWidget(pageContentId, function () {
-                    bcms.reload();
+                    redirect.ReloadWithAlert();
                 });
             }            
         };
@@ -470,9 +473,9 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                                     return false;
                                 }
                             } else {
-                                bcms.reload();
+                                redirect.ReloadWithAlert();
                             }
-                        },
+                        }
                     });
                 }
             });
@@ -486,14 +489,10 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                 onDeleteCompleted = function (json) {
                     try {
                         if (json.Success) {
-                            modal.info({
+                            redirect.ReloadWithAlert({
                                 title: globalization.deleteContentSuccessMessageTitle,
-                                content: globalization.deleteContentSuccessMessageMessage,
-                                disableCancel: true,
-                                disableAccept: true,
-                                onLoad: function () {
-                                    setTimeout(bcms.reload, 1500);
-                                }
+                                message: globalization.deleteContentSuccessMessageMessage,
+                                timeout: 1500
                             });
                         }
                         else {

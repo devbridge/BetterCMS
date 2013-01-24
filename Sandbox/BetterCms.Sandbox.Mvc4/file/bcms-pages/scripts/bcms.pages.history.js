@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.pages.history', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', 'bcms.dynamicContent'/*, 'bcms.redirect'*/],
-    function ($, bcms, modal, messages, dynamicContent/*, redirect*/) {
+define('bcms.pages.history', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', 'bcms.dynamicContent', 'bcms.redirect'],
+    function ($, bcms, modal, messages, dynamicContent, redirect) {
     'use strict';
 
     var history = {},
@@ -62,8 +62,7 @@ define('bcms.pages.history', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', '
                             messages.refreshBox(container, json);
                             
                             if (json.Success) {
-                                // TODO: add redirect window
-                                bcms.reload();
+                                redirect.ReloadWithAlert();
                             }
                         };
 

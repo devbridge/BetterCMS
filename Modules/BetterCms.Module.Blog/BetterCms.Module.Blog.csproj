@@ -114,6 +114,7 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Accessors\BlogPostContentAccessor.cs" />
     <Compile Include="BlogModuleConstants.cs" />
     <Compile Include="BlogModuleDescriptor.cs" />
     <Compile Include="Commands\DeleteAuthor\DeleteAuthorCommand.cs" />
@@ -135,9 +136,12 @@
     <Compile Include="Controllers\OptionController.cs" />
     <Compile Include="Models\Author.cs" />
     <Compile Include="Models\BlogPost.cs" />
+    <Compile Include="Models\BlogPostContent.cs" />
     <Compile Include="Models\Maps\AuthorMap.cs" />
+    <Compile Include="Models\Maps\BlogPostContentMap.cs" />
     <Compile Include="Models\Maps\BlogPostMap.cs" />
     <Compile Include="Models\Maps\OptionMap.cs" />
+    <Compile Include="Models\Migrations\Migration201301221400.cs" />
     <Compile Include="Models\Migrations\Migration201301211600.cs" />
     <Compile Include="Models\Option.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />

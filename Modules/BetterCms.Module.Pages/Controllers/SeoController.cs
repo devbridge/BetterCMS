@@ -39,10 +39,11 @@ namespace BetterCms.Module.Pages.Controllers
             bool success = false;            
             if (ModelState.IsValid)
             {
-                success = GetCommand<SavePageSeoCommand>().ExecuteCommand(model);
+                model = GetCommand<SavePageSeoCommand>().ExecuteCommand(model);
+                success = model != null;
             }
 
-            return Json(new WireJson(success));
+            return WireJson(success, model);
         }
     }
 }

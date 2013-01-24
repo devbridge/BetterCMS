@@ -12,7 +12,6 @@ using BetterCms.Module.Blog.ViewModels.Blog;
 
 using BetterCms.Module.MediaManager.Models;
 
-using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 
 using BetterCms.Module.Root.Models;
@@ -93,17 +92,17 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             var isNew = request.Id.HasDefaultValue();
 
             BlogPost blogPost;
-            HtmlContent content = null;
+            BlogPostContent content = null;
             PageContent pageContent = null;
 
             // Loading blog post and it's content, or creating new, if such not exists
             if (!isNew)
             {
                 blogPost = Repository.First<BlogPost>(request.Id);
-                pageContent = Repository.FirstOrDefault<PageContent>(c => c.Page == blogPost && c.Region == region && !c.IsDeleted);
-                if (pageContent != null && pageContent.Content != null)
+                content = Repository.FirstOrDefault<BlogPostContent>(c => c.PageContents.Any(x => x.Page == blogPost && x.Region == region && !x.IsDeleted));
+                if (content != null)
                 {
-                    content = Repository.FirstOrDefault<HtmlContent>(c => c.Id == pageContent.Content.Id);
+                    pageContent = Repository.FirstOrDefault<PageContent>(c => c.Page == blogPost && c.Region == region && !c.IsDeleted && c.Content == content);
                 }
             }
             else
@@ -113,7 +112,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
 
             if (content == null)
             {
-                content = new HtmlContent
+                content = new BlogPostContent
                               {
                                   Name = request.Title,
                                   Status = ContentStatus.Published
@@ -132,10 +131,12 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             if (isNew)
             {
                 blogPost.PageUrl = GeneratePageUrl(request.Title);
-                blogPost.IsPublished = true;
-                blogPost.PublishedOn = DateTime.Now;
                 blogPost.IsPublic = true;
                 blogPost.Layout = layout;
+
+                // TODO: set correct status
+                blogPost.IsPublished = true;
+                blogPost.PublishedOn = DateTime.Now;
             }
 
             if (request.AuthorId.HasValue)
@@ -165,9 +166,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                 blogPost.Image = null;
             }
 
-            Repository.Save(blogPost);
-
-            // Saving content
+            // Set content
             if (string.IsNullOrWhiteSpace(content.Name))
             {
                 content.Name = request.Title;
@@ -176,6 +175,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             content.ActivationDate = request.LiveFromDate;
             content.ExpirationDate = request.LiveToDate;
 
+            Repository.Save(blogPost);
             Repository.Save(content);
             Repository.Save(pageContent);
 

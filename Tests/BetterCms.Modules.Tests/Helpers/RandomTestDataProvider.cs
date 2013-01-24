@@ -7,6 +7,7 @@ using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Navigation.Models;
+using BetterCms.Module.Users.Models;
 
 using BlogOption = BetterCms.Module.Blog.Models.Option;
 
@@ -124,6 +125,15 @@ namespace BetterCms.Tests.Helpers
             PopulatePageProperties(entity);
 
             entity.Author = CreateNewAuthor();
+
+            return entity;
+        }
+
+        public BlogPostContent CreateNewBlogPostContent()
+        {
+            var entity = new BlogPostContent();
+
+            PopulateHtmlContentProperties(entity);
 
             return entity;
         }
@@ -441,6 +451,13 @@ namespace BetterCms.Tests.Helpers
         {
             var entity = new HtmlContent();
 
+            PopulateHtmlContentProperties(entity);
+
+            return entity;
+        }
+
+        private void PopulateHtmlContentProperties(HtmlContent entity)
+        {
             PopulateBaseFields(entity);
 
             entity.ActivationDate = ProvideRandomDateTime();
@@ -455,8 +472,6 @@ namespace BetterCms.Tests.Helpers
             entity.Original = null;
             entity.PublishedByUser = ProvideRandomString(MaxLength.Name);
             entity.PublishedOn = ProvideRandomDateTime();
-
-            return entity;
         }
        
         public Media CreateNewMedia(MediaType type = MediaType.Image)
@@ -562,6 +577,40 @@ namespace BetterCms.Tests.Helpers
             entity.Title = ProvideRandomString(MaxLength.Name);
             entity.Url = ProvideRandomString(MaxLength.Url);
             entity.DisplayOrder = ProvideRandomNumber(0, int.MaxValue);
+
+            return entity;
+        }
+
+        public Role CreateNewRole()
+        {
+            var entity = new Role();
+
+            PopulateBaseFields(entity);
+
+            entity.Name = ProvideRandomString(MaxLength.Name);
+
+            return entity;
+        }
+
+        public Permission CreateNewPermission()
+        {
+            var entity = new Permission();
+
+            PopulateBaseFields(entity);
+
+            entity.Name = ProvideRandomString(MaxLength.Name);
+
+            return entity;
+        }
+
+        public RolePermissions CreateNewRolePermission(Role role = null, Permission permission = null)
+        {
+            var entity = new RolePermissions();
+
+            PopulateBaseFields(entity);
+
+            entity.Role = role ?? CreateNewRole();
+            entity.Permission = permission ?? CreateNewPermission();
 
             return entity;
         }
