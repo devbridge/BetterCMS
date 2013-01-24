@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
+using System.Security.Principal;
 using System.Web.Mvc;
 
 using BetterCms.Core.Models;
@@ -25,8 +26,15 @@ namespace BetterCms.Core.Modules.Projections
 
         public int Order { get; set; }
 
-        public void Render(IPage page, HtmlHelper html)
-        {            
+        public Func<IPage, IPrincipal, bool> IsVisible { get; set; }
+
+        public void Render(IPage page, IPrincipal principal, HtmlHelper html)
+        {
+            if (IsVisible != null && !IsVisible(page, principal))
+            {
+                return;
+            }
+
             html.RenderAction(htmlActionExpression);
         }
     }

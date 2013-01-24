@@ -258,6 +258,9 @@
   <data name="SiteSettings_Title" xml:space="preserve">
     <value>Site Settings</value>
   </data>
+  <data name="UserRole_EditSiteSettings" xml:space="preserve">
+    <value>Edit Site Settings</value>
+  </data>
   <data name="WaterMark_Search" xml:space="preserve">
     <value>Search...</value>
   </data>

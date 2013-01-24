@@ -2,8 +2,10 @@
 
 using Autofac;
 
+using BetterCms.Core.Models;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
+using BetterCms.Core.Security;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Controllers;
 using BetterCms.Module.Root.Mvc;
@@ -154,6 +156,11 @@ namespace BetterCms.Module.Root
                 };
         }
 
+        public override IEnumerable<IUserRole> RegisterUserRoles(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        {
+            return new[] { new UserRole(UserRoles.EditSiteSettings, RootGlobalization.UserRole_EditSiteSettings) };
+        }
+
         public override IEnumerable<IPageActionProjection> RegisterSidebarHeaderProjections(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
         {
             return new IPageActionProjection[]
@@ -161,10 +168,10 @@ namespace BetterCms.Module.Root
                     new ButtonActionProjection(authenticationScriptModuleDescriptor, () => RootGlobalization.Sidebar_LogoutButton, page => "logout")
                         {
                             Order = 10,
-                            CssClass = page => "bcms-logout-btn"
+                            CssClass = page => "bcms-logout-btn",
+                            IsVisible = (page, principal) => principal.Identity.IsAuthenticated
                         },
-
-                    new RenderActionProjection<AuthenticationController>(f => f.Info())
+                    new RenderActionProjection<AuthenticationController>(f => f.Info()) { IsVisible = (page, principal) => principal.Identity.IsAuthenticated }
                 };
         }
 
@@ -176,7 +183,8 @@ namespace BetterCms.Module.Root
                         {
                             Title = () => RootGlobalization.Sidebar_SiteSettingsButtonTitle,
                             CssClass = page => "bcms-sidemenu-btn bcms-btn-settings",
-                            Order = 500
+                            Order = 500,
+                            IsVisible = (page, principal) => true // TODO: Uncomment this: principal.IsInRole(UserRoles.EditSiteSettings)
                         }
                 };
         }
