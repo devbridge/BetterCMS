@@ -1,5 +1,11 @@
-﻿@{
-    ViewBag.Title = "PageContentVersion";
+﻿@using BetterCms.Module.Root.Mvc.Helpers
+
+@model BetterCms.Module.Root.ViewModels.Cms.RenderPageViewModel
+
+@{
+    Layout = "~/Areas/bcms-pages/Views/Shared/Layouts/ContentVersionLayout.cshtml";
 }
 
-<h2>PageContentVersion</h2>
+@{
+    Html.RenderSectionContents(this, Model);
+}
