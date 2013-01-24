@@ -1,9 +1,8 @@
 ﻿using System.Web.Mvc;
 
 using BetterCms.Core.Mvc.Attributes;
-using BetterCms.Module.Root.Commands.GetPageToPreview;
+using BetterCms.Module.Root.Commands.GetPageToRender;
 using BetterCms.Module.Root.Mvc;
-using BetterCms.Module.Root.ViewModels.Cms;
 
 namespace BetterCms.Module.Root.Controllers
 {
@@ -23,14 +22,20 @@ namespace BetterCms.Module.Root.Controllers
         [IgnoreAutoRoute]
         public ActionResult Index(string pageId, string pageContentId)
         {
-            GetPageToPreviewRequest request = new GetPageToPreviewRequest {
-                                                                              PageId = pageId.ToGuidOrDefault(),
-                                                                              PageContentId = pageContentId.ToGuidOrDefault()
-                                                                          };
+            GetPageToRenderRequest request = new GetPageToRenderRequest {
+                                                                            PageId = pageId.ToGuidOrDefault(),
+                                                                            PreviewPageContentId = pageContentId.ToGuidOrDefault()
+                                                                        };
+        
 
-            RenderPageViewModel model = GetCommand<GetPageToPreviewCommand>().ExecuteCommand(request);
+            var model = GetCommand<GetPageToRenderCommand>().ExecuteCommand(request);
 
-            return View(model);
+            if (model.RenderPage != null)
+            {
+                return View(model.RenderPage);
+            }
+
+            return HttpNotFound();
         }
     }
 }

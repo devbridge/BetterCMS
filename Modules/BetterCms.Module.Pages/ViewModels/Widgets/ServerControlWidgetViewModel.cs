@@ -10,6 +10,14 @@ namespace BetterCms.Module.Pages.ViewModels.Widgets
     public class ServerControlWidgetViewModel : WidgetViewModel
     {
         /// <summary>
+        /// Gets or sets the desirable status for the saved widget.
+        /// </summary>
+        /// <value>
+        /// The desirable status.
+        /// </value>
+        public ContentStatus DesirableStatus { get; set; }
+
+        /// <summary>
         /// Gets or sets the url.
         /// </summary>
         /// <value>

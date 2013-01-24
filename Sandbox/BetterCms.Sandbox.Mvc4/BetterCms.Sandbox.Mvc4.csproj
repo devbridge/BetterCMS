@@ -180,6 +180,7 @@
     <EmbeddedResource Include="file\bcms-root\scripts\bcms.preview.js" />
     <EmbeddedResource Include="file\bcms-pages\scripts\bcms.pages.history.js" />
     <EmbeddedResource Include="file\bcms-pages\scripts\bcms.pages.content.js" />
+    <EmbeddedResource Include="file\bcms-pages\scripts\bcms.pages.widgets.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

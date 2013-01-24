@@ -18,8 +18,8 @@
                 @Html.HiddenFor(model => model.Id, new { @id = "bcmsPageContentId"})
                 @Html.HiddenFor(model => model.ContentId, new { @id = "bcmsContentId"})
                 @Html.HiddenFor(model => model.PageId)
-                @Html.HiddenFor(model => model.RegionId, new { @id = "bcmsAddContentToRegionId" })                
-                @Html.HiddenFor(modal => modal.DesirableStatus, new { @id = "bcmsAddContentDesirableStatus"})
+                @Html.HiddenFor(model => model.RegionId, new { @id = "bcmsContentToRegionId" })                
+                @Html.HiddenFor(modal => modal.DesirableStatus, new { @id = "bcmsContentDesirableStatus"})
                 @Html.Partial("Partial/EditHtmlContent", Model)
             }
         </div>

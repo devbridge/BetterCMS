@@ -15,10 +15,11 @@ using NHibernate;
 using NHibernate.Criterion;
 using NHibernate.Linq;
 using NHibernate.SqlCommand;
+using NHibernate.Transform;
 
 namespace BetterCms.Module.Root.Commands.GetPageToRender
 {
-    public class GetPageToRenderCommand : CommandBase, ICommand<string, CmsRequestViewModel>
+    public class GetPageToRenderCommand : CommandBase, ICommand<GetPageToRenderRequest, CmsRequestViewModel>
     {
         private readonly IPageAccessor pageAccessor;
 
@@ -40,22 +41,60 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
         /// <summary>
         /// Executes this command.
         /// </summary>
-        /// <param name="virtualPath">The request data with page data.</param>
+        /// <param name="request">The request data with page data.</param>
         /// <returns>Executed command result.</returns>
-        public CmsRequestViewModel Execute(string virtualPath)
+        public CmsRequestViewModel Execute(GetPageToRenderRequest request)
         {
-            Page page = Repository.AsQueryable<Page>()
-                            .Where(f => !f.IsDeleted)
-                            .Where(f => f.PageUrl.ToLower() == virtualPath.ToLowerInvariant())
-                            .Fetch(f => f.Layout).ThenFetchMany(f => f.LayoutRegions).ThenFetch(f => f.Region)                            
-                            .FetchMany(f => f.PageContents).ThenFetch(f => f.Content).ThenFetchMany(f => f.ContentOptions)
-                            .FetchMany(f => f.PageContents).ThenFetchMany(f => f.Options)
-                            .ToList()
-                            .FirstOrDefault();
-           
+           var pageQuery = Repository.AsQueryable<Page>()    
+                            .Where(f => !f.IsDeleted)         
+                            .Fetch(f => f.Layout).ThenFetchMany(f => f.LayoutRegions).ThenFetch(f => f.Region)
+                            .ToFuture();
+
+           var pageContentsQuery = Repository.AsQueryable<PageContent>()
+                              .Where(f => !f.IsDeleted)  
+                              .Fetch(f => f.Content).ThenFetchMany(f => f.ContentOptions)
+                              .FetchMany(f => f.Options)
+                              .ToFuture();
+
+            if (request.PageId == null)
+            {
+                pageQuery = pageQuery.Where(f => !f.IsDeleted && f.PageUrl.ToLower() == request.PageUrl.ToLowerInvariant());
+                pageContentsQuery = pageContentsQuery.Where(f => f.Page.PageUrl.ToLower() == request.PageUrl.ToLowerInvariant());
+            }
+            else
+            {
+                pageQuery = pageQuery.Where(f => !f.IsDeleted && f.Id == request.PageId);
+                pageContentsQuery = pageContentsQuery.Where(f => f.Page.Id == request.PageId);
+            }
+
+
+            if (request.CanManageContent)
+            {
+                if (request.PreviewPageContentId != null)
+                {
+                    pageContentsQuery = pageContentsQuery.Where(f => f.Content.Status == ContentStatus.Published || f.Content.Status == ContentStatus.Draft || f.Id == request.PreviewPageContentId.Value);
+                }
+                else
+                {
+                    pageContentsQuery = pageContentsQuery.Where(f => f.Content.Status == ContentStatus.Published || f.Content.Status == ContentStatus.Draft);
+                }
+            }
+            else
+            {
+                if (request.PreviewPageContentId != null)
+                {
+                    pageContentsQuery = pageContentsQuery.Where(f => f.Content.Status == ContentStatus.Published || f.Id == request.PreviewPageContentId.Value);
+                }
+                else
+                {
+                    pageContentsQuery = pageContentsQuery.Where(f => f.Content.Status == ContentStatus.Published);
+                }
+            }
+
+            var page = pageQuery.FirstOrDefault();
             if (page == null)
             {
-                var redirect = pageAccessor.GetRedirect(virtualPath);
+                var redirect = pageAccessor.GetRedirect(request.PageUrl);
                 if (!string.IsNullOrWhiteSpace(redirect))
                 {
                     return new CmsRequestViewModel(new RedirectViewModel(redirect));
@@ -64,10 +103,11 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                 return null;
             }
 
-            var contentProjections = page.PageContents.Distinct().Select(f => pageContentProjectionFactory.Create(f)).ToList();
+            var pageContents = pageContentsQuery.ToList();
+            var contentProjections = pageContents.Distinct().Select(f => pageContentProjectionFactory.Create(f)).ToList();
             
             RenderPageViewModel renderPageViewModel = new RenderPageViewModel(page);
-            
+            renderPageViewModel.CanManageContent = request.CanManageContent;
             renderPageViewModel.LayoutPath = page.Layout.LayoutPath;
 
             renderPageViewModel.Regions =
