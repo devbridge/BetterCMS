@@ -13,6 +13,7 @@ using BetterCms.Module.Pages;
 using BetterCms.Module.Root;
 using BetterCms.Module.Navigation;
 using BetterCms.Module.Templates;
+using BetterCms.Module.Users;
 
 using Common.Logging;
 
@@ -34,7 +35,8 @@ namespace BetterCms.Sandbox.DataMigration
                         new TemplatesModuleDescriptor(),
                         new MediaManagerModuleDescriptor(),
                         new PagesModuleDescriptor(),
-                        new RootModuleDescriptor()
+                        new RootModuleDescriptor(),
+                        new UsersModuleDescriptor()
                     })
                     .ToList();
         }

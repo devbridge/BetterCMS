@@ -1,0 +1,58 @@
+﻿@using BetterCms.Module.Root.Mvc.Grids.Extensions
+@using BetterCms.Module.Root.Mvc.Grids.TableRenderers
+@using BetterCms.Module.Root.Mvc.Helpers
+@using BetterCms.Module.Users.Content.Resources
+@using BetterCms.Module.Users.Controllers
+@using BetterCms.Module.Users.ViewModels.Role
+@using MvcContrib
+@using Microsoft.Web.Mvc
+@using MvcContrib.UI.Grid
+
+@model BetterCms.Module.Users.ViewModels.Role.SiteSettingRoleListViewModel
+           
+@{
+    Action<ColumnBuilder<RoleItemViewModel>> columns = column =>
+    {
+        column.EditButtonColumn(renderId:false);
+
+        column.For(f => string.Format("<a class=\"bcms-tables-link bcms-grid-item-edit-button bcms-template-name\" data-id=\"{0}\">{1}</a>", f.Id, f.RoleName))
+            .Named(UsersGlobalization.SiteSettings_Roles_RoleColumn)
+            .SortColumnName("TemplateName")
+            .Encode(false);
+            
+        column.DeleteButtonColumn(renderId:false);
+    };
+}
+ <div class="bcms-top-block-holder">
+        <div id="bcms-create-role-button" class="bcms-btn-links-main">@UsersGlobalization.Role_Dialog_AddNew</div>
+        @Html.MessagesBox("bcms-templates-messages")
+ </div>    
+
+@using (Html.BeginForm<RoleController>(f => f.RolesListView(null), FormMethod.Post, new { @id = "bcms-templates-form" }))
+{
+    @Html.HiddenGridOptions(Model.GridOptions)
+   
+    @(Html
+          .Grid(Model.Items)
+          .Sort(Model.GridOptions)
+          .Columns(columns)
+          .Attributes(@class => "bcms-tables")
+              .RowAttributes(delegate(GridRowViewData<RoleItemViewModel> row)
+                  {
+                      return new Dictionary<string, object>
+                              {
+                                    {"data-id", row.Item.Id},
+                                    {"data-version", row.Item.Version}
+                              };
+              })
+                  .RenderUsing(new EditableHtmlTableGridRenderer<RoleItemViewModel>()))
+}
+
+<script type="text/html" id="bcms-template-list-row-template">
+    @(Html
+                .Grid(new List<RoleItemViewModel> { new RoleItemViewModel() })
+        .Columns(columns)
+        .Attributes(@class => "bcms-tables")
+        .RenderUsing(new HtmlTableGridSingleRowRenderer<RoleItemViewModel>()))
+</script>
+
