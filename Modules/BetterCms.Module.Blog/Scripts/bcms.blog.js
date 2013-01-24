@@ -523,18 +523,6 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             });
         }
     };
-        
-    /**
-    * Called when showing content history
-    */
-    function onContentHistory(sender) {
-        var element = $(sender),
-            contentId = element.data('id');
-
-        if (element.hasClass(classes.regionBlogPostContent)) {
-            alert('TODO: implement blog content history');
-        }
-    };
 
     /**
     * Initializes blog module.
@@ -544,7 +532,6 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         
         bcms.on(bcms.events.showOverlay, onShowOverlay);
         bcms.on(bcms.events.editContent, onEditContent);
-        bcms.on(bcms.events.contentHistory, onContentHistory);
     };
     
     /**
