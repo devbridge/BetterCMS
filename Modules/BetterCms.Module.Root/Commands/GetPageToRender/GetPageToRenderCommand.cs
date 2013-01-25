@@ -52,6 +52,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             {
                 page = UnitOfWork.Session.QueryOver(() => pageAlias)
                               .Where(pageFilter)
+                              .Where(p => !p.IsDeleted)
                               .Fetch(f => f.Layout)
                               .Eager.Fetch(f => f.Layout.LayoutRegions)
                               .Eager.Fetch(f => f.Layout.LayoutRegions[0].Region)
@@ -65,6 +66,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             {
                 page = UnitOfWork.Session.QueryOver(() => pageAlias)
                               .Where(pageFilter)
+                              .Where(p => !p.IsDeleted)
                               .Fetch(f => f.Layout)
                               .Eager.Fetch(f => f.Layout.LayoutRegions)
                               .Eager.Fetch(f => f.Layout.LayoutRegions[0].Region)

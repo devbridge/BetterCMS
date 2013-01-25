@@ -2,12 +2,11 @@
 using System.Web.Mvc;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Modules.Registration;
-using BetterCms.Core.Mvc;
-using BetterCms.Core.Mvc.Extensions;
+using BetterCms.Core.Security;
 using BetterCms.Core.Services;
-using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Models.SiteSettingsMenu;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Registration;
 using BetterCms.Module.Root.ViewModels;
 
 using Common.Logging;
@@ -17,6 +16,7 @@ namespace BetterCms.Module.Root.Controllers
     /// <summary>
     /// Site settings menu controller.
     /// </summary>
+    // TODO: Uncomment this: [BcmsAuthorize(Roles = UserRoles.EditSiteSettings)]
     public class SiteSettingsController : CmsControllerBase
     {
         /// <summary>
@@ -72,4 +72,3 @@ namespace BetterCms.Module.Root.Controllers
         }
     }
 }
-

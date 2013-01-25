@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Web.Mvc;
 using System.Web.UI;
@@ -50,9 +51,15 @@ namespace BetterCms.Core.Modules.Projections
         /// Renders an action projection to given html output.
         /// </summary>
         /// <param name="page">The page.</param>
+        /// <param name="principal"></param>
         /// <param name="html">The html helper.</param>
-        public override void Render(IPage page, HtmlHelper html)
+        public override void Render(IPage page, IPrincipal principal, HtmlHelper html)
         {
+            if (IsVisible != null && !IsVisible(page, principal))
+            {
+                return;
+            }
+
             using (HtmlControlRenderer control = new HtmlControlRenderer(Tag))
             {
                 OnPreRender(control, page, html);
@@ -65,7 +72,7 @@ namespace BetterCms.Core.Modules.Projections
                     {
                         foreach (var htmlElementProjection in ChildProjections.OrderBy(f => f.Order))
                         {
-                            htmlElementProjection.Render(page, html);
+                            htmlElementProjection.Render(page, principal, html);
                         }
                     }
 

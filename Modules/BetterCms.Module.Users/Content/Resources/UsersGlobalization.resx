@@ -243,4 +243,10 @@
   <data name="SaveRole_CreatedSuccessfully_Message" xml:space="preserve">
     <value>Role created successfully.</value>
   </data>
+  <data name="DeleteRole_DeletedSuccessfully_Message" xml:space="preserve">
+    <value>Role deleted successfully.</value>
+  </data>
+  <data name="DeleteRole_Confirmation_Message" xml:space="preserve">
+    <value>Are you sure you want to delete this role?</value>
+  </data>
 </root>

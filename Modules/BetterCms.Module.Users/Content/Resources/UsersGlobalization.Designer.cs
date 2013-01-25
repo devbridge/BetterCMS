@@ -61,6 +61,24 @@ namespace BetterCms.Module.Users.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete this role?.
+        /// </summary>
+        public static string DeleteRole_Confirmation_Message {
+            get {
+                return ResourceManager.GetString("DeleteRole_Confirmation_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Role deleted successfully..
+        /// </summary>
+        public static string DeleteRole_DeletedSuccessfully_Message {
+            get {
+                return ResourceManager.GetString("DeleteRole_DeletedSuccessfully_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email.
         /// </summary>
         public static string EditUser_Email_Title {

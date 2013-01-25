@@ -17,7 +17,7 @@
     {
         foreach (var metaData in Model.Metadata)
         {
-            metaData.Render(Model, Html);
+            metaData.Render(Model, User, Html);
         }
     }
 }
