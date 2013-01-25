@@ -47,10 +47,16 @@ define('bcms.pages.history', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', '
     */
     function previewVersion(container, id) {
         var url = $.format(links.loadPageContentVersionPreviewUrl, id),
-            template = $(container.find(selectors.versionPreviewTemplate).html()).attr('src', url),
+            iFrame = $(container.find(selectors.versionPreviewTemplate).html()),
             previewContainer = container.find(selectors.versionPreviewContainer);
 
-        previewContainer.html(template);
+        previewContainer.html(iFrame);
+        previewContainer.showLoading();
+        iFrame.attr('src', url);
+
+        iFrame.on('load', function () {
+            previewContainer.hideLoading();
+        });
     }
 
     /**
