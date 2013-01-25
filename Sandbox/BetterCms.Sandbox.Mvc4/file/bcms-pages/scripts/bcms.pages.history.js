@@ -92,7 +92,6 @@ define('bcms.pages.history', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', '
         grid.submitGridForm(form, function (data) {
             container.html(data);
             history.initPageContentHistoryDialogEvents(dialog, data);
-            dialog.maximizeHeight();
         });
     }
 
@@ -100,6 +99,8 @@ define('bcms.pages.history', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', '
     * Initializes EditSeo dialog events.
     */
     history.initPageContentHistoryDialogEvents = function (dialog) {
+        dialog.maximizeHeight();
+
         var container = dialog.container.find(selectors.modalContent);
 
         container.find(selectors.gridRestoreLinks).on('click', function (event) {
