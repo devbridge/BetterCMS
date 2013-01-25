@@ -18,11 +18,7 @@ namespace BetterCms.Module.Users.Models.Migrations
         public override void Up()
         {
             Create.Table("Roles").InSchema(SchemaName).WithCmsBaseColumns().WithColumn("Name").AsAnsiString(MaxLength.Name).NotNullable();
-            Create.Table("Permissions").InSchema(SchemaName).WithCmsBaseColumns().WithColumn("Name").AsAnsiString(MaxLength.Name).NotNullable();
-            CreateRolePremissions();
-            InsertPremission(new Guid("B638896E-B8BB-472F-8DFF-A0B83FF1F36F"), "Administrator");
-            InsertPremission(new Guid("A638896E-B8BB-472F-8DFF-A0B83FF1F36F"), "Owner");
-            InsertPremission(new Guid("D634896E-B8BB-472F-8DFF-A0B83FF1F36F"), "Content Editor");
+            CreatePermissionsTable();
         }
 
         public override void Down()
@@ -30,6 +26,16 @@ namespace BetterCms.Module.Users.Models.Migrations
             DeleteRolePremissions();
             Delete.Table("Roles").InSchema(SchemaName);
             Delete.Table("Permissions").InSchema(SchemaName);
+        }
+
+        private void CreatePermissionsTable()
+        {
+            Create.Table("Permissions").InSchema(SchemaName).WithCmsBaseColumns().WithColumn("Name").AsAnsiString(MaxLength.Name).NotNullable().Unique()
+                .WithColumn("Description").AsAnsiString(MaxLength.Name).NotNullable();
+            CreateRolePremissions();
+            InsertPremission(new Guid("016C5C30-A9B2-4812-9DF5-78BD48AFE88D"), "Admin", "Administrator");
+            InsertPremission(new Guid("BF2D00E4-082B-4477-96F1-8FCACF414512"), "Owner", "Owner");
+            InsertPremission(new Guid("EFB00E47-51CD-48C9-8FCD-255C94237813"), "Editor", "Content Editor");
         }
 
         private void CreateRolePremissions()
@@ -63,7 +69,7 @@ namespace BetterCms.Module.Users.Models.Migrations
             Delete.Table("RolePermissions").InSchema(SchemaName);
         }
 
-         private void InsertPremission(Guid premissionId, string name)
+         private void InsertPremission(Guid premissionId, string name, string description)
          {
              Insert
                .IntoTable("Permissions").InSchema(SchemaName)
@@ -76,7 +82,8 @@ namespace BetterCms.Module.Users.Models.Migrations
                    CreatedByUser = "Admin",
                    ModifiedOn = DateTime.Now,
                    ModifiedByUser = "Admin",
-                   Name = name
+                   Name = name,
+                   Description = description
                });
          }
     }

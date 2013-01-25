@@ -21,7 +21,7 @@ namespace BetterCms.Module.Users.Commands.Role.GetPremissions
                 .Select(t => new PermissionViewModel
                 {
                     Id = t.Id,
-                    Name = t.Name
+                    Name = t.Description
                 })
                 .ToList();
 

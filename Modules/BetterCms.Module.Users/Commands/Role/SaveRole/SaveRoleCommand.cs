@@ -14,22 +14,25 @@ using NHibernate.Linq;
 
 namespace BetterCms.Module.Users.Commands.Role.EditRole
 {
+    /// <summary>
+    /// A command to save role item.
+    /// </summary>
     public class SaveRoleCommand : CommandBase, ICommand<EditRoleViewModel, SaveRoleResponse>
     {
         /// <summary>
         /// Executes a command to save role.
         /// </summary>
-        /// <param name="request">The role item.</param>
+        /// <param name="roleItem">The role item.</param>
         /// <returns>
         /// true if role saved successfully; false otherwise.
         /// </returns>
-        public SaveRoleResponse Execute(EditRoleViewModel request)
+        public SaveRoleResponse Execute(EditRoleViewModel roleItem)
         {
             UnitOfWork.BeginTransaction();
-   
-            var role = !request.Id.HasDefaultValue()
+
+            var role = !roleItem.Id.HasDefaultValue()
                                ? Repository.AsQueryable<Models.Role>()
-                                           .Where(f => f.Id == request.Id)
+                                           .Where(f => f.Id == roleItem.Id)
                                            .ToList()
                                            .FirstOrDefault()
                                : new Models.Role();
@@ -39,12 +42,12 @@ namespace BetterCms.Module.Users.Commands.Role.EditRole
                 role = new Models.Role();
             }
 
-            role.Name = request.RoleName;
-            role.Version = request.Version;
+            role.Name = roleItem.RoleName;
+            role.Version = roleItem.Version;
 
             //edits or remove permission
-            var rolePermissions = GetRolePermissions(request.Id);
-            var requestPermissionList = request.PermissionsList.Where(p => p.IsSelected).ToList(); 
+            var rolePermissions = GetRolePermissions(roleItem.Id);
+            var requestPermissionList = roleItem.PermissionsList.Where(p => p.IsSelected).ToList(); 
 
             if (rolePermissions != null && rolePermissions.Any())
             {
