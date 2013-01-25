@@ -12,8 +12,8 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
 
                 contentId: '#bcmsContentId',
                 pageContentId: '#bcmsPageContentId',
-                contentFormRegionId: '#bcmsAddContentToRegionId',
-                desirableStatus: '#bcmsAddContentDesirableStatus',
+                contentFormRegionId: '#bcmsContentToRegionId',
+                desirableStatus: '#bcmsContentDesirableStatus',
                 dataPickers: '.bcms-datepicker',
                 htmlEditor: 'bcms-contenthtml',
 

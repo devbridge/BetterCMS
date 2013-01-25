@@ -95,23 +95,20 @@ namespace BetterCms.Module.Root.Controllers
             virtualPath = VirtualPathUtility.AppendTrailingSlash(virtualPath);            
             IPrincipal principal = securityService.GetCurrentPrincipal();
             bool canManageContent = securityService.CanManageContent(principal);
-
             var useCaching = cmsConfiguration.Cache.Enabled && !canManageContent;
-
+            var request = new GetPageToRenderRequest {
+                                                         PageUrl = virtualPath,
+                                                         CanManageContent = canManageContent
+                                                     };
             if (useCaching)
             {
                 string cacheKey = "CMS_" + virtualPath + "_050cc001f75942648e57e58359140d1a";
                 
-                model = cacheService.Get(cacheKey, cmsConfiguration.Cache.Timeout, () => GetCommand<GetPageToRenderCommand>().ExecuteCommand(virtualPath));
+                model = cacheService.Get(cacheKey, cmsConfiguration.Cache.Timeout, () => GetCommand<GetPageToRenderCommand>().ExecuteCommand(request));
             }
             else
             {
-                model = GetCommand<GetPageToRenderCommand>().ExecuteCommand(virtualPath);
-            }
-
-            if (model != null && model.RenderPage != null)
-            {
-                model.RenderPage.CanManageContent = canManageContent;
+                model = GetCommand<GetPageToRenderCommand>().ExecuteCommand(request);
             }
 
             return model;

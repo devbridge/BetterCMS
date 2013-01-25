@@ -17,8 +17,8 @@
    
     @using (Html.BeginForm<WidgetsController>(c => c.EditServerControlWidget((ServerControlWidgetViewModel)null), FormMethod.Post, new { @id = "bcms-widget-form", @class = "bcms-ajax-form" }))
     {
-        @Html.MessagesBox("edit-widget-messages")
-            
+        @Html.MessagesBox("edit-widget-messages")   
+        @Html.HiddenFor(modal => modal.DesirableStatus, new { @id = "bcmsContentDesirableStatus"})
         @Html.HiddenFor(model => model.Id)
         @Html.HiddenFor(model => model.Version)
             
