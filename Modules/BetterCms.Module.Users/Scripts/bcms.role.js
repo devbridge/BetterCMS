@@ -1,7 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define */
 
-define('bcms.role', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.inlineEdit', 'bcms.dynamicContent'], function ($, bcms, modal, siteSettings, editor, dynamicContent) {
+define('bcms.role', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.inlineEdit', 'bcms.dynamicContent', 'bcms.messages', 'bcms.grid'], 
+    function ($, bcms, modal, siteSettings, editor, dynamicContent, messages, grid) {
     'use strict';
 
     var role = {},
@@ -11,7 +12,12 @@ define('bcms.role', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
 
             roleForm: '#bcms-role-form',
             roleRowEditButtons: '.bcms-grid-item-edit-button',
-            roleParentRow: 'tr:first'
+            roleRowDeleteButtons: '.bcms-grid-item-delete-button',
+            roleParentRow: 'tr:first',
+            roleNameCell: '.bcms-template-name',
+            roleRowTemplate: '#bcms-template-list-row-template',
+            roleTableFirstRow: 'table.bcms-tables > tbody > tr:first'
+                
         },
 
         links = {
@@ -19,14 +25,16 @@ define('bcms.role', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             loadSiteSettingsRoleUrl: null,
             loadEditUserUrl: null,
             loadCreatRoleUrl: null,
-            loadEditRoleUrl: null
+            loadEditRoleUrl: null,
+            deleteRoleUrl: null
 
         },
 
         globalization = {
             confirmLogoutMessage: null,
             rolesListTabTitle: null,
-            rolesAddNewTitle: null
+            rolesAddNewTitle: null,
+            deleteRoleConfirmMessage: null
         };
 
     // Assign objects to module.
@@ -51,17 +59,20 @@ define('bcms.role', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
          container.find(selectors.siteSettingsRoleCreatButton).on('click', function() {
             role.openCreatRoleDialog();
         });
+         container.find(selectors.roleRowDeleteButtons).on('click', function () {
+                deleteRole(container, $(this));
+        });
     };
   
   
-    role.openCreatRoleDialog = function () {//(onSaveCallback) {
+    role.openCreatRoleDialog = function (onSaveCallback) {
         modal.open({
             title: globalization.rolesAddNewTitle,
             onLoad: function (childDialog) {
                 dynamicContent.bindDialog(childDialog, links.loadCreatRoleUrl, {
-                    contentAvailable: initializeEditRoleForm
+                    contentAvailable: initializeEditRoleForm,
 
-                    //postSuccess: onSaveCallback
+                    postSuccess: onSaveCallback
                 });
             }
         });
@@ -88,7 +99,7 @@ define('bcms.role', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
 
         editRoleWindow(id, function (data) {
         if (data.Data != null) {
-        //setRoleFields(row, data);
+        setRoleFields(row, data);
         grid.showHideEmptyRow(container);
         }
         });
@@ -109,17 +120,76 @@ define('bcms.role', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
                 dynamicContent.bindDialog(childDialog, $.format(links.loadEditRoleUrl, templateId), {
                     contentAvailable: initializeEditRoleForm,
 
-                    //beforePost: function (form) {
-                      //  editor.resetAutoGenerateNameId();
-                        //editor.setInputNames(form);
-                    //},
+                    beforePost: function (form) {
+                        editor.resetAutoGenerateNameId();
+                        editor.setInputNames(form);
+                    },
 
-                    //postSuccess: onSaveCallback
+                    postSuccess: onSaveCallback
                 });
             }
         });
     };
 
+     role.deleteRole = function (roleId, roleVersion, roleName, onDeleteCallback) {
+            var url = $.format(links.deleteRoleUrl, roleId, roleVersion),
+                message = $.format(globalization.deleteRoleConfirmMessage, roleName),
+                onDeleteCompleted = function (json) {
+                    try {
+                        if (json.Success && $.isFunction(onDeleteCallback)) {
+                            onDeleteCallback(json);
+                        }
+                    } finally {
+                        confirmDialog.close();
+                    }
+                },
+                confirmDialog = modal.confirm({
+                    content: message,
+                    onAccept: function () {
+                        $.ajax({
+                            type: 'POST',
+                            url: url,
+                            contentType: 'application/json; charset=utf-8',
+                            dataType: 'json',
+                            cache: false
+                        })
+                        .done(function (json) {
+                            onDeleteCompleted(json);
+                        })
+                        .fail(function (response) {
+                            onDeleteCompleted(bcms.parseFailedResponse(response));
+                        });
+                        return false;
+                    }
+                });
+        };
+    
+        /**
+        * Deletes role from site settings role list.
+        */
+        function deleteRole(container, self) {
+            var row = self.parents(selectors.roleParentRow),
+                id = row.data('id'),
+                version = row.data('version'),
+                name = row.find(selectors.roleNameCell).html();
+
+            role.deleteRole(id, version, name, function(data) {
+                messages.refreshBox(container, data);
+                if (data.Success) {
+                    row.remove();
+                    grid.showHideEmptyRow(container);
+                }
+            });
+        };
+
+        /**
+        * Set values, returned from server to row fields
+        */
+        function setRoleFields(row, json) {
+            row.data('id', json.Data.Id);
+            row.data('version', json.Data.Version);
+            row.find(selectors.roleNameCell).html(json.Data.RoleName);
+        };
 
     bcms.registerInit(role.init);
 

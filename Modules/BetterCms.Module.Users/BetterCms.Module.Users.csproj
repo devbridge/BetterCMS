@@ -111,11 +111,12 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Commands\Role\DeleteRole\DeleteRoleCommand.cs" />
+    <Compile Include="Commands\Role\DeleteRole\DeleteRoleCommandRequest.cs" />
     <Compile Include="Commands\Role\GetRoleForEdit\GetRoleForEditCommand.cs" />
     <Compile Include="Commands\Role\GetRoles\GetRolesCommand.cs" />
     <Compile Include="Commands\Role\SaveRole\SaveRoleCommand.cs" />
     <Compile Include="Commands\Role\SaveRole\SaveRoleResponse.cs" />
-    <Compile Include="Commands\Role\GetPremissions\GetPremissionsCommand.cs" />
     <Compile Include="Content\Resources\UsersGlobalization.en-US.Designer.cs">
       <DependentUpon>UsersGlobalization.en-US.resx</DependentUpon>
       <AutoGen>True</AutoGen>
