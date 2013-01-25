@@ -11,8 +11,7 @@
       var d = c.addCommand(b, a);
       c.ui.addButton('CmsFileManager', {
         label: 'Insert File',
-        // TODO: Add icon for inserting file
-        icon: 'about',
+        icon: 'templates',
         command: b
       });
     }
