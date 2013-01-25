@@ -61,33 +61,58 @@
 @{
     Action<ColumnBuilder<PageContentHistoryItem>> columns = column =>
     {
-        column.For(f => PreviewLink(f)).Encode(false).Named(string.Empty).Sortable(false).HeaderAttributes(@style => "width: 50px;  padding: 10px;", @class => "bcms-tables-nohover");
+        column.For(f => PreviewLink(f))
+            .Encode(false)
+            .Named(string.Empty)
+            .Sortable(false)
+            .HeaderAttributes(@style => "width: 50px;  padding: 10px;", @class => "bcms-tables-nohover");
 
+        column.For(m => m.CreatedOn.ToFormattedDateString())
+               .Named(PagesGlobalization.PageContentHistory_Column_CreatedOn)
+               .SortColumnName("CreatedOn")
+               .HeaderAttributes(@style => "width: 90px;")
+               .Attributes(@style => "width: 90px;");
+
+        column.For(m => m.CreatedByUser)
+               .Named(PagesGlobalization.PageContentHistory_Column_CreatedByUser)
+               .SortColumnName("CreatedByUser");
+        
         column.For(m => m.PublishedOn.ToFormattedDateString())
-               .Named("Date Published")
+               .Named(PagesGlobalization.PageContentHistory_Column_PublishedOn)
                .SortColumnName("PublishedOn")
-               .HeaderAttributes(@style => "width: 150px;");
+               .HeaderAttributes(@style => "width: 90px;")
+               .Attributes(@style => "width: 90px;");
 
         column.For(m => m.PublishedByUser)
-               .Named("By")
+               .Named(PagesGlobalization.PageContentHistory_Column_PublishedByUser)
                .SortColumnName("PublishedByUser")
-               .HeaderAttributes(@style => "width: 95px;");
+               .HeaderAttributes(@style => "width: 120px;")
+               .Attributes(@style => "width: 120px;");
 
         column.For(m => m.ArchivedOn.ToFormattedDateString())
-               .Named("Archived")
+               .Named(PagesGlobalization.PageContentHistory_Column_ArchivedOn)
                .SortColumnName("ArchivedOn")
-               .HeaderAttributes(@style => "width: 125px;");
+               .HeaderAttributes(@style => "width: 90px;")
+               .Attributes(@style => "width: 90px;");
 
         column.For(m => m.DisplayedFor.ToFormatedTimeString())
-               .Named("Displayed For")
-               .SortColumnName("DisplayedFor");
+               .Named(PagesGlobalization.PageContentHistory_Column_DisplayedFor)
+               .SortColumnName("DisplayedFor")
+               .HeaderAttributes(@style => "width: 90px;")
+               .Attributes(@style => "width: 90px;");
 
         column.For(m => DisplayStatus(m.Status))
-               .Named("Status")
+               .Named(PagesGlobalization.PageContentHistory_Column_Status)
                .SortColumnName("Status")
-               .Encode(false);
+               .Encode(false)
+               .HeaderAttributes(@style => "width: 90px;")
+               .Attributes(@style => "width: 90px;");
 
-        column.For(f => RestoreLink(f)).Encode(false).Named(string.Empty).Sortable(false).HeaderAttributes(@style => "width: 225px;", @class => "bcms-tables-nohover");            
+        column.For(f => RestoreLink(f))
+            .Encode(false)
+            .Named(string.Empty)
+            .Sortable(false)
+            .HeaderAttributes(@style => "width: 125px;", @class => "bcms-tables-nohover");            
     };
 }
       
@@ -118,7 +143,7 @@
             @Html.MessagesBox("bcms-pagecontenthistory-messages")
             @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new ScrollableEditableHtmlTableGridRenderer<PageContentHistoryItem>()
                                                                                                                                  {
-                                                                                                                                     InterncalTableCssClass = "bcms-history-table"
+                                                                                                                                     InternalTableCssClass = "bcms-history-table"
                                                                                                                                  })
         }    
     </div>

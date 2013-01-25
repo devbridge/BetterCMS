@@ -1816,6 +1816,69 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Archived.
+        /// </summary>
+        public static string PageContentHistory_Column_ArchivedOn {
+            get {
+                return ResourceManager.GetString("PageContentHistory_Column_ArchivedOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Created By.
+        /// </summary>
+        public static string PageContentHistory_Column_CreatedByUser {
+            get {
+                return ResourceManager.GetString("PageContentHistory_Column_CreatedByUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date Created.
+        /// </summary>
+        public static string PageContentHistory_Column_CreatedOn {
+            get {
+                return ResourceManager.GetString("PageContentHistory_Column_CreatedOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Displayed For.
+        /// </summary>
+        public static string PageContentHistory_Column_DisplayedFor {
+            get {
+                return ResourceManager.GetString("PageContentHistory_Column_DisplayedFor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Published By.
+        /// </summary>
+        public static string PageContentHistory_Column_PublishedByUser {
+            get {
+                return ResourceManager.GetString("PageContentHistory_Column_PublishedByUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date Published.
+        /// </summary>
+        public static string PageContentHistory_Column_PublishedOn {
+            get {
+                return ResourceManager.GetString("PageContentHistory_Column_PublishedOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string PageContentHistory_Column_Status {
+            get {
+                return ResourceManager.GetString("PageContentHistory_Column_Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to History - Content Versions.
         /// </summary>
         public static string PageContentHistory_DialogTitle {

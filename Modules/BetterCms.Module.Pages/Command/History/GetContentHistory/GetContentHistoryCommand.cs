@@ -26,7 +26,7 @@ namespace BetterCms.Module.Pages.Command.History.GetContentHistory
         public PageContentHistoryViewModel Execute(GetContentHistoryRequest request)
         {
             var history = new List<PageContentHistoryItem>();
-            request.SetDefaultSortingOptions("PublishedOn", true);            
+            request.SetDefaultSortingOptions("CreatedOn", true);            
 
             var contentFutureQuery = Repository
                 .AsQueryable<Root.Models.Content>()
@@ -70,7 +70,9 @@ namespace BetterCms.Module.Pages.Command.History.GetContentHistory
                                    ? content.CreatedOn - content.PublishedOn.Value
                                    : (TimeSpan?)null,
                            PublishedByUser = content.Status == ContentStatus.Published ? content.PublishedByUser : null,
-                           PublishedOn = content.Status == ContentStatus.Published ? content.PublishedOn : null                           
+                           PublishedOn = content.Status == ContentStatus.Published ? content.PublishedOn : null,
+                           CreatedByUser = content.CreatedByUser,
+                           CreatedOn = content.CreatedOn
                        };
         }        
     }

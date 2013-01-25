@@ -1041,4 +1041,25 @@
   <data name="DeletePage_Dialog_DeleteButton" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="PageContentHistory_Column_ArchivedOn" xml:space="preserve">
+    <value>Archived</value>
+  </data>
+  <data name="PageContentHistory_Column_CreatedByUser" xml:space="preserve">
+    <value>Created By</value>
+  </data>
+  <data name="PageContentHistory_Column_CreatedOn" xml:space="preserve">
+    <value>Date Created</value>
+  </data>
+  <data name="PageContentHistory_Column_DisplayedFor" xml:space="preserve">
+    <value>Displayed For</value>
+  </data>
+  <data name="PageContentHistory_Column_PublishedByUser" xml:space="preserve">
+    <value>Published By</value>
+  </data>
+  <data name="PageContentHistory_Column_PublishedOn" xml:space="preserve">
+    <value>Date Published</value>
+  </data>
+  <data name="PageContentHistory_Column_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
 </root>
