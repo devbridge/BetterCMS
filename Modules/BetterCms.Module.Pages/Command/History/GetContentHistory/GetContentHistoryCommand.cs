@@ -26,7 +26,7 @@ namespace BetterCms.Module.Pages.Command.History.GetContentHistory
         public PageContentHistoryViewModel Execute(GetContentHistoryRequest request)
         {
             var history = new List<PageContentHistoryItem>();
-            request.SetDefaultSortingOptions("PublishedOn");            
+            request.SetDefaultSortingOptions("PublishedOn", true);            
 
             var contentFutureQuery = Repository
                 .AsQueryable<Root.Models.Content>()
