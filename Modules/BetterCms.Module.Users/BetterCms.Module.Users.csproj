@@ -145,7 +145,10 @@
     <Compile Include="Models\RolePermissions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registration\RoleJavaScriptModuleDescriptor.cs" />
+    <Compile Include="Provider\RoleProvider.cs" />
     <Compile Include="Registration\UserJavaScriptModuleDescriptor.cs" />
+    <Compile Include="Services\DefaultRoleService.cs" />
+    <Compile Include="Services\IRoleService.cs" />
     <Compile Include="UsersModuleDescriptor.cs" />
     <Compile Include="ViewModels\EditUserViewModel.cs" />
     <Compile Include="ViewModels\Role\EditRoleViewModel.cs" />
@@ -175,7 +178,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Css\Images\" />
-    <Folder Include="Provider\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BetterCMS.Configuration\BetterCms.Configuration.csproj">
