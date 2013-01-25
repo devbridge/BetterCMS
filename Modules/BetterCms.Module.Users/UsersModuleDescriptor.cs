@@ -9,6 +9,7 @@ using BetterCms.Core.Modules.JsModule;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Blog.Registration;
 using BetterCms.Module.Users.Content.Resources;
+using BetterCms.Module.Users.Registration;
 
 namespace BetterCms.Module.Users
 {
@@ -101,7 +102,8 @@ namespace BetterCms.Module.Users
         {
             return new JavaScriptModuleDescriptor[]
                 {
-                    userJavaScriptModuleDescriptor
+                    userJavaScriptModuleDescriptor,
+                    new RoleJavaScriptModuleDescriptor(this) 
                 };
         }
 

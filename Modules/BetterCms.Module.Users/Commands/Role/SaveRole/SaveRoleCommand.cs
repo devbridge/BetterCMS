@@ -16,6 +16,13 @@ namespace BetterCms.Module.Users.Commands.Role.EditRole
 {
     public class SaveRoleCommand : CommandBase, ICommand<EditRoleViewModel, SaveRoleResponse>
     {
+        /// <summary>
+        /// Executes a command to save role.
+        /// </summary>
+        /// <param name="request">The role item.</param>
+        /// <returns>
+        /// true if role saved successfully; false otherwise.
+        /// </returns>
         public SaveRoleResponse Execute(EditRoleViewModel request)
         {
             UnitOfWork.BeginTransaction();
@@ -35,23 +42,42 @@ namespace BetterCms.Module.Users.Commands.Role.EditRole
             role.Name = request.RoleName;
             role.Version = request.Version;
 
-            //add new
-         /*   foreach (var permission in request.PermissionsList)
+            //edits or remove permission
+            var rolePermissions = GetRolePermissions(request.Id);
+            var requestPermissionList = request.PermissionsList.Where(p => p.IsSelected).ToList(); 
+
+            if (rolePermissions != null && rolePermissions.Any())
             {
-                if (permission.IsSelected)
+                foreach (var rolePermission in rolePermissions)
                 {
-                    var rolePermission = new RolePermissions();
-                    rolePermission.Role = new Models.Role();
-                    rolePermission.Permission= new Permission();
+                    var requestPermision = requestPermissionList.Count != 0
+                                               ? requestPermissionList.FirstOrDefault(f => f.Id == rolePermission.Permission.Id && f.IsSelected)
+                                               : null;
 
-                    rolePermission.Role.Id = request.Id;
-                    rolePermission.Role.Name = request.RoleName;
-                    rolePermission.Permission.Id = permission.Id;
-                    rolePermission.Permission.Name = permission.Name;
-
-                    Repository.Save(rolePermission);
+                    if (requestPermision != null)
+                    {
+                        Repository.Save(rolePermission);
+                    }
+                    else
+                    {
+                        Repository.Delete(rolePermission);
+                    }
                 }
-            }*/
+                
+                foreach (var rolePermission in rolePermissions)
+                {
+                    requestPermissionList.RemoveAll(x => x.Id == rolePermission.Permission.Id);
+                }
+            }
+
+            var permissions = GetPermissions(requestPermissionList);
+            
+            //add new permission
+            foreach (var permission in permissions)
+            {
+                    var rolePermission = new RolePermissions(){Permission = permission, Role = role};
+                    Repository.Save(rolePermission);
+            }
 
             Repository.Save(role);
             UnitOfWork.Commit();
@@ -68,6 +94,18 @@ namespace BetterCms.Module.Users.Commands.Role.EditRole
                     .ToList(); 
 
             return rolePermissions;
+        } 
+
+        private IList<Permission> GetPermissions(IList<PermissionViewModel> rolePermissions)
+        {
+            var identifiers = rolePermissions.Select(r => r.Id).ToArray();
+
+            var permission = UnitOfWork.Session
+                    .Query<Permission>()
+                    .Where(p => !p.IsDeleted && identifiers.Contains(p.Id))
+                    .ToList();
+
+            return permission;
         } 
     }
 }
