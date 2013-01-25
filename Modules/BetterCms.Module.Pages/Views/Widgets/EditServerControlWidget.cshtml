@@ -14,14 +14,9 @@
 </div>
            
 <div class="bcms-scroll-window">
-   
+    @Html.MessagesBox("bcms-edit-widget-messages")
     @using (Html.BeginForm<WidgetsController>(c => c.EditServerControlWidget((ServerControlWidgetViewModel)null), FormMethod.Post, new { @id = "bcms-widget-form", @class = "bcms-ajax-form" }))
     {
-        @Html.MessagesBox("edit-widget-messages")
-            
-        @Html.HiddenFor(model => model.Id)
-        @Html.HiddenFor(model => model.Version)
-            
         <div id="bcms-tab-1" class="bcms-tab-single">
             <div class="bcms-padded-content">
                     <div class="bcms-input-list-holder">
@@ -64,7 +59,8 @@
         <div id="bcms-tab-2" class="bcms-tab-single">
             @Html.Partial("Partial/EditContentOptions")
         </div>
-            
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.Version)
         @Html.HiddenSubmit()
     }
 </div>

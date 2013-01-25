@@ -28,14 +28,8 @@
         @using (Html.BeginForm<PageController>(f => f.EditPageProperties((EditPagePropertiesViewModel)null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
         {
             @Html.MessagesBox("edit-page-properties-messages")
-            
-            <div id="bcms-tab-1" class="bcms-tab-single">
-                @Html.HiddenFor(model => model.TemplateId, new { @id = "TemplateId" })
-                @Html.HiddenFor(model => model.Id)
-                @Html.HiddenFor(model => model.Version)
-                @Html.HiddenFor(model => model.Image.ImageId, new {data_bind = "value: image().id()"})
-                
-                <div class="bcms-input-list-holder bcms-first-child-holder">
+            <div id="bcms-tab-1" class="bcms-tab-single">               
+                <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Title, PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageName_Title</div>
                     @Html.TextBoxFor(model => model.PageName, new { @class = "bcms-editor-field-box" })
@@ -83,11 +77,14 @@
                         @PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseNoIndex
                     </div>
                 </div>
-                    
+                @Html.HiddenFor(model => model.TemplateId, new { @id = "TemplateId" })
+                @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.Version)
+                @Html.HiddenFor(model => model.Image.ImageId, new {data_bind = "value: image().id()"})   
             </div>
 
             <div id="bcms-tab-2" class="bcms-tab-single">
-                <div class="bcms-input-list-holder bcms-first-child-holder">
+                <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageCss_Tooltip_Title, PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageCss_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageCss_Title</div>
                     @Html.TextAreaFor(model => model.PageCSS, new { @class = "bcms-editor-field-area" })
@@ -102,7 +99,7 @@
 
             <div id="bcms-tab-3" class="bcms-tab-single">
                 
-                <div class="bcms-input-list-holder bcms-first-child-holder">
+                <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.EditPageProperties_LayoutPropertiesTab_Layout_Tooltip_Title, PagesGlobalization.EditPageProperties_LayoutPropertiesTab_Layout_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_LayoutPropertiesTab_ChooseLayout_Title:</div>
                 </div>
