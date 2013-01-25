@@ -9,6 +9,7 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 using BetterCms.Module.Users.Commands.Role.EditRole;
 using BetterCms.Module.Users.Commands.Role.GetPremissions;
+using BetterCms.Module.Users.Commands.Role.GetRoleForEdit;
 using BetterCms.Module.Users.Commands.Role.GetRoles;
 using BetterCms.Module.Users.Content.Resources;
 using BetterCms.Module.Users.ViewModels.Role;
@@ -19,16 +20,15 @@ namespace BetterCms.Module.Users.Controllers
     {
         public ActionResult CreatRoleView()
         {
-            var model = new EditRoleViewModel();
-            model.PermissionsList = GetCommand<GetPremissionsCommand>().ExecuteCommand(null);
+            var model = GetCommand<GetRoleForEditCommand>().ExecuteCommand(null);
 
             return PartialView("EditRoleView",model);
         }
 
         public ActionResult EditRoleView(string id)
         {
-            var model = new EditRoleViewModel();
-            model.PermissionsList = GetCommand<GetPremissionsCommand>().ExecuteCommand(id.ToGuidOrDefault());
+            //var model = new EditRoleViewModel();
+            var model = GetCommand<GetRoleForEditCommand>().ExecuteCommand(id.ToGuidOrDefault());
 
             return PartialView(model);
         }

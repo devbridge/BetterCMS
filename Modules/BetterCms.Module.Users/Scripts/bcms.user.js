@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define */
 
-define('bcms.user', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.inlineEdit', 'bcms.dynamicContent'], function ($, bcms, modal, siteSettings, editor, dynamicContent) {
+define('bcms.user', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.inlineEdit', 'bcms.dynamicContent', 'bcms.role'], function ($, bcms, modal, siteSettings, editor, dynamicContent, role) {
     'use strict';
 
     var user = {},
@@ -49,7 +49,7 @@ define('bcms.user', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
 
         var users = new siteSettings.TabViewModel(globalization.usersListTabTitle, links.loadSiteSettingsUsersUrl, initSiteSettingsUserEvents);
 
-        var roles = new siteSettings.TabViewModel(globalization.rolesListTabTitle, links.loadSiteSettingsRoleUrl, initSiteSettingsRoleEvents);
+        var roles = new siteSettings.TabViewModel(role.globalization.rolesListTabTitle, role.links.loadSiteSettingsRoleUrl, role.initSiteSettingsRoleEvents);
 
         tabs.push(users);
 
@@ -59,20 +59,16 @@ define('bcms.user', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         editor.initialize(container, {});
     };
 
-    function initSiteSettingsRoleEvents(container, json) {
+    /*roles.initSiteSettingsRoleEvents = function(container, json) {
         var html = json.Html,
             data = (json.Success == true) ? json.Data : null;
 
         container.html(html);
 
-        container.find(selectors.siteSettingsRoleCreatButton).on('click', function () {
+        container.find(selectors.siteSettingsRoleCreatButton).on('click', function() {
             user.openCreatRoleDialog();
         });
-
-        container.find(selectors.roleRowEditButtons).on('click', function () {
-            editRole(container, $(this));
-        });
-    }
+    };*/
 
     /**
     * Initializes site settings user list
@@ -102,53 +98,6 @@ define('bcms.user', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         });
     };
 
-    user.openCreatRoleDialog = function () {//(onSaveCallback) {
-        modal.open({
-            title: globalization.rolesAddNewTitle,
-            onLoad: function (childDialog) {
-                dynamicContent.bindDialog(childDialog, links.loadCreatRoleUrl, {
-                    contentAvailable: initializeEditRoleForm
-
-                    //postSuccess: onSaveCallback
-                });
-            }
-        });
-    };
-
-    function initializeEditRoleForm() {
-        var dialog = siteSettings.getModalDialog(),
-            container = dialog.container;
-        var form = container.find(selectors.roleForm);
-
-        form.on('submit', function (event) {
-            event.preventDefault();
-            // searchTemplates(form);
-            return false;
-        });
-    }
-
-    /**
-    * Calls function, which opens dialog for a template editing.
-    */
-    function editRole(container, self) {
-        var row = self.parents(selectors.roleParentRow),
-                id = row.data('id');
-
-        /*role.editRole(id, function (data) {
-            if (data.Data != null) {
-                //setRoleFields(row, data);
-                grid.showHideEmptyRow(container);
-            }
-        });*/
-    };
-
-    /*
-    * Open a template edit dialog by the specified tempalte type.
-    */
-    /*user.editRole = function (templateId, onSaveCallback) {
-        //template.openEditTemplateDialog(templateId, onSaveCallback);
-
-    };*/
 
     bcms.registerInit(user.init);
 
