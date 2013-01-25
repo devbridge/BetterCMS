@@ -10,14 +10,12 @@ namespace BetterCms.Module.Pages.Controllers
     public class HistoryController : CmsControllerBase
     {
         [HttpGet]
-        public ActionResult PageContentHistory(string pageContentId, string pageContentVersion, string contentId, string contentVersion)
+        public ActionResult PageContentHistory(string contentId, string pageContentId)
         {
             var model = GetCommand<GetContentHistoryCommand>().ExecuteCommand(new GetContentHistoryRequest
                                                                                       {
-                                                                                          PageContentId = pageContentId.ToGuidOrDefault(),
-                                                                                          PageContentVersion = pageContentVersion.ToIntOrDefault(),
                                                                                           ContentId = contentId.ToGuidOrDefault(),
-                                                                                          ContentVersion = contentVersion.ToIntOrDefault()
+                                                                                          PageContentId = pageContentId.ToGuidOrDefault()
                                                                                       });
             return View(model);
         }

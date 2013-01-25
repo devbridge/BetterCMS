@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.pages.history', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', 'bcms.dynamicContent', 'bcms.redirect'],
-    function ($, bcms, modal, messages, dynamicContent, redirect) {
+define('bcms.pages.history', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', 'bcms.dynamicContent', 'bcms.redirect', 'bcms.grid'],
+    function ($, bcms, modal, messages, dynamicContent, redirect, grid) {
     'use strict';
 
     var history = {},
@@ -18,13 +18,17 @@ define('bcms.pages.history', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', '
             firstRow: 'tr:first',
             gridRows: '#bcms-pagecontenthistory-form .bcms-history-table tbody tr',
             versionPreviewContainer: '.bcms-history-preview',
-            versionPreviewTemplate: '#bcms-history-preview-template'
+            versionPreviewTemplate: '#bcms-history-preview-template',
+            pageContentHistoryForm: '#bcms-pagecontenthistory-form',
+            pageContentHistorySearchButton: '.bcms-btn-search',
+            modalContent: '.bcms-modal-content-padded'
         },
         
         links = {
             loadPageContentHistoryDialogUrl: null,
             loadPageContentVersionPreviewUrl: null,
-            restorePageContentVersionUrl: null
+            restorePageContentVersionUrl: null,
+            loadPageContentHistoryUrl: null
         },
         
         globalization = {
@@ -82,10 +86,21 @@ define('bcms.pages.history', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', '
     }
    
     /**
+    * Posts content history form with search query
+    */
+    function searchPageContentHistory(dialog, container, form) {
+        grid.submitGridForm(form, function (data) {
+            container.html(data);
+            history.initPageContentHistoryDialogEvents(dialog, data);
+            dialog.maximizeHeight();
+        });
+    }
+
+    /**
     * Initializes EditSeo dialog events.
     */
     history.initPageContentHistoryDialogEvents = function (dialog) {
-        var container = dialog.container;
+        var container = dialog.container.find(selectors.modalContent);
 
         container.find(selectors.gridRestoreLinks).on('click', function (event) {
             bcms.stopEventPropagation(event);
@@ -104,16 +119,32 @@ define('bcms.pages.history', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', '
 
             previewVersion(container, id);
         });
+        
+        var form = container.find(selectors.pageContentHistoryForm);
+        grid.bindGridForm(form, function (data) {
+            container.html(data);
+            history.initPageContentHistoryDialogEvents(dialog);
+        });
+
+        form.on('submit', function (event) {
+            bcms.stopEventPropagation(event);
+            searchPageContentHistory(dialog, container, form);
+            return false;
+        });
+
+        form.find(selectors.pageContentHistorySearchButton).on('click', function () {
+            searchPageContentHistory(dialog, container, form);
+        });
     };   
     
     /**
     * Loads edit SEO dialog.
     */
-    history.openPageContentHistoryDialog = function (contentId, contentVersion, pageContentId, pageContentVersion) {
+    history.openPageContentHistoryDialog = function (contentId, pageContentId) {
         modal.open({
             title: globalization.pageContentHistoryDialogTitle,            
             onLoad: function (dialog) {
-                var url = $.format(links.loadPageContentHistoryDialogUrl, pageContentId, pageContentVersion, contentId, contentVersion);
+                var url = $.format(links.loadPageContentHistoryDialogUrl, contentId, pageContentId);
                 dynamicContent.bindDialog(dialog, url, {
                     contentAvailable : function () {
                         history.initPageContentHistoryDialogEvents(dialog);
@@ -127,7 +158,6 @@ define('bcms.pages.history', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', '
                         dialog.container.hideLoading();
                     }
                 });
-                
             }            
         });
     };      

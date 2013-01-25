@@ -1,6 +1,7 @@
 ﻿using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.JsModule;
 using BetterCms.Core.Modules.Projections;
+using BetterCms.Module.Pages.Command.History.GetContentHistory;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Controllers;
 
@@ -21,9 +22,10 @@ namespace BetterCms.Module.Pages.Registration
 
             Links = new IActionProjection[]
                 {
-                    new JavaScriptModuleLinkTo<HistoryController>(this, "loadPageContentHistoryDialogUrl", controller => controller.PageContentHistory("{0}", "{1}", "{2}", "{3}")),
+                    new JavaScriptModuleLinkTo<HistoryController>(this, "loadPageContentHistoryDialogUrl", controller => controller.PageContentHistory("{0}", "{1}")),
+                    new JavaScriptModuleLinkTo<HistoryController>(this, "loadPageContentHistoryUrl", controller => controller.PageContentHistory(null)),
                     new JavaScriptModuleLinkTo<HistoryController>(this, "loadPageContentVersionPreviewUrl", controller => controller.PageContentVersion("{0}")),
-                    new JavaScriptModuleLinkTo<HistoryController>(this, "restorePageContentVersionUrl", controller => controller.RestorePageContentVersion("{0}"))
+                    new JavaScriptModuleLinkTo<HistoryController>(this, "restorePageContentVersionUrl", controller => controller.RestorePageContentVersion("{0}")),
                 };
 
             Globalization = new IActionProjection[]

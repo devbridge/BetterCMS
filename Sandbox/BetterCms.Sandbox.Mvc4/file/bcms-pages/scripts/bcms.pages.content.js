@@ -411,11 +411,9 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
         pagesContent.onContentHistory = function(sender) {
             var element = $(sender),
                 contentId = element.data('contentId'),
-                contentVersion = element.data('contentVersion'),
-                pageContentId = element.data('pageContentId'),
-                pageContentVersion = element.data('pageContentVersion');
+                pageContentId = element.data('pageContentId');
 
-            history.openPageContentHistoryDialog(contentId, contentVersion, pageContentId, pageContentVersion);
+            history.openPageContentHistoryDialog(contentId, pageContentId);
         };
 
         /**

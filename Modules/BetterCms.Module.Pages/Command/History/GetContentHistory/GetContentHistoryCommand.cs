@@ -49,7 +49,7 @@ namespace BetterCms.Module.Pages.Command.History.GetContentHistory
 
             history = history.AsQueryable().AddSortingAndPaging(request).ToList();
 
-            return new PageContentHistoryViewModel(history, request, history.Count, request.PageContentId);
+            return new PageContentHistoryViewModel(history, request, history.Count, request.ContentId, request.PageContentId);
         }
 
         private bool IsValidHistoricalContent(IHistorical f)

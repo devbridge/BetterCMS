@@ -105,6 +105,9 @@
         @using (Html.BeginForm<HistoryController>(f => f.PageContentHistory((GetContentHistoryRequest)null), FormMethod.Post, new { @id = "bcms-pagecontenthistory-form" }))
         {                        
             @Html.HiddenGridOptions(Model.GridOptions)
+            @Html.HiddenFor(model => model.ContentId)
+            @Html.HiddenFor(model => model.PageContentId)
+
             <div class="bcms-history-table-top">
                 <div class="bcms-large-titles">@PagesGlobalization.PageContentHistory_OlderVersions</div>
                 <div class="bcms-search-block">                    

@@ -8,17 +8,20 @@ namespace BetterCms.Module.Pages.ViewModels.History
 {
     public class PageContentHistoryViewModel : SearchableGridViewModel<PageContentHistoryItem> 
     {
-        public PageContentHistoryViewModel(IEnumerable<PageContentHistoryItem> items, SearchableGridOptions options, int totalCount, Guid pageContentId)
+        public PageContentHistoryViewModel(IEnumerable<PageContentHistoryItem> items, SearchableGridOptions options, int totalCount, Guid contentId, Guid pageContentId)
             : base(items, options, totalCount)
         {
+            ContentId = contentId;
             PageContentId = pageContentId;
         }
 
         public Guid PageContentId { get; set; }
+        
+        public Guid ContentId { get; set; }
 
         public override string ToString()
         {
-            return string.Format("PageContentId: {0}", PageContentId);
+            return string.Format("ContentId: {0}", ContentId);
         }
     }
 }

@@ -8,10 +8,6 @@ namespace BetterCms.Module.Pages.Command.History.GetContentHistory
     {
         public Guid PageContentId { get; set; }
 
-        public int PageContentVersion { get; set; }
-
         public Guid ContentId { get; set; }
-
-        public int ContentVersion { get; set; }
     }
 }
