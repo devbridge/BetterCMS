@@ -31,7 +31,8 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
                 customJsContainer: '#bcms-custom-js-container',
                 enableCustomHtml: '#bcms-enable-custom-html',
                 customHtmlContainer: '#bcms-custom-html-container',
-
+                desirableStatus: '#bcmsWidgetDesirableStatus',
+                
                 widgetPreviewImageUrl: '#PreviewImageUrl',
                 widgetPreviewImage: '#bcms-widget-preview-image',
                 

@@ -104,12 +104,12 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                     changeContentDesirableStatus(dialog, contentStatus.published);
                     dialog.submitForm();
                 }),
-                saveDraftButton = new modal.button(globalization.preview, classes.grayButton, 3, function(dialog) {
+                previewButton = new modal.button(globalization.preview, classes.grayButton, 3, function(dialog) {
                     changeContentDesirableStatus(dialog, contentStatus.preview);
                     dialog.submitForm();
                 });
             
-            extraButtons.push(saveDraftButton);            
+            extraButtons.push(previewButton);            
             extraButtons.push(saveAndPublishButton);
             
             modal.open({
@@ -145,11 +145,6 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                 }
             });
         };
-        
-        function openPreviewPageContentWindow(pageContentId) {
-            var link = $.format(links.previewPageUrl, bcms.pageId);
-            window.open(link, bcms.previewWindow, 'toolbar=yes,location=yes,directories=yes,status=yes,menubar=yes,scrollbars=yes,copyhistory=yes,resizable=yes');
-        }
 
         /**
         * Save content order after sorting.
@@ -442,12 +437,12 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                   changeContentDesirableStatus(dialog, contentStatus.published);
                   dialog.submitForm();
               }),
-              saveDraftButton = new modal.button(globalization.preview, classes.grayButton, 3, function (dialog) {
+              previewButton = new modal.button(globalization.preview, classes.grayButton, 3, function (dialog) {
                   changeContentDesirableStatus(dialog, contentStatus.preview);
                   dialog.submitForm();
               });
 
-            extraButtons.push(saveDraftButton);
+            extraButtons.push(previewButton);
             extraButtons.push(saveAndPublishButton);
             
             modal.open({
