@@ -40,6 +40,12 @@ input[type="text"] {
     border-radius: 0;
 }
 
+div {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}
+
 /* State management classes */
 .bcms-state-open {
 }
@@ -1158,7 +1164,9 @@ div.bcms-tip-close {
     }
 
 .bcms-btn-search {
-    display: inline-block;
+    position: absolute;
+    right: 0;
+    top: 15px;
     width: 30px;
     height: 30px;
     line-height: 30px;
@@ -1246,6 +1254,10 @@ a.bcms-btn-close {
     text-decoration: none;
 }
 
+.bcms-btn-small.bcms-btn-gray {
+    border: 1px solid #787878;
+}
+
 /*Titles*/
 .bcms-large-titles {
     padding-bottom: 10px;
@@ -1290,6 +1302,14 @@ a.bcms-btn-close {
     position: relative;
     padding: 0 0 20px 0;
 }
+
+    .bcms-input-list-holder:first-child {
+        padding-top: 20px;
+    }
+
+        .bcms-input-list-holder:first-child .bcms-tooltip-mark {
+            top: 21px;
+        }
 
     .bcms-input-list-holder .bcms-tooltip-mark {
         top: 1px;
@@ -1715,18 +1735,23 @@ a.bcms-btn-close {
 
 /*search*/
 .bcms-search-block {
+    position: relative;
     float: right;
+    padding-right: 30px;
 }
 
     .bcms-search-block > .bcms-editor-field-box {
         width: 287px;
-        margin-right: -4px;
-        border-right: 0;
+        vertical-align: top;
     }
 
         .bcms-search-block > .bcms-editor-field-box:focus {
             border-right: 0;
         }
+
+    .bcms-search-block > .bcms-btn-search {
+        top: 0;
+    }
 
 /*Tables*/
 .bcms-tables {
@@ -1942,7 +1967,6 @@ a.bcms-sort-arrow-top:hover {
     min-height: 100%;
     background-color: #fff;
     border-left: 1px solid #c6c6c6;
-    width: 75%;
     vertical-align: top;
 }
 
@@ -1987,6 +2011,30 @@ a.bcms-sort-arrow-top:hover {
         box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
     }
 
+div.bcms-grid .bcms-grid-input.input-validation-error {
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAFMLZykAAAAbUlEQVQoz2N45uw8DYi/MsAZ////B2NUBlDqP1wAyLGDcZBVLCeo4j8QO0LpTNIUgBwH44CMBzkYXUEmsgnIkiiuxCZJnAnEuKEFasIXIPZGUuwNFQPJtWCzHiXQgYoyoBqQcQYujdQzgFIvAACFG3m8e8veBgAAAABJRU5ErkJggg==') no-repeat 100% center #fcecec;
+    border: 1px solid #e64343;
+    box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
+}
+
+    div.bcms-grid .bcms-grid-input.input-validation-error:focus {
+        background: #fcecec;
+        border: 1px solid #e64343;
+        box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
+    }
+
+div.bcms-list .bcms-grid-input.input-validation-error {
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAFMLZykAAAAbUlEQVQoz2N45uw8DYi/MsAZ////B2NUBlDqP1wAyLGDcZBVLCeo4j8QO0LpTNIUgBwH44CMBzkYXUEmsgnIkiiuxCZJnAnEuKEFasIXIPZGUuwNFQPJtWCzHiXQgYoyoBqQcQYujdQzgFIvAACFG3m8e8veBgAAAABJRU5ErkJggg==') no-repeat 100% center #fcecec;
+    border: 1px solid #e64343;
+    box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
+}
+
+    div.bcms-list .bcms-grid-input.input-validation-error:focus {
+        background: #fcecec;
+        border: 1px solid #e64343;
+        box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
+    }
+
 /*UNCOMMENT THIS CLASSES IF FIELD VALIDATION MESSAGES IS REQUIRED
 .field-validation-error {
    position: relative;
@@ -2017,7 +2065,7 @@ a.bcms-sort-arrow-top:hover {
 
 ul.bcms-success-messages {
     padding: 10px 15px;
-    margin: 10px 20px;
+  /* margin: 10px 20px;*/ 
     border: 1px solid #20cd00;
     background-color: #e8fae5;
     font-size: 12px;
@@ -2032,7 +2080,7 @@ ul.bcms-success-messages {
 
 ul.bcms-warning-messages {
     padding: 10px 15px;
-    margin: 10px 20px;
+   /* margin: 10px 20px; */
     border: 1px solid #e7d827;
     background-color: #FFFEEC;
     font-size: 12px;
@@ -2046,7 +2094,7 @@ ul.bcms-warning-messages {
 
 ul.bcms-error-messages {
     padding: 10px 15px;
-    margin: 10px 20px;
+   /* margin: 10px 20px; */
     border: 1px solid #e64343;
     background-color: #fcecec;
     font-size: 12px;
@@ -2061,7 +2109,7 @@ ul.bcms-error-messages {
 
 ul.bcms-info-messages {
     padding: 10px 15px;
-    margin: 10px 20px;
+   /* margin: 10px 20px; */
     border: 1px solid #1891e6;
     background-color: #f0f8fd;
     font-size: 12px;

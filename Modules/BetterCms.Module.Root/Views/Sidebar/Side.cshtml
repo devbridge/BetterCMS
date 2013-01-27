@@ -9,7 +9,7 @@
         @foreach (var projection in Model.Projections)
         {
             <div class="bcms-sidemenu-separator">&nbsp;</div>
-            projection.Render(Model.Page, Html);  
+            projection.Render(Model.Page, User, Html);  
         }
     </div>
     <div title="@RootGlobalization.Sidebar_DragTitle" id="bcms-sidemenu-draghandle">&nbsp;</div>

@@ -15,6 +15,7 @@ namespace BetterCms.Module.Users.Models.Maps
             Table("Permissions");
 
             Map(x => x.Name).Length(MaxLength.Name).Not.Nullable();
+            Map(x => x.Description).Length(MaxLength.Name).Not.Nullable();
         }
     }
 }

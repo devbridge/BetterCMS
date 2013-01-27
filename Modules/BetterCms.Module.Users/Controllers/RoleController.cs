@@ -7,8 +7,9 @@ using System.Web.Mvc;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
+using BetterCms.Module.Users.Commands.Role.DeleteRole;
 using BetterCms.Module.Users.Commands.Role.EditRole;
-using BetterCms.Module.Users.Commands.Role.GetPremissions;
+using BetterCms.Module.Users.Commands.Role.GetRoleForEdit;
 using BetterCms.Module.Users.Commands.Role.GetRoles;
 using BetterCms.Module.Users.Content.Resources;
 using BetterCms.Module.Users.ViewModels.Role;
@@ -17,18 +18,42 @@ namespace BetterCms.Module.Users.Controllers
 {
     public class RoleController : CmsControllerBase
     {
+        /// <summary>
+        /// An action to delete a given role.
+        /// </summary>
+        /// <param name="id">The role id.</param>
+        /// <param name="version">The version.</param>
+        /// <returns>
+        /// Json with status.
+        /// </returns>
+        [HttpPost]
+        public ActionResult DeleteRole(string id, string version)
+        {
+            bool success = GetCommand<DeleteRoleCommand>().ExecuteCommand(
+                new DeleteRoleCommandRequest
+                {
+                    RoleId = id.ToGuidOrDefault(),
+                    Version = version.ToIntOrDefault()
+                });
+
+            if (success)
+            {
+                Messages.AddSuccess(UsersGlobalization.DeleteRole_DeletedSuccessfully_Message);
+            }
+
+            return Json(new WireJson(success));
+        }
+
         public ActionResult CreatRoleView()
         {
-            var model = new EditRoleViewModel();
-            model.PermissionsList = GetCommand<GetPremissionsCommand>().ExecuteCommand(null);
+            var model = GetCommand<GetRoleForEditCommand>().ExecuteCommand(null);
 
             return PartialView("EditRoleView",model);
         }
 
         public ActionResult EditRoleView(string id)
         {
-            var model = new EditRoleViewModel();
-            model.PermissionsList = GetCommand<GetPremissionsCommand>().ExecuteCommand(id.ToGuidOrDefault());
+            var model = GetCommand<GetRoleForEditCommand>().ExecuteCommand(id.ToGuidOrDefault());
 
             return PartialView(model);
         }

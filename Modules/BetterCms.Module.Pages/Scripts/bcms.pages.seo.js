@@ -49,7 +49,7 @@ define('bcms.pages.seo', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', 'bcms
     /**
     * Initializes EditSeo dialog events.
     */
-    seo.initEditSeoDialogEvents = function (editSeoDialog) {                
+    seo.initEditSeoDialogEvents = function (editSeoDialog) {       
         editSeoDialog.container.find(selectors.editPageUrlLink).on('click', function () {
             setEditPagePathBoxVisibility(editSeoDialog, true);
         });

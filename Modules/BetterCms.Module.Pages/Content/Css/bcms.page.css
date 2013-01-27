@@ -223,6 +223,10 @@ a.bcms-slider-next {
     background: url('images/bcms-no-image-2.png') no-repeat center center #f5f5f5;
 }
 
+.bcms-uploaded-image img {
+    max-width: 100%;
+}
+
 /*.bcms-uploaded-image a.bcms-remove-image {
         position: absolute;
         top: 0;

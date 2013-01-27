@@ -139,9 +139,12 @@
     <Compile Include="Models\ICategory.cs" />
     <Compile Include="Models\IHtmlContent.cs" />
     <Compile Include="Models\IHtmlContentWidget.cs" />
+    <Compile Include="Security\AuthorizeAttribute.cs" />
+    <Compile Include="Security\IUserRole.cs" />
     <Compile Include="Models\IWidget.cs" />
     <Compile Include="Modules\Projections\EmptyContentAccessor.cs" />
     <Compile Include="Mvc\Attributes\IgnoreAutoRouteAttribute.cs" />
+    <Compile Include="Security\UserRole.cs" />
     <Compile Include="Services\Storage\FtpStorageService.cs" />
     <Compile Include="Services\Storage\DownloadResponse.cs" />
     <Compile Include="Services\Storage\FileSystemStorageService.cs" />

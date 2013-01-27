@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Principal;
 using System.Web.Mvc;
 using System.Web.UI;
 
@@ -53,6 +54,14 @@ namespace BetterCms.Core.Modules.Projections
         public int Order { get; set; }
 
         /// <summary>
+        /// Gets or sets permission for rendering.
+        /// </summary>
+        /// <value>
+        /// The role.
+        /// </value>
+        public Func<IPage, IPrincipal, bool> IsVisible { get; set; }
+
+        /// <summary>
         /// Gets html element tag name.
         /// </summary>
         protected string Tag { get; private set; }
@@ -61,9 +70,15 @@ namespace BetterCms.Core.Modules.Projections
         /// Renders a control.
         /// </summary>
         /// <param name="page">The page.</param>
+        /// <param name="principal">The principal.</param>
         /// <param name="html">The HTML.</param>
-        public virtual void Render(IPage page, HtmlHelper html)
+        public virtual void Render(IPage page, IPrincipal principal, HtmlHelper html)
         {
+            if (IsVisible != null && !IsVisible(page, principal))
+            {
+                return;
+            }
+
             using (HtmlControlRenderer control = new HtmlControlRenderer(Tag))
             {
                 OnPreRender(control, page, html);
