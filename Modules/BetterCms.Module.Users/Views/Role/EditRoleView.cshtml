@@ -16,10 +16,12 @@
             @Html.Tooltip(UsersGlobalization.Role_AddNew_Dialog_RoleTooltip_Title, UsersGlobalization.Role_AddNew_Dialog_Tooltip_Description)
             <div class="bcms-content-titles">@UsersGlobalization.Role_AddNew_Dialog_RoleName_Title</div>
             @Html.TextBoxFor(m => m.RoleName, new { @class = "bcms-editor-field-box" })  
+        </div>
+            
             @Html.HiddenFor(m => m.Id)
             @Html.HiddenFor(m => m.Version)           
             @Html.Partial("Partial/PermissionsView", Model)
-        </div>
+        
         @Html.HiddenSubmit()
     }
     </div>

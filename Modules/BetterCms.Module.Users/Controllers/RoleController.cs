@@ -82,7 +82,7 @@ namespace BetterCms.Module.Users.Controllers
 
         public ActionResult RolesListView(SearchableGridOptions request)
         {
-            var roleList = GetCommand<GetRolesCommand>().Execute(null);            
+            var roleList = GetCommand<GetRolesCommand>().Execute(request);            
             var model = new SiteSettingRoleListViewModel(roleList, new SearchableGridOptions(), roleList.Count);
             return View(model);
         }
