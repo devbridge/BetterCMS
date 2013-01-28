@@ -162,6 +162,9 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                     // Create data models.
                     var sitemapModel = new SitemapViewModel();
                     sitemapModel.parseJsonNodes(content.Data.RootNodes);
+                    sitemapModel.forEachNode(function(node) {
+                        node.isDraggable = true;
+                    });
                     self.pageLinksModel = new SearchPageLinksViewModel(sitemapModel);
                     self.pageLinksModel.parseJsonLinks(content.Data.PageLinks);
                     sitemap.activeMapModel = sitemapModel;
@@ -283,8 +286,10 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                                 }
                             }
                         };
-                    $(element).draggable(setup).data("dragObject", dragObject);
-                    $(element).disableSelection();
+                    if (dragObject.isDraggable) {
+                        $(element).draggable(setup).data("dragObject", dragObject);
+                        $(element).disableSelection();
+                    }
                 }
             };
         }
@@ -473,7 +478,22 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                     self.updateNodes(node.childNodes(), node);
                 }
             };
-            
+
+            self.forEachNode = function (callback, nodes) {
+                if (callback && $.isFunction(callback)) {
+                    if (nodes == null) {
+                        nodes = self.childNodes();
+                    }
+                    
+                    for (var i in nodes) {
+                        if (callback && $.isFunction(callback)) {
+                            callback(nodes[i]);
+                        }
+                        self.forEachNode(callback, nodes[i].childNodes());
+                    }
+                }
+            };
+
             // Parse.
             self.parseJsonNodes = function (jsonNodes) {
                 var nodes = [];
@@ -506,6 +526,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             // For behavior.
             self.isActive = ko.observable(false);           // If TRUE - show edit fields.
             self.isExpanded = ko.observable(false);         // If TRUE - show child nodes.
+            self.isDraggable = false;
             self.toggleExpand = function () {
                 self.isExpanded(!self.isExpanded());
             };
@@ -702,6 +723,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             self.url = ko.observable();
             self.isVisible = ko.observable(true);
             self.isCustom = ko.observable(false);
+            self.isDraggable = true;
 
             self.fromJson = function (json) {
                 self.isVisible(true);
