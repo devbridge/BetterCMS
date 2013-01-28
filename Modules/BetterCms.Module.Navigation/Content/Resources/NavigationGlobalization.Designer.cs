@@ -133,6 +133,15 @@ namespace BetterCms.Module.Navigation.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete node &quot;{0}&quot;?.
+        /// </summary>
+        public static string Sitemap_DeleteNode_Confirmation_Message {
+            get {
+                return ResourceManager.GetString("Sitemap_DeleteNode_Confirmation_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Node +.
         /// </summary>
         public static string Sitemap_Dialog_Edit {

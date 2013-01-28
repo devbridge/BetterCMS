@@ -192,4 +192,7 @@
   <data name="Sitemap_AddNewPageDialog_SkipButton" xml:space="preserve">
     <value>Skip</value>
   </data>
+  <data name="Sitemap_DeleteNode_Confirmation_Message" xml:space="preserve">
+    <value>Are you sure you want to delete node "{0}"?</value>
+  </data>
 </root>

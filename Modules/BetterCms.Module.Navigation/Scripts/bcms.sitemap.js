@@ -25,6 +25,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 sitemapEditorDialogCustomLinkTitle: null,
                 sitemapAddNewPageDialogTitle: null,
                 sitemapAddNewPageDialogClose: null,
+                sitemapDeleteNodeConfirmationMessage: null,
             },
             defaultIdValue = '00000000-0000-0000-0000-000000000000',
             DropZoneTypes = {
@@ -578,27 +579,39 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                     });
             };
             self.deleteSitemapNode = function () {
-                var params = self.toJson(),
-                    onDeleteCompleted = function (json) {
-                        sitemap.showMessage(json);
-                        if (json.Success) {
-                            self.parentNode.childNodes.remove(self);
+                // Show confirmation dialog.
+                var message = $.format(globalization.sitemapDeleteNodeConfirmationMessage, self.title()),
+                    confirmDialog = modal.confirm({
+                        content: message,
+                        onAccept: function () {
+                            var params = self.toJson(),
+                                onDeleteCompleted = function(json) {
+                                    sitemap.showMessage(json);
+                                    try {
+                                        if (json.Success) {
+                                            self.parentNode.childNodes.remove(self);
+                                        }
+                                        sitemap.showLoading(false);
+                                    } finally {
+                                        confirmDialog.close();
+                                    }
+                                };
+                            sitemap.showLoading(true);
+                            $.ajax({
+                                url: links.deleteSitemapNodeUrl,
+                                type: 'POST',
+                                dataType: 'json',
+                                cache: false,
+                                data: params
+                            })
+                                .done(function (json) {
+                                    onDeleteCompleted(json);
+                                })
+                                .fail(function (response) {
+                                    onDeleteCompleted(bcms.parseFailedResponse(response));
+                                });
+                            return false;
                         }
-                        sitemap.showLoading(false);
-                    };
-                sitemap.showLoading(true);
-                $.ajax({
-                    url: links.deleteSitemapNodeUrl,
-                    type: 'POST',
-                    dataType: 'json',
-                    cache: false,
-                    data: params
-                })
-                    .done(function (json) {
-                        onDeleteCompleted(json);
-                    })
-                    .fail(function (response) {
-                        onDeleteCompleted(bcms.parseFailedResponse(response));
                     });
             };
             self.callbackAfterSuccessSaving = null;

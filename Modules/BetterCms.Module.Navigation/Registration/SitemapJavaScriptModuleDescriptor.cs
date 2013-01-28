@@ -34,7 +34,8 @@ namespace BetterCms.Module.Navigation.Registration
                     new JavaScriptModuleGlobalization(this, "sitemapEditorDialogClose", () => RootGlobalization.Button_Close),
                     new JavaScriptModuleGlobalization(this, "sitemapEditorDialogCustomLinkTitle", () => NavigationGlobalization.Sitemap_EditorDialog_CustomLinkTitle),
                     new JavaScriptModuleGlobalization(this, "sitemapAddNewPageDialogTitle", () => NavigationGlobalization.Sitemap_AddNewPageDialog_Title),
-                    new JavaScriptModuleGlobalization(this, "sitemapAddNewPageDialogClose", () => RootGlobalization.Button_Close)
+                    new JavaScriptModuleGlobalization(this, "sitemapAddNewPageDialogClose", () => RootGlobalization.Button_Close),
+                    new JavaScriptModuleGlobalization(this, "sitemapDeleteNodeConfirmationMessage", () => NavigationGlobalization.Sitemap_DeleteNode_Confirmation_Message)
                 };
         }
     }
