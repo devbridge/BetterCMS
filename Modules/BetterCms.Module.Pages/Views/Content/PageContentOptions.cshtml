@@ -34,12 +34,11 @@
 
 <div class="bcms-scroll-window">
     <div class="bcms-padded-content">
-        <div class="bcms-input-list-holder bcms-first-child-holder">
+        <div class="bcms-input-list-holder">
             @using (Html.BeginForm<ContentController>(c => c.PageContentOptions((PageContentOptionsViewModel)null), FormMethod.Post, new { @id = "bcms-options-form", @class = "bcms-ajax-form" }))
-            {
-                @Html.HiddenFor(model => model.PageContentId)
-                
+            {              
                 @Html.Grid(Model.WidgetOptions).Columns(columns).Attributes(@class => "bcms-tables", @id => "bcms-options-grid").RenderUsing(new EditableHtmlTableGridRenderer<PageContentOptionViewModel>())
+                @Html.HiddenFor(model => model.PageContentId)
             }
         </div>
     </div>
