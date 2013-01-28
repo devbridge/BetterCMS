@@ -127,7 +127,7 @@
     <value>Site Map</value>
   </data>
   <data name="Sitemap_Dialog_Edit" xml:space="preserve">
-    <value>Add Node +</value>
+    <value>Edit</value>
   </data>
   <data name="Sitemap_Dialog_Search" xml:space="preserve">
     <value>Search...</value>

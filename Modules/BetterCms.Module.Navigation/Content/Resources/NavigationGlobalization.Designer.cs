@@ -142,7 +142,7 @@ namespace BetterCms.Module.Navigation.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add Node +.
+        ///   Looks up a localized string similar to Edit.
         /// </summary>
         public static string Sitemap_Dialog_Edit {
             get {
