@@ -26,6 +26,8 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 sitemapAddNewPageDialogTitle: null,
                 sitemapAddNewPageDialogClose: null,
                 sitemapDeleteNodeConfirmationMessage: null,
+                sitemapNodeSaveButton: null,
+                sitemapNodeOkButton: null,
             },
             defaultIdValue = '00000000-0000-0000-0000-000000000000',
             DropZoneTypes = {
@@ -127,6 +129,13 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                     self.sitemapSearchModel = new SearchSitemapViewModel(sitemapModel);
                     sitemap.activeMapModel = sitemapModel;
 
+                    // Setup settings.
+                    sitemapModel.settings.canEditNode = true;
+                    sitemapModel.settings.canDeleteNode = true;
+                    sitemapModel.settings.canDragNode = false;
+                    sitemapModel.settings.nodeSaveButtonTitle = globalization.sitemapNodeSaveButton;
+                    sitemapModel.settings.nodeSaveAfterUpdate = true;
+
                     // Bind models.
                     var context = self.container.find(selectors.sitemapSearchDataBind).get(0);
                     if (context) {
@@ -157,17 +166,21 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 sitemap.activeMessageContainer = self.container;
                 sitemap.activeLoadingContainer = self.container.find(selectors.sitemapAddNodeDataBind);
 
-                messages.refreshBox(self.container, content);
+                sitemap.showMessage(content);
                 if (content.Success) {
                     // Create data models.
                     var sitemapModel = new SitemapViewModel();
                     sitemapModel.parseJsonNodes(content.Data.RootNodes);
-                    sitemapModel.forEachNode(function(node) {
-                        node.isDraggable = true;
-                    });
                     self.pageLinksModel = new SearchPageLinksViewModel(sitemapModel);
                     self.pageLinksModel.parseJsonLinks(content.Data.PageLinks);
                     sitemap.activeMapModel = sitemapModel;
+
+                    // Setup settings.
+                    sitemapModel.settings.canEditNode = true;
+                    sitemapModel.settings.canDeleteNode = true;
+                    sitemapModel.settings.canDragNode = true;
+                    sitemapModel.settings.nodeSaveButtonTitle = globalization.sitemapNodeOkButton;
+                    sitemapModel.settings.nodeSaveAfterUpdate = false;
 
                     // Bind models.
                     var context = self.container.find(selectors.sitemapAddNodeDataBind).get(0);
@@ -203,7 +216,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 sitemap.activeMessageContainer = self.container;
                 sitemap.activeLoadingContainer = self.container.find(selectors.sitemapAddNewPageDataBind);
 
-                messages.refreshBox(self.container, content);
+                sitemap.showMessage(content);
                 if (content.Success) {
                     var onSkip = function () {
                         dialog.close();
@@ -213,8 +226,14 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                     var sitemapModel = new SitemapViewModel();
                     sitemapModel.parseJsonNodes(content.Data.RootNodes);
                     self.newPageModel = new AddNewPageViewModel(sitemapModel, self.pageLinkModel, onSkip);
-                    
                     sitemap.activeMapModel = sitemapModel;
+
+                    // Setup settings.
+                    sitemapModel.settings.canEditNode = false;
+                    sitemapModel.settings.canDeleteNode = false;
+                    sitemapModel.settings.canDragNode = false;
+                    sitemapModel.settings.nodeSaveButtonTitle = globalization.sitemapNodeSaveButton;
+                    sitemapModel.settings.nodeSaveAfterUpdate = false;
 
                     // Bind models.
                     var context = self.container.find(selectors.sitemapAddNewPageDataBind).get(0);
@@ -286,10 +305,11 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                                 }
                             }
                         };
-                    if (dragObject.isDraggable) {
-                        $(element).draggable(setup).data("dragObject", dragObject);
-                        $(element).disableSelection();
+                    if (dragObject.getSitemap && !dragObject.getSitemap().settings.canDragNode) {
+                        return;
                     }
+                    $(element).draggable(setup).data("dragObject", dragObject);
+                    $(element).disableSelection();
                 }
             };
         }
@@ -370,6 +390,9 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                                 $(ui.draggable).data('draggable', forFix);
                             }
                         };
+                    if (dropZoneObject.getSitemap && !dropZoneObject.getSitemap().settings.canDragNode) {
+                        return;
+                    }
                     $(element).droppable(setup);
                 }
             };
@@ -435,6 +458,18 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             self.someNodeIsOver = ko.observable(false);     // Someone is dragging some node over the sitemap, but not over the particular node.
             self.activeZone = ko.observable(DropZoneTypes.None);
 
+            self.settings = {
+                canEditNode: false,
+                canDeleteNode: false,
+                canDragNode: false,
+                nodeSaveButtonTitle: globalization.sitemapNodeOkButton,
+                nodeSaveAfterUpdate: false,
+            };
+
+            self.getSitemap = function () {
+                return self;
+            };
+
             // Expanding or collapsing nodes.
             self.expandAll = function () {
                 self.expandOrCollapse(self.childNodes(), true);
@@ -494,6 +529,10 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 }
             };
 
+            self.save = function () {
+                // TODO: implement.
+            };
+
             // Parse.
             self.parseJsonNodes = function (jsonNodes) {
                 var nodes = [];
@@ -526,7 +565,6 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             // For behavior.
             self.isActive = ko.observable(false);           // If TRUE - show edit fields.
             self.isExpanded = ko.observable(false);         // If TRUE - show child nodes.
-            self.isDraggable = false;
             self.toggleExpand = function () {
                 self.isExpanded(!self.isExpanded());
             };
@@ -638,6 +676,13 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             self.callbackAfterSuccessSaving = null;
             self.callbackAfterFailSaving = null;
 
+            self.getSitemap = function() {
+                if (self.parentNode != null) {
+                    return self.parentNode.getSitemap();
+                }
+                return null;
+            };
+
             self.fromJson = function(jsonNode) {
                 self.id(jsonNode.Id);
                 self.version(jsonNode.Version);
@@ -723,7 +768,6 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             self.url = ko.observable();
             self.isVisible = ko.observable(true);
             self.isCustom = ko.observable(false);
-            self.isDraggable = true;
 
             self.fromJson = function (json) {
                 self.isVisible(true);
