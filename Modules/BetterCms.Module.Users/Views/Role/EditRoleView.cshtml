@@ -16,7 +16,7 @@
             <div class="bcms-content-titles">@UsersGlobalization.Role_AddNew_Dialog_RoleName_Title</div>
             @Html.TextBoxFor(m => m.RoleName, new { @class = "bcms-editor-field-box" })  
             @Html.Partial("Partial/PermissionsView", Model)
-        </div>
+        
         @Html.HiddenFor(m => m.Id)
         @Html.HiddenFor(m => m.Version)  
         @Html.HiddenSubmit()

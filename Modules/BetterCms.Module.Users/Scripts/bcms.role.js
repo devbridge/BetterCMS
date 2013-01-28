@@ -14,9 +14,10 @@ define('bcms.role', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             roleRowEditButtons: '.bcms-grid-item-edit-button',
             roleRowDeleteButtons: '.bcms-grid-item-delete-button',
             roleParentRow: 'tr:first',
-            roleNameCell: '.bcms-template-name',
-            roleRowTemplate: '#bcms-template-list-row-template',
-            roleTableFirstRow: 'table.bcms-tables > tbody > tr:first'
+            roleNameCell: '.bcms-role-name',
+            roleRowTemplate: '#bcms-role-list-row-template',
+            roleTableFirstRow: 'table.bcms-tables > tbody > tr:first',
+            roleRowTemplateFirstRow: 'tr:first'
                 
         },
 
@@ -47,19 +48,12 @@ define('bcms.role', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     };
 
 
-    role.initSiteSettingsRoleEvents = function(container, json) {
-        var html = json.Html,
-            data = (json.Success == true) ? json.Data : null;
-
-        container.html(html);
-
+   // role.initSiteSettingsRoleEvents = function(container, json) {
+        function initRoleEvents(container){
         container.find(selectors.roleRowEditButtons).on('click', function() {
             editRole(container, $(this));
         });
-         container.find(selectors.siteSettingsRoleCreatButton).on('click', function() {
-            role.openCreatRoleDialog();
-        });
-         container.find(selectors.roleRowDeleteButtons).on('click', function () {
+        container.find(selectors.roleRowDeleteButtons).on('click', function () {
                 deleteRole(container, $(this));
         });
     };
@@ -77,18 +71,48 @@ define('bcms.role', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             }
         });
     };
+        
+    role.initializeRoleListForm = function(container){
+          var onRoleCreated = function (json) {
+                    if (json.Success && json.Data != null) {
+                        var rowtemplate = $(selectors.roleRowTemplate),
+                            newRow = $(rowtemplate.html()).find(selectors.roleRowTemplateFirstRow);
+                        setRoleFields(newRow, json);
+                        newRow.insertBefore($(selectors.roleTableFirstRow, container));
+                        initRoleEvents(newRow);
+                        grid.showHideEmptyRow(container);
+                    }
+                };
+        
+         container.find(selectors.siteSettingsRoleCreatButton).on('click', function() {
+            role.openCreatRoleDialog(onRoleCreated);
+        });
+        
+        initRoleEvents(container);
+    };
 
     function initializeEditRoleForm() {
         var dialog = siteSettings.getModalDialog(),
             container = dialog.container;
+        
         var form = container.find(selectors.roleForm);
 
         form.on('submit', function (event) {
             event.preventDefault();
-            // searchTemplates(form);
+            //searchRoles(form);
             return false;
         });
     }
+        
+          /**
+        * Search site settings template.
+        */
+        function searchRoles(form) {
+            grid.submitGridForm(form, function (data) {
+                siteSettings.setContent(data);
+                role.initializeRoleList();
+            });
+        };
 
     /**
     * Calls function, which opens dialog for a role editing.
@@ -109,11 +133,11 @@ define('bcms.role', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     * Open a template edit dialog by the specified tempalte type.
     */
     function editRoleWindow(templateId, onSaveCallback) {
-    role.openEditTemplateDialog(templateId, onSaveCallback);
+    role.openEditRoleDialog(templateId, onSaveCallback);
 
     };
 
-    role.openEditTemplateDialog = function (templateId, onSaveCallback) {
+    role.openEditRoleDialog = function (templateId, onSaveCallback) {
         modal.open({
             title: globalization.rolesAddNewTitle,
             onLoad: function (childDialog) {

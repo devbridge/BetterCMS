@@ -184,7 +184,7 @@ namespace BetterCms.Module.Root
                             Title = () => RootGlobalization.Sidebar_SiteSettingsButtonTitle,
                             CssClass = page => "bcms-sidemenu-btn bcms-btn-settings",
                             Order = 500,
-                            IsVisible = (page, principal) => true // TODO: Uncomment this: principal.IsInRole(UserRoles.EditSiteSettings)
+                            IsVisible = (page, principal) => principal.IsInRole(UserRoles.EditSiteSettings)
                         }
                 };
         }

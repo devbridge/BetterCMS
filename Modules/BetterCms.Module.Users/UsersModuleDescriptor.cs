@@ -122,7 +122,7 @@ namespace BetterCms.Module.Users
                             Order = 4100,
                             Title = () => UsersGlobalization.SiteSettings_UserMenuItem,
                             CssClass = page => "bcms-sidebar-link",
-                            IsVisible = (page, principle) => false, // TODO: implement.
+                            IsVisible = (page, principle) => true, // TODO: implement.
                         }                                      
                 };
         }
