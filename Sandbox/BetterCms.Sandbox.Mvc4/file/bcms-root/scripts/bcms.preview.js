@@ -51,8 +51,8 @@ define('bcms.preview', ['jquery', 'bcms', 'bcms.modal', 'bcms.dynamicContent'], 
         });
     };
 
-    preview.previewPageContent = function(pageContentId) {
-        var link = $.format(links.previewPageUrl, bcms.pageId, pageContentId);
+    preview.previewPageContent = function (pageId, pageContentId) {
+        var link = $.format(links.previewPageUrl, pageId, pageContentId);
         window.open(link, bcms.previewWindow, 'toolbar=yes,location=yes,directories=yes,status=yes,menubar=yes,scrollbars=yes,copyhistory=yes,resizable=yes');
     };
     

@@ -15,7 +15,7 @@ namespace BetterCms.Module.Pages.Command.History.GetContentHistory
     /// <summary>
     /// Command to load a list of the content history versions.
     /// </summary>
-    public class GetContentHistoryCommand : CommandBase, ICommand<GetContentHistoryRequest, PageContentHistoryViewModel>
+    public class GetContentHistoryCommand : CommandBase, ICommand<GetContentHistoryRequest, ContentHistoryViewModel>
     {
         /// <summary>
         /// Executes the specified request.
@@ -23,10 +23,10 @@ namespace BetterCms.Module.Pages.Command.History.GetContentHistory
         /// <param name="request">The request.</param>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public PageContentHistoryViewModel Execute(GetContentHistoryRequest request)
+        public ContentHistoryViewModel Execute(GetContentHistoryRequest request)
         {
-            var history = new List<PageContentHistoryItem>();
-            request.SetDefaultSortingOptions("CreatedOn", true);            
+            var history = new List<ContentHistoryItem>();
+            request.SetDefaultSortingOptions("CreatedOn", true);
 
             var contentFutureQuery = Repository
                 .AsQueryable<Root.Models.Content>()
@@ -49,7 +49,7 @@ namespace BetterCms.Module.Pages.Command.History.GetContentHistory
 
             history = history.AsQueryable().AddSortingAndPaging(request).ToList();
 
-            return new PageContentHistoryViewModel(history, request, history.Count, request.ContentId, request.PageContentId);
+            return new ContentHistoryViewModel(history, request, history.Count, request.ContentId);
         }
 
         private bool IsValidHistoricalContent(IHistorical f)
@@ -57,9 +57,9 @@ namespace BetterCms.Module.Pages.Command.History.GetContentHistory
             return !f.IsDeleted && (f.Status == ContentStatus.Published || f.Status == ContentStatus.Draft || f.Status == ContentStatus.Archived);
         }
 
-        private PageContentHistoryItem Convert(IHistorical content)
+        private ContentHistoryItem Convert(IHistorical content)
         {
-            return new PageContentHistoryItem
+            return new ContentHistoryItem
                        {
                            Id = content.Id,
                            Version = content.Version,                           

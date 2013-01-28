@@ -28,7 +28,7 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
             {
                 var message = string.Format(PagesGlobalization.SaveWidget_VirtualPathNotExists_Message, request.Url);
                 var logMessage = string.Format("Widget view doesn't exists. Url: {0}, Id: {1}", request.Url, request.Id);
-                throw new ValidationException(m => message, logMessage);
+                throw new ValidationException(() => message, logMessage);
             }
 
             UnitOfWork.BeginTransaction();

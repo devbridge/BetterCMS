@@ -34,22 +34,19 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                 overlayConfigure: '.bcms-content-configure',
                 overlayDelete: '.bcms-content-delete',
                 overlay: '.bcms-content-overlay',
-                
+
                 enableCustomJs: '#bcms-enable-custom-js',
                 enableCustomCss: '#bcms-enable-custom-css',
                 customJsContainer: '#bcms-custom-js-container',
                 customCssContainer: '#bcms-custom-css-container'
             },
-            
             classes = {
                 sliderPrev: 'bcms-slider-prev',
                 sliderNext: 'bcms-slider-next',
                 regionContent: 'bcms-content-regular',
                 regionAdvancedContent: 'bcms-content-advanced',
-                regionWidget: 'bcms-content-widget',
-                grayButton: 'bcms-btn-small bcms-btn-gray'
+                regionWidget: 'bcms-content-widget'
             },
-            
             links = {
                 loadWidgetsUrl: null,
                 loadAddNewHtmlContentDialogUrl: null,
@@ -59,11 +56,7 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                 sortPageContentUrl: null,
                 previewPageUrl: null
             },
-
             globalization = {
-                saveDraft: null,
-                saveAndPublish: null,
-                preview: null,
                 addNewContentDialogTitle: null,
                 editContentDialogTitle: null,
                 deleteContentConfirmationTitle: null,
@@ -74,16 +67,10 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                 deleteContentFailureMessageMessage: null,
                 sortPageContentFailureMessageTitle: null,
                 sortPageContentFailureMessageMessage: null,
-                errorTitle: null,                
+                errorTitle: null,
                 insertingWidgetInfoMessage: null,
                 insertingWidgetInfoHeader: null,
-                insertingWidgetErrorMessage: null                
-            },
-            
-            contentStatus = {
-                published: 'Published',
-                draft: 'Draft',
-                preview: 'Preview'
+                insertingWidgetErrorMessage: null
             };
 
         /**
@@ -96,29 +83,10 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
         * Open dialog with add new content form
         */
         pagesContent.onAddNewContent = function(regionId) {
-            var extraButtons = [],
-                changeContentDesirableStatus = function(dialog, status) {
-                    dialog.container.find(selectors.desirableStatus).val(status);                    
-                },
-                saveAndPublishButton = new modal.button(globalization.saveAndPublish, classes.grayButton, 2, function(dialog) {
-                    changeContentDesirableStatus(dialog, contentStatus.published);
-                    dialog.submitForm();
-                }),
-                previewButton = new modal.button(globalization.preview, classes.grayButton, 3, function(dialog) {
-                    changeContentDesirableStatus(dialog, contentStatus.preview);
-                    dialog.submitForm();
-                });
             
-            extraButtons.push(previewButton);            
-            extraButtons.push(saveAndPublishButton);
-            
-            modal.open({
-                buttons: extraButtons,
-                acceptTitle: globalization.saveDraft,
+            modal.edit({
                 title: globalization.addNewContentDialogTitle,
-                onAcceptClick: function (dialog) {
-                    changeContentDesirableStatus(dialog, contentStatus.draft);
-                },
+              
                 onLoad: function(dialog) {
                     var url = $.format(links.loadAddNewHtmlContentDialogUrl, bcms.pageId, regionId);
                     dynamicContent.bindDialog(dialog, url, {
@@ -129,11 +97,12 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                         },
 
                         postSuccess: function (json) {                            
-                            if (json.Data.DesirableStatus === contentStatus.preview) {
-                                try {                                    
-                                    $(selectors.contentId).val(json.Data.ContentId);
-                                    $(selectors.pageContentId).val(json.Data.PageContentId);
-                                    preview.previewPageContent(json.Data.PageContentId);
+                            if (json.Data.DesirableStatus === bcms.contentStatus.preview) {
+                                try {
+                                    var result = json.Data;
+                                    $(selectors.contentId).val(result.ContentId);
+                                    $(selectors.pageContentId).val(result.PageContentId);
+                                    preview.previewPageContent(result.PageId, result.PageContentId);
                                 } finally  {
                                     return false;
                                 }                                 
@@ -193,7 +162,7 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                 widgets.openCreateHtmlContentWidgetDialog(function () {
                     // Reload search results after category was created.
                     pagesContent.updateWidgetCategoryList(dialog);
-                });
+                }, null);
             });
 
             bcms.preventInputFromSubmittingForm(dialog.container.find(selectors.widgetsSearchInput), {
@@ -265,11 +234,15 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                     widgetId = widgetContainer.data('id'),
                     widgetVersion = widgetContainer.data('version'),
                     widgetName = widgetContainer.find(selectors.widgetName).text();
-                                        
-                widgets.deleteWidget(widgetId, widgetVersion, widgetName, function (data) {
-                    messages.refreshBox(dialog.container, data);
-                    pagesContent.updateWidgetCategoryList(dialog);
-                });
+
+                widgets.deleteWidget(widgetId, widgetVersion, widgetName,
+                    function(data) {
+                        messages.refreshBox(dialog.container, data);
+                        pagesContent.updateWidgetCategoryList(dialog);
+                    },
+                    function(data) {
+                        messages.refreshBox(dialog.container, data);
+                    });
             });
 
             container.find(selectors.widgetEditButtons).on('click', function () {
@@ -281,7 +254,8 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                 widgets.editWidget(widgetId, widgetType, function(data) {
                     messages.refreshBox(dialog.container, data);
                     pagesContent.updateWidgetCategoryList(dialog);
-                });
+                },
+                null);
             });
 
             preview.initialize(container.find(selectors.widgetsContainer));
@@ -429,28 +403,7 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
         * Opens dialog for editing page regular content  
         */
         pagesContent.editPageContent = function (contentId) {
-            var extraButtons = [],
-              changeContentDesirableStatus = function (dialog, status) {
-                  dialog.container.find(selectors.desirableStatus).val(status);
-              },
-              saveAndPublishButton = new modal.button(globalization.saveAndPublish, classes.grayButton, 2, function (dialog) {
-                  changeContentDesirableStatus(dialog, contentStatus.published);
-                  dialog.submitForm();
-              }),
-              previewButton = new modal.button(globalization.preview, classes.grayButton, 3, function (dialog) {
-                  changeContentDesirableStatus(dialog, contentStatus.preview);
-                  dialog.submitForm();
-              });
-
-            extraButtons.push(previewButton);
-            extraButtons.push(saveAndPublishButton);
-            
-            modal.open({
-                buttons: extraButtons,
-                acceptTitle: globalization.saveDraft,
-                onAcceptClick: function (dialog) {
-                    changeContentDesirableStatus(dialog, contentStatus.draft);
-                },
+            modal.edit({
                 title: globalization.editContentDialogTitle,
                 onLoad: function (dialog) {
                     var url = $.format(links.editPageContentUrl, contentId);
@@ -462,9 +415,9 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                         },
 
                         postSuccess: function (json) {
-                            if (json.Data.DesirableStatus === contentStatus.preview) {
+                            if (json.Data.DesirableStatus === bcms.contentStatus.preview) {
                                 try {                                    
-                                    preview.previewPageContent(json.Data.PageContentId);
+                                    preview.previewPageContent(bcms.pageId, json.Data.PageContentId);
                                 } finally {
                                     return false;
                                 }

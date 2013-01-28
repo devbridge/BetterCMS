@@ -1,6 +1,7 @@
 ﻿using System;
 
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Mvc.Grids;
 
 namespace BetterCms.Module.Pages.ViewModels.SiteSettings
@@ -39,6 +40,12 @@ namespace BetterCms.Module.Pages.ViewModels.SiteSettings
         /// </value>
         public string CategoryName { get; set; }
 
+        /// <summary>
+        /// Gets or sets the type of the widget entity.
+        /// </summary>
+        /// <value>
+        /// The type of the widget entity.
+        /// </value>
         public Type WidgetEntityType { get; set; }
 
         /// <summary>
@@ -48,6 +55,51 @@ namespace BetterCms.Module.Pages.ViewModels.SiteSettings
         /// The type of the widget.
         /// </value>
         public WidgetType? WidgetType { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this widget is published.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this widget is published; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsPublished { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this widget has draft version.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this widget has draft; otherwise, <c>false</c>.
+        /// </value>
+        public bool HasDraft { get; set; }
+
+        /// <summary>
+        /// Gets the status.
+        /// </summary>
+        /// <value>
+        /// The status.
+        /// </value>
+        public string Status
+        {
+            get
+            {
+                if (IsPublished && HasDraft)
+                {
+                    return RootGlobalization.ContentStatus_PublishedWithDraft;
+                }
+
+                if (IsPublished)
+                {
+                    return RootGlobalization.ContentStatus_Published;
+                }
+
+                if (HasDraft)
+                {
+                    return RootGlobalization.ContentStatus_Draft;
+                }
+                
+                return null;
+            }
+        }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
@@ -60,5 +112,6 @@ namespace BetterCms.Module.Pages.ViewModels.SiteSettings
             return string.Format("Id: {0}, Version: {1}, WidgetName: {2}, CategoryName: {3}", Id, Version, WidgetName, CategoryName);
         }
         
+
     }
 }

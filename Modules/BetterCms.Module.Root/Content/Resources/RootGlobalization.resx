@@ -147,6 +147,9 @@
   <data name="Button_Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
+  <data name="Button_History" xml:space="preserve">
+    <value>History</value>
+  </data>
   <data name="Button_Insert" xml:space="preserve">
     <value>Insert</value>
   </data>
@@ -185,6 +188,15 @@
   </data>
   <data name="Confirm_Delete_DefaultMessage" xml:space="preserve">
     <value>Are you sure you want to delete selected object?</value>
+  </data>
+  <data name="ContentStatus_Draft" xml:space="preserve">
+    <value>Draft</value>
+  </data>
+  <data name="ContentStatus_Published" xml:space="preserve">
+    <value>Published</value>
+  </data>
+  <data name="ContentStatus_PublishedWithDraft" xml:space="preserve">
+    <value>Published (with draft)</value>
   </data>
   <data name="Grid_NoDataAvailable_Message" xml:space="preserve">
     <value>There is no data available.</value>

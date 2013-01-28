@@ -25,15 +25,15 @@ define('bcms.pages.history', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', '
         },
         
         links = {
-            loadPageContentHistoryDialogUrl: null,
-            loadPageContentVersionPreviewUrl: null,
-            restorePageContentVersionUrl: null,
+            loadContentHistoryDialogUrl: null,
+            loadContentVersionPreviewUrl: null,
+            restoreContentVersionUrl: null,
             loadPageContentHistoryUrl: null
         },
         
         globalization = {
-            pageContentHistoryDialogTitle: null,
-            pageContentVersionRestoryConfirmation: null
+            contentHistoryDialogTitle: null,
+            contentVersionRestoryConfirmation: null
         };
 
     /**
@@ -46,7 +46,7 @@ define('bcms.pages.history', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', '
     * Preview specified content version
     */
     function previewVersion(container, id) {
-        var url = $.format(links.loadPageContentVersionPreviewUrl, id),
+        var url = $.format(links.loadContentVersionPreviewUrl, id),
             iFrame = $(container.find(selectors.versionPreviewTemplate).html()),
             previewContainer = container.find(selectors.versionPreviewContainer);
 
@@ -64,10 +64,10 @@ define('bcms.pages.history', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', '
     */
     function restoreVersion(container, id) {
         modal.confirm({
-            content: globalization.pageContentVersionRestoryConfirmation,
+            content: globalization.contentVersionRestoryConfirmation,
             onAccept: function () {
                 
-                var url = $.format(links.restorePageContentVersionUrl, id),
+                var url = $.format(links.restoreContentVersionUrl, id),
                         onComplete = function (json) {
                             messages.refreshBox(container, json);
                             
@@ -145,13 +145,13 @@ define('bcms.pages.history', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', '
     };   
     
     /**
-    * Loads edit SEO dialog.
+    * Loads history preview dialog.
     */
     history.openPageContentHistoryDialog = function (contentId, pageContentId) {
         modal.open({
-            title: globalization.pageContentHistoryDialogTitle,            
+            title: globalization.contentHistoryDialogTitle,            
             onLoad: function (dialog) {
-                var url = $.format(links.loadPageContentHistoryDialogUrl, contentId, pageContentId);
+                var url = $.format(links.loadContentHistoryDialogUrl, contentId, pageContentId);
                 dynamicContent.bindDialog(dialog, url, {
                     contentAvailable : function () {
                         history.initPageContentHistoryDialogEvents(dialog);

@@ -239,8 +239,8 @@
     <Compile Include="ViewModels\Content\ContentOptionViewModel.cs" />
     <Compile Include="ViewModels\Content\ContentViewModel.cs" />
     <Compile Include="ViewModels\Content\PageContentSortViewModel.cs" />
-    <Compile Include="ViewModels\History\PageContentHistoryItem.cs" />
-    <Compile Include="ViewModels\History\PageContentHistoryViewModel.cs" />
+    <Compile Include="ViewModels\History\ContentHistoryItem.cs" />
+    <Compile Include="ViewModels\History\ContentHistoryViewModel.cs" />
     <Compile Include="ViewModels\SiteSettings\SiteSettingTemplateItemViewModel.cs" />
     <Compile Include="ViewModels\SiteSettings\SiteSettingTemplateListViewModel.cs" />
     <Compile Include="ViewModels\Tags\TagsTemplateViewModel.cs" />

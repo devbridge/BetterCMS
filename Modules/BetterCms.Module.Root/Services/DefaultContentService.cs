@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Models;
 using BetterCms.Core.Services;
+using BetterCms.Module.Root.Models;
 
 using NHibernate.Linq;
 
@@ -112,6 +114,7 @@ namespace BetterCms.Module.Root.Services
                 updatedContent.CopyDataTo(contentVersionOfRequestedStatus);
                 contentVersionOfRequestedStatus.Original = originalContent;
                 contentVersionOfRequestedStatus.Status = requestedStatus;
+                originalContent.History.Add(contentVersionOfRequestedStatus);
                 repository.Save(contentVersionOfRequestedStatus);                
             }
             
@@ -120,6 +123,7 @@ namespace BetterCms.Module.Root.Services
                 var originalToArchive = originalContent.Clone();
                 originalToArchive.Status = ContentStatus.Archived;
                 originalToArchive.Original = originalContent;
+                originalContent.History.Add(originalToArchive);
                 repository.Save(originalToArchive);
 
                 updatedContent.CopyDataTo(originalContent);
@@ -128,9 +132,11 @@ namespace BetterCms.Module.Root.Services
                 originalContent.PublishedByUser = securityService.CurrentPrincipalName;
                 repository.Save(originalContent);
 
-                foreach (var previewOrDraftVersionContent in originalContent.History.Where(f => f.Status == ContentStatus.Preview || f.Status == ContentStatus.Draft))
+                IList<Models.Content> contentsToRemove = originalContent.History.Where(f => f.Status == ContentStatus.Preview || f.Status == ContentStatus.Draft).ToList();
+                foreach (var redundantContent in contentsToRemove)
                 {
-                    repository.Delete(previewOrDraftVersionContent);
+                    repository.Delete(redundantContent);
+                    originalContent.History.Remove(redundantContent);
                 }
             }
         }
@@ -160,6 +166,7 @@ namespace BetterCms.Module.Root.Services
                     {
                         previewOrDraftContentVersion = originalContent.Clone();
                         previewOrDraftContentVersion.Original = originalContent;
+                        originalContent.History.Add(previewOrDraftContentVersion);
                     }
                 }
 
@@ -175,6 +182,7 @@ namespace BetterCms.Module.Root.Services
                     var originalToArchive = originalContent.Clone();
                     originalToArchive.Status = ContentStatus.Archived;
                     originalToArchive.Original = originalContent;
+                    originalContent.History.Add(originalToArchive);
                     repository.Save(originalToArchive);
 
                     updatedContent.CopyDataTo(originalContent);
@@ -215,6 +223,68 @@ namespace BetterCms.Module.Root.Services
 
             // Save entities
             SaveContentWithStatusUpdate(originalContent, ContentStatus.Published);
+        }
+
+        public System.Tuple<PageContent, Models.Content> GetPageContentForEdit(Guid pageContentId)
+        {
+            PageContent pageContent = repository.AsQueryable<PageContent>()
+                                  .Where(p => p.Id == pageContentId && !p.IsDeleted)
+                                  .Fetch(p => p.Content).ThenFetchMany(p => p.History)
+                                  .Fetch(p => p.Page)
+                                  .Fetch(f => f.Region)
+                                  .ToList()
+                                  .FirstOrDefault();
+
+            if (pageContent != null)
+            {
+                Models.Content content = FindEditableContentVersion(pageContent.Content);
+
+                if (content == null)
+                {
+                    return null;
+                }
+
+                return new System.Tuple<PageContent, Models.Content>(pageContent, content);
+            }
+
+            return null;
+        }
+
+        public Models.Content GetContentForEdit(Guid contentId)
+        {
+            Models.Content content = repository.AsQueryable<Models.Content>()
+                                  .Where(p => p.Id == contentId && !p.IsDeleted)
+                                  .FetchMany(p => p.History)
+                                  .ToList()
+                                  .FirstOrDefault();
+
+            if (content != null)
+            {
+                return FindEditableContentVersion(content);
+            }
+
+            return null;
+        }
+
+        private Models.Content FindEditableContentVersion(Models.Content content)
+        {
+            Models.Content contentForEdit = null;
+
+            if (content.Status == ContentStatus.Draft)
+            {
+                contentForEdit = content;
+            }
+            else if (content.History != null)
+            {
+                contentForEdit = content.History.FirstOrDefault(f => f.Status == ContentStatus.Draft);
+            }
+
+            if (contentForEdit == null && content.Status == ContentStatus.Published)
+            {
+                contentForEdit = content;
+            }
+
+            return contentForEdit;
         }
     }
 }

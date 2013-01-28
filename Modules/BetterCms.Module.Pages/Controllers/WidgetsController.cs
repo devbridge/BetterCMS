@@ -93,6 +93,7 @@ namespace BetterCms.Module.Pages.Controllers
                     {
                         Messages.AddSuccess(PagesGlobalization.SaveWidget_CreatedSuccessfully_Message);
                     }
+
                     return Json(new WireJson { Success = true, Data = response });
                 }
             }

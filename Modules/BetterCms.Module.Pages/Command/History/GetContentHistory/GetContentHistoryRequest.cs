@@ -6,8 +6,6 @@ namespace BetterCms.Module.Pages.Command.History.GetContentHistory
 {
     public class GetContentHistoryRequest : SearchableGridOptions
     {
-        public Guid PageContentId { get; set; }
-
         public Guid ContentId { get; set; }
     }
 }

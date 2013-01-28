@@ -4,7 +4,6 @@ using System.Web.Mvc;
 
 using BetterCms.Core.Models;
 using BetterCms.Core.Modules.Projections;
-using BetterCms.Module.Root.Models;
 
 namespace BetterCms.Module.Root.Projections
 {
@@ -12,24 +11,30 @@ namespace BetterCms.Module.Root.Projections
     public class PageContentProjection : IStylesheetAccessor, IHtmlAccessor, IJavaScriptAccessor, ISerializable
     {
         private readonly IPageContent pageContent;
+
+        private readonly IContent content;
+
         private readonly IContentAccessor contentAccessor;
 
-        public PageContentProjection(IPageContent pageContent, IContentAccessor contentAccessor)
+        public PageContentProjection(IPageContent pageContent, IContent content, IContentAccessor contentAccessor)
         {
             this.pageContent = pageContent;
+            this.content = content;
             this.contentAccessor = contentAccessor;
         }
 
         public PageContentProjection(SerializationInfo info, StreamingContext context)
         { 
-            pageContent = (PageContent)info.GetValue("pageContent", typeof(PageContent));
+            pageContent = (IPageContent)info.GetValue("pageContent", typeof(IPageContent));
+            content = (IContent)info.GetValue("content", typeof(IContent));
             contentAccessor = (IContentAccessor)info.GetValue("contentAccessor", typeof(IContentAccessor));
         }        
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             // Use the AddValue method to specify serialized values.
-            info.AddValue("pageContent", pageContent, typeof(PageContent));
+            info.AddValue("pageContent", pageContent, typeof(IPageContent));
+            info.AddValue("content", content, typeof(IContent));
             info.AddValue("contentAccessor", contentAccessor, contentAccessor.GetType());
         }
 
@@ -69,7 +74,7 @@ namespace BetterCms.Module.Root.Projections
         {
             get
             {
-                return pageContent.Content.Id;
+                return content.Id;
             }
         }
 
@@ -77,7 +82,7 @@ namespace BetterCms.Module.Root.Projections
         {
             get
             {
-                return pageContent.Content.Version;
+                return content.Version;
             }
         }
 

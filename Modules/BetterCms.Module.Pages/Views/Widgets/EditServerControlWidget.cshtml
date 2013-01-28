@@ -61,6 +61,7 @@
         </div>
         @Html.HiddenFor(model => model.Id)
         @Html.HiddenFor(model => model.Version)
+        @Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status"})
         @Html.HiddenSubmit()
     }
 </div>

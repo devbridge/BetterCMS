@@ -11,5 +11,10 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
         public bool CanManageContent { get; set; }
 
         public Guid? PreviewPageContentId { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("PageId: {0}, PageUrl: {1}, CanManageContent: {2}, PreviewPageContentId: {3}", PageId, PageUrl, CanManageContent, PreviewPageContentId);
+        }
     }
 }

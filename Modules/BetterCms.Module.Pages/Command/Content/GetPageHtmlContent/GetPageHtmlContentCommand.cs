@@ -1,16 +1,19 @@
 ﻿using System;
-using System.Linq;
 
+using BetterCms.Core.Exceptions;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Services;
 
 namespace BetterCms.Module.Pages.Command.Content.GetPageHtmlContent
 {
     public class GetPageHtmlContentCommand : CommandBase, ICommand<Guid, PageContentViewModel>
     {
+        public virtual IContentService ContentService { get; set; }
+
         /// <summary>
         /// Executes the specified request.
         /// </summary>
@@ -18,28 +21,32 @@ namespace BetterCms.Module.Pages.Command.Content.GetPageHtmlContent
         /// <returns></returns>        
         public PageContentViewModel Execute(Guid pageContentId)
         {
-            return
-                Repository.AsQueryable<PageContent>()
-                          .Where(f => f.Id == pageContentId && !f.IsDeleted && !f.Content.IsDeleted)
-                          .Select(
-                              f =>
-                              new PageContentViewModel
-                                  {
-                                      Id = f.Id,
-                                      PageId = f.Page.Id,
-                                      RegionId = f.Region.Id,
-                                      ContentId = f.Content.Id,
-                                      ContentName = f.Content.Name,
-                                      LiveFrom = ((HtmlContent)f.Content).ActivationDate,
-                                      LiveTo = ((HtmlContent)f.Content).ExpirationDate,
-                                      PageContent = ((HtmlContent)f.Content).Html,
-                                      Version = f.Version,
-                                      CustomCss = ((HtmlContent)f.Content).CustomCss,
-                                      CustomJs = ((HtmlContent)f.Content).CustomJs,
-                                      EanbledCustomJs = ((HtmlContent)f.Content).UseCustomJs,
-                                      EnabledCustomCss = ((HtmlContent)f.Content).UseCustomCss
-                                  })
-                          .FirstOrDefault();
+            var pageContentForEdit = ContentService.GetPageContentForEdit(pageContentId);
+
+            if (pageContentForEdit == null)
+            {
+                throw new CmsException(string.Format("An editable page content was not found by id={0}.", pageContentId));
+            }
+
+            PageContent pageContent = pageContentForEdit.Item1;
+            HtmlContent content = (HtmlContent)pageContentForEdit.Item2;
+
+            return new PageContentViewModel 
+                                            {
+                                                Id = pageContent.Id,
+                                                PageId = pageContent.Page.Id,
+                                                RegionId = pageContent.Region.Id,
+                                                ContentId = pageContent.Content.Id,
+                                                ContentName = content.Name,
+                                                LiveFrom = content.ActivationDate,
+                                                LiveTo = content.ExpirationDate,
+                                                PageContent = content.Html,
+                                                Version = pageContent.Version,
+                                                CustomCss = content.CustomCss,
+                                                CustomJs = content.CustomJs,
+                                                EanbledCustomJs = content.UseCustomJs,
+                                                EnabledCustomCss = content.UseCustomCss
+                                            };
         }
     }
 }

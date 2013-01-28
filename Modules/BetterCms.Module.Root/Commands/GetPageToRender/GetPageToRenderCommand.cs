@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
+using BetterCms.Core.Exceptions;
 using BetterCms.Core.Models;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Core.Mvc.Commands;
@@ -11,11 +12,7 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Projections;
 using BetterCms.Module.Root.ViewModels.Cms;
 
-using NHibernate;
-using NHibernate.Criterion;
 using NHibernate.Linq;
-using NHibernate.SqlCommand;
-using NHibernate.Transform;
 
 namespace BetterCms.Module.Root.Commands.GetPageToRender
 {
@@ -45,52 +42,9 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
         /// <returns>Executed command result.</returns>
         public CmsRequestViewModel Execute(GetPageToRenderRequest request)
         {
-           var pageQuery = Repository.AsQueryable<Page>()    
-                            .Where(f => !f.IsDeleted)         
-                            .Fetch(f => f.Layout).ThenFetchMany(f => f.LayoutRegions).ThenFetch(f => f.Region)
-                            .ToFuture();
-
-           var pageContentsQuery = Repository.AsQueryable<PageContent>()
-                              .Where(f => !f.IsDeleted)  
-                              .Fetch(f => f.Content).ThenFetchMany(f => f.ContentOptions)
-                              .FetchMany(f => f.Options)
-                              .ToFuture();
-
-            if (request.PageId == null)
-            {
-                pageQuery = pageQuery.Where(f => !f.IsDeleted && f.PageUrl.ToLower() == request.PageUrl.ToLowerInvariant());
-                pageContentsQuery = pageContentsQuery.Where(f => f.Page.PageUrl.ToLower() == request.PageUrl.ToLowerInvariant());
-            }
-            else
-            {
-                pageQuery = pageQuery.Where(f => !f.IsDeleted && f.Id == request.PageId);
-                pageContentsQuery = pageContentsQuery.Where(f => f.Page.Id == request.PageId);
-            }
-
-
-            if (request.CanManageContent)
-            {
-                if (request.PreviewPageContentId != null)
-                {
-                    pageContentsQuery = pageContentsQuery.Where(f => f.Content.Status == ContentStatus.Published || f.Content.Status == ContentStatus.Draft || f.Id == request.PreviewPageContentId.Value);
-                }
-                else
-                {
-                    pageContentsQuery = pageContentsQuery.Where(f => f.Content.Status == ContentStatus.Published || f.Content.Status == ContentStatus.Draft);
-                }
-            }
-            else
-            {
-                if (request.PreviewPageContentId != null)
-                {
-                    pageContentsQuery = pageContentsQuery.Where(f => f.Content.Status == ContentStatus.Published || f.Id == request.PreviewPageContentId.Value);
-                }
-                else
-                {
-                    pageContentsQuery = pageContentsQuery.Where(f => f.Content.Status == ContentStatus.Published);
-                }
-            }
-
+            var pageQuery = GetPageFutureQuery(request);
+            var pageContentsQuery = GetPageContentFutureQuery(request);
+            
             var page = pageQuery.FirstOrDefault();
             if (page == null)
             {
@@ -104,7 +58,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             }
 
             var pageContents = pageContentsQuery.ToList();
-            var contentProjections = pageContents.Distinct().Select(f => pageContentProjectionFactory.Create(f)).ToList();
+            var contentProjections = pageContents.Distinct().Select(f => CreatePageContentProjection(request, f)).ToList();
             
             RenderPageViewModel renderPageViewModel = new RenderPageViewModel(page);
             renderPageViewModel.CanManageContent = request.CanManageContent;
@@ -121,19 +75,121 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             renderPageViewModel.Contents = contentProjections;
             renderPageViewModel.Metadata = pageAccessor.GetPageMetaData(page).ToList();
 
-            // Styles
+            // Attach styles.
             var styles = new List<IStylesheetAccessor>();
             styles.Add(pageStylesheetProjectionFactory.Create(page));
             styles.AddRange(contentProjections);
             renderPageViewModel.Stylesheets = styles;
 
-            // JavaScripts
+            // Attach JavaScript includes.
             var js = new List<IJavaScriptAccessor>();
             js.Add(pageJavaScriptProjectionFactory.Create(page));
             js.AddRange(contentProjections);
             renderPageViewModel.JavaScripts = js;
 
             return new CmsRequestViewModel(renderPageViewModel);
+        }
+
+        private PageContentProjection CreatePageContentProjection(GetPageToRenderRequest request, PageContent pageContent)
+        {
+            Models.Content contentToProject = null;
+            
+            if (request.PreviewPageContentId != null && request.PreviewPageContentId.Value == pageContent.Id)
+            {
+                // Looks for the preview content version first.
+                if (pageContent.Content.Status == ContentStatus.Preview)
+                {
+                    contentToProject = pageContent.Content;
+                }
+                else
+                {
+                    contentToProject = pageContent.Content.History.FirstOrDefault(f => f.Status == ContentStatus.Preview);
+                }
+            }
+
+            if (contentToProject == null && (request.CanManageContent || request.PreviewPageContentId != null))
+            {
+                // Look for the draft content version if we are in the edit or preview mode.
+                if (pageContent.Content.Status == ContentStatus.Draft)
+                {
+                    contentToProject = pageContent.Content;
+                }
+                else
+                {
+                    contentToProject = pageContent.Content.History.FirstOrDefault(f => f.Status == ContentStatus.Draft);
+                }
+            }
+            
+            if (contentToProject == null && pageContent.Content.Status == ContentStatus.Published)
+            {
+                // Otherwise take published version.
+                contentToProject = pageContent.Content;
+            }
+
+            if (contentToProject == null)
+            {
+                throw new CmsException(string.Format("A content version was not found to project on the page. PageContent={0}; Request={1};", pageContent, request));
+            }
+
+            return pageContentProjectionFactory.Create(pageContent, contentToProject, pageContent.Options.Cast<IPageContentOption>().ToList());
+        }
+
+        private IEnumerable<Page> GetPageFutureQuery(GetPageToRenderRequest request)
+        {
+            IQueryable<Page> query = Repository.AsQueryable<Page>()                                               
+                                               .Fetch(f => f.Layout).ThenFetchMany(f => f.LayoutRegions).ThenFetch(f => f.Region);
+
+            if (request.PageId == null)
+            {
+                query = query.Where(f => !f.IsDeleted && f.PageUrl.ToLower() == request.PageUrl.ToLowerInvariant());
+            }
+            else
+            {
+                query = query.Where(f => !f.IsDeleted && f.Id == request.PageId);
+            }
+
+            query = query.Where(f => !f.IsDeleted);
+
+            return query.ToFuture();
+        }
+
+        private IEnumerable<PageContent> GetPageContentFutureQuery(GetPageToRenderRequest request)
+        {
+            IQueryable<PageContent> pageContentsQuery =
+                Repository.AsQueryable<PageContent>()                          
+                          .Fetch(f => f.Content).ThenFetchMany(f => f.ContentOptions)
+                          .FetchMany(f => f.Options);
+
+            if (request.CanManageContent || request.PreviewPageContentId != null)
+            {
+                pageContentsQuery = pageContentsQuery.Fetch(f => f.Content).ThenFetchMany(f => f.History);
+            }
+
+            if (request.PageId == null)
+            {
+                pageContentsQuery = pageContentsQuery.Where(f => f.Page.PageUrl.ToLower() == request.PageUrl.ToLowerInvariant());
+            }
+            else
+            {
+                pageContentsQuery = pageContentsQuery.Where(f => f.Page.Id == request.PageId);
+            }
+
+            if (request.PreviewPageContentId != null)
+            {
+                pageContentsQuery = pageContentsQuery.Where(f => f.Content.Status == ContentStatus.Published || f.Content.Status == ContentStatus.Draft || f.Id == request.PreviewPageContentId.Value);
+            }
+            else if (request.CanManageContent)
+            {
+                pageContentsQuery = pageContentsQuery.Where(f => f.Content.Status == ContentStatus.Published || f.Content.Status == ContentStatus.Draft);               
+            }
+            else
+            {
+                pageContentsQuery = pageContentsQuery.Where(f => f.Content.Status == ContentStatus.Published);
+            }
+
+            pageContentsQuery = pageContentsQuery.Where(f => !f.IsDeleted && !f.Content.IsDeleted);
+
+            return pageContentsQuery.ToFuture();
         }
     }
 }

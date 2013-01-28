@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using BetterCms.Core.Models;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Root.Models;
@@ -55,7 +56,7 @@ namespace BetterCms.Module.Pages.Command.History.GetContentVersion
                 .FetchMany(f => f.ContentOptions)
                 .FirstOrDefault();
 
-            var contentProjection = PageContentProjectionFactory.Create(pageContent);
+            var contentProjection = PageContentProjectionFactory.Create(pageContent, pageContent.Content, pageContent.Options.Cast<IPageContentOption>().ToList());
 
             return new RenderPageViewModel
                        {

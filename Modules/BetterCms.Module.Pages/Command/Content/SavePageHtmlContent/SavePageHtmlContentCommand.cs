@@ -52,7 +52,11 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
                         Name = request.ContentName,
                         ActivationDate = request.LiveFrom,
                         ExpirationDate = request.LiveTo,
-                        Html = request.PageContent ?? string.Empty                        
+                        Html = request.PageContent ?? string.Empty,
+                        UseCustomCss = request.EnabledCustomCss,
+                        CustomCss = request.CustomCss,
+                        UseCustomJs = request.EanbledCustomJs,
+                        CustomJs = request.CustomJs                      
                     },
                 request.DesirableStatus);
             
@@ -61,7 +65,9 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
 
             return new SavePageHtmlContentResponse {
                                                        PageContentId = pageContent.Id,
-                                                       ContentId = pageContent.Content.Id
+                                                       ContentId = pageContent.Content.Id,
+                                                       RegionId = pageContent.Region.Id,
+                                                       PageId = pageContent.Page.Id
                                                    };
         }
     }
