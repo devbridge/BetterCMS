@@ -471,14 +471,15 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
         function onEditContent(sender) {
             var element = $(sender),
                 contentId = element.data('contentId'),
+                pageContentId = element.data('pageContentId'),
                 onSuccess = function () {
                     redirect.ReloadWithAlert();
                 };
 
             if (element.hasClass(classes.regionWidget)) {
-                widgets.openEditServerControlWidgetDialog(contentId, onSuccess);
+                widgets.openEditServerControlWidgetDialog(contentId, onSuccess, pageContentId);
             } else if (element.hasClass(classes.regionAdvancedContent)) {
-                widgets.openEditHtmlContentWidgetDialog(contentId, onSuccess);
+                widgets.openEditHtmlContentWidgetDialog(contentId, onSuccess, pageContentId);
             }
         }
 
