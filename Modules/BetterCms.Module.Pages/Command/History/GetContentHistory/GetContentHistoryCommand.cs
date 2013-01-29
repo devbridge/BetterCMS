@@ -61,27 +61,34 @@ namespace BetterCms.Module.Pages.Command.History.GetContentHistory
 
             if (content != null)
             {
-                // Fix for draft
+                // Fix for draft: loading it's original content
                 if (content.Status == ContentStatus.Draft)
                 {
-                    content = Repository
+                    var publishedContent = Repository
                         .AsQueryable<Root.Models.Content>()
                         .Where(f => f == content.Original 
                             && !f.IsDeleted
                             && (f.Status == ContentStatus.Published || f.Status == ContentStatus.Draft || f.Status == ContentStatus.Archived))
                         .FetchMany(f => f.History)
                         .ToList().FirstOrDefault();
-                }
 
-                if (content != null)
-                {
-                    if (content.Status == ContentStatus.Published && ContainsSearchQuery(content, searchQuery))
+                    if (publishedContent != null)
                     {
+                        content = publishedContent;
+                    }
+                    else
+                    {
+                        // If draft has no original content, adding itself to history
                         history.Add(Convert(content));
                     }
-
-                    history.AddRange(content.History.Where(c => IsValidHistoricalContent(c) && ContainsSearchQuery(c, searchQuery)).Select(Convert));
                 }
+
+                if (content.Status == ContentStatus.Published && ContainsSearchQuery(content, searchQuery))
+                {
+                    history.Add(Convert(content));
+                }
+
+                history.AddRange(content.History.Where(c => IsValidHistoricalContent(c) && ContainsSearchQuery(c, searchQuery)).Select(Convert));
             }
 
             history = history.AsQueryable().AddSortingAndPaging(request).ToList();
