@@ -157,13 +157,13 @@ namespace BetterCms.Module.Root.Services
              *                  | create a history content version of the published (clone it). update original with draft data and remove draft|preview.
              *              - published content not exists:
              *                  | save draft content as published
-             */
+             */            
             if (requestedStatus == ContentStatus.Preview || requestedStatus == ContentStatus.Draft)
             {
                 var previewOrDraftContentVersion = originalContent.History.FirstOrDefault(f => f.Status == requestedStatus && !f.IsDeleted);
                 if (previewOrDraftContentVersion == null)
                 {
-                    if (originalContent.Original == null)
+                    if (originalContent.Status == requestedStatus)
                     {
                         previewOrDraftContentVersion = originalContent;
                     }
