@@ -144,7 +144,9 @@
             @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new ScrollableEditableHtmlTableGridRenderer<PageContentHistoryItem>()
                                                                                                                                  {
                                                                                                                                      InternalTableCssClass = "bcms-history-table"
-                                                                                                                                 })
+                                                                                                                                 
+                                                                                                                                })
+            @Html.HiddenSubmit()
         }    
     </div>
 </div>

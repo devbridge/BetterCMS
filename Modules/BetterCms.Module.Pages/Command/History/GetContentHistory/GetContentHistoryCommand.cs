@@ -28,14 +28,22 @@ namespace BetterCms.Module.Pages.Command.History.GetContentHistory
             var history = new List<PageContentHistoryItem>();
             request.SetDefaultSortingOptions("CreatedOn", true);            
 
-            var contentFutureQuery = Repository
+            var query = Repository
                 .AsQueryable<Root.Models.Content>()
                 .Where(f => f.Id == request.ContentId && !f.IsDeleted)
-                .Where(f => f.Status == ContentStatus.Published || f.Status == ContentStatus.Draft || f.Status == ContentStatus.Archived)
+                .Where(f => f.Status == ContentStatus.Published || f.Status == ContentStatus.Draft || f.Status == ContentStatus.Archived);
+
+            if (!string.IsNullOrWhiteSpace(request.SearchQuery))
+            {
+                // TODO: search by status
+                query = query.Where(q => q.CreatedByUser.Contains(request.SearchQuery) 
+                    || q.PublishedByUser.Contains(request.SearchQuery));
+            }
+
+            var content = query
                 .FetchMany(f => f.History)
-                .ToFuture();            
-            
-            var content = contentFutureQuery.ToList().FirstOrDefault();
+                .ToFuture()
+                .ToList().FirstOrDefault();
 
             if (content != null)
             {
