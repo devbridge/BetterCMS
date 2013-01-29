@@ -1068,4 +1068,16 @@
   <data name="Widgets_CanNotDeleteWidgetIsInUse_Message" xml:space="preserve">
     <value>Cannot remove {0} widget because it is in use.</value>
   </data>
+  <data name="ContentStatus_Archived" xml:space="preserve">
+    <value>Archived</value>
+  </data>
+  <data name="ContentStatus_Draft" xml:space="preserve">
+    <value>Draft</value>
+  </data>
+  <data name="ContentStatus_Preview" xml:space="preserve">
+    <value>Preview</value>
+  </data>
+  <data name="ContentStatus_Published" xml:space="preserve">
+    <value>Published</value>
+  </data>
 </root>

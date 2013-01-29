@@ -31,10 +31,8 @@
     }
 }
 
-@helper DisplayStatus(ContentStatus status)
+@helper DisplayStatus(string statusName, ContentStatus status)
 {
-    var statusName = status.ToString();
-    
     switch (status)
     {
         case ContentStatus.Archived:
@@ -53,7 +51,7 @@
             break;
             
         default:
-            @:statusName.ToString()
+            @:statusName
             break;
     }
 }
@@ -101,7 +99,7 @@
                .HeaderAttributes(@style => "width: 90px;")
                .Attributes(@style => "width: 90px;");
 
-        column.For(m => DisplayStatus(m.Status))
+        column.For(m => DisplayStatus(m.StatusName, m.Status))
                .Named(PagesGlobalization.ContentHistory_Column_Status)
                .SortColumnName("Status")
                .Encode(false)

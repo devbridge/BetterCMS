@@ -673,6 +673,42 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Archived.
+        /// </summary>
+        public static string ContentStatus_Archived {
+            get {
+                return ResourceManager.GetString("ContentStatus_Archived", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Draft.
+        /// </summary>
+        public static string ContentStatus_Draft {
+            get {
+                return ResourceManager.GetString("ContentStatus_Draft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preview.
+        /// </summary>
+        public static string ContentStatus_Preview {
+            get {
+                return ResourceManager.GetString("ContentStatus_Preview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Published.
+        /// </summary>
+        public static string ContentStatus_Published {
+            get {
+                return ResourceManager.GetString("ContentStatus_Published", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Category created successfully..
         /// </summary>
         public static string CreateCategory_CreatedSuccessfully_Message {

@@ -4,6 +4,7 @@ using System.Linq;
 
 using BetterCms.Core.Models;
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.ViewModels.History;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
@@ -17,6 +18,25 @@ namespace BetterCms.Module.Pages.Command.History.GetContentHistory
     /// </summary>
     public class GetContentHistoryCommand : CommandBase, ICommand<GetContentHistoryRequest, ContentHistoryViewModel>
     {
+        /// <summary>
+        /// The list of status names
+        /// </summary>
+        private readonly IDictionary<ContentStatus, string> statusNames;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetContentHistoryCommand" /> class.
+        /// </summary>
+        public GetContentHistoryCommand()
+        {
+            statusNames = new Dictionary<ContentStatus, string>
+                              {
+                                  {ContentStatus.Archived, PagesGlobalization.ContentStatus_Archived},
+                                  {ContentStatus.Draft, PagesGlobalization.ContentStatus_Draft},
+                                  {ContentStatus.Preview, PagesGlobalization.ContentStatus_Preview},
+                                  {ContentStatus.Published, PagesGlobalization.ContentStatus_Published}
+                              };
+        }
+
         /// <summary>
         /// Executes the specified request.
         /// </summary>
@@ -63,7 +83,11 @@ namespace BetterCms.Module.Pages.Command.History.GetContentHistory
         {
             if (!string.IsNullOrWhiteSpace(searchQuery))
             {
-                return f.PublishedByUser.ToLower().Contains(searchQuery) || f.CreatedByUser.ToLower().Contains(searchQuery);
+                var statusName = GetStatusName(f.Status).ToLower();
+
+                return f.PublishedByUser.ToLower().Contains(searchQuery) 
+                    || f.CreatedByUser.ToLower().Contains(searchQuery)
+                    || (!string.IsNullOrEmpty(statusName) && statusName.Contains(searchQuery));
             }
             return true;
         }
@@ -73,7 +97,8 @@ namespace BetterCms.Module.Pages.Command.History.GetContentHistory
             return new ContentHistoryItem
                        {
                            Id = content.Id,
-                           Version = content.Version,                           
+                           Version = content.Version,
+                           StatusName = GetStatusName(content.Status),
                            Status = content.Status,
                            ArchivedByUser = content.Status == ContentStatus.Archived ? content.CreatedByUser : null,
                            ArchivedOn = content.Status == ContentStatus.Archived ? content.CreatedOn : (DateTime?)null,
@@ -85,6 +110,15 @@ namespace BetterCms.Module.Pages.Command.History.GetContentHistory
                            CreatedByUser = content.CreatedByUser,
                            CreatedOn = content.CreatedOn
                        };
-        }        
+        }
+
+        private string GetStatusName(ContentStatus status)
+        {
+            if (statusNames.ContainsKey(status))
+            {
+                return statusNames[status];
+            }
+            return null;
+        }
     }
 }

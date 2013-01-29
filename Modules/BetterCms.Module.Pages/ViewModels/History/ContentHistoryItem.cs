@@ -26,5 +26,7 @@ namespace BetterCms.Module.Pages.ViewModels.History
         public TimeSpan? DisplayedFor { get; set; }
 
         public ContentStatus Status { get; set; }
+
+        public string StatusName { get; set; }
     }
 }
