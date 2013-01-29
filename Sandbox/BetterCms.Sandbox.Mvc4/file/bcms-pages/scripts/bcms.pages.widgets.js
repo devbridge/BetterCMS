@@ -472,8 +472,15 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
             var element = $(sender),
                 contentId = element.data('contentId'),
                 pageContentId = element.data('pageContentId'),
-                onSuccess = function () {
-                    redirect.ReloadWithAlert();
+                onSuccess = function (json) {
+                    if (json.Data.DesireableStatus === bcms.contentStatus.preview) {
+                        var result = json.Data;
+                        $(selectors.contentId).val(result.ContentId);
+                        $(selectors.pageContentId).val(result.PageContentId);
+                        preview.previewPageContent(result.PageId, result.PageContentId);
+                    } else {
+                        redirect.ReloadWithAlert();
+                    }                    
                 };
 
             if (element.hasClass(classes.regionWidget)) {
