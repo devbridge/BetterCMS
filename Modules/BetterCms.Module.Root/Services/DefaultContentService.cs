@@ -60,7 +60,7 @@ namespace BetterCms.Module.Root.Services
             
             var originalContent =
                 repository.AsQueryable<Models.Content>()
-                          .Fetch(f => f.Original)
+                          .Fetch(f => f.Original).ThenFetchMany(f => f.History)
                           .FetchMany(f => f.History)
                           .Where(f => f.Id == updatedContent.Id && !f.IsDeleted)
                           .ToList()
@@ -69,6 +69,11 @@ namespace BetterCms.Module.Root.Services
             if (originalContent == null)
             {
                 throw new CmsException(string.Format("An original content was not found by id={0}.", updatedContent.Id));
+            }
+            
+            if (originalContent.Original != null)
+            {
+                originalContent = originalContent.Original;
             }
 
             originalContent = repository.UnProxy(originalContent);
