@@ -66,6 +66,11 @@ namespace BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit
                          .Select(() => widget.Url).WithAlias(() => modelAlias.Url)
                          .Select(() => widget.PreviewUrl).WithAlias(() => modelAlias.PreviewImageUrl)
                          .Select(() => widget.Status).WithAlias(() => modelAlias.CurrentStatus)
+
+                         .Select(Projections.Conditional(Restrictions.Where(() => widget.Original != null), 
+                                 Projections.Constant(true),
+                                 Projections.Constant(false))).WithAlias(() => modelAlias.HasPublishedContent)
+
                          .Select(() => categoryAlias.Id).WithAlias(() => modelAlias.CategoryId))
                     .TransformUsing(Transformers.AliasToBean<EditServerControlWidgetViewModel>())
                     .FutureValue<EditServerControlWidgetViewModel>();

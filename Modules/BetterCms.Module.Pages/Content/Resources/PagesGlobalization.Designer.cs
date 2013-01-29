@@ -1033,11 +1033,20 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This is DRAFT version of the content. This copy currently is not live. You can &lt;a href=&apos;#&apos; class=&apos;bcms-messages-draft-destroy&apos;&gt;destroy&lt;/a&gt; and edit version that is currently published..
+        ///   Looks up a localized string similar to This is DRAFT version of the content. This copy currently is not live..
         /// </summary>
         public static string EditPageContent_Messages_DraftStatusWarnMessage {
             get {
                 return ResourceManager.GetString("EditPageContent_Messages_DraftStatusWarnMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can &lt;a href=&apos;#&apos; class=&apos;bcms-messages-draft-destroy&apos;&gt;destroy&lt;/a&gt; draft and edit version that is currently published..
+        /// </summary>
+        public static string EditPageContent_Messages_DraftStatusWarnMessage_Destroy {
+            get {
+                return ResourceManager.GetString("EditPageContent_Messages_DraftStatusWarnMessage_Destroy", resourceCulture);
             }
         }
         

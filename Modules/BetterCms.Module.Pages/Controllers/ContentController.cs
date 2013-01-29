@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 
 using BetterCms.Core.Models;
+
 using BetterCms.Module.Pages.Command.Content.GetPageContentOptions;
 using BetterCms.Module.Pages.Command.Content.GetPageHtmlContent;
 using BetterCms.Module.Pages.Command.Content.InsertContent;
@@ -11,8 +12,11 @@ using BetterCms.Module.Pages.Command.Content.SavePageHtmlContent;
 using BetterCms.Module.Pages.Command.Content.SortPageContent;
 using BetterCms.Module.Pages.Command.Content.DeletePageContent;
 using BetterCms.Module.Pages.Command.Widget.GetWidgetCategory;
+
 using BetterCms.Module.Pages.Content.Resources;
+
 using BetterCms.Module.Pages.ViewModels.Content;
+
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
@@ -153,7 +157,12 @@ namespace BetterCms.Module.Pages.Controllers
 
             if (viewModel.CurrentStatus == ContentStatus.Draft)
             {
-                Messages.AddWarn(PagesGlobalization.EditPageContent_Messages_DraftStatusWarnMessage);
+                var message = PagesGlobalization.EditPageContent_Messages_DraftStatusWarnMessage;
+                if (viewModel.HasPublishedContent)
+                {
+                    message = string.Concat(message, " ", PagesGlobalization.EditPageContent_Messages_DraftStatusWarnMessage_Destroy);
+                }
+                Messages.AddWarn(message);
             }
 
             return View(viewModel);

@@ -6,8 +6,11 @@ using BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit;
 using BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit;
 using BetterCms.Module.Pages.Command.Widget.GetSiteSettingsWidgets;
 using BetterCms.Module.Pages.Command.Widget.SaveWidget;
+
 using BetterCms.Module.Pages.Content.Resources;
+
 using BetterCms.Module.Pages.ViewModels.Widgets;
+
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
@@ -72,10 +75,7 @@ namespace BetterCms.Module.Pages.Controllers
         {
             var model = GetCommand<GetHtmlContentWidgetForEditCommand>().ExecuteCommand(id.ToGuidOrDefault());
 
-            if (model.CurrentStatus == ContentStatus.Draft)
-            {
-                Messages.AddWarn(PagesGlobalization.EditPageContent_Messages_DraftStatusWarnMessage);
-            }
+            AddWarnMessageAboutDraft(model.CurrentStatus, model.HasPublishedContent);
 
             return PartialView(model);
         }
@@ -132,10 +132,7 @@ namespace BetterCms.Module.Pages.Controllers
         {
             var model = GetCommand<GetServerControlWidgetForEditCommand>().ExecuteCommand(id.ToGuidOrDefault());
 
-            if (model.CurrentStatus == ContentStatus.Draft)
-            {
-                Messages.AddWarn(PagesGlobalization.EditPageContent_Messages_DraftStatusWarnMessage);
-            }
+            AddWarnMessageAboutDraft(model.CurrentStatus, model.HasPublishedContent);
 
             return PartialView(model);
         }
@@ -202,6 +199,19 @@ namespace BetterCms.Module.Pages.Controllers
             */
 
             return View(model);
+        }
+
+        private void AddWarnMessageAboutDraft(ContentStatus status, bool hasPublishedContent)
+        {
+            if (status == ContentStatus.Draft)
+            {
+                var message = PagesGlobalization.EditPageContent_Messages_DraftStatusWarnMessage;
+                if (hasPublishedContent)
+                {
+                    message = string.Concat(message, " ", PagesGlobalization.EditPageContent_Messages_DraftStatusWarnMessage_Destroy);
+                }
+                Messages.AddWarn(message);
+            }
         }
     }
 }

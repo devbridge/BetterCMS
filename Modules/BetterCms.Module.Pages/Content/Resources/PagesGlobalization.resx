@@ -1084,6 +1084,9 @@
     <value>Restore</value>
   </data>
   <data name="EditPageContent_Messages_DraftStatusWarnMessage" xml:space="preserve">
-    <value>This is DRAFT version of the content. This copy currently is not live. You can &lt;a href='#' class='bcms-messages-draft-destroy'&gt;destroy&lt;/a&gt; and edit version that is currently published.</value>
+    <value>This is DRAFT version of the content. This copy currently is not live.</value>
+  </data>
+  <data name="EditPageContent_Messages_DraftStatusWarnMessage_Destroy" xml:space="preserve">
+    <value>You can &lt;a href='#' class='bcms-messages-draft-destroy'&gt;destroy&lt;/a&gt; draft and edit version that is currently published.</value>
   </data>
 </root>
