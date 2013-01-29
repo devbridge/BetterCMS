@@ -347,7 +347,6 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                             drop: function (event, ui) {
                                 var forFix = $(ui.draggable).data('draggable'),
                                     dragObject = $(ui.draggable).data("dragObject"),
-                                    updateOrder = true;
                                 ui.helper.remove();
 
                                 if (dragObject.parentNode) {
@@ -363,7 +362,6 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                                         node.parentNode = dropZoneObject.parentNode;
                                     }
                                     if (dragObject.isCustom()) {
-                                        updateOrder = false;
                                         node.startEditSitemapNode();
                                         node.callbackAfterSuccessSaving = function () {
                                             sitemap.activeMapModel.updateNodesOrderAndParent();
@@ -396,9 +394,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                                 }
                                 dropZoneObject.activeZone(DropZoneTypes.None);
                                 
-                                if (updateOrder) {
-                                    sitemap.activeMapModel.updateNodesOrderAndParent();
-                                }
+                                sitemap.activeMapModel.updateNodesOrderAndParent();
 
                                 // Fix for jQuery drag object.
                                 $(ui.draggable).data('draggable', forFix);
