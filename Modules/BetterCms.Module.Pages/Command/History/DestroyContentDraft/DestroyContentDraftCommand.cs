@@ -10,14 +10,14 @@ using NHibernate.Linq;
 
 namespace BetterCms.Module.Pages.Command.History.DestroyContentDraft
 {
-    public class DestroyContentDraftCommand : CommandBase, ICommand<Guid, bool>
+    public class DestroyContentDraftCommand : CommandBase, ICommand<Guid, Guid?>
     {
         /// <summary>
         /// Executes the specified request.
         /// </summary>
         /// <param name="pageContentId">The page content id.</param>
         /// <returns></returns>
-        public bool Execute(Guid pageContentId)
+        public Guid? Execute(Guid pageContentId)
         {
             var content = Repository
                 .AsQueryable<Root.Models.Content>(p => p.Id == pageContentId)
@@ -52,7 +52,7 @@ namespace BetterCms.Module.Pages.Command.History.DestroyContentDraft
             Repository.Delete(content);
             UnitOfWork.Commit();
 
-            return true;
+            return content.Original.Id;
         }
     }
 }

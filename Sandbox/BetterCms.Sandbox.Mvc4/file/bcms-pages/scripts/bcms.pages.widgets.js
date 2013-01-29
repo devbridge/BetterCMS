@@ -109,10 +109,11 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
         /**
         * Opens dialog with an edit html content widget form.
         */
-        widgets.openEditHtmlContentWidgetDialog = function(id, postSuccess, availablePreviewOnPageContentId) {
+        widgets.openEditHtmlContentWidgetDialog = function (id, postSuccess, availablePreviewOnPageContentId, onCloseClick) {
             modal.edit({
                 isPreviewAvailable: availablePreviewOnPageContentId != null,
                 title: globalization.editAdvancedContentDialogTitle,
+                onCloseClick: onCloseClick,
                 onLoad: function(childDialog) {
                     dynamicContent.bindDialog(childDialog, $.format(links.loadEditHtmlContentWidgetDialogUrl, id), {
                         contentAvailable: function (dialog) {
@@ -132,10 +133,11 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
         /**
         * Opens ServerControlWidget edit dialog.
         */
-        widgets.openEditServerControlWidgetDialog = function(widgetId, onSaveCallback, availablePreviewOnPageContentId) {
+        widgets.openEditServerControlWidgetDialog = function (widgetId, onSaveCallback, availablePreviewOnPageContentId, onCloseClick) {
             modal.edit({
                 isPreviewAvailable: availablePreviewOnPageContentId != null,
                 title: globalization.editWidgetDialogTitle,
+                onCloseClick: onCloseClick,
                 onLoad: function(childDialog) {
                     dynamicContent.bindDialog(childDialog, $.format(links.loadEditServerControlWidgetDialogUrl, widgetId), {
                         contentAvailable: function (dialog) {
@@ -191,9 +193,12 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
             dialog.container.find(selectors.destroyDraftVersionLink).on('click', function () {
                 var contentId = dialog.container.find(selectors.contentId).val();
 
-                contentHistory.destroyDraftVersion(contentId, dialog.container, function () {
+                contentHistory.destroyDraftVersion(contentId, dialog.container, function (publishedId) {
                     dialog.close();
-                    // TODO:
+
+                    widgets.openEditHtmlContentWidgetDialog(publishedId, onEditContentSuccess, availablePreviewOnPageContentId, function () {
+                        redirect.ReloadWithAlert();
+                    });
                 });
             });
             
@@ -235,11 +240,14 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
             });
             
             dialog.container.find(selectors.destroyDraftVersionLink).on('click', function () {
-                var id = dialog.container.find(selectors.contentId).val();
+                var contentId = dialog.container.find(selectors.contentId).val();
 
-                contentHistory.destroyDraftVersion(id, dialog.container, function () {
+                contentHistory.destroyDraftVersion(contentId, dialog.container, function (publishedId) {
                     dialog.close();
-                    // TODO:
+                    
+                    widgets.openEditServerControlWidgetDialog(publishedId, onEditContentSuccess, availablePreviewOnPageContentId, function () {
+                        redirect.ReloadWithAlert();
+                    });
                 });
             });
         };
@@ -499,16 +507,20 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
         function onEditContent(sender) {
             var element = $(sender),
                 contentId = element.data('contentId'),
-                pageContentId = element.data('pageContentId'),
-                onSuccess = function () {
-                    redirect.ReloadWithAlert();
-                };
+                pageContentId = element.data('pageContentId');
 
             if (element.hasClass(classes.regionWidget)) {
-                widgets.openEditServerControlWidgetDialog(contentId, onSuccess, pageContentId);
+                widgets.openEditServerControlWidgetDialog(contentId, onEditContentSuccess, pageContentId);
             } else if (element.hasClass(classes.regionAdvancedContent)) {
-                widgets.openEditHtmlContentWidgetDialog(contentId, onSuccess, pageContentId);
+                widgets.openEditHtmlContentWidgetDialog(contentId, onEditContentSuccess, pageContentId);
             }
+        }
+        
+        /**
+        * Called on after successfull edit content save
+        */
+        function onEditContentSuccess() {
+            redirect.ReloadWithAlert();
         }
 
         /**

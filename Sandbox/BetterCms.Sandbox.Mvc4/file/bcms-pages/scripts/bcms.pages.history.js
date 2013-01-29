@@ -190,7 +190,9 @@ define('bcms.pages.history', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', '
 
                         if (json.Success) {
                             if ($.isFunction(onSuccess)) {
-                                onSuccess.call(this);
+                                var publishedId = json.Data ? json.Data.PublishedId : null;
+                                
+                                onSuccess.call(this, publishedId);
                             }
                         }
                     };
