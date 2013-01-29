@@ -19,8 +19,6 @@ namespace BetterCms.Module.Pages.Command.History.DestroyContentDraft
         /// <returns></returns>
         public bool Execute(Guid pageContentId)
         {
-            System.Threading.Thread.Sleep(5000);
-
             var content = Repository
                 .AsQueryable<Root.Models.Content>(p => p.Id == pageContentId)
                 .Fetch(f => f.Original)
