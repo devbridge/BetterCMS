@@ -42,7 +42,7 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
                 
                 widgetPreviewImageUrl: '#PreviewImageUrl',
                 widgetPreviewImage: '#bcms-widget-preview-image',
-                
+                widgetPreviewPageContentId: '.bcms-preview-page-content-id',
                 htmlContentWidgetContentHtmlEditor: 'bcms-advanced-contenthtml',
 
                 htmlContentWidgetRowTemplate: '#bcms-advanced-content-list-row-template',
@@ -176,6 +176,10 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
        * Initializes 'Edit Html Content Widget' dialog form.
        */
         function initializeEditHtmlContentWidgetForm(dialog, availablePreviewOnPageContentId) {
+            if (availablePreviewOnPageContentId !== null) {
+                dialog.container.find(selectors.widgetPreviewPageContentId).val(availablePreviewOnPageContentId);
+            }
+            
             dialog.container.find(selectors.enableCustomCss).on('click', function () {
                 showHideCustomCssText(dialog);
             });
@@ -209,6 +213,10 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
         * Initializes widget form
         */
         function initializeEditServerControlWidgetForm(dialog, availablePreviewOnPageContentId) {
+            if (availablePreviewOnPageContentId !== null) {
+                dialog.container.find(selectors.widgetPreviewPageContentId).val(availablePreviewOnPageContentId);
+            }
+            
             editor.initialize(dialog.container, {
                 deleteRowMessageExtractor: function () {
                     return globalization.deleteOptionConfirmMessage;
@@ -500,21 +508,23 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
             var element = $(sender),
                 contentId = element.data('contentId'),
                 pageContentId = element.data('pageContentId'),
-                onSuccess = function (json) {
-                    if (json.Data.DesireableStatus === bcms.contentStatus.preview) {
-                        var result = json.Data;
-                        $(selectors.contentId).val(result.ContentId);
-                        $(selectors.pageContentId).val(result.PageContentId);
-                        preview.previewPageContent(result.PageId, result.PageContentId);
+                onSave = function (json) {
+                    var result = json.Data;
+                    if (result.DesirableStatus === bcms.contentStatus.preview) {
+                        try {
+                            preview.previewPageContent(bcms.pageId, result.PreviewOnPageContentId);
+                        } finally {
+                            return false;
+                        }                        
                     } else {
                         redirect.ReloadWithAlert();
                     }                    
                 };
 
             if (element.hasClass(classes.regionWidget)) {
-                widgets.openEditServerControlWidgetDialog(contentId, onSuccess, pageContentId);
+                widgets.openEditServerControlWidgetDialog(contentId, onSave, pageContentId);
             } else if (element.hasClass(classes.regionAdvancedContent)) {
-                widgets.openEditHtmlContentWidgetDialog(contentId, onSuccess, pageContentId);
+                widgets.openEditHtmlContentWidgetDialog(contentId, onSave, pageContentId);
             }
         }
 

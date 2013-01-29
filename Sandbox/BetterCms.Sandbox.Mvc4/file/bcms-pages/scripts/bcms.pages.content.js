@@ -98,7 +98,7 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                         },
 
                         postSuccess: function (json) {                            
-                            if (json.Data.DesirableStatus === bcms.contentStatus.preview) {
+                            if (json.Data.DesirableStatus == bcms.contentStatus.preview) {
                                 try {
                                     var result = json.Data;
                                     $(selectors.contentId).val(result.ContentId);
@@ -429,7 +429,7 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                         },
 
                         postSuccess: function (json) {
-                            if (json.Data.DesirableStatus === bcms.contentStatus.preview) {
+                            if (json.Data.DesirableStatus == bcms.contentStatus.preview) {
                                 try {                                    
                                     preview.previewPageContent(bcms.pageId, json.Data.PageContentId);
                                 } finally {

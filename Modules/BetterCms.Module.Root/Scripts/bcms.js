@@ -27,9 +27,9 @@ define('bcms', ['jquery', 'knockout'], function ($, ko) {
         eventListeners = {},
 
         contentStatus = {
-             published: 'Published',
-             draft: 'Draft',
-             preview: 'Preview'
+             published: 3,
+             draft: 2,
+             preview: 1
          },
     
         errorTrace = !!true;

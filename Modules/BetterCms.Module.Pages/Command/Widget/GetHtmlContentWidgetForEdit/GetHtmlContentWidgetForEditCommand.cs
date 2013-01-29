@@ -47,6 +47,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
             if (widgetId != null)
             {
                 var htmlContentWidget = contentService.GetContentForEdit(widgetId.Value) as HtmlContentWidget;
+                
                 if (htmlContentWidget != null)
                 {
                     model = new EditHtmlContentWidgetViewModel {

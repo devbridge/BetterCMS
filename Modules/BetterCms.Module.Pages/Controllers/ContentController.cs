@@ -135,7 +135,7 @@ namespace BetterCms.Module.Pages.Controllers
                                            ContentId = result.ContentId,
                                            RegionId = result.RegionId,
                                            PageId = result.PageId,
-                                           DesirableStatus = model.DesirableStatus.ToString()
+                                           DesirableStatus = model.DesirableStatus
                                        }
                         });
             }

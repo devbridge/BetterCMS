@@ -11,7 +11,7 @@
 <div class="bcms-scroll-window">
     <div class="bcms-padded-content">
         @Html.MessagesBox("bcms-advanced-content-messages")           
-        @using (Html.BeginForm<WidgetsController>(c => c.EditHtmlContentWidget((HtmlContentWidgetViewModel)null), FormMethod.Post, new { @id = "bcms-advanced-content-form", @class = "bcms-ajax-form" }))
+        @using (Html.BeginForm<WidgetsController>(c => c.EditHtmlContentWidget((EditHtmlContentWidgetViewModel)null), FormMethod.Post, new { @id = "bcms-advanced-content-form", @class = "bcms-ajax-form" }))
         {
             <div class="bcms-input-list-holder">
                 @Html.Tooltip(PagesGlobalization.HtmlContentWidget_ContentName_Tooltip_Title, PagesGlobalization.HtmlContentWidget_ContentName_Tooltip_Description)
@@ -58,6 +58,7 @@
             @Html.HiddenFor(model => model.Id, new { @id = "bcmsContentId" })
             @Html.HiddenFor(model => model.Version)
             @Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status"})
+            @Html.HiddenFor(modal => modal.PreviewOnPageContentId, new { @class = "bcms-preview-page-content-id" })
             @Html.HiddenSubmit()
         }
     </div>

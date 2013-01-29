@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.DataAccess;
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Models;
 using BetterCms.Core.Services;
@@ -24,8 +25,11 @@ namespace BetterCms.Module.Root.Services
         /// </summary>
         private readonly IRepository repository;
 
-        public DefaultContentService(ISecurityService securityService, IRepository repository)
+        private readonly IUnitOfWork unitOfWork;
+
+        public DefaultContentService(ISecurityService securityService, IRepository repository, IUnitOfWork unitOfWork)
         {
+            this.unitOfWork = unitOfWork;
             this.securityService = securityService;
             this.repository = repository;
         }
@@ -41,7 +45,6 @@ namespace BetterCms.Module.Root.Services
             {
                 throw new CmsException(string.Format("Can't switch a content to the Archived state directly."));
             }
-
 
             if (updatedContent.Id == default(Guid))
             {
@@ -61,7 +64,9 @@ namespace BetterCms.Module.Root.Services
             var originalContent =
                 repository.AsQueryable<Models.Content>()
                           .Fetch(f => f.Original).ThenFetchMany(f => f.History)
+                          .Fetch(f => f.Original).ThenFetchMany(f => f.ContentOptions)
                           .FetchMany(f => f.History)
+                          .FetchMany(f => f.ContentOptions)                          
                           .Where(f => f.Id == updatedContent.Id && !f.IsDeleted)
                           .ToList()
                           .FirstOrDefault();
@@ -116,6 +121,8 @@ namespace BetterCms.Module.Root.Services
                     contentVersionOfRequestedStatus = originalContent.Clone();
                 }
 
+                RemoveContentOptionsIfExists(contentVersionOfRequestedStatus);
+              
                 updatedContent.CopyDataTo(contentVersionOfRequestedStatus);
                 contentVersionOfRequestedStatus.Original = originalContent;
                 contentVersionOfRequestedStatus.Status = requestedStatus;
@@ -131,6 +138,7 @@ namespace BetterCms.Module.Root.Services
                 originalContent.History.Add(originalToArchive);
                 repository.Save(originalToArchive);
 
+                RemoveContentOptionsIfExists(originalContent);
                 updatedContent.CopyDataTo(originalContent);
                 originalContent.Status = requestedStatus;
                 originalContent.PublishedOn = DateTime.Now;
@@ -175,6 +183,7 @@ namespace BetterCms.Module.Root.Services
                     }
                 }
 
+                RemoveContentOptionsIfExists(previewOrDraftContentVersion);
                 updatedContent.CopyDataTo(previewOrDraftContentVersion);                
                 previewOrDraftContentVersion.Status = requestedStatus;
                 repository.Save(previewOrDraftContentVersion); 
@@ -189,21 +198,14 @@ namespace BetterCms.Module.Root.Services
                     originalToArchive.Original = originalContent;
                     originalContent.History.Add(originalToArchive);
                     repository.Save(originalToArchive);
+                }
 
-                    updatedContent.CopyDataTo(originalContent);
-                    originalContent.Status = requestedStatus;
-                    originalContent.PublishedOn = DateTime.Now;
-                    originalContent.PublishedByUser = securityService.CurrentPrincipalName;
-                    repository.Save(originalContent);
-                }
-                else
-                {
-                    updatedContent.CopyDataTo(originalContent);
-                    originalContent.Status = requestedStatus;
-                    originalContent.PublishedOn = DateTime.Now;
-                    originalContent.PublishedByUser = securityService.CurrentPrincipalName;
-                    repository.Save(originalContent);
-                }
+                RemoveContentOptionsIfExists(originalContent);
+                updatedContent.CopyDataTo(originalContent);
+                originalContent.Status = requestedStatus;
+                originalContent.PublishedOn = DateTime.Now;
+                originalContent.PublishedByUser = securityService.CurrentPrincipalName;
+                repository.Save(originalContent);
             }
         }
 
@@ -290,6 +292,21 @@ namespace BetterCms.Module.Root.Services
             }
 
             return contentForEdit;
+        }
+
+        private void RemoveContentOptionsIfExists(Models.Content content)
+        {
+            if (content.ContentOptions != null)
+            {
+                List<ContentOption> options = content.ContentOptions.Where(f => !f.IsDeleted).ToList();
+
+                foreach (var contentOption in options)
+                {
+                    repository.Delete(contentOption);
+                    content.ContentOptions.Remove(contentOption);                   
+                    unitOfWork.Session.Flush();
+                }
+            }
         }
     }
 }

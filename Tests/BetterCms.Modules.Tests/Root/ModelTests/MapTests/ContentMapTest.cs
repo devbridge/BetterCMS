@@ -1,4 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+
+using BetterCms.Module.Root.Models;
+
+using NHibernate.Linq;
 
 using NUnit.Framework;
 
@@ -52,6 +57,37 @@ namespace BetterCms.Test.Module.Root.ModelTests.MapTests
                         Assert.AreEqual(content, result);
                         Assert.AreEqual(contentOptions.OrderBy(f => f.Id), result.ContentOptions.OrderBy(f => f.Id));
                     });
+        }
+
+        [Test]
+        public void Should_Remove_ContentOptions_From_Content()
+        {
+            var content = TestDataProvider.CreateNewContent();
+            var contentOptions = new[]
+                {
+                    TestDataProvider.CreateNewContentOption(content),
+                    TestDataProvider.CreateNewContentOption(content)
+                };
+
+            content.ContentOptions = contentOptions;
+
+            RunActionInTransaction(
+                session =>
+                {
+                    session.SaveOrUpdate(content);
+                    session.Flush();
+                    Guid contentId = content.Id;
+                    session.Clear();
+
+                    session.Delete(content.ContentOptions[0]);
+                    session.Flush();
+                    session.Clear();
+
+                    var dbContent = session.Query<Content>().FetchMany(f => f.ContentOptions).FirstOrDefault(f => f.Id == contentId);
+                    Assert.IsNotNull(dbContent);
+                    Assert.AreEqual(content, dbContent);
+                    Assert.AreEqual(1, dbContent.ContentOptions.Count);
+                });
         }
     }
 }

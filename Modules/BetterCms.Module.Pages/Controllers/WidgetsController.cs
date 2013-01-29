@@ -88,7 +88,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// Json with result status.
         /// </returns>
         [HttpPost]
-        public ActionResult EditHtmlContentWidget(HtmlContentWidgetViewModel model)
+        public ActionResult EditHtmlContentWidget(EditHtmlContentWidgetViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -145,7 +145,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// Json with result status.
         /// </returns>
         [HttpPost]
-        public ActionResult EditServerControlWidget(ServerControlWidgetViewModel model)
+        public ActionResult EditServerControlWidget(EditServerControlWidgetViewModel model)
         {
             if (ModelState.IsValid)
             {

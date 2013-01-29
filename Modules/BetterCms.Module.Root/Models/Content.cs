@@ -40,7 +40,26 @@ namespace BetterCms.Module.Root.Models
             content.PublishedByUser = PublishedByUser;
             content.Status = Status;
             content.Original = Original;
-            content.ContentOptions = ContentOptions != null ? ContentOptions.Select(f => f.Clone()).ToList() : null;
+
+            if (ContentOptions != null)
+            {
+                if (content.ContentOptions == null)
+                {
+                    content.ContentOptions = new List<ContentOption>();
+                }
+
+                foreach (var contentOption in ContentOptions)
+                {
+                    content.ContentOptions.Add(
+                        new ContentOption
+                            {
+                                Type = contentOption.Type,
+                                Key = contentOption.Key,
+                                DefaultValue = contentOption.DefaultValue,
+                                Content = content
+                            });
+                }
+            }
 
             return content;
         }

@@ -249,10 +249,6 @@
     <EmbeddedResource Include="Scripts\bcms.content.js" />
     <EmbeddedResource Include="Scripts\bcms.forms.js" />
     <EmbeddedResource Include="Scripts\bcms.sidemenu.js" />
-    <None Include="Scripts\jquery-1.7.2.intellisense.js">
-      <DependentUpon>jquery-1.7.2.js</DependentUpon>
-    </None>
-    <EmbeddedResource Include="Scripts\jquery-1.7.2.js" />
     <EmbeddedResource Include="Content\Styles\images\icn-sidebg.png" />
     <EmbeddedResource Include="Content\Styles\images\sprite-base-1.png" />
     <EmbeddedResource Include="Content\Styles\images\sprite-base-2.png" />
@@ -496,9 +492,6 @@
     <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\close.png" />
     <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\mini.png" />
     <EmbeddedResource Include="Scripts\ckeditor\styles.js" />
-    <Content Include="Scripts\jquery-1.7.2.min.js">
-      <DependentUpon>jquery-1.7.2.js</DependentUpon>
-    </Content>
     <EmbeddedResource Include="Scripts\jquery-ui.min.js" />
     <EmbeddedResource Include="Scripts\Libs\knockout-2.1.0.js" />
     <EmbeddedResource Include="Scripts\popup.js" />

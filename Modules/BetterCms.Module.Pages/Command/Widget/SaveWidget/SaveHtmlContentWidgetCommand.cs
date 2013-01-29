@@ -9,7 +9,7 @@ using BetterCms.Module.Root.Services;
 
 namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
 {
-    public class SaveHtmlContentWidgetCommand : SaveWidgetCommandBase<HtmlContentWidgetViewModel>
+    public class SaveHtmlContentWidgetCommand : SaveWidgetCommandBase<EditHtmlContentWidgetViewModel>
     {
         public virtual IContentService ContentService { get; set; }
 
@@ -19,11 +19,13 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
         /// <param name="request">The request.</param>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public override SaveWidgetResponse Execute(HtmlContentWidgetViewModel request)
+        public override SaveWidgetResponse Execute(EditHtmlContentWidgetViewModel request)
         {
             UnitOfWork.BeginTransaction();
+
             HtmlContentWidget content = (HtmlContentWidget)ContentService.SaveContentWithStatusUpdate(GetHtmlContentWidgetFromRequest(request), request.DesirableStatus);
             Repository.Save(content);
+
             UnitOfWork.Commit();
 
             return new SaveWidgetResponse
@@ -34,7 +36,9 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
                         Version = content.Version,
                         WidgetType = WidgetType.HtmlContent.ToString(),
                         IsPublished = content.Status == ContentStatus.Published,
-                        HasDraft = content.Status == ContentStatus.Draft || content.History != null && content.History.Any(f => f.Status == ContentStatus.Draft)
+                        HasDraft = content.Status == ContentStatus.Draft || content.History != null && content.History.Any(f => f.Status == ContentStatus.Draft),
+                        DesirableStatus = request.DesirableStatus,
+                        PreviewOnPageContentId = request.PreviewOnPageContentId
                     };
         }
 

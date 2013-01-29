@@ -16,9 +16,9 @@ namespace BetterCms.Module.Root.Models.Maps
             Map(x => x.PublishedOn).Nullable();
 
             References(x => x.Original).Cascade.SaveUpdate().LazyLoad();
-           
-            HasMany(x => x.PageContents).Inverse().Cascade.SaveUpdate().LazyLoad().Where("IsDeleted = 0");
+
             HasMany(x => x.ContentOptions).Inverse().Cascade.SaveUpdate().LazyLoad().Where("IsDeleted = 0");
+            HasMany(x => x.PageContents).Inverse().Cascade.SaveUpdate().LazyLoad().Where("IsDeleted = 0");
             HasMany(x => x.History).KeyColumn("OriginalId").Cascade.None().LazyLoad().Where("IsDeleted = 0");
         }
     }
