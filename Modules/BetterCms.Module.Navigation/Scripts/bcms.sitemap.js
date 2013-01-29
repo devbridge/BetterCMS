@@ -14,6 +14,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             },
             links = {
                 loadSiteSettingsSitemapUrl: null,
+                saveSitemapUrl: null,
                 saveSitemapNodeUrl: null,
                 deleteSitemapNodeUrl: null,
                 sitemapEditDialogUrl: null,
@@ -71,10 +72,10 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                     });
                 },
                 onAccept: function() {
-                    addNodeController.save();
-                },
-                onClose: function () {
-                    sitemap.loadSiteSettingsSitemap();
+                    addNodeController.save(function(json) {
+                        sitemap.loadSiteSettingsSitemap();
+                        sitemap.showMessage(json);
+                    });
                 }
             });
         };
@@ -199,9 +200,9 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                     }
                 }
             };
-            self.save = function () {
+            self.save = function (onDoneCallback) {
                 if (sitemap.activeMapModel) {
-                    sitemap.activeMapModel.save();
+                    sitemap.activeMapModel.save(onDoneCallback);
                 }
             };
         }
@@ -258,9 +259,9 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                     }
                 }
             };
-            self.save = function () {
+            self.save = function (onDoneCallback) {
                 if (sitemap.activeMapModel) {
-                    sitemap.activeMapModel.save();
+                    sitemap.activeMapModel.save(onDoneCallback);
                 }
             };
         }
@@ -538,15 +539,33 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 }
             };
 
-            self.save = function () {
-                sitemap.showLoading(true);
-                alert("Implement sitemap saving!");
-                // TODO: convert sitemap to JSON.
-                // TODO: post JSON to server.
-                // TODO: Unlock screen.
+            self.save = function (onDoneCallback) {
+                var dataToSend = JSON.stringify(self.composeJsonNodes()),
+                    onSaveCompleted = function (json) {
+                        sitemap.showLoading(false);
+                        if (onDoneCallback && $.isFunction(onDoneCallback)) {
+                            onDoneCallback(json);
+                        }
+                    };
+
+                $.ajax({
+                    url: links.saveSitemapUrl,
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    cache: false,
+                    data: dataToSend,
+                    beforeSend: function () { sitemap.showLoading(true); }
+                })
+                    .done(function (json) {
+                        onSaveCompleted(json);
+                    })
+                    .fail(function (response) {
+                        onSaveCompleted(bcms.parseFailedResponse(response));
+                    });
             };
 
-            // Parse.
+            // Parsing / composing.
             self.parseJsonNodes = function (jsonNodes) {
                 var nodes = [];
                 for (var i = 0; i < jsonNodes.length; i++) {
@@ -557,6 +576,26 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                     nodes.push(node);
                 }
                 self.childNodes(nodes);
+            };
+            self.composeJsonNodes = function () {
+                return self.nodesToJson(self.childNodes());
+            };
+            self.nodesToJson = function(nodes) {
+                var result = [];
+                for (var i in nodes) {
+                    var node = nodes[i];
+                    result.push({
+                            Id: node.id(),
+                            Version: node.version(),
+                            Title: node.title(),
+                            Url: node.url(),
+                            DisplayOrder: node.displayOrder(),
+                            IsDeleted: node.isDeleted(),
+                            ChildNodes: self.nodesToJson(node.childNodes()),
+                        }
+                    );
+                }
+                return result;
             };
         }
         

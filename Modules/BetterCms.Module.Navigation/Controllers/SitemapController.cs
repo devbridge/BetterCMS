@@ -1,8 +1,11 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 using BetterCms.Module.Navigation.Command.Sitemap.DeleteSitemapNode;
 using BetterCms.Module.Navigation.Command.Sitemap.GetPageLinks;
 using BetterCms.Module.Navigation.Command.Sitemap.GetSitemap;
+using BetterCms.Module.Navigation.Command.Sitemap.SaveSitemap;
 using BetterCms.Module.Navigation.Command.Sitemap.SaveSitemapNode;
 using BetterCms.Module.Navigation.Content.Resources;
 using BetterCms.Module.Navigation.ViewModels.Sitemap;
@@ -51,6 +54,22 @@ namespace BetterCms.Module.Navigation.Controllers
             }
 
             return ComboWireJson(success, view, data, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Saves the sitemap.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns>Action result.</returns>
+        [HttpPost]
+        public ActionResult SaveSitemap(List<SitemapNodeViewModel> model)
+        {
+            if (ModelState.IsValid)
+            {
+                GetCommand<SaveSitemapCommand>().Execute(model);
+                Messages.AddSuccess("URAAAAAAAAAAAAAAAA!!!!!");
+            }
+            return Json(new WireJson { Success = true });
         }
 
         /// <summary>

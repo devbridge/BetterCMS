@@ -118,6 +118,7 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Command\Sitemap\SaveSitemap\SaveSitemapCommand.cs" />
     <Compile Include="Command\Sitemap\DeleteSitemapNode\DeleteSitemapNodeCommand.cs" />
     <Compile Include="Command\Sitemap\GetPageLinks\GetPageLinksCommand.cs" />
     <Compile Include="Command\Sitemap\GetSitemap\GetSitemapCommand.cs" />
