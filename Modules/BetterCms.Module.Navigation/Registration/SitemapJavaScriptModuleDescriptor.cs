@@ -31,10 +31,8 @@ namespace BetterCms.Module.Navigation.Registration
             Globalization = new IActionProjection[]
                 {
                     new JavaScriptModuleGlobalization(this, "sitemapEditorDialogTitle", () => NavigationGlobalization.Sitemap_EditorDialog_Title),
-                    new JavaScriptModuleGlobalization(this, "sitemapEditorDialogClose", () => RootGlobalization.Button_Close),
                     new JavaScriptModuleGlobalization(this, "sitemapEditorDialogCustomLinkTitle", () => NavigationGlobalization.Sitemap_EditorDialog_CustomLinkTitle),
                     new JavaScriptModuleGlobalization(this, "sitemapAddNewPageDialogTitle", () => NavigationGlobalization.Sitemap_AddNewPageDialog_Title),
-                    new JavaScriptModuleGlobalization(this, "sitemapAddNewPageDialogClose", () => RootGlobalization.Button_Close),
                     new JavaScriptModuleGlobalization(this, "sitemapDeleteNodeConfirmationMessage", () => NavigationGlobalization.Sitemap_DeleteNode_Confirmation_Message),
                     new JavaScriptModuleGlobalization(this, "sitemapNodeSaveButton", () => RootGlobalization.Button_Save),
                     new JavaScriptModuleGlobalization(this, "sitemapNodeOkButton", () => RootGlobalization.Button_Ok)

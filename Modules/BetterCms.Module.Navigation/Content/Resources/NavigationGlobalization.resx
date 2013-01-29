@@ -195,4 +195,7 @@
   <data name="Sitemap_DeleteNode_Confirmation_Message" xml:space="preserve">
     <value>Are you sure you want to delete node "{0}"?</value>
   </data>
+  <data name="Sitemap_NodeEdit_PlaceLinkHere" xml:space="preserve">
+    <value>Place your page link here.</value>
+  </data>
 </root>

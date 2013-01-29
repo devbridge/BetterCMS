@@ -21,10 +21,8 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             },
             globalization = {
                 sitemapEditorDialogTitle: null,
-                sitemapEditorDialogClose: null,
                 sitemapEditorDialogCustomLinkTitle: null,
                 sitemapAddNewPageDialogTitle: null,
-                sitemapAddNewPageDialogClose: null,
                 sitemapDeleteNodeConfirmationMessage: null,
                 sitemapNodeSaveButton: null,
                 sitemapNodeOkButton: null,
@@ -65,14 +63,15 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             var addNodeController = new AddNodeMapController();
             modal.open({
                 title: globalization.sitemapEditorDialogTitle,
-                cancelTitle: globalization.sitemapEditorDialogClose,
-                disableAccept: true,
                 onLoad: function (dialog) {
                     dynamicContent.setContentFromUrl(dialog, links.sitemapEditDialogUrl, {
                         done: function (content) {
                             addNodeController.initialize(content, dialog);
                         },
                     });
+                },
+                onAccept: function() {
+                    addNodeController.save();
                 },
                 onClose: function () {
                     sitemap.loadSiteSettingsSitemap();
@@ -88,8 +87,6 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 var addPageController = new AddNewPageMapController(data.Data.Title, data.Data.PageUrl);
                 modal.open({
                     title: globalization.sitemapAddNewPageDialogTitle,
-                    cancelTitle: globalization.sitemapAddNewPageDialogClose,
-                    disableAccept: true,
                     onLoad: function (dialog) {
                         dynamicContent.setContentFromUrl(dialog, links.sitemapAddNewPageDialogUrl, {
                             done: function (content) {
@@ -97,7 +94,10 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                             }
                         });
                     },
-                    onClose: function() {
+                    onAccept: function () {
+                        addPageController.save();
+                    },
+                    onClose: function () {
                     if (data.Callback && $.isFunction(data.Callback)) {
                         data.Callback(data);
                     }
@@ -199,6 +199,11 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                     }
                 }
             };
+            self.save = function () {
+                if (sitemap.activeMapModel) {
+                    sitemap.activeMapModel.save();
+                }
+            };
         }
         
         /**
@@ -251,6 +256,11 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                             $.validator.unobtrusive.parse(form);
                         }
                     }
+                }
+            };
+            self.save = function () {
+                if (sitemap.activeMapModel) {
+                    sitemap.activeMapModel.save();
                 }
             };
         }
@@ -489,6 +499,16 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 }
             };
             
+            self.hasChildNodes = function () {
+                // Has at least one not deleted child node.
+                for (var i in self.childNodes()) {
+                    if (!self.childNodes()[i].isDeleted()) {
+                        return true;
+                    }
+                }
+                return false;
+            };
+            
             // Updating display order and parent node info.
             self.updateNodesOrderAndParent = function () {
                 self.updateNodes(self.childNodes(), self);
@@ -518,23 +538,9 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 }
             };
 
-            self.forEachNode = function (callback, nodes) {
-                if (callback && $.isFunction(callback)) {
-                    if (nodes == null) {
-                        nodes = self.childNodes();
-                    }
-                    
-                    for (var i in nodes) {
-                        if (callback && $.isFunction(callback)) {
-                            callback(nodes[i]);
-                        }
-                        self.forEachNode(callback, nodes[i].childNodes());
-                    }
-                }
-            };
-
             self.save = function () {
-                // TODO: Lock screen.
+                sitemap.showLoading(true);
+                alert("Implement sitemap saving!");
                 // TODO: convert sitemap to JSON.
                 // TODO: post JSON to server.
                 // TODO: Unlock screen.
@@ -566,6 +572,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             self.title = ko.observable();
             self.url = ko.observable();
             self.displayOrder = ko.observable(0);
+            self.isDeleted = ko.observable(false);
             self.childNodes = ko.observableArray([]);
             self.parentNode = null;
             
@@ -579,7 +586,13 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             self.activeZone = ko.observable(DropZoneTypes.None);
             self.isFirstNode = ko.observable(false);
             self.hasChildNodes = function () {
-                return self.childNodes().length > 0;
+                // Has at least one not deleted child node.
+                for (var i in self.childNodes()) {
+                    if (!self.childNodes()[i].isDeleted()) {
+                        return true;
+                    }
+                }
+                return false;
             };
             self.containerId = function () {
                 // User for validation.
@@ -655,7 +668,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                         content: message,
                         onAccept: function () {
                             if (self.getSitemap() == null || !self.getSitemap().settings.nodeSaveAfterUpdate) {
-                                self.parentNode.childNodes.remove(self);
+                                self.isDeleted(true);
                                 confirmDialog.close();
                                 return false;
                             }
@@ -665,6 +678,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                                     sitemap.showMessage(json);
                                     try {
                                         if (json.Success) {
+                                            self.isDeleted(true);
                                             self.parentNode.childNodes.remove(self);
                                         }
                                         sitemap.showLoading(false);

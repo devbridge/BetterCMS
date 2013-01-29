@@ -250,6 +250,15 @@ namespace BetterCms.Module.Navigation.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Place your page link here..
+        /// </summary>
+        public static string Sitemap_NodeEdit_PlaceLinkHere {
+            get {
+                return ResourceManager.GetString("Sitemap_NodeEdit_PlaceLinkHere", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter page title..
         /// </summary>
         public static string Sitemap_NodeEdit_Title_Tooltip_Message {
