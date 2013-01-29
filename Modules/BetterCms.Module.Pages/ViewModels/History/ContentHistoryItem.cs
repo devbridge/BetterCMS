@@ -13,8 +13,6 @@ namespace BetterCms.Module.Pages.ViewModels.History
 
         public DateTime? CreatedOn { get; set; }
 
-        public string CreatedByUser { get; set; }
-
         public DateTime? PublishedOn { get; set; }
 
         public string PublishedByUser { get; set; }

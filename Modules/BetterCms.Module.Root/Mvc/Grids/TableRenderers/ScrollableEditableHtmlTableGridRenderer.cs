@@ -12,7 +12,7 @@
         {
             RenderText("<tbody>");
             RenderText("<tr>");
-            RenderText(string.Format("<td colspan=\"{0}\" class=\"{1}\" style=\"border:0;\">", GridModel.Columns.Count, InternalTableCssClass));
+            RenderText(string.Format("<td colspan=\"{0}\" class=\"{1}\" style=\"border:0; padding: 0;\">", GridModel.Columns.Count, InternalTableCssClass));
             RenderText("<div class=\"bcms-scroll-tbody\">");
             RenderGridStart();
             base.RenderBodyStart();

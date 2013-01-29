@@ -48,7 +48,6 @@ namespace BetterCms.Module.Pages.Command.History.GetContentHistory
             var searchQuery = (request.SearchQuery ?? string.Empty).ToLower();
 
             var history = new List<ContentHistoryItem>();
-            request.SetDefaultSortingOptions("CreatedOn", true);
 
             var contentFutureQuery = Repository
                 .AsQueryable<Root.Models.Content>()
@@ -91,7 +90,14 @@ namespace BetterCms.Module.Pages.Command.History.GetContentHistory
                 history.AddRange(content.History.Where(c => IsValidHistoricalContent(c) && ContainsSearchQuery(c, searchQuery)).Select(Convert));
             }
 
-            history = history.AsQueryable().AddSortingAndPaging(request).ToList();
+            if (string.IsNullOrWhiteSpace(request.Column))
+            {
+                history = history.AsQueryable().OrderBy(o => o.Status).ThenByDescending(o => o.CreatedOn).AddPaging(request).ToList();
+            }
+            else
+            {
+                history = history.AsQueryable().AddSortingAndPaging(request).ToList();
+            }
 
             return new ContentHistoryViewModel(history, request, history.Count, request.ContentId);
         }
@@ -129,7 +135,6 @@ namespace BetterCms.Module.Pages.Command.History.GetContentHistory
                                    : (TimeSpan?)null,
                            PublishedByUser = content.Status == ContentStatus.Published ? content.PublishedByUser : null,
                            PublishedOn = content.Status == ContentStatus.Published ? content.PublishedOn : null,
-                           CreatedByUser = content.CreatedByUser,
                            CreatedOn = content.CreatedOn
                        };
         }

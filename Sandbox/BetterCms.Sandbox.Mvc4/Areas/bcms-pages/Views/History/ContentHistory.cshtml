@@ -63,41 +63,37 @@
             .Encode(false)
             .Named(string.Empty)
             .Sortable(false)
-            .HeaderAttributes(@style => "width: 50px;  padding: 10px;", @class => "bcms-tables-nohover");
+            .HeaderAttributes(@style => "width: 20px; padding: 10px;", @class => "bcms-tables-nohover");
 
         column.For(m => m.CreatedOn.ToFormattedDateString())
                .Named(PagesGlobalization.ContentHistory_Column_CreatedOn)
                .SortColumnName("CreatedOn")
-               .HeaderAttributes(@style => "width: 90px;")
-               .Attributes(@style => "width: 90px;");
-
-        column.For(m => m.CreatedByUser)
-               .Named(PagesGlobalization.ContentHistory_Column_CreatedByUser)
-               .SortColumnName("CreatedByUser");
+               .HeaderAttributes(@style => "width: 100px;")
+               .Attributes(@style => "width: 100px;");
         
         column.For(m => m.PublishedOn.ToFormattedDateString())
                .Named(PagesGlobalization.ContentHistory_Column_PublishedOn)
                .SortColumnName("PublishedOn")
-               .HeaderAttributes(@style => "width: 90px;")
-               .Attributes(@style => "width: 90px;");
+               .HeaderAttributes(@style => "width: 95px;")
+               .Attributes(@style => "width: 100px;");
 
         column.For(m => m.PublishedByUser)
                .Named(PagesGlobalization.ContentHistory_Column_PublishedByUser)
                .SortColumnName("PublishedByUser")
-               .HeaderAttributes(@style => "width: 120px;")
-               .Attributes(@style => "width: 120px;");
+               .HeaderAttributes(@style => "width: 100px;")
+               .Attributes(@style => "width: 100px;");
 
         column.For(m => m.ArchivedOn.ToFormattedDateString())
                .Named(PagesGlobalization.ContentHistory_Column_ArchivedOn)
                .SortColumnName("ArchivedOn")
-               .HeaderAttributes(@style => "width: 90px;")
-               .Attributes(@style => "width: 90px;");
+               .HeaderAttributes(@style => "width: 100px;")
+               .Attributes(@style => "width: 100px;");
 
         column.For(m => m.DisplayedFor.ToFormatedTimeString())
                .Named(PagesGlobalization.ContentHistory_Column_DisplayedFor)
                .SortColumnName("DisplayedFor")
-               .HeaderAttributes(@style => "width: 90px;")
-               .Attributes(@style => "width: 90px;");
+               .HeaderAttributes(@style => "width: 105px;")
+               .Attributes(@style => "width: 105px;");
 
         column.For(m => DisplayStatus(m.StatusName, m.Status))
                .Named(PagesGlobalization.ContentHistory_Column_Status)
@@ -110,11 +106,14 @@
             .Encode(false)
             .Named(string.Empty)
             .Sortable(false)
-            .HeaderAttributes(@style => "width: 125px;", @class => "bcms-tables-nohover");            
+            .HeaderAttributes(@style => "width: 167px;", @class => "bcms-tables-nohover")
+            .Attributes(@style => "width: 144px;");            
     };
 }
       
 <div class="bcms-scroll-window">
+    @Html.MessagesBox("bcms-content-history-messages")
+
     <div class="bcms-history-preview-holder">
         <div class="bcms-history-preview">
             <div class="bcms-history-info" style="display: block;">@PagesGlobalization.ContentHistory_SelectVersionToPreviewMessage</div>
@@ -137,12 +136,11 @@
                     <div class="bcms-btn-search" id="bcms-pagecontenthistory-search-btn">@RootGlobalization.Button_Search</div>
                 </div>
             </div>                        
-            @Html.MessagesBox("bcms-content-history-messages")
             @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new ScrollableEditableHtmlTableGridRenderer<ContentHistoryItem>()
                                                                                                                                  {
-                                                                                                                                     InternalTableCssClass = "bcms-history-table"
+                                                                                                                                     InternalTableCssClass = "bcms-history-cell"
                                                                                                                                  
-                                                                                                                                })
+                                                                                                                                 })
             @Html.HiddenSubmit()
         }    
     </div>
