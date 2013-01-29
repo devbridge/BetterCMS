@@ -133,6 +133,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                     sitemapModel.settings.canEditNode = true;
                     sitemapModel.settings.canDeleteNode = true;
                     sitemapModel.settings.canDragNode = false;
+                    sitemapModel.settings.canDropNode = false;
                     sitemapModel.settings.nodeSaveButtonTitle = globalization.sitemapNodeSaveButton;
                     sitemapModel.settings.nodeSaveAfterUpdate = true;
 
@@ -179,6 +180,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                     sitemapModel.settings.canEditNode = true;
                     sitemapModel.settings.canDeleteNode = true;
                     sitemapModel.settings.canDragNode = true;
+                    sitemapModel.settings.canDropNode = true;
                     sitemapModel.settings.nodeSaveButtonTitle = globalization.sitemapNodeOkButton;
                     sitemapModel.settings.nodeSaveAfterUpdate = false;
 
@@ -232,6 +234,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                     sitemapModel.settings.canEditNode = false;
                     sitemapModel.settings.canDeleteNode = false;
                     sitemapModel.settings.canDragNode = false;
+                    sitemapModel.settings.canDropNode = true;
                     sitemapModel.settings.nodeSaveButtonTitle = globalization.sitemapNodeSaveButton;
                     sitemapModel.settings.nodeSaveAfterUpdate = false;
 
@@ -390,7 +393,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                                 $(ui.draggable).data('draggable', forFix);
                             }
                         };
-                    if (dropZoneObject.getSitemap && !dropZoneObject.getSitemap().settings.canDragNode) {
+                    if (dropZoneObject.getSitemap && !dropZoneObject.getSitemap().settings.canDropNode) {
                         return;
                     }
                     $(element).droppable(setup);
@@ -462,6 +465,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 canEditNode: false,
                 canDeleteNode: false,
                 canDragNode: false,
+                canDropNode: false,
                 nodeSaveButtonTitle: globalization.sitemapNodeOkButton,
                 nodeSaveAfterUpdate: false,
             };
