@@ -610,6 +610,24 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Destroy.
+        /// </summary>
+        public static string ContentHistory_Destroy_AcceptButtonTitle {
+            get {
+                return ResourceManager.GetString("ContentHistory_Destroy_AcceptButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to destroy draft version?.
+        /// </summary>
+        public static string ContentHistory_DestroyDraft_ConfirmationMessage {
+            get {
+                return ResourceManager.GetString("ContentHistory_DestroyDraft_ConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to History - Content Versions.
         /// </summary>
         public static string ContentHistory_DialogTitle {

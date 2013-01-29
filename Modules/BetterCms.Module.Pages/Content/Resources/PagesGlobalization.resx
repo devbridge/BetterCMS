@@ -1089,4 +1089,10 @@
   <data name="EditPageContent_Messages_DraftStatusWarnMessage_Destroy" xml:space="preserve">
     <value>You can &lt;a href='#' class='bcms-messages-draft-destroy'&gt;destroy&lt;/a&gt; draft and edit version that is currently published.</value>
   </data>
+  <data name="ContentHistory_DestroyDraft_ConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to destroy draft version?</value>
+  </data>
+  <data name="ContentHistory_Destroy_AcceptButtonTitle" xml:space="preserve">
+    <value>Destroy</value>
+  </data>
 </root>

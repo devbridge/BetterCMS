@@ -9,6 +9,7 @@ using BetterCms.Module.Pages.ViewModels.Widgets;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
+using NHibernate;
 using NHibernate.Criterion;
 using NHibernate.SqlCommand;
 using NHibernate.Transform;
@@ -68,8 +69,8 @@ namespace BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit
                          .Select(() => widget.Status).WithAlias(() => modelAlias.CurrentStatus)
 
                          .Select(Projections.Conditional(Restrictions.Where(() => widget.Original != null), 
-                                 Projections.Constant(true),
-                                 Projections.Constant(false))).WithAlias(() => modelAlias.HasPublishedContent)
+                                 Projections.Constant(true, NHibernateUtil.Boolean),
+                                 Projections.Constant(false, NHibernateUtil.Boolean))).WithAlias(() => modelAlias.HasPublishedContent)
 
                          .Select(() => categoryAlias.Id).WithAlias(() => modelAlias.CategoryId))
                     .TransformUsing(Transformers.AliasToBean<EditServerControlWidgetViewModel>())

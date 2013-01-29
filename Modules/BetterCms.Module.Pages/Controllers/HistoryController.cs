@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 
+using BetterCms.Module.Pages.Command.History.DestroyContentDraft;
 using BetterCms.Module.Pages.Command.History.GetContentHistory;
 using BetterCms.Module.Pages.Command.History.GetContentVersion;
 using BetterCms.Module.Pages.Command.History.RestoreContentVersion;
@@ -39,6 +40,14 @@ namespace BetterCms.Module.Pages.Controllers
         public ActionResult RestorePageContentVersion(string id)
         {
             var result = GetCommand<RestoreContentVersionCommand>().ExecuteCommand(id.ToGuidOrDefault());
+
+            return WireJson(result);
+        }
+        
+        [HttpPost]
+        public ActionResult DestroyContentDraft(string id)
+        {
+            var result = GetCommand<DestroyContentDraftCommand>().ExecuteCommand(id.ToGuidOrDefault());
 
             return WireJson(result);
         }

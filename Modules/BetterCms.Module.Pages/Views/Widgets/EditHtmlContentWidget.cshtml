@@ -55,7 +55,7 @@
                 <div class="bcms-content-titles">@PagesGlobalization.HtmlContentWidget_CustomJS_Title</div>
                 @Html.TextAreaFor(model => model.CustomJS, new { @class = "bcms-editor-field-area", @style = "width: 820px;" })
             </div>            
-            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.Id, new { @id = "bcmsContentId" })
             @Html.HiddenFor(model => model.Version)
             @Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status"})
             @Html.HiddenSubmit()

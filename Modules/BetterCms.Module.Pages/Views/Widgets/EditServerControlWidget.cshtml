@@ -59,7 +59,7 @@
         <div id="bcms-tab-2" class="bcms-tab-single">
             @Html.Partial("Partial/EditContentOptions")
         </div>
-        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.Id, new { @id = "bcmsContentId" })
         @Html.HiddenFor(model => model.Version)
         @Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status"})
         @Html.HiddenSubmit()

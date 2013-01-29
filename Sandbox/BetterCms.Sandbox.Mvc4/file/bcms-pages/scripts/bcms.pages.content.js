@@ -16,6 +16,7 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                 desirableStatus: '#bcmsContentDesirableStatus',
                 dataPickers: '.bcms-datepicker',
                 htmlEditor: 'bcms-contenthtml',
+                destroyDraftVersionLink: '.bcms-messages-draft-destroy',
 
                 widgetsSearchButton: '#bcms-advanced-content-search-btn',
                 widgetsSearchInput: '#bcms-advanced-content-search',
@@ -187,6 +188,18 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
             dialog.container.find(selectors.dataPickers).initializeDatepicker();
             htmlEditor.initializeHtmlEditor(selectors.htmlEditor);
             pagesContent.initializeCustomTextArea(dialog);
+            
+            dialog.container.find(selectors.destroyDraftVersionLink).on('click', function () {
+                var contentId = dialog.container.find(selectors.contentId).val(),
+                    pageContentId = dialog.container.find(selectors.pageContentId).val();
+                
+                history.destroyDraftVersion(contentId, dialog.container, function () {
+                    dialog.close();
+                    pagesContent.editPageContent(pageContentId, function () {
+                        redirect.ReloadWithAlert();
+                    });
+                });
+            });
         };
 
          /**
@@ -402,9 +415,10 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
         /**
         * Opens dialog for editing page regular content  
         */
-        pagesContent.editPageContent = function (contentId) {
+        pagesContent.editPageContent = function (contentId, onCloseClick) {
             modal.edit({
                 title: globalization.editContentDialogTitle,
+                onCloseClick: onCloseClick,
                 onLoad: function (dialog) {
                     var url = $.format(links.editPageContentUrl, contentId);
                     dynamicContent.bindDialog(dialog, url, {
