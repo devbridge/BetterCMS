@@ -22,16 +22,15 @@ namespace BetterCms.Module.Pages.Registration
 
             Links = new IActionProjection[]
                 {
-                    new JavaScriptModuleLinkTo<HistoryController>(this, "loadPageContentHistoryDialogUrl", controller => controller.PageContentHistory("{0}", "{1}")),
-                    new JavaScriptModuleLinkTo<HistoryController>(this, "loadPageContentHistoryUrl", controller => controller.PageContentHistory(null)),
-                    new JavaScriptModuleLinkTo<HistoryController>(this, "loadPageContentVersionPreviewUrl", controller => controller.PageContentVersion("{0}")),
-                    new JavaScriptModuleLinkTo<HistoryController>(this, "restorePageContentVersionUrl", controller => controller.RestorePageContentVersion("{0}")),
+                    new JavaScriptModuleLinkTo<HistoryController>(this, "loadContentHistoryDialogUrl", controller => controller.ContentHistory("{0}")),
+                    new JavaScriptModuleLinkTo<HistoryController>(this, "loadContentVersionPreviewUrl", controller => controller.ContentVersion("{0}")),
+                    new JavaScriptModuleLinkTo<HistoryController>(this, "restoreContentVersionUrl", controller => controller.RestorePageContentVersion("{0}")),
                 };
 
             Globalization = new IActionProjection[]
                 {
-                     new JavaScriptModuleGlobalization(this, "pageContentHistoryDialogTitle", () => PagesGlobalization.PageContentHistory_DialogTitle),
-                     new JavaScriptModuleGlobalization(this, "pageContentVersionRestoryConfirmation", () => PagesGlobalization.PageContentVersion_Restore_ConfirmationMessage)
+                     new JavaScriptModuleGlobalization(this, "contentHistoryDialogTitle", () => PagesGlobalization.ContentHistory_DialogTitle),
+                     new JavaScriptModuleGlobalization(this, "contentVersionRestoryConfirmation", () => PagesGlobalization.ContentHistory_Restore_ConfirmationMessage)
                 };
         }
     }

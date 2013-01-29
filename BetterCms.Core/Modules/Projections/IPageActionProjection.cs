@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Security.Principal;
+using System.Web.Mvc;
 
 using BetterCms.Core.Models;
 
@@ -35,10 +37,19 @@ namespace BetterCms.Core.Modules.Projections
         int Order { get; }
 
         /// <summary>
+        /// Gets or sets permission for rendering.
+        /// </summary>
+        /// <value>
+        /// The role.
+        /// </value>
+        Func<IPage, IPrincipal, bool> IsVisible { get; set; }
+
+        /// <summary>
         /// Renders an action projection to given html output.
         /// </summary>
         /// <param name="page">The page.</param>
+        /// <param name="principal"></param>
         /// <param name="html">The html helper.</param>
-        void Render(IPage page, HtmlHelper html);
+        void Render(IPage page, IPrincipal principal, HtmlHelper html);
     }
 }

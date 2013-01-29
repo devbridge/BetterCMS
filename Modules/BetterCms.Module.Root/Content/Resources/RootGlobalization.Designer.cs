@@ -151,6 +151,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to History.
+        /// </summary>
+        public static string Button_History {
+            get {
+                return ResourceManager.GetString("Button_History", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Insert.
         /// </summary>
         public static string Button_Insert {
@@ -264,6 +273,33 @@ namespace BetterCms.Module.Root.Content.Resources {
         public static string Confirm_Delete_DefaultMessage {
             get {
                 return ResourceManager.GetString("Confirm_Delete_DefaultMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Draft.
+        /// </summary>
+        public static string ContentStatus_Draft {
+            get {
+                return ResourceManager.GetString("ContentStatus_Draft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Published.
+        /// </summary>
+        public static string ContentStatus_Published {
+            get {
+                return ResourceManager.GetString("ContentStatus_Published", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Published (with draft).
+        /// </summary>
+        public static string ContentStatus_PublishedWithDraft {
+            get {
+                return ResourceManager.GetString("ContentStatus_PublishedWithDraft", resourceCulture);
             }
         }
         
@@ -498,6 +534,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         public static string SiteSettings_Title {
             get {
                 return ResourceManager.GetString("SiteSettings_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Site Settings.
+        /// </summary>
+        public static string UserRole_EditSiteSettings {
+            get {
+                return ResourceManager.GetString("UserRole_EditSiteSettings", resourceCulture);
             }
         }
         

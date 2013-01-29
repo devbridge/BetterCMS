@@ -43,5 +43,21 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
         /// The type of the widget.
         /// </value>
         public string WidgetType { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this widget is published.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this widget is published; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsPublished { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this widget has draft version.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this widget has draft; otherwise, <c>false</c>.
+        /// </value>
+        public bool HasDraft { get; set; }
     }
 }

@@ -25,7 +25,7 @@ namespace BetterCms.Test.Module.Root.ProjectionTests
                                                  };
 
             PageContentProjection original = new PageContentProjection(
-                pageContent, new HtmlContentAccessor((HtmlContent)pageContent.Content, pageContent.Options.Cast<IPageContentOption>().ToList()));
+                pageContent, pageContent.Content, new HtmlContentAccessor((HtmlContent)pageContent.Content, pageContent.Options.Cast<IPageContentOption>().ToList()));
 
             RunSerializationAndDeserialization(original,
                 projection =>

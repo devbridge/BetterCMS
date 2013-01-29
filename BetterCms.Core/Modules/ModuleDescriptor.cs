@@ -12,6 +12,7 @@ using BetterCms.Core.Mvc;
 using BetterCms.Core.Mvc.Attributes;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Mvc.Extensions;
+using BetterCms.Core.Security;
 
 namespace BetterCms.Core.Modules
 {
@@ -133,6 +134,17 @@ namespace BetterCms.Core.Modules
         /// <param name="configuration">The configuration.</param>
         /// <returns>Enumerator of known module style sheet files.</returns>
         public virtual IEnumerable<string> RegisterStyleSheetFiles(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Registers the permissions.
+        /// </summary>
+        /// <param name="containerBuilder">The container builder.</param>
+        /// <param name="configuration">The configuration.</param>
+        /// <returns>Enumerator of known module permissions.</returns>
+        public virtual IEnumerable<IUserRole> RegisterUserRoles(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
         {
             return null;
         }

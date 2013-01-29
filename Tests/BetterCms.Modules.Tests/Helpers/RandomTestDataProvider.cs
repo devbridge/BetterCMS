@@ -599,6 +599,7 @@ namespace BetterCms.Tests.Helpers
             PopulateBaseFields(entity);
 
             entity.Name = ProvideRandomString(MaxLength.Name);
+            entity.Description = ProvideRandomString(MaxLength.Name);
 
             return entity;
         }

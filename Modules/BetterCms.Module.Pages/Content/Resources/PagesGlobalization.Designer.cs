@@ -547,6 +547,105 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Archived.
+        /// </summary>
+        public static string ContentHistory_Column_ArchivedOn {
+            get {
+                return ResourceManager.GetString("ContentHistory_Column_ArchivedOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Created By.
+        /// </summary>
+        public static string ContentHistory_Column_CreatedByUser {
+            get {
+                return ResourceManager.GetString("ContentHistory_Column_CreatedByUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date Created.
+        /// </summary>
+        public static string ContentHistory_Column_CreatedOn {
+            get {
+                return ResourceManager.GetString("ContentHistory_Column_CreatedOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Displayed For.
+        /// </summary>
+        public static string ContentHistory_Column_DisplayedFor {
+            get {
+                return ResourceManager.GetString("ContentHistory_Column_DisplayedFor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Published By.
+        /// </summary>
+        public static string ContentHistory_Column_PublishedByUser {
+            get {
+                return ResourceManager.GetString("ContentHistory_Column_PublishedByUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date Published.
+        /// </summary>
+        public static string ContentHistory_Column_PublishedOn {
+            get {
+                return ResourceManager.GetString("ContentHistory_Column_PublishedOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string ContentHistory_Column_Status {
+            get {
+                return ResourceManager.GetString("ContentHistory_Column_Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to History - Content Versions.
+        /// </summary>
+        public static string ContentHistory_DialogTitle {
+            get {
+                return ResourceManager.GetString("ContentHistory_DialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Older Versions.
+        /// </summary>
+        public static string ContentHistory_OlderVersions {
+            get {
+                return ResourceManager.GetString("ContentHistory_OlderVersions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to restore to older version? Restored content will be immediately published..
+        /// </summary>
+        public static string ContentHistory_Restore_ConfirmationMessage {
+            get {
+                return ResourceManager.GetString("ContentHistory_Restore_ConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Version to preview history.
+        /// </summary>
+        public static string ContentHistory_SelectVersionToPreviewMessage {
+            get {
+                return ResourceManager.GetString("ContentHistory_SelectVersionToPreviewMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add New +.
         /// </summary>
         public static string ContentOptions_AddNew {
@@ -1816,105 +1915,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Archived.
-        /// </summary>
-        public static string PageContentHistory_Column_ArchivedOn {
-            get {
-                return ResourceManager.GetString("PageContentHistory_Column_ArchivedOn", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Created By.
-        /// </summary>
-        public static string PageContentHistory_Column_CreatedByUser {
-            get {
-                return ResourceManager.GetString("PageContentHistory_Column_CreatedByUser", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Date Created.
-        /// </summary>
-        public static string PageContentHistory_Column_CreatedOn {
-            get {
-                return ResourceManager.GetString("PageContentHistory_Column_CreatedOn", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Displayed For.
-        /// </summary>
-        public static string PageContentHistory_Column_DisplayedFor {
-            get {
-                return ResourceManager.GetString("PageContentHistory_Column_DisplayedFor", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Published By.
-        /// </summary>
-        public static string PageContentHistory_Column_PublishedByUser {
-            get {
-                return ResourceManager.GetString("PageContentHistory_Column_PublishedByUser", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Date Published.
-        /// </summary>
-        public static string PageContentHistory_Column_PublishedOn {
-            get {
-                return ResourceManager.GetString("PageContentHistory_Column_PublishedOn", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Status.
-        /// </summary>
-        public static string PageContentHistory_Column_Status {
-            get {
-                return ResourceManager.GetString("PageContentHistory_Column_Status", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to History - Content Versions.
-        /// </summary>
-        public static string PageContentHistory_DialogTitle {
-            get {
-                return ResourceManager.GetString("PageContentHistory_DialogTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Older Versions.
-        /// </summary>
-        public static string PageContentHistory_OlderVersions {
-            get {
-                return ResourceManager.GetString("PageContentHistory_OlderVersions", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select Version to preview history.
-        /// </summary>
-        public static string PageContentHistory_SelectVersionToPreviewMessage {
-            get {
-                return ResourceManager.GetString("PageContentHistory_SelectVersionToPreviewMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to restore to older version? Restored content will be immediately published..
-        /// </summary>
-        public static string PageContentVersion_Restore_ConfirmationMessage {
-            get {
-                return ResourceManager.GetString("PageContentVersion_Restore_ConfirmationMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Page URL.
         /// </summary>
         public static string PageProperties_EditURLPath_Title {
@@ -2554,6 +2554,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string SiteSettings_Widgets_StatusColumn {
+            get {
+                return ResourceManager.GetString("SiteSettings_Widgets_StatusColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Widgets.
         /// </summary>
         public static string SiteSettings_Widgets_Title {
@@ -2892,6 +2901,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string WidgetPreviewImageUrl_Tooltip_Description {
             get {
                 return ResourceManager.GetString("WidgetPreviewImageUrl_Tooltip_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot remove {0} widget because it is in use..
+        /// </summary>
+        public static string Widgets_CanNotDeleteWidgetIsInUse_Message {
+            get {
+                return ResourceManager.GetString("Widgets_CanNotDeleteWidgetIsInUse_Message", resourceCulture);
             }
         }
     }

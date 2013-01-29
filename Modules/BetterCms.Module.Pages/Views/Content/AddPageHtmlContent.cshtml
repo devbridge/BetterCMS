@@ -1,5 +1,6 @@
 ﻿@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
+@using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
 
@@ -17,21 +18,21 @@
             
         <div id="bcms-tab-1" class="bcms-tab-single">
             @using (Html.BeginForm<ContentController>(c => c.SavePageHtmlContent(null), FormMethod.Post, new { @id = "bcms-content-form", @class = "bcms-ajax-form" }))
-            {                                
+            {              
+                @Html.Partial("Partial/EditHtmlContent", Model)                  
                 @Html.HiddenFor(model => model.Id, new { @id = "bcmsPageContentId"})
                 @Html.HiddenFor(model => model.ContentId, new { @id = "bcmsContentId"})
                 @Html.HiddenFor(model => model.PageId)
                 @Html.HiddenFor(model => model.RegionId, new { @id = "bcmsContentToRegionId" })
-                @Html.HiddenFor(modal => modal.DesirableStatus, new { @id = "bcmsContentDesirableStatus"})
-                @Html.Partial("Partial/EditHtmlContent", Model)
+                @Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status"})
             }
         </div>
 
         <div id="bcms-tab-2" class="bcms-tab-single">
-            <div class="bcms-advanced-content-top">
+            <div class="bcms-top-block-holder">
                 <div class="bcms-btn-links-main" id="bcms-create-advanced-content-button">@PagesGlobalization.AddPageContent_WidgetTab_AddNewButton</div>
                 <div class="bcms-search-block">
-                    <input type="text" id="bcms-advanced-content-search" class="bcms-editor-field-box" />
+                    <input type="text" id="bcms-advanced-content-search" class="bcms-editor-field-box" placeholder="@RootGlobalization.WaterMark_Search" />
                     <div class="bcms-btn-search" id="bcms-advanced-content-search-btn">@PagesGlobalization.AddPageContent_WidgetTab_SearchButton</div>
                 </div>
             </div>

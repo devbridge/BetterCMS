@@ -53,6 +53,20 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
                 .HeaderAttributes(@class => "bcms-tables-nohover");
         }
 
+        public static IGridColumn<T> HistoryButtonColumn<T>(this ColumnBuilder<T> builder, bool renderId = true) where T : class
+        {
+            return builder
+                .For(f => string.Format("<a class=\"bcms-icn-history bcms-grid-item-history-button\"{0}>{1}</a>",
+                        renderId && f is IEditableGridItem
+                            ? string.Format("data-id=\"{0}\"", ((IEditableGridItem)f).Id)
+                            : string.Empty,
+                        RootGlobalization.Button_History))
+                .Named("&nbsp;")
+                .Sortable(false)
+                .Encode(false)
+                .HeaderAttributes(@class => "bcms-tables-nohover");
+        }
+
         public static IGridColumn<T> DeleteButtonColumn<T>(this ColumnBuilder<T> builder, bool renderId = true) where T : class
         {
             return builder

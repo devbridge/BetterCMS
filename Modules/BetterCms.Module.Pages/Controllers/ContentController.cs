@@ -127,6 +127,8 @@ namespace BetterCms.Module.Pages.Controllers
                                        {
                                            PageContentId = result.PageContentId,
                                            ContentId = result.ContentId,
+                                           RegionId = result.RegionId,
+                                           PageId = result.PageId,
                                            DesirableStatus = model.DesirableStatus.ToString()
                                        }
                         });
@@ -193,14 +195,14 @@ namespace BetterCms.Module.Pages.Controllers
         {
             var request = new DeletePageContentCommandRequest
                               {
-                                  pageContentId = pageContentId.ToGuidOrDefault(),
+                                  PageContentId = pageContentId.ToGuidOrDefault(),
                                   PageContentVersion = pageContentVersion.ToIntOrDefault(),
                                   ContentVersion = contentVersion.ToIntOrDefault(),
                               };
 
             bool success = GetCommand<DeletePageContentCommand>().ExecuteCommand(request);
 
-            return Json(new WireJson { Success = success });
+            return Json(new WireJson(success));
         }
 
         /// <summary>

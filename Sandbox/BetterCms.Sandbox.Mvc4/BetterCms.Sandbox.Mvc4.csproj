@@ -254,10 +254,10 @@
     <Content Include="Views\Shared\Partial\TestOptionValues.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\bcms-pages\Views\History\PageContentHistory.cshtml" />
+    <Content Include="Areas\bcms-pages\Views\History\ContentHistory.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\bcms-pages\Views\History\PageContentVersion.cshtml" />
+    <Content Include="Areas\bcms-pages\Views\History\ContentVersion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\bcms-pages\Views\Shared\Layouts\ContentVersionLayout.cshtml" />

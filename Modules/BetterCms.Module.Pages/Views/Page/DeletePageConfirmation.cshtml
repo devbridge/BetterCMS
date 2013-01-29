@@ -10,14 +10,10 @@
 
 <div class="bcms-scroll-window">
     <div class="bcms-padded-content">
+        @Html.MessagesBox("bcms-confirm-page-delete-messages")
         @using (Html.BeginForm<PageController>(f => f.DeletePage(null), FormMethod.Post, new { @class = "bcms-ajax-form"}))
         {
-            @Html.MessagesBox("confirm-page-delete-messages")
-            
-            @Html.HiddenFor(m => m.PageId)
-            @Html.HiddenFor(m => m.Version)
-
-            <div class="bcms-input-list-holder bcms-first-child-holder">
+            <div class="bcms-input-list-holder">
                 <strong>@PagesGlobalization.DeletePage_Dialog_ConfirmationMessage_Header</strong>
                 <p>@PagesGlobalization.DeletePage_Dialog_ConfirmationMessage_Text</p>
             </div>
@@ -27,12 +23,13 @@
                 @Html.TextBoxFor(m => m.RedirectUrl, new { @class = "bcms-editor-field-box", @id = "PageTitle" })
             </div>
 
-            <div class="bcms-input-list-holder bcms-first-child-holder">
+            <div class="bcms-input-list-holder">
                 @Html.Tooltip(PagesGlobalization.DeletePage_Dialog_SecurityWord_Tooltip_Title, PagesGlobalization.DeletePage_Dialog_SecurityWord_Tooltip_Description)
                 <div class="bcms-content-titles">@PagesGlobalization.DeletePage_Dialog_SecurityWord</div>
                 @Html.TextBoxFor(m => m.SecurityWord, new { @class = "bcms-editor-field-box", @id = "PageTitle" })
             </div>
-            
+            @Html.HiddenFor(m => m.PageId)
+            @Html.HiddenFor(m => m.Version)
             @Html.HiddenSubmit()
         }
     </div>

@@ -5,7 +5,7 @@ using BetterCms.Module.Root.Mvc.Grids;
 
 namespace BetterCms.Module.Pages.ViewModels.History
 {    
-    public class PageContentHistoryItem : IEditableGridItem
+    public class ContentHistoryItem : IEditableGridItem
     {
         public Guid Id { get; set; }
 

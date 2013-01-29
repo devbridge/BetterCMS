@@ -7,7 +7,7 @@ using BetterCms.Module.Users.Controllers;
 namespace BetterCms.Module.Blog.Registration
 {
     /// <summary>
-    /// bcms.blog.js module descriptor.
+    /// bcms.user.js module descriptor.
     /// </summary>
     public class UserJavaScriptModuleDescriptor : JavaScriptModuleDescriptor
     {
@@ -22,9 +22,9 @@ namespace BetterCms.Module.Blog.Registration
                         {
                             new JavaScriptModuleLinkTo<UserController>(this, "loadSiteSettingsUsersUrl", c => c.Index(null)),
                             new JavaScriptModuleLinkTo<UserController>(this, "loadEditUserUrl", c=> c.EditUser()), 
-                            new JavaScriptModuleLinkTo<RoleController>(this, "loadCreatRoleUrl", c => c.CreatRoleView()),
+                            /*new JavaScriptModuleLinkTo<RoleController>(this, "loadCreatRoleUrl", c => c.CreatRoleView()),
                             new JavaScriptModuleLinkTo<RoleController>(this, "loadEditRoleUrl", c => c.EditRoleView("{0}")),
-                            new JavaScriptModuleLinkTo<RoleController>(this, "loadSiteSettingsRoleUrl", c => c.RolesListView(null)) 
+                            new JavaScriptModuleLinkTo<RoleController>(this, "loadSiteSettingsRoleUrl", c => c.RolesListView(null)) */
                         };
 
             Globalization = new IActionProjection[]

@@ -1,21 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Widgets;
-using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
-
-using NHibernate.Linq;
-using NHibernate;
+using BetterCms.Module.Root.Services;
 
 namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
 {
     public class GetHtmlContentWidgetForEditCommand : CommandBase, ICommand<Guid?, EditHtmlContentWidgetViewModel>
     {
+        /// <summary>
+        /// The content service.
+        /// </summary>
+        private readonly IContentService contentService;
+
         /// <summary>
         /// The category service
         /// </summary>
@@ -25,9 +26,11 @@ namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
         /// Initializes a new instance of the <see cref="GetHtmlContentWidgetForEditCommand" /> class.
         /// </summary>
         /// <param name="categoryService">The category service.</param>
-        public GetHtmlContentWidgetForEditCommand(ICategoryService categoryService)
+        /// <param name="contentService">The content service.</param>
+        public GetHtmlContentWidgetForEditCommand(ICategoryService categoryService, IContentService contentService)
         {
             this.categoryService = categoryService;
+            this.contentService = contentService;
         }
 
         /// <summary>
@@ -37,30 +40,32 @@ namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
         /// <returns>View model to </returns>
         public EditHtmlContentWidgetViewModel Execute(Guid? widgetId)
         {
+            EditHtmlContentWidgetViewModel model = null;
+
              var categories = categoryService.GetCategories();
 
-             var model = widgetId == null 
-                ? new EditHtmlContentWidgetViewModel() 
-                : Repository.AsQueryable<HtmlContentWidget>()
-                          .Select(
-                              c =>
-                              new EditHtmlContentWidgetViewModel
-                                  {
-                                      Id = c.Id,
-                                      Version = c.Version,
-                                      CategoryId = c.Category != null ? c.Category.Id : (Guid?)null,
-                                      Name = c.Name,
-                                      PageContent = c.Html,
-                                      EnableCustomHtml = c.UseHtml,
-                                      EnableCustomCSS = c.UseCustomCss,
-                                      CustomCSS = c.CustomCss,
-                                      EnableCustomJS = c.UseCustomJs,
-                                      CustomJS = c.CustomJs,
-                                      WidgetType = WidgetType.HtmlContent,
-                                      PreviewImageUrl = null
-                                  })
-                           .FirstOrDefault(c => c.Id == widgetId);
-
+            if (widgetId != null)
+            {
+                var htmlContentWidget = contentService.GetContentForEdit(widgetId.Value) as HtmlContentWidget;
+                if (htmlContentWidget != null)
+                {
+                    model = new EditHtmlContentWidgetViewModel {
+                                                                   Id = htmlContentWidget.Id,
+                                                                   Version = htmlContentWidget.Version,
+                                                                   CategoryId = htmlContentWidget.Category != null ? htmlContentWidget.Category.Id : (Guid?)null,
+                                                                   Name = htmlContentWidget.Name,
+                                                                   PageContent = htmlContentWidget.Html,
+                                                                   EnableCustomHtml = htmlContentWidget.UseHtml,
+                                                                   EnableCustomCSS = htmlContentWidget.UseCustomCss,
+                                                                   CustomCSS = htmlContentWidget.CustomCss,
+                                                                   EnableCustomJS = htmlContentWidget.UseCustomJs,
+                                                                   CustomJS = htmlContentWidget.CustomJs,
+                                                                   WidgetType = WidgetType.HtmlContent,
+                                                                   PreviewImageUrl = null
+                                                               };
+                }
+            }
+            
             if (model == null)
             {
                 model = new EditHtmlContentWidgetViewModel();

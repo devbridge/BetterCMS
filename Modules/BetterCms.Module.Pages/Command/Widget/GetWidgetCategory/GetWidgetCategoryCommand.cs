@@ -55,7 +55,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
             }
             
             // Load list of contents
-            var widgetsQuery = Repository.AsQueryable<Root.Models.Widget>().Where(f => !f.IsDeleted && f.Status == ContentStatus.Published);
+            var widgetsQuery = Repository.AsQueryable<Root.Models.Widget>().Where(f => !f.IsDeleted && f.Original == null && (f.Status == ContentStatus.Published || f.Status == ContentStatus.Draft));
 
             if (request.CategoryId.HasValue)
             {

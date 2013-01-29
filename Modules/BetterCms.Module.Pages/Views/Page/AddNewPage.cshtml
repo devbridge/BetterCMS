@@ -10,13 +10,10 @@
 
 <div class="bcms-scroll-window">
     <div class="bcms-padded-content">
+        @Html.MessagesBox("add-new-page-messages")
         @using (Html.BeginForm<PageController>(f => f.AddNewPage(null), FormMethod.Post, new { @class = "bcms-ajax-form"}))
         {
-            @Html.MessagesBox("add-new-page-messages")
-            
-            @Html.HiddenFor(f => f.TemplateId, new {@id = "TemplateId"})
-
-            <div class="bcms-input-list-holder bcms-first-child-holder">
+            <div class="bcms-input-list-holder">
                 @Html.Tooltip(PagesGlobalization.AddNewPage_PageTitle_Tooltip_Title, PagesGlobalization.AddNewPage_PageTitle_Tooltip_Description)
                 <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_PageTitle</div>
                 @Html.TextBoxFor(f => f.PageTitle, new { @class = "bcms-editor-field-box", @id = "PageTitle" })
@@ -24,7 +21,7 @@
             
             @Html.Partial("Partial/AddNewPageEditPermalink")
             
-                <div class="bcms-addpage-title">
+            <div class="bcms-addpage-title">
                 @Html.Tooltip(PagesGlobalization.AddNewPage_Template_Tooltip_Title, PagesGlobalization.AddNewPage_Template_Tooltip_Description)
                 <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_Template</div>
             </div>
@@ -35,6 +32,7 @@
             </div>
 
             @Html.Partial("Partial/TemplatesList", Model.Templates)
+            @Html.HiddenFor(f => f.TemplateId, new {@id = "TemplateId"})
             @Html.HiddenSubmit()
         }
     </div>

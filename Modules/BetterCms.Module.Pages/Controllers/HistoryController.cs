@@ -10,18 +10,17 @@ namespace BetterCms.Module.Pages.Controllers
     public class HistoryController : CmsControllerBase
     {
         [HttpGet]
-        public ActionResult PageContentHistory(string contentId, string pageContentId)
+        public ActionResult ContentHistory(string contentId)
         {
             var model = GetCommand<GetContentHistoryCommand>().ExecuteCommand(new GetContentHistoryRequest
                                                                                       {
                                                                                           ContentId = contentId.ToGuidOrDefault(),
-                                                                                          PageContentId = pageContentId.ToGuidOrDefault()
                                                                                       });
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult PageContentHistory(GetContentHistoryRequest request)
+        public ActionResult ContentHistory(GetContentHistoryRequest request)
         {
             var model = GetCommand<GetContentHistoryCommand>().ExecuteCommand(request);
 
@@ -29,7 +28,7 @@ namespace BetterCms.Module.Pages.Controllers
         }
 
         [HttpGet]
-        public ActionResult PageContentVersion(string id)
+        public ActionResult ContentVersion(string id)
         {
             var model = GetCommand<GetContentVersionCommand>().ExecuteCommand(id.ToGuidOrDefault());
 

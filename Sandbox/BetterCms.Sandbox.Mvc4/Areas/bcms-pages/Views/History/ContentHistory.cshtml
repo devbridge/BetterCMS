@@ -12,14 +12,14 @@
 @using BetterCms.Module.Root.ViewModels.Shared
 @using Microsoft.Web.Mvc
 @using MvcContrib.UI.Grid
-@model BetterCms.Module.Pages.ViewModels.History.PageContentHistoryViewModel
+@model BetterCms.Module.Pages.ViewModels.History.ContentHistoryViewModel
 
-@helper PreviewLink(PageContentHistoryItem item)
+@helper PreviewLink(ContentHistoryItem item)
 {
     <a class="bcms-icn-preview" data-id="@item.Id">@RootGlobalization.Button_Preview</a>
 }
 
-@helper RestoreLink(PageContentHistoryItem item)
+@helper RestoreLink(ContentHistoryItem item)
 {
     if (item.Status == ContentStatus.Archived)
     {
@@ -59,7 +59,7 @@
 }
 
 @{
-    Action<ColumnBuilder<PageContentHistoryItem>> columns = column =>
+    Action<ColumnBuilder<ContentHistoryItem>> columns = column =>
     {
         column.For(f => PreviewLink(f))
             .Encode(false)
@@ -68,41 +68,41 @@
             .HeaderAttributes(@style => "width: 50px;  padding: 10px;", @class => "bcms-tables-nohover");
 
         column.For(m => m.CreatedOn.ToFormattedDateString())
-               .Named(PagesGlobalization.PageContentHistory_Column_CreatedOn)
+               .Named(PagesGlobalization.ContentHistory_Column_CreatedOn)
                .SortColumnName("CreatedOn")
                .HeaderAttributes(@style => "width: 90px;")
                .Attributes(@style => "width: 90px;");
 
         column.For(m => m.CreatedByUser)
-               .Named(PagesGlobalization.PageContentHistory_Column_CreatedByUser)
+               .Named(PagesGlobalization.ContentHistory_Column_CreatedByUser)
                .SortColumnName("CreatedByUser");
         
         column.For(m => m.PublishedOn.ToFormattedDateString())
-               .Named(PagesGlobalization.PageContentHistory_Column_PublishedOn)
+               .Named(PagesGlobalization.ContentHistory_Column_PublishedOn)
                .SortColumnName("PublishedOn")
                .HeaderAttributes(@style => "width: 90px;")
                .Attributes(@style => "width: 90px;");
 
         column.For(m => m.PublishedByUser)
-               .Named(PagesGlobalization.PageContentHistory_Column_PublishedByUser)
+               .Named(PagesGlobalization.ContentHistory_Column_PublishedByUser)
                .SortColumnName("PublishedByUser")
                .HeaderAttributes(@style => "width: 120px;")
                .Attributes(@style => "width: 120px;");
 
         column.For(m => m.ArchivedOn.ToFormattedDateString())
-               .Named(PagesGlobalization.PageContentHistory_Column_ArchivedOn)
+               .Named(PagesGlobalization.ContentHistory_Column_ArchivedOn)
                .SortColumnName("ArchivedOn")
                .HeaderAttributes(@style => "width: 90px;")
                .Attributes(@style => "width: 90px;");
 
         column.For(m => m.DisplayedFor.ToFormatedTimeString())
-               .Named(PagesGlobalization.PageContentHistory_Column_DisplayedFor)
+               .Named(PagesGlobalization.ContentHistory_Column_DisplayedFor)
                .SortColumnName("DisplayedFor")
                .HeaderAttributes(@style => "width: 90px;")
                .Attributes(@style => "width: 90px;");
 
         column.For(m => DisplayStatus(m.Status))
-               .Named(PagesGlobalization.PageContentHistory_Column_Status)
+               .Named(PagesGlobalization.ContentHistory_Column_Status)
                .SortColumnName("Status")
                .Encode(false)
                .HeaderAttributes(@style => "width: 90px;")
@@ -119,7 +119,7 @@
 <div class="bcms-scroll-window">
     <div class="bcms-history-preview-holder">
         <div class="bcms-history-preview">
-            <div class="bcms-history-info" style="display: block;">@PagesGlobalization.PageContentHistory_SelectVersionToPreviewMessage</div>
+            <div class="bcms-history-info" style="display: block;">@PagesGlobalization.ContentHistory_SelectVersionToPreviewMessage</div>
             <div class="bcms-history-content"></div>
         </div>
 
@@ -127,21 +127,20 @@
 
     <div class="bcms-history-table-holder">
                        
-        @using (Html.BeginForm<HistoryController>(f => f.PageContentHistory((GetContentHistoryRequest)null), FormMethod.Post, new { @id = "bcms-pagecontenthistory-form" }))
+        @using (Html.BeginForm<HistoryController>(f => f.ContentHistory((GetContentHistoryRequest)null), FormMethod.Post, new { @id = "bcms-pagecontenthistory-form" }))
         {                        
             @Html.HiddenGridOptions(Model.GridOptions)
             @Html.HiddenFor(model => model.ContentId)
-            @Html.HiddenFor(model => model.PageContentId)
 
             <div class="bcms-history-table-top">
-                <div class="bcms-large-titles">@PagesGlobalization.PageContentHistory_OlderVersions</div>
+                <div class="bcms-large-titles">@PagesGlobalization.ContentHistory_OlderVersions</div>
                 <div class="bcms-search-block">                    
                     @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box", @placeholder = RootGlobalization.WaterMark_Search })
                     <div class="bcms-btn-search" id="bcms-pagecontenthistory-search-btn">@RootGlobalization.Button_Search</div>
                 </div>
             </div>                        
-            @Html.MessagesBox("bcms-pagecontenthistory-messages")
-            @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new ScrollableEditableHtmlTableGridRenderer<PageContentHistoryItem>()
+            @Html.MessagesBox("bcms-content-history-messages")
+            @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new ScrollableEditableHtmlTableGridRenderer<ContentHistoryItem>()
                                                                                                                                  {
                                                                                                                                      InternalTableCssClass = "bcms-history-table"
                                                                                                                                  

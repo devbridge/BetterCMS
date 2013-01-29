@@ -1,6 +1,7 @@
 ﻿@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.SiteSettings
+@using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc.Grids.Extensions
 @using BetterCms.Module.Root.Mvc.Grids.TableRenderers
 @using BetterCms.Module.Root.Mvc.Helpers
@@ -9,12 +10,13 @@
 @using MvcContrib.UI.Grid
 
 @model SiteSettingWidgetListViewModel
-           
+          
+
 @{
     Action<ColumnBuilder<SiteSettingWidgetItemViewModel>> columns = column =>
     {
-        column.EditButtonColumn(renderId:false);
-
+        column.EditButtonColumn(renderId: false);
+        
         column.For(f => string.Format("<a class=\"bcms-tables-link bcms-grid-item-edit-button bcms-widget-name\" data-id=\"{0}\">{1}</a>", f.Id, f.WidgetName))
             .Named(PagesGlobalization.SiteSettings_Widgets_NameColumn)
             .SortColumnName("WidgetName")
@@ -26,6 +28,13 @@
             .SortColumnName("CategoryName")
             .Attributes(@class => "bcms-category-name");
 
+        column.For(f => f.Status)
+            .Named(PagesGlobalization.SiteSettings_Widgets_StatusColumn)
+            .Sortable(false)
+            .Attributes(@class => "bcms-widget-status");
+
+        column.HistoryButtonColumn(renderId: false);
+        
         column.DeleteButtonColumn(renderId:false);
     };
 }

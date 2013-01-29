@@ -10,7 +10,7 @@ namespace BetterCms.Module.Pages.Command.Content.DeletePageContent
         /// <value>
         /// The page content id.
         /// </value>
-        public Guid pageContentId { get; set; }
+        public Guid PageContentId { get; set; }
 
         /// <summary>
         /// Gets or sets the version.

@@ -14,13 +14,9 @@
            
 <div class="bcms-scroll-window">
     <div class="bcms-padded-content">
+        @Html.MessagesBox("bcms-edit-template-messages")
         @using (Html.BeginForm<TemplatesController>(c => c.RegisterTemplate((TemplateEditViewModel)null), FormMethod.Post, new { @id = "bcms-template-form", @class = "bcms-ajax-form" }))
         {
-            @Html.MessagesBox("edit-template-messages")
-            
-            @Html.HiddenFor(model => model.Id)
-            @Html.HiddenFor(model => model.Version)
-            
             <div id="bcms-tab-1" class="bcms-tab-single">
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.Template_Title_Tooltip_Title, PagesGlobalization.Template_Title_Tooltip_Description)
@@ -54,8 +50,10 @@
               
             <div id="bcms-tab-2" class="bcms-tab-single">
                 @Html.Partial("Partial/EditTemplateRegions")
-        </div>
+            </div>
             
+            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.Version)
             @Html.HiddenSubmit()
         } 
         
