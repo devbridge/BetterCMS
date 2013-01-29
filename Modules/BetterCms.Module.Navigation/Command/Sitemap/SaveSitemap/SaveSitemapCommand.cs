@@ -41,14 +41,28 @@ namespace BetterCms.Module.Navigation.Command.Sitemap.SaveSitemap
                     ? new SitemapNode()
                     : Repository.AsProxy<SitemapNode>(node.Id);
 
-                sitemapNode.Version = node.Version;
-                sitemapNode.Title = node.Title;
-                sitemapNode.Url = node.Url;
-                sitemapNode.DisplayOrder = node.DisplayOrder;
-                sitemapNode.ParentNode = parentNode;
                 sitemapNode.IsDeleted = node.IsDeleted || (parentNode != null && parentNode.IsDeleted);
 
-                Repository.Save(sitemapNode);
+                if (sitemapNode.IsDeleted)
+                {
+                    if (!sitemapNode.Id.HasDefaultValue())
+                    {
+                        Repository.Delete(sitemapNode);
+                    }
+                }
+                else
+                {
+                    sitemapNode.Version = node.Version;
+                    sitemapNode.Title = node.Title;
+                    sitemapNode.Url = node.Url;
+                    sitemapNode.DisplayOrder = node.DisplayOrder;
+                    if (parentNode != null && !parentNode.Id.HasDefaultValue())
+                    {
+                        sitemapNode.ParentNode = parentNode;
+                    }
+
+                    Repository.Save(sitemapNode);
+                }
 
                 SaveNodeList(node.ChildNodes, sitemapNode);
             }
