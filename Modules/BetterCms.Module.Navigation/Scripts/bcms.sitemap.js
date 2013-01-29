@@ -71,11 +71,15 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                         },
                     });
                 },
-                onAccept: function() {
-                    addNodeController.save(function(json) {
-                        sitemap.loadSiteSettingsSitemap();
+                onAccept: function (dialog) {
+                    addNodeController.save(function (json) {
+                        if (json.Success) {
+                            dialog.close();
+                            sitemap.loadSiteSettingsSitemap();
+                        }
                         sitemap.showMessage(json);
                     });
+                    return false;
                 }
             });
         };
@@ -346,7 +350,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                             },
                             drop: function (event, ui) {
                                 var forFix = $(ui.draggable).data('draggable'),
-                                    dragObject = $(ui.draggable).data("dragObject"),
+                                    dragObject = $(ui.draggable).data("dragObject");
                                 ui.helper.remove();
 
                                 if (dragObject.parentNode) {

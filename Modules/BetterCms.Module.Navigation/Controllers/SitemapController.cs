@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
-using System.Web.Script.Serialization;
 
 using BetterCms.Module.Navigation.Command.Sitemap.DeleteSitemapNode;
 using BetterCms.Module.Navigation.Command.Sitemap.GetPageLinks;
@@ -67,8 +66,8 @@ namespace BetterCms.Module.Navigation.Controllers
             if (ModelState.IsValid)
             {
                 GetCommand<SaveSitemapCommand>().Execute(model);
-                Messages.AddSuccess("URAAAAAAAAAAAAAAAA!!!!!");
             }
+
             return Json(new WireJson { Success = true });
         }
 
@@ -98,6 +97,7 @@ namespace BetterCms.Module.Navigation.Controllers
                 var data = new SitemapAndPageLinksViewModel { PageLinks = response };
                 return Json(new WireJson { Success = true, Data = data });
             }
+
             return Json(new WireJson { Success = false });
         }
 
