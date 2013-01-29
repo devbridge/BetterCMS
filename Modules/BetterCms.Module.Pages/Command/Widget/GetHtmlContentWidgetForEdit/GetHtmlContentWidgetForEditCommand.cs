@@ -61,7 +61,8 @@ namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
                                                                    EnableCustomJS = htmlContentWidget.UseCustomJs,
                                                                    CustomJS = htmlContentWidget.CustomJs,
                                                                    WidgetType = WidgetType.HtmlContent,
-                                                                   PreviewImageUrl = null
+                                                                   PreviewImageUrl = null,
+                                                                   CurrentStatus = htmlContentWidget.Status
                                                                };
                 }
             }

@@ -45,7 +45,8 @@ namespace BetterCms.Module.Pages.Command.Content.GetPageHtmlContent
                                                 CustomCss = content.CustomCss,
                                                 CustomJs = content.CustomJs,
                                                 EanbledCustomJs = content.UseCustomJs,
-                                                EnabledCustomCss = content.UseCustomCss
+                                                EnabledCustomCss = content.UseCustomCss,
+                                                CurrentStatus = content.Status
                                             };
         }
     }

@@ -12,6 +12,14 @@ namespace BetterCms.Module.Pages.ViewModels.Widgets
     public class HtmlContentWidgetViewModel : WidgetViewModel
     {
         /// <summary>
+        /// Gets or sets the current status for the saved widget.
+        /// </summary>
+        /// <value>
+        /// The current status.
+        /// </value>
+        public ContentStatus CurrentStatus { get; set; }
+
+        /// <summary>
         /// Gets or sets the desirable status for the saved widget.
         /// </summary>
         /// <value>

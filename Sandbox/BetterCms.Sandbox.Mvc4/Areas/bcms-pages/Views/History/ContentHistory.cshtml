@@ -101,7 +101,7 @@
 
         column.For(m => DisplayStatus(m.StatusName, m.Status))
                .Named(PagesGlobalization.ContentHistory_Column_Status)
-               .SortColumnName("Status")
+               .SortColumnName("StatusName")
                .Encode(false)
                .HeaderAttributes(@style => "width: 90px;")
                .Attributes(@style => "width: 90px;");

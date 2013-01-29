@@ -65,6 +65,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit
                          .Select(() => widget.Name).WithAlias(() => modelAlias.Name)
                          .Select(() => widget.Url).WithAlias(() => modelAlias.Url)
                          .Select(() => widget.PreviewUrl).WithAlias(() => modelAlias.PreviewImageUrl)
+                         .Select(() => widget.Status).WithAlias(() => modelAlias.CurrentStatus)
                          .Select(() => categoryAlias.Id).WithAlias(() => modelAlias.CategoryId))
                     .TransformUsing(Transformers.AliasToBean<EditServerControlWidgetViewModel>())
                     .FutureValue<EditServerControlWidgetViewModel>();

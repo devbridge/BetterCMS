@@ -61,12 +61,27 @@ namespace BetterCms.Module.Pages.Command.History.GetContentHistory
 
             if (content != null)
             {
-                if (content.Status == ContentStatus.Published && ContainsSearchQuery(content, searchQuery))
+                // Fix for draft
+                if (content.Status == ContentStatus.Draft)
                 {
-                    history.Add(Convert(content));
+                    content = Repository
+                        .AsQueryable<Root.Models.Content>()
+                        .Where(f => f == content.Original 
+                            && !f.IsDeleted
+                            && (f.Status == ContentStatus.Published || f.Status == ContentStatus.Draft || f.Status == ContentStatus.Archived))
+                        .FetchMany(f => f.History)
+                        .ToList().FirstOrDefault();
                 }
 
-                history.AddRange(content.History.Where(c => IsValidHistoricalContent(c) && ContainsSearchQuery(c, searchQuery)).Select(Convert));     
+                if (content != null)
+                {
+                    if (content.Status == ContentStatus.Published && ContainsSearchQuery(content, searchQuery))
+                    {
+                        history.Add(Convert(content));
+                    }
+
+                    history.AddRange(content.History.Where(c => IsValidHistoricalContent(c) && ContainsSearchQuery(c, searchQuery)).Select(Convert));
+                }
             }
 
             history = history.AsQueryable().AddSortingAndPaging(request).ToList();
@@ -85,7 +100,7 @@ namespace BetterCms.Module.Pages.Command.History.GetContentHistory
             {
                 var statusName = GetStatusName(f.Status).ToLower();
 
-                return f.PublishedByUser.ToLower().Contains(searchQuery) 
+                return (f.Status == ContentStatus.Published && !string.IsNullOrEmpty(f.PublishedByUser) && f.PublishedByUser.ToLower().Contains(searchQuery))
                     || f.CreatedByUser.ToLower().Contains(searchQuery)
                     || (!string.IsNullOrEmpty(statusName) && statusName.Contains(searchQuery));
             }

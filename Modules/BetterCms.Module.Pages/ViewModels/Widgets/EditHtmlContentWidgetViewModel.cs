@@ -1,8 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
 
-using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Root.Models;
 
 namespace BetterCms.Module.Pages.ViewModels.Widgets

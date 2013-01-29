@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 
+using BetterCms.Core.Models;
 using BetterCms.Module.Pages.Command.Content.GetPageContentOptions;
 using BetterCms.Module.Pages.Command.Content.GetPageHtmlContent;
 using BetterCms.Module.Pages.Command.Content.InsertContent;
@@ -10,6 +11,7 @@ using BetterCms.Module.Pages.Command.Content.SavePageHtmlContent;
 using BetterCms.Module.Pages.Command.Content.SortPageContent;
 using BetterCms.Module.Pages.Command.Content.DeletePageContent;
 using BetterCms.Module.Pages.Command.Widget.GetWidgetCategory;
+using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
@@ -148,6 +150,11 @@ namespace BetterCms.Module.Pages.Controllers
         public ActionResult EditPageHtmlContent(string pageContentId)
         {
             var viewModel = GetCommand<GetPageHtmlContentCommand>().ExecuteCommand(pageContentId.ToGuidOrDefault());
+
+            if (viewModel.CurrentStatus == ContentStatus.Draft)
+            {
+                Messages.AddWarn(PagesGlobalization.EditPageContent_Messages_DraftStatusWarnMessage);
+            }
 
             return View(viewModel);
         }

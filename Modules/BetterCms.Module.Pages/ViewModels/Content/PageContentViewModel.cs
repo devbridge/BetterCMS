@@ -31,6 +31,14 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         public int Version { get; set; }
 
         /// <summary>
+        /// Gets or sets the currrent content status.
+        /// </summary>
+        /// <value>
+        /// The current content status.
+        /// </value>
+        public ContentStatus CurrentStatus { get; set; }
+
+        /// <summary>
         /// Gets or sets the desirable status.
         /// </summary>
         /// <value>

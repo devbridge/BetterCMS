@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 
+using BetterCms.Core.Models;
 using BetterCms.Module.Pages.Command.Widget.DeleteWidget;
 using BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit;
 using BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit;
@@ -71,6 +72,11 @@ namespace BetterCms.Module.Pages.Controllers
         {
             var model = GetCommand<GetHtmlContentWidgetForEditCommand>().ExecuteCommand(id.ToGuidOrDefault());
 
+            if (model.CurrentStatus == ContentStatus.Draft)
+            {
+                Messages.AddWarn(PagesGlobalization.EditPageContent_Messages_DraftStatusWarnMessage);
+            }
+
             return PartialView(model);
         }
 
@@ -125,6 +131,11 @@ namespace BetterCms.Module.Pages.Controllers
         public ActionResult EditServerControlWidget(string id)
         {
             var model = GetCommand<GetServerControlWidgetForEditCommand>().ExecuteCommand(id.ToGuidOrDefault());
+
+            if (model.CurrentStatus == ContentStatus.Draft)
+            {
+                Messages.AddWarn(PagesGlobalization.EditPageContent_Messages_DraftStatusWarnMessage);
+            }
 
             return PartialView(model);
         }
