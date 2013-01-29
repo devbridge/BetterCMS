@@ -534,7 +534,10 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             };
 
             self.save = function () {
-                // TODO: implement.
+                // TODO: Lock screen.
+                // TODO: convert sitemap to JSON.
+                // TODO: post JSON to server.
+                // TODO: Unlock screen.
             };
 
             // Parse.
@@ -608,6 +611,10 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 }
             };
             self.saveSitemapNode = function () {
+                if (self.getSitemap() == null || !self.getSitemap().settings.nodeSaveAfterUpdate) {
+                    return;
+                }
+                
                 var params = self.toJson(),
                     onSaveCompleted = function (json) {
                         sitemap.showMessage(json);
@@ -647,6 +654,12 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                     confirmDialog = modal.confirm({
                         content: message,
                         onAccept: function () {
+                            if (self.getSitemap() == null || !self.getSitemap().settings.nodeSaveAfterUpdate) {
+                                self.parentNode.childNodes.remove(self);
+                                confirmDialog.close();
+                                return false;
+                            }
+
                             var params = self.toJson(),
                                 onDeleteCompleted = function(json) {
                                     sitemap.showMessage(json);
