@@ -28,12 +28,13 @@ define('bcms.pages.history', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', '
             loadContentHistoryDialogUrl: null,
             loadContentVersionPreviewUrl: null,
             restoreContentVersionUrl: null,
-            loadPageContentHistoryUrl: null
+            destroyContentDraftVersionUrl: null
         },
         
         globalization = {
             contentHistoryDialogTitle: null,
-            contentVersionRestoryConfirmation: null,
+            contentVersionRestoreConfirmation: null,
+            contentVersionDestroyDraftConfirmation: null,
             restoreButtonTitle: null
         };
 
@@ -65,7 +66,7 @@ define('bcms.pages.history', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', '
     */
     function restoreVersion(container, id) {
         modal.confirm({
-            content: globalization.contentVersionRestoryConfirmation,
+            content: globalization.contentVersionRestoreConfirmation,
             acceptTitle: globalization.restoreButtonTitle,
             onAccept: function () {
                 
@@ -170,7 +171,46 @@ define('bcms.pages.history', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', '
                 });
             }            
         });
-    };      
+    };
+        
+    /**
+    * Destroys draft version of the content
+    */
+    history.destroyDraftVersion = function(id, container, onSuccess) {
+        modal.confirm({
+            content: globalization.contentVersionDestroyDraftConfirmation,
+            acceptTitle: globalization.destroyButtonTitle,
+            onAccept: function() {
+
+                var url = $.format(links.destroyContentDraftVersionUrl, id),
+                    onComplete = function (json) {
+                        container.hideLoading();
+
+                        messages.refreshBox(container, json);
+
+                        if (json.Success) {
+                            if ($.isFunction(onSuccess)) {
+                                onSuccess.call(this);
+                            }
+                        }
+                    };
+
+                container.showLoading();
+
+                $.ajax({
+                    type: 'POST',
+                    cache: false,
+                    url: url,
+                })
+                    .done(function(result) {
+                        onComplete(result);
+                    })
+                    .fail(function(response) {
+                        onComplete(bcms.parseFailedResponse(response));
+                    });
+            }
+        });
+    };
     
     return history;
 });
