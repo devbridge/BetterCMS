@@ -47,9 +47,9 @@ namespace BetterCms.Module.Pages.Controllers
         [HttpPost]
         public ActionResult DestroyContentDraft(string id)
         {
-            var result = GetCommand<DestroyContentDraftCommand>().ExecuteCommand(id.ToGuidOrDefault());
+            var publishedId = GetCommand<DestroyContentDraftCommand>().ExecuteCommand(id.ToGuidOrDefault());
 
-            return WireJson(result);
+            return WireJson(publishedId.HasValue, new { PublishedId = publishedId });
         }
     }
 }

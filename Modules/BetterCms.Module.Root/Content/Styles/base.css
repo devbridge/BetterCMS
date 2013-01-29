@@ -40,12 +40,6 @@ input[type="text"] {
     border-radius: 0;
 }
 
-div {
-    user-select: none;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-}
-
 /* State management classes */
 .bcms-state-open {
 }
@@ -330,7 +324,6 @@ a.bcms-icn-preview {
 
     a.bcms-icn-preview:active {
         background-position: -60px -159px;
-        user-select: none;
     }
 
 /*restore icon*/
@@ -348,6 +341,7 @@ a.bcms-icn-restore {
     a.bcms-icn-restore:hover {
         color: #303030;
         background-position: right -1121px;
+        text-decoration: none;
     }
 
     a.bcms-icn-restore:active {
@@ -1814,10 +1808,6 @@ th.bcms-tables-nohover:hover {
     background-color: #effcfe;
 }
 
-tr.bcms-table-row-active td {
-    vertical-align: top;
-}
-
 .bcms-table-row-active .bcms-icn-preview {
     background-position: -60px -133px;
 }
@@ -2063,9 +2053,13 @@ div.bcms-list .bcms-grid-input.input-validation-error {
       margin-top: -5px;
    }*/
 
+.bcms-messages {
+    padding-bottom: 20px;
+}
+
 ul.bcms-success-messages {
     padding: 10px 15px;
-  /* margin: 10px 20px;*/ 
+    /*  margin: 10px 20px;*/
     border: 1px solid #20cd00;
     background-color: #e8fae5;
     font-size: 12px;
@@ -2080,7 +2074,7 @@ ul.bcms-success-messages {
 
 ul.bcms-warning-messages {
     padding: 10px 15px;
-   /* margin: 10px 20px; */
+    /*  margin: 10px 20px;*/
     border: 1px solid #e7d827;
     background-color: #FFFEEC;
     font-size: 12px;
@@ -2094,7 +2088,7 @@ ul.bcms-warning-messages {
 
 ul.bcms-error-messages {
     padding: 10px 15px;
-   /* margin: 10px 20px; */
+    /* margin: 10px 20px;*/
     border: 1px solid #e64343;
     background-color: #fcecec;
     font-size: 12px;
@@ -2109,7 +2103,7 @@ ul.bcms-error-messages {
 
 ul.bcms-info-messages {
     padding: 10px 15px;
-   /* margin: 10px 20px; */
+    /* margin: 10px 20px;*/
     border: 1px solid #1891e6;
     background-color: #f0f8fd;
     font-size: 12px;
