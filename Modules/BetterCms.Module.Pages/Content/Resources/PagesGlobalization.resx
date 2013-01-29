@@ -1080,4 +1080,7 @@
   <data name="ContentStatus_Published" xml:space="preserve">
     <value>Published</value>
   </data>
+  <data name="ContentHistory_Restore_AcceptButtonTitle" xml:space="preserve">
+    <value>Restore</value>
+  </data>
 </root>

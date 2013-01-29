@@ -628,6 +628,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Restore.
+        /// </summary>
+        public static string ContentHistory_Restore_AcceptButtonTitle {
+            get {
+                return ResourceManager.GetString("ContentHistory_Restore_AcceptButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to restore to older version? Restored content will be immediately published..
         /// </summary>
         public static string ContentHistory_Restore_ConfirmationMessage {

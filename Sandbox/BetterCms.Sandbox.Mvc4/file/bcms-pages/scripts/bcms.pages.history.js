@@ -33,7 +33,8 @@ define('bcms.pages.history', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', '
         
         globalization = {
             contentHistoryDialogTitle: null,
-            contentVersionRestoryConfirmation: null
+            contentVersionRestoryConfirmation: null,
+            restoreButtonTitle: null
         };
 
     /**
@@ -65,6 +66,7 @@ define('bcms.pages.history', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', '
     function restoreVersion(container, id) {
         modal.confirm({
             content: globalization.contentVersionRestoryConfirmation,
+            acceptTitle: globalization.restoreButtonTitle,
             onAccept: function () {
                 
                 var url = $.format(links.restoreContentVersionUrl, id),
@@ -149,7 +151,8 @@ define('bcms.pages.history', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', '
     */
     history.openPageContentHistoryDialog = function (contentId, pageContentId) {
         modal.open({
-            title: globalization.contentHistoryDialogTitle,            
+            title: globalization.contentHistoryDialogTitle,
+            disableAccept: true,
             onLoad: function (dialog) {
                 var url = $.format(links.loadContentHistoryDialogUrl, contentId, pageContentId);
                 dynamicContent.bindDialog(dialog, url, {

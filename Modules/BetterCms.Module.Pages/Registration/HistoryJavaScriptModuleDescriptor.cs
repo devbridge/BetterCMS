@@ -1,7 +1,6 @@
 ﻿using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.JsModule;
 using BetterCms.Core.Modules.Projections;
-using BetterCms.Module.Pages.Command.History.GetContentHistory;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Controllers;
 
@@ -30,7 +29,8 @@ namespace BetterCms.Module.Pages.Registration
             Globalization = new IActionProjection[]
                 {
                      new JavaScriptModuleGlobalization(this, "contentHistoryDialogTitle", () => PagesGlobalization.ContentHistory_DialogTitle),
-                     new JavaScriptModuleGlobalization(this, "contentVersionRestoryConfirmation", () => PagesGlobalization.ContentHistory_Restore_ConfirmationMessage)
+                     new JavaScriptModuleGlobalization(this, "contentVersionRestoryConfirmation", () => PagesGlobalization.ContentHistory_Restore_ConfirmationMessage),
+                     new JavaScriptModuleGlobalization(this, "restoreButtonTitle", () => PagesGlobalization.ContentHistory_Restore_AcceptButtonTitle),
                 };
         }
     }
