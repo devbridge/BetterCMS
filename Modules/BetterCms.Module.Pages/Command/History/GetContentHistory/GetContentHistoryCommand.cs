@@ -25,34 +25,28 @@ namespace BetterCms.Module.Pages.Command.History.GetContentHistory
         /// <exception cref="System.NotImplementedException"></exception>
         public ContentHistoryViewModel Execute(GetContentHistoryRequest request)
         {
+            var searchQuery = (request.SearchQuery ?? string.Empty).ToLower();
+
             var history = new List<ContentHistoryItem>();
             request.SetDefaultSortingOptions("CreatedOn", true);
 
-            var query = Repository
+            var contentFutureQuery = Repository
                 .AsQueryable<Root.Models.Content>()
                 .Where(f => f.Id == request.ContentId && !f.IsDeleted)
-                .Where(f => f.Status == ContentStatus.Published || f.Status == ContentStatus.Draft || f.Status == ContentStatus.Archived);
-
-            if (!string.IsNullOrWhiteSpace(request.SearchQuery))
-            {
-                // TODO: search by status
-                query = query.Where(q => q.CreatedByUser.Contains(request.SearchQuery) 
-                    || q.PublishedByUser.Contains(request.SearchQuery));
-            }
-
-            var content = query
+                .Where(f => f.Status == ContentStatus.Published || f.Status == ContentStatus.Draft || f.Status == ContentStatus.Archived)
                 .FetchMany(f => f.History)
-                .ToFuture()
-                .ToList().FirstOrDefault();
+                .ToFuture();
+
+            var content = contentFutureQuery.ToList().FirstOrDefault();
 
             if (content != null)
             {
-                if (content.Status == ContentStatus.Published)
+                if (content.Status == ContentStatus.Published && ContainsSearchQuery(content, searchQuery))
                 {
                     history.Add(Convert(content));
                 }
 
-                history.AddRange(content.History.Where(IsValidHistoricalContent).Select(Convert));     
+                history.AddRange(content.History.Where(c => IsValidHistoricalContent(c) && ContainsSearchQuery(c, searchQuery)).Select(Convert));     
             }
 
             history = history.AsQueryable().AddSortingAndPaging(request).ToList();
@@ -63,6 +57,15 @@ namespace BetterCms.Module.Pages.Command.History.GetContentHistory
         private bool IsValidHistoricalContent(IHistorical f)
         {
             return !f.IsDeleted && (f.Status == ContentStatus.Published || f.Status == ContentStatus.Draft || f.Status == ContentStatus.Archived);
+        }
+
+        private bool ContainsSearchQuery(IHistorical f, string searchQuery)
+        {
+            if (!string.IsNullOrWhiteSpace(searchQuery))
+            {
+                return f.PublishedByUser.ToLower().Contains(searchQuery) || f.CreatedByUser.ToLower().Contains(searchQuery);
+            }
+            return true;
         }
 
         private ContentHistoryItem Convert(IHistorical content)
