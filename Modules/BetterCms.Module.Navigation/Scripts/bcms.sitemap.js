@@ -87,27 +87,31 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         /**
         * Shows add new page to sitemap dialog.
         */
-        sitemap.loadAddNewPageDialog = function (data) {
+        sitemap.loadAddNewPageDialog = function(data) {
             if (data && data.Data && data.Data.Title && data.Data.PageUrl) {
                 var addPageController = new AddNewPageMapController(data.Data.Title, data.Data.PageUrl);
                 modal.open({
                     title: globalization.sitemapAddNewPageDialogTitle,
-                    onLoad: function (dialog) {
+                    onLoad: function(dialog) {
                         dynamicContent.setContentFromUrl(dialog, links.sitemapAddNewPageDialogUrl, {
-                            done: function (content) {
+                            done: function(content) {
                                 addPageController.initialize(content, dialog);
                             }
                         });
                     },
-                    onAccept: function () {
-                        addPageController.save();
+                    onAccept: function() {
+                        addPageController.save(function() {
+                            if (data.Callback && $.isFunction(data.Callback)) {
+                                data.Callback(data);
+                            }
+                        });
                     },
-                    onClose: function () {
-                    if (data.Callback && $.isFunction(data.Callback)) {
-                        data.Callback(data);
+                    onClose: function() {
+                        if (data.Callback && $.isFunction(data.Callback)) {
+                            data.Callback(data);
+                        }
                     }
-                }
-            });
+                });
             }
         };
 
