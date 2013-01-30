@@ -142,6 +142,15 @@ namespace BetterCms.Module.Navigation.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You can undo page placement and replace it..
+        /// </summary>
+        public static string Sitemap_AddNewPageDialog_UndoMessage {
+            get {
+                return ResourceManager.GetString("Sitemap_AddNewPageDialog_UndoMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to delete node &quot;{0}&quot;?.
         /// </summary>
         public static string Sitemap_DeleteNode_Confirmation_Message {
