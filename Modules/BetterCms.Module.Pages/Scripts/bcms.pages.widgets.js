@@ -22,7 +22,8 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
                 editWidgetDialogTitle: null,
                 deleteWidgetConfirmMessage: null,
                 deleteOptionConfirmMessage: null,
-                editPageWidgetOptionsTitle: null
+                editPageWidgetOptionsTitle: null,
+                previewImageNotFoundMessage: null
             },
             selectors = {                                
                 enableCustomCss: '#bcms-enable-custom-css',
@@ -31,6 +32,8 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
                 customJsContainer: '#bcms-custom-js-container',
                 enableCustomHtml: '#bcms-enable-custom-html',
                 customHtmlContainer: '#bcms-custom-html-container',
+
+                messagesContainer: "#bcms-edit-widget-messages",
 
                 widgetPreviewImageUrl: '#PreviewImageUrl',
                 widgetPreviewImage: '#bcms-widget-preview-image',
@@ -188,18 +191,25 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
                 editor.addNewRow(dialog.container, $(selectors.optionsTable));
             });
 
-            dialog.container.find(selectors.widgetPreviewImageUrl).blur(function () {
-                var url = dialog.container.find(selectors.widgetPreviewImageUrl).val();
-                var webSiteUrlExp = /^(([\w]+:)?\/\/)?(([\d\w]|%[a-fA-f\d]{2,2})+(:([\d\w]|%[a-fA-f\d]{2,2})+)?@)?([\d\w][-\d\w]{0,253}[\d\w]\.)+[\w]{2,4}(:[\d]+)?(\/([-+_~.\d\w]|%[a-fA-f\d]{2,2})*)*(\?(&?([-+_~.\d\w]|%[a-fA-f\d]{2,2})=?)*)?(#([-+_~.\d\w]|%[a-fA-f\d]{2,2})*)?$/;
-                if (webSiteUrlExp.test(url)) {
-                    dialog.container.find(selectors.widgetPreviewImage).attr({
-                        src: url
-                    });
+            dialog.container.find(selectors.widgetPreviewImage).error(function() {
+                var image = dialog.container.find(selectors.widgetPreviewImage);
+                if (image.attr("src") != null && image.attr("src") != "") {
+                    messages.box({ container: dialog.container.find(selectors.messagesContainer) }).addWarningMessage(globalization.previewImageNotFoundMessage);
+                    image.hide();
+                    image.removeAttr("src");
+                }
+            });
+            
+            dialog.container.find(selectors.widgetPreviewImageUrl).blur(function() {
+                var image = dialog.container.find(selectors.widgetPreviewImage),
+                    urlInput = dialog.container.find(selectors.widgetPreviewImageUrl);
+
+                if (urlInput.valid()) {
+                    image.attr({ src: urlInput.val() });
+                    image.show();
                 } else {
-                    dialog.container.find(selectors.widgetPreviewImageUrl).val("");
-                    dialog.container.find(selectors.widgetPreviewImage).attr({
-                        src: ""
-                    });
+                    image.hide();
+                    image.removeAttr("src");
                 }
             });
         };

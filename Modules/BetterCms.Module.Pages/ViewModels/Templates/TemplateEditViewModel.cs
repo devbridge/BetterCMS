@@ -33,6 +33,7 @@ namespace BetterCms.Module.Pages.ViewModels.Templates
         [Required]
         [StringLength(200)]
         public string Name { get; set; }
+
         /// <summary>
         /// Gets or sets the image URL.
         /// </summary>
@@ -52,6 +53,12 @@ namespace BetterCms.Module.Pages.ViewModels.Templates
         [StringLength(MaxLength.Url)]
         public string Url { get; set; }
 
+        /// <summary>
+        /// Gets or sets the region options.
+        /// </summary>
+        /// <value>
+        /// The region options.
+        /// </value>
         public IList<TemplateRegionItemViewModel> RegionOptions { get; set; }
 
         /// <summary>
