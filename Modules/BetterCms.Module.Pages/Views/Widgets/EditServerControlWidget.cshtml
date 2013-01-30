@@ -14,11 +14,11 @@
 </div>
            
 <div class="bcms-scroll-window">
-    @Html.MessagesBox("bcms-edit-widget-messages")
     @using (Html.BeginForm<WidgetsController>(c => c.EditServerControlWidget((ServerControlWidgetViewModel)null), FormMethod.Post, new { @id = "bcms-widget-form", @class = "bcms-ajax-form" }))
     {
         <div id="bcms-tab-1" class="bcms-tab-single">
             <div class="bcms-padded-content">
+                    @Html.MessagesBox("bcms-edit-widget-messages")
                     <div class="bcms-input-list-holder">
                         @Html.Tooltip(PagesGlobalization.Widget_Title_Tooltip_Title, PagesGlobalization.Widget_Title_Tooltip_Description)
                         <div class="bcms-content-titles">@PagesGlobalization.Widget_Title_Title:</div>
