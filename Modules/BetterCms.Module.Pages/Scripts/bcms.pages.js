@@ -322,9 +322,9 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
     * Changes page slug
     */
     page.changeUrlSlug = function (dialog) {
-        var oldText = dialog.container.find(selectors.addNewPageTitleInput).val().trim();
+        var oldText = $.trim(dialog.container.find(selectors.addNewPageTitleInput).val());
         setTimeout(function() {
-            var text = dialog.container.find(selectors.addNewPageTitleInput).val().trim(),
+            var text = $.trim(dialog.container.find(selectors.addNewPageTitleInput).val()),
                 senderId = page.senderId++,
                 onComplete = function (json) {
                     if (json && json.SenderId == senderId && json.Url) {

@@ -512,6 +512,7 @@
     <EmbeddedResource Include="Scripts\knockout-2.2.0.debug.js" />
     <EmbeddedResource Include="Scripts\knockout-2.2.0.js" />
     <EmbeddedResource Include="Scripts\spinner.jquery.js" />
+    <EmbeddedResource Include="Scripts\bcms.preview.js" />
     <Content Include="Views\Web.config" />
     <EmbeddedResource Include="Views\Shared\Partial\Alert.cshtml">
       <SubType>Code</SubType>

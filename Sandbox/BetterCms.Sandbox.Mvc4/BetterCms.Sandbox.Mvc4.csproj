@@ -177,10 +177,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Content Include="App_Data\BetterCMS\Modules\readme.txt" />
-    <EmbeddedResource Include="file\bcms-root\scripts\bcms.preview.js" />
-    <EmbeddedResource Include="file\bcms-pages\scripts\bcms.pages.history.js" />
-    <EmbeddedResource Include="file\bcms-pages\scripts\bcms.pages.content.js" />
-    <EmbeddedResource Include="file\bcms-pages\scripts\bcms.pages.widgets.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -192,6 +188,8 @@
     <Folder Include="Areas\bcms-root\Views\Shared\Partial\" />
     <Folder Include="file\bcms-blog\scripts\" />
     <Folder Include="file\bcms-media\scripts\" />
+    <Folder Include="file\bcms-pages\scripts\" />
+    <Folder Include="file\bcms-root\scripts\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

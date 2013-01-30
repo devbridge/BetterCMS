@@ -54,6 +54,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit
             if (widgetId != null)
             {
                 var serverControlWidget = contentService.GetContentForEdit(widgetId.Value) as ServerControlWidget;
+
                 if (serverControlWidget != null)
                 {
                     model = new EditServerControlWidgetViewModel {
@@ -67,7 +68,8 @@ namespace BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit
                                                                      WidgetType = WidgetType.ServerControl,
                                                                      CategoryId = serverControlWidget.Category != null ? serverControlWidget.Category.Id : (Guid?)null
                                                                  };
-                    model.ContentOptions = serverControlWidget.ContentOptions
+
+                    model.ContentOptions = serverControlWidget.ContentOptions.Distinct()
                         .Select(
                             f => 
                                 new ContentOptionViewModel
@@ -79,45 +81,6 @@ namespace BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit
                         .ToList();
                 }
             }
-            /*
-            ServerControlWidgetViewModel modelAlias = null;
-                Category categoryAlias = null;
-
-                var widgetFuture = UnitOfWork.Session.QueryOver(() => serverControlWidget)
-                    .JoinAlias(() => serverControlWidget.Category, () => categoryAlias, JoinType.LeftOuterJoin, Restrictions.Where(() => !categoryAlias.IsDeleted))
-                    .Where(() => serverControlWidget.Id == widgetId)
-                    .SelectList(select => select
-                         .Select(() => serverControlWidget.Id).WithAlias(() => modelAlias.Id)
-                         .Select(() => serverControlWidget.Version).WithAlias(() => modelAlias.Version)
-                         .Select(() => serverControlWidget.Name).WithAlias(() => modelAlias.Name)
-                         .Select(() => serverControlWidget.Url).WithAlias(() => modelAlias.Url)
-                         .Select(() => serverControlWidget.PreviewUrl).WithAlias(() => modelAlias.PreviewImageUrl)
-                         .Select(() => serverControlWidget.Status).WithAlias(() => modelAlias.CurrentStatus)
-
-                         .Select(Projections.Conditional(Restrictions.Where(() => serverControlWidget.Original != null), 
-                                 Projections.Constant(true, NHibernateUtil.Boolean),
-                                 Projections.Constant(false, NHibernateUtil.Boolean))).WithAlias(() => modelAlias.HasPublishedContent)
-
-                         .Select(() => categoryAlias.Id).WithAlias(() => modelAlias.CategoryId))
-                    .TransformUsing(Transformers.AliasToBean<EditServerControlWidgetViewModel>())
-                    .FutureValue<EditServerControlWidgetViewModel>();
-
-                ContentOption contentOptionAlias = null;
-                ContentOptionViewModel contentOptionModelAlias = null;
-
-                var optionsFuture = UnitOfWork.Session.QueryOver(() => contentOptionAlias)
-                        .Where(() => contentOptionAlias.Content.Id == widgetId.Value && !contentOptionAlias.IsDeleted)
-                        .SelectList(select => select                            
-                            .Select(() => contentOptionAlias.Key).WithAlias(() => contentOptionModelAlias.OptionKey)
-                            .Select(() => contentOptionAlias.DefaultValue).WithAlias(() => contentOptionModelAlias.OptionDefaultValue)
-                            .Select(() => contentOptionAlias.Type).WithAlias(() => contentOptionModelAlias.Type))
-                        .TransformUsing(Transformers.AliasToBean<ContentOptionViewModel>())
-                        .Future<ContentOptionViewModel>();
-
-                model = widgetFuture.Value;
-                model.ContentOptions = optionsFuture.ToList();
-            }
-            */
             
             if (model == null)
             {

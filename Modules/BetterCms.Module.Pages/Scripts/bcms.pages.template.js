@@ -18,7 +18,8 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
                 editTemplateDialogTitle: null,
                 deleteTemplateConfirmMessage: null,
                 deleteRegionConfirmMessage: null,
-                editTemplateRegionTitle: null
+                editTemplateRegionTitle: null,
+                previewImageNotFoundMessage: null
             },
             selectors = {
                 templatePreviewImageUrl: '#PreviewImageUrl',
@@ -26,7 +27,9 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
                 htmlContentTemplateRowTemplate: '#bcms-advanced-content-list-row-template',
                 htmlContentTemplateRowTemplateFirstRow: 'tr:first',
                 htmlContentTemplateTableFirstRow: 'table.bcms-tables > tbody > tr:first',
-
+                
+                messagesContainer: "#bcms-edit-template-messages",
+                
                 templateSearchButton: '#bcms-template-search-btn',
 
                 templateRegisterButton: '#bcms-register-template-button',
@@ -112,18 +115,25 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
                 editor.addNewRow(dialog.container, $(selectors.optionsTable));
             });
 
+            dialog.container.find(selectors.templatePreviewImage).error(function () {
+                var image = dialog.container.find(selectors.templatePreviewImage);
+                if (image.attr("src") != null && image.attr("src") != "") {
+                    messages.box({ container: dialog.container.find(selectors.messagesContainer) }).addWarningMessage(globalization.previewImageNotFoundMessage);
+                    image.hide();
+                    image.removeAttr("src");
+                }
+            });
+
             dialog.container.find(selectors.templatePreviewImageUrl).blur(function () {
-                var url = dialog.container.find(selectors.templatePreviewImageUrl).val();
-                var webSiteUrlExp = /^(([\w]+:)?\/\/)?(([\d\w]|%[a-fA-f\d]{2,2})+(:([\d\w]|%[a-fA-f\d]{2,2})+)?@)?([\d\w][-\d\w]{0,253}[\d\w]\.)+[\w]{2,4}(:[\d]+)?(\/([-+_~.\d\w]|%[a-fA-f\d]{2,2})*)*(\?(&?([-+_~.\d\w]|%[a-fA-f\d]{2,2})=?)*)?(#([-+_~.\d\w]|%[a-fA-f\d]{2,2})*)?$/;
-                if (webSiteUrlExp.test(url)) {
-                    dialog.container.find(selectors.templatePreviewImage).attr({
-                        src: url
-                    });
+                var image = dialog.container.find(selectors.templatePreviewImage),
+                    urlInput = dialog.container.find(selectors.templatePreviewImageUrl);
+
+                if (urlInput.valid()) {
+                    image.attr({ src: urlInput.val() });
+                    image.show();
                 } else {
-                    dialog.container.find(selectors.templatePreviewImageUrl).val("");
-                    dialog.container.find(selectors.templatePreviewImage).attr({
-                        src: ""
-                    });
+                    image.hide();
+                    image.removeAttr("src");
                 }
             });
         };

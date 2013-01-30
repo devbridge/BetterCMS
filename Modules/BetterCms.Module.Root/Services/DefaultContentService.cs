@@ -82,6 +82,16 @@ namespace BetterCms.Module.Root.Services
             }
 
             originalContent = repository.UnProxy(originalContent);
+           
+            if (originalContent.History != null)
+            {
+                originalContent.History = originalContent.History.Distinct().ToList();
+            }
+
+            if (originalContent.ContentOptions != null)
+            {
+                originalContent.ContentOptions = originalContent.ContentOptions.Distinct().ToList();
+            }
 
             /* Update existing content. */
             switch (originalContent.Status)

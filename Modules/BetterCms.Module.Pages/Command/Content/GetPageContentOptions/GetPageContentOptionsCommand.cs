@@ -37,7 +37,7 @@ namespace BetterCms.Module.Pages.Command.Content.GetPageContentOptions
 
                     if (pageContent.Options != null)
                     {
-                        foreach (var pageContentOption in pageContent.Options)
+                        foreach (var pageContentOption in pageContent.Options.Distinct())
                         {
                             ContentOption contentOption = null;
                             if (pageContent.Content.ContentOptions != null)
@@ -57,7 +57,7 @@ namespace BetterCms.Module.Pages.Command.Content.GetPageContentOptions
 
                     if (pageContent.Content.ContentOptions != null)
                     {
-                        foreach (var contentOption in pageContent.Content.ContentOptions)
+                        foreach (var contentOption in pageContent.Content.ContentOptions.Distinct())
                         {
                             if (!options.Any(f => f.OptionKey.Equals(contentOption.Key.Trim(), StringComparison.OrdinalIgnoreCase)))
                             {

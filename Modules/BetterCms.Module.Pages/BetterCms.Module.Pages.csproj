@@ -297,6 +297,9 @@
     <EmbeddedResource Include="Scripts\bcms.pages.tags.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.properties.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.template.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.content.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.history.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.widgets.js" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -384,9 +387,7 @@
     <EmbeddedResource Include="Views\Content\PageContentOptions.cshtml" />
     <EmbeddedResource Include="Views\Content\EditPageHtmlContent.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\History\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Views\Templates\Templates.cshtml" />
   </ItemGroup>
@@ -408,7 +409,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Views\Page\Partial\AddNewPageEditPermalink.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Views\History\ContentHistory.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\History\ContentVersion.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Layouts\ContentVersionLayout.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
