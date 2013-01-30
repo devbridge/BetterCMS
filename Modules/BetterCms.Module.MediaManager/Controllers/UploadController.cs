@@ -76,7 +76,6 @@ namespace BetterCms.Module.MediaManager.Controllers
                         Data = new
                         {
                             IsValid = true,
-                            Message = string.Empty,
                             Id = media.Id,
                             fileName = media.OriginalFileName,
                             fileSize = media.Size,

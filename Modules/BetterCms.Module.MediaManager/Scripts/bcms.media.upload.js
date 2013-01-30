@@ -93,7 +93,7 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
                 },
                 onAcceptClick: function () {
                     $("#SaveForm").submit(); 
-                    alert("cia");
+                    
                 },
                 onCancel: function () {
                     options.uploads.removeAllUploads();
@@ -106,32 +106,32 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
         var isFirstLoad = true;
         var context = document.getElementById('bcms-media-uploads');
         var uploadsModel = options.uploads;
-        var fakeuploadData =
+        var fakeData =
             {
                 fileName: "Uploading",
-                fileSize: ko.observable(12560),
+                fileSize: 1024,
                 fileId: null,
                 version: null,
                 type: null
             };
-        var fileModel2 = new FileViewModel(fakeuploadData);
+        var uploadFile = new FileViewModel(fakeData);
 
         
         dialog.container.find("#upload").on('click', function () {
             dialog.container.find($('#ImgForm')).submit();
            
-            fileModel2.uploadCompleted(false);
-            uploadsModel.activeUploads.push(fileModel2);
-            uploadsModel.uploads.push(fileModel2);
+            uploadFile.uploadCompleted(false);
+            uploadsModel.activeUploads.push(uploadFile);
+            uploadsModel.uploads.push(uploadFile);
             ko.applyBindings(uploadsModel, context);
             //dialog.container.showLoading();
         });
 
         dialog.container.find($("#UploadTarget")).on('load', function () {
             //dialog.container.hideLoading();
-            fileModel2.uploadCompleted(true);
-            uploadsModel.uploads.remove(fileModel2);
-            
+            uploadFile.uploadCompleted(true);
+            uploadsModel.uploads.remove(uploadFile);
+            uploadsModel.activeUploads.remove(uploadFile);
             if (isFirstLoad == true) {
                 isFirstLoad = false;
                 return;

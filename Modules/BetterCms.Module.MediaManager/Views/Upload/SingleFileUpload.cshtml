@@ -42,7 +42,7 @@
             </div>
             
         }
-        @using (Html.BeginForm<UploadController>(c => c.SaveUploads(null), FormMethod.Post, new { id = "SaveForm", name ="SaveForm"}))
+        @using (Html.BeginForm<UploadController>(c => c.SaveUploads(null), FormMethod.Post, new { id = "SaveForm", name = "SaveForm", @class = "bcms-ajax-form" }))
         {
             @Html.HiddenFor(m => m.RootFolderId)
             @Html.HiddenFor(m => m.SelectedFolderId)
