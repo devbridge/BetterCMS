@@ -225,6 +225,9 @@
   <data name="ImageEditor_Dialog_FileSize" xml:space="preserve">
     <value>File size</value>
   </data>
+  <data name="ImageEditor_Dialog_FitImage_Title" xml:space="preserve">
+    <value>Fit Image</value>
+  </data>
   <data name="ImageEditor_Dialog_ImageHeight_RangeMessage" xml:space="preserve">
     <value>Image height can not be less than 0 px.</value>
   </data>
@@ -251,9 +254,6 @@
   </data>
   <data name="ImageEditor_Dialog_Title" xml:space="preserve">
     <value>Edit Image</value>
-  </data>
-  <data name="ImageEditor_Dialog_UseSourceImage_Title" xml:space="preserve">
-    <value>Use source image</value>
   </data>
   <data name="ImageEditor_InsertDialog_AcceptButton" xml:space="preserve">
     <value>Insert</value>

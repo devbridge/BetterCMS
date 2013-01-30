@@ -28,10 +28,10 @@ namespace BetterCms.Module.MediaManager.Command.Images.CropImage
             mediaImageService.CropImage(
                 request.Id.ToGuidOrDefault(),
                 request.Version.ToIntOrDefault(),
-                request.CropCoordX1.ToIntOrDefault(),
-                request.CropCoordY1.ToIntOrDefault(),
-                request.CropCoordX2.ToIntOrDefault(),
-                request.CropCoordY2.ToIntOrDefault());
+                request.CropCoordX1,
+                request.CropCoordY1,
+                request.CropCoordX2,
+                request.CropCoordY2);
         }
     }
 }

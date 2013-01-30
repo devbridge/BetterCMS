@@ -20,11 +20,16 @@
 
             <div class="bcms-input-list-holder">
                 @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_CropImage_Tooltip_Title, MediaGlobalization.ImageEditor_Dialog_CropImage_Tooltip_Description)
-                <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_CropImage_Title<a class="bcms-icn-delete-link">@MediaGlobalization.ImageEditor_Dialog_UseSourceImage_Title</a></div>
+                <div class="bcms-content-titles">
+                    @MediaGlobalization.ImageEditor_Dialog_CropImage_Title
+                </div>
+                
+                <input type="checkbox" data-bind="checked: dimensionEditor.fit" />
+                @MediaGlobalization.ImageEditor_Dialog_FitImage_Title
             </div>
             
             <div class="bcms-croped-block">
-                <a href="#"><img src="@Model.Url?version=@Model.Version" data-id="@Model.Id" data-version="@Model.Version"></a>
+                <a href="#"><img src="@Model.Url?version=@Model.Version" data-id="@Model.Id" data-version="@Model.Version" data-bind="attr: { width: dimensionEditor.calculatedWidth(), height: dimensionEditor.calculatedHeight() }"></a>
             </div>
                 
             <div class="bcms-edit-file-info">

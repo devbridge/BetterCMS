@@ -47,6 +47,10 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                 imageEditorCroppingDialogTitle: null,
                 imageEditorCropFailureMessageTitle: null,
                 imageEditorCropFailureMessageMessage: null,
+            },
+            constants = {
+                maxHeightToFit: 500,
+                maxWidthToFit: 835,
             };
 
         /**
@@ -199,7 +203,7 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
         var DimensionEditorViewModel = (function (_super) {
             bcms.extendsClass(DimensionEditorViewModel, _super);
 
-            function DimensionEditorViewModel(dialog, widht, height) {
+            function DimensionEditorViewModel(dialog, width, height) {
                 _super.call(this);
 
                 var self = this;
@@ -209,14 +213,108 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                 self.widthInput = dialog.container.find(selectors.imageSizeEditBoxWidth);
                 self.heightInput = dialog.container.find(selectors.imageSizeEditBoxWidth);
 
-                self.width = ko.observable(widht);
+                self.width = ko.observable(width);
                 self.height = ko.observable(height);
-                self.oldWidth = ko.observable(widht);
+                self.oldWidth = ko.observable(width);
                 self.oldHeight = ko.observable(height);
+                self.fit = ko.observable(true);
+                self.calculatedWidth = ko.observable(width);
+                self.calculatedHeight = ko.observable(height);
+
+                // Recalculate image dimensions on image change
+                self.fit.subscribe(function () {
+                    recalculate();
+                });
+                self.oldWidth.subscribe(function () {
+                    recalculate();
+                });
+                self.oldHeight.subscribe(function () {
+                    recalculate();
+                });
 
                 self.widthAndHeight = ko.computed(function () {
                     return self.oldWidth() + ' x ' + self.oldHeight();
                 });
+
+                self.calculateWidth = ko.computed(function () {
+                    if (self.fit() && self.width() > constants.maxWidthToFit) {
+                        return constants.maxWidthToFit;
+                    }
+                    return self.width();
+                });
+
+                self.calculateHeight = ko.computed(function () {
+                    if (self.fit() && self.height() > constants.maxHeightToFit) {
+                        return constants.maxHeightToFit;
+                    }
+                    return self.height();
+                });
+                
+                function recalculate() {
+                    var calcWidth = self.oldWidth(),
+                        calcHeight = self.oldHeight(),
+                        scaleX = constants.maxWidthToFit > 0 ? calcWidth / constants.maxWidthToFit : 0,
+                        scaleY = constants.maxHeightToFit > 0 ? calcHeight / constants.maxHeightToFit : 0;
+
+                    if (self.fit() && (calcHeight > constants.maxHeightToFit || calcWidth > constants.maxWidthToFit)) {
+                        
+                        if (scaleX > scaleY) {
+                            calcWidth = constants.maxWidthToFit;
+                            calcHeight = scaleX > 0 ? calcHeight / scaleX : 0;
+                            /*img.css('width', '');
+                            img.css('height', '100%');*/
+                        } else {
+                            /*img.css('width', '100%');
+                            img.css('height', '');*/
+                            calcHeight = constants.maxHeightToFit;
+                            calcWidth = scaleY > 0 ? calcWidth / scaleY : 0;
+                        }
+
+                        /*if (origWidth > origHeight) {
+                            if (origWidth > 960) {
+                                calcWidth = 960;
+                                calcHeight = origHeight * (calcWidth / origWidth);
+                            }
+                            if (origHeight > 640) {
+                                calcHeight = 640;
+                                calcWidth = origWidth * (calcHeight / origHeight);
+                            }
+                        }
+                        else {
+                            if (origHeight > 960) {
+                                calcHeight = 960;
+                                calcWidth = origWidth * (calcHeight / origHeight);
+                            }
+                            if (origWidth > 640) {
+                                calcWidth = 640;
+                                calcHeight = origHeight * (calcWidth / origWidth);
+                            }
+                        }*/
+
+                        /*if (aspectRatio > 1) {
+                            // Height > Width
+                            if (height > constants.maxHeightToFit) {
+                                
+                            } else {
+                                
+                            }
+                        } else {
+                            // Width > Height
+                        }*/
+                        
+                        /*if (self.height() > constants.maxHeightToFit) {
+                            calcHeight = constants.maxHeightToFit;
+                        }
+                        if (self.width() > constants.maxWidthToFit) {
+                            calcWidth = constants.maxWidthToFit;
+                        }*/
+                    }
+                    
+                    self.calculatedWidth(calcWidth);
+                    self.calculatedHeight(calcHeight);
+                }
+
+                recalculate();
             }
 
             DimensionEditorViewModel.prototype.onSave = function () {

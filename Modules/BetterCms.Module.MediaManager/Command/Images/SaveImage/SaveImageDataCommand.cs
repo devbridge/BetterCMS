@@ -27,8 +27,29 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
             mediaImage.Caption = request.Caption;
             mediaImage.Title = request.Title;
             mediaImage.ImageAlign = request.ImageAlign;
+            mediaImage.Width = request.ImageWidth;
+            mediaImage.Height = request.ImageHeight;
             mediaImage.Version = request.Version.ToIntOrDefault();
-            
+
+            // Set crop options
+            if (mediaImage.CropCoordX1 == 0 
+                && mediaImage.CropCoordY1 == 0
+                && mediaImage.CropCoordX2 == mediaImage.OriginalWidth
+                && mediaImage.CropCoordY2 == mediaImage.OriginalHeight)
+            {
+                mediaImage.CropCoordX1 = null;
+                mediaImage.CropCoordY1 = null;
+                mediaImage.CropCoordX2 = null;
+                mediaImage.CropCoordY2 = null;
+            }
+            else
+            {
+                mediaImage.CropCoordX1 = request.CropCoordX1;
+                mediaImage.CropCoordY1 = request.CropCoordY1;
+                mediaImage.CropCoordX2 = request.CropCoordX2;
+                mediaImage.CropCoordY2 = request.CropCoordY2;
+            }
+
             Repository.Save(mediaImage);
             UnitOfWork.Commit();
         }

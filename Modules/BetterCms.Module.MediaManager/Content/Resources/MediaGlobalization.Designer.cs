@@ -385,6 +385,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fit Image.
+        /// </summary>
+        public static string ImageEditor_Dialog_FitImage_Title {
+            get {
+                return ResourceManager.GetString("ImageEditor_Dialog_FitImage_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Image height can not be less than 0 px..
         /// </summary>
         public static string ImageEditor_Dialog_ImageHeight_RangeMessage {
@@ -462,15 +471,6 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         public static string ImageEditor_Dialog_Title {
             get {
                 return ResourceManager.GetString("ImageEditor_Dialog_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Use source image.
-        /// </summary>
-        public static string ImageEditor_Dialog_UseSourceImage_Title {
-            get {
-                return ResourceManager.GetString("ImageEditor_Dialog_UseSourceImage_Title", resourceCulture);
             }
         }
         
