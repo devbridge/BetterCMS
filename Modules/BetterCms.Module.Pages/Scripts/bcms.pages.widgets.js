@@ -22,7 +22,8 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
                 editWidgetDialogTitle: null,
                 deleteWidgetConfirmMessage: null,
                 deleteOptionConfirmMessage: null,
-                editPageWidgetOptionsTitle: null
+                editPageWidgetOptionsTitle: null,
+                previewImageNotFoundMessage: null
             },
             selectors = {                                
                 enableCustomCss: '#bcms-enable-custom-css',
@@ -193,7 +194,7 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
             dialog.container.find(selectors.widgetPreviewImage).error(function() {
                 var image = dialog.container.find(selectors.widgetPreviewImage);
                 if (image.attr("src") != null && image.attr("src") != "") {
-                    messages.box({ container: dialog.container.find(selectors.messagesContainer) }).addWarningMessage("Preview image not found, check url!");
+                    messages.box({ container: dialog.container.find(selectors.messagesContainer) }).addWarningMessage(globalization.previewImageNotFoundMessage);
                     image.hide();
                     image.removeAttr("src");
                 }

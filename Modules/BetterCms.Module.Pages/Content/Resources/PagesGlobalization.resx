@@ -1029,4 +1029,10 @@
   <data name="DeletePage_Dialog_DeleteButton" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="EditTemplate_PreviewImageNotFound_Message" xml:space="preserve">
+    <value>Preview image not found.</value>
+  </data>
+  <data name="EditWidget_PreviewImageNotFound_Message" xml:space="preserve">
+    <value>Preview image not found.</value>
+  </data>
 </root>

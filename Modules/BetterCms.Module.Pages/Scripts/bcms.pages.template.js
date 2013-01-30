@@ -18,7 +18,8 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
                 editTemplateDialogTitle: null,
                 deleteTemplateConfirmMessage: null,
                 deleteRegionConfirmMessage: null,
-                editTemplateRegionTitle: null
+                editTemplateRegionTitle: null,
+                previewImageNotFoundMessage: null
             },
             selectors = {
                 templatePreviewImageUrl: '#PreviewImageUrl',
@@ -117,7 +118,7 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
             dialog.container.find(selectors.templatePreviewImage).error(function () {
                 var image = dialog.container.find(selectors.templatePreviewImage);
                 if (image.attr("src") != null && image.attr("src") != "") {
-                    messages.box({ container: dialog.container.find(selectors.messagesContainer) }).addWarningMessage("Preview image not found, check url!");
+                    messages.box({ container: dialog.container.find(selectors.messagesContainer) }).addWarningMessage(globalization.previewImageNotFoundMessage);
                     image.hide();
                     image.removeAttr("src");
                 }
