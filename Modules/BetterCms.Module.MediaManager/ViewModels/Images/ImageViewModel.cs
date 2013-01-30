@@ -106,6 +106,22 @@ namespace BetterCms.Module.MediaManager.ViewModels.Images
         public int ImageHeight { get; set; }
 
         /// <summary>
+        /// Gets or sets the original image width.
+        /// </summary>
+        /// <value>
+        /// The original image width.
+        /// </value>
+        public int OriginalImageWidth { get; set; }
+
+        /// <summary>
+        /// Gets or sets the original image height.
+        /// </summary>
+        /// <value>
+        /// The original image height.
+        /// </value>
+        public int OriginalImageHeight { get; set; }
+
+        /// <summary>
         /// Gets or sets the image align.
         /// </summary>
         /// <value>

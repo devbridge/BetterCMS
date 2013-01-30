@@ -39,6 +39,8 @@ namespace BetterCms.Module.MediaManager.Command.Images.GetImage
                                      FileSize = MediaFileService.GetFileSizeText(f.Size),
                                      ImageWidth = f.Width,
                                      ImageHeight = f.Height,
+                                     OriginalImageWidth = f.OriginalWidth,
+                                     OriginalImageHeight = f.OriginalHeight,
                                      ImageAlign = f.ImageAlign.HasValue ? f.ImageAlign.Value : MediaImageAlign.Left,
                                      CropCoordX1 = f.CropCoordX1.HasValue ? f.CropCoordX1.Value : 0,
                                      CropCoordY1 = f.CropCoordY1.HasValue ? f.CropCoordY1.Value : 0,

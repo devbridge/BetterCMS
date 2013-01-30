@@ -203,7 +203,7 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
         var DimensionEditorViewModel = (function (_super) {
             bcms.extendsClass(DimensionEditorViewModel, _super);
 
-            function DimensionEditorViewModel(dialog, width, height) {
+            function DimensionEditorViewModel(dialog, width, height, originalWidth, originalHeight) {
                 _super.call(this);
 
                 var self = this;
@@ -213,6 +213,8 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                 self.widthInput = dialog.container.find(selectors.imageSizeEditBoxWidth);
                 self.heightInput = dialog.container.find(selectors.imageSizeEditBoxWidth);
 
+                self.originalWidth = originalWidth;
+                self.originalHeight = originalHeight;
                 self.width = ko.observable(width);
                 self.height = ko.observable(height);
                 self.oldWidth = ko.observable(width);
@@ -249,6 +251,12 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                     }
                     return self.height();
                 });
+
+                self.restoreOriginalSize = function() {
+                    self.width(self.originalWidth);
+                    self.height(self.originalHeight);
+                    self.save();
+                };
                 
                 function recalculate() {
                     var calcWidth = self.oldWidth(),
@@ -261,53 +269,10 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                         if (scaleX > scaleY) {
                             calcWidth = constants.maxWidthToFit;
                             calcHeight = scaleX > 0 ? calcHeight / scaleX : 0;
-                            /*img.css('width', '');
-                            img.css('height', '100%');*/
                         } else {
-                            /*img.css('width', '100%');
-                            img.css('height', '');*/
                             calcHeight = constants.maxHeightToFit;
                             calcWidth = scaleY > 0 ? calcWidth / scaleY : 0;
                         }
-
-                        /*if (origWidth > origHeight) {
-                            if (origWidth > 960) {
-                                calcWidth = 960;
-                                calcHeight = origHeight * (calcWidth / origWidth);
-                            }
-                            if (origHeight > 640) {
-                                calcHeight = 640;
-                                calcWidth = origWidth * (calcHeight / origHeight);
-                            }
-                        }
-                        else {
-                            if (origHeight > 960) {
-                                calcHeight = 960;
-                                calcWidth = origWidth * (calcHeight / origHeight);
-                            }
-                            if (origWidth > 640) {
-                                calcWidth = 640;
-                                calcHeight = origHeight * (calcWidth / origWidth);
-                            }
-                        }*/
-
-                        /*if (aspectRatio > 1) {
-                            // Height > Width
-                            if (height > constants.maxHeightToFit) {
-                                
-                            } else {
-                                
-                            }
-                        } else {
-                            // Width > Height
-                        }*/
-                        
-                        /*if (self.height() > constants.maxHeightToFit) {
-                            calcHeight = constants.maxHeightToFit;
-                        }
-                        if (self.width() > constants.maxWidthToFit) {
-                            calcWidth = constants.maxWidthToFit;
-                        }*/
                     }
                     
                     self.calculatedWidth(calcWidth);
@@ -349,14 +314,14 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
         /**
         * Initializes ImageEditor dialog events.
         */
-        imageEditor.initImageEditorDialogEvents = function (dialog) {
+        imageEditor.initImageEditorDialogEvents = function (dialog, content) {
+
+            var data = content.Data ? content.Data : { };
 
             // Create view models for editor boxes and for form
-            var titleEditor = new TitleEditorViewModel(dialog, dialog.container.find(selectors.imageTitleEditInput).val());
+            var titleEditor = new TitleEditorViewModel(dialog, data.Title);
             
-            var dimensionEditor = new DimensionEditorViewModel(dialog,
-                dialog.container.find(selectors.imageSizeEditBoxWidth).val(),
-                dialog.container.find(selectors.imageSizeEditBoxHeight).val());
+            var dimensionEditor = new DimensionEditorViewModel(dialog, data.ImageWidth, data.ImageHeight, data.OriginalImageWidth, data.OriginalImageHeight);
             
             var viewModel = new ImageEditViewModel(titleEditor, dimensionEditor);
             ko.applyBindings(viewModel, dialog.container.find(selectors.imageEditorForm).get(0));

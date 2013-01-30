@@ -61,11 +61,11 @@
                 
                 <div class="bcms-file-info-text"><b>@MediaGlobalization.ImageEditor_Dialog_FileSize:</b> <span id="image-file-size">@Model.FileSize</span></div>
 
-                <div class="bcms-file-info-text">
-                    <b>@MediaGlobalization.ImageEditor_Dialog_Dimensions:</b> <span data-bind="text: dimensionEditor.widthAndHeight()">@Model.ImageWidth x @Model.ImageHeight</span> 
-                    <a class="bcms-file-link" data-bind="click: dimensionEditor.open, visible: !dimensionEditor.isOpened()">@RootGlobalization.Button_Edit</a>
-                    <div class="bcms-file-edit" data-bind="style: {'display': dimensionEditor.isOpened() ? 'block' : 'none' }">
-                        <div class="bcms-tip-close" data-bind="click: dimensionEditor.close">@RootGlobalization.Button_Close</div>
+                <div class="bcms-file-info-text" data-bind="with: dimensionEditor">
+                    <b>@MediaGlobalization.ImageEditor_Dialog_Dimensions:</b> <span data-bind="text: widthAndHeight()">@Model.ImageWidth x @Model.ImageHeight</span> 
+                    <a class="bcms-file-link" data-bind="click: open, visible: !isOpened()">@RootGlobalization.Button_Edit</a>
+                    <div class="bcms-file-edit" data-bind="style: {'display': isOpened() ? 'block' : 'none' }">
+                        <div class="bcms-tip-close" data-bind="click: close">@RootGlobalization.Button_Close</div>
                         @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_ChangeSize_Tooltip_Title, MediaGlobalization.ImageEditor_Dialog_ChangeSize_Tooltip_Description)
                         <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_ChangeSize_Title</div>
                         <span>@MediaGlobalization.ImageEditor_Dialog_ChangeSize_Width:</span>
@@ -74,7 +74,7 @@
                                                                     @class = "bcms-editor-field-box", 
                                                                     @style = "width: 77px;", 
                                                                     @id = "image-width",
-                                                                    @data_bind = "value: dimensionEditor.width, valueUpdate: 'afterkeydown', enterPress: dimensionEditor.save, escPress: dimensionEditor.close"
+                                                                    @data_bind = "value: width, valueUpdate: 'afterkeydown', enterPress: save, escPress: close"
                                                                 })
                         <span>@MediaGlobalization.ImageEditor_Dialog_ChangeSize_Height:</span>
                         @Html.TextBoxFor(f => f.ImageHeight, new
@@ -82,10 +82,12 @@
                                                                      @class = "bcms-editor-field-box", 
                                                                      @style = "width: 77px;", 
                                                                      @id = "image-height",
-                                                                     @data_bind = "value: dimensionEditor.height, valueUpdate: 'afterkeydown', enterPress: dimensionEditor.save, escPress: dimensionEditor.close"
+                                                                     @data_bind = "value: height, valueUpdate: 'afterkeydown', enterPress: save, escPress: close"
                                                                  })
-                        <div class="bcms-btn-small" data-bind="click: dimensionEditor.save">@RootGlobalization.Button_Ok</div>
-                        <div class="bcms-btn-links-small" data-bind="click: dimensionEditor.close">@RootGlobalization.Button_Cancel</div>
+                        <div class="bcms-btn-small" data-bind="click: save">@RootGlobalization.Button_Ok</div>
+                        <div class="bcms-btn-links-small" data-bind="click: close">@RootGlobalization.Button_Cancel</div>
+                        
+                        <a href="#" data-bind="click: restoreOriginalSize">@MediaGlobalization.ImageEditor_Dialog_RestoreOriginalSize_Title</a>
                     </div>
                 </div>
             </div>

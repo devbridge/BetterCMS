@@ -466,6 +466,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Restore Original Size.
+        /// </summary>
+        public static string ImageEditor_Dialog_RestoreOriginalSize_Title {
+            get {
+                return ResourceManager.GetString("ImageEditor_Dialog_RestoreOriginalSize_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit Image.
         /// </summary>
         public static string ImageEditor_Dialog_Title {

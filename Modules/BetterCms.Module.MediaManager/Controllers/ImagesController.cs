@@ -72,8 +72,9 @@ namespace BetterCms.Module.MediaManager.Controllers
         public ActionResult ImageEditor(string imageId)
         {
             var model = GetCommand<GetImageCommand>().Execute(imageId.ToGuidOrDefault());
+            var view = RenderView("ImageEditor", model);
 
-            return View(model);
+            return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
