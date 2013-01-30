@@ -24,6 +24,11 @@
     padding: 0 20px 4px;
 }
 
+    .bcms-addnode-placement-holder .bcms-placement-node:hover {
+        border: 1px dashed #bdbdbd;
+        cursor: move;
+    }
+
 .bcms-sitemap-holder {
     padding-top: 20px;
 }
@@ -46,9 +51,6 @@
     border-radius: 4px;
     background-color: #fff;
     cursor: move;
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
 }
 
     .bcms-dropable-page-box:hover {
@@ -124,16 +126,11 @@
     border: 1px solid #c6c6c6;
     border-radius: 2px;
     background-color: #f5f5f5;
-    cursor: move;
 }
 
-    .bcms-placement-node:hover {
-        border: 1px dashed #bdbdbd;
+    .bcms-placement-node:hover .bcms-node-controls {
+        display: block;
     }
-
-        .bcms-placement-node:hover .bcms-node-controls {
-            display: block;
-        }
 
     .bcms-placement-node .bcms-placement-title {
         max-width: 450px;
@@ -279,34 +276,3 @@ div.bcms-add-node-col .bcms-placement-dropzone {
     border-left: 3px solid #e3e3e3;
     padding-left: 20px;
 }*/
-
-
-/*
-    .bcms-sitemap-links-header {
-    padding: 25px 20px 0;
-}
-
-    .bcms-sitemap-links-header > .bcms-content-titles {
-        cursor: pointer;
-    }
-
-    .bcms-add-custom-link {
-    position: relative;
-    padding: 2px 15px 15px;
-    margin: 10px 0;
-    border: 1px solid #bdbdbd;
-    border-radius: 4px;
-    background-color: #fff;
-    cursor: move;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    user-select: none;
-}
-
-    .bcms-add-custom-link:hover {
-        border: 1px dashed #a4a4a4;
-    }
-
-    .bcms-add-custom-link .bcms-content-titles {
-        padding: 10px 0 5px;
-    }*/
