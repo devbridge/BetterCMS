@@ -21,7 +21,7 @@
 .bcms-addnode-placement-holder {
     min-height: 52px;
     display: block;
-    padding: 0 20px 4px;
+    padding: 0 0 4px;
 }
 
     .bcms-addnode-placement-holder .bcms-placement-node:hover {
@@ -30,7 +30,7 @@
     }
 
 .bcms-sitemap-holder {
-    padding-top: 20px;
+    padding: 20px 20px 0;
 }
 
 .bcms-drop-area {
@@ -150,6 +150,8 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        cursor: pointer;
+        text-decoration: none;
     }
 
 .bcms-placement-node-drag {
