@@ -494,7 +494,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             var self = this;
             imageEditor.onEditImage(self.id(), function (json) {
                 self.version(json.Version);
-                self.name(json.FileName);
+                self.name(json.Title);
             });
         };
 

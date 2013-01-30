@@ -238,19 +238,11 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Scripts\bcms.contextMenu.js" />
-    <EmbeddedResource Include="Scripts\bcms.media.imageeditor.js" />
-    <EmbeddedResource Include="Scripts\bcms.media.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />
     <Folder Include="Mvc\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Images\ImageCropper.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Images\ImageEditor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Images\ImageEditorInsert.cshtml" />

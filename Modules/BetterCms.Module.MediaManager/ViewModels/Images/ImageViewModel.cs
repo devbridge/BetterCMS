@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+
+using BetterCms.Core.Models;
 using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Models;
 
@@ -24,6 +26,16 @@ namespace BetterCms.Module.MediaManager.ViewModels.Images
         /// The caption.
         /// </value>
         public string Caption { get; set; }
+
+        /// <summary>
+        /// Gets or sets the title.
+        /// </summary>
+        /// <value>
+        /// The title.
+        /// </value>
+        [Required]
+        [StringLength(MaxLength.Name)]
+        public string Title { get; set; }
 
         /// <summary>
         /// Gets or sets the URL.

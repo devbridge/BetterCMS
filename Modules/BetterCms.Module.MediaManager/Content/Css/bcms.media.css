@@ -1471,9 +1471,11 @@ input.bcms-grid-input:focus {
 .jcrop-tracker {
     height: 100%;
     width: 100%;
-    -webkit-tap-highlight-color: transparent; /* "turn off" link highlight */
-    -webkit-touch-callout: none; /* disable callout, image save panel */
-    -webkit-user-select: none; /* disable cut copy paste */
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
 }
 
 /* Positioning of handles and drag bars */

@@ -177,6 +177,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Content Include="App_Data\BetterCMS\Modules\readme.txt" />
+    <EmbeddedResource Include="file\bcms-media\scripts\bcms.media.imageeditor.js" />
+    <EmbeddedResource Include="file\bcms-media\scripts\bcms.media.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -187,7 +189,6 @@
     <Folder Include="Areas\bcms-blog\Views\Blog\" />
     <Folder Include="Areas\bcms-pages\Views\Page\Partial\" />
     <Folder Include="file\bcms-blog\scripts\" />
-    <Folder Include="file\bcms-media\scripts\" />
     <Folder Include="file\bcms-pages\scripts\" />
     <Folder Include="file\bcms-root\scripts\" />
     <Folder Include="Models\" />
@@ -250,6 +251,12 @@
     <Content Include="Views\Widgets\05.cshtml" />
     <Content Include="Views\Shared\Partial\Hello.cshtml" />
     <Content Include="Views\Shared\Partial\TestOptionValues.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\bcms-media\Views\Images\ImageCropper.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Areas\bcms-media\Views\Images\ImageEditor.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

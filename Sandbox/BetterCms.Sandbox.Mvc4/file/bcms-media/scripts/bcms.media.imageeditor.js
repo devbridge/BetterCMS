@@ -1,13 +1,13 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'jquery.Jcrop'],
-    function($, bcms, modal, siteSettings, forms, dynamicContent, jcrop) {
+define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'jquery.Jcrop', 'knockout'],
+    function($, bcms, modal, siteSettings, forms, dynamicContent, jcrop, ko) {
         'use strict';
 
         var imageEditor = {},
             selectors = {
-                imageEditLink: ".bcms-btn-main",
+                // imageEditLink: ".bcms-btn-main",
                 imageToEdit: ".bcms-croped-block img",
                 imageVersionField: "#image-version-field",
                 imageCaption: "#Caption",
@@ -17,12 +17,12 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                 imageAlignment: "input[name=ImageAlign]:checked",
                 imageAlignmentControls: ".bcms-alignment-controls",
 
-                imageSizeEditLink: ".bcms-file-link",
-                imageSizeEditBox: ".bcms-file-edit",
+                imageEditorForm: 'form:first',
+
                 imageSizeEditBoxWidth: "#image-width",
                 imageSizeEditBoxHeight: "#image-height",
-                imageSizeEditBoxOk: "#bcms-save-imagesize",
-                imageSizeEditBoxClose: "div.bcms-file-edit .bcms-tip-close",
+                
+                imageTitleEditInput: "#bcms-image-title-editor",
 
                 imageToCrop: ".bcms-crop-image-block img",
                 imageToCropCoordX1: ".bcms-crop-image-x1",
@@ -128,12 +128,144 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
         };
 
         /**
+        * Editor base view model
+        */
+        var EditorBaseViewModel = (function () {
+            function EditorBaseViewModel() {
+                var self = this;
+
+                self.isOpened = ko.observable(false);
+                
+                self.open = function () {
+                    self.isOpened(true);
+                };
+
+                self.close = function () {
+                    self.onClose();
+                    self.isOpened(false);
+                };
+
+                self.save = function () {
+                    if (self.onSave()) {
+                        self.isOpened(false);
+                    }
+                };
+            }
+            
+            EditorBaseViewModel.prototype.onSave = function () { };
+            
+            EditorBaseViewModel.prototype.onClose = function () { };
+
+            return EditorBaseViewModel;
+        })();
+        
+        /**
+        * Title editor view model
+        */
+        var TitleEditorViewModel = (function (_super) {
+            bcms.extendsClass(TitleEditorViewModel, _super);
+
+            function TitleEditorViewModel(dialog, title) {
+                _super.call(this);
+
+                var self = this;
+
+                self.input = dialog.container.find(selectors.imageTitleEditInput);
+                
+                self.title = ko.observable(title);
+                self.oldTitle = ko.observable(title);
+            }
+
+            TitleEditorViewModel.prototype.onSave = function () {
+                if (this.input.valid()) {
+                    this.oldTitle(this.title());
+
+                    return true;
+                }
+
+                return false;
+            };
+
+            TitleEditorViewModel.prototype.onClose = function () {
+                this.title(this.oldTitle());
+            };
+
+            return TitleEditorViewModel;
+        })(EditorBaseViewModel);
+
+        /**
+        * Dimension editor view model
+        */
+        var DimensionEditorViewModel = (function (_super) {
+            bcms.extendsClass(DimensionEditorViewModel, _super);
+
+            function DimensionEditorViewModel(dialog, widht, height) {
+                _super.call(this);
+
+                var self = this;
+
+                self.dialog = dialog;
+
+                self.widthInput = dialog.container.find(selectors.imageSizeEditBoxWidth);
+                self.heightInput = dialog.container.find(selectors.imageSizeEditBoxWidth);
+
+                self.width = ko.observable(widht);
+                self.height = ko.observable(height);
+                self.oldWidth = ko.observable(widht);
+                self.oldHeight = ko.observable(height);
+
+                self.widthAndHeight = ko.computed(function () {
+                    return self.oldWidth() + ' x ' + self.oldHeight();
+                });
+            }
+
+            DimensionEditorViewModel.prototype.onSave = function () {
+                if (this.widthInput.valid() && this.heightInput.valid() /*&& imageEditor.onImageResize(this.dialog) === true*/) {
+                    this.oldWidth(this.width());
+                    this.oldHeight(this.height());
+
+                    return true;
+                }
+
+                return false;
+            };
+
+            DimensionEditorViewModel.prototype.onClose = function () {
+                this.width(this.oldWidth());
+                this.height(this.oldHeight());
+            };
+            
+            return DimensionEditorViewModel;
+        })(EditorBaseViewModel);
+
+        /**
+        * Image edit form view model
+        */
+        function ImageEditViewModel(titleEditor, dimensionEditor) {
+            var self = this;
+
+            self.titleEditor = titleEditor;
+            self.dimensionEditor = dimensionEditor;
+        }
+
+        /**
         * Initializes ImageEditor dialog events.
         */
         imageEditor.initImageEditorDialogEvents = function (dialog) {
-            dialog.container.find(selectors.imageEditLink).on('click', function () {
+
+            // Create view models for editor boxes and for form
+            var titleEditor = new TitleEditorViewModel(dialog, dialog.container.find(selectors.imageTitleEditInput).val());
+            
+            var dimensionEditor = new DimensionEditorViewModel(dialog,
+                dialog.container.find(selectors.imageSizeEditBoxWidth).val(),
+                dialog.container.find(selectors.imageSizeEditBoxHeight).val());
+            
+            var viewModel = new ImageEditViewModel(titleEditor, dimensionEditor);
+            ko.applyBindings(viewModel, dialog.container.find(selectors.imageEditorForm).get(0));
+
+            /*dialog.container.find(selectors.imageEditLink).on('click', function () {
                 imageEditor.showImageCroppingDialog(dialog);
-            });
+            });*/
 
             dialog.container.find(selectors.imageToEdit).on('click', function () {
                 var img = $(this),
@@ -143,23 +275,7 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                 }
             });
 
-            dialog.container.find(selectors.imageSizeEditLink).on('click', function () {
-                dialog.container.find(selectors.imageSizeEditBox).show();
-                dialog.container.find(selectors.imageSizeEditLink).hide();
-            });
-
-            dialog.container.find(selectors.imageSizeEditBoxClose).on('click', function () {
-                dialog.container.find(selectors.imageSizeEditBox).hide();
-                dialog.container.find(selectors.imageSizeEditLink).show();
-            });
-
-            dialog.container.find(selectors.imageSizeEditBoxOk).on('click', function () {
-                if (imageEditor.onImageResize(dialog) === true) {
-                    dialog.container.find(selectors.imageSizeEditBox).hide();
-                    dialog.container.find(selectors.imageSizeEditLink).show();
-                }
-            });
-
+            // Image alignment
             dialog.container.find(selectors.imageAlignmentControls).children().each(function () {
                 var item = this;
                 $(item).on('click', function () {
@@ -177,13 +293,6 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
         * Resize image.
         */
         imageEditor.onImageResize = function (editorDialog) {
-            var widthIsValid = $(selectors.imageSizeEditBoxWidth).valid(),
-                heightIsValid = $(selectors.imageSizeEditBoxHeight).valid();
-
-            if (!widthIsValid || !heightIsValid) {
-                return false;
-            }
-
             var id = $(selectors.imageToEdit).data('id'),
                 width = $(selectors.imageSizeEditBoxWidth).val(),
                 height = $(selectors.imageSizeEditBoxHeight).val(),
@@ -218,7 +327,7 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
         /**
         * Show image cropping dialog.
         */
-        imageEditor.showImageCroppingDialog = function (editorDialog) {
+        /*imageEditor.showImageCroppingDialog = function (editorDialog) {
             var imageId = editorDialog.container.find(selectors.imageToEdit).data('id');
             modal.open({
                 title: globalization.imageEditorCroppingDialogTitle,
@@ -247,7 +356,7 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                     });
                 }
             });
-        };
+        };*/
 
         /**
         * Update image and properties.
@@ -257,7 +366,6 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
             editorDialog.container.find(selectors.imageToEdit).data('version', data.Version);
             editorDialog.container.find(selectors.imageFileName).text(data.FileName + '.' + data.FileExtension);
             editorDialog.container.find(selectors.imageFileSize).text(data.FileSize);
-            editorDialog.container.find(selectors.imageDimensions).text(data.ImageWidth + ' x ' + data.ImageHeight);
         };
 
         /**

@@ -331,11 +331,38 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dimentions (pixels).
+        ///   Looks up a localized string similar to Crop image.
         /// </summary>
-        public static string ImageEditor_Dialog_Dimentions {
+        public static string ImageEditor_Dialog_CropImage_Title {
             get {
-                return ResourceManager.GetString("ImageEditor_Dialog_Dimentions", resourceCulture);
+                return ResourceManager.GetString("ImageEditor_Dialog_CropImage_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Crop image.
+        /// </summary>
+        public static string ImageEditor_Dialog_CropImage_Tooltip_Description {
+            get {
+                return ResourceManager.GetString("ImageEditor_Dialog_CropImage_Tooltip_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Crop image.
+        /// </summary>
+        public static string ImageEditor_Dialog_CropImage_Tooltip_Title {
+            get {
+                return ResourceManager.GetString("ImageEditor_Dialog_CropImage_Tooltip_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dimensions (pixels).
+        /// </summary>
+        public static string ImageEditor_Dialog_Dimensions {
+            get {
+                return ResourceManager.GetString("ImageEditor_Dialog_Dimensions", resourceCulture);
             }
         }
         
@@ -376,6 +403,42 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Image.
+        /// </summary>
+        public static string ImageEditor_Dialog_ImageName_Title {
+            get {
+                return ResourceManager.GetString("ImageEditor_Dialog_ImageName_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change Image Name.
+        /// </summary>
+        public static string ImageEditor_Dialog_ImageTitle_Title {
+            get {
+                return ResourceManager.GetString("ImageEditor_Dialog_ImageTitle_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image Name.
+        /// </summary>
+        public static string ImageEditor_Dialog_ImageTitle_Tooltip_Description {
+            get {
+                return ResourceManager.GetString("ImageEditor_Dialog_ImageTitle_Tooltip_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image Name.
+        /// </summary>
+        public static string ImageEditor_Dialog_ImageTitle_Tooltip_Title {
+            get {
+                return ResourceManager.GetString("ImageEditor_Dialog_ImageTitle_Tooltip_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Image width can not be less than 0 px..
         /// </summary>
         public static string ImageEditor_Dialog_ImageWidth_RangeMessage {
@@ -394,29 +457,20 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Modify This Image.
-        /// </summary>
-        public static string ImageEditor_Dialog_LinkToImageCropping {
-            get {
-                return ResourceManager.GetString("ImageEditor_Dialog_LinkToImageCropping", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Image Info.
-        /// </summary>
-        public static string ImageEditor_Dialog_SubTitle {
-            get {
-                return ResourceManager.GetString("ImageEditor_Dialog_SubTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Edit Image.
         /// </summary>
         public static string ImageEditor_Dialog_Title {
             get {
                 return ResourceManager.GetString("ImageEditor_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use source image.
+        /// </summary>
+        public static string ImageEditor_Dialog_UseSourceImage_Title {
+            get {
+                return ResourceManager.GetString("ImageEditor_Dialog_UseSourceImage_Title", resourceCulture);
             }
         }
         

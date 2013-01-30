@@ -207,8 +207,17 @@
   <data name="ImageEditor_Dialog_ChangeSize_Width" xml:space="preserve">
     <value>Width</value>
   </data>
-  <data name="ImageEditor_Dialog_Dimentions" xml:space="preserve">
-    <value>Dimentions (pixels)</value>
+  <data name="ImageEditor_Dialog_CropImage_Title" xml:space="preserve">
+    <value>Crop image</value>
+  </data>
+  <data name="ImageEditor_Dialog_CropImage_Tooltip_Description" xml:space="preserve">
+    <value>Crop image</value>
+  </data>
+  <data name="ImageEditor_Dialog_CropImage_Tooltip_Title" xml:space="preserve">
+    <value>Crop image</value>
+  </data>
+  <data name="ImageEditor_Dialog_Dimensions" xml:space="preserve">
+    <value>Dimensions (pixels)</value>
   </data>
   <data name="ImageEditor_Dialog_FileName" xml:space="preserve">
     <value>Image</value>
@@ -222,20 +231,29 @@
   <data name="ImageEditor_Dialog_ImageHeight_RequiredMessage" xml:space="preserve">
     <value>Image height is required.</value>
   </data>
+  <data name="ImageEditor_Dialog_ImageName_Title" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="ImageEditor_Dialog_ImageTitle_Title" xml:space="preserve">
+    <value>Change Image Name</value>
+  </data>
+  <data name="ImageEditor_Dialog_ImageTitle_Tooltip_Description" xml:space="preserve">
+    <value>Image Name</value>
+  </data>
+  <data name="ImageEditor_Dialog_ImageTitle_Tooltip_Title" xml:space="preserve">
+    <value>Image Name</value>
+  </data>
   <data name="ImageEditor_Dialog_ImageWidth_RangeMessage" xml:space="preserve">
     <value>Image width can not be less than 0 px.</value>
   </data>
   <data name="ImageEditor_Dialog_ImageWidth_RequiredMessage" xml:space="preserve">
     <value>Image width is required.</value>
   </data>
-  <data name="ImageEditor_Dialog_LinkToImageCropping" xml:space="preserve">
-    <value>Modify This Image</value>
-  </data>
-  <data name="ImageEditor_Dialog_SubTitle" xml:space="preserve">
-    <value>Image Info</value>
-  </data>
   <data name="ImageEditor_Dialog_Title" xml:space="preserve">
     <value>Edit Image</value>
+  </data>
+  <data name="ImageEditor_Dialog_UseSourceImage_Title" xml:space="preserve">
+    <value>Use source image</value>
   </data>
   <data name="ImageEditor_InsertDialog_AcceptButton" xml:space="preserve">
     <value>Insert</value>

@@ -25,6 +25,7 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
             }
 
             mediaImage.Caption = request.Caption;
+            mediaImage.Title = request.Title;
             mediaImage.ImageAlign = request.ImageAlign;
             mediaImage.Version = request.Version.ToIntOrDefault();
             
