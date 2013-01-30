@@ -133,7 +133,34 @@ namespace BetterCms.Module.Navigation.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add Node +.
+        ///   Looks up a localized string similar to Undo.
+        /// </summary>
+        public static string Sitemap_AddNewPageDialog_UndoButton {
+            get {
+                return ResourceManager.GetString("Sitemap_AddNewPageDialog_UndoButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can undo page placement and replace it..
+        /// </summary>
+        public static string Sitemap_AddNewPageDialog_UndoMessage {
+            get {
+                return ResourceManager.GetString("Sitemap_AddNewPageDialog_UndoMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete node &quot;{0}&quot;?.
+        /// </summary>
+        public static string Sitemap_DeleteNode_Confirmation_Message {
+            get {
+                return ResourceManager.GetString("Sitemap_DeleteNode_Confirmation_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
         /// </summary>
         public static string Sitemap_Dialog_Edit {
             get {
@@ -237,6 +264,15 @@ namespace BetterCms.Module.Navigation.Content.Resources {
         public static string Sitemap_NodeDeletedSuccessfully_Message {
             get {
                 return ResourceManager.GetString("Sitemap_NodeDeletedSuccessfully_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Place your page link here..
+        /// </summary>
+        public static string Sitemap_NodeEdit_PlaceLinkHere {
+            get {
+                return ResourceManager.GetString("Sitemap_NodeEdit_PlaceLinkHere", resourceCulture);
             }
         }
         
