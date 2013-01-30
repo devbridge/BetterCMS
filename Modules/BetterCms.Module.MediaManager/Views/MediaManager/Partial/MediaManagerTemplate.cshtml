@@ -52,7 +52,7 @@
         <!-- /ko -->
 
         <div data-bind="foreach: medias()">
-            <div data-bind="click: openMedia.bind($data, $root), event: { contextmenu: contextMenu.show }, attr: {class: rowClassNames()}">
+            <div data-bind="click: openMedia.bind($data, $root), event: { contextmenu: contextMenu.show }, attr: { 'class': rowClassNames() }">
 
                 <div class="bcms-media-context" data-bind="click: stopEvent, attr: {id: contextMenu.domId}">
                     <a class="bcms-btn-close">@RootGlobalization.Button_Close</a>
@@ -82,7 +82,7 @@
                 </div>
 
                 <div class="bcms-media-items-block">
-                    <div data-bind="attr: {class: iconClassNames()}">
+                    <div data-bind="attr: { 'class': iconClassNames() }">
                         <!-- ko if: isImage() -->
                         <img alt="" data-bind="attr: {alt: tooltip, src: getImageUrl()}" />
                         <!-- /ko -->

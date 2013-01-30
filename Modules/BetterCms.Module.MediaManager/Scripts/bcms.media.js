@@ -356,7 +356,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 if (self.isSelected()) {
                     classes += ' bcms-media-click-active';
                 }
-                return classes.trim();
+                return $.trim(classes);
             });
 
             self.iconClassNames = ko.computed(function () {
@@ -375,7 +375,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                     classes += getFileExtensionCssClassName(self.extension);
                 }
 
-                return classes.trim();
+                return $.trim(classes);
             });
         }
 
