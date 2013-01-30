@@ -350,7 +350,8 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                             },
                             drop: function (event, ui) {
                                 var forFix = $(ui.draggable).data('draggable'),
-                                    dragObject = $(ui.draggable).data("dragObject");
+                                    dragObject = $(ui.draggable).data("dragObject"),
+                                    originalDragObject = dragObject;
                                 ui.helper.remove();
 
                                 if (dragObject.parentNode) {
@@ -402,6 +403,10 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
 
                                 // Fix for jQuery drag object.
                                 $(ui.draggable).data('draggable', forFix);
+                                
+                                if (originalDragObject.dropped && $.isFunction(originalDragObject.dropped)) {
+                                    originalDragObject.dropped(dragObject);
+                                }
                             }
                         };
                     if (dropZoneObject.getSitemap && !dropZoneObject.getSitemap().settings.canDropNode) {
@@ -838,7 +843,14 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             self.url = ko.observable();
             self.isVisible = ko.observable(true);
             self.isCustom = ko.observable(false);
+            self.isBeingDragged = ko.observable(false);
 
+            self.onDrop = null;
+            self.dropped = function (droppedSitemapNode) {
+                if(self.onDrop && $.isFunction(self.onDrop)) {
+                    self.onDrop(droppedSitemapNode);
+                }
+            };
             self.fromJson = function (json) {
                 self.isVisible(true);
                 self.title(json.Title);
@@ -854,11 +866,28 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             self.pageLink = pageLinkViewModel;
             self.sitemap = sitemapViewModel;
             self.onSkipClick = onSkip;
+            self.linkIsDropped = ko.observable(false);
+            self.sitemapNode = null;
+
+            self.pageLink.onDrop = function (droppedSitemapNode) {
+                self.linkIsDropped(true);
+                self.pageLink.isVisible(false);
+                self.sitemapNode = droppedSitemapNode;
+            };
 
             self.skipClicked = function () {
                 if (self.onSkipClick && $.isFunction(self.onSkipClick)) {
                     self.onSkipClick();
                 }
+            };
+            self.undoClicked = function () {
+                if (self.sitemapNode != null) {
+                    // Remove newly created node from sitemap.
+                    self.sitemapNode.parentNode.childNodes.remove(self.sitemapNode);
+                    self.sitemapNode = null;
+                }
+                self.pageLink.isVisible(true);
+                self.linkIsDropped(false);
             };
         }
         // --------------------------------------------------------------------
