@@ -74,6 +74,9 @@ namespace BetterCms.Core.Modules.Projections
         /// <param name="html">The HTML.</param>
         public virtual void Render(IPage page, IPrincipal principal, HtmlHelper html)
         {
+            // NOTE: brain storming.
+            // If user is in "BCMS_SUPER_USER_ROLE" ignore IsVisible.
+
             if (IsVisible != null && !IsVisible(page, principal))
             {
                 return;
