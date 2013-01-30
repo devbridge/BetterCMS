@@ -349,7 +349,7 @@ namespace BetterCms.Tests.Helpers
 
             entity.Key = ProvideRandomString(MaxLength.Name);
             entity.Content = content ?? CreateNewContent();
-            entity.Type = ProvideRandomEnumValue<ContentOptionType>();
+            entity.Type = ProvideRandomEnumValue<OptionType>();
             entity.DefaultValue = ProvideRandomString(100);
 
             return entity;
@@ -362,9 +362,10 @@ namespace BetterCms.Tests.Helpers
             PopulateBaseFields(entity);
 
             entity.PageContent = pageContent ?? CreateNewPageContent();
-            entity.ContentOption = contentOption ?? CreateNewContentOption();
+            entity.Key = ProvideRandomString(MaxLength.Name);
             entity.Value = ProvideRandomString(100);
-
+            entity.Type = ProvideRandomEnumValue<OptionType>();
+            
             return entity;
         }
       
@@ -417,7 +418,7 @@ namespace BetterCms.Tests.Helpers
             entity.Category = CreateNewCategory();
             entity.Name = ProvideRandomString(MaxLength.Name);
             entity.Url = ProvideRandomString(MaxLength.Url);
-            entity.Status = ContentStatus.Archived;
+            entity.Status = ContentStatus.Published;
             entity.Original = null;
             entity.PublishedByUser = ProvideRandomString(MaxLength.Name);
             entity.PublishedOn = ProvideRandomDateTime();
@@ -439,7 +440,7 @@ namespace BetterCms.Tests.Helpers
             entity.CustomCss = ProvideRandomString(100);
             entity.UseCustomJs = true;
             entity.CustomJs = ProvideRandomString(100);
-            entity.Status = ContentStatus.Archived;
+            entity.Status = ContentStatus.Published;
             entity.Original = null;
             entity.PublishedByUser = ProvideRandomString(MaxLength.Name);
             entity.PublishedOn = ProvideRandomDateTime();

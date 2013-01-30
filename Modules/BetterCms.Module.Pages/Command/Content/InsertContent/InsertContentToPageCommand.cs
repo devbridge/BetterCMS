@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 
 using BetterCms.Core.Exceptions;
-using BetterCms.Core.Models;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
@@ -23,35 +22,27 @@ namespace BetterCms.Module.Pages.Command.Content.InsertContent
             
             var page = Repository.AsProxy<Root.Models.Page>(request.PageId);            
             var region = Repository.AsProxy<Region>(request.RegionId);
-            var content = Repository.AsQueryable<Root.Models.Content>()
-                            .Where(f => f.Id == request.ContentId)
-                            .FetchMany(f => f.ContentOptions)
-                            .ToList()
-                            .FirstOrDefault();
-
-            if (content == null)
-            {
-                throw new CmsException(string.Format("Content was not found by id={0}.", request.ContentId));
-            }
+            var content = Repository.AsProxy<Root.Models.Content>(request.ContentId);                                                   
 
             var pageContent = new PageContent
-            {
-                Page = page,
-                Content = content,
-                Region = region
-            };
+                                {
+                                    Page = page,
+                                    Content = content,
+                                    Region = region                                    
+                                };
 
-            foreach (var contentOption in content.ContentOptions)
+            var max = Repository.AsQueryable<PageContent>().Where(f => f.Page.Id == request.PageId && !f.IsDeleted).Select(f => (int?)f.Order).Max();
+            if (max == null)
             {
-                PageContentOption pageContentOption = new PageContentOption();
-                pageContentOption.ContentOption = contentOption;
-                pageContentOption.PageContent = pageContent;
-                pageContentOption.Value = contentOption.DefaultValue;
-
-                Repository.Save(pageContentOption);
+                pageContent.Order = 0;
+            }
+            else
+            {
+                pageContent.Order = max.Value + 1;
             }
 
             Repository.Save(pageContent);
+
             UnitOfWork.Commit();
 
             return true;

@@ -56,7 +56,10 @@ namespace BetterCms.Module.Pages.Command.History.GetContentVersion
                 .FetchMany(f => f.ContentOptions)
                 .FirstOrDefault();
 
-            var contentProjection = PageContentProjectionFactory.Create(pageContent, pageContent.Content, pageContent.Options.Cast<IPageContentOption>().ToList());
+            List<IOption> options = new List<IOption>();
+            options.AddRange(pageContent.Options);
+
+            var contentProjection = PageContentProjectionFactory.Create(pageContent, pageContent.Content, options);
 
             return new RenderPageViewModel
                        {

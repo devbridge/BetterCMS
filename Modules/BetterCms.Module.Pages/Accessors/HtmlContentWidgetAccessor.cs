@@ -13,7 +13,7 @@ namespace BetterCms.Module.Pages.Accessors
     [Serializable]
     public class HtmlContentWidgetAccessor : ContentAccessor<HtmlContentWidget>
     {
-        public HtmlContentWidgetAccessor(HtmlContentWidget content, IList<IPageContentOption> options)
+        public HtmlContentWidgetAccessor(HtmlContentWidget content, IList<IOption> options)
             : base(content, options)
         {
         }

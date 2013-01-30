@@ -26,10 +26,11 @@ namespace BetterCms.Module.Root.Projections
             this.containerProvider = containerProvider;
         }
 
-        public PageContentProjection Create(IPageContent pageContent, IContent content, IList<IPageContentOption> options)
+        public PageContentProjection Create(IPageContent pageContent, IContent content, IList<IOption> options)
         {
             IContentAccessor contentAccessor = null;            
             Type contentType;
+
             if (content is IProxy)
             {
                 contentType = content.GetType().BaseType;
@@ -59,6 +60,7 @@ namespace BetterCms.Module.Root.Projections
             }
 
             PageContentProjection pageContentProjection = new PageContentProjection(pageContent, content, contentAccessor);
+
             return pageContentProjection;
         }
     }

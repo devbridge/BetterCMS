@@ -12,17 +12,23 @@ namespace BetterCms.Module.Root.Models
 
         public virtual string Key { get; set; }
 
-        public virtual ContentOptionType Type { get; set; }
+        public virtual OptionType Type { get; set; }
 
-        public virtual string DefaultValue { get; set; }
-
-        public virtual IList<PageContentOption> PageContentOptions { get; set; }
+        public virtual string DefaultValue { get; set; }        
 
         IContent IContentOption.Content
         {
             get
             {
                 return Content;
+            }
+        }
+
+        string IOption.Value
+        {
+            get
+            {
+                return DefaultValue;
             }
         }
     }

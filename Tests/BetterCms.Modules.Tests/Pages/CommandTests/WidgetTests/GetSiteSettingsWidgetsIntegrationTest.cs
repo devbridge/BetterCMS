@@ -18,7 +18,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.WidgetTests
         [Test]
         public void Should_Retrieve_Widgets_From_Database_Paged_And_Sorted_By_CategoryName()
         {            
-            this.RunActionInTransaction(session =>
+            RunActionInTransaction(session =>
                 {
                     var widgets = new Widget[]
                                       {

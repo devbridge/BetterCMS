@@ -3,12 +3,8 @@
     /// <summary>
     /// Defines interface to access the page content option.
     /// </summary>
-    public interface IPageContentOption : IEntity
+    public interface IPageContentOption : IOption
     {
-        IPageContent PageContent { get; }
-
-        IContentOption ContentOption { get; }
-
-        string Value { get; }
+        IPageContent PageContent { get; }        
     }
 }

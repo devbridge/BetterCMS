@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.Exceptions;
@@ -131,7 +132,11 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                 throw new CmsException(string.Format("A content version was not found to project on the page. PageContent={0}; Request={1};", pageContent, request));
             }
 
-            return pageContentProjectionFactory.Create(pageContent, contentToProject, pageContent.Options.Cast<IPageContentOption>().ToList());
+            List<IOption> options = new List<IOption>();
+            options.AddRange(pageContent.Options);
+            options.AddRange(pageContent.Content.ContentOptions.Where(f => !pageContent.Options.Any(g => g.Key.Trim().Equals(f.Key.Trim(), StringComparison.OrdinalIgnoreCase))));
+
+            return pageContentProjectionFactory.Create(pageContent, contentToProject, options);
         }
 
         private IEnumerable<Page> GetPageFutureQuery(GetPageToRenderRequest request)

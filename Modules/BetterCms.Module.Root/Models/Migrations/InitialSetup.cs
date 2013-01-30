@@ -440,29 +440,34 @@ namespace BetterCms.Module.Root.Models.Migrations
                 .InSchema(SchemaName)
                 .WithCmsBaseColumns()
                 .WithColumn("PageContentId").AsGuid().NotNullable()
-                .WithColumn("ContentOptionId").AsGuid().NotNullable()
-                .WithColumn("Value").AsString(MaxLength.Max).Nullable();
-
+                .WithColumn("Value").AsString(MaxLength.Max).Nullable()
+                .WithColumn("Key").AsString(MaxLength.Name).NotNullable()
+                .WithColumn("Type").AsInt32().NotNullable();
+                
             Create
                 .ForeignKey("FK_Cms_PageContentOptions_PageContentId_Cms_PageContents_Id")
                 .FromTable("PageContentOptions").InSchema(SchemaName).ForeignColumn("PageContentId")
                 .ToTable("PageContents").InSchema(SchemaName).PrimaryColumn("Id");
 
             Create
-                .ForeignKey("FK_Cms_PageContentOptions_ContentOptionId_Cms_ContentOptionId_Id")
-                .FromTable("PageContentOptions").InSchema(SchemaName).ForeignColumn("ContentOptionId")
-                .ToTable("ContentOptions").InSchema(SchemaName).PrimaryColumn("Id");
+                .ForeignKey("FK_Cms_PageContentOptions_Type_Cms_ContentOptionTypes_Id")
+                .FromTable("PageContentOptions").InSchema(SchemaName).ForeignColumn("Type")
+                .ToTable("ContentOptionTypes").InSchema(SchemaName).PrimaryColumn("Id");
+            
+            Create
+                .UniqueConstraint("UX_Cms_PageContentOptions_PageContentId_Key")
+                .OnTable("PageContentOptions").WithSchema(SchemaName)
+                .Columns(new[] { "PageContentId", "Key", "DeletedOn" });
         }
 
         private void RemovePageContentOptionsTable()
         {
             Delete.ForeignKey("FK_Cms_PageContentOptions_PageContentId_Cms_PageContents_Id").OnTable("PageContentOptions").InSchema(SchemaName);
-            Delete.ForeignKey("FK_Cms_PageContentOptions_ContentOptionId_Cms_ContentOptionId_Id").OnTable("PageContentOptions").InSchema(SchemaName);
+            Delete.ForeignKey("FK_Cms_PageContentOptions_Type_Cms_ContentOptionTypes_Id").OnTable("PageContentOptions").InSchema(SchemaName);
+            Delete.UniqueConstraint("UX_Cms_PageContentOptions_PageContentId_Key").FromTable("PageContentOptions").InSchema(SchemaName);
             Delete.Table("PageContentOptions").InSchema(SchemaName);
         }
-
-       
-
+        
         private void CreateContentStatusesTable()
         {
             Create

@@ -3,7 +3,7 @@ using System;
 namespace BetterCms.Core.Models
 {
     [Serializable]
-    public enum ContentOptionType
+    public enum OptionType
     {
         Text = 1
     }

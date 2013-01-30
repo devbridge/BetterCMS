@@ -134,6 +134,7 @@
     <Compile Include="Environment\Assemblies\DefaultAssemblyManager.cs" />
     <Compile Include="Environment\Assemblies\IAssemblyManager.cs" />
     <Compile Include="Models\ContentStatus.cs" />
+    <Compile Include="Models\IOption.cs" />
     <Compile Include="Models\IHistorical.cs" />
     <Compile Include="Models\IEntity.cs" />
     <Compile Include="Models\ICategory.cs" />
@@ -191,7 +192,7 @@
     <Compile Include="Exceptions\Service\StorageException.cs" />
     <Compile Include="Exceptions\Service\TagException.cs" />
     <Compile Include="Exceptions\Service\UserException.cs" />
-    <Compile Include="Models\ContentOptionType.cs" />
+    <Compile Include="Models\OptionType.cs" />
     <Compile Include="Models\IContentOption.cs" />
     <Compile Include="Models\IPageContent.cs" />
     <Compile Include="Models\IRegion.cs" />

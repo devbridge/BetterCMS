@@ -7,8 +7,11 @@ namespace BetterCms.Module.Root.Models.Maps
         public PageContentOptionMap() : base(RootModuleDescriptor.ModuleName)
         {
             Table("PageContentOptions");
+
+            Map(x => x.Key, "[Key]").Length(MaxLength.Name).Not.Nullable();
+            Map(x => x.Type).Not.Nullable();
             Map(x => x.Value).Length(MaxLength.Text).Nullable().LazyLoad();         
-            References(x => x.ContentOption).Cascade.SaveUpdate().LazyLoad();
+            
             References(x => x.PageContent).Cascade.SaveUpdate().LazyLoad();
         }
     }
