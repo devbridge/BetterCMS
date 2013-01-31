@@ -38,7 +38,7 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
                 rootFolderId: rootFolderId,
                 rootFolderType: rootFolderType
             };
-        if (html5Upload.fileApiSupported()) {
+        if (false && html5Upload.fileApiSupported()) { // TODO: remove after  single file upload functionality is implemented.
             modal.open({
                 title: globalization.uploadFilesDialogTitle,
                 onLoad: function(dialog) {
@@ -92,8 +92,8 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
                     });
                 },
                 onAcceptClick: function () {
-                    $("#SaveForm").submit(); 
-                    
+                    // TODO.
+                    $("#SaveForm").submit();
                 },
                 onCancel: function () {
                     options.uploads.removeAllUploads();
@@ -101,51 +101,52 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
             });
         }
     };
-        
+    
     function SingleFileUpload(dialog, options) {
-        var isFirstLoad = true;
-        var context = document.getElementById('bcms-media-uploads');
-        var uploadsModel = options.uploads;
-        var fakeData =
-            {
+        var context = dialog.container.find('#bcms-media-uploads').get(0),  // TODO: move to selectors.
+            uploadsModel = options.uploads,
+            fakeData = {
                 fileName: "Uploading",
                 fileSize: 1024,
                 fileId: null,
                 version: null,
                 type: null
-            };
-        var uploadFile = new FileViewModel(fakeData);
+            },
+            uploadFile = new FileViewModel(fakeData);
 
-        
-        dialog.container.find("#upload").on('click', function () {
-            dialog.container.find($('#ImgForm')).submit();
-           
-            uploadFile.uploadCompleted(false);
-            uploadsModel.activeUploads.push(uploadFile);
-            uploadsModel.uploads.push(uploadFile);
-            ko.applyBindings(uploadsModel, context);
-            //dialog.container.showLoading();
+        // On file selected.
+        dialog.container.find('#uploadFile').change(function () { // TODO: move to selectors.
+            var fileName = dialog.container.find('#uploadFile').val(); // TODO: move to selectors.
+            if (fileName != null && fileName != "") {
+                // Add fake file model for upload indication.
+                uploadFile.uploadCompleted(false);
+                uploadsModel.activeUploads.push(uploadFile);
+                uploadsModel.uploads.push(uploadFile);
+                // Send file to server.
+                dialog.container.find($('#ImgForm')).submit(); // TODO: move to selectors.
+            }
         });
-
-        dialog.container.find($("#UploadTarget")).on('load', function () {
-            //dialog.container.hideLoading();
+        
+        // On file submitted.
+        dialog.container.find($("#UploadTarget")).on('load', function () { // TODO: move to selectors.
+            // Remove fake file model.
             uploadFile.uploadCompleted(true);
             uploadsModel.uploads.remove(uploadFile);
             uploadsModel.activeUploads.remove(uploadFile);
-            if (isFirstLoad == true) {
-                isFirstLoad = false;
+            
+            // TODO: add comment.
+            dialog.container.find("#ImgForm").get(0).reset(); // TODO: move to selectors.
+            var result = $("#UploadTarget").contents().find("#jsonResult").get(0); // TODO: move to selectors.
+            if (result == null) {
                 return;
             }
-            document.getElementById("ImgForm").reset();            
-
-            var newImg = $.parseJSON($("#UploadTarget").contents().find("#jsonResult")[0].innerHTML);
-            
-            //If there was an error, display it to the user
+            var newImg = $.parseJSON(result.innerHTML);
             if (newImg.IsValid == false) {
-
+                alert(newImg.Messages); // TODO: remove.
                 return;
             }
             
+            // Add uploaded file model.
             var fileModel = new FileViewModel(newImg);
             
             fileModel.uploadCompleted(true);
@@ -156,8 +157,9 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
 
             uploadsModel.uploads.push(fileModel);
             uploadsModel.activeUploads.remove(fileModel);
-            ko.applyBindings(uploadsModel, context);
         });
+        
+        ko.applyBindings(uploadsModel, context);
     }
         
     function UploadsViewModel() {
