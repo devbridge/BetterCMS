@@ -70,32 +70,40 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
         } else {
             modal.open({
                 title: globalization.uploadFilesDialogTitle,
-                onLoad: function (dialog) {
+                onLoad: function(dialog) {
                     var url = $.format(links.loadUploadSingleFileDialogUrl, rootFolderId, rootFolderType);
                     dynamicContent.setContentFromUrl(dialog, url, {
-                        done: function () {
+                        done: function() {
                             SingleFileUpload(dialog, options);
-                        },
-                        beforePost: function () {
-                            dialog.container.showLoading();
-                        },
-
-                        postSuccess: function (json) {
-                            if (onSaveCallback && $.isFunction(onSaveCallback)) {
-                                onSaveCallback(json);
-                            }
-                        },
-
-                        postComplete: function () {
-                            dialog.container.hideLoading();
                         }
                     });
                 },
-                onAcceptClick: function () {
-                    // TODO.
-                    $("#SaveForm").submit();
+                onAcceptClick: function() {
+                    var formToSubmit = $("#SaveForm"), // TODO: move to selectors.
+                        onComplete = function(json) {
+                            if (json.Success) {
+                                if (onSaveCallback && $.isFunction(onSaveCallback)) {
+                                    onSaveCallback(json);
+                                }
+                            } else {
+                                // TODO: show error message.
+                            }
+                        };
+                    $.ajax({
+                        type: 'POST',
+                        cache: false,
+                        url: formToSubmit.attr('action'),
+                        data: formToSubmit.serialize()
+                    })
+                        .done(function(response) {
+                            onComplete(response);
+                        })
+                        .fail(function(response) {
+                            onComplete(bcms.parseFailedResponse(response));
+                        });
+
                 },
-                onCancel: function () {
+                onCancel: function() {
                     options.uploads.removeAllUploads();
                 }
             });
@@ -120,6 +128,8 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
             if (fileName != null && fileName != "") {
                 // Add fake file model for upload indication.
                 uploadFile.uploadCompleted(false);
+                uploadFile.fileName = fileName;
+                uploadFile.file.fileName = fileName;
                 uploadsModel.activeUploads.push(uploadFile);
                 uploadsModel.uploads.push(uploadFile);
                 // Send file to server.
@@ -130,19 +140,22 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
         // On file submitted.
         dialog.container.find($("#UploadTarget")).on('load', function () { // TODO: move to selectors.
             // Remove fake file model.
-            uploadFile.uploadCompleted(true);
             uploadsModel.uploads.remove(uploadFile);
             uploadsModel.activeUploads.remove(uploadFile);
             
-            // TODO: add comment.
+            // Reset form.
             dialog.container.find("#ImgForm").get(0).reset(); // TODO: move to selectors.
+            
+            // Check the result.
             var result = $("#UploadTarget").contents().find("#jsonResult").get(0); // TODO: move to selectors.
             if (result == null) {
                 return;
             }
             var newImg = $.parseJSON(result.innerHTML);
             if (newImg.IsValid == false) {
-                alert(newImg.Messages); // TODO: remove.
+                var failModel = new FileViewModel(uploadFile.file);
+                failModel.uploadFailed(true);
+                uploadsModel.uploads.push(failModel);
                 return;
             }
             
