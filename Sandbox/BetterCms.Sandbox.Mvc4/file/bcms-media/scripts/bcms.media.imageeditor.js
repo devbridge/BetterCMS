@@ -215,6 +215,7 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                 self.cropCoordX2 = ko.observable(json.CropCoordX2);
                 self.cropCoordY1 = ko.observable(json.CropCoordY1);
                 self.cropCoordY2 = ko.observable(json.CropCoordY2);
+                self.keepAspectRatio = ko.observable(false);
 
                 // Recalculate image dimensions on image change
                 self.fit.subscribe(function () {
@@ -226,10 +227,33 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                 self.oldHeight.subscribe(function () {
                     recalculate();
                 });
+                self.keepAspectRatio.subscribe(function () {
+                    self.changeHeight();
+                });
 
                 self.widthAndHeight = ko.computed(function () {
                     return self.oldWidth() + ' x ' + self.oldHeight();
                 });
+
+                self.changeHeight = function() {
+                    if (self.keepAspectRatio() && self.widthInput.valid() && self.oldWidth != self.width()) {
+                        var ratio = self.width() / (self.originalWidth || 1);
+
+                        self.height(Math.round(self.originalHeight * ratio));
+                    }
+                    
+                    return true;
+                };
+                
+                self.changeWidth = function () {
+                    if (self.keepAspectRatio() && self.heightInput.valid() && self.oldHeight != self.height()) {
+                        var ratio = self.height() / (self.originalHeight || 1);
+
+                        self.width(Math.round(self.originalWidth * ratio));
+                    }
+                    
+                    return true;
+                };
 
                 self.calculateWidth = ko.computed(function () {
                     if (self.fit() && self.width() > constants.maxWidthToFit) {
@@ -251,11 +275,15 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                     self.save();
                 };
 
-                self.onCropCoordsUpdated = function(coords) {
-                    self.cropCoordX1(Math.floor(coords.x));
-                    self.cropCoordY1(Math.floor(coords.y));
-                    self.cropCoordX2(Math.floor(coords.x2));
-                    self.cropCoordY2(Math.floor(coords.y2));
+                self.onCropCoordsUpdated = function (coords) {
+                    if (coords != null) {
+                        self.cropCoordX1(coords.x);
+                        self.cropCoordY1(coords.y);
+                        self.cropCoordX2(coords.x2);
+                        self.cropCoordY2(coords.y2);
+                    } else {
+                        self.removeCrop();
+                    }
                 };
 
                 self.hasCrop = ko.computed(function () {

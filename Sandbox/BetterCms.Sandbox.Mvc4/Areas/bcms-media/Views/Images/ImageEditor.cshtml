@@ -17,10 +17,10 @@
         {
             @Html.HiddenFor(model => model.Id)
             @Html.HiddenFor(model => model.Version, new { @id = "image-version-field" })
-            @Html.HiddenFor(model => model.CropCoordX1, new { @data_bind = "value: imageEditorViewModel.cropCoordX1()" })
-            @Html.HiddenFor(model => model.CropCoordX2, new { @data_bind = "value: imageEditorViewModel.cropCoordX2()" })
-            @Html.HiddenFor(model => model.CropCoordY1, new { @data_bind = "value: imageEditorViewModel.cropCoordY1()" })
-            @Html.HiddenFor(model => model.CropCoordY2, new { @data_bind = "value: imageEditorViewModel.cropCoordY2()" })
+            @Html.HiddenFor(model => model.CropCoordX1, new { @data_bind = "value: Math.floor(imageEditorViewModel.cropCoordX1())" })
+            @Html.HiddenFor(model => model.CropCoordX2, new { @data_bind = "value: Math.floor(imageEditorViewModel.cropCoordX2())" })
+            @Html.HiddenFor(model => model.CropCoordY1, new { @data_bind = "value: Math.floor(imageEditorViewModel.cropCoordY1())" })
+            @Html.HiddenFor(model => model.CropCoordY2, new { @data_bind = "value: Math.floor(imageEditorViewModel.cropCoordY2())" })
 
             <div class="bcms-input-list-holder">
                 @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_CropImage_Tooltip_Title, MediaGlobalization.ImageEditor_Dialog_CropImage_Tooltip_Description)
@@ -79,7 +79,7 @@
                                                                     @class = "bcms-editor-field-box", 
                                                                     @style = "width: 77px;", 
                                                                     @id = "image-width",
-                                                                    @data_bind = "value: width, valueUpdate: 'afterkeydown', enterPress: save, escPress: close"
+                                                                    @data_bind = "value: width, valueUpdate: 'afterkeydown', enterPress: save, escPress: close, event: { change: changeHeight }"
                                                                 })
                         <span>@MediaGlobalization.ImageEditor_Dialog_ChangeSize_Height:</span>
                         @Html.TextBoxFor(f => f.ImageHeight, new
@@ -87,11 +87,12 @@
                                                                      @class = "bcms-editor-field-box", 
                                                                      @style = "width: 77px;", 
                                                                      @id = "image-height",
-                                                                     @data_bind = "value: height, valueUpdate: 'afterkeydown', enterPress: save, escPress: close"
+                                                                     @data_bind = "value: height, valueUpdate: 'afterkeydown', enterPress: save, escPress: close, event: { change: changeWidth }"
                                                                  })
                         <div class="bcms-btn-small" data-bind="click: save">@RootGlobalization.Button_Ok</div>
                         <div class="bcms-btn-links-small" data-bind="click: close">@RootGlobalization.Button_Cancel</div>
                         
+                        <input type="checkbox" data-bind="checked: keepAspectRatio" />Keep aspect ratio<br />
                         <a href="#" data-bind="click: restoreOriginalSize">@MediaGlobalization.ImageEditor_Dialog_RestoreOriginalSize_Title</a>
                     </div>
                 </div>
