@@ -165,6 +165,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             var params = createFolderParams(self.path().currentFolder().id(), self),
                 onComplete = function (json) {
                     parseJsonResults(json, self);
+                    document.getElementById("bcms-search-input").focus();
                 };
             loadTabData(self, params, onComplete);
         };

@@ -29,6 +29,7 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
 
                 siteSettingsPagesListForm: '#bcms-pages-form',
                 siteSettingsPagesSearchButton: '#bcms-pages-search-btn',
+                siteSettingsPagesSearchField: 'SearchQuery',
                 siteSettingsPageCreateButton: '#bcms-create-page-button',
                 siteSettingsPageEditButton: '.bcms-grid-item-edit-button',
                 siteSettingsPageDeleteButton: '.bcms-grid-item-delete-button',
@@ -416,7 +417,8 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
     page.searchSiteSettingsPages = function(form) {
         grid.submitGridForm(form, function (data) {
             siteSettings.setContent(data);
-            page.initializeSiteSettingsPagesList(data);
+            page.initializeSiteSettingsPagesList(data);   
+            document.getElementById(selectors.siteSettingsPagesSearchField).focus();
         });
     };
 

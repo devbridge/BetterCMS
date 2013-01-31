@@ -14,6 +14,7 @@ define('bcms.pages.tags', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSe
             tagNameEditor: 'input.bcms-tag-name',
             tagsListForm: '#bcms-tags-form',
             tagsSearchButton: '#bcms-tags-search-btn',
+            tagsSearchField: 'SearchQuery',
             
             deleteCategoryLink: 'a.bcms-icn-delete',
             addCategoryButton: '#bcms-site-settings-add-category',
@@ -21,7 +22,8 @@ define('bcms.pages.tags', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSe
             categoryOldName: 'input.bcms-category-old-name',
             categoryNameEditor: 'input.bcms-category-name',
             categoriesListForm: '#bcms-categories-form',
-            categoriesSearchButton: '#bcms-categories-search-btn'
+            categoriesSearchButton: '#bcms-categories-search-btn',
+            categoriesSearchField: 'SearchQuery',
         },
         links = {
             loadSiteSettingsCategoryListUrl: null,
@@ -64,6 +66,7 @@ define('bcms.pages.tags', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSe
         grid.submitGridForm(form, function (data) {
             siteSettings.setContent(data);
             tags.initSiteSettingsTagsEvents(data);
+            document.getElementById(selectors.tagsSearchField).focus();
         });
     };
 
@@ -137,7 +140,8 @@ define('bcms.pages.tags', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSe
     tags.searchSiteSettingsCategories = function (form) {
         grid.submitGridForm(form, function (data) {
             siteSettings.setContent(data);
-            tags.initSiteSettingsCategoriesEvents(data);
+            tags.initSiteSettingsCategoriesEvents(data);      
+            document.getElementById(selectors.categoriesSearchField).focus();
         });
     };
 

@@ -27,10 +27,11 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
                 htmlContentTemplateRowTemplate: '#bcms-advanced-content-list-row-template',
                 htmlContentTemplateRowTemplateFirstRow: 'tr:first',
                 htmlContentTemplateTableFirstRow: 'table.bcms-tables > tbody > tr:first',
-                
+
                 messagesContainer: "#bcms-edit-template-messages",
-                
+
                 templateSearchButton: '#bcms-template-search-btn',
+                templateSearchField: 'SearchQuery',
 
                 templateRegisterButton: '#bcms-register-template-button',
                 templateRowEditButtons: '.bcms-grid-item-edit-button',
@@ -261,6 +262,7 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
             grid.submitGridForm(form, function (data) {
                 siteSettings.setContent(data);
                 initializeTemplatesList();
+                document.getElementById(selectors.templateSearchField).focus();
             });
         };
 

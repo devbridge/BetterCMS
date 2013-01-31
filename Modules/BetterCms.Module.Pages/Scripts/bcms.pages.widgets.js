@@ -53,6 +53,7 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
                 htmlContentWidgetTableFirstRow: 'table.bcms-tables > tbody > tr:first',
 
                 widgetsSearchButton: '#bcms-widget-search-btn',
+                widgetsSearchField: 'SearchQuery',
                 widgetCreateButton: '#bcms-create-widget-button',
                 widgetRegisterButton: '#bcms-register-widget-button',
                 widgetRowEditButton: '.bcms-grid-item-edit-button',
@@ -406,6 +407,7 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
             grid.submitGridForm(form, function(data) {
                 siteSettings.setContent(data);
                 initializeSiteSettingsWidgetsList();
+                document.getElementById(selectors.widgetsSearchField).focus();
             });
         };
 

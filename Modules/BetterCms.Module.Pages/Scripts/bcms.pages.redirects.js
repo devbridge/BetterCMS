@@ -8,6 +8,7 @@ define('bcms.pages.redirects', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.s
         selectors = {
             redirectsForm: '#bcms-redirects-form',
             searchLink: '#bcms-redirects-search-btn',
+            searchField: 'SearchQuery',
             createLink: '#bcms-create-redirect-button',
             deleteLink: '.bcms-grid-item-delete-button',
             pageUrlEditor: 'input.bcms-page-url',
@@ -86,6 +87,7 @@ define('bcms.pages.redirects', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.s
         grid.submitGridForm(form, function (data) {
             siteSettings.setContent(data);
             redirect.initializeSiteSettingsRedirectsList(data);
+            document.getElementById(selectors.searchField).focus();
         });
     };
 

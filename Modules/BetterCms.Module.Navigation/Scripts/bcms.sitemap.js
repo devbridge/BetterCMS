@@ -8,6 +8,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         var sitemap = {},
             selectors = {
                 sitemapSearchDataBind: "#bcms-sitemap-form",
+                sitemapSearchInput: "bcms-search-input",
                 sitemapAddNodeDataBind: "#bcms-sitemap-addnode",
                 sitemapAddNewPageDataBind: "#bcms-sitemap-addnewpage",
                 sitemapForm: "#bcms-sitemap-form",
@@ -439,6 +440,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
 
                     self.searchInNodes(self.sitemap.childNodes(), searchQuery, showAll);
                 }
+                document.getElementById(selectors.sitemapSearchInput).focus();
             };
             self.searchInNodes = function (nodes, searchQuery, showAll) {
                 var hasResult = false;
