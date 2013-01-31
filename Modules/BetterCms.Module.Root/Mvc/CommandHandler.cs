@@ -127,7 +127,7 @@ namespace BetterCms.Module.Root.Mvc
             string message = null;
             if (ex.Resource != null)
             {
-                message = ex.Resource(ex);
+                message = ex.Resource();
             }
 
             if (string.IsNullOrEmpty(message))

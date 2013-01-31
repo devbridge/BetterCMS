@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 
+using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Command.Page.ClonePage;
 using BetterCms.Module.Pages.Command.Page.CreatePage;
 using BetterCms.Module.Pages.Command.Page.DeletePage;
@@ -17,6 +18,7 @@ using BetterCms.Module.Pages.ViewModels.Page;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
+using BetterCms.Module.Root.Mvc.Helpers;
 
 namespace BetterCms.Module.Pages.Controllers
 {
@@ -91,14 +93,26 @@ namespace BetterCms.Module.Pages.Controllers
         [HttpGet]
         public ActionResult EditPageProperties(string pageId)
         {
-            EditPagePropertiesViewModel model = GetCommand<GetPagePropertiesCommand>().ExecuteCommand(pageId.ToGuidOrDefault());
-            model.Templates = GetCommand<GetTemplatesCommand>().ExecuteCommand(new GetTemplatesRequest()).Templates;
-            if (!model.TemplateId.HasDefaultValue())
+            var model = GetCommand<GetPagePropertiesCommand>().ExecuteCommand(pageId.ToGuidOrDefault());
+            var success = model != null;
+
+            if (success)
             {
-                model.Templates.Where(x => x.TemplateId == model.TemplateId).ToList().ForEach(x => x.IsActive = true);
+                model.Templates = GetCommand<GetTemplatesCommand>().ExecuteCommand(new GetTemplatesRequest()).Templates;
+                if (!model.TemplateId.HasDefaultValue())
+                {
+                    model.Templates.Where(x => x.TemplateId == model.TemplateId).ToList().ForEach(x => x.IsActive = true);
+                }
             }
 
-            return View(model);
+            var view = RenderView("EditPageProperties", model);
+            var json = new
+                           {
+                               Tags = success ? model.Tags : null,
+                               Image = success ? model.Image : new ImageSelectorViewModel()
+                           };
+
+            return ComboWireJson(success, view, json, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -198,6 +212,20 @@ namespace BetterCms.Module.Pages.Controllers
                 Messages.AddError(message);
             }
             return Json(new WireJson { Success = success });
+        }
+
+        /// <summary>
+        /// Converts the string to slug.
+        /// </summary>
+        /// <returns>URL, created from text</returns>
+        public ActionResult ConvertStringToSlug(string text, string senderId)
+        {
+            var slug = text.Transliterate();
+            if (string.IsNullOrWhiteSpace(slug))
+            {
+                slug = "-";
+            }
+            return Json(new { Text = text, Url = slug, SenderId = senderId }, JsonRequestBehavior.AllowGet);
         }
     }
 }

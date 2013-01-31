@@ -116,8 +116,8 @@ namespace BetterCms.Module.MediaManager.Services
             }
             file.Title = Path.GetFileName(fileName);
             file.Type = type;
-            file.FileName = fileName;
-            file.FileExtension = Path.GetExtension(fileName);           
+            file.OriginalFileName = fileName;
+            file.OriginalFileExtension = Path.GetExtension(fileName);           
             file.Size = fileLength;
             file.FileUri = GetFileUri(type, folderName, fileName);
             file.PublicUrl = GetPublicFileUrl(type, folderName, fileName);

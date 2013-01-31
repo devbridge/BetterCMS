@@ -9,8 +9,10 @@ using Autofac;
 using BetterCms.Core.Models;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Core.Mvc;
+using BetterCms.Core.Mvc.Attributes;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Mvc.Extensions;
+using BetterCms.Core.Security;
 
 namespace BetterCms.Core.Modules
 {
@@ -137,6 +139,17 @@ namespace BetterCms.Core.Modules
         }
 
         /// <summary>
+        /// Registers the permissions.
+        /// </summary>
+        /// <param name="containerBuilder">The container builder.</param>
+        /// <param name="configuration">The configuration.</param>
+        /// <returns>Enumerator of known module permissions.</returns>
+        public virtual IEnumerable<IUserRole> RegisterUserRoles(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        {
+            return null;
+        }
+
+        /// <summary>
         /// Registers module controller types.
         /// </summary>
         /// <param name="registrationContext">The area registration context.</param>
@@ -149,7 +162,7 @@ namespace BetterCms.Core.Modules
 
             if (controllerTypes != null)
             {
-                var allModuleActions = new Dictionary<Type, IEnumerable<string>>();
+                var allModuleActions = new Dictionary<Type, IEnumerable<MethodInfo>>();
                 foreach (Type controllerType in controllerTypes)
                 {
                     string key = (AreaName + "-" + controllerType.Name).ToUpperInvariant();                    
@@ -170,20 +183,27 @@ namespace BetterCms.Core.Modules
                 }
 
                 foreach (var item in allModuleActions)
-                {
+                {                 
                     var controllerName = controllerExtensions.GetControllerName(item.Key);
-                    var actionNames = item.Value;
+                    var controllerActions = item.Value;
 
-                    foreach (var actionName in actionNames)
+                    foreach (var actionMethod in controllerActions)
                     {
+                        var ignoreAutoRouteAttribute = actionMethod.GetCustomAttributes(typeof(IgnoreAutoRouteAttribute), false);
+                        var nonActionAttribute = actionMethod.GetCustomAttributes(typeof(NonActionAttribute), false);
+                        if (ignoreAutoRouteAttribute.Length > 0 || nonActionAttribute.Length > 0)
+                        {
+                            continue;
+                        }
+                        
                         registrationContext.MapRoute(
-                            string.Format("bcms_{0}_{1}_{2}", AreaName, controllerName, actionName),
-                            string.Format("{0}/{1}/{2}", AreaName, controllerName, actionName),
+                            string.Format("bcms_{0}_{1}_{2}", AreaName, controllerName, actionMethod.Name),
+                            string.Format("{0}/{1}/{2}", AreaName, controllerName, actionMethod.Name),
                             new
                             {
                                 area = AreaName,
                                 controller = controllerName,
-                                action = actionName
+                                action = actionMethod.Name
                             },
                             new[] { item.Key.Namespace });                        
                     }
@@ -229,6 +249,38 @@ namespace BetterCms.Core.Modules
                 .AsSelf()
                 .Keyed<IContentAccessor>(key)
                 .WithMetadata("ContentRendererType", contentRendererType)               
+                .InstancePerDependency();
+        }
+
+        protected void RegisterJavaScriptRendererType<TJavaScriptRenderer, TContent>(ContainerBuilder containerBuilder)
+            where TJavaScriptRenderer : IJavaScriptAccessor
+            where TContent : class
+        {
+            Type jsRendererType = typeof(TJavaScriptRenderer);
+            Type contentType = typeof(TContent);
+
+            string key = ("JavaScriptRenderer-" + contentType.Name).ToUpperInvariant();
+            containerBuilder
+                .RegisterType(jsRendererType)
+                .AsSelf()
+                .Keyed<IJavaScriptAccessor>(key)
+                .WithMetadata("JavaScriptRendererType", jsRendererType)
+                .InstancePerDependency();
+        }
+        
+        protected void RegisterStylesheetRendererType<TStyleSheetRenderer, TContent>(ContainerBuilder containerBuilder)
+            where TStyleSheetRenderer : IStylesheetAccessor
+            where TContent : class
+        {
+            Type styleRendererType = typeof(TStyleSheetRenderer);
+            Type contentType = typeof(TContent);
+
+            string key = ("StyleSheetRenderer-" + contentType.Name).ToUpperInvariant();
+            containerBuilder
+                .RegisterType(styleRendererType)
+                .AsSelf()
+                .Keyed<IStylesheetAccessor>(key)
+                .WithMetadata("StylesheetRendererType", styleRendererType)
                 .InstancePerDependency();
         }
 

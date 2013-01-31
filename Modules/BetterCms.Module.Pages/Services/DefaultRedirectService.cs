@@ -84,7 +84,7 @@ namespace BetterCms.Module.Pages.Services
             {
                 var message = string.Format(PagesGlobalization.SaveRedirect_RedirectExists_Message, pageUrl);
                 var logMessage = string.Format("Redirect from URL {0} already exists.", pageUrl);
-                throw new ValidationException(e => message, logMessage);
+                throw new ValidationException(() => message, logMessage);
             }
         }
 
@@ -160,7 +160,7 @@ namespace BetterCms.Module.Pages.Services
                 {
                     var message = PagesGlobalization.SaveRedirect_CircularLoopDetected_Message;
                     var logMessage = string.Format("Cannot save redirect. Circular redirect loop from url {0} to url {1} detected.", startPageUrl, startRedirectUrl);
-                    throw new ValidationException(e => message, logMessage);
+                    throw new ValidationException(() => message, logMessage);
                 }
 
                 checkedIds.Add(redirectTo.Id);

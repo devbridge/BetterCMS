@@ -30,9 +30,14 @@ body {
     background: url('images/loading.gif') no-repeat center center;
 }
 
-/*IE support*/
+/*browser compatibility support*/
 a:focus {
     outline: none;
+}
+
+input[type="text"] {
+    -webkit-appearance: none;
+    border-radius: 0;
 }
 
 /* State management classes */
@@ -319,7 +324,6 @@ a.bcms-icn-preview {
 
     a.bcms-icn-preview:active {
         background-position: -60px -159px;
-        user-select: none;
     }
 
 /*restore icon*/
@@ -337,6 +341,7 @@ a.bcms-icn-restore {
     a.bcms-icn-restore:hover {
         color: #303030;
         background-position: right -1121px;
+        text-decoration: none;
     }
 
     a.bcms-icn-restore:active {
@@ -362,6 +367,7 @@ a.bcms-icn-delete {
     a.bcms-icn-delete:hover {
         color: #303030;
         background-position: right -970px;
+        text-decoration: none;
     }
 
     a.bcms-icn-delete:active {
@@ -792,8 +798,8 @@ a.bcms-icn-delete {
 
 .bcms-padded-content {
     height: 100%;
-    padding-left: 60px;
-    max-width: 820px;
+    padding-left: 50px;
+    max-width: 830px;
 }
 
 div.bcms-noscroll body {
@@ -805,7 +811,6 @@ div.bcms-noscroll body {
     font-size: 13px;
     line-height: 140%;
     overflow-y: auto;
-    overflow-x: hidden;
     width: 100%;
     height: 100%;
     position: fixed;
@@ -1153,7 +1158,9 @@ div.bcms-tip-close {
     }
 
 .bcms-btn-search {
-    display: inline-block;
+    position: absolute;
+    right: 0;
+    top: 15px;
     width: 30px;
     height: 30px;
     line-height: 30px;
@@ -1241,18 +1248,10 @@ a.bcms-btn-close {
     text-decoration: none;
 }
 
-.bcms-uploader {
-    position: absolute;
-    right: 0;
-    top: 0;
-    border: #000 solid 28px;
-    background: #000;
-    font-size: 30px;
-    margin: 0;
-    filter: alpha(opacity=0);
-    opacity: 0;
-    cursor: pointer;
+.bcms-btn-small.bcms-btn-gray {
+    border: 1px solid #787878;
 }
+
 /*Titles*/
 .bcms-large-titles {
     padding-bottom: 10px;
@@ -1297,6 +1296,14 @@ a.bcms-btn-close {
     position: relative;
     padding: 0 0 20px 0;
 }
+
+    .bcms-input-list-holder:first-child {
+        padding-top: 20px;
+    }
+
+        .bcms-input-list-holder:first-child .bcms-tooltip-mark {
+            top: 21px;
+        }
 
     .bcms-input-list-holder .bcms-tooltip-mark {
         top: 1px;
@@ -1451,14 +1458,6 @@ a.bcms-btn-close {
             background-color: #FFFFFF;
         }
 
-.bcms-tab-single {
-    padding: 20px 0;
-}
-
-    .bcms-tab-single .bcms-edit-urlpath-box {
-        width: 503px;
-    }
-
 /*Inner Tabed View*/
 .bcms-innertab-header {
     position: relative;
@@ -1573,19 +1572,17 @@ a.bcms-btn-close {
     background-color: #f5f5f5;
     border: 1px solid #c6c6c6;
     box-shadow: 0 0 1px 1px #292929;
-    min-width: 200px;
-    min-height: 200px;
-    margin-left: -100px;
+    width: 170px;
+    min-height: 170px;
+    margin-left: -116px;
 }
 
 .bcms-preview-image-frame {
     overflow: hidden;
-
 }
 
     .bcms-preview-image-frame img {
         display: block;
-        /*width: 100%;*/
     }
 
 /*Features Grid*/
@@ -1730,6 +1727,26 @@ a.bcms-btn-close {
         cursor: pointer;
     }
 
+/*search*/
+.bcms-search-block {
+    position: relative;
+    float: right;
+    padding-right: 30px;
+}
+
+    .bcms-search-block > .bcms-editor-field-box {
+        width: 287px;
+        vertical-align: top;
+    }
+
+        .bcms-search-block > .bcms-editor-field-box:focus {
+            border-right: 0;
+        }
+
+    .bcms-search-block > .bcms-btn-search {
+        top: 0;
+    }
+
 /*Tables*/
 .bcms-tables {
     width: 100%;
@@ -1791,10 +1808,6 @@ th.bcms-tables-nohover:hover {
     background-color: #effcfe;
 }
 
-tr.bcms-table-row-active td {
-    vertical-align: middle;
-}
-
 .bcms-table-row-active .bcms-icn-preview {
     background-position: -60px -133px;
 }
@@ -1818,6 +1831,21 @@ tr.bcms-table-row-active td {
     border-color: #1894e4;
     box-shadow: 0 0 3px 0 rgba(24,145,230,0.35);
     outline: none;
+}
+
+.bcms-table-row-active .bcms-editor-field-area {
+    background: #fff;
+    border-color: #1894e4;
+    box-shadow: 0 0 3px 0 rgba(24,145,230,0.35);
+    outline: none;
+}
+
+.bcms-table-row-active .bcms-btn-small {
+    vertical-align: top;
+}
+
+.bcms-table-row-active .bcms-btn-links-small {
+    vertical-align: top;
 }
 
 .bcms-tables td {
@@ -1890,6 +1918,7 @@ span.bcms-tables-unpublished {
 
     .bcms-sort-arrow:hover {
         background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAYAAAGN9z9QAAAAUElEQVQI12NgYGCYBsT/GWAECPyBMf4ji7rCGLeRZISQlcEwyEQGfiSB2wxIwAnZBhBgBuK9WIyBYZAcG7IGFSD+gKQAxFZnwAMygTgHXRAA+ZId8raGMaEAAAAASUVORK5CYII=') no-repeat left 4px;
+        text-decoration: none;
     }
 
 .bcms-sort-arrow-top {
@@ -1928,7 +1957,6 @@ a.bcms-sort-arrow-top:hover {
     min-height: 100%;
     background-color: #fff;
     border-left: 1px solid #c6c6c6;
-    width: 75%;
     vertical-align: top;
 }
 
@@ -1949,13 +1977,49 @@ a.bcms-sort-arrow-top:hover {
     }
 
 /*forms & input fields validation, error messages*/
-input[type="text"].input-validation-error {
+.bcms-editor-field-box.input-validation-error {
     background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAFMLZykAAAAbUlEQVQoz2N45uw8DYi/MsAZ////B2NUBlDqP1wAyLGDcZBVLCeo4j8QO0LpTNIUgBwH44CMBzkYXUEmsgnIkiiuxCZJnAnEuKEFasIXIPZGUuwNFQPJtWCzHiXQgYoyoBqQcQYujdQzgFIvAACFG3m8e8veBgAAAABJRU5ErkJggg==') no-repeat 100% center #fcecec;
     border: 1px solid #e64343;
     box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
 }
 
-    input[type="text"].input-validation-error:focus {
+    .bcms-editor-field-box.input-validation-error:focus {
+        background: #fcecec;
+        border: 1px solid #e64343;
+        box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
+    }
+
+.bcms-editor-field-area.input-validation-error {
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAFMLZykAAAAbUlEQVQoz2N45uw8DYi/MsAZ////B2NUBlDqP1wAyLGDcZBVLCeo4j8QO0LpTNIUgBwH44CMBzkYXUEmsgnIkiiuxCZJnAnEuKEFasIXIPZGUuwNFQPJtWCzHiXQgYoyoBqQcQYujdQzgFIvAACFG3m8e8veBgAAAABJRU5ErkJggg==') no-repeat 100% 10px #fcecec;
+    border: 1px solid #e64343;
+    box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
+}
+
+    .bcms-editor-field-area.input-validation-error:focus {
+        background: #fcecec;
+        border: 1px solid #e64343;
+        box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
+    }
+
+div.bcms-grid .bcms-grid-input.input-validation-error {
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAFMLZykAAAAbUlEQVQoz2N45uw8DYi/MsAZ////B2NUBlDqP1wAyLGDcZBVLCeo4j8QO0LpTNIUgBwH44CMBzkYXUEmsgnIkiiuxCZJnAnEuKEFasIXIPZGUuwNFQPJtWCzHiXQgYoyoBqQcQYujdQzgFIvAACFG3m8e8veBgAAAABJRU5ErkJggg==') no-repeat 100% center #fcecec;
+    border: 1px solid #e64343;
+    box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
+}
+
+    div.bcms-grid .bcms-grid-input.input-validation-error:focus {
+        background: #fcecec;
+        border: 1px solid #e64343;
+        box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
+    }
+
+div.bcms-list .bcms-grid-input.input-validation-error {
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAFMLZykAAAAbUlEQVQoz2N45uw8DYi/MsAZ////B2NUBlDqP1wAyLGDcZBVLCeo4j8QO0LpTNIUgBwH44CMBzkYXUEmsgnIkiiuxCZJnAnEuKEFasIXIPZGUuwNFQPJtWCzHiXQgYoyoBqQcQYujdQzgFIvAACFG3m8e8veBgAAAABJRU5ErkJggg==') no-repeat 100% center #fcecec;
+    border: 1px solid #e64343;
+    box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
+}
+
+    div.bcms-list .bcms-grid-input.input-validation-error:focus {
         background: #fcecec;
         border: 1px solid #e64343;
         box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
@@ -1989,9 +2053,13 @@ input[type="text"].input-validation-error {
       margin-top: -5px;
    }*/
 
+.bcms-messages {
+    padding-bottom: 20px;
+}
+
 ul.bcms-success-messages {
     padding: 10px 15px;
-    margin: 10px 20px;
+    /*  margin: 10px 20px;*/
     border: 1px solid #20cd00;
     background-color: #e8fae5;
     font-size: 12px;
@@ -2006,7 +2074,7 @@ ul.bcms-success-messages {
 
 ul.bcms-warning-messages {
     padding: 10px 15px;
-    margin: 10px 20px;
+    /*  margin: 10px 20px;*/
     border: 1px solid #e7d827;
     background-color: #FFFEEC;
     font-size: 12px;
@@ -2020,7 +2088,7 @@ ul.bcms-warning-messages {
 
 ul.bcms-error-messages {
     padding: 10px 15px;
-    margin: 10px 20px;
+    /* margin: 10px 20px;*/
     border: 1px solid #e64343;
     background-color: #fcecec;
     font-size: 12px;
@@ -2035,7 +2103,7 @@ ul.bcms-error-messages {
 
 ul.bcms-info-messages {
     padding: 10px 15px;
-    margin: 10px 20px;
+    /* margin: 10px 20px;*/
     border: 1px solid #1891e6;
     background-color: #f0f8fd;
     font-size: 12px;

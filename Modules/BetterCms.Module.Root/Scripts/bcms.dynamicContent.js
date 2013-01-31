@@ -18,7 +18,7 @@ define('bcms.dynamicContent', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bc
 
         globalization = {
             failedLoadDialogMessage: 'Failed to load dialog. Internal server error. Please try again later.'
-        }
+        };
 
     /**
     /* Assign objects to module.
@@ -65,8 +65,8 @@ define('bcms.dynamicContent', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bc
             cache: false
         })
         .done(function (content, status, response) {
-            if (response.getResponseHeader('Content-Type').indexOf('application/json') === 0 && content.Data && content.Data.Html) {
-                dialog.setContent(content.Data.Html, contentId);
+            if (response.getResponseHeader('Content-Type').indexOf('application/json') === 0 && content.Html) {
+                dialog.setContent(content.Html, contentId);
             } else {
                 dialog.setContent(content, contentId);
             }
@@ -103,6 +103,7 @@ define('bcms.dynamicContent', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bc
                         options.beforeSubmit(form);
                     }
                 },
+                
                 success: function (json) {
                     if ($.isFunction(options.success)) {
                         if (options.success(json, dialog) !== false) {
@@ -127,8 +128,17 @@ define('bcms.dynamicContent', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bc
             });
         });
 
-        dialog.options.onAcceptClick = function () {
+        dialog.submitForm = function() {
             dialogForm.submit();
+        };
+        
+        var oldOnAcceptClick = dialog.options.onAcceptClick;
+        dialog.options.onAcceptClick = function () {
+            if ($.isFunction(oldOnAcceptClick)) {
+                oldOnAcceptClick(dialog);
+            }
+
+            dialog.submitForm();
             return false;
         };
     };

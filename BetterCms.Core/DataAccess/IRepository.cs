@@ -7,8 +7,10 @@ namespace BetterCms.Core.DataAccess
 {
     /// <summary>
     /// </summary>
-    public interface IRepository        
+    public interface IRepository
     {
+        TEntity UnProxy<TEntity>(TEntity entity);
+
         TEntity AsProxy<TEntity>(Guid id) where TEntity : Entity;
 
         TEntity First<TEntity>(Guid id) where TEntity : Entity;

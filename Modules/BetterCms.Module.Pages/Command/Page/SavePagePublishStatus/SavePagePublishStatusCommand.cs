@@ -35,7 +35,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePagePublishStatus
             {
                 var message = string.Format(PagesGlobalization.SavePagePublishStatus_NoPermission_Message);
                 var logMessage = string.Format("User has no permission to change page publish status. User: {0}", principal.Identity.Name);
-                throw new ValidationException(m => message, logMessage);
+                throw new ValidationException(() => message, logMessage);
             }
 
             var page = UnitOfWork.Session

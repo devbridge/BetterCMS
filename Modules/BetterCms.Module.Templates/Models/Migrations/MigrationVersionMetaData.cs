@@ -5,6 +5,8 @@ namespace BetterCms.Module.Templates.Models.Migrations
     [VersionTableMetaData]
     public class TemplatesVersionTableMetaData : IVersionTableMetaData
     {
+        internal const string VersionInfoTableName = "VersionInfo";
+        
         public string SchemaName
         {
             get
@@ -17,7 +19,7 @@ namespace BetterCms.Module.Templates.Models.Migrations
         {
             get
             {
-                return "VersionInfo";
+                return VersionInfoTableName;
             }
         }
 

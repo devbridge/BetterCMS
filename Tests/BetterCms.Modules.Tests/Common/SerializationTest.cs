@@ -13,21 +13,14 @@ namespace BetterCms.Test.Module.Common
     [TestFixture]
     public class SerializationTest : SerializationTestBase
     {
-        private readonly Assembly[] modulesToScan;
-
-        public SerializationTest()
-        {
-            modulesToScan = new[] { typeof(PagesModuleDescriptor).Assembly, typeof(RootModuleDescriptor).Assembly };
-        }
-
         [Test]
         public void All_Database_Entities_Should_Be_Serializable()
         {
             Type entityBaseType = typeof(Entity);
 
-            Assert.IsTrue(modulesToScan.Length > 0, "No modules defined to scan.");
-            
-            foreach (var assembly in modulesToScan)
+            Assert.IsTrue(KnownAssemblies.Count > 0, "No modules defined to scan.");
+
+            foreach (var assembly in KnownAssemblies)
             {                
                 var entityTypes = assembly.GetExportedTypes().Where(entityBaseType.IsAssignableFrom).ToList();
                 foreach (var entityType in entityTypes)

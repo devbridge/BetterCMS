@@ -182,8 +182,8 @@ namespace BetterCms.Module.MediaManager.Services
 
                 image.Title = Path.GetFileName(fileName);
                 image.Caption = null;
-                image.FileName = fileName;
-                image.FileExtension = Path.GetExtension(fileName);
+                image.OriginalFileName = fileName;
+                image.OriginalFileExtension = Path.GetExtension(fileName);
                 image.Type = MediaType.Image;
 
                 image.Width = size.Width;

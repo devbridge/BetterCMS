@@ -14,10 +14,6 @@ using BetterCms.Core.Services.Caching;
 using BetterCms.Core.Web;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
-using BetterCms.Module.Pages.Projections;
-using BetterCms.Module.Root.Models;
-using BetterCms.Module.Root.Mvc;
-using BetterCms.Module.Root.Projections;
 
 using NHibernate.Linq;
 
@@ -96,10 +92,6 @@ namespace BetterCms.Module.Pages.Services
             try
             {
                 var query = repository.AsQueryable<PageProperties>(x => x.Id == id);
-                if (loadFull)
-                {
-                    query = query.Fetch(x => x.Author).Fetch(x => x.Layout);
-                }
                 var page = query.First();
                 if (loadFull)
                 {
@@ -120,7 +112,7 @@ namespace BetterCms.Module.Pages.Services
             if (!redirectService.ValidateUrl(url))
             {
                 var logMessage = string.Format("Invalid page url {0}.", url);
-                throw new ValidationException(e => PagesGlobalization.ValidatePageUrlCommand_InvalidUrlPath_Message, logMessage);
+                throw new ValidationException(() => PagesGlobalization.ValidatePageUrlCommand_InvalidUrlPath_Message, logMessage);
             }
             
             // Is Url unique
@@ -133,7 +125,7 @@ namespace BetterCms.Module.Pages.Services
             if (query.Select(page => page.Id).Any())
             {
                 var logMessage = string.Format("Page with entered URL {0} already exists.", url);
-                throw new ValidationException(e => PagesGlobalization.ValidatePageUrlCommand_UrlAlreadyExists_Message, logMessage);
+                throw new ValidationException(() => PagesGlobalization.ValidatePageUrlCommand_UrlAlreadyExists_Message, logMessage);
             }
         }
 

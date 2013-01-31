@@ -6,7 +6,7 @@ namespace BetterCms.Core.Models
     /// Implements generic entities interface.
     /// </summary>
     [Serializable]
-    public abstract class Entity
+    public abstract class Entity : IEntity
     {
         /// <summary>
         /// Gets or sets the id.

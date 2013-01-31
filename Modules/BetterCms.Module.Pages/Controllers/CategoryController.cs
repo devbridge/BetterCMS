@@ -27,6 +27,7 @@ namespace BetterCms.Module.Pages.Controllers
         public ActionResult Categories(SearchableGridOptions request)
         {
             var model = GetCommand<GetCategoryListCommand>().ExecuteCommand(request);
+
             return View(model);
         }
 
@@ -47,6 +48,7 @@ namespace BetterCms.Module.Pages.Controllers
                     {
                         Messages.AddSuccess(PagesGlobalization.CreateCategory_CreatedSuccessfully_Message);
                     }
+
                     return Json(new WireJson { Success = true, Data = response });
                 }
             }

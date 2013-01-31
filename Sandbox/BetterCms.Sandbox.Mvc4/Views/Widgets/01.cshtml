@@ -1,8 +1,8 @@
-﻿Widget (01).
-Current time @DateTime.Now
-<br/>
-Render partial:
-<br/>
+﻿<div class="cart-summary">
+    <div class="cart-summary-title">
+        Cart Summary (@DateTime.Now)    
+    </div>    
+</div>
 
 
-Option 'aaa'='@ViewBag.aaa'
+@Html.Partial("Partial/TestOptionValues")

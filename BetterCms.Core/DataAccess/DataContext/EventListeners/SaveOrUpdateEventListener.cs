@@ -1,5 +1,6 @@
 ﻿using NHibernate.Event;
 using NHibernate.Event.Default;
+using NHibernate.Proxy.DynamicProxy;
 
 namespace BetterCms.Core.DataAccess.DataContext.EventListeners
 {
@@ -22,8 +23,6 @@ namespace BetterCms.Core.DataAccess.DataContext.EventListeners
             this.eventListenerHelper = eventListenerHelper;
         }
 
-        
-
         /// <summary>
         /// Performs the save or update.
         /// </summary>
@@ -34,7 +33,11 @@ namespace BetterCms.Core.DataAccess.DataContext.EventListeners
         /// </returns>
         protected override object PerformSaveOrUpdate(SaveOrUpdateEvent evt)
         {
-            eventListenerHelper.OnModify(evt.Entity);
+            if (evt.Session.IsDirtyEntity(evt.Entity))
+            {
+                eventListenerHelper.OnModify(evt.Entity);
+            }
+
             return base.PerformSaveOrUpdate(evt);
         }
 
@@ -71,7 +74,11 @@ namespace BetterCms.Core.DataAccess.DataContext.EventListeners
         /// <param name="persister">The persister.</param>
         protected override void PerformUpdate(SaveOrUpdateEvent evt, object entity, NHibernate.Persister.Entity.IEntityPersister persister)
         {
-            eventListenerHelper.OnModify(entity);
+            if (evt.Session.IsDirtyEntity(entity))
+            {
+                eventListenerHelper.OnModify(entity);
+            }
+
             base.PerformUpdate(evt, entity, persister);
         }
     }

@@ -7,20 +7,16 @@ using FluentMigrator;
 
 namespace BetterCms.Module.Templates.Models.Migrations
 {
-    [Migration(1)]
+    [Migration(201301151842)]
     public class InitialSetup : DefaultMigration
     {
-        private string rootSchemaName;
-
         private const string RegionsTableName = "Regions";
-        
+
         private const string LayoutsTableName = "Layouts";
 
         private const string LayoutRegionsTableName = "LayoutRegions";
-        
-        private const string SettingsTableName = "Settings";
-        
-        private const string SettingsTableColumnName = "TemplatesApplied";
+
+        private readonly string rootSchemaName;
 
         public InitialSetup()
             : base(TemplatesModuleDescriptor.ModuleName)
@@ -30,7 +26,7 @@ namespace BetterCms.Module.Templates.Models.Migrations
 
         public override void Up()
         {
-            if (MustInsertTemplates())
+            if (IsFirstTimeMigration())
             {
                 CreateLayouts();
                 CreateRegions();
@@ -51,22 +47,9 @@ namespace BetterCms.Module.Templates.Models.Migrations
             UpdateRegions(true);
         }
 
-        private bool MustInsertTemplates()
+        private bool IsFirstTimeMigration()
         {
-            if (Schema.Schema(rootSchemaName).Table(SettingsTableName).Column(SettingsTableColumnName).Exists())
-            {
-                return false;
-            }
-
-            //
-            // Hack: Altering settings table, with adding new column, because FluentMigrator has no
-            // ability to check if record exists in the DB.
-            //
-            Alter
-                .Table(SettingsTableName)
-                .InSchema(rootSchemaName)
-                .AddColumn(SettingsTableColumnName).AsBoolean().Nullable();
-            return true;
+            return Schema.Schema(SchemaName).Table(TemplatesVersionTableMetaData.VersionInfoTableName).Exists();
         }
 
         private void CreateLayouts()
@@ -168,21 +151,21 @@ namespace BetterCms.Module.Templates.Models.Migrations
             layouts.Add(new Layout
             {
                 Id = TemplatesModuleConstants.TemplateIds.Wide,
-                LayoutPath = "~/Areas/bcms-Templates/Views/Shared/WideLayout.cshtml",
+                LayoutPath = "~/Areas/bcms-templates/Views/Shared/WideLayout.cshtml",
                 Name = "Default Wide"
             });
 
             layouts.Add(new Layout
             {
                 Id = TemplatesModuleConstants.TemplateIds.TwoColumns,
-                LayoutPath = "~/Areas/bcms-Templates/Views/Shared/TwoColumnsLayout.cshtml",
+                LayoutPath = "~/Areas/bcms-templates/Views/Shared/TwoColumnsLayout.cshtml",
                 Name = "Default Two Columns"
             });
 
             layouts.Add(new Layout
             {
                 Id = TemplatesModuleConstants.TemplateIds.ThreeColumns,
-                LayoutPath = "~/Areas/bcms-Templates/Views/Shared/ThreeColumnsLayout.cshtml",
+                LayoutPath = "~/Areas/bcms-templates/Views/Shared/ThreeColumnsLayout.cshtml",
                 Name = "Default Three Columns"
             });
 
@@ -196,35 +179,30 @@ namespace BetterCms.Module.Templates.Models.Migrations
             regions.Add(new Region
             {
                 Id = TemplatesModuleConstants.RegionIds.MainContent,
-                Name = "Main Content",
                 RegionIdentifier = "CMSMainContent"
             });
 
             regions.Add(new Region
             {
                 Id = TemplatesModuleConstants.RegionIds.Header,
-                Name = "Header",
                 RegionIdentifier = "CMSHeader"
             });
 
             regions.Add(new Region
             {
                 Id = TemplatesModuleConstants.RegionIds.Footer,
-                Name = "Footer",
                 RegionIdentifier = "CMSFooter"
             });
 
             regions.Add(new Region
             {
                 Id = TemplatesModuleConstants.RegionIds.LeftSide,
-                Name = "Left Side",
                 RegionIdentifier = "CMSLeftSide"
             });
 
             regions.Add(new Region
             {
                 Id = TemplatesModuleConstants.RegionIds.RightSide,
-                Name = "Right Side",
                 RegionIdentifier = "CMSRightSide"
             });
 
@@ -235,20 +213,20 @@ namespace BetterCms.Module.Templates.Models.Migrations
         {
             var layoutRegions = new List<LayoutRegion>();
 
-            layoutRegions.Add(new LayoutRegion { LayoutId = TemplatesModuleConstants.TemplateIds.Wide, RegionId = TemplatesModuleConstants.RegionIds.MainContent });
-            layoutRegions.Add(new LayoutRegion { LayoutId = TemplatesModuleConstants.TemplateIds.Wide, RegionId = TemplatesModuleConstants.RegionIds.Header });
-            layoutRegions.Add(new LayoutRegion { LayoutId = TemplatesModuleConstants.TemplateIds.Wide, RegionId = TemplatesModuleConstants.RegionIds.Footer });
+            layoutRegions.Add(new LayoutRegion { Description = "Main Content", LayoutId = TemplatesModuleConstants.TemplateIds.Wide, RegionId = TemplatesModuleConstants.RegionIds.MainContent });
+            layoutRegions.Add(new LayoutRegion { Description = "Header", LayoutId = TemplatesModuleConstants.TemplateIds.Wide, RegionId = TemplatesModuleConstants.RegionIds.Header });
+            layoutRegions.Add(new LayoutRegion { Description = "Footer", LayoutId = TemplatesModuleConstants.TemplateIds.Wide, RegionId = TemplatesModuleConstants.RegionIds.Footer });
 
-            layoutRegions.Add(new LayoutRegion { LayoutId = TemplatesModuleConstants.TemplateIds.TwoColumns, RegionId = TemplatesModuleConstants.RegionIds.MainContent });
-            layoutRegions.Add(new LayoutRegion { LayoutId = TemplatesModuleConstants.TemplateIds.TwoColumns, RegionId = TemplatesModuleConstants.RegionIds.Header });
-            layoutRegions.Add(new LayoutRegion { LayoutId = TemplatesModuleConstants.TemplateIds.TwoColumns, RegionId = TemplatesModuleConstants.RegionIds.Footer });
-            layoutRegions.Add(new LayoutRegion { LayoutId = TemplatesModuleConstants.TemplateIds.TwoColumns, RegionId = TemplatesModuleConstants.RegionIds.LeftSide });
+            layoutRegions.Add(new LayoutRegion { Description = "Main Content", LayoutId = TemplatesModuleConstants.TemplateIds.TwoColumns, RegionId = TemplatesModuleConstants.RegionIds.MainContent });
+            layoutRegions.Add(new LayoutRegion { Description = "Header", LayoutId = TemplatesModuleConstants.TemplateIds.TwoColumns, RegionId = TemplatesModuleConstants.RegionIds.Header });
+            layoutRegions.Add(new LayoutRegion { Description = "Footer", LayoutId = TemplatesModuleConstants.TemplateIds.TwoColumns, RegionId = TemplatesModuleConstants.RegionIds.Footer });
+            layoutRegions.Add(new LayoutRegion { Description = "Left Side", LayoutId = TemplatesModuleConstants.TemplateIds.TwoColumns, RegionId = TemplatesModuleConstants.RegionIds.LeftSide });
 
-            layoutRegions.Add(new LayoutRegion { LayoutId = TemplatesModuleConstants.TemplateIds.ThreeColumns, RegionId = TemplatesModuleConstants.RegionIds.MainContent });
-            layoutRegions.Add(new LayoutRegion { LayoutId = TemplatesModuleConstants.TemplateIds.ThreeColumns, RegionId = TemplatesModuleConstants.RegionIds.Header });
-            layoutRegions.Add(new LayoutRegion { LayoutId = TemplatesModuleConstants.TemplateIds.ThreeColumns, RegionId = TemplatesModuleConstants.RegionIds.Footer });
-            layoutRegions.Add(new LayoutRegion { LayoutId = TemplatesModuleConstants.TemplateIds.ThreeColumns, RegionId = TemplatesModuleConstants.RegionIds.LeftSide });
-            layoutRegions.Add(new LayoutRegion { LayoutId = TemplatesModuleConstants.TemplateIds.ThreeColumns, RegionId = TemplatesModuleConstants.RegionIds.RightSide });
+            layoutRegions.Add(new LayoutRegion { Description = "Main Content", LayoutId = TemplatesModuleConstants.TemplateIds.ThreeColumns, RegionId = TemplatesModuleConstants.RegionIds.MainContent });
+            layoutRegions.Add(new LayoutRegion { Description = "Header", LayoutId = TemplatesModuleConstants.TemplateIds.ThreeColumns, RegionId = TemplatesModuleConstants.RegionIds.Header });
+            layoutRegions.Add(new LayoutRegion { Description = "Footer", LayoutId = TemplatesModuleConstants.TemplateIds.ThreeColumns, RegionId = TemplatesModuleConstants.RegionIds.Footer });
+            layoutRegions.Add(new LayoutRegion { Description = "Left Side", LayoutId = TemplatesModuleConstants.TemplateIds.ThreeColumns, RegionId = TemplatesModuleConstants.RegionIds.LeftSide });
+            layoutRegions.Add(new LayoutRegion { Description = "Right Side", LayoutId = TemplatesModuleConstants.TemplateIds.ThreeColumns, RegionId = TemplatesModuleConstants.RegionIds.RightSide });
 
             return layoutRegions;
         }
@@ -298,13 +276,13 @@ namespace BetterCms.Module.Templates.Models.Migrations
     }
 
     public class Region : BaseModel
-    {
-        public string Name { get; set; }
+    {        
         public string RegionIdentifier { get; set; }
     }
     
     public class LayoutRegion : BaseModel
     {
+        public string Description { get; set; }
         public Guid LayoutId { get; set; }
         public Guid RegionId { get; set; }
     }

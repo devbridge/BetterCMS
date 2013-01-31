@@ -40,8 +40,7 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        /// <exception cref="System.NotImplementedException"></exception>
-        public bool Execute(DeletePageViewModel request)
+        public virtual bool Execute(DeletePageViewModel request)
         {
             var page = Repository.First<PageProperties>(request.PageId);
             if (page.Version != request.Version)
@@ -66,10 +65,6 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
             foreach (var pageTag in page.PageTags)
             {
                 Repository.Delete(pageTag);
-            }
-            foreach (var pageCategory in page.PageCategories)
-            {
-                Repository.Delete(pageCategory);
             }
             foreach (var pageContent in page.PageContents)
             {

@@ -18,7 +18,8 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
     links = {
         loadUploadFilesDialogUrl: null,
         uploadFileToServerUrl: null,
-        undoFileUploadUrl: null
+        undoFileUploadUrl: null,
+        loadUploadSingleFileDialogUrl: null
     },
 
     globalization = {
@@ -37,36 +38,127 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
                 rootFolderId: rootFolderId,
                 rootFolderType: rootFolderType
             };
-            
-        modal.open({
-            title: globalization.uploadFilesDialogTitle,            
-            onLoad: function (dialog) {
-                var url = $.format(links.loadUploadFilesDialogUrl, rootFolderId, rootFolderType);
-                dynamicContent.bindDialog(dialog, url, {
-                    contentAvailable: function () {
-                        initUploadFilesDialogEvents(dialog, options);
-                    },
+        if (html5Upload.fileApiSupported()) {
+            modal.open({
+                title: globalization.uploadFilesDialogTitle,
+                onLoad: function(dialog) {
+                    var url = $.format(links.loadUploadFilesDialogUrl, rootFolderId, rootFolderType);
+                    dynamicContent.bindDialog(dialog, url, {
+                        contentAvailable: function() {
+                            initUploadFilesDialogEvents(dialog, options);
+                        },
 
-                    beforePost: function () {
-                        dialog.container.showLoading();
-                    },
-                    
-                    postSuccess: function(json) {
-                        if (onSaveCallback && $.isFunction(onSaveCallback)) {
-                            onSaveCallback(json);
+                        beforePost: function() {
+                            dialog.container.showLoading();
+                        },
+
+                        postSuccess: function(json) {
+                            if (onSaveCallback && $.isFunction(onSaveCallback)) {
+                                onSaveCallback(json);
+                            }
+                        },
+
+                        postComplete: function() {
+                            dialog.container.hideLoading();
                         }
-                    },
+                    });
+                },
+                onCancel: function() {
+                    options.uploads.removeAllUploads();
+                }
+            });
+        } else {
+            modal.open({
+                title: globalization.uploadFilesDialogTitle,
+                onLoad: function (dialog) {
+                    var url = $.format(links.loadUploadSingleFileDialogUrl, rootFolderId, rootFolderType);
+                    dynamicContent.setContentFromUrl(dialog, url, {
+                        done: function () {
+                            SingleFileUpload(dialog, options);
+                        },
+                        beforePost: function () {
+                            dialog.container.showLoading();
+                        },
 
-                    postComplete: function () {
-                        dialog.container.hideLoading();
-                    }
-                });
-            },
-            onCancel: function () {
-                uploadsModel.removeAllUploads();
-            }
-        });
+                        postSuccess: function (json) {
+                            if (onSaveCallback && $.isFunction(onSaveCallback)) {
+                                onSaveCallback(json);
+                            }
+                        },
+
+                        postComplete: function () {
+                            dialog.container.hideLoading();
+                        }
+                    });
+                },
+                onAcceptClick: function () {
+                    $("#SaveForm").submit(); 
+                    
+                },
+                onCancel: function () {
+                    options.uploads.removeAllUploads();
+                }
+            });
+        }
     };
+        
+    function SingleFileUpload(dialog, options) {
+        var isFirstLoad = true;
+        var context = document.getElementById('bcms-media-uploads');
+        var uploadsModel = options.uploads;
+        var fakeData =
+            {
+                fileName: "Uploading",
+                fileSize: 1024,
+                fileId: null,
+                version: null,
+                type: null
+            };
+        var uploadFile = new FileViewModel(fakeData);
+
+        
+        dialog.container.find("#upload").on('click', function () {
+            dialog.container.find($('#ImgForm')).submit();
+           
+            uploadFile.uploadCompleted(false);
+            uploadsModel.activeUploads.push(uploadFile);
+            uploadsModel.uploads.push(uploadFile);
+            ko.applyBindings(uploadsModel, context);
+            //dialog.container.showLoading();
+        });
+
+        dialog.container.find($("#UploadTarget")).on('load', function () {
+            //dialog.container.hideLoading();
+            uploadFile.uploadCompleted(true);
+            uploadsModel.uploads.remove(uploadFile);
+            uploadsModel.activeUploads.remove(uploadFile);
+            if (isFirstLoad == true) {
+                isFirstLoad = false;
+                return;
+            }
+            document.getElementById("ImgForm").reset();            
+
+            var newImg = $.parseJSON($("#UploadTarget").contents().find("#jsonResult")[0].innerHTML);
+            
+            //If there was an error, display it to the user
+            if (newImg.IsValid == false) {
+
+                return;
+            }
+            
+            var fileModel = new FileViewModel(newImg);
+            
+            fileModel.uploadCompleted(true);
+            fileModel.fileId(newImg.Id);
+            fileModel.version(newImg.Version);
+            fileModel.type(newImg.Type);
+            fileModel.uploadProgress = ko.observable(100);
+
+            uploadsModel.uploads.push(fileModel);
+            uploadsModel.activeUploads.remove(fileModel);
+            ko.applyBindings(uploadsModel, context);
+        });
+    }
         
     function UploadsViewModel() {
         var self = this,
@@ -158,14 +250,14 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
                 key: 'File',
                 data: { rootFolderId: options.rootFolderId, rootFolderType: options.rootFolderType },
                 maxSimultaneousUploads: 4,
-                onFileAdded: function (file) {
+                onFileAdded: function(file) {
                     var fileModel = new FileViewModel(file);
                     uploadsModel.activeUploads.push(fileModel);
                     uploadsModel.uploads.push(fileModel);
-                    
+
                     file.on({
                         // Called after received response from the server
-                        onCompleted: function (data) {
+                        onCompleted: function(data) {
                             var result = JSON.parse(data);
                             if (result.Success) {
                                 uploadsModel.activeUploads.remove(fileModel);
@@ -179,11 +271,11 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
                         },
 
                         // Called during upload progress, first parameter is decimal value from 0 to 100.
-                        onProgress: function (progress) {                            
+                        onProgress: function(progress) {
                             fileModel.uploadProgress(parseInt(progress, 10));
                         },
-                        
-                        onError: function () {                            
+
+                        onError: function() {
                             fileModel.uploadFailed(true);
                             uploadsModel.activeUploads.remove(fileModel);
                         }
@@ -192,7 +284,7 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
             });
 
             ko.applyBindings(uploadsModel, context);
-        }
+        } 
     }
         
     function trimTrailingZeros(number) {

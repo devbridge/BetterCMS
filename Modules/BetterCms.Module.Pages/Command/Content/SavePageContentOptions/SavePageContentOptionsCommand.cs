@@ -1,7 +1,14 @@
-﻿using BetterCms.Core.Mvc.Commands;
+﻿using System;
+using System.Linq;
+
+using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+
+using NHibernate.Linq;
+
+using ContentEntity = BetterCms.Module.Root.Models.Content;
 
 namespace BetterCms.Module.Pages.Command.Content.SavePageContentOptions
 {
@@ -14,22 +21,50 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageContentOptions
         /// <returns></returns>
         public bool Execute(PageContentOptionsViewModel model)
         {
-            if (model != null && model.WidgetOptions != null)
+            if (model != null && !model.PageContentId.HasDefaultValue()  && model.WidgetOptions != null)
             {
-                UnitOfWork.BeginTransaction();
+                var pageContent = Repository.AsQueryable<PageContent>()
+                              .Fetch(f => f.Content)
+                              .ThenFetchMany(f => f.ContentOptions)
+                              .FetchMany(f => f.Options)
+                              .Where(f => f.Id == model.PageContentId && !f.IsDeleted && !f.Content.IsDeleted)
+                              .ToList()
+                              .FirstOrDefault();
 
-                foreach (var option in model.WidgetOptions)
+                if (pageContent != null)
                 {
-                    var pageContentOption = Repository.FirstOrDefault<PageContentOption>(f => f.ContentOption.Key.ToLower() == option.OptionKey.ToLowerInvariant());
+                    UnitOfWork.BeginTransaction();
 
-                    if (pageContentOption != null && pageContentOption.Value != option.OptionValue)
+                    foreach (var widgetOption in model.WidgetOptions)
                     {
-                        pageContentOption.Value = option.OptionValue;
-                        Repository.Save(pageContentOption);
-                    }
-                }
+                        var pageContentOption = pageContent.Options.FirstOrDefault(f => f.Key.Trim().Equals(widgetOption.OptionKey.Trim(), StringComparison.OrdinalIgnoreCase));
 
-                UnitOfWork.Commit();                
+                        if (!string.IsNullOrEmpty(widgetOption.OptionValue) && widgetOption.OptionValue != widgetOption.OptionDefaultValue)
+                        {
+                            if (pageContentOption == null)
+                            {
+                                pageContentOption = new PageContentOption {
+                                                                             PageContent = pageContent,
+                                                                             Key = widgetOption.OptionKey,
+                                                                             Value = widgetOption.OptionValue,
+                                                                             Type = widgetOption.Type                                                                            
+                                                                          };
+                            }
+                            else
+                            {
+                                pageContentOption.Value = widgetOption.OptionValue;
+                                pageContentOption.Type = widgetOption.Type;
+                            }
+                            Repository.Save(pageContentOption);
+                        }
+                        else if (pageContentOption != null)
+                        {
+                            Repository.Delete(pageContentOption);
+                        }
+                    }
+
+                    UnitOfWork.Commit();   
+                }                
             }
 
             return true;

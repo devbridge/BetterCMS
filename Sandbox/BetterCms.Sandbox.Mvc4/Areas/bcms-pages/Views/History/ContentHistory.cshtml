@@ -1,0 +1,151 @@
+﻿@using BetterCms.Core.Models
+@using BetterCms.Module.Pages.Command.History.GetContentHistory
+@using BetterCms.Module.Pages.Content.Resources
+@using BetterCms.Module.Pages.Controllers
+@using BetterCms.Module.Pages.ViewModels.History
+@using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Mvc
+@using BetterCms.Module.Root.Mvc.Grids
+@using BetterCms.Module.Root.Mvc.Grids.Extensions
+@using BetterCms.Module.Root.Mvc.Grids.TableRenderers
+@using BetterCms.Module.Root.Mvc.Helpers
+@using BetterCms.Module.Root.ViewModels.Shared
+@using Microsoft.Web.Mvc
+@using MvcContrib.UI.Grid
+@model BetterCms.Module.Pages.ViewModels.History.ContentHistoryViewModel
+
+@helper PreviewLink(ContentHistoryItem item)
+{
+    <a class="bcms-icn-preview" data-id="@item.Id">@RootGlobalization.Button_Preview</a>
+}
+
+@helper RestoreLink(ContentHistoryItem item)
+{
+    if (item.Status == ContentStatus.Archived)
+    {
+        <a class="bcms-icn-restore" data-id="@item.Id" data-version="@item.Version">@RootGlobalization.Button_Restore</a>
+    } 
+    else
+    {
+        @:&nbsp;
+    }
+}
+
+@helper DisplayStatus(string statusName, ContentStatus status)
+{
+    switch (status)
+    {
+        case ContentStatus.Archived:
+            @:<div class="bcms-archived-state">@statusName</div>
+
+            break;
+
+        case ContentStatus.Draft:
+            @:<div class="bcms-draft-state">@statusName</div>
+        
+            break;
+
+        case ContentStatus.Published:
+            @:<div class="bcms-published-state">@statusName</div>    
+        
+            break;
+            
+        default:
+            @:statusName
+            break;
+    }
+}
+
+@{
+    Action<ColumnBuilder<ContentHistoryItem>> columns = column =>
+    {
+        column.For(f => PreviewLink(f))
+            .Encode(false)
+            .Named(string.Empty)
+            .Sortable(false)
+            .HeaderAttributes(@style => "width: 20px; padding: 10px;", @class => "bcms-tables-nohover");
+
+        column.For(m => m.CreatedOn.ToFormattedDateString())
+               .Named(PagesGlobalization.ContentHistory_Column_CreatedOn)
+               .SortColumnName("CreatedOn")
+               .HeaderAttributes(@style => "width: 100px;")
+               .Attributes(@style => "width: 100px;");
+        
+        column.For(m => m.PublishedOn.ToFormattedDateString())
+               .Named(PagesGlobalization.ContentHistory_Column_PublishedOn)
+               .SortColumnName("PublishedOn")
+               .HeaderAttributes(@style => "width: 95px;")
+               .Attributes(@style => "width: 100px;");
+
+        column.For(m => m.PublishedByUser)
+               .Named(PagesGlobalization.ContentHistory_Column_PublishedByUser)
+               .SortColumnName("PublishedByUser")
+               .HeaderAttributes(@style => "width: 100px;")
+               .Attributes(@style => "width: 100px;");
+
+        column.For(m => m.ArchivedOn.ToFormattedDateString())
+               .Named(PagesGlobalization.ContentHistory_Column_ArchivedOn)
+               .SortColumnName("ArchivedOn")
+               .HeaderAttributes(@style => "width: 100px;")
+               .Attributes(@style => "width: 100px;");
+
+        column.For(m => m.DisplayedFor.ToFormatedTimeString())
+               .Named(PagesGlobalization.ContentHistory_Column_DisplayedFor)
+               .SortColumnName("DisplayedFor")
+               .HeaderAttributes(@style => "width: 105px;")
+               .Attributes(@style => "width: 105px;");
+
+        column.For(m => DisplayStatus(m.StatusName, m.Status))
+               .Named(PagesGlobalization.ContentHistory_Column_Status)
+               .SortColumnName("StatusName")
+               .Encode(false)
+               .HeaderAttributes(@style => "width: 90px;")
+               .Attributes(@style => "width: 90px;");
+
+        column.For(f => RestoreLink(f))
+            .Encode(false)
+            .Named(string.Empty)
+            .Sortable(false)
+            .HeaderAttributes(@style => "width: 167px;", @class => "bcms-tables-nohover")
+            .Attributes(@style => "width: 144px;");            
+    };
+}
+      
+<div class="bcms-scroll-window">
+    @Html.MessagesBox("bcms-content-history-messages")
+
+    <div class="bcms-history-preview-holder">
+        <div class="bcms-history-preview">
+            <div class="bcms-history-info" style="display: block;">@PagesGlobalization.ContentHistory_SelectVersionToPreviewMessage</div>
+            <div class="bcms-history-content"></div>
+        </div>
+
+    </div>
+
+    <div class="bcms-history-table-holder">
+                       
+        @using (Html.BeginForm<HistoryController>(f => f.ContentHistory((GetContentHistoryRequest)null), FormMethod.Post, new { @id = "bcms-pagecontenthistory-form" }))
+        {                        
+            @Html.HiddenGridOptions(Model.GridOptions)
+            @Html.HiddenFor(model => model.ContentId)
+
+            <div class="bcms-history-table-top">
+                <div class="bcms-large-titles">@PagesGlobalization.ContentHistory_OlderVersions</div>
+                <div class="bcms-search-block">                    
+                    @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box", @placeholder = RootGlobalization.WaterMark_Search })
+                    <div class="bcms-btn-search" id="bcms-pagecontenthistory-search-btn">@RootGlobalization.Button_Search</div>
+                </div>
+            </div>                        
+            @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new ScrollableEditableHtmlTableGridRenderer<ContentHistoryItem>()
+                                                                                                                                 {
+                                                                                                                                     InternalTableCssClass = "bcms-history-cell"
+                                                                                                                                 
+                                                                                                                                 })
+            @Html.HiddenSubmit()
+        }    
+    </div>
+</div>
+
+<script type="text/html" id="bcms-history-preview-template">
+    <iframe src="" style="width: 100%; height: 100%; border: 0px;"></iframe>
+</script>

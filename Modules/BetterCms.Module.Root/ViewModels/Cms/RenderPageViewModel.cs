@@ -10,31 +10,91 @@ namespace BetterCms.Module.Root.ViewModels.Cms
     [Serializable]
     public class RenderPageViewModel : IPage
     {
+        public RenderPageViewModel(IPage page)
+        {
+            Id = page.Id;
+            IsDeleted = page.IsDeleted;
+            Version = page.Version;
+            HasSEO = page.HasSEO;
+            Title = page.Title;
+            PageUrl = page.PageUrl;            
+            IsPublished = page.IsPublished;
+        }
+
         public RenderPageViewModel()
         {
         }
 
-        public RenderPageViewModel(IPage page)
+        public Guid Id { get; private set; }
+
+        public bool IsDeleted { get; private set; }
+
+        DateTime IEntity.CreatedOn
         {
-            Id = page.Id;
-            IsPublished = page.IsPublished;
-            HasSEO = page.HasSEO;
-            Title = page.Title;
-            PageUrl = page.PageUrl;
+            get
+            {
+                throw new NotSupportedException();
+            }
         }
 
-        public Guid Id { get; set; }
+        DateTime IEntity.ModifiedOn
+        {
+            get
+            {
+                throw new NotSupportedException();
+            }
+        }
 
-        public bool IsPublished { get; set; }
+        DateTime? IEntity.DeletedOn
+        {
+            get
+            {
+                throw new NotSupportedException();
+            }
+        }
 
-        public bool HasSEO { get; set; }
+        string IEntity.CreatedByUser
+        {
+            get
+            {
+                throw new NotSupportedException();
+            }
+        }
 
-        public string Title { get; set; }
+        string IEntity.ModifiedByUser
+        {
+            get
+            {
+                throw new NotSupportedException();
+            }
+        }
 
-        public string PageUrl { get; set; }
+        string IEntity.DeletedByUser
+        {
+            get
+            {
+                throw new NotSupportedException();
+            }
+        }
 
+        public int Version { get; private set; }
+
+        public bool IsPublished { get; private set; }
+
+        public bool HasSEO { get; private set; }
+
+        public string Title { get; private set; }
+
+        public string PageUrl { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the layout path.
+        /// </summary>
+        /// <value>
+        /// The layout path.
+        /// </value>
         public string LayoutPath { get; set; }
-
+        
         /// <summary>
         /// Gets or sets page content projections list.
         /// </summary>
@@ -68,6 +128,14 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         public IList<IStylesheetAccessor> Stylesheets { get; set; }
 
         /// <summary>
+        /// Gets or sets the java scripts.
+        /// </summary>
+        /// <value>
+        /// The java scripts.
+        /// </value>
+        public IList<IJavaScriptAccessor> JavaScripts { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether current user can manage page content.
         /// </summary>
         /// <value>
@@ -75,9 +143,15 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         /// </value>
         public bool CanManageContent { get; set; }
 
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
         public override string ToString()
         {
-            return string.Format("Id: {0}, IsPublished: {1}, Title: {2}, PageUrl: {3}, LayoutPath: {4}", Id, IsPublished, Title, PageUrl, LayoutPath);
+            return string.Format("Id: {0}, Title: {1}, PageUrl: {2}, LayoutPath: {3}", Id, Title, PageUrl, LayoutPath);
         }
     }
 }

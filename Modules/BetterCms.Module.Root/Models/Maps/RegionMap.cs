@@ -8,8 +8,7 @@ namespace BetterCms.Module.Root.Models.Maps
             : base(RootModuleDescriptor.ModuleName)
         {
             Table("Regions");
-
-            Map(x => x.Name).Not.Nullable().Length(MaxLength.Name);
+            
             Map(x => x.RegionIdentifier).Not.Nullable().Length(MaxLength.Name);
 
             HasMany(x => x.PageContents).Inverse().Cascade.SaveUpdate().LazyLoad().Where("IsDeleted = 0");

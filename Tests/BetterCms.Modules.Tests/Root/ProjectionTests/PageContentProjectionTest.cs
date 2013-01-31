@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 
 using BetterCms.Core.Models;
+using BetterCms.Module.Pages.Accessors;
 using BetterCms.Module.Pages.Models;
-using BetterCms.Module.Pages.Projections;
 using BetterCms.Module.Root.Projections;
 
 using NUnit.Framework;
@@ -17,7 +17,7 @@ namespace BetterCms.Test.Module.Root.ProjectionTests
         {
             var pageContent = TestDataProvider.CreateNewPageContent();
             pageContent.Content = TestDataProvider.CreateNewHtmlContent();
-            pageContent.PageContentOptions = new[]
+            pageContent.Options = new[]
                                                  {
                                                      TestDataProvider.CreateNewPageContentOption(pageContent),
                                                      TestDataProvider.CreateNewPageContentOption(pageContent),
@@ -25,7 +25,7 @@ namespace BetterCms.Test.Module.Root.ProjectionTests
                                                  };
 
             PageContentProjection original = new PageContentProjection(
-                pageContent, new HtmlContentAccessor((HtmlContent)pageContent.Content, pageContent.PageContentOptions.Cast<IPageContentOption>().ToList()));
+                pageContent, pageContent.Content, new HtmlContentAccessor((HtmlContent)pageContent.Content, pageContent.Options.Cast<IOption>().ToList()));
 
             RunSerializationAndDeserialization(original,
                 projection =>

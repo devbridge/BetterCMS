@@ -64,6 +64,12 @@ define('bcms.tooltip', ['jquery', 'bcms'], function ($, bcms) {
             container.find(selectors.close).on('click', function () {
                 instance.hide();
             });
+            
+            $(document.body).bind('click', function (e) {
+                if ($(e.target).closest(selectors.arrowContainer).length == 0) {
+                    instance.hide();
+                }
+            });
 
             container
                 .hide()

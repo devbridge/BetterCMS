@@ -9,14 +9,14 @@
     @Html.HiddenFor(f => f.PageUrlPath)                 
 </div>
 <div class="bcms-edit-urlpath-box" style="display: none;">
-    <div class="bcms-edit-btn-close">@PagesGlobalization.EditSeo_EditUrlPath_Close</div>
+    <div class="bcms-tip-close">@PagesGlobalization.EditSeo_EditUrlPath_Close</div>
     @Html.Tooltip(PagesGlobalization.EditSeo_EditUrlPath_Tooltip_Title, PagesGlobalization.EditSeo_EditUrlPath_Tooltip_Description)
     <div class="bcms-content-titles">@PagesGlobalization.EditSeo_EditUrlPath_Title</div>
     @Html.TextBoxFor(f => f.ChangedUrlPath, new { @class = "bcms-editor-field-box", style = "width: 503px;"})    
+    <div id="bcms-editseo-editurlpath-save" class="bcms-btn-small">@RootGlobalization.Button_Ok</div>
+    <div id="bcms-editseo-editurlpath-cancel" class="bcms-btn-links-small">@RootGlobalization.Button_Cancel</div>
     <div class="bcms-edit-check-field">
         @Html.CheckBoxFor(f => f.CreatePermanentRedirect)
         <label for="@Microsoft.Web.Mvc.NameExtensions.NameFor(Html, f => f.CreatePermanentRedirect)" class="bcms-edit-label">@PagesGlobalization.EditSeo_EditUrlPath_PermanentRedirect</label>
     </div>
-    <div id="bcms-editseo-editurlpath-save" class="bcms-btn-small">@RootGlobalization.Button_Save</div>
-    <div id="bcms-editseo-editurlpath-cancel" class="bcms-btn-links-small">@RootGlobalization.Button_Cancel</div>
 </div>

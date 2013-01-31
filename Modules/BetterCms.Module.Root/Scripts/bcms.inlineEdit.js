@@ -8,10 +8,12 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
         selectors = {},
         defaultSelectors = {
             row: 'tr',
+            rowCells: 'td',
             firstRow: 'tr:first',
             firstCell: 'td:first',
             firstForm: 'form:first',
             firstEditableInput: 'input[type="text"]:first',
+            editableInput: 'input[type="text"]',
             fieldInputs: 'td > input.bcms-editor-field-box',
             fieldValues: '.bcms-grid-item-info',
             deleteRowLink: 'a.bcms-icn-delete',
@@ -110,22 +112,30 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
     * Initializes rows events
     */
     editor.initRowEvents = function(initContainer) {
-        initContainer.find(selectors.editRowLink).on('click', function () {
+        initContainer.find(selectors.rowCells).on('click', function (event) {
+            bcms.stopEventPropagation(event);
+            
             var row = $(this).parents(selectors.firstRow);
             editor.editRow(row, initContainer);
         });
 
-        initContainer.find(selectors.saveRowLink).on('click', function () {
+        initContainer.find(selectors.saveRowLink).on('click', function (event) {
+            bcms.stopEventPropagation(event);
+            
             var row = $(this).parents(selectors.firstRow);
             editor.saveRow(row, initContainer);
         });
 
-        initContainer.find(selectors.cancelLink).on('click', function () {
+        initContainer.find(selectors.cancelLink).on('click', function (event) {
+            bcms.stopEventPropagation(event);
+            
             var row = $(this).parents(selectors.firstRow);
             editor.cancelRowEdit(row);
         });
         
-        initContainer.find(selectors.deleteRowLink).on('click', function () {
+        initContainer.find(selectors.deleteRowLink).on('click', function (event) {
+            bcms.stopEventPropagation(event);
+            
             var row = $(this).parents(selectors.firstRow);
             editor.deleteRow(row);
         });
@@ -320,7 +330,7 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
                                 }
                                 if (json.Data.Id) {
                                     row.find(selectors.deleteRowLink).data('id', json.Data.Id);
-                                    row.find(selectors.editRowLink).data('id', json.Data.Id);
+                                    row.find(selectors.editRowLink).data('id', json.Data.Id);   
                                 }
                                 rowAdded = false;
                                 row.data('new', false);
@@ -450,7 +460,10 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
         
         row.find(selectors.fieldValues).hide();
         row.find(selectors.fieldInputs).show();
-        row.find(selectors.firstEditableInput).focus();
+        
+        if (!row.find(selectors.editableInput).eq(1).is(":focus")) {
+            row.find(selectors.firstEditableInput).focus();    
+        }
 
         row.find(selectors.deleteRowLink).hide();
         row.find(selectors.saveRowLink).show();

@@ -7,26 +7,7 @@ namespace BetterCms.Core.DataAccess.DataContext.EventListeners
 {
     public class EventListenerHelper
     {
-        private readonly ISecurityService securityService;
-
-        // TODO: remove when authorization will be enabled
-        private string PrincipalName
-        {
-            get
-            {
-                var principal = securityService.GetCurrentPrincipal();
-                string name = null;
-                if (principal != null && principal.Identity != null)
-                {
-                    name = principal.Identity.Name;
-                }
-                if (string.IsNullOrWhiteSpace(name))
-                {
-                    name = "Anonymous";
-                }
-                return name;
-            }
-        }
+        private readonly ISecurityService securityService;    
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventListenerHelper" /> class.
@@ -47,7 +28,7 @@ namespace BetterCms.Core.DataAccess.DataContext.EventListeners
             if (savingEntity != null)
             {
                 savingEntity.ModifiedOn = DateTime.Now;
-                savingEntity.ModifiedByUser = PrincipalName;
+                savingEntity.ModifiedByUser = securityService.CurrentPrincipalName;
             }
         }
 
@@ -61,9 +42,9 @@ namespace BetterCms.Core.DataAccess.DataContext.EventListeners
             if (savingEntity != null)
             {
                 savingEntity.CreatedOn = DateTime.Now;
-                savingEntity.CreatedByUser = PrincipalName;
+                savingEntity.CreatedByUser = securityService.CurrentPrincipalName;
                 savingEntity.ModifiedOn = DateTime.Now;
-                savingEntity.ModifiedByUser = PrincipalName;
+                savingEntity.ModifiedByUser = securityService.CurrentPrincipalName;
             }
         }
 
@@ -78,7 +59,7 @@ namespace BetterCms.Core.DataAccess.DataContext.EventListeners
             {
                 deletingEntity.IsDeleted = true;
                 deletingEntity.DeletedOn = DateTime.Now;
-                deletingEntity.DeletedByUser = PrincipalName;
+                deletingEntity.DeletedByUser = securityService.CurrentPrincipalName;
             }
         }
     }

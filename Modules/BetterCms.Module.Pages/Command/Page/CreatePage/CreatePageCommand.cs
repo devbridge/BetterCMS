@@ -1,10 +1,11 @@
 ﻿using BetterCms.Core.Mvc.Commands;
+
 using BetterCms.Module.Pages.Command.Page.SavePageProperties;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
-using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Mvc.Helpers;
 
 namespace BetterCms.Module.Pages.Command.Page.CreatePage
 {
@@ -38,14 +39,20 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
         /// <returns>Created page</returns>
         public virtual SavePageResponse Execute(AddNewPageViewModel request)
         {
-            request.PagePermalink = redirectService.FixUrl(request.PagePermalink);
+            var pageUrl = request.PageUrl;
+            if (pageUrl == null && !string.IsNullOrWhiteSpace(request.PageTitle))
+            {
+                pageUrl = request.PageTitle.Transliterate();
+            }
+
+            pageUrl = redirectService.FixUrl(pageUrl);
 
             // Validate Url
-            pageService.ValidatePageUrl(request.PagePermalink);
+            pageService.ValidatePageUrl(pageUrl);
 
             var page = new PageProperties
                 {
-                    PageUrl = request.PagePermalink,
+                    PageUrl = pageUrl,
                     Title = request.PageTitle,
                     Layout = Repository.AsProxy<Root.Models.Layout>(request.TemplateId)
                 };

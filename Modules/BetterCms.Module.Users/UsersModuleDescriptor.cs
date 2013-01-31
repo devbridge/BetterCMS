@@ -7,6 +7,9 @@ using BetterCms.Core.Models;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.JsModule;
 using BetterCms.Core.Modules.Projections;
+using BetterCms.Module.Blog.Registration;
+using BetterCms.Module.Users.Content.Resources;
+using BetterCms.Module.Users.Registration;
 
 namespace BetterCms.Module.Users
 {
@@ -15,6 +18,23 @@ namespace BetterCms.Module.Users
     /// </summary>
     public class UsersModuleDescriptor : ModuleDescriptor
     {
+        /// <summary>
+        /// The module name.
+        /// </summary>
+        internal const string ModuleName = "users";
+        /// <summary>
+        /// The user java script module descriptor
+        /// </summary>
+        private readonly UserJavaScriptModuleDescriptor userJavaScriptModuleDescriptor;
+
+         /// <summary>
+        /// Initializes a new instance of the <see cref="UsersModuleDescriptor" /> class.
+        /// </summary>
+        public UsersModuleDescriptor()
+        {
+            userJavaScriptModuleDescriptor = new UserJavaScriptModuleDescriptor(this);
+        }
+
         /// <summary>
         /// Gets the name of module.
         /// </summary>
@@ -25,7 +45,7 @@ namespace BetterCms.Module.Users
         {
             get
             {
-                return "Users";
+                return ModuleName;
             }
         }
 
@@ -42,6 +62,20 @@ namespace BetterCms.Module.Users
                 return "Users module for BetterCMS.";
             }
         }
+        
+        /// <summary>
+        /// Gets the order.
+        /// </summary>
+        /// <value>
+        /// The order.
+        /// </value>
+        public override int Order
+        {
+            get
+            {
+                return int.MaxValue - 200;
+            }
+        }
 
         /// <summary>
         /// Registers the style sheet files.
@@ -55,6 +89,42 @@ namespace BetterCms.Module.Users
                 {
                     "/file/bcms-users/Content/Css/bcms.users.css"
                 };
-        }      
+        }
+
+        /// <summary>
+        /// Gets known client side modules in page module.
+        /// </summary>
+        /// <param name="containerBuilder">The container builder.</param>
+        /// <param name="configuration">The CMS configuration.</param>
+        /// <returns>List of known client side modules in page module.</returns>
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
+        public override IEnumerable<JavaScriptModuleDescriptor> RegisterJavaScriptModules(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        {
+            return new JavaScriptModuleDescriptor[]
+                {
+                    userJavaScriptModuleDescriptor,
+                    new RoleJavaScriptModuleDescriptor(this) 
+                };
+        }
+
+        /// <summary>
+        /// Registers the site settings projections.
+        /// </summary>
+        /// <param name="containerBuilder">The container builder.</param>
+        /// <param name="configuration">The configuration.</param>
+        /// <returns>List of page action projections.</returns>
+        public override IEnumerable<IPageActionProjection> RegisterSiteSettingsProjections(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        {
+            return new IPageActionProjection[]
+                {
+                    new LinkActionProjection(userJavaScriptModuleDescriptor, page => "loadSiteSettingsUsers")
+                        {
+                            Order = 4100,
+                            Title = () => UsersGlobalization.SiteSettings_UserMenuItem,
+                            CssClass = page => "bcms-sidebar-link",
+                            IsVisible = (page, principle) => false, // TODO: implement.
+                        }                                      
+                };
+        }
     }
 }

@@ -9,7 +9,7 @@
 @RenderBody()
 
 @section CmsMetaTitle {
-    <title>@Model.Title</title>    
+    <title>@Model.Title</title>
 }
 
 @section CmsMeta {
@@ -17,7 +17,7 @@
     {
         foreach (var metaData in Model.Metadata)
         {
-            metaData.Render(Model, Html);
+            metaData.Render(Model, User, Html);
         }
     }
 }
@@ -31,7 +31,9 @@
         @Html.Action("RenderStyleSheetIncludes", "Rendering")
     }
 
-    @Html.RenderPageCustomCss(Model.Stylesheets)
+    @if (Model.Stylesheets != null) {
+        @Html.RenderPageCustomCss(Model.Stylesheets)
+    }
 }
 
 @section CmsHeadScripts {
@@ -41,7 +43,7 @@
     }
 }
 
-@section CmsBodyAttributes {@(Html.Raw(Model.CanManageContent ? string.Format(@" data-page-id = ""{0}"" class=""bcms-page-content""", @ViewBag.pageId) : string.Empty))}
+@section CmsBodyAttributes {@(Html.Raw(Model.CanManageContent ? string.Format(@" data-page-id = ""{0}""", @ViewBag.pageId) : string.Empty))}
 
 @section CmsScripts {
     @if (Model.CanManageContent)
@@ -55,6 +57,11 @@
         @Html.Partial("Partial/Info")
         @Html.Partial("Partial/Tooltip")
         @Html.Partial("Partial/ImagePreview")
+        @Html.Partial("Partial/SiteSettingTab")
+
+        if (Model.JavaScripts != null) {
+            @Html.RenderPageCustomJavaScript(Model.JavaScripts)
+        }
     }
 }
 

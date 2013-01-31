@@ -132,6 +132,9 @@
   <data name="Boolean_Yes" xml:space="preserve">
     <value>Yes</value>
   </data>
+  <data name="Button_AddNew" xml:space="preserve">
+    <value>Add New +</value>
+  </data>
   <data name="Button_Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
@@ -144,6 +147,9 @@
   <data name="Button_Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
+  <data name="Button_History" xml:space="preserve">
+    <value>History</value>
+  </data>
   <data name="Button_Insert" xml:space="preserve">
     <value>Insert</value>
   </data>
@@ -153,14 +159,26 @@
   <data name="Button_Open" xml:space="preserve">
     <value>Open</value>
   </data>
+  <data name="Button_Preview" xml:space="preserve">
+    <value>Preview</value>
+  </data>
   <data name="Button_Remove" xml:space="preserve">
     <value>Remove</value>
   </data>
   <data name="Button_Rename" xml:space="preserve">
     <value>Rename</value>
   </data>
+  <data name="Button_Restore" xml:space="preserve">
+    <value>Restore</value>
+  </data>
   <data name="Button_Save" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="Button_SaveAndPublish" xml:space="preserve">
+    <value>Save &amp; Publish</value>
+  </data>
+  <data name="Button_SaveDraft" xml:space="preserve">
+    <value>Save Draft</value>
   </data>
   <data name="Button_Search" xml:space="preserve">
     <value>Search</value>
@@ -170,6 +188,15 @@
   </data>
   <data name="Confirm_Delete_DefaultMessage" xml:space="preserve">
     <value>Are you sure you want to delete selected object?</value>
+  </data>
+  <data name="ContentStatus_Draft" xml:space="preserve">
+    <value>Draft</value>
+  </data>
+  <data name="ContentStatus_Published" xml:space="preserve">
+    <value>Published</value>
+  </data>
+  <data name="ContentStatus_PublishedWithDraft" xml:space="preserve">
+    <value>Published (with draft)</value>
   </data>
   <data name="Grid_NoDataAvailable_Message" xml:space="preserve">
     <value>There is no data available.</value>
@@ -186,6 +213,9 @@
   <data name="Message_FailedToLoadDialog" xml:space="preserve">
     <value>Failed to load dialog. Please retry.</value>
   </data>
+  <data name="Message_FailedToRenderContent" xml:space="preserve">
+    <value>Failed To Render Content.</value>
+  </data>
   <data name="Message_FailedToSaveData" xml:space="preserve">
     <value>Unable to save information. Please retry.</value>
   </data>
@@ -197,6 +227,18 @@
   </data>
   <data name="Message_Saving" xml:space="preserve">
     <value>Saving ...</value>
+  </data>
+  <data name="Redirect_Message" xml:space="preserve">
+    <value>Please wait while page is redirecting.</value>
+  </data>
+  <data name="Redirect_Title" xml:space="preserve">
+    <value>Redirecting</value>
+  </data>
+  <data name="Reload_Message" xml:space="preserve">
+    <value>Please wait while page is reloading.</value>
+  </data>
+  <data name="Reload_Title" xml:space="preserve">
+    <value>Reloading page</value>
   </data>
   <data name="Sidebar_DragTitle" xml:space="preserve">
     <value>Drag to adjust sidebar position</value>
@@ -233,6 +275,9 @@
   </data>
   <data name="SiteSettings_Title" xml:space="preserve">
     <value>Site Settings</value>
+  </data>
+  <data name="UserRole_EditSiteSettings" xml:space="preserve">
+    <value>Edit Site Settings</value>
   </data>
   <data name="WaterMark_Search" xml:space="preserve">
     <value>Search...</value>

@@ -156,6 +156,12 @@
   <data name="DeleteVideo_DeletedSuccessfully_Message" xml:space="preserve">
     <value>Video deleted successfully.</value>
   </data>
+  <data name="FileNotSelected_MessageMessage" xml:space="preserve">
+    <value>Click on file to select it.</value>
+  </data>
+  <data name="FileNotSelected_MessageTitle" xml:space="preserve">
+    <value>Select file</value>
+  </data>
   <data name="FilesTab_Title" xml:space="preserve">
     <value>Files</value>
   </data>
@@ -267,6 +273,15 @@
   <data name="ImagesTab_UploadImage" xml:space="preserve">
     <value>Upload Image</value>
   </data>
+  <data name="InsertFile_Dialog_Title" xml:space="preserve">
+    <value>Insert File</value>
+  </data>
+  <data name="InsertFile_FailureMessage_Message" xml:space="preserve">
+    <value>Failed to get files list.</value>
+  </data>
+  <data name="InsertFile_FailureMessage_Title" xml:space="preserve">
+    <value>Failure</value>
+  </data>
   <data name="InsertImage_Dialog_Title" xml:space="preserve">
     <value>Insert Image</value>
   </data>
@@ -287,6 +302,12 @@
   </data>
   <data name="MediaManager_AddNewFolder" xml:space="preserve">
     <value>Add New Folder</value>
+  </data>
+  <data name="MediaManager_ButtonDownload" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="MediaManager_ButtonInsertFile" xml:space="preserve">
+    <value>Insert File</value>
   </data>
   <data name="MediaManager_ButtonInsertImage" xml:space="preserve">
     <value>Insert Image</value>

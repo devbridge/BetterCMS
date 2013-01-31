@@ -1,18 +1,10 @@
-﻿using System;
-
-namespace BetterCms.Core.Models
+﻿namespace BetterCms.Core.Models
 {
     /// <summary>
     /// Defines interface to access the content option.
     /// </summary>
-    public interface IContentOption
+    public interface IContentOption : IOption
     {
-        Guid Id { get; }
-
-        string Key { get; }
-
-        ContentOptionType Type { get; }
-        
-        string DefaultValue { get; }        
+        IContent Content { get; }        
     }
 }

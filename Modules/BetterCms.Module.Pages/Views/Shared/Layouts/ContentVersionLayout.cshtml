@@ -1,0 +1,10 @@
+﻿@using BetterCms.Module.Root.Mvc.Helpers
+
+@model BetterCms.Module.Root.ViewModels.Cms.RenderPageViewModel
+
+@{
+    Layout = "~/Areas/bcms-root/Views/Shared/BaseLayout.cshtml";
+}
+
+@RenderBody()
+@RenderSection("VersionContent", false)

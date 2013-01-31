@@ -11,7 +11,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageSeo
     /// <summary>
     /// A command to save SEO information.
     /// </summary>
-    public class SavePageSeoCommand : CommandBase, ICommand<EditSeoViewModel, bool>
+    public class SavePageSeoCommand : CommandBase, ICommand<EditSeoViewModel, EditSeoViewModel>
     {
         /// <summary>
         /// The page service
@@ -41,7 +41,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageSeo
         /// <returns>
         /// true if SEO information saved successfully; false otherwise.
         /// </returns>
-        public virtual bool Execute(EditSeoViewModel model)
+        public virtual EditSeoViewModel Execute(EditSeoViewModel model)
         {
             var page = Repository.AsProxy<PageProperties>(model.PageId);
             page.Version = model.Version;
@@ -71,7 +71,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageSeo
             Repository.Save(page);
             UnitOfWork.Commit();
 
-            return true;
+            return new EditSeoViewModel { PageUrlPath = page.PageUrl };
         }
     }
 }

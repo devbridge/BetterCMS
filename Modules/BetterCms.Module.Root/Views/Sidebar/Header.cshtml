@@ -2,6 +2,6 @@
 <div class="bcms-sidemenu-header">
         @foreach (var projection in Model.Projections)
         {
-            projection.Render(Model.Page, Html);
+            projection.Render(Model.Page, User, Html);
         }
 </div>

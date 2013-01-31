@@ -12,6 +12,7 @@ using BetterCms.Module.MediaManager.Command.Upload.GetMultiFileUpload;
 using BetterCms.Module.MediaManager.Command.Upload.UndoUpload;
 using BetterCms.Module.MediaManager.Command.Upload.Upload;
 using BetterCms.Module.MediaManager.Content.Resources;
+using BetterCms.Module.MediaManager.Helpers;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels.Upload;
@@ -40,6 +41,58 @@ namespace BetterCms.Module.MediaManager.Controllers
                     });
 
             return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult SingleFileUpload(string folderId, string folderType)
+        {
+            var model = GetCommand<GetMultiFileUploadCommand>().ExecuteCommand(
+                new GetMultiFileUploadRequest
+                {
+                    FolderId = folderId.ToGuidOrDefault(),
+                    Type = (MediaType)Enum.Parse(typeof(MediaType), folderType)
+                });
+
+            return View("SingleFileUpload",model);
+        }
+
+        [HttpPost]
+        public WrappedJsonResult UploadSingleFile(HttpPostedFileWrapper uploadFile, string SelectedFolderId, string RootFolderType)
+        {
+            if (uploadFile != null)
+            {
+                UploadFileRequest request = new UploadFileRequest();
+                request.RootFolderId = SelectedFolderId.ToGuidOrDefault();
+                request.Type = (MediaType)Enum.Parse(typeof(MediaType),RootFolderType);
+                request.FileLength = uploadFile.ContentLength;
+                request.FileName = uploadFile.FileName;
+                request.FileStream = uploadFile.InputStream;
+
+                var media = GetCommand<UploadCommand>().Execute(request);
+                if (media != null)
+                {
+                    return new WrappedJsonResult
+                    {
+                        Data = new
+                        {
+                            IsValid = true,
+                            Id = media.Id,
+                            fileName = media.OriginalFileName,
+                            fileSize = media.Size,
+                            Version = media.Version,
+                            Type = request.Type
+                        }
+                    };
+                }
+            }
+            return new WrappedJsonResult
+            {
+                Data = new
+                {
+                    IsValid = false,
+                    Message = string.Empty,//"No file was uploaded.",
+                }
+            };
         }
 
         [HttpPost]

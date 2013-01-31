@@ -1,6 +1,4 @@
 ﻿@using BetterCms.Module.Pages.Content.Resources
-@using BetterCms.Module.Root.Controllers
-@using Microsoft.Web.Mvc;
 
 @model BetterCms.Module.Pages.ViewModels.Page.TemplateViewModel
 
@@ -9,9 +7,11 @@
         <div class="bcms-content-titles">@Model.Title</div>
     </div>
     <div class="bcms-grid-image-holder">
-        <img src="@(Html.BuildUrlFromExpression<PreviewController>(f => f.Layout(Model.TemplateId.ToString())))" alt="" />
-         <div class="bcms-zoom-overlay">
-         </div>
+        @if (!string.IsNullOrWhiteSpace(Model.PreviewUrl))
+        {
+            <img src="@Model.PreviewUrl" alt="" />
+            <div class="bcms-zoom-overlay bcms-preview-template" data-url="@Model.PreviewUrl" data-alt="@Model.Title"></div>
+        }
     </div>
     <div class="bcms-grid-button-holder">
         <div class="bcms-grid-active-message-text" style="@(Model.IsActive ? "display:" : "display: none;")">@PagesGlobalization.AddNewPage_DefaultTemplate_Title</div>

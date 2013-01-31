@@ -8,8 +8,6 @@ namespace BetterCms.Module.Root.Models
     [Serializable]
     public class Region : EquatableEntity<Region>, IRegion
     {
-        public virtual string Name { get; set; }
-
         public virtual string RegionIdentifier { get; set; }
 
         public virtual IList<LayoutRegion> LayoutRegion { get; set; }

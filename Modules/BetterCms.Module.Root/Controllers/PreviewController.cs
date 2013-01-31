@@ -1,55 +1,41 @@
-﻿using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
+using BetterCms.Core.Mvc.Attributes;
+using BetterCms.Module.Root.Commands.GetPageToRender;
 using BetterCms.Module.Root.Mvc;
-
-using Common.Logging;
 
 namespace BetterCms.Module.Root.Controllers
 {
     /// <summary>
-    /// Preview controller stub.
-    /// TODO: add logic to render preview dynamically with corresponding image. 
+    /// Preview controller.
     /// </summary>
     public class PreviewController : CmsControllerBase
     {
         /// <summary>
-        /// Current class logger.
+        /// Previews the specified page id.
         /// </summary>
-        private static readonly ILog Log = LogManager.GetCurrentClassLogger();
-
-        /// <summary>
-        /// Returns a preview image of layout.
-        /// </summary>
-        /// <param name="layoutId">The layout id.</param>
-        /// <returns>Image with a layout preview.</returns>
-        [HttpGet]
-        public ActionResult Layout(string layoutId)
+        /// <param name="pageId">The page id.</param>
+        /// <param name="pageContentId">The page content id.</param>
+        /// <returns>
+        /// Returns an action result to render a page preview. 
+        /// </returns>
+        [IgnoreAutoRoute]
+        public ActionResult Index(string pageId, string pageContentId)
         {
-            
-            using (Bitmap preview = new Bitmap(210, 177))
+            GetPageToRenderRequest request = new GetPageToRenderRequest {
+                                                                            PageId = pageId.ToGuidOrDefault(),
+                                                                            PreviewPageContentId = pageContentId.ToGuidOrDefault()
+                                                                        };
+        
+
+            var model = GetCommand<GetPageToRenderCommand>().ExecuteCommand(request);
+
+            if (model.RenderPage != null)
             {
-                using (Graphics graphics = Graphics.FromImage(preview))
-                {
-                    graphics.FillRectangle(Brushes.WhiteSmoke, 0, 0, 186, 186);
-                    graphics.DrawRectangle(Pens.Silver, 0, 0, 186, 186);
-
-                    graphics.DrawString("Rendered", new Font("Arial", 10), Brushes.Black, 10, 10);
-                    graphics.DrawString("Layout Preview", new Font("Arial", 7), Brushes.Black, 10, 30);
-                    graphics.DrawString(layoutId.ToString(), new Font("Arial", 5), Brushes.Black, 10, 60);
-                    graphics.Flush();
-
-                    using (MemoryStream stream = new MemoryStream())
-                    {
-                        preview.Save(stream, ImageFormat.Png);
-
-                        return File(stream.GetBuffer(), "image/png");
-                    }
-                }
+                return View(model.RenderPage);
             }
+
+            return HttpNotFound();
         }
     }
 }
-

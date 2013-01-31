@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 using BetterCms.Core.Models;
 
@@ -11,18 +12,24 @@ namespace BetterCms.Module.Root.Models
 
         public virtual string Key { get; set; }
 
-        public virtual ContentOptionType Type { get; set; }
+        public virtual OptionType Type { get; set; }
 
-        public virtual string DefaultValue { get; set; }
+        public virtual string DefaultValue { get; set; }        
 
-        public virtual ContentOption Clone()
+        IContent IContentOption.Content
         {
-            return new ContentOption
-                       {
-                           Key = Key,
-                           Type = Type,
-                           DefaultValue = DefaultValue
-                       };
+            get
+            {
+                return Content;
+            }
+        }
+
+        string IOption.Value
+        {
+            get
+            {
+                return DefaultValue;
+            }
         }
     }
 }

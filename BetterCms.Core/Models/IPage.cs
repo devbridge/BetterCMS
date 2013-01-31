@@ -5,18 +5,10 @@ namespace BetterCms.Core.Models
     /// <summary>
     /// Defines interface to access basic page properties.
     /// </summary>
-    public interface IPage
+    public interface IPage : IEntity
     {
         /// <summary>
-        /// Gets the page id.
-        /// </summary>
-        /// <value>
-        /// The page id.
-        /// </value>
-        Guid Id { get; }
-        
-        /// <summary>
-        /// Gets or sets a value indicating whether this page is published.
+        /// Gets a value indicating whether this page is published.
         /// </summary>
         /// <value>
         /// <c>true</c> if this page is published; otherwise, <c>false</c>.
@@ -32,13 +24,19 @@ namespace BetterCms.Core.Models
         bool HasSEO { get; }
 
         /// <summary>
-        /// Gets or sets the title.
+        /// Gets the title.
         /// </summary>
         /// <value>
         /// The title.
         /// </value>
         string Title { get; }
 
+        /// <summary>
+        /// Gets the page URL.
+        /// </summary>
+        /// <value>
+        /// The page URL.
+        /// </value>
         string PageUrl { get; }
     }
 }

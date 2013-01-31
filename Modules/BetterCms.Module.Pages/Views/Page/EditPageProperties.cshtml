@@ -9,6 +9,14 @@
 
 @model EditPagePropertiesViewModel
 
+@{
+    var tagsTemplateViewModel = new BetterCms.Module.Pages.ViewModels.Tags.TagsTemplateViewModel
+    {
+        TooltipTitle = PagesGlobalization.EditPageProperties_BasicPropertiesTab_AddTags_Tooltip_Title,
+        TooltipDescription = PagesGlobalization.EditPageProperties_BasicPropertiesTab_AddTags_Tooltip_Description
+    };
+}
+
 <div class="bcms-tab-header">
     <a class="bcms-tab bcms-tab-active" href="#bcms-tab-1">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_Title</a>
     <a class="bcms-tab" href="#bcms-tab-2">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Title</a>
@@ -20,105 +28,59 @@
         @using (Html.BeginForm<PageController>(f => f.EditPageProperties((EditPagePropertiesViewModel)null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
         {
             @Html.MessagesBox("edit-page-properties-messages")
-            
-            <div id="bcms-tab-1" class="bcms-tab-single">
-                @Html.HiddenFor(model => model.TemplateId, new { @id = "TemplateId" })
-                @Html.HiddenFor(model => model.Id)
-                @Html.HiddenFor(model => model.Version)
-                
+            <div id="bcms-tab-1" class="bcms-tab-single">               
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Title, PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageName_Title</div>
                     @Html.TextBoxFor(model => model.PageName, new { @class = "bcms-editor-field-box" })
                 </div>
+                
+                @Html.Partial("Partial/PagePropertiesEditPermalink")
+
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageImage_Tooltip_Title, PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageImage_Tooltip_Description)
-                    <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageImage_Title</div>
-                    <div class="bcms-featured-image-block">
-                        <div class="bcms-featured-image-holder">
-                            <img src="@Model.FeaturedPageImageUrl" />
-                        </div>
-                        <div class="bcms-featured-info-holder">
-                            <div class="bcms-info-text"><b>@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageImage_FileName</b>&nbsp;@Model.FileName</div>
-                            <div class="bcms-info-text"><b>@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageImage_FileSize</b>&nbsp;@Model.FileSize</div>
-                            <div class="bcms-btn-small">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageImage_ChangeButton</div>
-                        </div>
+                    <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageImage_Title:</div>
+                    <div class="bcms-uploaded-image">
+                        <!-- ko if: image().url() -->
+                        <a href="#" data-bind="click: image().preview"><img data-bind="attr: {src: image().thumbnailUrl(), alt: image().tooltip() }" /></a>
+                        <!-- /ko -->
+                    </div>
+                    <div class="bcms-upload-info">
+                        <div class="bcms-upload-info-text">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageImage_Description</div>
+                        <div class="bcms-btn-small" data-bind="click: image().select.bind(image())">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_SelectImage_ButtonTitle</div>
                     </div>
                 </div>
+                
                 <div class="bcms-input-list-holder">
-                    <div class="bcms-tooltip-mark"></div>
-                    @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_Author_Tooltip_Title, PagesGlobalization.EditPageProperties_BasicPropertiesTab_Author_Tooltip_Description)
-                    <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_Author_Title</div>
-                    @Html.DropDownListFor(model => model.AuthorId, Model.Authors.ToSelectList(Model.AuthorId), string.Empty, new { @class = "bcms-global-select" })
+                    @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_Category_Tooltip_Title, PagesGlobalization.EditPageProperties_BasicPropertiesTab_Category_Tooltip_Description)
+                    <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_Category_Title:</div>
+                    @Html.DropDownListFor(model => model.CategoryId, Model.Categories.ToSelectList(Model.CategoryId), string.Empty, new { @class = "bcms-global-select" })
                 </div>
-                <div class="bcms-tags-box-holder">
-                    <div class="bcms-input-list-holder">
-                        @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_AddTags_Tooltip_Title, PagesGlobalization.EditPageProperties_BasicPropertiesTab_AddTags_Tooltip_Description)
-                        <div class="bcms-content-titles">
-                            @PagesGlobalization.EditPageProperties_BasicPropertiesTab_AddTags_Title
-                            <div class=" bcms-btn-plus bcms-tag-btn-expand">&nbsp;</div>
-                            <div class="bcms-tags-field-holder" style="display: none;">
-                                <input type="text" class="bcms-add-tags-field" style="width: 107px;" />
-                            </div>
-                        </div>
-                        <div class="bcms-single-tag-holder" id="bcms-tags-container">
-                            @if (Model.Tags != null )
-                            {
-                                for (int i = 0; i < Model.Tags.Count; i++)
-                                {
-                                    <div class="bcms-single-tag" data-name="@Model.Tags[i]">
-                                        @Model.Tags[i]
-                                        <a>@PagesGlobalization.EditPageProperties_BasicPropertiesTab_RemoveButton</a>
-                                        @Html.HiddenFor(m =>  Model.Tags[i], new {@class="bcms-single-tag-hidden-value"})
-                                        <input class="bcms-single-tag-hidden-indexer" type="hidden" value="@i" name="Tags.Index"/>
-                                    </div>
-                                }
-                            }
-                        </div>
-                    </div>
-                    @Html.Partial("Partial/PagePropertiesEditPermalink")
 
-                    <div class="bcms-input-list-holder">
-                        @Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_Tooltip_Title, PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_Tooltip_Description)
-                        <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_Title</div>
-                        <div class="bcms-checkbox-holder">
-                            @Html.CheckBoxFor(model => model.IsVisibleToEveryone)
-                            @PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_VisibleToEveryone
-                        </div>
-                        <div class="bcms-checkbox-holder">
-                            @Html.CheckBoxFor(model => model.UseNoFollow)
-                            @PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseNoFollow
-                        </div>
-                        <div class="bcms-checkbox-holder">
-                            @Html.CheckBoxFor(model => model.UseNoIndex)
-                            @PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseNoIndex
-                        </div>
+                <div class="bcms-tags-box-holder" data-bind="with: tags">
+                    @Html.Partial("~/Areas/bcms-pages/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel)
+                </div>
+
+                <div class="bcms-input-list-holder">
+                    @Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_Tooltip_Title, PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_Tooltip_Description)
+                    <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_Title</div>
+                    <div class="bcms-checkbox-holder">
+                        @Html.CheckBoxFor(model => model.IsVisibleToEveryone)
+                        @PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_VisibleToEveryone
                     </div>
-                    <div class="bcms-input-list-holder">
-                        @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_AddCategories_Tooltip_Title, PagesGlobalization.EditPageProperties_BasicPropertiesTab_AddCategories_Tooltip_Description)
-                        <div class="bcms-content-titles">
-                            @PagesGlobalization.EditPageProperties_BasicPropertiesTab_AddCategories_Title
-                                <div class=" bcms-btn-plus bcms-categories-btn-expand">&nbsp;</div>
-                                <div class="bcms-tags-field-holder" style="display: none;">
-                                    <input type="text" class="bcms-add-tags-field" id="bcms-add-categories-field" style="width: 107px;" />
-                                </div>
-                        </div>
-                        <div class="bcms-single-tag-holder" id="bcms-categories-container">
-                            @if (Model.Categories != null)
-                            {
-                                for (int i = 0; i < Model.Categories.Count; i++)
-                                {
-                                    <div class="bcms-single-tag" data-name="@Model.Categories[i]">
-                                        @Model.Categories[i]
-                                        <a>@PagesGlobalization.EditPageProperties_BasicPropertiesTab_RemoveButton</a>
-                                        @Html.HiddenFor(m =>  Model.Categories[i], new {@class="bcms-single-category-hidden-value"})
-                                        <input class="bcms-single-category-hidden-indexer" type="hidden" value="@i" name="Categories.Index"/>
-                                    </div>
-                                }
-                            }
-                        </div>
+                    <div class="bcms-checkbox-holder">
+                        @Html.CheckBoxFor(model => model.UseNoFollow)
+                        @PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseNoFollow
+                    </div>
+                    <div class="bcms-checkbox-holder">
+                        @Html.CheckBoxFor(model => model.UseNoIndex)
+                        @PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseNoIndex
                     </div>
                 </div>
+                @Html.HiddenFor(model => model.TemplateId, new { @id = "TemplateId" })
+                @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.Version)
+                @Html.HiddenFor(model => model.Image.ImageId, new {data_bind = "value: image().id()"})   
             </div>
 
             <div id="bcms-tab-2" class="bcms-tab-single">
@@ -128,11 +90,21 @@
                     @Html.TextAreaFor(model => model.PageCSS, new { @class = "bcms-editor-field-area" })
                 </div>
                 
+                <div class="bcms-input-list-holder">
+                    @Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageJavascript_Tooltip_Title, PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageJavascript_Tooltip_Description)
+                    <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageJavascript_Title</div>
+                    @Html.TextAreaFor(model => model.PageJavascript, new { @class = "bcms-editor-field-area" })
+                </div>
             </div>
 
             <div id="bcms-tab-3" class="bcms-tab-single">
-                <div class="bcms-info-message-box">
+                
+                <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.EditPageProperties_LayoutPropertiesTab_Layout_Tooltip_Title, PagesGlobalization.EditPageProperties_LayoutPropertiesTab_Layout_Tooltip_Description)
+                    <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_LayoutPropertiesTab_ChooseLayout_Title:</div>
+                </div>
+
+                <div class="bcms-info-message-box">
                     <a class="bcms-btn-close">@RootGlobalization.Button_Close</a>
                     @Html.Raw(PagesGlobalization.EditPageProperties_LayoutPropertiesTab_InfoMessage)
                 </div>
@@ -144,18 +116,4 @@
             @Html.HiddenSubmit()
         }
     </div>
-    <script type="text/html" id="bcms-add-page-tag-template">
-        <div class="bcms-single-tag">
-            <a>@PagesGlobalization.EditPageProperties_BasicPropertiesTab_RemoveButton</a>
-            @Html.HiddenInputForFake(m => m.Tags[0], "bcms-single-tag-hidden-value")
-            @Html.HiddenIndexerInputForModel("bcms-single-tag-hidden-indexer", m => m.Tags)
-        </div>
-    </script>
-    <script type="text/html" id="bcms-add-page-category-template">
-        <div class="bcms-single-tag">
-           <a>@PagesGlobalization.EditPageProperties_BasicPropertiesTab_RemoveButton</a>
-            @Html.HiddenInputForFake(m => m.Categories[0], "bcms-single-category-hidden-value")
-            @Html.HiddenIndexerInputForModel("bcms-single-category-hidden-indexer", m => m.Categories)
-        </div>
-    </script>
 </div>

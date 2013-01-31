@@ -7,9 +7,9 @@ using Autofac;
 using BetterCms.Core.Models;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
+using BetterCms.Module.Pages.Accessors;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
-using BetterCms.Module.Pages.Projections;
 using BetterCms.Module.Pages.Registration;
 using BetterCms.Module.Pages.Services;
 
@@ -57,7 +57,15 @@ namespace BetterCms.Module.Pages
         /// </summary>
         private readonly WidgetsJavaScriptModuleDescriptor widgetsJavaScriptModuleDescriptor;
 
+        /// <summary>
+        /// bcms.pages.templates.js java script module descriptor.
+        /// </summary>
         private readonly TemplatesJavaScriptModuleDescriptor templatesJavaScriptModuleDescriptor;
+
+        /// <summary>
+        /// bcms.pages.history.js java script module descriptor.
+        /// </summary>
+        private readonly HistoryJavaScriptModuleDescriptor historyJavaScriptModuleDescriptor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PagesModuleDescriptor" /> class.
@@ -72,6 +80,7 @@ namespace BetterCms.Module.Pages
             tagsJavaScriptModuleDescriptor = new TagsJavaScriptModuleDescriptor(this);
             redirectsJavaScriptModuleDescriptor = new RedirectsJavaScriptModuleDescriptor(this);
             templatesJavaScriptModuleDescriptor = new TemplatesJavaScriptModuleDescriptor(this);
+            historyJavaScriptModuleDescriptor = new HistoryJavaScriptModuleDescriptor(this);
         }
 
         /// <summary>
@@ -103,6 +112,20 @@ namespace BetterCms.Module.Pages
         }
 
         /// <summary>
+        /// Gets the order.
+        /// </summary>
+        /// <value>
+        /// The order.
+        /// </value>
+        public override int Order
+        {
+            get
+            {
+                return int.MaxValue - 300;
+            }
+        }
+
+        /// <summary>
         /// Registers module types.
         /// </summary>
         /// <param name="context">The area registration context.</param>
@@ -110,6 +133,9 @@ namespace BetterCms.Module.Pages
         /// <param name="configuration">The configuration.</param>
         public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder, ICmsConfiguration configuration)
         {
+            RegisterStylesheetRendererType<PageStylesheetAccessor, PageProperties>(containerBuilder);
+            RegisterJavaScriptRendererType<PageJavaScriptAccessor, PageProperties>(containerBuilder);
+
             RegisterContentRendererType<HtmlContentAccessor, HtmlContent>(containerBuilder);
             RegisterContentRendererType<HtmlContentWidgetAccessor, HtmlContentWidget>(containerBuilder);
             RegisterContentRendererType<ServerControlWidgetAccessor, ServerControlWidget>(containerBuilder);            
@@ -118,6 +144,7 @@ namespace BetterCms.Module.Pages
             containerBuilder.RegisterType<DefaultRedirectService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultCategoryService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultWidgetsService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultTagService>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
 
         /// <summary>
@@ -152,7 +179,8 @@ namespace BetterCms.Module.Pages
                     seoJavaScriptModuleDescriptor,
                     tagsJavaScriptModuleDescriptor,
                     widgetsJavaScriptModuleDescriptor,
-                    templatesJavaScriptModuleDescriptor
+                    templatesJavaScriptModuleDescriptor,
+                    historyJavaScriptModuleDescriptor
                 };
         }
 
@@ -314,13 +342,13 @@ namespace BetterCms.Module.Pages
 
                     new SeparatorProjection(3500), 
 
-                    new LinkActionProjection(this.redirectsJavaScriptModuleDescriptor, page => "loadSiteSettingsRedirectList")
+                    new LinkActionProjection(redirectsJavaScriptModuleDescriptor, page => "loadSiteSettingsRedirectList")
                         {
                             Order = 4000,
                             Title = () => PagesGlobalization.SiteSettings_Redirects,
                             CssClass = page => "bcms-sidebar-link"
                         }
                 };
-        }
+        }       
     }
 }

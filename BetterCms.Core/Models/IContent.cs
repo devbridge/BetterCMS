@@ -1,12 +1,24 @@
-﻿using System;
-
-namespace BetterCms.Core.Models
+﻿namespace BetterCms.Core.Models
 {
     /// <summary>
     /// Defines interface to access basic content properties.
     /// </summary>
-    public interface IContent
+    public interface IContent : IEntity, IHistorical
     {
-        Guid Id { get; set; }
+        /// <summary>
+        /// Gets the name.
+        /// </summary>
+        /// <value>
+        /// The name.
+        /// </value>
+        string Name { get; }
+
+        /// <summary>
+        /// Gets the preview URL.
+        /// </summary>
+        /// <value>
+        /// The preview URL.
+        /// </value>
+        string PreviewUrl { get; }
     }
 }

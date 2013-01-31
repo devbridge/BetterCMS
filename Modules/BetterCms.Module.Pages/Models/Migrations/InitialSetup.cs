@@ -1,18 +1,31 @@
-﻿using BetterCms.Core.DataAccess.DataContext.Migrations;
+﻿using System;
+
+using BetterCms.Core.DataAccess.DataContext.Migrations;
 using BetterCms.Core.Models;
+using BetterCms.Module.Templates;
 
 using FluentMigrator;
 
 namespace BetterCms.Module.Pages.Models.Migrations
 {
-    [Migration(1)]
+    [Migration(201301151849)]
     public class InitialSetup : DefaultMigration
     {
-        private const string RootModuleSchemaName = "bcms_root";
+        /// <summary>
+        /// The root module schema name.
+        /// </summary>
+        private readonly string rootModuleSchemaName;
+
+        /// <summary>
+        /// The media manager schema name.
+        /// </summary>
+        private readonly string mediaManagerSchemaName;
 
         public InitialSetup()
             : base(PagesModuleDescriptor.ModuleName)
         {
+            rootModuleSchemaName = (new Root.Models.Migrations.RootVersionTableMetaData()).SchemaName;
+            mediaManagerSchemaName = (new MediaManager.Models.Migrations.MediaManagerVersionTableMetaData()).SchemaName;
         }
 
         public override void Up()
@@ -28,10 +41,18 @@ namespace BetterCms.Module.Pages.Models.Migrations
 
             CreatePageTagsTable();
             CreatePageCategoriesTable();
+
+            InsertDefaultPage();
+            InsertPage404();
+            InsertPage500();
         }
 
         public override void Down()
         {
+            RemoveDefaultPage();
+            RemovePage404();
+            RemovePage500();
+
             RemovePageTagsTable();
             RemovePageCategoriesTable();
             
@@ -53,21 +74,17 @@ namespace BetterCms.Module.Pages.Models.Migrations
 
                .WithCmsBaseColumns()
 
-               .WithColumn("FirstName").AsString(MaxLength.Name).NotNullable()
-               .WithColumn("LastName").AsString(MaxLength.Name).NotNullable()
-               .WithColumn("DisplayName").AsString(MaxLength.Name).NotNullable()
+               .WithColumn("Name").AsString(MaxLength.Name).NotNullable()
+               .WithColumn("ImageId").AsGuid().Nullable();
 
-               .WithColumn("Title").AsString(MaxLength.Name).Nullable()
-               .WithColumn("Email").AsString(MaxLength.Email).Nullable()
-               .WithColumn("Twitter").AsString(MaxLength.Name).Nullable()
-               .WithColumn("ProfileImageUrl").AsString(MaxLength.Url).Nullable()
-               .WithColumn("ProfileThumbnailUrl").AsString(MaxLength.Url).Nullable()
-               .WithColumn("ShortDescription").AsString(MaxLength.Text).Nullable()
-               .WithColumn("LongDescription").AsString(MaxLength.Max).Nullable();               
+            Create.ForeignKey("FK_Cms_Authors_ImageId_MediaImages_Id")
+               .FromTable("Authors").InSchema(SchemaName).ForeignColumn("ImageId")
+               .ToTable("MediaImages").InSchema(mediaManagerSchemaName).PrimaryColumn("Id");
         }
 
         private void RemoveAuthorsTable()
         {
+            Delete.ForeignKey("FK_Cms_Authors_ImageId_MediaImages_Id").OnTable("Authors").InSchema(SchemaName);
             Delete.Table("Authors").InSchema(SchemaName);
         }
 
@@ -103,7 +120,7 @@ namespace BetterCms.Module.Pages.Models.Migrations
             Create
                 .ForeignKey("FK_Cms_HtmlContents_Id_Contents_Id")
                 .FromTable("HtmlContents").InSchema(SchemaName).ForeignColumn("Id")
-                .ToTable("Contents").InSchema(RootModuleSchemaName).PrimaryColumn("Id");
+                .ToTable("Contents").InSchema(rootModuleSchemaName).PrimaryColumn("Id");
         }
 
         private void RemoveHtmlContentsTable()
@@ -123,7 +140,7 @@ namespace BetterCms.Module.Pages.Models.Migrations
             Create
                 .ForeignKey("FK_Cms_ServerControlWidgets_Id_Widgets_Id")
                 .FromTable("ServerControlWidgets").InSchema(SchemaName).ForeignColumn("Id")
-                .ToTable("Widgets").InSchema(RootModuleSchemaName).PrimaryColumn("Id");
+                .ToTable("Widgets").InSchema(rootModuleSchemaName).PrimaryColumn("Id");
         }
 
         private void RemoveServerControlWidgetsTable()
@@ -148,7 +165,7 @@ namespace BetterCms.Module.Pages.Models.Migrations
             Create
                 .ForeignKey("FK_Cms_HtmlContentWidgets_Id_Widgets_Id")
                 .FromTable("HtmlContentWidgets").InSchema(SchemaName).ForeignColumn("Id")
-                .ToTable("Widgets").InSchema(RootModuleSchemaName).PrimaryColumn("Id");
+                .ToTable("Widgets").InSchema(rootModuleSchemaName).PrimaryColumn("Id");
         }
      
         private void RemoveHtmlContentWidgetsTable()
@@ -164,34 +181,41 @@ namespace BetterCms.Module.Pages.Models.Migrations
                 .InSchema(SchemaName)
                 .WithColumn("Id").AsGuid().PrimaryKey()
                 .WithColumn("Description").AsString(MaxLength.Text).Nullable()
-                .WithColumn("ImageUrl").AsString(MaxLength.Url).Nullable()
+                .WithColumn("ImageId").AsGuid().Nullable()
                 .WithColumn("CanonicalUrl").AsAnsiString(MaxLength.Url).Nullable()
-                .WithColumn("CustomCss").AsString(MaxLength.Max).Nullable()
-
-                .WithColumn("ShowTitle").AsBoolean().NotNullable().WithDefaultValue(true)
+                .WithColumn("CustomCss").AsString(MaxLength.Max).Nullable()                
                 .WithColumn("UseCanonicalUrl").AsBoolean().NotNullable().WithDefaultValue(false)
                 .WithColumn("IsPublic").AsBoolean().NotNullable().WithDefaultValue(true)
                 .WithColumn("UseCustomCss").AsBoolean().NotNullable().WithDefaultValue(true)
                 .WithColumn("UseNoFollow").AsBoolean().NotNullable().WithDefaultValue(false)
                 .WithColumn("UseNoIndex").AsBoolean().NotNullable().WithDefaultValue(false)
-
                 .WithColumn("PublishedOn").AsDateTime().Nullable()
-
-                .WithColumn("AuthorId").AsGuid().Nullable();
+                .WithColumn("AuthorId").AsGuid().Nullable()
+                .WithColumn("CategoryId").AsGuid().Nullable();
 
             Create
                 .ForeignKey("FK_Cms_PagesPages_Cms_RootPages")
                 .FromTable("Pages").InSchema(SchemaName).ForeignColumn("Id")
-                .ToTable("Pages").InSchema(RootModuleSchemaName).PrimaryColumn("Id");
+                .ToTable("Pages").InSchema(rootModuleSchemaName).PrimaryColumn("Id");
 
             Create
                 .ForeignKey("FK_Cms_PagesPages_Cms_Authors")
                 .FromTable("Pages").InSchema(SchemaName).ForeignColumn("AuthorId")
                 .ToTable("Authors").InSchema(SchemaName).PrimaryColumn("Id");
+                
+            Create.ForeignKey("FK_Cms_Pages_CategoryId_Categories_Id")
+                .FromTable("Pages").InSchema(SchemaName).ForeignColumn("CategoryId")
+                .ToTable("Categories").InSchema(rootModuleSchemaName).PrimaryColumn("Id");
+
+            Create.ForeignKey("FK_Cms_Pages_ImageId_MediaImages_Id")
+                .FromTable("Pages").InSchema(SchemaName).ForeignColumn("ImageId")
+                .ToTable("MediaImages").InSchema(mediaManagerSchemaName).PrimaryColumn("Id");
         }
 
         private void RemovePagesTable()
         {
+            Delete.ForeignKey("FK_Cms_Pages_ImageId_MediaImages_Id").OnTable("Pages").InSchema(SchemaName);
+            Delete.ForeignKey("FK_Cms_Pages_CategoryId_Categories_Id").OnTable("Pages").InSchema(SchemaName);
             Delete.ForeignKey("FK_Cms_PagesPages_Cms_RootPages").OnTable("Pages").InSchema(SchemaName);
             Delete.ForeignKey("FK_Cms_PagesPages_Cms_Authors").OnTable("Pages").InSchema(SchemaName);
             Delete.Table("Pages").InSchema(SchemaName);
@@ -214,7 +238,7 @@ namespace BetterCms.Module.Pages.Models.Migrations
             Create
                 .ForeignKey("FK_Cms_PageTags_Cms_Tags")
                 .FromTable("PageTags").InSchema(SchemaName).ForeignColumn("TagId")
-                .ToTable("Tags").InSchema(RootModuleSchemaName).PrimaryColumn("Id");
+                .ToTable("Tags").InSchema(rootModuleSchemaName).PrimaryColumn("Id");
         }
 
         private void RemovePageTagsTable()
@@ -241,7 +265,7 @@ namespace BetterCms.Module.Pages.Models.Migrations
             Create
                 .ForeignKey("FK_Cms_PageCategories_Cms_Categories")
                 .FromTable("PageCategories").InSchema(SchemaName).ForeignColumn("CategoryId")
-                .ToTable("Categories").InSchema(RootModuleSchemaName).PrimaryColumn("Id");
+                .ToTable("Categories").InSchema(rootModuleSchemaName).PrimaryColumn("Id");
         }
 
         private void RemovePageCategoriesTable()
@@ -249,6 +273,310 @@ namespace BetterCms.Module.Pages.Models.Migrations
             Delete.ForeignKey("FK_Cms_PageCategories_Cms_Pages").OnTable("PageCategories").InSchema(SchemaName);
             Delete.ForeignKey("FK_Cms_PageCategories_Cms_Categories").OnTable("PageCategories").InSchema(SchemaName);
             Delete.Table("PageCategories").InSchema(SchemaName);
+        }       
+
+        /// <summary>
+        /// Inserts the default page.
+        /// </summary>
+        private void InsertDefaultPage()
+        {
+            InsertPage(
+                PagesConstants.PageIds.PageDefault,
+                TemplatesModuleConstants.TemplateIds.Wide,
+                "/",
+                "Better CMS",
+                "Better CMS main page.",
+                "Better CMS main page meta title",
+                "Better CMS main page meta keywords",
+                "Better CMS main page meta description");
+
+            // Insert header.
+            InsertContent(
+                PagesConstants.ContentIds.PageDefaultHeader,
+                PagesConstants.PageIds.PageDefault,
+                TemplatesModuleConstants.RegionIds.Header,
+                "Header",
+                "<a href=\"/\" class=\"bcms-logo\"><img src=\"/file/bcms-pages/content/css/images/logo.png\" alt=\"Better CMS\"></a>");
+
+            // Insert body.
+            InsertContent(
+                PagesConstants.ContentIds.PageDefaultBody,
+                PagesConstants.PageIds.PageDefault,
+                TemplatesModuleConstants.RegionIds.MainContent,
+                "Main Content",
+                "<p>Hello world!</p>");
+
+            // Insert footer.
+            InsertContent(
+                PagesConstants.ContentIds.PageDefaultFooter,
+                PagesConstants.PageIds.PageDefault,
+                TemplatesModuleConstants.RegionIds.Footer,
+                "Footer",
+                "<span class=\"copyright\">Better CMS 2012 ©</span>");
+        }
+
+        /// <summary>
+        /// Inserts the page404.
+        /// </summary>
+        private void InsertPage404()
+        {
+            InsertPage(
+                PagesConstants.PageIds.Page404,
+                TemplatesModuleConstants.TemplateIds.Wide,
+                "/404/",
+                "Page Not Found",
+                "Page Not Found",
+                "Page Not Found meta title",
+                "Page Not Found meta keywords",
+                "Page Not Found meta description");
+
+            // Insert header.
+            InsertContent(
+                PagesConstants.ContentIds.Page404Header,
+                PagesConstants.PageIds.Page404,
+                TemplatesModuleConstants.RegionIds.Header,
+                "Header",
+                "<a href=\"/\" class=\"bcms-logo\"><img src=\"/file/bcms-pages/content/css/images/logo.png\" alt=\"Better CMS\"></a>");
+
+            // Insert body.
+            InsertContent(
+                PagesConstants.ContentIds.Page404Body,
+                PagesConstants.PageIds.Page404,
+                TemplatesModuleConstants.RegionIds.MainContent,
+                "Main Content",
+                "<p>Oops! The page you are looking for can not be found.</p>");
+
+            // Insert footer.
+            InsertContent(
+                PagesConstants.ContentIds.Page404Footer,
+                PagesConstants.PageIds.Page404,
+                TemplatesModuleConstants.RegionIds.Footer,
+                "Footer",
+                "<span class=\"copyright\">Better CMS 2012 ©</span>");
+        }
+
+        /// <summary>
+        /// Inserts the page500.
+        /// </summary>
+        private void InsertPage500()
+        {
+            InsertPage(
+                PagesConstants.PageIds.Page500,
+                TemplatesModuleConstants.TemplateIds.Wide,
+                "/500/",
+                "Internal server error",
+                "Internal server error.",
+                "Better CMS main page meta title",
+                "Better CMS main page meta keywords",
+                "Better CMS main page meta description");
+
+            // Insert header.
+            InsertContent(
+                PagesConstants.ContentIds.Page500Header,
+                PagesConstants.PageIds.Page500,
+                TemplatesModuleConstants.RegionIds.Header,
+                "Header",
+                "<a href=\"/\" class=\"bcms-logo\"><img src=\"/file/bcms-pages/content/css/images/logo.png\" alt=\"Better CMS\"></a>");
+
+            // Insert body.
+            InsertContent(
+                PagesConstants.ContentIds.Page500Body,
+                PagesConstants.PageIds.Page500,
+                TemplatesModuleConstants.RegionIds.MainContent,
+                "Main Content",
+                "<p>Oops! The Web server encountered an unexpected condition that prevented it from fulfilling your request. Please try again later or contact the administrator.</p>");
+
+            // Insert footer.
+            InsertContent(
+                PagesConstants.ContentIds.Page500Footer,
+                PagesConstants.PageIds.Page500,
+                TemplatesModuleConstants.RegionIds.Footer,
+                "Footer",
+                "<span class=\"copyright\">Better CMS 2012 ©</span>");
+        }
+
+        /// <summary>
+        /// Removes the default page.
+        /// </summary>
+        private void RemoveDefaultPage()
+        {
+            RemovePageContent(PagesConstants.ContentIds.PageDefaultHeader);
+            RemovePageContent(PagesConstants.ContentIds.PageDefaultBody);
+            RemovePageContent(PagesConstants.ContentIds.PageDefaultFooter);
+            RemovePage(PagesConstants.PageIds.PageDefault);
+        }
+
+        /// <summary>
+        /// Removes 404 page.
+        /// </summary>
+        private void RemovePage404()
+        {
+            RemovePageContent(PagesConstants.ContentIds.Page404Header);
+            RemovePageContent(PagesConstants.ContentIds.Page404Body);
+            RemovePageContent(PagesConstants.ContentIds.Page404Footer);
+            RemovePage(PagesConstants.PageIds.Page404);
+        }
+
+        /// <summary>
+        /// Removes 500 page.
+        /// </summary>
+        private void RemovePage500()
+        {
+            RemovePageContent(PagesConstants.ContentIds.Page500Header);
+            RemovePageContent(PagesConstants.ContentIds.Page500Body);
+            RemovePageContent(PagesConstants.ContentIds.Page500Footer);
+            RemovePage(PagesConstants.PageIds.Page500);
+        }
+
+
+        /// <summary>
+        /// Inserts the page.
+        /// </summary>
+        /// <param name="pageId">The page id.</param>
+        /// <param name="layoutId">The layout id.</param>
+        /// <param name="pageUrl">The page URL.</param>
+        /// <param name="title">The title.</param>
+        /// <param name="description">The description.</param>
+        /// <param name="metaTitle">The meta title.</param>
+        /// <param name="metaKeywords">The meta keywords.</param>
+        /// <param name="metaDescription">The meta description.</param>
+        private void InsertPage(Guid pageId, Guid layoutId, string pageUrl, string title, string description, string metaTitle, string metaKeywords, string metaDescription)
+        {
+            // Insert page.
+            Insert
+                .IntoTable("Pages").InSchema(rootModuleSchemaName)
+                .Row(new
+                {
+                    Id = pageId,
+                    Version = 1,
+                    IsDeleted = false,
+                    CreatedOn = DateTime.Now,
+                    CreatedByUser = "Admin",
+                    ModifiedOn = DateTime.Now,
+                    ModifiedByUser = "Admin",
+                    PageUrl = pageUrl,
+                    Title = title,
+                    LayoutId = layoutId,
+                    PublishedOn = DateTime.Now,
+                    IsPublished = true,
+                    MetaTitle = metaTitle,
+                    MetaKeywords = metaKeywords,
+                    MetaDescription = metaDescription,
+                });
+
+            Insert
+                .IntoTable("Pages").InSchema(SchemaName)
+                .Row(new
+                {
+                    Id = pageId,
+                    Description = description,                    
+                    UseCanonicalUrl = false,
+                    IsPublic = true,
+                    UseCustomCss = false,
+                    UseNoFollow = false,
+                    UseNoIndex = false,
+                    PublishedOn = DateTime.Now,
+                });
+        }
+
+        /// <summary>
+        /// Inserts the page header.
+        /// </summary>
+        /// <param name="contentId">The content id.</param>
+        /// <param name="pageId">The page id.</param>
+        /// <param name="regionId">The region id.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="html">The HTML.</param>
+        private void InsertContent(Guid contentId, Guid pageId, Guid regionId, string name, string html)
+        {
+            Insert
+                .IntoTable("Contents").InSchema(rootModuleSchemaName)
+                .Row(new
+                {
+                    Id = contentId,
+                    Version = 1,
+                    IsDeleted = false,
+                    CreatedOn = DateTime.Now,
+                    CreatedByUser = "Admin",
+                    ModifiedOn = DateTime.Now,
+                    ModifiedByUser = "Admin",
+                    Name = name,
+                    Status = 3,
+                    PublishedOn = DateTime.Now,
+                    PublishedByUser = "Admin"
+                });
+
+            Insert
+                .IntoTable("HtmlContents").InSchema(SchemaName)
+                .Row(new
+                {
+                    Id = contentId,
+                    ActivationDate = DateTime.Now,
+                    UseCustomCss = false,
+                    UseCustomJs = false,
+                    Html = html,
+                });
+
+            Insert
+                .IntoTable("PageContents").InSchema(rootModuleSchemaName)
+                .Row(new
+                {
+                    Id = Guid.NewGuid(),
+                    Version = 1,
+                    IsDeleted = false,
+                    CreatedOn = DateTime.Now,
+                    CreatedByUser = "Admin",
+                    ModifiedOn = DateTime.Now,
+                    ModifiedByUser = "Admin",
+                    PageId = pageId,
+                    ContentId = contentId,
+                    RegionId = regionId,
+                    Order = 0                    
+                });
+        }
+
+        /// <summary>
+        /// Removes the page.
+        /// </summary>
+        /// <param name="pageId">The page id.</param>
+        private void RemovePage(Guid pageId)
+        {
+            Delete
+                .FromTable("PageContents")
+                .InSchema(rootModuleSchemaName)
+                .Row(new { PageId = pageId });
+
+            Delete
+                .FromTable("Pages")
+                .InSchema(SchemaName)
+                .Row(new { Id = pageId });
+
+            Delete
+                .FromTable("Pages")
+                .InSchema(rootModuleSchemaName)
+                .Row(new { Id = pageId });
+        }
+
+        /// <summary>
+        /// Removes the content.
+        /// </summary>
+        /// <param name="contentId">The content id.</param>
+        private void RemovePageContent(Guid contentId)
+        {
+            Delete
+                .FromTable("PageContents")
+                .InSchema(rootModuleSchemaName)
+                .Row(new { ContentId = contentId });
+
+            Delete
+                .FromTable("HtmlContents")
+                .InSchema(SchemaName)
+                .Row(new { Id = contentId });
+
+            Delete
+                .FromTable("Contents")
+                .InSchema(rootModuleSchemaName)
+                .Row(new { Id = contentId });
         }
     }
 }

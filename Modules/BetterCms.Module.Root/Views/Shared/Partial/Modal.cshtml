@@ -8,13 +8,14 @@
             </div>
             <div class="bcms-modal-content">
                 <div class="bcms-loader"></div>
-                <div class="bcms-modal-content-padded"></div>
-        </div>
-        <div class="bcms-modal-footer">
-            <div class="bcms-btn-small bcms-modal-accept">@RootGlobalization.Button_Save</div>
-            <div class="bcms-btn-links-small bcms-modal-cancel">@RootGlobalization.Button_Cancel</div>
-            <div class="bcms-modal-cmslogo"></div>
+                <div class="bcms-modal-content-padded" data-bind="stopBinding: true"></div>
+            </div>
+            <div class="bcms-modal-footer">
+                <div class="bcms-modal-footer-buttons" style="float: left" data-bind="foreach: buttons">
+                    <div data-bind="text: title, css: css, click: click, visible: !disabled()"></div>
+                </div>
+                <div class="bcms-modal-cmslogo"></div>
+            </div>
         </div>
     </div>
-</div>
 </script>

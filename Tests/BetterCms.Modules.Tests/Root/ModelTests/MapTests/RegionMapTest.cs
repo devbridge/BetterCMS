@@ -23,6 +23,7 @@ namespace BetterCms.Test.Module.Root.ModelTests.MapTests
                 {
                     TestDataProvider.CreateNewPageContent(null, null, region)
                 };
+
             region.PageContents = pageContents;
 
             SaveEntityAndRunAssertionsInTransaction(
@@ -44,6 +45,7 @@ namespace BetterCms.Test.Module.Root.ModelTests.MapTests
                     TestDataProvider.CreateNewLayoutRegion(null, region),
                     TestDataProvider.CreateNewLayoutRegion(null, region)
                 };
+
             region.LayoutRegion = layoutRegions;
 
             SaveEntityAndRunAssertionsInTransaction(

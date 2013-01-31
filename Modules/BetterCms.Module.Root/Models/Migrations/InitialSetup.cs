@@ -5,7 +5,7 @@ using FluentMigrator;
 
 namespace BetterCms.Module.Root.Models.Migrations
 {
-    [Migration(1)]
+    [Migration(201301151829)]
     public class InitialSetup : DefaultMigration
     {
         public InitialSetup()
@@ -24,6 +24,7 @@ namespace BetterCms.Module.Root.Models.Migrations
             CreateTagsTable();
             CreateCategoriesTable();
 
+            CreateContentStatusesTable();   
             CreateContentsTable();
             CreateContentOptionsTypesTable();
             CreateContentOptionsTable();
@@ -33,13 +34,11 @@ namespace BetterCms.Module.Root.Models.Migrations
             CreatePageContentsTable();
             CreatePageContentOptionsTable();
                         
-            CreateUsersTable();
-            
-            CreateSiteSettingsTable();
+            CreateUsersTable();                     
         }
 
         public override void Down()
-        {
+        {                        
             RemoveUsersTable();
                                     
             RemovePageContentOptionsTable();
@@ -50,12 +49,12 @@ namespace BetterCms.Module.Root.Models.Migrations
             RemoveContentOptionsTable();
             RemoveContentOptionsTypesTable();
             RemoveContentsTable();
+            RemoveContentStatusesTable();
 
             RemoveLayoutRegionsTable();
             RemoveLayoutsTable();
             RemoveRegionsTable();            
 
-            RemoveSiteSettingsTable();
             RemoveCategoriesTable();
             RemoveTagsTable();
             
@@ -91,7 +90,8 @@ namespace BetterCms.Module.Root.Models.Migrations
                 .WithCmsBaseColumns()
                 .WithColumn("Name").AsString(MaxLength.Name).NotNullable()
                 .WithColumn("LayoutPath").AsAnsiString(MaxLength.Url).NotNullable()
-                .WithColumn("ModuleId").AsGuid().Nullable();
+                .WithColumn("ModuleId").AsGuid().Nullable()
+                .WithColumn("PreviewUrl").AsAnsiString(MaxLength.Url).Nullable();
 
             Create
                 .ForeignKey("FK_Cms_Layouts_Cms_Modules")
@@ -113,8 +113,7 @@ namespace BetterCms.Module.Root.Models.Migrations
         {
             Create
                 .Table("Regions").InSchema(SchemaName)
-                .WithCmsBaseColumns()
-                .WithColumn("Name").AsString(MaxLength.Name).NotNullable()
+                .WithCmsBaseColumns()                
                 .WithColumn("RegionIdentifier").AsAnsiString(MaxLength.Name).NotNullable();        
     
             Create
@@ -134,6 +133,7 @@ namespace BetterCms.Module.Root.Models.Migrations
             Create
                 .Table("LayoutRegions").InSchema(SchemaName)
                 .WithCmsBaseColumns()
+                .WithColumn("Description").AsAnsiString(MaxLength.Name).Nullable()
                 .WithColumn("LayoutId").AsGuid().NotNullable()
                 .WithColumn("RegionId").AsGuid().NotNullable();
 
@@ -161,22 +161,50 @@ namespace BetterCms.Module.Root.Models.Migrations
             Delete.Table("LayoutRegions").InSchema(SchemaName);
         }
 
-
         private void CreateContentsTable()
         {
             Create
                 .Table("Contents").InSchema(SchemaName)
                 .WithCmsBaseColumns()
-                .WithColumn("Name").AsString(MaxLength.Name).NotNullable();
+                .WithColumn("Name").AsString(MaxLength.Name).NotNullable()
+                .WithColumn("PreviewUrl").AsAnsiString(MaxLength.Url).Nullable()
+                .WithColumn("Status").AsInt32().NotNullable()
+                .WithColumn("PublishedOn").AsDateTime().Nullable()
+                .WithColumn("PublishedByUser").AsString(MaxLength.Name).Nullable()
+                .WithColumn("OriginalId").AsGuid().Nullable();
 
             Create
                 .Index("IX_Cms_Contents_Name")
                 .OnTable("Contents").InSchema(SchemaName)
                 .OnColumn("Name");
+
+            Create
+                .Index("IX_Cms_Contents_Status")
+                .OnTable("Contents").InSchema(SchemaName)
+                .OnColumn("Status");
+
+            Create
+                .Index("IX_Cms_Contents_OriginalId")
+                .OnTable("Contents").InSchema(SchemaName)
+                .OnColumn("OriginalId");
+
+            Create
+                .ForeignKey("FK_Cms_Contents_Cms_ContentStatuses")
+                .FromTable("Contents").InSchema(SchemaName).ForeignColumn("Status")
+                .ToTable("ContentStatuses").InSchema(SchemaName).PrimaryColumn("Id");
+
+            Create
+                .ForeignKey("FK_Cms_Contents_Cms_Contents_OriginalId")
+                .FromTable("Contents").InSchema(SchemaName).ForeignColumn("OriginalId")
+                .ToTable("Contents").InSchema(SchemaName).PrimaryColumn("Id");
         }
 
         private void RemoveContentsTable()
         {
+            Delete.ForeignKey("FK_Cms_Contents_Cms_Contents_OriginalId").OnTable("Contents").InSchema(SchemaName);
+            Delete.ForeignKey("FK_Cms_Contents_Cms_ContentStatuses").OnTable("Contents").InSchema(SchemaName);
+            Delete.Index("IX_Cms_Contents_OriginalId").OnTable("Contents").InSchema(SchemaName);
+            Delete.Index("IX_Cms_Contents_Status").OnTable("Contents").InSchema(SchemaName);
             Delete.Index("IX_Cms_Contents_Name").OnTable("Contents").InSchema(SchemaName);
             Delete.Table("Contents").InSchema(SchemaName);
         }
@@ -412,48 +440,76 @@ namespace BetterCms.Module.Root.Models.Migrations
                 .InSchema(SchemaName)
                 .WithCmsBaseColumns()
                 .WithColumn("PageContentId").AsGuid().NotNullable()
-                .WithColumn("ContentOptionId").AsGuid().NotNullable()
-                .WithColumn("Value").AsString(MaxLength.Max).Nullable();
-
+                .WithColumn("Value").AsString(MaxLength.Max).Nullable()
+                .WithColumn("Key").AsString(MaxLength.Name).NotNullable()
+                .WithColumn("Type").AsInt32().NotNullable();
+                
             Create
                 .ForeignKey("FK_Cms_PageContentOptions_PageContentId_Cms_PageContents_Id")
                 .FromTable("PageContentOptions").InSchema(SchemaName).ForeignColumn("PageContentId")
                 .ToTable("PageContents").InSchema(SchemaName).PrimaryColumn("Id");
 
             Create
-                .ForeignKey("FK_Cms_PageContentOptions_ContentOptionId_Cms_ContentOptionId_Id")
-                .FromTable("PageContentOptions").InSchema(SchemaName).ForeignColumn("ContentOptionId")
-                .ToTable("ContentOptions").InSchema(SchemaName).PrimaryColumn("Id");
+                .ForeignKey("FK_Cms_PageContentOptions_Type_Cms_ContentOptionTypes_Id")
+                .FromTable("PageContentOptions").InSchema(SchemaName).ForeignColumn("Type")
+                .ToTable("ContentOptionTypes").InSchema(SchemaName).PrimaryColumn("Id");
+            
+            Create
+                .UniqueConstraint("UX_Cms_PageContentOptions_PageContentId_Key")
+                .OnTable("PageContentOptions").WithSchema(SchemaName)
+                .Columns(new[] { "PageContentId", "Key", "DeletedOn" });
         }
 
         private void RemovePageContentOptionsTable()
         {
             Delete.ForeignKey("FK_Cms_PageContentOptions_PageContentId_Cms_PageContents_Id").OnTable("PageContentOptions").InSchema(SchemaName);
-            Delete.ForeignKey("FK_Cms_PageContentOptions_ContentOptionId_Cms_ContentOptionId_Id").OnTable("PageContentOptions").InSchema(SchemaName);
+            Delete.ForeignKey("FK_Cms_PageContentOptions_Type_Cms_ContentOptionTypes_Id").OnTable("PageContentOptions").InSchema(SchemaName);
+            Delete.UniqueConstraint("UX_Cms_PageContentOptions_PageContentId_Key").FromTable("PageContentOptions").InSchema(SchemaName);
             Delete.Table("PageContentOptions").InSchema(SchemaName);
         }
-
-        private void CreateSiteSettingsTable()
+        
+        private void CreateContentStatusesTable()
         {
             Create
-                .Table("SiteSettings").InSchema(SchemaName)
-                .WithCmsBaseColumns()
-                .WithColumn("Name").AsString(MaxLength.Name).NotNullable()
-                .WithColumn("Url").AsAnsiString(MaxLength.Url).Nullable()
-                .WithColumn("PrimaryRegionId").AsGuid().Nullable()
-                .WithColumn("DefaultLayoutId").AsGuid().Nullable()
-                .WithColumn("ImagePath").AsString(MaxLength.Url).Nullable()
-                .WithColumn("MaxImageWidth").AsInt32().NotNullable()
-                .WithColumn("AllowComments").AsBoolean().NotNullable()
-                .WithColumn("AllowAnonymousComments").AsBoolean().NotNullable()
-                .WithColumn("TimeZone").AsInt32().NotNullable()
-                .WithColumn("ImplementsPageComments").AsBoolean().NotNullable()
-                .WithColumn("ImplementsPrivatePages").AsBoolean().NotNullable();
+                .Table("ContentStatuses")
+                .InSchema(SchemaName)
+                .WithColumn("Id").AsInt32().PrimaryKey()
+                .WithColumn("Name").AsString(MaxLength.Name).NotNullable();
+
+            Create
+                .UniqueConstraint("UX_Cms_ContentStatuses_Name")
+                .OnTable("ContentStatuses").WithSchema(SchemaName)
+                .Column("Name");
+
+            Insert
+                .IntoTable("ContentStatuses")
+                .InSchema(SchemaName)
+                .Row(new
+                {
+                    Id = 1,
+                    Name = "Preview"
+                })
+                .Row(new
+                {
+                    Id = 2,
+                    Name = "Draft"
+                })
+                .Row(new
+                {
+                    Id = 3,
+                    Name = "Published"
+                })
+                .Row(new
+                {
+                    Id = 4,
+                    Name = "Archived"
+                });
         }
 
-        private void RemoveSiteSettingsTable()
-        {
-            Delete.Table("SiteSettings").InSchema(SchemaName);            
-        }
+        private void RemoveContentStatusesTable()
+        {            
+            Delete.UniqueConstraint("UX_Cms_ContentStatuses_Name").FromTable("ContentStatuses").InSchema(SchemaName);
+            Delete.Table("ContentStatuses").InSchema(SchemaName);
+        } 
     }
 }

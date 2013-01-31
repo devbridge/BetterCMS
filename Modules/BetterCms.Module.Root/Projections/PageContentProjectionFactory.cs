@@ -1,59 +1,66 @@
 ﻿using System;
-using System.Linq;
+using System.Collections.Generic;
 
 using Autofac;
 using Autofac.Core;
 
 using BetterCms.Core.Dependencies;
-using BetterCms.Core.Exceptions;
 using BetterCms.Core.Models;
 using BetterCms.Core.Modules.Projections;
-using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Content.Resources;
+
+using Common.Logging;
 
 using NHibernate.Proxy.DynamicProxy;
 
 namespace BetterCms.Module.Root.Projections
 {
     public class PageContentProjectionFactory
-    {        
-        private PerWebRequestContainerProvider containerProvider;
+    {
+        private static readonly ILog Log = LogManager.GetCurrentClassLogger();
+
+        private readonly PerWebRequestContainerProvider containerProvider;
 
         public PageContentProjectionFactory(PerWebRequestContainerProvider containerProvider)
         {
             this.containerProvider = containerProvider;
         }
 
-        public PageContentProjection Create(PageContent pageContent)
+        public PageContentProjection Create(IPageContent pageContent, IContent content, IList<IOption> options)
         {
             IContentAccessor contentAccessor = null;            
             Type contentType;
-            if (pageContent.Content is IProxy)
+
+            if (content is IProxy)
             {
-                contentType = pageContent.Content.GetType().BaseType;
+                contentType = content.GetType().BaseType;
             }
             else
             {
-                contentType = pageContent.Content.GetType();
+                contentType = content.GetType();
             }
 
             string key = "CONTENTRENDERER-" + contentType.Name.ToUpperInvariant();
 
             if (containerProvider.CurrentScope.IsRegisteredWithKey<IContentAccessor>(key))
-            {                
+            {
                 contentAccessor = containerProvider.CurrentScope
                     .ResolveKeyed<IContentAccessor>(key, new Parameter[]
                                                              {
-                                                                 new PositionalParameter(0, pageContent.Content),
-                                                                 new PositionalParameter(1, pageContent.PageContentOptions.Cast<IPageContentOption>().ToList())
+                                                                 new PositionalParameter(0, content),
+                                                                 new PositionalParameter(1, options)
                                                              });
             }
 
             if (contentAccessor == null)
             {
-                throw new CmsException(string.Format("No content accessor found for the content type {0}.", pageContent.Content.GetType().FullName));
+                Log.Error(string.Format("A content accessor was not found for the content type {0} with id={1}.", content.GetType().FullName, content.Id));
+
+                contentAccessor = new EmptyContentAccessor(string.Format("<i style=\"color:red;\">{0}</i>", RootGlobalization.Message_FailedToRenderContent));
             }
 
-            PageContentProjection pageContentProjection = new PageContentProjection(pageContent,  contentAccessor);
+            PageContentProjection pageContentProjection = new PageContentProjection(pageContent, content, contentAccessor);
+
             return pageContentProjection;
         }
     }

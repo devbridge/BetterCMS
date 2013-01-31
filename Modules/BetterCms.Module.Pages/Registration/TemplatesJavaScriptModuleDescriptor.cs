@@ -21,20 +21,19 @@ namespace BetterCms.Module.Pages.Registration
                             new JavaScriptModuleLinkTo<TemplatesController>(this, "loadSiteSettingsTemplateListUrl", controller => controller.Templates(null)),
                            
                             new JavaScriptModuleLinkTo<TemplatesController>(this, "loadRegisterTemplateDialogUrl", controller => controller.RegisterTemplate()),
-                           /* new JavaScriptModuleLinkTo<WidgetsController>(this, "loadEditServerControlWidgetDialogUrl", controller => controller.EditServerControlWidget("{0}")),
-                            new JavaScriptModuleLinkTo<WidgetsController>(this, "deleteWidgetUrl", controller => controller.DeleteWidget("{0}", "{1}")),*/
-                            new JavaScriptModuleLinkTo<ContentController>(this, "loadPageContentOptionsDialogUrl", controller => controller.PageContentOptions("{0}"))
+                            new JavaScriptModuleLinkTo<TemplatesController>(this, "loadEditTemplateDialogUrl", controller => controller.EditTemplate("{0}")),
+                            new JavaScriptModuleLinkTo<TemplatesController>(this, "deleteTemplateUrl", controller => controller.DeleteTemplate("{0}", "{1}")),
+                            new JavaScriptModuleLinkTo<ContentController>(this, "loadTemplateRegionDialogUrl", controller => controller.PageContentOptions("{0}"))
                         };
 
             Globalization = new IActionProjection[]
                                 {
-                                    new JavaScriptModuleGlobalization(this, "createHtmlContentWidgetDialogTitle", () => PagesGlobalization.SiteSettings_TemplatesMenuItem),
-                                    new JavaScriptModuleGlobalization(this, "editAdvancedContentDialogTitle", () => PagesGlobalization.SiteSettings_TemplatesMenuItem),
-                                    new JavaScriptModuleGlobalization(this, "createWidgetDialogTitle", () => PagesGlobalization.SiteSettings_TemplatesMenuItem),
-                                    new JavaScriptModuleGlobalization(this, "editWidgetDialogTitle", () => PagesGlobalization.SiteSettings_TemplatesMenuItem),
-                                    new JavaScriptModuleGlobalization(this, "editPageWidgetOptionsTitle", () => PagesGlobalization.SiteSettings_TemplatesMenuItem),
-                                    new JavaScriptModuleGlobalization(this, "deleteWidgetConfirmMessage", () => PagesGlobalization.SiteSettings_TemplatesMenuItem),
-                                    new JavaScriptModuleGlobalization(this, "deleteOptionConfirmMessage", () => PagesGlobalization.SiteSettings_TemplatesMenuItem),
+                                    new JavaScriptModuleGlobalization(this, "createTemplateDialogTitle", () => PagesGlobalization.CreatTemplate_Dialog_Title),
+                                    new JavaScriptModuleGlobalization(this, "editTemplateDialogTitle", () => PagesGlobalization.EditTemplate_Dialog_Title),
+                                    new JavaScriptModuleGlobalization(this, "editTemplateRegionTitle", () => PagesGlobalization.SiteSettings_TemplatesMenuItem),
+                                    new JavaScriptModuleGlobalization(this, "deleteTemplateConfirmMessage", () => PagesGlobalization.SiteSettings_Template_DeleteCategoryMessage),
+                                    new JavaScriptModuleGlobalization(this, "deleteRegionConfirmMessage", () => PagesGlobalization.DeleteRegion_Confirmation_Message),
+                                    new JavaScriptModuleGlobalization(this, "previewImageNotFoundMessage", () => PagesGlobalization.EditTemplate_PreviewImageNotFound_Message),
                                 };
         }
     }

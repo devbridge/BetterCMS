@@ -1,7 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.pages.seo', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', 'bcms.dynamicContent'], function ($, bcms, modal, messages, dynamicContent) {
+define('bcms.pages.seo', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', 'bcms.dynamicContent', 'bcms.redirect'],
+    function ($, bcms, modal, messages, dynamicContent, redirect) {
     'use strict';
 
     var seo = {},
@@ -13,7 +14,7 @@ define('bcms.pages.seo', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', 'bcms
             editPageUrlLink: '#bcms-editseo-editurlpath',
             editUrlPathBox: '.bcms-edit-urlpath-box',
             editUrlSave: '#bcms-editseo-editurlpath-save',
-            editUrlCancel: '#bcms-editseo-editurlpath-cancel, .bcms-edit-urlpath-box .bcms-edit-btn-close',
+            editUrlCancel: '#bcms-editseo-editurlpath-cancel, .bcms-edit-urlpath-box .bcms-tip-close',
             editUrlTextBox: '.bcms-edit-urlpath-box .bcms-editor-field-box',
             editSeoForm: 'form:first'
         },
@@ -48,7 +49,7 @@ define('bcms.pages.seo', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', 'bcms
     /**
     * Initializes EditSeo dialog events.
     */
-    seo.initEditSeoDialogEvents = function (editSeoDialog) {                
+    seo.initEditSeoDialogEvents = function (editSeoDialog) {       
         editSeoDialog.container.find(selectors.editPageUrlLink).on('click', function () {
             setEditPagePathBoxVisibility(editSeoDialog, true);
         });
@@ -124,8 +125,11 @@ define('bcms.pages.seo', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', 'bcms
                         dialog.container.showLoading();
                     },
                                    
-                    postComplete: function () {
+                    postComplete: function (data) {
                         dialog.container.hideLoading();
+                        if (data.Data && data.Data.PageUrlPath) {
+                            redirect.RedirectWithAlert(data.Data.PageUrlPath);
+                        }
                     }
                 });
                 

@@ -35,6 +35,6 @@ namespace BetterCms.Test.Module.Root.ModelTests.MapTests
                     Assert.AreEqual(page, result);
                     Assert.AreEqual(pageContents.OrderBy(f => f.Id), result.PageContents.OrderBy(f => f.Id));
                 });
-        }
+        }       
     }
 }
