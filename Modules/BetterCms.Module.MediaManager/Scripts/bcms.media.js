@@ -868,6 +868,12 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             } else if (imageAlign == 3) {
                 align = "right";
             }
+            if (contentEditor.mode == 'source') {
+                var img = '<img src="' + imageUrl + '" alt="' + caption + '" align="' + align + '"/>';
+                var oldData = contentEditor.getData();
+                
+                contentEditor.setData(oldData + img);
+            }
             contentEditor.insertHtml('<img src="' + imageUrl + '" alt="' + caption + '" align="' + align + '"/>');
         }
     };
