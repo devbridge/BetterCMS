@@ -417,8 +417,11 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
     page.searchSiteSettingsPages = function(form) {
         grid.submitGridForm(form, function (data) {
             siteSettings.setContent(data);
-            page.initializeSiteSettingsPagesList(data);   
+            page.initializeSiteSettingsPagesList(data);
+            var val = document.getElementById(selectors.siteSettingsPagesSearchField).value;
             document.getElementById(selectors.siteSettingsPagesSearchField).focus();
+            document.getElementById(selectors.siteSettingsPagesSearchField).value = '';
+            document.getElementById(selectors.siteSettingsPagesSearchField).value = val;
         });
     };
 

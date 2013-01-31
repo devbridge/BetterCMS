@@ -261,8 +261,11 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
         function searchTemplates(form) {
             grid.submitGridForm(form, function (data) {
                 siteSettings.setContent(data);
-                initializeTemplatesList();
+                initializeTemplatesList();                
+                var val = document.getElementById(selectors.templateSearchField).value;
                 document.getElementById(selectors.templateSearchField).focus();
+                document.getElementById(selectors.templateSearchField).value = '';
+                document.getElementById(selectors.templateSearchField).value = val;
             });
         };
 

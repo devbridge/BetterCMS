@@ -65,8 +65,11 @@ define('bcms.pages.tags', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSe
     tags.searchSiteSettingsTags = function (form) {
         grid.submitGridForm(form, function (data) {
             siteSettings.setContent(data);
-            tags.initSiteSettingsTagsEvents(data);
+            tags.initSiteSettingsTagsEvents(data);            
+            var val = document.getElementById(selectors.tagsSearchField).value;
             document.getElementById(selectors.tagsSearchField).focus();
+            document.getElementById(selectors.tagsSearchField).value = '';
+            document.getElementById(selectors.tagsSearchField).value = val;
         });
     };
 
@@ -140,8 +143,11 @@ define('bcms.pages.tags', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSe
     tags.searchSiteSettingsCategories = function (form) {
         grid.submitGridForm(form, function (data) {
             siteSettings.setContent(data);
-            tags.initSiteSettingsCategoriesEvents(data);      
+            tags.initSiteSettingsCategoriesEvents(data);                  
+            var val = document.getElementById(selectors.categoriesSearchField).value;
             document.getElementById(selectors.categoriesSearchField).focus();
+            document.getElementById(selectors.categoriesSearchField).value = '';
+            document.getElementById(selectors.categoriesSearchField).value = val;
         });
     };
 

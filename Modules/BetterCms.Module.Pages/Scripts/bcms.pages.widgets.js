@@ -406,8 +406,11 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
         function searchSiteSettingsWidgets(form) {
             grid.submitGridForm(form, function(data) {
                 siteSettings.setContent(data);
-                initializeSiteSettingsWidgetsList();
+                initializeSiteSettingsWidgetsList();                
+                var val = document.getElementById(selectors.widgetsSearchField).value;
                 document.getElementById(selectors.widgetsSearchField).focus();
+                document.getElementById(selectors.widgetsSearchField).value = '';
+                document.getElementById(selectors.widgetsSearchField).value = val;
             });
         };
 

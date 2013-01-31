@@ -87,7 +87,10 @@ define('bcms.pages.redirects', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.s
         grid.submitGridForm(form, function (data) {
             siteSettings.setContent(data);
             redirect.initializeSiteSettingsRedirectsList(data);
+            var val = document.getElementById(selectors.searchField).value;
             document.getElementById(selectors.searchField).focus();
+            document.getElementById(selectors.searchField).value = '';
+            document.getElementById(selectors.searchField).value = val;
         });
     };
 

@@ -236,7 +236,10 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         grid.submitGridForm(form, function (data) {
             container.html(data);
             initializeSiteSettingsBlogsList(container, data);
+            var val = document.getElementById(selectors.siteSettingsBlogsSearchInput).value;
             document.getElementById(selectors.siteSettingsBlogsSearchInput).focus();
+            document.getElementById(selectors.siteSettingsBlogsSearchInput).value = '';
+            document.getElementById(selectors.siteSettingsBlogsSearchInput).value = val;
         });
     }
 
