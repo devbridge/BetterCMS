@@ -547,6 +547,132 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Archived.
+        /// </summary>
+        public static string ContentHistory_Column_ArchivedOn {
+            get {
+                return ResourceManager.GetString("ContentHistory_Column_ArchivedOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Created By.
+        /// </summary>
+        public static string ContentHistory_Column_CreatedByUser {
+            get {
+                return ResourceManager.GetString("ContentHistory_Column_CreatedByUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date Created.
+        /// </summary>
+        public static string ContentHistory_Column_CreatedOn {
+            get {
+                return ResourceManager.GetString("ContentHistory_Column_CreatedOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Displayed For.
+        /// </summary>
+        public static string ContentHistory_Column_DisplayedFor {
+            get {
+                return ResourceManager.GetString("ContentHistory_Column_DisplayedFor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Published By.
+        /// </summary>
+        public static string ContentHistory_Column_PublishedByUser {
+            get {
+                return ResourceManager.GetString("ContentHistory_Column_PublishedByUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date Published.
+        /// </summary>
+        public static string ContentHistory_Column_PublishedOn {
+            get {
+                return ResourceManager.GetString("ContentHistory_Column_PublishedOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string ContentHistory_Column_Status {
+            get {
+                return ResourceManager.GetString("ContentHistory_Column_Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Destroy.
+        /// </summary>
+        public static string ContentHistory_Destroy_AcceptButtonTitle {
+            get {
+                return ResourceManager.GetString("ContentHistory_Destroy_AcceptButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to destroy draft version?.
+        /// </summary>
+        public static string ContentHistory_DestroyDraft_ConfirmationMessage {
+            get {
+                return ResourceManager.GetString("ContentHistory_DestroyDraft_ConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to History - Content Versions.
+        /// </summary>
+        public static string ContentHistory_DialogTitle {
+            get {
+                return ResourceManager.GetString("ContentHistory_DialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Older Versions.
+        /// </summary>
+        public static string ContentHistory_OlderVersions {
+            get {
+                return ResourceManager.GetString("ContentHistory_OlderVersions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restore.
+        /// </summary>
+        public static string ContentHistory_Restore_AcceptButtonTitle {
+            get {
+                return ResourceManager.GetString("ContentHistory_Restore_AcceptButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to restore to older version? Restored content will be immediately published..
+        /// </summary>
+        public static string ContentHistory_Restore_ConfirmationMessage {
+            get {
+                return ResourceManager.GetString("ContentHistory_Restore_ConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Version to preview history.
+        /// </summary>
+        public static string ContentHistory_SelectVersionToPreviewMessage {
+            get {
+                return ResourceManager.GetString("ContentHistory_SelectVersionToPreviewMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add New +.
         /// </summary>
         public static string ContentOptions_AddNew {
@@ -570,6 +696,42 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string ContentOptions_OptionKeyColumn {
             get {
                 return ResourceManager.GetString("ContentOptions_OptionKeyColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Archived.
+        /// </summary>
+        public static string ContentStatus_Archived {
+            get {
+                return ResourceManager.GetString("ContentStatus_Archived", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Draft.
+        /// </summary>
+        public static string ContentStatus_Draft {
+            get {
+                return ResourceManager.GetString("ContentStatus_Draft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preview.
+        /// </summary>
+        public static string ContentStatus_Preview {
+            get {
+                return ResourceManager.GetString("ContentStatus_Preview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Published.
+        /// </summary>
+        public static string ContentStatus_Published {
+            get {
+                return ResourceManager.GetString("ContentStatus_Published", resourceCulture);
             }
         }
         
@@ -885,6 +1047,24 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string EditContent_Dialog_Title {
             get {
                 return ResourceManager.GetString("EditContent_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This is DRAFT version of the content. This copy currently is not live..
+        /// </summary>
+        public static string EditPageContent_Messages_DraftStatusWarnMessage {
+            get {
+                return ResourceManager.GetString("EditPageContent_Messages_DraftStatusWarnMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can &lt;a href=&apos;#&apos; class=&apos;bcms-messages-draft-destroy&apos;&gt;destroy&lt;/a&gt; draft and edit version that is currently published..
+        /// </summary>
+        public static string EditPageContent_Messages_DraftStatusWarnMessage_Destroy {
+            get {
+                return ResourceManager.GetString("EditPageContent_Messages_DraftStatusWarnMessage_Destroy", resourceCulture);
             }
         }
         
@@ -2473,6 +2653,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string SiteSettings_Widgets_StatusColumn {
+            get {
+                return ResourceManager.GetString("SiteSettings_Widgets_StatusColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Widgets.
         /// </summary>
         public static string SiteSettings_Widgets_Title {
@@ -2811,6 +3000,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string WidgetPreviewImageUrl_Tooltip_Description {
             get {
                 return ResourceManager.GetString("WidgetPreviewImageUrl_Tooltip_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot remove {0} widget because it is in use..
+        /// </summary>
+        public static string Widgets_CanNotDeleteWidgetIsInUse_Message {
+            get {
+                return ResourceManager.GetString("Widgets_CanNotDeleteWidgetIsInUse_Message", resourceCulture);
             }
         }
     }

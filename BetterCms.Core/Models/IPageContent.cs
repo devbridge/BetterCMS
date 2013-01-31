@@ -11,11 +11,6 @@
 
         IContent Content { get; }
 
-        IRegion Region { get; }
-
-        /// <summary>
-        /// Gets a value indicating this content publishing status (auto saved for preview, draft, published, archived).
-        /// </summary>        
-        ContentStatus Status { get; }
+        IRegion Region { get; }        
     }
 }

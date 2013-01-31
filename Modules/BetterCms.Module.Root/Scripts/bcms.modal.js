@@ -21,7 +21,8 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'knockout'], function ($, b
             previewImage: '.bcms-preview-image-frame img',
             previewImageContainer: '.bcms-preview-image-border',
             footer: '.bcms-success-buttons-holder, .bcms-modal-footer',
-
+            desirableStatus: '.bcms-content-desirable-status',
+            
             // selectors for calculation of modal window size
             elemOuter: '.bcms-modal-body',
             elemHeader: '.bcms-modal-header',
@@ -32,7 +33,8 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'knockout'], function ($, b
         
         classes = {
             saveButton: 'bcms-btn-small bcms-modal-accept',
-            cancelButton: 'bcms-btn-links-small bcms-modal-cancel'
+            cancelButton: 'bcms-btn-links-small bcms-modal-cancel',
+            grayButton: 'bcms-btn-small bcms-btn-gray'
         },
 
         links = {},
@@ -40,7 +42,10 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'knockout'], function ($, b
         globalization = {
             save: null,
             cancel: null,
-            ok: null
+            ok: null,
+            saveDraft: null,
+            saveAndPublish: null,
+            preview: null,
         };
 
     /**
@@ -498,7 +503,7 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'knockout'], function ($, b
             $(document).off('.bcms.modal');
         }
     }
-
+    
     /**
     * Creates and opens modal windows
     */
@@ -512,6 +517,71 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'knockout'], function ($, b
         }
 
         return modalWindow;
+    };
+
+    modal.edit = function (options) {
+        options = $.extend({
+            isPreviewAvailable: true,
+            onSaveAndPublishClick: null,
+            onPreviewClick: null,
+            onSaveDraftClick: null
+        }, options);
+
+        var extraButtons = [],
+            changeContentDesirableStatus = function(dialog, status) {
+                var desirableStatus = dialog.container.find(selectors.desirableStatus);
+                if (desirableStatus.length > 0) {
+                    desirableStatus.val(status);
+                } else {
+                    throw new Error($.format('Dialog {0} should contain hidden input for a desirable status.', dialog.title));
+                }                
+            };
+           
+        var saveAndPublishButton = new ButtonViewModel(globalization.saveAndPublish, classes.grayButton, 2, function(dialog) {
+            if ($.isFunction(options.onSaveAndPublishClick)) {
+                if (options.onSaveAndPublishClick(dialog) !== false) {
+                    changeContentDesirableStatus(dialog, bcms.contentStatus.published);
+                    dialog.submitForm();
+                }
+            } else {
+                changeContentDesirableStatus(dialog, bcms.contentStatus.published);
+                dialog.submitForm();
+            }
+
+        });
+        extraButtons.push(saveAndPublishButton);
+
+        if (!!options.isPreviewAvailable) {
+            var previewButton = new ButtonViewModel(globalization.preview, classes.grayButton, 3, function(dialog) {
+                if ($.isFunction(options.onPreviewClick)) {
+                    if (options.onPreviewClick(dialog) !== false) {
+                        changeContentDesirableStatus(dialog, bcms.contentStatus.preview);
+                        dialog.submitForm();
+                    }
+                } else {
+                    changeContentDesirableStatus(dialog, bcms.contentStatus.preview);
+                    dialog.submitForm();
+                }
+            });
+            extraButtons.push(previewButton);
+        }
+        
+        options.buttons = extraButtons;
+        options.acceptTitle = globalization.saveDraft;
+        
+        options.onAcceptClick = function(dialog) {
+            if ($.isFunction(options.onSaveDraftClick)) {
+                if (options.onSaveDraftClick(dialog) !== false) {
+                    changeContentDesirableStatus(dialog, bcms.contentStatus.draft);
+                    dialog.submitForm();
+                }
+            } else {
+                changeContentDesirableStatus(dialog, bcms.contentStatus.draft);
+                dialog.submitForm();
+            }
+        };
+        
+        modal.open(options);
     };
 
     modal.alert = function (options) {

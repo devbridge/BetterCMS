@@ -35,7 +35,7 @@ namespace BetterCms.Module.Blog.Controllers
             var model = GetCommand<GetBlogPostCommand>().ExecuteCommand(id.ToGuidOrDefault());
             var view = RenderView("EditBlogPost", model);
             var success = model != null;
-
+           
             return ComboWireJson(success, view, model, JsonRequestBehavior.AllowGet);
         }
 

@@ -3,14 +3,8 @@
     /// <summary>
     /// Defines interface to access the content option.
     /// </summary>
-    public interface IContentOption : IEntity
+    public interface IContentOption : IOption
     {
-        IContent Content { get; }
-
-        string Key { get; }
-
-        ContentOptionType Type { get; }
-        
-        string DefaultValue { get; }    
+        IContent Content { get; }        
     }
 }

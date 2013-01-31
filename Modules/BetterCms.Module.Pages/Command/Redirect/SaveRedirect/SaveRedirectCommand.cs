@@ -43,13 +43,13 @@ namespace BetterCms.Module.Pages.Command.Redirect.SaveRedirect
             {
                 var message = PagesGlobalization.SaveRedirect_InvalidPageUrl_Message;
                 var logMessage = string.Format("Invalid page url {0}.", request.PageUrl);
-                throw new ValidationException(e => message, logMessage);
+                throw new ValidationException(() => message, logMessage);
             }
             if (!redirectService.ValidateUrl(request.RedirectUrl))
             {
                 var message = PagesGlobalization.SaveRedirect_InvalidRedirectUrl_Message;
                 var logMessage = string.Format("Invalid redirect url {0}.", request.RedirectUrl);
-                throw new ValidationException(e => message, logMessage);
+                throw new ValidationException(() => message, logMessage);
             }
             redirectService.ValidateRedirectExists(request.PageUrl, request.Id);
             redirectService.ValidateForCircularLoop(request.PageUrl, request.RedirectUrl, request.Id);

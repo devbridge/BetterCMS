@@ -149,7 +149,7 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
                     PreviewOnly = false,
                     Timeout = (int)migrationTimeout.TotalSeconds
                 };
-
+           
             IMigrationProcessor processor;
 
             var connectionString = ConfigurationManager.ConnectionStrings["BetterCms"].ConnectionString;
@@ -157,7 +157,7 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
             if (databaseType == DatabaseType.SqlAzure || databaseType == DatabaseType.SqlServer)
             {
                 var factory = new FluentMigrator.Runner.Processors.SqlServer.SqlServer2008ProcessorFactory();
-                processor = factory.Create(connectionString, announcer, options);                
+                processor = factory.Create(connectionString, announcer, options);                   
             }
             else if (databaseType == DatabaseType.PostgreSQL)
             {
@@ -175,8 +175,8 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
             }
             
             var runner = new MigrationRunner(assembly, migrationContext, processor);
-            runner.ValidateVersionOrder();
-
+         //   runner.ValidateVersionOrder();
+        
             if (up)
             {
                 if (version != null)
@@ -193,7 +193,5 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
                 runner.MigrateDown(version ?? 0);                
             }
         }
-
-
     }
 }

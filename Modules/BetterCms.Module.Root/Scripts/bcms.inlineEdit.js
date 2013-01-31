@@ -330,7 +330,7 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
                                 }
                                 if (json.Data.Id) {
                                     row.find(selectors.deleteRowLink).data('id', json.Data.Id);
-                                    row.find(selectors.editRowLink).data('id', json.Data.Id);
+                                    row.find(selectors.editRowLink).data('id', json.Data.Id);   
                                 }
                                 rowAdded = false;
                                 row.data('new', false);

@@ -12,7 +12,7 @@ namespace BetterCms.Module.Blog.Accessors
     [Serializable]
     public class BlogPostContentAccessor : ContentAccessor<BlogPostContent>
     {
-        public BlogPostContentAccessor(BlogPostContent content, IList<IPageContentOption> options)
+        public BlogPostContentAccessor(BlogPostContent content, IList<IOption> options)
             : base(content, options)
         {
         }

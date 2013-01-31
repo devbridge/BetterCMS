@@ -27,6 +27,7 @@ namespace BetterCms.Module.Pages.Controllers
         public ActionResult Categories(SearchableGridOptions request)
         {
             var model = GetCommand<GetCategoryListCommand>().ExecuteCommand(request);
+
             return View(model);
         }
 

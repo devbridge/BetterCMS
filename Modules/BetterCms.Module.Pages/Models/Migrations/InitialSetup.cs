@@ -45,18 +45,10 @@ namespace BetterCms.Module.Pages.Models.Migrations
             InsertDefaultPage();
             InsertPage404();
             InsertPage500();
-
-            CreateHtmlContentHistoryTable();
-            CreateServerControlWidgetHistoryTable();
-            CreateHtmlContentWidgetHistoryTable();
         }
 
         public override void Down()
         {
-            RemoveHtmlContentWidgetHistoryTable();
-            RemoveServerControlWidgetHistoryTable();
-            RemoveHtmlContentHistoryTable();
-
             RemoveDefaultPage();
             RemovePage404();
             RemovePage500();
@@ -281,78 +273,7 @@ namespace BetterCms.Module.Pages.Models.Migrations
             Delete.ForeignKey("FK_Cms_PageCategories_Cms_Pages").OnTable("PageCategories").InSchema(SchemaName);
             Delete.ForeignKey("FK_Cms_PageCategories_Cms_Categories").OnTable("PageCategories").InSchema(SchemaName);
             Delete.Table("PageCategories").InSchema(SchemaName);
-        }
-
-        private void CreateHtmlContentHistoryTable()
-        {
-            Create
-               .Table("HtmlContentHistory")
-               .InSchema(SchemaName)
-               .WithColumn("Id").AsGuid().PrimaryKey()
-               .WithColumn("ActivationDate").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime)
-               .WithColumn("ExpirationDate").AsDateTime().Nullable()
-               .WithColumn("CustomCss").AsString(MaxLength.Max).Nullable()
-               .WithColumn("UseCustomCss").AsBoolean().NotNullable().WithDefaultValue(false)
-               .WithColumn("CustomJs").AsString(MaxLength.Max).Nullable()
-               .WithColumn("UseCustomJs").AsBoolean().NotNullable().WithDefaultValue(false)
-               .WithColumn("Html").AsString(int.MaxValue).NotNullable();
-
-            Create
-                .ForeignKey("FK_Cms_HtmlContentHistory_Id_ContentHistory_Id")
-                .FromTable("HtmlContentHistory").InSchema(SchemaName).ForeignColumn("Id")
-                .ToTable("ContentHistory").InSchema(rootModuleSchemaName).PrimaryColumn("Id");
-        }
-
-        private void RemoveHtmlContentHistoryTable()
-        {
-            Delete.ForeignKey("FK_Cms_HtmlContentHistory_Id_ContentHistory_Id").OnTable("HtmlContentHistory").InSchema(SchemaName);
-            Delete.Table("HtmlContentHistory").InSchema(SchemaName);
-        }
-
-        private void CreateServerControlWidgetHistoryTable()
-        {
-            Create
-                .Table("ServerControlWidgetHistory")
-                .InSchema(SchemaName)
-                .WithColumn("Id").AsGuid().PrimaryKey()
-                .WithColumn("Url").AsAnsiString(MaxLength.Url).NotNullable();
-
-            Create
-                .ForeignKey("FK_Cms_ServerControlWidgetHistory_Id_WidgetHistory_Id")
-                .FromTable("ServerControlWidgetHistory").InSchema(SchemaName).ForeignColumn("Id")
-                .ToTable("WidgetHistory").InSchema(rootModuleSchemaName).PrimaryColumn("Id");
-        }
-
-        private void RemoveServerControlWidgetHistoryTable()
-        {
-            Delete.ForeignKey("FK_Cms_ServerControlWidgetHistory_Id_WidgetHistory_Id").OnTable("ServerControlWidgetHistory").InSchema(SchemaName);
-            Delete.Table("ServerControlWidgetHistory").InSchema(SchemaName);
-        }
-
-        private void CreateHtmlContentWidgetHistoryTable()
-        {
-            Create
-                .Table("HtmlContentWidgetHistory")
-                .InSchema(SchemaName)
-                .WithColumn("Id").AsGuid().PrimaryKey()
-                .WithColumn("CustomCss").AsString(MaxLength.Max).Nullable()
-                .WithColumn("UseCustomCss").AsBoolean().NotNullable().WithDefaultValue(false)
-                .WithColumn("CustomJs").AsString(MaxLength.Max).Nullable()
-                .WithColumn("UseCustomJs").AsBoolean().NotNullable().WithDefaultValue(false)
-                .WithColumn("Html").AsString(MaxLength.Max).NotNullable()
-                .WithColumn("UseHtml").AsBoolean().NotNullable().WithDefaultValue(false);
-
-            Create
-                .ForeignKey("FK_Cms_HtmlContentWidgetHistory_Id_WidgetHistory_Id")
-                .FromTable("HtmlContentWidgetHistory").InSchema(SchemaName).ForeignColumn("Id")
-                .ToTable("WidgetHistory").InSchema(rootModuleSchemaName).PrimaryColumn("Id");
-        }
-
-        private void RemoveHtmlContentWidgetHistoryTable()
-        {
-            Delete.ForeignKey("FK_Cms_HtmlContentWidgetHistory_Id_WidgetHistory_Id").OnTable("HtmlContentWidgetHistory").InSchema(SchemaName);
-            Delete.Table("HtmlContentWidgetHistory").InSchema(SchemaName);
-        }    
+        }       
 
         /// <summary>
         /// Inserts the default page.
@@ -580,6 +501,9 @@ namespace BetterCms.Module.Pages.Models.Migrations
                     ModifiedOn = DateTime.Now,
                     ModifiedByUser = "Admin",
                     Name = name,
+                    Status = 3,
+                    PublishedOn = DateTime.Now,
+                    PublishedByUser = "Admin"
                 });
 
             Insert
@@ -597,7 +521,7 @@ namespace BetterCms.Module.Pages.Models.Migrations
                 .IntoTable("PageContents").InSchema(rootModuleSchemaName)
                 .Row(new
                 {
-                    Id = contentId,
+                    Id = Guid.NewGuid(),
                     Version = 1,
                     IsDeleted = false,
                     CreatedOn = DateTime.Now,
@@ -607,7 +531,7 @@ namespace BetterCms.Module.Pages.Models.Migrations
                     PageId = pageId,
                     ContentId = contentId,
                     RegionId = regionId,
-                    Order = 0,
+                    Order = 0                    
                 });
         }
 
@@ -642,7 +566,7 @@ namespace BetterCms.Module.Pages.Models.Migrations
             Delete
                 .FromTable("PageContents")
                 .InSchema(rootModuleSchemaName)
-                .Row(new { Id = contentId });
+                .Row(new { ContentId = contentId });
 
             Delete
                 .FromTable("HtmlContents")

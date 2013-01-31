@@ -5,6 +5,7 @@ using System.Web.Mvc;
 
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Modules.Registration;
+using BetterCms.Core.Mvc.Attributes;
 using BetterCms.Core.Services;
 
 using BetterCms.Module.Root.Models.Rendering;
@@ -32,19 +33,12 @@ namespace BetterCms.Module.Root.Controllers
         private readonly IModulesRegistration modulesRegistration;
 
         /// <summary>
-        /// The page extensions.
-        /// </summary>
-        private readonly IPageAccessor pageAccessor;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="RenderingController" /> class.
         /// </summary>
         /// <param name="modulesRegistration">A contract to manage modules registry.</param>
-        /// <param name="pageAccessor">The page extensions.</param>
-        public RenderingController(IModulesRegistration modulesRegistration, IPageAccessor pageAccessor)
+        public RenderingController(IModulesRegistration modulesRegistration)
         {           
             this.modulesRegistration = modulesRegistration;
-            this.pageAccessor = pageAccessor;
         }
 
         /// <summary>
@@ -53,6 +47,7 @@ namespace BetterCms.Module.Root.Controllers
         /// <returns>main.js file with client side entry point.</returns>
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
         //[OutputCache(Duration = 120, Location = OutputCacheLocation.ServerAndClient)]
+        [IgnoreAutoRoute]
         public ActionResult RenderMainJsFile()
         {
             RenderMainJsViewModel model = new RenderMainJsViewModel();
@@ -68,6 +63,7 @@ namespace BetterCms.Module.Root.Controllers
         /// </summary>
         /// <returns>bcms.processor.js file with logic to initialize and manage JS modules.</returns>
         [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1616:ElementReturnValueDocumentationMustHaveText", Justification = "Reviewed. Suppression is OK here.")]
+        [IgnoreAutoRoute]
         public ActionResult RenderProcessorJsFile()
         {
             IEnumerable<JavaScriptModuleViewModel> model = RetrieveJsModulesModel();

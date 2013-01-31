@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'bcms.pages.widgets', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages', 'bcms.preview', 'bcms.grid', 'bcms.inlineEdit', 'slides.jquery', 'bcms.redirect'],
-    function($, bcms, modal, content, widgets, datepicker, htmlEditor, dynamicContent, siteSettings, messages, preview, grid, editor, slides, redirect) {
+define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'bcms.pages.widgets', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages', 'bcms.preview', 'bcms.grid', 'bcms.inlineEdit', 'slides.jquery', 'bcms.redirect', 'bcms.pages.history'],
+    function($, bcms, modal, content, widgets, datepicker, htmlEditor, dynamicContent, siteSettings, messages, preview, grid, editor, slides, redirect, history) {
         'use strict';
 
         var pagesContent = {},
@@ -10,10 +10,13 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                 sliderBoxes: '.bcms-slider-box',
                 sliderContainer: 'bcms-slides-container',
 
-                contentFormRegionId: '#bcmsAddContentToRegionId',
-                desirableStatus: '#bcmsAddContentDesirableStatus',
+                contentId: '#bcmsContentId',
+                pageContentId: '#bcmsPageContentId',
+                contentFormRegionId: '#bcmsContentToRegionId',
+                desirableStatus: '#bcmsContentDesirableStatus',
                 dataPickers: '.bcms-datepicker',
                 htmlEditor: 'bcms-contenthtml',
+                destroyDraftVersionLink: '.bcms-messages-draft-destroy',
 
                 widgetsSearchButton: '#bcms-advanced-content-search-btn',
                 widgetsSearchInput: '#bcms-advanced-content-search',
@@ -32,22 +35,19 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                 overlayConfigure: '.bcms-content-configure',
                 overlayDelete: '.bcms-content-delete',
                 overlay: '.bcms-content-overlay',
-                
+
                 enableCustomJs: '#bcms-enable-custom-js',
                 enableCustomCss: '#bcms-enable-custom-css',
                 customJsContainer: '#bcms-custom-js-container',
                 customCssContainer: '#bcms-custom-css-container'
             },
-            
             classes = {
                 sliderPrev: 'bcms-slider-prev',
                 sliderNext: 'bcms-slider-next',
                 regionContent: 'bcms-content-regular',
                 regionAdvancedContent: 'bcms-content-advanced',
-                regionWidget: 'bcms-content-widget',
-                grayButton: 'bcms-btn-small bcms-btn-gray'
+                regionWidget: 'bcms-content-widget'
             },
-            
             links = {
                 loadWidgetsUrl: null,
                 loadAddNewHtmlContentDialogUrl: null,
@@ -57,11 +57,7 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                 sortPageContentUrl: null,
                 previewPageUrl: null
             },
-
             globalization = {
-                saveDraft: null,
-                saveAndPublish: null,
-                preview: null,
                 addNewContentDialogTitle: null,
                 editContentDialogTitle: null,
                 deleteContentConfirmationTitle: null,
@@ -72,16 +68,10 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                 deleteContentFailureMessageMessage: null,
                 sortPageContentFailureMessageTitle: null,
                 sortPageContentFailureMessageMessage: null,
-                errorTitle: null,                
+                errorTitle: null,
                 insertingWidgetInfoMessage: null,
                 insertingWidgetInfoHeader: null,
-                insertingWidgetErrorMessage: null                
-            },
-            
-            contentStatus = {
-                published: 'Published',
-                draft: 'Draft',
-                preview: 'Preview'
+                insertingWidgetErrorMessage: null
             };
 
         /**
@@ -94,29 +84,10 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
         * Open dialog with add new content form
         */
         pagesContent.onAddNewContent = function(regionId) {
-            var extraButtons = [],
-                changeContentDesirableStatus = function(dialog, status) {
-                    dialog.container.find(selectors.desirableStatus).val(status);                    
-                },
-                saveAndPublishButton = new modal.button(globalization.saveAndPublish, classes.grayButton, 2, function(dialog) {
-                    changeContentDesirableStatus(dialog, contentStatus.published);
-                    dialog.submitForm();
-                }),
-                saveDraftButton = new modal.button(globalization.preview, classes.grayButton, 3, function(dialog) {
-                    changeContentDesirableStatus(dialog, contentStatus.preview);
-                    dialog.submitForm();
-                });
             
-            extraButtons.push(saveDraftButton);            
-            extraButtons.push(saveAndPublishButton);
-            
-            modal.open({
-                buttons: extraButtons,
-                acceptTitle: globalization.saveDraft,
+            modal.edit({
                 title: globalization.addNewContentDialogTitle,
-                onAcceptClick: function (dialog) {
-                    changeContentDesirableStatus(dialog, contentStatus.draft);
-                },
+              
                 onLoad: function(dialog) {
                     var url = $.format(links.loadAddNewHtmlContentDialogUrl, bcms.pageId, regionId);
                     dynamicContent.bindDialog(dialog, url, {
@@ -127,8 +98,15 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                         },
 
                         postSuccess: function (json) {                            
-                            if (json.desirableStatus === contentStatus.preview) {
-                                openPreviewPageContentWindow(json.Data.PageContentId);
+                            if (json.Data.DesirableStatus == bcms.contentStatus.preview) {
+                                try {
+                                    var result = json.Data;
+                                    $(selectors.contentId).val(result.ContentId);
+                                    $(selectors.pageContentId).val(result.PageContentId);
+                                    preview.previewPageContent(result.PageId, result.PageContentId);
+                                } finally  {
+                                    return false;
+                                }                                 
                             } else {
                                 redirect.ReloadWithAlert();
                             }                            
@@ -137,11 +115,6 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                 }
             });
         };
-
-        function openPreviewPageContentWindow(pageContentId) {
-            var link = $.format(links.previewPageUrl, bcms.pageId);
-            window.open(link, bcms.previewWindow, 'toolbar=yes,location=yes,directories=yes,status=yes,menubar=yes,scrollbars=yes,copyhistory=yes,resizable=yes');
-        }
 
         /**
         * Save content order after sorting.
@@ -190,7 +163,7 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                 widgets.openCreateHtmlContentWidgetDialog(function () {
                     // Reload search results after category was created.
                     pagesContent.updateWidgetCategoryList(dialog);
-                });
+                }, null);
             });
 
             bcms.preventInputFromSubmittingForm(dialog.container.find(selectors.widgetsSearchInput), {
@@ -215,6 +188,18 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
             dialog.container.find(selectors.dataPickers).initializeDatepicker();
             htmlEditor.initializeHtmlEditor(selectors.htmlEditor);
             pagesContent.initializeCustomTextArea(dialog);
+            
+            dialog.container.find(selectors.destroyDraftVersionLink).on('click', function () {
+                var contentId = dialog.container.find(selectors.contentId).val(),
+                    pageContentId = dialog.container.find(selectors.pageContentId).val();
+                
+                history.destroyDraftVersion(contentId, dialog.container, function () {
+                    dialog.close();
+                    pagesContent.editPageContent(pageContentId, function () {
+                        redirect.ReloadWithAlert();
+                    });
+                });
+            });
         };
 
          /**
@@ -262,11 +247,15 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                     widgetId = widgetContainer.data('id'),
                     widgetVersion = widgetContainer.data('version'),
                     widgetName = widgetContainer.find(selectors.widgetName).text();
-                                        
-                widgets.deleteWidget(widgetId, widgetVersion, widgetName, function (data) {
-                    messages.refreshBox(dialog.container, data);
-                    pagesContent.updateWidgetCategoryList(dialog);
-                });
+
+                widgets.deleteWidget(widgetId, widgetVersion, widgetName,
+                    function(data) {
+                        messages.refreshBox(dialog.container, data);
+                        pagesContent.updateWidgetCategoryList(dialog);
+                    },
+                    function(data) {
+                        messages.refreshBox(dialog.container, data);
+                    });
             });
 
             container.find(selectors.widgetEditButtons).on('click', function () {
@@ -278,7 +267,8 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                 widgets.editWidget(widgetId, widgetType, function(data) {
                     messages.refreshBox(dialog.container, data);
                     pagesContent.updateWidgetCategoryList(dialog);
-                });
+                },
+                null);
             });
 
             preview.initialize(container.find(selectors.widgetsContainer));
@@ -359,7 +349,7 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
             } else if (element.hasClass(classes.regionAdvancedContent)) {
                 overlay.find(selectors.overlayConfigure).hide();
             } else if (element.hasClass(classes.regionWidget)) {
-            }            
+            }
         };
 
         /**
@@ -402,15 +392,10 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
         */
         pagesContent.onContentHistory = function(sender) {
             var element = $(sender),
-                contentId = element.data('id');
+                contentId = element.data('contentId'),
+                pageContentId = element.data('pageContentId');
 
-            if (element.hasClass(classes.regionContent)) {
-                pagesContent.showContentHistory(contentId);
-            } else if (element.hasClass(classes.regionAdvancedContent)) {
-                pagesContent.showHtmlContentWidgetHistory(contentId);
-            } else if (element.hasClass(classes.regionWidget)) {
-                pagesContent.showServerControlWidgetHistory(contentId);
-            }
+            history.openPageContentHistoryDialog(contentId, pageContentId);
         };
 
         /**
@@ -430,9 +415,10 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
         /**
         * Opens dialog for editing page regular content  
         */
-        pagesContent.editPageContent = function(contentId) {
-            modal.open({
+        pagesContent.editPageContent = function (contentId, onCloseClick) {
+            modal.edit({
                 title: globalization.editContentDialogTitle,
+                onCloseClick: onCloseClick,
                 onLoad: function (dialog) {
                     var url = $.format(links.editPageContentUrl, contentId);
                     dynamicContent.bindDialog(dialog, url, {
@@ -442,9 +428,17 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                             htmlEditor.updateEditorContent();
                         },
 
-                        postSuccess: function () {
-                            redirect.ReloadWithAlert();
-                        },
+                        postSuccess: function (json) {
+                            if (json.Data.DesirableStatus == bcms.contentStatus.preview) {
+                                try {                                    
+                                    preview.previewPageContent(bcms.pageId, json.Data.PageContentId);
+                                } finally {
+                                    return false;
+                                }
+                            } else {
+                                redirect.ReloadWithAlert();
+                            }
+                        }
                     });
                 }
             });
@@ -494,7 +488,7 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                         return false;
                     }
                 });
-        };
+        };    
         
          /**
         * Shows/hides custom css field in a content edit form
@@ -513,30 +507,6 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
             } else {
                 dialog.container.find(selectors.customJsContainer).hide();
             }
-        };
-
-        /**
-        * Opens dialog with regular html content history.
-        * TODO: need implementation
-        */
-        pagesContent.showContentHistory = function(contentId) {
-            alert('Show regular content history ' + contentId);
-        };
-
-        /**
-        * Opens dialog with html content widget history.
-        * TODO: need implementation
-        */
-        pagesContent.showHtmlContentWidgetHistory = function(contentId) {
-            alert('Show widget history ' + contentId);
-        };
-
-        /**
-        * Opens dialog with server control widget history.
-        * TODO: need implementation
-        */
-        pagesContent.showServerControlWidgetHistory = function(contentId) {
-            alert('Show widget history ' + contentId);
         };
 
         /**

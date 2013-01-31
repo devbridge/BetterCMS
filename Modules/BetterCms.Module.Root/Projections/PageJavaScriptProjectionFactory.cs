@@ -47,7 +47,7 @@ namespace BetterCms.Module.Root.Projections
 
             if (jsAccessor == null)
             {
-                throw new CmsException(string.Format("No page javascript accessor found for the page type {0}.", pageType.FullName));
+                throw new CmsException(string.Format("No page javascript accessor was found for the page type {0}.", pageType.FullName));
             }
 
             var jsProjection = new PageJavaScriptProjection(page, jsAccessor);
