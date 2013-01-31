@@ -871,10 +871,11 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             if (contentEditor.mode == 'source') {
                 var img = '<img src="' + imageUrl + '" alt="' + caption + '" align="' + align + '"/>';
                 var oldData = contentEditor.getData();
-                
+
                 contentEditor.setData(oldData + img);
+            } else {
+                contentEditor.insertHtml('<img src="' + imageUrl + '" alt="' + caption + '" align="' + align + '"/>');
             }
-            contentEditor.insertHtml('<img src="' + imageUrl + '" alt="' + caption + '" align="' + align + '"/>');
         }
     };
 
@@ -955,7 +956,14 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     */
     function addFileToEditor(fileUrl, fileName) {
         if (contentEditor != null) {
-            contentEditor.insertHtml('<a href="' + fileUrl + '">' + fileName + '</a>');
+            if (contentEditor.mode == 'source') {
+                var file = '<a href="' + fileUrl + '">' + fileName + '</a>';
+                var oldData = contentEditor.getData();
+
+                contentEditor.setData(oldData + file);
+            } else {
+                contentEditor.insertHtml('<a href="' + fileUrl + '">' + fileName + '</a>');
+            }
         }
     };
 
