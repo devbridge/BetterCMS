@@ -53,7 +53,7 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
                 htmlContentWidgetTableFirstRow: 'table.bcms-tables > tbody > tr:first',
 
                 widgetsSearchButton: '#bcms-widget-search-btn',
-                widgetsSearchField: 'SearchQuery',
+                widgetsSearchField: '.bcms-search-query',
                 widgetCreateButton: '#bcms-create-widget-button',
                 widgetRegisterButton: '#bcms-register-widget-button',
                 widgetRowEditButton: '.bcms-grid-item-edit-button',
@@ -386,7 +386,7 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
             });
 
             form.find(selectors.widgetsSearchButton).on('click', function() {
-                searchSiteSettingsWidgets(form);
+                searchSiteSettingsWidgets(form, container);
             });
 
             container.find(selectors.widgetCreateButton).on('click', function () {
@@ -403,14 +403,14 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
         /**
         * Search site settings widgets.
         */
-        function searchSiteSettingsWidgets(form) {
+        function searchSiteSettingsWidgets(form, container) {
             grid.submitGridForm(form, function(data) {
                 siteSettings.setContent(data);
                 initializeSiteSettingsWidgetsList();                
-                var val = document.getElementById(selectors.widgetsSearchField).value;
-                document.getElementById(selectors.widgetsSearchField).focus();
-                document.getElementById(selectors.widgetsSearchField).value = '';
-                document.getElementById(selectors.widgetsSearchField).value = val;
+                var searchInput = container.find(selectors.widgetsSearchField);
+                var val = searchInput.val();
+                searchInput.focus().val("");
+                searchInput.val(val);
             });
         };
 

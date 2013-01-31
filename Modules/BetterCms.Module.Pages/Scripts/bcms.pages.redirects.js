@@ -8,7 +8,7 @@ define('bcms.pages.redirects', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.s
         selectors = {
             redirectsForm: '#bcms-redirects-form',
             searchLink: '#bcms-redirects-search-btn',
-            searchField: 'SearchQuery',
+            searchField: '#SearchQuery',
             createLink: '#bcms-create-redirect-button',
             deleteLink: '.bcms-grid-item-delete-button',
             pageUrlEditor: 'input.bcms-page-url',
@@ -62,7 +62,7 @@ define('bcms.pages.redirects', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.s
         });
 
         form.find(selectors.searchLink).on('click', function () {
-            redirect.searchSiteSettingsRedirects(form);
+            redirect.searchSiteSettingsRedirects(form, container);
         });
 
         form.find(selectors.createLink).on('click', function () {
@@ -83,14 +83,14 @@ define('bcms.pages.redirects', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.s
     /**
     * Search site settings redirects
     */
-    redirect.searchSiteSettingsRedirects = function(form) {
+    redirect.searchSiteSettingsRedirects = function(form, container) {
         grid.submitGridForm(form, function (data) {
             siteSettings.setContent(data);
             redirect.initializeSiteSettingsRedirectsList(data);
-            var val = document.getElementById(selectors.searchField).value;
-            document.getElementById(selectors.searchField).focus();
-            document.getElementById(selectors.searchField).value = '';
-            document.getElementById(selectors.searchField).value = val;
+            var searchInput = container.find(selectors.searchField);           
+            var val = searchInput.val();
+            searchInput.focus().val("");
+            searchInput.val(val);   
         });
     };
 
