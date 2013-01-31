@@ -110,8 +110,7 @@ namespace BetterCms.Module.MediaManager
         {
             return new[]
                 {
-                    "/file/bcms-media/Content/Css/bcms.media.css",
-                    "/file/bcms-media/Content/Css/jquery.Jcrop.css"
+                    "/file/bcms-media/Content/Css/bcms.media.css"
                 };
         }
 

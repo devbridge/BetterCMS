@@ -32,10 +32,10 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
             mediaImage.Version = request.Version.ToIntOrDefault();
 
             // Set crop options
-            if (mediaImage.CropCoordX1 == 0 
-                && mediaImage.CropCoordY1 == 0
-                && mediaImage.CropCoordX2 == mediaImage.OriginalWidth
-                && mediaImage.CropCoordY2 == mediaImage.OriginalHeight)
+            if (request.CropCoordX1 == 0
+                && request.CropCoordY1 == 0
+                && request.CropCoordX2 == mediaImage.OriginalWidth
+                && request.CropCoordY2 == mediaImage.OriginalHeight)
             {
                 mediaImage.CropCoordX1 = null;
                 mediaImage.CropCoordY1 = null;

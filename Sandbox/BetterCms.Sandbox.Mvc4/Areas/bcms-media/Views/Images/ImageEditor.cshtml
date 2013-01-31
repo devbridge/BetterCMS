@@ -17,11 +17,16 @@
         {
             @Html.HiddenFor(model => model.Id)
             @Html.HiddenFor(model => model.Version, new { @id = "image-version-field" })
+            @Html.HiddenFor(model => model.CropCoordX1, new { @data_bind = "value: dimensionEditor.cropCoordX1()" })
+            @Html.HiddenFor(model => model.CropCoordX2, new { @data_bind = "value: dimensionEditor.cropCoordX2()" })
+            @Html.HiddenFor(model => model.CropCoordY1, new { @data_bind = "value: dimensionEditor.cropCoordY1()" })
+            @Html.HiddenFor(model => model.CropCoordY2, new { @data_bind = "value: dimensionEditor.cropCoordY2()" })
 
             <div class="bcms-input-list-holder">
                 @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_CropImage_Tooltip_Title, MediaGlobalization.ImageEditor_Dialog_CropImage_Tooltip_Description)
                 <div class="bcms-content-titles">
                     @MediaGlobalization.ImageEditor_Dialog_CropImage_Title
+                    <a href="#" class="bcms-icn-delete-link" data-bind="visible: dimensionEditor.hasCrop(), click: dimensionEditor.removeCrop">Remove crop</a>
                 </div>
                 
                 <input type="checkbox" data-bind="checked: dimensionEditor.fit" />
@@ -29,7 +34,7 @@
             </div>
             
             <div class="bcms-croped-block">
-                <a href="#"><img src="@Model.Url?version=@Model.Version" data-id="@Model.Id" data-version="@Model.Version" data-bind="attr: { width: dimensionEditor.calculatedWidth(), height: dimensionEditor.calculatedHeight() }"></a>
+                <img src="@Model.Url?version=@Model.Version" data-id="@Model.Id" data-version="@Model.Version" data-bind="style: { width: dimensionEditor.calculatedWidth() + 'px', height: dimensionEditor.calculatedHeight() + 'px' }">
             </div>
                 
             <div class="bcms-edit-file-info">

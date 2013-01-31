@@ -205,9 +205,6 @@
     <EmbeddedResource Include="Content\Css\Images\sprite-media-1.png" />
     <EmbeddedResource Include="Content\Css\Images\sprite-media-2.png" />
     <EmbeddedResource Include="Scripts\html5Upload.js" />
-    <EmbeddedResource Include="Scripts\jquery.Jcrop.js" />
-    <EmbeddedResource Include="Content\Css\jquery.Jcrop.css" />
-    <EmbeddedResource Include="Content\Css\Images\Jcrop.gif" />
     <EmbeddedResource Include="Content\Css\Images\sprite-media-3.png" />
     <EmbeddedResource Include="Content\Css\Images\bcms-no-image-1.png" />
     <EmbeddedResource Include="Content\Css\Images\bcms-no-image-2.png" />
@@ -238,6 +235,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Scripts\bcms.contextMenu.js" />
+    <EmbeddedResource Include="Scripts\jquery.Jcrop.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
