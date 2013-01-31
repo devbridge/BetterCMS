@@ -7,13 +7,11 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
 
         var imageEditor = {},
             selectors = {
-                // imageEditLink: ".bcms-btn-main",
                 imageToEdit: ".bcms-croped-block img",
                 imageVersionField: "#image-version-field",
                 imageCaption: "#Caption",
                 imageFileName: "#image-file-name",
                 imageFileSize: "#image-file-size",
-                imageDimensions: "#image-dimensions",
                 imageAlignment: "input[name=ImageAlign]:checked",
                 imageAlignmentControls: ".bcms-alignment-controls",
 
@@ -24,17 +22,13 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                 
                 imageTitleEditInput: "#bcms-image-title-editor",
 
-                imageToCrop: ".bcms-croped-block img",
-                imageToCropCoordX1: ".bcms-crop-image-x1",
-                imageToCropCoordX2: ".bcms-crop-image-x2",
-                imageToCropCoordY1: ".bcms-crop-image-y1",
-                imageToCropCoordY2: ".bcms-crop-image-y2",
+                imageToCrop: ".bcms-croped-block img"
             },
             links = {
                 imageEditorDialogUrl: null,
                 imageEditorInsertDialogUrl: null,
-                imageEditorCroppingDialogUrl: null,
-                imageResizeUrl: null,
+                imageEditorCroppingDialogUrl: null, // TODO: remove
+                imageResizeUrl: null, // TODO: remove
             },
             globalization = {
                 imageEditorDialogTitle: null,
@@ -42,11 +36,11 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                 imageEditorInsertDialogAcceptButton: null,
                 imageEditorUpdateFailureMessageTitle: null,
                 imageEditorUpdateFailureMessageMessage: null,
-                imageEditorResizeFailureMessageTitle: null,
-                imageEditorResizeFailureMessageMessage: null,
-                imageEditorCroppingDialogTitle: null,
-                imageEditorCropFailureMessageTitle: null,
-                imageEditorCropFailureMessageMessage: null,
+                imageEditorResizeFailureMessageTitle: null, // TODO: remove
+                imageEditorResizeFailureMessageMessage: null, // TODO: remove
+                imageEditorCroppingDialogTitle: null, // TODO: remove
+                imageEditorCropFailureMessageTitle: null, // TODO: remove
+                imageEditorCropFailureMessageMessage: null, // TODO: remove
             },
             constants = {
                 maxHeightToFit: 500,
@@ -212,7 +206,7 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                 self.dialog = dialog;
 
                 self.widthInput = dialog.container.find(selectors.imageSizeEditBoxWidth);
-                self.heightInput = dialog.container.find(selectors.imageSizeEditBoxWidth);
+                self.heightInput = dialog.container.find(selectors.imageSizeEditBoxHeight);
                 self.image = dialog.container.find(selectors.imageToCrop);
 
                 self.originalWidth = json.OriginalImageWidth;
@@ -355,7 +349,7 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
             }
 
             DimensionEditorViewModel.prototype.onSave = function () {
-                if (this.widthInput.valid() && this.heightInput.valid() /*&& imageEditor.onImageResize(this.dialog) === true*/) {
+                if (this.widthInput.valid() && this.heightInput.valid()) {
                     this.oldWidth(this.width());
                     this.oldHeight(this.height());
 
@@ -376,11 +370,11 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
         /**
         * Image edit form view model
         */
-        function ImageEditViewModel(titleEditor, dimensionEditor) {
+        function ImageEditViewModel(titleEditorViewModel, imageEditorViewModel) {
             var self = this;
 
-            self.titleEditor = titleEditor;
-            self.dimensionEditor = dimensionEditor;
+            self.titleEditorViewModel = titleEditorViewModel;
+            self.imageEditorViewModel = imageEditorViewModel;
         }
 
         /**
@@ -391,24 +385,12 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
             var data = content.Data ? content.Data : { };
 
             // Create view models for editor boxes and for form
-            var titleEditor = new TitleEditorViewModel(dialog, data.Title);
+            var titleEditorViewModel = new TitleEditorViewModel(dialog, data.Title);
             
-            var dimensionEditor = new DimensionEditorViewModel(dialog, data);
+            var imageEditorViewModel = new DimensionEditorViewModel(dialog, data);
             
-            var viewModel = new ImageEditViewModel(titleEditor, dimensionEditor);
+            var viewModel = new ImageEditViewModel(titleEditorViewModel, imageEditorViewModel);
             ko.applyBindings(viewModel, dialog.container.find(selectors.imageEditorForm).get(0));
-
-            /*dialog.container.find(selectors.imageEditLink).on('click', function () {
-                imageEditor.showImageCroppingDialog(dialog);
-            });*/
-
-            /*dialog.container.find(selectors.imageToEdit).on('click', function () {
-                var img = $(this),
-                    src = img.attr('src');
-                if (src) {
-                    modal.imagePreview(src, img.attr('alt'));
-                }
-            });*/
 
             // Image alignment
             dialog.container.find(selectors.imageAlignmentControls).children().each(function () {
@@ -423,111 +405,6 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                 });
             });
         };
-
-        /**
-        * Resize image.
-        */
-        imageEditor.onImageResize = function (editorDialog) {
-            var id = $(selectors.imageToEdit).data('id'),
-                width = $(selectors.imageSizeEditBoxWidth).val(),
-                height = $(selectors.imageSizeEditBoxHeight).val(),
-                version = $(selectors.imageToEdit).data('version'),
-                url = $.format(links.imageResizeUrl, id, width, height, version),
-                onComplete = function(json) {
-                    if (json.Success) {
-                        imageEditor.updateImage(editorDialog, json.Data);
-                    } else {
-                        modal.alert({
-                            title: globalization.imageEditorResizeFailureMessageTitle,
-                            content: globalization.imageEditorResizeFailureMessageMessage,
-                        });
-                    }
-                };
-
-            $.ajax({
-                type: 'POST',
-                url: url,
-                contentType: 'application/json; charset=utf-8',
-                dataType: 'json'
-            })
-            .done(function (result) {
-                onComplete(result);
-            })
-            .fail(function (response) {
-                onComplete(bcms.parseFailedResponse(response));
-            });
-            return true;
-        };
-
-        /**
-        * Show image cropping dialog.
-        */
-        /*imageEditor.showImageCroppingDialog = function (editorDialog) {
-            var imageId = editorDialog.container.find(selectors.imageToEdit).data('id');
-            modal.open({
-                title: globalization.imageEditorCroppingDialogTitle,
-                onLoad: function (cropperDialog) {
-                    var url = $.format(links.imageEditorCroppingDialogUrl, imageId),
-                        onFail = function() {
-                            modal.alert({
-                                title: globalization.imageEditorCropFailureMessageTitle,
-                                content: globalization.imageEditorCropFailureMessageMessage,
-                                onClose: function () {
-                                    cropperDialog.close();
-                                }
-                            });
-                        };
-
-                    dynamicContent.bindDialog(cropperDialog, url, {
-                        contentAvailable: imageEditor.initImageCroppingDialogEvents,
-                        postSuccess: function (json) {
-                            if (json.Success) {
-                                imageEditor.updateImage(editorDialog, json.Data);
-                            } else {
-                                onFail();
-                            }
-                        },
-                        postError: onFail
-                    });
-                }
-            });
-        };*/
-
-        /**
-        * Update image and properties.
-        */
-        imageEditor.updateImage = function(editorDialog, data) {
-            editorDialog.container.find(selectors.imageToEdit).attr('src', data.Url + '?version=' + Math.random());
-            editorDialog.container.find(selectors.imageToEdit).data('version', data.Version);
-            editorDialog.container.find(selectors.imageFileName).text(data.FileName + '.' + data.FileExtension);
-            editorDialog.container.find(selectors.imageFileSize).text(data.FileSize);
-        };
-
-        /**
-        * Initializes ImageCropping dialog events.
-        */
-        /*imageEditor.initImageCroppingDialogEvents = function (dialog) {
-            var x1Input = dialog.container.find(selectors.imageToCropCoordX1),
-                y1Input = dialog.container.find(selectors.imageToCropCoordY1),
-                x2Input = dialog.container.find(selectors.imageToCropCoordX2),
-                y2Input = dialog.container.find(selectors.imageToCropCoordY2),
-                onCropCoordsUpdated = function(coords) {
-                    x1Input.val(Math.round(coords.x));
-                    y1Input.val(Math.round(coords.y));
-                    x2Input.val(Math.round(coords.x2));
-                    y2Input.val(Math.round(coords.y2));
-                };
-
-            var image = dialog.container.find(selectors.imageToCrop);
-            image.load(function() {
-                image.Jcrop({
-                    onChange: onCropCoordsUpdated,
-                    onSelect: onCropCoordsUpdated,
-                    trueSize: [image[0].naturalWidth, image[0].naturalHeight],
-                    setSelect: [x1Input.val(), y1Input.val(), x2Input.val(), y2Input.val()],
-                });
-            });
-        };*/
 
         /**
         * Initializes page module.
