@@ -253,9 +253,6 @@
     <Content Include="Views\Shared\Partial\TestOptionValues.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\bcms-media\Views\Images\ImageCropper.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Areas\bcms-media\Views\Images\ImageEditor.cshtml" />
   </ItemGroup>
   <PropertyGroup>

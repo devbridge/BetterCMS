@@ -44,8 +44,8 @@ namespace BetterCms.Module.MediaManager.Command.Images.GetImage
                                      ImageAlign = f.ImageAlign.HasValue ? f.ImageAlign.Value : MediaImageAlign.Left,
                                      CropCoordX1 = f.CropCoordX1.HasValue ? f.CropCoordX1.Value : 0,
                                      CropCoordY1 = f.CropCoordY1.HasValue ? f.CropCoordY1.Value : 0,
-                                     CropCoordX2 = f.CropCoordX2.HasValue ? f.CropCoordX2.Value : f.Width,
-                                     CropCoordY2 = f.CropCoordY2.HasValue ? f.CropCoordY2.Value : f.Height,
+                                     CropCoordX2 = f.CropCoordX2.HasValue ? f.CropCoordX2.Value : f.OriginalWidth,
+                                     CropCoordY2 = f.CropCoordY2.HasValue ? f.CropCoordY2.Value : f.OriginalHeight,
                                      OriginalImageUrl = f.PublicOriginallUrl
                                  })
                 .FirstOrDefault();

@@ -214,38 +214,11 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed to crop image..
-        /// </summary>
-        public static string ImageEditor_CropFailureMessage_Message {
-            get {
-                return ResourceManager.GetString("ImageEditor_CropFailureMessage_Message", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failure.
-        /// </summary>
-        public static string ImageEditor_CropFailureMessage_Title {
-            get {
-                return ResourceManager.GetString("ImageEditor_CropFailureMessage_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Select area to crop..
         /// </summary>
         public static string ImageEditor_CroppingDialog_SubTitle {
             get {
                 return ResourceManager.GetString("ImageEditor_CroppingDialog_SubTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Media Manager - Crop Image.
-        /// </summary>
-        public static string ImageEditor_CroppingDialog_Title {
-            get {
-                return ResourceManager.GetString("ImageEditor_CroppingDialog_Title", resourceCulture);
             }
         }
         
@@ -498,24 +471,6 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         public static string ImageEditor_InsertDialog_Title {
             get {
                 return ResourceManager.GetString("ImageEditor_InsertDialog_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to resize image..
-        /// </summary>
-        public static string ImageEditor_ResizeFailureMessage_Message {
-            get {
-                return ResourceManager.GetString("ImageEditor_ResizeFailureMessage_Message", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failure.
-        /// </summary>
-        public static string ImageEditor_ResizeFailureMessage_Title {
-            get {
-                return ResourceManager.GetString("ImageEditor_ResizeFailureMessage_Title", resourceCulture);
             }
         }
         

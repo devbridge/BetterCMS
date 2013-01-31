@@ -1,5 +1,5 @@
-﻿using BetterCms.Module.MediaManager.Command.Images;
-using BetterCms.Module.MediaManager.Command.Images.CropImage;
+﻿using System.Web.Mvc;
+
 using BetterCms.Module.MediaManager.Command.Images.GetImage;
 using BetterCms.Module.MediaManager.Command.Images.GetImages;
 using BetterCms.Module.MediaManager.Command.Images.SaveImage;
@@ -13,8 +13,6 @@ using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
-
-using System.Web.Mvc;
 
 namespace BetterCms.Module.MediaManager.Controllers
 {
@@ -102,57 +100,6 @@ namespace BetterCms.Module.MediaManager.Controllers
             var result = GetCommand<GetImageCommand>().Execute(model.Id.ToGuidOrDefault());
 
             return Json(new WireJson { Success = true, Data = result });
-        }
-
-        /// <summary>
-        /// Image cropper dialog.
-        /// </summary>
-        /// <param name="imageId">The image id.</param>
-        /// <returns>The view.</returns>
-        [HttpGet]
-        public ActionResult ImageCropper(string imageId)
-        {
-            var model = GetCommand<GetImageCommand>().Execute(imageId.ToGuidOrDefault());
-
-            return View(model);
-        }
-
-        /// <summary>
-        /// Image cropper dialog post.
-        /// </summary>
-        /// <param name="model">The model.</param>
-        /// <returns>Json result.</returns>
-        [HttpPost]
-        public ActionResult ImageCropper(ImageViewModel model)
-        {
-            GetCommand<CropImageCommand>().Execute(model);
-            var result = GetCommand<GetImageCommand>().Execute(model.Id.ToGuidOrDefault());
-
-            return Json(new WireJson { Success = true, Data = result });
-        }
-
-        /// <summary>
-        /// Image resize.
-        /// </summary>
-        /// <param name="imageId">The image id.</param>
-        /// <param name="width">The width.</param>
-        /// <param name="height">The height.</param>
-        /// <param name="version">The version.</param>
-        /// <returns>Json result.</returns>
-        [HttpPost]
-        public ActionResult ImageResize(string imageId, string width, string height, string version)
-        {
-            var request = new ResizeImageCommandRequest
-                              {
-                                  Id = imageId.ToGuidOrDefault(),
-                                  Width = width.ToIntOrDefault(),
-                                  Height = height.ToIntOrDefault(),
-                                  Version = version.ToIntOrDefault(),
-                              };
-            GetCommand<ResizeImageCommand>().Execute(request);
-            var model = GetCommand<GetImageCommand>().Execute(request.Id);
-
-            return Json(new WireJson { Success = true, Data = model });
         }
 
         /// <summary>

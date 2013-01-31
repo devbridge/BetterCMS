@@ -26,21 +26,14 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
             },
             links = {
                 imageEditorDialogUrl: null,
-                imageEditorInsertDialogUrl: null,
-                imageEditorCroppingDialogUrl: null, // TODO: remove
-                imageResizeUrl: null, // TODO: remove
+                imageEditorInsertDialogUrl: null
             },
             globalization = {
                 imageEditorDialogTitle: null,
                 imageEditorInsertDialogTitle: null,
                 imageEditorInsertDialogAcceptButton: null,
                 imageEditorUpdateFailureMessageTitle: null,
-                imageEditorUpdateFailureMessageMessage: null,
-                imageEditorResizeFailureMessageTitle: null, // TODO: remove
-                imageEditorResizeFailureMessageMessage: null, // TODO: remove
-                imageEditorCroppingDialogTitle: null, // TODO: remove
-                imageEditorCropFailureMessageTitle: null, // TODO: remove
-                imageEditorCropFailureMessageMessage: null, // TODO: remove
+                imageEditorUpdateFailureMessageMessage: null
             },
             constants = {
                 maxHeightToFit: 500,
