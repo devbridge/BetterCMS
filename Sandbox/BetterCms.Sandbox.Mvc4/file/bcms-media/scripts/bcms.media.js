@@ -468,7 +468,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             };
 
             self.previewImage = function () {
-                var previewUrl = self.publicUrl();
+                var previewUrl = self.publicUrl() + '?version=' + self.version();
                 if (previewUrl) {
                     modal.imagePreview(previewUrl, self.tooltip);
                 }

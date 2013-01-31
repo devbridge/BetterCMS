@@ -25,13 +25,13 @@ namespace BetterCms.Module.MediaManager.Command.Images.CropImage
         /// <returns></returns>
         public void Execute(ImageViewModel request)
         {
-            mediaImageService.CropImage(
+            /*mediaImageService.CropImage(
                 request.Id.ToGuidOrDefault(),
                 request.Version.ToIntOrDefault(),
                 request.CropCoordX1,
                 request.CropCoordY1,
                 request.CropCoordX2,
-                request.CropCoordY2);
+                request.CropCoordY2);*/
         }
     }
 }

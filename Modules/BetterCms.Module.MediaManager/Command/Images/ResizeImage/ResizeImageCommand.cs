@@ -24,11 +24,11 @@ namespace BetterCms.Module.MediaManager.Command.Images
         /// <returns></returns>
         public void Execute(ResizeImageCommandRequest request)
         {
-            mediaImageService.ResizeImage(
+            /*mediaImageService.ResizeImage(
                 request.Id,
                 request.Version,
                 request.Width,
-                request.Height);
+                request.Height);*/
         }
     }
 }
