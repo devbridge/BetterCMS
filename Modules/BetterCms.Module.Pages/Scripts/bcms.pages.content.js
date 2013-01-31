@@ -157,6 +157,7 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
 
             dialog.container.find(selectors.widgetsSearchButton).on('click', function () {
                 pagesContent.updateWidgetCategoryList(dialog);
+                
             });
 
             dialog.container.find(selectors.widgetCreateButton).on('click', function () {
@@ -227,6 +228,7 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                 dialog.container.find(selectors.widgetsContainer).html(data);
 
                 pagesContent.initializeWidgets(dialog.container, dialog);
+                dialog.container.find(selectors.widgetsSearchInput).focus();
             });
         };
         

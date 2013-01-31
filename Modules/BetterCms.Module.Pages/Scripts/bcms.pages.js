@@ -29,6 +29,7 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
 
                 siteSettingsPagesListForm: '#bcms-pages-form',
                 siteSettingsPagesSearchButton: '#bcms-pages-search-btn',
+                siteSettingsPagesSearchField: '.bcms-search-query',
                 siteSettingsPageCreateButton: '#bcms-create-page-button',
                 siteSettingsPageEditButton: '.bcms-grid-item-edit-button',
                 siteSettingsPageDeleteButton: '.bcms-grid-item-delete-button',
@@ -380,12 +381,12 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
 
         form.on('submit', function (event) {
             event.preventDefault();
-            page.searchSiteSettingsPages(form);
+            page.searchSiteSettingsPages(form, container);
             return false;
         });
 
         form.find(selectors.siteSettingsPagesSearchButton).on('click', function () {
-            page.searchSiteSettingsPages(form);
+            page.searchSiteSettingsPages(form, container);
         });
 
         page.initializeSiteSettingsPagesListItems(container);
@@ -413,10 +414,14 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
     /**
     * Search site settings pages
     */
-    page.searchSiteSettingsPages = function(form) {
+    page.searchSiteSettingsPages = function(form, container) {
         grid.submitGridForm(form, function (data) {
             siteSettings.setContent(data);
             page.initializeSiteSettingsPagesList(data);
+            var searchInput = container.find(selectors.siteSettingsPagesSearchField);           
+            var val = searchInput.val();
+            searchInput.focus().val("");
+            searchInput.val(val);            
         });
     };
 

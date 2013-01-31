@@ -48,7 +48,7 @@
         <div class="bcms-btn-links-main" id="bcms-create-widget-button">@PagesGlobalization.SiteSettings_Widgets_AddNew</div>
         <div class="bcms-btn-links-main" id="bcms-register-widget-button">@PagesGlobalization.SiteSettings_Widgets_RegisterNew</div>
         <div class="bcms-search-block">
-            @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box" })
+            @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query" })
             <div class="bcms-btn-search" id="bcms-widget-search-btn">@PagesGlobalization.SiteSettings_Widgets_Search</div>
         </div>
         @Html.MessagesBox("bcms-widgets-messages")

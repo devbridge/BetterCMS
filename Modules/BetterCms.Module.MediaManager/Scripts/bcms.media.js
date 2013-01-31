@@ -165,6 +165,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             var params = createFolderParams(self.path().currentFolder().id(), self),
                 onComplete = function (json) {
                     parseJsonResults(json, self);
+                    document.getElementById("bcms-search-input").focus();
                 };
             loadTabData(self, params, onComplete);
         };
@@ -867,7 +868,14 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             } else if (imageAlign == 3) {
                 align = "right";
             }
-            contentEditor.insertHtml('<img src="' + imageUrl + '" alt="' + caption + '" align="' + align + '"/>');
+            if (contentEditor.mode == 'source') {
+                var img = '<img src="' + imageUrl + '" alt="' + caption + '" align="' + align + '"/>';
+                var oldData = contentEditor.getData();
+
+                contentEditor.setData(oldData + img);
+            } else {
+                contentEditor.insertHtml('<img src="' + imageUrl + '" alt="' + caption + '" align="' + align + '"/>');
+            }
         }
     };
 
@@ -948,7 +956,14 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     */
     function addFileToEditor(fileUrl, fileName) {
         if (contentEditor != null) {
-            contentEditor.insertHtml('<a href="' + fileUrl + '">' + fileName + '</a>');
+            if (contentEditor.mode == 'source') {
+                var file = '<a href="' + fileUrl + '">' + fileName + '</a>';
+                var oldData = contentEditor.getData();
+
+                contentEditor.setData(oldData + file);
+            } else {
+                contentEditor.insertHtml('<a href="' + fileUrl + '">' + fileName + '</a>');
+            }
         }
     };
 
