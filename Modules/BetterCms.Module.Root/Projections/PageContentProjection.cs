@@ -54,6 +54,14 @@ namespace BetterCms.Module.Root.Projections
             }
         }
 
+        public virtual ContentStatus PageContentStatus
+        {
+            get
+            {
+                return content.Status;
+            }
+        }
+
         public virtual int Order
         {
             get

@@ -35,6 +35,7 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                 overlayConfigure: '.bcms-content-configure',
                 overlayDelete: '.bcms-content-delete',
                 overlay: '.bcms-content-overlay',
+                overlayEditIconDiv: '.bcms-content-edit .bcms-content-icon',
 
                 enableCustomJs: '#bcms-enable-custom-js',
                 enableCustomCss: '#bcms-enable-custom-css',
@@ -352,6 +353,9 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                 overlay.find(selectors.overlayConfigure).hide();
             } else if (element.hasClass(classes.regionWidget)) {
             }
+            if (element.data('draft')) {
+                overlay.find(selectors.overlayEditIconDiv).html('<div>*</div>');
+            }
         };
 
         /**
@@ -363,6 +367,8 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
             overlay.find(selectors.overlayEdit).show();
             overlay.find(selectors.overlayConfigure).show();
             overlay.find(selectors.overlayDelete).show();
+
+            overlay.find(selectors.overlayEditIconDiv).html('');
         };
 
         /**

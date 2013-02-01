@@ -112,14 +112,15 @@
 }
       
 <div class="bcms-scroll-window">
-    @Html.MessagesBox("bcms-content-history-messages")
 
     <div class="bcms-history-preview-holder">
         <div class="bcms-history-preview">
-            <div class="bcms-history-info" style="display: block;">@PagesGlobalization.ContentHistory_SelectVersionToPreviewMessage</div>
-            <div class="bcms-history-content"></div>
+            @Html.MessagesBox("bcms-content-history-messages")
+            <div id="bcms-history-preview">
+                <div class="bcms-history-info" style="display: block;">@PagesGlobalization.ContentHistory_SelectVersionToPreviewMessage</div>
+                <div class="bcms-history-content"></div>
+            </div>
         </div>
-
     </div>
 
     <div class="bcms-history-table-holder">
