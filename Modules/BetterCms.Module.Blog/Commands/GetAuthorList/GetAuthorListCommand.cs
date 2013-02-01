@@ -44,6 +44,7 @@ namespace BetterCms.Module.Blog.Commands.GetAuthorList
                                 new ImageSelectorViewModel
                                     {
                                         ImageId = author.Image.Id,
+                                        ImageVersion = author.Image.Version,
                                         ImageUrl = author.Image.PublicUrl,
                                         ThumbnailUrl = author.Image.PublicThumbnailUrl,
                                         ImageTooltip = author.Image.Caption

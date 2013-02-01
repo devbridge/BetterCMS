@@ -179,6 +179,7 @@
     <Content Include="App_Data\BetterCMS\Modules\readme.txt" />
     <EmbeddedResource Include="file\bcms-media\scripts\bcms.media.imageeditor.js" />
     <EmbeddedResource Include="file\bcms-media\scripts\bcms.media.js" />
+    <EmbeddedResource Include="file\bcms-blog\scripts\bcms.blog.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -188,7 +189,6 @@
   <ItemGroup>
     <Folder Include="Areas\bcms-blog\Views\Blog\" />
     <Folder Include="Areas\bcms-pages\Views\Page\Partial\" />
-    <Folder Include="file\bcms-blog\scripts\" />
     <Folder Include="file\bcms-pages\scripts\" />
     <Folder Include="file\bcms-root\scripts\" />
     <Folder Include="Models\" />

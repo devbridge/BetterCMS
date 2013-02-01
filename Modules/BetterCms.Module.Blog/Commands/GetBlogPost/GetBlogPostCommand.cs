@@ -79,6 +79,7 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
                                     new ImageSelectorViewModel
                                     {
                                         ImageId = bp.Image.Id,
+                                        ImageVersion = bp.Image.Version,
                                         ImageUrl = bp.Image.PublicUrl,
                                         ThumbnailUrl = bp.Image.PublicThumbnailUrl,
                                         ImageTooltip = bp.Image.Caption
