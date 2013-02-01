@@ -130,8 +130,8 @@ namespace BetterCms.Module.MediaManager.Models.Migrations
             Create
                 .Table("MediaFiles").InSchema(SchemaName)
                 .WithColumn("Id").AsGuid().PrimaryKey().NotNullable()
-                .WithColumn("FileName").AsAnsiString(MaxLength.Name).NotNullable()
-                .WithColumn("FileExtension").AsAnsiString(MaxLength.Name).Nullable()
+                .WithColumn("OriginalFileName").AsAnsiString(MaxLength.Name).NotNullable()
+                .WithColumn("OriginalFileExtension").AsAnsiString(MaxLength.Name).Nullable()
                 .WithColumn("FileUri").AsString(MaxLength.Uri).NotNullable()
                 .WithColumn("PublicUrl").AsString(MaxLength.Url).NotNullable()
                 .WithColumn("Size").AsInt64().NotNullable()
@@ -144,8 +144,8 @@ namespace BetterCms.Module.MediaManager.Models.Migrations
                 .ToTable("Medias").InSchema(SchemaName).PrimaryColumn("Id");
 
             Create
-                .Index("IX_Cms_MediaFiles_FileName")
-                .OnTable("MediaFiles").InSchema(SchemaName).OnColumn("FileName").Ascending();
+                .Index("IX_Cms_MediaFiles_OriginalFileName")
+                .OnTable("MediaFiles").InSchema(SchemaName).OnColumn("OriginalFileName").Ascending();
 
             Create
                 .Index("IX_Cms_MediaFiles_Size")
@@ -155,7 +155,7 @@ namespace BetterCms.Module.MediaManager.Models.Migrations
         private void RemoveMediaFilesTable()
         {
             Delete.Index("IX_Cms_MediaFiles_Size").OnTable("MediaFiles").InSchema(SchemaName);
-            Delete.Index("IX_Cms_MediaFiles_FileName").OnTable("MediaFiles").InSchema(SchemaName);
+            Delete.Index("IX_Cms_MediaFiles_OriginalFileName").OnTable("MediaFiles").InSchema(SchemaName);
             Delete.Table("MediaFiles").InSchema(SchemaName);
         }
 
