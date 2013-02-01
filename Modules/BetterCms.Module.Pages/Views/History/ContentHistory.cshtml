@@ -5,14 +5,13 @@
 @using BetterCms.Module.Pages.ViewModels.History
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc
-@using BetterCms.Module.Root.Mvc.Grids
 @using BetterCms.Module.Root.Mvc.Grids.Extensions
 @using BetterCms.Module.Root.Mvc.Grids.TableRenderers
 @using BetterCms.Module.Root.Mvc.Helpers
-@using BetterCms.Module.Root.ViewModels.Shared
 @using Microsoft.Web.Mvc
 @using MvcContrib.UI.Grid
-@model BetterCms.Module.Pages.ViewModels.History.ContentHistoryViewModel
+
+@model ContentHistoryViewModel
 
 @helper PreviewLink(ContentHistoryItem item)
 {
@@ -60,10 +59,10 @@
     Action<ColumnBuilder<ContentHistoryItem>> columns = column =>
     {
         column.For(f => PreviewLink(f))
-            .Encode(false)
-            .Named(string.Empty)
-            .Sortable(false)
-            .HeaderAttributes(@style => "width: 20px; padding: 10px;", @class => "bcms-tables-nohover");
+               .Encode(false)
+               .Named(string.Empty)
+               .Sortable(false)
+               .HeaderAttributes(@style => "width: 20px; padding: 10px;", @class => "bcms-tables-nohover");
 
         column.For(m => m.CreatedOn.ToFormattedDateString())
                .Named(PagesGlobalization.ContentHistory_Column_CreatedOn)
@@ -103,11 +102,11 @@
                .Attributes(@style => "width: 90px;");
 
         column.For(f => RestoreLink(f))
-            .Encode(false)
-            .Named(string.Empty)
-            .Sortable(false)
-            .HeaderAttributes(@style => "width: 160px;", @class => "bcms-tables-nohover")
-            .Attributes(@style => "width: 144px;");            
+               .Encode(false)
+               .Named(string.Empty)
+               .Sortable(false)
+               .HeaderAttributes(@style => "width: 160px;", @class => "bcms-tables-nohover")
+               .Attributes(@style => "width: 144px;");         
     };
 }
       

@@ -411,10 +411,13 @@
     <EmbeddedResource Include="Views\History\ContentHistory.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\History\ContentVersion.cshtml" />
+    <EmbeddedResource Include="Views\History\ContentVersion.cshtml">
+      <SubType>
+      </SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\Layouts\ContentVersionLayout.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Layouts\ContentVersionLayout.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
