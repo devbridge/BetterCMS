@@ -36,8 +36,8 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                 imageEditorUpdateFailureMessageMessage: null
             },
             constants = {
-                maxHeightToFit: 500,
-                maxWidthToFit: 835,
+                maxHeightToFit: 557,
+                maxWidthToFit: 839,
             },
             jCropApi = null;
 
