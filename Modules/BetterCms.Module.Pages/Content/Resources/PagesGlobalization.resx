@@ -988,7 +988,7 @@
     <value>Template view doesn't exists by given url ({0}). Url should start with tilde(~) and direct to views folder in the web application root folder (for example, ~/Views/Shared/Example.cshtml). Check if url is valid and if file exists and try again.</value>
   </data>
   <data name="ContentHistory_DialogTitle" xml:space="preserve">
-    <value>History - Content Versions</value>
+    <value>History - Content Versions Preview</value>
   </data>
   <data name="ContentHistory_OlderVersions" xml:space="preserve">
     <value>Older Versions</value>
@@ -1042,13 +1042,13 @@
     <value>Delete</value>
   </data>
   <data name="ContentHistory_Column_ArchivedOn" xml:space="preserve">
-    <value>Archived</value>
+    <value>Archived On</value>
   </data>
   <data name="ContentHistory_Column_CreatedByUser" xml:space="preserve">
     <value>Created By</value>
   </data>
   <data name="ContentHistory_Column_CreatedOn" xml:space="preserve">
-    <value>Date Created</value>
+    <value>Created On</value>
   </data>
   <data name="ContentHistory_Column_DisplayedFor" xml:space="preserve">
     <value>Displayed For</value>
@@ -1057,7 +1057,7 @@
     <value>Published By</value>
   </data>
   <data name="ContentHistory_Column_PublishedOn" xml:space="preserve">
-    <value>Date Published</value>
+    <value>Published On</value>
   </data>
   <data name="ContentHistory_Column_Status" xml:space="preserve">
     <value>Status</value>

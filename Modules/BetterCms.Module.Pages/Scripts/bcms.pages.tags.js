@@ -14,6 +14,7 @@ define('bcms.pages.tags', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSe
             tagNameEditor: 'input.bcms-tag-name',
             tagsListForm: '#bcms-tags-form',
             tagsSearchButton: '#bcms-tags-search-btn',
+            tagsSearchField: '.bcms-search-query',
             
             deleteCategoryLink: 'a.bcms-icn-delete',
             addCategoryButton: '#bcms-site-settings-add-category',
@@ -21,7 +22,8 @@ define('bcms.pages.tags', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSe
             categoryOldName: 'input.bcms-category-old-name',
             categoryNameEditor: 'input.bcms-category-name',
             categoriesListForm: '#bcms-categories-form',
-            categoriesSearchButton: '#bcms-categories-search-btn'
+            categoriesSearchButton: '#bcms-categories-search-btn',
+            categoriesSearchField: '.bcms-search-query',
         },
         links = {
             loadSiteSettingsCategoryListUrl: null,
@@ -60,10 +62,14 @@ define('bcms.pages.tags', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSe
     /**
     * Search site settings tags
     */
-    tags.searchSiteSettingsTags = function (form) {
+    tags.searchSiteSettingsTags = function (form, container) {
         grid.submitGridForm(form, function (data) {
             siteSettings.setContent(data);
-            tags.initSiteSettingsTagsEvents(data);
+            tags.initSiteSettingsTagsEvents(data);   
+            var searchInput = container.find(selectors.tagsSearchField);
+            var val = searchInput.val();
+            searchInput.focus().val("");
+            searchInput.val(val);
         });
     };
 
@@ -87,7 +93,7 @@ define('bcms.pages.tags', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSe
         });
 
         container.find(selectors.tagsSearchButton).on('click', function () {
-            tags.searchSiteSettingsTags(form);
+            tags.searchSiteSettingsTags(form, container);
         });
 
         container.find(selectors.addTagButton).on('click', function () {
@@ -134,10 +140,14 @@ define('bcms.pages.tags', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSe
     /**
     * Search site settings categories
     */
-    tags.searchSiteSettingsCategories = function (form) {
+    tags.searchSiteSettingsCategories = function (form, container) {
         grid.submitGridForm(form, function (data) {
             siteSettings.setContent(data);
-            tags.initSiteSettingsCategoriesEvents(data);
+            tags.initSiteSettingsCategoriesEvents(data);                  
+            var searchInput = container.find(selectors.categoriesSearchField);
+            var val = searchInput.val();
+            searchInput.focus().val("");
+            searchInput.val(val);
         });
     };
 
@@ -156,12 +166,12 @@ define('bcms.pages.tags', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSe
 
         form.on('submit', function (event) {
             event.preventDefault();
-            tags.searchSiteSettingsCategories(form);
+            tags.searchSiteSettingsCategories(form, container);
             return false;
         });
 
         container.find(selectors.categoriesSearchButton).on('click', function () {
-            tags.searchSiteSettingsCategories(form);
+            tags.searchSiteSettingsCategories(form, container);
         });
 
         container.find(selectors.addCategoryButton).on('click', function () {

@@ -12,6 +12,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             firstForm: 'form:first',
             siteSettingsBlogsListForm: '#bcms-blogs-form',
             siteSettingsBlogsSearchButton: '#bcms-blogs-search-btn',
+            siteSettingsBlogsSearchInput: '.bcms-search-query',
             siteSettingsBlogCreateButton: '#bcms-create-blog-button',
             siteSettingsBlogDeleteButton: '.bcms-grid-item-delete-button',
             siteSettingsBlogParentRow: 'tr:first',
@@ -234,7 +235,11 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     function searchSiteSettingsBlogs(container, form) {
         grid.submitGridForm(form, function (data) {
             container.html(data);
-            initializeSiteSettingsBlogsList(container, data);
+            initializeSiteSettingsBlogsList(container, data);           
+            var searchInput = container.find(selectors.siteSettingsBlogsSearchInput);
+            var val = searchInput.val();
+            searchInput.focus().val("");
+            searchInput.val(val);       
         });
     }
 
