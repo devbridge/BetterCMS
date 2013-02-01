@@ -141,8 +141,6 @@
     <Compile Include="Models\Maps\BlogPostContentMap.cs" />
     <Compile Include="Models\Maps\BlogPostMap.cs" />
     <Compile Include="Models\Maps\OptionMap.cs" />
-    <Compile Include="Models\Migrations\Migration201301221400.cs" />
-    <Compile Include="Models\Migrations\Migration201301211600.cs" />
     <Compile Include="Models\Option.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
     <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />

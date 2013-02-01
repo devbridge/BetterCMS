@@ -62,7 +62,8 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                                 IsVisibleToEveryone = page.IsPublic,
                                 TemplateId = page.Layout.Id,
                                 CategoryId = page.Category.Id,
-                                Image = new ImageSelectorViewModel
+                                Image = page.Image == null ? null :
+                                    new ImageSelectorViewModel
                                             {
                                                 ImageId = page.Image.Id,
                                                 ImageVersion = page.Image.Version,

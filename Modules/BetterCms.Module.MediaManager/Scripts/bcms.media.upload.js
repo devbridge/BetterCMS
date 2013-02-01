@@ -243,7 +243,13 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
         self.uploadFailed = ko.observable(false);
         self.uploadSpeedFormatted = ko.observable();
         self.fileName = file.fileName;
-        self.fileSizeFormated = formatFileSize(file.fileSize);        
+        self.fileSizeFormated = formatFileSize(file.fileSize);
+
+        self.uploadCompleted.subscribe(function (newValue) {
+            if (newValue === true) {
+                self.uploadProgress(100);
+            }
+        });
     }
         
     function initUploadFilesDialogEvents(dialog, options) {
