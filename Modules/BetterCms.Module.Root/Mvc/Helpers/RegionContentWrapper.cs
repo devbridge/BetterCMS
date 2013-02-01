@@ -2,6 +2,7 @@
 using System.Text;
 using System.Web.Mvc;
 
+using BetterCms.Core.Models;
 using BetterCms.Module.Root.Projections;
 
 namespace BetterCms.Module.Root.Mvc.Helpers
@@ -54,13 +55,14 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             {
                 string cssClass = content.GetRegionWrapperCssClass(html);
 
-                sb.AppendFormat(@"<div id=""{0}"" class=""bcms-content {1}"" data-page-content-id=""{2}"" data-content-id=""{3}"" data-page-content-version=""{4}"" data-content-version=""{5}"">",
+                sb.AppendFormat(@"<div id=""{0}"" class=""bcms-content {1}"" data-page-content-id=""{2}"" data-content-id=""{3}"" data-page-content-version=""{4}"" data-content-version=""{5}""{6}>",
                     id,
                     cssClass,
                     content.PageContentId,
                     content.ContentId,
                     content.PageContentVersion,
-                    content.ContentVersion);
+                    content.ContentVersion,
+                    content.PageContentStatus == ContentStatus.Draft ? " data-draft=\"true\"" : null);
                 sb.AppendLine();
             }
             else
