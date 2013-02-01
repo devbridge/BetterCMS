@@ -4,7 +4,7 @@
     /// Page widget option view model
     /// </summary>
     public class PageContentOptionViewModel : ContentOptionViewModel
-    {        
+    {
         /// <summary>
         /// Gets or sets the option value.
         /// </summary>

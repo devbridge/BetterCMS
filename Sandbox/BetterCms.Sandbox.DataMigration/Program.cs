@@ -51,7 +51,13 @@ namespace BetterCms.Sandbox.DataMigration
         {
             try
             {
-                // Console.WriteLine("-- Migrate DOWN --");
+                if (args.Length == 0 || args[0] != "auto")
+                {
+                    Console.WriteLine("-- PRESS ANY KEY TO START DATABASE MIGRATIONS --");
+                    Console.ReadKey();
+                }
+
+                Console.WriteLine("-- Migrate DOWN --");
                 
                  Migrate(false);
 

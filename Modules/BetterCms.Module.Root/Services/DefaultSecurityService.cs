@@ -22,6 +22,27 @@ namespace BetterCms.Module.Root.Services
         }
 
         /// <summary>
+        /// Gets the name of the get current principal.
+        /// </summary>
+        /// <value>
+        /// The name of the get current principal.
+        /// </value>
+        public string CurrentPrincipalName
+        {
+            get
+            {
+                var principal = GetCurrentPrincipal();
+
+                if (principal != null)
+                {
+                    return principal.Identity.Name;
+                }
+
+                return "Anonymous";
+            }
+        }
+
+        /// <summary>
         /// Gets the content management roles.
         /// </summary>
         /// <value>

@@ -13,7 +13,7 @@ namespace BetterCms.Module.Pages.Accessors
     [Serializable]
     public class HtmlContentAccessor : ContentAccessor<HtmlContent>
     {
-        public HtmlContentAccessor(HtmlContent content, IList<IPageContentOption> options)
+        public HtmlContentAccessor(HtmlContent content, IList<IOption> options)
             : base(content, options)
         {
         }

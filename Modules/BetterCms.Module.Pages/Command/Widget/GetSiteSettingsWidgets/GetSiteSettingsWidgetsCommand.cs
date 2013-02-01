@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 
+using BetterCms.Core.Models;
 using BetterCms.Core.Mvc;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Models;
@@ -26,7 +27,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetSiteSettingsWidgets
         {
             var query =
                 Repository.AsQueryable<Root.Models.Widget>()
-                          .Where(f => f.IsDeleted == false)
+                          .Where(f => f.IsDeleted == false && f.Original == null && (f.Status == ContentStatus.Published || f.Status == ContentStatus.Draft))
                           .Select(
                               f =>
                               new SiteSettingWidgetItemViewModel
@@ -35,7 +36,9 @@ namespace BetterCms.Module.Pages.Command.Widget.GetSiteSettingsWidgets
                                       Version = f.Version,
                                       WidgetName = f.Name,
                                       CategoryName = f.Category.Name,
-                                      WidgetEntityType = f.GetType()
+                                      WidgetEntityType = f.GetType(),
+                                      IsPublished = f.Status == ContentStatus.Published,
+                                      HasDraft = f.Status == ContentStatus.Draft || f.History.Any(d => d.Status == ContentStatus.Draft)
                                   });
 
             if (gridOptions != null)

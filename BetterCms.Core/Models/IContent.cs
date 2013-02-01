@@ -3,7 +3,7 @@
     /// <summary>
     /// Defines interface to access basic content properties.
     /// </summary>
-    public interface IContent : IEntity
+    public interface IContent : IEntity, IHistorical
     {
         /// <summary>
         /// Gets the name.

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using BetterCms.Core.Models;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
@@ -54,28 +55,29 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
             }
             
             // Load list of contents
-            var contentsQuery = Repository.AsQueryable<Root.Models.Widget>();
+            var widgetsQuery = Repository.AsQueryable<Root.Models.Widget>().Where(f => !f.IsDeleted && f.Original == null && (f.Status == ContentStatus.Published || f.Status == ContentStatus.Draft));
 
             if (request.CategoryId.HasValue)
             {
                 if (request.CategoryId.Value.HasDefaultValue())
                 {
-                    contentsQuery = contentsQuery.Where(c => c.Category == null);
+                    widgetsQuery = widgetsQuery.Where(c => c.Category == null);
                 }
                 else
                 {
-                    contentsQuery = contentsQuery.Where(c => c.Category.Id == request.CategoryId.Value);
+                    widgetsQuery = widgetsQuery.Where(c => c.Category.Id == request.CategoryId.Value);
                 }
             }
 
             if (!string.IsNullOrWhiteSpace(request.Filter))
             {
-                contentsQuery = contentsQuery.Where(c => c.Name.ToLower().Contains(request.Filter.ToLowerInvariant()));
+                widgetsQuery = widgetsQuery.Where(c => c.Name.ToLower().Contains(request.Filter.ToLowerInvariant()));
             }
 
-            var contents = contentsQuery.OrderBy(f => f.Name).ToFuture().ToList().Select(CreateWidgetViewModel);
+            var contents = widgetsQuery.OrderBy(f => f.Name).ToFuture().ToList().Select(CreateWidgetViewModel);
 
             List<WidgetCategoryViewModel> categories;
+
             // Load list of categories and move contents to categories.
             if (categoriesFuture != null)
             {
@@ -103,7 +105,10 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
             // Remove empty categories
             categories = categories.Where(c => c.Widgets.Any()).ToList();
 
-            return new GetWidgetCategoryResponse { WidgetCategories = categories };
+            return new GetWidgetCategoryResponse
+                       {
+                           WidgetCategories = categories
+                       };
         }
 
         private WidgetViewModel CreateWidgetViewModel(Root.Models.Widget widget)
@@ -142,8 +147,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
 
             result.Id = widget.Id;
             result.Name = widget.Name;
-            // TODO: set preview image URL when it will be available.
-            //result.PreviewImageUrl = widget.
+            result.PreviewImageUrl = widget.PreviewUrl;
             result.Version = widget.Version;
             result.CategoryId = widget.Category != null ? widget.Category.Id : (Guid?)null;
             

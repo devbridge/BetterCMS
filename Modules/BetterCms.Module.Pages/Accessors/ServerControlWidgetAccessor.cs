@@ -12,7 +12,7 @@ namespace BetterCms.Module.Pages.Accessors
     [Serializable]
     public class ServerControlWidgetAccessor : ContentAccessor<ServerControlWidget>
     {
-        public ServerControlWidgetAccessor(ServerControlWidget content, IList<IPageContentOption> options)
+        public ServerControlWidgetAccessor(ServerControlWidget content, IList<IOption> options)
             : base(content, options)
         {
         }
@@ -41,16 +41,12 @@ namespace BetterCms.Module.Pages.Accessors
 
                     if (Options != null && Options.Count > 0)
                     {
-                        foreach (var value in Options)
+                        foreach (var option in Options)
                         {
-                            if (value.Value != null)
+                            if (option.Value != null)
                             {
-                                viewData[value.ContentOption.Key] = value.Value;
-                            } 
-                            else if (value.ContentOption.DefaultValue != null)
-                            {
-                                viewData[value.ContentOption.Key] = value.ContentOption.DefaultValue;
-                            }
+                                viewData[option.Key] = option.Value;
+                            }                             
                         }
                     }
 

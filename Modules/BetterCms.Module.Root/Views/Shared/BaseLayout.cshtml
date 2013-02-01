@@ -43,7 +43,7 @@
     }
 }
 
-@section CmsBodyAttributes {@(Html.Raw(Model.CanManageContent ? string.Format(@" data-page-id = ""{0}"" class=""bcms-page-content""", @ViewBag.pageId) : string.Empty))}
+@section CmsBodyAttributes {@(Html.Raw(Model.CanManageContent ? string.Format(@" data-page-id = ""{0}""", @ViewBag.pageId) : string.Empty))}
 
 @section CmsScripts {
     @if (Model.CanManageContent)

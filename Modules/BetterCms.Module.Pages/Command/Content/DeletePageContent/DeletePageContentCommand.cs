@@ -20,22 +20,24 @@ namespace BetterCms.Module.Pages.Command.Content.DeletePageContent
         {
             UnitOfWork.BeginTransaction();
 
-            var content = Repository.AsQueryable<PageContent>()
-                                    .Where(f => f.Id == request.pageContentId)
+            var pageContent = Repository.AsQueryable<PageContent>()
+                                    .Where(f => f.Id == request.PageContentId)
                                     .Fetch(f => f.Content)
                                     .FirstOrDefault();
 
-            if (content == null)
+            if (pageContent == null)
             {
-                throw new CmsException(string.Format("Content was not found by id={0}.", request.pageContentId));
+                throw new CmsException(string.Format("Content was not found by id={0}.", request.PageContentId));
             }
-            if (content.Content is HtmlContent)
+            
+            if (pageContent.Content is HtmlContent)
             {
-                Repository.Delete<HtmlContent>(content.Content.Id, request.ContentVersion);
+                Repository.Delete<HtmlContent>(pageContent.Content.Id, request.ContentVersion);
             }
-            Repository.Delete<PageContent>(content.Id, request.PageContentVersion);
 
+            Repository.Delete<PageContent>(pageContent.Id, request.PageContentVersion);
             UnitOfWork.Commit();
+
             return true;
         }
     }

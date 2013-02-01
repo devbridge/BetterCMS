@@ -76,7 +76,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             {
                 var message = BlogGlobalization.SaveBlogPost_LayoutNotFound_Message;
                 var logMessage = "Failed to save blog post. No compatible layouts found.";
-                throw new ValidationException(e => message, logMessage);
+                throw new ValidationException(() => message, logMessage);
             }
 
             // Loading region
@@ -85,7 +85,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             {
                 var message = string.Format(BlogGlobalization.SaveBlogPost_RegionNotFound_Message, regionIdentifier);
                 var logMessage = string.Format("Region {0} for rendering blog post content not found.", regionIdentifier);
-                throw new ValidationException(e => message, logMessage);
+                throw new ValidationException(() => message, logMessage);
             }
             var region = Repository.AsProxy<Region>(regionId);
 
@@ -112,15 +112,16 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
 
             if (content == null)
             {
-                content = new BlogPostContent { Name = request.Title };
+                content = new BlogPostContent
+                              {
+                                  Name = request.Title,
+                                  Status = ContentStatus.Published
+                              };
             }
 
             if (pageContent == null)
             {
                 pageContent = new PageContent { Region = region, Content = content, Page = blogPost };
-
-                // TODO: set correct status
-                pageContent.Status = ContentStatus.Published;
             }
 
             blogPost.Title = request.Title;

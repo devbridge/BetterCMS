@@ -31,12 +31,36 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         public int Version { get; set; }
 
         /// <summary>
+        /// Gets or sets the currrent content status.
+        /// </summary>
+        /// <value>
+        /// The current content status.
+        /// </value>
+        public ContentStatus CurrentStatus { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether content has original published content.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if content has published original content; otherwise, <c>false</c>.
+        /// </value>
+        public bool HasPublishedContent { get; set; }
+
+        /// <summary>
         /// Gets or sets the desirable status.
         /// </summary>
         /// <value>
         /// The desirable status.
         /// </value>
         public ContentStatus DesirableStatus { get; set; }
+
+        /// <summary>
+        /// Gets or sets the content id.
+        /// </summary>
+        /// <value>
+        /// The content id.
+        /// </value>
+        public Guid ContentId { get; set; }
 
         /// <summary>
         /// Gets or sets the page id.

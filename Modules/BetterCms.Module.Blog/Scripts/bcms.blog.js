@@ -12,6 +12,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             firstForm: 'form:first',
             siteSettingsBlogsListForm: '#bcms-blogs-form',
             siteSettingsBlogsSearchButton: '#bcms-blogs-search-btn',
+            siteSettingsBlogsSearchInput: '.bcms-search-query',
             siteSettingsBlogCreateButton: '#bcms-create-blog-button',
             siteSettingsBlogDeleteButton: '.bcms-grid-item-delete-button',
             siteSettingsBlogParentRow: 'tr:first',
@@ -234,7 +235,11 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     function searchSiteSettingsBlogs(container, form) {
         grid.submitGridForm(form, function (data) {
             container.html(data);
-            initializeSiteSettingsBlogsList(container, data);
+            initializeSiteSettingsBlogsList(container, data);           
+            var searchInput = container.find(selectors.siteSettingsBlogsSearchInput);
+            var val = searchInput.val();
+            searchInput.focus().val("");
+            searchInput.val(val);       
         });
     }
 
@@ -523,18 +528,6 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             });
         }
     };
-        
-    /**
-    * Called when showing content history
-    */
-    function onContentHistory(sender) {
-        var element = $(sender),
-            contentId = element.data('id');
-
-        if (element.hasClass(classes.regionBlogPostContent)) {
-            alert('TODO: implement blog content history');
-        }
-    };
 
     /**
     * Initializes blog module.
@@ -544,7 +537,6 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         
         bcms.on(bcms.events.showOverlay, onShowOverlay);
         bcms.on(bcms.events.editContent, onEditContent);
-        bcms.on(bcms.events.contentHistory, onContentHistory);
     };
     
     /**

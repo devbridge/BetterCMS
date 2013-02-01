@@ -26,6 +26,12 @@ define('bcms', ['jquery', 'knockout'], function ($, ko) {
 
         eventListeners = {},
 
+        contentStatus = {
+             published: 3,
+             draft: 2,
+             preview: 1
+         },
+    
         errorTrace = !!true;
 
     /**
@@ -43,6 +49,11 @@ define('bcms', ['jquery', 'knockout'], function ($, ko) {
     */
     app.errorTrace = errorTrace;
 
+    /**
+    * Contains available content statuses.
+    */
+    app.contentStatus = contentStatus;
+    
     /**
     */
     app.previewWindow = '__bcmsPreview';

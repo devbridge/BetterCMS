@@ -10,17 +10,17 @@ namespace BetterCms.Module.Pages.Models
     {
         public virtual string Url { get; set; }
 
+        public override Root.Models.Content CopyDataTo(Root.Models.Content content)
+        {
+            var copy = (ServerControlWidget)base.CopyDataTo(content);
+            copy.Url = Url;
+
+            return copy;
+        }
+
         public override Root.Models.Content Clone()
         {
-            return new ServerControlWidget
-                       {
-                           Url = Url,
-                           Name = Name,
-                           Category = Category,
-                           ContentOptions = ContentOptions != null
-                                                ? ContentOptions.Select(f => f.Clone()).ToList()
-                                                : null
-                       };
+            return CopyDataTo(new ServerControlWidget());
         }
     }
 }

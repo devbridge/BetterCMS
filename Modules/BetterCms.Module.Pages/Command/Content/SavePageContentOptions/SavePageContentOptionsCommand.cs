@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
@@ -21,85 +21,50 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageContentOptions
         /// <returns></returns>
         public bool Execute(PageContentOptionsViewModel model)
         {
-            if (model != null && model.WidgetOptions != null)
+            if (model != null && !model.PageContentId.HasDefaultValue()  && model.WidgetOptions != null)
             {
-                UnitOfWork.BeginTransaction();
+                var pageContent = Repository.AsQueryable<PageContent>()
+                              .Fetch(f => f.Content)
+                              .ThenFetchMany(f => f.ContentOptions)
+                              .FetchMany(f => f.Options)
+                              .Where(f => f.Id == model.PageContentId && !f.IsDeleted && !f.Content.IsDeleted)
+                              .ToList()
+                              .FirstOrDefault();
 
-                // Load content and page content as proxies
-                var contentId = Repository
-                    .AsQueryable<PageContent>(c => c.Id == model.PageContentId)
-                    .Select(c => c.Content.Id)
-                    .First();
-
-                var content = Repository.AsProxy<ContentEntity>(contentId);
-                var pageContent = Repository.AsProxy<PageContent>(model.PageContentId);
-
-                // Load saved page options
-                var keys = model.WidgetOptions
-                    .Select(o => o.OptionKey.ToLowerInvariant())
-                    .ToArray();
-
-                var savedPageOptions = Repository
-                    .AsQueryable<PageContentOption>(f => keys.Contains(f.ContentOption.Key.ToLower()) 
-                        && f.PageContent == pageContent)
-                    .Select(c => new
-                                     {
-                                         OptionKey = c.ContentOption.Key,
-                                         PageOption = c
-                                     })
-                    .ToList();
-
-                // Load all content options
-                var allContentOptions = Repository
-                    .AsQueryable<ContentOption>(c => c.Content == content)
-                    .Select(c => new
-                                     {
-                                         Key = c.Key,
-                                         Id = c.Id
-                                     })
-                    .ToList();
-
-                // Save option changes
-                foreach (var option in model.WidgetOptions)
+                if (pageContent != null)
                 {
-                    var savedPageOption = savedPageOptions.FirstOrDefault(o => o.OptionKey == option.OptionKey);
-                    if (savedPageOption != null)
+                    UnitOfWork.BeginTransaction();
+
+                    foreach (var widgetOption in model.WidgetOptions)
                     {
-                        if (savedPageOption.PageOption.Value != option.OptionValue)
+                        var pageContentOption = pageContent.Options.FirstOrDefault(f => f.Key.Trim().Equals(widgetOption.OptionKey.Trim(), StringComparison.OrdinalIgnoreCase));
+
+                        if (!string.IsNullOrEmpty(widgetOption.OptionValue) && widgetOption.OptionValue != widgetOption.OptionDefaultValue)
                         {
-                            if (string.IsNullOrWhiteSpace(option.OptionValue))
+                            if (pageContentOption == null)
                             {
-                                Repository.Delete(savedPageOption.PageOption);
+                                pageContentOption = new PageContentOption {
+                                                                             PageContent = pageContent,
+                                                                             Key = widgetOption.OptionKey,
+                                                                             Value = widgetOption.OptionValue,
+                                                                             Type = widgetOption.Type                                                                            
+                                                                          };
                             }
                             else
                             {
-                                savedPageOption.PageOption.Value = option.OptionValue;
-                                Repository.Save(savedPageOption.PageOption);
+                                pageContentOption.Value = widgetOption.OptionValue;
+                                pageContentOption.Type = widgetOption.Type;
                             }
+                            Repository.Save(pageContentOption);
                         }
-                    }
-                    else
-                    {
-                        if (!string.IsNullOrWhiteSpace(option.OptionValue))
+                        else if (pageContentOption != null)
                         {
-                            var contentOption = allContentOptions
-                                .FirstOrDefault(o => o.Key.ToLowerInvariant() == option.OptionKey.ToLowerInvariant());
-
-                            if (contentOption != null) {
-
-                                var newOption = new PageContentOption
-                                                    {
-                                                        PageContent = pageContent,
-                                                        ContentOption = Repository.AsProxy<ContentOption>(contentOption.Id),
-                                                        Value = option.OptionValue
-                                                    };
-                                Repository.Save(newOption);
-                            }
+                            Repository.Delete(pageContentOption);
                         }
                     }
-                }
 
-                UnitOfWork.Commit();                
+                    UnitOfWork.Commit();   
+                }                
             }
 
             return true;

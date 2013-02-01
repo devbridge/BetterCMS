@@ -3,15 +3,20 @@ using System.Linq;
 using System.Web.Mvc;
 
 using BetterCms.Core.Models;
+
 using BetterCms.Module.Pages.Command.Content.GetPageContentOptions;
+using BetterCms.Module.Pages.Command.Content.GetPageHtmlContent;
 using BetterCms.Module.Pages.Command.Content.InsertContent;
-using BetterCms.Module.Pages.Command.Content.SaveContent;
 using BetterCms.Module.Pages.Command.Content.SavePageContentOptions;
+using BetterCms.Module.Pages.Command.Content.SavePageHtmlContent;
 using BetterCms.Module.Pages.Command.Content.SortPageContent;
 using BetterCms.Module.Pages.Command.Content.DeletePageContent;
-using BetterCms.Module.Pages.Command.Content.GetContent;
 using BetterCms.Module.Pages.Command.Widget.GetWidgetCategory;
+
+using BetterCms.Module.Pages.Content.Resources;
+
 using BetterCms.Module.Pages.ViewModels.Content;
+
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
@@ -91,7 +96,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// ViewResult to render add page content modal dialog.
         /// </returns>
         [HttpGet]
-        public ActionResult AddPageContent(string pageId, string regionId)
+        public ActionResult AddPageHtmlContent(string pageId, string regionId)
         {
             var viewModel = new PageContentViewModel
             {
@@ -111,13 +116,14 @@ namespace BetterCms.Module.Pages.Controllers
         /// </summary>
         /// <param name="model">The model.</param>
         /// <returns>
-        /// Json with result status and redirect Url.
+        /// JSON with result status and redirect URL.
         /// </returns>
         [HttpPost]
-        public ActionResult AddPageContent(PageContentViewModel model)
+        public ActionResult SavePageHtmlContent(PageContentViewModel model)
         {
-            Guid pageContentId = GetCommand<SaveContentCommand>().ExecuteCommand(model);
-            if (pageContentId != Guid.Empty)
+            var result = GetCommand<SavePageHtmlContentCommand>().ExecuteCommand(model);
+
+            if (result != null)
             {
                 return Json(
                     new WireJson
@@ -125,8 +131,11 @@ namespace BetterCms.Module.Pages.Controllers
                             Success = true,
                             Data = new
                                        {
-                                           PageContentId = pageContentId,
-                                           DesirableStatus = model.DesirableStatus.ToString()
+                                           PageContentId = result.PageContentId,
+                                           ContentId = result.ContentId,
+                                           RegionId = result.RegionId,
+                                           PageId = result.PageId,
+                                           DesirableStatus = model.DesirableStatus
                                        }
                         });
             }
@@ -137,14 +146,25 @@ namespace BetterCms.Module.Pages.Controllers
         /// <summary>
         /// Creates edit page content modal dialog for given page.
         /// </summary>
-        /// <param name="contentId">The content id.</param>
+        /// <param name="pageContentId">The page content id.</param>
         /// <returns>
-        /// ViewResult to render edit page content modal dialog.
+        /// ViewResult to render an edit content dialog.
         /// </returns>
         [HttpGet]
-        public ActionResult EditPageContent(string contentId)
+        public ActionResult EditPageHtmlContent(string pageContentId)
         {
-            var viewModel = GetCommand<GetContentCommand>().ExecuteCommand(contentId.ToGuidOrDefault());
+            var viewModel = GetCommand<GetPageHtmlContentCommand>().ExecuteCommand(pageContentId.ToGuidOrDefault());
+
+            if (viewModel.CurrentStatus == ContentStatus.Draft)
+            {
+                var message = PagesGlobalization.EditPageContent_Messages_DraftStatusWarnMessage;
+                if (viewModel.HasPublishedContent)
+                {
+                    message = string.Concat(message, " ", PagesGlobalization.EditPageContent_Messages_DraftStatusWarnMessage_Destroy);
+                }
+                Messages.AddWarn(message);
+            }
+
             return View(viewModel);
         }
 
@@ -181,22 +201,24 @@ namespace BetterCms.Module.Pages.Controllers
         /// Deletes page content.
         /// </summary>
         /// <param name="pageContentId">Page content id.</param>
+        /// <param name="pageContentVersion">The page content version.</param>
+        /// <param name="contentVersion">The content version.</param>
         /// <returns>
         /// Json with result status.
         /// </returns>
         [HttpPost]
-        public ActionResult DeletePageContent(string pageContentId, string pageContentVersion, string ContentVersion)
+        public ActionResult DeletePageContent(string pageContentId, string pageContentVersion, string contentVersion)
         {
             var request = new DeletePageContentCommandRequest
                               {
-                                  pageContentId = pageContentId.ToGuidOrDefault(),
+                                  PageContentId = pageContentId.ToGuidOrDefault(),
                                   PageContentVersion = pageContentVersion.ToIntOrDefault(),
-                                  ContentVersion = ContentVersion.ToIntOrDefault(),
+                                  ContentVersion = contentVersion.ToIntOrDefault(),
                               };
 
             bool success = GetCommand<DeletePageContentCommand>().ExecuteCommand(request);
 
-            return Json(new WireJson { Success = success });
+            return Json(new WireJson(success));
         }
 
         /// <summary>

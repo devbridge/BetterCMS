@@ -47,7 +47,7 @@ namespace BetterCms.Module.Root.Projections
 
             if (jsAccessor == null)
             {
-                throw new CmsException(string.Format("No page style sheet accessor found for the page type {0}.", pageType.FullName));
+                throw new CmsException(string.Format("No page style sheet accessor was found for the page type {0}.", pageType.FullName));
             }
 
             var jsProjection = new PageStylesheetProjection(page, jsAccessor);

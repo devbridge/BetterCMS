@@ -15,7 +15,7 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// </summary>
         public ContentOptionViewModel()
         {
-            Type = ContentOptionType.Text;
+            Type = OptionType.Text;
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// <value>
         /// The type.
         /// </value>
-        public ContentOptionType Type { get; set; }
+        public OptionType Type { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

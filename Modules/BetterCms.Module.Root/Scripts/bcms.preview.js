@@ -16,7 +16,10 @@ define('bcms.preview', ['jquery', 'bcms', 'bcms.modal', 'bcms.dynamicContent'], 
             elementsToDisable: '.bcms-modal-content a, .bcms-modal-content input, .bcms-modal-content select'
         },
 
-        links = {},
+        links = {
+            previewPageUrl: null
+        },
+        
         globalization = {};
 
     // Assign objects to module
@@ -48,5 +51,10 @@ define('bcms.preview', ['jquery', 'bcms', 'bcms.modal', 'bcms.dynamicContent'], 
         });
     };
 
+    preview.previewPageContent = function (pageId, pageContentId) {
+        var link = $.format(links.previewPageUrl, pageId, pageContentId);
+        window.open(link, bcms.previewWindow, 'toolbar=yes,location=yes,directories=yes,status=yes,menubar=yes,scrollbars=yes,copyhistory=yes,resizable=yes');
+    };
+    
     return preview;
 });

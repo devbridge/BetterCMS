@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
+﻿using System;
+using System.Collections.Generic;
 
-using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Root.Models;
 
 namespace BetterCms.Module.Pages.ViewModels.Widgets
@@ -11,7 +9,15 @@ namespace BetterCms.Module.Pages.ViewModels.Widgets
     /// A widget view model.
     /// </summary>
     public class EditHtmlContentWidgetViewModel : HtmlContentWidgetViewModel
-    {                
+    {
+        /// <summary>
+        /// Gets or sets the page content id to preview this widget.
+        /// </summary>
+        /// <value>
+        /// The page content id to preview this widget.
+        /// </value>
+        public Guid? PreviewOnPageContentId { get; set; }
+
         /// <summary>
         /// Gets or sets the categories.
         /// </summary>

@@ -2,6 +2,9 @@ using System;
 
 using BetterCms.Core.Models;
 
+using NHibernate.Proxy;
+using NHibernate.Proxy.DynamicProxy;
+
 namespace BetterCms.Module.Pages.Models
 {
     [Serializable]
@@ -21,19 +24,23 @@ namespace BetterCms.Module.Pages.Models
 
         public virtual bool UseCustomJs { get; set; }
 
+        public override Root.Models.Content CopyDataTo(Root.Models.Content content)
+        {
+            var copy = (HtmlContent)base.CopyDataTo(content);
+            copy.ActivationDate = ActivationDate;
+            copy.ExpirationDate = ExpirationDate;
+            copy.CustomCss = CustomCss;
+            copy.UseCustomCss = UseCustomCss;
+            copy.Html = Html;            
+            copy.CustomJs = CustomJs;
+            copy.UseCustomJs = UseCustomJs;
+
+            return copy;
+        }
+
         public override Root.Models.Content Clone()
         {
-            return new HtmlContent
-                {
-                    Name = Name,
-                    ActivationDate = ActivationDate,
-                    ExpirationDate = ExpirationDate,
-                    CustomCss = CustomCss,
-                    UseCustomCss = UseCustomCss,
-                    CustomJs = CustomJs,
-                    UseCustomJs = UseCustomJs,
-                    Html = Html
-                };
+            return CopyDataTo(new HtmlContent());
         }
     }
 }

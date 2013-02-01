@@ -7,7 +7,7 @@
 
 <div class="bcms-scroll-window" style="height: 1297px;" id="bcms-sitemap-addnode">
     <div class="bcms-columns-container">
-        <div class="bcms-leftcol">
+        <div class="bcms-leftcol bcms-add-node-col">
             <div class="bcms-sitemap-links-holder" data-bind="template: { name: 'bcms-navigation-pagelinks-template' }"></div>
         </div>
         <div class="bcms-rightcol">
@@ -31,7 +31,7 @@
             data-bind="value: searchQuery, valueUpdate: 'afterkeydown', enterPress: searchForPageLinks">
         <div class="bcms-btn-search" data-bind="click: searchForPageLinks">@NavigationGlobalization.Sitemap_EditDialog_AddPageLink_SearchButton</div>
     </div>
-    <div data-bind="template: { name: 'bcms-navigation-pagelink-template', foreach: pageLinks }"></div>
+    <div class="bcms-addnode-placement-holder" data-bind="template: { name: 'bcms-navigation-pagelink-template', foreach: pageLinks }"></div>
 </script>
 <script type="text/html" id="bcms-navigation-pagelink-template">
     <!-- ko if: isVisible() || isCustom() -->
@@ -39,5 +39,8 @@
         <div class="bcms-placement-title" data-bind="text: title()"></div>
         <div class="bcms-placement-path" data-bind="text: url()"></div>
     </div>
+    <!-- ko if: isBeingDragged() -->
+    <div class="bcms-placement-dropzone"></div>
+    <!-- /ko -->
     <!-- /ko -->
 </script>

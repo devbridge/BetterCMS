@@ -7,6 +7,7 @@ using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Models;
 using NHibernate;
 using NHibernate.Linq;
+using NHibernate.Proxy;
 
 namespace BetterCms.Core.DataAccess
 {
@@ -41,6 +42,17 @@ namespace BetterCms.Core.DataAccess
         public void Use(IUnitOfWork unitOfWorkToUse)
         {
             unitOfWork = unitOfWorkToUse;
+        }
+
+        public TEntity UnProxy<TEntity>(TEntity entity)
+        {
+            INHibernateProxy proxy = entity as INHibernateProxy;
+            if (proxy != null)
+            {
+               return (TEntity)proxy.HibernateLazyInitializer.GetImplementation();
+            }
+
+            return entity;
         }
 
         public virtual TEntity AsProxy<TEntity>(Guid id) where TEntity : Entity

@@ -151,6 +151,7 @@
     <Compile Include="Controllers\VideosController.cs" />
     <Compile Include="Controllers\FilesController.cs" />
     <Compile Include="Controllers\MediaManagerController.cs" />
+    <Compile Include="Helpers\WrappedJsonResult.cs" />
     <Compile Include="MediaManagerModuleDescriptor.cs" />
     <Compile Include="Models\Maps\MediaMap.cs" />
     <Compile Include="Models\Maps\MediaFileMap.cs" />
@@ -238,7 +239,6 @@
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Helpers\" />
     <Folder Include="Mvc\" />
   </ItemGroup>
   <ItemGroup>
@@ -264,6 +264,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Files\FileInsert.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Upload\SingleFileUpload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Images\ImageEditor.cshtml" />

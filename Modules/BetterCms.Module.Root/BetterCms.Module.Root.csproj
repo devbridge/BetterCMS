@@ -116,8 +116,8 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Commands\GetPageToRender\GetPageToRenderCommand.cs" />
     <Compile Include="Commands\GetPageToRender\GetPageToRenderRequest.cs" />
+    <Compile Include="Commands\GetPageToRender\GetPageToRenderCommand.cs" />
     <Compile Include="Content\Resources\RootGlobalization.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -125,6 +125,7 @@
     </Compile>
     <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\CmsController.cs" />
+    <Compile Include="Controllers\PreviewController.cs" />
     <Compile Include="Controllers\EmbeddedResourcesController.cs" />
     <Compile Include="Controllers\RenderingController.cs" />
     <Compile Include="Controllers\SidebarController.cs" />
@@ -133,21 +134,7 @@
     <Compile Include="Models\Content.cs" />
     <Compile Include="Models\ContentOption.cs" />
     <Compile Include="Models\ContentBase.cs" />
-    <Compile Include="Models\ContentHistory.cs" />
-    <Compile Include="Models\ContentOptionHistory.cs" />
     <Compile Include="Models\ComboWireJson.cs" />
-    <Compile Include="Models\Maps\ContentHistoryMap.cs" />
-    <Compile Include="Models\Maps\ContentOptionHistoryMap.cs" />
-    <Compile Include="Models\Maps\PageContentHistoryMap.cs" />
-    <Compile Include="Models\Maps\PageContentOptionHistoryMap.cs" />
-    <Compile Include="Models\Maps\Predefined\ContentEntityMapBase.cs" />
-    <Compile Include="Models\Maps\Predefined\ContentOptionEntityMapBase.cs" />
-    <Compile Include="Models\Maps\Predefined\PageContentOptionEntityMapBase.cs" />
-    <Compile Include="Models\Maps\Predefined\PageContentEntityMapBase.cs" />
-    <Compile Include="Models\Maps\WidgetHistoryMap.cs" />
-    <Compile Include="Models\WidgetHistory.cs" />
-    <Compile Include="Models\PageContentOptionHistory.cs" />
-    <Compile Include="Models\PageContentHistory.cs" />
     <Compile Include="Models\LayoutRegion.cs" />
     <Compile Include="Models\Maps\CategoryMap.cs" />
     <Compile Include="Models\Maps\ContentMap.cs" />
@@ -176,6 +163,7 @@
     <Compile Include="Mvc\Grids\Extensions\GridExtensions.cs" />
     <Compile Include="Mvc\Grids\GridOptions\GridOptions.cs" />
     <Compile Include="Mvc\Grids\IEditableGridItem.cs" />
+    <Compile Include="Mvc\Grids\TableRenderers\ScrollableEditableHtmlTableGridRenderer.cs" />
     <Compile Include="Mvc\Grids\TableRenderers\EditableHtmlTableGridRenderer.cs" />
     <Compile Include="Mvc\Grids\TableRenderers\HtmlTableGridSingleRowRenderer.cs" />
     <Compile Include="Mvc\Grids\GridOptions\SearchableGridOptions.cs" />
@@ -192,6 +180,7 @@
     <Compile Include="Projections\PageJavaScriptProjection.cs" />
     <Compile Include="Registration\AuthenticationJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\ContentJavaScriptModuleDescriptor.cs" />
+    <Compile Include="Registration\PreviewJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\UserRoles.cs" />
     <Compile Include="Registration\RedirectJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\InlineEditorJavaScriptModuleDescriptor.cs" />
@@ -217,7 +206,9 @@
     <Compile Include="Mvc\Helpers\MessagesHelper.cs" />
     <Compile Include="Registration\TabsJavaScriptModuleDescriptor.cs" />
     <Compile Include="RootModuleConstants.cs" />
+    <Compile Include="Services\DefaultContentService.cs" />
     <Compile Include="Services\DefaultSecurityService.cs" />
+    <Compile Include="Services\IContentService.cs" />
     <Compile Include="ViewModels\Authentication\InfoViewModel.cs" />
     <Compile Include="ViewModels\Cms\CmsRequestViewModel.cs" />
     <Compile Include="ViewModels\Cms\PageRegionViewModel.cs" />
@@ -258,10 +249,6 @@
     <EmbeddedResource Include="Scripts\bcms.content.js" />
     <EmbeddedResource Include="Scripts\bcms.forms.js" />
     <EmbeddedResource Include="Scripts\bcms.sidemenu.js" />
-    <None Include="Scripts\jquery-1.7.2.intellisense.js">
-      <DependentUpon>jquery-1.7.2.js</DependentUpon>
-    </None>
-    <EmbeddedResource Include="Scripts\jquery-1.7.2.js" />
     <EmbeddedResource Include="Content\Styles\images\icn-sidebg.png" />
     <EmbeddedResource Include="Content\Styles\images\sprite-base-1.png" />
     <EmbeddedResource Include="Content\Styles\images\sprite-base-2.png" />
@@ -333,7 +320,6 @@
     <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
     <EmbeddedResource Include="Scripts\bcms.tabs.js" />
     <EmbeddedResource Include="Content\Styles\images\modal-back.png" />
-    <EmbeddedResource Include="Scripts\bcms.preview.js" />
     <EmbeddedResource Include="Scripts\bcms.grid.js" />
     <EmbeddedResource Include="Content\Styles\images\loading.gif" />
     <EmbeddedResource Include="Content\Styles\images\bcms-sidebar-select.png" />
@@ -506,9 +492,6 @@
     <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\close.png" />
     <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\mini.png" />
     <EmbeddedResource Include="Scripts\ckeditor\styles.js" />
-    <Content Include="Scripts\jquery-1.7.2.min.js">
-      <DependentUpon>jquery-1.7.2.js</DependentUpon>
-    </Content>
     <EmbeddedResource Include="Scripts\jquery-ui.min.js" />
     <EmbeddedResource Include="Scripts\Libs\knockout-2.1.0.js" />
     <EmbeddedResource Include="Scripts\popup.js" />
@@ -529,6 +512,7 @@
     <EmbeddedResource Include="Scripts\knockout-2.2.0.debug.js" />
     <EmbeddedResource Include="Scripts\knockout-2.2.0.js" />
     <EmbeddedResource Include="Scripts\spinner.jquery.js" />
+    <EmbeddedResource Include="Scripts\bcms.preview.js" />
     <Content Include="Views\Web.config" />
     <EmbeddedResource Include="Views\Shared\Partial\Alert.cshtml">
       <SubType>Code</SubType>
@@ -568,11 +552,11 @@
     <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\TopBlock.cshtml" />
     <EmbeddedResource Include="Views\Shared\Partial\Modal.cshtml" />
     <EmbeddedResource Include="Views\Shared\Partial\SiteSettingTab.cshtml" />
+    <EmbeddedResource Include="Views\Preview\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\Entity\" />
     <Folder Include="Data\Map\" />
-    <Folder Include="Views\Cms\Partial\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BetterCMS.Configuration\BetterCms.Configuration.csproj">

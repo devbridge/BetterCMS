@@ -987,6 +987,15 @@
   <data name="SaveTemplate_VirtualPathNotExists_Message" xml:space="preserve">
     <value>Template view doesn't exists by given url ({0}). Url should start with tilde(~) and direct to views folder in the web application root folder (for example, ~/Views/Shared/Example.cshtml). Check if url is valid and if file exists and try again.</value>
   </data>
+  <data name="ContentHistory_DialogTitle" xml:space="preserve">
+    <value>History - Content Versions Preview</value>
+  </data>
+  <data name="ContentHistory_OlderVersions" xml:space="preserve">
+    <value>Older Versions</value>
+  </data>
+  <data name="ContentHistory_SelectVersionToPreviewMessage" xml:space="preserve">
+    <value>Select Version to preview history</value>
+  </data>
   <data name="HtmlContent_CustomCss_Title" xml:space="preserve">
     <value>Custom CSS</value>
   </data>
@@ -1026,7 +1035,70 @@
   <data name="EditPageProperties_LayoutPropertiesTab_ChooseLayout_Title" xml:space="preserve">
     <value>Choose Page Layout</value>
   </data>
+  <data name="ContentHistory_Restore_ConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to restore to older version? Restored content will be immediately published.</value>
+  </data>
   <data name="DeletePage_Dialog_DeleteButton" xml:space="preserve">
     <value>Delete</value>
+  </data>
+  <data name="ContentHistory_Column_ArchivedOn" xml:space="preserve">
+    <value>Archived On</value>
+  </data>
+  <data name="ContentHistory_Column_CreatedByUser" xml:space="preserve">
+    <value>Created By</value>
+  </data>
+  <data name="ContentHistory_Column_CreatedOn" xml:space="preserve">
+    <value>Created On</value>
+  </data>
+  <data name="ContentHistory_Column_DisplayedFor" xml:space="preserve">
+    <value>Displayed For</value>
+  </data>
+  <data name="ContentHistory_Column_PublishedByUser" xml:space="preserve">
+    <value>Published By</value>
+  </data>
+  <data name="ContentHistory_Column_PublishedOn" xml:space="preserve">
+    <value>Published On</value>
+  </data>
+  <data name="ContentHistory_Column_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="SiteSettings_Widgets_StatusColumn" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Widgets_CanNotDeleteWidgetIsInUse_Message" xml:space="preserve">
+    <value>Cannot remove {0} widget because it is in use.</value>
+  </data>
+  <data name="ContentStatus_Archived" xml:space="preserve">
+    <value>Archived</value>
+  </data>
+  <data name="ContentStatus_Draft" xml:space="preserve">
+    <value>Draft</value>
+  </data>
+  <data name="ContentStatus_Preview" xml:space="preserve">
+    <value>Preview</value>
+  </data>
+  <data name="ContentStatus_Published" xml:space="preserve">
+    <value>Published</value>
+  </data>
+  <data name="ContentHistory_Restore_AcceptButtonTitle" xml:space="preserve">
+    <value>Restore</value>
+  </data>
+  <data name="EditPageContent_Messages_DraftStatusWarnMessage" xml:space="preserve">
+    <value>This is DRAFT version of the content. This copy currently is not live.</value>
+  </data>
+  <data name="EditPageContent_Messages_DraftStatusWarnMessage_Destroy" xml:space="preserve">
+    <value>You can &lt;a href='#' class='bcms-messages-draft-destroy'&gt;destroy&lt;/a&gt; draft and edit version that is currently published.</value>
+  </data>
+  <data name="ContentHistory_DestroyDraft_ConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to destroy draft version?</value>
+  </data>
+  <data name="ContentHistory_Destroy_AcceptButtonTitle" xml:space="preserve">
+    <value>Destroy</value>
+  </data>
+  <data name="EditTemplate_PreviewImageNotFound_Message" xml:space="preserve">
+    <value>Preview image not found.</value>
+  </data>
+  <data name="EditWidget_PreviewImageNotFound_Message" xml:space="preserve">
+    <value>Preview image not found.</value>
   </data>
 </root>
