@@ -46,7 +46,7 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
                 rootFolderId: rootFolderId,
                 rootFolderType: rootFolderType
             };
-        if (false && html5Upload.fileApiSupported()) { // TODO: remove after  single file upload functionality is implemented.
+        if (html5Upload.fileApiSupported()) {
             modal.open({
                 title: globalization.uploadFilesDialogTitle,
                 onLoad: function(dialog) {
