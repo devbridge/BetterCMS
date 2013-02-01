@@ -26,11 +26,12 @@
                 @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_CropImage_Tooltip_Title, MediaGlobalization.ImageEditor_Dialog_CropImage_Tooltip_Description)
                 <div class="bcms-content-titles">
                     @MediaGlobalization.ImageEditor_Dialog_CropImage_Title
-                    <a href="#" class="bcms-icn-delete-link" data-bind="visible: imageEditorViewModel.hasCrop(), click: imageEditorViewModel.removeCrop">Remove crop</a>
+
+                    <a href="#" class="bcms-icn-delete-link" data-bind="visible: imageEditorViewModel.hasCrop(), click: imageEditorViewModel.removeCrop">Remove crop</a>                    
+                    <div class="bcms-crop-checkbox">
+                        <input type="checkbox" data-bind="checked: imageEditorViewModel.fit" />@MediaGlobalization.ImageEditor_Dialog_FitImage_Title
+                    </div>
                 </div>
-                
-                <input type="checkbox" data-bind="checked: imageEditorViewModel.fit" />
-                @MediaGlobalization.ImageEditor_Dialog_FitImage_Title
             </div>
             
             <div class="bcms-croped-block">
@@ -72,7 +73,12 @@
                     <div class="bcms-file-edit" data-bind="style: {'display': isOpened() ? 'block' : 'none' }">
                         <div class="bcms-tip-close" data-bind="click: close">@RootGlobalization.Button_Close</div>
                         @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_ChangeSize_Tooltip_Title, MediaGlobalization.ImageEditor_Dialog_ChangeSize_Tooltip_Description)
-                        <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_ChangeSize_Title</div>
+                        <div class="bcms-content-titles">
+                            @MediaGlobalization.ImageEditor_Dialog_ChangeSize_Title
+                            <div class="bcms-crop-checkbox">
+                                <input type="checkbox" data-bind="checked: keepAspectRatio" />Keep aspect ratio<br />
+                            </div>
+                        </div>
                         <span>@MediaGlobalization.ImageEditor_Dialog_ChangeSize_Width:</span>
                         @Html.TextBoxFor(f => f.ImageWidth, new
                                                                 {
@@ -92,7 +98,6 @@
                         <div class="bcms-btn-small" data-bind="click: save">@RootGlobalization.Button_Ok</div>
                         <div class="bcms-btn-links-small" data-bind="click: close">@RootGlobalization.Button_Cancel</div>
                         
-                        <input type="checkbox" data-bind="checked: keepAspectRatio" />Keep aspect ratio<br />
                         <a href="#" data-bind="click: restoreOriginalSize">@MediaGlobalization.ImageEditor_Dialog_RestoreOriginalSize_Title</a>
                     </div>
                 </div>
