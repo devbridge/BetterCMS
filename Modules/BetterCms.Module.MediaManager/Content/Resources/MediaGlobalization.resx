@@ -372,6 +372,9 @@
   <data name="MultiFileUpload_Uploading" xml:space="preserve">
     <value>Uploading...</value>
   </data>
+  <data name="SingleFileUpload_DragDropBox" xml:space="preserve">
+    <value>Select file to upload</value>
+  </data>
   <data name="SiteSettings_MediaManagerMenuItem" xml:space="preserve">
     <value>Media Manager</value>
   </data>

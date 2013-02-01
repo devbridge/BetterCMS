@@ -1,14 +1,22 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.modal', 'html5Upload', 'knockout'],
-    function ($, bcms, dynamicContent, modal, html5Upload, ko) {
+define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.modal', 'html5Upload', 'knockout', 'bcms.messages'],
+    function ($, bcms, dynamicContent, modal, html5Upload, ko, messages) {
     'use strict';
 
     var mediaUpload = {},
 
     selectors = {
-        dragZone: '#bcms-files-dropzone'
+        dragZone: '#bcms-files-dropzone',
+        messageBox: "#bcms-multi-file-upload-messages",
+        fileUploadingContext: '#bcms-media-uploads',
+        fileUploadingMasterForm: '#SaveForm',
+        fileUploadingForm: '#ImgForm',
+        fileUploadingTarget: '#UploadTarget',
+        fileUploadingInput: '#uploadFile',
+        fileUploadingResult: '#jsonResult',
+        folderDropDown: '#SelectedFolderId'
     },
 
     classes = {
@@ -70,82 +78,102 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
         } else {
             modal.open({
                 title: globalization.uploadFilesDialogTitle,
-                onLoad: function (dialog) {
+                onLoad: function(dialog) {
                     var url = $.format(links.loadUploadSingleFileDialogUrl, rootFolderId, rootFolderType);
                     dynamicContent.setContentFromUrl(dialog, url, {
-                        done: function () {
+                        done: function() {
                             SingleFileUpload(dialog, options);
-                        },
-                        beforePost: function () {
-                            dialog.container.showLoading();
-                        },
-
-                        postSuccess: function (json) {
-                            if (onSaveCallback && $.isFunction(onSaveCallback)) {
-                                onSaveCallback(json);
-                            }
-                        },
-
-                        postComplete: function () {
-                            dialog.container.hideLoading();
                         }
                     });
                 },
-                onAcceptClick: function () {
-                    $("#SaveForm").submit(); 
+                onAcceptClick: function(dialog) {
+                    var formToSubmit = $(selectors.fileUploadingMasterForm),
+                        onComplete = function (json) {
+                            messages.refreshBox(dialog.container.find(selectors.messageBox), json);
+                            if (json.Success) {
+                                try {
+                                    if (onSaveCallback && $.isFunction(onSaveCallback)) {
+                                        onSaveCallback(json);
+                                    }
+                                } finally {
+                                    dialog.close();
+                                }
+                            }
+                        };
+                    $.ajax({
+                        type: 'POST',
+                        cache: false,
+                        url: formToSubmit.attr('action'),
+                        data: formToSubmit.serialize()
+                    })
+                        .done(function(response) {
+                            onComplete(response);
+                        })
+                        .fail(function(response) {
+                            onComplete(bcms.parseFailedResponse(response));
+                        });
                     
+                    return false;
                 },
-                onCancel: function () {
+                onCancel: function() {
                     options.uploads.removeAllUploads();
                 }
             });
         }
     };
-        
+    
     function SingleFileUpload(dialog, options) {
-        var isFirstLoad = true;
-        var context = document.getElementById('bcms-media-uploads');
-        var uploadsModel = options.uploads;
-        var fakeData =
-            {
+        var context = dialog.container.find(selectors.fileUploadingContext).get(0),
+            uploadsModel = options.uploads,
+            fakeData = {
                 fileName: "Uploading",
                 fileSize: 1024,
                 fileId: null,
                 version: null,
                 type: null
-            };
-        var uploadFile = new FileViewModel(fakeData);
+            },
+            uploadFile = new FileViewModel(fakeData);
 
-        
-        dialog.container.find("#upload").on('click', function () {
-            dialog.container.find($('#ImgForm')).submit();
-           
-            uploadFile.uploadCompleted(false);
-            uploadsModel.activeUploads.push(uploadFile);
-            uploadsModel.uploads.push(uploadFile);
-            ko.applyBindings(uploadsModel, context);
-            //dialog.container.showLoading();
+        // On file selected.
+        dialog.container.find(selectors.fileUploadingInput).change(function () {
+            var fileName = dialog.container.find(selectors.fileUploadingInput).val();
+            if (fileName != null && fileName != "") {
+                // Add fake file model for upload indication.
+                uploadFile.uploadCompleted(false);
+                uploadFile.fileName = fileName;
+                uploadFile.file.fileName = fileName;
+                uploadsModel.activeUploads.push(uploadFile);
+                uploadsModel.uploads.push(uploadFile);
+                // Send file to server.
+                dialog.container.find($(selectors.fileUploadingForm)).submit();
+            }
         });
-
-        dialog.container.find($("#UploadTarget")).on('load', function () {
-            //dialog.container.hideLoading();
-            uploadFile.uploadCompleted(true);
+        
+        // On file submitted.
+        dialog.container.find($(selectors.fileUploadingTarget)).on('load', function () {
+            // Remove fake file model.
             uploadsModel.uploads.remove(uploadFile);
             uploadsModel.activeUploads.remove(uploadFile);
-            if (isFirstLoad == true) {
-                isFirstLoad = false;
+            
+            // Reset form.
+            var selectedFolderIndex = dialog.container.find(selectors.folderDropDown).get(0).selectedIndex;
+            dialog.container.find(selectors.fileUploadingForm).get(0).reset();
+            dialog.container.find(selectors.folderDropDown).get(0).selectedIndex = selectedFolderIndex;
+
+            // Check the result.
+            var result = $(selectors.fileUploadingTarget).contents().find(selectors.fileUploadingResult).get(0);
+            if (result == null) {
                 return;
             }
-            document.getElementById("ImgForm").reset();            
-
-            var newImg = $.parseJSON($("#UploadTarget").contents().find("#jsonResult")[0].innerHTML);
-            
-            //If there was an error, display it to the user
+            var newImg = $.parseJSON(result.innerHTML);
             if (newImg.IsValid == false) {
-
+                var failModel = new FileViewModel(uploadFile.file);
+                failModel.uploadFailed(true);
+                uploadsModel.uploads.push(failModel);
                 return;
             }
             
+            // Add uploaded file model.
             var fileModel = new FileViewModel(newImg);
             
             fileModel.uploadCompleted(true);
@@ -156,8 +184,9 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
 
             uploadsModel.uploads.push(fileModel);
             uploadsModel.activeUploads.remove(fileModel);
-            ko.applyBindings(uploadsModel, context);
         });
+        
+        ko.applyBindings(uploadsModel, context);
     }
         
     function UploadsViewModel() {
