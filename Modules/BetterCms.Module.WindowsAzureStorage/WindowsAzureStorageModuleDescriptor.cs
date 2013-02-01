@@ -24,7 +24,7 @@ namespace BetterCms.Module.AmazonS3Storage
                 return "WindowsAzureStorage";
             }
         }
-
+         
         /// <summary>
         /// Gets the description.
         /// </summary>
