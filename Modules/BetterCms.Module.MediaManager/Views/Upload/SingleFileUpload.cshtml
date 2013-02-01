@@ -24,23 +24,20 @@
                 @Html.HiddenFor(f => f.RootFolderType)
                 @Html.DropDownListFor(f => f.SelectedFolderId,
                     Model.Folders.Select(o => new SelectListItem
-                    {
-                        Selected = Model.SelectedFolderId == o.Item1,
-                        Text = o.Item2,
-                        Value = o.Item1.ToString()
-                    }),
+                        {
+                            Selected = Model.SelectedFolderId == o.Item1,
+                            Text = o.Item2,
+                            Value = o.Item1.ToString()
+                        }),
                     new { @class = "bcms-global-select" })
             </div>
             <div id="bcms-files-dropzone" class="bcms-dropzone">
-               
-                <input type="file" name="uploadFile" id="uploadFile" class="bcms-uploader" />
-                <button type="button" id="upload" style="display: none">upload </button>
+                <div class="bcms-dropzone-infotext">@MediaGlobalization.SingleFileUpload_DragDropBox</div>
                 <div class="bcms-btn-upload-files">
-                    <label for="upload" >@MediaGlobalization.MultiFileUpload_UploadButton</label>
+                    <label for="uploadFile" >@MediaGlobalization.MultiFileUpload_UploadButton</label>
+                    <input type="file" name="uploadFile" id="uploadFile" class="bcms-uploader" style="position: absolute; left: -999em; top: -999em;"/>
                 </div>
-               
             </div>
-            
         }
         @using (Html.BeginForm<UploadController>(c => c.SaveUploads(null), FormMethod.Post, new { id = "SaveForm", name = "SaveForm", @class = "bcms-ajax-form" }))
         {
@@ -54,7 +51,7 @@
         <div id="Images"></div>
          <script type="text/html" id="bcms-file-upload-template">
             <div data-bind="visible: activeUploads().length > 0">
-                <div class="bcms-content-titles">@MediaGlobalization.MultiFileUpload_Uploading<a class="bcms-icn-delete-link" data-bind="click: cancelAllActiveUploads">@MediaGlobalization.MultiFileUpload_CancelUploading</a></div>
+                <div class="bcms-content-titles">@MediaGlobalization.MultiFileUpload_Uploading@*<a class="bcms-icn-delete-link" data-bind="click: cancelAllActiveUploads">@MediaGlobalization.MultiFileUpload_CancelUploading</a>*@</div>
             </div>
             <div data-bind="foreach: uploads">
                 <div data-bind="css: { 'bcms-upload-block':true, 'bcms-upload-success':uploadCompleted(), 'bcms-upload-failed':uploadFailed() }">
@@ -85,4 +82,3 @@
         </script>
     </div>
 </div>
-

@@ -27,7 +27,7 @@
             <div id="bcms-files-dropzone" class="bcms-dropzone">
                 <div class="bcms-dropzone-infotext">@MediaGlobalization.MultiFileUpload_DragDropBox</div>
                 <div class="bcms-btn-upload-files">
-                    <label for="bcms-files-upload-input">@MediaGlobalization.MultiFileUpload_UploadButton</label>
+                    <label for="bcms-files-upload-input" @* TODO: fix for FireFox: onclick="$('#bcms-files-upload-input').click();"*@>@MediaGlobalization.MultiFileUpload_UploadButton</label>
                     <input type="file" multiple="multiple" name="uploadFiles" id="bcms-files-upload-input" class="bcms-uploader" style="display: none">
                 </div>
             </div>

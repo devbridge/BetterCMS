@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Models;
 using BetterCms.Core.Mvc.Commands;
@@ -174,6 +175,12 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             content.Html = request.Content ?? string.Empty;
             content.ActivationDate = request.LiveFromDate;
             content.ExpirationDate = request.LiveToDate;
+
+            // If content has changed, push blog post entity to save also
+            if (UnitOfWork.Session.IsDirtyEntity(content))
+            {
+                blogPost.ModifiedOn = DateTime.Now;
+            }
 
             Repository.Save(blogPost);
             Repository.Save(content);

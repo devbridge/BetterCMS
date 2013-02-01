@@ -4,16 +4,14 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Helpers;
 
-using BetterCms.Configuration;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Service;
 using BetterCms.Core.Services.Storage;
-using BetterCms.Core.Web;
+
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Mvc;
 
@@ -47,11 +45,6 @@ namespace BetterCms.Module.MediaManager.Services
         private readonly IStorageService storageService;
 
         /// <summary>
-        /// The configuration.
-        /// </summary>
-        private readonly ICmsConfiguration configuration;
-
-        /// <summary>
         /// The repository.
         /// </summary>
         private readonly IRepository repository;
@@ -66,6 +59,9 @@ namespace BetterCms.Module.MediaManager.Services
         /// </summary>
         private readonly ISessionFactoryProvider sessionFactoryProvider;
 
+        /// <summary>
+        /// The media file service
+        /// </summary>
         private readonly IMediaFileService mediaFileService;
 
         /// <summary>
@@ -73,16 +69,14 @@ namespace BetterCms.Module.MediaManager.Services
         /// </summary>
         /// <param name="mediaFileService">The media file service.</param>
         /// <param name="storageService">The storage service.</param>
-        /// <param name="configuration">The configuration.</param>
         /// <param name="repository">The repository.</param>
         /// <param name="unitOfWork">The unit of work.</param>
         /// <param name="sessionFactoryProvider">The session factory provider.</param>
-        public DefaultMediaImageService(IMediaFileService mediaFileService, IStorageService storageService, ICmsConfiguration configuration, IRepository repository, ISessionFactoryProvider sessionFactoryProvider, IUnitOfWork unitOfWork)
+        public DefaultMediaImageService(IMediaFileService mediaFileService, IStorageService storageService, IRepository repository, ISessionFactoryProvider sessionFactoryProvider, IUnitOfWork unitOfWork)
         {
             this.mediaFileService = mediaFileService;
             this.sessionFactoryProvider = sessionFactoryProvider;
             this.storageService = storageService;
-            this.configuration = configuration;
             this.repository = repository;
             this.unitOfWork = unitOfWork;
         }
@@ -314,70 +308,17 @@ namespace BetterCms.Module.MediaManager.Services
         }
 
         /// <summary>
-        /// Crops the image.
-        /// </summary>
-        /// <param name="mediaImageId">The media image id.</param>
-        /// <param name="version">The version.</param>
-        /// <param name="x1">The x1.</param>
-        /// <param name="y1">The y1.</param>
-        /// <param name="x2">The x2.</param>
-        /// <param name="y2">The y2.</param>
-        public void CropImage(Guid mediaImageId, int version, int x1, int y1, int x2, int y2)
-        {
-            var imageEntity = GetImageEntity(mediaImageId, version);
-
-            var downloadResponse = storageService.DownloadObject(imageEntity.OriginalUri);
-            var image = new WebImage(downloadResponse.ResponseStream);
-            var croppedImage = image.Crop(y1, x1, image.Height - y2, image.Width - x2);
-            var bytes = croppedImage.GetBytes();
-            var memoryStream = new MemoryStream(bytes);
-            storageService.UploadObject(new UploadRequest { InputStream = memoryStream, Uri = imageEntity.FileUri });
-
-            imageEntity.Width = croppedImage.Width;
-            imageEntity.Height = croppedImage.Height;
-            imageEntity.Size = bytes.Length;
-            imageEntity.Version = version;
-
-            UpdateThumbnail(imageEntity, ThumbnailSize);
-
-            repository.Save(imageEntity);
-        }
-
-        /// <summary>
-        /// Resizes the image.
-        /// </summary>
-        /// <param name="mediaImageId">The media image id.</param>
-        /// <param name="version">The version.</param>
-        /// <param name="width">The width.</param>
-        /// <param name="height">The height.</param>
-        public void ResizeImage(Guid mediaImageId, int version, int width, int height)
-        {
-            var imageEntity = this.GetImageEntity(mediaImageId, version);
-
-            var downloadResponse = storageService.DownloadObject(imageEntity.OriginalUri);
-            var image = new WebImage(downloadResponse.ResponseStream);
-            var resizedImage = image.Resize(width, height, false);
-            var bytes = resizedImage.GetBytes();
-            var memoryStream = new MemoryStream(bytes);
-            storageService.UploadObject(new UploadRequest { InputStream = memoryStream, Uri = imageEntity.FileUri });
-
-            imageEntity.Width = resizedImage.Width;
-            imageEntity.Height = resizedImage.Height;
-            imageEntity.Size = bytes.Length;
-            imageEntity.Version = version;
-
-            UpdateThumbnail(imageEntity, ThumbnailSize);
-
-            repository.Save(imageEntity);
-        }
-
-        /// <summary>
         /// Updates the thumbnail.
         /// </summary>
         /// <param name="mediaImage">The media image.</param>
         /// <param name="size">The size.</param>
-        private void UpdateThumbnail(MediaImage mediaImage, Size size)
+        public void UpdateThumbnail(MediaImage mediaImage, Size size)
         {
+            if (size.IsEmpty)
+            {
+                size = ThumbnailSize;
+            }
+
             var downloadResponse = storageService.DownloadObject(mediaImage.FileUri);
 
             using (var memoryStream = new MemoryStream())
@@ -390,35 +331,6 @@ namespace BetterCms.Module.MediaManager.Services
                 mediaImage.ThumbnailHeight = size.Height;
                 mediaImage.ThumbnailSize = memoryStream.Length;
             }
-        }
-
-        /// <summary>
-        /// Gets the image entity.
-        /// </summary>
-        /// <param name="mediaImageId">The media image id.</param>
-        /// <param name="version">The version.</param>
-        /// <returns>Image entity.</returns>
-        /// <exception cref="CmsException">Image not found or Image was modified.</exception>
-        private MediaImage GetImageEntity(Guid mediaImageId, int version)
-        {
-            var imageEntity = repository.AsQueryable<MediaImage>().FirstOrDefault(f => f.Id == mediaImageId);
-
-            if (imageEntity == null)
-            {
-                throw new CmsException(string.Format("Image not found by id={0}.", mediaImageId));
-            }
-
-            if (imageEntity.Version != version)
-            {
-                throw new CmsException(string.Format("Image with id={0} was modified.", mediaImageId));
-            }
-
-            if (!storageService.ObjectExists(imageEntity.OriginalUri))
-            {
-                throw new CmsException(string.Format("Image not found in the storage by URI={0}.", imageEntity.OriginalUri));
-            }
-
-            return imageEntity;
         }
 
         private void ExecuteActionOnThreadSeparatedSessionWithNoConcurrencyTracking(Action<ISession> work)

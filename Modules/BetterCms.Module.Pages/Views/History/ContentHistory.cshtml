@@ -106,20 +106,21 @@
             .Encode(false)
             .Named(string.Empty)
             .Sortable(false)
-            .HeaderAttributes(@style => "width: 167px;", @class => "bcms-tables-nohover")
+            .HeaderAttributes(@style => "width: 160px;", @class => "bcms-tables-nohover")
             .Attributes(@style => "width: 144px;");            
     };
 }
       
 <div class="bcms-scroll-window">
-    @Html.MessagesBox("bcms-content-history-messages")
 
     <div class="bcms-history-preview-holder">
         <div class="bcms-history-preview">
-            <div class="bcms-history-info" style="display: block;">@PagesGlobalization.ContentHistory_SelectVersionToPreviewMessage</div>
-            <div class="bcms-history-content"></div>
+            @Html.MessagesBox("bcms-content-history-messages")
+            <div id="bcms-history-preview">
+                <div class="bcms-history-info" style="display: block;">@PagesGlobalization.ContentHistory_SelectVersionToPreviewMessage</div>
+                <div class="bcms-history-content"></div>
+            </div>
         </div>
-
     </div>
 
     <div class="bcms-history-table-holder">
@@ -136,7 +137,7 @@
                     <div class="bcms-btn-search" id="bcms-pagecontenthistory-search-btn">@RootGlobalization.Button_Search</div>
                 </div>
             </div>                        
-            @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new ScrollableEditableHtmlTableGridRenderer<ContentHistoryItem>()
+            @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables bcms-history-grid").RenderUsing(new ScrollableEditableHtmlTableGridRenderer<ContentHistoryItem>()
                                                                                                                                  {
                                                                                                                                      InternalTableCssClass = "bcms-history-cell"
                                                                                                                                  

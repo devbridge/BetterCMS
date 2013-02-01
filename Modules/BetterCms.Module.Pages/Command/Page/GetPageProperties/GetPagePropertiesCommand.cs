@@ -65,6 +65,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                                 Image = new ImageSelectorViewModel
                                             {
                                                 ImageId = page.Image.Id,
+                                                ImageVersion = page.Image.Version,
                                                 ImageUrl = page.Image.PublicUrl,
                                                 ThumbnailUrl = page.Image.PublicThumbnailUrl,
                                                 ImageTooltip = page.Image.Caption

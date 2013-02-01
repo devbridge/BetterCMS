@@ -349,6 +349,29 @@ a.bcms-icn-restore {
         background-position: right -1151px;
     }
 
+/*history icon*/
+a.bcms-icn-history {
+    float: right;
+    height: 20px;
+    padding-right: 30px;
+    background: url('images/sprite-base-1.png') no-repeat right -314px;
+    color: #c0c0c0;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+    a.bcms-icn-history:hover {
+        color: #303030;
+        background-position: right -357px;
+        text-decoration: none;
+    }
+
+    a.bcms-icn-history:active {
+        color: #df2200;
+        background-position: right -399px;
+    }
+
 /*delete icon*/
 a.bcms-icn-delete {
     display: inline-block;
@@ -762,12 +785,25 @@ a.bcms-icn-delete {
     }
 
 .bcms-content-icon {
+    position: relative;
     width: 20px;
     height: 20px;
     margin: 11px auto;
     background-repeat: no-repeat;
     background-position: 50% 50%;
 }
+
+    .bcms-content-icon div {
+        position: absolute;
+        top: -11px;
+        left: -13px;
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 20px;
+        color: #9fd5ef;
+        width: 42px;
+        text-align: right;
+    }
 
 .bcms-content-delete {
     border-right: 0;
@@ -1265,7 +1301,7 @@ a.bcms-btn-close {
     position: relative;
     padding-bottom: 10px;
     color: #000;
-    line-height: 14px;
+    line-height: 20px;
     font-size: 14px;
     font-weight: 700;
     font-family: "Open Sans", sans-serif;
@@ -1288,7 +1324,7 @@ a.bcms-btn-close {
 }
 
     .bcms-input-field-holder .bcms-tooltip-mark {
-        top: 1px;
+        top: 4px;
         left: -15px;
     }
 
@@ -1298,15 +1334,11 @@ a.bcms-btn-close {
 }
 
     .bcms-input-list-holder:first-child {
-        padding-top: 20px;
+        margin-top: 20px;
     }
 
-        .bcms-input-list-holder:first-child .bcms-tooltip-mark {
-            top: 21px;
-        }
-
     .bcms-input-list-holder .bcms-tooltip-mark {
-        top: 1px;
+        top: 4px;
         left: -15px;
     }
 
@@ -1840,19 +1872,10 @@ th.bcms-tables-nohover:hover {
     outline: none;
 }
 
-.bcms-table-row-active .bcms-btn-small {
-    vertical-align: top;
-}
-
-.bcms-table-row-active .bcms-btn-links-small {
-    vertical-align: top;
-}
-
 .bcms-tables td {
     padding: 10px;
     border-bottom: 1px solid #e3e3e3;
     color: #787878;
-    vertical-align: top;
     word-break: break-all;
 }
 
@@ -2130,7 +2153,7 @@ ul.bcms-info-messages {
 /*override jquery ui*/
 .ui-datepicker-trigger {
     position: absolute;
-    top: 30px;
+    top: 36px;
     right: 5px;
     cursor: pointer;
 }

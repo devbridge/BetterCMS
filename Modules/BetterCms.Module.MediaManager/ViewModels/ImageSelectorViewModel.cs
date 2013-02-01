@@ -13,6 +13,14 @@ namespace BetterCms.Module.MediaManager.ViewModels
         public virtual Guid? ImageId { get; set; }
 
         /// <summary>
+        /// Gets or sets the image version.
+        /// </summary>
+        /// <value>
+        /// The image version.
+        /// </value>
+        public virtual int ImageVersion { get; set; }
+
+        /// <summary>
         /// Gets or sets the image URL.
         /// </summary>
         /// <value>

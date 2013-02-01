@@ -31,7 +31,7 @@
         <div class="bcms-large-titles">@PagesGlobalization.SiteSettings_Categories_Title</div>
         <div class="bcms-btn-links-main" id="bcms-site-settings-add-category">@PagesGlobalization.SiteSettings_Categories_AddNewCategory</div>
         <div class="bcms-search-block">
-            @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box" })
+            @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query" })
             <div class="bcms-btn-search" id="bcms-categories-search-btn">@PagesGlobalization.SiteSettings_Categories_Search</div>
         </div>
         @Html.MessagesBox("bcms-site-settings-categories-messages")

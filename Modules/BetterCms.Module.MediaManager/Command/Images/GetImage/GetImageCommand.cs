@@ -31,6 +31,7 @@ namespace BetterCms.Module.MediaManager.Command.Images.GetImage
                                  {                                     
                                      Id = f.Id.ToString(),
                                      Caption = f.Caption,
+                                     Title = f.Title,
                                      Url = f.PublicUrl,
                                      Version = f.Version.ToString(CultureInfo.InvariantCulture),
                                      FileName = f.OriginalFileName,
@@ -38,11 +39,13 @@ namespace BetterCms.Module.MediaManager.Command.Images.GetImage
                                      FileSize = MediaFileService.GetFileSizeText(f.Size),
                                      ImageWidth = f.Width,
                                      ImageHeight = f.Height,
+                                     OriginalImageWidth = f.OriginalWidth,
+                                     OriginalImageHeight = f.OriginalHeight,
                                      ImageAlign = f.ImageAlign.HasValue ? f.ImageAlign.Value : MediaImageAlign.Left,
-                                     CropCoordX1 = f.CropCoordX1.HasValue ? f.CropCoordX1.Value.ToString(CultureInfo.InvariantCulture) : "0",
-                                     CropCoordY1 = f.CropCoordY1.HasValue ? f.CropCoordY1.Value.ToString(CultureInfo.InvariantCulture) : "0",
-                                     CropCoordX2 = f.CropCoordX2.HasValue ? f.CropCoordX2.Value.ToString(CultureInfo.InvariantCulture) : f.Width.ToString(CultureInfo.InvariantCulture),
-                                     CropCoordY2 = f.CropCoordY2.HasValue ? f.CropCoordY2.Value.ToString(CultureInfo.InvariantCulture) : f.Height.ToString(CultureInfo.InvariantCulture),
+                                     CropCoordX1 = f.CropCoordX1.HasValue ? f.CropCoordX1.Value : 0,
+                                     CropCoordY1 = f.CropCoordY1.HasValue ? f.CropCoordY1.Value : 0,
+                                     CropCoordX2 = f.CropCoordX2.HasValue ? f.CropCoordX2.Value : f.OriginalWidth,
+                                     CropCoordY2 = f.CropCoordY2.HasValue ? f.CropCoordY2.Value : f.OriginalHeight,
                                      OriginalImageUrl = f.PublicOriginallUrl
                                  })
                 .FirstOrDefault();

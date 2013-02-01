@@ -27,10 +27,11 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
                 htmlContentTemplateRowTemplate: '#bcms-advanced-content-list-row-template',
                 htmlContentTemplateRowTemplateFirstRow: 'tr:first',
                 htmlContentTemplateTableFirstRow: 'table.bcms-tables > tbody > tr:first',
-                
+
                 messagesContainer: "#bcms-edit-template-messages",
-                
+
                 templateSearchButton: '#bcms-template-search-btn',
+                templateSearchField: '.bcms-search-query',
 
                 templateRegisterButton: '#bcms-register-template-button',
                 templateRowEditButtons: '.bcms-grid-item-edit-button',
@@ -244,7 +245,7 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
             });
 
             form.find(selectors.templateSearchButton).on('click', function () {
-                searchTemplates(form);
+                searchTemplates(form, container);
             });
 
             container.find(selectors.templateRegisterButton).on('click', function () {
@@ -257,10 +258,14 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
         /**
         * Search site settings template.
         */
-        function searchTemplates(form) {
+        function searchTemplates(form, container) {
             grid.submitGridForm(form, function (data) {
                 siteSettings.setContent(data);
-                initializeTemplatesList();
+                initializeTemplatesList();                
+                var searchInput = container.find(selectors.templateSearchField);
+                var val = searchInput.val();
+                searchInput.focus().val("");
+                searchInput.val(val);  
             });
         };
 

@@ -12,12 +12,13 @@ define('bcms.pages.history', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', '
         },
         
         selectors = {
-            gridRestoreLinks: '#bcms-pagecontenthistory-form .bcms-history-table a.bcms-icn-restore',
-            gridCells: '#bcms-pagecontenthistory-form .bcms-history-table tbody td',
+            gridRestoreLinks: '#bcms-pagecontenthistory-form .bcms-history-cell a.bcms-icn-restore',
+            gridCells: '#bcms-pagecontenthistory-form .bcms-history-cell tbody td',
             gridRowPreviewLink: 'a.bcms-icn-preview:first',
             firstRow: 'tr:first',
-            gridRows: '#bcms-pagecontenthistory-form .bcms-history-table tbody tr',
-            versionPreviewContainer: '.bcms-history-preview',
+            gridRows: '#bcms-pagecontenthistory-form .bcms-history-cell tbody tr',
+            versionPreviewContainer: '#bcms-history-preview',
+            versionPreviewLoaderContainer: '.bcms-history-preview',
             versionPreviewTemplate: '#bcms-history-preview-template',
             pageContentHistoryForm: '#bcms-pagecontenthistory-form',
             pageContentHistorySearchButton: '.bcms-btn-search',
@@ -50,14 +51,15 @@ define('bcms.pages.history', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', '
     function previewVersion(container, id) {
         var url = $.format(links.loadContentVersionPreviewUrl, id),
             iFrame = $(container.find(selectors.versionPreviewTemplate).html()),
-            previewContainer = container.find(selectors.versionPreviewContainer);
+            previewContainer = container.find(selectors.versionPreviewContainer),
+            loaderContainer = container.find(selectors.versionPreviewLoaderContainer);
 
         previewContainer.html(iFrame);
-        previewContainer.showLoading();
+        loaderContainer.showLoading();
         iFrame.attr('src', url);
 
         iFrame.on('load', function () {
-            previewContainer.hideLoading();
+            loaderContainer.hideLoading();
         });
     }
 
