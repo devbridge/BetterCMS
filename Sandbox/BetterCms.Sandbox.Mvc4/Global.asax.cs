@@ -55,7 +55,7 @@ namespace BetterCms.Sandbox.Mvc4
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
-        {
+        {            
             string roles = System.Configuration.ConfigurationManager.AppSettings["TestUserRoles"];
             string name = System.Configuration.ConfigurationManager.AppSettings["TestUserName"];
 

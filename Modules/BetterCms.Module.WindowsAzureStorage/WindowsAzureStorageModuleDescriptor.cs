@@ -7,9 +7,9 @@ using BetterCms.Core.Services.Storage;
 namespace BetterCms.Module.AmazonS3Storage
 {
     /// <summary>
-    /// A storage module based on the Amazon S3 cloud service.
+    /// A storage module based on the Windows Azure Storage cloud service.
     /// </summary>
-    public class AmazonS3StorageModuleDescriptor : ModuleDescriptor
+    public class WindowsAzureStorageModuleDescriptor : ModuleDescriptor
     {
         /// <summary>
         /// Gets the name.
@@ -21,10 +21,10 @@ namespace BetterCms.Module.AmazonS3Storage
         {
             get
             {
-                return "AmazonS3Storage";
+                return "WindowsAzureStorage";
             }
         }
-
+         
         /// <summary>
         /// Gets the description.
         /// </summary>
@@ -35,7 +35,7 @@ namespace BetterCms.Module.AmazonS3Storage
         {
             get
             {
-                return "A storage module based on the Amazon S3 cloud service.";
+                return "A storage module based on Windows Azure Storage cloud service.";
             }
         }
 
@@ -49,7 +49,7 @@ namespace BetterCms.Module.AmazonS3Storage
         {
             if (configuration.Storage.ServiceType == StorageServiceType.Auto)
             {
-                containerBuilder.RegisterType<AmazonS3StorageService>().As<IStorageService>().SingleInstance();
+                //containerBuilder.RegisterType<WindowsAzureStorageService>().As<IStorageService>().SingleInstance();
             }
         }
     }
