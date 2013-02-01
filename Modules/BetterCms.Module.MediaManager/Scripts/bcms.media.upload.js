@@ -15,7 +15,8 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
         fileUploadingForm: '#ImgForm',
         fileUploadingTarget: '#UploadTarget',
         fileUploadingInput: '#uploadFile',
-        fileUploadingResult: '#jsonResult'
+        fileUploadingResult: '#jsonResult',
+        folderDropDown: '#SelectedFolderId'
     },
 
     classes = {
@@ -155,8 +156,10 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
             uploadsModel.activeUploads.remove(uploadFile);
             
             // Reset form.
+            var selectedFolderIndex = dialog.container.find(selectors.folderDropDown).get(0).selectedIndex;
             dialog.container.find(selectors.fileUploadingForm).get(0).reset();
-            
+            dialog.container.find(selectors.folderDropDown).get(0).selectedIndex = selectedFolderIndex;
+
             // Check the result.
             var result = $(selectors.fileUploadingTarget).contents().find(selectors.fileUploadingResult).get(0);
             if (result == null) {
