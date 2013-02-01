@@ -246,6 +246,9 @@
   <data name="ImageEditor_Dialog_RestoreOriginalSize_Title" xml:space="preserve">
     <value>Restore Original Size</value>
   </data>
+  <data name="ImageEditor_Dialog_SubTitle" xml:space="preserve">
+    <value>Image Information</value>
+  </data>
   <data name="ImageEditor_Dialog_Title" xml:space="preserve">
     <value>Edit Image</value>
   </data>

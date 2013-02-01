@@ -1,0 +1,61 @@
+﻿@using BetterCms.Module.MediaManager.Models
+@using Microsoft.Web.Mvc
+@using BetterCms.Module.Root.Mvc.UI
+@using BetterCms.Module.Root.Mvc.Helpers
+@using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.MediaManager.Content.Resources
+@using BetterCms.Module.MediaManager.Controllers
+@using BetterCms.Module.MediaManager.ViewModels.Images
+
+@model ImageViewModel
+<div class="bcms-scroll-window" style="height: 942px;">
+    
+    @Html.MessagesBox("bcms-image-editor-messages")
+
+    <div class="bcms-file-manager-inner">
+        @using (Html.BeginForm<ImagesController>(f => f.ImageEditor((ImageViewModel)null), FormMethod.Post, new { @class = "bcms-ajax-form", @enctype = "multipart/form-data" }))
+        {
+            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.Version, new { @id = "image-version-field" })
+
+            <div class="bcms-input-list-holder">
+                <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_SubTitle</div>
+            </div>
+            
+            <div class="bcms-croped-block">
+                <img src="@Model.Url" data-id="@Model.Id" data-version="@Model.Version">
+            </div>
+            
+            <div class="bcms-edit-file-info">
+                <div class="bcms-input-list-holder">
+                    @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_Caption_Tooltip_Title, MediaGlobalization.ImageEditor_Dialog_Caption_Tooltip_Description)
+                    <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_Caption:</div>
+                    @Html.TextBoxFor(f => f.Caption, new { @class = "bcms-editor-field-box", @id = "Caption" })
+                </div>
+
+                <div class="bcms-file-info-text"><b>@MediaGlobalization.ImageEditor_Dialog_FileName:</b> <span id="image-file-name">@(Model.FileName).@Model.FileExtension</span></div>
+                
+                <div class="bcms-file-info-text"><b>@MediaGlobalization.ImageEditor_Dialog_FileSize:</b> <span id="image-file-size">@Model.FileSize</span></div>
+                
+                <div class="bcms-file-info-text">
+                    <b>@MediaGlobalization.ImageEditor_Dialog_Dimensions:</b> <span id="image-dimensions">@Model.ImageWidth x @Model.ImageHeight</span>
+                </div>
+            </div>
+            
+            <div class="bcms-file-alignment">
+                <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_AligmentTitle:</div>
+                <div class="bcms-alignment-controls">
+                    <div class="bcms-align-left@(Model.ImageAlign == MediaImageAlign.Left ? "-active" : string.Empty)">
+                        <input type="radio" id="alignleft" name="ImageAlign" value="@((int)MediaImageAlign.Left)" @(Model.ImageAlign == MediaImageAlign.Left ? "checked" : string.Empty)>
+                    </div>
+                    <div class="bcms-align-center@(Model.ImageAlign == MediaImageAlign.Center ? "-active" : string.Empty)">
+                        <input type="radio" id="aligncenter" name="ImageAlign" value="@((int)MediaImageAlign.Center)" @(Model.ImageAlign == MediaImageAlign.Center ? "checked" : string.Empty)>
+                    </div>
+                    <div class="bcms-align-right@(Model.ImageAlign == MediaImageAlign.Right ? "-active" : string.Empty)">
+                        <input type="radio" id="alignright" name="ImageAlign" value="@((int)MediaImageAlign.Right)" @(Model.ImageAlign == MediaImageAlign.Right ? "checked" : string.Empty)>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

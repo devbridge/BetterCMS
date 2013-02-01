@@ -70,7 +70,7 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                 onLoad: function (dialog) {
                     var url = $.format(links.imageEditorDialogUrl, imageId);
                     dynamicContent.bindDialog(dialog, url, {
-                        contentAvailable: imageEditor.initImageEditorDialogEvents,
+                        contentAvailable: initImageEditorDialogEvents,
                         beforePost: function () {
                             var newVersion = $(selectors.imageToEdit).data('version');
                             if (newVersion > 0) {
@@ -103,10 +103,8 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                 acceptTitle: globalization.imageEditorInsertDialogAcceptButton,
                 onLoad: function (dialog) {
                     var url = $.format(links.imageEditorInsertDialogUrl, image.id());
-                    dynamicContent.setContentFromUrl(dialog, url, {
-                        done: function (content) {
-                            // NOTE: attach events if needed.
-                        },
+                    dynamicContent.bindDialog(dialog, url, {
+                        contentAvailable: initInsertImageWithOptionsDialogEvents
                     });
                 },
                 onAcceptClick: function (dialog) {
@@ -401,7 +399,7 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
         /**
         * Initializes ImageEditor dialog events.
         */
-        imageEditor.initImageEditorDialogEvents = function (dialog, content) {
+        function initImageEditorDialogEvents(dialog, content) {
 
             var data = content.Data ? content.Data : { };
 
@@ -415,17 +413,33 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
 
             // Image alignment
             dialog.container.find(selectors.imageAlignmentControls).children().each(function () {
-                var item = this;
-                $(item).on('click', function () {
-                    dialog.container.find(selectors.imageAlignmentControls).children().each(function () {
-                        $(this).attr('class', $(this).attr('class').replace('-active', ''));
-                        $('input', this).removeAttr('checked');
-                    });
-                    $(item).attr('class', $(item).attr('class') + '-active');
-                    $('input', item).attr('checked', 'true');
-                });
+                setImageAlignment(this, dialog);
             });
-        };
+        }
+
+        /**
+        * Initializes inserting image options dialog events.
+        */
+        function initInsertImageWithOptionsDialogEvents(dialog) {
+            // Image alignment
+            dialog.container.find(selectors.imageAlignmentControls).children().each(function() {
+                setImageAlignment(this, dialog);
+            });
+        }
+
+        /**
+        * Changes CSS class for selected image alignment type
+        */
+        function setImageAlignment(item, dialog) {
+            $(item).on('click', function() {
+                dialog.container.find(selectors.imageAlignmentControls).children().each(function() {
+                    $(this).attr('class', $(this).attr('class').replace('-active', ''));
+                    $('input', this).removeAttr('checked');
+                });
+                $(item).attr('class', $(item).attr('class') + '-active');
+                $('input', item).attr('checked', 'true');
+            });
+        }
 
         /**
         * Initializes page module.

@@ -448,6 +448,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Image Information.
+        /// </summary>
+        public static string ImageEditor_Dialog_SubTitle {
+            get {
+                return ResourceManager.GetString("ImageEditor_Dialog_SubTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit Image.
         /// </summary>
         public static string ImageEditor_Dialog_Title {

@@ -240,9 +240,6 @@
     <Folder Include="Mvc\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Images\ImageEditorInsert.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Views\Images\ImageInsert.cshtml" />
   </ItemGroup>
   <ItemGroup>
