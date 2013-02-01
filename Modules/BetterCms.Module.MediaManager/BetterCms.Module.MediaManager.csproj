@@ -201,12 +201,10 @@
     <EmbeddedResource Include="Content\Css\Images\loading.gif" />
     <EmbeddedResource Include="Content\Css\Images\sprite-media-1.png" />
     <EmbeddedResource Include="Content\Css\Images\sprite-media-2.png" />
-    <EmbeddedResource Include="Scripts\html5Upload.js" />
     <EmbeddedResource Include="Content\Css\Images\sprite-media-3.png" />
     <EmbeddedResource Include="Content\Css\Images\bcms-no-image-1.png" />
     <EmbeddedResource Include="Content\Css\Images\bcms-no-image-2.png" />
     <EmbeddedResource Include="Content\Css\Images\bcms-no-image-3.png" />
-    <EmbeddedResource Include="Scripts\bcms.media.upload.js" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BetterCMS.Configuration\BetterCms.Configuration.csproj">
@@ -232,9 +230,11 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Scripts\bcms.contextMenu.js" />
-    <EmbeddedResource Include="Scripts\jquery.Jcrop.js" />
     <EmbeddedResource Include="Scripts\bcms.media.imageeditor.js" />
     <EmbeddedResource Include="Scripts\bcms.media.js" />
+    <EmbeddedResource Include="Scripts\bcms.media.upload.js" />
+    <EmbeddedResource Include="Scripts\html5Upload.js" />
+    <EmbeddedResource Include="Scripts\jquery.Jcrop.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
