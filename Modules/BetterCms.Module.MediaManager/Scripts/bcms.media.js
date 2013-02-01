@@ -469,7 +469,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             };
 
             self.previewImage = function () {
-                var previewUrl = self.publicUrl();
+                var previewUrl = self.publicUrl() + '?version=' + self.version();
                 if (previewUrl) {
                     modal.imagePreview(previewUrl, self.tooltip);
                 }
@@ -495,7 +495,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             var self = this;
             imageEditor.onEditImage(self.id(), function (json) {
                 self.version(json.Version);
-                self.name(json.FileName);
+                self.name(json.Title);
             });
         };
 
@@ -1233,22 +1233,42 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.url = ko.observable();
             self.thumbnailUrl = ko.observable();
             self.tooltip = ko.observable();
+            self.version = ko.observable();
 
             self.preview = function (data, event) {
                 bcms.stopEventPropagation(event);
 
-                var previewUrl = self.url();
+                var previewUrl = createUrl(self.url());
                 if (previewUrl) {
                     modal.imagePreview(previewUrl, self.tooltip());
                 }
             };
+
+            self.versionedThumnailUrl = ko.computed(function () {
+                return createUrl(self.thumbnailUrl());
+            });
 
             self.setImage = function (imageData) {
                 self.thumbnailUrl(imageData.ThumbnailUrl);
                 self.url(imageData.ImageUrl);
                 self.tooltip(imageData.ImageTooltip);
                 self.id(imageData.ImageId);
+                self.version(imageData.ImageVersion);
             };
+
+            function createUrl(url) {
+                if (!url) {
+                    return url;
+                }
+                
+                if (url.indexOf('?') < 0) {
+                    url = url + '?version=' + self.version();
+                } else {
+                    url = url + '&version=' + self.version();
+                }
+
+                return url;
+            }
 
             if (image) {
                 self.setImage(image);
@@ -1262,6 +1282,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                     self.url(insertedImage.publicUrl());
                     self.tooltip(insertedImage.tooltip);
                     self.id(insertedImage.id());
+                    self.version(insertedImage.version());
 
                     self.onAfterSelect();
                 },

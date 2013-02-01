@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+
+using BetterCms.Core.Models;
 using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Models;
 
@@ -24,6 +26,16 @@ namespace BetterCms.Module.MediaManager.ViewModels.Images
         /// The caption.
         /// </value>
         public string Caption { get; set; }
+
+        /// <summary>
+        /// Gets or sets the title.
+        /// </summary>
+        /// <value>
+        /// The title.
+        /// </value>
+        [Required]
+        [StringLength(MaxLength.Name)]
+        public string Title { get; set; }
 
         /// <summary>
         /// Gets or sets the URL.
@@ -94,6 +106,22 @@ namespace BetterCms.Module.MediaManager.ViewModels.Images
         public int ImageHeight { get; set; }
 
         /// <summary>
+        /// Gets or sets the original image width.
+        /// </summary>
+        /// <value>
+        /// The original image width.
+        /// </value>
+        public int OriginalImageWidth { get; set; }
+
+        /// <summary>
+        /// Gets or sets the original image height.
+        /// </summary>
+        /// <value>
+        /// The original image height.
+        /// </value>
+        public int OriginalImageHeight { get; set; }
+
+        /// <summary>
         /// Gets or sets the image align.
         /// </summary>
         /// <value>
@@ -107,7 +135,7 @@ namespace BetterCms.Module.MediaManager.ViewModels.Images
         /// <value>
         /// The crop X coordinate.
         /// </value>
-        public string CropCoordX1 { get; set; }
+        public int CropCoordX1 { get; set; }
 
         /// <summary>
         /// Gets or sets the second crop point X coordinate.
@@ -115,7 +143,7 @@ namespace BetterCms.Module.MediaManager.ViewModels.Images
         /// <value>
         /// The crop X coordinate.
         /// </value>
-        public string CropCoordX2 { get; set; }
+        public int CropCoordX2 { get; set; }
 
         /// <summary>
         /// Gets or sets the first crop point Y coordinate.
@@ -123,7 +151,7 @@ namespace BetterCms.Module.MediaManager.ViewModels.Images
         /// <value>
         /// The crop Y coordinate.
         /// </value>
-        public string CropCoordY1 { get; set; }
+        public int CropCoordY1 { get; set; }
 
         /// <summary>
         /// Gets or sets the second crop point Y coordinate.
@@ -131,6 +159,6 @@ namespace BetterCms.Module.MediaManager.ViewModels.Images
         /// <value>
         /// The crop Y coordinate.
         /// </value>
-        public string CropCoordY2 { get; set; }
+        public int CropCoordY2 { get; set; }
     }
 }

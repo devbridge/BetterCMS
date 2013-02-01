@@ -75,14 +75,15 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
                                 IntroText = bp.Description,
                                 AuthorId = bp.Author.Id,
                                 CategoryId = bp.Category.Id,
-                                Image =
+                                Image = bp.Image != null ?
                                     new ImageSelectorViewModel
                                     {
                                         ImageId = bp.Image.Id,
+                                        ImageVersion = bp.Image.Version,
                                         ImageUrl = bp.Image.PublicUrl,
                                         ThumbnailUrl = bp.Image.PublicThumbnailUrl,
                                         ImageTooltip = bp.Image.Caption
-                                    }
+                                    } : new ImageSelectorViewModel()
                             })
                     .FirstOrDefault();
 

@@ -21,9 +21,7 @@ namespace BetterCms.Module.MediaManager.Registration
             Links = new IActionProjection[]
                 {
                     new JavaScriptModuleLinkTo<ImagesController>(this, "imageEditorDialogUrl", c => c.ImageEditor("{0}")),
-                    new JavaScriptModuleLinkTo<ImagesController>(this, "imageEditorInsertDialogUrl", c => c.ImageEditorInsert("{0}")),
-                    new JavaScriptModuleLinkTo<ImagesController>(this, "imageEditorCroppingDialogUrl", c => c.ImageCropper("{0}")),
-                    new JavaScriptModuleLinkTo<ImagesController>(this, "imageResizeUrl", c => c.ImageResize("{0}", "{1}", "{2}", "{3}")),
+                    new JavaScriptModuleLinkTo<ImagesController>(this, "imageEditorInsertDialogUrl", c => c.ImageEditorInsert("{0}"))
                 };
 
             Globalization = new IActionProjection[]
@@ -32,12 +30,7 @@ namespace BetterCms.Module.MediaManager.Registration
                     new JavaScriptModuleGlobalization(this, "imageEditorInsertDialogTitle", () => MediaGlobalization.ImageEditor_InsertDialog_Title),
                     new JavaScriptModuleGlobalization(this, "imageEditorInsertDialogAcceptButton", () => MediaGlobalization.ImageEditor_InsertDialog_AcceptButton),
                     new JavaScriptModuleGlobalization(this, "imageEditorUpdateFailureMessageTitle", () => MediaGlobalization.ImageEditor_UpdateFailureMessage_Title),
-                    new JavaScriptModuleGlobalization(this, "imageEditorUpdateFailureMessageMessage", () => MediaGlobalization.ImageEditor_UpdateFailureMessage_Message),
-                    new JavaScriptModuleGlobalization(this, "imageEditorResizeFailureMessageTitle", () => MediaGlobalization.ImageEditor_ResizeFailureMessage_Title),
-                    new JavaScriptModuleGlobalization(this, "imageEditorResizeFailureMessageMessage", () => MediaGlobalization.ImageEditor_ResizeFailureMessage_Message),
-                    new JavaScriptModuleGlobalization(this, "imageEditorCroppingDialogTitle", () => MediaGlobalization.ImageEditor_CroppingDialog_Title),
-                    new JavaScriptModuleGlobalization(this, "imageEditorCropFailureMessageTitle", () => MediaGlobalization.ImageEditor_CropFailureMessage_Title),
-                    new JavaScriptModuleGlobalization(this, "imageEditorCropFailureMessageMessage", () => MediaGlobalization.ImageEditor_CropFailureMessage_Message),
+                    new JavaScriptModuleGlobalization(this, "imageEditorUpdateFailureMessageMessage", () => MediaGlobalization.ImageEditor_UpdateFailureMessage_Message)
                 };
         }
     }
