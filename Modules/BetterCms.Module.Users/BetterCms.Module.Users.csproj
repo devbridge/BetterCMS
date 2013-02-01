@@ -138,7 +138,6 @@
     <Compile Include="Models\Maps\RoleMap.cs" />
     <Compile Include="Models\Maps\RolePermissionMap.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
-    <Compile Include="Models\Migrations\Migration201301221015.cs" />
     <Compile Include="Models\Migrations\UsersVersionTableMetaData.cs" />
     <Compile Include="Models\Permission.cs" />
     <Compile Include="Models\Role.cs" />

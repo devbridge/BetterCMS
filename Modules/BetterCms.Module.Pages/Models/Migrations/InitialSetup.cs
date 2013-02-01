@@ -30,7 +30,6 @@ namespace BetterCms.Module.Pages.Models.Migrations
 
         public override void Up()
         {
-            CreateAuthorsTable();
             CreateRedirectsTable();
                 
             CreateHtmlContentsTable();
@@ -40,8 +39,7 @@ namespace BetterCms.Module.Pages.Models.Migrations
             CreatePagesTable();
 
             CreatePageTagsTable();
-            CreatePageCategoriesTable();
-
+            
             InsertDefaultPage();
             InsertPage404();
             InsertPage500();
@@ -54,7 +52,6 @@ namespace BetterCms.Module.Pages.Models.Migrations
             RemovePage500();
 
             RemovePageTagsTable();
-            RemovePageCategoriesTable();
             
             RemoveHtmlContentWidgetsTable();
             RemoveServerControlWidgetsTable();
@@ -63,31 +60,8 @@ namespace BetterCms.Module.Pages.Models.Migrations
             RemovePagesTable();
 
             RemoveRedirectsTable();
-            RemoveAuthorsTable();
         }
-
-        private void CreateAuthorsTable()
-        {            
-            Create
-               .Table("Authors")
-               .InSchema(SchemaName)
-
-               .WithCmsBaseColumns()
-
-               .WithColumn("Name").AsString(MaxLength.Name).NotNullable()
-               .WithColumn("ImageId").AsGuid().Nullable();
-
-            Create.ForeignKey("FK_Cms_Authors_ImageId_MediaImages_Id")
-               .FromTable("Authors").InSchema(SchemaName).ForeignColumn("ImageId")
-               .ToTable("MediaImages").InSchema(mediaManagerSchemaName).PrimaryColumn("Id");
-        }
-
-        private void RemoveAuthorsTable()
-        {
-            Delete.ForeignKey("FK_Cms_Authors_ImageId_MediaImages_Id").OnTable("Authors").InSchema(SchemaName);
-            Delete.Table("Authors").InSchema(SchemaName);
-        }
-
+        
         private void CreateRedirectsTable()
         {
             Create
@@ -183,25 +157,19 @@ namespace BetterCms.Module.Pages.Models.Migrations
                 .WithColumn("Description").AsString(MaxLength.Text).Nullable()
                 .WithColumn("ImageId").AsGuid().Nullable()
                 .WithColumn("CanonicalUrl").AsAnsiString(MaxLength.Url).Nullable()
-                .WithColumn("CustomCss").AsString(MaxLength.Max).Nullable()                
+                .WithColumn("CustomCss").AsString(MaxLength.Max).Nullable()
+                .WithColumn("CustomJS").AsString(MaxLength.Max).Nullable()
                 .WithColumn("UseCanonicalUrl").AsBoolean().NotNullable().WithDefaultValue(false)
-                .WithColumn("IsPublic").AsBoolean().NotNullable().WithDefaultValue(true)
-                .WithColumn("UseCustomCss").AsBoolean().NotNullable().WithDefaultValue(true)
+                .WithColumn("IsPublic").AsBoolean().NotNullable().WithDefaultValue(true)                
                 .WithColumn("UseNoFollow").AsBoolean().NotNullable().WithDefaultValue(false)
                 .WithColumn("UseNoIndex").AsBoolean().NotNullable().WithDefaultValue(false)
-                .WithColumn("PublishedOn").AsDateTime().Nullable()
-                .WithColumn("AuthorId").AsGuid().Nullable()
+                .WithColumn("PublishedOn").AsDateTime().Nullable()                
                 .WithColumn("CategoryId").AsGuid().Nullable();
 
             Create
                 .ForeignKey("FK_Cms_PagesPages_Cms_RootPages")
                 .FromTable("Pages").InSchema(SchemaName).ForeignColumn("Id")
-                .ToTable("Pages").InSchema(rootModuleSchemaName).PrimaryColumn("Id");
-
-            Create
-                .ForeignKey("FK_Cms_PagesPages_Cms_Authors")
-                .FromTable("Pages").InSchema(SchemaName).ForeignColumn("AuthorId")
-                .ToTable("Authors").InSchema(SchemaName).PrimaryColumn("Id");
+                .ToTable("Pages").InSchema(rootModuleSchemaName).PrimaryColumn("Id");            
                 
             Create.ForeignKey("FK_Cms_Pages_CategoryId_Categories_Id")
                 .FromTable("Pages").InSchema(SchemaName).ForeignColumn("CategoryId")
@@ -216,8 +184,7 @@ namespace BetterCms.Module.Pages.Models.Migrations
         {
             Delete.ForeignKey("FK_Cms_Pages_ImageId_MediaImages_Id").OnTable("Pages").InSchema(SchemaName);
             Delete.ForeignKey("FK_Cms_Pages_CategoryId_Categories_Id").OnTable("Pages").InSchema(SchemaName);
-            Delete.ForeignKey("FK_Cms_PagesPages_Cms_RootPages").OnTable("Pages").InSchema(SchemaName);
-            Delete.ForeignKey("FK_Cms_PagesPages_Cms_Authors").OnTable("Pages").InSchema(SchemaName);
+            Delete.ForeignKey("FK_Cms_PagesPages_Cms_RootPages").OnTable("Pages").InSchema(SchemaName);            
             Delete.Table("Pages").InSchema(SchemaName);
         }
 
@@ -246,34 +213,7 @@ namespace BetterCms.Module.Pages.Models.Migrations
             Delete.ForeignKey("FK_Cms_PageTags_Cms_Pages").OnTable("PageTags").InSchema(SchemaName);
             Delete.ForeignKey("FK_Cms_PageTags_Cms_Tags").OnTable("PageTags").InSchema(SchemaName);
             Delete.Table("PageTags").InSchema(SchemaName);
-        }
-
-        private void CreatePageCategoriesTable()
-        {
-            Create
-                .Table("PageCategories")
-                .InSchema(SchemaName)
-                .WithCmsBaseColumns()
-                .WithColumn("PageId").AsGuid().NotNullable()
-                .WithColumn("CategoryId").AsGuid().NotNullable();
-
-            Create
-                .ForeignKey("FK_Cms_PageCategories_Cms_Pages")
-                .FromTable("PageCategories").InSchema(SchemaName).ForeignColumn("PageId")
-                .ToTable("Pages").InSchema(SchemaName).PrimaryColumn("Id");
-
-            Create
-                .ForeignKey("FK_Cms_PageCategories_Cms_Categories")
-                .FromTable("PageCategories").InSchema(SchemaName).ForeignColumn("CategoryId")
-                .ToTable("Categories").InSchema(rootModuleSchemaName).PrimaryColumn("Id");
-        }
-
-        private void RemovePageCategoriesTable()
-        {
-            Delete.ForeignKey("FK_Cms_PageCategories_Cms_Pages").OnTable("PageCategories").InSchema(SchemaName);
-            Delete.ForeignKey("FK_Cms_PageCategories_Cms_Categories").OnTable("PageCategories").InSchema(SchemaName);
-            Delete.Table("PageCategories").InSchema(SchemaName);
-        }       
+        }          
 
         /// <summary>
         /// Inserts the default page.
@@ -471,8 +411,7 @@ namespace BetterCms.Module.Pages.Models.Migrations
                     Id = pageId,
                     Description = description,                    
                     UseCanonicalUrl = false,
-                    IsPublic = true,
-                    UseCustomCss = false,
+                    IsPublic = true,                    
                     UseNoFollow = false,
                     UseNoIndex = false,
                     PublishedOn = DateTime.Now,
