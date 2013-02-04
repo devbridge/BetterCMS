@@ -1,6 +1,7 @@
 ﻿@using BetterCms.Module.MediaManager.Content.Resources
 @using BetterCms.Module.MediaManager.Controllers
 @using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Mvc
 @using BetterCms.Module.Root.Mvc.UI
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
@@ -14,14 +15,14 @@
                 @Html.Tooltip(MediaGlobalization.MultiFileUpload_SelectFolder_Help_Title, MediaGlobalization.MultiFileUpload_SelectFolder_Help_Message)            
                 <div class="bcms-content-titles">@MediaGlobalization.MultiFileUpload_SelectFolder</div>
                 @Html.HiddenFor(f => f.RootFolderId)
-                @Html.DropDownListFor(f => f.SelectedFolderId, 
-                    Model.Folders.Select(o => new SelectListItem
-                                                  {
-                                                      Selected = Model.SelectedFolderId == o.Item1,
-                                                      Text = o.Item2,
-                                                      Value = o.Item1.ToString()
-                                                  }),
-                    new { @class = "bcms-global-select" })
+                @if (Model.RootFolderId.HasDefaultValue())
+                {
+                    @Html.DropDownListFor(f => f.SelectedFolderId, Model.Folders.Select(o => new SelectListItem { Selected = Model.SelectedFolderId == o.Item1, Text = o.Item2, Value = o.Item1.ToString() }), new { @class = "bcms-global-select" })
+                }
+                else
+                {
+                    @Html.HiddenFor(f => f.SelectedFolderId, new {@Value = Model.RootFolderId})
+                }
             </div>
 
             <div id="bcms-files-dropzone" class="bcms-dropzone">

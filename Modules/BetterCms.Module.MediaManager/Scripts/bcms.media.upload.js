@@ -134,6 +134,14 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
             },
             uploadFile = new FileViewModel(fakeData);
 
+        // On folder changed
+        dialog.container.find(selectors.fileUploadingForm).find(selectors.folderDropDown).on('change', function () {
+            var value = $(this).val(),
+                hidden = dialog.container.find(selectors.fileUploadingMasterForm).find(selectors.folderDropDown);
+
+            hidden.val(value);
+        });
+
         // On file selected.
         dialog.container.find(selectors.fileUploadingInput).change(function () {
             var fileName = dialog.container.find(selectors.fileUploadingInput).val();
@@ -156,9 +164,12 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
             uploadsModel.activeUploads.remove(uploadFile);
             
             // Reset form.
-            var selectedFolderIndex = dialog.container.find(selectors.folderDropDown).get(0).selectedIndex;
-            dialog.container.find(selectors.fileUploadingForm).get(0).reset();
-            dialog.container.find(selectors.folderDropDown).get(0).selectedIndex = selectedFolderIndex;
+            var folderDropDown = dialog.container.find(selectors.folderDropDown);
+            if (folderDropDown.length > 0) {
+                var selectedFolderIndex = dialog.container.find(selectors.folderDropDown).get(0).selectedIndex;
+                dialog.container.find(selectors.fileUploadingForm).get(0).reset();
+                dialog.container.find(selectors.folderDropDown).get(0).selectedIndex = selectedFolderIndex;
+            }
 
             // Check the result.
             var result = $(selectors.fileUploadingTarget).contents().find(selectors.fileUploadingResult).get(0);

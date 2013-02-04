@@ -1,6 +1,7 @@
 ﻿@using BetterCms.Module.MediaManager.Content.Resources
 @using BetterCms.Module.MediaManager.Controllers
 @using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Mvc
 @using BetterCms.Module.Root.Mvc.UI
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
@@ -22,14 +23,14 @@
                 <div class="bcms-content-titles">@MediaGlobalization.MultiFileUpload_SelectFolder</div>
                 @Html.HiddenFor(f => f.RootFolderId)
                 @Html.HiddenFor(f => f.RootFolderType)
-                @Html.DropDownListFor(f => f.SelectedFolderId,
-                    Model.Folders.Select(o => new SelectListItem
-                        {
-                            Selected = Model.SelectedFolderId == o.Item1,
-                            Text = o.Item2,
-                            Value = o.Item1.ToString()
-                        }),
-                    new { @class = "bcms-global-select" })
+                @if (Model.RootFolderId.HasDefaultValue())
+                {
+                    @Html.DropDownListFor(f => f.SelectedFolderId, Model.Folders.Select(o => new SelectListItem { Selected = Model.SelectedFolderId == o.Item1, Text = o.Item2, Value = o.Item1.ToString() }), new { @class = "bcms-global-select" })
+                }
+                else
+                {
+                    @Html.HiddenFor(f => f.SelectedFolderId, new {@Value = Model.RootFolderId})
+                }
             </div>
             <div id="bcms-files-dropzone" class="bcms-dropzone">
                 <div class="bcms-dropzone-infotext">@MediaGlobalization.SingleFileUpload_DragDropBox</div>
@@ -42,7 +43,15 @@
         @using (Html.BeginForm<UploadController>(c => c.SaveUploads(null), FormMethod.Post, new { id = "SaveForm", name = "SaveForm", @class = "bcms-ajax-form" }))
         {
             @Html.HiddenFor(m => m.RootFolderId)
-            @Html.HiddenFor(m => m.SelectedFolderId)
+            if (Model.RootFolderId.HasDefaultValue())
+            {
+                @Html.HiddenFor(m => m.SelectedFolderId)
+            }
+            else
+            {
+                @Html.HiddenFor(m => m.SelectedFolderId, new {@Value = Model.RootFolderId})
+            }
+            
             @Html.HiddenFor(m=> m.RootFolderType)
              <div id="bcms-media-uploads" class="bcms-upload-holder" data-bind="template: { name: 'bcms-file-upload-template' }">
             </div>
