@@ -88,7 +88,7 @@ define('bcms.pages.tags', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSe
 
         form.on('submit', function (event) {
             event.preventDefault();
-            tags.searchSiteSettingsTags(form);
+            tags.searchSiteSettingsTags(form, container);
             return false;
         });
 

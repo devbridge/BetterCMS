@@ -103,16 +103,17 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                 acceptTitle: globalization.imageEditorInsertDialogAcceptButton,
                 onLoad: function (dialog) {
                     var url = $.format(links.imageEditorInsertDialogUrl, image.id());
-                    dynamicContent.bindDialog(dialog, url, {
+                    dynamicContent.setContentFromUrl(dialog, url, {
                         contentAvailable: initInsertImageWithOptionsDialogEvents
                     });
                 },
-                onAcceptClick: function (dialog) {
+                onAccept: function (dialog) {
                     var imageUrl = dialog.container.find(selectors.imageToEdit).attr("src"),
                         caption = dialog.container.find(selectors.imageCaption).val(),
                         align = dialog.container.find(selectors.imageAlignment).val();
                     dialog.close();
                     callback(image, imageUrl, caption, align);
+                    return false;
                 }
             });
         };
