@@ -43,7 +43,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="BetterCMS.nuspec.template" />
-    <None Include="create.nuget.package.build" />
     <None Include="package\content\net40\Config\cms.config" />
     <None Include="package\content\net40\web.config.transform" />
     <None Include="package\tools\install.ps1" />
