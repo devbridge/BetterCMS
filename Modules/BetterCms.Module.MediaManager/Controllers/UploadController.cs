@@ -153,7 +153,7 @@ namespace BetterCms.Module.MediaManager.Controllers
                 Messages.AddError(MediaGlobalization.MultiFileUpload_SaveFailed);
             }
 
-            return Json(new WireJson(true, result));
+            return Json(new WireJson(result != null, result));
         }
     }
 }

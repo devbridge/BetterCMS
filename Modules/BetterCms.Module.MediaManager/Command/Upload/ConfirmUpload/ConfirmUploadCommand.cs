@@ -32,14 +32,17 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
                 List<MediaFile> files = new List<MediaFile>();
                 foreach (var fileId in request.UploadedFiles)
                 {
-                    var file = Repository.FirstOrDefault<MediaFile>(fileId);
-                    if (folder != null && (file.Folder == null || file.Folder.Id != folder.Id))
+                    if (!fileId.HasDefaultValue())
                     {
-                        file.Folder = folder;
+                        var file = Repository.FirstOrDefault<MediaFile>(fileId);
+                        if (folder != null && (file.Folder == null || file.Folder.Id != folder.Id))
+                        {
+                            file.Folder = folder;
+                        }
+                        file.IsTemporary = false;
+                        Repository.Save(file);
+                        files.Add(file);
                     }
-                    file.IsTemporary = false;
-                    Repository.Save(file);                    
-                    files.Add(file);
                 }
 
                 UnitOfWork.Commit();
