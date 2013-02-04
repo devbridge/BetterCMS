@@ -1,0 +1,20 @@
+﻿<configuration>
+  <configSections>
+    <section name="cms" type="BetterCms.Configuration.CmsConfigurationSection, BetterCms.Configuration" requirePermission="false" />
+  </configSections>
+  <connectionStrings>
+    <add name="BetterCms" connectionString="Server=(local);Database=BetterCms;Integrated Security=SSPI;" />
+  </connectionStrings>
+  <cms configSource="Config\cms.config" />
+  <system.webServer>
+    <httpErrors existingResponse="PassThrough"/>
+    <validation validateIntegratedModeConfiguration="false" />
+    <modules runAllManagedModulesForAllRequests="true" />
+    <security>
+      <requestFiltering>
+        <!-- maxAllowedContentLength=200MB -->
+        <requestLimits maxAllowedContentLength="209715200"></requestLimits>
+      </requestFiltering>
+    </security>
+  </system.webServer>
+</configuration>

@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A5D7CC00-D8A7-4177-8432-86B10EEABAE8}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BetterCms.NugetPackage</RootNamespace>
+    <AssemblyName>BetterCms.NugetPackage</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BetterCMS.nuspec.template" />
+    <None Include="create.nuget.package.build" />
+    <None Include="package\content\net40\Config\cms.config" />
+    <None Include="package\content\net40\web.config.transform" />
+    <None Include="package\tools\install.ps1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\BetterCMS.Configuration\BetterCms.Configuration.csproj">
+      <Project>{da2b225e-6aee-4465-8b08-4d5b1c1ced49}</Project>
+      <Name>BetterCms.Configuration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\BetterCMS.Core\BetterCms.Core.csproj">
+      <Project>{694ca5ca-a0e2-4578-a249-648498b058d7}</Project>
+      <Name>BetterCms.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCMS.Module.Blog\BetterCms.Module.Blog.csproj">
+      <Project>{a66a3046-ef60-4c51-ada7-eb055763419b}</Project>
+      <Name>BetterCms.Module.Blog</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.MediaManager\BetterCms.Module.MediaManager.csproj">
+      <Project>{f3e41793-e8ed-4ba8-a1ab-cba1e47b0786}</Project>
+      <Name>BetterCms.Module.MediaManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.Navigation\BetterCms.Module.Navigation.csproj">
+      <Project>{5383227a-9cb8-4978-91d1-8168ec817d16}</Project>
+      <Name>BetterCms.Module.Navigation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.Pages\BetterCms.Module.Pages.csproj">
+      <Project>{fc04d4c2-8688-498f-b546-292c7e3688a9}</Project>
+      <Name>BetterCms.Module.Pages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.Root\BetterCms.Module.Root.csproj">
+      <Project>{66e7e4df-eeea-4b1e-8663-a1b430eb7375}</Project>
+      <Name>BetterCms.Module.Root</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.Templates\BetterCms.Module.Templates.csproj">
+      <Project>{17bf5ca2-23b6-4796-8ef1-cddf6d41a4f7}</Project>
+      <Name>BetterCms.Module.Templates</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="package\content\net40\App_Data\BetterCMS\Modules\" />
+    <Folder Include="package\lib\net40\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>mkdir $(ProjectDir)$(OutDir)package
+xcopy $(ProjectDir)package $(ProjectDir)$(OutDir)package /E /Y /Q
+
+copy $(ProjectDir)$(OutDir)BetterCms.Core.dll $(ProjectDir)$(OutDir)package\lib\net40 /Y
+copy $(ProjectDir)$(OutDir)BetterCms.Configuration.dll $(ProjectDir)$(OutDir)package\lib\net40\ /Y
+copy $(ProjectDir)$(OutDir)BetterCms.Module.*.dll $(ProjectDir)$(OutDir)package\content\net40\App_Data\BetterCms\Modules /Y
+copy $(SolutionDir)README.md $(ProjectDir)$(OutDir)package\readme.txt
+$(ProjectDir)$(OutDir)BetterCms.NugetPackage.exe $(ProjectDir)BetterCMS.nuspec.template $(ProjectDir)$(OutDir)package\BetterCMS.nuspec
+$(SolutionDir).nuget\nuget.exe pack $(ProjectDir)$(OutDir)package\BetterCMS.nuspec -OutputDirectory $(ProjectDir)$(OutDir)
+
+rmdir $(ProjectDir)$(OutDir)package /S /Q
+</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
