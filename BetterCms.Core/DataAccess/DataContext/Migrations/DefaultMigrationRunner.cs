@@ -1,23 +1,22 @@
-﻿using System.CodeDom.Compiler;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Linq;
-using System.Reflection;
-using System.Reflection.Emit;
-using System.Transactions;
 
 using BetterCms.Core.Environment.Assemblies;
 using BetterCms.Core.Modules;
-using System;
+
+using Common.Logging;
 
 using FluentMigrator;
 using FluentMigrator.Runner;
 using FluentMigrator.Runner.Announcers;
 using FluentMigrator.Runner.Initialization;
 using FluentMigrator.Runner.Processors;
-using Common.Logging;
-
-using Microsoft.CSharp;
+using FluentMigrator.Runner.Processors.Oracle;
+using FluentMigrator.Runner.Processors.Postgres;
+using FluentMigrator.Runner.Processors.SqlServer;
 
 namespace BetterCms.Core.DataAccess.DataContext.Migrations
 {    
@@ -151,23 +150,27 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
                 };
            
             IMigrationProcessor processor;
+            IDbConnection dbConnection = null;
 
             var connectionString = ConfigurationManager.ConnectionStrings["BetterCms"].ConnectionString;
 
             if (databaseType == DatabaseType.SqlAzure || databaseType == DatabaseType.SqlServer)
             {
                 var factory = new FluentMigrator.Runner.Processors.SqlServer.SqlServer2008ProcessorFactory();
-                processor = factory.Create(connectionString, announcer, options);                   
+                processor = factory.Create(connectionString, announcer, options);
+                dbConnection = ((SqlServerProcessor)processor).Connection;
             }
             else if (databaseType == DatabaseType.PostgreSQL)
             {
                 var factory = new FluentMigrator.Runner.Processors.Postgres.PostgresProcessorFactory();
                 processor = factory.Create(connectionString, announcer, options);
+                dbConnection = ((PostgresProcessor)processor).Connection;
             }
             else if (databaseType == DatabaseType.Oracle)
             {
                 var factory = new FluentMigrator.Runner.Processors.Oracle.OracleProcessorFactory();
                 processor = factory.Create(connectionString, announcer, options);
+                dbConnection = ((OracleProcessor)processor).Connection;
             }
             else
             {
@@ -191,6 +194,12 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
             else
             {               
                 runner.MigrateDown(version ?? 0);                
+            }
+
+            // If connection is still opened, close it
+            if (dbConnection != null && dbConnection.State != ConnectionState.Closed)
+            {
+                dbConnection.Close();
             }
         }
     }
