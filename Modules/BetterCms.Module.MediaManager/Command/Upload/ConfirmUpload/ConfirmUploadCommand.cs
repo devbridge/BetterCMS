@@ -17,8 +17,8 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
         /// Executes this command.
         /// </summary>
         public ConfirmUploadResponse Execute(MultiFileUploadViewModel request)
-        {            
-            ConfirmUploadResponse response = new ConfirmUploadResponse();
+        {
+            ConfirmUploadResponse response = new ConfirmUploadResponse { SelectedFolderId = request.SelectedFolderId ?? Guid.Empty };
 
             if (request.UploadedFiles != null && request.UploadedFiles.Count > 0)
             {
