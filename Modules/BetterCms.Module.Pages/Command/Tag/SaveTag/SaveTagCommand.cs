@@ -1,7 +1,9 @@
 ﻿using System;
 
+using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc;
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Tags;
 using BetterCms.Module.Root.Models;
@@ -24,6 +26,15 @@ namespace BetterCms.Module.Pages.Commands.SaveTag
         public TagItemViewModel Execute(TagItemViewModel tagItem)
         {
             Tag tag;
+
+            var tagName = Repository.FirstOrDefault<Tag>(c => c.Name == tagItem.Name);
+            if (tagName != null && tagName.Id != tagItem.Id)
+            {
+                var message = string.Format(PagesGlobalization.SaveTag_TagExists_Message, tagItem.Name);
+                var logMessage = string.Format("Tag already exists. Tag name: {0}, Id: {1}", tagItem.Name, tagItem.Id);
+
+                throw new ValidationException(() => message, logMessage);
+            }
 
             if (tagItem.Id == default(Guid))
             {
