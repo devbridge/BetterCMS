@@ -91,12 +91,12 @@
     <PostBuildEvent>mkdir $(ProjectDir)$(OutDir)package
 xcopy $(ProjectDir)package $(ProjectDir)$(OutDir)package /E /Y /Q
 
-copy $(ProjectDir)$(OutDir)BetterCms.Core.dll $(ProjectDir)$(OutDir)package\lib\net40 /Y
-copy $(ProjectDir)$(OutDir)BetterCms.Configuration.dll $(ProjectDir)$(OutDir)package\lib\net40\ /Y
-copy $(ProjectDir)$(OutDir)BetterCms.Module.*.dll $(ProjectDir)$(OutDir)package\content\net40\App_Data\BetterCms\Modules /Y
-copy $(SolutionDir)README.md $(ProjectDir)$(OutDir)package\readme.txt
+xcopy $(ProjectDir)$(OutDir)BetterCms.Core.dll $(ProjectDir)$(OutDir)package\lib\net40 /Y
+xcopy $(ProjectDir)$(OutDir)BetterCms.Configuration.dll $(ProjectDir)$(OutDir)package\lib\net40\ /Y
+xcopy $(ProjectDir)$(OutDir)BetterCms.Module.*.dll $(ProjectDir)$(OutDir)package\content\net40\App_Data\BetterCms\Modules /Y
+xcopy $(SolutionDir)README.md $(ProjectDir)$(OutDir)package\readme.txt /Q
 $(ProjectDir)$(OutDir)BetterCms.NugetPackage.exe $(ProjectDir)BetterCMS.nuspec.template $(ProjectDir)$(OutDir)package\BetterCMS.nuspec
-$(SolutionDir).nuget\nuget.exe pack $(ProjectDir)$(OutDir)package\BetterCMS.nuspec -OutputDirectory $(ProjectDir)$(OutDir)
+$(SolutionDir).nuget\nuget.exe pack $(ProjectDir)$(OutDir)package\BetterCMS.nuspec -OutputDirectory $(ProjectDir)$(OutDir) -NoPackageAnalysis
 
 rmdir $(ProjectDir)$(OutDir)package /S /Q
 </PostBuildEvent>
