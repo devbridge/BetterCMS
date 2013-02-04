@@ -1,233 +1,240 @@
-﻿//using System;
-//using System.IO;
-//using System.Net;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.IO;
+using System.Net;
 
-//using BetterCms.Core.Services.Storage;
+using BetterCms.Core.Services.Storage;
 
-//using Microsoft.WindowsAzure.Storage;
-//using Microsoft.WindowsAzure.Storage.Auth;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Auth;
+using Microsoft.WindowsAzure.Storage.Blob;
 
-//using StorageException = BetterCms.Core.Exceptions.Service.StorageException;
+using StorageException = BetterCms.Core.Exceptions.Service.StorageException;
 
-//namespace BetterCms.Module.AmazonS3Storage
-//{
-//    public class WindowsAzureStorageService : IStorageService
-//    { 
-//        private readonly string accessKey;
-//        private readonly string secretKey;
-//        private readonly string bucketName;
+namespace BetterCms.Module.AmazonS3Storage
+{
+    public class WindowsAzureStorageService : IStorageService
+    {
+        private readonly CloudStorageAccount cloudStorageAccount;
 
-//        public WindowsAzureStorageService(ICmsConfiguration config)
-//        {
-//            try            
-//            {  
-//              //  CloudStorageAccount account = new CloudStorageAccount(new StorageCredentials(), );
-                
-//                var serviceSection = config.Storage;
+        private readonly string containerName;
 
-//                accessKey = serviceSection.GetValue("AmazonAccessKey");
-//                secretKey = serviceSection.GetValue("AmazonSecretKey");
-//                bucketName = serviceSection.GetValue("AmazonBucketName");
-//            }
-//            catch (Exception e)
-//            {
-//                throw new StorageException(string.Format("Failed to initialize storage service {0}.", GetType()), e);
-//            }
-//        }
+        public WindowsAzureStorageService(ICmsConfiguration config)
+        {
+            try
+            {
+                var serviceSection = config.Storage;
+                string accountName = serviceSection.GetValue("AzureAccountName");
+                string secretKey = serviceSection.GetValue("AzureSecondaryKey");                               
+                bool useHttps = bool.Parse(serviceSection.GetValue("AzureUseHttps"));
 
-//        public bool ObjectExists(Uri uri)
-//        {
-//            CheckUri(uri);
+                containerName = serviceSection.GetValue("AzureContainerName");
 
-//            try
-//            {
-//                using (var client = CreateAmazonS3Client())
-//                {
-//                    try
-//                    {
-//                        var absolutePath = uri.AbsolutePath;
-//                        var key = absolutePath.TrimStart(Convert.ToChar("/"));
-//                        var request = new GetObjectMetadataRequest();
+                cloudStorageAccount = new CloudStorageAccount(new StorageCredentials(accountName, secretKey), useHttps);                
+            }
+            catch (Exception e)
+            {
+                throw new StorageException(string.Format("Failed to initialize storage service {0}.", GetType()), e);
+            }
+        }
 
-//                        request.WithBucketName(bucketName)
-//                            .WithKey(key);
+        public bool ObjectExists(Uri uri)
+        {
+            CheckUri(uri);
 
-//                        using (client.GetObjectMetadata(request))
-//                        {
-//                            return true;
-//                        }
-//                    }
-//                    catch (AmazonS3Exception ex)
-//                    {
-//                        if (ex.StatusCode == HttpStatusCode.NotFound)
-//                        {
-//                            return false;
-//                        }
+            try
+            {
+                var client = cloudStorageAccount.CreateCloudBlobClient();
+                client.ParallelOperationThreadCount = 1;
 
-//                        // Status not found - throw the exception.
-//                        throw;
-//                    }
-//                }
-//            }
-//            catch (Exception e)
-//            {
-//                throw new StorageException(string.Format("Failed to check if object exists {0}.", uri), e);
-//            }
-//        }
+                try
+                {
+                    var blob = client.GetBlobReferenceFromServer(uri);
+                    return blob.Exists();                    
+                }
+                catch (Microsoft.WindowsAzure.Storage.StorageException ex)
+                {
+                    if (ex.RequestInformation.HttpStatusCode == (int)HttpStatusCode.NotFound)
+                    {
+                        return false;
+                    }
 
-//        public void UploadObject(UploadRequest request)
-//        {
-//            CheckUri(request.Uri);
+                    // Status not found - throw the exception.
+                    throw;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new StorageException(string.Format("Failed to check if object exists {0}.", uri), e);
+            }
+        }
 
-//            try
-//            {
-//                var putRequest = new PutObjectRequest();
-//                using (var client = CreateAmazonS3Client())
-//                {
-//                    var absolutePath = request.Uri.AbsolutePath;
-//                    var key = absolutePath.TrimStart(Convert.ToChar("/"));
+        public void UploadObject(UploadRequest request)
+        {
+            CheckUri(request.Uri);
 
-//                    putRequest.WithBucketName(bucketName)
-//                        .WithKey(key)
-//                        .WithCannedACL(S3CannedACL.PublicRead)
-//                        .WithInputStream(request.InputStream);
+            try
+            {
+                var client = cloudStorageAccount.CreateCloudBlobClient();
+                client.ParallelOperationThreadCount = 1;
 
-//                    if (request.Headers != null && request.Headers.Count > 0)
-//                    {
-//                        putRequest.AddHeaders(request.Headers);
-//                    }
+                var container = client.GetContainerReference(containerName);
+                if (request.CreateDirectory)
+                {
+                    container.CreateIfNotExists();
+                }
 
-//                    if (request.MetaData != null && request.MetaData.Count > 0)
-//                    {
-//                        putRequest.WithMetaData(request.MetaData);
-//                    }
+                var blob = container.GetBlockBlobReference(request.Uri.AbsoluteUri);
+                if (request.Headers != null && request.Headers.Count > 0)
+                {
+                    if (request.Headers["content-type"] != null)
+                    {
+                        blob.Properties.ContentType = request.MetaData["content-type"];
+                    }
+                }
 
-//                    using (client.PutObject(putRequest))
-//                    {
-//                    }
-//                }
-//            }
-//            catch (Exception e)
-//            {
-//                throw new StorageException(string.Format("Failed to upload object with request {0}.", request), e);
-//            }
-//        }
 
-//        public DownloadResponse DownloadObject(Uri uri)
-//        {
-//            CheckUri(uri);
+                if (request.MetaData != null && request.MetaData.Count > 0)
+                {                    
+                    foreach (KeyValuePair<string, string> metadata in request.MetaData)
+                    {
+                        blob.Metadata.Add(metadata);
+                    }                    
+                }
 
-//            try
-//            {                
-//                var request = (HttpWebRequest)WebRequest.Create(uri);
-//                var response = request.GetResponse();
-//                var downloadResponse = new DownloadResponse();
-//                downloadResponse.Uri = uri;
 
-//                using (var responseStream = response.GetResponseStream())
-//                {
-//                    downloadResponse.ResponseStream = new MemoryStream();
-//                    if (responseStream != null)
-//                    {
-//                        responseStream.CopyTo(downloadResponse.ResponseStream);
-//                    }
-//                }
 
-//                return downloadResponse;
-//            }
-//            catch (Exception e)
-//            {
-//                throw new StorageException(string.Format("Failed to download object from {0}.", uri), e);
-//            }
-//        }
+/*
+                blob.UploadFromStream(request.InputStream);
+                putRequest.WithBucketName(containerName).WithKey(key).WithCannedACL(S3CannedACL.PublicRead).WithInputStream(request.InputStream);
 
-//        public void CopyObject(Uri sourceUri, Uri destinationUri)
-//        {
-//            CheckUri(sourceUri);
-//            CheckUri(destinationUri);
+                if (request.Headers != null && request.Headers.Count > 0)
+                {
+                    putRequest.AddHeaders(request.Headers);
+                }
 
-//            try
-//            {
-//                var sourceKey = sourceUri.AbsolutePath.TrimStart('/');
-//                var destinationKey = destinationUri.AbsolutePath.TrimStart('/');
+                if (request.MetaData != null && request.MetaData.Count > 0)
+                {
+                    putRequest.WithMetaData(request.MetaData);
+                }*/
+            }
+            catch (Exception e)
+            {
+                throw new StorageException(string.Format("Failed to upload object with request {0}.", request), e);
+            }
+        }
 
-//                using (var client = CreateAmazonS3Client())
-//                {
-//                    var request = new CopyObjectRequest()
-//                        .WithSourceBucket(bucketName)
-//                        .WithDestinationBucket(bucketName)
-//                        .WithCannedACL(S3CannedACL.PublicRead)
-//                        .WithSourceKey(sourceKey)
-//                        .WithDestinationKey(destinationKey)
-//                        .WithDirective(S3MetadataDirective.COPY);
+        public DownloadResponse DownloadObject(Uri uri)
+        {
+            CheckUri(uri);
 
-//                    client.CopyObject(request);
+            try
+            {
+                var request = (HttpWebRequest)WebRequest.Create(uri);
+                var response = request.GetResponse();
+                var downloadResponse = new DownloadResponse();
+                downloadResponse.Uri = uri;
 
-//                }
-//            }
-//            catch (Exception e)
-//            {
-//                throw new StorageException(string.Format("Failed to copy object. SourceUrl: {0}, DestinationUrl: {1}", sourceUri, destinationUri), e);
-//            }
-//        }
+                using (var responseStream = response.GetResponseStream())
+                {
+                    downloadResponse.ResponseStream = new MemoryStream();
+                    if (responseStream != null)
+                    {
+                        responseStream.CopyTo(downloadResponse.ResponseStream);
+                    }
+                }
 
-//        public void RemoveObject(Uri uri)
-//        {
-//            CheckUri(uri);
+                return downloadResponse;
+            }
+            catch (Exception e)
+            {
+                throw new StorageException(string.Format("Failed to download object from {0}.", uri), e);
+            }
+        }
 
-//            try
-//            {
-//                var sourceKey = uri.AbsolutePath.TrimStart('/');                
+        public void CopyObject(Uri sourceUri, Uri destinationUri)
+        {
+            CheckUri(sourceUri);
+            CheckUri(destinationUri);
 
-//                using (var client = CreateAmazonS3Client())
-//                {
-//                    var request = new DeleteObjectRequest()
-//                        .WithKey(sourceKey)
-//                        .WithBucketName(bucketName);
+        /*    try
+            {
+                var sourceKey = sourceUri.AbsolutePath.TrimStart('/');
+                var destinationKey = destinationUri.AbsolutePath.TrimStart('/');
 
-//                    client.DeleteObject(request);                    
-//                }
-//            }
-//            catch (Exception e)
-//            {
-//                throw new StorageException(string.Format("Failed to delete object. Uri: {0}", uri), e);
-//            }
-//        }
+                using (var client = CreateAmazonS3Client())
+                {
+                    var request = new CopyObjectRequest()
+                        .WithSourceBucket(containerName)
+                        .WithDestinationBucket(containerName)
+                        .WithCannedACL(S3CannedACL.PublicRead)
+                        .WithSourceKey(sourceKey)
+                        .WithDestinationKey(destinationKey)
+                        .WithDirective(S3MetadataDirective.COPY);
 
-//        public void RemoveObjectBucket(Uri uri)
-//        {
-//            CheckUri(uri);
+                    client.CopyObject(request);
 
-//            try
-//            {
-//                var sourceKey = uri.AbsolutePath.TrimStart('/');
+                }
+            }
+            catch (Exception e)
+            {
+                throw new StorageException(string.Format("Failed to copy object. SourceUrl: {0}, DestinationUrl: {1}", sourceUri, destinationUri), e);
+            }*/
+        }
 
-//                using (var client = CreateAmazonS3Client())
-//                {
-//                    var request = new DeleteObjectRequest()
-//                        .WithKey(sourceKey)
-//                        .WithBucketName(bucketName);
+        public void RemoveObject(Uri uri)
+        {
+            CheckUri(uri);
 
-//                    client.DeleteObject(request);
-//                }
-//            }
-//            catch (Exception e)
-//            {
-//                throw new StorageException(string.Format("Failed to delete object. Uri: {0}", uri), e);
-//            }
-//        }
+        /*    try
+            {
+                var sourceKey = uri.AbsolutePath.TrimStart('/');
 
-//        private AmazonS3 CreateAmazonS3Client()
-//        {
-//            return AWSClientFactory.CreateAmazonS3Client(accessKey, secretKey);
-//        }
+                using (var client = CreateAmazonS3Client())
+                {
+                    var request = new DeleteObjectRequest()
+                        .WithKey(sourceKey)
+                        .WithBucketName(containerName);
 
-//        private void CheckUri(Uri uri)
-//        {
-//            if (!Uri.CheckSchemeName(uri.Scheme) || !(uri.Scheme.Equals(Uri.UriSchemeHttp) || uri.Scheme.Equals(Uri.UriSchemeHttps)))
-//            {
-//                throw new StorageException(string.Format("An Uri scheme {0} is invalid. Uri {1} can't be processed with a {2} storage service.", uri.Scheme, uri, GetType().Name));
-//            }
-//        } 
-//    }
-//}
+                    client.DeleteObject(request);
+                }
+            }
+            catch (Exception e)
+            {
+                throw new StorageException(string.Format("Failed to delete object. Uri: {0}", uri), e);
+            }*/
+        }
+
+        public void RemoveObjectBucket(Uri uri)
+        {
+            CheckUri(uri);
+
+    /*        try
+            {
+                var sourceKey = uri.AbsolutePath.TrimStart('/');
+
+                using (var client = CreateAmazonS3Client())
+                {
+                    var request = new DeleteObjectRequest()
+                        .WithKey(sourceKey)
+                        .WithBucketName(containerName);
+
+                    client.DeleteObject(request);
+                }
+            }
+            catch (Exception e)
+            {
+                throw new StorageException(string.Format("Failed to delete object. Uri: {0}", uri), e);
+            }*/
+        }
+
+        private void CheckUri(Uri uri)
+        {
+            if (!Uri.CheckSchemeName(uri.Scheme) || !(uri.Scheme.Equals(Uri.UriSchemeHttp) || uri.Scheme.Equals(Uri.UriSchemeHttps)))
+            {
+                throw new StorageException(string.Format("An Uri scheme {0} is invalid. Uri {1} can't be processed with a {2} storage service.", uri.Scheme, uri, GetType().Name));
+            }
+        }
+    }
+}
