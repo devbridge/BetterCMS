@@ -114,11 +114,18 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     function MediaItemsViewModel(container, url, messagesContainer) {
         var self = this,
             onUploadFiles = function(newFilesData) {
-                if (newFilesData && newFilesData.Data && newFilesData.Data.Medias && newFilesData.Data.Medias.length > 0) {
-                    var medias = newFilesData.Data.Medias;
-                    for (var i = medias.length - 1; i >= 0; i--) {
-                        var mediaItem = convertToMediaModel(medias[i]);
-                        self.medias.unshift(mediaItem);
+                if (newFilesData && newFilesData.Data) {
+
+                    // Do not add files, uploaded to different folder
+                    var currentFolder = self.path().currentFolder().id();
+                    var uploadedFolder = newFilesData.Data.SelectedFolderId;
+
+                    if (currentFolder == uploadedFolder && newFilesData.Data.Medias && newFilesData.Data.Medias.length > 0) {
+                        var medias = newFilesData.Data.Medias;
+                        for (var i = medias.length - 1; i >= 0; i--) {
+                            var mediaItem = convertToMediaModel(medias[i]);
+                            self.medias.unshift(mediaItem);
+                        }
                     }
                 }
             };
