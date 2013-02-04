@@ -1,7 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define */
 
-define('bcms.user', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.inlineEdit', 'bcms.dynamicContent', 'bcms.role'], function ($, bcms, modal, siteSettings, editor, dynamicContent, role) {
+define('bcms.user', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.inlineEdit', 'bcms.dynamicContent', 'bcms.role', 'bcms.media'], 
+    function ($, bcms, modal, siteSettings, editor, dynamicContent, role, media) {
     'use strict';
 
     var user = {},
@@ -9,10 +10,7 @@ define('bcms.user', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             siteSettingsUserCreateButton: "#bcms-create-user-button",
             siteSettingsRoleCreatButton: "#bcms-create-role-button",
             usersTable: '#bcms-users-grid',
-
-            roleForm: '#bcms-role-form',
-            roleRowEditButtons: '.bcms-grid-item-edit-button',
-            roleParentRow: 'tr:first'
+            userUploadImageButton: "#bcms-open-uploader-button"
         },
 
         links = {
@@ -59,16 +57,6 @@ define('bcms.user', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         editor.initialize(container, {});
     };
 
-    /*roles.initSiteSettingsRoleEvents = function(container, json) {
-        var html = json.Html,
-            data = (json.Success == true) ? json.Data : null;
-
-        container.html(html);
-
-        container.find(selectors.siteSettingsRoleCreatButton).on('click', function() {
-            user.openCreatRoleDialog();
-        });
-    };*/
 
     /**
     * Initializes site settings user list
@@ -83,6 +71,7 @@ define('bcms.user', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             user.openCreatUserDialog();
             //editor.addNewRow(container);
         });
+
     }
 
     user.openCreatUserDialog = function () {//(onSaveCallback) {
@@ -90,11 +79,23 @@ define('bcms.user', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             title: globalization.usersAddNewTitle,
             onLoad: function (childDialog) {
                 dynamicContent.bindDialog(childDialog, links.loadEditUserUrl, {
-                    //contentAvailable: initializeEditTemplateForm,
+                    contentAvailable: initUserCreatEvents,
 
                     //postSuccess: onSaveCallback
                 });
             }
+        });
+    };
+        
+    function initUserCreatEvents(dialog) {
+        var onImageInsert = function(json) {
+            alert(json.Data);
+        };
+        dialog.container.find(selectors.userUploadImageButton).on('click', function () {            
+            media.openImageInsertDialog(onImageInsert);
+            //onAccept, canInsertWithOptions, folderViewModelOptions
+            //self.image = ko.observable(new media.ImageSelectorViewModel(image));
+            //Image
         });
     };
 

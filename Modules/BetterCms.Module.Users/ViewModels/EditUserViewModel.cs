@@ -3,12 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
+using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Root.Models;
 
 namespace BetterCms.Module.Users.ViewModels
 {
     public class EditUserViewModel
     {
+        public EditUserViewModel()
+        {
+            Image = new ImageSelectorViewModel();    
+        }
+
         public Guid Id { get; set; }
 
         public int Version { get; set; }
@@ -24,6 +30,8 @@ namespace BetterCms.Module.Users.ViewModels
         public string Password { get; set; }
 
         public string RetypedPassword { get; set; }
+
+        public ImageSelectorViewModel Image { get; set; }
 
         /// <summary>
         /// Gets or sets the list of Role.

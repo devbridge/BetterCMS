@@ -6,6 +6,8 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 using BetterCms.Module.Root.ViewModels.SiteSettings;
+using BetterCms.Module.Users.Commands.User;
+using BetterCms.Module.Users.Content.Resources;
 using BetterCms.Module.Users.ViewModels;
 
 namespace BetterCms.Module.Users.Controllers
@@ -34,6 +36,20 @@ namespace BetterCms.Module.Users.Controllers
             roles.Add(new LookupKeyValue() { Key = "0", Value = "Content editor" });
             model.Roles = roles;
             return PartialView("EditUserView", model);
+        }
+
+        public ActionResult SaveUser(EditUserViewModel model)
+        {
+            var response = GetCommand<SaveUserCommand>().Execute(model);
+            if (response != null)
+            {
+                if (response.Id.HasDefaultValue())
+                {
+                    Messages.AddSuccess(UsersGlobalization.SaveRole_CreatedSuccessfully_Message);
+                }
+                return Json(new WireJson { Success = true, Data = response });
+            }
+            return Json(new WireJson { Success = false });
         }
 
     }
