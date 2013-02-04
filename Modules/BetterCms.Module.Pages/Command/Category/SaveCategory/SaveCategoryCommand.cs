@@ -1,11 +1,15 @@
 ﻿using System;
 
+using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc;
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Category;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+
+using NHibernate.Linq;
 
 namespace BetterCms.Module.Pages.Commands.SaveCategory
 {
@@ -25,6 +29,15 @@ namespace BetterCms.Module.Pages.Commands.SaveCategory
         {
             Category category;
 
+            var categoryName = Repository.FirstOrDefault<Category>(c => c.Name == categoryItem.Name);
+            if (categoryName != null && categoryName.Id != categoryItem.Id)
+            {
+                var message = string.Format(PagesGlobalization.SaveCategory_CategoryExists_Message, categoryItem.Name);
+                var logMessage = string.Format("Category already exists. Category name: {0}, Id: {1}", categoryItem.Name, categoryItem.Id);
+
+                throw new ValidationException(() => message, logMessage);
+            }   
+
             if (categoryItem.Id == default(Guid))
             {
                 category = new Category();
@@ -32,7 +45,7 @@ namespace BetterCms.Module.Pages.Commands.SaveCategory
             else
             {
                 category = Repository.AsProxy<Category>(categoryItem.Id);                
-            }
+            }                     
 
             category.Version = categoryItem.Version;
             category.Name = categoryItem.Name;

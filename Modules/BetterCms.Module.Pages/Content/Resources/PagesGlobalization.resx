@@ -1101,4 +1101,10 @@
   <data name="EditWidget_PreviewImageNotFound_Message" xml:space="preserve">
     <value>Preview image not found.</value>
   </data>
+  <data name="SaveCategory_CategoryExists_Message" xml:space="preserve">
+    <value>Category already exists. </value>
+  </data>
+  <data name="SaveTag_TagExists_Message" xml:space="preserve">
+    <value>Tag already exists.</value>
+  </data>
 </root>

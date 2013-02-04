@@ -2095,6 +2095,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Category already exists. .
+        /// </summary>
+        public static string SaveCategory_CategoryExists_Message {
+            get {
+                return ResourceManager.GetString("SaveCategory_CategoryExists_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You have no permission to change page publish status..
         /// </summary>
         public static string SavePagePublishStatus_NoPermission_Message {
@@ -2136,6 +2145,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string SaveRedirect_RedirectExists_Message {
             get {
                 return ResourceManager.GetString("SaveRedirect_RedirectExists_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tag already exists..
+        /// </summary>
+        public static string SaveTag_TagExists_Message {
+            get {
+                return ResourceManager.GetString("SaveTag_TagExists_Message", resourceCulture);
             }
         }
         
