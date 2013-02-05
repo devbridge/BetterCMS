@@ -255,6 +255,7 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.mod
             self.id = ko.observable(item.Id);
             self.version = ko.observable(item.Version);
             self.isActive = ko.observable(item.IsActive || false);
+            self.processing = ko.observable(false);
             self.hasFocus = ko.observable(true);
             self.hasError = ko.observable(false);
             self.isSelected = false;
@@ -395,6 +396,7 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.mod
                 confirmDialog = modal.confirm({
                     content: message || '',
                     onAccept: function() {
+                        self.processing(true);
                         $.ajax({
                             type: 'POST',
                             url: url,
@@ -403,9 +405,11 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.mod
                         })
                             .done(function(json) {
                                 onDeleteCompleted(json);
+                                self.processing(false);
                             })
                             .fail(function(response) {
                                 onDeleteCompleted(bcms.parseFailedResponse(response));
+                                self.processing(false);
                             });
                         return false;
                     }
@@ -435,7 +439,7 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.mod
 
             if (canSave) {
                 var params = self.getSaveParams();
-
+                self.processing(true);
                 $.ajax({
                     url: url,
                     type: 'POST',
@@ -446,9 +450,11 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.mod
                 })
                     .done(function(json) {
                         self.onAfterItemSaved(json);
+                        self.processing(false);
                     })
                     .fail(function(response) {
                         self.onAfterItemSaved(bcms.parseFailedResponse(response));
+                        self.processing(false);
                     });
             } else {
                 if (!keepActive) {
