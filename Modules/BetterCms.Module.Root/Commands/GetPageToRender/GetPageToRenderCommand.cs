@@ -66,7 +66,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             }
 
             var pageContents = pageContentsQuery.ToList();
-            var contentProjections = pageContents.Distinct().Select(f => CreatePageContentProjection(request, f)).ToList();
+            var contentProjections = pageContents.Distinct().Select(f => CreatePageContentProjection(request, f)).Where(c => c != null).ToList();
 
             RenderPageViewModel renderPageViewModel = new RenderPageViewModel(page);
             renderPageViewModel.CanManageContent = request.CanManageContent;
@@ -130,6 +130,13 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             
             if (contentToProject == null && pageContent.Content.Status == ContentStatus.Published)
             {
+                IHtmlContent htmlContent = pageContent.Content as IHtmlContent;
+                if (!request.CanManageContent && htmlContent != null && (DateTime.Now < htmlContent.ActivationDate || (htmlContent.ExpirationDate.HasValue && htmlContent.ExpirationDate.Value < DateTime.Now)))
+                {
+                    // Invisible for user because of activation dates.
+                    return null;
+                }
+
                 // Otherwise take published version.
                 contentToProject = pageContent.Content;
             }

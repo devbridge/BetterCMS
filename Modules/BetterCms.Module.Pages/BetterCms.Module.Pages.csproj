@@ -218,6 +218,7 @@
     <Compile Include="Models\Redirect.cs" />
     <Compile Include="Models\WidgetType.cs" />
     <Compile Include="Mvc\Attributes\CustomPageUrlValidationAttribute.cs" />
+    <Compile Include="Mvc\Attributes\EndDateValidationAttribute.cs" />
     <Compile Include="PagesConstants.cs" />
     <Compile Include="Accessors\HtmlContentWidgetAccessor.cs" />
     <Compile Include="Accessors\HtmlContentAccessor.cs" />

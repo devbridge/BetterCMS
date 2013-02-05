@@ -17,7 +17,7 @@ namespace BetterCms.Test.Module.Root.HelperTests
             string html = button.ToHtmlString().Trim();
             Assert.IsTrue(html.StartsWith("<input "));
             Assert.IsTrue(html.EndsWith("/>"));
-            Assert.IsTrue(html.Contains("display:none") || html.Contains("display: none"));
+            Assert.IsTrue(html.Contains("position:absolute; left:-999em; top:-999em;") || html.Contains("position: absolute; left: -999em; top: -999em;"));
         }
     }
 }

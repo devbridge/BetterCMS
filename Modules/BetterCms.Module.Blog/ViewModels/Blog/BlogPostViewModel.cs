@@ -4,7 +4,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 using BetterCms.Core.Models;
+using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.MediaManager.ViewModels;
+using BetterCms.Module.Pages.Content.Resources;
+using BetterCms.Module.Pages.Mvc.Attributes;
 using BetterCms.Module.Root.Models;
 
 namespace BetterCms.Module.Blog.ViewModels.Blog
@@ -72,6 +75,7 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// <value>
         /// The live to date.
         /// </value>
+        [EndDateValidation(StartDateProperty = "LiveFromDate", ErrorMessageResourceType = typeof(BlogGlobalization), ErrorMessageResourceName = "BlogPost_LiveTo_ValidationMessage")]
         public virtual DateTime? LiveToDate { get; set; }
 
         /// <summary>
