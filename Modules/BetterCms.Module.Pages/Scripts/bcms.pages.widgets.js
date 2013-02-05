@@ -106,6 +106,9 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
 
                         postSuccess: postSuccess
                     });
+                },
+                onClose: function() {
+                    htmlEditor.destroyAllHtmlEditorInstances();
                 }
             });
         };

@@ -202,6 +202,7 @@
     <Compile Include="Helpers\RenderHelper.cs" />
     <Compile Include="Models\IServerControlWidget.cs" />
     <Compile Include="Models\Maps\HtmlContentMap.cs" />
+    <Compile Include="Models\Migrations\Migration201302050830.cs" />
     <Compile Include="Models\ServerControlWidget.cs" />
     <Compile Include="Models\HtmlContent.cs" />
     <Compile Include="Models\Maps\RedirectMap.cs" />
@@ -217,6 +218,7 @@
     <Compile Include="Models\Redirect.cs" />
     <Compile Include="Models\WidgetType.cs" />
     <Compile Include="Mvc\Attributes\CustomPageUrlValidationAttribute.cs" />
+    <Compile Include="Mvc\Attributes\EndDateValidationAttribute.cs" />
     <Compile Include="PagesConstants.cs" />
     <Compile Include="Accessors\HtmlContentWidgetAccessor.cs" />
     <Compile Include="Accessors\HtmlContentAccessor.cs" />

@@ -230,11 +230,11 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Scripts\bcms.contextMenu.js" />
-    <EmbeddedResource Include="Scripts\bcms.media.imageeditor.js" />
-    <EmbeddedResource Include="Scripts\bcms.media.js" />
     <EmbeddedResource Include="Scripts\bcms.media.upload.js" />
     <EmbeddedResource Include="Scripts\html5Upload.js" />
     <EmbeddedResource Include="Scripts\jquery.Jcrop.js" />
+    <EmbeddedResource Include="Scripts\bcms.media.imageeditor.js" />
+    <EmbeddedResource Include="Scripts\bcms.media.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>

@@ -835,7 +835,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 if ($.isFunction(onImageInsert)) {
                     onImageInsert(selectedMedia, url, caption, align);
                 } else {
-                    addImageToEditor(url, caption, align);
+                    addImageToEditor(url, caption, align, selectedMedia.version());
                 }
 
                 if (imageInsertDialog != null) {
@@ -867,7 +867,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     /**
     * Insert image to html content editor.
     */
-    function addImageToEditor(imageUrl, caption, imageAlign) {
+    function addImageToEditor(imageUrl, caption, imageAlign, version) {
         if (contentEditor != null) {
             var align = "left";
             if (imageAlign == 2) {
@@ -875,13 +875,18 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             } else if (imageAlign == 3) {
                 align = "right";
             }
+            if (imageUrl.indexOf('?') < 0) {
+                imageUrl += '?version=' + version;
+            } else {
+                imageUrl += '&version=' + version;
+            }
+            var img = '<img src="' + imageUrl + '" alt="' + caption + '" align="' + align + '"/>';
             if (contentEditor.mode == 'source') {
-                var img = '<img src="' + imageUrl + '" alt="' + caption + '" align="' + align + '"/>';
                 var oldData = contentEditor.getData();
 
                 contentEditor.setData(oldData + img);
             } else {
-                contentEditor.insertHtml('<img src="' + imageUrl + '" alt="' + caption + '" align="' + align + '"/>');
+                contentEditor.insertHtml(img);
             }
         }
     };

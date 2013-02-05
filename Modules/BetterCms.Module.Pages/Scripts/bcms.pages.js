@@ -533,6 +533,20 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
         $.validator.unobtrusive.adapters.add("pageurlvalidation", ['pattern'], function (options) {
             options.rules["jqpageurlvalidation"] = { message: options.message, pattern: options.params.pattern };
         });
+        
+        $.validator.addMethod("jqenddatevalidation", function (value, element, params) {
+            var startDateString = $('#' + params.startdateproperty).val();
+            if (value != null && value != "" && startDateString != null && startDateString != "") {
+                return new Date(startDateString) < new Date(value);
+            }
+            return true;
+        }, function (params) {
+            return params.message;
+        });
+
+        $.validator.unobtrusive.adapters.add("enddatevalidation", ['startdateproperty'], function (options) {
+            options.rules["jqenddatevalidation"] = { message: options.message, startdateproperty: options.params.startdateproperty };
+        });
     }
 
     /**

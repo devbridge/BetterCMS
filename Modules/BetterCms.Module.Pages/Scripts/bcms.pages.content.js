@@ -113,6 +113,9 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                             }                            
                         }
                     });
+                },
+                onClose: function() {
+                    htmlEditor.destroyAllHtmlEditorInstances();
                 }
             });
         };
@@ -121,6 +124,10 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
         * Save content order after sorting.
         */
         pagesContent.onSortPageContent = function (model) {
+            if (model.data.pageContents.length < 2) {
+                return; // Sorting is needed for more than one item.
+            }
+            
             var url = links.sortPageContentUrl,
                 alertOnError = function() {
                     modal.alert({
@@ -448,6 +455,9 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                             }
                         }
                     });
+                },
+                onClose: function() {
+                    htmlEditor.destroyAllHtmlEditorInstances();
                 }
             });
         };
