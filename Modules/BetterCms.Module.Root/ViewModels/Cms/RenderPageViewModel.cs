@@ -80,6 +80,8 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         public int Version { get; private set; }
 
         public bool IsPublished { get; private set; }
+        
+        public bool IsPublic { get; private set; }
 
         public bool HasSEO { get; private set; }
 

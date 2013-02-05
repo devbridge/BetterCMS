@@ -202,6 +202,7 @@
     <Compile Include="Helpers\RenderHelper.cs" />
     <Compile Include="Models\IServerControlWidget.cs" />
     <Compile Include="Models\Maps\HtmlContentMap.cs" />
+    <Compile Include="Models\Migrations\Migration201302050830.cs" />
     <Compile Include="Models\ServerControlWidget.cs" />
     <Compile Include="Models\HtmlContent.cs" />
     <Compile Include="Models\Maps\RedirectMap.cs" />

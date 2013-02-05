@@ -35,6 +35,20 @@ namespace BetterCms.Module.Root.Models
         /// </value>
         public virtual bool IsPublished { get; set; }
 
+        /// <summary>
+        /// Gets a value indicating whether this page is available for not authenticated users.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this page is available for not authenticated users; otherwise, <c>false</c>.
+        /// </value>
+        public virtual bool IsPublic { get; set; }
+
+        /// <summary>
+        /// Gets or sets the page published date.
+        /// </summary>
+        /// <value>
+        /// The page published date.
+        /// </value>
         public virtual DateTime? PublishedOn { get; set; }
 
         /// <summary>

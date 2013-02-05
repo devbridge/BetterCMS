@@ -26,14 +26,18 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
         private PageJavaScriptProjectionFactory pageJavaScriptProjectionFactory;
 
         private PageStylesheetProjectionFactory pageStylesheetProjectionFactory;
+        
+        private readonly ICmsConfiguration cmsConfiguration;
 
         public GetPageToRenderCommand(IPageAccessor pageAccessor, PageContentProjectionFactory pageContentProjectionFactory,
-            PageStylesheetProjectionFactory pageStylesheetProjectionFactory, PageJavaScriptProjectionFactory pageJavaScriptProjectionFactory)
+            PageStylesheetProjectionFactory pageStylesheetProjectionFactory, PageJavaScriptProjectionFactory pageJavaScriptProjectionFactory,
+            ICmsConfiguration cmsConfiguration)
         {
             this.pageContentProjectionFactory = pageContentProjectionFactory;
             this.pageStylesheetProjectionFactory = pageStylesheetProjectionFactory;
             this.pageJavaScriptProjectionFactory = pageJavaScriptProjectionFactory;
             this.pageAccessor = pageAccessor;
+            this.cmsConfiguration = cmsConfiguration;
         }
 
         /// <summary>
@@ -49,13 +53,16 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             var page = pageQuery.FirstOrDefault();
             if (page == null)
             {
-                var redirect = pageAccessor.GetRedirect(request.PageUrl);
-                if (!string.IsNullOrWhiteSpace(redirect))
-                {
-                    return new CmsRequestViewModel(new RedirectViewModel(redirect));
-                }
+                return Redirect(request.PageUrl);
+            }
 
+            // Redirect user to login page, if page is inaccessible for public users
+            // and user is not authenticated
+            if (!request.IsAuthenticated && !page.IsPublic && !string.IsNullOrWhiteSpace(cmsConfiguration.LoginUrl))
+            {
+                // TODO: uncomment redirect to login form, when login form will be im
                 return null;
+                // return Redirect(cmsConfiguration.LoginUrl);
             }
 
             var pageContents = pageContentsQuery.ToList();
@@ -209,6 +216,17 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             pageContentsQuery = pageContentsQuery.Where(f => !f.IsDeleted && !f.Content.IsDeleted);
 
             return pageContentsQuery.ToFuture();
+        }
+
+        private CmsRequestViewModel Redirect(string redirectUrl)
+        {
+            var redirect = pageAccessor.GetRedirect(redirectUrl);
+            if (!string.IsNullOrWhiteSpace(redirect))
+            {
+                return new CmsRequestViewModel(new RedirectViewModel(redirect));
+            }
+
+            return null;
         }
     }
 }
