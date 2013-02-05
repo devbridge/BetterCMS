@@ -27,12 +27,17 @@
                 @Html.Partial(column.CellView, column)
             }
             <td>
-                <!-- ko ifnot: isActive() -->
+                <!-- ko if: processing() -->
+                    @RootGlobalization.Message_Saving
+                <!-- /ko -->
+                <!-- ko ifnot: processing() -->
+                <!-- ko ifnot: isActive()-->
                 <a class="bcms-icn-delete" data-bind="click: onDelete">@RootGlobalization.Button_Delete</a>
                 <!-- /ko -->
                 <!-- ko if: isActive() -->
                 <div class="bcms-btn-small" data-bind="click: onSave">@RootGlobalization.Button_Save</div>
                 <div class="bcms-btn-links-small" data-bind="click: onCancelEdit">@RootGlobalization.Button_Cancel</div>
+                <!-- /ko -->
                 <!-- /ko -->
             </td>
         </tr>
