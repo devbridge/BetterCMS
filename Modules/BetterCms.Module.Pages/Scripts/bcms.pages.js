@@ -504,11 +504,17 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 var url = $.format(links.clonePageDialogUrl, bcms.pageId);
                 dynamicContent.bindDialog(dialog, url, {
                     postSuccess: function (json) {
-                        messages.showMessages(json);
-                        if (json.DataType === 'redirect') {                            
-                            window.setTimeout(function() {
-                                bcms.redirect(json.Data);
-                            }, 500);
+                        if (json.Success && json.Data && json.Data.PageUrl) {
+                            var postSuccess = function(data) {
+                                bcms.redirect(data.Data.PageUrl);
+                            };
+                            if (bcms.trigger(bcms.events.pageCreated, { Data: { Title: json.Data.PageTitle, PageUrl: json.Data.PageUrl }, Callback: postSuccess }) <= 0) {
+                                if (postSuccess && $.isFunction(postSuccess)) {
+                                    postSuccess(json.Data);
+                                }
+                            }
+                        } else {
+                            messages.showMessages(json);
                         }
                     }
                 });
