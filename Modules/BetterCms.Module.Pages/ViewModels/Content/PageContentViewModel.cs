@@ -5,6 +5,7 @@ using System.Web.Mvc;
 
 using BetterCms.Core.Models;
 using BetterCms.Module.Pages.Content.Resources;
+using BetterCms.Module.Pages.Mvc.Attributes;
 using BetterCms.Module.Pages.ViewModels.Widgets;
 
 namespace BetterCms.Module.Pages.ViewModels.Content
@@ -103,6 +104,7 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// <value>
         /// The date, to which page is in live.
         /// </value>
+        [EndDateValidation(StartDateProperty = "LiveFrom", ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "PageContent_LiveTo_ValidationMessage")]
         public DateTime? LiveTo { get; set; }
 
         /// <summary>

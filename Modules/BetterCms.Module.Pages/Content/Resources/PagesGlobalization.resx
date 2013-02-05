@@ -1107,4 +1107,7 @@
   <data name="SaveTag_TagExists_Message" xml:space="preserve">
     <value>Tag already exists.</value>
   </data>
+  <data name="PageContent_LiveTo_ValidationMessage" xml:space="preserve">
+    <value>Live To date must be greater than Live From.</value>
+  </data>
 </root>
