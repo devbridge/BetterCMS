@@ -113,6 +113,9 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                             }                            
                         }
                     });
+                },
+                onClose: function() {
+                    htmlEditor.destroyAllHtmlEditorInstances();
                 }
             });
         };
@@ -452,6 +455,9 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                             }
                         }
                     });
+                },
+                onClose: function() {
+                    htmlEditor.destroyAllHtmlEditorInstances();
                 }
             });
         };

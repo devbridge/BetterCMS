@@ -49,6 +49,12 @@ define('bcms.htmlEditor', ['jquery', 'bcms', 'ckeditor'], function ($, bcms) {
         };
     };
 
+    htmlEditor.destroyAllHtmlEditorInstances = function () {
+        for (name in CKEDITOR.instances) {
+            CKEDITOR.instances[name].destroy();
+        }
+    };
+
     htmlEditor.setSourceMode = function (id) {
         CKEDITOR.instances[id].on('instanceReady', function () {
             var instance = CKEDITOR.instances[id];
@@ -66,7 +72,7 @@ define('bcms.htmlEditor', ['jquery', 'bcms', 'ckeditor'], function ($, bcms) {
     };
 
     htmlEditor.insertImage = function(imageUrl) {
-        alert('Insert image to html editor!');
+        alert('Insert image to html editor! (' + imageUrl +')');
     };
 
     /**
