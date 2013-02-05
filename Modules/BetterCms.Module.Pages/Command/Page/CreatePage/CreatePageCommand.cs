@@ -54,7 +54,8 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
                 {
                     PageUrl = pageUrl,
                     Title = request.PageTitle,
-                    Layout = Repository.AsProxy<Root.Models.Layout>(request.TemplateId)
+                    Layout = Repository.AsProxy<Root.Models.Layout>(request.TemplateId),
+                    IsPublic = true
                 };
                 
             Repository.Save(page);
