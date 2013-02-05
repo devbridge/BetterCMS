@@ -1,7 +1,9 @@
 ﻿using System;
 
 using BetterCms.Core.Exceptions.DataTier;
+using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
@@ -52,9 +54,23 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
 
             if (!string.IsNullOrWhiteSpace(request.RedirectUrl) && !string.Equals(page.PageUrl, request.RedirectUrl, StringComparison.OrdinalIgnoreCase))
             {
-                pageService.ValidatePageUrl(request.RedirectUrl, request.PageId);
+                // Valdiate url
+                if (!redirectService.ValidateUrl(request.RedirectUrl))
+                {
+                    var logMessage = string.Format("Invalid page url {0}.", request.RedirectUrl);
+                    throw new ValidationException(() => PagesGlobalization.ValidatePageUrlCommand_InvalidUrlPath_Message, logMessage);
+                }
 
-                var redirect = redirectService.CreateRedirectEntity(page.PageUrl, request.RedirectUrl);
+                var redirect = redirectService.GetPageRedirect(page.PageUrl);
+                if (redirect != null)
+                {
+                    redirect.RedirectUrl = request.RedirectUrl;
+                }
+                else
+                {
+                    redirect = redirectService.CreateRedirectEntity(page.PageUrl, request.RedirectUrl);    
+                }
+                
                 if (redirect != null)
                 {
                     Repository.Save(redirect);
