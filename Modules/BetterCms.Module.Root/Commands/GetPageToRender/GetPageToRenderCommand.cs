@@ -28,10 +28,10 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
         private PageStylesheetProjectionFactory pageStylesheetProjectionFactory;
 
         public GetPageToRenderCommand(IPageAccessor pageAccessor, PageContentProjectionFactory pageContentProjectionFactory,
-            PageStylesheetProjectionFactory pageStylesheerProjectionFactory, PageJavaScriptProjectionFactory pageJavaScriptProjectionFactory)
+            PageStylesheetProjectionFactory pageStylesheetProjectionFactory, PageJavaScriptProjectionFactory pageJavaScriptProjectionFactory)
         {
             this.pageContentProjectionFactory = pageContentProjectionFactory;
-            this.pageStylesheetProjectionFactory = pageStylesheerProjectionFactory;
+            this.pageStylesheetProjectionFactory = pageStylesheetProjectionFactory;
             this.pageJavaScriptProjectionFactory = pageJavaScriptProjectionFactory;
             this.pageAccessor = pageAccessor;
         }
@@ -60,7 +60,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
             var pageContents = pageContentsQuery.ToList();
             var contentProjections = pageContents.Distinct().Select(f => CreatePageContentProjection(request, f)).ToList();
-            
+
             RenderPageViewModel renderPageViewModel = new RenderPageViewModel(page);
             renderPageViewModel.CanManageContent = request.CanManageContent;
             renderPageViewModel.LayoutPath = page.Layout.LayoutPath;
@@ -142,18 +142,25 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
         private IEnumerable<Page> GetPageFutureQuery(GetPageToRenderRequest request)
         {
             IQueryable<Page> query = Repository.AsQueryable<Page>()                                               
-                                               .Fetch(f => f.Layout).ThenFetchMany(f => f.LayoutRegions).ThenFetch(f => f.Region);
+                                               .Fetch(f => f.Layout)
+                                               .ThenFetchMany(f => f.LayoutRegions)
+                                               .ThenFetch(f => f.Region)
+                                               .Where(f => !f.IsDeleted);
 
             if (request.PageId == null)
             {
-                query = query.Where(f => !f.IsDeleted && f.PageUrl.ToLower() == request.PageUrl.ToLowerInvariant());
+                query = query.Where(f => f.PageUrl.ToLower() == request.PageUrl.ToLowerInvariant());
             }
             else
             {
-                query = query.Where(f => !f.IsDeleted && f.Id == request.PageId);
+                query = query.Where(f => f.Id == request.PageId);
             }
 
-            query = query.Where(f => !f.IsDeleted);
+            // If page is not published, page is not found
+            if (!request.IsAuthenticated)
+            {
+                query = query.Where(f => f.IsPublished);
+            }
 
             return query.ToFuture();
         }

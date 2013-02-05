@@ -98,7 +98,8 @@ namespace BetterCms.Module.Root.Controllers
             var useCaching = cmsConfiguration.Cache.Enabled && !canManageContent;
             var request = new GetPageToRenderRequest {
                                                          PageUrl = virtualPath,
-                                                         CanManageContent = canManageContent
+                                                         CanManageContent = canManageContent,
+                                                         IsAuthenticated = principal != null && principal.Identity.IsAuthenticated
                                                      };
             if (useCaching)
             {
