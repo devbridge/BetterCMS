@@ -31,7 +31,7 @@ namespace BetterCms.Module.Pages.ViewModels.Templates
         /// The name.
         /// </value>
         [Required]
-        [StringLength(200)]
+        [StringLength(MaxLength.Name)]
         public string Name { get; set; }
 
         /// <summary>

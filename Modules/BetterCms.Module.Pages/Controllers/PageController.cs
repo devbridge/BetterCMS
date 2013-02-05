@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 
+using BetterCms.Core.Models;
 using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Command.Page.ClonePage;
 using BetterCms.Module.Pages.Command.Page.CreatePage;
@@ -22,8 +23,6 @@ using BetterCms.Module.Root.Mvc.Helpers;
 
 namespace BetterCms.Module.Pages.Controllers
 {
-
-
     /// <summary>
     /// Controller for CMS pages: create / edit / delete pages
     /// </summary>
@@ -221,11 +220,18 @@ namespace BetterCms.Module.Pages.Controllers
         /// <returns>URL, created from text</returns>
         public ActionResult ConvertStringToSlug(string text, string senderId)
         {
+            const int maxLength = MaxLength.Url - 5;
+            
             var slug = text.Transliterate();
             if (string.IsNullOrWhiteSpace(slug))
             {
                 slug = "-";
             }
+            if (slug.Length >= maxLength)
+            {
+                slug = slug.Substring(0, maxLength);
+            }
+
             return Json(new { Text = text, Url = slug, SenderId = senderId }, JsonRequestBehavior.AllowGet);
         }
     }
