@@ -87,6 +87,9 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
                     
                     postSuccess: postSuccess
                 });
+            },
+            onClose: function() {
+                htmlEditor.destroyAllHtmlEditorInstances();
             }
         });
     }
