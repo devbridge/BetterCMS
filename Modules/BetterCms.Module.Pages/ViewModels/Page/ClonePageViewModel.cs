@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using BetterCms.Module.Pages.Content.Resources;
+using BetterCms.Module.Pages.Mvc.Attributes;
 
 namespace BetterCms.Module.Pages.ViewModels.Page
 {
@@ -38,9 +39,8 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// <value>
         /// The page permalink.
         /// </value>
-        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "ClonePage_PageUrl_RequiredMessage")]
+        [CustomPageUrlValidation]
         [StringLength(1000, MinimumLength = 1, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "ClonePage_PageUrl_MaxLengthMessage")]
-        [RegularExpression(PagesConstants.PageUrlRegularExpression, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "ClonePage_PageUrl_InvalidMessage")]
         public string PageUrl { get; set; }
 
         /// <summary>

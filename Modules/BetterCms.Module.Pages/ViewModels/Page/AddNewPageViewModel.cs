@@ -34,6 +34,14 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public string PageUrl { get; set; }
 
         /// <summary>
+        /// Gets or sets the parent page URL.
+        /// </summary>
+        /// <value>
+        /// The parent page URL.
+        /// </value>
+        public string ParentPageUrl { get; set; }
+
+        /// <summary>
         /// Gets or sets the templates.
         /// </summary>
         /// <value>

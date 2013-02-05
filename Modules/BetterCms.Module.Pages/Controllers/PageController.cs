@@ -47,9 +47,9 @@ namespace BetterCms.Module.Pages.Controllers
         /// ViewResult to render add new page modal dialog.
         /// </returns>
         [HttpGet]
-        public ActionResult AddNewPage()
+        public ActionResult AddNewPage(string parentPageUrl)
         {
-            AddNewPageViewModel model = new AddNewPageViewModel();
+            AddNewPageViewModel model = new AddNewPageViewModel { ParentPageUrl = parentPageUrl };
             model.Templates = GetCommand<GetTemplatesCommand>().ExecuteCommand(new GetTemplatesRequest()).Templates;
 
             // Select first template as active
@@ -177,7 +177,8 @@ namespace BetterCms.Module.Pages.Controllers
         [HttpPost]
         public ActionResult ClonePage(ClonePageViewModel model)
         {
-            if (GetCommand<ClonePageCommand>().ExecuteCommand(model))
+            model = GetCommand<ClonePageCommand>().ExecuteCommand(model);
+            if (model != null)
             {
                 Messages.AddSuccess(string.Format(PagesGlobalization.ClonePage_Dialog_Success, model.PageUrl));
                 return Json(new WireJson { Success = true, Data = model.PageUrl, DataType = "redirect" });
