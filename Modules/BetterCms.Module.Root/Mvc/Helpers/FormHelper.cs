@@ -17,7 +17,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         public static IHtmlString HiddenSubmit(this HtmlHelper html)
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine("<input type=\"submit\" style=\"display:none\" />");
+            sb.AppendLine("<input type=\"submit\" style=\"position: absolute; left: -999em; top: -999em;\" />");
             return new MvcHtmlString(sb.ToString());
         }
     }
