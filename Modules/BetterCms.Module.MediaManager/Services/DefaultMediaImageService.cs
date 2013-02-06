@@ -9,9 +9,10 @@ using System.Web.Helpers;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions;
+using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Exceptions.Service;
 using BetterCms.Core.Services.Storage;
-
+using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Mvc;
 
@@ -161,8 +162,18 @@ namespace BetterCms.Module.MediaManager.Services
         public MediaImage UploadImage(Guid rootFolderId, string fileName, long fileLength, Stream fileStream)
         {
             string folderName = mediaFileService.CreateRandomFolderName();
+            Size size;
 
-            Size size = GetImageSize(fileStream);
+            try
+            {
+                size = GetImageSize(fileStream);
+            }
+            catch (ImagingException ex)
+            {
+                var message = MediaGlobalization.MultiFileUpload_ImageFormatNotSuported;
+                const string logMessage = "Failed to get image size.";
+                throw new ValidationException(() => message, logMessage, ex);
+            }
 
             using (var thumbnailImage = new MemoryStream())
             {
@@ -262,7 +273,7 @@ namespace BetterCms.Module.MediaManager.Services
                     return img.Size;
                 }
             }
-            catch (Exception e)
+            catch (ArgumentException e)
             {
                 throw new ImagingException(string.Format("Stream {0} is not valid image stream. Can not determine image size.", imageStream.GetType()), e);
             }
