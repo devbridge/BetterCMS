@@ -154,6 +154,7 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
             var url = $.format(links.deleteTemplateUrl, templateId, templateVersion),
                 message = $.format(globalization.deleteTemplateConfirmMessage, templateName),
                 onDeleteCompleted = function (json) {
+                    messages.refreshBox(siteSettings.getModalDialog().container, json);
                     try {
                         if (json.Success && $.isFunction(onDeleteCallback)) {
                             onDeleteCallback(json);

@@ -134,6 +134,7 @@
     <Compile Include="Command\Layout\DeleteTemplate\DeleteTemplateCommandRequest.cs" />
     <Compile Include="Command\Layout\GetSiteSettingsTemplates\GetSiteSettingsTemplatesCommand.cs" />
     <Compile Include="Command\Layout\GetTemplatesForEdit\GetTemplatesForEditCommand.cs" />
+    <Compile Include="Command\Layout\GetTemplate\GetTemplateCommand.cs" />
     <Compile Include="Command\Layout\SaveTemplate\SaveTemplateCommand.cs" />
     <Compile Include="Command\Layout\SaveTemplate\SaveTemplateResponse.cs" />
     <Compile Include="Command\Page\ClonePage\ClonePageCommand.cs" />

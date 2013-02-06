@@ -2,6 +2,7 @@
 
 using BetterCms.Module.Pages.Command.Layout.DeleteTemplate;
 using BetterCms.Module.Pages.Command.Layout.GetSiteSettingsTemplates;
+using BetterCms.Module.Pages.Command.Layout.GetTemplate;
 using BetterCms.Module.Pages.Command.Layout.GetTemplatesForEdit;
 using BetterCms.Module.Pages.Command.Layout.SaveTemplate;
 using BetterCms.Module.Pages.Command.Widget.DeleteWidget;
@@ -10,6 +11,8 @@ using BetterCms.Module.Pages.ViewModels.Templates;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
+
+using NHibernate.Util;
 
 namespace BetterCms.Module.Pages.Controllers
 {
@@ -31,6 +34,16 @@ namespace BetterCms.Module.Pages.Controllers
                 TemplateId = id.ToGuidOrDefault(),
                 Version = version.ToIntOrDefault()
             };
+
+            var template = GetCommand<GetTemplateCommand>().ExecuteCommand(request.TemplateId);
+            if (template != null && template.Pages.Any())
+            {
+                Messages.AddError(PagesGlobalization.DeleteTemplate_TemplateIsInUse_Message);
+                return Json(new WireJson { Success = false });
+            }
+
+            Messages.AddSuccess(PagesGlobalization.DeleteTemplate_DeletedSuccessfully_Message);
+
             if (GetCommand<DeleteTemplateCommand>().ExecuteCommand(request))
             {
                 Messages.AddSuccess(PagesGlobalization.DeleteTemplate_DeletedSuccessfully_Message);

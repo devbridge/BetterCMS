@@ -1131,4 +1131,7 @@
   <data name="SaveWidget_DublicateOptionName_Message" xml:space="preserve">
     <value>Duplicate widget options found.</value>
   </data>
+  <data name="DeleteTemplate_TemplateIsInUse_Message" xml:space="preserve">
+    <value>Cannot delete template, because it is in use.</value>
+  </data>
 </root>

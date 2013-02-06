@@ -1078,6 +1078,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot delete template, because it is in use..
+        /// </summary>
+        public static string DeleteTemplate_TemplateIsInUse_Message {
+            get {
+                return ResourceManager.GetString("DeleteTemplate_TemplateIsInUse_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to delete {0} widget?.
         /// </summary>
         public static string DeleteWidget_Confirmation_Message {
