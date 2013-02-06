@@ -180,7 +180,7 @@ namespace BetterCms.Module.Pages.Controllers
             if (model != null)
             {
                 Messages.AddSuccess(string.Format(PagesGlobalization.ClonePage_Dialog_Success, model.PageUrl));
-                return Json(new WireJson { Success = true, Data = model.PageUrl, DataType = "redirect" });
+                return Json(new WireJson { Success = true, Data = model});
             }
 
             return Json(new WireJson { Success = false });

@@ -89,8 +89,8 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         * Shows add new page to sitemap dialog.
         */
         sitemap.loadAddNewPageDialog = function(data) {
-            if (data && data.Data && data.Data.Title && data.Data.PageUrl) {
-                var addPageController = new AddNewPageMapController(data.Data.Title, data.Data.PageUrl);
+            if (data && data.Data && (data.Data.Title || data.Data.PageTitle) && (data.Data.Url || data.Data.PageUrl)) {
+                var addPageController = new AddNewPageMapController(data.Data.Title || data.Data.PageTitle, data.Data.Url || data.Data.PageUrl);
                 modal.open({
                     title: globalization.sitemapAddNewPageDialogTitle,
                     onLoad: function(dialog) {

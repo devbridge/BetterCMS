@@ -544,11 +544,17 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                     },
 
                     postSuccess: function (json) {
-                        messages.showMessages(json);
-                        if (json.DataType === 'redirect') {                            
-                            window.setTimeout(function() {
-                                bcms.redirect(json.Data);
-                            }, 500);
+                        if (json.Success && json.Data && (json.Data.Url || json.Data.PageUrl)) {
+                            var postSuccess = function(data) {
+                                redirect.RedirectWithAlert(json.Data.Url || json.Data.PageUrl);
+                            };
+                            if (bcms.trigger(bcms.events.pageCreated, { Data: json.Data, Callback: postSuccess }) <= 0) {
+                                if (postSuccess && $.isFunction(postSuccess)) {
+                                    postSuccess(json.Data);
+                                }
+                            }
+                        } else {
+                            messages.showMessages(json);
                         }
                     }
                 });
