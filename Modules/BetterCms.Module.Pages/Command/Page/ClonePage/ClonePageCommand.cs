@@ -135,7 +135,16 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
             newPageContent.Page = newPage;
             newPageContent.Order = pageContent.Order;
             newPageContent.Region = pageContent.Region;
-            newPageContent.Content = pageContent.Content.Clone();
+
+            if (pageContent.Content is HtmlContentWidget || pageContent.Content is ServerControlWidget)
+            {
+                // Do not need to clone widgets.
+                newPageContent.Content = pageContent.Content;
+            }
+            else
+            {
+                newPageContent.Content = pageContent.Content.Clone();
+            }
 
             Repository.Save(newPageContent);           
         }
