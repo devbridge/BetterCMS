@@ -1,5 +1,6 @@
 ﻿@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.ViewModels.Content
+@using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc.Grids.Extensions
 @using BetterCms.Module.Root.Mvc.Grids.TableRenderers
 @using MvcContrib.UI.Grid
@@ -22,7 +23,7 @@
             .Sortable(false)
             .Attributes(@class => "bcms-option-value");
         
-        column.InlineEditControlsColumn();
+        column.InlineEditControlsColumn(RootGlobalization.Button_Ok);
     };
 }
 <div class="bcms-top-block-holder">

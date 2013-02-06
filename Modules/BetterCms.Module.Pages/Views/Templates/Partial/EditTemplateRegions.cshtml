@@ -1,11 +1,12 @@
 ﻿@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.ViewModels.Templates
+@using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc.Grids.Extensions
 @using BetterCms.Module.Root.Mvc.Grids.TableRenderers
 @using MvcContrib.UI.Grid
 
 
-@model BetterCms.Module.Pages.ViewModels.Templates.TemplateEditViewModel
+@model TemplateEditViewModel
            
 @{
     Action<ColumnBuilder<TemplateRegionItemViewModel>> columns = column =>
@@ -22,7 +23,7 @@
            .Sortable(false)
            .Attributes(@class => "bcms-option-value");
 
-        column.InlineEditControlsColumn();
+        column.InlineEditControlsColumn(RootGlobalization.Button_Ok);
     };
 }
 
