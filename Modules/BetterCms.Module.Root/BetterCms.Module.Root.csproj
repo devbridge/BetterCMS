@@ -332,7 +332,6 @@
     <EmbeddedResource Include="Scripts\bcms.dynamicContent.js" />
     <EmbeddedResource Include="Scripts\bcms.siteSettings.js" />
     <EmbeddedResource Include="Scripts\bcms.js" />
-    <EmbeddedResource Include="Scripts\bcms.modal.js" />
     <EmbeddedResource Include="Scripts\bcms.redirect.js" />
     <EmbeddedResource Include="Scripts\ckeditor\build-config.js" />
     <EmbeddedResource Include="Scripts\ckeditor\ckeditor.js" />
@@ -513,6 +512,7 @@
     <EmbeddedResource Include="Scripts\knockout-2.2.0.js" />
     <EmbeddedResource Include="Scripts\spinner.jquery.js" />
     <EmbeddedResource Include="Scripts\bcms.preview.js" />
+    <EmbeddedResource Include="Scripts\bcms.modal.js" />
     <Content Include="Views\Web.config" />
     <EmbeddedResource Include="Views\Shared\Partial\Alert.cshtml">
       <SubType>Code</SubType>

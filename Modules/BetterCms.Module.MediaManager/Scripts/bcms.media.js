@@ -1247,17 +1247,22 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.tooltip = ko.observable();
             self.version = ko.observable();
 
-            self.preview = function (data, event) {
-                bcms.stopEventPropagation(event);
-
-                var previewUrl = createUrl(self.url());
-                if (previewUrl) {
-                    modal.imagePreview(previewUrl, self.tooltip());
+            self.createUrl = function (url) {
+                if (!url) {
+                    return url;
                 }
+
+                if (url.indexOf('?') < 0) {
+                    url = url + '?version=' + self.version();
+                } else {
+                    url = url + '&version=' + self.version();
+                }
+
+                return url;
             };
 
             self.versionedThumnailUrl = ko.computed(function () {
-                return createUrl(self.thumbnailUrl());
+                return self.createUrl(self.thumbnailUrl());
             });
 
             self.setImage = function (imageData) {
@@ -1268,25 +1273,31 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 self.version(imageData.ImageVersion);
             };
 
-            function createUrl(url) {
-                if (!url) {
-                    return url;
-                }
-                
-                if (url.indexOf('?') < 0) {
-                    url = url + '?version=' + self.version();
-                } else {
-                    url = url + '&version=' + self.version();
-                }
-
-                return url;
-            }
-
             if (image) {
                 self.setImage(image);
             }
         };
 
+        media.ImageSelectorViewModel.prototype.preview = function (data, event) {
+            bcms.stopEventPropagation(event);
+
+            var previewUrl = this.createUrl(this.url());
+            if (previewUrl) {
+                var options = {
+                    onClose: this.onAfterPreview
+                };
+
+                modal.imagePreview(previewUrl, this.tooltip(), options);
+            }
+        };
+        
+        media.ImageSelectorViewModel.prototype.remove = function (data, event) {
+            bcms.stopEventPropagation(event);
+            
+            this.setImage({});
+            this.onAfterRemove();
+        };
+        
         media.ImageSelectorViewModel.prototype.select = function (data, event) {
             var self = this,
                 onMediaSelect = function (insertedImage) {
@@ -1309,6 +1320,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         };
 
         media.ImageSelectorViewModel.prototype.onAfterSelect = function () { };
+
+        media.ImageSelectorViewModel.prototype.onAfterRemove = function () { };
+
+        media.ImageSelectorViewModel.prototype.onAfterPreview = function () { };
 
         return media.ImageSelectorViewModel;
     })();

@@ -135,6 +135,9 @@
   <data name="Button_AddNew" xml:space="preserve">
     <value>Add New +</value>
   </data>
+  <data name="Button_Browse" xml:space="preserve">
+    <value>Browse</value>
+  </data>
   <data name="Button_Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>

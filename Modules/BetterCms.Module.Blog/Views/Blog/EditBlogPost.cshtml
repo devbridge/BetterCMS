@@ -64,6 +64,7 @@
                     <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_FeaturedImage_Title</div>
                     <div class="bcms-uploaded-image">
                         <!-- ko if: image().url() -->
+                        <a href="#" class="bcms-remove-image" data-bind="click: image().remove">@RootGlobalization.Button_Remove</a>
                         <a href="#" data-bind="click: image().preview"><img data-bind="attr: {src: image().versionedThumnailUrl(), alt: image().tooltip() }" /></a>
                         <!-- /ko -->
                     </div>

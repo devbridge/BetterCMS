@@ -149,11 +149,11 @@ div.bcms-btn-blog-add {
 
 /*author tab*/
 .bcms-author-picture {
+    position: relative;
     width: 110px;
     height: 110px;
     margin: 0 auto;
     background: url('images/bcms-no-image-3.png') no-repeat center center;
-    overflow: hidden;
     vertical-align: middle;
     border: 1px solid #c6c6c6;
     background-size: cover;
