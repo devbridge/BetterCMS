@@ -177,9 +177,17 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
                 return;
             }
             var newImg = $.parseJSON(result.innerHTML);
-            if (newImg.IsValid == false) {
+            if (newImg.Success == false) {
                 var failModel = new FileViewModel(uploadFile.file);
                 failModel.uploadFailed(true);
+                failModel.failureMessage('');
+                if (newImg.Messages) {
+                    var failureMessages = '';
+                    for (var i in newImg.Messages) {
+                        failureMessages += newImg.Messages[i] + ' ';
+                    }
+                    failModel.failureMessage(failureMessages);
+                }
                 uploadsModel.uploads.push(failModel);
                 return;
             }
@@ -252,6 +260,7 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
         self.uploadProgress = ko.observable(0);
         self.uploadCompleted = ko.observable(false);
         self.uploadFailed = ko.observable(false);
+        self.failureMessage = ko.observable("");
         self.uploadSpeedFormatted = ko.observable();
         self.fileName = file.fileName;
         self.fileSizeFormated = formatFileSize(file.fileSize);
@@ -313,6 +322,14 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
                                 fileModel.type(result.Data.Type);
                             } else {
                                 fileModel.uploadFailed(true);
+                                fileModel.failureMessage('');
+                                if (result.Messages) {
+                                    var failureMessages = '';
+                                    for (var i in result.Messages) {
+                                        failureMessages += result.Messages[i] + ' ';
+                                    }
+                                    fileModel.failureMessage(failureMessages);
+                                }
                             }
                         },
 

@@ -75,7 +75,8 @@
                             <div class="bcms-progress" style="width: 0;" data-bind="style: { width: uploadProgress() + '%' }"></div>
                         </div>
                         <div class="bcms-upload-description" data-bind="visible: uploadFailed">
-                            @MediaGlobalization.MultiFileUpload_Failed
+                            <span data-bind="visible: !(failureMessage() != null && failureMessage().length > 0)">@MediaGlobalization.MultiFileUpload_Failed</span>
+                            <span data-bind="visible: failureMessage() != null && failureMessage().length > 0, text: failureMessage"></span>
                         </div>
                         <div class="bcms-upload-description" data-bind="visible: uploadCompleted">
                             @MediaGlobalization.MultiFileUpload_Success
