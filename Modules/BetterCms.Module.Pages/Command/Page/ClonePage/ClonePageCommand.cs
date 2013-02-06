@@ -83,6 +83,7 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
                        {
                            PageId = newPage.Id,
                            Version = newPage.Version,
+                           PageTitle = newPage.Title,
                            PageUrl = newPage.PageUrl
                        };
         }

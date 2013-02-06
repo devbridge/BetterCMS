@@ -544,11 +544,11 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                     },
 
                     postSuccess: function (json) {
-                        if (json.Success && json.Data && json.Data.PageUrl) {
+                        if (json.Success && json.Data && (json.Data.Url || json.Data.PageUrl)) {
                             var postSuccess = function(data) {
-                                bcms.redirect(data.Data.PageUrl);
+                                redirect.RedirectWithAlert(json.Data.Url || json.Data.PageUrl);
                             };
-                            if (bcms.trigger(bcms.events.pageCreated, { Data: { Title: json.Data.PageTitle, PageUrl: json.Data.PageUrl }, Callback: postSuccess }) <= 0) {
+                            if (bcms.trigger(bcms.events.pageCreated, { Data: json.Data, Callback: postSuccess }) <= 0) {
                                 if (postSuccess && $.isFunction(postSuccess)) {
                                     postSuccess(json.Data);
                                 }
