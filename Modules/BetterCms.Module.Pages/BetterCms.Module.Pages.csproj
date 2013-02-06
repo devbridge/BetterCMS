@@ -303,9 +303,6 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Content\Partial\WidgetCategory.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\BetterCMS.Configuration\BetterCms.Configuration.csproj">
       <Project>{DA2B225E-6AEE-4465-8B08-4D5B1C1CED49}</Project>
       <Name>BetterCms.Configuration</Name>
@@ -375,7 +372,9 @@
     <EmbeddedResource Include="Views\Content\PageContentOptions.cshtml" />
     <EmbeddedResource Include="Views\Content\EditPageHtmlContent.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Content\Partial\WidgetCategory.cshtml" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Templates\Templates.cshtml" />
   </ItemGroup>

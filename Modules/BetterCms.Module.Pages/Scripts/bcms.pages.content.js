@@ -28,6 +28,7 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                 widgetContainerBlock: '.bcms-preview-block',
                 widgetCategory: '.bcms-category',
                 widgetName: '.bcms-title-holder > .bcms-content-titles',
+                widgetImagePreview: '.bcms-preview-box:not(:has(iframe)) .bcms-zoom-overlay',
 
                 widgetsContent: '.bcms-widgets',
 
@@ -185,7 +186,15 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
 
             htmlEditor.initializeHtmlEditor(selectors.htmlEditor);
 
-            preview.initialize(dialog.container.find(selectors.widgetsContent));
+            // Add preview for widget with images (unbind click for iframe preview)
+            dialog.container.find(selectors.widgetImagePreview).unbind('click');
+            dialog.container.find(selectors.widgetImagePreview).on('click', function () {
+                var self = $(this),
+                    url = self.data('previewUrl'),
+                    alt = self.data('previewTitle');
+                
+                modal.imagePreview(url, alt);
+            });
 
             pagesContent.initializeCustomTextArea(dialog);
         };
