@@ -86,7 +86,7 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// The name of the page content.
         /// </value>
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "PageContent_ContentName_RequiredMessage")]
-        [StringLength(200, MinimumLength = 1, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "PageContent_ContentName_MaxLengthMessage")]
+        [StringLength(MaxLength.Name, MinimumLength = 1, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "PageContent_ContentName_MaxLengthMessage")]
         public string ContentName { get; set; }
 
         /// <summary>

@@ -60,7 +60,7 @@ namespace BetterCms.Module.Pages.Command.Layout.SaveTemplate
                                                    ? request.RegionOptions.FirstOrDefault(f => f.Identifier == region.Region.RegionIdentifier)
                                                    : null;
 
-                    if (requestRegion != null && region.Description != requestRegion.Description)
+                    if (requestRegion != null && region.Region.RegionIdentifier == requestRegion.Identifier)
                     {
                         region.Description = requestRegion.Description;                        
                         Repository.Save(region);
@@ -75,15 +75,15 @@ namespace BetterCms.Module.Pages.Command.Layout.SaveTemplate
             // Adds new region.
             if (request.RegionOptions != null)
             {
+                if (template.LayoutRegions == null)
+                {
+                    template.LayoutRegions = new List<LayoutRegion>();
+                }
+
                 var regions = GetRegions(request.RegionOptions);
 
                 foreach (var requestRegionOption in request.RegionOptions)
                 {
-                    if (template.LayoutRegions == null)
-                    {
-                        template.LayoutRegions = new List<LayoutRegion>();
-                    }
-
                     if (!template.LayoutRegions.Any(f => f.Region.RegionIdentifier.Equals(requestRegionOption.Identifier, StringComparison.InvariantCultureIgnoreCase)))
                     {
                         var region = regions.Find(f => f.RegionIdentifier.Equals(requestRegionOption.Identifier, StringComparison.InvariantCultureIgnoreCase));
@@ -112,6 +112,7 @@ namespace BetterCms.Module.Pages.Command.Layout.SaveTemplate
                         {
                             var layoutRegion = new LayoutRegion
                                                    {
+                                                       Description = requestRegionOption.Description,                                                       
                                                        Region = region, 
                                                        Layout = template
                                                    };

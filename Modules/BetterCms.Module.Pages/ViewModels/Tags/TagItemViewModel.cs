@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
+using BetterCms.Core.Models;
 using BetterCms.Module.Root.Mvc.Grids;
 
 namespace BetterCms.Module.Pages.ViewModels.Tags
@@ -33,7 +34,7 @@ namespace BetterCms.Module.Pages.ViewModels.Tags
         /// The name.
         /// </value>
         [Required]
-        [StringLength(512)]
+        [StringLength(MaxLength.Name)]
         public string Name { get; set; }
 
         /// <summary>

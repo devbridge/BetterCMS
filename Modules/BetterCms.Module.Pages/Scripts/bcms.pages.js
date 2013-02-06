@@ -7,15 +7,15 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
 
         var page = { },            
             selectors = {
-                editPermalink: '#bcms-addnewpage-editpermalink',
+                editPermalink: '#bcms-page-editpermalink',
                 editPermalinkBox: '.bcms-edit-urlpath-box',
                 editPermalinkClose: 'div.bcms-edit-urlpath-box .bcms-tip-close, div.bcms-edit-urlpath-box .bcms-btn-links-small',
                 editPermalinkSave: '#bcms-save-permalink',
-                permalinkHiddenField: '#bcms-page-permalink',
-                permalinkEditField: '#bcms-page-permalink-edit',
-                permalinkInfoField: '#bcms-page-permalink-info',
-                addNewPageTitleInput: '#PageTitle',
+                editPermalinkHiddenField: '#bcms-page-permalink',
+                editPermalinkEditField: '#bcms-page-permalink-edit',
+                editPermalinkInfoField: '#bcms-page-permalink-info',
 
+                addNewPageTitleInput: '#PageTitle',
                 addNewPageCloseInfoMessage: '#bcms-addnewpage-closeinfomessage',
                 addNewPageCloseInfoMessageBox: '.bcms-info-message-box',
                 addNewPageTemplateSelect: '.bcms-btn-grid',
@@ -81,37 +81,52 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
     page.globalization = globalization;
     page.senderId = 0;
 
-    /**
-    * Initializes AddNewPage dialog events.
-    */
-    page.initAddNewPageDialogEvents = function (dialog) {
+    function initializePermalinkBox(dialog, addPrefix) {
         pageUrlManuallyEdited = false;
         
-        dialog.container.find(selectors.editPermalink).on('click', function() {
+        dialog.container.find(selectors.editPermalink).on('click', function () {
             page.showAddNewPageEditPermalinkBox(dialog);
         });
 
-        dialog.container.find(selectors.editPermalinkClose).on('click', function() {
+        dialog.container.find(selectors.editPermalinkClose).on('click', function () {
             page.closeAddNewPageEditPermalinkBox(dialog);
         });
-        
+
         dialog.container.find(selectors.editPermalinkSave).on('click', function () {
             page.saveAddNewPageEditPermalinkBox(dialog);
         });
 
         dialog.container.find(selectors.addNewPageTitleInput).on('keyup', function () {
-            page.changeUrlSlug(dialog);
+            page.changeUrlSlug(dialog, addPrefix);
         });
 
-        dialog.container.find(selectors.permalinkEditField).on('keyup', function () {
+        dialog.container.find(selectors.editPermalinkEditField).on('keyup', function () {
             pageUrlManuallyEdited = true;
         });
-
+        
         dialog.container.find(selectors.addNewPageForm).on('submit', function () {
-            if (!dialog.container.find(selectors.permalinkEditField).valid()) {
+            if (!dialog.container.find(selectors.editPermalinkEditField).valid()) {
                 page.showAddNewPageEditPermalinkBox(dialog);
             }
         });
+        
+        bcms.preventInputFromSubmittingForm(dialog.container.find(selectors.editPermalinkEditField), {
+            preventedEnter: function () {
+                dialog.container.find(selectors.editPermalinkEditField).blur();
+                page.saveAddNewPageEditPermalinkBox(dialog);
+            },
+            preventedEsc: function () {
+                dialog.container.find(selectors.editPermalinkEditField).blur();
+                page.closeAddNewPageEditPermalinkBox(dialog);
+            }
+        });
+    }
+
+    /**
+    * Initializes AddNewPage dialog events.
+    */
+    page.initAddNewPageDialogEvents = function (dialog) {
+        initializePermalinkBox(dialog, true);
 
         var infoMessageClosed = localStorage.getItem(keys.addNewPageInfoMessageClosed);
         if (infoMessageClosed && infoMessageClosed === '1') {
@@ -134,17 +149,6 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
 
             modal.imagePreview(url, alt);
         });
-        
-        bcms.preventInputFromSubmittingForm(dialog.container.find(selectors.permalinkEditField), {
-            preventedEnter: function () {
-                dialog.container.find(selectors.permalinkEditField).blur();
-                page.saveAddNewPageEditPermalinkBox(dialog);
-            },
-            preventedEsc: function () {
-                dialog.container.find(selectors.permalinkEditField).blur();
-                page.closeAddNewPageEditPermalinkBox(dialog);
-            }
-        });
     };
 
     /**
@@ -153,17 +157,17 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
     page.showAddNewPageEditPermalinkBox = function (dialog) {
         dialog.container.find(selectors.editPermalinkBox).show();
         dialog.container.find(selectors.editPermalink).hide();
-        dialog.container.find(selectors.permalinkEditField).focus();
+        dialog.container.find(selectors.editPermalinkEditField).focus();
     };
 
     /**
     * Sets changed permalink value in PageProperties dialog
     */
     page.saveAddNewPageEditPermalinkBox = function (dialog) {
-        if ($(selectors.permalinkEditField).valid()) {
-            var value = dialog.container.find(selectors.permalinkEditField).val();
-            dialog.container.find(selectors.permalinkHiddenField).val(value);
-            dialog.container.find(selectors.permalinkInfoField).html(value ? value : "&nbsp;");
+        if ($(selectors.editPermalinkEditField).valid()) {
+            var value = dialog.container.find(selectors.editPermalinkEditField).val();
+            dialog.container.find(selectors.editPermalinkHiddenField).val(value);
+            dialog.container.find(selectors.editPermalinkInfoField).html(value ? value : "&nbsp;");
 
             page.hideAddNewPageEditPermalinkBox(dialog);
         }
@@ -173,8 +177,8 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
     * Closes edit permalink box in AddNewPage dialog.
     */
     page.closeAddNewPageEditPermalinkBox = function (dialog) {
-        var value = dialog.container.find(selectors.permalinkHiddenField).val();
-        dialog.container.find(selectors.permalinkEditField).val(value);
+        var value = dialog.container.find(selectors.editPermalinkHiddenField).val();
+        dialog.container.find(selectors.editPermalinkEditField).val(value);
 
         page.hideAddNewPageEditPermalinkBox(dialog);
     };
@@ -245,17 +249,18 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
     };
 
     page.openCreatePageDialog = function (postSuccess) {
-        var permalinkValue;
+        var permalinkValue,
+            url = $.format(links.loadAddNewPageDialogUrl, window.location.pathname);
 
         modal.open({
             title: globalization.addNewPageDialogTitle,
             onLoad: function (dialog) {
-                dynamicContent.bindDialog(dialog, links.loadAddNewPageDialogUrl, {
+                dynamicContent.bindDialog(dialog, url, {
                     contentAvailable: page.initAddNewPageDialogEvents,
 
                     beforePost: function () {
                         if (!pageUrlManuallyEdited) {
-                            var pageUrlField = dialog.container.find(selectors.permalinkEditField);
+                            var pageUrlField = dialog.container.find(selectors.editPermalinkEditField);
                             permalinkValue = pageUrlField.val();
                             pageUrlField.val(null);
                         }
@@ -263,7 +268,7 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
 
                     postError: function () {
                         if (!pageUrlManuallyEdited) {
-                            var pageUrlField = dialog.container.find(selectors.permalinkEditField);
+                            var pageUrlField = dialog.container.find(selectors.editPermalinkEditField);
                             pageUrlField.val(permalinkValue);
                         }
                     },
@@ -322,7 +327,7 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
     /**
     * Changes page slug
     */
-    page.changeUrlSlug = function (dialog) {
+    page.changeUrlSlug = function (dialog, addPrefix) {
         var oldText = $.trim(dialog.container.find(selectors.addNewPageTitleInput).val());
         setTimeout(function() {
             var text = $.trim(dialog.container.find(selectors.addNewPageTitleInput).val()),
@@ -330,12 +335,23 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 onComplete = function (json) {
                     if (json && json.SenderId == senderId && json.Url) {
                         var slug = json.Url,
-                            prefix = window.location.pathname,
-                            url = prefix + (slug ? slug + '/' : '');
+                            url = (slug ? slug + '/' : '');
 
-                        dialog.container.find(selectors.permalinkEditField).val(url);
-                        dialog.container.find(selectors.permalinkHiddenField).val(url);
-                        dialog.container.find(selectors.permalinkInfoField).html(url);
+                        if (addPrefix) {
+                            var prefix = window.location.pathname;
+                            if (prefix.substr(prefix.length - 1, 1) != '/') {
+                                prefix += '/';
+                            }
+                            url = prefix + url;
+                        }
+                        
+                        if (url.substr(0, 1) != '/') {
+                            url = '/' + url;
+                        }
+
+                        dialog.container.find(selectors.editPermalinkEditField).val(url);
+                        dialog.container.find(selectors.editPermalinkHiddenField).val(url);
+                        dialog.container.find(selectors.editPermalinkInfoField).html(url);
                         
                         pageUrlManuallyEdited = false;
                     }
@@ -496,13 +512,37 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
         });
     };
 
-    page.clonePage = function() {
+    /**
+    * Opens dialog for clone the page
+    */
+    page.clonePage = function () {
+        var permalinkValue;
+
         modal.open({
             title: globalization.clonePageDialogTitle,
             acceptTitle: globalization.cloneButtonTitle,
             onLoad: function (dialog) {
                 var url = $.format(links.clonePageDialogUrl, bcms.pageId);
                 dynamicContent.bindDialog(dialog, url, {
+                    contentAvailable: function () {
+                        initializePermalinkBox(dialog, false);
+                    },
+
+                    beforePost: function () {
+                        if (!pageUrlManuallyEdited) {
+                            var pageUrlField = dialog.container.find(selectors.editPermalinkEditField);
+                            permalinkValue = pageUrlField.val();
+                            pageUrlField.val(null);
+                        }
+                    },
+
+                    postError: function () {
+                        if (!pageUrlManuallyEdited) {
+                            var pageUrlField = dialog.container.find(selectors.editPermalinkEditField);
+                            pageUrlField.val(permalinkValue);
+                        }
+                    },
+
                     postSuccess: function (json) {
                         if (json.Success && json.Data && json.Data.PageUrl) {
                             var postSuccess = function(data) {

@@ -2,9 +2,11 @@
 
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Mvc.Helpers;
 
 using NHibernate.Linq;
 
@@ -13,15 +15,42 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
     /// <summary>
     /// A command to clone given page.
     /// </summary>
-    public class ClonePageCommand : CommandBase, ICommand<ClonePageViewModel, bool>
+    public class ClonePageCommand : CommandBase, ICommand<ClonePageViewModel, ClonePageViewModel>
     {
+        /// <summary>
+        /// Gets or sets the page service.
+        /// </summary>
+        /// <value>
+        /// The page service.
+        /// </value>
+        public IPageService PageService { get; set; }
+
+        /// <summary>
+        /// Gets or sets the redirect service.
+        /// </summary>
+        /// <value>
+        /// The redirect service.
+        /// </value>
+        public IRedirectService RedirectService { get; set; }
+
         /// <summary>
         /// Executes the specified request.
         /// </summary>
         /// <param name="request">The page view model.</param>
         /// <returns>true if page cloned successfully; false otherwise.</returns>
-        public virtual bool Execute(ClonePageViewModel request)
+        public virtual ClonePageViewModel Execute(ClonePageViewModel request)
         {
+            // Create / fix page url
+            var pageUrl = request.PageUrl;
+            if (pageUrl == null && !string.IsNullOrWhiteSpace(request.PageTitle))
+            {
+                pageUrl = request.PageTitle.Transliterate();
+            }
+            pageUrl = RedirectService.FixUrl(pageUrl);
+
+            // Validate Url
+            PageService.ValidatePageUrl(pageUrl);
+
             var page = Repository.FirstOrDefault<PageProperties>(request.PageId);
 
             UnitOfWork.BeginTransaction();
@@ -41,7 +70,7 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
                 .Where(f => f.PageContent.Page.Id == page.Id)
                 .ToList();
 
-            var newPage = ClonePageOnly(page, request.PageTitle, request.PageUrl);
+            var newPage = ClonePageOnly(page, request.PageTitle, pageUrl);
 
             // Clone HTML contents and Controls:
             pageContents.ForEach(pageContent => ClonePageContent(pageContent, newPage));
@@ -50,7 +79,12 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
 
             UnitOfWork.Commit();
 
-            return true;
+            return new ClonePageViewModel
+                       {
+                           PageId = newPage.Id,
+                           Version = newPage.Version,
+                           PageUrl = newPage.PageUrl
+                       };
         }
 
         private void ClonePageTags(PageTag pageTag, PageProperties newPage)

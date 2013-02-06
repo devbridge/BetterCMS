@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 
+using BetterCms.Core.Models;
 using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Command.Page.ClonePage;
 using BetterCms.Module.Pages.Command.Page.CreatePage;
@@ -22,8 +23,6 @@ using BetterCms.Module.Root.Mvc.Helpers;
 
 namespace BetterCms.Module.Pages.Controllers
 {
-
-
     /// <summary>
     /// Controller for CMS pages: create / edit / delete pages
     /// </summary>
@@ -47,9 +46,9 @@ namespace BetterCms.Module.Pages.Controllers
         /// ViewResult to render add new page modal dialog.
         /// </returns>
         [HttpGet]
-        public ActionResult AddNewPage()
+        public ActionResult AddNewPage(string parentPageUrl)
         {
-            AddNewPageViewModel model = new AddNewPageViewModel();
+            AddNewPageViewModel model = new AddNewPageViewModel { ParentPageUrl = parentPageUrl };
             model.Templates = GetCommand<GetTemplatesCommand>().ExecuteCommand(new GetTemplatesRequest()).Templates;
 
             // Select first template as active
@@ -177,7 +176,8 @@ namespace BetterCms.Module.Pages.Controllers
         [HttpPost]
         public ActionResult ClonePage(ClonePageViewModel model)
         {
-            if (GetCommand<ClonePageCommand>().ExecuteCommand(model))
+            model = GetCommand<ClonePageCommand>().ExecuteCommand(model);
+            if (model != null)
             {
                 Messages.AddSuccess(string.Format(PagesGlobalization.ClonePage_Dialog_Success, model.PageUrl));
                 return Json(new WireJson { Success = true, Data = model});
@@ -220,11 +220,18 @@ namespace BetterCms.Module.Pages.Controllers
         /// <returns>URL, created from text</returns>
         public ActionResult ConvertStringToSlug(string text, string senderId)
         {
+            const int maxLength = MaxLength.Url - 5;
+            
             var slug = text.Transliterate();
             if (string.IsNullOrWhiteSpace(slug))
             {
                 slug = "-";
             }
+            if (slug.Length >= maxLength)
+            {
+                slug = slug.Substring(0, maxLength);
+            }
+
             return Json(new { Text = text, Url = slug, SenderId = senderId }, JsonRequestBehavior.AllowGet);
         }
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
+using BetterCms.Core.Models;
 using BetterCms.Module.Root.Mvc.Grids;
 
 namespace BetterCms.Module.Pages.ViewModels.SiteSettings
@@ -31,7 +32,7 @@ namespace BetterCms.Module.Pages.ViewModels.SiteSettings
         /// </value>
         [Required(AllowEmptyStrings = false)]
         [RegularExpression(PagesConstants.PageUrlRegularExpression)]
-        [StringLength(1000)]
+        [StringLength(MaxLength.Url)]
         public string PageUrl { get; set; }
 
         /// <summary>
@@ -42,7 +43,7 @@ namespace BetterCms.Module.Pages.ViewModels.SiteSettings
         /// </value>
         [Required(AllowEmptyStrings = false)]
         [RegularExpression(PagesConstants.PageUrlRegularExpression)]
-        [StringLength(1000)]
+        [StringLength(MaxLength.Url)]
         public string RedirectUrl { get; set; }
 
         /// <summary>

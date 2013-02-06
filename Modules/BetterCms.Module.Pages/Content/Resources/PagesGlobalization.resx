@@ -1107,7 +1107,25 @@
   <data name="SaveTag_TagExists_Message" xml:space="preserve">
     <value>Tag already exists.</value>
   </data>
+  <data name="ClonePage_EditNewUrl_Title" xml:space="preserve">
+    <value>New Page URL</value>
+  </data>
   <data name="PageContent_LiveTo_ValidationMessage" xml:space="preserve">
     <value>Live To date must be greater than Live From.</value>
+  </data>
+  <data name="ClonePage_EditNewUrl_Tooltip_Description" xml:space="preserve">
+    <value>Page URL must start and end with "/" and can contain only following characters: '0-9', 'a-z', '-', '/, '_'</value>
+  </data>
+  <data name="ClonePage_EditNewUrl_Tooltip_Title" xml:space="preserve">
+    <value>New Page URL</value>
+  </data>
+  <data name="ClonePage_NewUrl" xml:space="preserve">
+    <value>New Page URL</value>
+  </data>
+  <data name="ClonePage_NewUrl_Tooltip_Description" xml:space="preserve">
+    <value>Edit New Page URL</value>
+  </data>
+  <data name="ClonePage_NewUrl_Tooltip_Title" xml:space="preserve">
+    <value>Edit New Page URL</value>
   </data>
 </root>

@@ -502,6 +502,60 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New Page URL.
+        /// </summary>
+        public static string ClonePage_EditNewUrl_Title {
+            get {
+                return ResourceManager.GetString("ClonePage_EditNewUrl_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Page URL must start and end with &quot;/&quot; and can contain only following characters: &apos;0-9&apos;, &apos;a-z&apos;, &apos;-&apos;, &apos;/, &apos;_&apos;.
+        /// </summary>
+        public static string ClonePage_EditNewUrl_Tooltip_Description {
+            get {
+                return ResourceManager.GetString("ClonePage_EditNewUrl_Tooltip_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Page URL.
+        /// </summary>
+        public static string ClonePage_EditNewUrl_Tooltip_Title {
+            get {
+                return ResourceManager.GetString("ClonePage_EditNewUrl_Tooltip_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Page URL.
+        /// </summary>
+        public static string ClonePage_NewUrl {
+            get {
+                return ResourceManager.GetString("ClonePage_NewUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit New Page URL.
+        /// </summary>
+        public static string ClonePage_NewUrl_Tooltip_Description {
+            get {
+                return ResourceManager.GetString("ClonePage_NewUrl_Tooltip_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit New Page URL.
+        /// </summary>
+        public static string ClonePage_NewUrl_Tooltip_Title {
+            get {
+                return ResourceManager.GetString("ClonePage_NewUrl_Tooltip_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Page title max length exceeded..
         /// </summary>
         public static string ClonePage_PageTitle_MaxLengthMessage {
