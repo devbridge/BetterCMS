@@ -2248,6 +2248,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Duplicate widget options found..
+        /// </summary>
+        public static string SaveWidget_DublicateOptionName_Message {
+            get {
+                return ResourceManager.GetString("SaveWidget_DublicateOptionName_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Widget view doesn&apos;t exists by given url ({0}). Url should start with tilde(~) and direct to views folder in the web application root folder (for example, ~/Views/Widgets/Example.cshtml). Check if url is valid and if file exists and try again..
         /// </summary>
         public static string SaveWidget_VirtualPathNotExists_Message {
