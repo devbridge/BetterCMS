@@ -150,7 +150,7 @@ namespace BetterCms.Module.Pages.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (model.ContentOptions.GroupBy(o => o.OptionKey).SelectMany(g => g.Skip(1)).Any())
+                if (model.ContentOptions != null && model.ContentOptions.GroupBy(o => o.OptionKey).SelectMany(g => g.Skip(1)).Any())
                 {
                     Messages.AddError(PagesGlobalization.SaveWidget_DublicateOptionName_Message);
                     return Json(new WireJson { Success = false });

@@ -22,6 +22,7 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                 widgetsSearchInput: '#bcms-advanced-content-search',
                 widgetsContainer: '#bcms-advanced-contents-container',
                 widgetCreateButton: '#bcms-create-advanced-content-button',
+                widgetRegisterButton: '#bcms-registeradvanced-content-button',
                 widgetInsertButtons: '.bcms-content-insert-button',
                 widgetDeleteButtons: '.bcms-content-delete-button',
                 widgetEditButtons: '.bcms-content-edit-button',
@@ -173,6 +174,12 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
             dialog.container.find(selectors.widgetCreateButton).on('click', function () {
                 widgets.openCreateHtmlContentWidgetDialog(function () {
                     // Reload search results after category was created.
+                    pagesContent.updateWidgetCategoryList(dialog);
+                }, null);
+            });
+
+            dialog.container.find(selectors.widgetRegisterButton).on('click', function () {
+                widgets.openCreateServerControlWidgetDialog(function () {
                     pagesContent.updateWidgetCategoryList(dialog);
                 }, null);
             });

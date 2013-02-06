@@ -1134,4 +1134,7 @@
   <data name="DeleteTemplate_TemplateIsInUse_Message" xml:space="preserve">
     <value>Cannot delete template, because it is in use.</value>
   </data>
+  <data name="AddPageContent_WidgetTab_RegisterButton" xml:space="preserve">
+    <value>Register +</value>
+  </data>
 </root>

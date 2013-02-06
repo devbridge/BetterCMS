@@ -376,6 +376,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Register +.
+        /// </summary>
+        public static string AddPageContent_WidgetTab_RegisterButton {
+            get {
+                return ResourceManager.GetString("AddPageContent_WidgetTab_RegisterButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
         public static string AddPageContent_WidgetTab_SearchButton {
