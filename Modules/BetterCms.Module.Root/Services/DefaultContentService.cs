@@ -181,7 +181,8 @@ namespace BetterCms.Module.Root.Services
                 var previewOrDraftContentVersion = originalContent.History.FirstOrDefault(f => f.Status == requestedStatus && !f.IsDeleted);
                 if (previewOrDraftContentVersion == null)
                 {
-                    if (originalContent.Status == requestedStatus)
+                    if (originalContent.Status == requestedStatus 
+                        || (originalContent.Status == ContentStatus.Preview && requestedStatus == ContentStatus.Draft))
                     {
                         previewOrDraftContentVersion = originalContent;
                     }
