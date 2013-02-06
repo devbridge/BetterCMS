@@ -57,7 +57,7 @@ define('bcms.pages.redirects', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.s
 
         form.on('submit', function (event) {
             event.preventDefault();
-            redirect.searchSiteSettingsRedirects(form);
+            redirect.searchSiteSettingsRedirects(form, container);
             return false;
         });
 
@@ -87,10 +87,12 @@ define('bcms.pages.redirects', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.s
         grid.submitGridForm(form, function (data) {
             siteSettings.setContent(data);
             redirect.initializeSiteSettingsRedirectsList(data);
-            var searchInput = container.find(selectors.searchField);           
-            var val = searchInput.val();
-            searchInput.focus().val("");
-            searchInput.val(val);   
+            var searchInput = container.find(selectors.searchField);  
+            setTimeout(function() {
+                var val = searchInput.val();
+                searchInput.focus().val("");
+                searchInput.val(val);
+            }, 50);
         });
     };
 

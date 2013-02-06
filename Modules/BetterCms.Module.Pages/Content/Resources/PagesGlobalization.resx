@@ -1137,4 +1137,7 @@
   <data name="AddPageContent_WidgetTab_RegisterButton" xml:space="preserve">
     <value>Register +</value>
   </data>
+  <data name="SaveTemplate_DublicateRegionIdentificator_Message" xml:space="preserve">
+    <value>Duplicate template region found.</value>
+  </data>
 </root>

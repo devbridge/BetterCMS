@@ -1,5 +1,5 @@
 ﻿using System.Web.Mvc;
-
+using System.Linq;
 using BetterCms.Module.Pages.Command.Layout.DeleteTemplate;
 using BetterCms.Module.Pages.Command.Layout.GetSiteSettingsTemplates;
 using BetterCms.Module.Pages.Command.Layout.GetTemplate;
@@ -81,6 +81,12 @@ namespace BetterCms.Module.Pages.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (model.RegionOptions != null && model.RegionOptions.GroupBy(r => r.Identifier).SelectMany(g => g.Skip(1)).Any())
+                {
+                    Messages.AddError(PagesGlobalization.SaveTemplate_DublicateRegionIdentificator_Message);
+                    return Json(new WireJson { Success = false });
+                }
+
                 var response = GetCommand<SaveTemplateCommand>().ExecuteCommand(model);
                 if (response != null)
                 {
