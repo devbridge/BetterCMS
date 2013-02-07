@@ -362,17 +362,17 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                                     originalDragObject = dragObject;
                                 ui.helper.remove();
 
-                                if (dragObject.parentNode) {
-                                    dragObject.parentNode.childNodes.remove(dragObject);
+                                if (dragObject.parentNode && dragObject.parentNode()) {
+                                    dragObject.parentNode().childNodes.remove(dragObject);
                                 } else {
                                     // Create node from page link.
                                     var node = new NodeViewModel();
                                     node.title(dragObject.title());
                                     node.url(dragObject.url());
                                     if (dropZoneType == DropZoneTypes.EmptyListZone || dropZoneType == DropZoneTypes.MiddleZone) {
-                                        node.parentNode = dropZoneObject;
+                                        node.parentNode(dropZoneObject);
                                     } else {
-                                        node.parentNode = dropZoneObject.parentNode;
+                                        node.parentNode(dropZoneObject.parentNode());
                                     }
                                     if (dragObject.isCustom()) {
                                         node.startEditSitemapNode();
@@ -380,7 +380,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                                             sitemap.activeMapModel.updateNodesOrderAndParent();
                                         };
                                         node.callbackAfterFailSaving = function (newNode) {
-                                            newNode.parentNode.childNodes.remove(newNode);
+                                            newNode.parentNode().childNodes.remove(newNode);
                                         };
                                     }
                                     dragObject = node;
@@ -394,16 +394,16 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                                     dropZoneObject.childNodes.splice(0, 0, dragObject);
                                 }
                                 else if (dropZoneType == DropZoneTypes.TopZone) {
-                                    index = dropZoneObject.parentNode.childNodes().indexOf(dropZoneObject);
-                                    dropZoneObject.parentNode.childNodes.splice(index, 0, dragObject);
+                                    index = dropZoneObject.parentNode().childNodes().indexOf(dropZoneObject);
+                                    dropZoneObject.parentNode().childNodes.splice(index, 0, dragObject);
                                 }
                                 else if (dropZoneType == DropZoneTypes.MiddleZone) {
                                     dropZoneObject.childNodes.splice(0, 0, dragObject);
                                     dropZoneObject.isExpanded(true);
                                 }
                                 else if (dropZoneType == DropZoneTypes.BottomZone) {
-                                    index = dropZoneObject.parentNode.childNodes().indexOf(dropZoneObject);
-                                    dropZoneObject.parentNode.childNodes.splice(index + 1, 0, dragObject);
+                                    index = dropZoneObject.parentNode().childNodes().indexOf(dropZoneObject);
+                                    dropZoneObject.parentNode().childNodes.splice(index + 1, 0, dragObject);
                                 }
                                 dropZoneObject.activeZone(DropZoneTypes.None);
                                 
@@ -423,6 +423,31 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                     $(element).droppable(setup);
                 }
             };
+        }
+
+        /**
+        * Helper function to update nodes in list.
+        */
+        function updateFirstLastNode(nodes) {
+            var firstNotDeletedNode = null,
+                lastNotDeletedNode = null;
+            for (var i = 0; i < nodes.length; i++) {
+                var node = nodes[i];
+                if (!node.isDeleted()) {
+                    if (firstNotDeletedNode == null) {
+                        firstNotDeletedNode = node;
+                    }
+                    lastNotDeletedNode = node;
+                }
+                node.isFirstNode(false);
+                node.isLastNode(false);
+            }
+            if (firstNotDeletedNode != null) {
+                firstNotDeletedNode.isFirstNode(true);
+            }
+            if (lastNotDeletedNode != null) {
+                lastNotDeletedNode.isLastNode(true);
+            }
         }
         // --------------------------------------------------------------------
         
@@ -483,6 +508,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             var self = this;
             self.id = function() { return defaultIdValue; };
             self.childNodes = ko.observableArray([]);
+            self.childNodes.subscribe(updateFirstLastNode);
             self.someNodeIsOver = ko.observable(false);     // Someone is dragging some node over the sitemap, but not over the particular node.
             self.activeZone = ko.observable(DropZoneTypes.None);
 
@@ -533,16 +559,14 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                     var node = nodes[i],
                         saveIt = false;
                     
-                    node.isFirstNode(i == 0);
-
                     if (node.displayOrder() != i) {
                         saveIt = true;
                         node.displayOrder(i);
                     }
 
-                    if (node.parentNode != parent) {
+                    if (node.parentNode() != parent) {
                         saveIt = true;
-                        node.parentNode = parent;
+                        node.parentNode(parent);
                     }
 
                     if (saveIt || node.id() == defaultIdValue) {
@@ -605,8 +629,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 for (var i = 0; i < jsonNodes.length; i++) {
                     var node = new NodeViewModel();
                     node.fromJson(jsonNodes[i]);
-                    node.parentNode = self;
-                    node.isFirstNode(i == 0);
+                    node.parentNode(self);
                     nodes.push(node);
                 }
                 self.childNodes(nodes);
@@ -646,8 +669,14 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             self.url = ko.observable();
             self.displayOrder = ko.observable(0);
             self.isDeleted = ko.observable(false);
+            self.isDeleted.subscribe(function () {
+                if (self.parentNode()) {
+                    updateFirstLastNode(self.parentNode().childNodes());
+                }
+            });
             self.childNodes = ko.observableArray([]);
-            self.parentNode = null;
+            self.childNodes.subscribe(updateFirstLastNode);
+            self.parentNode = ko.observable();
             
             // For behavior.
             self.isActive = ko.observable(false);           // If TRUE - show edit fields.
@@ -658,6 +687,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             self.isBeingDragged = ko.observable(false);     // Someone is dragging the node.
             self.activeZone = ko.observable(DropZoneTypes.None);
             self.isFirstNode = ko.observable(false);
+            self.isLastNode = ko.observable(false);
             self.hasChildNodes = function () {
                 // Has at least one not deleted child node.
                 for (var i in self.childNodes()) {
@@ -686,7 +716,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 self.title(self.titleOldValue);
                 self.url(self.urlOldValue);
                 if (self.id() == defaultIdValue) {
-                    self.parentNode.childNodes.remove(self);
+                    self.parentNode().childNodes.remove(self);
                 }
             };
             self.saveSitemapNodeWithValidation = function () {
@@ -751,7 +781,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                                     try {
                                         if (json.Success) {
                                             self.isDeleted(true);
-                                            self.parentNode.childNodes.remove(self);
+                                            self.parentNode().childNodes.remove(self);
                                         }
                                         sitemap.showLoading(false);
                                     } finally {
@@ -780,8 +810,8 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             self.callbackAfterFailSaving = null;
 
             self.getSitemap = function() {
-                if (self.parentNode != null) {
-                    return self.parentNode.getSitemap();
+                if (self.parentNode() != null) {
+                    return self.parentNode().getSitemap();
                 }
                 return null;
             };
@@ -798,8 +828,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                     for (var i = 0; i < jsonNode.ChildNodes.length; i++) {
                         var node = new NodeViewModel();
                         node.fromJson(jsonNode.ChildNodes[i]);
-                        node.parentNode = self;
-                        node.isFirstNode(i == 0);
+                        node.parentNode(self);
                         nodes.push(node);
                     }
                 }
@@ -812,7 +841,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                     Title: self.title(),
                     Url: self.url(),
                     DisplayOrder: self.displayOrder(),
-                    ParentId: self.parentNode.id(),
+                    ParentId: self.parentNode().id(),
                 };
                 return params;
             };
@@ -911,7 +940,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             self.undoClicked = function () {
                 if (self.sitemapNode != null) {
                     // Remove newly created node from sitemap.
-                    self.sitemapNode.parentNode.childNodes.remove(self.sitemapNode);
+                    self.sitemapNode.parentNode().childNodes.remove(self.sitemapNode);
                     self.sitemapNode = null;
                 }
                 self.pageLink.isVisible(true);

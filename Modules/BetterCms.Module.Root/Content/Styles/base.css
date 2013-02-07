@@ -1098,8 +1098,9 @@ div.bcms-modal-close {
     }
 
     .bcms-popinfo-frame > p {
-        font-size: 11px;
         line-height: 19px;
+        word-wrap: break-word;
+        font-size: 11px;
         font-family: 'Open Sans', sans-serif;
     }
 
