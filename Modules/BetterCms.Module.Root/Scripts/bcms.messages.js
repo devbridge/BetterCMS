@@ -140,8 +140,9 @@ define('bcms.messages', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, mod
             container: container
         });
 
+        messagesBox.clearMessages();
+        
         if (json.Messages) {
-            messagesBox.clearMessages();
             for (var i = 0; i < json.Messages.length; i++) {
                 if (json.Success) {
                     messagesBox.addSuccessMessage(json.Messages[i]);

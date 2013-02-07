@@ -7,9 +7,9 @@
 @using Microsoft.Web.Mvc
 
 @model DeletePageViewModel
-@Html.TabbedContentMessagesBox()
 
 <div class="bcms-scroll-window">
+    @Html.TabbedContentMessagesBox()
     <div class="bcms-padded-content">
         @using (Html.BeginForm<PageController>(f => f.DeletePage(null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
         {

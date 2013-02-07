@@ -954,7 +954,7 @@ div.bcms-modal-close {
 
 .bcms-modal-content-padded {
     position: relative;
-    padding: 0 0 74px;
+    padding: 50px 0 74px;
 }
 
 .bcms-modal-footer {
