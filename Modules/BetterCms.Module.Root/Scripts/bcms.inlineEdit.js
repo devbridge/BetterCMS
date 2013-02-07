@@ -143,6 +143,7 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
         bcms.preventInputFromSubmittingForm(initContainer.find(selectors.fieldInputs), {
             preventedEnter: function (self) {
                 var row = self.parents(selectors.firstRow);
+
                 editor.saveRow(row, formContainer);
             },
             preventedEsc: function (self) {
@@ -233,6 +234,7 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
     * Function is called when focus lost, when inline editing mode is on
     */
     editor.onRowInputBlur = function (event, self, row, container) {
+        row.data('blurred', true);
         setTimeout(function () {
             var unbind = false;
 
@@ -241,7 +243,7 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
                 var valueChanged = editor.hasAnyValueChanged(row);
                 
                 if (valueChanged) {
-                    if (editor.isRowValid(row)) {
+                    if (editor.isRowValid(row) && row.data('blurred')) {
                         editor.saveRow(row, container);
                         unbind = true;
                     }
@@ -261,6 +263,8 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
                 // Unbind, and later bind  back again
                 editor.unbindBlurEvents(row);
             }
+            
+            row.data('blurred', false);
         }, 500);
     };
 
@@ -323,6 +327,7 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
                         messages.refreshBox(container, json);
                         savingMessage.hide();
                         row.data('saving', false);
+                        row.data('blurred', false);
                         if (json.Success) {
                             if (json.Data) {
                                 if (json.Data.Version) {
