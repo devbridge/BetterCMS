@@ -13,7 +13,7 @@ define('bcms.messages', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, mod
     // Selectors used in the module to locate DOM elements:
         selectors = {
             messagesBox: '#bcms-messages-box',
-            messages: '.bcms-messages-type-1:first, .bcms-messages-type-2:first, .bcms-messages-type-3:first',
+            messages: '.bcms-messages-type-1:first, .bcms-messages-type-2:first',
             success: '.bcms-success-messages:first',
             info: '.bcms-info-messages:first',
             warn: '.bcms-warning-messages:first',

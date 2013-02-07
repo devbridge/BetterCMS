@@ -1,6 +1,7 @@
 ﻿@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.Category
+@using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc.Grids.Extensions
 @using BetterCms.Module.Root.Mvc.Grids.TableRenderers
 @using BetterCms.Module.Root.Mvc.Helpers
@@ -31,7 +32,7 @@
         <div class="bcms-large-titles">@PagesGlobalization.SiteSettings_Categories_Title</div>
         <div class="bcms-btn-links-main" id="bcms-site-settings-add-category">@PagesGlobalization.SiteSettings_Categories_AddNewCategory</div>
         <div class="bcms-search-block">
-            @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query" })
+            @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
             <div class="bcms-btn-search" id="bcms-categories-search-btn">@PagesGlobalization.SiteSettings_Categories_Search</div>
         </div>
     </div>

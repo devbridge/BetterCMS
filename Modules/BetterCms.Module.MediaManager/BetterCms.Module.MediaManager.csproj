@@ -247,9 +247,6 @@
     <EmbeddedResource Include="Views\Upload\MultiFileUpload.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Videos\VideosTab.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>

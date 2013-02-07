@@ -14,8 +14,8 @@ namespace BetterCms.Module.Root.Mvc.Helpers
     /// </summary>
     public static class MessagesHelper
     {
-        private const string cssClassMessagesType1 = "bcms-messages-type-2";
-        private const string cssClassMessagesType2 = "bcms-messages-type-3";
+        private const string cssClassMessagesType1 = "bcms-messages-type-1";
+        private const string cssClassMessagesType2 = "bcms-messages-type-2";
 
         public static IHtmlString TabbedContentMessagesBox(this HtmlHelper html, string id = null, IDictionary<string, string> attributes = null)
         {
