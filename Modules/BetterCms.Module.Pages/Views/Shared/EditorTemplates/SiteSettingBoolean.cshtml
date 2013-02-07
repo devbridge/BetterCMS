@@ -1,12 +1,11 @@
 ﻿@using BetterCms.Module.Root.Content.Resources
 
 @model bool
-           
 @if (Model)
 {
-    <span class="bcms-tables-published">@RootGlobalization.Boolean_Yes</span>
+    <div class="bcms-icn-published">@RootGlobalization.Boolean_Yes</div>
 }
 else
 {
-    <span class="bcms-tables-unpublished">@RootGlobalization.Boolean_No</span>
+    <div class="bcms-icn-unpublished">@RootGlobalization.Boolean_No</div>
 }

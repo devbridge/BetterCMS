@@ -23,11 +23,12 @@
     <a class="bcms-tab" href="#bcms-tab-3">@PagesGlobalization.EditPageProperties_LayoutPropertiesTab_Title</a>
 </div>
 
+@Html.TabbedContentMessagesBox()
+
 <div class="bcms-scroll-window">
     <div class="bcms-padded-content">
         @using (Html.BeginForm<PageController>(f => f.EditPageProperties((EditPagePropertiesViewModel)null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
         {
-            @Html.MessagesBox("edit-page-properties-messages")
             <div id="bcms-tab-1" class="bcms-tab-single">               
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Title, PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Description)

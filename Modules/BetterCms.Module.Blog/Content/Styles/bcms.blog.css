@@ -13,10 +13,13 @@ div.bcms-btn-blog-add {
     }
 
 /*blog templates grid*/
-.bcms-blog-templates-container .bcms-top-block-holder {
-    border-bottom: 1px solid #c6c6c6;
-    margin-bottom: 10px;
+.bcms-blog-templates-container {
+    padding-top: 10px;
 }
+
+    .bcms-blog-templates-container .bcms-top-block-holder {
+        border-bottom: 1px solid #c6c6c6;
+    }
 
 .bcms-blog-templates-holder {
     display: inline-block;
@@ -27,7 +30,7 @@ div.bcms-btn-blog-add {
     position: relative;
     float: left;
     width: 217px;
-    height: 286px;
+    height: 260px;
     padding: 10px 24px 20px;
     margin-left: 11px;
     border: 1px solid #c6c6c6;

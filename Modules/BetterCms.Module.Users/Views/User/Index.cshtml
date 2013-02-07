@@ -35,8 +35,9 @@
         @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box" })
         <div class="bcms-btn-search" id="bcms-blogs-search-btn">@UsersGlobalization.User_Dialog_Search</div>
     </div>
-    @Html.MessagesBox("bcms-blogs-messages")
 </div>
+
+@Html.SiteSettingsMessagesBox()
 
 @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables", @id => "bcms-users-grid").RenderUsing(new EditableHtmlTableGridRenderer<UserViewModel>())
 

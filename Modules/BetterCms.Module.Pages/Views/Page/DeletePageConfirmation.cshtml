@@ -7,15 +7,15 @@
 @using Microsoft.Web.Mvc
 
 @model DeletePageViewModel
+@Html.TabbedContentMessagesBox()
 
 <div class="bcms-scroll-window">
     <div class="bcms-padded-content">
-        @Html.MessagesBox("bcms-confirm-page-delete-messages")
-        @using (Html.BeginForm<PageController>(f => f.DeletePage(null), FormMethod.Post, new { @class = "bcms-ajax-form"}))
+        @using (Html.BeginForm<PageController>(f => f.DeletePage(null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
         {
             <div class="bcms-input-list-holder">
-                <strong>@PagesGlobalization.DeletePage_Dialog_ConfirmationMessage_Header</strong>
-                <p>@PagesGlobalization.DeletePage_Dialog_ConfirmationMessage_Text</p>
+                <div class="bcms-content-titles">@PagesGlobalization.DeletePage_Dialog_ConfirmationMessage_Header</div>
+                <div>@PagesGlobalization.DeletePage_Dialog_ConfirmationMessage_Text</div>
             </div>
             <div class="bcms-input-list-holder">
                 @Html.Tooltip(PagesGlobalization.DeletePage_Dialog_RedurectUrl_Tooltip_Title, PagesGlobalization.DeletePage_Dialog_RedurectUrl_Tooltip_Description)
@@ -28,6 +28,7 @@
                 <div class="bcms-content-titles">@PagesGlobalization.DeletePage_Dialog_SecurityWord</div>
                 @Html.TextBoxFor(m => m.SecurityWord, new { @class = "bcms-editor-field-box", @id = "PageTitle" })
             </div>
+            
             @Html.HiddenFor(m => m.PageId)
             @Html.HiddenFor(m => m.Version)
             @Html.HiddenSubmit()

@@ -9,9 +9,10 @@
     <a class="bcms-tab bcms-tab-active" href="#bcms-tab-1">@PagesGlobalization.EditPageContent_RegularContentTab_Title</a>
 </div>
 
+@Html.TabbedContentMessagesBox()
+
 <div class="bcms-scroll-window">
     <div class="bcms-padded-content">
-        @Html.MessagesBox("add-content-messages")
         <div id="bcms-tab-1" class="bcms-tab-single">
             @using (Html.BeginForm<ContentController>(c => c.SavePageHtmlContent(null), FormMethod.Post, new { @id = "bcms-content-form", @class = "bcms-ajax-form" }))
             {  

@@ -414,6 +414,46 @@ a.bcms-remove-image {
     z-index: 1;
 }
 
+/*published icon*/
+.bcms-icn-published {
+    width: 17px;
+    height: 17px;
+    margin: 0 auto;
+    overflow: hidden;
+    text-indent: 9999px;
+    background: url('images/sprite-base-2.png') no-repeat 0 -129px;
+}
+
+/*unpublished icon*/
+.bcms-icn-unpublished {
+    width: 17px;
+    height: 17px;
+    margin: 0 auto;
+    overflow: hidden;
+    text-indent: 9999px;
+    background: url('images/sprite-base-2.png') no-repeat -2px -154px;
+}
+
+/*draft icon*/
+.bcms-icn-draft {
+    width: 13px;
+    height: 17px;
+    margin: 0 auto;
+    overflow: hidden;
+    text-indent: 9999px;
+    background: url('images/sprite-base-2.png') no-repeat -25px -200px;
+}
+
+/*published with draft icon*/
+.bcms-icn-pubdraft {
+    width: 16px;
+    height: 17px;
+    margin: 0 auto;
+    overflow: hidden;
+    text-indent: 9999px;
+    background: url('images/sprite-base-2.png') no-repeat -3px -200px;
+}
+
 .bcms-buttons-block {
     display: inline-block;
     width: 100%;
@@ -862,7 +902,7 @@ div.bcms-noscroll body {
     font-family: "Open Sans", sans-serif;
     font-size: 13px;
     line-height: 140%;
-    overflow-y: auto;
+    overflow: hidden;
     width: 100%;
     height: 100%;
     position: fixed;
@@ -914,7 +954,7 @@ div.bcms-modal-close {
 
 .bcms-modal-content-padded {
     position: relative;
-    padding: 50px 0 74px;
+    padding: 0 0 74px;
 }
 
 .bcms-modal-footer {
@@ -938,6 +978,7 @@ div.bcms-modal-close {
     line-height: 34px;
     background: url('images/bcms-logo.png') no-repeat right center;
 }
+
 /* Upload image dialog */
 .bcms-uploadimage-dragndrop {
     border: 2px dashed #DDD;
@@ -1098,7 +1139,7 @@ a.bcms-error-close {
 
 .bcms-tooltip-box {
     width: 308px;
-    padding: 20px;
+    padding: 15px;
     position: relative;
     background: #eff9fd;
     border: 1px solid #c6c6c6;
@@ -1350,8 +1391,12 @@ a.bcms-btn-close {
 }
 
     .bcms-input-list-holder:first-child {
-        margin-top: 20px;
+        padding-top: 20px;
     }
+
+        .bcms-input-list-holder:first-child .bcms-tooltip-mark {
+            top: 24px;
+        }
 
     .bcms-input-list-holder .bcms-tooltip-mark {
         top: 4px;
@@ -1467,7 +1512,7 @@ a.bcms-btn-close {
 
 /*Main Tabed View*/
 .bcms-tab-header {
-    padding: 30px 60px 0;
+    padding: 10px 60px 0;
     height: 30px;
     background: #303030;
     border-bottom: 1px solid #c6c6c6;
@@ -1523,9 +1568,7 @@ a.bcms-btn-close {
         line-height: 29px;
         padding: 0 22px;
         margin-right: 5px;
-        border-style: solid solid none solid;
-        border-width: 1px;
-        border-color: #c6c6c6;
+        border: 1px solid #c6c6c6;
         background: #e5e5e5;
         cursor: pointer;
         color: #000;
@@ -1560,7 +1603,7 @@ a.bcms-btn-close {
 }
 
 .bcms-title-holder {
-    height: 36px;
+    height: 20px;
     margin-bottom: 5px;
     position: relative;
     width: 100%;
@@ -1582,7 +1625,6 @@ a.bcms-btn-close {
     margin-bottom: 5px;
     border: 1px solid #c6c6c6;
     background: url('images/bcms-no-image-1.png') no-repeat center center #f5f5f5;
-    overflow: hidden;
 }
 
     .bcms-preview-box img {
@@ -1644,7 +1686,7 @@ a.bcms-btn-close {
     position: relative;
     float: left;
     width: 265px;
-    height: 315px;
+    height: 300px;
     padding: 20px 26px;
     margin-left: 11px;
     border: 1px solid #c6c6c6;
@@ -1744,14 +1786,10 @@ a.bcms-btn-close {
     margin-top: -8px;
 }
 
-.bcms-single-tag-holder {
-    padding-top: 5px;
-}
-
 .bcms-single-tag {
     position: relative;
     display: inline-block;
-    margin-right: 4px;
+    margin: 4px 4px 0 0;
     height: 22px;
     line-height: 21px;
     padding: 0 18px 0 6px;
@@ -1918,28 +1956,9 @@ table.bcms-tables td:first-child {
         text-decoration: underline;
     }
 
-.bcms-tables td > span {
-    display: block;
-    width: 17px;
-    height: 17px;
-    margin: 0 auto;
-    overflow: hidden;
-    text-indent: 9999px;
-    background-image: url('images/sprite-base-2.png');
-    background-repeat: no-repeat;
-}
-
 .bcms-tables td > ins {
     display: block;
     text-decoration: none;
-}
-
-span.bcms-tables-published {
-    background-position: 0 -129px;
-}
-
-span.bcms-tables-unpublished {
-    background-position: -2px -154px;
 }
 
 .bcms-sort-arrow {
@@ -2002,8 +2021,8 @@ a.bcms-sort-arrow-top:hover {
 .bcms-twocols-title-block {
     position: relative;
     margin-right: -1px;
-    min-height: 35px;
-    line-height: 32px;
+    min-height: 30px;
+    line-height: 30px;
     left: -1px;
     padding: 15px 20px 15px 20px;
     background-color: #eaeaea;
@@ -2092,16 +2111,38 @@ div.bcms-list .bcms-grid-input.input-validation-error {
       margin-top: -5px;
    }*/
 
-.bcms-messages {
-    padding-bottom: 20px;
+.bcms-messages-type-1 {
+    padding-top: 50px;
+}
+
+.bcms-messages-type-2, .bcms-messages-type-3 {
+    padding: 0;
+}
+
+div.bcms-messages-type-1 ul {
+    padding: 15px 60px 14px;
+    margin: 0;
+    border-bottom: 1px solid #c6c6c6;
+    font-size: 12px;
+}
+
+div.bcms-messages-type-2 ul {
+    padding: 15px 60px 14px;
+    margin: 0;
+    border-bottom: 1px solid #c6c6c6;
+    font-size: 12px;
+}
+
+div.bcms-messages-type-3 ul {
+    padding: 15px 60px 14px;
+    margin: 0;
+    font-size: 12px;
+    border-top: 1px solid #c6c6c6;
+    border-bottom: 0;
 }
 
 ul.bcms-success-messages {
-    padding: 10px 15px;
-    /*  margin: 10px 20px;*/
-    border: 1px solid #20cd00;
     background-color: #e8fae5;
-    font-size: 12px;
 }
 
     ul.bcms-success-messages li {
@@ -2112,11 +2153,7 @@ ul.bcms-success-messages {
     }
 
 ul.bcms-warning-messages {
-    padding: 10px 15px;
-    /*  margin: 10px 20px;*/
-    border: 1px solid #e7d827;
     background-color: #FFFEEC;
-    font-size: 12px;
 }
 
     ul.bcms-warning-messages li {
@@ -2126,11 +2163,7 @@ ul.bcms-warning-messages {
     }
 
 ul.bcms-error-messages {
-    padding: 10px 15px;
-    /* margin: 10px 20px;*/
-    border: 1px solid #e64343;
     background-color: #fcecec;
-    font-size: 12px;
 }
 
     ul.bcms-error-messages li {
@@ -2141,16 +2174,13 @@ ul.bcms-error-messages {
     }
 
 ul.bcms-info-messages {
-    padding: 10px 15px;
-    /* margin: 10px 20px;*/
-    border: 1px solid #1891e6;
     background-color: #f0f8fd;
-    font-size: 12px;
 }
 
     ul.bcms-info-messages li {
         line-height: 25px;
-        list-style: none;
+        list-style-position: inside;
+        list-style-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAALCAYAAAE8d1zJAAAAeklEQVQoz2OQ7HvxH4gnM0AZDAwoxH8YBnHyQaJAfAZELEWWgWOYnqXIemGqQAwzID4JxCuAmB+IVeAWo2MQMQ2IJaACINVP/v//D5dAMZ8oiZlAfB6IE0BGIkugWExQ4j9UEubJM1A2yE+vsNmNrgEnplgDAyFMlgYAD+gfgD4Bb/wAAAAASUVORK5CYII=');
         color: #1891e6;
     }
 
@@ -2164,7 +2194,6 @@ ul.bcms-info-messages {
     overflow: hidden;
     text-indent: 9999px;
 }
-
 
 /*override jquery ui*/
 .ui-datepicker-trigger {

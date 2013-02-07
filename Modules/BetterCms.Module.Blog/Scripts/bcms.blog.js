@@ -225,8 +225,10 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             
             var self = $(this),
                 id = self.data('id');
-            pages.deletePage(id, function () {
-                self.parents(selectors.siteSettingsBlogParentRow).remove();
+            pages.deletePage(id, function (json) {
+                var row = self.parents(selectors.siteSettingsBlogParentRow);
+                messages.refreshBox(row, json);
+                row.remove();
                 grid.showHideEmptyRow(container);
             }, globalization.deleteBlogDialogTitle);
         });
@@ -512,7 +514,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         self.select = function () {
             var url = $.format(links.saveDefaultTemplateUrl, self.id),
                 onComplete = function (json) {
-                    container.hideLoading();
+                    self.container.hideLoading();
                     messages.refreshBox(self.container, json);
                     if (json.Success == true) {
                         for (var i = 0; i < self.parent.templates().length; i++) {
@@ -523,7 +525,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
                     }
                 };
 
-            container.showLoading();
+            self.container.showLoading();
 
             $.ajax({
                 type: 'POST',

@@ -267,11 +267,11 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
 
                 widgets.deleteWidget(widgetId, widgetVersion, widgetName,
                     function(data) {
-                        messages.refreshBox(dialog.container, data);
+                        messages.refreshBox(widgetContainer, data);
                         pagesContent.updateWidgetCategoryList(dialog);
                     },
                     function(data) {
-                        messages.refreshBox(dialog.container, data);
+                        messages.refreshBox(widgetContainer, data);
                     });
             });
 
@@ -282,7 +282,7 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                     widgetType = widgetContainer.data('type');
                 
                 widgets.editWidget(widgetId, widgetType, function(data) {
-                    messages.refreshBox(dialog.container, data);
+                    messages.refreshBox(widgetContainer, data);
                     pagesContent.updateWidgetCategoryList(dialog);
                 },
                 null);
