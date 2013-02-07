@@ -316,7 +316,9 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
 
         AuthorImageViewModel.prototype.preview = function (data, event) {
             bcms.stopEventPropagation();
-            this.onBeforeAction();
+            if (this.parent.isActive()) {
+                this.onBeforeAction();
+            }
 
             _super.prototype.preview.call(this, data, event);
         };
@@ -336,6 +338,10 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         };
 
         AuthorImageViewModel.prototype.onAfterPreview = function () {
+            this.onAfterAction();
+        };
+
+        AuthorImageViewModel.prototype.onSelectClose = function () {
             this.onAfterAction();
         };
 
