@@ -36,7 +36,7 @@ define('bcms.dynamicContent', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bc
         options = $.extend({
             done: null,
             fail: function (failedDialog, message, request) {
-                var html = '<div class="bcms-messages-type-2">' +
+                var html = '<div class="bcms-messages-type-1">' +
                                 '<ul class="bcms-error-messages">' +
                                     '<li>' +
                                         message +
