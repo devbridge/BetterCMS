@@ -309,7 +309,10 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                         setup = {
                             revert: true,
                             revertDuration: 0,
-                            appendTo: "body",
+                            refreshPositions: true,
+                            scroll: true,
+                            containment: $(selectors.sitemapAddNodeDataBind).get(0) || $(selectors.sitemapAddNewPageDataBind).get(0),
+                            appendTo: $(selectors.sitemapAddNodeDataBind).get(0) || $(selectors.sitemapAddNewPageDataBind).get(0),
                             helper: function () {
                                 if (dragObject.isExpanded) {
                                     dragObject.isExpanded(false);
@@ -394,6 +397,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                                     dropZoneObject.childNodes.splice(0, 0, dragObject);
                                 }
                                 else if (dropZoneType == DropZoneTypes.TopZone) {
+                                    // NOTE: indexOf is no supported on IE8. TODO: solve the issue for IE8.
                                     index = dropZoneObject.parentNode().childNodes().indexOf(dropZoneObject);
                                     dropZoneObject.parentNode().childNodes.splice(index, 0, dragObject);
                                 }
@@ -402,6 +406,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                                     dropZoneObject.isExpanded(true);
                                 }
                                 else if (dropZoneType == DropZoneTypes.BottomZone) {
+                                    // NOTE: indexOf is no supported on IE8. TODO: solve the issue for IE8.
                                     index = dropZoneObject.parentNode().childNodes().indexOf(dropZoneObject);
                                     dropZoneObject.parentNode().childNodes.splice(index + 1, 0, dragObject);
                                 }
