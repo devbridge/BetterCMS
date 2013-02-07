@@ -335,7 +335,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                         return;
                     }
                     $(element).draggable(setup).data("dragObject", dragObject);
-                    $(element).disableSelection();
+                    //$(element).disableSelection(); //commented because it is not possible to put pointer using mouse to URL field.
                 }
             };
         }
