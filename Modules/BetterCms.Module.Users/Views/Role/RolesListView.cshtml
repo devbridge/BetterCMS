@@ -25,8 +25,9 @@
 }
  <div class="bcms-top-block-holder">
         <div id="bcms-create-role-button" class="bcms-btn-links-main">@UsersGlobalization.Role_Dialog_AddNew</div>
-        @Html.MessagesBox("bcms-templates-messages")
  </div>    
+
+@Html.SiteSettingsMessagesBox()
 
 @using (Html.BeginForm<RoleController>(f => f.RolesListView(null), FormMethod.Post, new { @id = "bcms-templates-form" }))
 {

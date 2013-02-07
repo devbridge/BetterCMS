@@ -225,8 +225,10 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             
             var self = $(this),
                 id = self.data('id');
-            pages.deletePage(id, function () {
-                self.parents(selectors.siteSettingsBlogParentRow).remove();
+            pages.deletePage(id, function (json) {
+                var row = self.parents(selectors.siteSettingsBlogParentRow);
+                messages.refreshBox(row, json);
+                row.remove();
                 grid.showHideEmptyRow(container);
             }, globalization.deleteBlogDialogTitle);
         });

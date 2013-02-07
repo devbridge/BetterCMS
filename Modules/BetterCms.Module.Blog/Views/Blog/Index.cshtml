@@ -56,8 +56,9 @@
             @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
             <div class="bcms-btn-search" id="bcms-blogs-search-btn">@BlogGlobalization.SiteSettings_Blogs_Search</div>
         </div>
-        @Html.MessagesBox("bcms-blogs-messages")
     </div>
+    
+    @Html.SiteSettingsMessagesBox()
 
     @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingBlogPostViewModel>())
 }
