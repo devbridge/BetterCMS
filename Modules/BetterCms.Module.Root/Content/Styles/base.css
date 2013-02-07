@@ -1790,7 +1790,7 @@ a.bcms-btn-close {
 .bcms-single-tag {
     position: relative;
     display: inline-block;
-    margin: 4px 4px 0 0;
+    margin: 4px 4px 3px 0;
     height: 22px;
     line-height: 21px;
     padding: 0 18px 0 6px;
