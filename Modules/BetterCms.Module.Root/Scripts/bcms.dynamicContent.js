@@ -36,21 +36,17 @@ define('bcms.dynamicContent', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bc
         options = $.extend({
             done: null,
             fail: function (failedDialog, message, request) {
-                var html = '<div class="bcms-scroll-window">' +
-                              '<div class="bcms-padded-content">' +
-                                '<div class="bcms-messages">' +
-                                    '<ul class="bcms-error-messages-type-2">' +
-                                        '<li>' +
-                                            message +
-                                        '</li>' +
-                                    '</ul>' +
-                                '</div>';
+                var html = '<div class="bcms-messages-type-2">' +
+                                '<ul class="bcms-error-messages">' +
+                                    '<li>' +
+                                        message +
+                                    '</li>' +
+                                '</ul>' +
+                            '</div>';
 
                 if (bcms.errorTrace && request) {
                     html = html + request.responseText;
                 }
-
-                html = html + '</div></div>';
 
                 failedDialog.setContent(html);
                 failedDialog.disableAccept();
