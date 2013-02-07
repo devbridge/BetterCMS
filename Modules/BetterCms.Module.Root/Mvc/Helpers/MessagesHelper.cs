@@ -14,16 +14,32 @@ namespace BetterCms.Module.Root.Mvc.Helpers
     /// </summary>
     public static class MessagesHelper
     {
+        private const string cssClassMessagesType1 = "bcms-messages-type-1";
+        private const string cssClassMessagesType2 = "bcms-messages-type-2";
+
+        public static IHtmlString TabbedContentMessagesBox(this HtmlHelper html, string id = null, IDictionary<string, string> attributes = null)
+        {
+            return MessagesBox(html, id, attributes, cssClassMessagesType1);
+        }
+
+        public static IHtmlString SiteSettingsMessagesBox(this HtmlHelper html, string id = null, IDictionary<string, string> attributes = null)
+        {
+            return MessagesBox(html, id, attributes, cssClassMessagesType2);
+        }
+
         /// <summary>
         /// Renders messages box with given id.
         /// </summary>
         /// <param name="html">The HTML helper.</param>
         /// <param name="id">The messages box id.</param>
         /// <param name="attributes">The attributes.</param>
+        /// <param name="cssClass">The CSS class.</param>
         /// <returns>
         /// Html string with rendered messages box.
         /// </returns>
-        public static IHtmlString MessagesBox(this HtmlHelper html, string id = null, IDictionary<string, string> attributes = null)
+        /// <exception cref="CmsException">Unable to generate messages box.;Controller should inherit CmsControllerBase class.</exception>
+        /// <exception cref="System.NotSupportedException">Controller should inherit CmsControllerBase class.</exception>
+        private static IHtmlString MessagesBox(this HtmlHelper html, string id, IDictionary<string, string> attributes, string cssClass)
         {
             CmsControllerBase controller = html.ViewContext.Controller as CmsControllerBase;
             if (controller == null)
@@ -32,7 +48,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             }
                 
             StringBuilder sb = new StringBuilder();
-            sb.Append("<div class=\"bcms-messages\"");
+            sb.AppendFormat("<div class=\"{0}\"", cssClass);
             if (!string.IsNullOrEmpty(id))
             {
                 sb.Append(" id=\"" + id + "\"");

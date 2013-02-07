@@ -727,7 +727,7 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your upload attempt failed, don’t give up try again!.
+        ///   Looks up a localized string similar to Your upload attempt failed!.
         /// </summary>
         public static string MultiFileUpload_Failed {
             get {
@@ -750,6 +750,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         public static string MultiFileUpload_FileUploadedMessage {
             get {
                 return ResourceManager.GetString("MultiFileUpload_FileUploadedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to It is not an image or file format is not supported..
+        /// </summary>
+        public static string MultiFileUpload_ImageFormatNotSuported {
+            get {
+                return ResourceManager.GetString("MultiFileUpload_ImageFormatNotSuported", resourceCulture);
             }
         }
         
@@ -790,7 +799,7 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Success! Image uploaded..
+        ///   Looks up a localized string similar to Success! File uploaded..
         /// </summary>
         public static string MultiFileUpload_Success {
             get {

@@ -13,10 +13,13 @@ div.bcms-btn-blog-add {
     }
 
 /*blog templates grid*/
-.bcms-blog-templates-container .bcms-top-block-holder {
-    border-bottom: 1px solid #c6c6c6;
-    margin-bottom: 10px;
+.bcms-blog-templates-container {
+    padding-top: 10px;
 }
+
+    .bcms-blog-templates-container .bcms-top-block-holder {
+        border-bottom: 1px solid #c6c6c6;
+    }
 
 .bcms-blog-templates-holder {
     display: inline-block;
@@ -27,7 +30,7 @@ div.bcms-btn-blog-add {
     position: relative;
     float: left;
     width: 217px;
-    height: 286px;
+    height: 260px;
     padding: 10px 24px 20px;
     margin-left: 11px;
     border: 1px solid #c6c6c6;
@@ -140,7 +143,7 @@ div.bcms-btn-blog-add {
 
 .bcms-blog-tags-holder {
     position: relative;
-    margin: 20px 0 0 20px;
+    margin: 0 0 0 20px;
 }
 
     .bcms-blog-tags-holder .bcms-content-titles {
@@ -149,11 +152,11 @@ div.bcms-btn-blog-add {
 
 /*author tab*/
 .bcms-author-picture {
+    position: relative;
     width: 110px;
     height: 110px;
     margin: 0 auto;
     background: url('images/bcms-no-image-3.png') no-repeat center center;
-    overflow: hidden;
     vertical-align: middle;
     border: 1px solid #c6c6c6;
     background-size: cover;

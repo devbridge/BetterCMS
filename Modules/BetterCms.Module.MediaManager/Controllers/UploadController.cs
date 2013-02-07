@@ -68,14 +68,14 @@ namespace BetterCms.Module.MediaManager.Controllers
                 request.FileName = uploadFile.FileName;
                 request.FileStream = uploadFile.InputStream;
 
-                var media = GetCommand<UploadCommand>().Execute(request);
+                var media = GetCommand<UploadCommand>().ExecuteCommand(request);
                 if (media != null)
                 {
                     return new WrappedJsonResult
                     {
                         Data = new
                         {
-                            IsValid = true,
+                            Success = true,
                             Id = media.Id,
                             fileName = media.OriginalFileName,
                             fileSize = media.Size,
@@ -85,12 +85,16 @@ namespace BetterCms.Module.MediaManager.Controllers
                     };
                 }
             }
+
+            List<string> messages = new List<string>();
+            messages.AddRange(Messages.Error);
+
             return new WrappedJsonResult
             {
                 Data = new
                 {
-                    IsValid = false,
-                    Message = string.Empty,//"No file was uploaded.",
+                    Success = false,
+                    Messages = messages.ToArray()
                 }
             };
         }

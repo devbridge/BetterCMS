@@ -16,6 +16,7 @@
 }
 
 <div class="bcms-scroll-window">
+    @Html.TabbedContentMessagesBox()
     @using (Html.BeginForm<BlogController>(c => c.SaveBlogPost(null), FormMethod.Post, new { @id = "bcms-blog-post-form", @class = "bcms-ajax-form" }))
     {
         @Html.HiddenFor(model => model.Id)
@@ -23,8 +24,6 @@
         @Html.HiddenFor(model => model.Image.ImageId, new {data_bind = "value: image().id()"})
 
         <div class="bcms-new-blog-content">
-    
-            @Html.MessagesBox("bcms-blog-post-messages")
 
             <div class="bcms-blog-left">
 
@@ -64,7 +63,8 @@
                     <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_FeaturedImage_Title</div>
                     <div class="bcms-uploaded-image">
                         <!-- ko if: image().url() -->
-                        <a href="#" data-bind="click: image().preview"><img data-bind="attr: {src: image().versionedThumnailUrl(), alt: image().tooltip() }" /></a>
+                        <a href="#" class="bcms-remove-image" data-bind="click: image().remove.bind(image())">@RootGlobalization.Button_Remove</a>
+                        <a href="#" data-bind="click: image().preview.bind(image())"><img data-bind="attr: {src: image().versionedThumnailUrl(), alt: image().tooltip() }" /></a>
                         <!-- /ko -->
                     </div>
                     <div class="bcms-upload-info">

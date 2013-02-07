@@ -2,16 +2,14 @@
 @using Microsoft.Web.Mvc
 @using BetterCms.Module.Root.Mvc.UI
 @using BetterCms.Module.Root.Mvc.Helpers
-@using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.MediaManager.Content.Resources
 @using BetterCms.Module.MediaManager.Controllers
 @using BetterCms.Module.MediaManager.ViewModels.Images
 
 @model ImageViewModel
+           
 <div class="bcms-scroll-window" style="height: 942px;">
-    
-    @Html.MessagesBox("bcms-image-editor-messages")
-
+    @Html.TabbedContentMessagesBox()
     <div class="bcms-file-manager-inner">
         @using (Html.BeginForm<ImagesController>(f => f.ImageEditor((ImageViewModel)null), FormMethod.Post, new { @class = "bcms-ajax-form", @enctype = "multipart/form-data" }))
         {

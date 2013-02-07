@@ -52,11 +52,6 @@
     margin: 0 auto;
 }
 
-.bcms-croped-block img {
-    display: block;
-    margin: 0 auto;
-}
-
 .bcms-croped-block-no-preview {
     background-image: url('images/bcms-no-image-1.png');
     background-repeat: no-repeat;

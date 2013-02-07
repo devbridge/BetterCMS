@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Security.Principal;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -98,11 +99,12 @@ namespace BetterCms.Module.Root.Controllers
             var useCaching = cmsConfiguration.Cache.Enabled && !canManageContent;
             var request = new GetPageToRenderRequest {
                                                          PageUrl = virtualPath,
-                                                         CanManageContent = canManageContent
+                                                         CanManageContent = canManageContent,
+                                                         IsAuthenticated = principal != null && principal.Identity.IsAuthenticated
                                                      };
             if (useCaching)
             {
-                string cacheKey = "CMS_" + virtualPath + "_050cc001f75942648e57e58359140d1a";
+                string cacheKey = "CMS_" + CalculateHash(virtualPath) + "_050cc001f75942648e57e58359140d1a";
                 
                 model = cacheService.Get(cacheKey, cmsConfiguration.Cache.Timeout, () => GetCommand<GetPageToRenderCommand>().ExecuteCommand(request));
             }
@@ -112,6 +114,22 @@ namespace BetterCms.Module.Root.Controllers
             }
 
             return model;
-        }   
+        }
+
+        public static string CalculateHash(string input)
+        {
+            // step 1, calculate SHA1 hash from input
+            var sha1 = System.Security.Cryptography.SHA1.Create();
+            byte[] inputBytes = Encoding.ASCII.GetBytes(input);
+            byte[] hash = sha1.ComputeHash(inputBytes);
+
+            // step 2, convert byte array to hex string
+            var sb = new StringBuilder();
+            for (int i = 0; i < hash.Length; i++)
+            {
+                sb.Append(hash[i].ToString("X2"));
+            }
+            return sb.ToString();
+        }
     }
 }

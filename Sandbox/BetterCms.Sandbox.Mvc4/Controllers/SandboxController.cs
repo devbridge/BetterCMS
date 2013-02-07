@@ -25,7 +25,7 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
         [AllowAnonymous]
         public ActionResult Login()
         {
-            var authTicket = new FormsAuthenticationTicket(1, "BetterCMS test user", DateTime.Now, DateTime.Now.AddMinutes(30), true, "User,Admin");
+            var authTicket = new FormsAuthenticationTicket(1, "BetterCMS test user", DateTime.Now, DateTime.Now.AddMonths(1), true, "User,Admin");
 
             string cookieContents = FormsAuthentication.Encrypt(authTicket);
             var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, cookieContents)

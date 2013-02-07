@@ -103,16 +103,17 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                 acceptTitle: globalization.imageEditorInsertDialogAcceptButton,
                 onLoad: function (dialog) {
                     var url = $.format(links.imageEditorInsertDialogUrl, image.id());
-                    dynamicContent.bindDialog(dialog, url, {
+                    dynamicContent.setContentFromUrl(dialog, url, {
                         contentAvailable: initInsertImageWithOptionsDialogEvents
                     });
                 },
-                onAcceptClick: function (dialog) {
+                onAccept: function (dialog) {
                     var imageUrl = dialog.container.find(selectors.imageToEdit).attr("src"),
                         caption = dialog.container.find(selectors.imageCaption).val(),
                         align = dialog.container.find(selectors.imageAlignment).val();
                     dialog.close();
                     callback(image, imageUrl, caption, align);
+                    return false;
                 }
             });
         };
@@ -214,6 +215,7 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                 self.cropCoordY1 = ko.observable(json.CropCoordY1);
                 self.cropCoordY2 = ko.observable(json.CropCoordY2);
                 self.keepAspectRatio = ko.observable(false);
+                self.url = json.OriginalImageUrl + '?version=' + json.Version;
 
                 // Recalculate image dimensions on image change
                 self.fit.subscribe(function () {
@@ -329,21 +331,16 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                     destroyJCrop();
                     jCropApi = null;
 
-                    // If image is already loaded
-                    if (self.image.get(0).naturalWidth > 0) {
+                    self.image.load(function () {
                         self.fit(true);
-                        setTimeout(addCropper, 50);
-                    } else {
-                        self.image.load(function () {
-                            self.fit(true);
-                            setTimeout(addCropper, 50);
-                        });
-                    }
+                        addCropper();
+                    });
+                    self.image.attr('src', self.url);
                 }
 
                 function addCropper() {
                     destroyJCrop();
-
+                    
                     var cropperOptions = {
                         onChange: self.onCropCoordsUpdated,
                         onSelect: self.onCropCoordsUpdated,
@@ -353,9 +350,12 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                     if (self.hasCrop()) {
                         cropperOptions.setSelect = [self.cropCoordX1(), self.cropCoordY1(), self.cropCoordX2(), self.cropCoordY2()];
                     }
-                    self.image.Jcrop(cropperOptions, function () {
-                        jCropApi = this;
-                    });
+
+                    setTimeout(function() {
+                        self.image.Jcrop(cropperOptions, function() {
+                            jCropApi = this;
+                        });
+                    }, 10);
                 }
                 
                 function destroyJCrop() {

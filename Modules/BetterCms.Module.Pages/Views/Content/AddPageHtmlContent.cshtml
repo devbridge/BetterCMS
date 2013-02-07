@@ -12,9 +12,8 @@
 </div>
 
 <div class="bcms-scroll-window">
+    @Html.TabbedContentMessagesBox()
     <div class="bcms-padded-content">
-            
-        @Html.MessagesBox("add-content-messages")
             
         <div id="bcms-tab-1" class="bcms-tab-single">
             @using (Html.BeginForm<ContentController>(c => c.SavePageHtmlContent(null), FormMethod.Post, new { @id = "bcms-content-form", @class = "bcms-ajax-form" }))
@@ -31,6 +30,7 @@
         <div id="bcms-tab-2" class="bcms-tab-single">
             <div class="bcms-top-block-holder">
                 <div class="bcms-btn-links-main" id="bcms-create-advanced-content-button">@PagesGlobalization.AddPageContent_WidgetTab_AddNewButton</div>
+                <div class="bcms-btn-links-main" id="bcms-registeradvanced-content-button">@PagesGlobalization.AddPageContent_WidgetTab_RegisterButton</div>
                 <div class="bcms-search-block">
                     <input type="text" id="bcms-advanced-content-search" class="bcms-editor-field-box" placeholder="@RootGlobalization.WaterMark_Search" />
                     <div class="bcms-btn-search" id="bcms-advanced-content-search-btn">@PagesGlobalization.AddPageContent_WidgetTab_SearchButton</div>

@@ -16,6 +16,7 @@ namespace BetterCms.Module.Root.Models.Maps
             Map(x => x.MetaTitle).Length(MaxLength.Name);
             Map(x => x.MetaKeywords).Length(MaxLength.Max);
             Map(x => x.MetaDescription).Length(MaxLength.Max);
+            Map(x => x.IsPublic).Not.Nullable();
 
             References(x => x.Layout).Not.Nullable().Cascade.SaveUpdate().LazyLoad();
             

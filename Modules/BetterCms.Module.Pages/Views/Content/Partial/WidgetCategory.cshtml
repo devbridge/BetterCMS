@@ -15,6 +15,8 @@
                 
                 for (int i = 0; i < Model.Widgets.Count; i++)
                 {
+                    var widget = Model.Widgets[i];
+                    
                     if (i % 3 == 0 && i != 0)
                     {
                         @:</div>
@@ -22,14 +24,22 @@
                     }
 
                     <div class="bcms-preview-block" 
-                         data-id="@Model.Widgets[i].Id"                          
-                         data-version="@Model.Widgets[i].Version"       
-                         data-type="@Model.Widgets[i].WidgetType"
-                         data-category-id="@(Model.Widgets[i].CategoryId ?? Guid.Empty)">
+                         data-id="@widget.Id"                          
+                         data-version="@widget.Version"       
+                         data-type="@widget.WidgetType"
+                         data-category-id="@(widget.CategoryId ?? Guid.Empty)">
                         <div class="bcms-title-holder">
-                            <div class="bcms-content-titles">@Model.Widgets[i].Name</div>
+                            <div class="bcms-content-titles">@widget.Name</div>
                         </div>
-                        @Html.PreviewContentBox(Html.BuildUrlFromExpression<WidgetsController>(f => f.PreviewHtmlContentWidget(Model.Widgets[i].Id.ToString())), Model.Widgets[i].Name)    
+                        @if (!string.IsNullOrWhiteSpace(widget.PreviewImageUrl))
+                        {
+                            @Html.PreviewContentBox(widget.PreviewImageUrl, widget.Name, true)
+                        }
+                        else
+                        {
+                            @Html.PreviewContentBox(Html.BuildUrlFromExpression<WidgetsController>(f => f.PreviewHtmlContentWidget(widget.Id.ToString())), widget.Name)
+                        }
+
                         <div class="bcms-controls-holder">
                             <div class="bcms-btn-small bcms-content-insert-button" >@PagesGlobalization.AddPageContent_WidgetTab_InsertButton</div>
                             <a class="bcms-icn-edit bcms-content-edit-button">@PagesGlobalization.AddPageContent_WidgetTab_EditButton</a>

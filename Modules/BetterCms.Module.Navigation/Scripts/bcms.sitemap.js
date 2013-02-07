@@ -12,6 +12,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 sitemapAddNodeDataBind: "#bcms-sitemap-addnode",
                 sitemapAddNewPageDataBind: "#bcms-sitemap-addnewpage",
                 sitemapForm: "#bcms-sitemap-form",
+                sitemapMessagesContainer: '#bcms-site-settings-placeholder'
             },
             links = {
                 loadSiteSettingsSitemapUrl: null,
@@ -26,6 +27,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 sitemapEditorDialogCustomLinkTitle: null,
                 sitemapAddNewPageDialogTitle: null,
                 sitemapDeleteNodeConfirmationMessage: null,
+                sitemapSomeNodesAreInEditingState: null,
                 sitemapNodeSaveButton: null,
                 sitemapNodeOkButton: null,
             },
@@ -36,7 +38,8 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 TopZone: 'topZone',
                 MiddleZone: 'middleZone',
                 BottomZone: 'bottomZone'
-            };
+            },
+            nodeId = 0;
 
         /**
         * Assign objects to module.
@@ -89,8 +92,8 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         * Shows add new page to sitemap dialog.
         */
         sitemap.loadAddNewPageDialog = function(data) {
-            if (data && data.Data && data.Data.Title && data.Data.PageUrl) {
-                var addPageController = new AddNewPageMapController(data.Data.Title, data.Data.PageUrl);
+            if (data && data.Data && (data.Data.Title || data.Data.PageTitle) && (data.Data.Url || data.Data.PageUrl)) {
+                var addPageController = new AddNewPageMapController(data.Data.Title || data.Data.PageTitle, data.Data.Url || data.Data.PageUrl);
                 modal.open({
                     title: globalization.sitemapAddNewPageDialogTitle,
                     onLoad: function(dialog) {
@@ -128,7 +131,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
 
             self.initialize = function(content) {
                 self.container = siteSettings.getModalDialog().container;
-                sitemap.activeMessageContainer = self.container;
+                sitemap.activeMessageContainer = self.container.find(selectors.sitemapMessagesContainer);
                 sitemap.activeLoadingContainer = self.container.find(selectors.sitemapSearchDataBind);
                     
                 sitemap.showMessage(content);
@@ -174,7 +177,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
 
             self.initialize = function (content, dialog) {
                 self.container = dialog.container;
-                sitemap.activeMessageContainer = self.container;
+                sitemap.activeMessageContainer = self.container.find(selectors.sitemapMessagesContainer);
                 sitemap.activeLoadingContainer = self.container.find(selectors.sitemapAddNodeDataBind);
 
                 sitemap.showMessage(content);
@@ -230,7 +233,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
 
             self.initialize = function (content, dialog) {
                 self.container = dialog.container;
-                sitemap.activeMessageContainer = self.container;
+                sitemap.activeMessageContainer = self.container.find(selectors.sitemapMessagesContainer);
                 sitemap.activeLoadingContainer = self.container.find(selectors.sitemapAddNewPageDataBind);
 
                 sitemap.showMessage(content);
@@ -306,7 +309,10 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                         setup = {
                             revert: true,
                             revertDuration: 0,
-                            appendTo: "body",
+                            refreshPositions: true,
+                            scroll: true,
+                            containment: $(selectors.sitemapAddNodeDataBind).get(0) || $(selectors.sitemapAddNewPageDataBind).get(0),
+                            appendTo: $(selectors.sitemapAddNodeDataBind).get(0) || $(selectors.sitemapAddNewPageDataBind).get(0),
                             helper: function () {
                                 if (dragObject.isExpanded) {
                                     dragObject.isExpanded(false);
@@ -332,7 +338,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                         return;
                     }
                     $(element).draggable(setup).data("dragObject", dragObject);
-                    $(element).disableSelection();
+                    //$(element).disableSelection(); //commented because it is not possible to put pointer using mouse to URL field.
                 }
             };
         }
@@ -359,17 +365,17 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                                     originalDragObject = dragObject;
                                 ui.helper.remove();
 
-                                if (dragObject.parentNode) {
-                                    dragObject.parentNode.childNodes.remove(dragObject);
+                                if (dragObject.parentNode && dragObject.parentNode()) {
+                                    dragObject.parentNode().childNodes.remove(dragObject);
                                 } else {
                                     // Create node from page link.
                                     var node = new NodeViewModel();
                                     node.title(dragObject.title());
                                     node.url(dragObject.url());
                                     if (dropZoneType == DropZoneTypes.EmptyListZone || dropZoneType == DropZoneTypes.MiddleZone) {
-                                        node.parentNode = dropZoneObject;
+                                        node.parentNode(dropZoneObject);
                                     } else {
-                                        node.parentNode = dropZoneObject.parentNode;
+                                        node.parentNode(dropZoneObject.parentNode());
                                     }
                                     if (dragObject.isCustom()) {
                                         node.startEditSitemapNode();
@@ -377,7 +383,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                                             sitemap.activeMapModel.updateNodesOrderAndParent();
                                         };
                                         node.callbackAfterFailSaving = function (newNode) {
-                                            newNode.parentNode.childNodes.remove(newNode);
+                                            newNode.parentNode().childNodes.remove(newNode);
                                         };
                                     }
                                     dragObject = node;
@@ -391,16 +397,18 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                                     dropZoneObject.childNodes.splice(0, 0, dragObject);
                                 }
                                 else if (dropZoneType == DropZoneTypes.TopZone) {
-                                    index = dropZoneObject.parentNode.childNodes().indexOf(dropZoneObject);
-                                    dropZoneObject.parentNode.childNodes.splice(index, 0, dragObject);
+                                    // NOTE: indexOf is no supported on IE8. TODO: solve the issue for IE8.
+                                    index = dropZoneObject.parentNode().childNodes().indexOf(dropZoneObject);
+                                    dropZoneObject.parentNode().childNodes.splice(index, 0, dragObject);
                                 }
                                 else if (dropZoneType == DropZoneTypes.MiddleZone) {
                                     dropZoneObject.childNodes.splice(0, 0, dragObject);
                                     dropZoneObject.isExpanded(true);
                                 }
                                 else if (dropZoneType == DropZoneTypes.BottomZone) {
-                                    index = dropZoneObject.parentNode.childNodes().indexOf(dropZoneObject);
-                                    dropZoneObject.parentNode.childNodes.splice(index + 1, 0, dragObject);
+                                    // NOTE: indexOf is no supported on IE8. TODO: solve the issue for IE8.
+                                    index = dropZoneObject.parentNode().childNodes().indexOf(dropZoneObject);
+                                    dropZoneObject.parentNode().childNodes.splice(index + 1, 0, dragObject);
                                 }
                                 dropZoneObject.activeZone(DropZoneTypes.None);
                                 
@@ -420,6 +428,31 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                     $(element).droppable(setup);
                 }
             };
+        }
+
+        /**
+        * Helper function to update nodes in list.
+        */
+        function updateFirstLastNode(nodes) {
+            var firstNotDeletedNode = null,
+                lastNotDeletedNode = null;
+            for (var i = 0; i < nodes.length; i++) {
+                var node = nodes[i];
+                if (!node.isDeleted()) {
+                    if (firstNotDeletedNode == null) {
+                        firstNotDeletedNode = node;
+                    }
+                    lastNotDeletedNode = node;
+                }
+                node.isFirstNode(false);
+                node.isLastNode(false);
+            }
+            if (firstNotDeletedNode != null) {
+                firstNotDeletedNode.isFirstNode(true);
+            }
+            if (lastNotDeletedNode != null) {
+                lastNotDeletedNode.isLastNode(true);
+            }
         }
         // --------------------------------------------------------------------
         
@@ -480,6 +513,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             var self = this;
             self.id = function() { return defaultIdValue; };
             self.childNodes = ko.observableArray([]);
+            self.childNodes.subscribe(updateFirstLastNode);
             self.someNodeIsOver = ko.observable(false);     // Someone is dragging some node over the sitemap, but not over the particular node.
             self.activeZone = ko.observable(DropZoneTypes.None);
 
@@ -530,16 +564,14 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                     var node = nodes[i],
                         saveIt = false;
                     
-                    node.isFirstNode(i == 0);
-
                     if (node.displayOrder() != i) {
                         saveIt = true;
                         node.displayOrder(i);
                     }
 
-                    if (node.parentNode != parent) {
+                    if (node.parentNode() != parent) {
                         saveIt = true;
-                        node.parentNode = parent;
+                        node.parentNode(parent);
                     }
 
                     if (saveIt || node.id() == defaultIdValue) {
@@ -550,7 +582,27 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 }
             };
 
+            self.focusOnActiveNode = function(nodes) {
+                for (var i in nodes) {
+                    if (nodes[i].isActive()) {
+                        $($('input', '#' + nodes[i].containerId).get(0)).focus();
+                        return true;
+                    }
+                    if (self.focusOnActiveNode(nodes[i].childNodes())) {
+                        nodes[i].isExpanded(true);
+                        return true;
+                    }
+                }
+                return false;
+            };
             self.save = function (onDoneCallback) {
+                if (self.focusOnActiveNode(self.childNodes())) {
+                    var messagesBox = messages.box({ container: sitemap.activeMessageContainer });
+                    messagesBox.clearMessages();
+                    messagesBox.addWarningMessage(globalization.sitemapSomeNodesAreInEditingState);
+                    return;
+                }
+
                 var dataToSend = JSON.stringify(self.composeJsonNodes()),
                     onSaveCompleted = function (json) {
                         sitemap.showLoading(false);
@@ -582,8 +634,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 for (var i = 0; i < jsonNodes.length; i++) {
                     var node = new NodeViewModel();
                     node.fromJson(jsonNodes[i]);
-                    node.parentNode = self;
-                    node.isFirstNode(i == 0);
+                    node.parentNode(self);
                     nodes.push(node);
                 }
                 self.childNodes(nodes);
@@ -623,8 +674,14 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             self.url = ko.observable();
             self.displayOrder = ko.observable(0);
             self.isDeleted = ko.observable(false);
+            self.isDeleted.subscribe(function () {
+                if (self.parentNode()) {
+                    updateFirstLastNode(self.parentNode().childNodes());
+                }
+            });
             self.childNodes = ko.observableArray([]);
-            self.parentNode = null;
+            self.childNodes.subscribe(updateFirstLastNode);
+            self.parentNode = ko.observable();
             
             // For behavior.
             self.isActive = ko.observable(false);           // If TRUE - show edit fields.
@@ -635,6 +692,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             self.isBeingDragged = ko.observable(false);     // Someone is dragging the node.
             self.activeZone = ko.observable(DropZoneTypes.None);
             self.isFirstNode = ko.observable(false);
+            self.isLastNode = ko.observable(false);
             self.hasChildNodes = function () {
                 // Has at least one not deleted child node.
                 for (var i in self.childNodes()) {
@@ -644,10 +702,9 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 }
                 return false;
             };
-            self.containerId = function () {
-                // User for validation.
-                return "id-" + self.id();
-            };
+
+            // User for validation.
+            self.containerId = 'node-' + nodeId++;
             
             // For search results.
             self.isVisible = ko.observable(true);
@@ -664,11 +721,11 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 self.title(self.titleOldValue);
                 self.url(self.urlOldValue);
                 if (self.id() == defaultIdValue) {
-                    self.parentNode.childNodes.remove(self);
+                    self.parentNode().childNodes.remove(self);
                 }
             };
             self.saveSitemapNodeWithValidation = function () {
-                if ($('input', '#' + self.containerId()).valid()) {
+                if ($('input', '#' + self.containerId).valid()) {
                     self.saveSitemapNode();
                     self.isActive(false);
                 }
@@ -729,7 +786,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                                     try {
                                         if (json.Success) {
                                             self.isDeleted(true);
-                                            self.parentNode.childNodes.remove(self);
+                                            self.parentNode().childNodes.remove(self);
                                         }
                                         sitemap.showLoading(false);
                                     } finally {
@@ -758,8 +815,8 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             self.callbackAfterFailSaving = null;
 
             self.getSitemap = function() {
-                if (self.parentNode != null) {
-                    return self.parentNode.getSitemap();
+                if (self.parentNode() != null) {
+                    return self.parentNode().getSitemap();
                 }
                 return null;
             };
@@ -776,8 +833,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                     for (var i = 0; i < jsonNode.ChildNodes.length; i++) {
                         var node = new NodeViewModel();
                         node.fromJson(jsonNode.ChildNodes[i]);
-                        node.parentNode = self;
-                        node.isFirstNode(i == 0);
+                        node.parentNode(self);
                         nodes.push(node);
                     }
                 }
@@ -790,7 +846,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                     Title: self.title(),
                     Url: self.url(),
                     DisplayOrder: self.displayOrder(),
-                    ParentId: self.parentNode.id(),
+                    ParentId: self.parentNode().id(),
                 };
                 return params;
             };
@@ -889,7 +945,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             self.undoClicked = function () {
                 if (self.sitemapNode != null) {
                     // Remove newly created node from sitemap.
-                    self.sitemapNode.parentNode.childNodes.remove(self.sitemapNode);
+                    self.sitemapNode.parentNode().childNodes.remove(self.sitemapNode);
                     self.sitemapNode = null;
                 }
                 self.pageLink.isVisible(true);

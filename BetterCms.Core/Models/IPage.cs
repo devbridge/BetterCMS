@@ -16,6 +16,14 @@ namespace BetterCms.Core.Models
         bool IsPublished { get; }
 
         /// <summary>
+        /// Gets a value indicating whether this page is available for not authenticated users.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this page is available for not authenticated users; otherwise, <c>false</c>.
+        /// </value>
+        bool IsPublic { get; }
+
+        /// <summary>
         /// Gets a value indicating whether this page has SEO meta data.
         /// </summary>
         /// <value>

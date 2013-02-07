@@ -1,16 +1,15 @@
 ﻿@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
-@using BetterCms.Module.Pages.ViewModels.Content
 @using BetterCms.Module.Pages.ViewModels.Widgets
 @using BetterCms.Module.Root.Mvc.Helpers
 @using BetterCms.Module.Root.Mvc.UI
 @using Microsoft.Web.Mvc
 
-@model BetterCms.Module.Pages.ViewModels.Widgets.EditHtmlContentWidgetViewModel
+@model EditHtmlContentWidgetViewModel
 
 <div class="bcms-scroll-window">
+    @Html.TabbedContentMessagesBox()      
     <div class="bcms-padded-content">
-        @Html.MessagesBox("bcms-advanced-content-messages")           
         @using (Html.BeginForm<WidgetsController>(c => c.EditHtmlContentWidget((EditHtmlContentWidgetViewModel)null), FormMethod.Post, new { @id = "bcms-advanced-content-form", @class = "bcms-ajax-form" }))
         {
             <div class="bcms-input-list-holder">

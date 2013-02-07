@@ -32,7 +32,6 @@ div.bcms-editseo-modal {
 
 .bcms-editseo-window {
     width: 670px;
-    /*padding: 0 30px 0 0;*/
     min-height: 100%;
 }
 
@@ -188,11 +187,11 @@ a.bcms-slider-next {
 }
 
 .bcms-title-holder .bcms-content-titles {
-    position: absolute;
-    padding-bottom: 0;
-    bottom: 0;
-    left: 0;
     font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-bottom: 0;
 }
 
 .bcms-controls-holder .bcms-icn-delete {
@@ -218,27 +217,13 @@ a.bcms-slider-next {
     position: relative;
     width: 124px;
     height: 124px;
-    margin-bottom: 5px;
-    border: 2px solid #c6c6c6;
+    border: 1px solid #c6c6c6;
     background: url('images/bcms-no-image-2.png') no-repeat center center #f5f5f5;
 }
 
     .bcms-uploaded-image img {
         max-width: 100%;
     }
-
-/*.bcms-uploaded-image a.bcms-remove-image {
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 20px;
-        height: 20px;
-        background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAOCAYAAAGHjXZ5AAAAbElEQVQoz5WSSxbAIAgDs/H+B/Qw0xXWys/ueASHhKcAARKgOcRbzCE+0mpY4UYd7QfjnAgRkZAuLXeetBBpPYcKjVlzp/Riii0N7bgsVrR6pYmE6pELlA1Wrq7sZXHU2asgbd4KnH657uKAHm4iCGmg/EKuAAAAAElFTkSuQmCC') no-repeat center center;
-        border-radius: 2px;
-        cursor: pointer;
-        text-indent: 9999px;
-        z-index: 1;
-    }*/
 
 .bcms-upload-info {
     display: inline-block;
@@ -252,13 +237,13 @@ a.bcms-slider-next {
     }
 
 .bcms-upload-info-text {
-    height: 88px;
+    height: 86px;
     font-size: 12px;
     overflow: hidden;
 }
 
 .bcms-tags-box-holder {
-    padding: 25px 0 0 40px;
+    padding: 10px 0 0 30px;
     margin: 0 0 20px -30px;
     border-top: 1px solid #c6c6c6;
     border-bottom: 1px solid #c6c6c6;
@@ -346,7 +331,7 @@ hr.bcms-settings-separator {
 /*content*/
 .bcms-top-block-holder {
     padding: 20px 20px 20px 30px;
-    height: 35px;
+    height: 30px;
 }
 
     .bcms-top-block-holder .bcms-large-titles {
@@ -473,9 +458,3 @@ hr.bcms-settings-separator {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
-/*
-transition: all 0.1s ease-in-out;
--moz-transition: all 0.1s ease-in-out;
--webkit-transition: all 0.1s ease-in-out;
-*/

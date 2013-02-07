@@ -1,6 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+
+using BetterCms.Core.Models;
 using BetterCms.Module.Pages.Content.Resources;
+using BetterCms.Module.Pages.Mvc.Attributes;
 
 namespace BetterCms.Module.Pages.ViewModels.Page
 {
@@ -29,7 +32,7 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// The page title.
         /// </value>
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "ClonePage_PageTitle_RequiredMessage")]
-        [StringLength(300, MinimumLength = 1, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "ClonePage_PageTitle_MaxLengthMessage")]
+        [StringLength(MaxLength.Name, MinimumLength = 1, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "ClonePage_PageTitle_MaxLengthMessage")]
         public string PageTitle { get; set; }
 
         /// <summary>
@@ -38,9 +41,8 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// <value>
         /// The page permalink.
         /// </value>
-        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "ClonePage_PageUrl_RequiredMessage")]
-        [StringLength(1000, MinimumLength = 1, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "ClonePage_PageUrl_MaxLengthMessage")]
-        [RegularExpression(PagesConstants.PageUrlRegularExpression, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "ClonePage_PageUrl_InvalidMessage")]
+        [CustomPageUrlValidation]
+        [StringLength(MaxLength.Url, MinimumLength = 1, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "ClonePage_PageUrl_MaxLengthMessage")]
         public string PageUrl { get; set; }
 
         /// <summary>

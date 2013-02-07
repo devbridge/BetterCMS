@@ -376,6 +376,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Register +.
+        /// </summary>
+        public static string AddPageContent_WidgetTab_RegisterButton {
+            get {
+                return ResourceManager.GetString("AddPageContent_WidgetTab_RegisterButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
         public static string AddPageContent_WidgetTab_SearchButton {
@@ -498,6 +507,60 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string ClonePage_Dialog_Title {
             get {
                 return ResourceManager.GetString("ClonePage_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Page URL.
+        /// </summary>
+        public static string ClonePage_EditNewUrl_Title {
+            get {
+                return ResourceManager.GetString("ClonePage_EditNewUrl_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Page URL must start and end with &quot;/&quot; and can contain only following characters: &apos;0-9&apos;, &apos;a-z&apos;, &apos;-&apos;, &apos;/, &apos;_&apos;.
+        /// </summary>
+        public static string ClonePage_EditNewUrl_Tooltip_Description {
+            get {
+                return ResourceManager.GetString("ClonePage_EditNewUrl_Tooltip_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Page URL.
+        /// </summary>
+        public static string ClonePage_EditNewUrl_Tooltip_Title {
+            get {
+                return ResourceManager.GetString("ClonePage_EditNewUrl_Tooltip_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Page URL.
+        /// </summary>
+        public static string ClonePage_NewUrl {
+            get {
+                return ResourceManager.GetString("ClonePage_NewUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit New Page URL.
+        /// </summary>
+        public static string ClonePage_NewUrl_Tooltip_Description {
+            get {
+                return ResourceManager.GetString("ClonePage_NewUrl_Tooltip_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit New Page URL.
+        /// </summary>
+        public static string ClonePage_NewUrl_Tooltip_Title {
+            get {
+                return ResourceManager.GetString("ClonePage_NewUrl_Tooltip_Title", resourceCulture);
             }
         }
         
@@ -1020,6 +1083,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string DeleteTemplate_DeletedSuccessfully_Message {
             get {
                 return ResourceManager.GetString("DeleteTemplate_DeletedSuccessfully_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot delete template, because it is in use..
+        /// </summary>
+        public static string DeleteTemplate_TemplateIsInUse_Message {
+            get {
+                return ResourceManager.GetString("DeleteTemplate_TemplateIsInUse_Message", resourceCulture);
             }
         }
         
@@ -2014,6 +2086,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Live To date must be greater than Live From..
+        /// </summary>
+        public static string PageContent_LiveTo_ValidationMessage {
+            get {
+                return ResourceManager.GetString("PageContent_LiveTo_ValidationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Page URL.
         /// </summary>
         public static string PageProperties_EditURLPath_Title {
@@ -2095,6 +2176,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Category already exists. .
+        /// </summary>
+        public static string SaveCategory_CategoryExists_Message {
+            get {
+                return ResourceManager.GetString("SaveCategory_CategoryExists_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You have no permission to change page publish status..
         /// </summary>
         public static string SavePagePublishStatus_NoPermission_Message {
@@ -2140,11 +2230,29 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tag already exists..
+        /// </summary>
+        public static string SaveTag_TagExists_Message {
+            get {
+                return ResourceManager.GetString("SaveTag_TagExists_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Template created succesfully..
         /// </summary>
         public static string SaveTemplate_CreatedSuccessfully_Message {
             get {
                 return ResourceManager.GetString("SaveTemplate_CreatedSuccessfully_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duplicate template region found..
+        /// </summary>
+        public static string SaveTemplate_DublicateRegionIdentificator_Message {
+            get {
+                return ResourceManager.GetString("SaveTemplate_DublicateRegionIdentificator_Message", resourceCulture);
             }
         }
         
@@ -2163,6 +2271,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string SaveWidget_CreatedSuccessfully_Message {
             get {
                 return ResourceManager.GetString("SaveWidget_CreatedSuccessfully_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duplicate widget options found..
+        /// </summary>
+        public static string SaveWidget_DublicateOptionName_Message {
+            get {
+                return ResourceManager.GetString("SaveWidget_DublicateOptionName_Message", resourceCulture);
             }
         }
         

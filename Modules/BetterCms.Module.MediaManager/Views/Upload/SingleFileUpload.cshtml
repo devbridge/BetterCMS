@@ -6,9 +6,10 @@
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
 @model BetterCms.Module.MediaManager.ViewModels.Upload.MultiFileUploadViewModel
+           
 <div class="bcms-scroll-window">
+    @Html.TabbedContentMessagesBox("bcms-multi-file-upload-messages")
     <div class="bcms-file-manager-inner">
-        @Html.MessagesBox("bcms-multi-file-upload-messages")
 
         @using (Html.BeginForm("UploadSingleFile", "Upload", FormMethod.Post, new
         {
@@ -35,7 +36,7 @@
             <div id="bcms-files-dropzone" class="bcms-dropzone">
                 <div class="bcms-dropzone-infotext">@MediaGlobalization.SingleFileUpload_DragDropBox</div>
                 <div class="bcms-btn-upload-files">
-                    <label for="uploadFile" >@MediaGlobalization.MultiFileUpload_UploadButton</label>
+                    <label for="uploadFile" onclick="if ($.browser.mozilla) { $('#' + $(this).attr('for')).click(); return false; }">@MediaGlobalization.MultiFileUpload_UploadButton</label>
                     <input type="file" name="uploadFile" id="uploadFile" class="bcms-uploader" style="position: absolute; left: -999em; top: -999em;"/>
                 </div>
             </div>
@@ -75,7 +76,8 @@
                             <div class="bcms-progress" style="width: 0;" data-bind="style: { width: uploadProgress() + '%' }"></div>
                         </div>
                         <div class="bcms-upload-description" data-bind="visible: uploadFailed">
-                            @MediaGlobalization.MultiFileUpload_Failed
+                            <span data-bind="visible: !(failureMessage() != null && failureMessage().length > 0)">@MediaGlobalization.MultiFileUpload_Failed</span>
+                            <span data-bind="visible: failureMessage() != null && failureMessage().length > 0, text: failureMessage"></span>
                         </div>
                         <div class="bcms-upload-description" data-bind="visible: uploadCompleted">
                             @MediaGlobalization.MultiFileUpload_Success

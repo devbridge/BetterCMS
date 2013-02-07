@@ -42,7 +42,7 @@ namespace BetterCms.Module.Blog.Services
                 .QueryOver(() => alias)
                 .SelectList(select => select
                     .Select(Projections.Cast(NHibernateUtil.String, Projections.Property<Author>(c => c.Id))).WithAlias(() => lookupAlias.Key)
-                    .Select(() => alias.Name).WithAlias(() => lookupAlias.Value))
+                    .Select(() => alias.Name).WithAlias(() => lookupAlias.Value)).Where(c => !c.IsDeleted)
                 .OrderBy(o => o.Name).Asc()
                 .TransformUsing(Transformers.AliasToBean<LookupKeyValue>())
                 .List<LookupKeyValue>();

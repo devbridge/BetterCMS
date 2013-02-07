@@ -757,10 +757,11 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     /**
     * Shows image selection window.
     */
-    media.openImageInsertDialog = function (onAccept, canInsertWithOptions, folderViewModelOptions) {
+    media.openImageInsertDialog = function (onAccept, canInsertWithOptions, folderViewModelOptions, onClose) {
         modal.open({
             title: globalization.insertImageDialogTitle,
             acceptTitle: 'Insert',
+            onClose: onClose,
             onLoad: function (dialog) {
                 imageInsertDialog = dialog;
                 dynamicContent.setContentFromUrl(dialog, links.insertImageDialogUrl, {
@@ -805,7 +806,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 }
                     
                 return true;
-            },
+            }
         });
     };
 
@@ -835,7 +836,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 if ($.isFunction(onImageInsert)) {
                     onImageInsert(selectedMedia, url, caption, align);
                 } else {
-                    addImageToEditor(url, caption, align);
+                    addImageToEditor(url, caption, align, selectedMedia.version());
                 }
 
                 if (imageInsertDialog != null) {
@@ -867,7 +868,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     /**
     * Insert image to html content editor.
     */
-    function addImageToEditor(imageUrl, caption, imageAlign) {
+    function addImageToEditor(imageUrl, caption, imageAlign, version) {
         if (contentEditor != null) {
             var align = "left";
             if (imageAlign == 2) {
@@ -875,13 +876,18 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             } else if (imageAlign == 3) {
                 align = "right";
             }
+            if (imageUrl.indexOf('?') < 0) {
+                imageUrl += '?version=' + version;
+            } else {
+                imageUrl += '&version=' + version;
+            }
+            var img = '<img src="' + imageUrl + '" alt="' + caption + '" align="' + align + '"/>';
             if (contentEditor.mode == 'source') {
-                var img = '<img src="' + imageUrl + '" alt="' + caption + '" align="' + align + '"/>';
                 var oldData = contentEditor.getData();
 
                 contentEditor.setData(oldData + img);
             } else {
-                contentEditor.insertHtml('<img src="' + imageUrl + '" alt="' + caption + '" align="' + align + '"/>');
+                contentEditor.insertHtml(img);
             }
         }
     };
@@ -1242,17 +1248,22 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.tooltip = ko.observable();
             self.version = ko.observable();
 
-            self.preview = function (data, event) {
-                bcms.stopEventPropagation(event);
-
-                var previewUrl = createUrl(self.url());
-                if (previewUrl) {
-                    modal.imagePreview(previewUrl, self.tooltip());
+            self.createUrl = function (url) {
+                if (!url) {
+                    return url;
                 }
+
+                if (url.indexOf('?') < 0) {
+                    url = url + '?version=' + self.version();
+                } else {
+                    url = url + '&version=' + self.version();
+                }
+
+                return url;
             };
 
             self.versionedThumnailUrl = ko.computed(function () {
-                return createUrl(self.thumbnailUrl());
+                return self.createUrl(self.thumbnailUrl());
             });
 
             self.setImage = function (imageData) {
@@ -1263,25 +1274,35 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 self.version(imageData.ImageVersion);
             };
 
-            function createUrl(url) {
-                if (!url) {
-                    return url;
-                }
-                
-                if (url.indexOf('?') < 0) {
-                    url = url + '?version=' + self.version();
-                } else {
-                    url = url + '&version=' + self.version();
-                }
-
-                return url;
-            }
-
             if (image) {
                 self.setImage(image);
             }
         };
 
+        media.ImageSelectorViewModel.prototype.preview = function (data, event) {
+            bcms.stopEventPropagation(event);
+
+            var previewUrl = this.createUrl(this.url()),
+                self = this;
+
+            if (previewUrl) {
+                var options = {
+                    onClose: function () {
+                        self.onAfterPreview();
+                    }
+                };
+
+                modal.imagePreview(previewUrl, this.tooltip(), options);
+            }
+        };
+        
+        media.ImageSelectorViewModel.prototype.remove = function (data, event) {
+            bcms.stopEventPropagation(event);
+            
+            this.setImage({});
+            this.onAfterRemove();
+        };
+        
         media.ImageSelectorViewModel.prototype.select = function (data, event) {
             var self = this,
                 onMediaSelect = function (insertedImage) {
@@ -1297,13 +1318,22 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                     onMediaSelect: function (image) {
                         onMediaSelect(image);
                     }
+                },
+                onMediaSelectClose = function () {
+                    self.onSelectClose();
                 };
             
             bcms.stopEventPropagation(event);
-            media.openImageInsertDialog(onMediaSelect, false, mediasViewModelExtender);
+            media.openImageInsertDialog(onMediaSelect, false, mediasViewModelExtender, onMediaSelectClose);
         };
 
         media.ImageSelectorViewModel.prototype.onAfterSelect = function () { };
+
+        media.ImageSelectorViewModel.prototype.onAfterRemove = function () { };
+
+        media.ImageSelectorViewModel.prototype.onAfterPreview = function () { };
+        
+        media.ImageSelectorViewModel.prototype.onSelectClose = function () { };
 
         return media.ImageSelectorViewModel;
     })();

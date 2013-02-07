@@ -28,8 +28,9 @@ define('bcms.preview', ['jquery', 'bcms', 'bcms.modal', 'bcms.dynamicContent'], 
     preview.links = links;
     preview.globalization = globalization;
 
-    preview.initialize = function(container) {
-        container.find(selectors.previewZoom).on('click', function() {
+    preview.initialize = function (container, selector) {
+        selector = selector || selectors.previewZoom;
+        container.find(selector).on('click', function () {
             var self = $(this),
                 title = self.data('previewTitle'),
                 url = self.data('previewUrl');

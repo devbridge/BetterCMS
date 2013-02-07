@@ -9,8 +9,8 @@
 @model ClonePageViewModel
 
 <div class="bcms-scroll-window">
+    @Html.TabbedContentMessagesBox()
     <div class="bcms-padded-content">
-        @Html.MessagesBox("clone-page-messages")
         @using (Html.BeginForm<PageController>(f => f.ClonePage((ClonePageViewModel)null), FormMethod.Post, new { @class = "bcms-ajax-form"}))
         {
             <div class="bcms-input-list-holder">
@@ -23,11 +23,14 @@
                 @Html.TextBoxFor(m => m.PageTitle, new { @class = "bcms-editor-field-box"})
             </div>
 
-            <div class="bcms-input-list-holder">
+            @*<div class="bcms-input-list-holder">
                 @Html.Tooltip(PagesGlobalization.ClonePage_Dialog_PageUrl_Tooltip_Title, PagesGlobalization.ClonePage_Dialog_PageUrl_Tooltip_Description)
                 <div class="bcms-content-titles">@PagesGlobalization.ClonePage_Dialog_PageUrl</div>
                 @Html.TextBoxFor(m => m.PageUrl, new { @class = "bcms-editor-field-box" })
-            </div>
+            </div>*@
+            
+            @Html.Partial("Partial/ClonePageEditUrl")
+            
             @Html.HiddenFor(m => m.PageId)
             @Html.HiddenFor(m => m.Version)
             @Html.HiddenSubmit()

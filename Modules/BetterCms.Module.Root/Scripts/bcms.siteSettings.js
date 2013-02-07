@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define */
 
-define('bcms.siteSettings', ['jquery', 'bcms', 'bcms.modal', 'bcms.dynamicContent', 'bcms.tabs', 'knockout'],
-    function ($, bcms, modal, dynamicContent, tabs, ko) {
+define('bcms.siteSettings', ['jquery', 'bcms', 'bcms.modal', 'bcms.dynamicContent', 'bcms.tabs', 'knockout', 'bcms.messages'],
+    function ($, bcms, modal, dynamicContent, tabs, ko, messages) {
     'use strict';
 
     var siteSettings = {},
@@ -15,7 +15,8 @@ define('bcms.siteSettings', ['jquery', 'bcms', 'bcms.modal', 'bcms.dynamicConten
             firstMenuButton: '#bcms-site-settings-menu .bcms-onclick-action:first',
             loaderContainer: '.bcms-rightcol',
             tabsTemplate: '#bcms-site-setting-tab-template',
-            tabsTemplateChildDiv: 'div'
+            tabsTemplateChildDiv: 'div',
+            modalMessages: '#bcms-modal-messages'
         },
 
         links = {
@@ -62,6 +63,8 @@ define('bcms.siteSettings', ['jquery', 'bcms', 'bcms.modal', 'bcms.dynamicConten
     */
     siteSettings.setContent = function (content, contentId) {
         if (siteSettingsModalWindow && (!contentId || contentId == siteSettings.contentId)) {
+            messages.refreshBox(siteSettingsModalWindow.container.find(selectors.modalMessages), {});
+
             siteSettingsModalWindow.container.find(selectors.placeHolder).empty().append(content);
 
             if ($.validator && $.validator.unobtrusive) {
@@ -151,6 +154,8 @@ define('bcms.siteSettings', ['jquery', 'bcms', 'bcms.modal', 'bcms.dynamicConten
         };
 
         self.load = function () {
+            messages.refreshBox(siteSettingsModalWindow.container.find(selectors.modalMessages), {});
+
             if (!self.isInitialized) {
                 self.spinContainer = siteSettingsModalWindow.container.find(selectors.loaderContainer);
                 self.container = siteSettingsModalWindow.container.find(self.href).find(selectors.tabsTemplateChildDiv);

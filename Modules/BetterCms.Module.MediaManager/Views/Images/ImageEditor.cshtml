@@ -8,10 +8,9 @@
 @using BetterCms.Module.MediaManager.ViewModels.Images
 
 @model ImageViewModel
-<div class="bcms-scroll-window" style="height: 942px;">
-    
-    @Html.MessagesBox("bcms-image-editor-messages")
 
+<div class="bcms-scroll-window" style="height: 942px;">
+    @Html.TabbedContentMessagesBox()
     <div class="bcms-file-manager-inner">
         @using (Html.BeginForm<ImagesController>(f => f.ImageEditor((ImageViewModel)null), FormMethod.Post, new { @class = "bcms-ajax-form", @enctype = "multipart/form-data" }))
         {
@@ -35,7 +34,7 @@
             </div>
             
             <div class="bcms-croped-block">
-                <img src="@Model.OriginalImageUrl?version=@Model.Version" data-bind="style: { width: imageEditorViewModel.calculatedWidth() + 'px', height: imageEditorViewModel.calculatedHeight() + 'px' }">
+                <img src="" data-bind="style: { width: imageEditorViewModel.calculatedWidth() + 'px', height: imageEditorViewModel.calculatedHeight() + 'px' }">
             </div>
                 
             <div class="bcms-edit-file-info">

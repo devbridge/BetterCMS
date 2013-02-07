@@ -87,6 +87,9 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
                     
                     postSuccess: postSuccess
                 });
+            },
+            onClose: function() {
+                htmlEditor.destroyAllHtmlEditorInstances();
             }
         });
     }
@@ -222,8 +225,10 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             
             var self = $(this),
                 id = self.data('id');
-            pages.deletePage(id, function () {
-                self.parents(selectors.siteSettingsBlogParentRow).remove();
+            pages.deletePage(id, function (json) {
+                var row = self.parents(selectors.siteSettingsBlogParentRow);
+                messages.refreshBox(row, json);
+                row.remove();
                 grid.showHideEmptyRow(container);
             }, globalization.deleteBlogDialogTitle);
         });
@@ -288,17 +293,58 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             self.parent = parent;
 
             _super.call(this);
+
+            self.onAfterAction = function () {
+                if (self.parent.isActive()) {
+                    self.parent.hasFocus(true);
+                }
+
+                return true;
+            };
+
+            self.onBeforeAction = function() {
+                self.parent.isSelected = true;
+                self.parent.isActive(true);
+                
+                return true;
+            };
         }
-        
+
         AuthorImageViewModel.prototype.select = function (data, event) {
-            this.parent.isSelected = true;
-            this.parent.isActive(true);
+            this.onBeforeAction();
 
             _super.prototype.select.call(this, data, event);
         };
 
+        AuthorImageViewModel.prototype.preview = function (data, event) {
+            bcms.stopEventPropagation();
+            if (this.parent.isActive()) {
+                this.onBeforeAction();
+            }
+
+            _super.prototype.preview.call(this, data, event);
+        };
+
+        AuthorImageViewModel.prototype.remove = function (data, event) {
+            this.onBeforeAction();
+
+            _super.prototype.remove.call(this, data, event);
+        };
+
         AuthorImageViewModel.prototype.onAfterSelect = function () {
-            this.parent.hasFocus(true);
+            this.onAfterAction();
+        };
+        
+        AuthorImageViewModel.prototype.onAfterRemove = function () {
+            this.onAfterAction();
+        };
+
+        AuthorImageViewModel.prototype.onAfterPreview = function () {
+            this.onAfterAction();
+        };
+
+        AuthorImageViewModel.prototype.onSelectClose = function () {
+            this.onAfterAction();
         };
 
         return AuthorImageViewModel;
@@ -468,7 +514,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         self.select = function () {
             var url = $.format(links.saveDefaultTemplateUrl, self.id),
                 onComplete = function (json) {
-                    container.hideLoading();
+                    self.container.hideLoading();
                     messages.refreshBox(self.container, json);
                     if (json.Success == true) {
                         for (var i = 0; i < self.parent.templates().length; i++) {
@@ -479,7 +525,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
                     }
                 };
 
-            container.showLoading();
+            self.container.showLoading();
 
             $.ajax({
                 type: 'POST',

@@ -340,13 +340,16 @@
     <value>Drag files here to upload</value>
   </data>
   <data name="MultiFileUpload_Failed" xml:space="preserve">
-    <value>Your upload attempt failed, don’t give up try again!</value>
+    <value>Your upload attempt failed!</value>
   </data>
   <data name="MultiFileUpload_FileSize" xml:space="preserve">
     <value>Size:</value>
   </data>
   <data name="MultiFileUpload_FileUploadedMessage" xml:space="preserve">
     <value>Success! Image uploaded.</value>
+  </data>
+  <data name="MultiFileUpload_ImageFormatNotSuported" xml:space="preserve">
+    <value>It is not an image or file format is not supported.</value>
   </data>
   <data name="MultiFileUpload_SaveFailed" xml:space="preserve">
     <value>Failed to save uploaded files.</value>
@@ -361,7 +364,7 @@
     <value>Select Folder</value>
   </data>
   <data name="MultiFileUpload_Success" xml:space="preserve">
-    <value>Success! Image uploaded.</value>
+    <value>Success! File uploaded.</value>
   </data>
   <data name="MultiFileUpload_Title" xml:space="preserve">
     <value>Upload New File</value>

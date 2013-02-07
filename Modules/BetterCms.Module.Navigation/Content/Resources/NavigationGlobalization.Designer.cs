@@ -232,6 +232,15 @@ namespace BetterCms.Module.Navigation.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to At least one node is in editing mode..
+        /// </summary>
+        public static string Sitemap_EditDialog_SomeNodesAreInEditingState {
+            get {
+                return ResourceManager.GetString("Sitemap_EditDialog_SomeNodesAreInEditingState", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Custom URL.
         /// </summary>
         public static string Sitemap_EditorDialog_CustomLinkTitle {

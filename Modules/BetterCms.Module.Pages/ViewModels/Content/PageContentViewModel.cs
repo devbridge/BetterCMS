@@ -5,6 +5,7 @@ using System.Web.Mvc;
 
 using BetterCms.Core.Models;
 using BetterCms.Module.Pages.Content.Resources;
+using BetterCms.Module.Pages.Mvc.Attributes;
 using BetterCms.Module.Pages.ViewModels.Widgets;
 
 namespace BetterCms.Module.Pages.ViewModels.Content
@@ -85,7 +86,7 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// The name of the page content.
         /// </value>
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "PageContent_ContentName_RequiredMessage")]
-        [StringLength(200, MinimumLength = 1, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "PageContent_ContentName_MaxLengthMessage")]
+        [StringLength(MaxLength.Name, MinimumLength = 1, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "PageContent_ContentName_MaxLengthMessage")]
         public string ContentName { get; set; }
 
         /// <summary>
@@ -103,6 +104,7 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// <value>
         /// The date, to which page is in live.
         /// </value>
+        [EndDateValidation(StartDateProperty = "LiveFrom", ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "PageContent_LiveTo_ValidationMessage")]
         public DateTime? LiveTo { get; set; }
 
         /// <summary>

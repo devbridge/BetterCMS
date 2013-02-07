@@ -22,12 +22,15 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                 widgetsSearchInput: '#bcms-advanced-content-search',
                 widgetsContainer: '#bcms-advanced-contents-container',
                 widgetCreateButton: '#bcms-create-advanced-content-button',
+                widgetRegisterButton: '#bcms-registeradvanced-content-button',
                 widgetInsertButtons: '.bcms-content-insert-button',
                 widgetDeleteButtons: '.bcms-content-delete-button',
                 widgetEditButtons: '.bcms-content-edit-button',
                 widgetContainerBlock: '.bcms-preview-block',
                 widgetCategory: '.bcms-category',
                 widgetName: '.bcms-title-holder > .bcms-content-titles',
+                widgetIFramePreview: '.bcms-preview-box:has(iframe) .bcms-zoom-overlay',
+                widgetImagePreview: '.bcms-preview-box:not(:has(iframe)) .bcms-zoom-overlay',
 
                 widgetsContent: '.bcms-widgets',
 
@@ -113,6 +116,9 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                             }                            
                         }
                     });
+                },
+                onClose: function() {
+                    htmlEditor.destroyAllHtmlEditorInstances();
                 }
             });
         };
@@ -121,6 +127,10 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
         * Save content order after sorting.
         */
         pagesContent.onSortPageContent = function (model) {
+            if (model.data.pageContents.length < 2) {
+                return; // Sorting is needed for more than one item.
+            }
+            
             var url = links.sortPageContentUrl,
                 alertOnError = function() {
                     modal.alert({
@@ -168,6 +178,12 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                 }, null);
             });
 
+            dialog.container.find(selectors.widgetRegisterButton).on('click', function () {
+                widgets.openCreateServerControlWidgetDialog(function () {
+                    pagesContent.updateWidgetCategoryList(dialog);
+                }, null);
+            });
+
             bcms.preventInputFromSubmittingForm(dialog.container.find(selectors.widgetsSearchInput), {
                 preventedEnter: function () {                    
                     pagesContent.updateWidgetCategoryList(dialog);
@@ -177,8 +193,6 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
             pagesContent.initializeWidgets(dialog.container, dialog);
 
             htmlEditor.initializeHtmlEditor(selectors.htmlEditor);
-
-            preview.initialize(dialog.container.find(selectors.widgetsContent));
 
             pagesContent.initializeCustomTextArea(dialog);
         };
@@ -253,11 +267,11 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
 
                 widgets.deleteWidget(widgetId, widgetVersion, widgetName,
                     function(data) {
-                        messages.refreshBox(dialog.container, data);
+                        messages.refreshBox(widgetContainer, data);
                         pagesContent.updateWidgetCategoryList(dialog);
                     },
                     function(data) {
-                        messages.refreshBox(dialog.container, data);
+                        messages.refreshBox(widgetContainer, data);
                     });
             });
 
@@ -268,13 +282,23 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                     widgetType = widgetContainer.data('type');
                 
                 widgets.editWidget(widgetId, widgetType, function(data) {
-                    messages.refreshBox(dialog.container, data);
+                    messages.refreshBox(widgetContainer, data);
                     pagesContent.updateWidgetCategoryList(dialog);
                 },
                 null);
             });
 
-            preview.initialize(container.find(selectors.widgetsContainer));
+            preview.initialize(container.find(selectors.widgetsContainer), selectors.widgetIFramePreview);
+            
+            // Add preview for widget with images (unbind click for iframe preview)
+            dialog.container.find(selectors.widgetImagePreview).unbind('click');
+            dialog.container.find(selectors.widgetImagePreview).on('click', function () {
+                var self = $(this),
+                    url = self.data('previewUrl'),
+                    alt = self.data('previewTitle');
+
+                modal.imagePreview(url, alt);
+            });
         };
               
         /**
@@ -448,6 +472,9 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                             }
                         }
                     });
+                },
+                onClose: function() {
+                    htmlEditor.destroyAllHtmlEditorInstances();
                 }
             });
         };

@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using System.Linq;
 
 using BetterCms.Core.Models;
 using BetterCms.Module.Pages.Command.Widget.DeleteWidget;
@@ -149,6 +150,12 @@ namespace BetterCms.Module.Pages.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (model.ContentOptions != null && model.ContentOptions.GroupBy(o => o.OptionKey).SelectMany(g => g.Skip(1)).Any())
+                {
+                    Messages.AddError(PagesGlobalization.SaveWidget_DublicateOptionName_Message);
+                    return Json(new WireJson { Success = false });
+                }
+
                 var response = GetCommand<SaveServerControlWidgetCommand>().ExecuteCommand(model);
                 if (response != null)
                 {
