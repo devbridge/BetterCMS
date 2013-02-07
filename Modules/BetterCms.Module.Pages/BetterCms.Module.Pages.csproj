@@ -292,16 +292,6 @@
     <EmbeddedResource Include="Content\Css\Images\bcms-no-image-3.png" />
     <EmbeddedResource Include="Content\Css\Images\sprite-pages-1.png" />
     <EmbeddedResource Include="Content\Css\Images\sprite-pages-2.png" />
-    <EmbeddedResource Include="Scripts\bcms.pages.content.js" />
-    <EmbeddedResource Include="Scripts\bcms.pages.history.js" />
-    <EmbeddedResource Include="Scripts\bcms.pages.js" />
-    <EmbeddedResource Include="Scripts\bcms.pages.properties.js" />
-    <EmbeddedResource Include="Scripts\bcms.pages.redirects.js" />
-    <EmbeddedResource Include="Scripts\bcms.pages.seo.js" />
-    <EmbeddedResource Include="Scripts\bcms.pages.tags.js" />
-    <EmbeddedResource Include="Scripts\bcms.pages.template.js" />
-    <EmbeddedResource Include="Scripts\bcms.pages.widgets.js" />
-    <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BetterCMS.Configuration\BetterCms.Configuration.csproj">
@@ -334,71 +324,47 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Seo\EditSeo.cshtml" />
+    <EmbeddedResource Include="Scripts\bcms.pages.content.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.history.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.properties.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.redirects.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.seo.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.tags.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.template.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.widgets.js" />
+    <Content Include="web.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <EmbeddedResource Include="Views\Seo\Partial\EditSeoEditUrlPath.cshtml" />
+    <EmbeddedResource Include="Views\Category\Categories.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Content\AddPageHtmlContent.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Widgets\Partial\Widget.cshtml" />
+    <EmbeddedResource Include="Views\Content\EditPageHtmlContent.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Content\Widgets.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Content\Partial\WidgetCategories.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Widgets\EditHtmlContentWidget.cshtml" />
+    <EmbeddedResource Include="Views\Content\PageContentOptions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Content\Partial\EditHtmlContent.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="web.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Tags\ListTags.cshtml" />
-    <EmbeddedResource Include="Views\Widgets\Widgets.cshtml" />
-    <EmbeddedResource Include="Views\Redirect\Redirects.cshtml" />
-    <EmbeddedResource Include="Views\Widgets\PreviewWidget.cshtml" />
-    <EmbeddedResource Include="Views\Widgets\PreviewHtmlContentWidget.cshtml" />
-    <EmbeddedResource Include="Views\Category\Categories.cshtml" />
-    <EmbeddedResource Include="Views\Widgets\EditServerControlWidget.cshtml" />
-    <EmbeddedResource Include="Views\Widgets\Partial\EditContentOptions.cshtml" />
-    <EmbeddedResource Include="Views\Shared\EditorTemplates\SiteSettingBoolean.cshtml" />
-    <EmbeddedResource Include="Views\Content\PageContentOptions.cshtml" />
-    <EmbeddedResource Include="Views\Content\EditPageHtmlContent.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Views\Content\Partial\WidgetCategory.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Templates\Templates.cshtml" />
+    <EmbeddedResource Include="Views\Content\Partial\WidgetCategories.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Templates\EditTemplate.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Templates\Partial\EditTemplateRegions.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Tags\TagsTemplate.cshtml" />
+    <EmbeddedResource Include="Views\Content\Widgets.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\History\ContentHistory.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\History\ContentVersion.cshtml">
-      <SubType>
-      </SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\Layouts\ContentVersionLayout.cshtml" />
+    <EmbeddedResource Include="Views\History\ContentVersion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Page\AddNewPage.cshtml" />
@@ -408,6 +374,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Page\DeletePageConfirmation.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Page\EditPageProperties.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Page\Pages.cshtml" />
@@ -428,9 +397,59 @@
     <EmbeddedResource Include="Views\Page\Partial\TemplatesList.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Page\EditPageProperties.cshtml" />
+    <EmbeddedResource Include="Views\Redirect\Redirects.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Seo\EditSeo.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Seo\Partial\EditSeoEditUrlPath.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\EditorTemplates\SiteSettingBoolean.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\Layouts\ContentVersionLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Tags\ListTags.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Tags\TagsTemplate.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Templates\EditTemplate.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Templates\Partial\EditTemplateRegions.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Templates\Templates.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Widgets\EditHtmlContentWidget.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Widgets\EditServerControlWidget.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Widgets\Partial\EditContentOptions.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Widgets\Partial\Widget.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Widgets\PreviewHtmlContentWidget.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Widgets\PreviewWidget.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Widgets\Widgets.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Web.config" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

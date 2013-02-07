@@ -13,7 +13,7 @@ define('bcms.messages', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, mod
     // Selectors used in the module to locate DOM elements:
         selectors = {
             messagesBox: '#bcms-messages-box',
-            messages: '.bcms-messages:first',
+            messages: '.bcms-messages-type-1:first, .bcms-messages-type-2:first, .bcms-messages-type-3:first',
             success: '.bcms-success-messages:first',
             info: '.bcms-info-messages:first',
             warn: '.bcms-warning-messages:first',
@@ -48,20 +48,20 @@ define('bcms.messages', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, mod
             var parentContainer = options.container;
             do {
                 if (options.container instanceof $) {
-                    container = parentContainer.find(selectors.messages);
+                    container = parentContainer.find(selectors.messages).first();
                 } else {
-                    container = $(parentContainer).find(selectors.messages);
+                    container = $(parentContainer).find(selectors.messages).first();
                 }
                 if (container.length === 0) {
                     parentContainer = parentContainer.parent();
                 }
             } while (container.length === 0 && parentContainer.length !== 0);
         } else if (options.containerId) {
-            container = $('#' + options.containerId).find(selectors.messages);
+            container = $('#' + options.containerId).find(selectors.messages).first();
         } else if (options.messageBoxId) {
             container = $('#' + options.messageBoxId);
         } else {
-            container = $(selectors.messages);
+            container = $(selectors.messages).first();
         }
 
         this.container = container;

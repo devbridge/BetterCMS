@@ -10,10 +10,10 @@
     <a class="bcms-tab bcms-tab-active" href="#bcms-tab-1">@PagesGlobalization.EditWidget_BasicPropertiesTab_Title</a>
     <a class="bcms-tab" href="#bcms-tab-2">@PagesGlobalization.EditWidget_OptionsTab_Title</a>
 </div>
-
+@Html.TabbedContentMessagesBox("bcms-edit-widget-messages")
+     
 <div class="bcms-scroll-window">
     <div class="bcms-padded-content">
-        @Html.MessagesBox("bcms-edit-widget-messages")
         @using (Html.BeginForm<WidgetsController>(c => c.EditServerControlWidget((EditServerControlWidgetViewModel)null), FormMethod.Post, new { @id = "bcms-widget-form", @class = "bcms-ajax-form" }))
         {
             <div id="bcms-tab-1" class="bcms-tab-single">

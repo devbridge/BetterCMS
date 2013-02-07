@@ -11,12 +11,12 @@
             <div class="bcms-sitemap-links-holder" data-bind="template: { name: 'bcms-navigation-pagelinks-template' }"></div>
         </div>
         <div class="bcms-rightcol">
+            @Html.TabbedContentMessagesBox()
             <div class="bcms-sitemap-holder">
                 <div class="bcms-addnode-placement-holder">
                     @* Form is required for unobtrusive validation. *@
                     @using (Html.BeginForm<SitemapController>(f => f.Index(null), FormMethod.Post, new { @id = "bcms-sitemap-form" }))
                     {
-                        @Html.MessagesBox("bcms-messages-box")
                         @Html.Partial("Partial/Sitemap", new SitemapNodeViewModel())
                     }
                 </div>

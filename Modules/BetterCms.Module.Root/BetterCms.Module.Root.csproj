@@ -223,7 +223,6 @@
     </Compile>
     <Compile Include="Mvc\Grids\EditableGridColumn.cs" />
     <Compile Include="ViewModels\Shared\EditableGridViewModel.cs" />
-    <Compile Include="ViewModels\Shared\MessagesViewModel.cs" />
     <Compile Include="ViewModels\Sidebar\SidebarContainerViewModel.cs" />
     <Compile Include="ViewModels\ProjectionsViewModel.cs" />
     <Compile Include="ViewModels\SiteSettings\SearchableGridViewModel.cs" />
@@ -255,7 +254,6 @@
     <EmbeddedResource Include="Scripts\bcms.authentication.js" />
     <EmbeddedResource Include="Scripts\bcms.tooltip.js" />
     <EmbeddedResource Include="Content\Styles\images\icn-calendar.png" />
-    <EmbeddedResource Include="Scripts\bcms.messages.js" />
     <EmbeddedResource Include="Scripts\bcms.datepicker.js" />
     <EmbeddedResource Include="Scripts\bcms.htmlEditor.js" />
     <EmbeddedResource Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -327,7 +325,6 @@
     <EmbeddedResource Include="Content\Styles\images\bcms-no-image-1.png" />
     <EmbeddedResource Include="Content\Styles\images\bcms-no-image-2.png" />
     <EmbeddedResource Include="Content\Styles\images\bcms-no-image-3.png" />
-    <EmbeddedResource Include="Scripts\bcms.dynamicContent.js" />
     <EmbeddedResource Include="Scripts\bcms.siteSettings.js" />
     <EmbeddedResource Include="Scripts\bcms.js" />
     <EmbeddedResource Include="Scripts\bcms.redirect.js" />
@@ -510,23 +507,13 @@
     <EmbeddedResource Include="Scripts\knockout-2.2.0.js" />
     <EmbeddedResource Include="Scripts\spinner.jquery.js" />
     <EmbeddedResource Include="Scripts\bcms.preview.js" />
-    <EmbeddedResource Include="Scripts\bcms.inlineEdit.js" />
     <EmbeddedResource Include="Scripts\bcms.ko.grid.js" />
+    <EmbeddedResource Include="Scripts\bcms.dynamicContent.js" />
+    <EmbeddedResource Include="Scripts\bcms.inlineEdit.js" />
+    <EmbeddedResource Include="Scripts\bcms.messages.js" />
     <EmbeddedResource Include="Scripts\bcms.modal.js" />
     <Content Include="Views\Web.config" />
-    <EmbeddedResource Include="Views\Shared\Partial\Alert.cshtml">
-      <SubType>Code</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\Shared\Partial\Confirm.cshtml">
-      <SubType>Code</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\Shared\Partial\ContentOverlay.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Partial\Info.cshtml">
-      <SubType>Code</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\Shared\Partial\Region.cshtml" />
     <EmbeddedResource Include="Views\Sidebar\Container.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Layouts\OneColumnLayout.cshtml" />
     <EmbeddedResource Include="Views\Rendering\RenderMainJsFile.cshtml" />
     <EmbeddedResource Include="Views\SiteSettings\Container.cshtml" />
     <EmbeddedResource Include="Views\Sidebar\Header.cshtml" />
@@ -536,22 +523,10 @@
     <EmbeddedResource Include="Views\Sidebar\Footer.cshtml" />
     <EmbeddedResource Include="Views\Sidebar\Body.cshtml" />
     <EmbeddedResource Include="Views\Authentication\Info.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Partial\Tooltip.cshtml" />
     <Content Include="web.config">
       <SubType>Designer</SubType>
     </Content>
-    <EmbeddedResource Include="Views\Shared\Partial\Messages.cshtml" />
     <EmbeddedResource Include="Views\Cms\Index.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Layouts\Preview.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Partial\ImagePreview.cshtml" />
-    <EmbeddedResource Include="Views\Shared\BaseLayout.cshtml" />
-    <EmbeddedResource Include="Views\Shared\RootLayout.cshtml" />
-    <EmbeddedResource Include="Views\Shared\EditableGrid\Grid.cshtml" />
-    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\Cell.cshtml" />
-    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\Header.cshtml" />
-    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\TopBlock.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Partial\Modal.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Partial\SiteSettingTab.cshtml" />
     <EmbeddedResource Include="Views\Preview\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -575,6 +550,57 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\BaseLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\EditableGrid\Grid.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\Cell.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\Header.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\TopBlock.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\Layouts\OneColumnLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\Layouts\Preview.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\Partial\Alert.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\Partial\Confirm.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\Partial\ContentOverlay.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\Partial\ImagePreview.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\Partial\Info.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\Partial\Modal.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\Partial\Region.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\Partial\SiteSettingTab.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\Partial\Tooltip.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\RootLayout.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

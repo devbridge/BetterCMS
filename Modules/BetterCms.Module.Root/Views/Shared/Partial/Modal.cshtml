@@ -1,4 +1,6 @@
 ﻿@using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Mvc.Helpers
+
 <script type="text/html" id="bcms-modal-template">
     <div class="bcms-modal">
         <div class="bcms-modal-body">
@@ -6,6 +8,7 @@
                 <div class="bcms-modal-title">@RootGlobalization.Message_Loading</div>
                 <div class="bcms-modal-close"> </div>
             </div>
+            @Html.ModalMessagesBox("bcms-modal-messages")
             <div class="bcms-modal-content">
                 <div class="bcms-loader"></div>
                 <div class="bcms-modal-content-padded" data-bind="stopBinding: true"></div>

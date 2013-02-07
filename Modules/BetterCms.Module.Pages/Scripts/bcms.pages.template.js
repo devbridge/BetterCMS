@@ -150,11 +150,14 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
         /**
         * Deletes template.
         */
-        template.deleteTemplate = function (templateId, templateVersion, templateName, onDeleteCallback) {
-            var url = $.format(links.deleteTemplateUrl, templateId, templateVersion),
+        template.deleteTemplate = function (row, onDeleteCallback) {
+            var templateId = row.data('id'),
+                templateVersion = row.data('version'),
+                templateName = row.find(selectors.templateNameCell).html(),
+                url = $.format(links.deleteTemplateUrl, templateId, templateVersion),
                 message = $.format(globalization.deleteTemplateConfirmMessage, templateName),
                 onDeleteCompleted = function (json) {
-                    messages.refreshBox(siteSettings.getModalDialog().container, json);
+                    messages.refreshBox(row, json);
                     try {
                         if (json.Success && $.isFunction(onDeleteCallback)) {
                             onDeleteCallback(json);
@@ -302,13 +305,10 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
         * Deletes template from site settings template list.
         */
         function deleteTemplates(container, self) {
-            var row = self.parents(selectors.templateParentRow),
-                id = row.data('id'),
-                version = row.data('version'),
-                name = row.find(selectors.templateNameCell).html();
+            var row = self.parents(selectors.templateParentRow);
 
-            template.deleteTemplate(id, version, name, function (data) {
-                messages.refreshBox(container, data);
+            template.deleteTemplate(row, function (data) {
+                messages.refreshBox(row, data);
                 if (data.Success) {
                     row.remove();
                     grid.showHideEmptyRow(container);

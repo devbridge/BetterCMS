@@ -116,14 +116,14 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
             bcms.stopEventPropagation(event);
             
             var row = $(this).parents(selectors.firstRow);
-            editor.editRow(row, initContainer);
+            editor.editRow(row);
         });
 
         initContainer.find(selectors.saveRowLink).on('click', function (event) {
             bcms.stopEventPropagation(event);
             
             var row = $(this).parents(selectors.firstRow);
-            editor.saveRow(row, initContainer);
+            editor.saveRow(row);
         });
 
         initContainer.find(selectors.cancelLink).on('click', function (event) {
@@ -144,7 +144,7 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
             preventedEnter: function (self) {
                 var row = self.parents(selectors.firstRow);
 
-                editor.saveRow(row, formContainer);
+                editor.saveRow(row);
             },
             preventedEsc: function (self) {
                 var row = self.parents(selectors.firstRow);
@@ -217,9 +217,9 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
     /**
     * Bind input fields to blur event
     */
-    editor.bindBlurEvents = function (row, container) {
+    editor.bindBlurEvents = function (row) {
         row.find(selectors.fieldInputs).bind('blur', function (event) {
-            editor.onRowInputBlur(event, $(this), row, container);
+            editor.onRowInputBlur(event, $(this), row);
         });
     };
 
@@ -233,7 +233,7 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
     /**
     * Function is called when focus lost, when inline editing mode is on
     */
-    editor.onRowInputBlur = function (event, self, row, container) {
+    editor.onRowInputBlur = function (event, self, row) {
         row.data('blurred', true);
         setTimeout(function () {
             var unbind = false;
@@ -244,7 +244,7 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
                 
                 if (valueChanged) {
                     if (editor.isRowValid(row) && row.data('blurred')) {
-                        editor.saveRow(row, container);
+                        editor.saveRow(row);
                         unbind = true;
                     }
                 } else {
@@ -300,7 +300,7 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
 
             editor.initRowEvents(newRow, container);
 
-            editor.bindBlurEvents(newRow, container);
+            editor.bindBlurEvents(newRow);
 
             rowAdded = true;
 
@@ -311,7 +311,7 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
     /**
     * Saves the row
     */
-    editor.saveRow = function(row, container) {
+    editor.saveRow = function(row) {
         if (editor.isRowValid(row)) {
 
             //
@@ -324,7 +324,7 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
                     cancelLink = row.find(selectors.cancelLink),
                     url = options.saveUrl,
                     onComplete = function(json) {
-                        messages.refreshBox(container, json);
+                        messages.refreshBox(row, json);
                         savingMessage.hide();
                         row.data('saving', false);
                         row.data('blurred', false);
@@ -346,7 +346,7 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
                             options.switchRowToView(row);
                         } else {
                             // Bind back to item blur event
-                            editor.bindBlurEvents(row, container);
+                            editor.bindBlurEvents(row);
 
                             saveLink.show();
                             cancelLink.show();
@@ -397,8 +397,8 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
     /**
     * Enters row inline edit mode.
     */
-    editor.editRow = function (row, container) {
-        editor.bindBlurEvents(row, container);
+    editor.editRow = function (row) {
+        editor.bindBlurEvents(row);
 
         options.switchRowToEdit(row);
     };
@@ -424,7 +424,7 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
                         deleteMessage = row.find(selectors.rowMessage),
                         deleteLink = row.find(selectors.deleteRowLink),
                         onComplete = function(json) {
-                            messages.refreshBox(formContainer, json);
+                            messages.refreshBox(row, json);
                             deleteMessage.hide();
                             if (json.Success) {
                                 row.remove();
