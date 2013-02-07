@@ -14,23 +14,17 @@ namespace BetterCms.Module.Root.Mvc.Helpers
     /// </summary>
     public static class MessagesHelper
     {
-        private const string CssClassMessagesType1 = "bcms-messages-type-1";
-        private const string CssClassMessagesType2 = "bcms-messages-type-2";
-        private const string CssClassMessagesType3 = "bcms-messages-type-3";
-
-        public static IHtmlString ModalMessagesBox(this HtmlHelper html, string id = null, IDictionary<string, string> attributes = null)
-        {
-            return MessagesBox(html, id, attributes, CssClassMessagesType1);
-        }
+        private const string cssClassMessagesType1 = "bcms-messages-type-1";
+        private const string cssClassMessagesType2 = "bcms-messages-type-2";
 
         public static IHtmlString TabbedContentMessagesBox(this HtmlHelper html, string id = null, IDictionary<string, string> attributes = null)
         {
-            return MessagesBox(html, id, attributes, CssClassMessagesType2);
+            return MessagesBox(html, id, attributes, cssClassMessagesType1);
         }
 
         public static IHtmlString SiteSettingsMessagesBox(this HtmlHelper html, string id = null, IDictionary<string, string> attributes = null)
         {
-            return MessagesBox(html, id, attributes, CssClassMessagesType3);
+            return MessagesBox(html, id, attributes, cssClassMessagesType2);
         }
 
         /// <summary>

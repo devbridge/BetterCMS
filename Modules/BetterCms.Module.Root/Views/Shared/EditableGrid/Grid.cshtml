@@ -20,7 +20,7 @@
     </thead>
     <tbody>
         <!-- ko foreach: items -->
-        <tr data-bind="click: onOpen">
+        <tr data-bind="click: onOpen, css: {'bcms-table-row-active' : isActive()}">
             <td><a class="bcms-icn-edit" data-bind="click: onEdit">@RootGlobalization.Button_Edit</a></td>
             @foreach (var column in Model.Columns)
             {

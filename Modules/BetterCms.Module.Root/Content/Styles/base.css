@@ -889,7 +889,6 @@ a.bcms-remove-image {
 }
 
 .bcms-padded-content {
-    height: 100%;
     padding-left: 50px;
     max-width: 830px;
 }
@@ -954,7 +953,7 @@ div.bcms-modal-close {
 
 .bcms-modal-content-padded {
     position: relative;
-    padding: 0 0 74px;
+    padding: 50px 0 74px;
 }
 
 .bcms-modal-footer {
@@ -1790,7 +1789,7 @@ a.bcms-btn-close {
 .bcms-single-tag {
     position: relative;
     display: inline-block;
-    margin: 4px 4px 0 0;
+    margin: 4px 4px 3px 0;
     height: 22px;
     line-height: 21px;
     padding: 0 18px 0 6px;
@@ -2112,14 +2111,6 @@ div.bcms-list .bcms-grid-input.input-validation-error {
       margin-top: -5px;
    }*/
 
-.bcms-messages-type-1 {
-    padding-top: 50px;
-}
-
-.bcms-messages-type-2, .bcms-messages-type-3 {
-    padding: 0;
-}
-
 div.bcms-messages-type-1 ul {
     padding: 15px 60px 14px;
     margin: 0;
@@ -2128,13 +2119,6 @@ div.bcms-messages-type-1 ul {
 }
 
 div.bcms-messages-type-2 ul {
-    padding: 15px 60px 14px;
-    margin: 0;
-    border-bottom: 1px solid #c6c6c6;
-    font-size: 12px;
-}
-
-div.bcms-messages-type-3 ul {
     padding: 15px 60px 14px;
     margin: 0;
     font-size: 12px;
