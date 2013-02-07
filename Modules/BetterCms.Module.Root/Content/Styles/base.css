@@ -978,6 +978,7 @@ div.bcms-modal-close {
     line-height: 34px;
     background: url('images/bcms-logo.png') no-repeat right center;
 }
+
 /* Upload image dialog */
 .bcms-uploadimage-dragndrop {
     border: 2px dashed #DDD;
@@ -1138,7 +1139,7 @@ a.bcms-error-close {
 
 .bcms-tooltip-box {
     width: 308px;
-    padding: 20px;
+    padding: 15px;
     position: relative;
     background: #eff9fd;
     border: 1px solid #c6c6c6;
@@ -1598,7 +1599,7 @@ a.bcms-btn-close {
 }
 
 .bcms-title-holder {
-    height: 36px;
+    height: 20px;
     margin-bottom: 5px;
     position: relative;
     width: 100%;
@@ -1620,7 +1621,6 @@ a.bcms-btn-close {
     margin-bottom: 5px;
     border: 1px solid #c6c6c6;
     background: url('images/bcms-no-image-1.png') no-repeat center center #f5f5f5;
-    overflow: hidden;
 }
 
     .bcms-preview-box img {
@@ -1682,7 +1682,7 @@ a.bcms-btn-close {
     position: relative;
     float: left;
     width: 265px;
-    height: 315px;
+    height: 300px;
     padding: 20px 26px;
     margin-left: 11px;
     border: 1px solid #c6c6c6;
@@ -1782,14 +1782,10 @@ a.bcms-btn-close {
     margin-top: -8px;
 }
 
-.bcms-single-tag-holder {
-    padding-top: 5px;
-}
-
 .bcms-single-tag {
     position: relative;
     display: inline-block;
-    margin-right: 4px;
+    margin: 4px 4px 0 0;
     height: 22px;
     line-height: 21px;
     padding: 0 18px 0 6px;

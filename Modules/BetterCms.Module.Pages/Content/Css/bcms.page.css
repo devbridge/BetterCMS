@@ -32,7 +32,6 @@ div.bcms-editseo-modal {
 
 .bcms-editseo-window {
     width: 670px;
-    /*padding: 0 30px 0 0;*/
     min-height: 100%;
 }
 
@@ -188,11 +187,11 @@ a.bcms-slider-next {
 }
 
 .bcms-title-holder .bcms-content-titles {
-    position: absolute;
-    padding-bottom: 0;
-    bottom: 0;
-    left: 0;
     font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-bottom: 0;
 }
 
 .bcms-controls-holder .bcms-icn-delete {
@@ -245,7 +244,7 @@ a.bcms-slider-next {
 }
 
 .bcms-tags-box-holder {
-    padding: 5px 0 0 40px;
+    padding: 10px 0 0 30px;
     margin: 0 0 20px -30px;
     border-top: 1px solid #c6c6c6;
     border-bottom: 1px solid #c6c6c6;
@@ -333,7 +332,7 @@ hr.bcms-settings-separator {
 /*content*/
 .bcms-top-block-holder {
     padding: 20px 20px 20px 30px;
-    height: 35px;
+    height: 30px;
 }
 
     .bcms-top-block-holder .bcms-large-titles {
@@ -460,9 +459,3 @@ hr.bcms-settings-separator {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
-/*
-transition: all 0.1s ease-in-out;
--moz-transition: all 0.1s ease-in-out;
--webkit-transition: all 0.1s ease-in-out;
-*/
