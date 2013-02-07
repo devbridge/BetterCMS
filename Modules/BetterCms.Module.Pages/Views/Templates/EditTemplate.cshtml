@@ -11,12 +11,12 @@
     <a class="bcms-tab" href="#bcms-tab-2">@PagesGlobalization.EditTemplate_OptionsTab_Title</a>
 </div>
 @Html.TabbedContentMessagesBox("bcms-edit-template-messages")
-         
+
 <div class="bcms-scroll-window">
-    <div class="bcms-padded-content">
-        @using (Html.BeginForm<TemplatesController>(c => c.RegisterTemplate((TemplateEditViewModel)null), FormMethod.Post, new { @id = "bcms-template-form", @class = "bcms-ajax-form" }))
-        {
-            <div id="bcms-tab-1" class="bcms-tab-single">
+    @using (Html.BeginForm<TemplatesController>(c => c.RegisterTemplate((TemplateEditViewModel)null), FormMethod.Post, new { @id = "bcms-template-form", @class = "bcms-ajax-form" }))
+    {
+        <div id="bcms-tab-1" class="bcms-tab-single">
+            <div class="bcms-padded-content">
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.Template_Title_Tooltip_Title, PagesGlobalization.Template_Title_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.Template_Title_Title:</div>
@@ -45,16 +45,14 @@
 
                 </div>
             </div>
+        </div>
               
-            <div id="bcms-tab-2" class="bcms-tab-single">
-                @Html.Partial("Partial/EditTemplateRegions")
-            </div>
+        <div id="bcms-tab-2" class="bcms-tab-single">
+            @Html.Partial("Partial/EditTemplateRegions")
+        </div>
             
-            @Html.HiddenFor(model => model.Id)
-            @Html.HiddenFor(model => model.Version)
-            @Html.HiddenSubmit()
-        }
-
-    </div>
-
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.Version)
+        @Html.HiddenSubmit()
+    }
 </div>

@@ -1391,8 +1391,12 @@ a.bcms-btn-close {
 }
 
     .bcms-input-list-holder:first-child {
-        margin-top: 20px;
+        padding-top: 20px;
     }
+
+        .bcms-input-list-holder:first-child .bcms-tooltip-mark {
+            top: 24px;
+        }
 
     .bcms-input-list-holder .bcms-tooltip-mark {
         top: 4px;

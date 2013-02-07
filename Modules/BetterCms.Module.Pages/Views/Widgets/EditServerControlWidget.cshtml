@@ -11,12 +11,13 @@
     <a class="bcms-tab" href="#bcms-tab-2">@PagesGlobalization.EditWidget_OptionsTab_Title</a>
 </div>
 @Html.TabbedContentMessagesBox("bcms-edit-widget-messages")
-     
+
 <div class="bcms-scroll-window">
-    <div class="bcms-padded-content">
-        @using (Html.BeginForm<WidgetsController>(c => c.EditServerControlWidget((EditServerControlWidgetViewModel)null), FormMethod.Post, new { @id = "bcms-widget-form", @class = "bcms-ajax-form" }))
-        {
-            <div id="bcms-tab-1" class="bcms-tab-single">
+
+    @using (Html.BeginForm<WidgetsController>(c => c.EditServerControlWidget((EditServerControlWidgetViewModel)null), FormMethod.Post, new { @id = "bcms-widget-form", @class = "bcms-ajax-form" }))
+    {
+        <div id="bcms-tab-1" class="bcms-tab-single">
+            <div class="bcms-padded-content">
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.Widget_Title_Tooltip_Title, PagesGlobalization.Widget_Title_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.Widget_Title_Title:</div>
@@ -51,15 +52,17 @@
 
                 </div>
             </div>
+        </div>
                 
-            <div id="bcms-tab-2" class="bcms-tab-single">
-                @Html.Partial("Partial/EditContentOptions")
-            </div>
-            @Html.HiddenFor(model => model.Id, new { @id = "bcmsContentId" })
-            @Html.HiddenFor(model => model.Version)
-            @Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status" })
-            @Html.HiddenFor(modal => modal.PreviewOnPageContentId, new { @class = "bcms-preview-page-content-id" })
-            @Html.HiddenSubmit()
-        }
-    </div>
+        <div id="bcms-tab-2" class="bcms-tab-single">
+            @Html.Partial("Partial/EditContentOptions")
+        </div>
+        
+        @Html.HiddenFor(model => model.Id, new { @id = "bcmsContentId" })
+        @Html.HiddenFor(model => model.Version)
+        @Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status" })
+        @Html.HiddenFor(modal => modal.PreviewOnPageContentId, new { @class = "bcms-preview-page-content-id" })
+        @Html.HiddenSubmit()
+    }
 </div>
+
