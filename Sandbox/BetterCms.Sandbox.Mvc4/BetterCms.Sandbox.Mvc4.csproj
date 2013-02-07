@@ -177,41 +177,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Content Include="App_Data\BetterCMS\Modules\readme.txt" />
-    <EmbeddedResource Include="file\bcms-root\scripts\bcms.authentication.js" />
-    <EmbeddedResource Include="file\bcms-root\scripts\bcms.content.js" />
-    <EmbeddedResource Include="file\bcms-root\scripts\bcms.datepicker.js" />
-    <EmbeddedResource Include="file\bcms-root\scripts\bcms.dynamicContent.js" />
-    <EmbeddedResource Include="file\bcms-root\scripts\bcms.forms.js" />
-    <EmbeddedResource Include="file\bcms-root\scripts\bcms.grid.js" />
-    <EmbeddedResource Include="file\bcms-root\scripts\bcms.htmlEditor.js" />
-    <EmbeddedResource Include="file\bcms-root\scripts\bcms.inlineEdit.js" />
-    <EmbeddedResource Include="file\bcms-root\scripts\bcms.js" />
-    <EmbeddedResource Include="file\bcms-root\scripts\bcms.ko.grid.js" />
-    <EmbeddedResource Include="file\bcms-root\scripts\bcms.messages.js" />
-    <EmbeddedResource Include="file\bcms-root\scripts\bcms.modal.js" />
-    <EmbeddedResource Include="file\bcms-root\scripts\bcms.preview.js" />
-    <EmbeddedResource Include="file\bcms-root\scripts\bcms.redirect.js" />
-    <EmbeddedResource Include="file\bcms-root\scripts\bcms.sidemenu.js" />
-    <EmbeddedResource Include="file\bcms-root\scripts\bcms.siteSettings.js" />
-    <EmbeddedResource Include="file\bcms-root\scripts\bcms.tabs.js" />
-    <EmbeddedResource Include="file\bcms-root\scripts\bcms.tooltip.js" />
-    <EmbeddedResource Include="file\bcms-root\scripts\jquery-ui-1.9.0.js" />
-    <EmbeddedResource Include="file\bcms-root\scripts\jquery-ui-1.9.0.min.js" />
-    <EmbeddedResource Include="file\bcms-root\scripts\jquery-ui.min.js" />
-    <EmbeddedResource Include="file\bcms-root\scripts\jquery.unobtrusive-ajax.js" />
-    <EmbeddedResource Include="file\bcms-root\scripts\jquery.unobtrusive-ajax.min.js" />
-    <None Include="file\bcms-root\scripts\jquery.validate-vsdoc.js" />
-    <EmbeddedResource Include="file\bcms-root\scripts\jquery.validate.js" />
-    <EmbeddedResource Include="file\bcms-root\scripts\jquery.validate.min.js" />
-    <EmbeddedResource Include="file\bcms-root\scripts\jquery.validate.unobtrusive.js" />
-    <EmbeddedResource Include="file\bcms-root\scripts\jquery.validate.unobtrusive.min.js" />
-    <EmbeddedResource Include="file\bcms-root\scripts\knockout-2.2.0.debug.js" />
-    <EmbeddedResource Include="file\bcms-root\scripts\knockout-2.2.0.js" />
-    <EmbeddedResource Include="file\bcms-root\scripts\popup.js" />
-    <EmbeddedResource Include="file\bcms-root\scripts\require-jquery.js" />
-    <EmbeddedResource Include="file\bcms-root\scripts\require.js" />
-    <EmbeddedResource Include="file\bcms-root\scripts\slides.jquery.js" />
-    <EmbeddedResource Include="file\bcms-root\scripts\spinner.jquery.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -226,6 +191,7 @@
     <Folder Include="file\bcms-blog\scripts\" />
     <Folder Include="file\bcms-media\scripts\" />
     <Folder Include="file\bcms-pages\scripts\" />
+    <Folder Include="file\bcms-root\scripts\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

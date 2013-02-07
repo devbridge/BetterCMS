@@ -7,9 +7,8 @@
 @using Microsoft.Web.Mvc
 @model BetterCms.Module.MediaManager.ViewModels.Upload.MultiFileUploadViewModel
            
-@Html.TabbedContentMessagesBox("bcms-multi-file-upload-messages")
-
 <div class="bcms-scroll-window">
+    @Html.TabbedContentMessagesBox("bcms-multi-file-upload-messages")
     <div class="bcms-file-manager-inner">
 
         @using (Html.BeginForm("UploadSingleFile", "Upload", FormMethod.Post, new
