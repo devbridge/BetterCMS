@@ -6,29 +6,28 @@
 @using Microsoft.Web.Mvc
 
 @model EditServerControlWidgetViewModel
-
 <div class="bcms-tab-header">
     <a class="bcms-tab bcms-tab-active" href="#bcms-tab-1">@PagesGlobalization.EditWidget_BasicPropertiesTab_Title</a>
     <a class="bcms-tab" href="#bcms-tab-2">@PagesGlobalization.EditWidget_OptionsTab_Title</a>
 </div>
-      
 @Html.TabbedContentMessagesBox("bcms-edit-widget-messages")
-     
+
 <div class="bcms-scroll-window">
-    <div class="bcms-padded-content">
-        @using (Html.BeginForm<WidgetsController>(c => c.EditServerControlWidget((EditServerControlWidgetViewModel)null), FormMethod.Post, new { @id = "bcms-widget-form", @class = "bcms-ajax-form" }))
-        {
-            <div id="bcms-tab-1" class="bcms-tab-single">
+
+    @using (Html.BeginForm<WidgetsController>(c => c.EditServerControlWidget((EditServerControlWidgetViewModel)null), FormMethod.Post, new { @id = "bcms-widget-form", @class = "bcms-ajax-form" }))
+    {
+        <div id="bcms-tab-1" class="bcms-tab-single">
+            <div class="bcms-padded-content">
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.Widget_Title_Tooltip_Title, PagesGlobalization.Widget_Title_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.Widget_Title_Title:</div>
                     @Html.TextBoxFor(model => model.Name, new { @class = "bcms-editor-field-box", @style = "width: 523px;" })
                 </div>
-                
+
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.Widget_Category_Tooltip_Title, PagesGlobalization.Widget_Category_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.Widget_Category_Title:</div>
-                    @Html.DropDownListFor(model => model.CategoryId, Model.Categories.ToSelectList(Model.CategoryId), PagesGlobalization.Widget_Category_SelectCategory, new {@class = "bcms-global-select"})
+                    @Html.DropDownListFor(model => model.CategoryId, Model.Categories.ToSelectList(Model.CategoryId), PagesGlobalization.Widget_Category_SelectCategory, new { @class = "bcms-global-select" })
                 </div>
 
                 <div class="bcms-input-list-holder">
@@ -36,33 +35,34 @@
                     <div class="bcms-content-titles">@PagesGlobalization.Widget_Url_Title:</div>
                     @Html.TextBoxFor(model => model.Url, new { @class = "bcms-editor-field-box", @style = "width: 523px;" })
                 </div>
-                
+
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.Widget_Preview_Image_Tooltip_Title, PagesGlobalization.WidgetPreviewImageUrl_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.WidgetPreviewImageUrl_Title:</div>
                     @Html.TextBoxFor(model => model.PreviewImageUrl, new { @class = "bcms-editor-field-box", @style = "width: 523px;" })
                 </div>
-                
+
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.Widget_Preview_Image_Tooltip_Title, PagesGlobalization.WidgetPreviewImageUrl_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.WidgetPreviewImage_Title:</div>
-                </div>
 
-                <div class="bcms-thumbnails-preview">
                     <div class="bcms-preview-module-image">
                         <img id="bcms-widget-preview-image" src="@Model.PreviewImageUrl" alt="" />
                     </div>
+
                 </div>
             </div>
+        </div>
                 
         <div id="bcms-tab-2" class="bcms-tab-single">
             @Html.Partial("Partial/EditContentOptions")
         </div>
+        
         @Html.HiddenFor(model => model.Id, new { @id = "bcmsContentId" })
         @Html.HiddenFor(model => model.Version)
-        @Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status"})
+        @Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status" })
         @Html.HiddenFor(modal => modal.PreviewOnPageContentId, new { @class = "bcms-preview-page-content-id" })
         @Html.HiddenSubmit()
     }
-	</div>
 </div>
+
