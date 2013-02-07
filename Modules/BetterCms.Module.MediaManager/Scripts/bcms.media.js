@@ -757,10 +757,11 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     /**
     * Shows image selection window.
     */
-    media.openImageInsertDialog = function (onAccept, canInsertWithOptions, folderViewModelOptions) {
+    media.openImageInsertDialog = function (onAccept, canInsertWithOptions, folderViewModelOptions, onClose) {
         modal.open({
             title: globalization.insertImageDialogTitle,
             acceptTitle: 'Insert',
+            onClose: onClose,
             onLoad: function (dialog) {
                 imageInsertDialog = dialog;
                 dynamicContent.setContentFromUrl(dialog, links.insertImageDialogUrl, {
@@ -805,7 +806,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 }
                     
                 return true;
-            },
+            }
         });
     };
 
@@ -1281,10 +1282,14 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         media.ImageSelectorViewModel.prototype.preview = function (data, event) {
             bcms.stopEventPropagation(event);
 
-            var previewUrl = this.createUrl(this.url());
+            var previewUrl = this.createUrl(this.url()),
+                self = this;
+
             if (previewUrl) {
                 var options = {
-                    onClose: this.onAfterPreview
+                    onClose: function () {
+                        self.onAfterPreview();
+                    }
                 };
 
                 modal.imagePreview(previewUrl, this.tooltip(), options);
@@ -1313,10 +1318,13 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                     onMediaSelect: function (image) {
                         onMediaSelect(image);
                     }
+                },
+                onMediaSelectClose = function () {
+                    self.onSelectClose();
                 };
             
             bcms.stopEventPropagation(event);
-            media.openImageInsertDialog(onMediaSelect, false, mediasViewModelExtender);
+            media.openImageInsertDialog(onMediaSelect, false, mediasViewModelExtender, onMediaSelectClose);
         };
 
         media.ImageSelectorViewModel.prototype.onAfterSelect = function () { };
@@ -1324,6 +1332,8 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         media.ImageSelectorViewModel.prototype.onAfterRemove = function () { };
 
         media.ImageSelectorViewModel.prototype.onAfterPreview = function () { };
+        
+        media.ImageSelectorViewModel.prototype.onSelectClose = function () { };
 
         return media.ImageSelectorViewModel;
     })();
