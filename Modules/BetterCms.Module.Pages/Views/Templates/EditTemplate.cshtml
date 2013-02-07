@@ -6,12 +6,11 @@
 @using Microsoft.Web.Mvc
 
 @model TemplateEditViewModel
-
 <div class="bcms-tab-header">
     <a class="bcms-tab bcms-tab-active" href="#bcms-tab-1">@PagesGlobalization.EditTemplate_BasicPropertiesTab_Title</a>
     <a class="bcms-tab" href="#bcms-tab-2">@PagesGlobalization.EditTemplate_OptionsTab_Title</a>
 </div>
-           
+
 <div class="bcms-scroll-window">
     <div class="bcms-padded-content">
         @Html.MessagesBox("bcms-edit-template-messages")
@@ -29,22 +28,21 @@
                     <div class="bcms-content-titles">@PagesGlobalization.Template_Url_Title:</div>
                     @Html.TextBoxFor(model => model.Url, new { @class = "bcms-editor-field-box", @style = "width: 523px;" })
                 </div>
-                
+
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.Template_Preview_Image_Tooltip_Title, PagesGlobalization.TemplatePreviewImageUrl_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.TemplatePreviewImageUrl_Title:</div>
                     @Html.TextBoxFor(model => model.PreviewImageUrl, new { @class = "bcms-editor-field-box", @style = "width: 523px;" })
                 </div>
-                
+
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.Template_Preview_Image_Tooltip_Title, PagesGlobalization.TemplatePreviewImageUrl_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.TemplatePreviewImage_Title:</div>
-                </div>
 
-                <div class="bcms-thumbnails-preview">
                     <div class="bcms-preview-module-image">
                         <img id="bcms-template-preview-image" src="@Model.PreviewImageUrl" alt="" />
                     </div>
+
                 </div>
             </div>
               
@@ -55,8 +53,8 @@
             @Html.HiddenFor(model => model.Id)
             @Html.HiddenFor(model => model.Version)
             @Html.HiddenSubmit()
-        } 
-        
+        }
+
     </div>
-     
+
 </div>
