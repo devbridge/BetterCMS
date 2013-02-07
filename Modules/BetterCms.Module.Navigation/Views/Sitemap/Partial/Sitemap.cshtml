@@ -40,7 +40,12 @@
                     <div class="bcms-placement-path"><a data-bind="text: url, click: startEditSitemapNode"></a></div>
                     <!-- /ko -->
                     <!-- ko ifnot: getSitemap().settings.canEditNode && !getSitemap().settings.canDragNode -->
-                    <div class="bcms-placement-path" data-bind="text: url"></div>
+                        <!-- ko if: getSitemap().settings.canEditNode -->
+                            <div class="bcms-placement-path"><a data-bind="text: url, click: startEditSitemapNode"></a></div>
+                        <!-- /ko -->
+                        <!-- ko ifnot: getSitemap().settings.canEditNode -->
+                            <div class="bcms-placement-path" data-bind="text: url"></div>
+                        <!-- /ko -->
                     <!-- /ko -->
                 </div>
                 <!-- ko if: getSitemap().settings.canEditNode -->
