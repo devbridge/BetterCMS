@@ -51,11 +51,11 @@
                             <div class="bcms-create-author-holder">
                                 <div class="bcms-tooltip-mark" data-message="@UsersGlobalization.EditUser_UserImage_Tooltip_Description" data-title="@UsersGlobalization.EditUser_UserImage_Tooltip_Title"></div>
                                 <div class="bcms-content-titles">@UsersGlobalization.EditUser_Image_Title</div>
-                                <div class="bcms-uploaded-image"> </div>
+                                <div class="bcms-uploaded-image"><img class="bcms-user-image-url" src=""/> </div>
                                 <div class="bcms-upload-info">
                                     <div class="bcms-upload-info-text">@UsersGlobalization.EditUser_UploadImage_Info</div>
                                     <div id="bcms-open-uploader-button" class="bcms-btn-small">@UsersGlobalization.EditUser_UploadImage_Button_Title</div>
-                                    @Html.HiddenFor(m => m.Image)
+                                    @Html.HiddenFor(m => m.Image.ImageId, new { @class = "bcms-user-image-id" })
                                 </div>
                             </div>
                         </div>

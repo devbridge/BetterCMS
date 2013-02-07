@@ -24,7 +24,7 @@ namespace BetterCms.Module.Users.Models.Migrations
 
         public override void Down()
         {
-            Delete.ForeignKey("FK_Cms_Users_Cms_MediaFiles").OnTable("Users").InSchema(SchemaName);
+            Delete.ForeignKey("FK_Cms_Users_ImageId_Cms_MediaFiles_Id").OnTable("Users").InSchema(SchemaName);
         }
     }
 }

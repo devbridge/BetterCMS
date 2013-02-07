@@ -21,7 +21,7 @@ namespace BetterCms.Module.Blog.Registration
             Links = new IActionProjection[]
                         {
                             new JavaScriptModuleLinkTo<UserController>(this, "loadSiteSettingsUsersUrl", c => c.Index(null)),
-                            new JavaScriptModuleLinkTo<UserController>(this, "loadEditUserUrl", c=> c.EditUser()), 
+                            new JavaScriptModuleLinkTo<UserController>(this, "loadEditUserUrl", c=> c.EditUser("{0}")), 
                             /*new JavaScriptModuleLinkTo<RoleController>(this, "loadCreatRoleUrl", c => c.CreatRoleView()),
                             new JavaScriptModuleLinkTo<RoleController>(this, "loadEditRoleUrl", c => c.EditRoleView("{0}")),
                             new JavaScriptModuleLinkTo<RoleController>(this, "loadSiteSettingsRoleUrl", c => c.RolesListView(null)) */

@@ -10,7 +10,9 @@ define('bcms.user', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             siteSettingsUserCreateButton: "#bcms-create-user-button",
             siteSettingsRoleCreatButton: "#bcms-create-role-button",
             usersTable: '#bcms-users-grid',
-            userUploadImageButton: "#bcms-open-uploader-button"
+            userUploadImageButton: "#bcms-open-uploader-button",
+            userImageId: ".bcms-user-image-id",
+            userImage: ".bcms-user-image-url"
         },
 
         links = {
@@ -88,14 +90,12 @@ define('bcms.user', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     };
         
     function initUserCreatEvents(dialog) {
-        var onImageInsert = function(json) {
-            alert(json.Data);
+        var onImageInsert = function(image) {            
+            dialog.container.find(selectors.userImageId).val(image.id());
+            dialog.container.find(selectors.userImage).attr('src', image.thumbnailUrl);
         };
         dialog.container.find(selectors.userUploadImageButton).on('click', function () {            
-            media.openImageInsertDialog(onImageInsert);
-            //onAccept, canInsertWithOptions, folderViewModelOptions
-            //self.image = ko.observable(new media.ImageSelectorViewModel(image));
-            //Image
+            media.openImageInsertDialog(onImageInsert);          
         });
     };
 

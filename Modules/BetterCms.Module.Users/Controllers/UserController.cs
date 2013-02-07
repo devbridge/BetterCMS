@@ -7,6 +7,7 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 using BetterCms.Module.Root.ViewModels.SiteSettings;
 using BetterCms.Module.Users.Commands.User;
+using BetterCms.Module.Users.Commands.User.GetUser;
 using BetterCms.Module.Users.Content.Resources;
 using BetterCms.Module.Users.ViewModels;
 
@@ -27,14 +28,9 @@ namespace BetterCms.Module.Users.Controllers
             return View(model);
         }
 
-        public ActionResult EditUser()
+        public ActionResult EditUser(string id)
         {
-            var model = new EditUserViewModel();
-            var roles = new List<LookupKeyValue>();
-            roles.Add(new LookupKeyValue() { Key = "0", Value = "... Select role ..." });
-            roles.Add(new LookupKeyValue(){Key = "0", Value = "Administrator"});
-            roles.Add(new LookupKeyValue() { Key = "0", Value = "Content editor" });
-            model.Roles = roles;
+            var model = GetCommand<GetUserCommand>().Execute(id.ToGuidOrDefault());
             return PartialView("EditUserView", model);
         }
 

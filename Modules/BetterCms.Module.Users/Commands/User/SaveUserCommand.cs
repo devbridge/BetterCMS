@@ -3,6 +3,8 @@
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Users.Models;
+using BetterCms.Module.Users.Services;
 using BetterCms.Module.Users.ViewModels;
 
 namespace BetterCms.Module.Users.Commands.User
@@ -12,6 +14,12 @@ namespace BetterCms.Module.Users.Commands.User
     /// </summary>
     public class SaveUserCommand: CommandBase, ICommand<EditUserViewModel, SaveUserResponse>
     {
+        private IRoleService roleService;
+
+        public SaveUserCommand(IRoleService roleService)
+        {
+            this.roleService = roleService;
+        }
         /// <summary>
         /// Executes a command to save user.
         /// </summary>
@@ -49,6 +57,15 @@ namespace BetterCms.Module.Users.Commands.User
             else
             {
                 user.Image = null;
+            }
+
+            if (userItem.RoleId != null)
+            {
+                var userRoles = new UserRoles();
+                userRoles.User = user;
+                userRoles.Role = roleService.GetRole(userItem.RoleId);
+
+                Repository.Save(userRoles);
             }
 
             Repository.Save(user);

@@ -177,6 +177,8 @@
     <Compile Include="Users\ModelTests\MapTests\PermissionMapTest.cs" />
     <Compile Include="Users\ModelTests\MapTests\RoleMapTest.cs" />
     <Compile Include="Users\ModelTests\MapTests\RolePermissionMapTest.cs" />
+    <Compile Include="Users\ModelTests\MapTests\UserRolesMapTest.cs" />
+    <Compile Include="Users\ModelTests\MapTests\UsersMapTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
