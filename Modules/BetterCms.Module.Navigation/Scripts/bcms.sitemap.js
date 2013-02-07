@@ -26,6 +26,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 sitemapEditorDialogCustomLinkTitle: null,
                 sitemapAddNewPageDialogTitle: null,
                 sitemapDeleteNodeConfirmationMessage: null,
+                sitemapSomeNodesAreInEditingState: null,
                 sitemapNodeSaveButton: null,
                 sitemapNodeOkButton: null,
             },
@@ -36,7 +37,8 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 TopZone: 'topZone',
                 MiddleZone: 'middleZone',
                 BottomZone: 'bottomZone'
-            };
+            },
+            nodeId = 0;
 
         /**
         * Assign objects to module.
@@ -550,7 +552,27 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 }
             };
 
+            self.focusOnActiveNode = function(nodes) {
+                for (var i in nodes) {
+                    if (nodes[i].isActive()) {
+                        $($('input', '#' + nodes[i].containerId).get(0)).focus();
+                        return true;
+                    }
+                    if (self.focusOnActiveNode(nodes[i].childNodes())) {
+                        nodes[i].isExpanded(true);
+                        return true;
+                    }
+                }
+                return false;
+            };
             self.save = function (onDoneCallback) {
+                if (self.focusOnActiveNode(self.childNodes())) {
+                    var messagesBox = messages.box({ container: sitemap.activeMessageContainer });
+                    messagesBox.clearMessages();
+                    messagesBox.addWarningMessage(globalization.sitemapSomeNodesAreInEditingState);
+                    return;
+                }
+
                 var dataToSend = JSON.stringify(self.composeJsonNodes()),
                     onSaveCompleted = function (json) {
                         sitemap.showLoading(false);
@@ -644,10 +666,9 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 }
                 return false;
             };
-            self.containerId = function () {
-                // User for validation.
-                return "id-" + self.id();
-            };
+
+            // User for validation.
+            self.containerId = 'node-' + nodeId++;
             
             // For search results.
             self.isVisible = ko.observable(true);
@@ -668,7 +689,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 }
             };
             self.saveSitemapNodeWithValidation = function () {
-                if ($('input', '#' + self.containerId()).valid()) {
+                if ($('input', '#' + self.containerId).valid()) {
                     self.saveSitemapNode();
                     self.isActive(false);
                 }

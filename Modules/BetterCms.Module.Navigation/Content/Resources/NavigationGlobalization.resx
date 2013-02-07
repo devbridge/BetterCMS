@@ -204,4 +204,7 @@
   <data name="Sitemap_AddNewPageDialog_UndoMessage" xml:space="preserve">
     <value>You can undo page placement and replace it.</value>
   </data>
+  <data name="Sitemap_EditDialog_SomeNodesAreInEditingState" xml:space="preserve">
+    <value>At least one node is in editing mode.</value>
+  </data>
 </root>
