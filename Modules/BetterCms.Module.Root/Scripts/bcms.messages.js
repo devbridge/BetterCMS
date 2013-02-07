@@ -112,14 +112,13 @@ define('bcms.messages', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, mod
                 if (options.enableAutoHide) {
                     setTimeout(function () {
                         element.animate({
-                            'line-height': '1px',                            
-                            opacity: 0.2
-                        }, 350,
+                            'line-height': '1px'
+                        }, 200,
                             function () {
                                 var parent = $(this).parent('ul:first');
                                 $(this).remove();
                                 if (parent.find('li').length === 0) {
-                                    parent.fadeOut('fast', function() { $(this).hide(); });
+                                    parent.fadeOut(100, function () { $(this).hide(); });
                                 }
                             });
                     }, options.autoHideTimeout);
