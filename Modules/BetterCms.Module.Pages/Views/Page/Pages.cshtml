@@ -60,8 +60,8 @@
             @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query" })
             <div class="bcms-btn-search" id="bcms-pages-search-btn">@PagesGlobalization.SiteSettings_Pages_Search</div>
         </div>
-        @Html.MessagesBox("bcms-pages-messages")
     </div>
+    @Html.SiteSettingsMessagesBox()
 
     @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingPageViewModel>())
 }

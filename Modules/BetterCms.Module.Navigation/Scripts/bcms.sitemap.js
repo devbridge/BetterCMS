@@ -12,6 +12,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 sitemapAddNodeDataBind: "#bcms-sitemap-addnode",
                 sitemapAddNewPageDataBind: "#bcms-sitemap-addnewpage",
                 sitemapForm: "#bcms-sitemap-form",
+                sitemapMessagesContainer: '#bcms-site-settings-placeholder'
             },
             links = {
                 loadSiteSettingsSitemapUrl: null,
@@ -130,7 +131,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
 
             self.initialize = function(content) {
                 self.container = siteSettings.getModalDialog().container;
-                sitemap.activeMessageContainer = self.container;
+                sitemap.activeMessageContainer = self.container.find(selectors.sitemapMessagesContainer);
                 sitemap.activeLoadingContainer = self.container.find(selectors.sitemapSearchDataBind);
                     
                 sitemap.showMessage(content);
@@ -176,7 +177,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
 
             self.initialize = function (content, dialog) {
                 self.container = dialog.container;
-                sitemap.activeMessageContainer = self.container;
+                sitemap.activeMessageContainer = self.container.find(selectors.sitemapMessagesContainer);
                 sitemap.activeLoadingContainer = self.container.find(selectors.sitemapAddNodeDataBind);
 
                 sitemap.showMessage(content);
@@ -232,7 +233,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
 
             self.initialize = function (content, dialog) {
                 self.container = dialog.container;
-                sitemap.activeMessageContainer = self.container;
+                sitemap.activeMessageContainer = self.container.find(selectors.sitemapMessagesContainer);
                 sitemap.activeLoadingContainer = self.container.find(selectors.sitemapAddNewPageDataBind);
 
                 sitemap.showMessage(content);

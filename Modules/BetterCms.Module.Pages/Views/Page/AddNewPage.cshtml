@@ -8,9 +8,10 @@
 
 @model AddNewPageViewModel
 
+@Html.TabbedContentMessagesBox()
+
 <div class="bcms-scroll-window">
     <div class="bcms-padded-content">
-        @Html.MessagesBox("add-new-page-messages")
         @using (Html.BeginForm<PageController>(f => f.AddNewPage((string) null), FormMethod.Post, new { @class = "bcms-ajax-form"}))
         {
             <div class="bcms-input-list-holder">

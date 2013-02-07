@@ -35,8 +35,10 @@
             @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query" })
             <div class="bcms-btn-search" id="bcms-template-search-btn">@PagesGlobalization.SiteSettings_Template_Search</div>
         </div>
-        @Html.MessagesBox("bcms-templates-messages")
     </div>    
+    
+    @Html.SiteSettingsMessagesBox()
+
     @(Html
           .Grid(Model.Items)
           .Sort(Model.GridOptions)

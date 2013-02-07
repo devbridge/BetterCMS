@@ -42,8 +42,6 @@ namespace BetterCms.Module.Pages.Controllers
                 return Json(new WireJson { Success = false });
             }
 
-            Messages.AddSuccess(PagesGlobalization.DeleteTemplate_DeletedSuccessfully_Message);
-
             if (GetCommand<DeleteTemplateCommand>().ExecuteCommand(request))
             {
                 Messages.AddSuccess(PagesGlobalization.DeleteTemplate_DeletedSuccessfully_Message);

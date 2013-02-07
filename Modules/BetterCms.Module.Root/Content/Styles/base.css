@@ -862,7 +862,7 @@ div.bcms-noscroll body {
     font-family: "Open Sans", sans-serif;
     font-size: 13px;
     line-height: 140%;
-    overflow-y: auto;
+    overflow: hidden;
     width: 100%;
     height: 100%;
     position: fixed;
@@ -914,7 +914,7 @@ div.bcms-modal-close {
 
 .bcms-modal-content-padded {
     position: relative;
-    padding: 50px 0 74px;
+    padding: 0 0 74px;
 }
 
 .bcms-modal-footer {
@@ -1467,7 +1467,7 @@ a.bcms-btn-close {
 
 /*Main Tabed View*/
 .bcms-tab-header {
-    padding: 30px 60px 0;
+    padding: 10px 60px 0;
     height: 30px;
     background: #303030;
     border-bottom: 1px solid #c6c6c6;
@@ -1523,9 +1523,7 @@ a.bcms-btn-close {
         line-height: 29px;
         padding: 0 22px;
         margin-right: 5px;
-        border-style: solid solid none solid;
-        border-width: 1px;
-        border-color: #c6c6c6;
+        border: 1px solid #c6c6c6;
         background: #e5e5e5;
         cursor: pointer;
         color: #000;
@@ -2002,8 +2000,8 @@ a.bcms-sort-arrow-top:hover {
 .bcms-twocols-title-block {
     position: relative;
     margin-right: -1px;
-    min-height: 35px;
-    line-height: 32px;
+    min-height: 30px;
+    line-height: 30px;
     left: -1px;
     padding: 15px 20px 15px 20px;
     background-color: #eaeaea;
@@ -2092,16 +2090,38 @@ div.bcms-list .bcms-grid-input.input-validation-error {
       margin-top: -5px;
    }*/
 
-.bcms-messages {
-    padding-bottom: 20px;
+.bcms-messages-type-1 {
+    padding-top: 50px;
+}
+
+.bcms-messages-type-2, .bcms-messages-type-3 {
+    padding: 0;
+}
+
+div.bcms-messages-type-1 ul {
+    padding: 15px 60px 14px;
+    margin: 0;
+    border-bottom: 1px solid #c6c6c6;
+    font-size: 12px;
+}
+
+div.bcms-messages-type-2 ul {
+    padding: 15px 60px 14px;
+    margin: 0;
+    border-bottom: 1px solid #c6c6c6;
+    font-size: 12px;
+}
+
+div.bcms-messages-type-3 ul {
+    padding: 15px 60px 14px;
+    margin: 0;
+    font-size: 12px;
+    border-top: 1px solid #c6c6c6;
+    border-bottom: 0;
 }
 
 ul.bcms-success-messages {
-    padding: 10px 15px;
-    /*  margin: 10px 20px;*/
-    border: 1px solid #20cd00;
     background-color: #e8fae5;
-    font-size: 12px;
 }
 
     ul.bcms-success-messages li {
@@ -2112,11 +2132,7 @@ ul.bcms-success-messages {
     }
 
 ul.bcms-warning-messages {
-    padding: 10px 15px;
-    /*  margin: 10px 20px;*/
-    border: 1px solid #e7d827;
     background-color: #FFFEEC;
-    font-size: 12px;
 }
 
     ul.bcms-warning-messages li {
@@ -2126,11 +2142,7 @@ ul.bcms-warning-messages {
     }
 
 ul.bcms-error-messages {
-    padding: 10px 15px;
-    /* margin: 10px 20px;*/
-    border: 1px solid #e64343;
     background-color: #fcecec;
-    font-size: 12px;
 }
 
     ul.bcms-error-messages li {
@@ -2141,16 +2153,13 @@ ul.bcms-error-messages {
     }
 
 ul.bcms-info-messages {
-    padding: 10px 15px;
-    /* margin: 10px 20px;*/
-    border: 1px solid #1891e6;
     background-color: #f0f8fd;
-    font-size: 12px;
 }
 
     ul.bcms-info-messages li {
         line-height: 25px;
-        list-style: none;
+        list-style-position: inside;
+        list-style-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAALCAYAAAE8d1zJAAAAeklEQVQoz2OQ7HvxH4gnM0AZDAwoxH8YBnHyQaJAfAZELEWWgWOYnqXIemGqQAwzID4JxCuAmB+IVeAWo2MQMQ2IJaACINVP/v//D5dAMZ8oiZlAfB6IE0BGIkugWExQ4j9UEubJM1A2yE+vsNmNrgEnplgDAyFMlgYAD+gfgD4Bb/wAAAAASUVORK5CYII=');
         color: #1891e6;
     }
 
@@ -2164,7 +2173,6 @@ ul.bcms-info-messages {
     overflow: hidden;
     text-indent: 9999px;
 }
-
 
 /*override jquery ui*/
 .ui-datepicker-trigger {

@@ -39,7 +39,7 @@ define('bcms.dynamicContent', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bc
                 var html = '<div class="bcms-scroll-window">' +
                               '<div class="bcms-padded-content">' +
                                 '<div class="bcms-messages">' +
-                                    '<ul class="bcms-error-messages">' +
+                                    '<ul class="bcms-error-messages-type-2">' +
                                         '<li>' +
                                             message +
                                         '</li>' +

@@ -11,10 +11,11 @@
     <a class="bcms-tab bcms-tab-active" href="#bcms-tab-1">@PagesGlobalization.EditTemplate_BasicPropertiesTab_Title</a>
     <a class="bcms-tab" href="#bcms-tab-2">@PagesGlobalization.EditTemplate_OptionsTab_Title</a>
 </div>
-           
+  
+@Html.TabbedContentMessagesBox("bcms-edit-template-messages")
+         
 <div class="bcms-scroll-window">
     <div class="bcms-padded-content">
-        @Html.MessagesBox("bcms-edit-template-messages")
         @using (Html.BeginForm<TemplatesController>(c => c.RegisterTemplate((TemplateEditViewModel)null), FormMethod.Post, new { @id = "bcms-template-form", @class = "bcms-ajax-form" }))
         {
             <div id="bcms-tab-1" class="bcms-tab-single">

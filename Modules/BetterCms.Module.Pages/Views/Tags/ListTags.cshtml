@@ -34,11 +34,9 @@
             @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query" })
             <div class="bcms-btn-search" id="bcms-tags-search-btn">@PagesGlobalization.SiteSettings_Tags_Search</div>
         </div>
-        @Html.MessagesBox("bcms-site-settings-tags-messages")
     </div>    
-    
+    @Html.SiteSettingsMessagesBox()
     @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<TagItemViewModel>())
-
     @Html.HiddenSubmit()
 }
 

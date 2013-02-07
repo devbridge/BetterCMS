@@ -512,7 +512,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         self.select = function () {
             var url = $.format(links.saveDefaultTemplateUrl, self.id),
                 onComplete = function (json) {
-                    container.hideLoading();
+                    self.container.hideLoading();
                     messages.refreshBox(self.container, json);
                     if (json.Success == true) {
                         for (var i = 0; i < self.parent.templates().length; i++) {
@@ -523,7 +523,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
                     }
                 };
 
-            container.showLoading();
+            self.container.showLoading();
 
             $.ajax({
                 type: 'POST',

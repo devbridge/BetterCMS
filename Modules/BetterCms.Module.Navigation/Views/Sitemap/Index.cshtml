@@ -15,8 +15,8 @@
             <input type="text" id="bcms-search-input" class = "bcms-editor-field-box" data-bind="value: searchQuery, valueUpdate: 'afterkeydown', enterPress: searchForNodes"/>
             <div class="bcms-btn-search" id="bcms-btn-sitemap-search" data-bind="click: searchForNodes">@NavigationGlobalization.Sitemap_Dialog_Search</div>
         </div>
-        @Html.MessagesBox("bcms-messages-box")
     </div>
+    @Html.SiteSettingsMessagesBox()
     <div class="bcms-placement-holder">
         @Html.Partial("Partial/Sitemap", new SitemapNodeViewModel())
     </div>
