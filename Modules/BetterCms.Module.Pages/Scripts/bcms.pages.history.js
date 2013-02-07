@@ -188,7 +188,11 @@ define('bcms.pages.history', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', '
                     onComplete = function (json) {
                         container.hideLoading();
 
-                        messages.refreshBox(container, json);
+                        var messagesContainer = container.find(messages.selectors.messages).last();
+                        if (messagesContainer.length == 0) {
+                            messagesContainer = container;
+                        }
+                        messages.refreshBox(messagesContainer, json);
 
                         if (json.Success) {
                             if ($.isFunction(onSuccess)) {
