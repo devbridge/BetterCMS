@@ -21,11 +21,12 @@
             <div class="bcms-btn-search" data-bind="click: searchMedia">@RootGlobalization.Button_Search</div>
         </div>
     </div>
+
     <div class="bcms-breadcrumbs-holder">
         <div data-bind="foreach: path().pathFolders()"><a class="bcms-breadcrumbs-root" href="#" data-bind="text: pathName(), click: openMedia.bind($data, $root)"></a></div>
     </div>
 
-    @Html.MessagesBox(null, new Dictionary<string, string> { { "data-bind", "attr: { id: domId() }" } })
+    @Html.SiteSettingsMessagesBox(null, new Dictionary<string, string> { { "data-bind", "attr: { id: domId() }" } })
 
     <div id="bcms-view-container" data-bind="css: { 'bcms-list': !isGrid(), 'bcms-grid': isGrid() }" class="bcms-list">
         <div class="bcms-media-sorting-block">

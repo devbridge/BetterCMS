@@ -45,7 +45,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// </returns>
         /// <exception cref="CmsException">Unable to generate messages box.;Controller should inherit CmsControllerBase class.</exception>
         /// <exception cref="System.NotSupportedException">Controller should inherit CmsControllerBase class.</exception>
-        public static IHtmlString MessagesBox(this HtmlHelper html, string id = null, IDictionary<string, string> attributes = null, string cssClass = "bcms-messages-type-1")
+        private static IHtmlString MessagesBox(this HtmlHelper html, string id, IDictionary<string, string> attributes, string cssClass)
         {
             CmsControllerBase controller = html.ViewContext.Controller as CmsControllerBase;
             if (controller == null)
