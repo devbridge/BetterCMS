@@ -3,8 +3,6 @@
     padding: 10px 20px;
 }
 
-/**/
-
 .bcms-sidebar-search {
     position: relative;
     padding: 15px 30px 15px 0;
@@ -187,7 +185,6 @@ a.bcms-expanded-nodes {
 .bcms-expand-link-holder {
     display: inline-block;
     width: 100%;
-    padding-bottom: 10px;
 }
 
 .bcms-expand-link {
