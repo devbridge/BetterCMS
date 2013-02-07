@@ -500,7 +500,7 @@
     <EmbeddedResource Include="Scripts\jquery-ui.min.js" />
     <EmbeddedResource Include="Scripts\jquery.unobtrusive-ajax.js" />
     <EmbeddedResource Include="Scripts\jquery.unobtrusive-ajax.min.js" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <EmbeddedResource Include="Scripts\jquery.validate-vsdoc.js" />
     <EmbeddedResource Include="Scripts\jquery.validate.js" />
     <EmbeddedResource Include="Scripts\jquery.validate.min.js" />
     <EmbeddedResource Include="Scripts\jquery.validate.unobtrusive.js" />
