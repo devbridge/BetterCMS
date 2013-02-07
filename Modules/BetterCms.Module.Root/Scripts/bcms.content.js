@@ -65,7 +65,7 @@ define('bcms.content', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, moda
         })
             .show()
             .offset({ top: offset.top - padding, left: offset.left - padding })
-            .animate({ 'opacity': 1 }, 300);
+            .animate({ 'opacity': 1 }, 200);
     };
 
     /**
@@ -74,7 +74,7 @@ define('bcms.content', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, moda
     content.highlightRegion = function (element) {
         var container = $('#bcms-region-overlay-template'),
             template = container.html(),
-            rectangle = $(template).css('z-index', 1000);
+            rectangle = $(template).css('z-index', 1005);
 
         rectangle.data('target', element);
         rectangle.insertBefore(container);
