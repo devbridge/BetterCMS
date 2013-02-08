@@ -32,23 +32,11 @@ namespace BetterCms.Module.Pages.Command.Widget.GetSiteSettingsWidgets
             var query = Repository.AsQueryable<Root.Models.Widget>()
                           .Where(f => f.IsDeleted == false && f.Original == null && (f.Status == ContentStatus.Published || f.Status == ContentStatus.Draft));
 
-            gridOptions.SetDefaultSortingOptions("Name");
+            gridOptions.SetDefaultSortingOptions("WidgetName");
 
-            if (gridOptions.Column == "CategoryName")
+            if (gridOptions.Column == "Status")
             {
-                if (gridOptions.Direction == SortDirection.Ascending)
-                {
-                    query = query.OrderBy(w => w.Category.Name);
-                }
-                else
-                {
-                    query = query.OrderByDescending(w => w.Category.Name);
-                }
-                query = query.AddPaging(gridOptions);
-            }
-            else
-            {
-                query = query.AddSortingAndPaging(gridOptions);
+                query = query.OrderBy(gridOptions.Column, gridOptions.Direction);
             }
 
             var modelQuery = query.Select(
@@ -71,6 +59,16 @@ namespace BetterCms.Module.Pages.Command.Widget.GetSiteSettingsWidgets
             }
             
             var count = modelQuery.ToRowCountFutureValue();
+
+            if (gridOptions.Column == "Status")
+            {
+                modelQuery = modelQuery.AddPaging(gridOptions);
+            }
+            else
+            {
+                modelQuery = modelQuery.AddSortingAndPaging(gridOptions);
+            }
+
             var widgets = modelQuery.ToFuture().ToList();
 
             widgets.ForEach(
@@ -90,7 +88,6 @@ namespace BetterCms.Module.Pages.Command.Widget.GetSiteSettingsWidgets
                         }
                     });
 
-            // Re-order by status
             if (gridOptions.Column == "Status")
             {
                 if (gridOptions.Direction == SortDirection.Ascending)

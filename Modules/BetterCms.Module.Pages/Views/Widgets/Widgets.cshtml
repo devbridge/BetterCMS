@@ -18,7 +18,7 @@
         
         column.For(f => string.Format("<a class=\"bcms-tables-link bcms-grid-item-edit-button bcms-widget-name\" data-id=\"{0}\">{1}</a>", f.Id, f.WidgetName))
             .Named(PagesGlobalization.SiteSettings_Widgets_NameColumn)
-            .SortColumnName("Name")
+            .SortColumnName("WidgetName")
             .HeaderAttributes(@style => "width: 245px;")
             .Encode(false);
 
