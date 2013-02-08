@@ -119,7 +119,10 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
                     if (!pageContentId.HasDefaultValue())
                     {
                         var pageContent = contentService.GetPageContentForEdit(pageContentId);
-                        content = pageContent.Item2 as BlogPostContent;
+                        if (pageContent != null)
+                        {
+                            content = pageContent.Item2 as BlogPostContent;
+                        }
                     }
 
                     if (content != null)

@@ -58,7 +58,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
             // Redirect user to login page, if page is inaccessible for public users
             // and user is not authenticated
-            if (!request.IsAuthenticated && !page.IsPublic && !string.IsNullOrWhiteSpace(cmsConfiguration.LoginUrl))
+            if (request.PreviewPageContentId == null && !request.IsAuthenticated && !page.IsPublic && !string.IsNullOrWhiteSpace(cmsConfiguration.LoginUrl))
             {
                 // TODO: uncomment redirect to login form, when login form will be im
                 return null;
@@ -171,7 +171,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             }
 
             // If page is not published, page is not found
-            if (!request.IsAuthenticated)
+            if (!request.IsAuthenticated && request.PreviewPageContentId == null)
             {
                 query = query.Where(f => f.IsPublished);
             }

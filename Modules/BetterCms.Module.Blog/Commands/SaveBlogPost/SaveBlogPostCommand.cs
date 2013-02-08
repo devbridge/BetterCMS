@@ -151,7 +151,9 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                            ModifiedByUser = blogPost.ModifiedByUser,
                            ModifiedOn = blogPost.ModifiedOn.ToFormattedDateString(),
                            CreatedOn = blogPost.CreatedOn.ToFormattedDateString(),
-                           IsPublished = blogPost.IsPublished
+                           IsPublished = blogPost.IsPublished,
+                           DesirableStatus = request.DesirableStatus,
+                           PageContentId = pageContent.Id
                        };
         }
 
