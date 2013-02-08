@@ -9,7 +9,7 @@
            
 <div class="bcms-scroll-window">
     @Html.TabbedContentMessagesBox("bcms-multi-file-upload-messages")
-    <div class="bcms-file-manager-inner">
+    <div class="bcms-file-manager-inner" id="bcms-media-uploads">
 
         @using (Html.BeginForm("UploadSingleFile", "Upload", FormMethod.Post, new
         {
@@ -34,8 +34,8 @@
                 }
             </div>
             <div id="bcms-files-dropzone" class="bcms-dropzone">
-                <div class="bcms-dropzone-infotext">@MediaGlobalization.SingleFileUpload_DragDropBox</div>
-                <div class="bcms-btn-upload-files">
+                <div class="bcms-dropzone-infotext" data-bind="text: !(activeUploads().length > 0) ? '@MediaGlobalization.SingleFileUpload_DragDropBox' : '@MediaGlobalization.MultiFileUpload_Uploading'"></div>
+                <div data-bind="visible: !(activeUploads().length > 0)" class="bcms-btn-upload-files">
                     <label for="uploadFile" onclick="if ($.browser.mozilla) { $('#' + $(this).attr('for')).click(); return false; }">@MediaGlobalization.MultiFileUpload_UploadButton</label>
                     <input type="file" name="uploadFile" id="uploadFile" class="bcms-uploader" style="position: absolute; left: -999em; top: -999em;"/>
                 </div>
@@ -54,15 +54,12 @@
             }
             
             @Html.HiddenFor(m=> m.RootFolderType)
-             <div id="bcms-media-uploads" class="bcms-upload-holder" data-bind="template: { name: 'bcms-file-upload-template' }">
+            <div class="bcms-upload-holder" data-bind="template: { name: 'bcms-file-upload-template' }">
             </div>
         }
         <iframe id="UploadTarget" name="UploadTarget" style="position: absolute; left: -999em; top: -999em;"></iframe>
         <div id="Images"></div>
-         <script type="text/html" id="bcms-file-upload-template">
-            <div data-bind="visible: activeUploads().length > 0">
-                <div class="bcms-content-titles">@MediaGlobalization.MultiFileUpload_Uploading@*<a class="bcms-icn-delete-link" data-bind="click: cancelAllActiveUploads">@MediaGlobalization.MultiFileUpload_CancelUploading</a>*@</div>
-            </div>
+        <script type="text/html" id="bcms-file-upload-template">
             <div data-bind="foreach: uploads">
                 <div data-bind="css: { 'bcms-upload-block':true, 'bcms-upload-success':uploadCompleted(), 'bcms-upload-failed':uploadFailed() }">
                     <div class="bcms-upload-file-titles" data-bind="text: fileName"></div>
@@ -83,11 +80,19 @@
                             @MediaGlobalization.MultiFileUpload_Success
                         </div>
                     </div>
+                    <!-- ko if: uploadCompleted() && !uploadFailed() -->
                     <div class="bcms-uploaded-info" data-bind="text: uploadProgress() + '%'"></div>
                     <div class="bcms-upload-size-info"><b>@MediaGlobalization.MultiFileUpload_FileSize</b><span data-bind="text: fileSizeFormated"></span></div>
+                    <!-- /ko -->
+                    <!-- ko if: uploadCompleted() || uploadFailed()-->
+                    <!-- ko: uploadFailed() -->
+                    <div class="bcms-uploaded-info">&nbsp;</div>
+                    <div class="bcms-upload-size-info">&nbsp;</div>
+                    <!-- /ko -->
                     <div class="bcms-media-delete-holder">
-                        <a class="bcms-icn-delete" data-bind="click: function() { $root.removeUpload($data); }, text: uploadCompleted() || uploadFailed() ? '@RootGlobalization.Button_Remove' : '@RootGlobalization.Button_Cancel'"></a>                        
+                        <a class="bcms-icn-delete" data-bind="click: function() { $root.removeUpload($data); }">@RootGlobalization.Button_Remove</a>
                     </div>                  
+                    <!-- /ko -->
                 </div>
             </div>
         </script>
