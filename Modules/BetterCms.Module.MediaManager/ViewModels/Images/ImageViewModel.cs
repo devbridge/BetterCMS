@@ -25,6 +25,7 @@ namespace BetterCms.Module.MediaManager.ViewModels.Images
         /// <value>
         /// The caption.
         /// </value>
+        [StringLength(MaxLength.Uri, ErrorMessageResourceType = typeof(MediaGlobalization), ErrorMessageResourceName = "ImageEditor_Dialog_ImageCaption_MaxLengthMessage")]
         public string Caption { get; set; }
 
         /// <summary>

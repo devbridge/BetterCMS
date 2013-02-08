@@ -1708,6 +1708,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Meta title max length exceeded..
+        /// </summary>
+        public static string EditSeo_MetaTitle_MaxLengthMessage {
+            get {
+                return ResourceManager.GetString("EditSeo_MetaTitle_MaxLengthMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Purpose of meta title is .......
         /// </summary>
         public static string EditSeo_MetaTitle_Tooltip_Description {

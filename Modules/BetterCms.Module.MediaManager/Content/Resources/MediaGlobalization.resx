@@ -219,6 +219,9 @@
   <data name="ImageEditor_Dialog_FitImage_Title" xml:space="preserve">
     <value>Fit Image</value>
   </data>
+  <data name="ImageEditor_Dialog_ImageCaption_MaxLengthMessage" xml:space="preserve">
+    <value>Caption max length exceeded.</value>
+  </data>
   <data name="ImageEditor_Dialog_ImageHeight_RangeMessage" xml:space="preserve">
     <value>Image height can not be less than 0 px.</value>
   </data>
