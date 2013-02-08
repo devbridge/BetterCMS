@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.grid', 'bcms.pages', 'knockout', 'bcms.media', 'bcms.pages.tags', 'bcms.ko.grid', 'bcms.messages', 'bcms.redirect', 'bcms.pages.history'],
-    function ($, bcms, modal, siteSettings, dynamicContent, datepicker, htmlEditor, grid, pages, ko, media, tags, kogrid, messages, redirect, history) {
+define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.grid', 'bcms.pages', 'knockout', 'bcms.media', 'bcms.pages.tags', 'bcms.ko.grid', 'bcms.messages', 'bcms.redirect', 'bcms.pages.history', 'bcms.preview'],
+    function ($, bcms, modal, siteSettings, dynamicContent, datepicker, htmlEditor, grid, pages, ko, media, tags, kogrid, messages, redirect, history, preview) {
     'use strict';
 
     var blog = { },
@@ -65,28 +65,48 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     /**
     * Blog post view model
     */
-    function BlogPostViewModel(image, tagsViewModel) {
+    function BlogPostViewModel(image, tagsViewModel, version) {
         var self = this;
 
         self.tags = tagsViewModel;
         self.image = ko.observable(new media.ImageSelectorViewModel(image));
+        self.version = ko.observable(version);
     }
 
     /**
     * Opens blog edit form
     */
     function openBlogEditForm(url, title, postSuccess, onClose) {
+        var blogViewModel;
+
         modal.edit({
             title: title,
             onLoad: function (dialog) {
                 dynamicContent.bindDialog(dialog, url, {
-                    contentAvailable: initEditBlogPostDialogEvents,
+                    contentAvailable: function (dialog, content) {
+                        blogViewModel = initEditBlogPostDialogEvents(dialog, content);
+                    },
 
                     beforePost: function () {
                         htmlEditor.updateEditorContent();
                     },
                     
-                    postSuccess: postSuccess
+                    postSuccess: function (json) {
+                        if (json.Data.DesirableStatus == bcms.contentStatus.preview) {
+                            try {
+                                var result = json.Data;
+                                blogViewModel.version(result.Version);
+                                preview.previewPageContent(result.Id, result.PageContentId);
+                            } finally {
+                                return false;
+                            }
+                        } else {
+                            if ($.isFunction(postSuccess)) {
+                                postSuccess(json);
+                            }
+                        }
+                        return true;
+                    }
                 });
             },
             onAccept: function() {
@@ -114,7 +134,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
 
         var tagsViewModel = new tags.TagsListViewModel(tagsList);
 
-        var blogViewModel = new BlogPostViewModel(image, tagsViewModel);
+        var blogViewModel = new BlogPostViewModel(image, tagsViewModel, data.Version);
         ko.applyBindings(blogViewModel, dialog.container.find(selectors.firstForm).get(0));
         
         dialog.container.find(selectors.destroyDraftVersionLink).on('click', function () {
@@ -127,6 +147,8 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
                 editBlogPost(data.Id, onClose, onClose);
             });
         });
+
+        return blogViewModel;
     }
 
     /**
