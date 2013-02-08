@@ -66,6 +66,9 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             uploadVideo: null,
             uploadFile: null,
         },
+        keys = {
+            folderViewMode: 'bcms.mediaFolderViewMode'
+        },
         mediaTypes = {
             image: 1,
             video: 2,
@@ -137,7 +140,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
         self.medias = ko.observableArray();
         self.path = ko.observable();
-        self.isGrid = ko.observable(false);
+        self.isGrid = ko.observable(localStorage.getItem(keys.folderViewMode) == 1);
         self.canSelectMedia = ko.observable(false);
         self.canInsertMedia = ko.observable(false);
         self.canInsertMediaWithOptions = ko.observable(false);
@@ -193,8 +196,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             loadTabData(self, params, onComplete);
         };
 
-        self.switchViewStyle = function() {
-            self.isGrid(!self.isGrid());
+        self.switchViewStyle = function () {
+            var isGrid = !self.isGrid();
+            localStorage.setItem(keys.folderViewMode, isGrid ? 1 : 0);
+            self.isGrid(isGrid);
         };
 
         self.isSortedAscending = function(column) {
