@@ -22,6 +22,7 @@
         @Html.HiddenFor(model => model.Id)
         @Html.HiddenFor(model => model.Version)
         @Html.HiddenFor(model => model.Image.ImageId, new {data_bind = "value: image().id()"})
+        @Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status"})
 
         <div class="bcms-new-blog-content">
 

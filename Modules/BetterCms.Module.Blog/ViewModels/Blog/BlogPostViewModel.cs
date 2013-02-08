@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 using BetterCms.Core.Models;
+
 using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.MediaManager.ViewModels;
-using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Mvc.Attributes;
 using BetterCms.Module.Root.Models;
 
@@ -22,6 +22,14 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// </value>
         [Required]
         public virtual Guid Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the content id.
+        /// </summary>
+        /// <value>
+        /// The content id.
+        /// </value>
+        public virtual Guid ContentId { get; set; }
 
         /// <summary>
         /// Gets or sets the entity version.
@@ -93,6 +101,30 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// The cathegory.
         /// </value>
         public virtual Guid? CategoryId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the desirable status for the saved widget.
+        /// </summary>
+        /// <value>
+        /// The desirable status.
+        /// </value>
+        public ContentStatus DesirableStatus { get; set; }
+
+        /// <summary>
+        /// Gets or sets the current status.
+        /// </summary>
+        /// <value>
+        /// The current status.
+        /// </value>
+        public ContentStatus CurrentStatus { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether blog post content has published version.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if blog post content has published version; otherwise, <c>false</c>.
+        /// </value>
+        public bool HasPublishedContent { get; set; }
 
         /// <summary>
         /// Gets or sets the post tags.
