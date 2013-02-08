@@ -16,11 +16,6 @@ namespace BetterCms.Module.Root.Controllers
     public class CmsController : CmsControllerBase
     {
         /// <summary>
-        /// The page accessor.
-        /// </summary>
-        private readonly IPageAccessor pageAccessor;
-
-        /// <summary>
         /// The configuration loader
         /// </summary>
         private readonly ICmsConfiguration cmsConfiguration;
@@ -42,7 +37,6 @@ namespace BetterCms.Module.Root.Controllers
         public CmsController(IPageAccessor pageAccessor, ICmsConfiguration cmsConfiguration, ICacheService cacheService, ISecurityService securityService)
         {
             this.securityService = securityService;            
-            this.pageAccessor = pageAccessor;
             this.cmsConfiguration = cmsConfiguration;
             this.cacheService = cacheService;
         }
@@ -116,7 +110,7 @@ namespace BetterCms.Module.Root.Controllers
             return model;
         }
 
-        public static string CalculateHash(string input)
+        private static string CalculateHash(string input)
         {
             // step 1, calculate SHA1 hash from input
             var sha1 = System.Security.Cryptography.SHA1.Create();
