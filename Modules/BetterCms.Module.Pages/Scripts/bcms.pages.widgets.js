@@ -379,7 +379,7 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
             var form = dialog.container.find(selectors.siteSettingsWidgetsListForm);
             grid.bindGridForm(form, function(data) {
                 siteSettings.setContent(data);
-                widgets.initializeSiteSettingsWidgetsList(data);
+                initializeSiteSettingsWidgetsList(data);
             });
 
             form.on('submit', function(event) {
