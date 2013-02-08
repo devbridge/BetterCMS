@@ -6,7 +6,6 @@
 @using BetterCms.Module.Root.Mvc.Grids.TableRenderers
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
-@using MvcContrib
 @using MvcContrib.UI.Grid
 
 @model SiteSettingWidgetListViewModel
@@ -19,7 +18,7 @@
         
         column.For(f => string.Format("<a class=\"bcms-tables-link bcms-grid-item-edit-button bcms-widget-name\" data-id=\"{0}\">{1}</a>", f.Id, f.WidgetName))
             .Named(PagesGlobalization.SiteSettings_Widgets_NameColumn)
-            .SortColumnName("WidgetName")
+            .SortColumnName("Name")
             .HeaderAttributes(@style => "width: 245px;")
             .Encode(false);
 
@@ -30,7 +29,7 @@
 
         column.For(f => f.Status)
             .Named(PagesGlobalization.SiteSettings_Widgets_StatusColumn)
-            .Sortable(false)
+            .SortColumnName("Status")
             .Attributes(@class => "bcms-widget-status");
 
         column.HistoryButtonColumn(renderId: false);
