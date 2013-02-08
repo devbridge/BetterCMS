@@ -107,7 +107,10 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
                         postSuccess: postSuccess
                     });
                 },
-                onClose: function() {
+                onAccept: function () {
+                    htmlEditor.destroyAllHtmlEditorInstances();
+                },
+                onClose: function () {
                     htmlEditor.destroyAllHtmlEditorInstances();
                 }
             });
@@ -133,6 +136,12 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
 
                         postSuccess: postSuccess
                     });
+                },
+                onAccept: function () {
+                    htmlEditor.destroyAllHtmlEditorInstances();
+                },
+                onClose: function () {
+                    htmlEditor.destroyAllHtmlEditorInstances();
                 }
             });
         };

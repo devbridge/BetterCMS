@@ -117,7 +117,10 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                         }
                     });
                 },
-                onClose: function() {
+                onAccept: function () {
+                    htmlEditor.destroyAllHtmlEditorInstances();
+                },
+                onClose: function () {
                     htmlEditor.destroyAllHtmlEditorInstances();
                 }
             });
@@ -473,7 +476,10 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                         }
                     });
                 },
-                onClose: function() {
+                onAccept: function () {
+                    htmlEditor.destroyAllHtmlEditorInstances();
+                },
+                onClose: function () {
                     htmlEditor.destroyAllHtmlEditorInstances();
                 }
             });
