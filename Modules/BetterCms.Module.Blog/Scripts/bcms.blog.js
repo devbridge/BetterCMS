@@ -65,11 +65,12 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     /**
     * Blog post view model
     */
-    function BlogPostViewModel(image, tagsViewModel, version) {
+    function BlogPostViewModel(image, tagsViewModel, id, version) {
         var self = this;
 
         self.tags = tagsViewModel;
         self.image = ko.observable(new media.ImageSelectorViewModel(image));
+        self.id = ko.observable(id);
         self.version = ko.observable(version);
     }
 
@@ -96,6 +97,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
                             try {
                                 var result = json.Data;
                                 blogViewModel.version(result.Version);
+                                blogViewModel.id(result.Id);
                                 preview.previewPageContent(result.Id, result.PageContentId);
                             } finally {
                                 return false;
@@ -134,7 +136,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
 
         var tagsViewModel = new tags.TagsListViewModel(tagsList);
 
-        var blogViewModel = new BlogPostViewModel(image, tagsViewModel, data.Version);
+        var blogViewModel = new BlogPostViewModel(image, tagsViewModel, data.Id, data.Version);
         ko.applyBindings(blogViewModel, dialog.container.find(selectors.firstForm).get(0));
         
         dialog.container.find(selectors.destroyDraftVersionLink).on('click', function () {

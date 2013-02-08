@@ -12,6 +12,8 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
         
         public bool IsAuthenticated { get; set; }
 
+        public bool IsPreview { get; set; }
+
         public Guid? PreviewPageContentId { get; set; }
 
         public override string ToString()
