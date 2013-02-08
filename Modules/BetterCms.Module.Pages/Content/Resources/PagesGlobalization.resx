@@ -1140,4 +1140,7 @@
   <data name="SaveTemplate_DublicateRegionIdentificator_Message" xml:space="preserve">
     <value>Duplicate template region found.</value>
   </data>
+  <data name="EditSeo_MetaTitle_MaxLengthMessage" xml:space="preserve">
+    <value>Meta title max length exceeded.</value>
+  </data>
 </root>

@@ -71,6 +71,7 @@ namespace BetterCms.Module.Pages.ViewModels.Seo
         /// <value>
         /// The meta title.
         /// </value>        
+        [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "EditSeo_MetaTitle_MaxLengthMessage")]
         public string MetaTitle { get; set; }
 
         /// <summary>

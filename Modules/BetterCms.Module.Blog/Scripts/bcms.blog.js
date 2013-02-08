@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.grid', 'bcms.pages', 'knockout', 'bcms.media', 'bcms.pages.tags', 'bcms.ko.grid', 'bcms.messages', 'bcms.redirect'],
-    function ($, bcms, modal, siteSettings, dynamicContent, datepicker, htmlEditor, grid, pages, ko, media, tags, kogrid, messages, redirect) {
+define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.grid', 'bcms.pages', 'knockout', 'bcms.media', 'bcms.pages.tags', 'bcms.ko.grid', 'bcms.messages', 'bcms.redirect', 'bcms.pages.history'],
+    function ($, bcms, modal, siteSettings, dynamicContent, datepicker, htmlEditor, grid, pages, ko, media, tags, kogrid, messages, redirect, history) {
     'use strict';
 
     var blog = { },
@@ -26,7 +26,8 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             siteSettingsBlogsTableFirstRow: 'table.bcms-tables > tbody > tr:first',
             overlayConfigure: '.bcms-content-configure',
             overlayDelete: '.bcms-content-delete',
-            overlay: '.bcms-content-overlay'
+            overlay: '.bcms-content-overlay',
+            destroyDraftVersionLink: '.bcms-messages-draft-destroy'
         },
         links = {
             loadSiteSettingsBlogsUrl: null,
@@ -74,8 +75,8 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     /**
     * Opens blog edit form
     */
-    function openBlogEditForm(url, title, postSuccess) {
-        modal.open({
+    function openBlogEditForm(url, title, postSuccess, onClose) {
+        modal.edit({
             title: title,
             onLoad: function (dialog) {
                 dynamicContent.bindDialog(dialog, url, {
@@ -93,6 +94,9 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             },
             onClose: function() {
                 htmlEditor.destroyAllHtmlEditorInstances();
+                if ($.isFunction(onClose)) {
+                    onClose();
+                }
             }
         });
     }
@@ -112,6 +116,17 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
 
         var blogViewModel = new BlogPostViewModel(image, tagsViewModel);
         ko.applyBindings(blogViewModel, dialog.container.find(selectors.firstForm).get(0));
+        
+        dialog.container.find(selectors.destroyDraftVersionLink).on('click', function () {
+            history.destroyDraftVersion(data.ContentId, dialog.container, function () {
+                var onClose = function() {
+                    redirect.ReloadWithAlert();
+                };
+
+                dialog.close();
+                editBlogPost(data.Id, onClose, onClose);
+            });
+        });
     }
 
     /**
@@ -139,11 +154,11 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     /**
     * Edits blog post
     */
-    function editBlogPost(id, postSuccess) {
+    function editBlogPost(id, postSuccess, onClose) {
         var url = $.format(links.loadEditPostDialogUrl, id),
             title = globalization.editPostDialogTitle;
 
-        openBlogEditForm(url, title, postSuccess);
+        openBlogEditForm(url, title, postSuccess, onClose);
     }
 
     /**
