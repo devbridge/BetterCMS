@@ -21,16 +21,19 @@
 
     <!-- ko foreach: childNodes -->
     <!-- ko if: isVisible() && !isDeleted() -->
-    <!-- ko if: isFirstNode() -->
-    <div class="bcms-nodes-dropzone"
-            data-bind="css: { 'bcms-nodes-dropzone-active': activeZone() == 'topZone'  }, droppable: 'topZone'">
-        <div class="bcms-node-infotext">@NavigationGlobalization.Sitemap_NodeEdit_PlaceLinkHere</div>
-    </div>
-    <!-- /ko -->
     <div class="bcms-tree-holder">
+        <!-- ko if: isFirstNode() -->
+        <div class="bcms-nodes-dropzone"
+             data-bind="css: { 'bcms-nodes-dropzone-active': activeZone() == 'topZone'  }, droppable: 'topZone'">
+            <div class="bcms-node-infotext">@NavigationGlobalization.Sitemap_NodeEdit_PlaceLinkHere</div>
+        </div>
+        <!-- /ko -->
         <div data-bind="attr: { id: containerId }, draggable: $parentContext.$index, style: { zIndex: !isBeingDragged() ? '0' : '9999' }">
-
-            <div class="bcms-placement-node" data-bind="css: { 'bcms-placement-node-drag': isBeingDragged(), 'bcms-placement-node-edit': isActive() }">
+            <div class="bcms-placement-node" data-bind="
+                        css: { 'bcms-placement-node-drag': isBeingDragged(), 'bcms-placement-node-edit': isActive() },
+                        @* TODO: Move to css. *@
+                        style: { backgroundColor: !isBeingDragged() && superDraggable() ? '#effcfe' : '',
+                                 cursor: !isBeingDragged() && superDraggable() ? 'move' : '' }">
                 <!-- ko if: hasChildNodes() -->
                 <a class="bcms-expand-collapse-node" data-bind="click: toggleExpand, css: { 'bcms-expanded-nodes': isExpanded() }">&nbsp;</a>
                 <!-- /ko -->

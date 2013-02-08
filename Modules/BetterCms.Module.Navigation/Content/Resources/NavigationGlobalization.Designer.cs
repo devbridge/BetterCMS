@@ -133,16 +133,7 @@ namespace BetterCms.Module.Navigation.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Undo.
-        /// </summary>
-        public static string Sitemap_AddNewPageDialog_UndoButton {
-            get {
-                return ResourceManager.GetString("Sitemap_AddNewPageDialog_UndoButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You can undo page placement and replace it..
+        ///   Looks up a localized string similar to You can replace reacently added page..
         /// </summary>
         public static string Sitemap_AddNewPageDialog_UndoMessage {
             get {

@@ -334,7 +334,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                                 }
                             }
                         };
-                    if (dragObject.getSitemap && !dragObject.getSitemap().settings.canDragNode) {
+                    if (!dragObject.superDraggable() && dragObject.getSitemap && !dragObject.getSitemap().settings.canDragNode) {
                         return;
                     }
                     $(element).draggable(setup).data("dragObject", dragObject);
@@ -386,6 +386,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                                             newNode.parentNode().childNodes.remove(newNode);
                                         };
                                     }
+                                    node.superDraggable(dragObject.superDraggable());
                                     dragObject = node;
                                 }
                                 
@@ -705,6 +706,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 }
                 return false;
             };
+            self.superDraggable = ko.observable(false);     // Used to force dragging if sitemap settings !canDragNode.
 
             // User for validation.
             self.containerId = 'node-' + nodeId++;
@@ -909,6 +911,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             self.isVisible = ko.observable(true);
             self.isCustom = ko.observable(false);
             self.isBeingDragged = ko.observable(false);
+            self.superDraggable = ko.observable(false); // Used to force dragging if sitemap settings !canDragNode.
 
             self.onDrop = null;
             self.dropped = function (droppedSitemapNode) {
@@ -929,6 +932,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         function AddNewPageViewModel(sitemapViewModel, pageLinkViewModel, onSkip) {
             var self = this;
             self.pageLink = pageLinkViewModel;
+            self.pageLink.superDraggable(true);
             self.sitemap = sitemapViewModel;
             self.onSkipClick = onSkip;
             self.linkIsDropped = ko.observable(false);
