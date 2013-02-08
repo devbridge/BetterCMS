@@ -12,7 +12,7 @@
                 <div class="bcms-content-titles">@NavigationGlobalization.Sitemap_AddNewPageDialog_PageNodeHeader</div>
                 <!-- ko with: pageLink -->
                 <div data-bind="draggable: $parentContext">
-                    <div class="bcms-dropable-page-box" style="position: relative; z-index: 0;">
+                    <div class="bcms-dropable-page-box" style="position: relative; z-index: 0;" data-bind="css: { 'bcms-placement-node-drag': isBeingDragged() }">
                         <div class="bcms-drop-button">@NavigationGlobalization.Sitemap_AddNewPageDialog_DragButton</div>
                         <div class="bcms-content-titles">@NavigationGlobalization.Sitemap_AddNewPageDialog_PageName</div>
                         <div class="bcms-dropable-text" data-bind="text: title()"></div>

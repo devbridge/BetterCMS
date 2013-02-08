@@ -397,8 +397,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                                     dropZoneObject.childNodes.splice(0, 0, dragObject);
                                 }
                                 else if (dropZoneType == DropZoneTypes.TopZone) {
-                                    // NOTE: indexOf is no supported on IE8. TODO: solve the issue for IE8.
-                                    index = dropZoneObject.parentNode().childNodes().indexOf(dropZoneObject);
+                                    index = $.inArray(dropZoneObject, dropZoneObject.parentNode().childNodes());
                                     dropZoneObject.parentNode().childNodes.splice(index, 0, dragObject);
                                 }
                                 else if (dropZoneType == DropZoneTypes.MiddleZone) {
@@ -406,8 +405,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                                     dropZoneObject.isExpanded(true);
                                 }
                                 else if (dropZoneType == DropZoneTypes.BottomZone) {
-                                    // NOTE: indexOf is no supported on IE8. TODO: solve the issue for IE8.
-                                    index = dropZoneObject.parentNode().childNodes().indexOf(dropZoneObject);
+                                    index = $.inArray(dropZoneObject, dropZoneObject.parentNode().childNodes());
                                     dropZoneObject.parentNode().childNodes.splice(index + 1, 0, dragObject);
                                 }
                                 dropZoneObject.activeZone(DropZoneTypes.None);
