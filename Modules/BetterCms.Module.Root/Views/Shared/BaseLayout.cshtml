@@ -1,7 +1,6 @@
 ﻿@using BetterCms.Module.Root.Mvc.Helpers
 
 @model BetterCms.Module.Root.ViewModels.Cms.RenderPageViewModel
-
 @{
     Layout = "RootLayout.cshtml";
 }
@@ -13,6 +12,7 @@
 }
 
 @section CmsMeta {
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     @if (Model.Metadata != null)
     {
         foreach (var metaData in Model.Metadata)
@@ -25,13 +25,14 @@
 @section CmsHeadStyles {
     @if (Model.CanManageContent)
     {
-        <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700|Oswald:400,700" />
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700' rel='stylesheet' type='text/css' />
         <link rel="stylesheet" type="text/css" href="@Url.Content("~/file/bcms-root/Content/Styles/base.css")" />
         
         @Html.Action("RenderStyleSheetIncludes", "Rendering")
     }
 
-    @if (Model.Stylesheets != null) {
+    @if (Model.Stylesheets != null)
+    {
         @Html.RenderPageCustomCss(Model.Stylesheets)
     }
 }
@@ -60,7 +61,8 @@
         @Html.Partial("Partial/SiteSettingTab")
     }
 
-    @if (Model.JavaScripts != null) {
+    @if (Model.JavaScripts != null)
+    {
         @Html.RenderPageCustomJavaScript(Model.JavaScripts)
     }
 }

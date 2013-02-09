@@ -236,7 +236,7 @@ namespace BetterCms.Module.Pages.Models.Migrations
                 PagesConstants.PageIds.PageDefault,
                 TemplatesModuleConstants.RegionIds.Header,
                 "Header",
-                "<a href=\"/\" class=\"bcms-logo\"><img src=\"/file/bcms-pages/content/css/images/logo.png\" alt=\"Better CMS\"></a>");
+                "<a href=\"/\" class=\"logo\"><img src=\"/file/bcms-pages/content/css/images/logo.png\" alt=\"Better CMS\"></a>");
 
             // Insert body.
             InsertContent(
@@ -276,7 +276,7 @@ namespace BetterCms.Module.Pages.Models.Migrations
                 PagesConstants.PageIds.Page404,
                 TemplatesModuleConstants.RegionIds.Header,
                 "Header",
-                "<a href=\"/\" class=\"bcms-logo\"><img src=\"/file/bcms-pages/content/css/images/logo.png\" alt=\"Better CMS\"></a>");
+                "<a href=\"/\" class=\"logo\"><img src=\"/file/bcms-pages/content/css/images/logo.png\" alt=\"Better CMS\"></a>");
 
             // Insert body.
             InsertContent(
@@ -316,7 +316,7 @@ namespace BetterCms.Module.Pages.Models.Migrations
                 PagesConstants.PageIds.Page500,
                 TemplatesModuleConstants.RegionIds.Header,
                 "Header",
-                "<a href=\"/\" class=\"bcms-logo\"><img src=\"/file/bcms-pages/content/css/images/logo.png\" alt=\"Better CMS\"></a>");
+                "<a href=\"/\" class=\"logo\"><img src=\"/file/bcms-pages/content/css/images/logo.png\" alt=\"Better CMS\"></a>");
 
             // Insert body.
             InsertContent(
