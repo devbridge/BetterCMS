@@ -136,8 +136,8 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                     self.isOpened(false);
                 };
 
-                self.save = function () {
-                    if (self.onSave()) {
+                self.save = function (element) {
+                    if (self.onSave($(element))) {
                         self.isOpened(false);
                     }
                 };
@@ -367,7 +367,14 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                 initialize();
             }
 
-            DimensionEditorViewModel.prototype.onSave = function () {
+            DimensionEditorViewModel.prototype.onSave = function (element) {
+                // Call recalculation, if "keep aspect ratio" is checked
+                if (element.get(0) == this.widthInput.get(0)) {
+                    this.changeHeight();
+                } else if (element.get(0) == this.heightInput.get(0)) {
+                    this.changeWidth();
+                }
+                
                 if (this.widthInput.valid() && this.heightInput.valid()) {
                     this.oldWidth(this.width());
                     this.oldHeight(this.height());

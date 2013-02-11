@@ -247,7 +247,7 @@ define('bcms', ['jquery', 'knockout'], function ($, ko) {
            
             app.preventInputFromSubmittingForm($(element), {
                 preventedEnter: function () {
-                    allBindings.enterPress.call(viewModel);
+                    allBindings.enterPress.call(viewModel, element);
                 }
             });
         }
@@ -262,7 +262,7 @@ define('bcms', ['jquery', 'knockout'], function ($, ko) {
             
             app.preventInputFromSubmittingForm($(element), {
                 preventedEsc: function () {
-                    allBindings.escPress.call(viewModel);
+                    allBindings.escPress.call(viewModel, element);
                 }
             });
         }
