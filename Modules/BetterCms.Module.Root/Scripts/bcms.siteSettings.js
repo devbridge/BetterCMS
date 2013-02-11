@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define */
 
-define('bcms.siteSettings', ['jquery', 'bcms', 'bcms.modal', 'bcms.dynamicContent', 'bcms.tabs', 'knockout', 'bcms.messages'],
-    function ($, bcms, modal, dynamicContent, tabs, ko, messages) {
+define('bcms.siteSettings', ['jquery', 'bcms', 'bcms.modal', 'bcms.dynamicContent', 'bcms.tabs', 'knockout', 'bcms.messages', 'bcms.forms'],
+    function ($, bcms, modal, dynamicContent, tabs, ko, messages, forms) {
     'use strict';
 
     var siteSettings = {},
@@ -74,6 +74,8 @@ define('bcms.siteSettings', ['jquery', 'bcms', 'bcms.modal', 'bcms.dynamicConten
             siteSettingsModalWindow.maximizeHeight();
             
             tabs.initTabPanel(siteSettingsModalWindow.container);
+            
+            forms.bindCheckboxes(siteSettingsModalWindow.container);
         }
     };
 

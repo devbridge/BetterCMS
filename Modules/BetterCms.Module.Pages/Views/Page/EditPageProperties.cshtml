@@ -67,15 +67,15 @@
                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_Title</div>
                     <div class="bcms-checkbox-holder">
                         @Html.CheckBoxFor(model => model.IsVisibleToEveryone)
-                        @PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_VisibleToEveryone
+                        <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_VisibleToEveryone</div>
                     </div>
                     <div class="bcms-checkbox-holder">
                         @Html.CheckBoxFor(model => model.UseNoFollow)
-                        @PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseNoFollow
+                        <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseNoFollow</div>
                     </div>
                     <div class="bcms-checkbox-holder">
                         @Html.CheckBoxFor(model => model.UseNoIndex)
-                        @PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseNoIndex
+                        <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseNoIndex</div>
                     </div>
                 </div>
                 @Html.HiddenFor(model => model.TemplateId, new { @id = "TemplateId" })

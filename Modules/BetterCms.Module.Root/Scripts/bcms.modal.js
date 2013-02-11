@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console, document */
 
-define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'knockout'], function ($, bcms, tabs, ko) {
+define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'knockout', 'bcms.forms'], function ($, bcms, tabs, ko, forms) {
     'use strict';
 
     var modal = {},
@@ -321,6 +321,8 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'knockout'], function ($, b
             this.maximizeHeight();
 
             tabs.initTabPanel(this.container);
+            
+            forms.bindCheckboxes(this.container);
 
             if (this.options.autoFocus) {
                 this.setFocus();
