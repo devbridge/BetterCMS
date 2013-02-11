@@ -99,6 +99,7 @@ div.bcms-editseo-modal {
 .bcms-edit-label {
     display: inline-block;
     vertical-align: middle;
+    cursor: pointer;
 }
 
 /*Add New Content Tabbed Page*/
