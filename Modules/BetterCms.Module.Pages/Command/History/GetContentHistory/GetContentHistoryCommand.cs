@@ -133,8 +133,8 @@ namespace BetterCms.Module.Pages.Command.History.GetContentHistory
                            DisplayedFor = content.Status == ContentStatus.Archived && content.PublishedOn != null
                                    ? content.CreatedOn - content.PublishedOn.Value
                                    : (TimeSpan?)null,
-                           PublishedByUser = content.Status == ContentStatus.Published ? content.PublishedByUser : null,
-                           PublishedOn = content.Status == ContentStatus.Published ? content.PublishedOn : null,
+                           PublishedByUser = content.Status == ContentStatus.Published || content.Status == ContentStatus.Archived ? content.PublishedByUser : null,
+                           PublishedOn = content.Status == ContentStatus.Published || content.Status == ContentStatus.Archived ? content.PublishedOn : null,
                            CreatedOn = content.CreatedOn
                        };
         }

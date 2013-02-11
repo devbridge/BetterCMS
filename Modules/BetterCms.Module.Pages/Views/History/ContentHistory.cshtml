@@ -62,14 +62,8 @@
                .Encode(false)
                .Named(string.Empty)
                .Sortable(false)
-               .HeaderAttributes(@style => "width: 20px; padding: 10px;", @class => "bcms-tables-nohover");
+               .HeaderAttributes(@style => "width: 40px; padding: 10px;", @class => "bcms-tables-nohover");
 
-        column.For(m => m.CreatedOn.ToFormattedDateString())
-               .Named(PagesGlobalization.ContentHistory_Column_CreatedOn)
-               .SortColumnName("CreatedOn")
-               .HeaderAttributes(@style => "width: 100px;")
-               .Attributes(@style => "width: 100px;");
-        
         column.For(m => m.PublishedOn.ToFormattedDateString())
                .Named(PagesGlobalization.ContentHistory_Column_PublishedOn)
                .SortColumnName("PublishedOn")
@@ -79,8 +73,8 @@
         column.For(m => m.PublishedByUser)
                .Named(PagesGlobalization.ContentHistory_Column_PublishedByUser)
                .SortColumnName("PublishedByUser")
-               .HeaderAttributes(@style => "width: 100px;")
-               .Attributes(@style => "width: 100px;");
+               .HeaderAttributes(@style => "width: 200px;")
+               .Attributes(@style => "width: 200px;");
 
         column.For(m => m.ArchivedOn.ToFormattedDateString())
                .Named(PagesGlobalization.ContentHistory_Column_ArchivedOn)
