@@ -589,7 +589,6 @@ input.bcms-grid-input:focus {
         height: 94px;
         background: url('images/bcms-no-image-3.png') no-repeat center center;
         background-size: cover;
-        border: 1px solid #c6c6c6;
         overflow: hidden;
     }
 

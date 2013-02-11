@@ -127,12 +127,36 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
             uploadsModel = options.uploads,
             fakeData = {
                 fileName: "Uploading",
-                fileSize: 1024,
+                fileSize: 0,
                 fileId: null,
                 version: null,
-                type: null
+                type: null,
+                abort: function() { /* File upload canceling is not supported. */ }
             },
-            uploadFile = new FileViewModel(fakeData);
+            uploadFile = new FileViewModel(fakeData),
+            resetUploadForm = function() {
+                var folderDropDown = dialog.container.find(selectors.folderDropDown);
+                if (folderDropDown.length > 0) {
+                    var selectedFolderIndex = dialog.container.find(selectors.folderDropDown).get(0).selectedIndex;
+                    dialog.container.find(selectors.fileUploadingForm).get(0).reset();
+                    dialog.container.find(selectors.folderDropDown).get(0).selectedIndex = selectedFolderIndex;
+                }
+            },
+            uploadAnimationId,
+            animateUpload = function (fileModel) {
+                uploadAnimationId = setInterval(function() {
+                    if (fileModel.uploadProgress() >= 100) {
+                        fileModel.uploadProgress(0);
+                    } else {
+                        fileModel.uploadProgress(fileModel.uploadProgress() + 20);
+                    };
+                }, 200);
+            },
+            stopUploadAnimation = function () {
+                if (uploadAnimationId) {
+                    clearInterval(uploadAnimationId);
+                }
+            };
 
         // On folder changed
         dialog.container.find(selectors.fileUploadingForm).find(selectors.folderDropDown).on('change', function () {
@@ -150,8 +174,10 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
                 uploadFile.uploadCompleted(false);
                 uploadFile.fileName = fileName;
                 uploadFile.file.fileName = fileName;
+                uploadFile.uploadProgress(0);
                 uploadsModel.activeUploads.push(uploadFile);
                 uploadsModel.uploads.push(uploadFile);
+                animateUpload(uploadFile);
                 // Send file to server.
                 dialog.container.find($(selectors.fileUploadingForm)).submit();
             }
@@ -159,18 +185,11 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
         
         // On file submitted.
         dialog.container.find($(selectors.fileUploadingTarget)).on('load', function () {
-            // Remove fake file model.
+            stopUploadAnimation();
             uploadsModel.uploads.remove(uploadFile);
             uploadsModel.activeUploads.remove(uploadFile);
+            resetUploadForm();
             
-            // Reset form.
-            var folderDropDown = dialog.container.find(selectors.folderDropDown);
-            if (folderDropDown.length > 0) {
-                var selectedFolderIndex = dialog.container.find(selectors.folderDropDown).get(0).selectedIndex;
-                dialog.container.find(selectors.fileUploadingForm).get(0).reset();
-                dialog.container.find(selectors.folderDropDown).get(0).selectedIndex = selectedFolderIndex;
-            }
-
             // Check the result.
             var result = $(selectors.fileUploadingTarget).contents().find(selectors.fileUploadingResult).get(0);
             if (result == null) {
@@ -199,7 +218,7 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
             fileModel.fileId(newImg.Id);
             fileModel.version(newImg.Version);
             fileModel.type(newImg.Type);
-            fileModel.uploadProgress = ko.observable(100);
+            fileModel.uploadProgress(100);
 
             uploadsModel.uploads.push(fileModel);
             uploadsModel.activeUploads.remove(fileModel);

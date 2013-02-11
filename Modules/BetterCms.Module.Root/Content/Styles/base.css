@@ -817,12 +817,13 @@ a.bcms-remove-image {
 }
 
 .bcms-content-actions {
-    height: 42px;
-    border: 2px solid #9ED4F0;
-    background: #0383df;
     position: absolute;
     top: 10px;
     left: 10px;
+    height: 42px;
+    border: 2px solid #9ED4F0;
+    background: #0383df;
+    z-index: 5;
 }
 
 .bcms-content-button {
@@ -1637,6 +1638,9 @@ a.bcms-btn-close {
         cursor: pointer;
         opacity: 1;
         filter: Alpha(opacity=100);
+        transition: opacity 0.2s ease-in-out;
+        -moz-transition: opacity 0.2s ease-in-out;
+        -webkit-transition: opacity 0.2s ease-in-out;
     }
 
 .bcms-zoom-overlay {
@@ -1649,9 +1653,6 @@ a.bcms-btn-close {
     opacity: 0;
     filter: Alpha(opacity=0);
     background: url('images/icn-zoom.png') no-repeat center center;
-    transition: all 0.2s ease-in-out;
-    -moz-transition: all 0.2s ease-in-out;
-    -webkit-transition: all 0.2s ease-in-out;
 }
 
 .bcms-preview-image-border {
@@ -1798,7 +1799,15 @@ a.bcms-btn-close {
     border-radius: 2px;
     font-size: 12px;
     color: #000;
+    cursor: default;
+    transition: background-color 0.1s ease-in-out;
+    -moz-transition: background-color 0.1s ease-in-out;
+    -webkit-transition: background-color 0.1s ease-in-out;
 }
+
+    .bcms-single-tag:hover {
+        background-color: #CDF4FF;
+    }
 
     .bcms-single-tag > a {
         position: absolute;
