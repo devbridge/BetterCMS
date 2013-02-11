@@ -55,7 +55,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             {
                 string cssClass = content.GetRegionWrapperCssClass(html);
 
-                sb.AppendFormat(@"<div id=""{0}"" class=""bcms-content {1}"" data-page-content-id=""{2}"" data-content-id=""{3}"" data-page-content-version=""{4}"" data-content-version=""{5}""{6}>",
+                sb.AppendFormat(@"<div id=""{0}"" class=""clearfix bcms-content {1}"" data-page-content-id=""{2}"" data-content-id=""{3}"" data-page-content-version=""{4}"" data-content-version=""{5}""{6}>",
                     id,
                     cssClass,
                     content.PageContentId,
@@ -67,7 +67,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             }
             else
             {
-                sb.AppendFormat(@"<div id=""{0}"">", id);
+                sb.AppendFormat(@"<div class=""clearfix"" id=""{0}"">", id);
                 sb.AppendLine();
             }
         }
