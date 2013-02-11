@@ -107,7 +107,10 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
                         postSuccess: postSuccess
                     });
                 },
-                onClose: function() {
+                onAccept: function () {
+                    htmlEditor.destroyAllHtmlEditorInstances();
+                },
+                onClose: function () {
                     htmlEditor.destroyAllHtmlEditorInstances();
                 }
             });
@@ -133,6 +136,12 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
 
                         postSuccess: postSuccess
                     });
+                },
+                onAccept: function () {
+                    htmlEditor.destroyAllHtmlEditorInstances();
+                },
+                onClose: function () {
+                    htmlEditor.destroyAllHtmlEditorInstances();
                 }
             });
         };
@@ -379,7 +388,7 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
             var form = dialog.container.find(selectors.siteSettingsWidgetsListForm);
             grid.bindGridForm(form, function(data) {
                 siteSettings.setContent(data);
-                widgets.initializeSiteSettingsWidgetsList(data);
+                initializeSiteSettingsWidgetsList(data);
             });
 
             form.on('submit', function(event) {

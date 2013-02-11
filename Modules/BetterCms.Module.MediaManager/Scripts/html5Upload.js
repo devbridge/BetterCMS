@@ -95,6 +95,7 @@ define(function () {
             if (inputField) {
                 manager.on(inputField, 'change', function () {
                     manager.processFiles(this.files);
+                    $(this).val('');
                 });
             }
         },

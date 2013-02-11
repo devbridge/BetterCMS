@@ -24,7 +24,8 @@ namespace BetterCms.Module.Root.Controllers
         {
             GetPageToRenderRequest request = new GetPageToRenderRequest {
                                                                             PageId = pageId.ToGuidOrDefault(),
-                                                                            PreviewPageContentId = pageContentId.ToGuidOrDefault()
+                                                                            PreviewPageContentId = pageContentId.ToGuidOrDefault(),
+                                                                            IsPreview = true
                                                                         };
         
 

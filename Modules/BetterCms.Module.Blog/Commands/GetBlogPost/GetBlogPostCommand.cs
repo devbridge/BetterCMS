@@ -10,8 +10,7 @@ using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
-
-using NHibernate.Transform;
+using BetterCms.Module.Root.Services;
 
 using BlogContent = BetterCms.Module.Root.Models.Content;
 
@@ -38,16 +37,24 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
         private readonly ITagService tagService;
 
         /// <summary>
+        /// The content service
+        /// </summary>
+        private readonly IContentService contentService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="GetBlogPostCommand" /> class.
         /// </summary>
         /// <param name="categoryService">The category service.</param>
         /// <param name="authorService">The author service.</param>
         /// <param name="tagService">The tag service.</param>
-        public GetBlogPostCommand(ICategoryService categoryService, IAuthorService authorService, ITagService tagService)
+        /// <param name="contentService">The content service.</param>
+        public GetBlogPostCommand(ICategoryService categoryService, IAuthorService authorService,
+            ITagService tagService, IContentService contentService)
         {
             this.categoryService = categoryService;
             this.authorService = authorService;
             this.tagService = tagService;
+            this.contentService = contentService;
         }
 
         /// <summary>
@@ -62,8 +69,6 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
 
             if (!id.HasDefaultValue())
             {
-                BlogPostViewModel blogModelAlias = null;
-
                 model = Repository.AsQueryable<BlogPost>()
                     .Where(bp => bp.Id == id)
                     .Select(bp =>
@@ -98,27 +103,36 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
                     PageContent pageContentAlias = null;
                     BlogPostContent blogPostContentAlias = null;
 
-                    var contents = UnitOfWork.Session
-                        .QueryOver(() => blogPostContentAlias)
-                        .Inner.JoinAlias(c => c.PageContents, () => pageContentAlias)
+                    var pageContentId = UnitOfWork.Session
+                        .QueryOver(() => pageContentAlias)
+                        .Inner.JoinAlias(c => c.Content, () => blogPostContentAlias)
                         .Where(() => pageContentAlias.Page.Id == id
                             && !pageContentAlias.IsDeleted
                             && pageContentAlias.Region.Id == regionId.Value)
                         .OrderBy(() => pageContentAlias.CreatedOn).Asc
-                        .SelectList(select => select
-                            .Select(() => blogPostContentAlias.Html).WithAlias(() => blogModelAlias.Content)
-                            .Select(() => blogPostContentAlias.ActivationDate).WithAlias(() => blogModelAlias.LiveFromDate)
-                            .Select(() => blogPostContentAlias.ExpirationDate).WithAlias(() => blogModelAlias.LiveToDate))
-                        .TransformUsing(Transformers.AliasToBean<BlogPostViewModel>())
+                        .Select(c => c.Id)
                         .Take(1)
-                        .List<BlogPostViewModel>();
+                        .List<Guid>()
+                        .FirstOrDefault();
 
-                    if (contents != null && contents.Count > 0)
+                    BlogPostContent content = null;
+                    if (!pageContentId.HasDefaultValue())
                     {
-                        var content = contents[0];
-                        model.Content = content.Content;
-                        model.LiveFromDate = content.LiveFromDate;
-                        model.LiveToDate = content.LiveToDate;
+                        var pageContent = contentService.GetPageContentForEdit(pageContentId);
+                        if (pageContent != null)
+                        {
+                            content = pageContent.Item2 as BlogPostContent;
+                        }
+                    }
+
+                    if (content != null)
+                    {
+                        model.Content = content.Html;
+                        model.ContentId = content.Id;
+                        model.LiveFromDate = content.ActivationDate;
+                        model.LiveToDate = content.ExpirationDate;
+                        model.CurrentStatus = content.Status;
+                        model.HasPublishedContent = content.Original != null;
                     }
                     else
                     {

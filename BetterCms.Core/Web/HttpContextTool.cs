@@ -19,11 +19,11 @@ namespace BetterCms.Core.Web
         {
             var request = httpContext.Request;
             var originalUrl = virtualPath ?? request.ServerVariables["HTTP_X_ORIGINAL_URL"];
-            var host = request.Url.Host;
+            var host = request.Url != null ? request.Url.Host : null;
 
             if (!string.IsNullOrEmpty(originalUrl))
             {
-                return new Uri(string.Format("http://{0}{1}", host, originalUrl), UriKind.Absolute).AbsolutePath;
+                return FixUrl(new Uri(string.Format("http://{0}{1}", host, originalUrl), UriKind.Absolute).AbsolutePath);
             }
 
             var originalUri = new Uri(string.Format("http://{0}{1}", host, request.RawUrl));
@@ -34,7 +34,17 @@ namespace BetterCms.Core.Web
                 path = path.Substring(0, path.Length - request.PathInfo.Length);
             }
 
-            return path;
+            return FixUrl(path);
+        }
+
+        private string FixUrl(string virtualPath)
+        {
+            if (virtualPath != null && !virtualPath.EndsWith("/"))
+            {
+                virtualPath += "/";
+            }
+
+            return virtualPath;
         }
     }
 }

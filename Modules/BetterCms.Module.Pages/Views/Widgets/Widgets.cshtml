@@ -6,7 +6,6 @@
 @using BetterCms.Module.Root.Mvc.Grids.TableRenderers
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
-@using MvcContrib
 @using MvcContrib.UI.Grid
 
 @model SiteSettingWidgetListViewModel
@@ -30,7 +29,7 @@
 
         column.For(f => f.Status)
             .Named(PagesGlobalization.SiteSettings_Widgets_StatusColumn)
-            .Sortable(false)
+            .SortColumnName("Status")
             .Attributes(@class => "bcms-widget-status");
 
         column.HistoryButtonColumn(renderId: false);

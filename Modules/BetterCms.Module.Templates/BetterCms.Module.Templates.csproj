@@ -119,7 +119,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Content\Css\Images\" />
+    <Folder Include="Content\Css\images\" />
     <Folder Include="Controllers\" />
     <Folder Include="Provider\" />
     <Folder Include="Scripts\" />

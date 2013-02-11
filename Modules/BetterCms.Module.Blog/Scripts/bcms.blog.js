@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.grid', 'bcms.pages', 'knockout', 'bcms.media', 'bcms.pages.tags', 'bcms.ko.grid', 'bcms.messages', 'bcms.redirect'],
-    function ($, bcms, modal, siteSettings, dynamicContent, datepicker, htmlEditor, grid, pages, ko, media, tags, kogrid, messages, redirect) {
+define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.grid', 'bcms.pages', 'knockout', 'bcms.media', 'bcms.pages.tags', 'bcms.ko.grid', 'bcms.messages', 'bcms.redirect', 'bcms.pages.history', 'bcms.preview'],
+    function ($, bcms, modal, siteSettings, dynamicContent, datepicker, htmlEditor, grid, pages, ko, media, tags, kogrid, messages, redirect, history, preview) {
     'use strict';
 
     var blog = { },
@@ -26,7 +26,8 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             siteSettingsBlogsTableFirstRow: 'table.bcms-tables > tbody > tr:first',
             overlayConfigure: '.bcms-content-configure',
             overlayDelete: '.bcms-content-delete',
-            overlay: '.bcms-content-overlay'
+            overlay: '.bcms-content-overlay',
+            destroyDraftVersionLink: '.bcms-messages-draft-destroy'
         },
         links = {
             loadSiteSettingsBlogsUrl: null,
@@ -64,32 +65,60 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     /**
     * Blog post view model
     */
-    function BlogPostViewModel(image, tagsViewModel) {
+    function BlogPostViewModel(image, tagsViewModel, id, version) {
         var self = this;
 
         self.tags = tagsViewModel;
         self.image = ko.observable(new media.ImageSelectorViewModel(image));
+        self.id = ko.observable(id);
+        self.version = ko.observable(version);
     }
 
     /**
     * Opens blog edit form
     */
-    function openBlogEditForm(url, title, postSuccess) {
-        modal.open({
+    function openBlogEditForm(url, title, postSuccess, onClose) {
+        var blogViewModel;
+
+        modal.edit({
             title: title,
             onLoad: function (dialog) {
                 dynamicContent.bindDialog(dialog, url, {
-                    contentAvailable: initEditBlogPostDialogEvents,
+                    contentAvailable: function (dialog, content) {
+                        blogViewModel = initEditBlogPostDialogEvents(dialog, content);
+                    },
 
                     beforePost: function () {
                         htmlEditor.updateEditorContent();
                     },
                     
-                    postSuccess: postSuccess
+                    postSuccess: function (json) {
+                        if (json.Data.DesirableStatus == bcms.contentStatus.preview) {
+                            try {
+                                var result = json.Data;
+                                blogViewModel.version(result.Version);
+                                blogViewModel.id(result.Id);
+                                preview.previewPageContent(result.Id, result.PageContentId);
+                            } finally {
+                                return false;
+                            }
+                        } else {
+                            if ($.isFunction(postSuccess)) {
+                                postSuccess(json);
+                            }
+                        }
+                        return true;
+                    }
                 });
+            },
+            onAccept: function() {
+                htmlEditor.destroyAllHtmlEditorInstances();
             },
             onClose: function() {
                 htmlEditor.destroyAllHtmlEditorInstances();
+                if ($.isFunction(onClose)) {
+                    onClose();
+                }
             }
         });
     }
@@ -107,8 +136,21 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
 
         var tagsViewModel = new tags.TagsListViewModel(tagsList);
 
-        var blogViewModel = new BlogPostViewModel(image, tagsViewModel);
+        var blogViewModel = new BlogPostViewModel(image, tagsViewModel, data.Id, data.Version);
         ko.applyBindings(blogViewModel, dialog.container.find(selectors.firstForm).get(0));
+        
+        dialog.container.find(selectors.destroyDraftVersionLink).on('click', function () {
+            history.destroyDraftVersion(data.ContentId, dialog.container, function () {
+                var onClose = function() {
+                    redirect.ReloadWithAlert();
+                };
+
+                dialog.close();
+                editBlogPost(data.Id, onClose, onClose);
+            });
+        });
+
+        return blogViewModel;
     }
 
     /**
@@ -136,11 +178,11 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     /**
     * Edits blog post
     */
-    function editBlogPost(id, postSuccess) {
+    function editBlogPost(id, postSuccess, onClose) {
         var url = $.format(links.loadEditPostDialogUrl, id),
             title = globalization.editPostDialogTitle;
 
-        openBlogEditForm(url, title, postSuccess);
+        openBlogEditForm(url, title, postSuccess, onClose);
     }
 
     /**
