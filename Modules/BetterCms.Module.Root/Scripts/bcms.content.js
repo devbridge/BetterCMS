@@ -74,7 +74,7 @@ define('bcms.content', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, moda
     content.highlightRegion = function (element) {
         var container = $('#bcms-region-overlay-template'),
             template = container.html(),
-            rectangle = $(template).css('z-index', 1005);
+            rectangle = $(template);
 
         rectangle.data('target', element);
         rectangle.insertBefore(container);
