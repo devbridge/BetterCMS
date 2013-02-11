@@ -159,13 +159,18 @@
     filter: alpha(opacity = 50);
 }
 
-    .bcms-placement-node-drag a.bcms-icn-edit {
-        display: none;
-    }
+div.bcms-placement-one-active {
+    background: #effcfe;
+    cursor: move;
+}
 
-    .bcms-placement-node-drag a.bcms-icn-delete {
-        display: none;
-    }
+.bcms-placement-node-drag a.bcms-icn-edit {
+    display: none;
+}
+
+.bcms-placement-node-drag a.bcms-icn-delete {
+    display: none;
+}
 
 .bcms-expand-collapse-node {
     position: absolute;
