@@ -55,6 +55,7 @@ define('bcms.pages.history', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', '
             loaderContainer = container.find(selectors.versionPreviewLoaderContainer);
 
         previewContainer.html(iFrame);
+        loaderContainer.hideLoading();
         loaderContainer.showLoading();
         iFrame.attr('src', url);
 
