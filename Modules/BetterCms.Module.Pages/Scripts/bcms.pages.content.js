@@ -75,7 +75,8 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                 errorTitle: null,
                 insertingWidgetInfoMessage: null,
                 insertingWidgetInfoHeader: null,
-                insertingWidgetErrorMessage: null
+                insertingWidgetErrorMessage: null,
+                datePickerTooltipTitle: null
             };
 
         /**
@@ -167,7 +168,7 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
         * Initializes content dialog form.
         */
         pagesContent.initializeAddNewContentForm = function (dialog) {
-            dialog.container.find(selectors.dataPickers).initializeDatepicker();
+            dialog.container.find(selectors.dataPickers).initializeDatepicker(globalization.datePickerTooltipTitle);
 
             dialog.container.find(selectors.widgetsSearchButton).on('click', function () {
                 pagesContent.updateWidgetCategoryList(dialog);

@@ -49,7 +49,8 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             deleteAuthorDialogTitle: null,
             blogPostsTabTitle: null,
             authorsTabTitle: null,
-            templatesTabTitle: null
+            templatesTabTitle: null,
+            datePickerTooltipTitle: null
         },
         classes = {
             regionBlogPostContent: 'bcms-blog-post-content',
@@ -131,7 +132,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         var data = content.Data,
             image = data.Image,
             tagsList = data.Tags;
-        dialog.container.find(selectors.datePickers).initializeDatepicker();
+        dialog.container.find(selectors.datePickers).initializeDatepicker(globalization.datePickerTooltipTitle);
         
         htmlEditor.initializeHtmlEditor(selectors.htmlEditor);
 

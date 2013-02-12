@@ -1143,4 +1143,7 @@
   <data name="EditSeo_MetaTitle_MaxLengthMessage" xml:space="preserve">
     <value>Meta title max length exceeded.</value>
   </data>
+  <data name="Date_Picker_Tooltip_Title" xml:space="preserve">
+    <value>Calendar</value>
+  </data>
 </root>
