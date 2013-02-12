@@ -31,6 +31,14 @@ namespace BetterCms.Module.Pages.ViewModels.SiteSettings
         public string Title { get; set; }
 
         /// <summary>
+        /// Gets or sets the page url.
+        /// </summary>
+        /// <value>
+        /// The page url.
+        /// </value>
+        public string Url { get; set; }
+
+        /// <summary>
         /// Gets or sets the date the page is created on.
         /// </summary>
         /// <value>

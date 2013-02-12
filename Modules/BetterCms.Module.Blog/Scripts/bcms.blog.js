@@ -19,6 +19,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             siteSettingsBlogEditButton: '.bcms-grid-item-edit-button',
             siteSettingsRowCells: 'td',
             siteSettingsBlogCellPrefix: '.bcms-blog-',
+            siteSettingsBlogTitleCell: '.bcms-blog-Title',
             siteSettingsBlogBooleanTemplateFalse: '#bcms-boolean-false-template',
             siteSettingsBlogBooleanTemplateTrue: '#bcms-boolean-true-template',
             siteSettingsBlogRowTemplate: '#bcms-blogs-list-row-template',
@@ -227,6 +228,12 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             bcms.stopEventPropagation(event);
             searchSiteSettingsBlogs(container, form);
             return false;
+        });
+        
+        form.find(selectors.siteSettingsBlogTitleCell).on('click', function (event) {
+            bcms.stopEventPropagation(event);
+            var url = $(this).data('url');
+            window.open(url);
         });
 
         form.find(selectors.siteSettingsBlogsSearchButton).on('click', function () {
