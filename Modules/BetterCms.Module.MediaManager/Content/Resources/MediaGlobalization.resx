@@ -168,6 +168,9 @@
   <data name="FilesTab_UploadFile" xml:space="preserve">
     <value>Upload file</value>
   </data>
+  <data name="FileUpload_Failed_ImageFormatNotSuported" xml:space="preserve">
+    <value>Failed! Can upload only gif, jpg, jpeg or png.</value>
+  </data>
   <data name="ImageEditor_CroppingDialog_SubTitle" xml:space="preserve">
     <value>Select area to crop.</value>
   </data>
@@ -356,6 +359,9 @@
   </data>
   <data name="MultiFileUpload_SaveFailed" xml:space="preserve">
     <value>Failed to save uploaded files.</value>
+  </data>
+  <data name="MultiFileUpload_SaveFailed_FolderDeleted" xml:space="preserve">
+    <value>Folder you trying to save uploaded files is deleted.</value>
   </data>
   <data name="MultiFileUpload_SelectFolder" xml:space="preserve">
     <value>Select Folder where to upload files:</value>

@@ -589,7 +589,7 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
         $.validator.addMethod("jqenddatevalidation", function (value, element, params) {
             var startDateString = $('#' + params.startdateproperty).val();
             if (value != null && value != "" && startDateString != null && startDateString != "") {
-                return new Date(startDateString) < new Date(value);
+                return new Date(startDateString) <= new Date(value);
             }
             return true;
         }, function (params) {

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.Exceptions;
+using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 using BetterCms.Module.MediaManager.ViewModels.Upload;
@@ -27,6 +29,11 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
                 if (request.SelectedFolderId != null && request.SelectedFolderId.Value != Guid.Empty)
                 {
                     folder = Repository.AsProxy<MediaFolder>(request.SelectedFolderId.Value);
+                    if (folder.IsDeleted)
+                    {
+                        response.FolderIsDeleted = true;
+                        return response;
+                    }
                 }
 
                 List<MediaFile> files = new List<MediaFile>();

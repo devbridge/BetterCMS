@@ -15,5 +15,7 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
         {
             Medias = new List<MediaFileViewModel>();
         }
+
+        public bool FolderIsDeleted { get; set; }
     }
 }

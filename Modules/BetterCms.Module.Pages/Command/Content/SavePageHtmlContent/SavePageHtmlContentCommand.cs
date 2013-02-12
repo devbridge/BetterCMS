@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Root.Models;
@@ -51,7 +53,7 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
                         Id = request.ContentId,
                         Name = request.ContentName,
                         ActivationDate = request.LiveFrom,
-                        ExpirationDate = request.LiveTo,
+                        ExpirationDate = TimeHelper.FormatEndDate(request.LiveTo),
                         Html = request.PageContent ?? string.Empty,
                         UseCustomCss = request.EnabledCustomCss,
                         CustomCss = request.CustomCss,
