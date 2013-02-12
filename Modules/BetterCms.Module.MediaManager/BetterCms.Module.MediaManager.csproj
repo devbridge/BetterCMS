@@ -207,6 +207,10 @@
     <EmbeddedResource Include="Content\Css\Images\bcms-no-image-3.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\BetterCms.Api.Interfaces\BetterCms.Api.Interfaces.csproj">
+      <Project>{8059ba38-54a4-44a9-82ac-56e8a27e982d}</Project>
+      <Name>BetterCms.Api.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\BetterCMS.Configuration\BetterCms.Configuration.csproj">
       <Project>{DA2B225E-6AEE-4465-8B08-4D5B1C1CED49}</Project>
       <Name>BetterCms.Configuration</Name>

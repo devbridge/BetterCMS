@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
 
+using BetterCms.Api;
 using BetterCms.Core;
 using BetterCms.Core.Environment.Host;
 
@@ -26,7 +27,7 @@ namespace BetterCms.Sandbox.Mvc4
 
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             
-            cmsHost.OnApplicationStart(this);            
+            cmsHost.OnApplicationStart(this);
         }
 
         protected void Application_BeginRequest()

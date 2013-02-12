@@ -150,6 +150,13 @@ namespace BetterCms.Core.Modules
         }
 
         /// <summary>
+        /// Attaches to events.
+        /// </summary>
+        public virtual void AttachToEvents()
+        {
+        }
+
+        /// <summary>
         /// Registers module controller types.
         /// </summary>
         /// <param name="registrationContext">The area registration context.</param>

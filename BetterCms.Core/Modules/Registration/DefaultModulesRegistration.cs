@@ -273,6 +273,8 @@ namespace BetterCms.Core.Modules.Registration
                     knownStyleSheetFiles.Add(styleSheetFile);
                 }
             }
+
+            moduleDescriptor.AttachToEvents();
         }
 
         /// <summary>

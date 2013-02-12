@@ -133,16 +133,8 @@
     <Compile Include="Dependencies\PerWebRequestLifetimeModule.cs" />
     <Compile Include="Environment\Assemblies\DefaultAssemblyManager.cs" />
     <Compile Include="Environment\Assemblies\IAssemblyManager.cs" />
-    <Compile Include="Models\ContentStatus.cs" />
-    <Compile Include="Models\IOption.cs" />
-    <Compile Include="Models\IHistorical.cs" />
-    <Compile Include="Models\IEntity.cs" />
-    <Compile Include="Models\ICategory.cs" />
-    <Compile Include="Models\IHtmlContent.cs" />
-    <Compile Include="Models\IHtmlContentWidget.cs" />
     <Compile Include="Security\AuthorizeAttribute.cs" />
     <Compile Include="Security\IUserRole.cs" />
-    <Compile Include="Models\IWidget.cs" />
     <Compile Include="Modules\Projections\EmptyContentAccessor.cs" />
     <Compile Include="Mvc\Attributes\IgnoreAutoRouteAttribute.cs" />
     <Compile Include="Security\UserRole.cs" />
@@ -192,16 +184,9 @@
     <Compile Include="Exceptions\Service\StorageException.cs" />
     <Compile Include="Exceptions\Service\TagException.cs" />
     <Compile Include="Exceptions\Service\UserException.cs" />
-    <Compile Include="Models\OptionType.cs" />
-    <Compile Include="Models\IContentOption.cs" />
-    <Compile Include="Models\IPageContent.cs" />
-    <Compile Include="Models\IRegion.cs" />
-    <Compile Include="Models\IPageContentOption.cs" />
-    <Compile Include="Models\IContent.cs" />
     <Compile Include="Models\EntitySubClassMapBase.cs" />
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\EntityMapBase.cs" />
-    <Compile Include="Models\IPage.cs" />
     <Compile Include="Models\MaxLength.cs" />
     <Compile Include="Modules\ModuleRegistrationContext.cs" />
     <Compile Include="Modules\Projections\ButtonActionProjection.cs" />
@@ -278,6 +263,10 @@
     <Folder Include="Themes\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BetterCms.Api.Interfaces\BetterCms.Api.Interfaces.csproj">
+      <Project>{8059ba38-54a4-44a9-82ac-56e8a27e982d}</Project>
+      <Name>BetterCms.Api.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BetterCMS.Configuration\BetterCms.Configuration.csproj">
       <Project>{DA2B225E-6AEE-4465-8B08-4D5B1C1CED49}</Project>
       <Name>BetterCms.Configuration</Name>

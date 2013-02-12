@@ -8,17 +8,27 @@ namespace BetterCms.Api
         private static CmsContext instance;
 
         private readonly ITagApiService tagService;
+        private readonly IPageApiService pageService;
 
-        public CmsContext(ITagApiService tagService)
+        public CmsContext(ITagApiService tagService, IPageApiService pageService)
         {
             this.tagService = tagService;
+            this.pageService = pageService;
         }
 
-        public ITagApiService TagService
+        public ITagApiService Tags
         {
             get
             {
                 return tagService;
+            }
+        }
+
+        public IPageApiService Pages
+        {
+            get
+            {
+                return pageService;
             }
         }
 

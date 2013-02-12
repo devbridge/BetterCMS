@@ -14,6 +14,8 @@ using BetterCms.Module.Root.Projections;
 using BetterCms.Module.Root.Registration;
 using BetterCms.Module.Root.Services;
 
+using Common.Logging;
+
 namespace BetterCms.Module.Root
 {
     /// <summary>
@@ -26,6 +28,8 @@ namespace BetterCms.Module.Root
         private AuthenticationScriptModuleDescriptor authenticationScriptModuleDescriptor;
 
         private SiteSettingsJavaScriptModuleDescriptor siteSettingsJavaScriptModuleDescriptor;
+
+        private static readonly ILog Log = LogManager.GetCurrentClassLogger();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RootModuleDescriptor" /> class.
@@ -240,6 +244,26 @@ namespace BetterCms.Module.Root
                     },
                     new[] { typeof(EmbeddedResourcesController).Namespace });
             }
+        }
+
+        public override void AttachToEvents()
+        {
+            base.AttachToEvents();
+
+            // TODO: remove after tests
+            CmsContext.Api.Pages.PageCreated += Pages_PageCreated;
+        }
+
+        /// <summary>
+        /// Handles the PageCreated event of the Pages control.
+        /// TODO: remove after tests
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="args">The <see cref="Api.Events.PageCreatedEventArgs" /> instance containing the event data.</param>
+        /// <exception cref="System.NotImplementedException"></exception>
+        void Pages_PageCreated(object sender, Api.Events.PageCreatedEventArgs args)
+        {
+            Log.InfoFormat("Page created. Id: {0}, Title: {1}, Sender: {2}", args.Page.Id, args.Page.Title, sender);
         }
     }
 }

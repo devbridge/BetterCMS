@@ -17,6 +17,7 @@ namespace BetterCms.Module.Pages.Services
             this.repository = repository;
         }
 
+        // Methods implementations
         public IList<ITag> GetTags()
         {
             return repository
@@ -24,5 +25,8 @@ namespace BetterCms.Module.Pages.Services
                 .Cast<ITag>()
                 .ToList();
         }
+
+        // Implemented events
+        public event Api.Events.PageCreatedEventArgs.PageCreatedEventHandler PageCreated;
     }
 }

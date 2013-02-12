@@ -70,6 +70,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\BetterCms.Api.Interfaces\BetterCms.Api.Interfaces.csproj">
+      <Project>{8059ba38-54a4-44a9-82ac-56e8a27e982d}</Project>
+      <Name>BetterCms.Api.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\BetterCMS.Configuration\BetterCms.Configuration.csproj">
       <Project>{da2b225e-6aee-4465-8b08-4d5b1c1ced49}</Project>
       <Name>BetterCms.Configuration</Name>

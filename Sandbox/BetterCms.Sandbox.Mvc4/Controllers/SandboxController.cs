@@ -53,7 +53,7 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
 
         public ActionResult TestApi()
         {
-            var tags = CmsContext.Api.TagService.GetTags();
+            var tags = CmsContext.Api.Tags.GetTags();
             
             var count = tags.Count;
             var message = string.Format("Tags count: {0}", count);

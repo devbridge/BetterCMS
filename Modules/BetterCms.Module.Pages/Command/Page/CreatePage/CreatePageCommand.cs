@@ -1,4 +1,6 @@
-﻿using BetterCms.Core.Mvc.Commands;
+﻿using BetterCms.Api;
+using BetterCms.Api.Events;
+using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.Pages.Command.Page.SavePageProperties;
 using BetterCms.Module.Pages.Models;
@@ -72,6 +74,9 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
                 
             Repository.Save(page);
             UnitOfWork.Commit();
+
+            // Calling event, that page is created
+            CmsContext.Api.Pages.OnPageCreated(new PageCreatedEventArgs { Page = page });
 
             return new SavePageResponse(page);
         }
