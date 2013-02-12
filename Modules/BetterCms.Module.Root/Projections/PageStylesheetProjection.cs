@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
+using BetterCms.Api.Interfaces.Models;
 using BetterCms.Core.Models;
 using BetterCms.Core.Modules.Projections;
 

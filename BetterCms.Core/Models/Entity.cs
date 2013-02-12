@@ -1,5 +1,7 @@
 ﻿using System;
 
+using BetterCms.Api.Interfaces.Models;
+
 namespace BetterCms.Core.Models
 {
     /// <summary>

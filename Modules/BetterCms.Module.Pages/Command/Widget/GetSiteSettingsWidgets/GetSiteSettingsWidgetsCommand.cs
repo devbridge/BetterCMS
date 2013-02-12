@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 
-using BetterCms.Core.Models;
-using BetterCms.Core.Mvc;
+using BetterCms.Api.Interfaces.Models.Enums;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.SiteSettings;

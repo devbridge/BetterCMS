@@ -2,7 +2,9 @@ using System;
 using System.Runtime.Serialization;
 using System.Web.Mvc;
 
-using BetterCms.Core.Models;
+using BetterCms.Api.Interfaces.Models;
+using BetterCms.Api.Interfaces.Models.Enums;
+
 using BetterCms.Core.Modules.Projections;
 
 namespace BetterCms.Module.Root.Projections

@@ -3,6 +3,7 @@ using System.Linq.Expressions;
 using System.Security.Principal;
 using System.Web.Mvc;
 
+using BetterCms.Api.Interfaces.Models;
 using BetterCms.Core.Models;
 
 using Microsoft.Web.Mvc;

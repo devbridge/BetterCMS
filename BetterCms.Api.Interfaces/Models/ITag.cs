@@ -1,6 +1,4 @@
-﻿using BetterCms.Core.Models;
-
-namespace BetterCms.Api.Models
+﻿namespace BetterCms.Api.Interfaces.Models
 {
     public interface ITag : IEntity
     {

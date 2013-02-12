@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Text;
 
+using BetterCms.Api.Interfaces.Models.Enums;
+
 using BetterCms.Core.Models;
+
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Models;

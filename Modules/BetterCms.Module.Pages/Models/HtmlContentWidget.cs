@@ -1,5 +1,6 @@
 using System;
 
+using BetterCms.Api.Interfaces.Models;
 using BetterCms.Core.Models;
 using BetterCms.Module.Root.Models;
 

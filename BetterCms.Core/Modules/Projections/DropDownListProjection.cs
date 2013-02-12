@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 
+using BetterCms.Api.Interfaces.Models;
 using BetterCms.Core.Models;
 
 namespace BetterCms.Core.Modules.Projections

@@ -44,8 +44,8 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Models\Enum\ContentStatus.cs" />
-    <Compile Include="Models\Enum\OptionType.cs" />
+    <Compile Include="Models\Enums\ContentStatus.cs" />
+    <Compile Include="Models\Enums\OptionType.cs" />
     <Compile Include="Models\ICategory.cs" />
     <Compile Include="Models\IContent.cs" />
     <Compile Include="Models\IContentOption.cs" />

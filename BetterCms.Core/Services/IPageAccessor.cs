@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Web;
 
+using BetterCms.Api.Interfaces.Models;
 using BetterCms.Core.Models;
 using BetterCms.Core.Modules.Projections;
 

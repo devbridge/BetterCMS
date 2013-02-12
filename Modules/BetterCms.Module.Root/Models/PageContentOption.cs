@@ -1,5 +1,7 @@
 using System;
 
+using BetterCms.Api.Interfaces.Models;
+using BetterCms.Api.Interfaces.Models.Enums;
 using BetterCms.Core.Models;
 
 namespace BetterCms.Module.Root.Models

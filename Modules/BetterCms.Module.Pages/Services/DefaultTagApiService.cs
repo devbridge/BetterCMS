@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Api.Models;
+using BetterCms.Api.Interfaces.Models;
 using BetterCms.Api.Services;
 using BetterCms.Core.DataAccess;
 using BetterCms.Module.Root.Models;

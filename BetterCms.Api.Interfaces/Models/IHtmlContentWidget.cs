@@ -1,4 +1,4 @@
-﻿namespace BetterCms.Core.Models
+﻿namespace BetterCms.Api.Interfaces.Models
 {
     public interface IHtmlContentWidget : IContent
     {

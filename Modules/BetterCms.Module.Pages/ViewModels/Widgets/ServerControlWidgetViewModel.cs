@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
+using BetterCms.Api.Interfaces.Models.Enums;
 using BetterCms.Core.Models;
 
 namespace BetterCms.Module.Pages.ViewModels.Widgets

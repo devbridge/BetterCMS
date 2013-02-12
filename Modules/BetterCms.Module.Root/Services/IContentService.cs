@@ -1,6 +1,6 @@
 ﻿using System;
 
-using BetterCms.Core.Models;
+using BetterCms.Api.Interfaces.Models.Enums;
 
 namespace BetterCms.Module.Root.Services
 {

@@ -1,6 +1,6 @@
 using System;
 
-using BetterCms.Api.Models;
+using BetterCms.Api.Interfaces.Models;
 using BetterCms.Core.Models;
 
 namespace BetterCms.Module.Root.Models

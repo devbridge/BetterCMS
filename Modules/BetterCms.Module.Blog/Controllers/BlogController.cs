@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Web.Mvc;
 
-using BetterCms.Core.Models;
+using BetterCms.Api.Interfaces.Models.Enums;
+
 using BetterCms.Module.Blog.Commands.GetBlogPost;
 using BetterCms.Module.Blog.Commands.GetBlogPostList;
 using BetterCms.Module.Blog.Commands.SaveBlogPost;

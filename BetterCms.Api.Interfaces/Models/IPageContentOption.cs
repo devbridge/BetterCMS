@@ -1,4 +1,4 @@
-﻿namespace BetterCms.Core.Models
+﻿namespace BetterCms.Api.Interfaces.Models
 {
     /// <summary>
     /// Defines interface to access the page content option.

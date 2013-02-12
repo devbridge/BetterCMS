@@ -1,4 +1,6 @@
-﻿namespace BetterCms.Core.Models
+﻿using BetterCms.Api.Interfaces.Models.Enums;
+
+namespace BetterCms.Api.Interfaces.Models
 {
     /// <summary>
     /// Defines interface to access the option key/type/value.

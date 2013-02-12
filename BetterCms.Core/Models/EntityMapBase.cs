@@ -1,3 +1,5 @@
+using BetterCms.Api.Interfaces.Models;
+
 using FluentNHibernate.Mapping;
 
 namespace BetterCms.Core.Models

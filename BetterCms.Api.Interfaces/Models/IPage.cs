@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace BetterCms.Core.Models
+﻿namespace BetterCms.Api.Interfaces.Models
 {
     /// <summary>
     /// Defines interface to access basic page properties.

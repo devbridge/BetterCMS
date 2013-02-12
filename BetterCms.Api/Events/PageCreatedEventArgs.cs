@@ -1,4 +1,6 @@
 ﻿using System;
+
+using BetterCms.Api.Interfaces.Models;
 using BetterCms.Core.Models;
 
 namespace BetterCms.Api.Events

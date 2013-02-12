@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Web.Mvc;
 
+using BetterCms.Api.Interfaces.Models;
 using BetterCms.Core.Models;
 
 namespace BetterCms.Core.Modules.Projections

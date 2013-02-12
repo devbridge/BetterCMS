@@ -1,8 +1,10 @@
 ﻿using System.Linq;
 
-using BetterCms.Core.Models;
+using BetterCms.Api.Interfaces.Models.Enums;
+
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Widgets;
+
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;

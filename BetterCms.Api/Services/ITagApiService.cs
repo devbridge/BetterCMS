@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-using BetterCms.Api.Models;
+using BetterCms.Api.Interfaces.Models;
 
 namespace BetterCms.Api.Services
 {
