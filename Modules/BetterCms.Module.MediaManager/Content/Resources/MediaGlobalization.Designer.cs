@@ -214,6 +214,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed! Can upload only gif, jpg, jpeg or png..
+        /// </summary>
+        public static string FileUpload_Failed_ImageFormatNotSuported {
+            get {
+                return ResourceManager.GetString("FileUpload_Failed_ImageFormatNotSuported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select area to crop..
         /// </summary>
         public static string ImageEditor_CroppingDialog_SubTitle {

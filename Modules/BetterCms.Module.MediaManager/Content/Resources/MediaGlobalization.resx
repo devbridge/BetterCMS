@@ -168,6 +168,9 @@
   <data name="FilesTab_UploadFile" xml:space="preserve">
     <value>Upload file</value>
   </data>
+  <data name="FileUpload_Failed_ImageFormatNotSuported" xml:space="preserve">
+    <value>Failed! Can upload only gif, jpg, jpeg or png.</value>
+  </data>
   <data name="ImageEditor_CroppingDialog_SubTitle" xml:space="preserve">
     <value>Select area to crop.</value>
   </data>
