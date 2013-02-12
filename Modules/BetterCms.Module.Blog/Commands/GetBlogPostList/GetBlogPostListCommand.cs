@@ -50,7 +50,8 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPostList
                     .Select(() => alias.ModifiedOn).WithAlias(() => modelAlias.ModifiedOn)
                     .Select(() => alias.ModifiedByUser).WithAlias(() => modelAlias.ModifiedByUser)
                     .Select(() => alias.IsPublished).WithAlias(() => modelAlias.IsPublished)
-                    .Select(() => alias.Version).WithAlias(() => modelAlias.Version))
+                    .Select(() => alias.Version).WithAlias(() => modelAlias.Version)
+                    .Select(() => alias.PageUrl).WithAlias(() => modelAlias.PageUrl))
                 .TransformUsing(Transformers.AliasToBean<SiteSettingBlogPostViewModel>());
 
             var count = query.ToRowCountFutureValue();
