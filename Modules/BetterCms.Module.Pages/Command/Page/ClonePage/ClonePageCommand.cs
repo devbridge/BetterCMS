@@ -1,5 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
+using BetterCms.Core.Models;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
@@ -144,9 +147,23 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
             else
             {
                 newPageContent.Content = pageContent.Content.Clone();
+
+                var draft = pageContent.Content.History.FirstOrDefault(c => c.Status == ContentStatus.Draft && !c.IsDeleted);
+                if (pageContent.Content.Status == ContentStatus.Published && draft != null)
+                {
+                    if (newPageContent.Content.History == null)
+                    {
+                        newPageContent.Content.History = new List<Root.Models.Content>();
+                    }
+
+                    var draftClone = draft.Clone();
+                    draftClone.Original = newPageContent.Content;
+                    newPageContent.Content.History.Add(draftClone);
+                    Repository.Save(draftClone);
+                }
             }
 
-            Repository.Save(newPageContent);           
+            Repository.Save(newPageContent);
         }
     }
 }
