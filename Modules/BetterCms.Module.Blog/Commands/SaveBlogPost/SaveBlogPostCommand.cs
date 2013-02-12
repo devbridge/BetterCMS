@@ -11,7 +11,7 @@ using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Blog.ViewModels.Blog;
 
 using BetterCms.Module.MediaManager.Models;
-
+using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Services;
 
 using BetterCms.Module.Root.Models;
@@ -120,7 +120,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                               Name = request.Title,
                               Html = request.Content ?? string.Empty,
                               ActivationDate = request.LiveFromDate,
-                              ExpirationDate = request.LiveToDate
+                              ExpirationDate = TimeHelper.FormatEndDate(request.LiveToDate)
                           };
 
             content = (BlogPostContent)contentService.SaveContentWithStatusUpdate(content, request.DesirableStatus);

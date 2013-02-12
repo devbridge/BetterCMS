@@ -45,7 +45,7 @@ namespace BetterCms.Module.Pages.Mvc.Attributes
                     DateTime dateFrom;
                     if (DateTime.TryParse(dateFromString, out dateFrom))
                     {
-                        return dateFrom < dateTo;
+                        return dateFrom <= dateTo;
                     }
                 }
             }
