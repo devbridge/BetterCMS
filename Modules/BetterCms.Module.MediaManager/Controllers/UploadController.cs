@@ -156,8 +156,12 @@ namespace BetterCms.Module.MediaManager.Controllers
             {
                 Messages.AddError(MediaGlobalization.MultiFileUpload_SaveFailed);
             }
+            else if (result.FolderIsDeleted)
+            {
+                Messages.AddError(MediaGlobalization.MultiFileUpload_SaveFailed_FolderDeleted);
+            }
 
-            return Json(new WireJson(result != null, result));
+            return Json(new WireJson(result != null && !result.FolderIsDeleted, result));
         }
     }
 }
