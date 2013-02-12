@@ -7,8 +7,8 @@
     <ProjectGuid>{8059BA38-54A4-44A9-82AC-56E8A27E982D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BetterCms.Api.Interfaces</RootNamespace>
-    <AssemblyName>BetterCms.Api.Interfaces</AssemblyName>
+    <RootNamespace>BetterCms.DataContracts</RootNamespace>
+    <AssemblyName>BetterCms.DataContracts</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -44,22 +44,22 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Models\Enums\ContentStatus.cs" />
-    <Compile Include="Models\Enums\OptionType.cs" />
-    <Compile Include="Models\ICategory.cs" />
-    <Compile Include="Models\IContent.cs" />
-    <Compile Include="Models\IContentOption.cs" />
-    <Compile Include="Models\IEntity.cs" />
-    <Compile Include="Models\IHistorical.cs" />
-    <Compile Include="Models\IHtmlContent.cs" />
-    <Compile Include="Models\IHtmlContentWidget.cs" />
-    <Compile Include="Models\IOption.cs" />
-    <Compile Include="Models\IPage.cs" />
-    <Compile Include="Models\IPageContent.cs" />
-    <Compile Include="Models\IPageContentOption.cs" />
-    <Compile Include="Models\IRegion.cs" />
-    <Compile Include="Models\ITag.cs" />
-    <Compile Include="Models\IWidget.cs" />
+    <Compile Include="Enums\ContentStatus.cs" />
+    <Compile Include="Enums\OptionType.cs" />
+    <Compile Include="ICategory.cs" />
+    <Compile Include="IContent.cs" />
+    <Compile Include="IContentOption.cs" />
+    <Compile Include="IEntity.cs" />
+    <Compile Include="IHistorical.cs" />
+    <Compile Include="IHtmlContent.cs" />
+    <Compile Include="IHtmlContentWidget.cs" />
+    <Compile Include="IOption.cs" />
+    <Compile Include="IPage.cs" />
+    <Compile Include="IPageContent.cs" />
+    <Compile Include="IPageContentOption.cs" />
+    <Compile Include="IRegion.cs" />
+    <Compile Include="ITag.cs" />
+    <Compile Include="IWidget.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -37,17 +37,5 @@ namespace BetterCms.Core.Dependencies
         {
             return ApplicationContainer.BeginLifetimeScope();
         }
-
-        /// <summary>
-        /// Retrieve a service from the applicaiton context.
-        /// </summary>
-        /// <typeparam name="TService">The type of the service.</typeparam>
-        /// <returns>
-        /// Retrieved service
-        /// </returns>
-        public static TService Resolve<TService>()
-        {
-            return ApplicationContainer.Resolve<TService>();
-        }
     }
 }

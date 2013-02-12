@@ -3,6 +3,8 @@ using System.Web.Hosting;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Autofac;
+
+using BetterCms.Api;
 using BetterCms.Configuration;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
@@ -30,6 +32,24 @@ namespace BetterCms.Core
     /// </summary>
     public static class BetterCmsContext
     {
+        private static CmsApiContext api = null;
+
+        public static CmsApiContext Api 
+        { 
+            get
+            {
+                if (api == null)
+                {
+                    throw new CmsException("The BetterCMS API is not initialized. Need to register CMS host first (call BetterCmsContext.RegisterHost()).");
+                }
+
+                return api;
+            } 
+        }
+
+        // TBD. To access and handle current page data.
+        //public static CmsCurrentContenxt Current { get; private set; }
+
         /// <summary>
         /// Constructs the host context.
         /// </summary>
@@ -44,12 +64,17 @@ namespace BetterCms.Core
                     throw new CmsException("BetterCMS dependencies container is not initialized.");
                 }
 
-                cmsHost = container.Resolve<ICmsHost>();
-            }
+                cmsHost = container.Resolve<ICmsHost>();                
+                if (cmsHost == null)
+                {
+                    throw new CmsException("BetterCMS host context was not created.");
+                }
 
-            if (cmsHost == null)
-            {
-                throw new CmsException("BetterCMS host context was not created.");
+                api = container.Resolve<CmsApiContext>();
+                if (api == null)
+                {
+                    throw new CmsException("BetterCMS API context was not created.");
+                }
             }
 
             return cmsHost;
@@ -70,6 +95,7 @@ namespace BetterCms.Core
             builder.RegisterInstance(cmsConfiguration).As<ICmsConfiguration>().SingleInstance();
 
             builder.RegisterType<DefaultCmsHost>().As<ICmsHost>().SingleInstance();
+            builder.RegisterType<CmsApiContext>().AsSelf().SingleInstance();
             builder.RegisterType<DefaultSessionFactoryProvider>().As<ISessionFactoryProvider>().SingleInstance();
             builder.RegisterType<DefaultAssemblyLoader>().As<IAssemblyLoader>().SingleInstance();
             builder.RegisterType<DefaultAssemblyManager>().As<IAssemblyManager>().SingleInstance();
@@ -92,7 +118,7 @@ namespace BetterCms.Core
             builder.RegisterType<PerWebRequestContainerProvider>().InstancePerLifetimeScope();
           
             builder.RegisterType<DefaultMigrationRunner>().AsImplementedInterfaces().SingleInstance();
-
+            
             RegisterCacheService(cmsConfiguration, builder);
 
             RegisterStorageService(cmsConfiguration, builder);

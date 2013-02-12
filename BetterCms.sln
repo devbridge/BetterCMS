@@ -91,7 +91,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.NugetPackage", "B
 		{0BBF2CFF-860C-4A30-892F-623E0AA5BEE4} = {0BBF2CFF-860C-4A30-892F-623E0AA5BEE4}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.Api.Interfaces", "BetterCms.Api.Interfaces\BetterCms.Api.Interfaces.csproj", "{8059BA38-54A4-44A9-82AC-56E8A27E982D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.DataContracts", "BetterCms.Api.Interfaces\BetterCms.DataContracts.csproj", "{8059BA38-54A4-44A9-82AC-56E8A27E982D}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution

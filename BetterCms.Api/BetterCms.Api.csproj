@@ -48,24 +48,16 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="CmsContext.cs" />
+    <Compile Include="CmsApiContext.cs" />
     <Compile Include="Events\PageCreatedEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IPageApiService.cs" />
     <Compile Include="Services\ITagApiService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BetterCms.Api.Interfaces\BetterCms.Api.Interfaces.csproj">
+    <ProjectReference Include="..\BetterCms.Api.Interfaces\BetterCms.DataContracts.csproj">
       <Project>{8059ba38-54a4-44a9-82ac-56e8a27e982d}</Project>
-      <Name>BetterCms.Api.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BetterCMS.Configuration\BetterCms.Configuration.csproj">
-      <Project>{da2b225e-6aee-4465-8b08-4d5b1c1ced49}</Project>
-      <Name>BetterCms.Configuration</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BetterCMS.Core\BetterCms.Core.csproj">
-      <Project>{694ca5ca-a0e2-4578-a249-648498b058d7}</Project>
-      <Name>BetterCms.Core</Name>
+      <Name>BetterCms.DataContracts</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

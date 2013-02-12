@@ -198,9 +198,9 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\BetterCms.Api.Interfaces\BetterCms.Api.Interfaces.csproj">
+    <ProjectReference Include="..\..\BetterCms.Api.Interfaces\BetterCms.DataContracts.csproj">
       <Project>{8059ba38-54a4-44a9-82ac-56e8a27e982d}</Project>
-      <Name>BetterCms.Api.Interfaces</Name>
+      <Name>BetterCms.DataContracts</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\BetterCms.Api\BetterCms.Api.csproj">
       <Project>{0bbf2cff-860c-4a30-892f-623e0aa5bee4}</Project>

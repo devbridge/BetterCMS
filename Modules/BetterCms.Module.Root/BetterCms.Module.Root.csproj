@@ -116,6 +116,8 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Api\ICategoryApiService.cs" />
+    <Compile Include="Api\RootApi.cs" />
     <Compile Include="Commands\GetPageToRender\GetPageToRenderRequest.cs" />
     <Compile Include="Commands\GetPageToRender\GetPageToRenderCommand.cs" />
     <Compile Include="Content\Resources\RootGlobalization.Designer.cs">
@@ -534,9 +536,9 @@
     <Folder Include="Data\Map\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\BetterCms.Api.Interfaces\BetterCms.Api.Interfaces.csproj">
+    <ProjectReference Include="..\..\BetterCms.Api.Interfaces\BetterCms.DataContracts.csproj">
       <Project>{8059ba38-54a4-44a9-82ac-56e8a27e982d}</Project>
-      <Name>BetterCms.Api.Interfaces</Name>
+      <Name>BetterCms.DataContracts</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\BetterCms.Api\BetterCms.Api.csproj">
       <Project>{0BBF2CFF-860C-4A30-892F-623E0AA5BEE4}</Project>
