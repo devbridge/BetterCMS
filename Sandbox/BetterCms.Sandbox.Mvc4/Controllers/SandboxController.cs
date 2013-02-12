@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+
+using BetterCms.Api;
 
 namespace BetterCms.Sandbox.Mvc4.Controllers
 {
@@ -46,6 +49,19 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
             FormsAuthentication.SignOut();
 
             return Redirect("/");
+        }
+
+        public ActionResult TestApi()
+        {
+            var tags = CmsContext.Api.TagService.GetTags();
+            
+            var count = tags.Count;
+            var message = string.Format("Tags count: {0}", count);
+            if (count > 0)
+            {
+                message = string.Format("{0}<br /> Tag names: {1}", message, string.Join("; ", tags.Select(t => t.Name)));
+            }
+            return Content(message);
         }
     }
 }

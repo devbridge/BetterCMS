@@ -198,6 +198,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\BetterCms.Api\BetterCms.Api.csproj">
+      <Project>{0bbf2cff-860c-4a30-892f-623e0aa5bee4}</Project>
+      <Name>BetterCms.Api</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\BetterCMS.Configuration\BetterCms.Configuration.csproj">
       <Project>{da2b225e-6aee-4465-8b08-4d5b1c1ced49}</Project>
       <Name>BetterCms.Configuration</Name>

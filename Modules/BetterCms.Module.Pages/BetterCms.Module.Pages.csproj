@@ -119,6 +119,7 @@
     </Compile>
     <Compile Include="Accessors\PageStylesheetAccessor.cs" />
     <Compile Include="Accessors\PageJavaScriptAccessor.cs" />
+    <Compile Include="Services\DefaultTagApiService.cs" />
     <Compile Include="Command\Content\DeletePageContent\DeletePageContentCommand.cs" />
     <Compile Include="Command\Content\DeletePageContent\DeletePageContentCommandRequest.cs" />
     <Compile Include="Command\Content\GetPageHtmlContent\GetPageHtmlContentCommand.cs" />
@@ -231,6 +232,7 @@
     <Compile Include="Registration\RedirectsJavaScriptModuleDescriptor.cs" />
     <Compile Include="Services\DefaultTagService.cs" />
     <Compile Include="Services\DefaultWidgetsService.cs" />
+    <Compile Include="Services\IPageService.cs" />
     <Compile Include="Services\ITagService.cs" />
     <Compile Include="Services\IWidgetsService.cs" />
     <Compile Include="Services\DefaultCategoryService.cs" />
@@ -260,7 +262,6 @@
     <Compile Include="Registration\SeoJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\PagePropertiesJavaScriptModuleDescriptor.cs" />
     <Compile Include="Services\DefaultPageService.cs" />
-    <Compile Include="Services\IPageService.cs" />
     <Compile Include="ViewModels\Widgets\WidgetCategoryViewModel.cs" />
     <Compile Include="ViewModels\Widgets\WidgetViewModel.cs" />
     <Compile Include="ViewModels\Content\PageContentViewModel.cs" />
@@ -294,6 +295,10 @@
     <EmbeddedResource Include="Content\Css\Images\sprite-pages-2.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\BetterCms.Api\BetterCms.Api.csproj">
+      <Project>{0BBF2CFF-860C-4A30-892F-623E0AA5BEE4}</Project>
+      <Name>BetterCms.Api</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\BetterCMS.Configuration\BetterCms.Configuration.csproj">
       <Project>{DA2B225E-6AEE-4465-8B08-4D5B1C1CED49}</Project>
       <Name>BetterCms.Configuration</Name>

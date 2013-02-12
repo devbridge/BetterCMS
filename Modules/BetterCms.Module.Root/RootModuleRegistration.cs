@@ -2,6 +2,7 @@
 
 using Autofac;
 
+using BetterCms.Api;
 using BetterCms.Core.Models;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
@@ -90,6 +91,7 @@ namespace BetterCms.Module.Root
             containerBuilder.RegisterType<DefaultContentService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<PageStylesheetProjectionFactory>().AsSelf().InstancePerLifetimeScope();
             containerBuilder.RegisterType<PageJavaScriptProjectionFactory>().AsSelf().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<CmsContext>().AsSelf().InstancePerLifetimeScope();
         }
 
         /// <summary>
