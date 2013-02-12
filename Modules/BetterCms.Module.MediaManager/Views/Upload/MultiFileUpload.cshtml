@@ -9,7 +9,7 @@
            
 <div class="bcms-scroll-window">
     @Html.TabbedContentMessagesBox("bcms-multi-file-upload-messages")
-    <div class="bcms-file-manager-inner">
+    <div class="bcms-file-manager-inner" id="bcms-media-uploads">
 
         @using (Html.BeginForm<UploadController>(f => f.SaveUploads(null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
         {
@@ -31,11 +31,12 @@
                 <div class="bcms-dropzone-infotext">@MediaGlobalization.MultiFileUpload_DragDropBox</div>
                 <div class="bcms-btn-upload-files">
                     <label for="bcms-files-upload-input" onclick="if ($.browser.mozilla) { $('#' + $(this).attr('for')).click(); return false; }">@MediaGlobalization.MultiFileUpload_UploadButton</label>
-                    <input type="file" multiple="multiple" name="uploadFiles" id="bcms-files-upload-input" class="bcms-uploader" style="position: absolute; left: -999em; top: -999em;">
+                    <input type="file" multiple="multiple" name="uploadFiles" id="bcms-files-upload-input" class="bcms-uploader" style="position: absolute; left: -999em; top: -999em;"
+                        data-bind="attr: { accept : filesToAccept() }">
                 </div>
             </div>
         
-            <div id="bcms-media-uploads" class="bcms-upload-holder" data-bind="template: { name: 'bcms-file-upload-template' }">
+            <div class="bcms-upload-holder" data-bind="template: { name: 'bcms-file-upload-template' }">
             </div>
         }
         <script type="text/html" id="bcms-file-upload-template">

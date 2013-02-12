@@ -37,7 +37,7 @@
                 <div class="bcms-dropzone-infotext" data-bind="text: !(activeUploads().length > 0) ? '@MediaGlobalization.SingleFileUpload_DragDropBox' : '@MediaGlobalization.MultiFileUpload_Uploading'"></div>
                 <div data-bind="visible: !(activeUploads().length > 0)" class="bcms-btn-upload-files">
                     <label for="uploadFile" onclick="if ($.browser.mozilla) { $('#' + $(this).attr('for')).click(); return false; }">@MediaGlobalization.MultiFileUpload_UploadButton</label>
-                    <input type="file" name="uploadFile" id="uploadFile" class="bcms-uploader" style="position: absolute; left: -999em; top: -999em;"/>
+                    <input type="file" name="uploadFile" id="uploadFile" class="bcms-uploader" style="position: absolute; left: -999em; top: -999em;" />
                 </div>
             </div>
         }
