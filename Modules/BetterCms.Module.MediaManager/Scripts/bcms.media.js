@@ -202,7 +202,13 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         self.switchViewStyle = function () {
             var isGrid = !self.isGrid();
             localStorage.setItem(keys.folderViewMode, isGrid ? 1 : 0);
-            self.isGrid(isGrid);
+            
+            // Loop through all media view models
+            $.each([imagesViewModel, audiosViewModel, videosViewModel, filesViewModel], function(index, viewModel) {
+                if (viewModel && viewModel.isGrid) {
+                    viewModel.isGrid(isGrid);
+                }
+            });
         };
 
         self.isSortedAscending = function(column) {

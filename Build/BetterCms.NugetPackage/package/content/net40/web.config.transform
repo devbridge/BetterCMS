@@ -23,8 +23,5 @@
       </requestFiltering>
     </security>
     <caching enabled="false" enableKernelCache="false" />
-    <staticContent>
-      <mimeMap fileExtension=".mp4" mimeType="video/mp4" />
-    </staticContent>
   </system.webServer>
 </configuration>

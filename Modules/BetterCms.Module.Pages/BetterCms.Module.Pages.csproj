@@ -336,7 +336,9 @@
     <EmbeddedResource Include="Scripts\bcms.pages.widgets.js" />
     <Content Include="web.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\Partial\WarnMessageAboutDraft.cshtml" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Category\Categories.cshtml" />
   </ItemGroup>
