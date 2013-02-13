@@ -65,7 +65,8 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
                     .Select(() => alias.IsPublished).WithAlias(() => modelAlias.IsPublished)
                     .Select(hasSeoProjection).WithAlias(() => modelAlias.HasSEO)
                     .Select(() => alias.CreatedOn).WithAlias(() => modelAlias.CreatedOn)
-                    .Select(() => alias.ModifiedOn).WithAlias(() => modelAlias.ModifiedOn))
+                    .Select(() => alias.ModifiedOn).WithAlias(() => modelAlias.ModifiedOn)
+                    .Select(() => alias.PageUrl).WithAlias(() => modelAlias.Url))
                 .TransformUsing(Transformers.AliasToBean<SiteSettingPageViewModel>());
 
             var count = query.ToRowCountFutureValue();

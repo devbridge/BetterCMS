@@ -313,7 +313,7 @@
     <value>File Size</value>
   </data>
   <data name="MediaList_FileTypeColumn" xml:space="preserve">
-    <value>FileType</value>
+    <value>File Type</value>
   </data>
   <data name="MediaManager_AddNewFolder" xml:space="preserve">
     <value>Add New Folder</value>

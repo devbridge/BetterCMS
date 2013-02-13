@@ -199,7 +199,7 @@
     <value>Place your page link here.</value>
   </data>
   <data name="Sitemap_AddNewPageDialog_UndoMessage" xml:space="preserve">
-    <value>You can replace reacently added page.</value>
+    <value>You can replace recently added page.</value>
   </data>
   <data name="Sitemap_EditDialog_SomeNodesAreInEditingState" xml:space="preserve">
     <value>At least one node is in editing mode.</value>

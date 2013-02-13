@@ -16,12 +16,13 @@ define('bcms.datepicker', ['jquery', 'bcms'], function ($, bcms) {
     datepicker.init = function () {
         console.log('Initializing bcms.datepicker module');
 
-        $.fn.initializeDatepicker = function (options) {
+        $.fn.initializeDatepicker = function (tooltipTitle) {
             $(this).datepicker({
                 showOn: 'button',
                 buttonImage: links.calendarImageUrl,
                 buttonImageOnly: true
             });
+            $(this).datepicker("option", "buttonText", tooltipTitle);
         };
     };
 

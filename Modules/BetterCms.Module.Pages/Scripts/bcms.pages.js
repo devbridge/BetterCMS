@@ -421,6 +421,12 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             page.editSiteSettingsPage(editButton);
         });
 
+        container.find(selectors.siteSettingPageTitleCell).on('click', function (event) {
+            bcms.stopEventPropagation(event);
+            var url = $(this).data('url');
+            window.open(url);
+        });
+
         container.find(selectors.siteSettingsPageDeleteButton).on('click', function (event) {
             bcms.stopEventPropagation(event);
             page.deleteSiteSettingsPage($(this), container);

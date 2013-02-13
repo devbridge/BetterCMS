@@ -133,7 +133,7 @@ namespace BetterCms.Module.Navigation.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You can replace reacently added page..
+        ///   Looks up a localized string similar to You can replace recently added page..
         /// </summary>
         public static string Sitemap_AddNewPageDialog_UndoMessage {
             get {

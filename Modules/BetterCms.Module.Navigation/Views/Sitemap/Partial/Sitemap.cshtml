@@ -35,9 +35,9 @@
                 <a class="bcms-expand-collapse-node" data-bind="click: toggleExpand, css: { 'bcms-expanded-nodes': isExpanded() }">&nbsp;</a>
                 <!-- /ko -->
                 <div class="bcms-node-info" data-bind="droppable: 'middleZone'">
-                    <div class="bcms-placement-title" data-bind="text: title"></div>
+                    <a class="bcms-placement-title bcms-content-titles" data-bind="text: title, click: startEditSitemapNode"></a>
                     <!-- ko if: getSitemap().settings.canEditNode && !getSitemap().settings.canDragNode -->
-                    <div class="bcms-placement-path"><a data-bind="text: url, click: startEditSitemapNode"></a></div>
+                    <div class="bcms-placement-path"><a data-bind="text: url, attr:{href: url}" href="" target="_blank"></a></div>
                     <!-- /ko -->
                     <!-- ko ifnot: getSitemap().settings.canEditNode && !getSitemap().settings.canDragNode -->
                         <!-- ko if: getSitemap().settings.canEditNode -->

@@ -62,6 +62,14 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         public bool IsPublished { get; set; }
 
         /// <summary>
+        /// Gets or sets the page url.
+        /// </summary>
+        /// <value>
+        /// The page url.
+        /// </value>
+        public string PageUrl { get; set; }
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>
