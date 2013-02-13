@@ -155,16 +155,6 @@ namespace BetterCms.Module.Pages.Controllers
         {
             var viewModel = GetCommand<GetPageHtmlContentCommand>().ExecuteCommand(pageContentId.ToGuidOrDefault());
 
-            if (viewModel.CurrentStatus == ContentStatus.Draft)
-            {
-                var message = PagesGlobalization.EditPageContent_Messages_DraftStatusWarnMessage;
-                if (viewModel.HasPublishedContent)
-                {
-                    message = string.Concat(message, " ", PagesGlobalization.EditPageContent_Messages_DraftStatusWarnMessage_Destroy);
-                }
-                Messages.AddWarn(message);
-            }
-
             return View(viewModel);
         }
 

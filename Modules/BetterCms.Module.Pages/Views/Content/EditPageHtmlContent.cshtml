@@ -1,4 +1,5 @@
-﻿@using BetterCms.Module.Pages.Content.Resources
+﻿@using BetterCms.Core.Models
+@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
@@ -11,6 +12,7 @@
 
 <div class="bcms-scroll-window">
     @Html.TabbedContentMessagesBox()
+    @Html.Partial("Partial/WarnMessageAboutDraft", Model)
     <div class="bcms-padded-content">
         <div id="bcms-tab-1" class="bcms-tab-single">
             @using (Html.BeginForm<ContentController>(c => c.SavePageHtmlContent(null), FormMethod.Post, new { @id = "bcms-content-form", @class = "bcms-ajax-form" }))

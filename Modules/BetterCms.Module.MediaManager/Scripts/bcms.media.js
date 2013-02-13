@@ -20,7 +20,9 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             templateDataBind: '.bcms-data-bind-container',
             firstForm: 'form:first',
             spinContainer: '.bcms-rightcol:first',
-            insertContentContainer: '.bcms-insert-content-modal:first'
+            insertContentContainer: '.bcms-insert-content-modal:first',
+            searchBox: '#bcms-search-input',
+            fileListMessageBox: '#bcms-site-settings-media-messages-'
         },
         links = {
             loadSiteSettingsMediaManagerUrl: null,
@@ -169,13 +171,14 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
         self.uploadMedia = function () {
             mediaUpload.openUploadFilesDialog(self.path().currentFolder().id(), self.path().currentFolder().type, onUploadFiles);
+            messages.refreshBox($(selectors.fileListMessageBox + self.path().type), {});
         };
 
         self.searchMedia = function () {
             var params = createFolderParams(self.path().currentFolder().id(), self),
                 onComplete = function (json) {
                     parseJsonResults(json, self);
-                    document.getElementById("bcms-search-input").focus();
+                    selectors.searchBox.focus();
                 };
             loadTabData(self, params, onComplete);
         };
@@ -428,6 +431,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         MediaItemBaseViewModel.prototype.openMedia = function (folderViewModel, data, event) {
             bcms.stopEventPropagation(event);
             editOrSelectMedia(folderViewModel, this, data, event);
+            messages.refreshBox($(selectors.fileListMessageBox + this.type), {});
         };
 
         MediaItemBaseViewModel.prototype.saveMedia = function (folderViewModel, data, event) {
@@ -1067,6 +1071,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 parseJsonResults(json, folderViewModel);
             };
         loadTabData(folderViewModel, params, onComplete);
+        messages.refreshBox(folderViewModel.container, {});
     };
 
     /**
