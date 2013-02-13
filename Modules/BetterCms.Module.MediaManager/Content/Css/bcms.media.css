@@ -127,14 +127,17 @@
 
 .bcms-alignment-controls .bcms-align-left {
     background-position: 0 0;
+    cursor: pointer;
 }
 
 .bcms-alignment-controls .bcms-align-center {
     background-position: -104px 0;
+    cursor: pointer;
 }
 
 .bcms-alignment-controls .bcms-align-right {
     background-position: -208px 0;
+    cursor: pointer;
 }
 
 div.bcms-align-left-active {

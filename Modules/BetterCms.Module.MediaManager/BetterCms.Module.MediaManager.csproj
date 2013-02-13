@@ -230,11 +230,11 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Scripts\bcms.contextMenu.js" />
-    <EmbeddedResource Include="Scripts\bcms.media.imageeditor.js" />
-    <EmbeddedResource Include="Scripts\bcms.media.js" />
     <EmbeddedResource Include="Scripts\bcms.media.upload.js" />
     <EmbeddedResource Include="Scripts\html5Upload.js" />
     <EmbeddedResource Include="Scripts\jquery.Jcrop.js" />
+    <EmbeddedResource Include="Scripts\bcms.media.imageeditor.js" />
+    <EmbeddedResource Include="Scripts\bcms.media.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -265,10 +265,10 @@
     <EmbeddedResource Include="Views\Upload\SingleFileUpload.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Images\ImageEditor.cshtml" />
+    <EmbeddedResource Include="Views\Images\ImageEditorInsert.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Images\ImageEditorInsert.cshtml" />
+    <EmbeddedResource Include="Views\Images\ImageEditor.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
