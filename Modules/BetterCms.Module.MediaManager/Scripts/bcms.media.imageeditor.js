@@ -187,12 +187,12 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
         })(EditorBaseViewModel);
 
         /**
-        * Dimension editor view model
+        * Image editor view model
         */
-        var DimensionEditorViewModel = (function (_super) {
-            bcms.extendsClass(DimensionEditorViewModel, _super);
+        var ImageEditorViewModel = (function (_super) {
+            bcms.extendsClass(ImageEditorViewModel, _super);
 
-            function DimensionEditorViewModel(dialog, json) {
+            function ImageEditorViewModel(dialog, json) {
                 _super.call(this);
 
                 var self = this;
@@ -377,7 +377,7 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                 initialize();
             }
 
-            DimensionEditorViewModel.prototype.onSave = function (element) {
+            ImageEditorViewModel.prototype.onSave = function (element) {
                 // Call recalculation, if "keep aspect ratio" is checked
                 if (element.get(0) == this.widthInput.get(0)) {
                     this.changeHeight();
@@ -395,12 +395,12 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                 return false;
             };
 
-            DimensionEditorViewModel.prototype.onClose = function () {
+            ImageEditorViewModel.prototype.onClose = function () {
                 this.width(this.oldWidth());
                 this.height(this.oldHeight());
             };
             
-            return DimensionEditorViewModel;
+            return ImageEditorViewModel;
         })(EditorBaseViewModel);
 
         /**
@@ -423,7 +423,7 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
             // Create view models for editor boxes and for form
             var titleEditorViewModel = new TitleEditorViewModel(dialog, data.Title);
             
-            var imageEditorViewModel = new DimensionEditorViewModel(dialog, data);
+            var imageEditorViewModel = new ImageEditorViewModel(dialog, data);
             
             var viewModel = new ImageEditViewModel(titleEditorViewModel, imageEditorViewModel);
             ko.applyBindings(viewModel, dialog.container.find(selectors.imageEditorForm).get(0));
