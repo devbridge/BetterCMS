@@ -1,25 +1,23 @@
-﻿using System.IO;
-
-namespace BetterCms.Module.Pages.Helpers
+﻿namespace BetterCms.Module.Pages.Helpers
 {
+    /// <summary>
+    /// Helper class for http related tasks.
+    /// </summary>
     public static class HttpHelper
     {
         /// <summary>
-        /// Virtuals the path exists.
+        /// Virtual the path exists.
         /// </summary>
         /// <param name="virtualPath">The virtual path.</param>
-        /// <returns></returns>
+        /// <returns>Returns true if file exists or false otherwise.</returns>
         public static bool VirtualPathExists(string virtualPath)
         {
-            var exists = false;
-
             if (!string.IsNullOrWhiteSpace(virtualPath))
             {
-                var fileName = System.Web.HttpContext.Current.Server.MapPath(virtualPath);
-                exists = File.Exists(fileName);
+                return System.Web.Hosting.HostingEnvironment.VirtualPathProvider.FileExists(virtualPath);
             }
             
-            return exists;
+            return false;
         }
     }
 }
