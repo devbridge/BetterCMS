@@ -104,7 +104,9 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                 onLoad: function (dialog) {
                     var url = $.format(links.imageEditorInsertDialogUrl, image.id());
                     dynamicContent.setContentFromUrl(dialog, url, {
-                        contentAvailable: initInsertImageWithOptionsDialogEvents
+                        done: function () {
+                            initInsertImageWithOptionsDialogEvents(dialog);
+                        }
                     });
                 },
                 onAccept: function (dialog) {
@@ -300,6 +302,14 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                     self.cropCoordY2(self.originalHeight);
 
                     addCropper();
+                };
+
+                self.changeFit = function() {
+                    self.fit(!self.fit());
+                };
+                
+                self.changeAspectRatio = function () {
+                    self.keepAspectRatio(!self.keepAspectRatio());
                 };
 
                 function recalculate() {

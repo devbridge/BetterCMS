@@ -396,4 +396,7 @@
   <data name="VideosTab_UploadVideo" xml:space="preserve">
     <value>Upload Video</value>
   </data>
+  <data name="ImageEditor_Dialog_KeepAspectRatio" xml:space="preserve">
+    <value>Keep aspect ratio</value>
+  </data>
 </root>
