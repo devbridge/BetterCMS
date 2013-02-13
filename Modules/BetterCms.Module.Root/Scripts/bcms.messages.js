@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define */
 
-define('bcms.messages', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, modal) {
+define('bcms.messages', ['jquery'], function ($) {
     'use strict';
 
     var messages = {},
@@ -153,23 +153,6 @@ define('bcms.messages', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, mod
         }
 
         return messagesBox;
-    };
-
-    messages.showMessages = function (json) {
-        if (json.Messages) {
-            var content = "";
-
-            for (var i = 0; i < json.Messages.length; i++) {
-                if (content) {
-                    content += "<br />";
-                }
-                content += json.Messages[i];
-            }
-
-            modal.alert({
-                content: content
-            });
-        }
     };
 
     return messages;
