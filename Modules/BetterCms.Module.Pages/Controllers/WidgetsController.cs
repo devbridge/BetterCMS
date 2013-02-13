@@ -76,8 +76,6 @@ namespace BetterCms.Module.Pages.Controllers
         {
             var model = GetCommand<GetHtmlContentWidgetForEditCommand>().ExecuteCommand(id.ToGuidOrDefault());
 
-            AddWarnMessageAboutDraft(model.CurrentStatus, model.HasPublishedContent);
-
             return PartialView(model);
         }
 
@@ -132,8 +130,6 @@ namespace BetterCms.Module.Pages.Controllers
         public ActionResult EditServerControlWidget(string id)
         {
             var model = GetCommand<GetServerControlWidgetForEditCommand>().ExecuteCommand(id.ToGuidOrDefault());
-
-            AddWarnMessageAboutDraft(model.CurrentStatus, model.HasPublishedContent);
 
             return PartialView(model);
         }
@@ -206,19 +202,6 @@ namespace BetterCms.Module.Pages.Controllers
             */
 
             return View(model);
-        }
-
-        private void AddWarnMessageAboutDraft(ContentStatus status, bool hasPublishedContent)
-        {
-            if (status == ContentStatus.Draft)
-            {
-                var message = PagesGlobalization.EditPageContent_Messages_DraftStatusWarnMessage;
-                if (hasPublishedContent)
-                {
-                    message = string.Concat(message, " ", PagesGlobalization.EditPageContent_Messages_DraftStatusWarnMessage_Destroy);
-                }
-                Messages.AddWarn(message);
-            }
         }
     }
 }
