@@ -2977,6 +2977,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Redirect URL belongs page which you want to delete. Please update URL (path) and try again..
+        /// </summary>
+        public static string ValidatePageUrlCommand_SameUrlPath_Message {
+            get {
+                return ResourceManager.GetString("ValidatePageUrlCommand_SameUrlPath_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Page with entered URL already exists. Please update URL (path) and try again..
         /// </summary>
         public static string ValidatePageUrlCommand_UrlAlreadyExists_Message {

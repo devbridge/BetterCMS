@@ -1146,4 +1146,7 @@
   <data name="Date_Picker_Tooltip_Title" xml:space="preserve">
     <value>Calendar</value>
   </data>
+  <data name="ValidatePageUrlCommand_SameUrlPath_Message" xml:space="preserve">
+    <value>Redirect URL belongs page which you want to delete. Please update URL (path) and try again.</value>
+  </data>
 </root>
