@@ -9,33 +9,38 @@
         };
 
     spinner.showLoading = function (indicatorId) {
+        spinner.hideLoading(indicatorId);
         showLoading(this, indicatorId, true);
 
         return this;
     };
     
     spinner.hideLoading = function (indicatorId) {
-        if (!indicatorId) {
-            indicatorId = $(this).attr('id');
-        }
+        var id = createIndicatorId($(this), indicatorId);
 
-        var loadingDiv = $('#loading-indicator-' + indicatorId);
-        loadingDiv.remove();
-
-        loadingDiv = $('#loading-indicator-' + indicatorId + '-overlay');
+        var loadingDiv = $('#' + id);
         loadingDiv.remove();
 
         return this;
     };
 
-    function showLoading(target, indicatorId) {
-        target = $(target);
-        
+    function createIndicatorId(target, indicatorId) {
         if (!indicatorId) {
             indicatorId = target.attr('id') || '';
         }
 
-        var border_top_width = target.css('border-top-width'),
+        if (indicatorId) {
+            return "loading-indicator-" + indicatorId;
+        } else {
+            return "loading-indicator";
+        }
+    }
+
+    function showLoading(target, indicatorId) {
+        target = $(target);
+        
+        var id = createIndicatorId(target, indicatorId),
+            border_top_width = target.css('border-top-width'),
             border_left_width = target.css('border-left-width');
 
         border_top_width = isNaN(parseInt(border_top_width)) ? 0 : border_top_width;
@@ -69,8 +74,7 @@
         }
 
         // Create overlay div
-        var overlayDiv = $('<div style="display: none;"></div>');
-        $(overlayDiv).attr('id', 'loading-indicator-' + indicatorId);
+        var overlayDiv = $('<div id="' + id + '" style="display: none;"></div>');
         
         $(overlayDiv).css('width', overlay_width.toString() + 'px');
         $(overlayDiv).css('height', overlay_height.toString() + 'px');
