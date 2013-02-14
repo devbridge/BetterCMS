@@ -3,10 +3,13 @@
 (function ($) {
     'use strict';
 
-    var spinner = { };
+    var spinner = { },
+        selectors = {
+            scrollableParents: '.bcms-scroll-window'
+        };
 
     spinner.showLoading = function (indicatorId) {
-        var loadingDiv = $('<div class="bcms-loader"></div>');
+        var loadingDiv = $('<div class="bcms-loader" style="opacity: 0.1; background-color: green;"></div>');
         
         if (!indicatorId) {
             indicatorId = $(this).attr('id');
@@ -28,6 +31,20 @@
 
         var overlay_width = parseInt($(this).width()) + parseInt($(this).css('padding-right')) + parseInt($(this).css('padding-left'));
         var overlay_height = parseInt($(this).height()) + parseInt($(this).css('padding-top')) + parseInt($(this).css('padding-bottom'));
+
+        var scrollableParent = $(this).closest(selectors.scrollableParents);
+        if (scrollableParent.length > 0) {
+            var scrollableHeight = scrollableParent.height();
+            var scrollableWidth = scrollableParent.width();
+            
+            if (scrollableHeight && overlay_height > scrollableHeight) {
+                overlay_height = scrollableHeight;
+            }
+            
+            if (scrollableWidth && overlay_width > scrollableWidth) {
+                overlay_width = scrollableWidth;
+            }
+        }
 
         $(loadingDiv).css('display', 'none');
         $(this).append(loadingDiv);
