@@ -17,7 +17,8 @@ define('bcms.messages', ['jquery'], function ($) {
             success: '.bcms-success-messages:first',
             info: '.bcms-info-messages:first',
             warn: '.bcms-warning-messages:first',
-            error: '.bcms-error-messages:first'
+            error: '.bcms-error-messages:first',
+            scrollable: '.bcms-scroll-window',
         },
 
         links = {},
@@ -143,12 +144,16 @@ define('bcms.messages', ['jquery'], function ($) {
         messagesBox.clearMessages();
         
         if (json.Messages) {
-            for (var i = 0; i < json.Messages.length; i++) {
+            var i = 0;
+            for (i = 0; i < json.Messages.length; i++) {
                 if (json.Success) {
                     messagesBox.addSuccessMessage(json.Messages[i]);
                 } else {
                     messagesBox.addErrorMessage(json.Messages[i]);
                 }
+            }
+            if (i > 0) {
+                $(messagesBox.container).closest(selectors.scrollable).scrollTop(0);
             }
         }
 
