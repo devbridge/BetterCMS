@@ -1,6 +1,6 @@
 ﻿/*global define, console */
 
-define('bcms', ['jquery', 'knockout'], function ($, ko) {
+define('bcms', ['jquery'], function ($) {
     'use strict';
 
     var app = {},
@@ -236,69 +236,6 @@ define('bcms', ['jquery', 'knockout'], function ($, ko) {
 
         __.prototype = b.prototype;
         d.prototype = new __();
-    };
-
-    /**
-    * Extend knockout handlers: add Enter key press event handler
-    */
-    ko.bindingHandlers.enterPress = {
-        init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
-            var allBindings = allBindingsAccessor();
-           
-            app.preventInputFromSubmittingForm($(element), {
-                preventedEnter: function () {
-                    allBindings.enterPress.call(viewModel, element);
-                }
-            });
-        }
-    };
-    
-    /**
-    * Extend knockout handlers: add Esc key press event handler
-    */
-    ko.bindingHandlers.escPress = {
-        init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
-            var allBindings = allBindingsAccessor();
-            
-            app.preventInputFromSubmittingForm($(element), {
-                preventedEsc: function () {
-                    allBindings.escPress.call(viewModel, element);
-                }
-            });
-        }
-    };
-
-    /**
-    * Extend knockout handlers: stop binding to child elements
-    */
-    ko.bindingHandlers.stopBindings = {
-        init: function () {
-            return { controlsDescendantBindings: true };
-        }
-    };
-
-    /**
-    * Extend knockout: add required value validation
-    */
-    ko.extenders.required = function (target, overrideMessage) {
-        // add some sub-observables to our observable
-        target.hasError = ko.observable();
-        target.validationMessage = ko.observable();
-
-        // define a function to do validation
-        function validate(newValue) {
-            target.hasError(newValue ? false : true);
-            target.validationMessage(newValue ? "" : overrideMessage || "This field is required");
-        }
-
-        // initial validation
-        validate(target());
-
-        // validate whenever the value changes
-        target.subscribe(validate);
-
-        // return the original observable
-        return target;
     };
 
     /**

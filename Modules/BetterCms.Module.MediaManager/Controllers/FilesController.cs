@@ -2,6 +2,7 @@
 
 using BetterCms.Module.MediaManager.Command.Files.GetFiles;
 using BetterCms.Module.MediaManager.Command.MediaManager.DeleteMedia;
+using BetterCms.Module.MediaManager.Command.MediaManager.DownloadMedia;
 using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 
@@ -76,6 +77,22 @@ namespace BetterCms.Module.MediaManager.Controllers
             var view = RenderView("FileInsert", new MediaImageViewModel());
 
             return ComboWireJson(success, view, files, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Downloads the specified id.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns>File to download.</returns>
+        public FileResult Download(string id)
+        {
+            var model = GetCommand<DownloadFileCommand>().Execute(id.ToGuidOrDefault());
+            if (model != null)
+            {
+                return File(model.FileName, model.ContentMimeType, model.FileDownloadName);
+            }
+
+            return null;
         }
     }
 }

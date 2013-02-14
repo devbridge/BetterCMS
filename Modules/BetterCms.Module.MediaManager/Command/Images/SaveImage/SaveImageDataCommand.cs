@@ -109,7 +109,11 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
                     var cropX2 = image.Width - (int)Math.Floor(x2.Value * xRatio);
                     var cropY2 = image.Height - (int)Math.Floor(y2.Value * yRatio);
 
-                    image = image.Crop(cropY1, cropX1, cropY2, cropX2);
+                    // Fix for small resized images
+                    if (cropX2 - cropX1 < image.Width && cropY2 - cropY1 < image.Height)
+                    {
+                        image = image.Crop(cropY1, cropX1, cropY2, cropX2);
+                    }
                 }
 
                 // Upload image to storage

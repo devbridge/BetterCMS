@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.modal', 'html5Upload', 'knockout', 'bcms.messages'],
+define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.modal', 'html5Upload', 'bcms.ko.extenders', 'bcms.messages'],
     function ($, bcms, dynamicContent, modal, html5Upload, ko, messages) {
     'use strict';
 

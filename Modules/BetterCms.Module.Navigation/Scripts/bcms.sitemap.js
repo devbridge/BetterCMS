@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.messages', 'knockout'],
+define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.messages', 'bcms.ko.extenders'],
     function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, ko) {
         'use strict';
 
@@ -466,11 +466,12 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             self.sitemap = sitemapViewModel;
 
             self.searchForNodes = function() {
-                if (self.sitemap) {
+                if (self.sitemap && self.sitemap.hasChildNodes()) {
                     var showAll = $.trim(self.searchQuery()).length === 0,
                         searchQuery = self.searchQuery().toLowerCase();
 
-                    self.searchInNodes(self.sitemap.childNodes(), searchQuery, showAll);
+                    var hasResult = self.searchInNodes(self.sitemap.childNodes(), searchQuery, showAll);
+                    self.sitemap.showHasNoDataMessage(!(hasResult || showAll));
                 }
                 document.getElementById(selectors.sitemapSearchInput).focus();
             };
@@ -515,6 +516,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             self.childNodes.subscribe(updateFirstLastNode);
             self.someNodeIsOver = ko.observable(false);     // Someone is dragging some node over the sitemap, but not over the particular node.
             self.activeZone = ko.observable(DropZoneTypes.None);
+            self.showHasNoDataMessage = ko.observable(false);
 
             self.settings = {
                 canEditNode: false,
@@ -730,8 +732,10 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 }
             };
             self.saveSitemapNodeWithValidation = function () {
-                if ($('input', '#' + self.containerId).valid()) {
+                var inputFields = $('input', '#' + self.containerId);
+                if (inputFields.valid()) {
                     self.saveSitemapNode();
+                    inputFields.blur();
                     self.isActive(false);
                 }
             };

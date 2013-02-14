@@ -1,5 +1,23 @@
-﻿@{
-    ViewBag.Title = "WarnMessageAboutDraft";
-}
+﻿@using BetterCms.Core.Models
+@using BetterCms.Module.Pages.Content.Resources
 
-<h2>WarnMessageAboutDraft</h2>
+@if (Model.CurrentStatus == ContentStatus.Draft)
+{
+    <div class="bcms-messages-type-1">
+        <ul class="bcms-success-messages" style="display: none">
+        </ul>
+        <ul class="bcms-info-messages" style="display: none">
+        </ul>
+        <ul class="bcms-warning-messages">
+            <li>
+                @PagesGlobalization.EditPageContent_Messages_DraftStatusWarnMessage
+                @if (Model.HasPublishedContent)
+                {
+                    @Html.Raw(PagesGlobalization.EditPageContent_Messages_DraftStatusWarnMessage_Destroy)
+                }
+            </li>
+        </ul>
+        <ul class="bcms-error-messages" style="display: none">
+        </ul>
+    </div>
+}

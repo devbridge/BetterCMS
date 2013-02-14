@@ -11,6 +11,8 @@ namespace BetterCms.Module.MediaManager.ViewModels.Images
     /// </summary>
     public class ImageViewModel
     {
+        private const string dimensionRegularExpression = "^[1-9][0-9]{0,3}$";
+
         /// <summary>
         /// Gets or sets the id.
         /// </summary>
@@ -93,7 +95,7 @@ namespace BetterCms.Module.MediaManager.ViewModels.Images
         /// The width of the image.
         /// </value>
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(MediaGlobalization), ErrorMessageResourceName = "ImageEditor_Dialog_ImageWidth_RequiredMessage")]
-        [Range(0, 10000, ErrorMessageResourceType = typeof(MediaGlobalization), ErrorMessageResourceName = "ImageEditor_Dialog_ImageWidth_RangeMessage")]
+        [RegularExpression(dimensionRegularExpression, ErrorMessageResourceType = typeof(MediaGlobalization), ErrorMessageResourceName = "ImageEditor_Dialog_ImageWidth_RangeMessage")]
         public int ImageWidth { get; set; }
 
         /// <summary>
@@ -103,7 +105,7 @@ namespace BetterCms.Module.MediaManager.ViewModels.Images
         /// The height of the image.
         /// </value>
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(MediaGlobalization), ErrorMessageResourceName = "ImageEditor_Dialog_ImageHeight_RequiredMessage")]
-        [Range(0, 10000, ErrorMessageResourceType = typeof(MediaGlobalization), ErrorMessageResourceName = "ImageEditor_Dialog_ImageHeight_RangeMessage")]
+        [RegularExpression(dimensionRegularExpression, ErrorMessageResourceType = typeof(MediaGlobalization), ErrorMessageResourceName = "ImageEditor_Dialog_ImageHeight_RangeMessage")]
         public int ImageHeight { get; set; }
 
         /// <summary>
