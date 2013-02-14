@@ -9,6 +9,12 @@
     <div class="bcms-expand-link" data-bind="click: collapseAll">Collapse All</div>
 </div>
 
+<!-- ko if: hasChildNodes() && showHasNoDataMessage() -->
+<div class="bcms-nodes-dropzone bcms-nodes-dropzone-active">
+    <div class="bcms-node-infotext">@RootGlobalization.Grid_NoDataAvailable_Message</div>
+</div>
+<!-- /ko -->
+
 <div data-bind='template: { name: "bcms-navigation-sitemapnode-template" }'></div>
 <!-- /ko -->
 
@@ -18,7 +24,7 @@
         <div class="bcms-node-infotext">@NavigationGlobalization.Sitemap_NodeEdit_PlaceLinkHere</div>
     </div>
     <!-- /ko -->
-
+    
     <!-- ko foreach: childNodes -->
     <!-- ko if: isVisible() && !isDeleted() -->
     <div class="bcms-tree-holder">
