@@ -730,8 +730,10 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 }
             };
             self.saveSitemapNodeWithValidation = function () {
-                if ($('input', '#' + self.containerId).valid()) {
+                var inputFields = $('input', '#' + self.containerId);
+                if (inputFields.valid()) {
                     self.saveSitemapNode();
+                    inputFields.blur();
                     self.isActive(false);
                 }
             };
