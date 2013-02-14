@@ -178,7 +178,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             var params = createFolderParams(self.path().currentFolder().id(), self),
                 onComplete = function (json) {
                     parseJsonResults(json, self);
-                    selectors.searchBox.focus();
+                    $(selectors.searchBox).focus();                    
                 };
             loadTabData(self, params, onComplete);
         };
