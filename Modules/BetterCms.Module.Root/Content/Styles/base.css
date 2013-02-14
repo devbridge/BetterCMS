@@ -24,10 +24,17 @@ body {
     position: absolute;
     left: 50%;
     top: 50%;
-    margin: -35px 0 0 -35px;
     width: 70px;
     height: 70px;
+    margin: -35px 0 0 -35px;
     background: url('images/loading.gif') no-repeat center center;
+}
+
+.bcms-loader-2 {
+    position: fixed;
+    width: 70px;
+    height: 70px;
+    background: url('images/loading.gif') no-repeat scroll center center transparent;
 }
 
 /*browser compatibility support*/
