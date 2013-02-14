@@ -74,7 +74,7 @@
         }
 
         // Create overlay div
-        var overlayDiv = $('<div id="' + id + '" style="display: none; opacity: 0.1; background-color: green;"></div>');
+        var overlayDiv = $('<div id="' + id + '" style="display: none;"></div>');
         
         $(overlayDiv).css('width', overlay_width.toString() + 'px');
         $(overlayDiv).css('height', overlay_height.toString() + 'px');
