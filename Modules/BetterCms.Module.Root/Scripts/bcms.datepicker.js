@@ -12,7 +12,7 @@ define('bcms.datepicker', ['jquery', 'bcms'], function ($, bcms) {
     // Assign objects to module.
     datepicker.links = links;
     datepicker.globalization = globalization;
-    
+
     datepicker.init = function () {
         console.log('Initializing bcms.datepicker module');
 
@@ -22,6 +22,9 @@ define('bcms.datepicker', ['jquery', 'bcms'], function ($, bcms) {
                 buttonImage: links.calendarImageUrl,
                 buttonImageOnly: true
             });
+            if (tooltipTitle == null) {
+                tooltipTitle = "";
+            }
             $(this).datepicker("option", "buttonText", tooltipTitle);
         };
     };
