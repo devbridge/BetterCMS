@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.modal'],
+define('bcms.ko.grid', ['jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messages', 'bcms.modal'],
     function ($, bcms, ko, messages, modal) {
     'use strict';
 
