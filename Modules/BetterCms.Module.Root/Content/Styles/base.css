@@ -34,6 +34,7 @@ body {
     position: fixed;
     width: 70px;
     height: 70px;
+    margin: -35px 0 0 -35px;
     background: url('images/loading.gif') no-repeat scroll center center transparent;
 }
 
