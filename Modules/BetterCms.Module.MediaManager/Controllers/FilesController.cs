@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Web;
+using System.Web.Mvc;
 
 using BetterCms.Module.MediaManager.Command.Files.GetFiles;
 using BetterCms.Module.MediaManager.Command.MediaManager.DeleteMedia;
@@ -16,6 +17,8 @@ namespace BetterCms.Module.MediaManager.Controllers
     /// </summary>
     public class FilesController : CmsControllerBase
     {
+        public ICmsConfiguration CmsConfiguration { get; set; }
+
         /// <summary>
         /// Gets the files list.
         /// </summary>
@@ -84,7 +87,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// </summary>
         /// <param name="id">The id.</param>
         /// <returns>File to download.</returns>
-        public FileResult Download(string id)
+        public ActionResult Download(string id)
         {
             var model = GetCommand<DownloadFileCommand>().Execute(id.ToGuidOrDefault());
             if (model != null)
@@ -92,7 +95,12 @@ namespace BetterCms.Module.MediaManager.Controllers
                 return File(model.FileName, model.ContentMimeType, model.FileDownloadName);
             }
 
-            return null;
+            if (!string.IsNullOrWhiteSpace(CmsConfiguration.PageNotFoundUrl))
+            {
+                return Redirect(HttpUtility.UrlDecode(CmsConfiguration.PageNotFoundUrl));
+            }
+
+            return new HttpStatusCodeResult(404);
         }
     }
 }
