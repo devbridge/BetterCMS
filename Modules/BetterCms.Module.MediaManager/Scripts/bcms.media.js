@@ -354,7 +354,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             };
 
             self.downloadMedia = function () {
-                window.open($.format(links.downloadFileUrl, self.id()), '_newtab');
+                if (self.publicUrl()) {
+                    window.open(self.publicUrl(), '_newtab');
+                }
+                // TODO: not working on Cloud: window.open($.format(links.downloadFileUrl, self.id()), '_newtab');
             };
 
             self.rowClassNames = ko.computed(function () {
@@ -365,14 +368,18 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                         classes += ' bcms-folder-box-active';
                     }
                 }
-                if (self.isFile()) {
+                if (self.isFile() && !self.isImage()) {
                     classes += ' bcms-file-box';
                 }
                 if (self.isImage()) {
                     classes += ' bcms-image-box';
                 }
                 if (self.isFile() && self.isActive()) {
-                    classes += ' bcms-file-box-active';
+                    if (!self.isImage()) {
+                        classes += ' bcms-file-box-active';
+                    } else {
+                        classes += ' bcms-image-box-active';
+                    }
                 }
                 if (self.isSelected()) {
                     classes += ' bcms-media-click-active';
@@ -689,23 +696,25 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     */
     function saveMedia(folderViewModel, item) {
         var idSelector = '#' + item.nameDomId,
-            input = folderViewModel.container.find(idSelector);
+            input = folderViewModel.container.find(idSelector),
+            loaderContainer = $(input.closest(siteSettings.selectors.loaderContainer).get(0) || input.closest(modal.selectors.scrollWindow).get(0));
 
-        if (item.oldName != item.name() && item.isActive() && input != null) {
+        if (item.oldName != item.name() && item.isActive()) {
             if (input.valid()) {
-                var onSaveCompleted = function(json) {
-                    messages.refreshBox(folderViewModel.container, json);
-                    if (json.Success) {
-                        if (json.Data) {
+                var params = item.toJson(),
+                    onSaveCompleted = function (json) {
+                        loaderContainer.hideLoading();
+                        messages.refreshBox(folderViewModel.container, json);
+                        if (json.Success && json.Data) {
                             item.version(json.Data.Version);
                             item.id(json.Data.Id);
                             item.oldName = item.name();
+                        } else {
+                            item.isActive(true);
                         }
-                        item.isActive(false);
-                    }
-                },
-                    params = item.toJson();
-
+                    };
+                loaderContainer.showLoading();
+                item.isActive(false);
                 $.ajax({
                     url: item.updateUrl,
                     type: 'POST',
@@ -960,7 +969,8 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     * Called when file is selected from files list.
     */
     function insertFile(selectedMedia) {
-        addFileToEditor($.format(links.downloadFileUrl, selectedMedia.id()), selectedMedia.name());
+        addFileToEditor(selectedMedia.publicUrl(), selectedMedia.name());
+        // TODO: not working on Cloud: addFileToEditor($.format(links.downloadFileUrl, selectedMedia.id()), selectedMedia.name());
 
         if (fileInsertDialog != null) {
             fileInsertDialog.close();
@@ -1027,10 +1037,9 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     };
 
     /**
-    * Attach links to actions.
+    * Replace form's unobtrusive validation.
     */
-    function attachEvents(tabContainer) {
-        var form = tabContainer.find(selectors.firstForm);
+    function addUnobtrusiveValidator(form) {
         if ($.validator && $.validator.unobtrusive) {
             form.removeData("validator");
             form.removeData("unobtrusiveValidation");
@@ -1189,7 +1198,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         if (parseJsonResults(json, folderViewModel)) {
             ko.applyBindings(folderViewModel, context);
 
-            attachEvents(folderViewModel.container);
+            addUnobtrusiveValidator(folderViewModel.container.find(selectors.firstForm));
         }
     }
 

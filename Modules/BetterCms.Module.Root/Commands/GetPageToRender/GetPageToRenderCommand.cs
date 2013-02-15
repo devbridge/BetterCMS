@@ -213,7 +213,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                 pageContentsQuery = pageContentsQuery.Where(f => f.Content.Status == ContentStatus.Published);
             }
 
-            pageContentsQuery = pageContentsQuery.Where(f => !f.IsDeleted && !f.Content.IsDeleted);
+            pageContentsQuery = pageContentsQuery.Where(f => !f.IsDeleted && !f.Content.IsDeleted && !f.Page.IsDeleted);
 
             return pageContentsQuery.ToFuture();
         }

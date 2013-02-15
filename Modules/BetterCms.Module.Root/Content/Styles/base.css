@@ -34,6 +34,7 @@ body {
     position: fixed;
     width: 70px;
     height: 70px;
+    margin: -35px 0 0 -35px;
     background: url('images/loading.gif') no-repeat scroll center center transparent;
 }
 
@@ -295,14 +296,14 @@ div.bcms-btn-gray {
 
 /*edit icon*/
 a.bcms-icn-edit {
+    position: relative;
     display: inline-block;
     width: 15px;
     height: 20px;
     vertical-align: middle;
     background: url('images/sprite-base-1.png') no-repeat center -835px;
     cursor: pointer;
-    overflow: hidden;
-    text-indent: 9999px;
+    text-indent: -9999px;
 }
 
     a.bcms-icn-edit:hover {
@@ -312,6 +313,15 @@ a.bcms-icn-edit {
     a.bcms-icn-edit:active {
         background-position: center -903px;
     }
+
+a.bcms-edit-draft:after {
+    content: "*";
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    color: #20cd00;
+    text-indent: 0;
+}
 
 /*preview icon*/
 a.bcms-icn-preview {

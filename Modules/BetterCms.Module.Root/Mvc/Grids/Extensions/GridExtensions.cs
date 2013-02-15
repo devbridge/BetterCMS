@@ -64,7 +64,7 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
                 .Named("&nbsp;")
                 .Sortable(false)
                 .Encode(false)
-                .HeaderAttributes(@class => "bcms-tables-nohover");
+                .HeaderAttributes(@style => "width: 80px;", @class => "bcms-tables-nohover");
         }
 
         public static IGridColumn<T> DeleteButtonColumn<T>(this ColumnBuilder<T> builder, bool renderId = true) where T : class
