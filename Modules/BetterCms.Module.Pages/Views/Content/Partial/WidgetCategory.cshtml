@@ -1,4 +1,5 @@
-﻿@using BetterCms.Module.Pages.Content.Resources
+﻿@using BetterCms.Core.Models
+@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.Models
 @using BetterCms.Module.Root.Mvc.Helpers
@@ -30,7 +31,20 @@
                          data-type="@widget.WidgetType"
                          data-category-id="@(widget.CategoryId ?? Guid.Empty)">
                         <div class="bcms-title-holder">
-                            <div class="bcms-content-titles">@widget.Name</div>
+                            <div class="bcms-content-titles bcms-draft-published-state">@widget.Name</div>
+                            @if (widget.Status == ContentStatus.Published.ToString())
+                            {
+                                //TODO: add correct css class
+                            }
+                            else if (widget.Status == ContentStatus.Draft.ToString())
+                            {
+                                //TODO: add correct css class
+                            }
+                            else
+                            {
+                                //TODO: add correct css class
+                            }
+                            
                         </div>
                         @if (!string.IsNullOrWhiteSpace(widget.PreviewImageUrl))
                         {

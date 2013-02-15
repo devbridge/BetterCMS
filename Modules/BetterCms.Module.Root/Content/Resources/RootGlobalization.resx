@@ -285,4 +285,13 @@
   <data name="WaterMark_Search" xml:space="preserve">
     <value>Search...</value>
   </data>
+  <data name="WidgetStatus_Draft" xml:space="preserve">
+    <value>Draft</value>
+  </data>
+  <data name="WidgetStatus_Published" xml:space="preserve">
+    <value>Published</value>
+  </data>
+  <data name="WidgetStatus_PublishedWithDraft" xml:space="preserve">
+    <value>Published (With Draft)</value>
+  </data>
 </root>

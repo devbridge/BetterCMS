@@ -365,7 +365,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                         classes += ' bcms-folder-box-active';
                     }
                 }
-                if (self.isFile()) {
+                if (self.isFile() && !self.isImage()) {
                     classes += ' bcms-file-box';
                 }
                 if (self.isImage()) {
@@ -1027,10 +1027,9 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     };
 
     /**
-    * Attach links to actions.
+    * Replace form's unobtrusive validation.
     */
-    function attachEvents(tabContainer) {
-        var form = tabContainer.find(selectors.firstForm);
+    function addUnobtrusiveValidator(form) {
         if ($.validator && $.validator.unobtrusive) {
             form.removeData("validator");
             form.removeData("unobtrusiveValidation");
@@ -1189,7 +1188,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         if (parseJsonResults(json, folderViewModel)) {
             ko.applyBindings(folderViewModel, context);
 
-            attachEvents(folderViewModel.container);
+            addUnobtrusiveValidator(folderViewModel.container.find(selectors.firstForm));
         }
     }
 
