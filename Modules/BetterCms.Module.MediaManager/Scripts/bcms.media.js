@@ -372,7 +372,11 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                     classes += ' bcms-image-box';
                 }
                 if (self.isFile() && self.isActive()) {
-                    classes += ' bcms-file-box-active';
+                    if (!self.isImage()) {
+                        classes += ' bcms-file-box-active';
+                    } else {
+                        classes += ' bcms-image-box-active';
+                    }
                 }
                 if (self.isSelected()) {
                     classes += ' bcms-media-click-active';

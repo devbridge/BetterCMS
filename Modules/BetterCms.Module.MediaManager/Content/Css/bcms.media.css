@@ -81,7 +81,9 @@
 
 .bcms-editing-text {
     display: inline-block;
+    vertical-align: bottom;
     max-width: 290px;
+    padding-left: 5px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -595,8 +597,8 @@ input.bcms-grid-input:focus {
 }
 
     .bcms-grid .bcms-image-box .bcms-media-file-holder {
-        width: 103px;
-        height: 94px;
+        width: 105px;
+        height: 96px;
         background: url('images/bcms-no-image-3.png') no-repeat center center;
         background-size: cover;
         overflow: hidden;
@@ -604,8 +606,7 @@ input.bcms-grid-input:focus {
 
         .bcms-grid .bcms-image-box .bcms-media-file-holder img {
             display: block;
-            width: 103px;
-            height: 94px;
+            width: 100%;
         }
 
     .bcms-grid .bcms-image-box:hover > .bcms-media-edit-controls {
@@ -662,7 +663,7 @@ input.bcms-grid-input:focus {
         top: 0;
         left: 0;
         width: 105px;
-        height: 100px;
+        height: 96px;
         overflow: hidden;
     }
 
@@ -675,7 +676,7 @@ input.bcms-grid-input:focus {
         position: absolute;
         bottom: 5px;
         left: 4px;
-        width: 95px;
+        width: 94px;
         margin: 0;
         border: 1px solid #c6c6c6;
         box-sizing: border-box;
@@ -700,7 +701,7 @@ input.bcms-grid-input:focus {
     }
 
     .bcms-grid .bcms-image-box-active div.bcms-media-edit-controls {
-        display: block;
+        display: none;
     }
 
     .bcms-grid .bcms-image-box-active .bcms-icn-delete {
@@ -746,7 +747,7 @@ input.bcms-grid-input:focus {
 
     .bcms-list .bcms-image-box .bcms-media-name {
         display: inline-block;
-        max-width: 670px;
+        max-width: 420px;
         padding-left: 20px;
         vertical-align: middle;
         font-size: 14px;
@@ -1207,7 +1208,7 @@ input.bcms-grid-input:focus {
 
     .bcms-list .bcms-file-box .bcms-media-name {
         display: inline-block;
-        max-width: 390px;
+        max-width: 420px;
         padding-left: 20px;
         vertical-align: middle;
         font-size: 14px;
