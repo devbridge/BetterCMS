@@ -27,7 +27,7 @@
             .SortColumnName("CategoryName")
             .Attributes(@class => "bcms-category-name");
 
-        column.For(f => f.Status)
+        column.For(f => Html.EditorFor(e => f.Status, "WidgetStatus"))
             .Named(PagesGlobalization.SiteSettings_Widgets_StatusColumn)
             .SortColumnName("Status")
             .Attributes(@class => "bcms-widget-status");
