@@ -445,11 +445,11 @@ hr.bcms-settings-separator {
 }
 
 .bcms-draft-state {
-    color: #e64343;
+    color: #20cd00;
 }
 
 .bcms-archived-state {
-    color: #20cd00;
+    color: #e64343;
 }
 
 /*Analytics page*/
