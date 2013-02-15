@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'jquery.Jcrop', 'knockout'],
+define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'jquery.Jcrop', 'bcms.ko.extenders'],
     function($, bcms, modal, siteSettings, forms, dynamicContent, jcrop, ko) {
         'use strict';
 
@@ -104,7 +104,9 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                 onLoad: function (dialog) {
                     var url = $.format(links.imageEditorInsertDialogUrl, image.id());
                     dynamicContent.setContentFromUrl(dialog, url, {
-                        contentAvailable: initInsertImageWithOptionsDialogEvents
+                        done: function () {
+                            initInsertImageWithOptionsDialogEvents(dialog);
+                        }
                     });
                 },
                 onAccept: function (dialog) {
@@ -136,8 +138,8 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                     self.isOpened(false);
                 };
 
-                self.save = function () {
-                    if (self.onSave()) {
+                self.save = function (element) {
+                    if (self.onSave($(element))) {
                         self.isOpened(false);
                     }
                 };
@@ -185,12 +187,12 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
         })(EditorBaseViewModel);
 
         /**
-        * Dimension editor view model
+        * Image editor view model
         */
-        var DimensionEditorViewModel = (function (_super) {
-            bcms.extendsClass(DimensionEditorViewModel, _super);
+        var ImageEditorViewModel = (function (_super) {
+            bcms.extendsClass(ImageEditorViewModel, _super);
 
-            function DimensionEditorViewModel(dialog, json) {
+            function ImageEditorViewModel(dialog, json) {
                 _super.call(this);
 
                 var self = this;
@@ -302,6 +304,14 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                     addCropper();
                 };
 
+                self.changeFit = function() {
+                    self.fit(!self.fit());
+                };
+                
+                self.changeAspectRatio = function () {
+                    self.keepAspectRatio(!self.keepAspectRatio());
+                };
+
                 function recalculate() {
                     var calcWidth = self.oldWidth(),
                         calcHeight = self.oldHeight(),
@@ -367,7 +377,14 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                 initialize();
             }
 
-            DimensionEditorViewModel.prototype.onSave = function () {
+            ImageEditorViewModel.prototype.onSave = function (element) {
+                // Call recalculation, if "keep aspect ratio" is checked
+                if (element.get(0) == this.widthInput.get(0)) {
+                    this.changeHeight();
+                } else if (element.get(0) == this.heightInput.get(0)) {
+                    this.changeWidth();
+                }
+                
                 if (this.widthInput.valid() && this.heightInput.valid()) {
                     this.oldWidth(this.width());
                     this.oldHeight(this.height());
@@ -378,12 +395,12 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                 return false;
             };
 
-            DimensionEditorViewModel.prototype.onClose = function () {
+            ImageEditorViewModel.prototype.onClose = function () {
                 this.width(this.oldWidth());
                 this.height(this.oldHeight());
             };
             
-            return DimensionEditorViewModel;
+            return ImageEditorViewModel;
         })(EditorBaseViewModel);
 
         /**
@@ -406,7 +423,7 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
             // Create view models for editor boxes and for form
             var titleEditorViewModel = new TitleEditorViewModel(dialog, data.Title);
             
-            var imageEditorViewModel = new DimensionEditorViewModel(dialog, data);
+            var imageEditorViewModel = new ImageEditorViewModel(dialog, data);
             
             var viewModel = new ImageEditViewModel(titleEditorViewModel, imageEditorViewModel);
             ko.applyBindings(viewModel, dialog.container.find(selectors.imageEditorForm).get(0));

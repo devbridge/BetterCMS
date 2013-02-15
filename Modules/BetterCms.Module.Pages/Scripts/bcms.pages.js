@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.pages.properties', 'bcms.messages', 'bcms.grid', 'bcms.redirect'],
-    function ($, bcms, modal, siteSettings, forms, dynamicContent, pageProperties, messages, grid, redirect) {
+define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.pages.properties', 'bcms.grid', 'bcms.redirect'],
+    function ($, bcms, modal, siteSettings, forms, dynamicContent, pageProperties, grid, redirect) {
     'use strict';
 
         var page = { },            
@@ -224,7 +224,7 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
         var isPublished = sender.val() == "publish",
             data = {PageId: bcms.pageId, IsPublished: isPublished},
             onComplete = function (json) {
-                messages.showMessages(json);
+                modal.showMessages(json);
                 if (json.Success) {
                     setTimeout(function() {
                         bcms.reload();
@@ -421,6 +421,12 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             page.editSiteSettingsPage(editButton);
         });
 
+        container.find(selectors.siteSettingPageTitleCell).on('click', function (event) {
+            bcms.stopEventPropagation(event);
+            var url = $(this).data('url');
+            window.open(url);
+        });
+
         container.find(selectors.siteSettingsPageDeleteButton).on('click', function (event) {
             bcms.stopEventPropagation(event);
             page.deleteSiteSettingsPage($(this), container);
@@ -554,7 +560,7 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                                 }
                             }
                         } else {
-                            messages.showMessages(json);
+                            modal.showMessages(json);
                         }
                     }
                 });
@@ -583,7 +589,7 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
         $.validator.addMethod("jqenddatevalidation", function (value, element, params) {
             var startDateString = $('#' + params.startdateproperty).val();
             if (value != null && value != "" && startDateString != null && startDateString != "") {
-                return new Date(startDateString) < new Date(value);
+                return new Date(startDateString) <= new Date(value);
             }
             return true;
         }, function (params) {

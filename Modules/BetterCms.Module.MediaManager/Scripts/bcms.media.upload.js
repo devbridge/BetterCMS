@@ -1,38 +1,38 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.modal', 'html5Upload', 'knockout', 'bcms.messages'],
+define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.modal', 'html5Upload', 'bcms.ko.extenders', 'bcms.messages'],
     function ($, bcms, dynamicContent, modal, html5Upload, ko, messages) {
     'use strict';
 
     var mediaUpload = {},
 
-    selectors = {
-        dragZone: '#bcms-files-dropzone',
-        messageBox: "#bcms-multi-file-upload-messages",
-        fileUploadingContext: '#bcms-media-uploads',
-        fileUploadingMasterForm: '#SaveForm',
-        fileUploadingForm: '#ImgForm',
-        fileUploadingTarget: '#UploadTarget',
-        fileUploadingInput: '#uploadFile',
-        fileUploadingResult: '#jsonResult',
-        folderDropDown: '#SelectedFolderId'
-    },
+        selectors = {
+            dragZone: '#bcms-files-dropzone',
+            messageBox: "#bcms-multi-file-upload-messages",
+            fileUploadingContext: '#bcms-media-uploads',
+            fileUploadingMasterForm: '#SaveForm',
+            fileUploadingForm: '#ImgForm',
+            fileUploadingTarget: '#UploadTarget',
+            fileUploadingInput: '#uploadFile',
+            fileUploadingResult: '#jsonResult',
+            folderDropDown: '#SelectedFolderId'
+        },
 
-    classes = {
-        dragZoneActive: 'bcms-dropzone-active'
-    },
+        classes = {
+            dragZoneActive: 'bcms-dropzone-active'
+        },
 
-    links = {
-        loadUploadFilesDialogUrl: null,
-        uploadFileToServerUrl: null,
-        undoFileUploadUrl: null,
-        loadUploadSingleFileDialogUrl: null
-    },
+        links = {
+            loadUploadFilesDialogUrl: null,
+            uploadFileToServerUrl: null,
+            undoFileUploadUrl: null,
+            loadUploadSingleFileDialogUrl: null
+        },
 
-    globalization = {
-        uploadFilesDialogTitle: null
-    };
+        globalization = {
+            uploadFilesDialogTitle: null
+        };
 
     /**
     * Assign objects to module.
@@ -46,6 +46,9 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
                 rootFolderId: rootFolderId,
                 rootFolderType: rootFolderType
             };
+
+        options.uploads.filesToAccept(rootFolderType == 1 ? 'image/*' : '');
+
         if (html5Upload.fileApiSupported()) {
             modal.open({
                 title: globalization.uploadFilesDialogTitle,
@@ -121,7 +124,7 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
             });
         }
     };
-    
+
     function SingleFileUpload(dialog, options) {
         var context = dialog.container.find(selectors.fileUploadingContext).get(0),
             uploadsModel = options.uploads,
@@ -250,6 +253,7 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
         
         self.uploads = ko.observableArray();
         self.activeUploads = ko.observableArray();
+        self.filesToAccept = ko.observable('');
         
         self.cancelAllActiveUploads = function () {
             var uploads = self.activeUploads.removeAll();

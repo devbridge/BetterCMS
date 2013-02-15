@@ -6,15 +6,22 @@
     <add name="BetterCms" connectionString="Server=(local);Database=BetterCms;Integrated Security=SSPI;" />
   </connectionStrings>
   <cms configSource="Config\cms.config" />
+  <system.web>
+    <globalization uiCulture="auto" />
+    <!-- maxRequestLength=200MB, URL max length 2000 -->
+    <httpRuntime requestValidationMode="2.0" relaxedUrlToFileSystemMapping="true" maxRequestLength="204800" maxUrlLength="2000" maxQueryStringLength="2000" />
+    <customErrors mode="Off" />
+  </system.web>
   <system.webServer>
     <httpErrors existingResponse="PassThrough"/>
     <validation validateIntegratedModeConfiguration="false" />
     <modules runAllManagedModulesForAllRequests="true" />
     <security>
       <requestFiltering>
-        <!-- maxAllowedContentLength=200MB -->
-        <requestLimits maxAllowedContentLength="209715200"></requestLimits>
+        <!-- maxAllowedContentLength=200MB, URL max length 2000 -->
+        <requestLimits maxUrl="2000" maxAllowedContentLength="209715200" maxQueryString="2000"></requestLimits>
       </requestFiltering>
     </security>
+    <caching enabled="false" enableKernelCache="false" />
   </system.webServer>
 </configuration>

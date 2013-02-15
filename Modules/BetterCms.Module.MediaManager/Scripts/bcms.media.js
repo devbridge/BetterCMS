@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.messages', 'bcms.media.upload', 'bcms.media.imageeditor', 'bcms.htmlEditor', 'knockout', 'bcms.contextMenu'],
+define('bcms.media', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.messages', 'bcms.media.upload', 'bcms.media.imageeditor', 'bcms.htmlEditor', 'bcms.ko.extenders', 'bcms.contextMenu'],
 function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUpload, imageEditor, htmlEditor, ko, menu) {
     'use strict';
 
@@ -20,7 +20,9 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             templateDataBind: '.bcms-data-bind-container',
             firstForm: 'form:first',
             spinContainer: '.bcms-rightcol:first',
-            insertContentContainer: '.bcms-insert-content-modal:first'
+            insertContentContainer: '.bcms-insert-content-modal:first',
+            searchBox: '#bcms-search-input',
+            fileListMessageBox: '#bcms-site-settings-media-messages-'
         },
         links = {
             loadSiteSettingsMediaManagerUrl: null,
@@ -37,7 +39,8 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             getImageUrl: null,
             saveFolderUrl: null,
             renameMediaUrl: null,
-            getMediaUrl: null
+            getMediaUrl: null,
+            downloadFileUrl: null
         },
         globalization = {
             deleteImageConfirmMessage: null,
@@ -169,13 +172,14 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
         self.uploadMedia = function () {
             mediaUpload.openUploadFilesDialog(self.path().currentFolder().id(), self.path().currentFolder().type, onUploadFiles);
+            messages.refreshBox($(selectors.fileListMessageBox + self.path().type), {});
         };
 
         self.searchMedia = function () {
             var params = createFolderParams(self.path().currentFolder().id(), self),
                 onComplete = function (json) {
                     parseJsonResults(json, self);
-                    document.getElementById("bcms-search-input").focus();
+                    $(selectors.searchBox).focus();                    
                 };
             loadTabData(self, params, onComplete);
         };
@@ -199,7 +203,13 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         self.switchViewStyle = function () {
             var isGrid = !self.isGrid();
             localStorage.setItem(keys.folderViewMode, isGrid ? 1 : 0);
-            self.isGrid(isGrid);
+            
+            // Loop through all media view models
+            $.each([imagesViewModel, audiosViewModel, videosViewModel, filesViewModel], function(index, viewModel) {
+                if (viewModel && viewModel.isGrid) {
+                    viewModel.isGrid(isGrid);
+                }
+            });
         };
 
         self.isSortedAscending = function(column) {
@@ -343,10 +353,8 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 bcms.stopEventPropagation(event);
             };
 
-            self.downloadMedia = function() {
-                if (self.publicUrl()) {
-                    window.open(self.publicUrl(), '_newtab');
-                }
+            self.downloadMedia = function () {
+                window.open($.format(links.downloadFileUrl, self.id()), '_newtab');
             };
 
             self.rowClassNames = ko.computed(function () {
@@ -422,6 +430,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         MediaItemBaseViewModel.prototype.openMedia = function (folderViewModel, data, event) {
             bcms.stopEventPropagation(event);
             editOrSelectMedia(folderViewModel, this, data, event);
+            messages.refreshBox($(selectors.fileListMessageBox + this.type), {});
         };
 
         MediaItemBaseViewModel.prototype.saveMedia = function (folderViewModel, data, event) {
@@ -951,7 +960,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     * Called when file is selected from files list.
     */
     function insertFile(selectedMedia) {
-        addFileToEditor(selectedMedia.publicUrl(), selectedMedia.name());
+        addFileToEditor($.format(links.downloadFileUrl, selectedMedia.id()), selectedMedia.name());
 
         if (fileInsertDialog != null) {
             fileInsertDialog.close();
@@ -960,7 +969,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     };
 
     /**
-    * Function is called, when insert file event is trigerred
+    * Function is called, when insert file event is triggered.
     */
     function onOpenFileInsertDialog(htmlContentEditor) {
         contentEditor = htmlContentEditor;
@@ -1061,6 +1070,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 parseJsonResults(json, folderViewModel);
             };
         loadTabData(folderViewModel, params, onComplete);
+        messages.refreshBox(folderViewModel.container, {});
     };
 
     /**

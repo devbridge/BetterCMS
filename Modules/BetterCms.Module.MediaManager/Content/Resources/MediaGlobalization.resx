@@ -168,6 +168,9 @@
   <data name="FilesTab_UploadFile" xml:space="preserve">
     <value>Upload file</value>
   </data>
+  <data name="FileUpload_Failed_ImageFormatNotSuported" xml:space="preserve">
+    <value>Failed! Can upload only gif, jpg, jpeg or png.</value>
+  </data>
   <data name="ImageEditor_CroppingDialog_SubTitle" xml:space="preserve">
     <value>Select area to crop.</value>
   </data>
@@ -223,7 +226,7 @@
     <value>Caption max length exceeded.</value>
   </data>
   <data name="ImageEditor_Dialog_ImageHeight_RangeMessage" xml:space="preserve">
-    <value>Image height can not be less than 0 px.</value>
+    <value>Image height can not be less than 0 px and bigger that 9999.</value>
   </data>
   <data name="ImageEditor_Dialog_ImageHeight_RequiredMessage" xml:space="preserve">
     <value>Image height is required.</value>
@@ -241,7 +244,7 @@
     <value>Image Name</value>
   </data>
   <data name="ImageEditor_Dialog_ImageWidth_RangeMessage" xml:space="preserve">
-    <value>Image width can not be less than 0 px.</value>
+    <value>Image width can not be less than 0 px and bigger that 9999.</value>
   </data>
   <data name="ImageEditor_Dialog_ImageWidth_RequiredMessage" xml:space="preserve">
     <value>Image width is required.</value>
@@ -310,7 +313,7 @@
     <value>File Size</value>
   </data>
   <data name="MediaList_FileTypeColumn" xml:space="preserve">
-    <value>FileType</value>
+    <value>File Type</value>
   </data>
   <data name="MediaManager_AddNewFolder" xml:space="preserve">
     <value>Add New Folder</value>
@@ -357,6 +360,9 @@
   <data name="MultiFileUpload_SaveFailed" xml:space="preserve">
     <value>Failed to save uploaded files.</value>
   </data>
+  <data name="MultiFileUpload_SaveFailed_FolderDeleted" xml:space="preserve">
+    <value>Folder you trying to save uploaded files is deleted.</value>
+  </data>
   <data name="MultiFileUpload_SelectFolder" xml:space="preserve">
     <value>Select Folder where to upload files:</value>
   </data>
@@ -389,5 +395,8 @@
   </data>
   <data name="VideosTab_UploadVideo" xml:space="preserve">
     <value>Upload Video</value>
+  </data>
+  <data name="ImageEditor_Dialog_KeepAspectRatio" xml:space="preserve">
+    <value>Keep aspect ratio</value>
   </data>
 </root>

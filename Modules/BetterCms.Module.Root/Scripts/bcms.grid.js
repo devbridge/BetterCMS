@@ -64,6 +64,7 @@ define('bcms.grid', ['jquery', 'bcms'], function ($, bcms) {
     * Submits site settings list form
     */
     grid.submitGridForm = function (form, onSuccess) {
+//        $(form).showLoading();
         $.ajax({
             type: 'POST',
             contentType: 'application/x-www-form-urlencoded',
@@ -71,8 +72,11 @@ define('bcms.grid', ['jquery', 'bcms'], function ($, bcms) {
             cache: false,
             url: form.attr('action'),
             data: form.serialize(),
-
+//            error: function() {
+//                $(form).hideLoading();
+//            },
             success: function (data) {
+//                $(form).hideLoading();
                 if ($.isFunction(onSuccess)) {
                     onSuccess(data);
                 }

@@ -117,6 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BlogPost_LiveFrom_DateNotValidationMessage" xml:space="preserve">
+    <value>The field Live From must be a date.</value>
+  </data>
+  <data name="BlogPost_LiveFrom_RequiredMessage" xml:space="preserve">
+    <value>The field Live From is required.</value>
+  </data>
+  <data name="BlogPost_LiveTo_DateNotValidationMessage" xml:space="preserve">
+    <value>The field Live To must be a date.</value>
+  </data>
   <data name="BlogPost_LiveTo_ValidationMessage" xml:space="preserve">
     <value>Live To date must be greater than Live From.</value>
   </data>
@@ -125,6 +134,9 @@
   </data>
   <data name="CreateNewPost_Dialog_Title" xml:space="preserve">
     <value>Create New Post</value>
+  </data>
+  <data name="Date_Picker_Tooltip_Title" xml:space="preserve">
+    <value>Calendar</value>
   </data>
   <data name="DeleteAuthor_Confirmation_Message" xml:space="preserve">
     <value>Are you sure you want to delete author {0}?</value>

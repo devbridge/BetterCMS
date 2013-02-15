@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 
-using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Models;
 using BetterCms.Core.Mvc.Commands;
@@ -12,7 +11,7 @@ using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Blog.ViewModels.Blog;
 
 using BetterCms.Module.MediaManager.Models;
-
+using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Services;
 
 using BetterCms.Module.Root.Models;
@@ -106,11 +105,6 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                 blogPost.IsPublic = true;
                 blogPost.Layout = layout;
             }
-            if (request.DesirableStatus == ContentStatus.Published && !blogPost.IsPublished)
-            {
-                blogPost.PublishedOn = DateTime.Now;
-                blogPost.IsPublished = true;
-            }
 
             // Push to change modified data each time save button is pressed
             blogPost.ModifiedOn = DateTime.Now;
@@ -126,7 +120,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                               Name = request.Title,
                               Html = request.Content ?? string.Empty,
                               ActivationDate = request.LiveFromDate,
-                              ExpirationDate = request.LiveToDate
+                              ExpirationDate = TimeHelper.FormatEndDate(request.LiveToDate)
                           };
 
             content = (BlogPostContent)contentService.SaveContentWithStatusUpdate(content, request.DesirableStatus);

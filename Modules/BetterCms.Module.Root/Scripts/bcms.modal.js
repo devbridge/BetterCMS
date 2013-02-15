@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console, document */
 
-define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'knockout', 'bcms.forms'], function ($, bcms, tabs, ko, forms) {
+define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', 'bcms.forms'], function ($, bcms, tabs, ko, forms) {
     'use strict';
 
     var modal = {},
@@ -654,6 +654,23 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'knockout', 'bcms.forms'], 
         });
 
         return dialog;
+    };
+
+    modal.showMessages = function (json) {
+        if (json.Messages) {
+            var content = "";
+
+            for (var i = 0; i < json.Messages.length; i++) {
+                if (content) {
+                    content += "<br />";
+                }
+                content += json.Messages[i];
+            }
+
+            modal.alert({
+                content: content
+            });
+        }
     };
 
     return modal;

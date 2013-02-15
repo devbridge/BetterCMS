@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.modal'],
+define('bcms.ko.grid', ['jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messages', 'bcms.modal'],
     function ($, bcms, ko, messages, modal) {
     'use strict';
 
@@ -380,6 +380,7 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.mod
                 return;
             }
 
+            self.processing(true);
             var container = self.parent.container,
                 items = self.parent.items,
                 message = self.getDeleteConfirmationMessage(),
@@ -396,7 +397,6 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.mod
                 confirmDialog = modal.confirm({
                     content: message || '',
                     onAccept: function() {
-                        self.processing(true);
                         $.ajax({
                             type: 'POST',
                             url: url,
@@ -424,8 +424,10 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.mod
         };
 
         grid.ItemViewModel.prototype.saveItem = function () {
-            var self = this,
-                url = self.parent.saveUrl,
+            var self = this;
+            self.processing(true);
+            
+            var url = self.parent.saveUrl,
                 canSave = url && this.isActive() && this.hasChanges() && this.isValid(),
                 removeFromList = this.isActive() && !this.hasChanges() && !this.id(),
                 keepActive = !this.isValid();
@@ -439,7 +441,6 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.mod
 
             if (canSave) {
                 var params = self.getSaveParams();
-                self.processing(true);
                 $.ajax({
                     url: url,
                     type: 'POST',
@@ -464,6 +465,7 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.mod
                 if (removeFromList) {
                     this.parent.items.remove(this);
                 }
+                self.processing(false);
             }
         };
 

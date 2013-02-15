@@ -201,6 +201,7 @@
     <Compile Include="Helpers\HttpHelper.cs" />
     <Compile Include="Helpers\ListModelBindingExtensions.cs" />
     <Compile Include="Helpers\RenderHelper.cs" />
+    <Compile Include="Helpers\TimeHelper.cs" />
     <Compile Include="Models\IServerControlWidget.cs" />
     <Compile Include="Models\Maps\HtmlContentMap.cs" />
     <Compile Include="Models\Migrations\Migration201302050830.cs" />
@@ -219,6 +220,7 @@
     <Compile Include="Models\Redirect.cs" />
     <Compile Include="Models\WidgetType.cs" />
     <Compile Include="Mvc\Attributes\CustomPageUrlValidationAttribute.cs" />
+    <Compile Include="Mvc\Attributes\DateValidationAttribute.cs" />
     <Compile Include="Mvc\Attributes\EndDateValidationAttribute.cs" />
     <Compile Include="PagesConstants.cs" />
     <Compile Include="Accessors\HtmlContentWidgetAccessor.cs" />
@@ -325,7 +327,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Scripts\bcms.pages.content.js" />
-    <EmbeddedResource Include="Scripts\bcms.pages.history.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.properties.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.redirects.js" />
@@ -333,9 +334,12 @@
     <EmbeddedResource Include="Scripts\bcms.pages.tags.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.template.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.widgets.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.history.js" />
     <Content Include="web.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\Partial\WarnMessageAboutDraft.cshtml" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Category\Categories.cshtml" />
   </ItemGroup>

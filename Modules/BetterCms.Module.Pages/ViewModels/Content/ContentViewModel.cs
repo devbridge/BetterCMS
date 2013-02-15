@@ -36,6 +36,8 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         [StringLength(MaxLength.Name)]
         public virtual string Name { get; set; }
 
+        public virtual string Status { get; set; }
+
         /// <summary>
         /// Gets or sets the list of content options.
         /// </summary>

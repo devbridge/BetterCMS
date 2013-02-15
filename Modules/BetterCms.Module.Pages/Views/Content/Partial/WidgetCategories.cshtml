@@ -1,4 +1,5 @@
-﻿@model IList<BetterCms.Module.Pages.ViewModels.Widgets.WidgetCategoryViewModel>
+﻿@using BetterCms.Module.Root.Content.Resources
+@model IList<BetterCms.Module.Pages.ViewModels.Widgets.WidgetCategoryViewModel>
 
 @if (Model != null && Model.Count > 0)
 {
@@ -9,6 +10,7 @@
 }
 else
 {
-    @* Return anything. jQuery doesn't understand empty (null) results. *@
-    @Html.Raw("&nbsp;")
+    <div class="bcms-category bcms-content-sliders">           
+        <div class="bcms-category-titles">@RootGlobalization.Grid_NoDataAvailable_Message</div>
+    </div>
 }

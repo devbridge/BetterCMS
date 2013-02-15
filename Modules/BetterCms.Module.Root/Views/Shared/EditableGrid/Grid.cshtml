@@ -15,22 +15,25 @@
             {
                 @Html.Partial(column.HeaderView, column)
             }
-            <th style="width: 145px;" class="bcms-tables-nohover">&nbsp;</th>
+            <th class="bcms-tables-nohover" style="width: 145px;">&nbsp;</th>
         </tr>
     </thead>
     <tbody>
         <!-- ko foreach: items -->
         <tr data-bind="click: onOpen, css: {'bcms-table-row-active' : isActive()}">
+            <!-- ko if: processing() -->
+            <td class="bcms-tables-nohover">&nbsp;</td>
+            <td class="bcms-tables-nohover" colspan="@Model.Columns.Count">@RootGlobalization.Message_Saving</td>
+            <td class="bcms-tables-nohover" style="width: 145px;">&nbsp;</td>
+            <!-- /ko -->
+            
+            <!-- ko ifnot: processing() -->
             <td><a class="bcms-icn-edit" data-bind="click: onEdit">@RootGlobalization.Button_Edit</a></td>
             @foreach (var column in Model.Columns)
             {
                 @Html.Partial(column.CellView, column)
             }
             <td>
-                <!-- ko if: processing() -->
-                    @RootGlobalization.Message_Saving
-                <!-- /ko -->
-                <!-- ko ifnot: processing() -->
                 <!-- ko ifnot: isActive()-->
                 <a class="bcms-icn-delete" data-bind="click: onDelete">@RootGlobalization.Button_Delete</a>
                 <!-- /ko -->
@@ -38,8 +41,8 @@
                 <div class="bcms-btn-small" data-bind="click: onSave">@RootGlobalization.Button_Save</div>
                 <div class="bcms-btn-links-small" data-bind="click: onCancelEdit">@RootGlobalization.Button_Cancel</div>
                 <!-- /ko -->
-                <!-- /ko -->
             </td>
+            <!-- /ko -->
         </tr>
         <!-- /ko -->
         <!-- ko if: items().length == 0 -->

@@ -61,6 +61,33 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The field Live From must be a date..
+        /// </summary>
+        public static string BlogPost_LiveFrom_DateNotValidationMessage {
+            get {
+                return ResourceManager.GetString("BlogPost_LiveFrom_DateNotValidationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The field Live From is required..
+        /// </summary>
+        public static string BlogPost_LiveFrom_RequiredMessage {
+            get {
+                return ResourceManager.GetString("BlogPost_LiveFrom_RequiredMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The field Live To must be a date..
+        /// </summary>
+        public static string BlogPost_LiveTo_DateNotValidationMessage {
+            get {
+                return ResourceManager.GetString("BlogPost_LiveTo_DateNotValidationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Live To date must be greater than Live From..
         /// </summary>
         public static string BlogPost_LiveTo_ValidationMessage {
@@ -84,6 +111,15 @@ namespace BetterCms.Module.Blog.Content.Resources {
         public static string CreateNewPost_Dialog_Title {
             get {
                 return ResourceManager.GetString("CreateNewPost_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Calendar.
+        /// </summary>
+        public static string Date_Picker_Tooltip_Title {
+            get {
+                return ResourceManager.GetString("Date_Picker_Tooltip_Title", resourceCulture);
             }
         }
         

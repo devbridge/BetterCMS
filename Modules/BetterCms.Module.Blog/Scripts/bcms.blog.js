@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.grid', 'bcms.pages', 'knockout', 'bcms.media', 'bcms.pages.tags', 'bcms.ko.grid', 'bcms.messages', 'bcms.redirect', 'bcms.pages.history', 'bcms.preview'],
+define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.grid', 'bcms.pages', 'bcms.ko.extenders', 'bcms.media', 'bcms.pages.tags', 'bcms.ko.grid', 'bcms.messages', 'bcms.redirect', 'bcms.pages.history', 'bcms.preview'],
     function ($, bcms, modal, siteSettings, dynamicContent, datepicker, htmlEditor, grid, pages, ko, media, tags, kogrid, messages, redirect, history, preview) {
     'use strict';
 
@@ -19,6 +19,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             siteSettingsBlogEditButton: '.bcms-grid-item-edit-button',
             siteSettingsRowCells: 'td',
             siteSettingsBlogCellPrefix: '.bcms-blog-',
+            siteSettingsBlogTitleCell: '.bcms-blog-Title',
             siteSettingsBlogBooleanTemplateFalse: '#bcms-boolean-false-template',
             siteSettingsBlogBooleanTemplateTrue: '#bcms-boolean-true-template',
             siteSettingsBlogRowTemplate: '#bcms-blogs-list-row-template',
@@ -48,7 +49,8 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             deleteAuthorDialogTitle: null,
             blogPostsTabTitle: null,
             authorsTabTitle: null,
-            templatesTabTitle: null
+            templatesTabTitle: null,
+            datePickerTooltipTitle: null
         },
         classes = {
             regionBlogPostContent: 'bcms-blog-post-content',
@@ -130,7 +132,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         var data = content.Data,
             image = data.Image,
             tagsList = data.Tags;
-        dialog.container.find(selectors.datePickers).initializeDatepicker();
+        dialog.container.find(selectors.datePickers).initializeDatepicker(globalization.datePickerTooltipTitle);
         
         htmlEditor.initializeHtmlEditor(selectors.htmlEditor);
 
@@ -227,6 +229,12 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             bcms.stopEventPropagation(event);
             searchSiteSettingsBlogs(container, form);
             return false;
+        });
+        
+        form.find(selectors.siteSettingsBlogTitleCell).on('click', function (event) {
+            bcms.stopEventPropagation(event);
+            var url = $(this).data('url');
+            window.open(url);
         });
 
         form.find(selectors.siteSettingsBlogsSearchButton).on('click', function () {
@@ -425,7 +433,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
 
             var self = this;
 
-            self.name = ko.observable().extend({ required: "" });
+            self.name = ko.observable().extend({ required: "" }).extend({ maxLength: ko.maxLength.name });
             self.image = ko.observable(new AuthorImageViewModel(self));
             self.oldImageId = item.Image != null ? item.Image.ImageId : '';
 
@@ -452,7 +460,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         AuthorViewModel.prototype.hasChanges = function () {
             var hasChanges = _super.prototype.hasChanges.call(this);
             if (!hasChanges) {
-                hasChanges = this.image().id() != this.oldImageId;
+                hasChanges = (this.image().id() || '') != this.oldImageId;
             }
 
             return hasChanges;

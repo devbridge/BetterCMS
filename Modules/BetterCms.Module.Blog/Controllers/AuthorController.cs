@@ -30,16 +30,22 @@ namespace BetterCms.Module.Blog.Controllers
         [HttpPost]
         public virtual ActionResult SaveAuthor(AuthorViewModel model)
         {
-            var response = GetCommand<SaveAuthorCommand>().ExecuteCommand(model);
-            if (response != null)
+            var success = false;
+            AuthorViewModel response = null;
+            if (ModelState.IsValid)
             {
-                if (model.Id.HasDefaultValue())
+                response = GetCommand<SaveAuthorCommand>().ExecuteCommand(model);
+                if (response != null)
                 {
-                    Messages.AddSuccess(BlogGlobalization.CreateAuthor_CreatedSuccessfully_Message);
+                    if (model.Id.HasDefaultValue())
+                    {
+                        Messages.AddSuccess(BlogGlobalization.CreateAuthor_CreatedSuccessfully_Message);
+                    }
+                    success = true;
                 }
             }
 
-            return WireJson(response != null, response);
+            return WireJson(success, response);
         }
         
         [HttpPost]

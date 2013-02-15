@@ -56,11 +56,12 @@ define('bcms.pages.history', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', '
 
         previewContainer.html(iFrame);
         loaderContainer.showLoading();
-        iFrame.attr('src', url);
 
         iFrame.on('load', function () {
             loaderContainer.hideLoading();
         });
+        
+        iFrame.attr('src', url);
     }
 
     /**
