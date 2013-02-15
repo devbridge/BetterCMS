@@ -692,7 +692,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             input = folderViewModel.container.find(idSelector),
             loaderContainer = $(input.closest(siteSettings.selectors.loaderContainer).get(0) || input.closest(modal.selectors.scrollWindow).get(0));
 
-        if (item.oldName != item.name() && item.isActive() && input != null) {
+        if (item.oldName != item.name() && item.isActive()) {
             if (input.valid()) {
                 var params = item.toJson(),
                     onSaveCompleted = function (json) {
