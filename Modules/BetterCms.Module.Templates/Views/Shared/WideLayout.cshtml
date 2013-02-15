@@ -12,13 +12,14 @@
 
     <header class="page-header">
         <div class="page-frame clearfix">
-            @RenderSection("CMSHeader", false)
+            <div>
+                @RenderSection("CMSHeader", false)
+            </div>
         </div>
     </header>
 
     <div class="page-block">
         <div class="page-frame clearfix">
-            <h1>@Model.Title</h1>
             @RenderSection("CMSMainContent", false)
             @RenderBody()
         </div>

@@ -203,14 +203,7 @@ div.bcms-align-right-active {
     position: relative;
     display: inline-block;
     margin: 15px 0;
-    height: 33px;
-    line-height: 33px;
-    font-size: 12px;
-    font-family: 'Open Sans', sans-serif;
-    color: #FFFFFF;
     overflow: hidden;
-    white-space: nowrap;
-    text-transform: uppercase;
     box-shadow: 0 0 1px 1px #292929;
     background-color: #676767;
     background-image: linear-gradient(to bottom, #676767 0, #555555 100%);
@@ -218,17 +211,23 @@ div.bcms-align-right-active {
     background-image: -webkit-linear-gradient(top, #676767 0, #555555 100%);
 }
 
-    .bcms-btn-upload-files label {
-        display: block;
-        height: 100%;
-        padding: 0 10px;
-        cursor: pointer;
+    .bcms-btn-upload-files label:active {
+        box-shadow: 0 0 2px 1px #292929;
+        background: #555;
     }
 
-        .bcms-btn-upload-files label:active {
-            box-shadow: 0 0 2px 1px #292929;
-            background: #555;
-        }
+label.bcms-btn-upload-files-text {
+    display: block;
+    height: 33px;
+    line-height: 33px;
+    padding: 0 10px;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: 'Open Sans', sans-serif;
+    color: #fff;
+    white-space: nowrap;
+    text-transform: uppercase;
+}
 
 .bcms-upload-holder .bcms-upload-block:first-child {
     border-top: 1px solid #e3e3e3;
