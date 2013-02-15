@@ -79,6 +79,14 @@
     padding-bottom: 15px;
 }
 
+.bcms-editing-text {
+    display: inline-block;
+    max-width: 290px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .bcms-file-alignment {
     display: inline-block;
     padding: 0 0 0 30px;
@@ -738,7 +746,7 @@ input.bcms-grid-input:focus {
 
     .bcms-list .bcms-image-box .bcms-media-name {
         display: inline-block;
-        max-width: 420px;
+        max-width: 670px;
         padding-left: 20px;
         vertical-align: middle;
         font-size: 14px;
