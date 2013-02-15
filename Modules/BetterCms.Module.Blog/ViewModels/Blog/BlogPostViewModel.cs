@@ -74,7 +74,8 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// <value>
         /// The live from date.
         /// </value>
-        [Required]
+        [DateValidation(ErrorMessageResourceType = typeof(BlogGlobalization), ErrorMessageResourceName = "BlogPost_LiveFrom_DateNotValidationMessage")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(BlogGlobalization), ErrorMessageResourceName = "BlogPost_LiveFrom_RequiredMessage")]
         public virtual DateTime LiveFromDate { get; set; }
 
         /// <summary>
@@ -83,6 +84,7 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// <value>
         /// The live to date.
         /// </value>
+        [DateValidation(ErrorMessageResourceType = typeof(BlogGlobalization), ErrorMessageResourceName = "BlogPost_LiveTo_DateNotValidationMessage")]
         [EndDateValidation(StartDateProperty = "LiveFromDate", ErrorMessageResourceType = typeof(BlogGlobalization), ErrorMessageResourceName = "BlogPost_LiveTo_ValidationMessage")]
         public virtual DateTime? LiveToDate { get; set; }
 

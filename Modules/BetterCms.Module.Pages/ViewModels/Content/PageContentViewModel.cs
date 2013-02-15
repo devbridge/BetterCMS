@@ -95,7 +95,7 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// <value>
         /// The date, from which page is in live.
         /// </value>
-        [DateValidation("Date first aware is not a valid date.")]
+        [DateValidation(ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "PageContent_LiveFrom_DateNotValidationMessage")]
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "PageContent_LiveFrom_RequiredMessage")]
         public DateTime LiveFrom { get; set; }
 
@@ -105,7 +105,7 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// <value>
         /// The date, to which page is in live.
         /// </value>
-        [DateValidation("Date first aware is not a valid date.")]
+        [DateValidation(ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "PageContent_LiveTo_DateNotValidationMessage")]
         [EndDateValidation(StartDateProperty = "LiveFrom", ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "PageContent_LiveTo_ValidationMessage")]
         public DateTime? LiveTo { get; set; }
 
