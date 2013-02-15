@@ -1149,4 +1149,10 @@
   <data name="ValidatePageUrlCommand_SameUrlPath_Message" xml:space="preserve">
     <value>Redirect URL belongs page which you want to delete. Please update URL (path) and try again.</value>
   </data>
+  <data name="PageContent_LiveFrom_DateNotValidationMessage" xml:space="preserve">
+    <value>The field Live From must be a date.</value>
+  </data>
+  <data name="PageContent_LiveTo_DateNotValidationMessage" xml:space="preserve">
+    <value>The field Live To must be a date.</value>
+  </data>
 </root>
