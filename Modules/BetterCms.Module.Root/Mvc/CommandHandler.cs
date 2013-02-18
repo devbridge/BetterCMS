@@ -4,7 +4,6 @@ using System.Text;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Exceptions.Mvc;
-using BetterCms.Core.Mvc;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Root.Content.Resources;
 
@@ -26,11 +25,13 @@ namespace BetterCms.Module.Root.Mvc
         /// Handles the command.
         /// </summary>
         /// <param name="command">The command.</param>
-        public static void ExecuteCommand(this ICommand command)
+        /// <returns>False if exception was caught, and True otherwise.</returns>
+        public static bool ExecuteCommand(this ICommand command)
         {
             try
             {
                 command.Execute();
+                return true;
             }
             catch (ValidationException ex)
             {
@@ -40,6 +41,10 @@ namespace BetterCms.Module.Root.Mvc
             {
                 HandleConcurrentDataException(ex, command);
             }
+            catch (EntityNotFoundException ex)
+            {
+                HandleEntityNotFoundException(ex, command);
+            }
             catch (CmsException ex)
             {
                 HandleCmsException(ex, command);
@@ -48,6 +53,8 @@ namespace BetterCms.Module.Root.Mvc
             {
                 HandleException(ex, command);
             }
+
+            return false;
         }
 
         /// <summary>
@@ -56,11 +63,13 @@ namespace BetterCms.Module.Root.Mvc
         /// <typeparam name="TRequest">The type of the command request.</typeparam>
         /// <param name="command">The command.</param>
         /// <param name="request">The request.</param>
-        public static void ExecuteCommand<TRequest>(this ICommand<TRequest> command, TRequest request)
+        /// <returns>False if exception was caught, and True otherwise.</returns>
+        public static bool ExecuteCommand<TRequest>(this ICommand<TRequest> command, TRequest request)
         {
             try
             {
                 command.Execute(request);
+                return true;
             }
             catch (ValidationException ex)
             {
@@ -68,7 +77,11 @@ namespace BetterCms.Module.Root.Mvc
             }
             catch (ConcurrentDataException ex)
             {
-                HandleConcurrentDataException(ex, command);
+                HandleConcurrentDataException(ex, command, request);
+            }
+            catch (EntityNotFoundException ex)
+            {
+                HandleEntityNotFoundException(ex, command, request);
             }
             catch (CmsException ex)
             {
@@ -78,6 +91,8 @@ namespace BetterCms.Module.Root.Mvc
             {
                 HandleException(ex, command, request);
             }
+
+            return false;
         }
 
         /// <summary>
@@ -100,7 +115,11 @@ namespace BetterCms.Module.Root.Mvc
             }
             catch (ConcurrentDataException ex)
             {
-                HandleConcurrentDataException(ex, command);
+                HandleConcurrentDataException(ex, command, request);
+            }
+            catch (EntityNotFoundException ex)
+            {
+                HandleEntityNotFoundException(ex, command, request);
             }
             catch (CmsException ex)
             {
@@ -142,7 +161,7 @@ namespace BetterCms.Module.Root.Mvc
         }
 
         /// <summary>
-        /// Handles the concurent data exception.
+        /// Handles the concurrent data exception.
         /// </summary>
         /// <param name="ex">The exception.</param>
         /// <param name="command">The command.</param>
@@ -152,6 +171,24 @@ namespace BetterCms.Module.Root.Mvc
             Log.Trace(FormatCommandExceptionMessage(command, request), ex);
 
             string message = RootGlobalization.Message_ConcurentDataException;
+
+            if (command.Context != null)
+            {
+                command.Context.Messages.AddError(message);
+            }
+        }
+
+        /// <summary>
+        /// Handles the entity not found exception.
+        /// </summary>
+        /// <param name="ex">The ex.</param>
+        /// <param name="command">The command.</param>
+        /// <param name="request">The request.</param>
+        private static void HandleEntityNotFoundException(EntityNotFoundException ex, ICommandBase command, object request = null)
+        {
+            Log.Trace(FormatCommandExceptionMessage(command, request), ex);
+
+            string message = RootGlobalization.Message_EntityNotFoundException;
 
             if (command.Context != null)
             {

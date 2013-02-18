@@ -1,21 +1,20 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Web.Helpers;
 
-using BetterCms.Core.Exceptions;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Services.Storage;
-
-using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels.Images;
-
 using BetterCms.Module.Root.Mvc;
 
 namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
 {
+    /// <summary>
+    /// Command to save image properties.
+    /// </summary>
     public class SaveImageDataCommand : CommandBase, ICommand<ImageViewModel>
     {
         /// <summary>
@@ -37,16 +36,10 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
         /// <summary>
         /// Executes this command.
         /// </summary>
+        /// <param name="request">The request.</param>
         public void Execute(ImageViewModel request)
         {
-            var mediaImage = Repository
-                .AsQueryable<MediaImage>()
-                .FirstOrDefault(f => f.Id == request.Id.ToGuidOrDefault());
-
-            if (mediaImage == null)
-            {
-                throw new CmsException(string.Format("Image was not found by id={0}.", request.Id));
-            }
+            var mediaImage = Repository.First<MediaImage>(request.Id.ToGuidOrDefault());
 
             mediaImage.Caption = request.Caption;
             mediaImage.Title = request.Title;
@@ -99,6 +92,7 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
                 {
                     image = image.Resize(newWidth, newHeight, false);
                 }
+
                 if (cropped)
                 {
                     var xRatio = (decimal)newWidth / (mediaImage.OriginalWidth == 0 ? newWidth : mediaImage.OriginalWidth);

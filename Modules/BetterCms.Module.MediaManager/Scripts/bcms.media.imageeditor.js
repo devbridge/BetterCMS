@@ -83,7 +83,7 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                             }
                             dialog.close();
                         },
-                        postError: function() {
+                        postError: function () {
                             modal.alert({
                                 title: globalization.imageEditorUpdateFailureMessageTitle,
                                 content: globalization.imageEditorUpdateFailureMessageMessage,
