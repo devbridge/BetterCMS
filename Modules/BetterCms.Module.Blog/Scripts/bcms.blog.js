@@ -87,7 +87,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             onLoad: function (dialog) {
                 dynamicContent.bindDialog(dialog, url, {
                     contentAvailable: function (dialog, content) {
-                        blogViewModel = initEditBlogPostDialogEvents(dialog, content, calledFromPage);
+                        blogViewModel = initEditBlogPostDialogEvents(dialog, content, calledFromPage, postSuccess);
                     },
 
                     beforePost: function () {
@@ -128,7 +128,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     /**
     * Initializes blog edit form
     */
-    function initEditBlogPostDialogEvents(dialog, content, calledFromPage) {
+    function initEditBlogPostDialogEvents(dialog, content, calledFromPage, postSuccess) {
         var data = content.Data,
             image = data.Image,
             tagsList = data.Tags;
@@ -143,14 +143,12 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         
         dialog.container.find(selectors.destroyDraftVersionLink).on('click', function () {
             history.destroyDraftVersion(data.ContentId, dialog.container, function () {
-                var onSave = null,
+                var onSave = postSuccess,
                     onClose = null;
 
                 dialog.close();
                 if (calledFromPage) {
-                    onClose = onSave = function() {
-                        redirect.ReloadWithAlert();
-                    };
+                    onClose = postSuccess;
                 }
                 editBlogPost(data.Id, onSave, calledFromPage, onClose);
             });

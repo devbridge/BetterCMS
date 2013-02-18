@@ -4,20 +4,21 @@ using System.Linq;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Models;
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Mvc;
 
 using NHibernate.Linq;
 
 namespace BetterCms.Module.Pages.Command.History.DestroyContentDraft
 {
-    public class DestroyContentDraftCommand : CommandBase, ICommand<Guid, Guid?>
+    public class DestroyContentDraftCommand : CommandBase, ICommand<Guid, DestroyContentDraftCommandResponse>
     {
         /// <summary>
         /// Executes the specified request.
         /// </summary>
         /// <param name="pageContentId">The page content id.</param>
         /// <returns></returns>
-        public Guid? Execute(Guid pageContentId)
+        public DestroyContentDraftCommandResponse Execute(Guid pageContentId)
         {
             var content = Repository
                 .AsQueryable<Root.Models.Content>(p => p.Id == pageContentId)
@@ -52,7 +53,25 @@ namespace BetterCms.Module.Pages.Command.History.DestroyContentDraft
             Repository.Delete(content);
             UnitOfWork.Commit();
 
-            return content.Original.Id;
+            var response = new DestroyContentDraftCommandResponse
+                       {
+                           PublishedId = content.Original.Id,
+                           Id = content.Original.Id,
+                           Version = content.Original.Version,
+                           WidgetName = content.Original.Name,
+                           IsPublished = true,
+                           HasDraft = false,
+                           DesirableStatus = ContentStatus.Published
+                       };
+
+            // Try to cast to widget
+            var widget = content.Original as HtmlContentWidget;
+            if (widget != null && widget.Category != null)
+            {
+                response.CategoryName = widget.Category.Name;
+            }
+
+            return response;
         }
     }
 }
