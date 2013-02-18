@@ -238,7 +238,7 @@ input[type="submit"].btn-secondary, input[type="submit"].btn-primary {
 }
 
 /*header*/
-a.logo {
+a.bcms-logo {
     float: left;
     margin-top: 30px;
 }
