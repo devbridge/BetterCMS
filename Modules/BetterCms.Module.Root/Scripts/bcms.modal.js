@@ -472,6 +472,8 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', 'bcms.
     *  Binds to a document key press events.
     */
     function addGlobalKeyPressEvent() {
+        var lastEnterModal,
+            lastEscModal;
         $(document).on('keydown.bcms.modal', function (e) {
             var topModal = modal.last();
             if (topModal) {
@@ -479,14 +481,20 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', 'bcms.
                 if (e.keyCode === 27 && !topModal.options.disableCancel) {
                     if (canHandleKeyPress()) {
                         e.preventDefault();
-                        topModal.closeClick();
+                        if (topModal != lastEscModal) {
+                            topModal.closeClick();
+                            lastEscModal = topModal;
+                        }
                     }
                 }
                 // If Enter pressed and accept action is not disabled in the modal dialog.
                 else if (e.keyCode === 13 && !topModal.options.disableAccept) {
                     if (canHandleKeyPress()) {
                         e.preventDefault();
-                        topModal.acceptClick();
+                        if (topModal != lastEnterModal) {
+                            topModal.acceptClick();
+                            lastEnterModal = topModal;
+                        }
                     }
                 }
             }
