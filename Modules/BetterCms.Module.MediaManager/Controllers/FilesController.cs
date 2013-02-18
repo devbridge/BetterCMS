@@ -1,9 +1,9 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
+using BetterCms.Module.MediaManager.Command.Files.DownloadFile;
 using BetterCms.Module.MediaManager.Command.Files.GetFiles;
 using BetterCms.Module.MediaManager.Command.MediaManager.DeleteMedia;
-using BetterCms.Module.MediaManager.Command.MediaManager.DownloadMedia;
 using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 
@@ -17,12 +17,21 @@ namespace BetterCms.Module.MediaManager.Controllers
     /// </summary>
     public class FilesController : CmsControllerBase
     {
+        /// <summary>
+        /// Gets or sets the CMS configuration.
+        /// </summary>
+        /// <value>
+        /// The CMS configuration.
+        /// </value>
         public ICmsConfiguration CmsConfiguration { get; set; }
 
         /// <summary>
         /// Gets the files list.
         /// </summary>
-        /// <returns>List of files</returns>
+        /// <param name="options">The options.</param>
+        /// <returns>
+        /// List of files.
+        /// </returns>
         public ActionResult GetFilesList(MediaManagerViewModel options)
         {
             var success = true;
@@ -36,6 +45,7 @@ namespace BetterCms.Module.MediaManager.Controllers
             {
                 success = false;
             }
+
             return Json(new WireJson { Success = success, Data = model });
         }
 

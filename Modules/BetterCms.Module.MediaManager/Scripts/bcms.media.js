@@ -354,10 +354,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             };
 
             self.downloadMedia = function () {
-                if (self.publicUrl()) {
-                    window.open(self.publicUrl(), '_newtab');
-                }
-                // TODO: not working on Cloud: window.open($.format(links.downloadFileUrl, self.id()), '_newtab');
+                window.open($.format(links.downloadFileUrl, self.id()), '_newtab');
             };
 
             self.rowClassNames = ko.computed(function () {
@@ -969,8 +966,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     * Called when file is selected from files list.
     */
     function insertFile(selectedMedia) {
-        addFileToEditor(selectedMedia.publicUrl(), selectedMedia.name());
-        // TODO: not working on Cloud: addFileToEditor($.format(links.downloadFileUrl, selectedMedia.id()), selectedMedia.name());
+        addFileToEditor($.format(links.downloadFileUrl, selectedMedia.id()), selectedMedia.name());
 
         if (fileInsertDialog != null) {
             fileInsertDialog.close();

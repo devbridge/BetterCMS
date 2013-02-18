@@ -1,10 +1,11 @@
 ﻿using System;
 
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Module.MediaManager.Command.MediaManager.DownloadMedia;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Mvc;
 
-namespace BetterCms.Module.MediaManager.Command.MediaManager.DownloadMedia
+namespace BetterCms.Module.MediaManager.Command.Files.DownloadFile
 {
     /// <summary>
     /// Gets file info for downloading.
@@ -23,7 +24,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager.DownloadMedia
             {
                 return new DownloadFileCommandResponse
                     {
-                        FileName = file.FileUri.AbsolutePath,
+                        FileName = file.PublicUrl,
                         ContentMimeType = System.Net.Mime.MediaTypeNames.Application.Octet, // Specify the generic octet-stream MIME type.
                         FileDownloadName = string.Format("{0}{1}", System.IO.Path.GetFileNameWithoutExtension(file.Title), file.OriginalFileExtension)
                     };
