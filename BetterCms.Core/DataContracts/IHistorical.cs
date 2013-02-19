@@ -1,8 +1,8 @@
 ﻿using System;
 
-using BetterCms.Api.Interfaces.Models.Enums;
+using BetterCms.Core.DataContracts.Enums;
 
-namespace BetterCms.Api.Interfaces.Models
+namespace BetterCms.Core.DataContracts
 {
     /// <summary>
     /// Defines interface to access a basic page content properties.

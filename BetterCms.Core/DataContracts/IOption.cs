@@ -1,6 +1,6 @@
-﻿using BetterCms.Api.Interfaces.Models.Enums;
+﻿using BetterCms.Core.DataContracts.Enums;
 
-namespace BetterCms.Api.Interfaces.Models
+namespace BetterCms.Core.DataContracts
 {
     /// <summary>
     /// Defines interface to access the option key/type/value.

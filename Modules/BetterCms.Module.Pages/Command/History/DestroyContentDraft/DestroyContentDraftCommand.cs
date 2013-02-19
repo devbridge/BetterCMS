@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-using BetterCms.Api.Interfaces.Models.Enums;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Root.Mvc;

@@ -1,4 +1,4 @@
-﻿namespace BetterCms.Api.Interfaces.Models
+﻿namespace BetterCms.Core.DataContracts
 {
     public interface ITag : IEntity
     {

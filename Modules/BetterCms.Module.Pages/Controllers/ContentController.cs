@@ -2,8 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 
-using BetterCms.Api.Interfaces.Models.Enums;
-
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Pages.Command.Content.DeletePageContent;
 using BetterCms.Module.Pages.Command.Content.GetPageContentOptions;
 using BetterCms.Module.Pages.Command.Content.GetPageHtmlContent;

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Text;
 
-using BetterCms.Api.Interfaces.Models.Enums;
-
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;
 
 using BetterCms.Module.Blog.Models;

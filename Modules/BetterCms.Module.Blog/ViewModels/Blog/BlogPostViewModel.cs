@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
-using BetterCms.Api.Interfaces.Models.Enums;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;
 
 using BetterCms.Module.Blog.Content.Resources;

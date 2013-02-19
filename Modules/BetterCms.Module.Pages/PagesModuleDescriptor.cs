@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 
 using Autofac;
 
-using BetterCms.Api.Interfaces.Models;
+using BetterCms.Core.DataContracts;
 using BetterCms.Core.Models;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;

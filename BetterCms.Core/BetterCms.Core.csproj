@@ -115,7 +115,8 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="BetterCmsContext.cs" />
+    <Compile Include="CmsContext.cs" />
+    <Compile Include="CmsApiContext.cs" />
     <Compile Include="DataAccess\DataContext\EventListeners\DeleteEventListener.cs" />
     <Compile Include="DataAccess\DataContext\EventListeners\EventListenerHelper.cs" />
     <Compile Include="DataAccess\DataContext\EventListeners\SaveOrUpdateEventListener.cs" />
@@ -127,17 +128,36 @@
     <Compile Include="DataAccess\DataContext\Migrations\MigrationExtensions.cs" />
     <Compile Include="DataAccess\DataContext\RestrictionsExtensions.cs" />
     <Compile Include="DataAccess\DataContext\SessionExtensions.cs" />
+    <Compile Include="DataContracts\Enums\ContentStatus.cs" />
+    <Compile Include="DataContracts\Enums\OptionType.cs" />
+    <Compile Include="DataContracts\ICategory.cs" />
+    <Compile Include="DataContracts\IContent.cs" />
+    <Compile Include="DataContracts\IContentOption.cs" />
+    <Compile Include="DataContracts\IEntity.cs" />
+    <Compile Include="DataContracts\IHistorical.cs" />
+    <Compile Include="DataContracts\IHtmlContent.cs" />
+    <Compile Include="DataContracts\IHtmlContentWidget.cs" />
+    <Compile Include="DataContracts\IOption.cs" />
+    <Compile Include="DataContracts\IPage.cs" />
+    <Compile Include="DataContracts\IPageContent.cs" />
+    <Compile Include="DataContracts\IPageContentOption.cs" />
+    <Compile Include="DataContracts\IRegion.cs" />
+    <Compile Include="DataContracts\ITag.cs" />
+    <Compile Include="DataContracts\IWidget.cs" />
     <Compile Include="Dependencies\ContextScopeProvider.cs" />
     <Compile Include="Environment\ApplicationStart\BetterCmsEntrypoint.cs" />
     <Compile Include="Dependencies\PerWebRequestContainerProvider.cs" />
     <Compile Include="Dependencies\PerWebRequestLifetimeModule.cs" />
     <Compile Include="Environment\Assemblies\DefaultAssemblyManager.cs" />
     <Compile Include="Environment\Assemblies\IAssemblyManager.cs" />
+    <Compile Include="Events\PageCreatedEventArgs.cs" />
     <Compile Include="Security\AuthorizeAttribute.cs" />
     <Compile Include="Security\IUserRole.cs" />
     <Compile Include="Modules\Projections\EmptyContentAccessor.cs" />
     <Compile Include="Mvc\Attributes\IgnoreAutoRouteAttribute.cs" />
     <Compile Include="Security\UserRole.cs" />
+    <Compile Include="DataServices\IPageApiService.cs" />
+    <Compile Include="DataServices\ITagApiService.cs" />
     <Compile Include="Services\Storage\FtpStorageService.cs" />
     <Compile Include="Services\Storage\DownloadResponse.cs" />
     <Compile Include="Services\Storage\FileSystemStorageService.cs" />
@@ -259,18 +279,8 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Themes\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\BetterCms.Api.Interfaces\BetterCms.DataContracts.csproj">
-      <Project>{8059ba38-54a4-44a9-82ac-56e8a27e982d}</Project>
-      <Name>BetterCms.DataContracts</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BetterCms.Api\BetterCms.Api.csproj">
-      <Project>{0bbf2cff-860c-4a30-892f-623e0aa5bee4}</Project>
-      <Name>BetterCms.Api</Name>
-    </ProjectReference>
     <ProjectReference Include="..\BetterCMS.Configuration\BetterCms.Configuration.csproj">
       <Project>{DA2B225E-6AEE-4465-8B08-4D5B1C1CED49}</Project>
       <Name>BetterCms.Configuration</Name>

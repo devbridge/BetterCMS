@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-using BetterCms.Api.Interfaces.Models;
+using BetterCms.Core.DataContracts;
 
-namespace BetterCms.Api.Services
+namespace BetterCms.Core.DataServices
 {
     public interface ITagApiService
     {

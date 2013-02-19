@@ -1,4 +1,4 @@
-using BetterCms.Api.Interfaces.Models;
+using BetterCms.Core.DataContracts;
 
 using FluentNHibernate.Mapping;
 

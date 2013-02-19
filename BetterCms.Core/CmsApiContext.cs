@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using Autofac;
 
-using BetterCms.Api.Services;
+using BetterCms.Core.DataServices;
+using BetterCms.Core.Exceptions;
 
-namespace BetterCms.Api
+namespace BetterCms.Core
 {
     public class CmsApiContext : IDisposable
     {
@@ -30,13 +28,27 @@ namespace BetterCms.Api
         {
             get
             {
-                return pageApiService;
+                if (container.IsRegistered<IPageApiService>())
+                {
+                    return container.Resolve<IPageApiService>();
+                }
+
+                throw new CmsException("Tags API service was not initialized. Please make sure to add BetterCms.Modules.Root module.");
             }
         }
 
         public CmsApiContext(ILifetimeScope container)
         {
             this.container = container;
+        }
+
+        public void Dispose()
+        {
+            // TODO: what dispose ????
+            if (container != null)
+            {
+                container.Dispose();
+            }
         }
     }
 }

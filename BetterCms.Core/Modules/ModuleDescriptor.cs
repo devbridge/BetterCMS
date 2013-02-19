@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 using Autofac;
 
-using BetterCms.Api.Interfaces.Models;
+using BetterCms.Core.DataContracts;
 using BetterCms.Core.Models;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Core.Mvc;
@@ -148,13 +148,6 @@ namespace BetterCms.Core.Modules
         public virtual IEnumerable<IUserRole> RegisterUserRoles(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
         {
             return null;
-        }
-
-        /// <summary>
-        /// Attaches to events.
-        /// </summary>
-        public virtual void AttachToEvents()
-        {
         }
 
         /// <summary>

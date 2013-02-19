@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BetterCms.Api.Interfaces.Models.Enums
+namespace BetterCms.Core.DataContracts.Enums
 {
     /// <summary>
     /// Indicates content publishing status (auto saved for preview, draft, published, archived).

@@ -11,7 +11,7 @@ namespace BetterCms.Module.Pages.Services
     /// <summary>
     /// Helper service for handling page tags
     /// </summary>
-    public class DefaultTagService : ITagService
+    internal class DefaultTagService : ITagService
     {
         /// <summary>
         /// The unit of work

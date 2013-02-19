@@ -1,9 +1,8 @@
 ﻿using System;
 
-using BetterCms.Api.Interfaces.Models;
-using BetterCms.Core.Models;
+using BetterCms.Core.DataContracts;
 
-namespace BetterCms.Api.Events
+namespace BetterCms.Core.Events
 {
     public class PageCreatedEventArgs : EventArgs
     {

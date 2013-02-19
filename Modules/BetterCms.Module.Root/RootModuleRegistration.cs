@@ -2,8 +2,6 @@
 
 using Autofac;
 
-using BetterCms.Api;
-using BetterCms.Core.Models;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Core.Security;
@@ -95,7 +93,6 @@ namespace BetterCms.Module.Root
             containerBuilder.RegisterType<DefaultContentService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<PageStylesheetProjectionFactory>().AsSelf().InstancePerLifetimeScope();
             containerBuilder.RegisterType<PageJavaScriptProjectionFactory>().AsSelf().InstancePerLifetimeScope();
-            containerBuilder.RegisterType<CmsContext>().AsSelf().InstancePerLifetimeScope();
         }
 
         /// <summary>
@@ -244,26 +241,6 @@ namespace BetterCms.Module.Root
                     },
                     new[] { typeof(EmbeddedResourcesController).Namespace });
             }
-        }
-
-        public override void AttachToEvents()
-        {
-            base.AttachToEvents();
-
-            // TODO: remove after tests
-            CmsContext.Api.Pages.PageCreated += Pages_PageCreated;
-        }
-
-        /// <summary>
-        /// Handles the PageCreated event of the Pages control.
-        /// TODO: remove after tests
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="args">The <see cref="Api.Events.PageCreatedEventArgs" /> instance containing the event data.</param>
-        /// <exception cref="System.NotImplementedException"></exception>
-        void Pages_PageCreated(object sender, Api.Events.PageCreatedEventArgs args)
-        {
-            Log.InfoFormat("Page created. Id: {0}, Title: {1}, Sender: {2}", args.Page.Id, args.Page.Title, sender);
         }
     }
 }

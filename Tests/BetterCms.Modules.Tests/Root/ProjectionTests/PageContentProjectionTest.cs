@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-using BetterCms.Api.Interfaces.Models;
+using BetterCms.Core.DataContracts;
 using BetterCms.Core.Models;
 using BetterCms.Module.Pages.Accessors;
 using BetterCms.Module.Pages.Models;

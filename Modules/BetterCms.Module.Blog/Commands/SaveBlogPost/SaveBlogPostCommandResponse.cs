@@ -1,6 +1,6 @@
 ﻿using System;
 
-using BetterCms.Api.Interfaces.Models.Enums;
+using BetterCms.Core.DataContracts.Enums;
 
 namespace BetterCms.Module.Blog.Commands.SaveBlogPost
 {

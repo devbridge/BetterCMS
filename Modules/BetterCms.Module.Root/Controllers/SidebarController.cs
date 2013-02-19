@@ -3,7 +3,7 @@ using System.Linq;
 using System.Reflection;
 using System.Web.Mvc;
 
-using BetterCms.Api.Interfaces.Models;
+using BetterCms.Core.DataContracts;
 using BetterCms.Core.Environment.Host;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Models;

@@ -1,6 +1,6 @@
 using System;
 
-using BetterCms.Api.Interfaces.Models;
+using BetterCms.Core.DataContracts;
 using BetterCms.Core.Models;
 
 namespace BetterCms.Core.Modules.Projections

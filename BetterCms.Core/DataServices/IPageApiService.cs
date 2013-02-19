@@ -1,6 +1,6 @@
-﻿using BetterCms.Api.Events;
+﻿using BetterCms.Core.Events;
 
-namespace BetterCms.Api.Services
+namespace BetterCms.Core.DataServices
 {
     public interface IPageApiService
     {

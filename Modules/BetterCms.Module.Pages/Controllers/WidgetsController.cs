@@ -1,8 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Linq;
 
-using BetterCms.Api.Interfaces.Models.Enums;
-
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Pages.Command.Widget.DeleteWidget;
 using BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit;
 using BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit;

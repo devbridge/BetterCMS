@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Api.Interfaces.Models;
-using BetterCms.Api.Interfaces.Models.Enums;
-
+using BetterCms.Core.DataContracts;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Core.Mvc.Commands;

@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Api.Interfaces.Models;
-using BetterCms.Api.Services;
 using BetterCms.Core.DataAccess;
+using BetterCms.Core.DataContracts;
+using BetterCms.Core.DataServices;
+using BetterCms.Core.Events;
 using BetterCms.Module.Root.Models;
 
 namespace BetterCms.Module.Pages.Services
@@ -27,6 +28,6 @@ namespace BetterCms.Module.Pages.Services
         }
 
         // Implemented events
-        public event Api.Events.PageCreatedEventArgs.PageCreatedEventHandler PageCreated;
+        public event PageCreatedEventArgs.PageCreatedEventHandler PageCreated;
     }
 }

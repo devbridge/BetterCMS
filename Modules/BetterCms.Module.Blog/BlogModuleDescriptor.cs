@@ -2,7 +2,6 @@
 
 using Autofac;
 
-using BetterCms.Api;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Blog.Accessors;

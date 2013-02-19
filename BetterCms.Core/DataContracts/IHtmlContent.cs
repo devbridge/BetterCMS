@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BetterCms.Api.Interfaces.Models
+namespace BetterCms.Core.DataContracts
 {
     public interface IHtmlContent : IContent
     {

@@ -1,4 +1,4 @@
-﻿namespace BetterCms.Api.Interfaces.Models
+﻿namespace BetterCms.Core.DataContracts
 {
     /// <summary>
     /// Defines interface to access a basic page content properties.

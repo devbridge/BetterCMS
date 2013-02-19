@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Security.Principal;
 using System.Web;
-using System.Web.Configuration;
-using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
 
-using BetterCms.Api;
 using BetterCms.Core;
 using BetterCms.Core.Environment.Host;
 
@@ -19,7 +16,7 @@ namespace BetterCms.Sandbox.Mvc4
 
         protected void Application_Start()
         {     
-            cmsHost = BetterCmsContext.RegisterHost();
+            cmsHost = CmsContext.RegisterHost();
 
             AreaRegistration.RegisterAllAreas();
 

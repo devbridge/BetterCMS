@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
-using BetterCms.Api.Interfaces.Models;
+using BetterCms.Core.DataContracts;
 using BetterCms.Core.Models;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Mvc;
