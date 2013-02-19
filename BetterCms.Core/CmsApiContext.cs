@@ -11,6 +11,12 @@ namespace BetterCms.Core
     {
         private readonly ILifetimeScope container;
 
+        /// <summary>
+        /// Gets the tags API service.
+        /// </summary>
+        /// <value>
+        /// The tags API service.
+        /// </value>
         public ITagApiService Tags
         {
             get
@@ -24,6 +30,12 @@ namespace BetterCms.Core
             }
         }
 
+        /// <summary>
+        /// Gets the pages API service.
+        /// </summary>
+        /// <value>
+        /// The pages API service.
+        /// </value>
         public IPageApiService Pages
         {
             get
@@ -33,23 +45,28 @@ namespace BetterCms.Core
                     return container.Resolve<IPageApiService>();
                 }
 
-                throw new CmsException("Tags API service was not initialized. Please make sure to add BetterCms.Modules.Root module.");
+                throw new CmsException("Pages API service was not initialized. Please make sure to add BetterCms.Modules.Root module.");
             }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CmsApiContext" /> class.
+        /// </summary>
+        /// <param name="container">The container.</param>
         public CmsApiContext(ILifetimeScope container)
         {
-            // TODO: check performance and memory/connection leaks
             this.container = container;
         }
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
-        /// <filterpriority>2</filterpriority>
         public void Dispose()
         {
-            container.Dispose();
+            if (container != null)
+            {
+                container.Dispose();
+            }
         }
     }
 }

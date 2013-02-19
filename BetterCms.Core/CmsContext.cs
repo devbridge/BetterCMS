@@ -2,6 +2,7 @@
 using System.Web.Hosting;
 using System.Web.Mvc;
 using System.Web.Routing;
+
 using Autofac;
 
 using BetterCms.Configuration;
@@ -31,21 +32,10 @@ namespace BetterCms.Core
     /// </summary>
     public static class CmsContext
     {
-        private static CmsApiContext data;
-
-        public static CmsApiContext Data 
-        { 
-            get
-            {
-                if (data == null)
-                {
-                    throw new CmsException("The BetterCMS API is not initialized. Need to register CMS host first (call BetterCmsContext.RegisterHost()).");
-                }
-
-                return data;
-            } 
-        }
-
+        /// <summary>
+        /// Creates the data API.
+        /// </summary>
+        /// <returns></returns>
         public static CmsApiContext CreateDataApi()
         {
             return new CmsApiContext(ContextScopeProvider.CreateChildContainer());
@@ -72,12 +62,6 @@ namespace BetterCms.Core
                 if (cmsHost == null)
                 {
                     throw new CmsException("BetterCMS host context was not created.");
-                }
-
-                data = container.Resolve<CmsApiContext>();
-                if (data == null)
-                {
-                    throw new CmsException("BetterCMS API context was not created.");
                 }
             }
 

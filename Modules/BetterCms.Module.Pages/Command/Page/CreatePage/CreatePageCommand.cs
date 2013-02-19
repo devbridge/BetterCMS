@@ -76,7 +76,11 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
             UnitOfWork.Commit();
 
             // Calling event, that page is created
-            CmsContext.Data.Pages.OnPageCreated(new PageCreatedEventArgs { Page = page });
+            // TODO: Fail with EVENTS CmsContext.Data.Pages.OnPageCreated(new PageCreatedEventArgs { Page = page });
+            using (var api = CmsContext.CreateDataApi())
+            {
+                api.Pages.OnPageCreated(new PageCreatedEventArgs { Page = page });
+            }
 
             return new SavePageResponse(page);
         }
