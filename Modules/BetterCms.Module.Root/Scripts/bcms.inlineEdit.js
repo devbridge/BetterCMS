@@ -434,7 +434,7 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
                         deleteLink = row.find(selectors.deleteRowLink),
                         onComplete = function(json) {
                             messages.refreshBox(row, json);
-                            editor.showRowLoading(row);
+                            editor.hideRowLoading(row);
                             if (json.Success) {
                                 row.remove();
                                 options.showHideEmptyRow(formContainer);
