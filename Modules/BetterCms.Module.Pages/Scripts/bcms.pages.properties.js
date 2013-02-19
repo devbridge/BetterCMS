@@ -143,8 +143,10 @@ define('bcms.pages.properties', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', '
     * Closes edit permalink box in PageProperties dialog.
     */
     page.closePagePropertiesEditPermalinkBox = function (dialog) {
-        var value = dialog.container.find(selectors.permalinkHiddenField).val();
-        dialog.container.find(selectors.permalinkEditField).val(value);
+        var value = dialog.container.find(selectors.permalinkHiddenField).val(),
+            permalinkEditField = dialog.container.find(selectors.permalinkEditField);
+        permalinkEditField.val(value);
+        permalinkEditField.blur();
 
         page.hidePagePropertiesEditPermalinkBox(dialog);
     };
