@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 
+using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
@@ -67,14 +68,14 @@ namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
                                                                    HasPublishedContent = htmlContentWidget.Original != null
                                                                };
                 }
-            }
-            
-            if (model == null)
-            {
-                model = new EditHtmlContentWidgetViewModel();
-            }
 
-            model.Categories = categories.ToList();
+                if (model == null)
+                {
+                    throw new EntityNotFoundException(typeof(HtmlContentWidget), widgetId.Value);
+                }
+
+                model.Categories = categories.ToList();
+            }
             
             return model;
         }

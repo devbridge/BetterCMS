@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
 
 using BetterCms.Core.Models;
 using BetterCms.Module.MediaManager.ViewModels;
-using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 using BetterCms.Module.Pages.Command.Page.ClonePage;
 using BetterCms.Module.Pages.Command.Page.CreatePage;
 using BetterCms.Module.Pages.Command.Page.DeletePage;

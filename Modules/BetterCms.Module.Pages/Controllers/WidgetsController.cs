@@ -75,8 +75,8 @@ namespace BetterCms.Module.Pages.Controllers
         public ActionResult EditHtmlContentWidget(string id)
         {
             var model = GetCommand<GetHtmlContentWidgetForEditCommand>().ExecuteCommand(id.ToGuidOrDefault());
-
-            return PartialView(model);
+            var view = RenderView("EditHtmlContentWidget", model);
+            return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -130,8 +130,8 @@ namespace BetterCms.Module.Pages.Controllers
         public ActionResult EditServerControlWidget(string id)
         {
             var model = GetCommand<GetServerControlWidgetForEditCommand>().ExecuteCommand(id.ToGuidOrDefault());
-
-            return PartialView(model);
+            var view = RenderView("EditServerControlWidget", model);
+            return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
