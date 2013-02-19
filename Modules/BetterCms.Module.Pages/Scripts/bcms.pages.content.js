@@ -226,11 +226,11 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
         * Initializes custom css and js text fields.
         */
         pagesContent.initializeCustomTextArea = function(dialog) {
-            dialog.container.find(selectors.enableCustomCss).on('click', function() {
+            dialog.container.find(selectors.enableCustomCss).on('change', function() {
                 showHideCustomCssText(dialog);
             });
 
-            dialog.container.find(selectors.enableCustomJs).on('click', function() {
+            dialog.container.find(selectors.enableCustomJs).on('change', function() {
                 showHideCustomJsText(dialog);
             });
             showHideCustomCssText(dialog);

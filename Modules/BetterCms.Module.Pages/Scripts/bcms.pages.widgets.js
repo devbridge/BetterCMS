@@ -203,15 +203,15 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
                 dialog.container.find(selectors.widgetPreviewPageContentId).val(availablePreviewOnPageContentId);
             }
             
-            dialog.container.find(selectors.enableCustomCss).on('click', function () {
+            dialog.container.find(selectors.enableCustomCss).on('change', function () {
                 showHideCustomCssText(dialog);
             });
 
-            dialog.container.find(selectors.enableCustomJs).on('click', function () {
+            dialog.container.find(selectors.enableCustomJs).on('change', function () {
                 showHideCustomJsText(dialog);
             });
 
-            dialog.container.find(selectors.enableCustomHtml).on('click', function () {
+            dialog.container.find(selectors.enableCustomHtml).on('change', function () {
                 showHideCustomHtmlText(dialog);
             });
             
