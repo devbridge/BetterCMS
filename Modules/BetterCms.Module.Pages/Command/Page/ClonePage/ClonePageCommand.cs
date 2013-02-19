@@ -54,7 +54,7 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
             // Validate Url
             PageService.ValidatePageUrl(pageUrl);
 
-            var page = Repository.FirstOrDefault<PageProperties>(request.PageId);
+            var page = Repository.First<PageProperties>(request.PageId);
 
             UnitOfWork.BeginTransaction();
 
