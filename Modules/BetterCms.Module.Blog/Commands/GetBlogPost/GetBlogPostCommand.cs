@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.Blog.Models;
@@ -90,7 +91,7 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
                                         ImageTooltip = bp.Image.Caption
                                     }
                             })
-                    .FirstOrDefault();
+                    .FirstOne();
 
                 if (model != null)
                 {
