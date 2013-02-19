@@ -1072,10 +1072,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     function changeFolder(id, folderViewModel) {
         var params = createFolderParams(id, null),
             onComplete = function (json) {
+                messages.refreshBox(folderViewModel.container, {});
                 parseJsonResults(json, folderViewModel);
             };
         loadTabData(folderViewModel, params, onComplete);
-        messages.refreshBox(folderViewModel.container, {});
     };
 
     /**
@@ -1084,7 +1084,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     function parseJsonResults(json, folderViewModel) {
         var i;
 
-        messages.refreshBox(folderViewModel.messagesContainer, json);
+        messages.refreshBox(folderViewModel.container, json);
 
         if (json.Success) {
             folderViewModel.medias.removeAll();
