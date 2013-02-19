@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 
 using BetterCms.Core;
+using BetterCms.Core.DataContracts;
 
 namespace BetterCms.Sandbox.Mvc4.Controllers
 {
@@ -53,7 +55,11 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
 
         public ActionResult TestApi()
         {
-            var tags = CmsContext.Data.Tags.GetTags();
+            IList<ITag> tags;
+            using (var api =  CmsContext.CreateDataApi())
+            {
+                tags = api.Tags.GetTags();
+            }
             
             var count = tags.Count;
             var message = string.Format("Tags count: {0}", count);

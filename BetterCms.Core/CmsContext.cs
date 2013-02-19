@@ -46,6 +46,11 @@ namespace BetterCms.Core
             } 
         }
 
+        public static CmsApiContext CreateDataApi()
+        {
+            return new CmsApiContext(ContextScopeProvider.CreateChildContainer());
+        }
+
         // TBD. To access and handle current page data.
         //public static CmsCurrentContenxt Current { get; private set; }
 

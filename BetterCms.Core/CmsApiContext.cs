@@ -39,16 +39,17 @@ namespace BetterCms.Core
 
         public CmsApiContext(ILifetimeScope container)
         {
+            // TODO: check performance and memory/connection leaks
             this.container = container;
         }
 
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        /// <filterpriority>2</filterpriority>
         public void Dispose()
         {
-            // TODO: what dispose ????
-            if (container != null)
-            {
-                container.Dispose();
-            }
+            container.Dispose();
         }
     }
 }
