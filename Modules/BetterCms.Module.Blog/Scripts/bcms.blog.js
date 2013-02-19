@@ -79,7 +79,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     /**
     * Opens blog edit form
     */
-    function openBlogEditForm(url, title, postSuccess, onClose) {
+    function openBlogEditForm(url, title, postSuccess, onClose, calledFromPage) {
         var blogViewModel;
 
         modal.edit({
@@ -87,7 +87,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             onLoad: function (dialog) {
                 dynamicContent.bindDialog(dialog, url, {
                     contentAvailable: function (dialog, content) {
-                        blogViewModel = initEditBlogPostDialogEvents(dialog, content);
+                        blogViewModel = initEditBlogPostDialogEvents(dialog, content, calledFromPage, postSuccess);
                     },
 
                     beforePost: function () {
@@ -128,7 +128,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     /**
     * Initializes blog edit form
     */
-    function initEditBlogPostDialogEvents(dialog, content) {
+    function initEditBlogPostDialogEvents(dialog, content, calledFromPage, postSuccess) {
         var data = content.Data,
             image = data.Image,
             tagsList = data.Tags;
@@ -143,12 +143,14 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         
         dialog.container.find(selectors.destroyDraftVersionLink).on('click', function () {
             history.destroyDraftVersion(data.ContentId, dialog.container, function () {
-                var onClose = function() {
-                    redirect.ReloadWithAlert();
-                };
+                var onSave = postSuccess,
+                    onClose = null;
 
                 dialog.close();
-                editBlogPost(data.Id, onClose, onClose);
+                if (calledFromPage) {
+                    onClose = postSuccess;
+                }
+                editBlogPost(data.Id, onSave, calledFromPage, onClose);
             });
         });
 
@@ -180,11 +182,11 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     /**
     * Edits blog post
     */
-    function editBlogPost(id, postSuccess, onClose) {
+    function editBlogPost(id, postSuccess, calledFromPage, onClose) {
         var url = $.format(links.loadEditPostDialogUrl, id),
             title = globalization.editPostDialogTitle;
 
-        openBlogEditForm(url, title, postSuccess, onClose);
+        openBlogEditForm(url, title, postSuccess, onClose, calledFromPage);
     }
 
     /**
@@ -263,11 +265,12 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     function initializeSiteSettingsBlogsListItems(container) {
         container.find(selectors.siteSettingsRowCells).on('click', function () {
             var row = $(this).parents(selectors.siteSettingsBlogParentRow),
-                id = row.find(selectors.siteSettingsBlogEditButton).data("id");
+                id = row.find(selectors.siteSettingsBlogEditButton).data("id"),
+                onSave = function (json) {
+                    onAfterSiteSettingsBlogPostSaved(json, row);
+                };
 
-            editBlogPost(id, function (json) {
-                onAfterSiteSettingsBlogPostSaved(json, row);
-            });
+            editBlogPost(id, onSave, false);
         });
 
         container.find(selectors.siteSettingsBlogDeleteButton).on('click', function (event) {
@@ -616,12 +619,13 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     * Called when editing page content
     */
     function onEditContent(sender) {
-        var element = $(sender);
+        var element = $(sender),
+            onSave = function () {
+                redirect.ReloadWithAlert();
+            };
 
         if (element.hasClass(classes.regionBlogPostContent)) {
-            editBlogPost(bcms.pageId, function () {
-                redirect.ReloadWithAlert();
-            });
+            editBlogPost(bcms.pageId, onSave, true);
         }
     };
 

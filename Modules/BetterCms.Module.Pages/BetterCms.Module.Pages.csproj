@@ -126,6 +126,7 @@
     <Compile Include="Command\Content\SortPageContent\SortPageContentResponse.cs" />
     <Compile Include="Command\Content\SortPageContent\SortPageContentCommand.cs" />
     <Compile Include="Command\History\DestroyContentDraft\DestroyContentDraftCommand.cs" />
+    <Compile Include="Command\History\DestroyContentDraft\DestroyContentDraftCommandResponse.cs" />
     <Compile Include="Command\History\GetContentHistory\GetContentHistoryCommand.cs" />
     <Compile Include="Command\History\GetContentHistory\GetContentHistoryRequest.cs" />
     <Compile Include="Command\History\GetContentVersion\GetContentVersionCommand.cs" />
@@ -333,8 +334,8 @@
     <EmbeddedResource Include="Scripts\bcms.pages.seo.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.tags.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.template.js" />
-    <EmbeddedResource Include="Scripts\bcms.pages.widgets.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.history.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.widgets.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
