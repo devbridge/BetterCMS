@@ -24,8 +24,7 @@ namespace BetterCms.Module.MediaManager.Command.Files.GetFiles
         /// <returns></returns>
         protected override NHibernate.Criterion.Lambda.QueryOverProjectionBuilder<MediaFile> SelectItems(NHibernate.Criterion.Lambda.QueryOverProjectionBuilder<MediaFile> builder)
         {
-            return builder
-                    .Select(() => alias.Id).WithAlias(() => modelAlias.Id)
+            return builder.Select(() => alias.Id).WithAlias(() => modelAlias.Id)
                     .Select(() => alias.Title).WithAlias(() => modelAlias.Name)
                     .Select(() => alias.Version).WithAlias(() => modelAlias.Version)
                     .Select(() => alias.OriginalFileExtension).WithAlias(() => modelAlias.FileExtension)
