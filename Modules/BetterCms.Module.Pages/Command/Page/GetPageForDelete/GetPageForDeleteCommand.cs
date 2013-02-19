@@ -1,5 +1,6 @@
 ﻿using System;
 
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Page;
@@ -9,31 +10,28 @@ using NHibernate.Transform;
 
 namespace BetterCms.Module.Pages.Command.Page.GetPageForDelete
 {
+    /// <summary>
+    /// Command for page delete confirmation.
+    /// </summary>
     public class GetPageForDeleteCommand : CommandBase, ICommand<Guid, DeletePageViewModel>
     {
         /// <summary>
         /// Executes the specified request.
         /// </summary>
         /// <param name="request">The request.</param>
-        /// <returns></returns>
-        /// <exception cref="System.NotImplementedException"></exception>
+        /// <returns>Delete confirmation view model.</returns>
         public DeletePageViewModel Execute(Guid request)
         {
-            DeletePageViewModel model;
-
             PageProperties alias = null;
             DeletePageViewModel modelAlias = null;
 
-            model =
-                UnitOfWork.Session.QueryOver(() => alias)
-                          .Where(p => p.Id == request)
+            return UnitOfWork.Session.QueryOver(() => alias)
+                          .Where(p => p.Id == request && !p.IsDeleted)
                           .SelectList(select => select
                               .Select(() => alias.Id).WithAlias(() => modelAlias.PageId)
                               .Select(() => alias.Version).WithAlias(() => modelAlias.Version))
                           .TransformUsing(Transformers.AliasToBean<DeletePageViewModel>())
-                          .SingleOrDefault<DeletePageViewModel>();
-
-            return model ?? new DeletePageViewModel();
+                          .First<DeletePageViewModel, PageProperties>();
         }
     }
 }

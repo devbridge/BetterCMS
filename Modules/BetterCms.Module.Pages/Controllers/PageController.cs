@@ -1,8 +1,10 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
 using BetterCms.Core.Models;
 using BetterCms.Module.MediaManager.ViewModels;
+using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 using BetterCms.Module.Pages.Command.Page.ClonePage;
 using BetterCms.Module.Pages.Command.Page.CreatePage;
 using BetterCms.Module.Pages.Command.Page.DeletePage;
@@ -145,7 +147,8 @@ namespace BetterCms.Module.Pages.Controllers
         public ActionResult DeletePageConfirmation(string id)
         {
             var model = GetCommand<GetPageForDeleteCommand>().ExecuteCommand(id.ToGuidOrDefault());
-            return View(model);
+            var view = RenderView("DeletePageConfirmation", model ?? new DeletePageViewModel());
+            return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
