@@ -77,7 +77,10 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
             },
             classes = {
                 regionAdvancedContent: 'bcms-content-advanced',
-                regionWidget: 'bcms-content-widget'
+                regionWidget: 'bcms-content-widget',
+                draftStatus: 'bcms-icn-draft',
+                publishStatus: 'bcms-icn-published',
+                draftPublStatus: 'bcms-icn-pubdraft'
             };
 
         /**
@@ -512,14 +515,19 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
             }
 
             var status = '';
+            var statusContainer = $("<div></div>");
             if (json.Data.IsPublished && json.Data.HasDraft) {
+                statusContainer.addClass(classes.draftPublStatus);
                 status = globalization.widgetStatusPublishedWithDraft;
             } else if (json.Data.IsPublished) {
+                statusContainer.addClass(classes.publishStatus);
                 status = globalization.widgetStatusPublished;
             } else if (json.Data.HasDraft) {
+                statusContainer.addClass(classes.draftStatus);
                 status = globalization.widgetStatusDraft;
             }
-            row.find(selectors.widgetStatusCell).html(status);
+            statusContainer.html(status);
+            row.find(selectors.widgetStatusCell).html(statusContainer);
         };
         
         /**

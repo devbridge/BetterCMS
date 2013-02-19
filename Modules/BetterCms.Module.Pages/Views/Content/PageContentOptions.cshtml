@@ -33,7 +33,7 @@
 }
 
 <div class="bcms-scroll-window">
-    <div class="bcms-padded-content">
+    
         <div class="bcms-input-list-holder">
             @using (Html.BeginForm<ContentController>(c => c.PageContentOptions((PageContentOptionsViewModel)null), FormMethod.Post, new { @id = "bcms-options-form", @class = "bcms-ajax-form" }))
             {              
@@ -41,5 +41,5 @@
                 @Html.HiddenFor(model => model.PageContentId)
             }
         </div>
-    </div>
+   
 </div>

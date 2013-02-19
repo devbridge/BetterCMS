@@ -51,10 +51,10 @@
 
                         <div class="bcms-controls-holder">
                             <div class="bcms-btn-small bcms-content-insert-button" >@PagesGlobalization.AddPageContent_WidgetTab_InsertButton</div>
-                             @if (widget.Status.Equals(ContentStatus.Draft.ToString()))
-                            {
+                             @if (!widget.Status.Equals(ContentStatus.Published.ToString()))
+                             {
                                 <a class="bcms-icn-edit bcms-content-edit-button bcms-edit-draft">@PagesGlobalization.AddPageContent_WidgetTab_EditButton</a>
-                            }
+                             }
                              else
                              {
                                 <a class="bcms-icn-edit bcms-content-edit-button">@PagesGlobalization.AddPageContent_WidgetTab_EditButton</a>
