@@ -43,7 +43,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageSeo
         /// </returns>
         public virtual EditSeoViewModel Execute(EditSeoViewModel model)
         {
-            var page = Repository.AsProxy<PageProperties>(model.PageId);
+            var page = Repository.First<PageProperties>(model.PageId);
             page.Version = model.Version;
             page.Title = model.PageTitle;
 

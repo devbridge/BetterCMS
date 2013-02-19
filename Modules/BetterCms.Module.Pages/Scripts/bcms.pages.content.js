@@ -155,7 +155,11 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                     if (json.Success && json.Data != null) {
                         content.updateRegionContentVersions(model.region, json.Data.UpdatedPageContents);
                     } else {
-                        alertOnError();
+                        if (json.Messages && json.Messages.length > 0) {
+                            modal.showMessages(json);
+                        } else {
+                            alertOnError();
+                        }
                     }
                 },
                 error: function () {
@@ -501,10 +505,14 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                             });
                         }
                         else {
-                            modal.alert({
-                                title: globalization.deleteContentFailureMessageTitle,
-                                content: globalization.deleteContentFailureMessageMessage,
-                            });
+                            if (json.Messages && json.Messages.length > 0) {
+                                modal.showMessages(json);
+                            } else {
+                                modal.alert({
+                                    title: globalization.deleteContentFailureMessageTitle,
+                                    content: globalization.deleteContentFailureMessageMessage,
+                                });
+                            }
                         }
                     } finally {
                         confirmDialog.close();
