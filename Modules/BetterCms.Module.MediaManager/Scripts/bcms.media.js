@@ -48,7 +48,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             deleteVideoConfirmMessage: null,
             deleteFileConfirmMessage: null,
             deleteFolderConfirmMessage: null,
-            
+
             insertImageDialogTitle: null,
             insertImageFailureMessageTitle: null,
             insertImageFailureMessageMessage: null,
@@ -58,7 +58,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             insertFileFailureMessageMessage: null,
             insertFileDialogTitle: null,
             fileNotSelectedMessageMessage: null,
-                
+
             imagesTabTitle: null,
             audiosTabTitle: null,
             videosTabTitle: null,
@@ -93,7 +93,8 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         staticDomId = 1,
         contentEditor = null,
         imageInsertDialog = null,
-        fileInsertDialog = null;
+        fileInsertDialog = null,
+        blurTimer = null;
 
     /**
     * Assign objects to module.
@@ -667,7 +668,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     * Function is called, when editable item losts focus
     */
     function cancelOrSaveMedia(folderViewModel, item) {
-        setTimeout(function () {
+        blurTimer = setTimeout(function () {
             if (!item.name() && !item.id()) {
                 cancelEditMedia(folderViewModel, item);
             } else {
@@ -700,18 +701,17 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             if (input.valid()) {
                 var params = item.toJson(),
                     onSaveCompleted = function (json) {
+                        clearTimeout(blurTimer);
                         loaderContainer.hideLoading();
                         messages.refreshBox(folderViewModel.container, json);
                         if (json.Success && json.Data) {
                             item.version(json.Data.Version);
                             item.id(json.Data.Id);
                             item.oldName = item.name();
-                        } else {
-                            item.isActive(true);
+                            item.isActive(false);
                         }
                     };
                 loaderContainer.showLoading();
-                item.isActive(false);
                 $.ajax({
                     url: item.updateUrl,
                     type: 'POST',
