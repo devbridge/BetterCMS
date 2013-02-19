@@ -27,13 +27,13 @@ namespace BetterCms.Module.Pages.Mvc.Attributes
             if (value != null)
             {
                 var dateTo = value as DateTime?;
-                if (dateTo.HasValue)
+                if (!dateTo.HasValue)
                 {
-                    return true;
+                    return false;
                 }
             }
 
-            return false;
+            return true;
         }
 
         /// <summary>
