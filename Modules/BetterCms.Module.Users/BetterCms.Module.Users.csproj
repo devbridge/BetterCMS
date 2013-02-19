@@ -117,6 +117,7 @@
     <Compile Include="Commands\Role\GetRoles\GetRolesCommand.cs" />
     <Compile Include="Commands\Role\SaveRole\SaveRoleCommand.cs" />
     <Compile Include="Commands\Role\SaveRole\SaveRoleResponse.cs" />
+    <Compile Include="Commands\User\GetUsersList\GetUsersCommand.cs" />
     <Compile Include="Commands\User\GetUser\GetUserCommand.cs" />
     <Compile Include="Commands\User\SaveUserCommand.cs" />
     <Compile Include="Commands\User\SaveUserResponse.cs" />
@@ -166,6 +167,7 @@
     <Compile Include="ViewModels\Role\SiteSettingRoleListViewModel.cs" />
     <Compile Include="ViewModels\SearchableUserViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
+    <Compile Include="ViewModels\User\UserItemViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Content\Resources\UsersGlobalization.en-US.resx">

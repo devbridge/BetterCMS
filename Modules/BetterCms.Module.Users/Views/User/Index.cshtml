@@ -3,19 +3,20 @@
 @using BetterCms.Module.Users.Content.Resources
 @using BetterCms.Module.Users.ViewModels;
 @using BetterCms.Module.Root.Mvc.Helpers
+@using BetterCms.Module.Users.ViewModels.User
 @using Microsoft.Web.Mvc
 @using MvcContrib.UI.Grid
 
-@model BetterCms.Module.Root.ViewModels.SiteSettings.SearchableGridViewModel<UserViewModel>
+@model BetterCms.Module.Root.ViewModels.SiteSettings.SearchableGridViewModel<UserItemViewModel>
 
 @{
-    Action<ColumnBuilder<UserViewModel>> columns = column =>
+    Action<ColumnBuilder<UserItemViewModel>> columns = column =>
     {
         column.EditButtonColumn();
 
-        column.For(m => string.Format("<a class=\"bcms-tables-link bcms-grid-item-edit-button bcms-blog-Title\" data-id=\"{0}\">{1}</a>", m.Id, m.Name))
+        column.For(m => string.Format("<a class=\"bcms-tables-link bcms-grid-item-edit-button bcms-user-name\" data-id=\"{0}\">{1}</a>", m.Id, m.UserName))
             .Named(UsersGlobalization.SiteSettings_Users_NameColumn)
-            .SortColumnName("Name")
+            .SortColumnName("UserName")
             .Encode(false);
 
         column.For(m => m.Roles)
@@ -33,14 +34,21 @@
     <div class="bcms-btn-links-main" id="bcms-create-user-button">@UsersGlobalization.User_Dialog_AddNew</div>
     <div class="bcms-search-block">
         @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box" })
-        <div class="bcms-btn-search" id="bcms-blogs-search-btn">@UsersGlobalization.User_Dialog_Search</div>
+        <div class="bcms-btn-search" id="bcms-users-search-btn">@UsersGlobalization.User_Dialog_Search</div>
     </div>
-    @Html.MessagesBox("bcms-blogs-messages")
+    @Html.MessagesBox("bcms-users-messages")
 </div>
 
-@Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables", @id => "bcms-users-grid").RenderUsing(new EditableHtmlTableGridRenderer<UserViewModel>())
+@Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables", @id => "bcms-users-grid").RowAttributes(delegate(GridRowViewData<UserItemViewModel> row)
+                  {
+                      return new Dictionary<string, object>
+                              {
+                                    {"data-id", row.Item.Id},
+                                    {"data-version", row.Item.Version}
+                              };
+              }).RenderUsing(new EditableHtmlTableGridRenderer<UserItemViewModel>())
 
 
-<script type="text/html" id="bcms-blogs-list-row-template">
-    @Html.Grid(new List<UserViewModel> {new UserViewModel()}).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<UserViewModel>())
+<script type="text/html" id="bcms-users-list-row-template">
+    @Html.Grid(new List<UserItemViewModel> {new UserItemViewModel()}).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<UserItemViewModel>())
 </script>

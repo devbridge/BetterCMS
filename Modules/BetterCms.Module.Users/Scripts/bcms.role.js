@@ -8,8 +8,6 @@ define('bcms.role', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     var role = {},
         selectors = {
             siteSettingsRoleCreatButton: "#bcms-create-role-button",
-            usersTable: '#bcms-users-grid',
-
             roleForm: '#bcms-role-form',
             roleRowEditButtons: '.bcms-grid-item-edit-button',
             roleRowDeleteButtons: '.bcms-grid-item-delete-button',
@@ -99,7 +97,6 @@ define('bcms.role', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
 
         form.on('submit', function (event) {
             event.preventDefault();
-            //searchRoles(form);
             return false;
         });
     }

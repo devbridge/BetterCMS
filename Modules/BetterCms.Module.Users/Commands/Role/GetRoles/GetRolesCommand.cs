@@ -31,7 +31,7 @@ namespace BetterCms.Module.Users.Commands.Role.GetRoles
                 gridOptions.SetDefaultSortingOptions("RoleName");
             }
 
-            return roles.AddSortingAndPaging(gridOptions).ToFuture().ToList(); ;
+            return roles.AddSortingAndPaging(gridOptions).ToFuture().ToList();
         }
     }
 }

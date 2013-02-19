@@ -8,11 +8,16 @@ define('bcms.user', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     var user = {},
         selectors = {
             siteSettingsUserCreateButton: "#bcms-create-user-button",
-            siteSettingsRoleCreatButton: "#bcms-create-role-button",
             usersTable: '#bcms-users-grid',
             userUploadImageButton: "#bcms-open-uploader-button",
             userImageId: ".bcms-user-image-id",
-            userImage: ".bcms-user-image-url"
+            userImage: ".bcms-user-image-url",
+            userRowEditButtons: '.bcms-grid-item-edit-button',
+            userParentRow: 'tr:first',
+            userNameCell: '.bcms-user-name',
+            userRowTemplate: '#bcms-role-list-row-template',
+            userTableFirstRow: 'table.bcms-tables > tbody > tr:first',
+            userRowTemplateFirstRow: 'tr:first'
         },
 
         links = {
@@ -29,6 +34,7 @@ define('bcms.user', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             confirmLogoutMessage: null,
             usersListTabTitle: null,
             usersAddNewTitle: null,
+            editUserTitle: null,
             rolesListTabTitle: null,
             rolesAddNewTitle: null
         };
@@ -73,6 +79,9 @@ define('bcms.user', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             user.openCreatUserDialog();
             //editor.addNewRow(container);
         });
+        container.find(selectors.userRowEditButtons).on('click', function() {
+            editUser(container, $(this));
+        });
 
     }
 
@@ -96,9 +105,66 @@ define('bcms.user', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         };
         dialog.container.find(selectors.userUploadImageButton).on('click', function () {            
             media.openImageInsertDialog(onImageInsert);          
+        });        
+    };
+
+     /**
+    * Calls function, which opens dialog for a user editing.
+    */
+    function editUser(container, self) {
+        var row = self.parents(selectors.userParentRow),
+                id = row.data('id');
+
+        editUserWindow(id, function (data) {
+        if (data.Data != null) {
+            setUserFields(row, data);
+        grid.showHideEmptyRow(container);
+        }
         });
     };
 
+    function editUserWindow(templateId, onSaveCallback) {
+        user.openEditUserDialog(templateId, onSaveCallback);
+    };
+        
+    user.openEditUserDialog = function (templateId, onSaveCallback) {
+    modal.open({
+            title: globalization.editUserTitle,
+            onLoad: function (childDialog) {
+                dynamicContent.bindDialog(childDialog, $.format(links.loadEditUserUrl, templateId), {
+                    contentAvailable: initializeEditUserForm,
+
+                    beforePost: function (form) {
+                        editor.resetAutoGenerateNameId();
+                        editor.setInputNames(form);
+                    },
+
+                    postSuccess: onSaveCallback
+                });
+            }
+        });
+    };
+        
+    function initializeEditUserForm() {
+        var dialog = siteSettings.getModalDialog(),
+            container = dialog.container;
+        
+        var form = container.find(selectors.userForm);
+
+        form.on('submit', function (event) {
+            event.preventDefault();
+            return false;
+        });
+    }
+        
+    /**
+    * Set values, returned from server to row fields
+    */
+    function setUserFields(row, json) {
+        row.data('id', json.Data.Id);
+        row.data('version', json.Data.Version);
+        row.find(selectors.userNameCell).html(json.Data.UserName);
+    };
 
     bcms.registerInit(user.init);
 

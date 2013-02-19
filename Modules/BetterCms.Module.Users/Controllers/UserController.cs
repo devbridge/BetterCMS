@@ -8,8 +8,10 @@ using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 using BetterCms.Module.Root.ViewModels.SiteSettings;
 using BetterCms.Module.Users.Commands.User;
 using BetterCms.Module.Users.Commands.User.GetUser;
+using BetterCms.Module.Users.Commands.User.GetUsersList;
 using BetterCms.Module.Users.Content.Resources;
 using BetterCms.Module.Users.ViewModels;
+using BetterCms.Module.Users.ViewModels.User;
 
 namespace BetterCms.Module.Users.Controllers
 {
@@ -20,11 +22,8 @@ namespace BetterCms.Module.Users.Controllers
 
         public ActionResult Index(SearchableGridOptions request)
         {
-            
-            IList<UserViewModel> user = new List<UserViewModel>();
-            user.Add(new UserViewModel(){Name = "test"});
-            user.Add(new UserViewModel() { Name = "test1" });
-            var model = new SearchableGridViewModel<UserViewModel>(user, new SearchableGridOptions(), 0);
+            var users = GetCommand<GetUsersCommand>().Execute(request);
+            var model = new SearchableGridViewModel<UserItemViewModel>(users, new SearchableGridOptions(), users.Count);
             return View(model);
         }
 
