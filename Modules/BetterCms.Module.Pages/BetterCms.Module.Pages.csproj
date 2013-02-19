@@ -243,6 +243,7 @@
     <Compile Include="ViewModels\Category\CategoryItemViewModel.cs" />
     <Compile Include="ViewModels\Content\ContentOptionViewModel.cs" />
     <Compile Include="ViewModels\Content\ContentViewModel.cs" />
+    <Compile Include="ViewModels\Content\ContentSortViewModel.cs" />
     <Compile Include="ViewModels\Content\PageContentSortViewModel.cs" />
     <Compile Include="ViewModels\History\ContentHistoryItem.cs" />
     <Compile Include="ViewModels\History\ContentHistoryViewModel.cs" />

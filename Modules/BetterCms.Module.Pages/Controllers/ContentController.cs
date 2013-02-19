@@ -2,26 +2,23 @@
 using System.Linq;
 using System.Web.Mvc;
 
-using BetterCms.Core.Models;
-
+using BetterCms.Module.Pages.Command.Content.DeletePageContent;
 using BetterCms.Module.Pages.Command.Content.GetPageContentOptions;
 using BetterCms.Module.Pages.Command.Content.GetPageHtmlContent;
 using BetterCms.Module.Pages.Command.Content.InsertContent;
 using BetterCms.Module.Pages.Command.Content.SavePageContentOptions;
 using BetterCms.Module.Pages.Command.Content.SavePageHtmlContent;
 using BetterCms.Module.Pages.Command.Content.SortPageContent;
-using BetterCms.Module.Pages.Command.Content.DeletePageContent;
 using BetterCms.Module.Pages.Command.Widget.GetWidgetCategory;
-
-using BetterCms.Module.Pages.Content.Resources;
-
 using BetterCms.Module.Pages.ViewModels.Content;
-
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
 namespace BetterCms.Module.Pages.Controllers
 {
+    /// <summary>
+    /// Controller for content management.
+    /// </summary>
     public class ContentController : CmsControllerBase
     {
         /// <summary>
@@ -153,14 +150,15 @@ namespace BetterCms.Module.Pages.Controllers
         [HttpGet]
         public ActionResult EditPageHtmlContent(string pageContentId)
         {
-            var viewModel = GetCommand<GetPageHtmlContentCommand>().ExecuteCommand(pageContentId.ToGuidOrDefault());
-
-            return View(viewModel);
+            var model = GetCommand<GetPageHtmlContentCommand>().ExecuteCommand(pageContentId.ToGuidOrDefault());
+            var view = RenderView("EditPageHtmlContent", model);
+            return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
         /// Creates modal dialog for editing a page content options.
         /// </summary>
+        /// <param name="pageContentId">The page content id.</param>
         /// <returns>
         /// ViewResult to render page content options modal dialog.
         /// </returns>
@@ -222,7 +220,7 @@ namespace BetterCms.Module.Pages.Controllers
         public ActionResult SortPageContent(PageContentSortViewModel model)
         {
             var response = GetCommand<SortPageContentCommand>().ExecuteCommand(model);
-            return Json(new WireJson { Success = true, Data = response });
+            return Json(new WireJson { Success = response != null, Data = response });
         }
     }
 }

@@ -51,11 +51,11 @@ namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
                         PageId = page.Id,
                         RegionId = region.Id,
                         PageContents =
-                            new List<ContentViewModel>
+                            new List<ContentSortViewModel>
                                 {
-                                    new ContentViewModel { Id = page.PageContents[2].Id, Version = page.PageContents[2].Version },
-                                    new ContentViewModel { Id = page.PageContents[1].Id, Version = page.PageContents[1].Version },
-                                    new ContentViewModel { Id = page.PageContents[0].Id, Version = page.PageContents[0].Version },
+                                    new ContentSortViewModel { Id = page.PageContents[2].Id, Version = page.PageContents[2].Version },
+                                    new ContentSortViewModel { Id = page.PageContents[1].Id, Version = page.PageContents[1].Version },
+                                    new ContentSortViewModel { Id = page.PageContents[0].Id, Version = page.PageContents[0].Version },
                                 }
                     };
                 var response = command.Execute(request);
