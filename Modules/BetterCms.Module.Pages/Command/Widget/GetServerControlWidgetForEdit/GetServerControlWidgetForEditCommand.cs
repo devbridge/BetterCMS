@@ -46,7 +46,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit
             EditServerControlWidgetViewModel model = null;
             var categories = categoryService.GetCategories();
 
-            if (widgetId != null)
+            if (widgetId.HasValue && widgetId.Value != Guid.Empty)
             {
                 var serverControlWidget = contentService.GetContentForEdit(widgetId.Value) as ServerControlWidget;
 
@@ -80,9 +80,13 @@ namespace BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit
                 {
                     throw new EntityNotFoundException(typeof(ServerControlWidget), widgetId.Value);
                 }
-
-                model.Categories = categories.ToList();
             }
+            else
+            {
+                model = new EditServerControlWidgetViewModel();
+            }
+
+            model.Categories = categories.ToList();
             
             return model;
         }

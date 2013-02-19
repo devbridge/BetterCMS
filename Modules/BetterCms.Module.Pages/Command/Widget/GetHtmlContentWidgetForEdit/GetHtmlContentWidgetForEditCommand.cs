@@ -45,7 +45,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
 
              var categories = categoryService.GetCategories();
 
-            if (widgetId != null)
+             if (widgetId.HasValue && widgetId.Value != Guid.Empty)
             {
                 var htmlContentWidget = contentService.GetContentForEdit(widgetId.Value) as HtmlContentWidget;
                 
@@ -73,9 +73,13 @@ namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
                 {
                     throw new EntityNotFoundException(typeof(HtmlContentWidget), widgetId.Value);
                 }
-
-                model.Categories = categories.ToList();
             }
+            else
+            {
+                model = new EditHtmlContentWidgetViewModel();
+            }
+
+            model.Categories = categories.ToList();
             
             return model;
         }
