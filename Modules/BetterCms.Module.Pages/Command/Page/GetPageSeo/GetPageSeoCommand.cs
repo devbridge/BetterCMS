@@ -21,6 +21,11 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageSeo
         /// <returns>EditSeoView model filled with page SEO information.</returns>
         public virtual EditSeoViewModel Execute(Guid pageId)
         {
+            if (pageId.HasDefaultValue())
+            {
+                return new EditSeoViewModel();
+            }
+
             var page = Repository
                 .AsQueryable<PageProperties>()
                 .Where(f => f.Id == pageId)

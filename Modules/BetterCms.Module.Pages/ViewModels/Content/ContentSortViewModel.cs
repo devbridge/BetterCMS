@@ -22,5 +22,16 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// </value>
         [Required]
         public virtual int Version { get; set; }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format("ContentId: {0}", Id);
+        }
     }
 }

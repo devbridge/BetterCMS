@@ -177,8 +177,10 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
     * Closes edit permalink box in AddNewPage dialog.
     */
     page.closeAddNewPageEditPermalinkBox = function (dialog) {
-        var value = dialog.container.find(selectors.editPermalinkHiddenField).val();
-        dialog.container.find(selectors.editPermalinkEditField).val(value);
+        var value = dialog.container.find(selectors.editPermalinkHiddenField).val(),
+            permalinkEditField = dialog.container.find(selectors.editPermalinkEditField);
+        permalinkEditField.val(value);
+        permalinkEditField.blur();
 
         page.hideAddNewPageEditPermalinkBox(dialog);
     };

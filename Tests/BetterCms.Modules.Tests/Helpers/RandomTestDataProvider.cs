@@ -85,7 +85,8 @@ namespace BetterCms.Tests.Helpers
         public void PopulateBaseFields<TEntity>(EquatableEntity<TEntity> entity, User user = null)
             where TEntity : EquatableEntity<TEntity>
         {
-          /*  entity.IsDeleted = false;
+            entity.Id = Guid.NewGuid();
+            /*  entity.IsDeleted = false;
             entity.CreatedOn = ProvideRandomDateTime();
             entity.CreatedByUser = ProvideRandomString(256);
             entity.ModifiedOn = ProvideRandomDateTime();
