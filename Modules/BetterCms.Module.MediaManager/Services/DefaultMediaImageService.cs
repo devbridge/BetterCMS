@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -64,6 +65,11 @@ namespace BetterCms.Module.MediaManager.Services
         /// The media file service
         /// </summary>
         private readonly IMediaFileService mediaFileService;
+
+        /// <summary>
+        /// The image file format
+        /// </summary>
+        public static IDictionary<string, ImageFormat> transparencyFormats = new Dictionary<string, ImageFormat>(StringComparer.OrdinalIgnoreCase) { { "png", ImageFormat.Png }, { "gif", ImageFormat.Gif } };
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultMediaImageService" /> class.
@@ -277,7 +283,7 @@ namespace BetterCms.Module.MediaManager.Services
             {
                 throw new ImagingException(string.Format("Stream {0} is not valid image stream. Can not determine image size.", imageStream.GetType()), e);
             }
-        }
+        }        
 
         /// <summary>
         /// Resizes the image and crop to fit.
@@ -293,25 +299,53 @@ namespace BetterCms.Module.MediaManager.Services
                 sourceStream.CopyTo(tempStream);               
 
                 var image = new WebImage(tempStream);
-                
+               
                 // Make image rectangular.
                 WebImage croppedImage;
-                var diff = (image.Width - image.Height) / 2.0;
-                if (diff > 0)
+
+                ImageFormat format = null;
+                if (transparencyFormats.TryGetValue(image.ImageFormat, out format))
                 {
-                    croppedImage = image.Crop(0, Convert.ToInt32(Math.Floor(diff)), 0, Convert.ToInt32(Math.Ceiling(diff)));
-                }
-                else if (diff < 0)
-                {
-                    diff = Math.Abs(diff);
-                    croppedImage = image.Crop(Convert.ToInt32(Math.Floor(diff)), 0, Convert.ToInt32(Math.Ceiling(diff)));
+                    using (Image resizedBitmap = new Bitmap(size.Width, size.Height))
+                    {
+                        using (Bitmap source = new Bitmap(new MemoryStream(image.GetBytes())))
+                        {
+                            using (Graphics g = Graphics.FromImage(resizedBitmap))
+                            {
+                                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                                g.DrawImage(source, 0, 0, size.Width, size.Height);
+                            }
+                        }
+                        using (MemoryStream ms = new MemoryStream())
+                        {
+                            resizedBitmap.Save(ms, ImageFormat.Png);
+                            croppedImage = new WebImage(ms);
+                        }
+                    }
                 }
                 else
                 {
-                    croppedImage = image;
+
+                    var diff = (image.Width - image.Height) / 2.0;
+                    if (diff > 0)
+                    {
+                        croppedImage = image.Crop(0, Convert.ToInt32(Math.Floor(diff)), 0, Convert.ToInt32(Math.Ceiling(diff)));
+                    }
+                    else if (diff < 0)
+                    {
+                        diff = Math.Abs(diff);
+                        croppedImage = image.Crop(Convert.ToInt32(Math.Floor(diff)), 0, Convert.ToInt32(Math.Ceiling(diff)));
+                    }
+                    else
+                    {
+                        croppedImage = image;
+                    }
+                    croppedImage = croppedImage.Resize(size.Width, size.Height);
                 }
 
-                var resizedImage = croppedImage.Resize(size.Width, size.Height);
+
+                var resizedImage = croppedImage;
 
                 var bytes = resizedImage.GetBytes();
                 destinationStream.Write(bytes, 0, bytes.Length);                
