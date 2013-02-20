@@ -169,6 +169,15 @@ namespace BetterCms.Module.Navigation.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid &lt;,&gt;,*,%,&amp;,:,\,? symbols..
+        /// </summary>
+        public static string Sitemap_Dialog_NodeUrl_InvalidSymbol {
+            get {
+                return ResourceManager.GetString("Sitemap_Dialog_NodeUrl_InvalidSymbol", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Url is required..
         /// </summary>
         public static string Sitemap_Dialog_NodeUrl_RequiredMessage {

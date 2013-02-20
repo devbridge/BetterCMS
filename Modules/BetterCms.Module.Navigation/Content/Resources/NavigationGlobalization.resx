@@ -204,4 +204,7 @@
   <data name="Sitemap_EditDialog_SomeNodesAreInEditingState" xml:space="preserve">
     <value>At least one node is in editing mode.</value>
   </data>
+  <data name="Sitemap_Dialog_NodeUrl_InvalidSymbol" xml:space="preserve">
+    <value>Invalid &lt;,&gt;,*,%,&amp;,:,\,? symbols.</value>
+  </data>
 </root>
