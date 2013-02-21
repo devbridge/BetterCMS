@@ -49,16 +49,22 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         private readonly IContentService contentService;
 
         /// <summary>
+        /// The redirect service
+        /// </summary>
+        private readonly IRedirectService redirectService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SaveBlogPostCommand" /> class.
         /// </summary>
         /// <param name="tagService">The tag service.</param>
         /// <param name="optionService">The option service.</param>
         /// <param name="contentService">The content service.</param>
-        public SaveBlogPostCommand(ITagService tagService, IOptionService optionService, IContentService contentService)
+        public SaveBlogPostCommand(ITagService tagService, IOptionService optionService, IContentService contentService, IRedirectService redirectService)
         {
             this.tagService = tagService;
             this.optionService = optionService;
             this.contentService = contentService;
+            this.redirectService = redirectService;
         }
 
         /// <summary>
@@ -101,7 +107,17 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             blogPost.Version = request.Version;
             if (isNew)
             {
-                blogPost.PageUrl = GeneratePageUrl(request.Title);
+                var parentPageUrl = request.ParentPageUrl.Trim('/');
+                if (!string.IsNullOrWhiteSpace(parentPageUrl))
+                {
+                    var postUrl = GeneratePageUrl(request.Title);
+                    var pageUrl = string.Concat(parentPageUrl, postUrl);
+                    blogPost.PageUrl = redirectService.FixUrl(pageUrl);
+                }
+                else
+                {
+                    blogPost.PageUrl = GeneratePageUrl(request.Title);
+                }
                 blogPost.IsPublic = true;
                 blogPost.Layout = layout;
             }

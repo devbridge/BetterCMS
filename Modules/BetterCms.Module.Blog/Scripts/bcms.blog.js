@@ -173,7 +173,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     * Created new blog post
     */
     function createBlogPost(postSuccess) {
-        var url = links.loadCreateNewPostDialogUrl,
+        var url = $.format(links.loadCreateNewPostDialogUrl, window.location.pathname),
             title = globalization.createNewPostDialogTitle;
 
         openBlogEditForm(url, title, postSuccess);
