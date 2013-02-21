@@ -22,5 +22,29 @@ namespace BetterCms.Module.Pages.Models
         
         public virtual Category Category { get; set; }
         public virtual MediaImage Image { get; set; }
+
+        public virtual PageProperties Duplicate()
+        {
+            return CopyDataToDuplicate(new PageProperties());
+        }
+
+        protected virtual PageProperties CopyDataToDuplicate(PageProperties duplicate)
+        {
+            duplicate.MetaTitle = MetaTitle;
+            duplicate.MetaKeywords = MetaKeywords;
+            duplicate.MetaDescription = MetaDescription;
+            duplicate.IsPublic = IsPublic;
+            duplicate.UseCanonicalUrl = UseCanonicalUrl;
+            duplicate.CustomCss = CustomCss;
+            duplicate.CustomJS = CustomJS;
+            duplicate.Description = Description;
+            duplicate.UseNoFollow = UseNoFollow;
+            duplicate.UseNoIndex = UseNoIndex;
+            duplicate.Layout = Layout;
+            duplicate.Image = Image;
+            duplicate.Category = Category;
+
+            return duplicate;
+        }
     }
 }
