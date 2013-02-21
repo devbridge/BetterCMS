@@ -736,7 +736,8 @@ namespace BetterCms.Tests.Helpers
             entity.FirstName = ProvideRandomString(MaxLength.Name);
             entity.LastName = ProvideRandomString(MaxLength.Name);
             entity.Email = ProvideRandomString(MaxLength.Email);
-            entity.Password = ProvideRandomString(MaxLength.Name);
+            entity.Password = ProvideRandomString(MaxLength.Password);
+            entity.Salt = ProvideRandomString(MaxLength.Password);
             entity.Image = CreateNewMediaImage();
 
             return entity;

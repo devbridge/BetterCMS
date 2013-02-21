@@ -16,9 +16,12 @@ namespace BetterCms.Module.Users.Commands.User
     {
         private IRoleService roleService;
 
-        public SaveUserCommand(IRoleService roleService)
+        private IAuthenticationService authenticationService;
+
+        public SaveUserCommand(IRoleService roleService, IAuthenticationService authenticationService)
         {
             this.roleService = roleService;
+            this.authenticationService = authenticationService;
         }
         /// <summary>
         /// Executes a command to save user.
@@ -47,7 +50,9 @@ namespace BetterCms.Module.Users.Commands.User
             user.FirstName = userItem.FirstName;
             user.LastName = userItem.LastName;
             user.Email = userItem.Email;
-            user.Password = userItem.Password;
+            var salt = authenticationService.GeneratePasswordSalt();
+            user.Password = authenticationService.CreatePasswordHash(userItem.Password, salt);
+            user.Salt = salt;
             user.Version = userItem.Version;
 
             if (userItem.Image != null && userItem.Image.ImageId.HasValue)

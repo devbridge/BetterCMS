@@ -137,6 +137,7 @@ namespace BetterCms.Module.Users
         public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder, ICmsConfiguration configuration)
         {
             containerBuilder.RegisterType<DefaultRoleService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultAuthentictionService>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
     }
 }

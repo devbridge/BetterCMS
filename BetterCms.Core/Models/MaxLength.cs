@@ -16,6 +16,11 @@ namespace BetterCms.Core.Models
         public const int Name = 200;
 
         /// <summary>
+        /// A max length of password fields.
+        /// </summary>
+        public const int Password = 255;
+
+        /// <summary>
         /// A max length of text fields.
         /// </summary>
         public const int Text = 2000;

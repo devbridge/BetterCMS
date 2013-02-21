@@ -36,16 +36,10 @@ namespace BetterCms.Module.Users.Models.Migrations
                    .WithColumn("Email").AsAnsiString(MaxLength.Email).NotNullable()
                    .WithColumn("Password").AsAnsiString(MaxLength.Name).NotNullable()
                    .WithColumn("ImageId").AsGuid().Nullable();
-
-            /*Create
-                .ForeignKey("FK_Cms_Users_ImageId_Medias_Id")
-                .FromTable("Users").InSchema(SchemaName).ForeignColumn("ImageId")
-                .ToTable("Medias").InSchema(SchemaName).PrimaryColumn("Id");*/
         }
 
         public override void Down()
-        {
-           // Delete.ForeignKey("ImageId").OnTable("Users").InSchema(SchemaName);
+        {           
             Delete.Table("Users").InSchema(SchemaName);
         }
     }

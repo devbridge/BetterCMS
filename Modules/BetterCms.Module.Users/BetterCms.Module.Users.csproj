@@ -149,6 +149,7 @@
     <Compile Include="Models\Migrations\Migration201301221015.cs" />
     <Compile Include="Models\Migrations\Migration201302011135.cs" />
     <Compile Include="Models\Migrations\Migration201302061720.cs" />
+    <Compile Include="Models\Migrations\Migration201302211715.cs" />
     <Compile Include="Models\Migrations\UsersVersionTableMetaData.cs" />
     <Compile Include="Models\Permission.cs" />
     <Compile Include="Models\Role.cs" />
@@ -159,7 +160,9 @@
     <Compile Include="Registration\RoleJavaScriptModuleDescriptor.cs" />
     <Compile Include="Provider\RoleProvider.cs" />
     <Compile Include="Registration\UserJavaScriptModuleDescriptor.cs" />
+    <Compile Include="Services\DefaultAuthentictionService.cs" />
     <Compile Include="Services\DefaultRoleService.cs" />
+    <Compile Include="Services\IAuthenticationService.cs" />
     <Compile Include="Services\IRoleService.cs" />
     <Compile Include="UsersModuleDescriptor.cs" />
     <Compile Include="ViewModels\EditUserViewModel.cs" />
