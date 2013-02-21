@@ -117,6 +117,8 @@
     <Compile Include="Commands\Role\GetRoles\GetRolesCommand.cs" />
     <Compile Include="Commands\Role\SaveRole\SaveRoleCommand.cs" />
     <Compile Include="Commands\Role\SaveRole\SaveRoleResponse.cs" />
+    <Compile Include="Commands\User\DeleteUser\DeleteUserCommand.cs" />
+    <Compile Include="Commands\User\DeleteUser\DeleteUserCommandRequest.cs" />
     <Compile Include="Commands\User\GetUsersList\GetUsersCommand.cs" />
     <Compile Include="Commands\User\GetUser\GetUserCommand.cs" />
     <Compile Include="Commands\User\SaveUserCommand.cs" />

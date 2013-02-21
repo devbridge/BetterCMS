@@ -7,6 +7,7 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 using BetterCms.Module.Root.ViewModels.SiteSettings;
 using BetterCms.Module.Users.Commands.User;
+using BetterCms.Module.Users.Commands.User.DeleteUser;
 using BetterCms.Module.Users.Commands.User.GetUser;
 using BetterCms.Module.Users.Commands.User.GetUsersList;
 using BetterCms.Module.Users.Content.Resources;
@@ -45,6 +46,22 @@ namespace BetterCms.Module.Users.Controllers
                 return Json(new WireJson { Success = true, Data = response });
             }
             return Json(new WireJson { Success = false });
+        }
+
+        public ActionResult DeleteUser(string id, string version)
+        {
+            bool success = GetCommand<DeleteUserCommand>().ExecuteCommand(
+                new DeleteUserCommandRequest
+                {
+                    UserId = id.ToGuidOrDefault(),
+                    Version = version.ToIntOrDefault()
+                });
+
+            if (success)
+            {
+                Messages.AddSuccess(UsersGlobalization.DeleteUser_DeletedSuccessfully_Message);
+            }
+            return Json(new WireJson(success));
         }
 
     }
