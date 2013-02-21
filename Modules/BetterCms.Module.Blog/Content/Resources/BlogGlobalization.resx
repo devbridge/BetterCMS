@@ -258,7 +258,7 @@
   <data name="SiteSettings_Blogs_CreatedColumn" xml:space="preserve">
     <value>Created</value>
   </data>
-  <data name="SiteSettings_Blogs_IsPublishedColumn" xml:space="preserve">
+  <data name="SiteSettings_Blogs_PageStatusColumn" xml:space="preserve">
     <value>Published</value>
   </data>
   <data name="SiteSettings_Blogs_ModifiedByColumn" xml:space="preserve">

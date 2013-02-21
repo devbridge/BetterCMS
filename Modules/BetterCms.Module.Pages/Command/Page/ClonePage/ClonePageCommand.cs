@@ -115,7 +115,7 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
 
             newPage.Title = newPageTitle;
             newPage.PageUrl = newPageUrl;
-            newPage.IsPublished = false;
+            newPage.Status = PageStatus.Unpublished;
 
             Repository.Save(newPage);
 

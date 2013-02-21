@@ -1,4 +1,6 @@
 ﻿using System;
+
+using BetterCms.Core.Models;
 using BetterCms.Module.Root.Mvc.Grids;
 
 namespace BetterCms.Module.Blog.ViewModels.Blog
@@ -54,12 +56,12 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         public string ModifiedByUser { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether page is published.
+        /// Gets or sets the page status.
         /// </summary>
         /// <value>
-        /// <c>true</c> if page is published; otherwise, <c>false</c>.
+        /// The page status.
         /// </value>
-        public bool IsPublished { get; set; }
+        public PageStatus PageStatus { get; set; }
 
         /// <summary>
         /// Gets or sets the page url.

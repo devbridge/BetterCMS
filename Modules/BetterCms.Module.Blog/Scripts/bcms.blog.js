@@ -20,8 +20,9 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             siteSettingsRowCells: 'td',
             siteSettingsBlogCellPrefix: '.bcms-blog-',
             siteSettingsBlogTitleCell: '.bcms-blog-Title',
-            siteSettingsBlogBooleanTemplateFalse: '#bcms-boolean-false-template',
-            siteSettingsBlogBooleanTemplateTrue: '#bcms-boolean-true-template',
+            siteSettingsPageStatusTemplatePublished: '#bcms-pagestatus-published-template',
+            siteSettingsPageStatusTemplateUnpublished: '#bcms-pagestatus-unpublished-template',
+            siteSettingsPageStatusTemplateDraft: '#bcms-pagestatus-draft-template',
             siteSettingsBlogRowTemplate: '#bcms-blogs-list-row-template',
             siteSettingsBlogRowTemplateFirstRow: 'tr:first',
             siteSettingsBlogsTableFirstRow: 'table.bcms-tables > tbody > tr:first',
@@ -203,19 +204,28 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             row.find(selectors.siteSettingsBlogDeleteButton).data('id', json.Data.Id);
             row.find(selectors.siteSettingsBlogDeleteButton).data('version', json.Data.Version);
 
-            siteSettingsSetBooleanTemplate(row.find(selectors.siteSettingsBlogCellPrefix + 'IsPublished'), json.Data.IsPublished);
+            siteSettingsPageStatusTemplate(row.find(selectors.siteSettingsBlogCellPrefix + 'IsPublished'), json.Data.PageStatus);
         }
     }
 
     /**
-    * Adds boolean template to specified container
+    * Creates html for page status value, using given PageStatus template
     */
-    function siteSettingsSetBooleanTemplate (container, value) {
-        var template = (value === true) ? $(selectors.siteSettingsBlogBooleanTemplateTrue) : $(selectors.siteSettingsBlogBooleanTemplateFalse),
-            html = $(template.html());
+    function siteSettingsPageStatusTemplate(container, value) {
+        var template;
+        
+        if (value == 2) {
+            template = $(selectors.siteSettingsPageStatusTemplateDraft);
+        }   else if (value == 3) {
+            template = $(selectors.siteSettingsPageStatusTemplatePublished);
+        } else {
+            template = $(selectors.siteSettingsPageStatusTemplateUnpublished);
+        }
+        
+        var html = $(template.html());
         container.html(html);
     };
-
+        
     /**
     * Initializes site settings blogs list
     */

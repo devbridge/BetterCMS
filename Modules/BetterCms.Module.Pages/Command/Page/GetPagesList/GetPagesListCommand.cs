@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 
+using BetterCms.Core.Models;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.SiteSettings;
@@ -23,12 +24,9 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
         /// Executes the specified request.
         /// </summary>
         /// <param name="request">The request.</param>
-        /// <returns></returns>
-        /// <exception cref="System.NotImplementedException"></exception>
+        /// <returns>Result model.</returns>
         public SearchableGridViewModel<SiteSettingPageViewModel> Execute(SearchableGridOptions request)
         {
-            SearchableGridViewModel<SiteSettingPageViewModel> model;
-
             request.SetDefaultSortingOptions("Title");
 
             PageProperties alias = null;
@@ -36,7 +34,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
 
             var query = UnitOfWork.Session
                 .QueryOver(() => alias)
-                .Where(() => !alias.IsDeleted);
+                .Where(() => !alias.IsDeleted && alias.Status != PageStatus.Preview);
 
             if (!string.IsNullOrWhiteSpace(request.SearchQuery))
             {
@@ -44,7 +42,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
                 query = query.Where(Restrictions.Disjunction()
                                         .Add(Restrictions.InsensitiveLike(NHibernate.Criterion.Projections.Property(() => alias.Title), searchQuery))
                                         .Add(Restrictions.InsensitiveLike(NHibernate.Criterion.Projections.Property(() => alias.PageUrl), searchQuery))
-                                        .Add(Restrictions.InsensitiveLike(NHibernate.Criterion.Projections.Property(() => alias.MetaTitle), searchQuery))
+                                        .Add(Restrictions.InsensitiveLike(Projections.Property(() => alias.MetaTitle), searchQuery))
                                         .Add(Restrictions.InsensitiveLike(NHibernate.Criterion.Projections.Property(() => alias.MetaDescription), searchQuery))
                                         .Add(Restrictions.InsensitiveLike(NHibernate.Criterion.Projections.Property(() => alias.MetaKeywords), searchQuery)));
             }
@@ -62,7 +60,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
                     .Select(() => alias.Id).WithAlias(() => modelAlias.Id)
                     .Select(() => alias.Version).WithAlias(() => modelAlias.Version)
                     .Select(() => alias.Title).WithAlias(() => modelAlias.Title)
-                    .Select(() => alias.IsPublished).WithAlias(() => modelAlias.IsPublished)
+                    .Select(() => alias.Status).WithAlias(() => modelAlias.PageStatus)
                     .Select(hasSeoProjection).WithAlias(() => modelAlias.HasSEO)
                     .Select(() => alias.CreatedOn).WithAlias(() => modelAlias.CreatedOn)
                     .Select(() => alias.ModifiedOn).WithAlias(() => modelAlias.ModifiedOn)
@@ -73,10 +71,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
 
             var pages = query.AddSortingAndPaging(request).Future<SiteSettingPageViewModel>();
 
-            model = new SearchableGridViewModel<SiteSettingPageViewModel>(pages.ToList(), request, count.Value);
-
-
-            return model;
+            return new SearchableGridViewModel<SiteSettingPageViewModel>(pages.ToList(), request, count.Value);
         }
     }
 }

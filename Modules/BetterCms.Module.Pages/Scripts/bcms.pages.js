@@ -36,6 +36,9 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 siteSettingsPageRowTemplate: '#bcms-pages-list-row-template',
                 siteSettingsPageBooleanTemplateTrue: '#bcms-boolean-true-template',
                 siteSettingsPageBooleanTemplateFalse: '#bcms-boolean-false-template',
+                siteSettingsPageStatusTemplatePublished: '#bcms-pagestatus-published-template',
+                siteSettingsPageStatusTemplateUnpublished: '#bcms-pagestatus-unpublished-template',
+                siteSettingsPageStatusTemplateDraft: '#bcms-pagestatus-draft-template',
                 siteSettingsPageRowTemplateFirstRow: 'tr:first',
                 siteSettingsPageParentRow: 'tr:first',
                 siteSettingsPagesTableFirstRow: 'table.bcms-tables > tbody > tr:first',
@@ -44,7 +47,7 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 siteSettingPageTitleCell: '.bcms-page-title',
                 siteSettingPageCreatedCell: '.bcms-page-created',
                 siteSettingPageModifiedCell: '.bcms-page-modified',
-                siteSettingPageIsPublishedCell: '.bcms-page-ispublished',
+                siteSettingPageStatusCell: '.bcms-page-ispublished',
                 siteSettingPageHasSeoCell: '.bcms-page-hasseo',
             },        
             links = {
@@ -462,7 +465,7 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 newRow.find(selectors.siteSettingPageCreatedCell).html(data.Data.CreatedOn);
                 newRow.find(selectors.siteSettingPageModifiedCell).html(data.Data.ModifiedOn);
 
-                page.siteSettingsSetBooleanTemplate(newRow.find(selectors.siteSettingPageIsPublishedCell), data.Data.IsPublished);
+                page.siteSettingsPageStatusTemplate(newRow.find(selectors.siteSettingPageStatusCell), data.Data.PageStatus);
                 page.siteSettingsSetBooleanTemplate(newRow.find(selectors.siteSettingPageHasSeoCell), data.Data.HasSEO);
 
                 newRow.find(selectors.siteSettingsPageEditButton).data('id', data.Data.PageId);
@@ -488,6 +491,24 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
     };
 
     /**
+    * Creates html for page status value, using given PageStatus template
+    */
+    page.siteSettingsPageStatusTemplate = function (container, value) {
+        var template;
+        
+        if (value == 2) {
+            template = $(selectors.siteSettingsPageStatusTemplateDraft);
+        }   else if (value == 3) {
+            template = $(selectors.siteSettingsPageStatusTemplatePublished);
+        } else {
+            template = $(selectors.siteSettingsPageStatusTemplateUnpublished);
+        }
+        
+        var html = $(template.html());
+        container.html(html);
+    };
+
+    /**
     * Opens page edit form from site settings pages list
     */
     page.editSiteSettingsPage = function (self) {
@@ -501,7 +522,7 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 row.find(selectors.siteSettingPageCreatedCell).html(data.Data.CreatedOn);
                 row.find(selectors.siteSettingPageModifiedCell).html(data.Data.ModifiedOn);
                 
-                page.siteSettingsSetBooleanTemplate(row.find(selectors.siteSettingPageIsPublishedCell), data.Data.IsPublished);
+                page.siteSettingsPageStatusTemplate(row.find(selectors.siteSettingPageStatusCell), data.Data.PageStatus);
                 page.siteSettingsSetBooleanTemplate(row.find(selectors.siteSettingPageHasSeoCell), data.Data.HasSEO);
             }
         });

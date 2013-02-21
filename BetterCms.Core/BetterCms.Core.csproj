@@ -136,6 +136,7 @@
     <Compile Include="Environment\Assemblies\DefaultAssemblyManager.cs" />
     <Compile Include="Environment\Assemblies\IAssemblyManager.cs" />
     <Compile Include="Models\ContentStatus.cs" />
+    <Compile Include="Models\PageStatus.cs" />
     <Compile Include="Models\IOption.cs" />
     <Compile Include="Models\IHistorical.cs" />
     <Compile Include="Models\IEntity.cs" />
