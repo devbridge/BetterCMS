@@ -25,7 +25,7 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// <value>
         /// The list of page content ids and versions.
         /// </value>
-        public IList<ContentViewModel> PageContents { get; set; }
+        public IList<ContentSortViewModel> PageContents { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

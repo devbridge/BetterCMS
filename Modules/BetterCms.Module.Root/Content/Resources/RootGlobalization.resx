@@ -213,6 +213,9 @@
   <data name="Message_Deleting" xml:space="preserve">
     <value>Deleting ...</value>
   </data>
+  <data name="Message_EntityNotFoundException" xml:space="preserve">
+    <value>The record does not exist. Probably it was deleted by another user. Please refresh page.</value>
+  </data>
   <data name="Message_FailedToLoadDialog" xml:space="preserve">
     <value>Failed to load dialog. Please retry.</value>
   </data>

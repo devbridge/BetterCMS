@@ -1,21 +1,25 @@
 ﻿using System.Linq;
-using NHibernate.Linq;
 
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
-using BetterCms.Core.Exceptions;
+using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
-using BetterCms.Module.Pages.Models;
+
+using NHibernate.Linq;
 
 namespace BetterCms.Module.Pages.Command.Content.DeletePageContent
 {
+    /// <summary>
+    /// Command for page content deleting.
+    /// </summary>
     public class DeletePageContentCommand : CommandBase, ICommand<DeletePageContentCommandRequest, bool>
     {
         /// <summary>
         /// Executes the specified request.
         /// </summary>
         /// <param name="request">The request.</param>
-        /// <returns></returns>
+        /// <returns>True if deleted successfully and False otherwise.</returns>
         public bool Execute(DeletePageContentCommandRequest request)
         {
             UnitOfWork.BeginTransaction();
@@ -23,13 +27,8 @@ namespace BetterCms.Module.Pages.Command.Content.DeletePageContent
             var pageContent = Repository.AsQueryable<PageContent>()
                                     .Where(f => f.Id == request.PageContentId)
                                     .Fetch(f => f.Content)
-                                    .FirstOrDefault();
+                                    .FirstOne();
 
-            if (pageContent == null)
-            {
-                throw new CmsException(string.Format("Content was not found by id={0}.", request.PageContentId));
-            }
-            
             if (pageContent.Content is HtmlContent)
             {
                 Repository.Delete<HtmlContent>(pageContent.Content.Id, request.ContentVersion);

@@ -5,8 +5,15 @@
 
     var spinner = { },
         selectors = {
-            scrollableParents: '.bcms-scroll-window'
-        };
+            scrollableParents: '.bcms-scroll-window',
+            spinnerContainers: '.bcms-spinner-container'
+        },
+        constants = {
+            indicatorPrefix: 'bcms-loading-indicator',
+            generatedPrefix: 'bcms-spinner-target-'
+        },
+        resizeTimer,
+        staticId = 1;
 
     spinner.showLoading = function (indicatorId) {
         spinner.hideLoading(indicatorId);
@@ -30,14 +37,23 @@
         }
 
         if (indicatorId) {
-            return "loading-indicator-" + indicatorId;
+            return constants.indicatorPrefix + '-' + indicatorId;
         } else {
-            return "loading-indicator";
+            return constants.indicatorPrefix;
         }
     }
 
     function showLoading(target, indicatorId) {
         target = $(target);
+        if (target.length == 0) {
+            return;
+        }
+
+        var targetId = target.attr('id');
+        if (!targetId) {
+            targetId = generateId();
+            target.attr('id', targetId);
+        }
         
         var id = createIndicatorId(target, indicatorId),
             border_top_width = target.css('border-top-width'),
@@ -46,8 +62,8 @@
         border_top_width = isNaN(parseInt(border_top_width)) ? 0 : border_top_width;
         border_left_width = isNaN(parseInt(border_left_width)) ? 0 : border_left_width;
 
-        var left = target.css('position') == 'relative' ? 0 : target.position().left,
-            top = target.css('position') == 'relative' ? 0 : target.position().top,
+        var left = target.offset().left,
+            top = target.offset().top,
 
             overlay_left_pos = left + parseInt(border_left_width),
             overlay_top_pos = top + parseInt(border_top_width),
@@ -74,16 +90,18 @@
         }
 
         // Create overlay div
-        var overlayDiv = $('<div id="' + id + '" style="display: none;"></div>');
+        var overlayDiv = $('<div class="bcms-spinner-container" id="' + id + '" style="display: none;"></div>');
         
         $(overlayDiv).css('width', overlay_width.toString() + 'px');
         $(overlayDiv).css('height', overlay_height.toString() + 'px');
 
         $(overlayDiv).css('left', overlay_left_pos.toString() + 'px');
-        $(overlayDiv).css('position', 'absolute');
+        $(overlayDiv).css('position', 'fixed');
 
         $(overlayDiv).css('top', overlay_top_pos.toString() + 'px');
         $(overlayDiv).css('z-index', '5000');
+
+        $(overlayDiv).data('target', targetId);
 
         // Create loader div
         var loaderDiv = $('<div class="bcms-loader-2"></div>');
@@ -95,6 +113,27 @@
         $(overlayDiv).show();
     }
 
+    function generateId() {
+        return constants.generatedPrefix + (staticId++);
+    }
+
+    function onWindowResize() {
+        $(selectors.spinnerContainers).each(function () {
+            var spinnerContainer = $(this),
+                targetId = spinnerContainer.data('target');
+                    
+            if (targetId) {
+                var target = $('#' + targetId);
+                if (target.length == 1) {
+                    target.hideLoading(targetId);
+                    target.showLoading(targetId);
+                }
+            }
+        });
+        
+        return true;
+    }
+
     /**
     * Initializes spinners when CMS loads for the first time
     */
@@ -103,6 +142,11 @@
 
         $.fn.showLoading = spinner.showLoading;
         $.fn.hideLoading = spinner.hideLoading;
+        
+        $(window).on('resize', function () {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(onWindowResize, 100);
+        });
     };
 
     spinner.init();

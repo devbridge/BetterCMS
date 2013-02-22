@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Seo;
@@ -20,8 +21,14 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageSeo
         /// <returns>EditSeoView model filled with page SEO information.</returns>
         public virtual EditSeoViewModel Execute(Guid pageId)
         {
+            if (pageId.HasDefaultValue())
+            {
+                return new EditSeoViewModel();
+            }
+
             var page = Repository
                 .AsQueryable<PageProperties>()
+                .Where(f => f.Id == pageId)
                 .Select(
                     f => new
                         {
@@ -33,7 +40,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageSeo
                             MetaDescription = f.MetaDescription,
                             Version = f.Version
                         })
-                .FirstOrDefault(f => f.PageId == pageId);
+                .FirstOne();
 
             EditSeoViewModel model = new EditSeoViewModel();
             if (page != null)

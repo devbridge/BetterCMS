@@ -696,7 +696,7 @@
   <data name="SiteSettings_Pages_HasSeoColumn" xml:space="preserve">
     <value>SEO</value>
   </data>
-  <data name="SiteSettings_Pages_IsPublishedColumn" xml:space="preserve">
+  <data name="SiteSettings_Pages_PageStatusColumn" xml:space="preserve">
     <value>Published</value>
   </data>
   <data name="SiteSettings_Pages_ModifiedColumn" xml:space="preserve">
@@ -1154,5 +1154,8 @@
   </data>
   <data name="PageContent_LiveTo_DateNotValidationMessage" xml:space="preserve">
     <value>The field Live To must be a date.</value>
+  </data>
+  <data name="SavePageStatus_PageIsInInappropriateStatus_Message" xml:space="preserve">
+    <value>Page status is inappropriate. Can not change it.</value>
   </data>
 </root>

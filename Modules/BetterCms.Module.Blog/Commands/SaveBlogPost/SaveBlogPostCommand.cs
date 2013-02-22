@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 
+using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Models;
 using BetterCms.Core.Mvc.Commands;
@@ -29,7 +30,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
     public class SaveBlogPostCommand : CommandBase, ICommand<BlogPostViewModel, SaveBlogPostCommandResponse>
     {
         /// <summary>
-        /// The blog post region identifier
+        /// The blog post region identifier.
         /// </summary>
         private const string regionIdentifier = BlogModuleConstants.BlogPostMainContentRegionIdentifier;
 
@@ -49,16 +50,22 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         private readonly IContentService contentService;
 
         /// <summary>
+        /// The redirect service
+        /// </summary>
+        private readonly IRedirectService redirectService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SaveBlogPostCommand" /> class.
         /// </summary>
         /// <param name="tagService">The tag service.</param>
         /// <param name="optionService">The option service.</param>
         /// <param name="contentService">The content service.</param>
-        public SaveBlogPostCommand(ITagService tagService, IOptionService optionService, IContentService contentService)
+        public SaveBlogPostCommand(ITagService tagService, IOptionService optionService, IContentService contentService, IRedirectService redirectService)
         {
             this.tagService = tagService;
             this.optionService = optionService;
             this.contentService = contentService;
+            this.redirectService = redirectService;
         }
 
         /// <summary>
@@ -101,7 +108,17 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             blogPost.Version = request.Version;
             if (isNew)
             {
-                blogPost.PageUrl = GeneratePageUrl(request.Title);
+                var parentPageUrl = request.ParentPageUrl.Trim('/');
+                if (!string.IsNullOrWhiteSpace(parentPageUrl))
+                {
+                    var postUrl = GeneratePageUrl(request.Title);
+                    var pageUrl = string.Concat(parentPageUrl, postUrl);
+                    blogPost.PageUrl = redirectService.FixUrl(pageUrl);
+                }
+                else
+                {
+                    blogPost.PageUrl = GeneratePageUrl(request.Title);
+                }
                 blogPost.IsPublic = true;
                 blogPost.Layout = layout;
             }
@@ -109,8 +126,8 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             // Push to change modified data each time save button is pressed
             blogPost.ModifiedOn = DateTime.Now;
 
-            blogPost.Author = (request.AuthorId.HasValue) ? Repository.AsProxy<Author>(request.AuthorId.Value) : null;
-            blogPost.Category = (request.CategoryId.HasValue) ? Repository.AsProxy<Category>(request.CategoryId.Value) : null;
+            blogPost.Author = request.AuthorId.HasValue ? Repository.AsProxy<Author>(request.AuthorId.Value) : null;
+            blogPost.Category = request.CategoryId.HasValue ? Repository.AsProxy<Category>(request.CategoryId.Value) : null;
             blogPost.Image = (request.Image != null && request.Image.ImageId.HasValue) ? Repository.AsProxy<MediaImage>(request.Image.ImageId.Value) : null;
 
             // Set content and save with status change
@@ -125,6 +142,8 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
 
             content = (BlogPostContent)contentService.SaveContentWithStatusUpdate(content, request.DesirableStatus);
             pageContent.Content = content;
+
+            UpdateStatus(blogPost, request.DesirableStatus);
 
             Repository.Save(blogPost);
             Repository.Save(content);
@@ -145,26 +164,50 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                            ModifiedByUser = blogPost.ModifiedByUser,
                            ModifiedOn = blogPost.ModifiedOn.ToFormattedDateString(),
                            CreatedOn = blogPost.CreatedOn.ToFormattedDateString(),
-                           IsPublished = blogPost.IsPublished,
+                           PageStatus = blogPost.Status,
                            DesirableStatus = request.DesirableStatus,
                            PageContentId = pageContent.Id
                        };
         }
 
         /// <summary>
+        /// Updates the status.
+        /// </summary>
+        /// <param name="blogPost">The blog post.</param>
+        /// <param name="desirableStatus">The desirable status.</param>
+        /// <exception cref="CmsException">If <c>desirableStatus</c> is not supported.</exception>
+        private void UpdateStatus(BlogPost blogPost, ContentStatus desirableStatus)
+        {
+            switch (desirableStatus)
+            {
+                case ContentStatus.Published:
+                    blogPost.Status = PageStatus.Published;
+                    break;
+                case ContentStatus.Draft:
+                    blogPost.Status = PageStatus.Unpublished;
+                    break;
+                case ContentStatus.Preview:
+                    blogPost.Status = PageStatus.Preview;
+                    break;
+                default:
+                    throw new CmsException(string.Format("Blog post does not support status: {0}.", desirableStatus));
+            }
+        }
+
+        /// <summary>
         /// Loads the layout.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Layout for blog post.</returns>
+        /// <exception cref="System.ComponentModel.DataAnnotations.ValidationException">If layout was not found.</exception>
         private Layout LoadLayout()
         {
-            Layout layout;
             var layoutId = optionService.GetDefaultTemplateId();
 
-            layout = (layoutId.HasValue) ? Repository.AsProxy<Layout>(layoutId.Value) : GetFirstCompatibleLayout();
+            Layout layout = layoutId.HasValue ? Repository.AsProxy<Layout>(layoutId.Value) : GetFirstCompatibleLayout();
             if (layout == null)
             {
                 var message = BlogGlobalization.SaveBlogPost_LayoutNotFound_Message;
-                var logMessage = "Failed to save blog post. No compatible layouts found.";
+                const string logMessage = "Failed to save blog post. No compatible layouts found.";
                 throw new ValidationException(() => message, logMessage);
             }
 
@@ -174,7 +217,8 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         /// <summary>
         /// Loads the region.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Region for blog post content.</returns>
+        /// <exception cref="System.ComponentModel.DataAnnotations.ValidationException">If no region found.</exception>
         private Region LoadRegion()
         {
             var regionId = Repository.AsQueryable<Region>(r => !r.IsDeleted && r.RegionIdentifier == regionIdentifier).Select(s => s.Id).FirstOrDefault();
@@ -184,6 +228,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                 var logMessage = string.Format("Region {0} for rendering blog post content not found.", regionIdentifier);
                 throw new ValidationException(() => message, logMessage);
             }
+
             var region = Repository.AsProxy<Region>(regionId);
 
             return region;
@@ -192,7 +237,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         /// <summary>
         /// Gets the first compatible layout.
         /// </summary>
-        /// <returns>Layout</returns>
+        /// <returns>Layout for blog post.</returns>
         private Layout GetFirstCompatibleLayout()
         {
             LayoutRegion layoutRegionAlias = null;
@@ -230,10 +275,10 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         }
 
         /// <summary>
-        /// Pathes the exists in db.
+        /// Path exists in db.
         /// </summary>
         /// <param name="url">The URL.</param>
-        /// <returns>Url path</returns>
+        /// <returns>Url path.</returns>
         private bool PathExistsInDb(string url)
         {
             var exists = UnitOfWork.Session
@@ -245,10 +290,10 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         }
 
         /// <summary>
-        /// Adds the URL path sufix if needed.
+        /// Adds the URL path suffix if needed.
         /// </summary>
         /// <param name="url">The URL.</param>
-        /// <returns>Url path</returns>
+        /// <returns>Url path.</returns>
         private string AddUrlPathSuffixIfNeeded(string url)
         {
             var fullUrl = string.Format("/{0}/", url);

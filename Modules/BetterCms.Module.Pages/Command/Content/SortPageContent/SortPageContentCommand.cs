@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 using BetterCms.Core.Exceptions;
+using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Root.Models;
@@ -29,14 +31,15 @@ namespace BetterCms.Module.Pages.Command.Content.SortPageContent
                 var pageContent = pageContents.FirstOrDefault(f => f.Id == content.Id);
                 if (pageContent == null)
                 {
-                    throw new CmsException(string.Format("Content was not found by id={0}.", content.Id));
+                    throw new EntityNotFoundException(typeof(PageContent), Guid.Empty);
                 }
                 if (pageContent.Order != index)
                 {
                     if (pageContent.Version != content.Version)
                     {
-                        throw new CmsException(string.Format("Page content with id={0} was modified.", content.Id));
+                        throw new ConcurrentDataException(pageContent);
                     }
+
                     pageContent.Order = index;
                     Repository.Save(pageContent);
                     response.UpdatedPageContents.Add(new ContentViewModel { Id = pageContent.Id });

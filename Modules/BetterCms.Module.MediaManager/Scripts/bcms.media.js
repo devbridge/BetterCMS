@@ -48,7 +48,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             deleteVideoConfirmMessage: null,
             deleteFileConfirmMessage: null,
             deleteFolderConfirmMessage: null,
-            
+
             insertImageDialogTitle: null,
             insertImageFailureMessageTitle: null,
             insertImageFailureMessageMessage: null,
@@ -58,7 +58,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             insertFileFailureMessageMessage: null,
             insertFileDialogTitle: null,
             fileNotSelectedMessageMessage: null,
-                
+
             imagesTabTitle: null,
             audiosTabTitle: null,
             videosTabTitle: null,
@@ -93,7 +93,8 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         staticDomId = 1,
         contentEditor = null,
         imageInsertDialog = null,
-        fileInsertDialog = null;
+        fileInsertDialog = null,
+        blurTimer = null;
 
     /**
     * Assign objects to module.
@@ -354,10 +355,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             };
 
             self.downloadMedia = function () {
-                if (self.publicUrl()) {
-                    window.open(self.publicUrl(), '_newtab');
-                }
-                // TODO: not working on Cloud: window.open($.format(links.downloadFileUrl, self.id()), '_newtab');
+                window.open($.format(links.downloadFileUrl, self.id()), '_newtab');
             };
 
             self.rowClassNames = ko.computed(function () {
@@ -670,7 +668,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     * Function is called, when editable item losts focus
     */
     function cancelOrSaveMedia(folderViewModel, item) {
-        setTimeout(function () {
+        blurTimer = setTimeout(function () {
             if (!item.name() && !item.id()) {
                 cancelEditMedia(folderViewModel, item);
             } else {
@@ -703,18 +701,17 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             if (input.valid()) {
                 var params = item.toJson(),
                     onSaveCompleted = function (json) {
+                        clearTimeout(blurTimer);
                         loaderContainer.hideLoading();
                         messages.refreshBox(folderViewModel.container, json);
                         if (json.Success && json.Data) {
                             item.version(json.Data.Version);
                             item.id(json.Data.Id);
                             item.oldName = item.name();
-                        } else {
-                            item.isActive(true);
+                            item.isActive(false);
                         }
                     };
                 loaderContainer.showLoading();
-                item.isActive(false);
                 $.ajax({
                     url: item.updateUrl,
                     type: 'POST',
@@ -969,8 +966,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     * Called when file is selected from files list.
     */
     function insertFile(selectedMedia) {
-        addFileToEditor(selectedMedia.publicUrl(), selectedMedia.name());
-        // TODO: not working on Cloud: addFileToEditor($.format(links.downloadFileUrl, selectedMedia.id()), selectedMedia.name());
+        addFileToEditor($.format(links.downloadFileUrl, selectedMedia.id()), selectedMedia.name());
 
         if (fileInsertDialog != null) {
             fileInsertDialog.close();
@@ -1076,10 +1072,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     function changeFolder(id, folderViewModel) {
         var params = createFolderParams(id, null),
             onComplete = function (json) {
+                messages.refreshBox(folderViewModel.container, {});
                 parseJsonResults(json, folderViewModel);
             };
         loadTabData(folderViewModel, params, onComplete);
-        messages.refreshBox(folderViewModel.container, {});
     };
 
     /**
@@ -1088,7 +1084,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     function parseJsonResults(json, folderViewModel) {
         var i;
 
-        messages.refreshBox(folderViewModel.messagesContainer, json);
+        messages.refreshBox(folderViewModel.container, json);
 
         if (json.Success) {
             folderViewModel.medias.removeAll();

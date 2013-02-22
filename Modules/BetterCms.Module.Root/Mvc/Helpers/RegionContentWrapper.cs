@@ -65,11 +65,6 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                     content.PageContentStatus == ContentStatus.Draft ? " data-draft=\"true\"" : null);
                 sb.AppendLine();
             }
-            else
-            {
-                sb.AppendFormat(@"<div class=""clearfix"" id=""{0}"">", id);
-                sb.AppendLine();
-            }
         }
 
         /// <summary>
@@ -77,7 +72,10 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// </summary>
         private void RenderClosingTags()
         {
-            sb.AppendLine(@"</div>");
+            if (allowContentManagement)
+            {
+                sb.AppendLine(@"</div>");
+            }
         }
     }
 }

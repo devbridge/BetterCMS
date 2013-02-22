@@ -6,7 +6,10 @@
 @using Microsoft.Web.Mvc
 
 @model EditHtmlContentWidgetViewModel
-
+@if (Model == null)
+{
+    return;
+}
 <div class="bcms-scroll-window">
     @Html.TabbedContentMessagesBox()
     @Html.Partial("Partial/WarnMessageAboutDraft", Model)

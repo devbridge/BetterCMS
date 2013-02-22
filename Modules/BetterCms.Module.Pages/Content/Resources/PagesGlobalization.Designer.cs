@@ -2230,6 +2230,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Page status is inappropriate. Can not change it..
+        /// </summary>
+        public static string SavePageStatus_PageIsInInappropriateStatus_Message {
+            get {
+                return ResourceManager.GetString("SavePageStatus_PageIsInInappropriateStatus_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot save redirect. Circular redirect loop detected..
         /// </summary>
         public static string SaveRedirect_CircularLoopDetected_Message {
@@ -2527,20 +2536,20 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Published.
-        /// </summary>
-        public static string SiteSettings_Pages_IsPublishedColumn {
-            get {
-                return ResourceManager.GetString("SiteSettings_Pages_IsPublishedColumn", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Last Edited.
         /// </summary>
         public static string SiteSettings_Pages_ModifiedColumn {
             get {
                 return ResourceManager.GetString("SiteSettings_Pages_ModifiedColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Published.
+        /// </summary>
+        public static string SiteSettings_Pages_PageStatusColumn {
+            get {
+                return ResourceManager.GetString("SiteSettings_Pages_PageStatusColumn", resourceCulture);
             }
         }
         

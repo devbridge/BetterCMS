@@ -28,12 +28,12 @@ namespace BetterCms.Module.Root.Models
         public virtual string Title { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether page is published.
+        /// Gets or sets the page status.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if page is published; otherwise, <c>false</c>.
+        /// The page status.
         /// </value>
-        public virtual bool IsPublished { get; set; }
+        public virtual PageStatus Status { get; set; }
 
         /// <summary>
         /// Gets a value indicating whether this page is available for not authenticated users.

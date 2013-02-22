@@ -83,7 +83,7 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                             }
                             dialog.close();
                         },
-                        postError: function() {
+                        postError: function () {
                             modal.alert({
                                 title: globalization.imageEditorUpdateFailureMessageTitle,
                                 content: globalization.imageEditorUpdateFailureMessageMessage,
@@ -181,6 +181,7 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
 
             TitleEditorViewModel.prototype.onClose = function () {
                 this.title(this.oldTitle());
+                this.input.blur();
             };
 
             return TitleEditorViewModel;
@@ -398,6 +399,8 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
             ImageEditorViewModel.prototype.onClose = function () {
                 this.width(this.oldWidth());
                 this.height(this.oldHeight());
+                this.heightInput.blur();
+                this.widthInput.blur();
             };
             
             return ImageEditorViewModel;

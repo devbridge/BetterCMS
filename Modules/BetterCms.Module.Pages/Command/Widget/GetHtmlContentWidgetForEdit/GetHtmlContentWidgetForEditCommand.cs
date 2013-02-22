@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 
+using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
@@ -44,7 +45,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
 
              var categories = categoryService.GetCategories();
 
-            if (widgetId != null)
+             if (widgetId.HasValue && widgetId.Value != Guid.Empty)
             {
                 var htmlContentWidget = contentService.GetContentForEdit(widgetId.Value) as HtmlContentWidget;
                 
@@ -67,9 +68,13 @@ namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
                                                                    HasPublishedContent = htmlContentWidget.Original != null
                                                                };
                 }
+
+                if (model == null)
+                {
+                    throw new EntityNotFoundException(typeof(HtmlContentWidget), widgetId.Value);
+                }
             }
-            
-            if (model == null)
+            else
             {
                 model = new EditHtmlContentWidgetViewModel();
             }

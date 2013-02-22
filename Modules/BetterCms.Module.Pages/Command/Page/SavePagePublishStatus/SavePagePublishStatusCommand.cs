@@ -1,6 +1,7 @@
 ﻿using System;
 
 using BetterCms.Core.Exceptions.Mvc;
+using BetterCms.Core.Models;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Services;
 using BetterCms.Module.Pages.Content.Resources;
@@ -9,8 +10,14 @@ using BetterCms.Module.Root.Mvc;
 
 namespace BetterCms.Module.Pages.Command.Page.SavePagePublishStatus
 {
+    /// <summary>
+    /// Command to updated page status.
+    /// </summary>
     public class SavePagePublishStatusCommand : CommandBase, ICommand<SavePagePublishStatusRequest, bool>
     {
+        /// <summary>
+        /// The security service.
+        /// </summary>
         private readonly ISecurityService securityService;
 
         /// <summary>
@@ -26,8 +33,8 @@ namespace BetterCms.Module.Pages.Command.Page.SavePagePublishStatus
         /// Executes the specified request.
         /// </summary>
         /// <param name="request">The request.</param>
-        /// <returns></returns>
-        /// <exception cref="System.NotImplementedException"></exception>
+        /// <returns> <cref>true</cref> if status updated successfully, otherwise <cref>false</cref>.</returns>
+        /// <exception cref="System.ComponentModel.DataAnnotations.ValidationException">If user has no rights or page status is inappropriate.</exception>
         public bool Execute(SavePagePublishStatusRequest request)
         {
             var principal = securityService.GetCurrentPrincipal();
@@ -44,15 +51,25 @@ namespace BetterCms.Module.Pages.Command.Page.SavePagePublishStatus
 
             if (page != null)
             {
-                page.IsPublished = request.IsPublished;
+                if (page.Status == PageStatus.Draft || page.Status == PageStatus.Preview)
+                {
+                    var message = string.Format(PagesGlobalization.SavePageStatus_PageIsInInappropriateStatus_Message);
+                    var logMessage = string.Format("Draft/Preview page id={0} can not be published.", page.Id);
+                    throw new ValidationException(() => message, logMessage);
+                }
+
                 if (request.IsPublished)
                 {
+                    page.Status = PageStatus.Published;
                     page.PublishedOn = DateTime.Now;
+                }
+                else
+                {
+                    page.Status = PageStatus.Unpublished;
                 }
 
                 Repository.Save(page);
                 UnitOfWork.Commit();
-
             }
 
             return true;

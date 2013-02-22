@@ -65,7 +65,19 @@ define('bcms.dynamicContent', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bc
         })
         .done(function (content, status, response) {
             if (response.getResponseHeader('Content-Type').indexOf('application/json') === 0 && content.Html) {
-                dialog.setContent(content.Html, contentId);
+                if (content.Success) {
+                    dialog.setContent(content.Html, contentId);
+                } else {
+                    dialog.close();
+                    if (content.Messages && content.Messages.length > 0) {
+                        modal.showMessages(content);
+                    } else {
+                        modal.alert({
+                            content: globalization.failedLoadDialogMessage
+                        });
+                    }
+                    return;
+                }
             } else {
                 dialog.setContent(content, contentId);
             }

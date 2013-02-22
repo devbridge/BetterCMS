@@ -173,7 +173,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             // If page is not published, page is not found
             if (!request.IsAuthenticated && request.PreviewPageContentId == null)
             {
-                query = query.Where(f => f.IsPublished);
+                query = query.Where(f => f.Status == PageStatus.Published);
             }
 
             return query.ToFuture();

@@ -31,20 +31,7 @@
                          data-type="@widget.WidgetType"
                          data-category-id="@(widget.CategoryId ?? Guid.Empty)">
                         <div class="bcms-title-holder">
-                            <div class="bcms-content-titles bcms-draft-published-state">@widget.Name</div>
-                            @if (widget.Status == ContentStatus.Published.ToString())
-                            {
-                                //TODO: add correct css class
-                            }
-                            else if (widget.Status == ContentStatus.Draft.ToString())
-                            {
-                                //TODO: add correct css class
-                            }
-                            else
-                            {
-                                //TODO: add correct css class
-                            }
-                            
+                            <div class="bcms-content-titles">@widget.Name</div>                                                 
                         </div>
                         @if (!string.IsNullOrWhiteSpace(widget.PreviewImageUrl))
                         {
@@ -64,7 +51,14 @@
 
                         <div class="bcms-controls-holder">
                             <div class="bcms-btn-small bcms-content-insert-button" >@PagesGlobalization.AddPageContent_WidgetTab_InsertButton</div>
-                            <a class="bcms-icn-edit bcms-content-edit-button">@PagesGlobalization.AddPageContent_WidgetTab_EditButton</a>
+                             @if (!widget.Status.Equals(ContentStatus.Published.ToString()))
+                             {
+                                <a class="bcms-icn-edit bcms-content-edit-button bcms-edit-draft">@PagesGlobalization.AddPageContent_WidgetTab_EditButton</a>
+                             }
+                             else
+                             {
+                                <a class="bcms-icn-edit bcms-content-edit-button">@PagesGlobalization.AddPageContent_WidgetTab_EditButton</a>
+                             }
                             <a class="bcms-icn-delete bcms-content-delete-button">@PagesGlobalization.AddPageContent_WidgetTab_DeleteButton</a>
                         </div>
                     </div>

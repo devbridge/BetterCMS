@@ -1,4 +1,6 @@
 ﻿using System;
+
+using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.ViewModels.Templates;
 using BetterCms.Module.Root.Models;
@@ -26,7 +28,8 @@ namespace BetterCms.Module.Pages.Command.Layout.GetTemplatesForEdit
                 TemplateEditViewModel templateAlias = null;
 
                 var templateFuture = UnitOfWork.Session.QueryOver(() => template)
-                     .Where(() => template.Id == templateId).SelectList(select => select
+                     .Where(() => template.Id == templateId && !template.IsDeleted)
+                     .SelectList(select => select
                             .Select(() => template.Id).WithAlias(() => templateAlias.Id)
                             .Select(() => template.Version).WithAlias(() => templateAlias.Version)
                             .Select(() => template.Name).WithAlias(() => templateAlias.Name)
@@ -52,6 +55,11 @@ namespace BetterCms.Module.Pages.Command.Layout.GetTemplatesForEdit
                       .List<TemplateRegionItemViewModel>();
                 
                 templateModel = templateFuture.Value;
+                if (templateModel == null)
+                {
+                    throw new EntityNotFoundException(typeof(TemplateRegionItemViewModel), templateId.Value);
+                }
+
                 templateModel.RegionOptions = regions;
     
             }

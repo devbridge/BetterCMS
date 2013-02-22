@@ -475,15 +475,6 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Published.
-        /// </summary>
-        public static string SiteSettings_Blogs_IsPublishedColumn {
-            get {
-                return ResourceManager.GetString("SiteSettings_Blogs_IsPublishedColumn", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to LastEdited By.
         /// </summary>
         public static string SiteSettings_Blogs_ModifiedByColumn {
@@ -498,6 +489,15 @@ namespace BetterCms.Module.Blog.Content.Resources {
         public static string SiteSettings_Blogs_ModifiedColumn {
             get {
                 return ResourceManager.GetString("SiteSettings_Blogs_ModifiedColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Published.
+        /// </summary>
+        public static string SiteSettings_Blogs_PageStatusColumn {
+            get {
+                return ResourceManager.GetString("SiteSettings_Blogs_PageStatusColumn", resourceCulture);
             }
         }
         

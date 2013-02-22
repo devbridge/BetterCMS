@@ -109,12 +109,8 @@ namespace BetterCms.Module.Pages.Controllers
         public ActionResult EditTemplate(string id)
         {
             var model = GetCommand<GetTemplatesForEditCommand>().ExecuteCommand(id.ToGuidOrDefault());
-            return PartialView(model);
-        }
-
-        public ActionResult SaveTemplateRegions(TemplateRegionItemViewModel model)
-        {
-            return Json(new WireJson { Success = false });
+            var view = RenderView("EditTemplate", model);
+            return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>

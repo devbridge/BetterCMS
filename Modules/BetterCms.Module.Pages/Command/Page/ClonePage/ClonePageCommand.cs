@@ -54,7 +54,7 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
             // Validate Url
             PageService.ValidatePageUrl(pageUrl);
 
-            var page = Repository.FirstOrDefault<PageProperties>(request.PageId);
+            var page = Repository.First<PageProperties>(request.PageId);
 
             UnitOfWork.BeginTransaction();
 
@@ -111,28 +111,11 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
         /// <returns>Copy for <see cref="PageProperties"/>.</returns>
         private PageProperties ClonePageOnly(PageProperties page, string newPageTitle, string newPageUrl)
         {
-            var newPage = new PageProperties
-            {
-                // New page data:
-                Title = newPageTitle,
-                PageUrl = newPageUrl,
-                IsPublished = false,
+            var newPage = page.Duplicate();
 
-                // Cloned data:
-                MetaTitle = page.MetaTitle,                
-                MetaKeywords = page.MetaKeywords,
-                MetaDescription = page.MetaDescription,
-                IsPublic = page.IsPublic,
-                UseCanonicalUrl = page.UseCanonicalUrl,
-                CustomCss = page.CustomCss,
-                CustomJS = page.CustomJS,
-                Description = page.Description,
-                UseNoFollow = page.UseNoFollow,
-                UseNoIndex = page.UseNoIndex,
-                Layout = page.Layout,
-                Image = page.Image,
-                Category = page.Category,
-            };
+            newPage.Title = newPageTitle;
+            newPage.PageUrl = newPageUrl;
+            newPage.Status = PageStatus.Unpublished;
 
             Repository.Save(newPage);
 

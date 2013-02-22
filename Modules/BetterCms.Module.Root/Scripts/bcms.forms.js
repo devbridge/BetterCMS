@@ -156,7 +156,8 @@ define('bcms.forms', ['jquery', 'bcms', 'bcms.messages', 'bcms.tabs'], function 
 
         container.find(options.checkboxLabelsSelector).on('click', function () {
             var checkBox = $(this).parents(options.checkboxParentsSelector).first().find(options.checkboxSelector);
-            checkBox.click();
+            checkBox.trigger('click').trigger('change');
+            return false;
         });
     };
 

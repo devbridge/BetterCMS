@@ -1,5 +1,6 @@
 ﻿using System;
 
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.ViewModels.Page;
 using BetterCms.Module.Root.Mvc;
@@ -18,20 +19,16 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageForCloning
         /// <exception cref="System.NotImplementedException"></exception>
         public ClonePageViewModel Execute(Guid request)
         {
-            ClonePageViewModel model;
-
             Root.Models.Page alias = null;
             ClonePageViewModel modelAlias = null;
 
-            model = UnitOfWork.Session.QueryOver(() => alias)
-                    .Where(p => p.Id == request)
+            return UnitOfWork.Session.QueryOver(() => alias)
+                    .Where(p => p.Id == request && !p.IsDeleted)
                     .SelectList(select => select
                         .Select(() => alias.Id).WithAlias(() => modelAlias.PageId)
                         .Select(() => alias.Version).WithAlias(() => modelAlias.Version))
                     .TransformUsing(Transformers.AliasToBean<ClonePageViewModel>())
-                    .SingleOrDefault<ClonePageViewModel>();
-
-            return model ?? new ClonePageViewModel();
+                    .First<ClonePageViewModel, Root.Models.Page>();
         }
     }
 }

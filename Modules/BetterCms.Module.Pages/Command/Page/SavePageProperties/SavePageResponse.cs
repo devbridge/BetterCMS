@@ -58,12 +58,12 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         public string ModifiedOn { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether page is published.
+        /// Gets or sets the page status.
         /// </summary>
         /// <value>
-        /// <c>true</c> if page is published; otherwise, <c>false</c>.
+        /// The page status.
         /// </value>
-        public bool IsPublished { get; set; }
+        public PageStatus PageStatus { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether page has SEO.
@@ -83,7 +83,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             Title = page.Title;
             CreatedOn = page.CreatedOn.ToFormattedDateString();
             ModifiedOn = page.ModifiedOn.ToFormattedDateString();
-            IsPublished = page.IsPublished;
+            PageStatus = page.Status;
             HasSEO = ((IPage)page).HasSEO;
             PageUrl = page.PageUrl;
         }
