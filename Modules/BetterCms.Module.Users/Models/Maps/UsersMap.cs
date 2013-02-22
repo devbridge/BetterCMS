@@ -11,8 +11,8 @@ namespace BetterCms.Module.Users.Models.Maps
             Table("Users");
 
             Map(x => x.UserName).Length(MaxLength.Name).Not.Nullable();
-            Map(x => x.FirstName).Length(MaxLength.Name).Not.Nullable();
-            Map(x => x.LastName).Length(MaxLength.Name).Not.Nullable();
+            Map(x => x.FirstName).Length(MaxLength.Name).Nullable();
+            Map(x => x.LastName).Length(MaxLength.Name).Nullable();
             Map(x => x.Password).Length(MaxLength.Password).Not.Nullable();
             Map(x => x.Email).Length(MaxLength.Email).Not.Nullable();
             Map(x => x.Salt).Length(MaxLength.Password).Not.Nullable();

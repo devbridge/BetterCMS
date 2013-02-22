@@ -164,6 +164,7 @@
     <Compile Include="Services\DefaultRoleService.cs" />
     <Compile Include="Services\IAuthenticationService.cs" />
     <Compile Include="Services\IRoleService.cs" />
+    <Compile Include="UsersConstants.cs" />
     <Compile Include="UsersModuleDescriptor.cs" />
     <Compile Include="ViewModels\EditUserViewModel.cs" />
     <Compile Include="ViewModels\Role\EditRoleViewModel.cs" />

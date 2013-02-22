@@ -385,6 +385,24 @@ namespace BetterCms.Module.Users.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Role name should not be longer than 200 characters..
+        /// </summary>
+        public static string Role_RoleName_MaxLengthMessage {
+            get {
+                return ResourceManager.GetString("Role_RoleName_MaxLengthMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Role name is required..
+        /// </summary>
+        public static string Role_RoleName_RequiredMessage {
+            get {
+                return ResourceManager.GetString("Role_RoleName_RequiredMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Role created successfully..
         /// </summary>
         public static string SaveRole_CreatedSuccessfully_Message {
@@ -471,6 +489,105 @@ namespace BetterCms.Module.Users.Content.Resources {
         public static string User_Dialog_Title {
             get {
                 return ResourceManager.GetString("User_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email should not be longer than 400 characters..
+        /// </summary>
+        public static string User_Email_MaxLengthMessage {
+            get {
+                return ResourceManager.GetString("User_Email_MaxLengthMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email is required..
+        /// </summary>
+        public static string User_Email_RequiredMessage {
+            get {
+                return ResourceManager.GetString("User_Email_RequiredMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email format is not valid..
+        /// </summary>
+        public static string User_Email_ValidMessage {
+            get {
+                return ResourceManager.GetString("User_Email_ValidMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to First name should not be longer than 200 characters..
+        /// </summary>
+        public static string User_FirstName_MaxLengthMessage {
+            get {
+                return ResourceManager.GetString("User_FirstName_MaxLengthMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last name should not be longer than 200 characters..
+        /// </summary>
+        public static string User_LastName_MaxLengthMessage {
+            get {
+                return ResourceManager.GetString("User_LastName_MaxLengthMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password should not be shorter than 4 characters and not be longer than 255 characters..
+        /// </summary>
+        public static string User_Password_LengthMessage {
+            get {
+                return ResourceManager.GetString("User_Password_LengthMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password is required..
+        /// </summary>
+        public static string User_Password_RequiredMessage {
+            get {
+                return ResourceManager.GetString("User_Password_RequiredMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Retyped password isn&apos;t the same as password..
+        /// </summary>
+        public static string User_RetypePassword_EqualMessage {
+            get {
+                return ResourceManager.GetString("User_RetypePassword_EqualMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Retype password is required..
+        /// </summary>
+        public static string User_RetypePassword_RequiredMessage {
+            get {
+                return ResourceManager.GetString("User_RetypePassword_RequiredMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User name should not be longer than 200 characters..
+        /// </summary>
+        public static string User_UserName_MaxLengthMessage {
+            get {
+                return ResourceManager.GetString("User_UserName_MaxLengthMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User name is required..
+        /// </summary>
+        public static string User_UserName_RequiredMessage {
+            get {
+                return ResourceManager.GetString("User_UserName_RequiredMessage", resourceCulture);
             }
         }
     }

@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
+using BetterCms.Core.Models;
 using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Users.Content.Resources;
 
 namespace BetterCms.Module.Users.ViewModels
 {
@@ -20,27 +23,28 @@ namespace BetterCms.Module.Users.ViewModels
 
         public int Version { get; set; }
 
-        [Required]
-        [StringLength(200, ErrorMessage = "User name should not be longer than 200 characters")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_UserName_RequiredMessage")]
+        [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_UserName_MaxLengthMessage")]
         public string UserName { get; set; }
 
-        [StringLength(200, ErrorMessage = "First name should not be longer than 200 characters")]
+        [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_FirstName_MaxLengthMessage")]
         public string FirstName { get; set; }
 
-        [StringLength(200, ErrorMessage = "Last name should not be longer than 200 characters")]
+        [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_LastName_MaxLengthMessage")]
         public string LastName { get; set; }
 
-        [Required(ErrorMessage = "Email is required")]
-        [RegularExpression(@"^[\w_\+-]+(\.[\w_\+-]+)*@[\w-]+(\.[\w-]+)*\.([a-zA-Z]{2,4})$", ErrorMessage = "Email format is not valid")]
-        [StringLength(400, ErrorMessage = "Email should not be longer than 200 characters")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_Email_RequiredMessage")]
+        [RegularExpression(UsersConstants.EmailRegularExpression, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_Email_ValidMessage")]
+        [StringLength(MaxLength.Email, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_Email_MaxLengthMessage")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Password is required")]
-        [RegularExpression(@"^.{4}(.{255})?$")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_Password_RequiredMessage")]
+        [RegularExpression(UsersConstants.PasswordRegularExpression, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_Password_LengthMessage")]
         public string Password { get; set; }
 
-        [Required(ErrorMessage = "Password is required")]
-        [RegularExpression(@"^.{4}(.{255})?$")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_RetypePassword_RequiredMessage")]
+        [RegularExpression(UsersConstants.PasswordRegularExpression, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_Password_LengthMessage")]
+        [DataType(DataType.Password, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_RetypePassword_EqualMessage")]
         public string RetypedPassword { get; set; }
 
         public ImageSelectorViewModel Image { get; set; }
