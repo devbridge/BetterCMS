@@ -19,18 +19,18 @@
             target = "UploadTarget"
         }))
         {
-            <div class="bcms-input-list-holder">
-                @Html.Tooltip(MediaGlobalization.MultiFileUpload_SelectFolder_Help_Title, MediaGlobalization.MultiFileUpload_SelectFolder_Help_Message)            
-                <div class="bcms-content-titles">@MediaGlobalization.MultiFileUpload_SelectFolder</div>
+            <div class="bcms-input-list-holder">                
                 @Html.HiddenFor(f => f.RootFolderId)
                 @Html.HiddenFor(f => f.RootFolderType)
                 @if (Model.RootFolderId.HasDefaultValue())
                 {
+                    @Html.Tooltip(MediaGlobalization.MultiFileUpload_SelectFolder_Help_Title, MediaGlobalization.MultiFileUpload_SelectFolder_Help_Message)            
+                    <div class="bcms-content-titles">@MediaGlobalization.MultiFileUpload_SelectFolder</div>
                     @Html.DropDownListFor(f => f.SelectedFolderId, Model.Folders.Select(o => new SelectListItem { Selected = Model.SelectedFolderId == o.Item1, Text = o.Item2, Value = o.Item1.ToString() }), new { @class = "bcms-global-select" })
                 }
                 else
                 {
-                    @Html.HiddenFor(f => f.SelectedFolderId, new {@Value = Model.RootFolderId})
+                    @Html.HiddenFor(f => f.SelectedFolderId, new { @Value = Model.RootFolderId })
                 }
             </div>
             <div id="bcms-files-dropzone" class="bcms-dropzone">
@@ -50,10 +50,10 @@
             }
             else
             {
-                @Html.HiddenFor(m => m.SelectedFolderId, new {@Value = Model.RootFolderId})
+                @Html.HiddenFor(m => m.SelectedFolderId, new { @Value = Model.RootFolderId })
             }
             
-            @Html.HiddenFor(m=> m.RootFolderType)
+            @Html.HiddenFor(m => m.RootFolderType)
             <div class="bcms-upload-holder" data-bind="template: { name: 'bcms-file-upload-template' }">
             </div>
         }
