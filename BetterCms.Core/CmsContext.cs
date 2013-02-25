@@ -13,6 +13,7 @@ using BetterCms.Core.Dependencies;
 using BetterCms.Core.Environment.Assemblies;
 using BetterCms.Core.Environment.FileSystem;
 using BetterCms.Core.Environment.Host;
+using BetterCms.Core.Events;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Modules.Registration;
 using BetterCms.Core.Mvc;
@@ -32,6 +33,20 @@ namespace BetterCms.Core
     /// </summary>
     public static class CmsContext
     {
+        /// <summary>
+        /// Gets the API events container.
+        /// </summary>
+        /// <value>
+        /// The API events container.
+        /// </value>
+        public static CmsApiEvents Events
+        {
+            get
+            {
+                return CmsApiEvents.Instance;
+            }
+        }
+
         /// <summary>
         /// Creates the data API.
         /// </summary>
