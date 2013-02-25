@@ -1,0 +1,16 @@
+﻿@using BetterCms.Core.DataContracts.Enums
+@using BetterCms.Module.Root.Content.Resources
+
+@model string
+@if (Model == ContentStatus.Published.ToString())
+{
+    <div class="bcms-icn-published">@RootGlobalization.WidgetStatus_Published</div>
+}
+else if (Model == ContentStatus.Draft.ToString())
+{
+    <div class="bcms-icn-draft">@RootGlobalization.WidgetStatus_Draft</div>
+}
+else
+{
+    <div class="bcms-icn-pubdraft">@RootGlobalization.WidgetStatus_PublishedWithDraft</div>
+}

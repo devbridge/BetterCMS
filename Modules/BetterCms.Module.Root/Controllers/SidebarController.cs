@@ -23,6 +23,7 @@ namespace BetterCms.Module.Root.Controllers
     /// <summary>
     /// Side menu controller.
     /// </summary>
+    [Authorize]
     public class SidebarController : CmsControllerBase
     {
         /// <summary>

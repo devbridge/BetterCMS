@@ -1,0 +1,12 @@
+﻿@using BetterCms.Core.DataContracts.Enums
+@using BetterCms.Module.Root.Content.Resources
+
+@model PageStatus
+@if (Model == PageStatus.Published)
+{
+    <div class="bcms-icn-published">@RootGlobalization.Boolean_Yes</div>
+}
+else
+{
+    <div class="bcms-icn-unpublished">@RootGlobalization.Boolean_No</div>
+}

@@ -174,7 +174,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             // If page is not published, page is not found
             if (!request.IsAuthenticated && request.PreviewPageContentId == null)
             {
-                query = query.Where(f => f.IsPublished);
+                query = query.Where(f => f.Status == PageStatus.Published);
             }
 
             return query.ToFuture();
@@ -214,7 +214,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                 pageContentsQuery = pageContentsQuery.Where(f => f.Content.Status == ContentStatus.Published);
             }
 
-            pageContentsQuery = pageContentsQuery.Where(f => !f.IsDeleted && !f.Content.IsDeleted);
+            pageContentsQuery = pageContentsQuery.Where(f => !f.IsDeleted && !f.Content.IsDeleted && !f.Page.IsDeleted);
 
             return pageContentsQuery.ToFuture();
         }

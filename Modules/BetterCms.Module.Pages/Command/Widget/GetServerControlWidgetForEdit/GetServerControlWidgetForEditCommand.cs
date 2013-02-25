@@ -1,19 +1,14 @@
 ﻿using System;
 using System.Linq;
 
+using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Pages.ViewModels.Widgets;
-using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
-
-using NHibernate;
-using NHibernate.Criterion;
-using NHibernate.SqlCommand;
-using NHibernate.Transform;
 
 namespace BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit
 {
@@ -51,7 +46,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit
             EditServerControlWidgetViewModel model = null;
             var categories = categoryService.GetCategories();
 
-            if (widgetId != null)
+            if (widgetId.HasValue && widgetId.Value != Guid.Empty)
             {
                 var serverControlWidget = contentService.GetContentForEdit(widgetId.Value) as ServerControlWidget;
 
@@ -80,9 +75,13 @@ namespace BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit
                                  })
                         .ToList();
                 }
+
+                if (model == null)
+                {
+                    throw new EntityNotFoundException(typeof(ServerControlWidget), widgetId.Value);
+                }
             }
-            
-            if (model == null)
+            else
             {
                 model = new EditServerControlWidgetViewModel();
             }

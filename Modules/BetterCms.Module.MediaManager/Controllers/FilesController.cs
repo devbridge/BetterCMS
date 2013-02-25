@@ -1,5 +1,7 @@
-﻿using System.Web.Mvc;
+﻿using System.Web;
+using System.Web.Mvc;
 
+using BetterCms.Module.MediaManager.Command.Files.DownloadFile;
 using BetterCms.Module.MediaManager.Command.Files.GetFiles;
 using BetterCms.Module.MediaManager.Command.MediaManager.DeleteMedia;
 using BetterCms.Module.MediaManager.Content.Resources;
@@ -16,9 +18,20 @@ namespace BetterCms.Module.MediaManager.Controllers
     public class FilesController : CmsControllerBase
     {
         /// <summary>
+        /// Gets or sets the CMS configuration.
+        /// </summary>
+        /// <value>
+        /// The CMS configuration.
+        /// </value>
+        public ICmsConfiguration CmsConfiguration { get; set; }
+
+        /// <summary>
         /// Gets the files list.
         /// </summary>
-        /// <returns>List of files</returns>
+        /// <param name="options">The options.</param>
+        /// <returns>
+        /// List of files.
+        /// </returns>
         public ActionResult GetFilesList(MediaManagerViewModel options)
         {
             var success = true;
@@ -32,6 +45,7 @@ namespace BetterCms.Module.MediaManager.Controllers
             {
                 success = false;
             }
+
             return Json(new WireJson { Success = success, Data = model });
         }
 
@@ -76,6 +90,27 @@ namespace BetterCms.Module.MediaManager.Controllers
             var view = RenderView("FileInsert", new MediaImageViewModel());
 
             return ComboWireJson(success, view, files, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Downloads the specified id.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns>File to download.</returns>
+        public ActionResult Download(string id)
+        {
+            var model = GetCommand<DownloadFileCommand>().Execute(id.ToGuidOrDefault());
+            if (model != null)
+            {
+                return File(model.FileName, model.ContentMimeType, model.FileDownloadName);
+            }
+
+            if (!string.IsNullOrWhiteSpace(CmsConfiguration.PageNotFoundUrl))
+            {
+                return Redirect(HttpUtility.UrlDecode(CmsConfiguration.PageNotFoundUrl));
+            }
+
+            return new HttpStatusCodeResult(404);
         }
     }
 }

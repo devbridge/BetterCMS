@@ -87,7 +87,8 @@ namespace BetterCms.Tests.Helpers
         public void PopulateBaseFields<TEntity>(EquatableEntity<TEntity> entity, User user = null)
             where TEntity : EquatableEntity<TEntity>
         {
-          /*  entity.IsDeleted = false;
+            entity.Id = Guid.NewGuid();
+            /*  entity.IsDeleted = false;
             entity.CreatedOn = ProvideRandomDateTime();
             entity.CreatedByUser = ProvideRandomString(256);
             entity.ModifiedOn = ProvideRandomDateTime();
@@ -104,7 +105,7 @@ namespace BetterCms.Tests.Helpers
 
             entity.Title = ProvideRandomString(MaxLength.Name);
             entity.PageUrl = ProvideRandomString(MaxLength.Url);
-            entity.IsPublished = true;
+            entity.Status = PageStatus.Published;
             entity.PublishedOn = ProvideRandomDateTime();
             entity.Layout = layout ?? CreateNewLayout();
 
@@ -155,7 +156,7 @@ namespace BetterCms.Tests.Helpers
         {
             PopulateBaseFields(entity);
 
-            entity.IsPublished = ProvideRandomBooleanValue();
+            entity.Status = ProvideRandomEnumValue<PageStatus>();
             entity.PageUrl = ProvideRandomString(MaxLength.Url);
             entity.Title = ProvideRandomString(MaxLength.Name);
             entity.Description = ProvideRandomString(2000);

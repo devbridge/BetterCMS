@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
@@ -137,7 +138,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
                         .Select(() => folderAlias.Version).WithAlias(() => folderModelAlias.Version)
                         .Select(() => folderAlias.Type).WithAlias(() => folderModelAlias.Type))
                     .TransformUsing(Transformers.AliasToBean<MediaFolderViewModel>())
-                    .SingleOrDefault<MediaFolderViewModel>();
+                    .First<MediaFolderViewModel, MediaFolder>();
 
                 model.CurrentFolder = folder ?? new MediaFolderViewModel();
 

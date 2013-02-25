@@ -13,7 +13,7 @@ define('bcms.forms', ['jquery', 'bcms', 'bcms.messages', 'bcms.tabs'], function 
 
             firstInvalidField: '.input-validation-error:first',
             
-            checkboxContainers: '.bcms-checkbox-holder:has(input[type="checkbox"]) .bcms-edit-label, .bcms-edit-check-field:has(input[type="checkbox"]) .bcms-edit-label',
+            checkboxLabels: '.bcms-checkbox-holder:has(input[type="checkbox"]) .bcms-edit-label, .bcms-edit-check-field:has(input[type="checkbox"]) .bcms-edit-label',
             checkboxParents: '.bcms-checkbox-holder, .bcms-edit-check-field',
             checkbox: 'input[type="checkbox"]'
         },
@@ -146,9 +146,18 @@ define('bcms.forms', ['jquery', 'bcms', 'bcms.messages', 'bcms.tabs'], function 
         });
     };
 
-    forms.bindCheckboxes = function (container) {
-        container.find(selectors.checkboxContainers).on('click', function () {
-            $(this).parents(selectors.checkboxParents).first().find(selectors.checkbox).click();
+    forms.bindCheckboxes = function (container, options) {
+        
+        options = $.extend({
+            checkboxSelector: selectors.checkbox,
+            checkboxParentsSelector: selectors.checkboxParents,
+            checkboxLabelsSelector: selectors.checkboxLabels
+        }, options);
+
+        container.find(options.checkboxLabelsSelector).on('click', function () {
+            var checkBox = $(this).parents(options.checkboxParentsSelector).first().find(options.checkboxSelector);
+            checkBox.trigger('click').trigger('change');
+            return false;
         });
     };
 

@@ -75,7 +75,8 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// <value>
         /// The live from date.
         /// </value>
-        [Required]
+        [DateValidation(ErrorMessageResourceType = typeof(BlogGlobalization), ErrorMessageResourceName = "BlogPost_LiveFrom_DateNotValidationMessage")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(BlogGlobalization), ErrorMessageResourceName = "BlogPost_LiveFrom_RequiredMessage")]
         public virtual DateTime LiveFromDate { get; set; }
 
         /// <summary>
@@ -84,6 +85,7 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// <value>
         /// The live to date.
         /// </value>
+        [DateValidation(ErrorMessageResourceType = typeof(BlogGlobalization), ErrorMessageResourceName = "BlogPost_LiveTo_DateNotValidationMessage")]
         [EndDateValidation(StartDateProperty = "LiveFromDate", ErrorMessageResourceType = typeof(BlogGlobalization), ErrorMessageResourceName = "BlogPost_LiveTo_ValidationMessage")]
         public virtual DateTime? LiveToDate { get; set; }
 
@@ -94,6 +96,14 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// The author.
         /// </value>
         public virtual Guid? AuthorId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the parent page URL.
+        /// </summary>
+        /// <value>
+        /// The parent page URL.
+        /// </value>
+        public string ParentPageUrl { get; set; }
 
         /// <summary>
         /// Gets or sets the cathegory.

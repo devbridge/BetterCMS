@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Models;
@@ -44,9 +45,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
         /// <exception cref="System.NotImplementedException"></exception>
         public EditPagePropertiesViewModel Execute(Guid id)
         {
-            EditPagePropertiesViewModel model;
-
-            model = Repository
+            var model = Repository
                 .AsQueryable<PageProperties>()
                 .Where(p => p.Id == id)
                 .Select(page => new EditPagePropertiesViewModel
@@ -72,19 +71,14 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                                                 ImageTooltip = page.Image.Caption
                                             }
                             })
-                .FirstOrDefault();
+                .FirstOne();
 
             if (model != null)
             {
                 model.Tags = tagService.GetPageTagNames(id);
                 model.RedirectFromOldUrl = true;
+                model.Categories = categoryService.GetCategories();
             }
-            else
-            {
-                model = new EditPagePropertiesViewModel();
-            }
-
-            model.Categories = categoryService.GetCategories();
 
             return model;
         }

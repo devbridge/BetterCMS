@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using BetterCms.Core.DataContracts;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Root.Projections;
@@ -18,8 +19,8 @@ namespace BetterCms.Module.Root.ViewModels.Cms
             Version = page.Version;
             HasSEO = page.HasSEO;
             Title = page.Title;
-            PageUrl = page.PageUrl;            
-            IsPublished = page.IsPublished;
+            PageUrl = page.PageUrl;
+            Status = page.Status;
         }
 
         public RenderPageViewModel()
@@ -80,7 +81,7 @@ namespace BetterCms.Module.Root.ViewModels.Cms
 
         public int Version { get; private set; }
 
-        public bool IsPublished { get; private set; }
+        public PageStatus Status { get; private set; }
         
         public bool IsPublic { get; private set; }
 

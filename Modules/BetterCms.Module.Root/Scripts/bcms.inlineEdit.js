@@ -308,10 +308,24 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
         }
     };
 
+
+    editor.showRowLoading = function(tr, messageToShow) {
+        $(tr).children().hide();
+        var columnCount = $(tr).children().length;
+        var td = $("<td>", { "colspan": columnCount });
+        td.html(messageToShow);
+        $(tr).append(td);
+    };
+    
+    editor.hideRowLoading = function(tr) {
+        $($(tr).children().get($(tr).children().length - 1)).remove();
+        $(tr).children().show();
+    };
+
     /**
     * Saves the row
     */
-    editor.saveRow = function(row) {
+    editor.saveRow = function (row) {
         if (editor.isRowValid(row)) {
 
             //
@@ -325,10 +339,12 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
                     url = options.saveUrl,
                     onComplete = function(json) {
                         messages.refreshBox(row, json);
-                        savingMessage.hide();
+                        editor.hideRowLoading(row);
                         row.data('saving', false);
                         row.data('blurred', false);
                         if (json.Success) {
+                            saveLink.hide();
+                            cancelLink.hide();
                             if (json.Data) {
                                 if (json.Data.Version) {
                                     row.find(selectors.deleteRowLink).data('version', json.Data.Version);
@@ -347,17 +363,11 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
                         } else {
                             // Bind back to item blur event
                             editor.bindBlurEvents(row);
-
-                            saveLink.show();
-                            cancelLink.show();
                         }
                     };
 
                 row.data('saving', true);
-                saveLink.hide();
-                cancelLink.hide();
-                savingMessage.html(globalization.messageSaving);
-                savingMessage.show();
+                editor.showRowLoading(row, globalization.messageSaving);
 
                 $.ajax({
                     type: 'POST',
@@ -421,11 +431,10 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
             onAccept: function () {
                 if (options.deleteUrl) {
                     var url = options.deleteUrl,
-                        deleteMessage = row.find(selectors.rowMessage),
                         deleteLink = row.find(selectors.deleteRowLink),
                         onComplete = function(json) {
                             messages.refreshBox(row, json);
-                            deleteMessage.hide();
+                            editor.hideRowLoading(row);
                             if (json.Success) {
                                 row.remove();
                                 options.showHideEmptyRow(formContainer);
@@ -435,8 +444,7 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
                         };
 
                     deleteLink.hide();
-                    deleteMessage.html(globalization.messageDeleting);
-                    deleteMessage.show();
+                    editor.showRowLoading(row, globalization.messageDeleting);
                     $.ajax({
                         type: 'POST',
                         cache: false,

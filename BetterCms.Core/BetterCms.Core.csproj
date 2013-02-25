@@ -117,6 +117,8 @@
     </Compile>
     <Compile Include="CmsContext.cs" />
     <Compile Include="CmsApiContext.cs" />
+    <Compile Include="DataAccess\DataContext\QueryableExtensions.cs" />
+    <Compile Include="DataAccess\DataContext\QueryOverExtensions.cs" />
     <Compile Include="DataAccess\DataContext\EventListeners\DeleteEventListener.cs" />
     <Compile Include="DataAccess\DataContext\EventListeners\EventListenerHelper.cs" />
     <Compile Include="DataAccess\DataContext\EventListeners\SaveOrUpdateEventListener.cs" />
@@ -150,6 +152,7 @@
     <Compile Include="Dependencies\PerWebRequestLifetimeModule.cs" />
     <Compile Include="Environment\Assemblies\DefaultAssemblyManager.cs" />
     <Compile Include="Environment\Assemblies\IAssemblyManager.cs" />
+    <Compile Include="DataContracts\Enums\PageStatus.cs" />
     <Compile Include="Events\CmsApiEvents.cs" />
     <Compile Include="Events\PageCreatedEventArgs.cs" />
     <Compile Include="Events\CmsApiPagesEvents.cs" />

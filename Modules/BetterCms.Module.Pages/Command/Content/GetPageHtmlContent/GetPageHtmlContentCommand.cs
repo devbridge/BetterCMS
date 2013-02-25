@@ -1,9 +1,11 @@
 ﻿using System;
 
 using BetterCms.Core.Exceptions;
+using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Content;
+using BetterCms.Module.Pages.ViewModels.Templates;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
@@ -25,7 +27,7 @@ namespace BetterCms.Module.Pages.Command.Content.GetPageHtmlContent
 
             if (pageContentForEdit == null)
             {
-                throw new CmsException(string.Format("An editable page content was not found by id={0}.", pageContentId));
+                throw new EntityNotFoundException(typeof(PageContent), pageContentId);
             }
 
             PageContent pageContent = pageContentForEdit.Item1;

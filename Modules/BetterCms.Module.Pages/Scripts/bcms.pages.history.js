@@ -56,11 +56,12 @@ define('bcms.pages.history', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', '
 
         previewContainer.html(iFrame);
         loaderContainer.showLoading();
-        iFrame.attr('src', url);
 
         iFrame.on('load', function () {
             loaderContainer.hideLoading();
         });
+        
+        iFrame.attr('src', url);
     }
 
     /**
@@ -198,7 +199,7 @@ define('bcms.pages.history', ['jquery', 'bcms', 'bcms.modal', 'bcms.messages', '
                             if ($.isFunction(onSuccess)) {
                                 var publishedId = json.Data ? json.Data.PublishedId : null;
                                 
-                                onSuccess.call(this, publishedId);
+                                onSuccess.call(this, publishedId, json);
                             }
                         }
                     };

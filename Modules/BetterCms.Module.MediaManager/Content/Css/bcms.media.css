@@ -79,6 +79,16 @@
     padding-bottom: 15px;
 }
 
+.bcms-editing-text {
+    display: inline-block;
+    vertical-align: bottom;
+    max-width: 290px;
+    padding-left: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .bcms-file-alignment {
     display: inline-block;
     padding: 0 0 0 30px;
@@ -127,14 +137,17 @@
 
 .bcms-alignment-controls .bcms-align-left {
     background-position: 0 0;
+    cursor: pointer;
 }
 
 .bcms-alignment-controls .bcms-align-center {
     background-position: -104px 0;
+    cursor: pointer;
 }
 
 .bcms-alignment-controls .bcms-align-right {
     background-position: -208px 0;
+    cursor: pointer;
 }
 
 div.bcms-align-left-active {
@@ -200,14 +213,7 @@ div.bcms-align-right-active {
     position: relative;
     display: inline-block;
     margin: 15px 0;
-    height: 33px;
-    line-height: 33px;
-    font-size: 12px;
-    font-family: 'Open Sans', sans-serif;
-    color: #FFFFFF;
     overflow: hidden;
-    white-space: nowrap;
-    text-transform: uppercase;
     box-shadow: 0 0 1px 1px #292929;
     background-color: #676767;
     background-image: linear-gradient(to bottom, #676767 0, #555555 100%);
@@ -215,17 +221,23 @@ div.bcms-align-right-active {
     background-image: -webkit-linear-gradient(top, #676767 0, #555555 100%);
 }
 
-    .bcms-btn-upload-files label {
-        display: block;
-        height: 100%;
-        padding: 0 10px;
-        cursor: pointer;
+    .bcms-btn-upload-files label:active {
+        box-shadow: 0 0 2px 1px #292929;
+        background: #555;
     }
 
-        .bcms-btn-upload-files label:active {
-            box-shadow: 0 0 2px 1px #292929;
-            background: #555;
-        }
+label.bcms-btn-upload-files-text {
+    display: block;
+    height: 33px;
+    line-height: 33px;
+    padding: 0 10px;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: 'Open Sans', sans-serif;
+    color: #fff;
+    white-space: nowrap;
+    text-transform: uppercase;
+}
 
 .bcms-upload-holder .bcms-upload-block:first-child {
     border-top: 1px solid #e3e3e3;
@@ -585,8 +597,8 @@ input.bcms-grid-input:focus {
 }
 
     .bcms-grid .bcms-image-box .bcms-media-file-holder {
-        width: 103px;
-        height: 94px;
+        width: 105px;
+        height: 96px;
         background: url('images/bcms-no-image-3.png') no-repeat center center;
         background-size: cover;
         overflow: hidden;
@@ -594,8 +606,7 @@ input.bcms-grid-input:focus {
 
         .bcms-grid .bcms-image-box .bcms-media-file-holder img {
             display: block;
-            width: 103px;
-            height: 94px;
+            width: 100%;
         }
 
     .bcms-grid .bcms-image-box:hover > .bcms-media-edit-controls {
@@ -652,7 +663,7 @@ input.bcms-grid-input:focus {
         top: 0;
         left: 0;
         width: 105px;
-        height: 100px;
+        height: 96px;
         overflow: hidden;
     }
 
@@ -665,7 +676,7 @@ input.bcms-grid-input:focus {
         position: absolute;
         bottom: 5px;
         left: 4px;
-        width: 95px;
+        width: 94px;
         margin: 0;
         border: 1px solid #c6c6c6;
         box-sizing: border-box;
@@ -690,7 +701,7 @@ input.bcms-grid-input:focus {
     }
 
     .bcms-grid .bcms-image-box-active div.bcms-media-edit-controls {
-        display: block;
+        display: none;
     }
 
     .bcms-grid .bcms-image-box-active .bcms-icn-delete {
@@ -1197,7 +1208,7 @@ input.bcms-grid-input:focus {
 
     .bcms-list .bcms-file-box .bcms-media-name {
         display: inline-block;
-        max-width: 390px;
+        max-width: 420px;
         padding-left: 20px;
         vertical-align: middle;
         font-size: 14px;

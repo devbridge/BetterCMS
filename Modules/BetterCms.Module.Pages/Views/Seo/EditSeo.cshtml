@@ -6,7 +6,10 @@
 @using Microsoft.Web.Mvc
 
 @model EditSeoViewModel
-
+@if (Model == null)
+{ 
+    return;
+}
 <div class="bcms-scroll-window">
     @Html.TabbedContentMessagesBox()
     <div class="bcms-padded-content">

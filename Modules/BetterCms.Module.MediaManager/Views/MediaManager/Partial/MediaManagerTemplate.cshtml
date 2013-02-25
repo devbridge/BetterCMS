@@ -17,7 +17,7 @@
             <a class="bcms-media-new-file" data-bind="click: uploadMedia, text: uploadButtonTitle()"></a>
         </div>
         <div class="bcms-search-block">
-            <input id="bcms-search-input" data-bind="value: gridOptions().searchQuery, valueUpdate: 'afterkeydown', enterPress: searchMedia" class="bcms-editor-field-box" type="text" placeholder="@RootGlobalization.WaterMark_Search" />
+            <input id="bcms-search-input" name="MediaSearch" data-bind="value: gridOptions().searchQuery, valueUpdate: 'afterkeydown', enterPress: searchMedia" class="bcms-editor-field-box" type="text" placeholder="@RootGlobalization.WaterMark_Search" />
             <div class="bcms-btn-search" data-bind="click: searchMedia">@RootGlobalization.Button_Search</div>
         </div>
     </div>

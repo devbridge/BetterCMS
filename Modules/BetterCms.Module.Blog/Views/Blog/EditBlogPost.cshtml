@@ -1,12 +1,17 @@
-﻿@using BetterCms.Module.Blog.Content.Resources
+﻿@using BetterCms.Core.DataContracts.Enums
+@using BetterCms.Module.Blog.Content.Resources
 @using BetterCms.Module.Blog.Controllers
+@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc.Helpers
 @using BetterCms.Module.Root.Mvc.UI
 @using Microsoft.Web.Mvc
 
 @model BetterCms.Module.Blog.ViewModels.Blog.BlogPostViewModel
-
+@if (Model == null)
+{
+    return;
+}
 @{
     var tagsTemplateViewModel = new BetterCms.Module.Pages.ViewModels.Tags.TagsTemplateViewModel
     {
@@ -17,12 +22,33 @@
 
 <div class="bcms-scroll-window">
     @Html.TabbedContentMessagesBox()
+    @if (Model.CurrentStatus == ContentStatus.Draft)
+    {
+        <div class="bcms-messages-type-1">
+            <ul class="bcms-success-messages" style="display: none">
+            </ul>
+            <ul class="bcms-info-messages" style="display: none">
+            </ul>
+            <ul class="bcms-warning-messages">
+                <li>
+                    @PagesGlobalization.EditPageContent_Messages_DraftStatusWarnMessage
+                    @if (Model.HasPublishedContent)
+                    {
+                        @Html.Raw(PagesGlobalization.EditPageContent_Messages_DraftStatusWarnMessage_Destroy)
+                    }
+                </li>
+            </ul>
+            <ul class="bcms-error-messages" style="display: none">
+            </ul>
+        </div>
+    }
     @using (Html.BeginForm<BlogController>(c => c.SaveBlogPost(null), FormMethod.Post, new { @id = "bcms-blog-post-form", @class = "bcms-ajax-form" }))
     {
         @Html.HiddenFor(model => model.Id, new {data_bind = "value: id()"})
         @Html.HiddenFor(model => model.Version, new {data_bind = "value: version()"})
         @Html.HiddenFor(model => model.Image.ImageId, new {data_bind = "value: image().id()"})
         @Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status"})
+        @Html.HiddenFor(modal => modal.ParentPageUrl)
 
         <div class="bcms-new-blog-content">
 

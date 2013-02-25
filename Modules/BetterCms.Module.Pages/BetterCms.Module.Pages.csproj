@@ -128,6 +128,7 @@
     <Compile Include="Command\Content\SortPageContent\SortPageContentResponse.cs" />
     <Compile Include="Command\Content\SortPageContent\SortPageContentCommand.cs" />
     <Compile Include="Command\History\DestroyContentDraft\DestroyContentDraftCommand.cs" />
+    <Compile Include="Command\History\DestroyContentDraft\DestroyContentDraftCommandResponse.cs" />
     <Compile Include="Command\History\GetContentHistory\GetContentHistoryCommand.cs" />
     <Compile Include="Command\History\GetContentHistory\GetContentHistoryRequest.cs" />
     <Compile Include="Command\History\GetContentVersion\GetContentVersionCommand.cs" />
@@ -203,6 +204,7 @@
     <Compile Include="Helpers\HttpHelper.cs" />
     <Compile Include="Helpers\ListModelBindingExtensions.cs" />
     <Compile Include="Helpers\RenderHelper.cs" />
+    <Compile Include="Helpers\TimeHelper.cs" />
     <Compile Include="Models\IServerControlWidget.cs" />
     <Compile Include="Models\Maps\HtmlContentMap.cs" />
     <Compile Include="Models\Migrations\Migration201302050830.cs" />
@@ -221,6 +223,7 @@
     <Compile Include="Models\Redirect.cs" />
     <Compile Include="Models\WidgetType.cs" />
     <Compile Include="Mvc\Attributes\CustomPageUrlValidationAttribute.cs" />
+    <Compile Include="Mvc\Attributes\DateValidationAttribute.cs" />
     <Compile Include="Mvc\Attributes\EndDateValidationAttribute.cs" />
     <Compile Include="PagesConstants.cs" />
     <Compile Include="Accessors\HtmlContentWidgetAccessor.cs" />
@@ -243,6 +246,7 @@
     <Compile Include="ViewModels\Category\CategoryItemViewModel.cs" />
     <Compile Include="ViewModels\Content\ContentOptionViewModel.cs" />
     <Compile Include="ViewModels\Content\ContentViewModel.cs" />
+    <Compile Include="ViewModels\Content\ContentSortViewModel.cs" />
     <Compile Include="ViewModels\Content\PageContentSortViewModel.cs" />
     <Compile Include="ViewModels\History\ContentHistoryItem.cs" />
     <Compile Include="ViewModels\History\ContentHistoryViewModel.cs" />
@@ -327,17 +331,19 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Scripts\bcms.pages.content.js" />
-    <EmbeddedResource Include="Scripts\bcms.pages.history.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.properties.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.redirects.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.seo.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.tags.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.template.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.history.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.widgets.js" />
     <Content Include="web.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\Partial\WarnMessageAboutDraft.cshtml" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Category\Categories.cshtml" />
   </ItemGroup>
@@ -408,7 +414,7 @@
     <EmbeddedResource Include="Views\Seo\Partial\EditSeoEditUrlPath.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\EditorTemplates\SiteSettingBoolean.cshtml" />
+    <EmbeddedResource Include="Views\Shared\EditorTemplates\SEOStatus.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Shared\Layouts\ContentVersionLayout.cshtml" />
@@ -451,6 +457,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\EditorTemplates\WidgetStatus.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\EditorTemplates\PageStatus.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

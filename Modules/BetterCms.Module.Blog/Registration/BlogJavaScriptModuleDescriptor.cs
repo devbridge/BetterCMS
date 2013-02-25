@@ -21,7 +21,7 @@ namespace BetterCms.Module.Blog.Registration
             Links = new IActionProjection[]
                         {
                             new JavaScriptModuleLinkTo<BlogController>(this, "loadSiteSettingsBlogsUrl", c => c.Index(null)),
-                            new JavaScriptModuleLinkTo<BlogController>(this, "loadCreateNewPostDialogUrl", c => c.CreateBlogPost()),
+                            new JavaScriptModuleLinkTo<BlogController>(this, "loadCreateNewPostDialogUrl", c => c.CreateBlogPost("{0}")),
                             new JavaScriptModuleLinkTo<BlogController>(this, "loadEditPostDialogUrl", c => c.EditBlogPost("{0}")),
                             new JavaScriptModuleLinkTo<AuthorController>(this, "loadAuthorsTemplateUrl", c => c.ListTemplate()),
                             new JavaScriptModuleLinkTo<AuthorController>(this, "loadAuthorsUrl", c => c.AuthorsList(null)),
@@ -40,6 +40,7 @@ namespace BetterCms.Module.Blog.Registration
                             new JavaScriptModuleGlobalization(this, "blogPostsTabTitle", () => BlogGlobalization.SiteSettings_Blogs_PostsTab_Title),
                             new JavaScriptModuleGlobalization(this, "authorsTabTitle", () => BlogGlobalization.SiteSettings_Blogs_AuthorsTab_Title),
                             new JavaScriptModuleGlobalization(this, "templatesTabTitle", () => BlogGlobalization.SiteSettings_Blogs_TemplatesTab_Title),
+                            new JavaScriptModuleGlobalization(this, "datePickerTooltipTitle", () => BlogGlobalization.Date_Picker_Tooltip_Title)
                         };
         }
     }

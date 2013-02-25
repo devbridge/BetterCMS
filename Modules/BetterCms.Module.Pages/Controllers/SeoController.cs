@@ -24,8 +24,8 @@ namespace BetterCms.Module.Pages.Controllers
         public ActionResult EditSeo(string pageId)
         {
             EditSeoViewModel model = GetCommand<GetPageSeoCommand>().ExecuteCommand(pageId.ToGuidOrDefault());
-
-            return View(model);
+            var view = RenderView("EditSeo", model);
+            return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>

@@ -146,7 +146,7 @@ define('bcms.sidemenu', ['jquery', 'bcms', 'bcms.modal', 'jqueryui'], function (
     sidemenu.init = function () {
 
         console.log('Initialize sidebar');
-
+        $(selectors.container).hide();
         sidemenuContainer = $(selectors.container);
 
         var offsetTop = localStorage.getItem(keys.sideMenuOffsetTop),
@@ -238,10 +238,11 @@ define('bcms.sidemenu', ['jquery', 'bcms', 'bcms.modal', 'jqueryui'], function (
             }
         });
 
+        sidemenuContainer.show();
+
         console.log('Initialize sidebar done');
     };
 
     bcms.registerInit(sidemenu.init);
-
     return sidemenu;
 });

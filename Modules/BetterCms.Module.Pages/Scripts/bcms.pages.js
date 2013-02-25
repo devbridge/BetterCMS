@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.pages.properties', 'bcms.messages', 'bcms.grid', 'bcms.redirect'],
-    function ($, bcms, modal, siteSettings, forms, dynamicContent, pageProperties, messages, grid, redirect) {
+define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.pages.properties', 'bcms.grid', 'bcms.redirect'],
+    function ($, bcms, modal, siteSettings, forms, dynamicContent, pageProperties, grid, redirect) {
     'use strict';
 
         var page = { },            
@@ -36,6 +36,9 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 siteSettingsPageRowTemplate: '#bcms-pages-list-row-template',
                 siteSettingsPageBooleanTemplateTrue: '#bcms-boolean-true-template',
                 siteSettingsPageBooleanTemplateFalse: '#bcms-boolean-false-template',
+                siteSettingsPageStatusTemplatePublished: '#bcms-pagestatus-published-template',
+                siteSettingsPageStatusTemplateUnpublished: '#bcms-pagestatus-unpublished-template',
+                siteSettingsPageStatusTemplateDraft: '#bcms-pagestatus-draft-template',
                 siteSettingsPageRowTemplateFirstRow: 'tr:first',
                 siteSettingsPageParentRow: 'tr:first',
                 siteSettingsPagesTableFirstRow: 'table.bcms-tables > tbody > tr:first',
@@ -44,7 +47,7 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 siteSettingPageTitleCell: '.bcms-page-title',
                 siteSettingPageCreatedCell: '.bcms-page-created',
                 siteSettingPageModifiedCell: '.bcms-page-modified',
-                siteSettingPageIsPublishedCell: '.bcms-page-ispublished',
+                siteSettingPageStatusCell: '.bcms-page-ispublished',
                 siteSettingPageHasSeoCell: '.bcms-page-hasseo',
             },        
             links = {
@@ -177,8 +180,10 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
     * Closes edit permalink box in AddNewPage dialog.
     */
     page.closeAddNewPageEditPermalinkBox = function (dialog) {
-        var value = dialog.container.find(selectors.editPermalinkHiddenField).val();
-        dialog.container.find(selectors.editPermalinkEditField).val(value);
+        var value = dialog.container.find(selectors.editPermalinkHiddenField).val(),
+            permalinkEditField = dialog.container.find(selectors.editPermalinkEditField);
+        permalinkEditField.val(value);
+        permalinkEditField.blur();
 
         page.hideAddNewPageEditPermalinkBox(dialog);
     };
@@ -224,7 +229,7 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
         var isPublished = sender.val() == "publish",
             data = {PageId: bcms.pageId, IsPublished: isPublished},
             onComplete = function (json) {
-                messages.showMessages(json);
+                modal.showMessages(json);
                 if (json.Success) {
                     setTimeout(function() {
                         bcms.reload();
@@ -421,6 +426,12 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             page.editSiteSettingsPage(editButton);
         });
 
+        container.find(selectors.siteSettingPageTitleCell).on('click', function (event) {
+            bcms.stopEventPropagation(event);
+            var url = $(this).data('url');
+            window.open(url);
+        });
+
         container.find(selectors.siteSettingsPageDeleteButton).on('click', function (event) {
             bcms.stopEventPropagation(event);
             page.deleteSiteSettingsPage($(this), container);
@@ -454,7 +465,7 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 newRow.find(selectors.siteSettingPageCreatedCell).html(data.Data.CreatedOn);
                 newRow.find(selectors.siteSettingPageModifiedCell).html(data.Data.ModifiedOn);
 
-                page.siteSettingsSetBooleanTemplate(newRow.find(selectors.siteSettingPageIsPublishedCell), data.Data.IsPublished);
+                page.siteSettingsPageStatusTemplate(newRow.find(selectors.siteSettingPageStatusCell), data.Data.PageStatus);
                 page.siteSettingsSetBooleanTemplate(newRow.find(selectors.siteSettingPageHasSeoCell), data.Data.HasSEO);
 
                 newRow.find(selectors.siteSettingsPageEditButton).data('id', data.Data.PageId);
@@ -480,6 +491,24 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
     };
 
     /**
+    * Creates html for page status value, using given PageStatus template
+    */
+    page.siteSettingsPageStatusTemplate = function (container, value) {
+        var template;
+        
+        if (value == 2) {
+            template = $(selectors.siteSettingsPageStatusTemplateDraft);
+        }   else if (value == 3) {
+            template = $(selectors.siteSettingsPageStatusTemplatePublished);
+        } else {
+            template = $(selectors.siteSettingsPageStatusTemplateUnpublished);
+        }
+        
+        var html = $(template.html());
+        container.html(html);
+    };
+
+    /**
     * Opens page edit form from site settings pages list
     */
     page.editSiteSettingsPage = function (self) {
@@ -493,7 +522,7 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 row.find(selectors.siteSettingPageCreatedCell).html(data.Data.CreatedOn);
                 row.find(selectors.siteSettingPageModifiedCell).html(data.Data.ModifiedOn);
                 
-                page.siteSettingsSetBooleanTemplate(row.find(selectors.siteSettingPageIsPublishedCell), data.Data.IsPublished);
+                page.siteSettingsPageStatusTemplate(row.find(selectors.siteSettingPageStatusCell), data.Data.PageStatus);
                 page.siteSettingsSetBooleanTemplate(row.find(selectors.siteSettingPageHasSeoCell), data.Data.HasSEO);
             }
         });
@@ -554,7 +583,7 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                                 }
                             }
                         } else {
-                            messages.showMessages(json);
+                            modal.showMessages(json);
                         }
                     }
                 });
@@ -583,7 +612,7 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
         $.validator.addMethod("jqenddatevalidation", function (value, element, params) {
             var startDateString = $('#' + params.startdateproperty).val();
             if (value != null && value != "" && startDateString != null && startDateString != "") {
-                return new Date(startDateString) < new Date(value);
+                return new Date(startDateString) <= new Date(value);
             }
             return true;
         }, function (params) {

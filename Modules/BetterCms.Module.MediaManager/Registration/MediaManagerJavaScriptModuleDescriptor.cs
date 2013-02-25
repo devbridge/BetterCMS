@@ -32,6 +32,7 @@ namespace BetterCms.Module.MediaManager.Registration
                     new JavaScriptModuleLinkTo<VideosController>(this, "deleteVideoUrl", c => c.VideoDelete("{0}", "{1}")),
                     new JavaScriptModuleLinkTo<FilesController>(this, "deleteFileUrl", c => c.FileDelete("{0}", "{1}")),
                     new JavaScriptModuleLinkTo<ImagesController>(this, "getImageUrl", c => c.GetImage("{0}")),
+                    new JavaScriptModuleLinkTo<FilesController>(this, "downloadFileUrl", c => c.Download("{0}")),
                     new JavaScriptModuleLinkTo<FolderController>(this, "saveFolderUrl", c => c.SaveFolder(null)),
                     new JavaScriptModuleLinkTo<FolderController>(this, "deleteFolderUrl", c => c.DeleteFolder("{0}", "{1}")),
                     new JavaScriptModuleLinkTo<MediaManagerController>(this, "renameMediaUrl", c => c.RenameMedia(null))

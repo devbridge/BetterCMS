@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
+using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Core.Models;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Navigation.ViewModels.Sitemap;
 using BetterCms.Module.Pages.Models;
@@ -28,7 +30,7 @@ namespace BetterCms.Module.Navigation.Command.Sitemap.GetPageLinks
 
             var query = UnitOfWork.Session
                 .QueryOver(() => alias)
-                .Where(() => !alias.IsDeleted);
+                .Where(() => !alias.IsDeleted && alias.Status != PageStatus.Preview);
 
             if (!string.IsNullOrWhiteSpace(request))
             {

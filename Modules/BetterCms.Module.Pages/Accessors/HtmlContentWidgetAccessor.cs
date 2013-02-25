@@ -26,7 +26,8 @@ namespace BetterCms.Module.Pages.Accessors
 
         public override string GetHtml(HtmlHelper html)
         {
-            if (!string.IsNullOrWhiteSpace(Content.Html))
+
+            if (Content.UseHtml && !string.IsNullOrWhiteSpace(Content.Html))
             {
                 return Content.Html;
             }

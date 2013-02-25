@@ -52,9 +52,15 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
 
             request.RedirectUrl = redirectService.FixUrl(request.RedirectUrl);
 
-            if (!string.IsNullOrWhiteSpace(request.RedirectUrl) && !string.Equals(page.PageUrl, request.RedirectUrl, StringComparison.OrdinalIgnoreCase))
+            if (!string.IsNullOrWhiteSpace(request.RedirectUrl))
             {
-                // Valdiate url
+                if (string.Equals(page.PageUrl, request.RedirectUrl, StringComparison.OrdinalIgnoreCase))
+                {
+                    var logMessage = string.Format("Circular redirect loop from url {0} to url {0}.", request.RedirectUrl);
+                    throw new ValidationException(() => PagesGlobalization.ValidatePageUrlCommand_SameUrlPath_Message, logMessage);
+                }
+
+                // Validate url
                 if (!redirectService.ValidateUrl(request.RedirectUrl))
                 {
                     var logMessage = string.Format("Invalid page url {0}.", request.RedirectUrl);

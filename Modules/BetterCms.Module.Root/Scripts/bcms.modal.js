@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console, document */
 
-define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'knockout', 'bcms.forms'], function ($, bcms, tabs, ko, forms) {
+define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', 'bcms.forms'], function ($, bcms, tabs, ko, forms) {
     'use strict';
 
     var modal = {},
@@ -472,6 +472,8 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'knockout', 'bcms.forms'], 
     *  Binds to a document key press events.
     */
     function addGlobalKeyPressEvent() {
+        var lastEnterModal,
+            lastEscModal;
         $(document).on('keydown.bcms.modal', function (e) {
             var topModal = modal.last();
             if (topModal) {
@@ -479,14 +481,20 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'knockout', 'bcms.forms'], 
                 if (e.keyCode === 27 && !topModal.options.disableCancel) {
                     if (canHandleKeyPress()) {
                         e.preventDefault();
-                        topModal.closeClick();
+                        if (topModal != lastEscModal) {
+                            topModal.closeClick();
+                            lastEscModal = topModal;
+                        }
                     }
                 }
                 // If Enter pressed and accept action is not disabled in the modal dialog.
                 else if (e.keyCode === 13 && !topModal.options.disableAccept) {
                     if (canHandleKeyPress()) {
                         e.preventDefault();
-                        topModal.acceptClick();
+                        if (topModal != lastEnterModal) {
+                            topModal.acceptClick();
+                            lastEnterModal = topModal;
+                        }
                     }
                 }
             }
@@ -654,6 +662,23 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'knockout', 'bcms.forms'], 
         });
 
         return dialog;
+    };
+
+    modal.showMessages = function (json) {
+        if (json.Messages) {
+            var content = "";
+
+            for (var i = 0; i < json.Messages.length; i++) {
+                if (content) {
+                    content += "<br />";
+                }
+                content += json.Messages[i];
+            }
+
+            modal.alert({
+                content: content
+            });
+        }
     };
 
     return modal;

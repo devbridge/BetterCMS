@@ -40,8 +40,11 @@
 @section CmsHeadScripts {
     @if (Model.CanManageContent)
     {
-        <script type="text/javascript" data-main="@Url.Content("~/file/bcms-root/scripts/main")" src="@Url.Content("~/file/bcms-root/Scripts/require-jquery.js")"></script>
+        <script type="text/javascript" data-main="@Url.Content("~/file/bcms-root/scripts/main")" src="@Url.Content("~/file/bcms-root/Scripts/require-jquery.js")"></script>        
     }
+    <!--[if lt IE 9]>
+            <script src="@Url.Content("~/file/bcms-root/Scripts/html5shiv.js")"></script>
+    <![endif]-->
 }
 
 @section CmsBodyAttributes {@(Html.Raw(Model.CanManageContent ? string.Format(@" data-page-id = ""{0}""", @ViewBag.pageId) : string.Empty))}

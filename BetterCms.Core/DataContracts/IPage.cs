@@ -1,4 +1,6 @@
-﻿namespace BetterCms.Core.DataContracts
+﻿using BetterCms.Core.DataContracts.Enums;
+
+namespace BetterCms.Core.DataContracts
 {
     /// <summary>
     /// Defines interface to access basic page properties.
@@ -6,12 +8,12 @@
     public interface IPage : IEntity
     {
         /// <summary>
-        /// Gets a value indicating whether this page is published.
+        /// Gets the page status.
         /// </summary>
         /// <value>
-        /// <c>true</c> if this page is published; otherwise, <c>false</c>.
+        /// The page status.
         /// </value>
-        bool IsPublished { get; }
+        PageStatus Status { get; }
 
         /// <summary>
         /// Gets a value indicating whether this page is available for not authenticated users.

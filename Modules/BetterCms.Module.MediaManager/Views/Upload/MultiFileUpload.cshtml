@@ -9,33 +9,34 @@
            
 <div class="bcms-scroll-window">
     @Html.TabbedContentMessagesBox("bcms-multi-file-upload-messages")
-    <div class="bcms-file-manager-inner">
+    <div class="bcms-file-manager-inner" id="bcms-media-uploads">
 
         @using (Html.BeginForm<UploadController>(f => f.SaveUploads(null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
         {
-            <div class="bcms-input-list-holder">
-                @Html.Tooltip(MediaGlobalization.MultiFileUpload_SelectFolder_Help_Title, MediaGlobalization.MultiFileUpload_SelectFolder_Help_Message)            
-                <div class="bcms-content-titles">@MediaGlobalization.MultiFileUpload_SelectFolder</div>
+            <div class="bcms-input-list-holder">                
                 @Html.HiddenFor(f => f.RootFolderId)
                 @if (Model.RootFolderId.HasDefaultValue())
                 {
+                    @Html.Tooltip(MediaGlobalization.MultiFileUpload_SelectFolder_Help_Title, MediaGlobalization.MultiFileUpload_SelectFolder_Help_Message)            
+                    <div class="bcms-content-titles">@MediaGlobalization.MultiFileUpload_SelectFolder</div>
                     @Html.DropDownListFor(f => f.SelectedFolderId, Model.Folders.Select(o => new SelectListItem { Selected = Model.SelectedFolderId == o.Item1, Text = o.Item2, Value = o.Item1.ToString() }), new { @class = "bcms-global-select" })
                 }
                 else
                 {
-                    @Html.HiddenFor(f => f.SelectedFolderId, new {@Value = Model.RootFolderId})
+                    @Html.HiddenFor(f => f.SelectedFolderId, new { @Value = Model.RootFolderId })
                 }
             </div>
 
             <div id="bcms-files-dropzone" class="bcms-dropzone">
                 <div class="bcms-dropzone-infotext">@MediaGlobalization.MultiFileUpload_DragDropBox</div>
                 <div class="bcms-btn-upload-files">
-                    <label for="bcms-files-upload-input" onclick="if ($.browser.mozilla) { $('#' + $(this).attr('for')).click(); return false; }">@MediaGlobalization.MultiFileUpload_UploadButton</label>
-                    <input type="file" multiple="multiple" name="uploadFiles" id="bcms-files-upload-input" class="bcms-uploader" style="position: absolute; left: -999em; top: -999em;">
+                    <label for="bcms-files-upload-input" class="bcms-btn-upload-files-text" onclick="if ($.browser.mozilla) { $('#' + $(this).attr('for')).click(); return false; }">@MediaGlobalization.MultiFileUpload_UploadButton</label>
+                    <input type="file" multiple="multiple" name="uploadFiles" id="bcms-files-upload-input" class="bcms-uploader" style="position: absolute; left: -999em; top: -999em;"
+                           data-bind="attr: { accept : filesToAccept() }" />
                 </div>
             </div>
         
-            <div id="bcms-media-uploads" class="bcms-upload-holder" data-bind="template: { name: 'bcms-file-upload-template' }">
+            <div class="bcms-upload-holder" data-bind="template: { name: 'bcms-file-upload-template' }">
             </div>
         }
         <script type="text/html" id="bcms-file-upload-template">
@@ -46,10 +47,10 @@
                 <div data-bind="css: { 'bcms-upload-block':true, 'bcms-upload-success':uploadCompleted(), 'bcms-upload-failed':uploadFailed() }">
                     <div class="bcms-upload-file-titles" data-bind="text: fileName"></div>
                     @Html.HiddenFor(model => model.UploadedFiles, new
-                                                                      {
-                                                                          id = (string)null,
-                                                                          data_bind = "value:fileId()"
-                                                                      })
+               {
+                   id = (string)null,
+                   data_bind = "value:fileId()"
+               })
                     <div class="bcms-upload-bar-holder">
                         <div class="bcms-progress-bar" data-bind="visible: !uploadCompleted() && !uploadFailed()">
                             <div class="bcms-progress" style="width: 0;" data-bind="style: { width: uploadProgress() + '%' }"></div>

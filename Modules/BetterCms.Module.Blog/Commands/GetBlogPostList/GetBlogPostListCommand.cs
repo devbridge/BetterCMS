@@ -1,5 +1,7 @@
 ﻿using System.Linq;
 
+using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Core.Models;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.ViewModels.Blog;
@@ -34,7 +36,7 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPostList
 
             var query = UnitOfWork.Session
                 .QueryOver(() => alias)
-                .Where(() => !alias.IsDeleted);
+                .Where(() => !alias.IsDeleted && alias.Status != PageStatus.Preview);
 
             if (!string.IsNullOrWhiteSpace(request.SearchQuery))
             {
@@ -49,8 +51,9 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPostList
                     .Select(() => alias.CreatedOn).WithAlias(() => modelAlias.CreatedOn)
                     .Select(() => alias.ModifiedOn).WithAlias(() => modelAlias.ModifiedOn)
                     .Select(() => alias.ModifiedByUser).WithAlias(() => modelAlias.ModifiedByUser)
-                    .Select(() => alias.IsPublished).WithAlias(() => modelAlias.IsPublished)
-                    .Select(() => alias.Version).WithAlias(() => modelAlias.Version))
+                    .Select(() => alias.Status).WithAlias(() => modelAlias.PageStatus)
+                    .Select(() => alias.Version).WithAlias(() => modelAlias.Version)
+                    .Select(() => alias.PageUrl).WithAlias(() => modelAlias.PageUrl))
                 .TransformUsing(Transformers.AliasToBean<SiteSettingBlogPostViewModel>());
 
             var count = query.ToRowCountFutureValue();

@@ -53,7 +53,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.PageTests
             GetPageSeoCommand command = new GetPageSeoCommand();
             command.Repository = repositoryMock.Object;
 
-            var model = command.Execute(Guid.NewGuid());
+            var model = command.Execute(Guid.Empty);
 
             Assert.IsNotNull(model);            
             Assert.AreEqual(Guid.Empty, model.PageId);

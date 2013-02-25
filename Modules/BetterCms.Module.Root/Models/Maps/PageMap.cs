@@ -11,7 +11,7 @@ namespace BetterCms.Module.Root.Models.Maps
 
             Map(x => x.PageUrl).Not.Nullable().Length(MaxLength.Url);
             Map(x => x.Title).Not.Nullable().Length(MaxLength.Name);
-            Map(x => x.IsPublished).Not.Nullable();
+            Map(x => x.Status).Not.Nullable();
             Map(x => x.PublishedOn).Nullable();
             Map(x => x.MetaTitle).Length(MaxLength.Name);
             Map(x => x.MetaKeywords).Length(MaxLength.Max);

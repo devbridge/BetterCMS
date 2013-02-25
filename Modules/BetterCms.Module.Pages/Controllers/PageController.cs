@@ -145,7 +145,8 @@ namespace BetterCms.Module.Pages.Controllers
         public ActionResult DeletePageConfirmation(string id)
         {
             var model = GetCommand<GetPageForDeleteCommand>().ExecuteCommand(id.ToGuidOrDefault());
-            return View(model);
+            var view = RenderView("DeletePageConfirmation", model ?? new DeletePageViewModel());
+            return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -163,6 +164,7 @@ namespace BetterCms.Module.Pages.Controllers
                 Messages.AddSuccess(PagesGlobalization.DeletePage_DeletedSuccessfully_Message);
                 return Json(new WireJson { Success = true });
             }
+
             return Json(new WireJson { Success = false });
         }
 
@@ -170,7 +172,8 @@ namespace BetterCms.Module.Pages.Controllers
         public ActionResult ClonePage(string id)
         {
             var model = GetCommand<GetPageForCloningCommand>().ExecuteCommand(id.ToGuidOrDefault());
-            return View(model);
+            var view = RenderView("ClonePage", model ?? new ClonePageViewModel());
+            return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

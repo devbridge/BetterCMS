@@ -213,6 +213,9 @@
   <data name="Message_Deleting" xml:space="preserve">
     <value>Deleting ...</value>
   </data>
+  <data name="Message_EntityNotFoundException" xml:space="preserve">
+    <value>The record does not exist. Probably it was deleted by another user. Please refresh page.</value>
+  </data>
   <data name="Message_FailedToLoadDialog" xml:space="preserve">
     <value>Failed to load dialog. Please retry.</value>
   </data>
@@ -284,5 +287,14 @@
   </data>
   <data name="WaterMark_Search" xml:space="preserve">
     <value>Search...</value>
+  </data>
+  <data name="WidgetStatus_Draft" xml:space="preserve">
+    <value>Draft</value>
+  </data>
+  <data name="WidgetStatus_Published" xml:space="preserve">
+    <value>Published</value>
+  </data>
+  <data name="WidgetStatus_PublishedWithDraft" xml:space="preserve">
+    <value>Published (With Draft)</value>
   </data>
 </root>

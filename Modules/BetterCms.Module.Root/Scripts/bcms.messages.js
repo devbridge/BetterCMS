@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define */
 
-define('bcms.messages', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, modal) {
+define('bcms.messages', ['jquery'], function ($) {
     'use strict';
 
     var messages = {},
@@ -17,7 +17,8 @@ define('bcms.messages', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, mod
             success: '.bcms-success-messages:first',
             info: '.bcms-info-messages:first',
             warn: '.bcms-warning-messages:first',
-            error: '.bcms-error-messages:first'
+            error: '.bcms-error-messages:first',
+            scrollable: '.bcms-scroll-window',
         },
 
         links = {},
@@ -143,33 +144,20 @@ define('bcms.messages', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, mod
         messagesBox.clearMessages();
         
         if (json.Messages) {
-            for (var i = 0; i < json.Messages.length; i++) {
+            var i = 0;
+            for (i = 0; i < json.Messages.length; i++) {
                 if (json.Success) {
                     messagesBox.addSuccessMessage(json.Messages[i]);
                 } else {
                     messagesBox.addErrorMessage(json.Messages[i]);
                 }
             }
+            if (i > 0) {
+                $(messagesBox.container).closest(selectors.scrollable).scrollTop(0);
+            }
         }
 
         return messagesBox;
-    };
-
-    messages.showMessages = function (json) {
-        if (json.Messages) {
-            var content = "";
-
-            for (var i = 0; i < json.Messages.length; i++) {
-                if (content) {
-                    content += "<br />";
-                }
-                content += json.Messages[i];
-            }
-
-            modal.alert({
-                content: content
-            });
-        }
     };
 
     return messages;

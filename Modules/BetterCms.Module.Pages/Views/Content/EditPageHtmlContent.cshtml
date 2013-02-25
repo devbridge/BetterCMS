@@ -4,13 +4,17 @@
 @using Microsoft.Web.Mvc
 
 @model BetterCms.Module.Pages.ViewModels.Content.PageContentViewModel
-
+@if (Model == null)
+{
+    return;
+}
 <div class="bcms-tab-header">
     <a class="bcms-tab bcms-tab-active" href="#bcms-tab-1">@PagesGlobalization.EditPageContent_RegularContentTab_Title</a>
 </div>
 
 <div class="bcms-scroll-window">
     @Html.TabbedContentMessagesBox()
+    @Html.Partial("Partial/WarnMessageAboutDraft", Model)
     <div class="bcms-padded-content">
         <div id="bcms-tab-1" class="bcms-tab-single">
             @using (Html.BeginForm<ContentController>(c => c.SavePageHtmlContent(null), FormMethod.Post, new { @id = "bcms-content-form", @class = "bcms-ajax-form" }))

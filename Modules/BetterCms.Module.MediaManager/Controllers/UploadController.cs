@@ -59,11 +59,12 @@ namespace BetterCms.Module.MediaManager.Controllers
         [HttpPost]
         public WrappedJsonResult UploadSingleFile(HttpPostedFileWrapper uploadFile, string SelectedFolderId, string RootFolderType)
         {
-            if (uploadFile != null)
+            var rootFolderType = (MediaType)Enum.Parse(typeof(MediaType), RootFolderType);
+            if (uploadFile != null && FileFormatIsValid(rootFolderType, uploadFile.ContentType))
             {
                 UploadFileRequest request = new UploadFileRequest();
                 request.RootFolderId = SelectedFolderId.ToGuidOrDefault();
-                request.Type = (MediaType)Enum.Parse(typeof(MediaType),RootFolderType);
+                request.Type = rootFolderType;
                 request.FileLength = uploadFile.ContentLength;
                 request.FileName = uploadFile.FileName;
                 request.FileStream = uploadFile.InputStream;
@@ -105,28 +106,22 @@ namespace BetterCms.Module.MediaManager.Controllers
             var rootFolderId = Request.Form["rootFolderId"].ToGuidOrDefault();
             var rootFolderType = (MediaType)Enum.Parse(typeof(MediaType), Request.Form["rootFolderType"]);
 
-            UploadFileRequest request = new UploadFileRequest();
-            request.RootFolderId = rootFolderId;
-            request.Type = rootFolderType;
-            request.FileLength = file.ContentLength;
-            request.FileName = file.FileName;
-            request.FileStream = file.InputStream;
-
-            var media = GetCommand<UploadCommand>().ExecuteCommand(request);
-
-            if (media != null)
+            if (file != null && FileFormatIsValid(rootFolderType, file.ContentType))
             {
-                return Json(
-                    new WireJson(
-                        true,
-                        new
-                            {
-                                FileId = media.Id,
-                                Version = media.Version,
-                                Type = (int)rootFolderType
-                            }));
-            }
+                UploadFileRequest request = new UploadFileRequest();
+                request.RootFolderId = rootFolderId;
+                request.Type = rootFolderType;
+                request.FileLength = file.ContentLength;
+                request.FileName = file.FileName;
+                request.FileStream = file.InputStream;
 
+                var media = GetCommand<UploadCommand>().ExecuteCommand(request);
+
+                if (media != null)
+                {
+                    return Json(new WireJson(true, new { FileId = media.Id, Version = media.Version, Type = (int)rootFolderType }));
+                }
+            }
             return Json(new WireJson(false));
         }
 
@@ -156,8 +151,32 @@ namespace BetterCms.Module.MediaManager.Controllers
             {
                 Messages.AddError(MediaGlobalization.MultiFileUpload_SaveFailed);
             }
+            else if (result.FolderIsDeleted)
+            {
+                Messages.AddError(MediaGlobalization.MultiFileUpload_SaveFailed_FolderDeleted);
+            }
 
-            return Json(new WireJson(result != null, result));
+            return Json(new WireJson(result != null && !result.FolderIsDeleted, result));
+        }
+
+        private bool FileFormatIsValid(MediaType folderType, string fileType)
+        {
+            if (folderType == MediaType.Image)
+            {
+                switch (fileType)
+                {
+                    case "image/png":
+                    case "image/jpg":
+                    case "image/jpeg":
+                    case "image/gif":
+                        break;
+                    default:
+                        Messages.AddError(MediaGlobalization.FileUpload_Failed_ImageFormatNotSuported);
+                        return false;
+                }
+            }
+
+            return true;
         }
     }
 }

@@ -145,6 +145,7 @@
     <Compile Include="Models\Maps\RegionMap.cs" />
     <Compile Include="Models\Maps\TagMap.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
+    <Compile Include="Models\Migrations\Migration201302211227.cs" />
     <Compile Include="Models\PageContentOption.cs" />
     <Compile Include="Models\Layout.cs" />
     <Compile Include="Models\Maps\ModuleMap.cs" />
@@ -242,13 +243,7 @@
       <LastGenOutput>RootGlobalization.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Content\Styles\base.css" />
-    <EmbeddedResource Include="Content\Styles\images\icn-zoom.png" />
     <EmbeddedResource Include="Content\Styles\qunit-1.9.0.css" />
-    <EmbeddedResource Include="Content\Styles\images\icn-sidebg.png" />
-    <EmbeddedResource Include="Content\Styles\images\sprite-base-1.png" />
-    <EmbeddedResource Include="Content\Styles\images\sprite-base-2.png" />
-    <EmbeddedResource Include="Content\Styles\images\icn-calendar.png" />
     <EmbeddedResource Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <EmbeddedResource Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <EmbeddedResource Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -309,13 +304,6 @@
     <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
-    <EmbeddedResource Include="Content\Styles\images\modal-back.png" />
-    <EmbeddedResource Include="Content\Styles\images\loading.gif" />
-    <EmbeddedResource Include="Content\Styles\images\bcms-sidebar-select.png" />
-    <EmbeddedResource Include="Content\Styles\images\bcms-logo.png" />
-    <EmbeddedResource Include="Content\Styles\images\bcms-no-image-1.png" />
-    <EmbeddedResource Include="Content\Styles\images\bcms-no-image-2.png" />
-    <EmbeddedResource Include="Content\Styles\images\bcms-no-image-3.png" />
     <EmbeddedResource Include="Scripts\ckeditor\build-config.js" />
     <EmbeddedResource Include="Scripts\ckeditor\ckeditor.js" />
     <EmbeddedResource Include="Scripts\ckeditor\config.js" />
@@ -483,7 +471,6 @@
     <EmbeddedResource Include="Scripts\bcms.grid.js" />
     <EmbeddedResource Include="Scripts\bcms.htmlEditor.js" />
     <EmbeddedResource Include="Scripts\bcms.inlineEdit.js" />
-    <EmbeddedResource Include="Scripts\bcms.js" />
     <EmbeddedResource Include="Scripts\bcms.ko.grid.js" />
     <EmbeddedResource Include="Scripts\bcms.messages.js" />
     <EmbeddedResource Include="Scripts\bcms.preview.js" />
@@ -507,11 +494,27 @@
     <EmbeddedResource Include="Scripts\require-jquery.js" />
     <EmbeddedResource Include="Scripts\require.js" />
     <EmbeddedResource Include="Scripts\slides.jquery.js" />
-    <EmbeddedResource Include="Scripts\spinner.jquery.js" />
     <EmbeddedResource Include="Scripts\bcms.dynamicContent.js" />
-    <EmbeddedResource Include="Scripts\bcms.forms.js" />
     <EmbeddedResource Include="Scripts\bcms.modal.js" />
     <EmbeddedResource Include="Scripts\bcms.siteSettings.js" />
+    <EmbeddedResource Include="Scripts\bcms.forms.js" />
+    <EmbeddedResource Include="Scripts\bcms.js" />
+    <EmbeddedResource Include="Scripts\bcms.ko.extenders.js" />
+    <EmbeddedResource Include="Content\Styles\images\bcms-logo.png" />
+    <EmbeddedResource Include="Content\Styles\images\bcms-no-image-1.png" />
+    <EmbeddedResource Include="Content\Styles\images\bcms-no-image-2.png" />
+    <EmbeddedResource Include="Content\Styles\images\bcms-no-image-3.png" />
+    <EmbeddedResource Include="Content\Styles\images\bcms-sidebar-select.png" />
+    <EmbeddedResource Include="Content\Styles\images\icn-calendar.png" />
+    <EmbeddedResource Include="Content\Styles\images\icn-sidebg.png" />
+    <EmbeddedResource Include="Content\Styles\images\icn-zoom.png" />
+    <EmbeddedResource Include="Content\Styles\images\loading.gif" />
+    <EmbeddedResource Include="Content\Styles\images\modal-back.png" />
+    <EmbeddedResource Include="Content\Styles\images\sprite-base-1.png" />
+    <EmbeddedResource Include="Content\Styles\images\sprite-base-2.png" />
+    <EmbeddedResource Include="Content\Styles\base.css" />
+    <EmbeddedResource Include="Scripts\spinner.jquery.js" />
+    <EmbeddedResource Include="Scripts\html5shiv.js" />
     <Content Include="Views\Web.config" />
     <EmbeddedResource Include="Views\Sidebar\Container.cshtml" />
     <EmbeddedResource Include="Views\Rendering\RenderMainJsFile.cshtml" />

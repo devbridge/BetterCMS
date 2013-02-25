@@ -21,11 +21,18 @@ namespace BetterCms.Module.Blog.Controllers
         }
 
         [HttpGet]
-        public virtual ActionResult CreateBlogPost()
+        public virtual ActionResult CreateBlogPost(string parentPageUrl)
         {
             var model = GetCommand<GetBlogPostCommand>().ExecuteCommand(Guid.Empty);
+            //model.ParentPageUrl = parentPageUrl;
             var view = RenderView("EditBlogPost", model);
-            var success = model != null;
+            var success = false;
+            if (model != null)
+            {
+                model.ParentPageUrl = parentPageUrl;
+                success = true;
+            }
+            //var success = model != null;
 
             return ComboWireJson(success, view, model, JsonRequestBehavior.AllowGet);
         }
@@ -34,17 +41,6 @@ namespace BetterCms.Module.Blog.Controllers
         public virtual ActionResult EditBlogPost(string id)
         {
             var model = GetCommand<GetBlogPostCommand>().ExecuteCommand(id.ToGuidOrDefault());
-
-            if (model != null && model.CurrentStatus == ContentStatus.Draft)
-            {
-                var message = PagesGlobalization.EditPageContent_Messages_DraftStatusWarnMessage;
-                if (model.HasPublishedContent)
-                {
-                    message = string.Concat(message, " ", PagesGlobalization.EditPageContent_Messages_DraftStatusWarnMessage_Destroy);
-                }
-                Messages.AddWarn(message);
-            }
-
             var view = RenderView("EditBlogPost", model);
             var success = model != null;
            

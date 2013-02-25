@@ -1,5 +1,8 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
+using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Core.Models;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
@@ -46,12 +49,13 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
             {
                 pageUrl = request.PageTitle.Transliterate();
             }
+
             pageUrl = RedirectService.FixUrl(pageUrl);
 
             // Validate Url
             PageService.ValidatePageUrl(pageUrl);
 
-            var page = Repository.FirstOrDefault<PageProperties>(request.PageId);
+            var page = Repository.First<PageProperties>(request.PageId);
 
             UnitOfWork.BeginTransaction();
 
@@ -66,16 +70,11 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
                 .Fetch(x => x.Tag)
                 .ToList();
 
-            var pageContentOptions = Repository.AsQueryable<PageContentOption>()
-                .Where(f => f.PageContent.Page.Id == page.Id)
-                .ToList();
-
             var newPage = ClonePageOnly(page, request.PageTitle, pageUrl);
 
             // Clone HTML contents and Controls:
             pageContents.ForEach(pageContent => ClonePageContent(pageContent, newPage));
             pageTags.ForEach(pageTag => ClonePageTags(pageTag, newPage));
-            //pageContentOptions.ForEach(pageContentOption => ClonePageContentOptions(pageContentOption, newPage));
 
             UnitOfWork.Commit();
 
@@ -88,6 +87,11 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
                        };
         }
 
+        /// <summary>
+        /// Clones the page tags.
+        /// </summary>
+        /// <param name="pageTag">The page tag.</param>
+        /// <param name="newPage">The new page.</param>
         private void ClonePageTags(PageTag pageTag, PageProperties newPage)
         {
             var newPageHtmlControl = new PageTag
@@ -99,36 +103,31 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
             Repository.Save(newPageHtmlControl);
         }
 
+        /// <summary>
+        /// Clones the page only.
+        /// </summary>
+        /// <param name="page">The page.</param>
+        /// <param name="newPageTitle">The new page title.</param>
+        /// <param name="newPageUrl">The new page URL.</param>
+        /// <returns>Copy for <see cref="PageProperties"/>.</returns>
         private PageProperties ClonePageOnly(PageProperties page, string newPageTitle, string newPageUrl)
         {
-            var newPage = new PageProperties
-            {
-                // New page data:
-                Title = newPageTitle,
-                PageUrl = newPageUrl,
-                IsPublished = false,
+            var newPage = page.Duplicate();
 
-                // Cloned data:
-                MetaTitle = page.MetaTitle,                
-                MetaKeywords = page.MetaKeywords,
-                MetaDescription = page.MetaDescription,
-                IsPublic = page.IsPublic,
-                UseCanonicalUrl = page.UseCanonicalUrl,
-                CustomCss = page.CustomCss,
-                CustomJS = page.CustomJS,
-                Description = page.Description,
-                UseNoFollow = page.UseNoFollow,
-                UseNoIndex = page.UseNoIndex,
-                Layout = page.Layout,
-                Image = page.Image,
-                Category = page.Category,
-            };
+            newPage.Title = newPageTitle;
+            newPage.PageUrl = newPageUrl;
+            newPage.Status = PageStatus.Unpublished;
 
             Repository.Save(newPage);
 
             return newPage;
         }
 
+        /// <summary>
+        /// Clones the content of the page.
+        /// </summary>
+        /// <param name="pageContent">Content of the page.</param>
+        /// <param name="newPage">The new page.</param>
         private void ClonePageContent(PageContent pageContent, PageProperties newPage)
         {
             var newPageContent = new PageContent();
@@ -144,9 +143,42 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
             else
             {
                 newPageContent.Content = pageContent.Content.Clone();
+
+                var draft = pageContent.Content.History.FirstOrDefault(c => c.Status == ContentStatus.Draft && !c.IsDeleted);
+                if (pageContent.Content.Status == ContentStatus.Published && draft != null)
+                {
+                    if (newPageContent.Content.History == null)
+                    {
+                        newPageContent.Content.History = new List<Root.Models.Content>();
+                    }
+
+                    var draftClone = draft.Clone();
+                    draftClone.Original = newPageContent.Content;
+                    newPageContent.Content.History.Add(draftClone);
+                    Repository.Save(draftClone);
+                }
             }
 
-            Repository.Save(newPageContent);           
+            // Clone page content options.
+            foreach (var option in pageContent.Options)
+            {
+                if (newPageContent.Options == null)
+                {
+                    newPageContent.Options = new List<PageContentOption>();
+                }
+
+                var newOption = new PageContentOption
+                                    {
+                                        Key = option.Key,
+                                        Value = option.Value,
+                                        Type = option.Type,
+                                        PageContent = newPageContent
+                                    };
+                newPageContent.Options.Add(newOption);
+                Repository.Save(newOption);
+            }
+
+            Repository.Save(newPageContent);
         }
     }
 }

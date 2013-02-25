@@ -1,6 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Root.Models;
@@ -26,10 +29,10 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
 
             if (!request.Id.HasDefaultValue())
             {
-                pageContent = Repository.AsQueryable<PageContent>().FirstOrDefault(f => f.Id == request.Id && !f.IsDeleted);
+                pageContent = Repository.AsQueryable<PageContent>().Where(f => f.Id == request.Id && !f.IsDeleted).FirstOne();
             }
 
-            if (pageContent == null || request.Id.HasDefaultValue())
+            if (request.Id.HasDefaultValue())
             {              
                 pageContent = new PageContent();
                 var max = Repository.AsQueryable<PageContent>().Where(f => f.Page.Id == request.PageId && !f.IsDeleted).Select(f => (int?)f.Order).Max();
@@ -51,7 +54,7 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
                         Id = request.ContentId,
                         Name = request.ContentName,
                         ActivationDate = request.LiveFrom,
-                        ExpirationDate = request.LiveTo,
+                        ExpirationDate = TimeHelper.FormatEndDate(request.LiveTo),
                         Html = request.PageContent ?? string.Empty,
                         UseCustomCss = request.EnabledCustomCss,
                         CustomCss = request.CustomCss,

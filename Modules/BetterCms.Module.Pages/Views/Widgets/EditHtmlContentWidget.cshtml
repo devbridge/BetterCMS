@@ -6,9 +6,13 @@
 @using Microsoft.Web.Mvc
 
 @model EditHtmlContentWidgetViewModel
-
+@if (Model == null)
+{
+    return;
+}
 <div class="bcms-scroll-window">
-    @Html.TabbedContentMessagesBox()      
+    @Html.TabbedContentMessagesBox()
+    @Html.Partial("Partial/WarnMessageAboutDraft", Model)
     <div class="bcms-padded-content">
         @using (Html.BeginForm<WidgetsController>(c => c.EditHtmlContentWidget((EditHtmlContentWidgetViewModel)null), FormMethod.Post, new { @id = "bcms-advanced-content-form", @class = "bcms-ajax-form" }))
         {

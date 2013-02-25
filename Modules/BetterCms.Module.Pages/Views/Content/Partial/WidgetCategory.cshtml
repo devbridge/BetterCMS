@@ -1,5 +1,7 @@
-﻿@using BetterCms.Module.Pages.Content.Resources
+﻿@using BetterCms.Core.DataContracts.Enums
+@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
+@using BetterCms.Module.Pages.Models
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
 
@@ -29,7 +31,7 @@
                          data-type="@widget.WidgetType"
                          data-category-id="@(widget.CategoryId ?? Guid.Empty)">
                         <div class="bcms-title-holder">
-                            <div class="bcms-content-titles">@widget.Name</div>
+                            <div class="bcms-content-titles">@widget.Name</div>                                                 
                         </div>
                         @if (!string.IsNullOrWhiteSpace(widget.PreviewImageUrl))
                         {
@@ -37,12 +39,26 @@
                         }
                         else
                         {
-                            @Html.PreviewContentBox(Html.BuildUrlFromExpression<WidgetsController>(f => f.PreviewHtmlContentWidget(widget.Id.ToString())), widget.Name)
+                            if (widget.WidgetType.HasValue && widget.WidgetType.Value == WidgetType.ServerControl)
+                            {
+                                @Html.PreviewContentBox(Html.BuildUrlFromExpression<WidgetsController>(f => f.PreviewWidget(widget.Id.ToString())), widget.Name)
+                            }
+                            else
+                            {
+                                @Html.PreviewContentBox(Html.BuildUrlFromExpression<WidgetsController>(f => f.PreviewHtmlContentWidget(widget.Id.ToString())), widget.Name)
+                            }
                         }
 
                         <div class="bcms-controls-holder">
                             <div class="bcms-btn-small bcms-content-insert-button" >@PagesGlobalization.AddPageContent_WidgetTab_InsertButton</div>
-                            <a class="bcms-icn-edit bcms-content-edit-button">@PagesGlobalization.AddPageContent_WidgetTab_EditButton</a>
+                             @if (!widget.Status.Equals(ContentStatus.Published.ToString()))
+                             {
+                                <a class="bcms-icn-edit bcms-content-edit-button bcms-edit-draft">@PagesGlobalization.AddPageContent_WidgetTab_EditButton</a>
+                             }
+                             else
+                             {
+                                <a class="bcms-icn-edit bcms-content-edit-button">@PagesGlobalization.AddPageContent_WidgetTab_EditButton</a>
+                             }
                             <a class="bcms-icn-delete bcms-content-delete-button">@PagesGlobalization.AddPageContent_WidgetTab_DeleteButton</a>
                         </div>
                     </div>

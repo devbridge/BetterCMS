@@ -217,6 +217,10 @@
       <Project>{5383227a-9cb8-4978-91d1-8168ec817d16}</Project>
       <Name>BetterCms.Module.Navigation</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.Templates\BetterCms.Module.Templates.csproj">
+      <Project>{17BF5CA2-23B6-4796-8EF1-CDDF6D41A4F7}</Project>
+      <Name>BetterCms.Module.Templates</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCms.Module.Users\BetterCms.Module.Users.csproj">
       <Project>{C530025B-8AB7-402D-B60C-000C9A5D0446}</Project>
       <Name>BetterCms.Module.Users</Name>
