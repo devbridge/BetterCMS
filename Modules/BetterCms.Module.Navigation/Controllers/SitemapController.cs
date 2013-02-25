@@ -63,12 +63,7 @@ namespace BetterCms.Module.Navigation.Controllers
         [HttpPost]
         public ActionResult SaveSitemap(List<SitemapNodeViewModel> model)
         {
-            if (ModelState.IsValid)
-            {
-                GetCommand<SaveSitemapCommand>().Execute(model);
-            }
-
-            return Json(new WireJson { Success = true });
+            return Json(new WireJson { Success = GetCommand<SaveSitemapCommand>().ExecuteCommand(model) });
         }
 
         /// <summary>

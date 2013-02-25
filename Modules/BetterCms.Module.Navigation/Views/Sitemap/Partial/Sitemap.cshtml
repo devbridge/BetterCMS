@@ -34,8 +34,9 @@
             <div class="bcms-node-infotext">@NavigationGlobalization.Sitemap_NodeEdit_PlaceLinkHere</div>
         </div>
         <!-- /ko -->
-        <div data-bind="attr: { id: containerId }, draggable: $parentContext.$index, style: { zIndex: !isBeingDragged() ? '0' : '9999' }">
+        <div data-bind="draggable: $parentContext.$index, style: { zIndex: !isBeingDragged() ? '0' : '9999' }">
             <div class="bcms-placement-node" data-bind="
+                        attr: { id: containerId }, 
                         css: { 'bcms-placement-node-drag': isBeingDragged(), 'bcms-placement-node-edit': isActive(), 'bcms-placement-one-active': !isBeingDragged() && superDraggable() }">
                 <!-- ko if: hasChildNodes() -->
                 <a class="bcms-expand-collapse-node" data-bind="click: toggleExpand, css: { 'bcms-expanded-nodes': isExpanded() }">&nbsp;</a>
