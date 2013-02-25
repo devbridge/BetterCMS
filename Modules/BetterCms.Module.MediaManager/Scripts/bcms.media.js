@@ -708,10 +708,13 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                             item.version(json.Data.Version);
                             item.id(json.Data.Id);
                             item.oldName = item.name();
-                            item.isActive(false);
+                        } else {
+                            item.isActive(true);
                         }
+                        item.isActive(false);
                     };
                 loaderContainer.showLoading();
+                item.isActive(false);
                 $.ajax({
                     url: item.updateUrl,
                     type: 'POST',
