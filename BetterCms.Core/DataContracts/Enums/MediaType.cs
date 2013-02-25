@@ -1,6 +1,6 @@
 using System;
 
-namespace BetterCms.Module.MediaManager.Models
+namespace BetterCms.Core.DataContracts.Enums
 {
     [Serializable]
     public enum MediaType

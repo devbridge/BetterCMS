@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;

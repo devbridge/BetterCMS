@@ -11,7 +11,7 @@ namespace BetterCms.Module.Navigation.Services
     /// <summary>
     /// Default sitemap service.
     /// </summary>
-    public class DefaultSitemapService : ISitemapService
+    internal class DefaultSitemapService : ISitemapService
     {
         /// <summary>
         /// The cache service

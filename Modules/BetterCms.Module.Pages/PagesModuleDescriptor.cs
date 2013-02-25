@@ -11,6 +11,7 @@ using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Pages.Accessors;
 using BetterCms.Module.Pages.Content.Resources;
+using BetterCms.Module.Pages.DataServices;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Registration;
 using BetterCms.Module.Pages.Services;
@@ -153,6 +154,11 @@ namespace BetterCms.Module.Pages
             
             containerBuilder.RegisterType<DefaultTagApiService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultPageApiService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultRedirectApiService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultWidgetApiService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultCategoryApiService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultContentApiService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultLayoutApiService>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
 
         /// <summary>

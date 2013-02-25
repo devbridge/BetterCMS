@@ -6,6 +6,7 @@ using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Blog.Accessors;
 using BetterCms.Module.Blog.Content.Resources;
+using BetterCms.Module.Blog.DataServices;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.Registration;
 using BetterCms.Module.Blog.Services;
@@ -146,6 +147,9 @@ namespace BetterCms.Module.Blog
 
             containerBuilder.RegisterType<DefaultOptionService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultAuthorService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            
+            containerBuilder.RegisterType<DefaultAuthorApiService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultBlogApiService>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
     }
 }

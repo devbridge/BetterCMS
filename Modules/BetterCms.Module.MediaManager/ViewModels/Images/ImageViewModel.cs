@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;
 using BetterCms.Module.MediaManager.Content.Resources;
-using BetterCms.Module.MediaManager.Models;
 
 namespace BetterCms.Module.MediaManager.ViewModels.Images
 {

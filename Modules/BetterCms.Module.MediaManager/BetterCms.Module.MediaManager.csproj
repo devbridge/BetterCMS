@@ -153,6 +153,7 @@
     <Compile Include="Controllers\VideosController.cs" />
     <Compile Include="Controllers\FilesController.cs" />
     <Compile Include="Controllers\MediaManagerController.cs" />
+    <Compile Include="DataServices\DefaultMediaApiService.cs" />
     <Compile Include="Helpers\WrappedJsonResult.cs" />
     <Compile Include="MediaManagerModuleDescriptor.cs" />
     <Compile Include="Models\Maps\MediaMap.cs" />
@@ -160,9 +161,7 @@
     <Compile Include="Models\Maps\MediaFolderMap.cs" />
     <Compile Include="Models\Maps\MediaImageMap.cs" />
     <Compile Include="Models\MediaContentType.cs" />
-    <Compile Include="Models\MediaImageAlign.cs" />
     <Compile Include="Models\MediaFile.cs" />
-    <Compile Include="Models\MediaType.cs" />
     <Compile Include="Models\MediaFolder.cs" />
     <Compile Include="Models\Media.cs" />
     <Compile Include="Models\MediaImage.cs" />

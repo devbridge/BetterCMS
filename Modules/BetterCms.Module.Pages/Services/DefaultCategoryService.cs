@@ -9,7 +9,7 @@ using NHibernate.Transform;
 
 namespace BetterCms.Module.Pages.Services
 {
-    public class DefaultCategoryService : ICategoryService
+    internal class DefaultCategoryService : ICategoryService
     {
         /// <summary>
         /// The unit of work

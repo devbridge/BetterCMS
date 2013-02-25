@@ -1,9 +1,12 @@
 using System;
 
+using BetterCms.Core.DataContracts;
+using BetterCms.Core.DataContracts.Enums;
+
 namespace BetterCms.Module.MediaManager.Models
 {
     [Serializable]
-    public class MediaImage : MediaFile
+    public class MediaImage : MediaFile, IMediaImage
     {
         public virtual string Caption { get; set; }
 

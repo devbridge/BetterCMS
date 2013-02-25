@@ -6,6 +6,7 @@ using Autofac;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Navigation.Content.Resources;
+using BetterCms.Module.Navigation.DataServices;
 using BetterCms.Module.Navigation.Registration;
 using BetterCms.Module.Navigation.Services;
 
@@ -71,6 +72,8 @@ namespace BetterCms.Module.Navigation
         public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder, ICmsConfiguration configuration)
         {
             containerBuilder.RegisterType<DefaultSitemapService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            
+            containerBuilder.RegisterType<DefaultSitemapApiService>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
 
         /// <summary>

@@ -108,6 +108,7 @@
     <Compile Include="Blog\ModelTests\MapTests\BlogPostMapTest.cs" />
     <Compile Include="Blog\ModelTests\MapTests\BlogPostContentMapTest.cs" />
     <Compile Include="Blog\ModelTests\MapTests\OptionMapTest.cs" />
+    <Compile Include="Blog\ServiceTests\DefaultAuthorApiServiceTest.cs" />
     <Compile Include="Common\SecurityTest.cs" />
     <Compile Include="Common\SerializationTest.cs" />
     <Compile Include="ControllerTestBase.cs" />
@@ -121,6 +122,7 @@
     <Compile Include="Pages\HelperTests\StringHelperTests.cs" />
     <Compile Include="Pages\ModelTests\ConcurrencyTests\ConcurrencyTests.cs" />
     <Compile Include="Pages\ServicesTests\DefaultContentServiceTest.cs" />
+    <Compile Include="Pages\ServicesTests\DefaultTagApiServiceTest.cs" />
     <Compile Include="SerializationTestBase.cs" />
     <Compile Include="DatabaseTestBase.cs" />
     <Compile Include="Helpers\HttpContextExtensionMethods.cs" />

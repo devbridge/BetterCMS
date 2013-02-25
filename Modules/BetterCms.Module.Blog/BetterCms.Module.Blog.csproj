@@ -134,6 +134,8 @@
     <Compile Include="Controllers\AuthorController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\OptionController.cs" />
+    <Compile Include="DataServices\DefaultAuthorApiService.cs" />
+    <Compile Include="DataServices\DefaultBlogApiService.cs" />
     <Compile Include="Models\Author.cs" />
     <Compile Include="Models\BlogPost.cs" />
     <Compile Include="Models\BlogPostContent.cs" />

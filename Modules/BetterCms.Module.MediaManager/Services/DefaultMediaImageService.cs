@@ -9,6 +9,7 @@ using System.Web.Helpers;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Exceptions.Service;
@@ -24,7 +25,7 @@ namespace BetterCms.Module.MediaManager.Services
     /// <summary>
     /// Default media image service.
     /// </summary>
-    public class DefaultMediaImageService : IMediaImageService
+    internal class DefaultMediaImageService : IMediaImageService
     {
         /// <summary>
         /// The thumbnail size.

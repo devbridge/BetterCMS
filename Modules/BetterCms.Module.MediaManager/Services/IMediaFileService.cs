@@ -2,9 +2,8 @@
 using System.IO;
 using System.Threading.Tasks;
 
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.MediaManager.Models;
-
-using NHibernate;
 
 namespace BetterCms.Module.MediaManager.Services
 {

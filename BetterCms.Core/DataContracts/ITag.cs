@@ -2,6 +2,6 @@
 {
     public interface ITag : IEntity
     {
-        string Name { get; }
+        string Name { get; set; }
     }
 }

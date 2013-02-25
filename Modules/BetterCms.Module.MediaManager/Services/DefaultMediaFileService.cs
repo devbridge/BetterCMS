@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,6 +7,7 @@ using System.Web;
 using BetterCms.Configuration;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Services.Storage;
 using BetterCms.Core.Web;
@@ -18,7 +18,7 @@ using NHibernate;
 
 namespace BetterCms.Module.MediaManager.Services
 {
-    public class DefaultMediaFileService : IMediaFileService
+    internal class DefaultMediaFileService : IMediaFileService
     {
         private readonly IStorageService storageService;
         

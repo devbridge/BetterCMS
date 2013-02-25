@@ -13,7 +13,7 @@ using NHibernate.Linq;
 
 namespace BetterCms.Module.Root.Services
 {
-    public class DefaultContentService : IContentService
+    internal class DefaultContentService : IContentService
     {
         /// <summary>
         /// A security service.

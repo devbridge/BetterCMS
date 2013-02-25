@@ -1,5 +1,6 @@
 ﻿using System;
-using BetterCms.Module.MediaManager.Models;
+
+using BetterCms.Core.DataContracts.Enums;
 
 namespace BetterCms.Module.MediaManager.Command.Upload.GetMultiFileUpload
 {
