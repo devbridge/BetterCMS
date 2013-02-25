@@ -24,10 +24,18 @@ namespace BetterCms.Module.Pages.DataServices
 
         public IList<ITag> GetTags()
         {
-            return repository
-                .AsQueryable<Tag>()
-                .Cast<ITag>()
-                .ToList();
+            return GetTagsQueryable().ToList();
+        }
+
+        public IQueryable<ITag> GetTagsQueryable()
+        {
+            return GetTagsQueryable<Tag>();
+        }
+
+        public IQueryable<TEntity> GetTagsQueryable<TEntity>() 
+            where TEntity : Core.Models.Entity, ITag
+        {
+            return repository.AsQueryable<TEntity>();
         }
     }
 }

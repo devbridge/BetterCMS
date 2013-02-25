@@ -55,19 +55,31 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
 
         public ActionResult TestApi()
         {
-            IList<ITag> tags;
+            IList<IPage> pages;
+            IList<IPage> queryablePages;
             using (var api =  CmsContext.CreateDataApi())
             {
-                tags = api.Tags.GetTags();
+                pages = api.Pages.GetPages();
+                queryablePages = api.Pages.GetPagesQueryable().Take(2).OrderBy(p => p.Title).ToList();
             }
             
-            var count = tags.Count;
-            var message = string.Format("Tags count: {0}", count);
+            var count = pages.Count;
+            var message = string.Format("Pages count: {0}", count);
             if (count > 0)
             {
-                message = string.Format("{0}<br /> Tag names: {1}", message, string.Join("; ", tags.Select(t => t.Name)));
+                message = string.Format("{0}<br /> Pages titles: {1}", message, string.Join("; ", pages.Select(t => t.Title)));
             }
+
+            // Queryable test
+            count = queryablePages.Count;
+            message = string.Format("{0}<br /><hr />Queryable pages count [Max 2]: {1}", message, count);
+            if (count > 0)
+            {
+                message = string.Format("{0}<br /> Queryable pages titles, ordered by title [Max 2]: {1}", message, string.Join("; ", queryablePages.Select(t => t.Title)));
+            }
+
             return Content(message);
         }
+        
     }
 }

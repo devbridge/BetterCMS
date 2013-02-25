@@ -2,6 +2,7 @@
 
 using Autofac;
 
+using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataServices;
 using BetterCms.Core.Exceptions;
 
@@ -64,7 +65,45 @@ namespace BetterCms.Core
                     return container.Resolve<ILayoutApiService>();
                 }
 
-                throw new CmsException("Pages API service was not initialized. Please make sure to add BetterCms.Modules.Root module.");
+                throw new CmsException("Layouts API service was not initialized. Please make sure to add BetterCms.Modules.Root module.");
+            }
+        }
+
+        /// <summary>
+        /// Gets the categories Categories API.
+        /// </summary>
+        /// <value>
+        /// The categories Categories API.
+        /// </value>
+        public ICategoryApiService Categories
+        {
+            get
+            {
+                if (container.IsRegistered<ICategoryApiService>())
+                {
+                    return container.Resolve<ICategoryApiService>();
+                }
+
+                throw new CmsException("Categories API service was not initialized. Please make sure to add BetterCms.Modules.Root module.");
+            }
+        }
+
+        /// <summary>
+        /// Gets the redirects API service.
+        /// </summary>
+        /// <value>
+        /// The redirects API service.
+        /// </value>
+        public IRedirectApiService Redirects
+        {
+            get
+            {
+                if (container.IsRegistered<IRedirectApiService>())
+                {
+                    return container.Resolve<IRedirectApiService>();
+                }
+
+                throw new CmsException("Redirects API service was not initialized. Please make sure to add BetterCms.Modules.Root module.");
             }
         }
 

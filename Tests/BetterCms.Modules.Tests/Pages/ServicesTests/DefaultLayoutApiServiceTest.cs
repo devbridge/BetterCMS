@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace BetterCms.Test.Module.Pages.ServicesTests
 {
-    [TestFixture]
+    //[TestFixture]
     public class DefaultLayoutApiServiceTest : TestBase
     {
         // TODO: Mock-up Fetch()
