@@ -22,7 +22,6 @@ namespace BetterCms.Module.Pages.DataServices
             this.repository = repository;
         }
 
-        // Methods implementations
         public IList<ITag> GetTags()
         {
             return repository

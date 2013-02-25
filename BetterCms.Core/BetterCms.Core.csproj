@@ -142,6 +142,7 @@
     <Compile Include="DataContracts\IHistorical.cs" />
     <Compile Include="DataContracts\IHtmlContent.cs" />
     <Compile Include="DataContracts\IHtmlContentWidget.cs" />
+    <Compile Include="DataContracts\ILayout.cs" />
     <Compile Include="DataContracts\IMedia.cs" />
     <Compile Include="DataContracts\IMediaFile.cs" />
     <Compile Include="DataContracts\IMediaFolder.cs" />
@@ -150,6 +151,7 @@
     <Compile Include="DataContracts\IPage.cs" />
     <Compile Include="DataContracts\IPageContent.cs" />
     <Compile Include="DataContracts\IPageContentOption.cs" />
+    <Compile Include="DataContracts\IRedirect.cs" />
     <Compile Include="DataContracts\IRegion.cs" />
     <Compile Include="DataContracts\ITag.cs" />
     <Compile Include="DataContracts\IWidget.cs" />

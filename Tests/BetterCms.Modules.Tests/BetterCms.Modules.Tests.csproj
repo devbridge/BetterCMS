@@ -121,6 +121,9 @@
     <Compile Include="Pages\CommandTests\WidgetTests\GetSiteSettingsWidgetsIntegrationTest.cs" />
     <Compile Include="Pages\HelperTests\StringHelperTests.cs" />
     <Compile Include="Pages\ModelTests\ConcurrencyTests\ConcurrencyTests.cs" />
+    <Compile Include="Pages\ServicesTests\DefaultLayoutApiServiceTest.cs" />
+    <Compile Include="Pages\ServicesTests\DefaultCategoryApiServiceTest.cs" />
+    <Compile Include="Pages\ServicesTests\DefaultRedirectApiServiceTest.cs" />
     <Compile Include="Pages\ServicesTests\DefaultContentServiceTest.cs" />
     <Compile Include="Pages\ServicesTests\DefaultTagApiServiceTest.cs" />
     <Compile Include="SerializationTestBase.cs" />

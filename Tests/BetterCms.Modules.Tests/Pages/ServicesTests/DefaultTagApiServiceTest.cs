@@ -15,8 +15,8 @@ namespace BetterCms.Test.Module.Pages.ServicesTests
         [Test]
         public void Should_Return_Tags_List_Successfully()
         {
-            BetterCms.Module.Root.Models.Tag tag1 = this.TestDataProvider.CreateNewTag();
-            BetterCms.Module.Root.Models.Tag tag2 = this.TestDataProvider.CreateNewTag();
+            BetterCms.Module.Root.Models.Tag tag1 = TestDataProvider.CreateNewTag();
+            BetterCms.Module.Root.Models.Tag tag2 = TestDataProvider.CreateNewTag();
 
             Mock<IRepository> repositoryMock = new Mock<IRepository>();
             repositoryMock
