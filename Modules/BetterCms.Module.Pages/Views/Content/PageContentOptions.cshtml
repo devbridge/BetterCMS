@@ -27,8 +27,8 @@
         column.For(model => model.OptionDefaultValue)
             .Named(PagesGlobalization.PageWidgetOptions_OptionDefaultValueColumn)
             .Sortable(false)
-            .HeaderAttributes(@style => "width: 160px;")
-            .Attributes(@class => "bcms-option-key");
+            .HeaderAttributes(@style => "width: 160px; text-align: left")
+            .Attributes(@class => "bcms-option-key", @style => "text-align: left");
     };
 }
 
