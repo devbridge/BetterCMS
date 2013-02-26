@@ -55,16 +55,82 @@ namespace BetterCms.Test.Module.MediaManager.ServiceTests
             var folderMedias = service.GetFolderMedias(MediaType.File);
             Assert.IsNotNull(folderMedias);
             Assert.AreEqual(folderMedias.Count, 2);
-            Assert.AreEqual(folderMedias.Count(m => m is MediaImage), 1);
+            Assert.AreEqual(folderMedias.Count(m => m is MediaFile), 1);
             Assert.AreEqual(folderMedias.Count(m => m is MediaFolder), 1);
+        }
+
+        [Test]
+        public void Should_Return_Empty_Audio_Folder_Medias_List_Successfully()
+        {
+            var medias = CreateFakeMedias();
+            var repository = MockRepository(medias);
+            var service = new DefaultMediaApiService(repository.Object);
+
+            // Root files folder has 1 folder and 1 file
+            var folderMedias = service.GetFolderMedias(MediaType.Audio);
+            Assert.IsNotNull(folderMedias);
+            Assert.IsEmpty(folderMedias);
+        }
+
+        [Test]
+        public void Should_Return_Images_List_Successfully()
+        {
+            var medias = CreateFakeMedias();
+            var repository = MockRepository(medias);
+            var service = new DefaultMediaApiService(repository.Object);
+
+            var images = service.GetImages();
+            Assert.IsNotNull(images);
+            Assert.AreEqual(images.Count, medias.Count(m => m is MediaImage));
+        }
+        
+        [Test]
+        public void Should_Return_Files_List_Successfully()
+        {
+            var medias = CreateFakeMedias();
+            var repository = MockRepository(medias);
+            var service = new DefaultMediaApiService(repository.Object);
+
+            var files = service.GetFiles();
+            Assert.IsNotNull(files);
+            Assert.AreEqual(files.Count, medias.Count(m => m is MediaFile));
+        }
+        
+        [Test]
+        public void Should_Return_Folders_List_Successfully()
+        {
+            var medias = CreateFakeMedias();
+            var repository = MockRepository(medias);
+            var service = new DefaultMediaApiService(repository.Object);
+
+            var imageFolders = service.GetFolders(MediaType.Image);
+            Assert.IsNotNull(imageFolders);
+            Assert.AreEqual(imageFolders.Count, medias.Count(m => m is MediaFolder && m.Type == MediaType.Image));
+
+            var fileFolders = service.GetFolders(MediaType.File);
+            Assert.IsNotNull(fileFolders);
+            Assert.AreEqual(fileFolders.Count, medias.Count(m => m is MediaFolder && m.Type == MediaType.File));
         }
 
         private Mock<IRepository> MockRepository(Media[] medias)
         {
             var repositoryMock = new Mock<IRepository>();
+
             repositoryMock
                 .Setup(f => f.AsQueryable<Media>())
                 .Returns(medias.AsQueryable());
+
+            repositoryMock
+                .Setup(f => f.AsQueryable<MediaFolder>())
+                .Returns(medias.Where(m => m is MediaFolder).Cast<MediaFolder>().AsQueryable());
+
+            repositoryMock
+                .Setup(f => f.AsQueryable<MediaImage>())
+                .Returns(medias.Where(m => m is MediaImage).Cast<MediaImage>().AsQueryable());
+
+            repositoryMock
+                .Setup(f => f.AsQueryable<MediaFile>())
+                .Returns(medias.Where(m => m is MediaFile).Cast<MediaFile>().AsQueryable());
 
             return repositoryMock;
         }
@@ -127,8 +193,8 @@ namespace BetterCms.Test.Module.MediaManager.ServiceTests
             var image1__1 = TestDataProvider.CreateNewMediaImage(images1);
             var image1__2 = TestDataProvider.CreateNewMediaImage(images1);
             var image1_1__1 = TestDataProvider.CreateNewMediaImage(images1_1);
-            var rootFile1 = TestDataProvider.CreateNewMediaImage(null, MediaType.File);
-            var file1_1 = TestDataProvider.CreateNewMediaImage(files1, MediaType.File);
+            var rootFile1 = TestDataProvider.CreateNewMediaFile();
+            var file1_1 = TestDataProvider.CreateNewMediaFile(files1);
 
             rootImage1.Folder = null;
             rootImage2.Folder = null;

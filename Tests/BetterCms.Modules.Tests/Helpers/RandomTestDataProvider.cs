@@ -511,7 +511,7 @@ namespace BetterCms.Tests.Helpers
             return entity;
         }
 
-        public MediaFile CreateNewMediaFile(MediaFolder folder = null, MediaType type = MediaType.Image)
+        public MediaFile CreateNewMediaFile(MediaFolder folder = null, MediaType type = MediaType.File)
         {
             var entity = new MediaFile();
 

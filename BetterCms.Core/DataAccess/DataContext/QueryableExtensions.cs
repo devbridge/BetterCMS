@@ -53,7 +53,7 @@ namespace BetterCms.Core.DataAccess.DataContext
                 query = (orderDescending) ? query.OrderByDescending(order) : query.OrderBy(order);
             }
             
-            query.ApplyPaging(pageNumber, itemsPerPage);
+            query = query.ApplyPaging(pageNumber, itemsPerPage);
 
             return query;
         }
