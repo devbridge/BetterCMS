@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Models;
 using BetterCms.Module.Pages.Content.Resources;
@@ -36,6 +37,11 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
                 var logMessage = string.Format("Widget view doesn't exists. Url: {0}, Id: {1}", request.Url, request.Id);
 
                 throw new ValidationException(() => message, logMessage);
+            }
+
+            if (request.DesirableStatus == ContentStatus.Draft)
+            {
+                throw new CmsException(string.Format("Server widget does not support Draft state."));
             }
 
             UnitOfWork.BeginTransaction();

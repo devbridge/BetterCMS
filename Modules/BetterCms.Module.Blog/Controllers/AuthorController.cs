@@ -11,8 +11,15 @@ using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
 namespace BetterCms.Module.Blog.Controllers
 {
+    /// <summary>
+    /// Blog authors controller.
+    /// </summary>
     public class AuthorController : CmsControllerBase
     {
+        /// <summary>
+        /// Lists the template.
+        /// </summary>
+        /// <returns>Json result.</returns>
         public virtual ActionResult ListTemplate()
         {
             var view = RenderView("Partial/ListTemplate", null);
@@ -21,12 +28,22 @@ namespace BetterCms.Module.Blog.Controllers
             return ComboWireJson(authors != null, view, authors, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Lists the authors.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>Json result.</returns>
         public virtual ActionResult AuthorsList(SearchableGridOptions request)
         {
             var model = GetCommand<GetAuthorListCommand>().ExecuteCommand(request);
             return WireJson(model != null, model);
         }
 
+        /// <summary>
+        /// Saves the author.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns>Json result.</returns>
         [HttpPost]
         public virtual ActionResult SaveAuthor(AuthorViewModel model)
         {
@@ -47,14 +64,21 @@ namespace BetterCms.Module.Blog.Controllers
 
             return WireJson(success, response);
         }
-        
+
+        /// <summary>
+        /// Deletes the author.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <param name="version">The version.</param>
+        /// <returns>Json result.</returns>
         [HttpPost]
-        public virtual ActionResult DeleteAuthor(AuthorViewModel model)
+        public virtual ActionResult DeleteAuthor(string id, string version)
         {
-            var success = GetCommand<DeleteAuthorCommand>().ExecuteCommand(model);
+            var request = new AuthorViewModel { Id = id.ToGuidOrDefault(), Version = version.ToIntOrDefault() };
+            var success = GetCommand<DeleteAuthorCommand>().ExecuteCommand(request);
             if (success)
             {
-                if (!model.Id.HasDefaultValue())
+                if (!request.Id.HasDefaultValue())
                 {
                     Messages.AddSuccess(BlogGlobalization.DeleteAuthor_DeletedSuccessfully_Message);
                 }
