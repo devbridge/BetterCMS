@@ -3,6 +3,7 @@
 using BetterCms.Core;
 using BetterCms.Core.Exceptions;
 using BetterCms.Module.Pages.DataServices;
+using BetterCms.Module.Pages.Events;
 
 namespace BetterCms.Module.Pages
 {
@@ -15,6 +16,20 @@ namespace BetterCms.Module.Pages
         public PagesApiContext(ILifetimeScope container)
             : base(container)
         {
+        }
+
+        /// <summary>
+        /// Gets the events.
+        /// </summary>
+        /// <value>
+        /// The events.
+        /// </value>
+        public static PagesEvents Events
+        {
+            get
+            {
+                return PagesEvents.Instance;
+            }
         }
 
         /// <summary>

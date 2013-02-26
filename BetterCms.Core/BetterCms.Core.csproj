@@ -156,9 +156,6 @@
     <Compile Include="Environment\Assemblies\DefaultAssemblyManager.cs" />
     <Compile Include="Environment\Assemblies\IAssemblyManager.cs" />
     <Compile Include="DataContracts\Enums\PageStatus.cs" />
-    <Compile Include="Events\CmsApiEvents.cs" />
-    <Compile Include="Events\PageCreatedEventArgs.cs" />
-    <Compile Include="Events\CmsApiPagesEvents.cs" />
     <Compile Include="Security\AuthorizeAttribute.cs" />
     <Compile Include="Security\IUserRole.cs" />
     <Compile Include="Modules\Projections\EmptyContentAccessor.cs" />

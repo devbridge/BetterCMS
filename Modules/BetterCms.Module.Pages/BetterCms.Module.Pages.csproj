@@ -212,6 +212,9 @@
     <Compile Include="DataServices\IRedirectApiService.cs" />
     <Compile Include="DataServices\ITagApiService.cs" />
     <Compile Include="DataServices\IWidgetApiService.cs" />
+    <Compile Include="Events\PageDeletedEventArgs.cs" />
+    <Compile Include="Events\PagesEvents.cs" />
+    <Compile Include="Events\PageCreatedEventArgs.cs" />
     <Compile Include="Helpers\CssHelper.cs" />
     <Compile Include="Helpers\HttpHelper.cs" />
     <Compile Include="Helpers\ListModelBindingExtensions.cs" />

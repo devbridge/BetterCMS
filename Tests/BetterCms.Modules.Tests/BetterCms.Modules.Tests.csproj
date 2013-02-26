@@ -121,6 +121,7 @@
     <Compile Include="Pages\CommandTests\ContentTests\SortPageContentCommandIntegrationTest.cs" />
     <Compile Include="Pages\CommandTests\WidgetTests\DeleteWidgetCommandTest.cs" />
     <Compile Include="Pages\CommandTests\WidgetTests\GetSiteSettingsWidgetsIntegrationTest.cs" />
+    <Compile Include="Pages\EventTests\PageEventTests.cs" />
     <Compile Include="Pages\HelperTests\StringHelperTests.cs" />
     <Compile Include="Pages\ModelTests\ConcurrencyTests\ConcurrencyTests.cs" />
     <Compile Include="Pages\ServicesTests\DefaultLayoutApiServiceTest.cs" />
