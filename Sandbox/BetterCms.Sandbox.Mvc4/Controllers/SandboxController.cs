@@ -6,7 +6,8 @@ using System.Web.Mvc;
 using System.Web.Security;
 
 using BetterCms.Core;
-using BetterCms.Core.DataContracts;
+using BetterCms.Module.MediaManager;
+using BetterCms.Module.MediaManager.Models;
 
 namespace BetterCms.Sandbox.Mvc4.Controllers
 {
@@ -55,27 +56,17 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
 
         public ActionResult TestApi()
         {
-            IList<IPage> pages;
-            IList<IPage> queryablePages;
-            using (var api =  CmsContext.CreateDataApi())
+            IList<MediaFolder> tags;
+            using (var api = CmsContext.CreateDataApi<MediaManagerApiContext>())
             {
-                pages = api.Pages.GetPages();
-                queryablePages = api.Pages.GetPagesQueryable().Take(2).ToList();
-            }
-            
-            var count = pages.Count;
-            var message = string.Format("Pages count: {0}", count);
-            if (count > 0)
-            {
-                message = string.Format("{0}<br /> Pages titles: {1}", message, string.Join("; ", pages.Select(t => t.Title)));
+                tags = api.Medias.GetFolders(MediaType.Image);
             }
 
-            // Queryable test
-            count = queryablePages.Count;
-            message = string.Format("{0}<br /><hr />Queryable pages count [Max 2]: {1}", message, count);
+            var count = tags.Count;
+            var message = string.Format("Image folders count: {0}", count);
             if (count > 0)
             {
-                message = string.Format("{0}<br /> Queryable pages titles, ordered by title [Max 2]: {1}", message, string.Join("; ", queryablePages.Select(t => t.Title)));
+                message = string.Format("{0}<br /> Image folders titles: {1}", message, string.Join("; ", tags.Select(t => t.Title)));
             }
 
             return Content(message);

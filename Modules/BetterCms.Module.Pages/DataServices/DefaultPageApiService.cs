@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataContracts;
-using BetterCms.Core.DataServices;
-using BetterCms.Module.Root.Models;
+using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Module.Pages.Models;
 
 namespace BetterCms.Module.Pages.DataServices
 {
@@ -21,20 +22,25 @@ namespace BetterCms.Module.Pages.DataServices
             this.repository = repository;
         }
 
-        public IList<IPage> GetPages()
+        /// <summary>
+        /// Gets the list of page property entities.
+        /// </summary>
+        /// <param name="filter">The filter.</param>
+        /// <param name="order">The order.</param>
+        /// <param name="orderDescending">if set to <c>true</c> order by descending.</param>
+        /// <param name="pageNumber">The page number.</param>
+        /// <param name="itemsPerPage">The items per page.</param>
+        /// <returns>
+        /// The list of property entities
+        /// </returns>
+        public IList<PageProperties> GetPages(Expression<Func<PageProperties, bool>> filter = null, Expression<Func<PageProperties, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
         {
-            return GetPagesQueryable().ToList();
-        }
+            if (order == null)
+            {
+                order = p => p.Title;
+            }
 
-        public IQueryable<IPage> GetPagesQueryable()
-        {
-            return GetPagesQueryable<Page>();
-        }
-
-        public IQueryable<TEntity> GetPagesQueryable<TEntity>()
-            where TEntity : Core.Models.Entity, IPage
-        {
-            return repository.AsQueryable<TEntity>();
+            return repository.AsQueryable(filter, order, orderDescending, pageNumber, itemsPerPage).ToList();
         }
     }
 }

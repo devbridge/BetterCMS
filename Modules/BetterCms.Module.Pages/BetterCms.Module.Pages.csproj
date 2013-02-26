@@ -205,6 +205,13 @@
     <Compile Include="Controllers\SeoController.cs" />
     <Compile Include="Controllers\ContentController.cs" />
     <Compile Include="DataServices\DefaultWidgetApiService.cs" />
+    <Compile Include="DataServices\ICategoryApiService.cs" />
+    <Compile Include="DataServices\IContentApiService.cs" />
+    <Compile Include="DataServices\ILayoutApiService.cs" />
+    <Compile Include="DataServices\IPageApiService.cs" />
+    <Compile Include="DataServices\IRedirectApiService.cs" />
+    <Compile Include="DataServices\ITagApiService.cs" />
+    <Compile Include="DataServices\IWidgetApiService.cs" />
     <Compile Include="Helpers\CssHelper.cs" />
     <Compile Include="Helpers\HttpHelper.cs" />
     <Compile Include="Helpers\ListModelBindingExtensions.cs" />
@@ -230,6 +237,7 @@
     <Compile Include="Mvc\Attributes\CustomPageUrlValidationAttribute.cs" />
     <Compile Include="Mvc\Attributes\DateValidationAttribute.cs" />
     <Compile Include="Mvc\Attributes\EndDateValidationAttribute.cs" />
+    <Compile Include="PagesApiContext.cs" />
     <Compile Include="PagesConstants.cs" />
     <Compile Include="Accessors\HtmlContentWidgetAccessor.cs" />
     <Compile Include="Accessors\HtmlContentAccessor.cs" />

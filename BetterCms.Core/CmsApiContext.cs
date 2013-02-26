@@ -1,109 +1,64 @@
 ﻿using System;
+using System.Linq;
+using System.Linq.Expressions;
 
 using Autofac;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataServices;
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions;
+using BetterCms.Core.Models;
+
+using NHibernate;
+using NHibernate.Linq;
 
 namespace BetterCms.Core
 {
     public class CmsApiContext : IDisposable
     {
-        private readonly ILifetimeScope container;
+        protected readonly ILifetimeScope container;
+        protected IUnitOfWork unitOfWork;
 
-        /// <summary>
-        /// Gets the tags API service.
-        /// </summary>
-        /// <value>
-        /// The tags API service.
-        /// </value>
-        public ITagApiService Tags
+        public IQueryOver<TEntity> QueryOver<TEntity>(Expression<Func<TEntity, bool>> filter = null) where TEntity : Entity
         {
-            get
-            {
-                if (container.IsRegistered<ITagApiService>())
-                {
-                    return container.Resolve<ITagApiService>();
-                }
+            InitializeSession();
 
-                throw new CmsException("Tags API service was not initialized. Please make sure to add BetterCms.Modules.Root module.");
+            var query = unitOfWork.Session.QueryOver<TEntity>().Where(e => !e.IsDeleted);
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
             }
+
+            return query;
         }
 
-        /// <summary>
-        /// Gets the pages API service.
-        /// </summary>
-        /// <value>
-        /// The pages API service.
-        /// </value>
-        public IPageApiService Pages
+        public IQueryable<TEntity> Queryable<TEntity>(Expression<Func<TEntity, bool>> filter = null) where TEntity : Entity
         {
-            get
-            {
-                if (container.IsRegistered<IPageApiService>())
-                {
-                    return container.Resolve<IPageApiService>();
-                }
+            InitializeSession();
 
-                throw new CmsException("Pages API service was not initialized. Please make sure to add BetterCms.Modules.Root module.");
+            var query = unitOfWork.Session.Query<TEntity>().Where(e => !e.IsDeleted);
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
             }
+
+            return query;
         }
 
-        /// <summary>
-        /// Gets the layouts API service.
-        /// </summary>
-        /// <value>
-        /// The layouts API service.
-        /// </value>
-        public ILayoutApiService Layouts
+        private void InitializeSession()
         {
-            get
+            if (unitOfWork == null && container.IsRegistered<IUnitOfWork>())
             {
-                if (container.IsRegistered<ILayoutApiService>())
-                {
-                    return container.Resolve<ILayoutApiService>();
-                }
-
-                throw new CmsException("Layouts API service was not initialized. Please make sure to add BetterCms.Modules.Root module.");
+                unitOfWork = container.Resolve<IUnitOfWork>();
             }
-        }
-
-        /// <summary>
-        /// Gets the categories Categories API.
-        /// </summary>
-        /// <value>
-        /// The categories Categories API.
-        /// </value>
-        public ICategoryApiService Categories
-        {
-            get
+            if (unitOfWork == null)
             {
-                if (container.IsRegistered<ICategoryApiService>())
-                {
-                    return container.Resolve<ICategoryApiService>();
-                }
-
-                throw new CmsException("Categories API service was not initialized. Please make sure to add BetterCms.Modules.Root module.");
+                throw new CmsException("UnitOfWork was not initialized.");
             }
-        }
-
-        /// <summary>
-        /// Gets the redirects API service.
-        /// </summary>
-        /// <value>
-        /// The redirects API service.
-        /// </value>
-        public IRedirectApiService Redirects
-        {
-            get
+            if (unitOfWork.Disposed)
             {
-                if (container.IsRegistered<IRedirectApiService>())
-                {
-                    return container.Resolve<IRedirectApiService>();
-                }
-
-                throw new CmsException("Redirects API service was not initialized. Please make sure to add BetterCms.Modules.Root module.");
+                throw new CmsException("UnitOfWork is disposed.");
             }
         }
 
@@ -121,6 +76,10 @@ namespace BetterCms.Core
         /// </summary>
         public void Dispose()
         {
+            if (unitOfWork != null)
+            {
+                unitOfWork.Dispose();
+            }
             if (container != null)
             {
                 container.Dispose();

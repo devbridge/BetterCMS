@@ -1,16 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Linq;
+using System.Linq.Expressions;
 
 using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataServices;
-
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Module.Root.Models;
 
 namespace BetterCms.Module.Pages.DataServices
 {
     public class DefaultTagApiService : ITagApiService
     {
-        private IRepository repository { get; set; }
+        private readonly IRepository repository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultTagApiService" /> class.
@@ -21,20 +21,23 @@ namespace BetterCms.Module.Pages.DataServices
             this.repository = repository;
         }
 
-//        public IList<ITag> GetTags()
-//        {
-//            return GetTagsQueryable().ToList();
-//        }
-//
-//        public IQueryable<ITag> GetTagsQueryable()
-//        {
-//            return GetTagsQueryable<Tag>();
-//        }
-//
-//        public IQueryable<TEntity> GetTagsQueryable<TEntity>() 
-//            where TEntity : Core.Models.Entity, ITag
-//        {
-//            return repository.AsQueryable<TEntity>();
-//        }
+        /// <summary>
+        /// Gets the tags.
+        /// </summary>
+        /// <param name="filter">The filter.</param>
+        /// <param name="order">The order.</param>
+        /// <param name="orderDescending">if set to <c>true</c> [order descending].</param>
+        /// <param name="pageNumber">The page number.</param>
+        /// <param name="itemsPerPage">The items per page.</param>
+        /// <returns></returns>
+        public System.Collections.Generic.IList<Tag> GetTags(Expression<Func<Tag, bool>> filter = null, Expression<Func<Tag, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
+        {
+            if (order == null)
+            {
+                order = p => p.Name;
+            }
+
+            return repository.AsQueryable(filter, order, orderDescending, pageNumber, itemsPerPage).ToList();
+        }
     }
 }

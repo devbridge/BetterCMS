@@ -1,10 +1,11 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 
 using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataServices;
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Module.Root.Models;
-
-using NHibernate.Linq;
 
 namespace BetterCms.Module.Pages.DataServices
 {
@@ -21,13 +22,25 @@ namespace BetterCms.Module.Pages.DataServices
             this.repository = repository;
         }
 
-//        public System.Collections.Generic.IList<Core.DataContracts.ILayout> GetLayouts()
-//        {
-//            return repository
-//               .AsQueryable<Layout>()
-//               .Fetch(l => l.LayoutRegions)
-//               .Cast<Core.DataContracts.ILayout>()
-//               .ToList();
-//        }
+        /// <summary>
+        /// Gets the list of layout entities.
+        /// </summary>
+        /// <param name="filter">The filter.</param>
+        /// <param name="order">The order.</param>
+        /// <param name="orderDescending">if set to <c>true</c> order by descending.</param>
+        /// <param name="pageNumber">The page number.</param>
+        /// <param name="itemsPerPage">The items per page.</param>
+        /// <returns>
+        /// The list of layout entities
+        /// </returns>
+        public IList<Layout> GetLayouts(Expression<Func<Layout, bool>> filter = null, Expression<Func<Layout, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
+        {
+            if (order == null)
+            {
+                order = p => p.Name;
+            }
+
+            return repository.AsQueryable(filter, order, orderDescending, pageNumber, itemsPerPage).ToList();
+        }
     }
 }

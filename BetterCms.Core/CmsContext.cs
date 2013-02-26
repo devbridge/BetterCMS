@@ -53,7 +53,17 @@ namespace BetterCms.Core
         /// <returns></returns>
         public static CmsApiContext CreateDataApi()
         {
-            return new CmsApiContext(ContextScopeProvider.CreateChildContainer());
+            return CreateDataApi<CmsApiContext>();
+        }
+
+        /// <summary>
+        /// Creates the data API.
+        /// </summary>
+        /// <typeparam name="TApiContext">The type of the API content.</typeparam>
+        /// <returns></returns>
+        public static TApiContext CreateDataApi<TApiContext>() where TApiContext : CmsApiContext
+        {
+            return (TApiContext)Activator.CreateInstance(typeof(TApiContext), ContextScopeProvider.CreateChildContainer());
         }
 
         // TBD. To access and handle current page data.

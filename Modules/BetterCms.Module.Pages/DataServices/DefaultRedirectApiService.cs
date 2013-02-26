@@ -1,8 +1,11 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 
 using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataContracts;
-using BetterCms.Core.DataServices;
+using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Module.Pages.Models;
 
 namespace BetterCms.Module.Pages.DataServices
 {
@@ -19,12 +22,25 @@ namespace BetterCms.Module.Pages.DataServices
             this.repository = repository;
         }
 
-//        public System.Collections.Generic.IList<IRedirect> GetRedirects()
-//        {
-//            return repository
-//                .AsQueryable<Redirect>()
-//                .Cast<IRedirect>()
-//                .ToList();
-//        }
+        /// <summary>
+        /// Gets the list of redirect entities.
+        /// </summary>
+        /// <param name="filter">The filter.</param>
+        /// <param name="order">The order.</param>
+        /// <param name="orderDescending">if set to <c>true</c> order by descending.</param>
+        /// <param name="pageNumber">The page number.</param>
+        /// <param name="itemsPerPage">The items per page.</param>
+        /// <returns>
+        /// The list of redirect entities
+        /// </returns>
+        public IList<Redirect> GetRedirects(Expression<Func<Redirect, bool>> filter = null, Expression<Func<Redirect, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
+        {
+            if (order == null)
+            {
+                order = p => p.PageUrl;
+            }
+
+            return repository.AsQueryable(filter, order, orderDescending, pageNumber, itemsPerPage).ToList();
+        }
     }
 }

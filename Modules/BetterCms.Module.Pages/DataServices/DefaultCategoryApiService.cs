@@ -1,7 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 
 using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataServices;
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Module.Root.Models;
 
 namespace BetterCms.Module.Pages.DataServices
@@ -19,12 +22,25 @@ namespace BetterCms.Module.Pages.DataServices
             this.repository = repository;
         }
 
-        public System.Collections.Generic.IList<Core.DataContracts.ICategory> GetCategories()
+        /// <summary>
+        /// Gets the list of category entities.
+        /// </summary>
+        /// <param name="filter">The filter.</param>
+        /// <param name="order">The order.</param>
+        /// <param name="orderDescending">if set to <c>true</c> order by descending.</param>
+        /// <param name="pageNumber">The page number.</param>
+        /// <param name="itemsPerPage">The items per page.</param>
+        /// <returns>
+        /// The list of category entities
+        /// </returns>
+        public IList<Category> GetCategories(Expression<Func<Category, bool>> filter = null, Expression<Func<Category, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
         {
-            return repository
-                .AsQueryable<Category>()
-                .Cast<Core.DataContracts.ICategory>()
-                .ToList();
+            if (order == null)
+            {
+                order = p => p.Name;
+            }
+
+            return repository.AsQueryable(filter, order, orderDescending, pageNumber, itemsPerPage).ToList();
         }
     }
 }

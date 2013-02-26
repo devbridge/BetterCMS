@@ -128,6 +128,7 @@
     <Compile Include="DataAccess\DataContext\Migrations\DefaultMigrationRunner.cs" />
     <Compile Include="DataAccess\DataContext\Migrations\IMigrationRunner.cs" />
     <Compile Include="DataAccess\DataContext\Migrations\MigrationExtensions.cs" />
+    <Compile Include="DataAccess\DataContext\RepositoryExtensions.cs" />
     <Compile Include="DataAccess\DataContext\RestrictionsExtensions.cs" />
     <Compile Include="DataAccess\DataContext\SessionExtensions.cs" />
     <Compile Include="DataContracts\Enums\ContentStatus.cs" />
@@ -145,18 +146,9 @@
     <Compile Include="DataContracts\IPageContentOption.cs" />
     <Compile Include="DataContracts\IRegion.cs" />
     <Compile Include="DataContracts\IWidget.cs" />
-    <Compile Include="DataServices\IAuthorApiService.cs" />
-    <Compile Include="DataServices\IBlogApiService.cs" />
-    <Compile Include="DataServices\ICategoryApiService.cs" />
-    <Compile Include="DataServices\IContentApiService.cs" />
-    <Compile Include="DataServices\IHistoryApiService.cs" />
-    <Compile Include="DataServices\ILayoutApiService.cs" />
-    <Compile Include="DataServices\IMediaApiService.cs" />
-    <Compile Include="DataServices\IRedirectApiService.cs" />
     <Compile Include="DataServices\IRoleApiService.cs" />
     <Compile Include="DataServices\ISitemapApiService.cs" />
     <Compile Include="DataServices\IUserApiService.cs" />
-    <Compile Include="DataServices\IWidgetApiService.cs" />
     <Compile Include="Dependencies\ContextScopeProvider.cs" />
     <Compile Include="Environment\ApplicationStart\BetterCmsEntrypoint.cs" />
     <Compile Include="Dependencies\PerWebRequestContainerProvider.cs" />
@@ -172,8 +164,6 @@
     <Compile Include="Modules\Projections\EmptyContentAccessor.cs" />
     <Compile Include="Mvc\Attributes\IgnoreAutoRouteAttribute.cs" />
     <Compile Include="Security\UserRole.cs" />
-    <Compile Include="DataServices\IPageApiService.cs" />
-    <Compile Include="DataServices\ITagApiService.cs" />
     <Compile Include="Services\Storage\FtpStorageService.cs" />
     <Compile Include="Services\Storage\DownloadResponse.cs" />
     <Compile Include="Services\Storage\FileSystemStorageService.cs" />

@@ -210,6 +210,10 @@
       <Project>{573925f2-f15f-4cbe-8f13-7c67da06df0d}</Project>
       <Name>BetterCms.Module.AppFabricCache</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.MediaManager\BetterCms.Module.MediaManager.csproj">
+      <Project>{F3E41793-E8ED-4BA8-A1AB-CBA1E47B0786}</Project>
+      <Name>BetterCms.Module.MediaManager</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Config\cms.config">

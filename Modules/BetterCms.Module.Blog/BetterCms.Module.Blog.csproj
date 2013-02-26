@@ -117,6 +117,7 @@
     <Compile Include="Accessors\BlogPostContentAccessor.cs" />
     <Compile Include="BlogModuleConstants.cs" />
     <Compile Include="BlogModuleDescriptor.cs" />
+    <Compile Include="BlogsApiContext.cs" />
     <Compile Include="Commands\DeleteAuthor\DeleteAuthorCommand.cs" />
     <Compile Include="Commands\GetAuthorList\GetAuthorListCommand.cs" />
     <Compile Include="Commands\GetBlogPostList\GetBlogPostListCommand.cs" />
@@ -136,6 +137,8 @@
     <Compile Include="Controllers\OptionController.cs" />
     <Compile Include="DataServices\DefaultAuthorApiService.cs" />
     <Compile Include="DataServices\DefaultBlogApiService.cs" />
+    <Compile Include="DataServices\IAuthorApiService.cs" />
+    <Compile Include="DataServices\IBlogApiService.cs" />
     <Compile Include="Models\Author.cs" />
     <Compile Include="Models\BlogPost.cs" />
     <Compile Include="Models\BlogPostContent.cs" />
