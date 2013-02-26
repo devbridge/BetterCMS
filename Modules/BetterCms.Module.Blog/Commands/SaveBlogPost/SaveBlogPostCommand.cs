@@ -111,9 +111,10 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                 var parentPageUrl = request.ParentPageUrl.Trim('/');
                 if (!string.IsNullOrWhiteSpace(parentPageUrl))
                 {
-                    var postUrl = GeneratePageUrl(request.Title);
-                    var pageUrl = string.Concat(parentPageUrl, postUrl);
-                    blogPost.PageUrl = redirectService.FixUrl(pageUrl);
+                    var url = "/" + request.Title.Transliterate();
+                    var pageUrl = string.Concat(parentPageUrl, url);
+                    pageUrl = AddUrlPathSuffixIfNeeded(pageUrl);
+                    blogPost.PageUrl = pageUrl;
                 }
                 else
                 {
