@@ -81,7 +81,7 @@ namespace BetterCms.Core.Services.Storage
 
             try
             {
-                var absolutePath = ResolvePath(request.Uri.LocalPath);
+                var absolutePath = ResolvePath(request.Uri.AbsoluteUri);
 
                 if (request.CreateDirectory)
                 {
