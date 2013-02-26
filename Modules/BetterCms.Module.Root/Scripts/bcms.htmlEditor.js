@@ -54,6 +54,10 @@ define('bcms.htmlEditor', ['jquery', 'bcms', 'ckeditor'], function ($, bcms) {
             CKEDITOR.instances[name].destroy();
         }
     };
+    
+    htmlEditor.destroyHtmlEditorInstance = function () {
+        CKEDITOR.instances[htmlEditor.id].destroy();
+    };
 
     htmlEditor.setSourceMode = function (id) {
         CKEDITOR.instances[id].on('instanceReady', function () {

@@ -141,10 +141,10 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
                     });
                 },
                 onAccept: function () {
-                    htmlEditor.destroyAllHtmlEditorInstances();
+                    htmlEditor.destroyHtmlEditorInstance();
                 },
                 onClose: function () {
-                    htmlEditor.destroyAllHtmlEditorInstances();
+                    htmlEditor.destroyHtmlEditorInstance();
                     
                     if ($.isFunction(onCloseCallback)) {
                         onCloseCallback();
