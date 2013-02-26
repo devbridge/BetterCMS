@@ -160,6 +160,7 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
 
             modal.edit({
                 isPreviewAvailable: availablePreviewOnPageContentId != null,
+                disableSaveDraft: true,
                 title: globalization.editWidgetDialogTitle,
                 onClose: onCloseCallback,
                 onLoad: function(childDialog) {
@@ -185,6 +186,7 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
         widgets.openCreateServerControlWidgetDialog = function (onSaveCallback, availablePreviewOnPageContentId) {
             modal.edit({
                 isPreviewAvailable: availablePreviewOnPageContentId != null,
+                disableSaveDraft: true,
                 title: globalization.createWidgetDialogTitle,
                 onLoad: function (childDialog) {
                     dynamicContent.bindDialog(childDialog, links.loadCreateServerControlWidgetDialogUrl, {
