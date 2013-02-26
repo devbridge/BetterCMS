@@ -21,13 +21,13 @@ namespace BetterCms.Module.Pages.DataServices
             this.repository = repository;
         }
 
-        public System.Collections.Generic.IList<Core.DataContracts.ILayout> GetLayouts()
-        {
-            return repository
-               .AsQueryable<Layout>()
-               .Fetch(l => l.LayoutRegions)
-               .Cast<Core.DataContracts.ILayout>()
-               .ToList();
-        }
+//        public System.Collections.Generic.IList<Core.DataContracts.ILayout> GetLayouts()
+//        {
+//            return repository
+//               .AsQueryable<Layout>()
+//               .Fetch(l => l.LayoutRegions)
+//               .Cast<Core.DataContracts.ILayout>()
+//               .ToList();
+//        }
     }
 }

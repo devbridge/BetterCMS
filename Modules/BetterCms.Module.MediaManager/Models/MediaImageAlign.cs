@@ -1,6 +1,6 @@
 using System;
 
-namespace BetterCms.Core.DataContracts.Enums
+namespace BetterCms.Module.MediaManager.Models
 {
     [Serializable]
     public enum MediaImageAlign

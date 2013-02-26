@@ -60,7 +60,7 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
             using (var api =  CmsContext.CreateDataApi())
             {
                 pages = api.Pages.GetPages();
-                queryablePages = api.Pages.GetPagesQueryable().Take(2).OrderBy(p => p.Title).ToList();
+                queryablePages = api.Pages.GetPagesQueryable().Take(2).ToList();
             }
             
             var count = pages.Count;

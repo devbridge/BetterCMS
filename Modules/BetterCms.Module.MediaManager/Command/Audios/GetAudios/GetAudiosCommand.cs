@@ -1,5 +1,4 @@
-﻿using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Module.MediaManager.Command.MediaManager;
+﻿using BetterCms.Module.MediaManager.Command.MediaManager;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 

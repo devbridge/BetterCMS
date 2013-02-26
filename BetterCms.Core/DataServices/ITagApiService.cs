@@ -8,11 +8,11 @@ namespace BetterCms.Core.DataServices
 {
     public interface ITagApiService
     {
-        IList<ITag> GetTags();
+        // IList<ITag> GetTags();
 
-        IQueryable<ITag> GetTagsQueryable();
+        // IQueryable<ITag> GetTagsQueryable();
 
-        IQueryable<TEntity> GetTagsQueryable<TEntity>() 
-            where TEntity : Entity, ITag;
+        // IQueryable<TEntity> GetTagsQueryable<TEntity>() 
+        //    where TEntity : Entity, ITag;
     }
 }

@@ -1,11 +1,9 @@
 using System;
 
-using BetterCms.Core.DataContracts;
-
 namespace BetterCms.Module.MediaManager.Models
 {
     [Serializable]
-    public class MediaFile : Media, IMediaFile
+    public class MediaFile : Media
     {
         public virtual string OriginalFileName { get; set; }
 

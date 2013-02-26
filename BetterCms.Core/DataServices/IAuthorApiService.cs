@@ -6,6 +6,6 @@ namespace BetterCms.Core.DataServices
 {
     public interface IAuthorApiService
     {
-        IList<IAuthor> GetAuthors();
+        // IList<IAuthor> GetAuthors();
     }
 }

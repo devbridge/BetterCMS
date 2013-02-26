@@ -6,6 +6,6 @@ namespace BetterCms.Core.DataServices
 {
     public interface IRedirectApiService
     {
-        IList<IRedirect> GetRedirects();
+        // IList<IRedirect> GetRedirects();
     }
 }

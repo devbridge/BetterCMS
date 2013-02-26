@@ -156,6 +156,8 @@
     <Compile Include="DataServices\DefaultMediaApiService.cs" />
     <Compile Include="Helpers\WrappedJsonResult.cs" />
     <Compile Include="MediaManagerModuleDescriptor.cs" />
+    <Compile Include="Models\MediaImageAlign.cs" />
+    <Compile Include="Models\MediaType.cs" />
     <Compile Include="Models\Maps\MediaMap.cs" />
     <Compile Include="Models\Maps\MediaFileMap.cs" />
     <Compile Include="Models\Maps\MediaFolderMap.cs" />

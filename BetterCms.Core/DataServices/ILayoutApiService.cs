@@ -10,6 +10,6 @@ namespace BetterCms.Core.DataServices
         /// Gets the list of layouts.
         /// </summary>
         /// <returns>The list of layouts</returns>
-        IList<ILayout> GetLayouts();
+        // IList<ILayout> GetLayouts();
     }
 }

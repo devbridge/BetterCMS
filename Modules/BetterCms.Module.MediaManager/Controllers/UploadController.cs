@@ -12,6 +12,7 @@ using BetterCms.Module.MediaManager.Command.Upload.UndoUpload;
 using BetterCms.Module.MediaManager.Command.Upload.Upload;
 using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Helpers;
+using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels.Upload;
 using BetterCms.Module.Root.Models;

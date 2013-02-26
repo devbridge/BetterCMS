@@ -3,7 +3,6 @@
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataServices;
-using BetterCms.Module.Pages.Models;
 
 namespace BetterCms.Module.Pages.DataServices
 {
@@ -20,12 +19,12 @@ namespace BetterCms.Module.Pages.DataServices
             this.repository = repository;
         }
 
-        public System.Collections.Generic.IList<IRedirect> GetRedirects()
-        {
-            return repository
-                .AsQueryable<Redirect>()
-                .Cast<IRedirect>()
-                .ToList();
-        }
+//        public System.Collections.Generic.IList<IRedirect> GetRedirects()
+//        {
+//            return repository
+//                .AsQueryable<Redirect>()
+//                .Cast<IRedirect>()
+//                .ToList();
+//        }
     }
 }

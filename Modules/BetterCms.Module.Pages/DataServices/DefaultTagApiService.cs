@@ -2,7 +2,6 @@
 using System.Linq;
 
 using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataServices;
 
 using BetterCms.Module.Root.Models;
@@ -22,20 +21,20 @@ namespace BetterCms.Module.Pages.DataServices
             this.repository = repository;
         }
 
-        public IList<ITag> GetTags()
-        {
-            return GetTagsQueryable().ToList();
-        }
-
-        public IQueryable<ITag> GetTagsQueryable()
-        {
-            return GetTagsQueryable<Tag>();
-        }
-
-        public IQueryable<TEntity> GetTagsQueryable<TEntity>() 
-            where TEntity : Core.Models.Entity, ITag
-        {
-            return repository.AsQueryable<TEntity>();
-        }
+//        public IList<ITag> GetTags()
+//        {
+//            return GetTagsQueryable().ToList();
+//        }
+//
+//        public IQueryable<ITag> GetTagsQueryable()
+//        {
+//            return GetTagsQueryable<Tag>();
+//        }
+//
+//        public IQueryable<TEntity> GetTagsQueryable<TEntity>() 
+//            where TEntity : Core.Models.Entity, ITag
+//        {
+//            return repository.AsQueryable<TEntity>();
+//        }
     }
 }
