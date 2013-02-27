@@ -214,6 +214,10 @@
       <Project>{F3E41793-E8ED-4BA8-A1AB-CBA1E47B0786}</Project>
       <Name>BetterCms.Module.MediaManager</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.Navigation\BetterCms.Module.Navigation.csproj">
+      <Project>{5383227A-9CB8-4978-91D1-8168EC817D16}</Project>
+      <Name>BetterCms.Module.Navigation</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Config\cms.config">

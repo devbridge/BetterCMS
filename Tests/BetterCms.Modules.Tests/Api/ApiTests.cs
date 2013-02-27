@@ -6,6 +6,8 @@ using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Module.Blog.DataServices;
 using BetterCms.Module.MediaManager.DataServices;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.Navigation.DataServices;
+using BetterCms.Module.Navigation.Services;
 using BetterCms.Module.Pages.DataServices;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
