@@ -135,6 +135,7 @@
     <Compile Include="Models\Maps\SitemapNodeMap.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
     <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />
+    <Compile Include="NavigationApiContext.cs" />
     <Compile Include="Registration\SitemapJavaScriptModuleDescriptor.cs" />
     <Compile Include="NavigationModuleDescriptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

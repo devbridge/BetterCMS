@@ -72,7 +72,7 @@ namespace BetterCms.Module.Navigation
         public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder, ICmsConfiguration configuration)
         {
             containerBuilder.RegisterType<DefaultSitemapService>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            
+
             containerBuilder.RegisterType<DefaultSitemapApiService>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
 
