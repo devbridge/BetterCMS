@@ -15,19 +15,10 @@ namespace BetterCms.Module.Pages.DataServices
         /// </summary>
         /// <param name="pageId">The page id.</param>
         /// <param name="filter">The filter.</param>
-        /// <param name="order">The order.</param>
-        /// <param name="orderDescending">if set to <c>true</c> order by descending.</param>
-        /// <param name="pageNumber">The page number.</param>
-        /// <param name="itemsPerPage">The items per page.</param>
         /// <returns>
         /// Page content entities list
         /// </returns>
-        IList<PageContent> GetPageContents(Guid pageId,
-            Expression<Func<PageContent, bool>> filter = null,
-            Expression<Func<PageContent, dynamic>> order = null, 
-            bool orderDescending = false, 
-            int? pageNumber = null, 
-            int? itemsPerPage = null);
+        IList<PageContent> GetPageContents(Guid pageId, Expression<Func<PageContent, bool>> filter = null);
 
         /// <summary>
         /// Gets the list of page region contents.
@@ -35,18 +26,10 @@ namespace BetterCms.Module.Pages.DataServices
         /// <param name="pageId">The page id.</param>
         /// <param name="regionId">The region id.</param>
         /// <param name="filter">The filter.</param>
-        /// <param name="order">The order.</param>
-        /// <param name="orderDescending">if set to <c>true</c> order by descending.</param>
-        /// <param name="pageNumber">The page number.</param>
-        /// <param name="itemsPerPage">The items per page.</param>
-        /// <returns>Page content entities list</returns>
-        IList<PageContent> GetRegionContents(Guid pageId,
-            Guid regionId,
-            Expression<Func<PageContent, bool>> filter = null,
-            Expression<Func<PageContent, dynamic>> order = null, 
-            bool orderDescending = false, 
-            int? pageNumber = null, 
-            int? itemsPerPage = null);
+        /// <returns>
+        /// Page content entities list
+        /// </returns>
+        IList<PageContent> GetRegionContents(Guid pageId, Guid regionId, Expression<Func<PageContent, bool>> filter = null);
 
         /// <summary>
         /// Gets the list of page region contents.
@@ -54,20 +37,10 @@ namespace BetterCms.Module.Pages.DataServices
         /// <param name="pageId">The page id.</param>
         /// <param name="regionIdentifier">The region identifier.</param>
         /// <param name="filter">The filter.</param>
-        /// <param name="order">The order.</param>
-        /// <param name="orderDescending">if set to <c>true</c> order by descending.</param>
-        /// <param name="pageNumber">The page number.</param>
-        /// <param name="itemsPerPage">The items per page.</param>
         /// <returns>
         /// Page content entities list
         /// </returns>
-        IList<PageContent> GetRegionContents(Guid pageId,
-            string regionIdentifier,
-            Expression<Func<PageContent, bool>> filter = null,
-            Expression<Func<PageContent, dynamic>> order = null, 
-            bool orderDescending = false, 
-            int? pageNumber = null, 
-            int? itemsPerPage = null);
+        IList<PageContent> GetRegionContents(Guid pageId, string regionIdentifier, Expression<Func<PageContent, bool>> filter = null);
 
         /// <summary>
         /// Gets the content entity.
