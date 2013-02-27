@@ -5,11 +5,13 @@ using System.Linq.Expressions;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataServices;
+using BetterCms.Core.Exceptions.Api;
 using BetterCms.Module.Pages.Models;
 
 namespace BetterCms.Module.Pages.DataServices
 {
-    public class DefaultPageApiService : IPageApiService
+    public class DefaultPageApiService : ApiServiceBase, IPageApiService
     {
         private IRepository repository { get; set; }
 
@@ -35,12 +37,21 @@ namespace BetterCms.Module.Pages.DataServices
         /// </returns>
         public IList<PageProperties> GetPages(Expression<Func<PageProperties, bool>> filter = null, Expression<Func<PageProperties, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
         {
-            if (order == null)
+            try
             {
-                order = p => p.Title;
-            }
+                if (order == null)
+                {
+                    order = p => p.Title;
+                }
 
-            return repository.AsQueryable(filter, order, orderDescending, pageNumber, itemsPerPage).ToList();
+                return repository.AsQueryable(filter, order, orderDescending, pageNumber, itemsPerPage).ToList();
+            }
+            catch (Exception inner)
+            {
+                const string message = "Failed to get pages list.";
+                Logger.Error(message, inner);
+                throw new CmsApiException(message, inner);
+            }
         }
     }
 }

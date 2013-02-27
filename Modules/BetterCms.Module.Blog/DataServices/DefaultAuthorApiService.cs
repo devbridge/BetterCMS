@@ -5,13 +5,15 @@ using System.Linq.Expressions;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataServices;
+using BetterCms.Core.Exceptions.Api;
 using BetterCms.Module.Blog.Models;
 
 using NHibernate.Linq;
 
 namespace BetterCms.Module.Blog.DataServices
 {
-    public class DefaultAuthorApiService : IAuthorApiService
+    public class DefaultAuthorApiService : ApiServiceBase, IAuthorApiService
     {
         private IRepository repository { get; set; }
 
@@ -33,16 +35,21 @@ namespace BetterCms.Module.Blog.DataServices
         /// </returns>
         public IList<Author> GetAuthors(Expression<Func<Author, bool>> filter = null, Expression<Func<Author, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
         {
-            if (order == null)
+            try
             {
-                order = p => p.Name;
-            }
+                if (order == null)
+                {
+                    order = p => p.Name;
+                }
 
-            return repository
-                .AsQueryable<Author>()
-                .Fetch(a => a.Image)
-                .ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage)
-                .ToList();
+                return repository.AsQueryable<Author>().Fetch(a => a.Image).ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage).ToList();
+            }
+            catch (Exception inner)
+            {
+                const string message = "Failed to get authors list.";
+                Logger.Error(message, inner);
+                throw new CmsApiException(message, inner);
+            }
         }
     }
 }

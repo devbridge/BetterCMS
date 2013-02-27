@@ -146,6 +146,7 @@
     <Compile Include="DataContracts\IPageContentOption.cs" />
     <Compile Include="DataContracts\IRegion.cs" />
     <Compile Include="DataContracts\IWidget.cs" />
+    <Compile Include="DataServices\ApiServiceBase.cs" />
     <Compile Include="Dependencies\ContextScopeProvider.cs" />
     <Compile Include="Environment\ApplicationStart\BetterCmsEntrypoint.cs" />
     <Compile Include="Dependencies\PerWebRequestContainerProvider.cs" />
@@ -153,6 +154,7 @@
     <Compile Include="Environment\Assemblies\DefaultAssemblyManager.cs" />
     <Compile Include="Environment\Assemblies\IAssemblyManager.cs" />
     <Compile Include="DataContracts\Enums\PageStatus.cs" />
+    <Compile Include="Exceptions\Api\CmsApiException.cs" />
     <Compile Include="Security\AuthorizeAttribute.cs" />
     <Compile Include="Security\IUserRole.cs" />
     <Compile Include="Modules\Projections\EmptyContentAccessor.cs" />

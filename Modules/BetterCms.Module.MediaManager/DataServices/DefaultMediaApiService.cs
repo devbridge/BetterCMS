@@ -4,13 +4,15 @@ using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataServices;
+using BetterCms.Core.Exceptions.Api;
 using BetterCms.Module.MediaManager.Models;
 
 using NHibernate.Linq;
 
 namespace BetterCms.Module.MediaManager.DataServices
 {
-    public class DefaultMediaApiService : IMediaApiService
+    public class DefaultMediaApiService : ApiServiceBase, IMediaApiService
     {
         private readonly IRepository repository;
 
@@ -38,27 +40,38 @@ namespace BetterCms.Module.MediaManager.DataServices
         /// </returns>
         public IList<Media> GetFolderMedias(MediaType mediaType, Guid? folderId = null, System.Linq.Expressions.Expression<Func<Media, bool>> filter = null, System.Linq.Expressions.Expression<Func<Media, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
         {
-            if (order == null)
+            try
             {
-                order = p => p.Title;
+                if (order == null)
+                {
+                    order = p => p.Title;
+                }
+
+                var query = repository
+                    .AsQueryable<Media>()
+                    .Where(f => f.Type == mediaType);
+
+                if (folderId.HasValue)
+                {
+                    query = query.Where(f => f.Folder != null && f.Folder.Id == folderId.Value);
+                }
+                else
+                {
+                    query = query.Where(f => f.Folder == null);
+                }
+
+                query = query.ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage);
+
+                return query.ToList();
             }
-
-            var query = repository
-                .AsQueryable<Media>()
-                .Where(f => f.Type == mediaType);
-
-            if (folderId.HasValue)
+            catch (Exception inner)
             {
-                query = query.Where(f => f.Folder != null && f.Folder.Id == folderId.Value);
+                var message = string.Format("Failed to get folder medias list for media type={0} and folderId={1}.", 
+                    mediaType, 
+                    folderId.HasValue ? folderId.Value.ToString() : "null");
+                Logger.Error(message, inner);
+                throw new CmsApiException(message, inner);
             }
-            else
-            {
-                query = query.Where(f => f.Folder == null);
-            }
-
-            query = query.ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage);
-
-            return query.ToList();
         }
 
         /// <summary>
@@ -74,15 +87,24 @@ namespace BetterCms.Module.MediaManager.DataServices
         /// </returns>
         public IList<MediaImage> GetImages(System.Linq.Expressions.Expression<Func<MediaImage, bool>> filter = null, System.Linq.Expressions.Expression<Func<MediaImage, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
         {
-            if (order == null)
+            try
             {
-                order = p => p.Title;
-            }
+                if (order == null)
+                {
+                    order = p => p.Title;
+                }
 
-            return repository
-                .AsQueryable<MediaImage>()
-                .Fetch(m => m.Folder)
-                .ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage).ToList();
+                return repository
+                    .AsQueryable<MediaImage>()
+                    .Fetch(m => m.Folder)
+                    .ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage).ToList();
+            }
+            catch (Exception inner)
+            {
+                const string message = "Failed to get images list.";
+                Logger.Error(message, inner);
+                throw new CmsApiException(message, inner);
+            }
         }
 
         /// <summary>
@@ -98,16 +120,25 @@ namespace BetterCms.Module.MediaManager.DataServices
         /// </returns>
         public IList<MediaFile> GetFiles(System.Linq.Expressions.Expression<Func<MediaFile, bool>> filter = null, System.Linq.Expressions.Expression<Func<MediaFile, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
         {
-            if (order == null)
+            try
             {
-                order = p => p.Title;
-            }
+                if (order == null)
+                {
+                    order = p => p.Title;
+                }
 
-            return repository
-                .AsQueryable<MediaFile>()
-                .Fetch(m => m.Folder)
-                .Where(m => m.Type == MediaType.File)
-                .ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage).ToList();
+                return repository
+                    .AsQueryable<MediaFile>()
+                    .Fetch(m => m.Folder)
+                    .Where(m => m.Type == MediaType.File)
+                    .ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage).ToList();
+            }
+            catch (Exception inner)
+            {
+                const string message = "Failed to get files list.";
+                Logger.Error(message, inner);
+                throw new CmsApiException(message, inner);
+            }
         }
 
         /// <summary>
@@ -124,17 +155,26 @@ namespace BetterCms.Module.MediaManager.DataServices
         /// </returns>
         public IList<MediaFolder> GetFolders(MediaType mediaType, System.Linq.Expressions.Expression<Func<MediaFolder, bool>> filter = null, System.Linq.Expressions.Expression<Func<MediaFolder, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
         {
-            if (order == null)
+            try
             {
-                order = p => p.Title;
-            }
+                if (order == null)
+                {
+                    order = p => p.Title;
+                }
 
-            return repository
-                .AsQueryable<MediaFolder>()
-                .Fetch(m => m.Folder)
-                .Where(f => f.Type == mediaType)
-                .ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage)
-                .ToList();
+                return repository
+                    .AsQueryable<MediaFolder>()
+                    .Fetch(m => m.Folder)
+                    .Where(f => f.Type == mediaType)
+                    .ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage)
+                    .ToList();
+            }
+            catch (Exception inner)
+            {
+                var message = string.Format("Failed to get folders list for media type={0}.", mediaType);
+                Logger.Error(message, inner);
+                throw new CmsApiException(message, inner);
+            }
         }
 
         /// <summary>
@@ -147,10 +187,19 @@ namespace BetterCms.Module.MediaManager.DataServices
         /// <exception cref="System.NotImplementedException"></exception>
         public MediaFile GetFile(Guid id)
         {
-            return repository
-                .AsQueryable<MediaFile>()
-                .Fetch(f => f.Folder)
-                .FirstOrDefault(f => f.Id == id);
+            try
+            {
+                return repository
+                    .AsQueryable<MediaFile>()
+                    .Fetch(f => f.Folder)
+                    .FirstOrDefault(f => f.Id == id);
+            }
+            catch (Exception inner)
+            {
+                var message = string.Format("Failed to get media file by id {0}.", id);
+                Logger.Error(message, inner);
+                throw new CmsApiException(message, inner);
+            }
         }
 
         /// <summary>
@@ -163,10 +212,19 @@ namespace BetterCms.Module.MediaManager.DataServices
         /// <exception cref="System.NotImplementedException"></exception>
         public MediaImage GetImage(Guid id)
         {
-            return repository
-                .AsQueryable<MediaImage>()
-                .Fetch(f => f.Folder)
-                .FirstOrDefault(f => f.Id == id);
+            try
+            {
+                return repository
+                    .AsQueryable<MediaImage>()
+                    .Fetch(f => f.Folder)
+                    .FirstOrDefault(f => f.Id == id);
+            }
+            catch (Exception inner)
+            {
+                var message = string.Format("Failed to get media image by id {0}.", id);
+                Logger.Error(message, inner);
+                throw new CmsApiException(message, inner);
+            }
         }
     }
 }

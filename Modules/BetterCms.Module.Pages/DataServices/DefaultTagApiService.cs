@@ -4,11 +4,13 @@ using System.Linq.Expressions;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataServices;
+using BetterCms.Core.Exceptions.Api;
 using BetterCms.Module.Root.Models;
 
 namespace BetterCms.Module.Pages.DataServices
 {
-    public class DefaultTagApiService : ITagApiService
+    public class DefaultTagApiService : ApiServiceBase, ITagApiService
     {
         private readonly IRepository repository;
 
@@ -34,12 +36,21 @@ namespace BetterCms.Module.Pages.DataServices
         /// </returns>
         public System.Collections.Generic.IList<Tag> GetTags(Expression<Func<Tag, bool>> filter = null, Expression<Func<Tag, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
         {
-            if (order == null)
+            try
             {
-                order = p => p.Name;
-            }
+                if (order == null)
+                {
+                    order = p => p.Name;
+                }
 
-            return repository.AsQueryable(filter, order, orderDescending, pageNumber, itemsPerPage).ToList();
+                return repository.AsQueryable(filter, order, orderDescending, pageNumber, itemsPerPage).ToList();
+            }
+            catch (Exception inner)
+            {
+                const string message = "Failed to get tags list.";
+                Logger.Error(message, inner);
+                throw new CmsApiException(message, inner);
+            }
         }
     }
 }

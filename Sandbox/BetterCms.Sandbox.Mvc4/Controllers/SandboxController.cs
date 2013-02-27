@@ -6,8 +6,10 @@ using System.Web.Mvc;
 using System.Web.Security;
 
 using BetterCms.Core;
+using BetterCms.Module.Blog;
 using BetterCms.Module.MediaManager;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.Root.Mvc.Helpers;
 
 namespace BetterCms.Sandbox.Mvc4.Controllers
 {
@@ -67,6 +69,11 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
             if (count > 0)
             {
                 message = string.Format("{0}<br /> Image folders titles: {1}", message, string.Join("; ", folders.Select(t => t.Title)));
+            }
+
+            using (var api = CmsContext.CreateDataApi<BlogsApiContext>())
+            {
+                var authors = api.Authors.GetAuthors(p => p.Name.Transliterate(true) == "nnnn");
             }
 
             return Content(message);

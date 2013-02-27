@@ -210,9 +210,17 @@
       <Project>{573925f2-f15f-4cbe-8f13-7c67da06df0d}</Project>
       <Name>BetterCms.Module.AppFabricCache</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCMS.Module.Blog\BetterCms.Module.Blog.csproj">
+      <Project>{A66A3046-EF60-4C51-ADA7-EB055763419B}</Project>
+      <Name>BetterCms.Module.Blog</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCms.Module.MediaManager\BetterCms.Module.MediaManager.csproj">
       <Project>{F3E41793-E8ED-4BA8-A1AB-CBA1E47B0786}</Project>
       <Name>BetterCms.Module.MediaManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.Root\BetterCms.Module.Root.csproj">
+      <Project>{66E7E4DF-EEEA-4B1E-8663-A1B430EB7375}</Project>
+      <Name>BetterCms.Module.Root</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

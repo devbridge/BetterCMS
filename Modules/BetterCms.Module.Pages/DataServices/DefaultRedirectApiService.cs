@@ -5,11 +5,13 @@ using System.Linq.Expressions;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataServices;
+using BetterCms.Core.Exceptions.Api;
 using BetterCms.Module.Pages.Models;
 
 namespace BetterCms.Module.Pages.DataServices
 {
-    public class DefaultRedirectApiService : IRedirectApiService
+    public class DefaultRedirectApiService : ApiServiceBase, IRedirectApiService
     {
         private IRepository repository { get; set; }
 
@@ -35,12 +37,21 @@ namespace BetterCms.Module.Pages.DataServices
         /// </returns>
         public IList<Redirect> GetRedirects(Expression<Func<Redirect, bool>> filter = null, Expression<Func<Redirect, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
         {
-            if (order == null)
+            try
             {
-                order = p => p.PageUrl;
-            }
+                if (order == null)
+                {
+                    order = p => p.PageUrl;
+                }
 
-            return repository.AsQueryable(filter, order, orderDescending, pageNumber, itemsPerPage).ToList();
+                return repository.AsQueryable(filter, order, orderDescending, pageNumber, itemsPerPage).ToList();
+            }
+            catch (Exception inner)
+            {
+                const string message = "Failed to get redirects list.";
+                Logger.Error(message, inner);
+                throw new CmsApiException(message, inner);
+            }
         }
     }
 }

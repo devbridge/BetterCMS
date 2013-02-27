@@ -5,13 +5,15 @@ using System.Linq.Expressions;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataServices;
+using BetterCms.Core.Exceptions.Api;
 using BetterCms.Module.Blog.Models;
 
 using NHibernate.Linq;
 
 namespace BetterCms.Module.Blog.DataServices
 {
-    public class DefaultBlogApiService : IBlogApiService
+    public class DefaultBlogApiService : ApiServiceBase, IBlogApiService
     {
         private IRepository repository { get; set; }
 
@@ -37,17 +39,26 @@ namespace BetterCms.Module.Blog.DataServices
         /// </returns>
         public IList<BlogPost> GetBlogPosts(Expression<Func<BlogPost, bool>> filter = null, Expression<Func<BlogPost, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
         {
-            if (order == null)
+            try
             {
-                order = p => p.Title;
-            }
+                if (order == null)
+                {
+                    order = p => p.Title;
+                }
 
-            var query = repository
-                .AsQueryable<BlogPost>()
-                .Fetch(b => b.Author)
-                .ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage);
-            
-            return query.ToList();
+                var query = repository
+                    .AsQueryable<BlogPost>()
+                    .Fetch(b => b.Author)
+                    .ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage);
+
+                return query.ToList();
+            }
+            catch (Exception inner)
+            {
+                const string message = "Failed to get blog posts list.";
+                Logger.Error(message, inner);
+                throw new CmsApiException(message, inner);
+            }
         }
     }
 }
