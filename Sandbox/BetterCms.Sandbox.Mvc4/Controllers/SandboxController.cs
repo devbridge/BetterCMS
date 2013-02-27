@@ -56,17 +56,17 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
 
         public ActionResult TestApi()
         {
-            IList<MediaFolder> tags;
+            IList<MediaFolder> folders;
             using (var api = CmsContext.CreateDataApi<MediaManagerApiContext>())
             {
-                tags = api.Medias.GetFolders(MediaType.Image);
+                folders = api.Medias.GetFolders(MediaType.Image);
             }
 
-            var count = tags.Count;
+            var count = folders.Count;
             var message = string.Format("Image folders count: {0}", count);
             if (count > 0)
             {
-                message = string.Format("{0}<br /> Image folders titles: {1}", message, string.Join("; ", tags.Select(t => t.Title)));
+                message = string.Format("{0}<br /> Image folders titles: {1}", message, string.Join("; ", folders.Select(t => t.Title)));
             }
 
             return Content(message);

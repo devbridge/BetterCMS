@@ -26,10 +26,12 @@ namespace BetterCms.Module.Pages.DataServices
         /// </summary>
         /// <param name="filter">The filter.</param>
         /// <param name="order">The order.</param>
-        /// <param name="orderDescending">if set to <c>true</c> [order descending].</param>
+        /// <param name="orderDescending">if set to <c>true</c> order by descending.</param>
         /// <param name="pageNumber">The page number.</param>
         /// <param name="itemsPerPage">The items per page.</param>
-        /// <returns></returns>
+        /// <returns>
+        /// The list of tag entities
+        /// </returns>
         public System.Collections.Generic.IList<Tag> GetTags(Expression<Func<Tag, bool>> filter = null, Expression<Func<Tag, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
         {
             if (order == null)

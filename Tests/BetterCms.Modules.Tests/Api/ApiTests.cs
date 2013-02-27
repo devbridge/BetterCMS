@@ -1,10 +1,12 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Module.Blog.DataServices;
 using BetterCms.Module.MediaManager.DataServices;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.Pages.DataServices;
 
 using NUnit.Framework;
 
@@ -20,17 +22,25 @@ namespace BetterCms.Test.Module.Api
             {
                 var unitOfWork = new DefaultUnitOfWork(session);
                 var repository = new DefaultRepository(unitOfWork);
-                var service = new DefaultMediaApiService(repository);
+                var service = new DefaultContentApiService(repository);
+
+//                var pageId = new Guid("B0326B23-D0C0-4B4A-B7EE-A17200AE46BE");
+//
+//                var contents1 = service.GetPageContents(pageId);
+//                var contents2 = service.GetRegionContents(pageId, contents1[0].Region.Id);
+//                var contents3 = service.GetRegionContents(pageId, contents1[0].Region.RegionIdentifier);
+//                var content = service.GetContent(contents1[0].Content.Id);
+//                var pageContent = service.GetPageContent(contents1[0].Id);
 
                 //var result = service.GetFile(folder.Id);
-                
 
 
 
 
 
 
-                //var test = result;
+
+//                var test = pageContent;
             });
         }
     }
