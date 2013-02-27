@@ -130,6 +130,7 @@
     </Compile>
     <Compile Include="Controllers\SitemapController.cs" />
     <Compile Include="DataServices\DefaultSitemapApiService.cs" />
+    <Compile Include="DataServices\ISitemapApiService.cs" />
     <Compile Include="Models\SitemapNode.cs" />
     <Compile Include="Models\Maps\SitemapNodeMap.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />

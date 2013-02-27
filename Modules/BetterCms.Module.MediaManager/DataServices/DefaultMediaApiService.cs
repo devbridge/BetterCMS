@@ -6,6 +6,8 @@ using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Module.MediaManager.Models;
 
+using NHibernate.Linq;
+
 namespace BetterCms.Module.MediaManager.DataServices
 {
     public class DefaultMediaApiService : IMediaApiService
@@ -41,8 +43,10 @@ namespace BetterCms.Module.MediaManager.DataServices
                 order = p => p.Title;
             }
 
-            var query = repository.AsQueryable(filter, order, orderDescending, pageNumber);
-            query = query.Where(f => f.Type == mediaType);
+            var query = repository
+                .AsQueryable<Media>()
+                .Where(f => f.Type == mediaType);
+
             if (folderId.HasValue)
             {
                 query = query.Where(f => f.Folder != null && f.Folder.Id == folderId.Value);
@@ -51,7 +55,8 @@ namespace BetterCms.Module.MediaManager.DataServices
             {
                 query = query.Where(f => f.Folder == null);
             }
-            query = query.ApplyPaging(pageNumber, itemsPerPage);
+
+            query = query.ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage);
 
             return query.ToList();
         }
@@ -74,7 +79,10 @@ namespace BetterCms.Module.MediaManager.DataServices
                 order = p => p.Title;
             }
 
-            return repository.AsQueryable(filter, order, orderDescending, pageNumber, itemsPerPage).ToList();
+            return repository
+                .AsQueryable<MediaImage>()
+                .Fetch(m => m.Folder)
+                .ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage).ToList();
         }
 
         /// <summary>
@@ -95,7 +103,11 @@ namespace BetterCms.Module.MediaManager.DataServices
                 order = p => p.Title;
             }
 
-            return repository.AsQueryable(filter, order, orderDescending, pageNumber, itemsPerPage).ToList();
+            return repository
+                .AsQueryable<MediaFile>()
+                .Fetch(m => m.Folder)
+                .Where(m => m.Type == MediaType.File)
+                .ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage).ToList();
         }
 
         /// <summary>
@@ -117,11 +129,44 @@ namespace BetterCms.Module.MediaManager.DataServices
                 order = p => p.Title;
             }
 
-            var query = repository.AsQueryable(filter, order, orderDescending);
-            query = query.Where(f => f.Type == mediaType);
-            query = query.ApplyPaging(pageNumber, itemsPerPage);
+            return repository
+                .AsQueryable<MediaFolder>()
+                .Fetch(m => m.Folder)
+                .Where(f => f.Type == mediaType)
+                .ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage)
+                .ToList();
+        }
 
-            return query.ToList();
+        /// <summary>
+        /// Gets the file.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns>
+        /// File entity
+        /// </returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public MediaFile GetFile(Guid id)
+        {
+            return repository
+                .AsQueryable<MediaFile>()
+                .Fetch(f => f.Folder)
+                .FirstOrDefault(f => f.Id == id);
+        }
+
+        /// <summary>
+        /// Gets the image.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns>
+        /// Image entity
+        /// </returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public MediaImage GetImage(Guid id)
+        {
+            return repository
+                .AsQueryable<MediaImage>()
+                .Fetch(f => f.Folder)
+                .FirstOrDefault(f => f.Id == id);
         }
     }
 }

@@ -2,7 +2,6 @@
 using System.IO;
 using System.Threading.Tasks;
 
-using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.MediaManager.Models;
 
 namespace BetterCms.Module.MediaManager.Services

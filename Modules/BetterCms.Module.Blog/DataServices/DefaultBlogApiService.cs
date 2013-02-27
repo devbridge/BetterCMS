@@ -7,6 +7,8 @@ using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Module.Blog.Models;
 
+using NHibernate.Linq;
+
 namespace BetterCms.Module.Blog.DataServices
 {
     public class DefaultBlogApiService : IBlogApiService
@@ -40,7 +42,12 @@ namespace BetterCms.Module.Blog.DataServices
                 order = p => p.Title;
             }
 
-            return repository.AsQueryable(filter, order, orderDescending, pageNumber, itemsPerPage).ToList();
+            var query = repository
+                .AsQueryable<BlogPost>()
+                .Fetch(b => b.Author)
+                .ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage);
+            
+            return query.ToList();
         }
     }
 }

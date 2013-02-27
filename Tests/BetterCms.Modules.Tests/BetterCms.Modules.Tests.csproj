@@ -105,6 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AmazonS3Storage\AmazonS3StorageServiceTest.cs" />
+    <Compile Include="Api\ApiTests.cs" />
     <Compile Include="Blog\ModelTests\MapTests\BlogPostMapTest.cs" />
     <Compile Include="Blog\ModelTests\MapTests\BlogPostContentMapTest.cs" />
     <Compile Include="Blog\ModelTests\MapTests\OptionMapTest.cs" />
@@ -117,7 +118,7 @@
     <Compile Include="MediaManager\ModelTests\MapTests\MediaFolderMapTest.cs" />
     <Compile Include="MediaManager\ModelTests\MapTests\MediaImageMapTest.cs" />
     <Compile Include="MediaManager\ModelTests\MapTests\MediaMapTest.cs" />
-    <Compile Include="MediaManager\ServiceTests\DefaultMediaApiServiceTest.cs" />
+    <Compile Include="MediaManager\ServiceTests\DefaultMediaApiServiceIntegrationTests.cs" />
     <Compile Include="Pages\CommandTests\ContentTests\SortPageContentCommandIntegrationTest.cs" />
     <Compile Include="Pages\CommandTests\WidgetTests\DeleteWidgetCommandTest.cs" />
     <Compile Include="Pages\CommandTests\WidgetTests\GetSiteSettingsWidgetsIntegrationTest.cs" />

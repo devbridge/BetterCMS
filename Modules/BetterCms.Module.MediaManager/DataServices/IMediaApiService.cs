@@ -81,5 +81,19 @@ namespace BetterCms.Module.MediaManager.DataServices
             bool orderDescending = false,
             int? pageNumber = null,
             int? itemsPerPage = null);
+
+        /// <summary>
+        /// Gets the file.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns>File entity</returns>
+        MediaFile GetFile(Guid id);
+
+        /// <summary>
+        /// Gets the image.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns>Image entity</returns>
+        MediaImage GetImage(Guid id);
     }
 }

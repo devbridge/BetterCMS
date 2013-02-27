@@ -7,6 +7,8 @@ using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Module.Blog.Models;
 
+using NHibernate.Linq;
+
 namespace BetterCms.Module.Blog.DataServices
 {
     public class DefaultAuthorApiService : IAuthorApiService
@@ -36,7 +38,11 @@ namespace BetterCms.Module.Blog.DataServices
                 order = p => p.Name;
             }
 
-            return repository.AsQueryable(filter, order, orderDescending, pageNumber, itemsPerPage).ToList();
+            return repository
+                .AsQueryable<Author>()
+                .Fetch(a => a.Image)
+                .ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage)
+                .ToList();
         }
     }
 }
