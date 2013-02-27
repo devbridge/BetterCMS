@@ -168,9 +168,11 @@ define('bcms', ['jquery'], function ($) {
         var indexHighest = 0;
 
         $('body').children().each(function () {
-            var indexCurrent = parseInt($(this).css("z-index"), 10);
-            if (indexCurrent > indexHighest) {
-                indexHighest = indexCurrent;
+            if (!$(this).hasClass('cke_panel')) {   //ckeditor bug fix
+                var indexCurrent = parseInt($(this).css("z-index"), 10);
+                if (indexCurrent > indexHighest) {
+                    indexHighest = indexCurrent;
+                }
             }
         });
 
