@@ -181,6 +181,7 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
 
             dialog.container.find(selectors.widgetCreateButton).on('click', function () {
                 widgets.openCreateHtmlContentWidgetDialog(function () {
+                    htmlEditor.updateEditorContent(selectors.htmlEditor);
                     // Reload search results after category was created.
                     pagesContent.updateWidgetCategoryList(dialog);
                 }, null);

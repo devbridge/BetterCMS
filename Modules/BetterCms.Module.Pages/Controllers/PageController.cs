@@ -79,6 +79,7 @@ namespace BetterCms.Module.Pages.Controllers
                 if (response != null)
                 {
                     response.PageUrl = Http.GetAbsolutePath(response.PageUrl);
+                    Messages.AddSuccess(PagesGlobalization.SavePage_CreatedSuccessfully_Message);
                     return Json(new WireJson { Success = true, Data = response });
                 }
             }

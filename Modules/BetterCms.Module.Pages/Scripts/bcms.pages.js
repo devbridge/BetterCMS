@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.pages.properties', 'bcms.grid', 'bcms.redirect'],
-    function ($, bcms, modal, siteSettings, forms, dynamicContent, pageProperties, grid, redirect) {
+define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.pages.properties', 'bcms.grid', 'bcms.redirect', 'bcms.messages'],
+    function ($, bcms, modal, siteSettings, forms, dynamicContent, pageProperties, grid, redirect, messages) {
     'use strict';
 
         var page = { },            
@@ -279,7 +279,7 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                     },
 
                     postSuccess: function (data) {
-                        if (bcms.trigger(bcms.events.pageCreated, { Data: data.Data, Callback: postSuccess }) <= 0) {
+                        if (bcms.trigger(bcms.events.pageCreated, { Data: data, Callback: postSuccess }) <= 0) {
                             if (postSuccess && $.isFunction(postSuccess)) {
                                 postSuccess(data);
                             }
@@ -292,8 +292,8 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
 
     page.addNewPage = function() {
         page.openCreatePageDialog(function (data) {
-            if (data.Data && data.Data.PageUrl) {
-                redirect.RedirectWithAlert(data.Data.PageUrl);
+            if (data.Data && data.Data.Data && data.Data.Data.PageUrl) {
+                redirect.RedirectWithAlert(data.Data.Data.PageUrl);
             }
         });
     };
@@ -461,17 +461,18 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 var template = $(selectors.siteSettingsPageRowTemplate),
                     newRow = $(template.html()).find(selectors.siteSettingsPageRowTemplateFirstRow);
 
-                newRow.find(selectors.siteSettingPageTitleCell).html(data.Data.Title);
-                newRow.find(selectors.siteSettingPageCreatedCell).html(data.Data.CreatedOn);
-                newRow.find(selectors.siteSettingPageModifiedCell).html(data.Data.ModifiedOn);
+                newRow.find(selectors.siteSettingPageTitleCell).html(data.Data.Data.Title);
+                newRow.find(selectors.siteSettingPageCreatedCell).html(data.Data.Data.CreatedOn);
+                newRow.find(selectors.siteSettingPageModifiedCell).html(data.Data.Data.ModifiedOn);
 
-                page.siteSettingsPageStatusTemplate(newRow.find(selectors.siteSettingPageStatusCell), data.Data.PageStatus);
-                page.siteSettingsSetBooleanTemplate(newRow.find(selectors.siteSettingPageHasSeoCell), data.Data.HasSEO);
-
-                newRow.find(selectors.siteSettingPageTitleCell).data('url', data.Data.PageUrl);
-                newRow.find(selectors.siteSettingsPageEditButton).data('id', data.Data.PageId);
-                newRow.find(selectors.siteSettingsPageDeleteButton).data('id', data.Data.PageId);
-                newRow.find(selectors.siteSettingsPageDeleteButton).data('version', data.Data.Version);
+                page.siteSettingsPageStatusTemplate(newRow.find(selectors.siteSettingPageStatusCell), data.Data.Data.PageStatus);
+                page.siteSettingsSetBooleanTemplate(newRow.find(selectors.siteSettingPageHasSeoCell), data.Data.Data.HasSEO);
+                messages.refreshBox(selectors.siteSettingsPagesListForm, data.Data);
+                
+                newRow.find(selectors.siteSettingPageTitleCell).data('url', data.Data.Data.PageUrl);
+                newRow.find(selectors.siteSettingsPageEditButton).data('id', data.Data.Data.PageId);
+                newRow.find(selectors.siteSettingsPageDeleteButton).data('id', data.Data.Data.PageId);
+                newRow.find(selectors.siteSettingsPageDeleteButton).data('version', data.Data.Data.Version);
 
                 newRow.insertBefore($(selectors.siteSettingsPagesTableFirstRow, container));
 
@@ -535,9 +536,9 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
     page.deleteSiteSettingsPage = function (self, container) {
         var id = self.data('id');
 
-        page.deletePage(id, function () {
+        page.deletePage(id, function (json) {
             self.parents(selectors.siteSettingsPageParentRow).remove();
-            
+            messages.refreshBox(selectors.siteSettingsPagesListForm, json);
             grid.showHideEmptyRow(container);
         });
     };

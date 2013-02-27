@@ -200,6 +200,8 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             row.find(selectors.siteSettingsBlogCellPrefix + 'ModifiedByUser').html(json.Data.ModifiedByUser);
             row.find(selectors.siteSettingsBlogCellPrefix + 'CreatedOn').html(json.Data.CreatedOn);
 
+            messages.refreshBox(selectors.siteSettingsBlogsListForm, json);
+
             row.find(selectors.siteSettingsBlogTitleCell).data('url', json.Data.PageUrl);
             row.find(selectors.siteSettingsBlogEditButton).data('id', json.Data.Id);
             row.find(selectors.siteSettingsBlogDeleteButton).data('id', json.Data.Id);
