@@ -11,6 +11,7 @@ using BetterCms.Module.Navigation.DataServices;
 using BetterCms.Module.Navigation.Services;
 using BetterCms.Module.Pages.DataServices;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Mvc.Helpers;
 
 using NUnit.Framework;
@@ -27,19 +28,19 @@ namespace BetterCms.Test.Module.Api
             {
                 var unitOfWork = new DefaultUnitOfWork(session);
                 var repository = new DefaultRepository(unitOfWork);
-                var service = new DefaultContentApiService(repository);
+                var service = new DefaultHistoryApiService(new DefaultHistoryService(repository));
 
-                var pageId = new Guid("66d2dc73-9908-4a54-ad6b-a15f00c50f91");
+//                var contentId = new Guid("5CFA685B-DE66-414A-A9F4-A17200AE5D90");
+//
+//                var contents1 = service.GetContentHistory(contentId);
+//                var contents2 = service.GetContentHistory(contentId, c => c is HtmlContent && ((HtmlContent)c).Html.ToLower().Contains("draft"));
+                //var contents3 = service.GetContentHistory(contentId, null, c => c.Name, true);
 
-//                var contents1 = service.GetPageContents(pageId, p => ((PageProperties)p.Page).CustomCss.Transliterate(true) == "agfa");
-//                var contents2 = service.GetRegionContents(pageId, contents1[0].Region.Id);
-//                var contents3 = service.GetRegionContents(pageId, contents1[0].Region.RegionIdentifier);
-//                var content = service.GetContent(contents1[0].Content.Id);
-//                var pageContent = service.GetPageContent(contents1[0].Id);
-
-//                var result = service.GetFile(folder.Id);
+                //contentId = new Guid("DBC09596-572A-44D5-AC9C-A17200EBA112");
+                //var results = service.GetContentHistory(contentId);
 
 
+//                var test = service;
 
 //                var widgetApi = new DefaultWidgetApiService(repository);
 //                var widgets = widgetApi.GetPageWidgets(pageId);
