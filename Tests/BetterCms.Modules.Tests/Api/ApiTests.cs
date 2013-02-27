@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
@@ -40,6 +41,17 @@ namespace BetterCms.Test.Module.Api
 
 
                 var test = service;
+
+//                var widgetApi = new DefaultWidgetApiService(repository);
+//                var widgets = widgetApi.GetPageWidgets(pageId);
+//                var result = new StringBuilder("");
+//                foreach (var widget in widgets)
+//                {
+//                    result.AppendLine(string.Format("{0}: {1}, page options count: {2}", widget.Name, widget.Category != null ? widget.Category.Name : "[unknown category]", widget.PageContents.Where(p => p.Page.Id == pageId).Sum(p => p.Options.Count)));
+//                }
+//                var x = result.ToString();
+                
+//                var test = contents1;
             });
         }
     }
