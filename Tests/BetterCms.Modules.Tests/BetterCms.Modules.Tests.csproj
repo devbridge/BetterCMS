@@ -125,6 +125,7 @@
     <Compile Include="Pages\EventTests\PageEventTests.cs" />
     <Compile Include="Pages\HelperTests\StringHelperTests.cs" />
     <Compile Include="Pages\ModelTests\ConcurrencyTests\ConcurrencyTests.cs" />
+    <Compile Include="Pages\ServicesTests\DefaultHistoryApiServiceTest.cs" />
     <Compile Include="Pages\ServicesTests\DefaultLayoutApiServiceTest.cs" />
     <Compile Include="Pages\ServicesTests\DefaultCategoryApiServiceTest.cs" />
     <Compile Include="Pages\ServicesTests\DefaultRedirectApiServiceTest.cs" />
