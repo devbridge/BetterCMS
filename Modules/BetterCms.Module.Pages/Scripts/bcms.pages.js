@@ -468,6 +468,7 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 page.siteSettingsPageStatusTemplate(newRow.find(selectors.siteSettingPageStatusCell), data.Data.PageStatus);
                 page.siteSettingsSetBooleanTemplate(newRow.find(selectors.siteSettingPageHasSeoCell), data.Data.HasSEO);
 
+                newRow.find(selectors.siteSettingPageTitleCell).data('url', data.Data.PageUrl);
                 newRow.find(selectors.siteSettingsPageEditButton).data('id', data.Data.PageId);
                 newRow.find(selectors.siteSettingsPageDeleteButton).data('id', data.Data.PageId);
                 newRow.find(selectors.siteSettingsPageDeleteButton).data('version', data.Data.Version);

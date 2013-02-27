@@ -24,7 +24,6 @@ namespace BetterCms.Module.Blog.Controllers
         public virtual ActionResult CreateBlogPost(string parentPageUrl)
         {
             var model = GetCommand<GetBlogPostCommand>().ExecuteCommand(Guid.Empty);
-            //model.ParentPageUrl = parentPageUrl;
             var view = RenderView("EditBlogPost", model);
             var success = false;
             if (model != null)
@@ -32,7 +31,6 @@ namespace BetterCms.Module.Blog.Controllers
                 model.ParentPageUrl = parentPageUrl;
                 success = true;
             }
-            //var success = model != null;
 
             return ComboWireJson(success, view, model, JsonRequestBehavior.AllowGet);
         }

@@ -99,7 +99,7 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                         contentAvailable: pagesContent.initializeAddNewContentForm,
 
                         beforePost: function() {
-                            htmlEditor.updateEditorContent();
+                                htmlEditor.updateEditorContent(selectors.htmlEditor);   
                         },
 
                         postSuccess: function (json) {                            
@@ -287,7 +287,7 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                 var self = $(this),
                     widgetContainer = self.parents(selectors.widgetContainerBlock),
                     widgetId = widgetContainer.data('id'),
-                    widgetType = widgetContainer.data('type');
+                    widgetType = widgetContainer.data('type');               
                 
                 widgets.editWidget(widgetId, widgetType, function(data) {
                     messages.refreshBox(widgetContainer, data);

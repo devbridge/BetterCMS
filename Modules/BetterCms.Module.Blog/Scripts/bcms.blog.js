@@ -199,7 +199,8 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             row.find(selectors.siteSettingsBlogCellPrefix + 'ModifiedOn').html(json.Data.ModifiedOn);
             row.find(selectors.siteSettingsBlogCellPrefix + 'ModifiedByUser').html(json.Data.ModifiedByUser);
             row.find(selectors.siteSettingsBlogCellPrefix + 'CreatedOn').html(json.Data.CreatedOn);
-            
+
+            row.find(selectors.siteSettingsBlogTitleCell).data('url', json.Data.PageUrl);
             row.find(selectors.siteSettingsBlogEditButton).data('id', json.Data.Id);
             row.find(selectors.siteSettingsBlogDeleteButton).data('id', json.Data.Id);
             row.find(selectors.siteSettingsBlogDeleteButton).data('version', json.Data.Version);
@@ -272,7 +273,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     /**
     * Initializes site settings blogs list items for current container
     */
-    function initializeSiteSettingsBlogsListItems(container) {
+    function initializeSiteSettingsBlogsListItems(container) {     
         container.find(selectors.siteSettingsRowCells).on('click', function () {
             var row = $(this).parents(selectors.siteSettingsBlogParentRow),
                 id = row.find(selectors.siteSettingsBlogEditButton).data("id"),
@@ -281,6 +282,12 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
                 };
 
             editBlogPost(id, onSave, false);
+        });
+
+        container.find(selectors.siteSettingsBlogTitleCell).on('click', function (event) {
+            bcms.stopEventPropagation(event);
+            var url = $(this).data('url');
+            window.open(url);
         });
 
         container.find(selectors.siteSettingsBlogDeleteButton).on('click', function (event) {

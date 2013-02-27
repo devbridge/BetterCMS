@@ -260,6 +260,15 @@ namespace BetterCms.Module.MediaManager.Services
                 originalUpload.Start();
                 thumbnailUpload.Start();
 
+                try
+                {
+                    Task.WaitAll(new[] { imageUpload, originalUpload, thumbnailUpload });
+                }
+                catch (AggregateException ae)
+                {
+                    throw ae.Flatten();
+                }
+
                 return image;
             }
         }

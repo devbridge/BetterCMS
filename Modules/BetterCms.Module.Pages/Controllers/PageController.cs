@@ -24,13 +24,14 @@ using BetterCms.Module.Root.Mvc.Helpers;
 namespace BetterCms.Module.Pages.Controllers
 {
     /// <summary>
-    /// Controller for CMS pages: create / edit / delete pages
+    /// Controller for CMS pages: create / edit / delete pages.
     /// </summary>
     public class PageController : CmsControllerBase
     {
         /// <summary>
         /// Renders a page list for the site settings dialog.
         /// </summary>
+        /// <param name="request">The request.</param>
         /// <returns>
         /// Rendered pages list.
         /// </returns>
@@ -39,9 +40,11 @@ namespace BetterCms.Module.Pages.Controllers
             var model = GetCommand<GetPagesListCommand>().ExecuteCommand(request);
             return View(model);
         }
+
         /// <summary>
         /// Creates add new page modal dialog.
         /// </summary>
+        /// <param name="parentPageUrl">The parent page URL.</param>
         /// <returns>
         /// ViewResult to render add new page modal dialog.
         /// </returns>
@@ -79,6 +82,7 @@ namespace BetterCms.Module.Pages.Controllers
                     return Json(new WireJson { Success = true, Data = response });
                 }
             }
+
             return Json(new WireJson(false));
         }
 
@@ -131,6 +135,7 @@ namespace BetterCms.Module.Pages.Controllers
                     return Json(new WireJson { Success = true, Data = response });
                 }
             }
+
             return Json(new WireJson { Success = false });
         }
 
@@ -168,6 +173,13 @@ namespace BetterCms.Module.Pages.Controllers
             return Json(new WireJson { Success = false });
         }
 
+        /// <summary>
+        /// Clones the page.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns>
+        /// Json result status.
+        /// </returns>
         [HttpGet]
         public ActionResult ClonePage(string id)
         {
@@ -176,6 +188,13 @@ namespace BetterCms.Module.Pages.Controllers
             return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Clones the page.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns>
+        /// Json result status.
+        /// </returns>
         [HttpPost]
         public ActionResult ClonePage(ClonePageViewModel model)
         {
@@ -183,7 +202,7 @@ namespace BetterCms.Module.Pages.Controllers
             if (model != null)
             {
                 Messages.AddSuccess(string.Format(PagesGlobalization.ClonePage_Dialog_Success, model.PageUrl));
-                return Json(new WireJson { Success = true, Data = model});
+                return Json(new WireJson { Success = true, Data = model });
             }
 
             return Json(new WireJson { Success = false });
@@ -214,13 +233,18 @@ namespace BetterCms.Module.Pages.Controllers
                     : PagesGlobalization.PublishPage_FailedToUnpublishPage_Message;
                 Messages.AddError(message);
             }
+
             return Json(new WireJson { Success = success });
         }
 
         /// <summary>
         /// Converts the string to slug.
         /// </summary>
-        /// <returns>URL, created from text</returns>
+        /// <param name="text">The text.</param>
+        /// <param name="senderId">The sender id.</param>
+        /// <returns>
+        /// URL, created from text.
+        /// </returns>
         public ActionResult ConvertStringToSlug(string text, string senderId)
         {
             const int maxLength = MaxLength.Url - 5;
