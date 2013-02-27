@@ -151,6 +151,7 @@ namespace BetterCms.Module.Pages
             containerBuilder.RegisterType<DefaultCategoryService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultWidgetsService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultTagService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultHistoryService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             
             containerBuilder.RegisterType<DefaultTagApiService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultPageApiService>().AsImplementedInterfaces().InstancePerLifetimeScope();
@@ -159,6 +160,7 @@ namespace BetterCms.Module.Pages
             containerBuilder.RegisterType<DefaultCategoryApiService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultContentApiService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultLayoutApiService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultHistoryApiService>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
 
         /// <summary>

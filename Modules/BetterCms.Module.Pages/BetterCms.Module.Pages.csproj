@@ -121,6 +121,7 @@
     <Compile Include="Accessors\PageJavaScriptAccessor.cs" />
     <Compile Include="DataServices\DefaultCategoryApiService.cs" />
     <Compile Include="DataServices\DefaultContentApiService.cs" />
+    <Compile Include="DataServices\DefaultHistoryApiService.cs" />
     <Compile Include="DataServices\DefaultLayoutApiService.cs" />
     <Compile Include="DataServices\DefaultPageApiService.cs" />
     <Compile Include="DataServices\DefaultRedirectApiService.cs" />
@@ -207,6 +208,7 @@
     <Compile Include="DataServices\DefaultWidgetApiService.cs" />
     <Compile Include="DataServices\ICategoryApiService.cs" />
     <Compile Include="DataServices\IContentApiService.cs" />
+    <Compile Include="DataServices\IHistoryApiService.cs" />
     <Compile Include="DataServices\ILayoutApiService.cs" />
     <Compile Include="DataServices\IPageApiService.cs" />
     <Compile Include="DataServices\IRedirectApiService.cs" />
@@ -250,8 +252,10 @@
     <Compile Include="Registration\PagesContentJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\PageTagsJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\RedirectsJavaScriptModuleDescriptor.cs" />
+    <Compile Include="Services\DefaultHistoryService.cs" />
     <Compile Include="Services\DefaultTagService.cs" />
     <Compile Include="Services\DefaultWidgetsService.cs" />
+    <Compile Include="Services\IHistoryService.cs" />
     <Compile Include="Services\IPageService.cs" />
     <Compile Include="Services\ITagService.cs" />
     <Compile Include="Services\IWidgetsService.cs" />
