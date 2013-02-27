@@ -27,11 +27,11 @@ namespace BetterCms.Test.Module.Api
             {
                 var unitOfWork = new DefaultUnitOfWork(session);
                 var repository = new DefaultRepository(unitOfWork);
-                var service = new DefaultHistoryApiService(new DefaultHistoryService(repository));
+                var service = new DefaultContentApiService(repository);
 
-//                var contentId = new Guid("5CFA685B-DE66-414A-A9F4-A17200AE5D90");
+                var pageId = new Guid("B0326B23-D0C0-4B4A-B7EE-A17200AE46BE");
 //
-//                var contents1 = service.GetContentHistory(contentId);
+                var contents1 = service.GetPageContents(pageId, c => c.Content is HtmlContent && ((HtmlContent)c.Content).Html.Contains("boo"));
 //                var contents2 = service.GetContentHistory(contentId, c => c is HtmlContent && ((HtmlContent)c).Html.ToLower().Contains("draft"));
                 //var contents3 = service.GetContentHistory(contentId, null, c => c.Name, true);
 
@@ -39,7 +39,7 @@ namespace BetterCms.Test.Module.Api
                 //var results = service.GetContentHistory(contentId);
 
 
-//                var test = service;
+                var test = service;
             });
         }
     }

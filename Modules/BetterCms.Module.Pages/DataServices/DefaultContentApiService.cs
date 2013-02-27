@@ -28,29 +28,20 @@ namespace BetterCms.Module.Pages.DataServices
         /// </summary>
         /// <param name="pageId">The page id.</param>
         /// <param name="filter">The filter.</param>
-        /// <param name="order">The order.</param>
-        /// <param name="orderDescending">if set to <c>true</c> order by descending.</param>
-        /// <param name="pageNumber">The page number.</param>
-        /// <param name="itemsPerPage">The items per page.</param>
         /// <returns>
         /// Page content entities list
         /// </returns>
-        public System.Collections.Generic.IList<Root.Models.PageContent> GetPageContents(Guid pageId, System.Linq.Expressions.Expression<Func<Root.Models.PageContent, bool>> filter = null, System.Linq.Expressions.Expression<Func<Root.Models.PageContent, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
+        public System.Collections.Generic.IList<Root.Models.PageContent> GetPageContents(Guid pageId, System.Linq.Expressions.Expression<Func<Root.Models.PageContent, bool>> filter = null)
         {
             try
             {
-                if (order == null)
-                {
-                    order = p => p.Order;
-                }
-
                 return repository
                     .AsQueryable<Root.Models.PageContent>()
                     .Fetch(c => c.Content)
                     .Fetch(c => c.Region)
                     .FetchMany(c => c.Options)
                     .Where(p => p.Page.Id == pageId)
-                    .ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage)
+                    .ApplyFilters(filter, p => p.Order)
                     .ToList();
             }
             catch (Exception inner)
@@ -61,36 +52,26 @@ namespace BetterCms.Module.Pages.DataServices
             }
         }
 
-
         /// <summary>
         /// Gets the list of page region contents.
         /// </summary>
         /// <param name="pageId">The page id.</param>
         /// <param name="regionId">The region id.</param>
         /// <param name="filter">The filter.</param>
-        /// <param name="order">The order.</param>
-        /// <param name="orderDescending">if set to <c>true</c> order by descending.</param>
-        /// <param name="pageNumber">The page number.</param>
-        /// <param name="itemsPerPage">The items per page.</param>
         /// <returns>
         /// Page content entities list
         /// </returns>
-        public System.Collections.Generic.IList<Root.Models.PageContent> GetRegionContents(Guid pageId, Guid regionId, System.Linq.Expressions.Expression<Func<Root.Models.PageContent, bool>> filter = null, System.Linq.Expressions.Expression<Func<Root.Models.PageContent, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
+        public System.Collections.Generic.IList<Root.Models.PageContent> GetRegionContents(Guid pageId, Guid regionId, System.Linq.Expressions.Expression<Func<Root.Models.PageContent, bool>> filter = null)
         {
             try
             {
-                if (order == null)
-                {
-                    order = p => p.Order;
-                }
-
                 return repository
                     .AsQueryable<Root.Models.PageContent>()
                     .Fetch(c => c.Content)
                     .Fetch(c => c.Region)
                     .FetchMany(c => c.Options)
                     .Where(p => p.Page.Id == pageId && p.Region.Id == regionId)
-                    .ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage)
+                    .ApplyFilters(filter, p => p.Order)
                     .ToList();
             }
             catch (Exception inner)
@@ -107,29 +88,21 @@ namespace BetterCms.Module.Pages.DataServices
         /// <param name="pageId">The page id.</param>
         /// <param name="regionIdentifier">The region identifier.</param>
         /// <param name="filter">The filter.</param>
-        /// <param name="order">The order.</param>
-        /// <param name="orderDescending">if set to <c>true</c> order by descending.</param>
-        /// <param name="pageNumber">The page number.</param>
-        /// <param name="itemsPerPage">The items per page.</param>
         /// <returns>
         /// Page content entities list
         /// </returns>
-        public System.Collections.Generic.IList<Root.Models.PageContent> GetRegionContents(Guid pageId, string regionIdentifier, System.Linq.Expressions.Expression<Func<Root.Models.PageContent, bool>> filter = null, System.Linq.Expressions.Expression<Func<Root.Models.PageContent, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
+        /// <exception cref="CmsApiException"></exception>
+        public System.Collections.Generic.IList<Root.Models.PageContent> GetRegionContents(Guid pageId, string regionIdentifier, System.Linq.Expressions.Expression<Func<Root.Models.PageContent, bool>> filter = null)
         {
             try
             {
-                if (order == null)
-                {
-                    order = p => p.Order;
-                }
-
                 return repository
                     .AsQueryable<Root.Models.PageContent>()
                     .Fetch(c => c.Content)
                     .Fetch(c => c.Region)
                     .FetchMany(c => c.Options)
                     .Where(p => p.Page.Id == pageId && p.Region.RegionIdentifier == regionIdentifier)
-                    .ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage)
+                    .ApplyFilters(filter, p => p.Order)
                     .ToList();
             }
             catch (Exception inner)
