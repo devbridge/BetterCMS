@@ -123,16 +123,6 @@
     <Compile Include="Commands\User\GetUser\GetUserCommand.cs" />
     <Compile Include="Commands\User\SaveUserCommand.cs" />
     <Compile Include="Commands\User\SaveUserResponse.cs" />
-    <Compile Include="Content\Resources\UsersGlobalization.en-US.Designer.cs">
-      <DependentUpon>UsersGlobalization.en-US.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Content\Resources\UsersGlobalization.lt-LT.Designer.cs">
-      <DependentUpon>UsersGlobalization.lt-LT.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="Content\Resources\UsersGlobalization.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -176,14 +166,6 @@
     <Compile Include="ViewModels\User\UserItemViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Content\Resources\UsersGlobalization.en-US.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>UsersGlobalization.en-US.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Content\Resources\UsersGlobalization.lt-LT.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>UsersGlobalization.lt-LT.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="Content\Resources\UsersGlobalization.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>UsersGlobalization.Designer.cs</LastGenOutput>

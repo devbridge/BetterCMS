@@ -294,4 +294,7 @@
   <data name="User_UserName_RequiredMessage" xml:space="preserve">
     <value>User name is required.</value>
   </data>
+  <data name="User_Password_MaxLengthMessage" xml:space="preserve">
+    <value>Password should not be longer than 255 characters.</value>
+  </data>
 </root>
