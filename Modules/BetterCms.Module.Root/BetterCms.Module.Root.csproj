@@ -159,7 +159,7 @@
     <Compile Include="Mvc\CommandBase.cs" />
     <Compile Include="Mvc\CommandHandler.cs" />
     <Compile Include="Mvc\Converters.cs" />
-    <Compile Include="Mvc\Grids\Extensions\QueryExtensions.cs" />
+    <Compile Include="Mvc\Grids\Extensions\QueryableExtensions.cs" />
     <Compile Include="Mvc\Grids\Extensions\QueryOverExtensions.cs" />
     <Compile Include="Mvc\Grids\Extensions\GridExtensions.cs" />
     <Compile Include="Mvc\Grids\GridOptions\GridOptions.cs" />

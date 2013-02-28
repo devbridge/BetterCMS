@@ -1,4 +1,6 @@
-﻿using MvcContrib.Sorting;
+﻿using BetterCms.Core.DataAccess.DataContext;
+
+using MvcContrib.Sorting;
 
 using NHibernate;
 using NHibernate.Criterion;
@@ -53,20 +55,7 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
         /// <returns>The query</returns>
         public static IQueryOver<TRoot, TSubType> AddPaging<TRoot, TSubType>(this IQueryOver<TRoot, TSubType> query, SortAndPagingOptions options)
         {
-            if (options != null)
-            {
-                if (options.PageNumber > 0)
-                {
-                    query.UnderlyingCriteria.SetFirstResult(options.PageSize * (options.PageNumber - 1));
-                }
-
-                if (options.PageSize > 0)
-                {
-                    query.UnderlyingCriteria.SetMaxResults(options.PageSize);
-                }
-            }
-
-            return query;
+            return query.AddPaging(options.PageNumber, options.PageSize);
         }
     }
 }

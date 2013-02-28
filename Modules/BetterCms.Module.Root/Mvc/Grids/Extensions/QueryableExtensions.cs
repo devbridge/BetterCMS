@@ -1,47 +1,13 @@
-﻿using System;
-using System.Linq;
-using System.Linq.Expressions;
+﻿using System.Linq;
 
 using MvcContrib.Sorting;
-
-using NHibernate;
-using NHibernate.Linq;
 
 using SortAndPagingOptions = BetterCms.Module.Root.Mvc.Grids.GridOptions.GridOptions;
 
 namespace BetterCms.Module.Root.Mvc.Grids.Extensions
 {
-    public class FutureValueWrapper<T> : IFutureValue<T>
+    public static class QueryableExtensions
     {
-        public FutureValueWrapper(T value)
-        {
-            Value = value;
-        }
-
-        public T Value { get; private set; }
-    }
-
-    public static class QueryExtensions
-    {
-        public static IFutureValue<int> ToRowCountFutureValue<TSource>(this IQueryable<TSource> source)
-        {
-            if (source.Provider is INhQueryProvider)
-            {
-                return source.ToFutureValue(f => f.Count());
-            }
-            return new FutureValueWrapper<int>(source.Count());
-
-        }
-
-        private static IFutureValue<TResult> ToFutureValue<TSource, TResult>(this IQueryable<TSource> source, Expression<Func<IQueryable<TSource>, TResult>> selector)
-            where TResult : struct
-        {
-                var provider = (INhQueryProvider)source.Provider;
-                var method = ((MethodCallExpression)selector.Body).Method;
-                var expression = Expression.Call(null, method, source.Expression);
-                return (IFutureValue<TResult>)provider.ExecuteFuture(expression);
-        }
-
         /// <summary>
         /// Adds the sorting and paging to nHibernate query.
         /// </summary>

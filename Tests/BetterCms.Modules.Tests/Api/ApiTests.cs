@@ -32,11 +32,20 @@ namespace BetterCms.Test.Module.Api
             {
                 var unitOfWork = new DefaultUnitOfWork(session);
                 var repository = new DefaultRepository(unitOfWork);
-                var service = new DefaultPageApiService(repository);
+                var service = new DefaultLayoutApiService(repository, unitOfWork);
 
                 //var pages1 = service.GetPages();
                 //var pages2 = service.GetPages(loadChilds:PageLoadableChilds.All);
-                var pages3 = service.GetPages(loadChilds:PageLoadableChilds.Tags|PageLoadableChilds.Category);
+                var layouts = service.GetLayouts();
+                var layouts4 = service.GetLayouts(itemsPerPage:2, pageNumber:2);
+                var layouts1 = service.GetLayouts(l => l.Name.Contains("Column"), l => l.Name, true);
+                var layouts2 = service.GetLayouts(l => (l.Name == "Default Wide" || l.Name == "Default Two Columns"), l => l.Name, true, itemsPerPage:1);
+                //var regions = service.GetRegions();
+                //var layoutRegions = service.GetLayoutRegions(layouts[0].Id);
+
+                /*var a = layouts[0].LayoutRegions.Count;
+                var b = layouts[0].LayoutRegions[0];
+                var c = layouts[1].LayoutRegions.Count;*/
 
                 //var pageId = new Guid("B0326B23-D0C0-4B4A-B7EE-A17200AE46BE");
 
