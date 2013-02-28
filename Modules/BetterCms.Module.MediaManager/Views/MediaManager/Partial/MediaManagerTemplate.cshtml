@@ -3,7 +3,6 @@
 @using BetterCms.Module.Root.Mvc.Helpers
 
 @model BetterCms.Module.MediaManager.ViewModels.MediaManager.MediaViewModel
-
 <script type="text/html" id="bcms-media-list-template">
     <div class="bcms-top-block-holder">
         <div class="bcms-media-controls-holder">
@@ -47,7 +46,7 @@
             </div>
         </div>
         <!-- /ko -->
-        
+
         <!-- ko if: showNoDataInfoDiv() -->
         <div class="bcms-nomedia-data">@RootGlobalization.Grid_NoDataAvailable_Message</div>
         <!-- /ko -->
@@ -95,14 +94,14 @@
                     <div class="bcms-media-name" data-bind="text: name()"></div>
                     <!-- /ko -->
                     <div class="bcms-media-input-box">
-                    @Html.TextBoxFor(m => m.Name, new Dictionary<string, object>
-                                                        {
-                                                            {"data-bind", "value: name, valueUpdate: 'afterkeydown', enterPress: saveMedia.bind($data, $root), escPress: cancelEditMedia.bind($data, $root), hasfocus: isActive(), event: {blur: blurMediaField.bind($data, $root)}, attr: {id: nameDomId}, click: stopEvent "},
-                                                            {"class", "bcms-grid-input"},
-                                                            {"Name", (string) null},
-                                                        })
+                        @Html.TextBoxFor(m => m.Name, new Dictionary<string, object>
+                         {
+                           {"data-bind", "value: name, valueUpdate: 'afterkeydown', enterPress: saveMedia.bind($data, $root), escPress: cancelEditMedia.bind($data, $root), hasfocus: isActive(), event: {blur: blurMediaField.bind($data, $root)}, attr: {id: nameDomId}, click: stopEvent "},
+                           {"class", "bcms-grid-input"},
+                           {"Name", (string) null},
+                         })
                         @Html.ValidationMessageFor(m => m.Name)
-                        </div>
+                    </div>
                     <div class="bcms-media-inner-controls">
                         <div class="bcms-btn-small" data-bind="click: saveMedia.bind($data, $root)">@RootGlobalization.Button_Save</div>
                         <div class="bcms-btn-links-small" data-bind="click: cancelEditMedia.bind($data, $root)">@RootGlobalization.Button_Cancel</div>
