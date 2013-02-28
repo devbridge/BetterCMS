@@ -41,7 +41,7 @@ namespace BetterCms.Module.Pages.DataServices
         {
             try
             {
-                return repository.First<HtmlContentWidget>(w => w.Id == id);
+                return repository.First<HtmlContentWidget>(id);
             }
             catch (Exception inner)
             {
@@ -61,7 +61,7 @@ namespace BetterCms.Module.Pages.DataServices
         {
             try
             {
-                return repository.First<ServerControlWidget>(w => w.Id == id);
+                return repository.First<ServerControlWidget>(id);
             }
             catch (Exception inner)
             {
@@ -113,7 +113,7 @@ namespace BetterCms.Module.Pages.DataServices
             {
                 var query = repository
                     .AsQueryable<Widget>()
-                    .Where(w => w.PageContents.Any(c => c.Page.Id == pageId));
+                    .Where(w => w.PageContents != null && w.PageContents.Any(c => c.Page.Id == pageId));
 
                 if (filter != null)
                 {
