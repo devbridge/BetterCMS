@@ -470,7 +470,6 @@
     <EmbeddedResource Include="Scripts\bcms.datepicker.js" />
     <EmbeddedResource Include="Scripts\bcms.grid.js" />
     <EmbeddedResource Include="Scripts\bcms.htmlEditor.js" />
-    <EmbeddedResource Include="Scripts\bcms.inlineEdit.js" />
     <EmbeddedResource Include="Scripts\bcms.ko.grid.js" />
     <EmbeddedResource Include="Scripts\bcms.messages.js" />
     <EmbeddedResource Include="Scripts\bcms.preview.js" />
@@ -515,6 +514,7 @@
     <EmbeddedResource Include="Content\Styles\base.css" />
     <EmbeddedResource Include="Scripts\spinner.jquery.js" />
     <EmbeddedResource Include="Scripts\html5shiv.js" />
+    <EmbeddedResource Include="Scripts\bcms.inlineEdit.js" />
     <Content Include="Views\Web.config" />
     <EmbeddedResource Include="Views\Sidebar\Container.cshtml" />
     <EmbeddedResource Include="Views\Rendering\RenderMainJsFile.cshtml" />
