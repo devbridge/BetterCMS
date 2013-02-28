@@ -5,10 +5,6 @@ using BetterCms.Core.DataAccess;
 using BetterCms.Module.Navigation.DataServices;
 using BetterCms.Module.Navigation.Models;
 using BetterCms.Module.Navigation.Services;
-using BetterCms.Module.Pages.DataServices;
-using BetterCms.Module.Pages.Services;
-using BetterCms.Module.Root.Models;
-using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
 using Moq;
 
@@ -35,10 +31,9 @@ namespace BetterCms.Test.Module.Navigation.ServicesTests
             var node = service.GetNode(new Guid());
             Assert.IsNotNull(node);
 
-// TODO: need to mockup extension method.
-//            var nodes = service.GetNodes();
-//            Assert.IsNotNull(nodes);
-//            Assert.AreEqual(sitemap.Count(), nodes.Count);
+            var nodes = service.GetNodes();
+            Assert.IsNotNull(nodes);
+            Assert.AreEqual(sitemap.Count(), nodes.Count);
         }
 
         private SitemapNode[] CreateFakeSitemap()
@@ -64,9 +59,9 @@ namespace BetterCms.Test.Module.Navigation.ServicesTests
 
             mock.Setup(r => r.First<SitemapNode>(It.IsAny<Guid>()))
                 .Returns(sitemap[0]);
-// TODO: need to mockup extension method.
-//            mock.Setup(r => r.AsQueryable())
-//                .Returns(sitemap[0]);
+
+            mock.Setup(r => r.AsQueryable<SitemapNode>())
+                .Returns(sitemap.AsQueryable());
 
             return mock;
         }
