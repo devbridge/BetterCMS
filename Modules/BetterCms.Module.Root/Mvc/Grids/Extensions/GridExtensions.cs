@@ -201,7 +201,15 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
             // Hidden field
             var hiddenField = htmlHelper.HiddenFor(expression, new { @id = (string)null, @Name = (string)null, @class = hiddenFieldClassName });
 
-            return new MvcHtmlString(string.Concat(link.ToString(TagRenderMode.Normal), textBox.ToString(), hiddenField.ToString()));
+            // Validation box
+            var validationBox = htmlHelper.ValidationMessageFor(expression);
+
+            // Div
+            var div = new TagBuilder("div");
+            div.InnerHtml = string.Concat(link.ToString(TagRenderMode.Normal), textBox.ToString(), validationBox.ToString(), hiddenField.ToString());
+            div.AddCssClass("bcms-input-box");
+
+            return new MvcHtmlString(div.ToString());
         }
     }
 }

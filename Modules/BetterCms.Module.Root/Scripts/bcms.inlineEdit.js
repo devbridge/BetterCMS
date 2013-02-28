@@ -14,7 +14,7 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
             firstForm: 'form:first',
             firstEditableInput: 'input[type="text"]:first',
             editableInput: 'input[type="text"]',
-            fieldInputs: 'td > input.bcms-editor-field-box',
+            fieldInputs: 'td > .bcms-input-box > input.bcms-editor-field-box',
             fieldValues: '.bcms-grid-item-info',
             deleteRowLink: 'a.bcms-icn-delete',
             rowMessage: '.bcms-grid-item-message',
