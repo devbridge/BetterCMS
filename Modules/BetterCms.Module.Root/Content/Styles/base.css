@@ -2113,6 +2113,19 @@ a.bcms-sort-arrow-top:hover {
         box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
     }
 
+/*table grid validation messages*/
+.bcms-input-box input.input-validation-error {
+    background: #fcecec;
+    border: 1px solid #e64343;
+    box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
+}
+
+    .bcms-input-box input.input-validation-error:focus {
+        background: #fcecec;
+        border: 1px solid #e64343;
+        box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
+    }
+
 /*validation messages*/
 .bcms-input-box {
     position: relative;
@@ -2150,12 +2163,12 @@ a.bcms-sort-arrow-top:hover {
 
 span.field-validation-error {
     position: absolute;
-    right: 0;
+    right: 1px;
     top: 50%;
     width: 28px;
     height: 28px;
     margin-top: -14px;
-    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAFMLZykAAAAbUlEQVQoz2N45uw8DYi/MsAZ////B2NUBlDqP1wAyLGDcZBVLCeo4j8QO0LpTNIUgBwH44CMBzkYXUEmsgnIkiiuxCZJnAnEuKEFasIXIPZGUuwNFQPJtWCzHiXQgYoyoBqQcQYujdQzgFIvAACFG3m8e8veBgAAAABJRU5ErkJggg==') no-repeat center center transparent;
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAFMLZykAAAAbUlEQVQoz2N45uw8DYi/MsAZ////B2NUBlDqP1wAyLGDcZBVLCeo4j8QO0LpTNIUgBwH44CMBzkYXUEmsgnIkiiuxCZJnAnEuKEFasIXIPZGUuwNFQPJtWCzHiXQgYoyoBqQcQYujdQzgFIvAACFG3m8e8veBgAAAABJRU5ErkJggg==') no-repeat center center #FCECEC;
 }
 
     span.field-validation-error > span {
@@ -2163,8 +2176,8 @@ span.field-validation-error {
         position: absolute;
         right: 0;
         bottom: 32px;
-        min-width: 150px;
-        padding: 7px 15px;
+        min-width: 161px;
+        padding: 5px;
         color: #E64343;
         background: #FCECEC;
         border: 1px solid #E64343;
@@ -2196,7 +2209,6 @@ span.field-validation-error {
             right: 6px;
             margin-left: -11px;
         }
-
 
 div.bcms-messages-type-1 ul {
     padding: 15px 60px 14px;
