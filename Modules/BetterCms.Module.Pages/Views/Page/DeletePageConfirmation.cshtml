@@ -7,7 +7,6 @@
 @using Microsoft.Web.Mvc
 
 @model DeletePageViewModel
-
 <div class="bcms-scroll-window">
     @Html.TabbedContentMessagesBox()
     <div class="bcms-padded-content">
@@ -20,13 +19,19 @@
             <div class="bcms-input-list-holder">
                 @Html.Tooltip(PagesGlobalization.DeletePage_Dialog_RedurectUrl_Tooltip_Title, PagesGlobalization.DeletePage_Dialog_RedurectUrl_Tooltip_Description)
                 <div class="bcms-content-titles">@PagesGlobalization.DeletePage_Dialog_RedirectUrl</div>
-                @Html.TextBoxFor(m => m.RedirectUrl, new { @class = "bcms-editor-field-box", @id = "PageTitle" })
+                <div class="bcms-input-box">
+                    @Html.TextBoxFor(m => m.RedirectUrl, new { @class = "bcms-editor-field-box", @id = "PageTitle" })
+                    @Html.ValidationMessageFor(f => f.RedirectUrl)
+                </div>
             </div>
 
             <div class="bcms-input-list-holder">
                 @Html.Tooltip(PagesGlobalization.DeletePage_Dialog_SecurityWord_Tooltip_Title, PagesGlobalization.DeletePage_Dialog_SecurityWord_Tooltip_Description)
                 <div class="bcms-content-titles">@PagesGlobalization.DeletePage_Dialog_SecurityWord</div>
-                @Html.TextBoxFor(m => m.SecurityWord, new { @class = "bcms-editor-field-box", @id = "PageTitle" })
+                <div class="bcms-input-box">
+                    @Html.TextBoxFor(m => m.SecurityWord, new { @class = "bcms-editor-field-box", @id = "PageTitle" })
+                    @Html.ValidationMessageFor(f => f.SecurityWord)
+                </div>
             </div>
             
             @Html.HiddenFor(m => m.PageId)

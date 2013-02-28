@@ -511,14 +511,15 @@ div.bcms-nomedia-data {
 /*media manger files*/
 .bcms-list .bcms-grid-input {
     display: none;
-    position: absolute;
+    /*position: absolute;
     left: 135px;
-    top: 50%;
+    top: 50%;*/
     height: 30px;
-    width: 380px;
+    /*width: 380px;*/
+    width: 100%;
     line-height: 18px;
     padding: 6px;
-    margin: -15px 0 0;
+    /*margin: -15px 0 0;*/
     border: 1px solid #1894e4;
     box-shadow: 0 0 3px 0 rgba(24,145,230,0.35);
     font-family: "Open Sans", sans-serif;

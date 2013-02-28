@@ -7,16 +7,18 @@
 @using Microsoft.Web.Mvc
 
 @model AddNewPageViewModel
-
 <div class="bcms-scroll-window">
     @Html.TabbedContentMessagesBox()
     <div class="bcms-padded-content">
-        @using (Html.BeginForm<PageController>(f => f.AddNewPage((string) null), FormMethod.Post, new { @class = "bcms-ajax-form"}))
+        @using (Html.BeginForm<PageController>(f => f.AddNewPage((string)null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
         {
             <div class="bcms-input-list-holder">
                 @Html.Tooltip(PagesGlobalization.AddNewPage_PageTitle_Tooltip_Title, PagesGlobalization.AddNewPage_PageTitle_Tooltip_Description)
                 <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_PageTitle</div>
-                @Html.TextBoxFor(f => f.PageTitle, new { @class = "bcms-editor-field-box", @id = "PageTitle" })
+                <div class="bcms-input-box">
+                    @Html.TextBoxFor(f => f.PageTitle, new { @class = "bcms-editor-field-box", @id = "PageTitle" })
+                    @Html.ValidationMessageFor(f => f.PageTitle)
+                </div>
             </div>
             
             @Html.Partial("Partial/AddNewPageEditPermalink")
@@ -32,7 +34,7 @@
             </div>
 
             @Html.Partial("Partial/TemplatesList", Model.Templates)
-            @Html.HiddenFor(f => f.TemplateId, new {@id = "TemplateId"})
+            @Html.HiddenFor(f => f.TemplateId, new { @id = "TemplateId" })
             @Html.HiddenFor(f => f.ParentPageUrl)
             @Html.HiddenSubmit()
         }

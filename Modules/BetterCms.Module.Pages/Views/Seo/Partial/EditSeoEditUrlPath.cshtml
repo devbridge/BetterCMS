@@ -9,9 +9,6 @@
     @Html.HiddenFor(f => f.PageUrlPath)                 
 </div>
 <div class="bcms-edit-urlpath-box" style="display: none;">
-    <div class="bcms-tip-close">@PagesGlobalization.EditSeo_EditUrlPath_Close</div>
-    @Html.Tooltip(PagesGlobalization.EditSeo_EditUrlPath_Tooltip_Title, PagesGlobalization.EditSeo_EditUrlPath_Tooltip_Description)
-    <div class="bcms-content-titles">@PagesGlobalization.EditSeo_EditUrlPath_Title</div>
     @Html.TextBoxFor(f => f.ChangedUrlPath, new { @class = "bcms-editor-field-box", style = "width: 503px;"})    
     <div id="bcms-editseo-editurlpath-save" class="bcms-btn-small">@RootGlobalization.Button_Ok</div>
     <div id="bcms-editseo-editurlpath-cancel" class="bcms-btn-links-small">@RootGlobalization.Button_Cancel</div>
@@ -19,4 +16,4 @@
         @Html.CheckBoxFor(f => f.CreatePermanentRedirect)
         <div class="bcms-edit-label">@PagesGlobalization.EditSeo_EditUrlPath_PermanentRedirect</div>
     </div>
-</div>
+</div> 
