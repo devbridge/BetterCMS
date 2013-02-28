@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -13,13 +14,32 @@ namespace BetterCms.Core.DataAccess.DataContext
     public static class QueryableExtensions
     {
         /// <summary>
-        /// Firsts the one.
+        /// Return the first one entity from list, or execption, if list is null.
         /// </summary>
         /// <typeparam name="TSource">The type of the source.</typeparam>
         /// <param name="source">The source.</param>
         /// <returns>First item.</returns>
         /// <exception cref="EntityNotFoundException">If no items found.</exception>
         public static TSource FirstOne<TSource>(this IQueryable<TSource> source)
+        {
+            var model = source.FirstOrDefault();
+
+            if (model == null)
+            {
+                throw new EntityNotFoundException(typeof(TSource), Guid.Empty);
+            }
+
+            return model;
+        }
+
+        /// <summary>
+        /// Return the first one entity from list, or execption, if list is null.
+        /// </summary>
+        /// <typeparam name="TSource">The type of the source.</typeparam>
+        /// <param name="source">The source.</param>
+        /// <returns>First item.</returns>
+        /// <exception cref="EntityNotFoundException">If no items found.</exception>
+        public static TSource FirstOne<TSource>(this IEnumerable<TSource> source)
         {
             var model = source.FirstOrDefault();
 

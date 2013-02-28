@@ -119,6 +119,7 @@
     </Compile>
     <Compile Include="Accessors\PageStylesheetAccessor.cs" />
     <Compile Include="Accessors\PageJavaScriptAccessor.cs" />
+    <Compile Include="DataContracts\Enums\PageLoadableChilds.cs" />
     <Compile Include="DataServices\DefaultCategoryApiService.cs" />
     <Compile Include="DataServices\DefaultContentApiService.cs" />
     <Compile Include="DataServices\DefaultHistoryApiService.cs" />
@@ -484,6 +485,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Views\Shared\EditorTemplates\PageStatus.cshtml" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

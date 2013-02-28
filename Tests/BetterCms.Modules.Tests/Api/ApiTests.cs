@@ -9,10 +9,14 @@ using BetterCms.Module.MediaManager.DataServices;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Navigation.DataServices;
 using BetterCms.Module.Navigation.Services;
+using BetterCms.Module.Pages.DataContracts.Enums;
 using BetterCms.Module.Pages.DataServices;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc.Helpers;
+
+using NHibernate.Linq;
 
 using NUnit.Framework;
 
@@ -28,30 +32,31 @@ namespace BetterCms.Test.Module.Api
             {
                 var unitOfWork = new DefaultUnitOfWork(session);
                 var repository = new DefaultRepository(unitOfWork);
-                var service = new DefaultContentApiService(repository);
+                var service = new DefaultPageApiService(repository);
 
-                var pageId = new Guid("B0326B23-D0C0-4B4A-B7EE-A17200AE46BE");
-//
-                var contents1 = service.GetPageContents(pageId, c => c.Content is HtmlContent && ((HtmlContent)c.Content).Html.Contains("boo"));
-//                var contents2 = service.GetContentHistory(contentId, c => c is HtmlContent && ((HtmlContent)c).Html.ToLower().Contains("draft"));
-                //var contents3 = service.GetContentHistory(contentId, null, c => c.Name, true);
+                //var pages1 = service.GetPages();
+                //var pages2 = service.GetPages(loadChilds:PageLoadableChilds.All);
+                var pages3 = service.GetPages(loadChilds:PageLoadableChilds.Tags|PageLoadableChilds.Category);
 
-                //contentId = new Guid("DBC09596-572A-44D5-AC9C-A17200EBA112");
-                //var results = service.GetContentHistory(contentId);
+                //var pageId = new Guid("B0326B23-D0C0-4B4A-B7EE-A17200AE46BE");
 
+                //var page1 = service.GetPage(pageId, PageLoadableChilds.None);
+                //var page2 = service.GetPage(pageId, PageLoadableChilds.All);
+                //var page3 = service.GetPage(pageId, PageLoadableChilds.Tags | PageLoadableChilds.Image);
+
+//                Console.WriteLine("Pages: " + repository.AsQueryable<PageProperties>().Count());
+//                Console.WriteLine("Pages with Fetch: " + repository.AsQueryable<PageProperties>().Fetch(p => p.Layout).Count());
+//                Console.WriteLine("Pages with FetchMany: " + repository.AsQueryable<PageProperties>().FetchMany(p => p.PageTags).Count());
+//                Console.WriteLine("Pages with Fetch Category + Order: " + repository.AsQueryable<PageProperties>().Fetch(p => p.Category).OrderBy(p => p.Title).Count());
+//                Console.WriteLine("Pages with Fetch Layout + Order: " + repository.AsQueryable<PageProperties>().Fetch(p => p.Layout).OrderBy(p => p.Title).Count());
+//                
+//                Console.WriteLine("Pages with Where + Fetch Layout + Order: " + repository.AsQueryable<PageProperties>().Where(p => p.Id == Guid.Empty).Fetch(p => p.Layout).OrderBy(p => p.Title).Count());
+//                Console.WriteLine("Pages with Fetch Layout + Where + Order: " + repository.AsQueryable<PageProperties>().Fetch(p => p.Layout).Where(p => p.Id == Guid.Empty).OrderBy(p => p.Title).Count());
 
                 var test = service;
 
-//                var widgetApi = new DefaultWidgetApiService(repository);
-//                var widgets = widgetApi.GetPageWidgets(pageId);
-//                var result = new StringBuilder("");
-//                foreach (var widget in widgets)
-//                {
-//                    result.AppendLine(string.Format("{0}: {1}, page options count: {2}", widget.Name, widget.Category != null ? widget.Category.Name : "[unknown category]", widget.PageContents.Where(p => p.Page.Id == pageId).Sum(p => p.Options.Count)));
-//                }
-//                var x = result.ToString();
+
                 
-//                var test = contents1;
             });
         }
     }
