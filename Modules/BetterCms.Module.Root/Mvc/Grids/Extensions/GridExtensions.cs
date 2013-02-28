@@ -202,7 +202,7 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
             var hiddenField = htmlHelper.HiddenFor(expression, new { @id = (string)null, @Name = (string)null, @class = hiddenFieldClassName });
 
             // Validation box
-            var validationBox = htmlHelper.ValidationMessageFor(expression);
+            var validationBox = htmlHelper.ValidationMessageFor(expression, null);
 
             // Div
             var div = new TagBuilder("div");

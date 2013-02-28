@@ -52,7 +52,10 @@ namespace BetterCms.Module.Blog.Controllers
             var response = GetCommand<SaveBlogPostCommand>().ExecuteCommand(model);
             if (response != null)
             {
-                Messages.AddSuccess(BlogGlobalization.CreatePost_CreatedSuccessfully_Message);
+                if (model.DesirableStatus != ContentStatus.Preview)
+                {
+                    Messages.AddSuccess(BlogGlobalization.CreatePost_CreatedSuccessfully_Message);
+                }
             }
             return WireJson(response != null, response);
         }

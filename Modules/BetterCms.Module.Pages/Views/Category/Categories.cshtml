@@ -15,7 +15,7 @@
     {
         column.EditButtonColumn();
 
-        column.For(model => Html.InlineEditColumn(m => model.Name, "bcms-category-name", "bcms-category-old-name"))
+        column.For(model => Html.InlineEditColumnWithNamePattern(m => model.Name, "bcms-category-name", "bcms-category-old-name", "CategoryName_{0}"))
             .Named(PagesGlobalization.SiteSettings_Categories_NameColumn)
             .SortColumnName("Name")
             .Encode(false);
