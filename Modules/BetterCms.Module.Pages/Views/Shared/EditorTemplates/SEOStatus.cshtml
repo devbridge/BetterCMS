@@ -1,0 +1,11 @@
+﻿@using BetterCms.Module.Root.Content.Resources
+
+@model bool
+@if (Model)
+{
+    <div class="bcms-icn-published">@RootGlobalization.Boolean_Yes</div>
+}
+else
+{
+    <div class="bcms-icn-unpublished">@RootGlobalization.Boolean_No</div>
+}

@@ -168,17 +168,11 @@
   <data name="FilesTab_UploadFile" xml:space="preserve">
     <value>Upload file</value>
   </data>
-  <data name="ImageEditor_CropFailureMessage_Message" xml:space="preserve">
-    <value>Failed to crop image.</value>
-  </data>
-  <data name="ImageEditor_CropFailureMessage_Title" xml:space="preserve">
-    <value>Failure</value>
+  <data name="FileUpload_Failed_ImageFormatNotSuported" xml:space="preserve">
+    <value>Failed! Can upload only gif, jpg, jpeg or png.</value>
   </data>
   <data name="ImageEditor_CroppingDialog_SubTitle" xml:space="preserve">
     <value>Select area to crop.</value>
-  </data>
-  <data name="ImageEditor_CroppingDialog_Title" xml:space="preserve">
-    <value>Media Manager - Crop Image</value>
   </data>
   <data name="ImageEditor_Dialog_AligmentTitle" xml:space="preserve">
     <value>Image alignment</value>
@@ -207,8 +201,17 @@
   <data name="ImageEditor_Dialog_ChangeSize_Width" xml:space="preserve">
     <value>Width</value>
   </data>
-  <data name="ImageEditor_Dialog_Dimentions" xml:space="preserve">
-    <value>Dimentions (pixels)</value>
+  <data name="ImageEditor_Dialog_CropImage_Title" xml:space="preserve">
+    <value>Crop image</value>
+  </data>
+  <data name="ImageEditor_Dialog_CropImage_Tooltip_Description" xml:space="preserve">
+    <value>Crop image</value>
+  </data>
+  <data name="ImageEditor_Dialog_CropImage_Tooltip_Title" xml:space="preserve">
+    <value>Crop image</value>
+  </data>
+  <data name="ImageEditor_Dialog_Dimensions" xml:space="preserve">
+    <value>Dimensions (pixels)</value>
   </data>
   <data name="ImageEditor_Dialog_FileName" xml:space="preserve">
     <value>Image</value>
@@ -216,23 +219,41 @@
   <data name="ImageEditor_Dialog_FileSize" xml:space="preserve">
     <value>File size</value>
   </data>
+  <data name="ImageEditor_Dialog_FitImage_Title" xml:space="preserve">
+    <value>Fit Image</value>
+  </data>
+  <data name="ImageEditor_Dialog_ImageCaption_MaxLengthMessage" xml:space="preserve">
+    <value>Caption max length exceeded.</value>
+  </data>
   <data name="ImageEditor_Dialog_ImageHeight_RangeMessage" xml:space="preserve">
-    <value>Image height can not be less than 0 px.</value>
+    <value>Image height can not be less than 0 px and bigger that 9999.</value>
   </data>
   <data name="ImageEditor_Dialog_ImageHeight_RequiredMessage" xml:space="preserve">
     <value>Image height is required.</value>
   </data>
+  <data name="ImageEditor_Dialog_ImageName_Title" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="ImageEditor_Dialog_ImageTitle_Title" xml:space="preserve">
+    <value>Change Image Name</value>
+  </data>
+  <data name="ImageEditor_Dialog_ImageTitle_Tooltip_Description" xml:space="preserve">
+    <value>Image Name</value>
+  </data>
+  <data name="ImageEditor_Dialog_ImageTitle_Tooltip_Title" xml:space="preserve">
+    <value>Image Name</value>
+  </data>
   <data name="ImageEditor_Dialog_ImageWidth_RangeMessage" xml:space="preserve">
-    <value>Image width can not be less than 0 px.</value>
+    <value>Image width can not be less than 0 px and bigger that 9999.</value>
   </data>
   <data name="ImageEditor_Dialog_ImageWidth_RequiredMessage" xml:space="preserve">
     <value>Image width is required.</value>
   </data>
-  <data name="ImageEditor_Dialog_LinkToImageCropping" xml:space="preserve">
-    <value>Modify This Image</value>
+  <data name="ImageEditor_Dialog_RestoreOriginalSize_Title" xml:space="preserve">
+    <value>Restore Original Size</value>
   </data>
   <data name="ImageEditor_Dialog_SubTitle" xml:space="preserve">
-    <value>Image Info</value>
+    <value>Image Information</value>
   </data>
   <data name="ImageEditor_Dialog_Title" xml:space="preserve">
     <value>Edit Image</value>
@@ -242,12 +263,6 @@
   </data>
   <data name="ImageEditor_InsertDialog_Title" xml:space="preserve">
     <value>Insert Image Options</value>
-  </data>
-  <data name="ImageEditor_ResizeFailureMessage_Message" xml:space="preserve">
-    <value>Failed to resize image.</value>
-  </data>
-  <data name="ImageEditor_ResizeFailureMessage_Title" xml:space="preserve">
-    <value>Failure</value>
   </data>
   <data name="ImageEditor_UpdateFailureMessage_Message" xml:space="preserve">
     <value>Failed to save image properties.</value>
@@ -298,7 +313,7 @@
     <value>File Size</value>
   </data>
   <data name="MediaList_FileTypeColumn" xml:space="preserve">
-    <value>FileType</value>
+    <value>File Type</value>
   </data>
   <data name="MediaManager_AddNewFolder" xml:space="preserve">
     <value>Add New Folder</value>
@@ -331,7 +346,7 @@
     <value>Drag files here to upload</value>
   </data>
   <data name="MultiFileUpload_Failed" xml:space="preserve">
-    <value>Your upload attempt failed, don’t give up try again!</value>
+    <value>Your upload attempt failed!</value>
   </data>
   <data name="MultiFileUpload_FileSize" xml:space="preserve">
     <value>Size:</value>
@@ -339,8 +354,14 @@
   <data name="MultiFileUpload_FileUploadedMessage" xml:space="preserve">
     <value>Success! Image uploaded.</value>
   </data>
+  <data name="MultiFileUpload_ImageFormatNotSuported" xml:space="preserve">
+    <value>It is not an image or file format is not supported.</value>
+  </data>
   <data name="MultiFileUpload_SaveFailed" xml:space="preserve">
     <value>Failed to save uploaded files.</value>
+  </data>
+  <data name="MultiFileUpload_SaveFailed_FolderDeleted" xml:space="preserve">
+    <value>Folder you trying to save uploaded files is deleted.</value>
   </data>
   <data name="MultiFileUpload_SelectFolder" xml:space="preserve">
     <value>Select Folder where to upload files:</value>
@@ -352,7 +373,7 @@
     <value>Select Folder</value>
   </data>
   <data name="MultiFileUpload_Success" xml:space="preserve">
-    <value>Success! Image uploaded.</value>
+    <value>Success! File uploaded.</value>
   </data>
   <data name="MultiFileUpload_Title" xml:space="preserve">
     <value>Upload New File</value>
@@ -363,6 +384,9 @@
   <data name="MultiFileUpload_Uploading" xml:space="preserve">
     <value>Uploading...</value>
   </data>
+  <data name="SingleFileUpload_DragDropBox" xml:space="preserve">
+    <value>Select file to upload</value>
+  </data>
   <data name="SiteSettings_MediaManagerMenuItem" xml:space="preserve">
     <value>Media Manager</value>
   </data>
@@ -371,5 +395,8 @@
   </data>
   <data name="VideosTab_UploadVideo" xml:space="preserve">
     <value>Upload Video</value>
+  </data>
+  <data name="ImageEditor_Dialog_KeepAspectRatio" xml:space="preserve">
+    <value>Keep aspect ratio</value>
   </data>
 </root>

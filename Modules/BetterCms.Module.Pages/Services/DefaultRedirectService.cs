@@ -68,9 +68,28 @@ namespace BetterCms.Module.Pages.Services
         /// </returns>
         public void ValidateRedirectExists(string pageUrl, Guid? id = null)
         {
+            var redirect = GetPageRedirect(pageUrl, id);
+
+            if (redirect != null)
+            {
+                var message = string.Format(PagesGlobalization.SaveRedirect_RedirectExists_Message, pageUrl);
+                var logMessage = string.Format("Redirect from URL {0} already exists.", pageUrl);
+                throw new ValidationException(() => message, logMessage);
+            }
+        }
+
+        /// <summary>
+        /// Gets redirect, if such redirect exists.
+        /// </summary>
+        /// <param name="pageUrl">The page URL.</param>
+        /// <param name="id">The redirect id.</param>
+        /// <returns>
+        /// redirect, if redirect exists, null if not exists
+        /// </returns>
+        public Redirect GetPageRedirect(string pageUrl, Guid? id = null)
+        {
             var query = unitOfWork
-                .Session
-                .Query<Redirect>()
+                .Session.Query<Redirect>()
                 .Where(r => r.PageUrl == pageUrl 
                     && !r.IsDeleted);
 
@@ -78,14 +97,7 @@ namespace BetterCms.Module.Pages.Services
             {
                 query = query.Where(r => r.Id != id.Value);
             }
-
-            var redirect = query.FirstOrDefault();
-            if (redirect != null)
-            {
-                var message = string.Format(PagesGlobalization.SaveRedirect_RedirectExists_Message, pageUrl);
-                var logMessage = string.Format("Redirect from URL {0} already exists.", pageUrl);
-                throw new ValidationException(e => message, logMessage);
-            }
+            return query.FirstOrDefault();
         }
 
         /// <summary>
@@ -160,7 +172,7 @@ namespace BetterCms.Module.Pages.Services
                 {
                     var message = PagesGlobalization.SaveRedirect_CircularLoopDetected_Message;
                     var logMessage = string.Format("Cannot save redirect. Circular redirect loop from url {0} to url {1} detected.", startPageUrl, startRedirectUrl);
-                    throw new ValidationException(e => message, logMessage);
+                    throw new ValidationException(() => message, logMessage);
                 }
 
                 checkedIds.Add(redirectTo.Id);

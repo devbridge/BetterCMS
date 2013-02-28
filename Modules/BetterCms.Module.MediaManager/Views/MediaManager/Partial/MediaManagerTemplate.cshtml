@@ -17,15 +17,16 @@
             <a class="bcms-media-new-file" data-bind="click: uploadMedia, text: uploadButtonTitle()"></a>
         </div>
         <div class="bcms-search-block">
-            <input data-bind="value: gridOptions().searchQuery, valueUpdate: 'afterkeydown', enterPress: searchMedia" class="bcms-editor-field-box" type="text" placeholder="@RootGlobalization.WaterMark_Search" />
+            <input id="bcms-search-input" name="MediaSearch" data-bind="value: gridOptions().searchQuery, valueUpdate: 'afterkeydown', enterPress: searchMedia" class="bcms-editor-field-box" type="text" placeholder="@RootGlobalization.WaterMark_Search" />
             <div class="bcms-btn-search" data-bind="click: searchMedia">@RootGlobalization.Button_Search</div>
         </div>
     </div>
+
     <div class="bcms-breadcrumbs-holder">
         <div data-bind="foreach: path().pathFolders()"><a class="bcms-breadcrumbs-root" href="#" data-bind="text: pathName(), click: openMedia.bind($data, $root)"></a></div>
     </div>
 
-    @Html.MessagesBox(null, new Dictionary<string, string> { { "data-bind", "attr: { id: domId() }" } })
+    @Html.SiteSettingsMessagesBox(null, new Dictionary<string, string> { { "data-bind", "attr: { id: domId() }" } })
 
     <div id="bcms-view-container" data-bind="css: { 'bcms-list': !isGrid(), 'bcms-grid': isGrid() }" class="bcms-list">
         <div class="bcms-media-sorting-block">
@@ -52,7 +53,7 @@
         <!-- /ko -->
 
         <div data-bind="foreach: medias()">
-            <div data-bind="click: openMedia.bind($data, $root), event: { contextmenu: contextMenu.show }, attr: {class: rowClassNames()}">
+            <div data-bind="click: openMedia.bind($data, $root), event: { contextmenu: contextMenu.show }, css: rowClassNames()">
 
                 <div class="bcms-media-context" data-bind="click: stopEvent, attr: {id: contextMenu.domId}">
                     <a class="bcms-btn-close">@RootGlobalization.Button_Close</a>
@@ -75,14 +76,14 @@
                     <!-- ko if: isImage() && $root.canInsertMediaWithOptions() -->
                     <a class="bcms-media-content-link" href="#" data-bind="click: insertMediaWithOptions.bind($data, $root)">@MediaGlobalization.MediaManager_ButtonInsertImageWithOptions</a>
                     <!-- /ko -->
-                    <!-- ko if: !isImage() && $root.canInsertMedia() -->
+                    <!-- ko if: !isFolder() && !isImage() && $root.canInsertMedia() -->
                     <a class="bcms-media-content-link" href="#" data-bind="click: insertMedia.bind($data, $root)">@MediaGlobalization.MediaManager_ButtonInsertFile</a>
                     <!-- /ko -->
                     <a class="bcms-media-content-link" href="#" data-bind="click: deleteMedia.bind($data, $root)">@RootGlobalization.Button_Delete</a>
                 </div>
 
                 <div class="bcms-media-items-block">
-                    <div data-bind="attr: {class: iconClassNames()}">
+                    <div data-bind="css: iconClassNames()">
                         <!-- ko if: isImage() -->
                         <img alt="" data-bind="attr: {alt: tooltip, src: getImageUrl()}" />
                         <!-- /ko -->

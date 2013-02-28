@@ -1,6 +1,8 @@
-﻿@using BetterCms.Module.Pages.Content.Resources
+﻿@using BetterCms.Core.Models
+@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.SiteSettings
+@using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc
 @using BetterCms.Module.Root.Mvc.Grids.Extensions
 @using BetterCms.Module.Root.Mvc.Grids.TableRenderers
@@ -15,7 +17,7 @@
     {
         column.EditButtonColumn();
 
-        column.For(m => string.Format("<a class=\"bcms-tables-link bcms-grid-item-edit-button bcms-page-title\" data-id=\"{0}\">{1}</a>", m.Id, m.Title))
+        column.For(m => string.Format("<a class=\"bcms-tables-link bcms-page-title\" data-id=\"{0}\"  data-url=\"{2}\">{1}</a>", m.Id, m.Title, m.Url))
             .Named(PagesGlobalization.SiteSettings_Pages_TitleColumn)
             .SortColumnName("Title")
             .Attributes()
@@ -33,15 +35,15 @@
            .HeaderAttributes(@style => "width: 100px;")
            .Attributes(@class => "bcms-page-modified");
 
-        column.For(m => Html.EditorFor(e => m.HasSEO, "SiteSettingBoolean"))
+        column.For(m => Html.EditorFor(e => m.HasSEO, "SEOStatus"))
            .Named(PagesGlobalization.SiteSettings_Pages_HasSeoColumn)
            .SortColumnName("HasSEO")
            .HeaderAttributes(@style => "width: 65px; text-align: center")
            .Attributes(@class => "bcms-page-hasseo");
 
-        column.For(m => Html.EditorFor(e => m.IsPublished, "SiteSettingBoolean"))
-           .Named(PagesGlobalization.SiteSettings_Pages_IsPublishedColumn)
-           .SortColumnName("IsPublished")
+        column.For(m => Html.EditorFor(e => m.PageStatus, "PageStatus"))
+           .Named(PagesGlobalization.SiteSettings_Pages_PageStatusColumn)
+           .SortColumnName("PageStatus")
            .HeaderAttributes(@style => "width: 85px; text-align: center")
            .Attributes(@class => "bcms-page-ispublished");
 
@@ -57,11 +59,11 @@
         <div class="bcms-large-titles">@PagesGlobalization.SiteSettings_Pages_Title</div>
         <div class="bcms-btn-links-main" id="bcms-create-page-button">@PagesGlobalization.SiteSettings_Pages_AddNew</div>
         <div class="bcms-search-block">
-            @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box" })
+            @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
             <div class="bcms-btn-search" id="bcms-pages-search-btn">@PagesGlobalization.SiteSettings_Pages_Search</div>
         </div>
-        @Html.MessagesBox("bcms-pages-messages")
     </div>
+    @Html.SiteSettingsMessagesBox()
 
     @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingPageViewModel>())
 }
@@ -70,8 +72,17 @@
     @Html.Grid(new List<SiteSettingPageViewModel> {new SiteSettingPageViewModel()}).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingPageViewModel>())
 </script>
 <script type="text/html" id="bcms-boolean-true-template">
-    @Html.Partial("EditorTemplates/SiteSettingBoolean", true)
+    @Html.Partial("EditorTemplates/SEOStatus", true)
 </script>
 <script type="text/html" id="bcms-boolean-false-template">
-    @Html.Partial("EditorTemplates/SiteSettingBoolean", false)
+    @Html.Partial("EditorTemplates/SEOStatus", false)
+</script>
+<script type="text/html" id="bcms-pagestatus-published-template">
+    @Html.Partial("EditorTemplates/PageStatus", PageStatus.Published)
+</script>
+<script type="text/html" id="bcms-pagestatus-unpublished-template">
+    @Html.Partial("EditorTemplates/PageStatus", PageStatus.Unpublished)
+</script>
+<script type="text/html" id="bcms-pagestatus-draft-template">
+    @Html.Partial("EditorTemplates/PageStatus", PageStatus.Draft)
 </script>

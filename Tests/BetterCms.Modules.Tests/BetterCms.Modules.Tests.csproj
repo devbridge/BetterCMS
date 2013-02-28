@@ -120,14 +120,7 @@
     <Compile Include="Pages\CommandTests\WidgetTests\GetSiteSettingsWidgetsIntegrationTest.cs" />
     <Compile Include="Pages\HelperTests\StringHelperTests.cs" />
     <Compile Include="Pages\ModelTests\ConcurrencyTests\ConcurrencyTests.cs" />
-    <Compile Include="Pages\ModelTests\MapTests\HtmlContentHistoryMapTest.cs" />
-    <Compile Include="Pages\ModelTests\MapTests\HtmlContentWidgetHistoryMapTest.cs" />
-    <Compile Include="Pages\ModelTests\MapTests\ServerControlWidgetHistoryMapTest.cs" />
-    <Compile Include="Root\ModelTests\MapTests\ContentHistoryMapTest.cs" />
-    <Compile Include="Root\ModelTests\MapTests\ContentOptionHistoryMapTest.cs" />
-    <Compile Include="Root\ModelTests\MapTests\WidgetHistoryMapTest.cs" />
-    <Compile Include="Root\ModelTests\MapTests\PageContentOptionHistoryMapTest.cs" />
-    <Compile Include="Root\ModelTests\MapTests\PageContentHistoryMapTest.cs" />
+    <Compile Include="Pages\ServicesTests\DefaultContentServiceTest.cs" />
     <Compile Include="SerializationTestBase.cs" />
     <Compile Include="DatabaseTestBase.cs" />
     <Compile Include="Helpers\HttpContextExtensionMethods.cs" />
@@ -224,12 +217,18 @@
       <Project>{5383227a-9cb8-4978-91d1-8168ec817d16}</Project>
       <Name>BetterCms.Module.Navigation</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.Templates\BetterCms.Module.Templates.csproj">
+      <Project>{17BF5CA2-23B6-4796-8EF1-CDDF6D41A4F7}</Project>
+      <Name>BetterCms.Module.Templates</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCms.Module.Users\BetterCms.Module.Users.csproj">
       <Project>{C530025B-8AB7-402D-B60C-000C9A5D0446}</Project>
       <Name>BetterCms.Module.Users</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="WindowsAzureStorage\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <PropertyGroup>

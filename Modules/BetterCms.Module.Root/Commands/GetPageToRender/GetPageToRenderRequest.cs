@@ -1,29 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace BetterCms.Module.Root.Commands.GetPageToRender
 {
     public class GetPageToRenderRequest
     {
-        public string VirtualPath { get; set; }
+        public Guid? PageId { get; set; }
+
+        public string PageUrl { get; set; }
+
+        public bool CanManageContent { get; set; }
+        
+        public bool IsAuthenticated { get; set; }
+
+        public bool IsPreview { get; set; }
 
         public Guid? PreviewPageContentId { get; set; }
 
-        public GetPageToRenderRequest()
+        public override string ToString()
         {
-        }
-
-        public GetPageToRenderRequest(string virtualPath)
-        {
-            VirtualPath = virtualPath;
-        }
-
-        public GetPageToRenderRequest(string virtualPath, Guid? previewPageContentId)
-        {
-            VirtualPath = virtualPath;
-            PreviewPageContentId = previewPageContentId;
+            return string.Format("PageId: {0}, PageUrl: {1}, CanManageContent: {2}, PreviewPageContentId: {3}", PageId, PageUrl, CanManageContent, PreviewPageContentId);
         }
     }
 }

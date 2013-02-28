@@ -25,12 +25,12 @@ namespace BetterCms.Module.Pages.Registration
                 {      
                     new JavaScriptModuleLinkTo<ContentController>(this, "loadWidgetsFromCategoryUrl", controller => controller.WidgetCategory("{1}")),
                     new JavaScriptModuleLinkTo<ContentController>(this, "loadWidgetsUrl", controller => controller.Widgets("{0}")),
-                    new JavaScriptModuleLinkTo<ContentController>(this, "loadAddNewHtmlContentDialogUrl", controller => controller.AddPageContent("{0}", "{1}")),
+                    new JavaScriptModuleLinkTo<ContentController>(this, "loadAddNewHtmlContentDialogUrl", controller => controller.AddPageHtmlContent("{0}", "{1}")),
                     new JavaScriptModuleLinkTo<ContentController>(this, "insertContentToPageUrl", controller => controller.InsertContentToPage("{0}", "{1}", "{2}")),
                     new JavaScriptModuleLinkTo<ContentController>(this, "deletePageContentUrl", controller => controller.DeletePageContent("{0}", "{1}", "{2}")),
-                    new JavaScriptModuleLinkTo<ContentController>(this, "editPageContentUrl", controller => controller.EditPageContent("{0}")),
+                    new JavaScriptModuleLinkTo<ContentController>(this, "editPageContentUrl", controller => controller.EditPageHtmlContent("{0}")),
                     new JavaScriptModuleLinkTo<ContentController>(this, "sortPageContentUrl", controller => controller.SortPageContent(null)),
-                    new JavaScriptModuleLinkTo<CmsController>(this, "previewPageUrl", controller => controller.Index("{0}"))
+                   
                 };
 
             Globalization = new IActionProjection[]
@@ -50,12 +50,9 @@ namespace BetterCms.Module.Pages.Registration
                     new JavaScriptModuleGlobalization(this, "deleteContentFailureMessageMessage", () => PagesGlobalization.DeletePageContent_FailureMessage_Message),
                     new JavaScriptModuleGlobalization(this, "sortPageContentFailureMessageTitle", () => PagesGlobalization.SortPageContent_FailureMessage_Title),
                     new JavaScriptModuleGlobalization(this, "sortPageContentFailureMessageMessage", () => PagesGlobalization.SortPageContent_FailureMessage_Message),
+                    new JavaScriptModuleGlobalization(this, "datePickerTooltipTitle", () => PagesGlobalization.Date_Picker_Tooltip_Title),
                                         
-                    new JavaScriptModuleGlobalization(this, "errorTitle", () => RootGlobalization.Alert_ErrorTitle),
-
-                    new JavaScriptModuleGlobalization(this, "saveDraft", () => RootGlobalization.Button_SaveDraft),
-                    new JavaScriptModuleGlobalization(this, "saveAndPublish", () => RootGlobalization.Button_SaveAndPublish),
-                    new JavaScriptModuleGlobalization(this, "preview", () => RootGlobalization.Button_Preview),                                       
+                    new JavaScriptModuleGlobalization(this, "errorTitle", () => RootGlobalization.Alert_ErrorTitle)                                       
                 };
         }
     }

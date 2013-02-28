@@ -115,6 +115,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Browse.
+        /// </summary>
+        public static string Button_Browse {
+            get {
+                return ResourceManager.GetString("Button_Browse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string Button_Cancel {
@@ -147,6 +156,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         public static string Button_Edit {
             get {
                 return ResourceManager.GetString("Button_Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to History.
+        /// </summary>
+        public static string Button_History {
+            get {
+                return ResourceManager.GetString("Button_History", resourceCulture);
             }
         }
         
@@ -205,6 +223,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Restore.
+        /// </summary>
+        public static string Button_Restore {
+            get {
+                return ResourceManager.GetString("Button_Restore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string Button_Save {
@@ -259,6 +286,33 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Draft.
+        /// </summary>
+        public static string ContentStatus_Draft {
+            get {
+                return ResourceManager.GetString("ContentStatus_Draft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Published.
+        /// </summary>
+        public static string ContentStatus_Published {
+            get {
+                return ResourceManager.GetString("ContentStatus_Published", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Published (with draft).
+        /// </summary>
+        public static string ContentStatus_PublishedWithDraft {
+            get {
+                return ResourceManager.GetString("ContentStatus_PublishedWithDraft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There is no data available..
         /// </summary>
         public static string Grid_NoDataAvailable_Message {
@@ -295,11 +349,29 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The record does not exist. Probably it was deleted by another user. Please refresh page..
+        /// </summary>
+        public static string Message_EntityNotFoundException {
+            get {
+                return ResourceManager.GetString("Message_EntityNotFoundException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to load dialog. Please retry..
         /// </summary>
         public static string Message_FailedToLoadDialog {
             get {
                 return ResourceManager.GetString("Message_FailedToLoadDialog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed To Render Content..
+        /// </summary>
+        public static string Message_FailedToRenderContent {
+            get {
+                return ResourceManager.GetString("Message_FailedToRenderContent", resourceCulture);
             }
         }
         
@@ -498,6 +570,33 @@ namespace BetterCms.Module.Root.Content.Resources {
         public static string WaterMark_Search {
             get {
                 return ResourceManager.GetString("WaterMark_Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Draft.
+        /// </summary>
+        public static string WidgetStatus_Draft {
+            get {
+                return ResourceManager.GetString("WidgetStatus_Draft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Published.
+        /// </summary>
+        public static string WidgetStatus_Published {
+            get {
+                return ResourceManager.GetString("WidgetStatus_Published", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Published (With Draft).
+        /// </summary>
+        public static string WidgetStatus_PublishedWithDraft {
+            get {
+                return ResourceManager.GetString("WidgetStatus_PublishedWithDraft", resourceCulture);
             }
         }
     }

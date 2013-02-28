@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.modal'],
+define('bcms.ko.grid', ['jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messages', 'bcms.modal'],
     function ($, bcms, ko, messages, modal) {
     'use strict';
 
@@ -255,6 +255,7 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.mod
             self.id = ko.observable(item.Id);
             self.version = ko.observable(item.Version);
             self.isActive = ko.observable(item.IsActive || false);
+            self.processing = ko.observable(false);
             self.hasFocus = ko.observable(true);
             self.hasError = ko.observable(false);
             self.isSelected = false;
@@ -379,6 +380,7 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.mod
                 return;
             }
 
+            self.processing(true);
             var container = self.parent.container,
                 items = self.parent.items,
                 message = self.getDeleteConfirmationMessage(),
@@ -403,9 +405,11 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.mod
                         })
                             .done(function(json) {
                                 onDeleteCompleted(json);
+                                self.processing(false);
                             })
                             .fail(function(response) {
                                 onDeleteCompleted(bcms.parseFailedResponse(response));
+                                self.processing(false);
                             });
                         return false;
                     }
@@ -420,8 +424,10 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.mod
         };
 
         grid.ItemViewModel.prototype.saveItem = function () {
-            var self = this,
-                url = self.parent.saveUrl,
+            var self = this;
+            self.processing(true);
+            
+            var url = self.parent.saveUrl,
                 canSave = url && this.isActive() && this.hasChanges() && this.isValid(),
                 removeFromList = this.isActive() && !this.hasChanges() && !this.id(),
                 keepActive = !this.isValid();
@@ -435,7 +441,6 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.mod
 
             if (canSave) {
                 var params = self.getSaveParams();
-
                 $.ajax({
                     url: url,
                     type: 'POST',
@@ -446,9 +451,11 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.mod
                 })
                     .done(function(json) {
                         self.onAfterItemSaved(json);
+                        self.processing(false);
                     })
                     .fail(function(response) {
                         self.onAfterItemSaved(bcms.parseFailedResponse(response));
+                        self.processing(false);
                     });
             } else {
                 if (!keepActive) {
@@ -458,6 +465,7 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'knockout', 'bcms.messages', 'bcms.mod
                 if (removeFromList) {
                     this.parent.items.remove(this);
                 }
+                self.processing(false);
             }
         };
 

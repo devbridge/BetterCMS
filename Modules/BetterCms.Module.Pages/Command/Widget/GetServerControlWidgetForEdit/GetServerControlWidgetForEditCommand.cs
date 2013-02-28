@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Linq;
 
+using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Pages.ViewModels.Widgets;
-using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
-
-using NHibernate.Criterion;
-using NHibernate.SqlCommand;
-using NHibernate.Transform;
+using BetterCms.Module.Root.Services;
 
 namespace BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit
 {
@@ -25,12 +22,15 @@ namespace BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit
         /// </summary>
         private readonly ICategoryService categoryService;
 
+        private readonly IContentService contentService;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GetServerControlWidgetForEditCommand" /> class.
         /// </summary>
         /// <param name="categoryService">The category service.</param>
-        public GetServerControlWidgetForEditCommand(ICategoryService categoryService)
+        public GetServerControlWidgetForEditCommand(ICategoryService categoryService, IContentService contentService)
         {
+            this.contentService = contentService;
             this.categoryService = categoryService;
         }
 
@@ -42,52 +42,53 @@ namespace BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit
         /// Executed command result.
         /// </returns>
         public EditServerControlWidgetViewModel Execute(Guid? widgetId)
-        {
+        {            
+            EditServerControlWidgetViewModel model = null;
             var categories = categoryService.GetCategories();
-            EditServerControlWidgetViewModel serverControlWidget;
-            
-            if (widgetId == null)
+
+            if (widgetId.HasValue && widgetId.Value != Guid.Empty)
             {
-                serverControlWidget = new EditServerControlWidgetViewModel();
+                var serverControlWidget = contentService.GetContentForEdit(widgetId.Value) as ServerControlWidget;
+
+                if (serverControlWidget != null)
+                {
+                    model = new EditServerControlWidgetViewModel {
+                                                                     Id = serverControlWidget.Id,
+                                                                     Version = serverControlWidget.Version,
+                                                                     Name = serverControlWidget.Name,
+                                                                     Url = serverControlWidget.Url,
+                                                                     PreviewImageUrl = serverControlWidget.PreviewUrl,
+                                                                     CurrentStatus = serverControlWidget.Status,
+                                                                     HasPublishedContent = serverControlWidget.Original != null,
+                                                                     WidgetType = WidgetType.ServerControl,
+                                                                     CategoryId = serverControlWidget.Category != null ? serverControlWidget.Category.Id : (Guid?)null
+                                                                 };
+
+                    model.ContentOptions = serverControlWidget.ContentOptions.Distinct()
+                        .Select(
+                            f => 
+                                new ContentOptionViewModel
+                                 {
+                                     Type = f.Type,
+                                     OptionDefaultValue = f.DefaultValue,
+                                     OptionKey = f.Key
+                                 })
+                        .ToList();
+                }
+
+                if (model == null)
+                {
+                    throw new EntityNotFoundException(typeof(ServerControlWidget), widgetId.Value);
+                }
             }
-            else 
+            else
             {
-                ServerControlWidget widget = null;
-                ServerControlWidgetViewModel modelAlias = null;
-                Category categoryAlias = null;
-
-                var widgetFuture = UnitOfWork.Session.QueryOver(() => widget)
-                    .JoinAlias(() => widget.Category, () => categoryAlias, JoinType.LeftOuterJoin, Restrictions.Where(() => !categoryAlias.IsDeleted))
-                    .Where(() => widget.Id == widgetId)
-                    .SelectList(select => select
-                         .Select(() => widget.Id).WithAlias(() => modelAlias.Id)
-                         .Select(() => widget.Version).WithAlias(() => modelAlias.Version)
-                         .Select(() => widget.Name).WithAlias(() => modelAlias.Name)
-                         .Select(() => widget.Url).WithAlias(() => modelAlias.Url)
-                         .Select(() => widget.PreviewUrl).WithAlias(() => modelAlias.PreviewImageUrl)
-                         .Select(() => categoryAlias.Id).WithAlias(() => modelAlias.CategoryId))
-                    .TransformUsing(Transformers.AliasToBean<EditServerControlWidgetViewModel>())
-                    .FutureValue<EditServerControlWidgetViewModel>();
-
-                ContentOption contentOptionAlias = null;
-                ContentOptionViewModel contentOptionModelAlias = null;
-
-                var optionsFuture = UnitOfWork.Session.QueryOver(() => contentOptionAlias)
-                        .Where(() => contentOptionAlias.Content.Id == widgetId.Value && !contentOptionAlias.IsDeleted)
-                        .SelectList(select => select                            
-                            .Select(() => contentOptionAlias.Key).WithAlias(() => contentOptionModelAlias.OptionKey)
-                            .Select(() => contentOptionAlias.DefaultValue).WithAlias(() => contentOptionModelAlias.OptionDefaultValue)
-                            .Select(() => contentOptionAlias.Type).WithAlias(() => contentOptionModelAlias.Type))
-                        .TransformUsing(Transformers.AliasToBean<ContentOptionViewModel>())
-                        .Future<ContentOptionViewModel>();
-
-                serverControlWidget = widgetFuture.Value;
-                serverControlWidget.ContentOptions = optionsFuture.ToList();
+                model = new EditServerControlWidgetViewModel();
             }
+
+            model.Categories = categories.ToList();
             
-            serverControlWidget.Categories = categories.ToList();
-            
-            return serverControlWidget;
+            return model;
         }
     }
 }

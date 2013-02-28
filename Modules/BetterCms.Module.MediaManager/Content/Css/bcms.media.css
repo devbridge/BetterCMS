@@ -3,26 +3,54 @@
     padding: 0 35px 20px;
 }
 
+.bcms-icn-delete-link {
+    float: right;
+    line-height: 24px;
+}
+
+.bcms-file-edit div.bcms-crop-checkbox {
+    display: inline-block;
+    float: none;
+}
+
+.bcms-file-edit .bcms-tooltip-mark {
+    top: 19px;
+}
+
+.bcms-crop-checkbox {
+    float: right;
+    line-height: 24px;
+    margin-left: 7px;
+    font-weight: 400;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+    .bcms-crop-checkbox input[type="checkbox"] {
+        position: relative;
+        top: 2px;
+    }
+
 .bcms-croped-block {
     width: 835px;
+    max-height: 557px;
     padding: 15px;
     margin: -20px 0 20px;
     border: 2px dashed #0383df;
     border-radius: 2px;
     background-color: #f5f5f5;
-    overflow: hidden;
+    overflow: auto;
     text-align: center;
 }
 
-    .bcms-croped-block * {
-        margin: 0 auto;
-    }
+.bcms-crop-image {
+    max-width: 839px;
+    max-height: 557px;
+}
 
-    .bcms-croped-block img {
-        display: block;
-        max-width: 100%;
-        margin: 0 auto;
-    }
+.bcms-croped-block * {
+    margin: 0 auto;
+}
 
 .bcms-croped-block-no-preview {
     background-image: url('images/bcms-no-image-1.png');
@@ -49,6 +77,16 @@
 
 .bcms-file-info-text {
     padding-bottom: 15px;
+}
+
+.bcms-editing-text {
+    display: inline-block;
+    vertical-align: bottom;
+    max-width: 290px;
+    padding-left: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .bcms-file-alignment {
@@ -82,6 +120,12 @@
         margin: 0 5px;
     }
 
+    .bcms-file-edit a {
+        display: block;
+        padding-top: 4px;
+        cursor: pointer;
+    }
+
 .bcms-alignment-controls > div {
     display: inline-block;
     width: 51px;
@@ -93,14 +137,17 @@
 
 .bcms-alignment-controls .bcms-align-left {
     background-position: 0 0;
+    cursor: pointer;
 }
 
 .bcms-alignment-controls .bcms-align-center {
     background-position: -104px 0;
+    cursor: pointer;
 }
 
 .bcms-alignment-controls .bcms-align-right {
     background-position: -208px 0;
+    cursor: pointer;
 }
 
 div.bcms-align-left-active {
@@ -166,14 +213,7 @@ div.bcms-align-right-active {
     position: relative;
     display: inline-block;
     margin: 15px 0;
-    height: 33px;
-    line-height: 33px;
-    font-size: 12px;
-    font-family: 'Open Sans', sans-serif;
-    color: #FFFFFF;
     overflow: hidden;
-    white-space: nowrap;
-    text-transform: uppercase;
     box-shadow: 0 0 1px 1px #292929;
     background-color: #676767;
     background-image: linear-gradient(to bottom, #676767 0, #555555 100%);
@@ -181,20 +221,22 @@ div.bcms-align-right-active {
     background-image: -webkit-linear-gradient(top, #676767 0, #555555 100%);
 }
 
-    .bcms-btn-upload-files label {
-        display: block;
-        height: 100%;
-        padding: 0 10px;
-        cursor: pointer;
+    .bcms-btn-upload-files label:active {
+        box-shadow: 0 0 2px 1px #292929;
+        background: #555;
     }
 
-        .bcms-btn-upload-files label:active {
-            box-shadow: 0 0 2px 1px #292929;
-            background: #555;
-        }
-
-.bcms-icn-delete-link {
-    float: right;
+label.bcms-btn-upload-files-text {
+    display: block;
+    height: 33px;
+    line-height: 33px;
+    padding: 0 10px;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: 'Open Sans', sans-serif;
+    color: #fff;
+    white-space: nowrap;
+    text-transform: uppercase;
 }
 
 .bcms-upload-holder .bcms-upload-block:first-child {
@@ -555,18 +597,16 @@ input.bcms-grid-input:focus {
 }
 
     .bcms-grid .bcms-image-box .bcms-media-file-holder {
-        width: 103px;
-        height: 94px;
+        width: 105px;
+        height: 96px;
         background: url('images/bcms-no-image-3.png') no-repeat center center;
         background-size: cover;
-        border: 1px solid #c6c6c6;
         overflow: hidden;
     }
 
         .bcms-grid .bcms-image-box .bcms-media-file-holder img {
             display: block;
-            width: 103px;
-            height: 94px;
+            width: 100%;
         }
 
     .bcms-grid .bcms-image-box:hover > .bcms-media-edit-controls {
@@ -623,7 +663,7 @@ input.bcms-grid-input:focus {
         top: 0;
         left: 0;
         width: 105px;
-        height: 100px;
+        height: 96px;
         overflow: hidden;
     }
 
@@ -636,7 +676,7 @@ input.bcms-grid-input:focus {
         position: absolute;
         bottom: 5px;
         left: 4px;
-        width: 95px;
+        width: 94px;
         margin: 0;
         border: 1px solid #c6c6c6;
         box-sizing: border-box;
@@ -661,7 +701,7 @@ input.bcms-grid-input:focus {
     }
 
     .bcms-grid .bcms-image-box-active div.bcms-media-edit-controls {
-        display: block;
+        display: none;
     }
 
     .bcms-grid .bcms-image-box-active .bcms-icn-delete {
@@ -1168,7 +1208,7 @@ input.bcms-grid-input:focus {
 
     .bcms-list .bcms-file-box .bcms-media-name {
         display: inline-block;
-        max-width: 390px;
+        max-width: 420px;
         padding-left: 20px;
         vertical-align: middle;
         font-size: 14px;
@@ -1471,9 +1511,11 @@ input.bcms-grid-input:focus {
 .jcrop-tracker {
     height: 100%;
     width: 100%;
-    -webkit-tap-highlight-color: transparent; /* "turn off" link highlight */
-    -webkit-touch-callout: none; /* disable callout, image save panel */
-    -webkit-user-select: none; /* disable cut copy paste */
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
 }
 
 /* Positioning of handles and drag bars */

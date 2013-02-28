@@ -14,37 +14,74 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         {
             Id = page.Id;
             IsDeleted = page.IsDeleted;
-            CreatedOn = page.CreatedOn;
-            ModifiedOn = page.ModifiedOn;
-            DeletedOn = page.DeletedOn;
-            CreatedByUser = page.CreatedByUser;
-            ModifiedByUser = page.ModifiedByUser;
-            DeletedByUser = page.DeletedByUser;
             Version = page.Version;
             HasSEO = page.HasSEO;
             Title = page.Title;
-            PageUrl = page.PageUrl;            
+            PageUrl = page.PageUrl;
+            Status = page.Status;
+        }
+
+        public RenderPageViewModel()
+        {
         }
 
         public Guid Id { get; private set; }
 
         public bool IsDeleted { get; private set; }
 
-        public DateTime CreatedOn { get; private set; }
+        DateTime IEntity.CreatedOn
+        {
+            get
+            {
+                throw new NotSupportedException();
+            }
+        }
 
-        public DateTime ModifiedOn { get; private set; }
+        DateTime IEntity.ModifiedOn
+        {
+            get
+            {
+                throw new NotSupportedException();
+            }
+        }
 
-        public DateTime? DeletedOn { get; private set; }
+        DateTime? IEntity.DeletedOn
+        {
+            get
+            {
+                throw new NotSupportedException();
+            }
+        }
 
-        public string CreatedByUser { get; private set; }
+        string IEntity.CreatedByUser
+        {
+            get
+            {
+                throw new NotSupportedException();
+            }
+        }
 
-        public string ModifiedByUser { get; private set; }
+        string IEntity.ModifiedByUser
+        {
+            get
+            {
+                throw new NotSupportedException();
+            }
+        }
 
-        public string DeletedByUser { get; private set; }
+        string IEntity.DeletedByUser
+        {
+            get
+            {
+                throw new NotSupportedException();
+            }
+        }
 
         public int Version { get; private set; }
 
-        public bool IsPublished { get; private set; }
+        public PageStatus Status { get; private set; }
+        
+        public bool IsPublic { get; private set; }
 
         public bool HasSEO { get; private set; }
 

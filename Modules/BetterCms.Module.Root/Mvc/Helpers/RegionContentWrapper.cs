@@ -2,7 +2,7 @@
 using System.Text;
 using System.Web.Mvc;
 
-using BetterCms.Core.Modules.Projections;
+using BetterCms.Core.Models;
 using BetterCms.Module.Root.Projections;
 
 namespace BetterCms.Module.Root.Mvc.Helpers
@@ -33,10 +33,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             this.content = content;
             this.allowContentManagement = allowContentManagement;
 
-            if (allowContentManagement)
-            {
-                RenderOpeningTags();
-            }
+            RenderOpeningTags();
         }
 
         /// <summary>
@@ -44,10 +41,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// </summary>
         public void Dispose()
         {
-            if (allowContentManagement)
-            {
-                RenderClosingTags();
-            }
+            RenderClosingTags();
         }
 
         /// <summary>
@@ -55,15 +49,22 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// </summary>
         private void RenderOpeningTags()
         {
-            string cssClass = content.GetRegionWrapperCssClass(html);
+            string id = string.Format(PageContentIdPattern, content.ContentId);
 
-            sb.AppendFormat(@"<div class=""bcms-content {0}"" data-page-content-id=""{1}"" data-content-id=""{2}"" data-page-content-version=""{3}"" data-content-version=""{4}"">", 
-                cssClass,                
-                content.PageContentId,
-                content.ContentId,
-                content.PageContentVersion,
-                content.ContentVersion);
-            sb.AppendLine();
+            if (allowContentManagement)
+            {
+                string cssClass = content.GetRegionWrapperCssClass(html);
+
+                sb.AppendFormat(@"<div id=""{0}"" class=""clearfix bcms-content {1}"" data-page-content-id=""{2}"" data-content-id=""{3}"" data-page-content-version=""{4}"" data-content-version=""{5}""{6}>",
+                    id,
+                    cssClass,
+                    content.PageContentId,
+                    content.ContentId,
+                    content.PageContentVersion,
+                    content.ContentVersion,
+                    content.PageContentStatus == ContentStatus.Draft ? " data-draft=\"true\"" : null);
+                sb.AppendLine();
+            }
         }
 
         /// <summary>
@@ -71,7 +72,10 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// </summary>
         private void RenderClosingTags()
         {
-            sb.AppendLine(@"</div>");
+            if (allowContentManagement)
+            {
+                sb.AppendLine(@"</div>");
+            }
         }
     }
 }

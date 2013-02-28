@@ -1,7 +1,6 @@
 ﻿@using BetterCms.Module.Root.Mvc.Helpers
 
 @model BetterCms.Module.Root.ViewModels.Cms.RenderPageViewModel
-
 @{
     Layout = "RootLayout.cshtml";
 }
@@ -13,6 +12,7 @@
 }
 
 @section CmsMeta {
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     @if (Model.Metadata != null)
     {
         foreach (var metaData in Model.Metadata)
@@ -25,13 +25,14 @@
 @section CmsHeadStyles {
     @if (Model.CanManageContent)
     {
-        <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700|Oswald:400,700" />
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700' rel='stylesheet' type='text/css' />
         <link rel="stylesheet" type="text/css" href="@Url.Content("~/file/bcms-root/Content/Styles/base.css")" />
         
         @Html.Action("RenderStyleSheetIncludes", "Rendering")
     }
 
-    @if (Model.Stylesheets != null) {
+    @if (Model.Stylesheets != null)
+    {
         @Html.RenderPageCustomCss(Model.Stylesheets)
     }
 }
@@ -39,18 +40,21 @@
 @section CmsHeadScripts {
     @if (Model.CanManageContent)
     {
-        <script type="text/javascript" data-main="@Url.Content("~/file/bcms-root/scripts/main")" src="@Url.Content("~/file/bcms-root/Scripts/require-jquery.js")"></script>
+        <script type="text/javascript" data-main="@Url.Content("~/file/bcms-root/scripts/main")" src="@Url.Content("~/file/bcms-root/Scripts/require-jquery.js")"></script>        
     }
+    <!--[if lt IE 9]>
+            <script src="@Url.Content("~/file/bcms-root/Scripts/html5shiv.js")"></script>
+    <![endif]-->
 }
 
-@section CmsBodyAttributes {@(Html.Raw(Model.CanManageContent ? string.Format(@" data-page-id = ""{0}"" class=""bcms-page-content""", @ViewBag.pageId) : string.Empty))}
+@section CmsBodyAttributes {@(Html.Raw(Model.CanManageContent ? string.Format(@" data-page-id = ""{0}""", @ViewBag.pageId) : string.Empty))}
 
 @section CmsScripts {
     @if (Model.CanManageContent)
     {
         @Html.Partial("Partial/Region")
         @Html.Partial("Partial/ContentOverlay")
-        @Html.Action("Container", "Sidebar")        
+        @Html.Action("Container", "Sidebar")
         @Html.Partial("Partial/Modal")
         @Html.Partial("Partial/Alert")
         @Html.Partial("Partial/Confirm")
@@ -58,10 +62,11 @@
         @Html.Partial("Partial/Tooltip")
         @Html.Partial("Partial/ImagePreview")
         @Html.Partial("Partial/SiteSettingTab")
+    }
 
-        if (Model.JavaScripts != null) {
-            @Html.RenderPageCustomJavaScript(Model.JavaScripts)
-        }
+    @if (Model.JavaScripts != null)
+    {
+        @Html.RenderPageCustomJavaScript(Model.JavaScripts)
     }
 }
 

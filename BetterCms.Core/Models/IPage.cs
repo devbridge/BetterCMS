@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace BetterCms.Core.Models
+﻿namespace BetterCms.Core.Models
 {
     /// <summary>
     /// Defines interface to access basic page properties.
@@ -8,12 +6,20 @@ namespace BetterCms.Core.Models
     public interface IPage : IEntity
     {
         /// <summary>
-        /// Gets a value indicating whether this page is published.
+        /// Gets the page status.
         /// </summary>
         /// <value>
-        /// <c>true</c> if this page is published; otherwise, <c>false</c>.
+        /// The page status.
         /// </value>
-        bool IsPublished { get; }
+        PageStatus Status { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether this page is available for not authenticated users.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this page is available for not authenticated users; otherwise, <c>false</c>.
+        /// </value>
+        bool IsPublic { get; }
 
         /// <summary>
         /// Gets a value indicating whether this page has SEO meta data.

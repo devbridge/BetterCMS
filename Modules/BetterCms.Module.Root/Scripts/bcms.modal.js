@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console, document */
 
-define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'knockout'], function ($, bcms, tabs, ko) {
+define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', 'bcms.forms'], function ($, bcms, tabs, ko, forms) {
     'use strict';
 
     var modal = {},
@@ -21,7 +21,8 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'knockout'], function ($, b
             previewImage: '.bcms-preview-image-frame img',
             previewImageContainer: '.bcms-preview-image-border',
             footer: '.bcms-success-buttons-holder, .bcms-modal-footer',
-
+            desirableStatus: '.bcms-content-desirable-status',
+            
             // selectors for calculation of modal window size
             elemOuter: '.bcms-modal-body',
             elemHeader: '.bcms-modal-header',
@@ -32,7 +33,8 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'knockout'], function ($, b
         
         classes = {
             saveButton: 'bcms-btn-small bcms-modal-accept',
-            cancelButton: 'bcms-btn-links-small bcms-modal-cancel'
+            cancelButton: 'bcms-btn-links-small bcms-modal-cancel',
+            grayButton: 'bcms-btn-small bcms-btn-gray'
         },
 
         links = {},
@@ -40,7 +42,10 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'knockout'], function ($, b
         globalization = {
             save: null,
             cancel: null,
-            ok: null
+            ok: null,
+            saveDraft: null,
+            saveAndPublish: null,
+            preview: null,
         };
 
     /**
@@ -316,6 +321,8 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'knockout'], function ($, b
             this.maximizeHeight();
 
             tabs.initTabPanel(this.container);
+            
+            forms.bindCheckboxes(this.container);
 
             if (this.options.autoFocus) {
                 this.setFocus();
@@ -465,6 +472,8 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'knockout'], function ($, b
     *  Binds to a document key press events.
     */
     function addGlobalKeyPressEvent() {
+        var lastEnterModal,
+            lastEscModal;
         $(document).on('keydown.bcms.modal', function (e) {
             var topModal = modal.last();
             if (topModal) {
@@ -472,14 +481,20 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'knockout'], function ($, b
                 if (e.keyCode === 27 && !topModal.options.disableCancel) {
                     if (canHandleKeyPress()) {
                         e.preventDefault();
-                        topModal.closeClick();
+                        if (topModal != lastEscModal) {
+                            topModal.closeClick();
+                            lastEscModal = topModal;
+                        }
                     }
                 }
                 // If Enter pressed and accept action is not disabled in the modal dialog.
                 else if (e.keyCode === 13 && !topModal.options.disableAccept) {
                     if (canHandleKeyPress()) {
                         e.preventDefault();
-                        topModal.acceptClick();
+                        if (topModal != lastEnterModal) {
+                            topModal.acceptClick();
+                            lastEnterModal = topModal;
+                        }
                     }
                 }
             }
@@ -498,7 +513,7 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'knockout'], function ($, b
             $(document).off('.bcms.modal');
         }
     }
-
+    
     /**
     * Creates and opens modal windows
     */
@@ -512,6 +527,78 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'knockout'], function ($, b
         }
 
         return modalWindow;
+    };
+
+    modal.edit = function (options) {
+        options = $.extend({
+            isPreviewAvailable: true,
+            onSaveAndPublishClick: null,
+            onPreviewClick: null,
+            disableSaveDraft: false,
+            onSaveDraftClick: null
+        }, options);
+
+        var extraButtons = [],
+            changeContentDesirableStatus = function(dialog, status) {
+                var desirableStatus = dialog.container.find(selectors.desirableStatus);
+                if (desirableStatus.length > 0) {
+                    desirableStatus.val(status);
+                } else {
+                    throw new Error($.format('Dialog {0} should contain hidden input for a desirable status.', dialog.title));
+                }                
+            };
+           
+        var saveAndPublishButton = new ButtonViewModel(globalization.saveAndPublish, classes.grayButton, 2, function(dialog) {
+            if ($.isFunction(options.onSaveAndPublishClick)) {
+                if (options.onSaveAndPublishClick(dialog) !== false) {
+                    changeContentDesirableStatus(dialog, bcms.contentStatus.published);
+                    dialog.submitForm();
+                }
+            } else {
+                changeContentDesirableStatus(dialog, bcms.contentStatus.published);
+                dialog.submitForm();
+            }
+
+        });
+        extraButtons.push(saveAndPublishButton);
+
+        if (!!options.isPreviewAvailable) {
+            var previewButton = new ButtonViewModel(globalization.preview, classes.grayButton, 3, function(dialog) {
+                if ($.isFunction(options.onPreviewClick)) {
+                    if (options.onPreviewClick(dialog) !== false) {
+                        changeContentDesirableStatus(dialog, bcms.contentStatus.preview);
+                        dialog.submitForm();
+                    }
+                } else {
+                    changeContentDesirableStatus(dialog, bcms.contentStatus.preview);
+                    dialog.submitForm();
+                }
+            });
+            extraButtons.push(previewButton);
+        }
+        
+        options.buttons = extraButtons;
+        options.acceptTitle = globalization.saveDraft;
+        
+        if (options.disableSaveDraft) {
+            options.disableAccept = true;
+            options.onAcceptClick = null;
+            saveAndPublishButton.css(classes.saveButton);
+        } else {
+            options.onAcceptClick = function (dialog) {
+                if ($.isFunction(options.onSaveDraftClick)) {
+                    if (options.onSaveDraftClick(dialog) !== false) {
+                        changeContentDesirableStatus(dialog, bcms.contentStatus.draft);
+                        dialog.submitForm();
+                    }
+                } else {
+                    changeContentDesirableStatus(dialog, bcms.contentStatus.draft);
+                    dialog.submitForm();
+                }
+            };
+        }
+        
+        modal.open(options);
     };
 
     modal.alert = function (options) {
@@ -582,6 +669,23 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'knockout'], function ($, b
         });
 
         return dialog;
+    };
+
+    modal.showMessages = function (json) {
+        if (json.Messages) {
+            var content = "";
+
+            for (var i = 0; i < json.Messages.length; i++) {
+                if (content) {
+                    content += "<br />";
+                }
+                content += json.Messages[i];
+            }
+
+            modal.alert({
+                content: content
+            });
+        }
     };
 
     return modal;

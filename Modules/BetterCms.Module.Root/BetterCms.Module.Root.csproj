@@ -116,8 +116,8 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Commands\GetPageToRender\GetPageToRenderCommand.cs" />
     <Compile Include="Commands\GetPageToRender\GetPageToRenderRequest.cs" />
+    <Compile Include="Commands\GetPageToRender\GetPageToRenderCommand.cs" />
     <Compile Include="Content\Resources\RootGlobalization.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -125,6 +125,7 @@
     </Compile>
     <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\CmsController.cs" />
+    <Compile Include="Controllers\PreviewController.cs" />
     <Compile Include="Controllers\EmbeddedResourcesController.cs" />
     <Compile Include="Controllers\RenderingController.cs" />
     <Compile Include="Controllers\SidebarController.cs" />
@@ -133,21 +134,7 @@
     <Compile Include="Models\Content.cs" />
     <Compile Include="Models\ContentOption.cs" />
     <Compile Include="Models\ContentBase.cs" />
-    <Compile Include="Models\ContentHistory.cs" />
-    <Compile Include="Models\ContentOptionHistory.cs" />
     <Compile Include="Models\ComboWireJson.cs" />
-    <Compile Include="Models\Maps\ContentHistoryMap.cs" />
-    <Compile Include="Models\Maps\ContentOptionHistoryMap.cs" />
-    <Compile Include="Models\Maps\PageContentHistoryMap.cs" />
-    <Compile Include="Models\Maps\PageContentOptionHistoryMap.cs" />
-    <Compile Include="Models\Maps\Predefined\ContentEntityMapBase.cs" />
-    <Compile Include="Models\Maps\Predefined\ContentOptionEntityMapBase.cs" />
-    <Compile Include="Models\Maps\Predefined\PageContentOptionEntityMapBase.cs" />
-    <Compile Include="Models\Maps\Predefined\PageContentEntityMapBase.cs" />
-    <Compile Include="Models\Maps\WidgetHistoryMap.cs" />
-    <Compile Include="Models\WidgetHistory.cs" />
-    <Compile Include="Models\PageContentOptionHistory.cs" />
-    <Compile Include="Models\PageContentHistory.cs" />
     <Compile Include="Models\LayoutRegion.cs" />
     <Compile Include="Models\Maps\CategoryMap.cs" />
     <Compile Include="Models\Maps\ContentMap.cs" />
@@ -158,6 +145,7 @@
     <Compile Include="Models\Maps\RegionMap.cs" />
     <Compile Include="Models\Maps\TagMap.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
+    <Compile Include="Models\Migrations\Migration201302211227.cs" />
     <Compile Include="Models\PageContentOption.cs" />
     <Compile Include="Models\Layout.cs" />
     <Compile Include="Models\Maps\ModuleMap.cs" />
@@ -176,6 +164,7 @@
     <Compile Include="Mvc\Grids\Extensions\GridExtensions.cs" />
     <Compile Include="Mvc\Grids\GridOptions\GridOptions.cs" />
     <Compile Include="Mvc\Grids\IEditableGridItem.cs" />
+    <Compile Include="Mvc\Grids\TableRenderers\ScrollableEditableHtmlTableGridRenderer.cs" />
     <Compile Include="Mvc\Grids\TableRenderers\EditableHtmlTableGridRenderer.cs" />
     <Compile Include="Mvc\Grids\TableRenderers\HtmlTableGridSingleRowRenderer.cs" />
     <Compile Include="Mvc\Grids\GridOptions\SearchableGridOptions.cs" />
@@ -192,6 +181,7 @@
     <Compile Include="Projections\PageJavaScriptProjection.cs" />
     <Compile Include="Registration\AuthenticationJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\ContentJavaScriptModuleDescriptor.cs" />
+    <Compile Include="Registration\PreviewJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\UserRoles.cs" />
     <Compile Include="Registration\RedirectJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\InlineEditorJavaScriptModuleDescriptor.cs" />
@@ -217,7 +207,9 @@
     <Compile Include="Mvc\Helpers\MessagesHelper.cs" />
     <Compile Include="Registration\TabsJavaScriptModuleDescriptor.cs" />
     <Compile Include="RootModuleConstants.cs" />
+    <Compile Include="Services\DefaultContentService.cs" />
     <Compile Include="Services\DefaultSecurityService.cs" />
+    <Compile Include="Services\IContentService.cs" />
     <Compile Include="ViewModels\Authentication\InfoViewModel.cs" />
     <Compile Include="ViewModels\Cms\CmsRequestViewModel.cs" />
     <Compile Include="ViewModels\Cms\PageRegionViewModel.cs" />
@@ -232,7 +224,6 @@
     </Compile>
     <Compile Include="Mvc\Grids\EditableGridColumn.cs" />
     <Compile Include="ViewModels\Shared\EditableGridViewModel.cs" />
-    <Compile Include="ViewModels\Shared\MessagesViewModel.cs" />
     <Compile Include="ViewModels\Sidebar\SidebarContainerViewModel.cs" />
     <Compile Include="ViewModels\ProjectionsViewModel.cs" />
     <Compile Include="ViewModels\SiteSettings\SearchableGridViewModel.cs" />
@@ -252,25 +243,7 @@
       <LastGenOutput>RootGlobalization.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Content\Styles\base.css" />
-    <EmbeddedResource Include="Content\Styles\images\icn-zoom.png" />
     <EmbeddedResource Include="Content\Styles\qunit-1.9.0.css" />
-    <EmbeddedResource Include="Scripts\bcms.content.js" />
-    <EmbeddedResource Include="Scripts\bcms.forms.js" />
-    <EmbeddedResource Include="Scripts\bcms.sidemenu.js" />
-    <None Include="Scripts\jquery-1.7.2.intellisense.js">
-      <DependentUpon>jquery-1.7.2.js</DependentUpon>
-    </None>
-    <EmbeddedResource Include="Scripts\jquery-1.7.2.js" />
-    <EmbeddedResource Include="Content\Styles\images\icn-sidebg.png" />
-    <EmbeddedResource Include="Content\Styles\images\sprite-base-1.png" />
-    <EmbeddedResource Include="Content\Styles\images\sprite-base-2.png" />
-    <EmbeddedResource Include="Scripts\bcms.authentication.js" />
-    <EmbeddedResource Include="Scripts\bcms.tooltip.js" />
-    <EmbeddedResource Include="Content\Styles\images\icn-calendar.png" />
-    <EmbeddedResource Include="Scripts\bcms.messages.js" />
-    <EmbeddedResource Include="Scripts\bcms.datepicker.js" />
-    <EmbeddedResource Include="Scripts\bcms.htmlEditor.js" />
     <EmbeddedResource Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <EmbeddedResource Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <EmbeddedResource Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -331,23 +304,6 @@
     <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
-    <EmbeddedResource Include="Scripts\bcms.tabs.js" />
-    <EmbeddedResource Include="Content\Styles\images\modal-back.png" />
-    <EmbeddedResource Include="Scripts\bcms.preview.js" />
-    <EmbeddedResource Include="Scripts\bcms.grid.js" />
-    <EmbeddedResource Include="Content\Styles\images\loading.gif" />
-    <EmbeddedResource Include="Content\Styles\images\bcms-sidebar-select.png" />
-    <EmbeddedResource Include="Content\Styles\images\bcms-logo.png" />
-    <EmbeddedResource Include="Content\Styles\images\bcms-no-image-1.png" />
-    <EmbeddedResource Include="Content\Styles\images\bcms-no-image-2.png" />
-    <EmbeddedResource Include="Content\Styles\images\bcms-no-image-3.png" />
-    <EmbeddedResource Include="Scripts\bcms.inlineEdit.js" />
-    <EmbeddedResource Include="Scripts\bcms.ko.grid.js" />
-    <EmbeddedResource Include="Scripts\bcms.dynamicContent.js" />
-    <EmbeddedResource Include="Scripts\bcms.siteSettings.js" />
-    <EmbeddedResource Include="Scripts\bcms.js" />
-    <EmbeddedResource Include="Scripts\bcms.modal.js" />
-    <EmbeddedResource Include="Scripts\bcms.redirect.js" />
     <EmbeddedResource Include="Scripts\ckeditor\build-config.js" />
     <EmbeddedResource Include="Scripts\ckeditor\ckeditor.js" />
     <EmbeddedResource Include="Scripts\ckeditor\config.js" />
@@ -506,19 +462,25 @@
     <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\close.png" />
     <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\mini.png" />
     <EmbeddedResource Include="Scripts\ckeditor\styles.js" />
-    <Content Include="Scripts\jquery-1.7.2.min.js">
-      <DependentUpon>jquery-1.7.2.js</DependentUpon>
-    </Content>
-    <EmbeddedResource Include="Scripts\jquery-ui.min.js" />
     <EmbeddedResource Include="Scripts\Libs\knockout-2.1.0.js" />
-    <EmbeddedResource Include="Scripts\popup.js" />
-    <EmbeddedResource Include="Scripts\require-jquery.js" />
-    <EmbeddedResource Include="Scripts\require.js" />
     <EmbeddedResource Include="Scripts\WysiHtml5\wysihtml5-0.3.0.js" />
     <EmbeddedResource Include="Scripts\WysiHtml5\wysihtml5-parser-rules.js" />
-    <EmbeddedResource Include="Scripts\slides.jquery.js" />
+    <EmbeddedResource Include="Scripts\bcms.authentication.js" />
+    <EmbeddedResource Include="Scripts\bcms.content.js" />
+    <EmbeddedResource Include="Scripts\bcms.datepicker.js" />
+    <EmbeddedResource Include="Scripts\bcms.grid.js" />
+    <EmbeddedResource Include="Scripts\bcms.htmlEditor.js" />
+    <EmbeddedResource Include="Scripts\bcms.inlineEdit.js" />
+    <EmbeddedResource Include="Scripts\bcms.ko.grid.js" />
+    <EmbeddedResource Include="Scripts\bcms.messages.js" />
+    <EmbeddedResource Include="Scripts\bcms.preview.js" />
+    <EmbeddedResource Include="Scripts\bcms.redirect.js" />
+    <EmbeddedResource Include="Scripts\bcms.sidemenu.js" />
+    <EmbeddedResource Include="Scripts\bcms.tabs.js" />
+    <EmbeddedResource Include="Scripts\bcms.tooltip.js" />
     <EmbeddedResource Include="Scripts\jquery-ui-1.9.0.js" />
     <EmbeddedResource Include="Scripts\jquery-ui-1.9.0.min.js" />
+    <EmbeddedResource Include="Scripts\jquery-ui.min.js" />
     <EmbeddedResource Include="Scripts\jquery.unobtrusive-ajax.js" />
     <EmbeddedResource Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <EmbeddedResource Include="Scripts\jquery.validate-vsdoc.js" />
@@ -528,21 +490,33 @@
     <EmbeddedResource Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <EmbeddedResource Include="Scripts\knockout-2.2.0.debug.js" />
     <EmbeddedResource Include="Scripts\knockout-2.2.0.js" />
+    <EmbeddedResource Include="Scripts\popup.js" />
+    <EmbeddedResource Include="Scripts\require-jquery.js" />
+    <EmbeddedResource Include="Scripts\require.js" />
+    <EmbeddedResource Include="Scripts\slides.jquery.js" />
+    <EmbeddedResource Include="Scripts\bcms.dynamicContent.js" />
+    <EmbeddedResource Include="Scripts\bcms.modal.js" />
+    <EmbeddedResource Include="Scripts\bcms.siteSettings.js" />
+    <EmbeddedResource Include="Scripts\bcms.forms.js" />
+    <EmbeddedResource Include="Scripts\bcms.js" />
+    <EmbeddedResource Include="Scripts\bcms.ko.extenders.js" />
+    <EmbeddedResource Include="Content\Styles\images\bcms-logo.png" />
+    <EmbeddedResource Include="Content\Styles\images\bcms-no-image-1.png" />
+    <EmbeddedResource Include="Content\Styles\images\bcms-no-image-2.png" />
+    <EmbeddedResource Include="Content\Styles\images\bcms-no-image-3.png" />
+    <EmbeddedResource Include="Content\Styles\images\bcms-sidebar-select.png" />
+    <EmbeddedResource Include="Content\Styles\images\icn-calendar.png" />
+    <EmbeddedResource Include="Content\Styles\images\icn-sidebg.png" />
+    <EmbeddedResource Include="Content\Styles\images\icn-zoom.png" />
+    <EmbeddedResource Include="Content\Styles\images\loading.gif" />
+    <EmbeddedResource Include="Content\Styles\images\modal-back.png" />
+    <EmbeddedResource Include="Content\Styles\images\sprite-base-1.png" />
+    <EmbeddedResource Include="Content\Styles\images\sprite-base-2.png" />
+    <EmbeddedResource Include="Content\Styles\base.css" />
     <EmbeddedResource Include="Scripts\spinner.jquery.js" />
+    <EmbeddedResource Include="Scripts\html5shiv.js" />
     <Content Include="Views\Web.config" />
-    <EmbeddedResource Include="Views\Shared\Partial\Alert.cshtml">
-      <SubType>Code</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\Shared\Partial\Confirm.cshtml">
-      <SubType>Code</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\Shared\Partial\ContentOverlay.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Partial\Info.cshtml">
-      <SubType>Code</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\Shared\Partial\Region.cshtml" />
     <EmbeddedResource Include="Views\Sidebar\Container.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Layouts\OneColumnLayout.cshtml" />
     <EmbeddedResource Include="Views\Rendering\RenderMainJsFile.cshtml" />
     <EmbeddedResource Include="Views\SiteSettings\Container.cshtml" />
     <EmbeddedResource Include="Views\Sidebar\Header.cshtml" />
@@ -552,27 +526,15 @@
     <EmbeddedResource Include="Views\Sidebar\Footer.cshtml" />
     <EmbeddedResource Include="Views\Sidebar\Body.cshtml" />
     <EmbeddedResource Include="Views\Authentication\Info.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Partial\Tooltip.cshtml" />
     <Content Include="web.config">
       <SubType>Designer</SubType>
     </Content>
-    <EmbeddedResource Include="Views\Shared\Partial\Messages.cshtml" />
     <EmbeddedResource Include="Views\Cms\Index.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Layouts\Preview.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Partial\ImagePreview.cshtml" />
-    <EmbeddedResource Include="Views\Shared\BaseLayout.cshtml" />
-    <EmbeddedResource Include="Views\Shared\RootLayout.cshtml" />
-    <EmbeddedResource Include="Views\Shared\EditableGrid\Grid.cshtml" />
-    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\Cell.cshtml" />
-    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\Header.cshtml" />
-    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\TopBlock.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Partial\Modal.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Partial\SiteSettingTab.cshtml" />
+    <EmbeddedResource Include="Views\Preview\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\Entity\" />
     <Folder Include="Data\Map\" />
-    <Folder Include="Views\Cms\Partial\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BetterCMS.Configuration\BetterCms.Configuration.csproj">
@@ -591,6 +553,57 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\BaseLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\EditableGrid\Grid.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\Cell.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\Header.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\TopBlock.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\Layouts\OneColumnLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\Layouts\Preview.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\Partial\Alert.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\Partial\Confirm.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\Partial\ContentOverlay.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\Partial\ImagePreview.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\Partial\Info.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\Partial\Modal.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\Partial\Region.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\Partial\SiteSettingTab.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\Partial\Tooltip.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\RootLayout.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

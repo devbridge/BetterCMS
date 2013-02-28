@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Mvc;
+using BetterCms.Core.Models;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
@@ -9,42 +11,68 @@ using BetterCms.Module.Pages.ViewModels.Widgets;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using System.Linq;
+
+using BetterCms.Module.Root.Services;
+
 using NHibernate.Linq;
 
 namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
 {
-    public class SaveServerControlWidgetCommand : SaveWidgetCommandBase<ServerControlWidgetViewModel>
+    public class SaveServerControlWidgetCommand : SaveWidgetCommandBase<EditServerControlWidgetViewModel>
     {
+        public virtual IContentService ContentService { get; set; }
+
         /// <summary>
         /// Executes the specified request.
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public override SaveWidgetResponse Execute(ServerControlWidgetViewModel request)
+        public override SaveWidgetResponse Execute(EditServerControlWidgetViewModel request)
         {
-            // Validate
+            // Validate.
             if (!HttpHelper.VirtualPathExists(request.Url))
             {
                 var message = string.Format(PagesGlobalization.SaveWidget_VirtualPathNotExists_Message, request.Url);
                 var logMessage = string.Format("Widget view doesn't exists. Url: {0}, Id: {1}", request.Url, request.Id);
-                throw new ValidationException(m => message, logMessage);
+
+                throw new ValidationException(() => message, logMessage);
+            }
+
+            if (request.DesirableStatus == ContentStatus.Draft)
+            {
+                throw new CmsException(string.Format("Server widget does not support Draft state."));
             }
 
             UnitOfWork.BeginTransaction();
 
-            var widget = !request.Id.HasDefaultValue()
-                ? Repository.AsQueryable<ServerControlWidget>().Fetch(f => f.Category).FetchMany(f => f.ContentOptions).Where(f => f.Id == request.Id).ToList().FirstOrDefault()
-                : new ServerControlWidget();
+            var widget = (ServerControlWidget)ContentService.SaveContentWithStatusUpdate(GetServerControlWidgetFromRequest(request), request.DesirableStatus);
+            Repository.Save(widget);
 
-            if (widget == null)
-            {
-                widget = new ServerControlWidget();
-            }
+            UnitOfWork.Commit();
+
+            return new SaveWidgetResponse
+                       {
+                           Id = widget.Id,
+                           CategoryName = widget.Category != null ? widget.Category.Name : null,
+                           WidgetName = widget.Name,
+                           Version = widget.Version,
+                           WidgetType = WidgetType.ServerControl.ToString(),
+                           IsPublished = widget.Status == ContentStatus.Published,
+                           HasDraft = widget.Status == ContentStatus.Draft || widget.History != null && widget.History.Any(f => f.Status == ContentStatus.Draft),
+                           DesirableStatus = request.DesirableStatus,
+                           PreviewOnPageContentId = request.PreviewOnPageContentId
+                       };
+        }
+
+        private ServerControlWidget GetServerControlWidgetFromRequest(EditServerControlWidgetViewModel request)
+        {
+            ServerControlWidget widget = new ServerControlWidget();
+            widget.Id = request.Id;
 
             if (request.CategoryId.HasValue && !request.CategoryId.Value.HasDefaultValue())
             {
-                widget.Category = Repository.FirstOrDefault<Category>(request.CategoryId.Value);
+                widget.Category = Repository.AsProxy<Category>(request.CategoryId.Value);
             }
             else
             {
@@ -54,66 +82,26 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
             widget.Name = request.Name;
             widget.Url = request.Url;
             widget.Version = request.Version;
-            widget.PreviewUrl = request.PreviewImageUrl;
+            widget.PreviewUrl = request.PreviewImageUrl;            
 
-            // Edits or removes options.
-            if (widget.ContentOptions != null && widget.ContentOptions.Any())
-            {                
-                foreach (var contentOption in widget.ContentOptions)
-                {
-                    var requestContentOption = request.ContentOptions != null 
-                                                ? request.ContentOptions.FirstOrDefault(f => f.OptionKey.Equals(contentOption.Key, StringComparison.InvariantCultureIgnoreCase))
-                                                : null;
-
-                    if (requestContentOption != null)
-                    {
-                        contentOption.DefaultValue = requestContentOption.OptionDefaultValue;
-                        contentOption.Type = requestContentOption.Type;
-                        Repository.Save(contentOption);
-                    }
-                    else
-                    {
-                        Repository.Delete(contentOption);
-                    }
-                }                
-            }
-
-            // Adds new options.
             if (request.ContentOptions != null)
             {
+                widget.ContentOptions = new List<ContentOption>();
+
                 foreach (var requestContentOption in request.ContentOptions)
-                {                    
-                    if (widget.ContentOptions == null)
-                    {
-                        widget.ContentOptions = new List<ContentOption>();
-                    }
+                {
+                    var contentOption = new ContentOption {
+                                                              Content = widget,
+                                                              Key = requestContentOption.OptionKey,
+                                                              DefaultValue = requestContentOption.OptionDefaultValue,
+                                                              Type = requestContentOption.Type
+                                                          };
 
-                    if (!widget.ContentOptions.Any(f => f.Key.Equals(requestContentOption.OptionKey, StringComparison.InvariantCultureIgnoreCase)))
-                    {
-                        var contentOption = new ContentOption
-                                                {
-                                                    Content = widget,
-                                                    Key = requestContentOption.OptionKey,
-                                                    DefaultValue = requestContentOption.OptionDefaultValue,
-                                                    Type = requestContentOption.Type
-                                                };
-                        widget.ContentOptions.Add(contentOption);
-                        Repository.Save(contentOption);
-                    }
-                }                
+                    widget.ContentOptions.Add(contentOption);
+                }
             }
-            
-            Repository.Save(widget);
-            UnitOfWork.Commit();
 
-            return new SaveWidgetResponse
-            {
-                Id = widget.Id,
-                CategoryName = widget.Category != null ? widget.Category.Name : null,
-                WidgetName = widget.Name,
-                Version = widget.Version ,
-                WidgetType = WidgetType.ServerControl.ToString()
-            };
+            return widget;
         }
     }
 }

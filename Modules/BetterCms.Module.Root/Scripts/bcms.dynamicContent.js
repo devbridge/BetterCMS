@@ -37,20 +37,19 @@ define('bcms.dynamicContent', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bc
             done: null,
             fail: function (failedDialog, message, request) {
                 var html = '<div class="bcms-scroll-window">' +
-                              '<div class="bcms-padded-content">' +
-                                '<div class="bcms-messages">' +
+                                '<div class="bcms-messages-type-2">' +
                                     '<ul class="bcms-error-messages">' +
                                         '<li>' +
                                             message +
                                         '</li>' +
                                     '</ul>' +
                                 '</div>';
-
+                            
                 if (bcms.errorTrace && request) {
                     html = html + request.responseText;
                 }
-
-                html = html + '</div></div>';
+                
+                html += '</div>';
 
                 failedDialog.setContent(html);
                 failedDialog.disableAccept();
@@ -66,7 +65,19 @@ define('bcms.dynamicContent', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bc
         })
         .done(function (content, status, response) {
             if (response.getResponseHeader('Content-Type').indexOf('application/json') === 0 && content.Html) {
-                dialog.setContent(content.Html, contentId);
+                if (content.Success) {
+                    dialog.setContent(content.Html, contentId);
+                } else {
+                    dialog.close();
+                    if (content.Messages && content.Messages.length > 0) {
+                        modal.showMessages(content);
+                    } else {
+                        modal.alert({
+                            content: globalization.failedLoadDialogMessage
+                        });
+                    }
+                    return;
+                }
             } else {
                 dialog.setContent(content, contentId);
             }

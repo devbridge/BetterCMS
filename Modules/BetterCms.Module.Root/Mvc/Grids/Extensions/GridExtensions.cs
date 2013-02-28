@@ -53,6 +53,20 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
                 .HeaderAttributes(@class => "bcms-tables-nohover");
         }
 
+        public static IGridColumn<T> HistoryButtonColumn<T>(this ColumnBuilder<T> builder, bool renderId = true) where T : class
+        {
+            return builder
+                .For(f => string.Format("<a class=\"bcms-icn-history bcms-grid-item-history-button\"{0}>{1}</a>",
+                        renderId && f is IEditableGridItem
+                            ? string.Format("data-id=\"{0}\"", ((IEditableGridItem)f).Id)
+                            : string.Empty,
+                        RootGlobalization.Button_History))
+                .Named("&nbsp;")
+                .Sortable(false)
+                .Encode(false)
+                .HeaderAttributes(@style => "width: 80px;", @class => "bcms-tables-nohover");
+        }
+
         public static IGridColumn<T> DeleteButtonColumn<T>(this ColumnBuilder<T> builder, bool renderId = true) where T : class
         {
             return builder
@@ -69,11 +83,13 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
                 .HeaderAttributes(@style => "width: 80px;", @class => "bcms-tables-nohover");
         }
 
-        public static IGridColumn<T> InlineEditControlsColumn<T>(this ColumnBuilder<T> builder) where T : class
+        public static IGridColumn<T> InlineEditControlsColumn<T>(this ColumnBuilder<T> builder, string saveButtonTitle = null) where T : class
         {
+            saveButtonTitle = saveButtonTitle ?? @RootGlobalization.Button_Save;
+
             var stringBuilder = new StringBuilder();
             stringBuilder.AppendFormat("<a class=\"bcms-icn-delete bcms-grid-item-delete-button\" data-id=\"{{0}}\" data-version=\"{{1}}\">{0}</a>", RootGlobalization.Button_Delete).AppendLine();
-            stringBuilder.AppendFormat("<div style=\"display:none\" class=\"bcms-btn-small\">{0}</div>", @RootGlobalization.Button_Save).AppendLine();
+            stringBuilder.AppendFormat("<div style=\"display:none\" class=\"bcms-btn-small\">{0}</div>", saveButtonTitle).AppendLine();
             stringBuilder.AppendFormat("<a style=\"display:none\" class=\"bcms-btn-links-small\">{0}</a>", @RootGlobalization.Button_Cancel).AppendLine();
             stringBuilder.AppendFormat("<div style=\"display:none\" class=\"bcms-grid-item-message\"></div>");
 

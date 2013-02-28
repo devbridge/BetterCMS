@@ -11,7 +11,11 @@ define('bcms.forms', ['jquery', 'bcms', 'bcms.messages', 'bcms.tabs'], function 
             ajaxHide: '.bcms-ajax-hide',
             ajaxShow: '.bcms-ajax-show',
 
-            firstInvalidField: '.input-validation-error:first'
+            firstInvalidField: '.input-validation-error:first',
+            
+            checkboxLabels: '.bcms-checkbox-holder:has(input[type="checkbox"]) .bcms-edit-label, .bcms-edit-check-field:has(input[type="checkbox"]) .bcms-edit-label',
+            checkboxParents: '.bcms-checkbox-holder, .bcms-edit-check-field',
+            checkbox: 'input[type="checkbox"]'
         },
         submitting = 'submitting',
         links = {},
@@ -142,6 +146,20 @@ define('bcms.forms', ['jquery', 'bcms', 'bcms.messages', 'bcms.tabs'], function 
         });
     };
 
+    forms.bindCheckboxes = function (container, options) {
+        
+        options = $.extend({
+            checkboxSelector: selectors.checkbox,
+            checkboxParentsSelector: selectors.checkboxParents,
+            checkboxLabelsSelector: selectors.checkboxLabels
+        }, options);
+
+        container.find(options.checkboxLabelsSelector).on('click', function () {
+            var checkBox = $(this).parents(options.checkboxParentsSelector).first().find(options.checkboxSelector);
+            checkBox.trigger('click').trigger('change');
+            return false;
+        });
+    };
 
     return forms;
 });

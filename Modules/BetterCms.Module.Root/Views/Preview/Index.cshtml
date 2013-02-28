@@ -1,0 +1,21 @@
+﻿@using BetterCms.Module.Root.Mvc.Helpers
+
+@model BetterCms.Module.Root.ViewModels.Cms.RenderPageViewModel
+
+@{
+    ViewBag.Title = Model.Title;
+
+    if (Model.LayoutPath != null && !string.IsNullOrEmpty(Model.LayoutPath))
+    {
+        Layout = Model.LayoutPath;
+    }
+    else
+    {
+        Layout = "~/Areas/bcms-Root/Views/Shared/BaseLayout.cshtml";
+    }   
+}
+
+@{
+    // Render regions and contents.
+    Html.RenderSectionContents(this, Model);
+}

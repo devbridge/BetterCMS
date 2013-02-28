@@ -1,21 +1,21 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.pages.properties', 'bcms.messages', 'bcms.grid', 'bcms.redirect'],
-    function ($, bcms, modal, siteSettings, forms, dynamicContent, pageProperties, messages, grid, redirect) {
+define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.pages.properties', 'bcms.grid', 'bcms.redirect', 'bcms.messages'],
+    function ($, bcms, modal, siteSettings, forms, dynamicContent, pageProperties, grid, redirect, messages) {
     'use strict';
 
         var page = { },            
             selectors = {
-                editPermalink: '#bcms-addnewpage-editpermalink',
+                editPermalink: '#bcms-page-editpermalink',
                 editPermalinkBox: '.bcms-edit-urlpath-box',
                 editPermalinkClose: 'div.bcms-edit-urlpath-box .bcms-tip-close, div.bcms-edit-urlpath-box .bcms-btn-links-small',
                 editPermalinkSave: '#bcms-save-permalink',
-                permalinkHiddenField: '#bcms-page-permalink',
-                permalinkEditField: '#bcms-page-permalink-edit',
-                permalinkInfoField: '#bcms-page-permalink-info',
-                addNewPageTitleInput: '#PageTitle',
+                editPermalinkHiddenField: '#bcms-page-permalink',
+                editPermalinkEditField: '#bcms-page-permalink-edit',
+                editPermalinkInfoField: '#bcms-page-permalink-info',
 
+                addNewPageTitleInput: '#PageTitle',
                 addNewPageCloseInfoMessage: '#bcms-addnewpage-closeinfomessage',
                 addNewPageCloseInfoMessageBox: '.bcms-info-message-box',
                 addNewPageTemplateSelect: '.bcms-btn-grid',
@@ -29,12 +29,16 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
 
                 siteSettingsPagesListForm: '#bcms-pages-form',
                 siteSettingsPagesSearchButton: '#bcms-pages-search-btn',
+                siteSettingsPagesSearchField: '.bcms-search-query',
                 siteSettingsPageCreateButton: '#bcms-create-page-button',
                 siteSettingsPageEditButton: '.bcms-grid-item-edit-button',
                 siteSettingsPageDeleteButton: '.bcms-grid-item-delete-button',
                 siteSettingsPageRowTemplate: '#bcms-pages-list-row-template',
                 siteSettingsPageBooleanTemplateTrue: '#bcms-boolean-true-template',
                 siteSettingsPageBooleanTemplateFalse: '#bcms-boolean-false-template',
+                siteSettingsPageStatusTemplatePublished: '#bcms-pagestatus-published-template',
+                siteSettingsPageStatusTemplateUnpublished: '#bcms-pagestatus-unpublished-template',
+                siteSettingsPageStatusTemplateDraft: '#bcms-pagestatus-draft-template',
                 siteSettingsPageRowTemplateFirstRow: 'tr:first',
                 siteSettingsPageParentRow: 'tr:first',
                 siteSettingsPagesTableFirstRow: 'table.bcms-tables > tbody > tr:first',
@@ -43,7 +47,7 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 siteSettingPageTitleCell: '.bcms-page-title',
                 siteSettingPageCreatedCell: '.bcms-page-created',
                 siteSettingPageModifiedCell: '.bcms-page-modified',
-                siteSettingPageIsPublishedCell: '.bcms-page-ispublished',
+                siteSettingPageStatusCell: '.bcms-page-ispublished',
                 siteSettingPageHasSeoCell: '.bcms-page-hasseo',
             },        
             links = {
@@ -80,37 +84,52 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
     page.globalization = globalization;
     page.senderId = 0;
 
-    /**
-    * Initializes AddNewPage dialog events.
-    */
-    page.initAddNewPageDialogEvents = function (dialog) {
+    function initializePermalinkBox(dialog, addPrefix) {
         pageUrlManuallyEdited = false;
         
-        dialog.container.find(selectors.editPermalink).on('click', function() {
+        dialog.container.find(selectors.editPermalink).on('click', function () {
             page.showAddNewPageEditPermalinkBox(dialog);
         });
 
-        dialog.container.find(selectors.editPermalinkClose).on('click', function() {
+        dialog.container.find(selectors.editPermalinkClose).on('click', function () {
             page.closeAddNewPageEditPermalinkBox(dialog);
         });
-        
+
         dialog.container.find(selectors.editPermalinkSave).on('click', function () {
             page.saveAddNewPageEditPermalinkBox(dialog);
         });
 
         dialog.container.find(selectors.addNewPageTitleInput).on('keyup', function () {
-            page.changeUrlSlug(dialog);
+            page.changeUrlSlug(dialog, addPrefix);
         });
 
-        dialog.container.find(selectors.permalinkEditField).on('keyup', function () {
+        dialog.container.find(selectors.editPermalinkEditField).on('keyup', function () {
             pageUrlManuallyEdited = true;
         });
-
+        
         dialog.container.find(selectors.addNewPageForm).on('submit', function () {
-            if (!dialog.container.find(selectors.permalinkEditField).valid()) {
+            if (!dialog.container.find(selectors.editPermalinkEditField).valid()) {
                 page.showAddNewPageEditPermalinkBox(dialog);
             }
         });
+        
+        bcms.preventInputFromSubmittingForm(dialog.container.find(selectors.editPermalinkEditField), {
+            preventedEnter: function () {
+                dialog.container.find(selectors.editPermalinkEditField).blur();
+                page.saveAddNewPageEditPermalinkBox(dialog);
+            },
+            preventedEsc: function () {
+                dialog.container.find(selectors.editPermalinkEditField).blur();
+                page.closeAddNewPageEditPermalinkBox(dialog);
+            }
+        });
+    }
+
+    /**
+    * Initializes AddNewPage dialog events.
+    */
+    page.initAddNewPageDialogEvents = function (dialog) {
+        initializePermalinkBox(dialog, true);
 
         var infoMessageClosed = localStorage.getItem(keys.addNewPageInfoMessageClosed);
         if (infoMessageClosed && infoMessageClosed === '1') {
@@ -133,17 +152,6 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
 
             modal.imagePreview(url, alt);
         });
-        
-        bcms.preventInputFromSubmittingForm(dialog.container.find(selectors.permalinkEditField), {
-            preventedEnter: function () {
-                dialog.container.find(selectors.permalinkEditField).blur();
-                page.saveAddNewPageEditPermalinkBox(dialog);
-            },
-            preventedEsc: function () {
-                dialog.container.find(selectors.permalinkEditField).blur();
-                page.closeAddNewPageEditPermalinkBox(dialog);
-            }
-        });
     };
 
     /**
@@ -152,17 +160,17 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
     page.showAddNewPageEditPermalinkBox = function (dialog) {
         dialog.container.find(selectors.editPermalinkBox).show();
         dialog.container.find(selectors.editPermalink).hide();
-        dialog.container.find(selectors.permalinkEditField).focus();
+        dialog.container.find(selectors.editPermalinkEditField).focus();
     };
 
     /**
     * Sets changed permalink value in PageProperties dialog
     */
     page.saveAddNewPageEditPermalinkBox = function (dialog) {
-        if ($(selectors.permalinkEditField).valid()) {
-            var value = dialog.container.find(selectors.permalinkEditField).val();
-            dialog.container.find(selectors.permalinkHiddenField).val(value);
-            dialog.container.find(selectors.permalinkInfoField).html(value ? value : "&nbsp;");
+        if ($(selectors.editPermalinkEditField).valid()) {
+            var value = dialog.container.find(selectors.editPermalinkEditField).val();
+            dialog.container.find(selectors.editPermalinkHiddenField).val(value);
+            dialog.container.find(selectors.editPermalinkInfoField).html(value ? value : "&nbsp;");
 
             page.hideAddNewPageEditPermalinkBox(dialog);
         }
@@ -172,8 +180,10 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
     * Closes edit permalink box in AddNewPage dialog.
     */
     page.closeAddNewPageEditPermalinkBox = function (dialog) {
-        var value = dialog.container.find(selectors.permalinkHiddenField).val();
-        dialog.container.find(selectors.permalinkEditField).val(value);
+        var value = dialog.container.find(selectors.editPermalinkHiddenField).val(),
+            permalinkEditField = dialog.container.find(selectors.editPermalinkEditField);
+        permalinkEditField.val(value);
+        permalinkEditField.blur();
 
         page.hideAddNewPageEditPermalinkBox(dialog);
     };
@@ -219,7 +229,7 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
         var isPublished = sender.val() == "publish",
             data = {PageId: bcms.pageId, IsPublished: isPublished},
             onComplete = function (json) {
-                messages.showMessages(json);
+                modal.showMessages(json);
                 if (json.Success) {
                     setTimeout(function() {
                         bcms.reload();
@@ -244,17 +254,18 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
     };
 
     page.openCreatePageDialog = function (postSuccess) {
-        var permalinkValue;
+        var permalinkValue,
+            url = $.format(links.loadAddNewPageDialogUrl, window.location.pathname);
 
         modal.open({
             title: globalization.addNewPageDialogTitle,
             onLoad: function (dialog) {
-                dynamicContent.bindDialog(dialog, links.loadAddNewPageDialogUrl, {
+                dynamicContent.bindDialog(dialog, url, {
                     contentAvailable: page.initAddNewPageDialogEvents,
 
                     beforePost: function () {
                         if (!pageUrlManuallyEdited) {
-                            var pageUrlField = dialog.container.find(selectors.permalinkEditField);
+                            var pageUrlField = dialog.container.find(selectors.editPermalinkEditField);
                             permalinkValue = pageUrlField.val();
                             pageUrlField.val(null);
                         }
@@ -262,13 +273,13 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
 
                     postError: function () {
                         if (!pageUrlManuallyEdited) {
-                            var pageUrlField = dialog.container.find(selectors.permalinkEditField);
+                            var pageUrlField = dialog.container.find(selectors.editPermalinkEditField);
                             pageUrlField.val(permalinkValue);
                         }
                     },
 
                     postSuccess: function (data) {
-                        if (bcms.trigger(bcms.events.pageCreated, { Data: data.Data, Callback: postSuccess }) <= 0) {
+                        if (bcms.trigger(bcms.events.pageCreated, { Data: data, Callback: postSuccess }) <= 0) {
                             if (postSuccess && $.isFunction(postSuccess)) {
                                 postSuccess(data);
                             }
@@ -281,8 +292,8 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
 
     page.addNewPage = function() {
         page.openCreatePageDialog(function (data) {
-            if (data.Data && data.Data.PageUrl) {
-                redirect.RedirectWithAlert(data.Data.PageUrl);
+            if (data.Data && data.Data.Data && data.Data.Data.PageUrl) {
+                redirect.RedirectWithAlert(data.Data.Data.PageUrl);
             }
         });
     };
@@ -321,20 +332,31 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
     /**
     * Changes page slug
     */
-    page.changeUrlSlug = function (dialog) {
-        var oldText = dialog.container.find(selectors.addNewPageTitleInput).val().trim();
+    page.changeUrlSlug = function (dialog, addPrefix) {
+        var oldText = $.trim(dialog.container.find(selectors.addNewPageTitleInput).val());
         setTimeout(function() {
-            var text = dialog.container.find(selectors.addNewPageTitleInput).val().trim(),
+            var text = $.trim(dialog.container.find(selectors.addNewPageTitleInput).val()),
                 senderId = page.senderId++,
                 onComplete = function (json) {
                     if (json && json.SenderId == senderId && json.Url) {
                         var slug = json.Url,
-                            prefix = window.location.pathname,
-                            url = prefix + (slug ? slug + '/' : '');
+                            url = (slug ? slug + '/' : '');
 
-                        dialog.container.find(selectors.permalinkEditField).val(url);
-                        dialog.container.find(selectors.permalinkHiddenField).val(url);
-                        dialog.container.find(selectors.permalinkInfoField).html(url);
+                        if (addPrefix) {
+                            var prefix = window.location.pathname;
+                            if (prefix.substr(prefix.length - 1, 1) != '/') {
+                                prefix += '/';
+                            }
+                            url = prefix + url;
+                        }
+                        
+                        if (url.substr(0, 1) != '/') {
+                            url = '/' + url;
+                        }
+
+                        dialog.container.find(selectors.editPermalinkEditField).val(url);
+                        dialog.container.find(selectors.editPermalinkHiddenField).val(url);
+                        dialog.container.find(selectors.editPermalinkInfoField).html(url);
                         
                         pageUrlManuallyEdited = false;
                     }
@@ -380,12 +402,12 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
 
         form.on('submit', function (event) {
             event.preventDefault();
-            page.searchSiteSettingsPages(form);
+            page.searchSiteSettingsPages(form, container);
             return false;
         });
 
         form.find(selectors.siteSettingsPagesSearchButton).on('click', function () {
-            page.searchSiteSettingsPages(form);
+            page.searchSiteSettingsPages(form, container);
         });
 
         page.initializeSiteSettingsPagesListItems(container);
@@ -404,6 +426,12 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             page.editSiteSettingsPage(editButton);
         });
 
+        container.find(selectors.siteSettingPageTitleCell).on('click', function (event) {
+            bcms.stopEventPropagation(event);
+            var url = $(this).data('url');
+            window.open(url);
+        });
+
         container.find(selectors.siteSettingsPageDeleteButton).on('click', function (event) {
             bcms.stopEventPropagation(event);
             page.deleteSiteSettingsPage($(this), container);
@@ -413,10 +441,14 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
     /**
     * Search site settings pages
     */
-    page.searchSiteSettingsPages = function(form) {
+    page.searchSiteSettingsPages = function(form, container) {
         grid.submitGridForm(form, function (data) {
             siteSettings.setContent(data);
             page.initializeSiteSettingsPagesList(data);
+            var searchInput = container.find(selectors.siteSettingsPagesSearchField);           
+            var val = searchInput.val();
+            searchInput.focus().val("");
+            searchInput.val(val);            
         });
     };
 
@@ -429,16 +461,18 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 var template = $(selectors.siteSettingsPageRowTemplate),
                     newRow = $(template.html()).find(selectors.siteSettingsPageRowTemplateFirstRow);
 
-                newRow.find(selectors.siteSettingPageTitleCell).html(data.Data.Title);
-                newRow.find(selectors.siteSettingPageCreatedCell).html(data.Data.CreatedOn);
-                newRow.find(selectors.siteSettingPageModifiedCell).html(data.Data.ModifiedOn);
+                newRow.find(selectors.siteSettingPageTitleCell).html(data.Data.Data.Title);
+                newRow.find(selectors.siteSettingPageCreatedCell).html(data.Data.Data.CreatedOn);
+                newRow.find(selectors.siteSettingPageModifiedCell).html(data.Data.Data.ModifiedOn);
 
-                page.siteSettingsSetBooleanTemplate(newRow.find(selectors.siteSettingPageIsPublishedCell), data.Data.IsPublished);
-                page.siteSettingsSetBooleanTemplate(newRow.find(selectors.siteSettingPageHasSeoCell), data.Data.HasSEO);
-
-                newRow.find(selectors.siteSettingsPageEditButton).data('id', data.Data.PageId);
-                newRow.find(selectors.siteSettingsPageDeleteButton).data('id', data.Data.PageId);
-                newRow.find(selectors.siteSettingsPageDeleteButton).data('version', data.Data.Version);
+                page.siteSettingsPageStatusTemplate(newRow.find(selectors.siteSettingPageStatusCell), data.Data.Data.PageStatus);
+                page.siteSettingsSetBooleanTemplate(newRow.find(selectors.siteSettingPageHasSeoCell), data.Data.Data.HasSEO);
+                messages.refreshBox(selectors.siteSettingsPagesListForm, data.Data);
+                
+                newRow.find(selectors.siteSettingPageTitleCell).data('url', data.Data.Data.PageUrl);
+                newRow.find(selectors.siteSettingsPageEditButton).data('id', data.Data.Data.PageId);
+                newRow.find(selectors.siteSettingsPageDeleteButton).data('id', data.Data.Data.PageId);
+                newRow.find(selectors.siteSettingsPageDeleteButton).data('version', data.Data.Data.Version);
 
                 newRow.insertBefore($(selectors.siteSettingsPagesTableFirstRow, container));
 
@@ -459,6 +493,24 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
     };
 
     /**
+    * Creates html for page status value, using given PageStatus template
+    */
+    page.siteSettingsPageStatusTemplate = function (container, value) {
+        var template;
+        
+        if (value == 2) {
+            template = $(selectors.siteSettingsPageStatusTemplateDraft);
+        }   else if (value == 3) {
+            template = $(selectors.siteSettingsPageStatusTemplatePublished);
+        } else {
+            template = $(selectors.siteSettingsPageStatusTemplateUnpublished);
+        }
+        
+        var html = $(template.html());
+        container.html(html);
+    };
+
+    /**
     * Opens page edit form from site settings pages list
     */
     page.editSiteSettingsPage = function (self) {
@@ -472,7 +524,7 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 row.find(selectors.siteSettingPageCreatedCell).html(data.Data.CreatedOn);
                 row.find(selectors.siteSettingPageModifiedCell).html(data.Data.ModifiedOn);
                 
-                page.siteSettingsSetBooleanTemplate(row.find(selectors.siteSettingPageIsPublishedCell), data.Data.IsPublished);
+                page.siteSettingsPageStatusTemplate(row.find(selectors.siteSettingPageStatusCell), data.Data.PageStatus);
                 page.siteSettingsSetBooleanTemplate(row.find(selectors.siteSettingPageHasSeoCell), data.Data.HasSEO);
             }
         });
@@ -484,26 +536,56 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
     page.deleteSiteSettingsPage = function (self, container) {
         var id = self.data('id');
 
-        page.deletePage(id, function () {
+        page.deletePage(id, function (json) {
             self.parents(selectors.siteSettingsPageParentRow).remove();
-            
+            messages.refreshBox(selectors.siteSettingsPagesListForm, json);
             grid.showHideEmptyRow(container);
         });
     };
 
-    page.clonePage = function() {
+    /**
+    * Opens dialog for clone the page
+    */
+    page.clonePage = function () {
+        var permalinkValue;
+
         modal.open({
             title: globalization.clonePageDialogTitle,
             acceptTitle: globalization.cloneButtonTitle,
             onLoad: function (dialog) {
                 var url = $.format(links.clonePageDialogUrl, bcms.pageId);
                 dynamicContent.bindDialog(dialog, url, {
+                    contentAvailable: function () {
+                        initializePermalinkBox(dialog, false);
+                    },
+
+                    beforePost: function () {
+                        if (!pageUrlManuallyEdited) {
+                            var pageUrlField = dialog.container.find(selectors.editPermalinkEditField);
+                            permalinkValue = pageUrlField.val();
+                            pageUrlField.val(null);
+                        }
+                    },
+
+                    postError: function () {
+                        if (!pageUrlManuallyEdited) {
+                            var pageUrlField = dialog.container.find(selectors.editPermalinkEditField);
+                            pageUrlField.val(permalinkValue);
+                        }
+                    },
+
                     postSuccess: function (json) {
-                        messages.showMessages(json);
-                        if (json.DataType === 'redirect') {                            
-                            window.setTimeout(function() {
-                                bcms.redirect(json.Data);
-                            }, 500);
+                        if (json.Success && json.Data && (json.Data.Url || json.Data.PageUrl)) {
+                            var postSuccess = function(data) {
+                                redirect.RedirectWithAlert(json.Data.Url || json.Data.PageUrl);
+                            };
+                            if (bcms.trigger(bcms.events.pageCreated, { Data: json.Data, Callback: postSuccess }) <= 0) {
+                                if (postSuccess && $.isFunction(postSuccess)) {
+                                    postSuccess(json.Data);
+                                }
+                            }
+                        } else {
+                            modal.showMessages(json);
                         }
                     }
                 });
@@ -527,6 +609,20 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
 
         $.validator.unobtrusive.adapters.add("pageurlvalidation", ['pattern'], function (options) {
             options.rules["jqpageurlvalidation"] = { message: options.message, pattern: options.params.pattern };
+        });
+        
+        $.validator.addMethod("jqenddatevalidation", function (value, element, params) {
+            var startDateString = $('#' + params.startdateproperty).val();
+            if (value != null && value != "" && startDateString != null && startDateString != "") {
+                return new Date(startDateString) <= new Date(value);
+            }
+            return true;
+        }, function (params) {
+            return params.message;
+        });
+
+        $.validator.unobtrusive.adapters.add("enddatevalidation", ['startdateproperty'], function (options) {
+            options.rules["jqenddatevalidation"] = { message: options.message, startdateproperty: options.params.startdateproperty };
         });
     }
 

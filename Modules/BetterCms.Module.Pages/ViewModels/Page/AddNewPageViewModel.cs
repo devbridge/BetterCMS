@@ -20,7 +20,7 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// The page title.
         /// </value>
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "AddNewPageProperties_PageTitle_RequiredMessage")]
-        [StringLength(300, MinimumLength = 1, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "AddNewPageProperties_PageTitle_MaxLengthMessage")]
+        [StringLength(MaxLength.Name, MinimumLength = 1, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "AddNewPageProperties_PageTitle_MaxLengthMessage")]
         public string PageTitle { get; set; }
 
         /// <summary>
@@ -32,6 +32,14 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         [CustomPageUrlValidation]
         [StringLength(MaxLength.Url, MinimumLength = 1, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "AddNewPageProperties_PagePermalink_MaxLengthMessage")]
         public string PageUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the parent page URL.
+        /// </summary>
+        /// <value>
+        /// The parent page URL.
+        /// </value>
+        public string ParentPageUrl { get; set; }
 
         /// <summary>
         /// Gets or sets the templates.

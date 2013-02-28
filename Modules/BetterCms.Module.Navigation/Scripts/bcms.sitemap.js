@@ -1,19 +1,22 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.messages', 'knockout'],
+define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.messages', 'bcms.ko.extenders'],
     function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, ko) {
         'use strict';
 
         var sitemap = {},
             selectors = {
                 sitemapSearchDataBind: "#bcms-sitemap-form",
+                sitemapSearchInput: "bcms-search-input",
                 sitemapAddNodeDataBind: "#bcms-sitemap-addnode",
                 sitemapAddNewPageDataBind: "#bcms-sitemap-addnewpage",
-                sitemapForm: "#bcms-sitemap-form",
+                sitemapForm: ".bcms-sitemap-form",
+                sitemapMessagesContainer: '#bcms-site-settings-placeholder'
             },
             links = {
                 loadSiteSettingsSitemapUrl: null,
+                saveSitemapUrl: null,
                 saveSitemapNodeUrl: null,
                 deleteSitemapNodeUrl: null,
                 sitemapEditDialogUrl: null,
@@ -21,10 +24,12 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             },
             globalization = {
                 sitemapEditorDialogTitle: null,
-                sitemapEditorDialogClose: null,
                 sitemapEditorDialogCustomLinkTitle: null,
                 sitemapAddNewPageDialogTitle: null,
-                sitemapAddNewPageDialogClose: null,
+                sitemapDeleteNodeConfirmationMessage: null,
+                sitemapSomeNodesAreInEditingState: null,
+                sitemapNodeSaveButton: null,
+                sitemapNodeOkButton: null,
             },
             defaultIdValue = '00000000-0000-0000-0000-000000000000',
             DropZoneTypes = {
@@ -33,7 +38,8 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 TopZone: 'topZone',
                 MiddleZone: 'middleZone',
                 BottomZone: 'bottomZone'
-            };
+            },
+            nodeId = 0;
 
         /**
         * Assign objects to module.
@@ -62,8 +68,6 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             var addNodeController = new AddNodeMapController();
             modal.open({
                 title: globalization.sitemapEditorDialogTitle,
-                cancelTitle: globalization.sitemapEditorDialogClose,
-                disableAccept: true,
                 onLoad: function (dialog) {
                     dynamicContent.setContentFromUrl(dialog, links.sitemapEditDialogUrl, {
                         done: function (content) {
@@ -71,8 +75,15 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                         },
                     });
                 },
-                onClose: function () {
-                    sitemap.loadSiteSettingsSitemap();
+                onAccept: function (dialog) {
+                    addNodeController.save(function (json) {
+                        if (json.Success) {
+                            dialog.close();
+                            sitemap.loadSiteSettingsSitemap();
+                        }
+                        sitemap.showMessage(json);
+                    });
+                    return false;
                 }
             });
         };
@@ -80,26 +91,31 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         /**
         * Shows add new page to sitemap dialog.
         */
-        sitemap.loadAddNewPageDialog = function (data) {
-            if (data && data.Data && data.Data.Title && data.Data.PageUrl) {
-                var addPageController = new AddNewPageMapController(data.Data.Title, data.Data.PageUrl);
+        sitemap.loadAddNewPageDialog = function(data) {
+            if (data && data.Data && data.Data.Data && (data.Data.Data.Title || data.Data.Data.PageTitle) && (data.Data.Data.Url || data.Data.Data.PageUrl)) {
+                var addPageController = new AddNewPageMapController(data.Data.Data.Title || data.Data.Data.PageTitle, data.Data.Data.Url || data.Data.Data.PageUrl);
                 modal.open({
                     title: globalization.sitemapAddNewPageDialogTitle,
-                    cancelTitle: globalization.sitemapAddNewPageDialogClose,
-                    disableAccept: true,
-                    onLoad: function (dialog) {
+                    onLoad: function(dialog) {
                         dynamicContent.setContentFromUrl(dialog, links.sitemapAddNewPageDialogUrl, {
-                            done: function (content) {
+                            done: function(content) {
                                 addPageController.initialize(content, dialog);
                             }
                         });
                     },
+                    onAccept: function() {
+                        addPageController.save(function() {
+                            if (data.Callback && $.isFunction(data.Callback)) {
+                                data.Callback(data);
+                            }
+                        });
+                    },
                     onClose: function() {
-                    if (data.Callback && $.isFunction(data.Callback)) {
-                        data.Callback(data);
+                        if (data.Callback && $.isFunction(data.Callback)) {
+                            data.Callback(data);
+                        }
                     }
-                }
-            });
+                });
             }
         };
 
@@ -115,7 +131,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
 
             self.initialize = function(content) {
                 self.container = siteSettings.getModalDialog().container;
-                sitemap.activeMessageContainer = self.container;
+                sitemap.activeMessageContainer = self.container.find(selectors.sitemapMessagesContainer);
                 sitemap.activeLoadingContainer = self.container.find(selectors.sitemapSearchDataBind);
                     
                 sitemap.showMessage(content);
@@ -126,18 +142,19 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                     self.sitemapSearchModel = new SearchSitemapViewModel(sitemapModel);
                     sitemap.activeMapModel = sitemapModel;
 
+                    // Setup settings.
+                    sitemapModel.settings.canEditNode = true;
+                    sitemapModel.settings.canDeleteNode = true;
+                    sitemapModel.settings.canDragNode = false;
+                    sitemapModel.settings.canDropNode = false;
+                    sitemapModel.settings.nodeSaveButtonTitle = globalization.sitemapNodeSaveButton;
+                    sitemapModel.settings.nodeSaveAfterUpdate = true;
+
                     // Bind models.
                     var context = self.container.find(selectors.sitemapSearchDataBind).get(0);
                     if (context) {
                         ko.applyBindings(self.sitemapSearchModel, context);
-
-                        // Update validation.
-                        var form = self.container.find(selectors.sitemapForm);
-                        if ($.validator && $.validator.unobtrusive) {
-                            form.removeData("validator");
-                            form.removeData("unobtrusiveValidation");
-                            $.validator.unobtrusive.parse(form);
-                        }
+                        updateValidation();
                     }
                 }
             };
@@ -156,7 +173,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 sitemap.activeMessageContainer = self.container;
                 sitemap.activeLoadingContainer = self.container.find(selectors.sitemapAddNodeDataBind);
 
-                messages.refreshBox(self.container, content);
+                sitemap.showMessage(content);
                 if (content.Success) {
                     // Create data models.
                     var sitemapModel = new SitemapViewModel();
@@ -165,19 +182,25 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                     self.pageLinksModel.parseJsonLinks(content.Data.PageLinks);
                     sitemap.activeMapModel = sitemapModel;
 
+                    // Setup settings.
+                    sitemapModel.settings.canEditNode = true;
+                    sitemapModel.settings.canDeleteNode = true;
+                    sitemapModel.settings.canDragNode = true;
+                    sitemapModel.settings.canDropNode = true;
+                    sitemapModel.settings.nodeSaveButtonTitle = globalization.sitemapNodeOkButton;
+                    sitemapModel.settings.nodeSaveAfterUpdate = false;
+
                     // Bind models.
                     var context = self.container.find(selectors.sitemapAddNodeDataBind).get(0);
                     if (context) {
                         ko.applyBindings(self.pageLinksModel, context);
-
-                        // Update validation.
-                        var form = self.container.find('FORM');
-                        if ($.validator && $.validator.unobtrusive) {
-                            form.removeData("validator");
-                            form.removeData("unobtrusiveValidation");
-                            $.validator.unobtrusive.parse(form);
-                        }
+                        updateValidation();
                     }
+                }
+            };
+            self.save = function (onDoneCallback) {
+                if (sitemap.activeMapModel) {
+                    sitemap.activeMapModel.save(onDoneCallback);
                 }
             };
         }
@@ -199,7 +222,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 sitemap.activeMessageContainer = self.container;
                 sitemap.activeLoadingContainer = self.container.find(selectors.sitemapAddNewPageDataBind);
 
-                messages.refreshBox(self.container, content);
+                sitemap.showMessage(content);
                 if (content.Success) {
                     var onSkip = function () {
                         dialog.close();
@@ -209,22 +232,27 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                     var sitemapModel = new SitemapViewModel();
                     sitemapModel.parseJsonNodes(content.Data.RootNodes);
                     self.newPageModel = new AddNewPageViewModel(sitemapModel, self.pageLinkModel, onSkip);
-                    
                     sitemap.activeMapModel = sitemapModel;
+
+                    // Setup settings.
+                    sitemapModel.settings.canEditNode = false;
+                    sitemapModel.settings.canDeleteNode = false;
+                    sitemapModel.settings.canDragNode = false;
+                    sitemapModel.settings.canDropNode = true;
+                    sitemapModel.settings.nodeSaveButtonTitle = globalization.sitemapNodeSaveButton;
+                    sitemapModel.settings.nodeSaveAfterUpdate = false;
 
                     // Bind models.
                     var context = self.container.find(selectors.sitemapAddNewPageDataBind).get(0);
                     if (context) {
                         ko.applyBindings(self.newPageModel, context);
-
-                        // Update validation.
-                        var form = self.container.find('FORM');
-                        if ($.validator && $.validator.unobtrusive) {
-                            form.removeData("validator");
-                            form.removeData("unobtrusiveValidation");
-                            $.validator.unobtrusive.parse(form);
-                        }
+                        updateValidation();
                     }
+                }
+            };
+            self.save = function (onDoneCallback) {
+                if (sitemap.activeMapModel) {
+                    sitemap.activeMapModel.save(onDoneCallback);
                 }
             };
         }
@@ -260,7 +288,10 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                         setup = {
                             revert: true,
                             revertDuration: 0,
-                            appendTo: "body",
+                            refreshPositions: true,
+                            scroll: true,
+                            containment: $(selectors.sitemapAddNodeDataBind).get(0) || $(selectors.sitemapAddNewPageDataBind).get(0),
+                            appendTo: $(selectors.sitemapAddNodeDataBind).get(0) || $(selectors.sitemapAddNewPageDataBind).get(0),
                             helper: function () {
                                 if (dragObject.isExpanded) {
                                     dragObject.isExpanded(false);
@@ -282,8 +313,11 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                                 }
                             }
                         };
+                    if (!dragObject.superDraggable() && dragObject.getSitemap && !dragObject.getSitemap().settings.canDragNode) {
+                        return;
+                    }
                     $(element).draggable(setup).data("dragObject", dragObject);
-                    $(element).disableSelection();
+                    //$(element).disableSelection(); //commented because it is not possible to put pointer using mouse to URL field.
                 }
             };
         }
@@ -307,31 +341,31 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                             drop: function (event, ui) {
                                 var forFix = $(ui.draggable).data('draggable'),
                                     dragObject = $(ui.draggable).data("dragObject"),
-                                    updateOrder = true;
+                                    originalDragObject = dragObject;
                                 ui.helper.remove();
 
-                                if (dragObject.parentNode) {
-                                    dragObject.parentNode.childNodes.remove(dragObject);
+                                if (dragObject.parentNode && dragObject.parentNode()) {
+                                    dragObject.parentNode().childNodes.remove(dragObject);
                                 } else {
                                     // Create node from page link.
                                     var node = new NodeViewModel();
                                     node.title(dragObject.title());
                                     node.url(dragObject.url());
                                     if (dropZoneType == DropZoneTypes.EmptyListZone || dropZoneType == DropZoneTypes.MiddleZone) {
-                                        node.parentNode = dropZoneObject;
+                                        node.parentNode(dropZoneObject);
                                     } else {
-                                        node.parentNode = dropZoneObject.parentNode;
+                                        node.parentNode(dropZoneObject.parentNode());
                                     }
                                     if (dragObject.isCustom()) {
-                                        updateOrder = false;
                                         node.startEditSitemapNode();
                                         node.callbackAfterSuccessSaving = function () {
                                             sitemap.activeMapModel.updateNodesOrderAndParent();
                                         };
                                         node.callbackAfterFailSaving = function (newNode) {
-                                            newNode.parentNode.childNodes.remove(newNode);
+                                            newNode.parentNode().childNodes.remove(newNode);
                                         };
                                     }
+                                    node.superDraggable(dragObject.superDraggable());
                                     dragObject = node;
                                 }
                                 
@@ -343,30 +377,74 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                                     dropZoneObject.childNodes.splice(0, 0, dragObject);
                                 }
                                 else if (dropZoneType == DropZoneTypes.TopZone) {
-                                    index = dropZoneObject.parentNode.childNodes().indexOf(dropZoneObject);
-                                    dropZoneObject.parentNode.childNodes.splice(index, 0, dragObject);
+                                    index = $.inArray(dropZoneObject, dropZoneObject.parentNode().childNodes());
+                                    dropZoneObject.parentNode().childNodes.splice(index, 0, dragObject);
                                 }
                                 else if (dropZoneType == DropZoneTypes.MiddleZone) {
                                     dropZoneObject.childNodes.splice(0, 0, dragObject);
                                     dropZoneObject.isExpanded(true);
                                 }
                                 else if (dropZoneType == DropZoneTypes.BottomZone) {
-                                    index = dropZoneObject.parentNode.childNodes().indexOf(dropZoneObject);
-                                    dropZoneObject.parentNode.childNodes.splice(index + 1, 0, dragObject);
+                                    index = $.inArray(dropZoneObject, dropZoneObject.parentNode().childNodes());
+                                    dropZoneObject.parentNode().childNodes.splice(index + 1, 0, dragObject);
                                 }
                                 dropZoneObject.activeZone(DropZoneTypes.None);
                                 
-                                if (updateOrder) {
-                                    sitemap.activeMapModel.updateNodesOrderAndParent();
-                                }
+                                sitemap.activeMapModel.updateNodesOrderAndParent();
 
                                 // Fix for jQuery drag object.
                                 $(ui.draggable).data('draggable', forFix);
+                                
+                                if (originalDragObject.dropped && $.isFunction(originalDragObject.dropped)) {
+                                    originalDragObject.dropped(dragObject);
+                                }
+                                
+                                updateValidation();
                             }
                         };
+                    if (dropZoneObject.getSitemap && !dropZoneObject.getSitemap().settings.canDropNode) {
+                        return;
+                    }
                     $(element).droppable(setup);
                 }
             };
+        }
+
+        /**
+        * Helper function to update nodes in list.
+        */
+        function updateFirstLastNode(nodes) {
+            var firstNotDeletedNode = null,
+                lastNotDeletedNode = null;
+            for (var i = 0; i < nodes.length; i++) {
+                var node = nodes[i];
+                if (!node.isDeleted() && !node.isBeingDragged()) {
+                    if (firstNotDeletedNode == null) {
+                        firstNotDeletedNode = node;
+                    }
+                    lastNotDeletedNode = node;
+                }
+                node.isFirstNode(false);
+                node.isLastNode(false);
+            }
+            if (firstNotDeletedNode != null) {
+                firstNotDeletedNode.isFirstNode(true);
+            }
+            if (lastNotDeletedNode != null) {
+                lastNotDeletedNode.isLastNode(true);
+            }
+        }
+        
+        /**
+        * Helper function to update validation.
+        */
+        function updateValidation() {
+            var form = $(selectors.sitemapForm);
+            if ($.validator && $.validator.unobtrusive) {
+                form.removeData("validator");
+                form.removeData("unobtrusiveValidation");
+                $.validator.unobtrusive.parse(form);
+            }
         }
         // --------------------------------------------------------------------
         
@@ -381,12 +459,14 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             self.sitemap = sitemapViewModel;
 
             self.searchForNodes = function() {
-                if (self.sitemap) {
+                if (self.sitemap && self.sitemap.hasChildNodes()) {
                     var showAll = $.trim(self.searchQuery()).length === 0,
                         searchQuery = self.searchQuery().toLowerCase();
 
-                    self.searchInNodes(self.sitemap.childNodes(), searchQuery, showAll);
+                    var hasResult = self.searchInNodes(self.sitemap.childNodes(), searchQuery, showAll);
+                    self.sitemap.showHasNoDataMessage(!(hasResult || showAll));
                 }
+                document.getElementById(selectors.sitemapSearchInput).focus();
             };
             self.searchInNodes = function (nodes, searchQuery, showAll) {
                 var hasResult = false;
@@ -426,8 +506,23 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             var self = this;
             self.id = function() { return defaultIdValue; };
             self.childNodes = ko.observableArray([]);
+            self.childNodes.subscribe(updateFirstLastNode);
             self.someNodeIsOver = ko.observable(false);     // Someone is dragging some node over the sitemap, but not over the particular node.
             self.activeZone = ko.observable(DropZoneTypes.None);
+            self.showHasNoDataMessage = ko.observable(false);
+
+            self.settings = {
+                canEditNode: false,
+                canDeleteNode: false,
+                canDragNode: false,
+                canDropNode: false,
+                nodeSaveButtonTitle: globalization.sitemapNodeOkButton,
+                nodeSaveAfterUpdate: false,
+            };
+
+            self.getSitemap = function () {
+                return self;
+            };
 
             // Expanding or collapsing nodes.
             self.expandAll = function () {
@@ -444,6 +539,16 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 }
             };
             
+            self.hasChildNodes = function () {
+                // Has at least one not deleted child node.
+                for (var i in self.childNodes()) {
+                    if (!self.childNodes()[i].isDeleted()) {
+                        return true;
+                    }
+                }
+                return false;
+            };
+            
             // Updating display order and parent node info.
             self.updateNodesOrderAndParent = function () {
                 self.updateNodes(self.childNodes(), self);
@@ -453,16 +558,14 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                     var node = nodes[i],
                         saveIt = false;
                     
-                    node.isFirstNode(i == 0);
-
                     if (node.displayOrder() != i) {
                         saveIt = true;
                         node.displayOrder(i);
                     }
 
-                    if (node.parentNode != parent) {
+                    if (node.parentNode() != parent) {
                         saveIt = true;
-                        node.parentNode = parent;
+                        node.parentNode(parent);
                     }
 
                     if (saveIt || node.id() == defaultIdValue) {
@@ -472,18 +575,84 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                     self.updateNodes(node.childNodes(), node);
                 }
             };
-            
-            // Parse.
+
+            self.focusOnActiveNode = function(nodes) {
+                for (var i in nodes) {
+                    if (nodes[i].isActive()) {
+                        $($('input', '#' + nodes[i].containerId).get(0)).focus();
+                        return true;
+                    }
+                    if (self.focusOnActiveNode(nodes[i].childNodes())) {
+                        nodes[i].isExpanded(true);
+                        return true;
+                    }
+                }
+                return false;
+            };
+            self.save = function (onDoneCallback) {
+                if (self.focusOnActiveNode(self.childNodes())) {
+                    var messagesBox = messages.box({ container: sitemap.activeMessageContainer });
+                    messagesBox.clearMessages();
+                    messagesBox.addWarningMessage(globalization.sitemapSomeNodesAreInEditingState);
+                    return;
+                }
+
+                var dataToSend = JSON.stringify(self.composeJsonNodes()),
+                    onSaveCompleted = function (json) {
+                        messages.refreshBox(sitemap.activeMessageContainer, json);
+                        sitemap.showLoading(false);
+                        if (onDoneCallback && $.isFunction(onDoneCallback)) {
+                            onDoneCallback(json);
+                        }
+                    };
+
+                $.ajax({
+                    url: links.saveSitemapUrl,
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    cache: false,
+                    data: dataToSend,
+                    beforeSend: function () { sitemap.showLoading(true); }
+                })
+                    .done(function (json) {
+                        onSaveCompleted(json);
+                    })
+                    .fail(function (response) {
+                        onSaveCompleted(bcms.parseFailedResponse(response));
+                    });
+            };
+
+            // Parsing / composing.
             self.parseJsonNodes = function (jsonNodes) {
                 var nodes = [];
                 for (var i = 0; i < jsonNodes.length; i++) {
                     var node = new NodeViewModel();
                     node.fromJson(jsonNodes[i]);
-                    node.parentNode = self;
-                    node.isFirstNode(i == 0);
+                    node.parentNode(self);
                     nodes.push(node);
                 }
                 self.childNodes(nodes);
+            };
+            self.composeJsonNodes = function () {
+                return self.nodesToJson(self.childNodes());
+            };
+            self.nodesToJson = function(nodes) {
+                var result = [];
+                for (var i in nodes) {
+                    var node = nodes[i];
+                    result.push({
+                            Id: node.id(),
+                            Version: node.version(),
+                            Title: node.title(),
+                            Url: node.url(),
+                            DisplayOrder: node.displayOrder(),
+                            IsDeleted: node.isDeleted(),
+                            ChildNodes: self.nodesToJson(node.childNodes()),
+                        }
+                    );
+                }
+                return result;
             };
         }
         
@@ -499,8 +668,15 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             self.title = ko.observable();
             self.url = ko.observable();
             self.displayOrder = ko.observable(0);
+            self.isDeleted = ko.observable(false);
+            self.isDeleted.subscribe(function () {
+                if (self.parentNode()) {
+                    updateFirstLastNode(self.parentNode().childNodes());
+                }
+            });
             self.childNodes = ko.observableArray([]);
-            self.parentNode = null;
+            self.childNodes.subscribe(updateFirstLastNode);
+            self.parentNode = ko.observable();
             
             // For behavior.
             self.isActive = ko.observable(false);           // If TRUE - show edit fields.
@@ -509,15 +685,27 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 self.isExpanded(!self.isExpanded());
             };
             self.isBeingDragged = ko.observable(false);     // Someone is dragging the node.
+            self.isBeingDragged.subscribe(function () {
+                if (self.parentNode()) {
+                    updateFirstLastNode(self.parentNode().childNodes());
+                }
+            });
             self.activeZone = ko.observable(DropZoneTypes.None);
             self.isFirstNode = ko.observable(false);
+            self.isLastNode = ko.observable(false);
             self.hasChildNodes = function () {
-                return self.childNodes().length > 0;
+                // Has at least one not deleted child node.
+                for (var i in self.childNodes()) {
+                    if (!self.childNodes()[i].isDeleted()) {
+                        return true;
+                    }
+                }
+                return false;
             };
-            self.containerId = function () {
-                // User for validation.
-                return "id-" + self.id();
-            };
+            self.superDraggable = ko.observable(false);     // Used to force dragging if sitemap settings !canDragNode.
+
+            // User for validation.
+            self.containerId = 'node-' + nodeId++;
             
             // For search results.
             self.isVisible = ko.observable(true);
@@ -534,16 +722,22 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 self.title(self.titleOldValue);
                 self.url(self.urlOldValue);
                 if (self.id() == defaultIdValue) {
-                    self.parentNode.childNodes.remove(self);
+                    self.parentNode().childNodes.remove(self);
                 }
             };
             self.saveSitemapNodeWithValidation = function () {
-                if ($('input', '#' + self.containerId()).valid()) {
+                var inputFields = $('input', '#' + self.containerId);
+                if (inputFields.valid()) {
                     self.saveSitemapNode();
+                    inputFields.blur();
                     self.isActive(false);
                 }
             };
             self.saveSitemapNode = function () {
+                if (self.getSitemap() == null || !self.getSitemap().settings.nodeSaveAfterUpdate) {
+                    return;
+                }
+                
                 var params = self.toJson(),
                     onSaveCompleted = function (json) {
                         sitemap.showMessage(json);
@@ -578,31 +772,57 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                     });
             };
             self.deleteSitemapNode = function () {
-                var params = self.toJson(),
-                    onDeleteCompleted = function (json) {
-                        sitemap.showMessage(json);
-                        if (json.Success) {
-                            self.parentNode.childNodes.remove(self);
+                // Show confirmation dialog.
+                var message = $.format(globalization.sitemapDeleteNodeConfirmationMessage, self.title()),
+                    confirmDialog = modal.confirm({
+                        content: message,
+                        onAccept: function () {
+                            if (self.getSitemap() == null || !self.getSitemap().settings.nodeSaveAfterUpdate) {
+                                self.isDeleted(true);
+                                confirmDialog.close();
+                                return false;
+                            }
+
+                            var params = self.toJson(),
+                                onDeleteCompleted = function(json) {
+                                    sitemap.showMessage(json);
+                                    try {
+                                        if (json.Success) {
+                                            self.isDeleted(true);
+                                            self.parentNode().childNodes.remove(self);
+                                        }
+                                        sitemap.showLoading(false);
+                                    } finally {
+                                        confirmDialog.close();
+                                    }
+                                };
+                            sitemap.showLoading(true);
+                            $.ajax({
+                                url: links.deleteSitemapNodeUrl,
+                                type: 'POST',
+                                dataType: 'json',
+                                cache: false,
+                                data: params
+                            })
+                                .done(function (json) {
+                                    onDeleteCompleted(json);
+                                })
+                                .fail(function (response) {
+                                    onDeleteCompleted(bcms.parseFailedResponse(response));
+                                });
+                            return false;
                         }
-                        sitemap.showLoading(false);
-                    };
-                sitemap.showLoading(true);
-                $.ajax({
-                    url: links.deleteSitemapNodeUrl,
-                    type: 'POST',
-                    dataType: 'json',
-                    cache: false,
-                    data: params
-                })
-                    .done(function (json) {
-                        onDeleteCompleted(json);
-                    })
-                    .fail(function (response) {
-                        onDeleteCompleted(bcms.parseFailedResponse(response));
                     });
             };
             self.callbackAfterSuccessSaving = null;
             self.callbackAfterFailSaving = null;
+
+            self.getSitemap = function() {
+                if (self.parentNode() != null) {
+                    return self.parentNode().getSitemap();
+                }
+                return null;
+            };
 
             self.fromJson = function(jsonNode) {
                 self.id(jsonNode.Id);
@@ -616,8 +836,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                     for (var i = 0; i < jsonNode.ChildNodes.length; i++) {
                         var node = new NodeViewModel();
                         node.fromJson(jsonNode.ChildNodes[i]);
-                        node.parentNode = self;
-                        node.isFirstNode(i == 0);
+                        node.parentNode(self);
                         nodes.push(node);
                     }
                 }
@@ -630,7 +849,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                     Title: self.title(),
                     Url: self.url(),
                     DisplayOrder: self.displayOrder(),
-                    ParentId: self.parentNode.id(),
+                    ParentId: self.parentNode().id(),
                 };
                 return params;
             };
@@ -689,7 +908,15 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             self.url = ko.observable();
             self.isVisible = ko.observable(true);
             self.isCustom = ko.observable(false);
+            self.isBeingDragged = ko.observable(false);
+            self.superDraggable = ko.observable(false); // Used to force dragging if sitemap settings !canDragNode.
 
+            self.onDrop = null;
+            self.dropped = function (droppedSitemapNode) {
+                if(self.onDrop && $.isFunction(self.onDrop)) {
+                    self.onDrop(droppedSitemapNode);
+                }
+            };
             self.fromJson = function (json) {
                 self.isVisible(true);
                 self.title(json.Title);
@@ -703,13 +930,31 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         function AddNewPageViewModel(sitemapViewModel, pageLinkViewModel, onSkip) {
             var self = this;
             self.pageLink = pageLinkViewModel;
+            self.pageLink.superDraggable(true);
             self.sitemap = sitemapViewModel;
             self.onSkipClick = onSkip;
+            self.linkIsDropped = ko.observable(false);
+            self.sitemapNode = null;
+
+            self.pageLink.onDrop = function (droppedSitemapNode) {
+                self.linkIsDropped(true);
+                self.pageLink.isVisible(false);
+                self.sitemapNode = droppedSitemapNode;
+            };
 
             self.skipClicked = function () {
                 if (self.onSkipClick && $.isFunction(self.onSkipClick)) {
                     self.onSkipClick();
                 }
+            };
+            self.undoClicked = function () {
+                if (self.sitemapNode != null) {
+                    // Remove newly created node from sitemap.
+                    self.sitemapNode.parentNode().childNodes.remove(self.sitemapNode);
+                    self.sitemapNode = null;
+                }
+                self.pageLink.isVisible(true);
+                self.linkIsDropped(false);
             };
         }
         // --------------------------------------------------------------------

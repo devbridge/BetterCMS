@@ -116,14 +116,14 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
             bcms.stopEventPropagation(event);
             
             var row = $(this).parents(selectors.firstRow);
-            editor.editRow(row, initContainer);
+            editor.editRow(row);
         });
 
         initContainer.find(selectors.saveRowLink).on('click', function (event) {
             bcms.stopEventPropagation(event);
             
             var row = $(this).parents(selectors.firstRow);
-            editor.saveRow(row, initContainer);
+            editor.saveRow(row);
         });
 
         initContainer.find(selectors.cancelLink).on('click', function (event) {
@@ -143,7 +143,8 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
         bcms.preventInputFromSubmittingForm(initContainer.find(selectors.fieldInputs), {
             preventedEnter: function (self) {
                 var row = self.parents(selectors.firstRow);
-                editor.saveRow(row, formContainer);
+
+                editor.saveRow(row);
             },
             preventedEsc: function (self) {
                 var row = self.parents(selectors.firstRow);
@@ -216,9 +217,9 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
     /**
     * Bind input fields to blur event
     */
-    editor.bindBlurEvents = function (row, container) {
+    editor.bindBlurEvents = function (row) {
         row.find(selectors.fieldInputs).bind('blur', function (event) {
-            editor.onRowInputBlur(event, $(this), row, container);
+            editor.onRowInputBlur(event, $(this), row);
         });
     };
 
@@ -232,7 +233,8 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
     /**
     * Function is called when focus lost, when inline editing mode is on
     */
-    editor.onRowInputBlur = function (event, self, row, container) {
+    editor.onRowInputBlur = function (event, self, row) {
+        row.data('blurred', true);
         setTimeout(function () {
             var unbind = false;
 
@@ -241,8 +243,8 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
                 var valueChanged = editor.hasAnyValueChanged(row);
                 
                 if (valueChanged) {
-                    if (editor.isRowValid(row)) {
-                        editor.saveRow(row, container);
+                    if (editor.isRowValid(row) && row.data('blurred')) {
+                        editor.saveRow(row);
                         unbind = true;
                     }
                 } else {
@@ -261,6 +263,8 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
                 // Unbind, and later bind  back again
                 editor.unbindBlurEvents(row);
             }
+            
+            row.data('blurred', false);
         }, 500);
     };
 
@@ -296,7 +300,7 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
 
             editor.initRowEvents(newRow, container);
 
-            editor.bindBlurEvents(newRow, container);
+            editor.bindBlurEvents(newRow);
 
             rowAdded = true;
 
@@ -304,10 +308,24 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
         }
     };
 
+
+    editor.showRowLoading = function(tr, messageToShow) {
+        $(tr).children().hide();
+        var columnCount = $(tr).children().length;
+        var td = $("<td>", { "colspan": columnCount });
+        td.html(messageToShow);
+        $(tr).append(td);
+    };
+    
+    editor.hideRowLoading = function(tr) {
+        $($(tr).children().get($(tr).children().length - 1)).remove();
+        $(tr).children().show();
+    };
+
     /**
     * Saves the row
     */
-    editor.saveRow = function(row, container) {
+    editor.saveRow = function (row) {
         if (editor.isRowValid(row)) {
 
             //
@@ -320,17 +338,20 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
                     cancelLink = row.find(selectors.cancelLink),
                     url = options.saveUrl,
                     onComplete = function(json) {
-                        messages.refreshBox(container, json);
-                        savingMessage.hide();
+                        messages.refreshBox(row, json);
+                        editor.hideRowLoading(row);
                         row.data('saving', false);
+                        row.data('blurred', false);
                         if (json.Success) {
+                            saveLink.hide();
+                            cancelLink.hide();
                             if (json.Data) {
                                 if (json.Data.Version) {
                                     row.find(selectors.deleteRowLink).data('version', json.Data.Version);
                                 }
                                 if (json.Data.Id) {
                                     row.find(selectors.deleteRowLink).data('id', json.Data.Id);
-                                    row.find(selectors.editRowLink).data('id', json.Data.Id);
+                                    row.find(selectors.editRowLink).data('id', json.Data.Id);   
                                 }
                                 rowAdded = false;
                                 row.data('new', false);
@@ -341,18 +362,12 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
                             options.switchRowToView(row);
                         } else {
                             // Bind back to item blur event
-                            editor.bindBlurEvents(row, container);
-
-                            saveLink.show();
-                            cancelLink.show();
+                            editor.bindBlurEvents(row);
                         }
                     };
 
                 row.data('saving', true);
-                saveLink.hide();
-                cancelLink.hide();
-                savingMessage.html(globalization.messageSaving);
-                savingMessage.show();
+                editor.showRowLoading(row, globalization.messageSaving);
 
                 $.ajax({
                     type: 'POST',
@@ -392,8 +407,8 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
     /**
     * Enters row inline edit mode.
     */
-    editor.editRow = function (row, container) {
-        editor.bindBlurEvents(row, container);
+    editor.editRow = function (row) {
+        editor.bindBlurEvents(row);
 
         options.switchRowToEdit(row);
     };
@@ -416,11 +431,10 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
             onAccept: function () {
                 if (options.deleteUrl) {
                     var url = options.deleteUrl,
-                        deleteMessage = row.find(selectors.rowMessage),
                         deleteLink = row.find(selectors.deleteRowLink),
                         onComplete = function(json) {
-                            messages.refreshBox(formContainer, json);
-                            deleteMessage.hide();
+                            messages.refreshBox(row, json);
+                            editor.hideRowLoading(row);
                             if (json.Success) {
                                 row.remove();
                                 options.showHideEmptyRow(formContainer);
@@ -430,8 +444,7 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
                         };
 
                     deleteLink.hide();
-                    deleteMessage.html(globalization.messageDeleting);
-                    deleteMessage.show();
+                    editor.showRowLoading(row, globalization.messageDeleting);
                     $.ajax({
                         type: 'POST',
                         cache: false,

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Models;
@@ -44,9 +45,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
         /// <exception cref="System.NotImplementedException"></exception>
         public EditPagePropertiesViewModel Execute(Guid id)
         {
-            EditPagePropertiesViewModel model;
-
-            model = Repository
+            var model = Repository
                 .AsQueryable<PageProperties>()
                 .Where(p => p.Id == id)
                 .Select(page => new EditPagePropertiesViewModel
@@ -62,27 +61,24 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                                 IsVisibleToEveryone = page.IsPublic,
                                 TemplateId = page.Layout.Id,
                                 CategoryId = page.Category.Id,
-                                Image = new ImageSelectorViewModel
+                                Image = page.Image == null ? null :
+                                    new ImageSelectorViewModel
                                             {
                                                 ImageId = page.Image.Id,
+                                                ImageVersion = page.Image.Version,
                                                 ImageUrl = page.Image.PublicUrl,
                                                 ThumbnailUrl = page.Image.PublicThumbnailUrl,
                                                 ImageTooltip = page.Image.Caption
                                             }
                             })
-                .FirstOrDefault();
+                .FirstOne();
 
             if (model != null)
             {
                 model.Tags = tagService.GetPageTagNames(id);
                 model.RedirectFromOldUrl = true;
+                model.Categories = categoryService.GetCategories();
             }
-            else
-            {
-                model = new EditPagePropertiesViewModel();
-            }
-
-            model.Categories = categoryService.GetCategories();
 
             return model;
         }

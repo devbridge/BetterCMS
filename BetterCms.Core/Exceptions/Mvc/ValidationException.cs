@@ -13,7 +13,7 @@ namespace BetterCms.Core.Exceptions.Mvc
         /// </summary>
         /// <param name="resource">A function to retrieve a globalized resource associated with this exception.</param>
         /// <param name="message">The exception message.</param>
-        public ValidationException(Func<Exception, string> resource, string message)
+        public ValidationException(Func<string> resource, string message)
             : base(message)
         {
             Resource = resource;
@@ -25,7 +25,7 @@ namespace BetterCms.Core.Exceptions.Mvc
         /// <param name="resource">A function to retrieve a globalized resource associated with this exception.</param>
         /// <param name="message">The exception message.</param>
         /// <param name="innerException">The inner exception.</param>
-        public ValidationException(Func<Exception, string> resource, string message, Exception innerException)
+        public ValidationException(Func<string> resource, string message, Exception innerException)
             : base(message, innerException)
         {
             Resource = resource;
@@ -37,6 +37,6 @@ namespace BetterCms.Core.Exceptions.Mvc
         /// <value>
         /// A function to retrieve a globalized resource associated with this exception.
         /// </value>
-        public Func<Exception, string> Resource { get; private set; }
+        public Func<string> Resource { get; private set; }
     }
 }

@@ -112,7 +112,7 @@ namespace BetterCms.Module.Pages.Services
             if (!redirectService.ValidateUrl(url))
             {
                 var logMessage = string.Format("Invalid page url {0}.", url);
-                throw new ValidationException(e => PagesGlobalization.ValidatePageUrlCommand_InvalidUrlPath_Message, logMessage);
+                throw new ValidationException(() => PagesGlobalization.ValidatePageUrlCommand_InvalidUrlPath_Message, logMessage);
             }
             
             // Is Url unique
@@ -125,7 +125,7 @@ namespace BetterCms.Module.Pages.Services
             if (query.Select(page => page.Id).Any())
             {
                 var logMessage = string.Format("Page with entered URL {0} already exists.", url);
-                throw new ValidationException(e => PagesGlobalization.ValidatePageUrlCommand_UrlAlreadyExists_Message, logMessage);
+                throw new ValidationException(() => PagesGlobalization.ValidatePageUrlCommand_UrlAlreadyExists_Message, logMessage);
             }
         }
 

@@ -5,6 +5,7 @@ using System.Web.Mvc;
 
 using BetterCms.Core.Models;
 using BetterCms.Module.Pages.Content.Resources;
+using BetterCms.Module.Pages.Mvc.Attributes;
 using BetterCms.Module.Pages.ViewModels.Widgets;
 
 namespace BetterCms.Module.Pages.ViewModels.Content
@@ -31,12 +32,36 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         public int Version { get; set; }
 
         /// <summary>
+        /// Gets or sets the currrent content status.
+        /// </summary>
+        /// <value>
+        /// The current content status.
+        /// </value>
+        public ContentStatus CurrentStatus { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether content has original published content.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if content has published original content; otherwise, <c>false</c>.
+        /// </value>
+        public bool HasPublishedContent { get; set; }
+
+        /// <summary>
         /// Gets or sets the desirable status.
         /// </summary>
         /// <value>
         /// The desirable status.
         /// </value>
         public ContentStatus DesirableStatus { get; set; }
+
+        /// <summary>
+        /// Gets or sets the content id.
+        /// </summary>
+        /// <value>
+        /// The content id.
+        /// </value>
+        public Guid ContentId { get; set; }
 
         /// <summary>
         /// Gets or sets the page id.
@@ -61,7 +86,7 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// The name of the page content.
         /// </value>
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "PageContent_ContentName_RequiredMessage")]
-        [StringLength(200, MinimumLength = 1, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "PageContent_ContentName_MaxLengthMessage")]
+        [StringLength(MaxLength.Name, MinimumLength = 1, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "PageContent_ContentName_MaxLengthMessage")]
         public string ContentName { get; set; }
 
         /// <summary>
@@ -70,6 +95,7 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// <value>
         /// The date, from which page is in live.
         /// </value>
+        [DateValidation(ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "PageContent_LiveFrom_DateNotValidationMessage")]
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "PageContent_LiveFrom_RequiredMessage")]
         public DateTime LiveFrom { get; set; }
 
@@ -79,6 +105,8 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// <value>
         /// The date, to which page is in live.
         /// </value>
+        [DateValidation(ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "PageContent_LiveTo_DateNotValidationMessage")]
+        [EndDateValidation(StartDateProperty = "LiveFrom", ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "PageContent_LiveTo_ValidationMessage")]
         public DateTime? LiveTo { get; set; }
 
         /// <summary>

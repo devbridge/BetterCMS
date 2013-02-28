@@ -1,0 +1,102 @@
+﻿@using BetterCms.Module.MediaManager.Content.Resources
+@using BetterCms.Module.MediaManager.Controllers
+@using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Mvc
+@using BetterCms.Module.Root.Mvc.UI
+@using BetterCms.Module.Root.Mvc.Helpers
+@using Microsoft.Web.Mvc
+@model BetterCms.Module.MediaManager.ViewModels.Upload.MultiFileUploadViewModel
+           
+<div class="bcms-scroll-window">
+    @Html.TabbedContentMessagesBox("bcms-multi-file-upload-messages")
+    <div class="bcms-file-manager-inner" id="bcms-media-uploads">
+
+        @using (Html.BeginForm("UploadSingleFile", "Upload", FormMethod.Post, new
+        {
+            enctype = "multipart/form-data",
+            id = "ImgForm",
+            name = "ImgForm",
+            target = "UploadTarget"
+        }))
+        {
+            <div class="bcms-input-list-holder">                
+                @Html.HiddenFor(f => f.RootFolderId)
+                @Html.HiddenFor(f => f.RootFolderType)
+                @if (Model.RootFolderId.HasDefaultValue())
+                {
+                    @Html.Tooltip(MediaGlobalization.MultiFileUpload_SelectFolder_Help_Title, MediaGlobalization.MultiFileUpload_SelectFolder_Help_Message)            
+                    <div class="bcms-content-titles">@MediaGlobalization.MultiFileUpload_SelectFolder</div>
+                    @Html.DropDownListFor(f => f.SelectedFolderId, Model.Folders.Select(o => new SelectListItem { Selected = Model.SelectedFolderId == o.Item1, Text = o.Item2, Value = o.Item1.ToString() }), new { @class = "bcms-global-select" })
+                }
+                else
+                {
+                    @Html.HiddenFor(f => f.SelectedFolderId, new { @Value = Model.RootFolderId })
+                }
+            </div>
+            <div id="bcms-files-dropzone" class="bcms-dropzone">
+                <div class="bcms-dropzone-infotext" data-bind="text: !(activeUploads().length > 0) ? '@MediaGlobalization.SingleFileUpload_DragDropBox' : '@MediaGlobalization.MultiFileUpload_Uploading'"></div>
+                <div data-bind="visible: !(activeUploads().length > 0)" class="bcms-btn-upload-files">
+                    <label for="uploadFile" onclick="if ($.browser.mozilla) { $('#' + $(this).attr('for')).click(); return false; }">@MediaGlobalization.MultiFileUpload_UploadButton</label>
+                    <input type="file" name="uploadFile" id="uploadFile" class="bcms-uploader" style="position: absolute; left: -999em; top: -999em;" />
+                </div>
+            </div>
+        }
+        @using (Html.BeginForm<UploadController>(c => c.SaveUploads(null), FormMethod.Post, new { id = "SaveForm", name = "SaveForm", @class = "bcms-ajax-form" }))
+        {
+            @Html.HiddenFor(m => m.RootFolderId)
+            if (Model.RootFolderId.HasDefaultValue())
+            {
+                @Html.HiddenFor(m => m.SelectedFolderId)
+            }
+            else
+            {
+                @Html.HiddenFor(m => m.SelectedFolderId, new { @Value = Model.RootFolderId })
+            }
+            
+            @Html.HiddenFor(m => m.RootFolderType)
+            <div class="bcms-upload-holder" data-bind="template: { name: 'bcms-file-upload-template' }">
+            </div>
+        }
+        <iframe id="UploadTarget" name="UploadTarget" style="position: absolute; left: -999em; top: -999em;"></iframe>
+        <div id="Images"></div>
+        <script type="text/html" id="bcms-file-upload-template">
+            <div data-bind="foreach: uploads">
+                <div data-bind="css: { 'bcms-upload-block':true, 'bcms-upload-success':uploadCompleted(), 'bcms-upload-failed':uploadFailed() }">
+                    <div class="bcms-upload-file-titles" data-bind="text: fileName"></div>
+                    @Html.HiddenFor(model => model.UploadedFiles, new
+               {
+                   id = (string)null,
+                   data_bind = "value:fileId()"
+               })
+                    <div class="bcms-upload-bar-holder">
+                        <div class="bcms-progress-bar" data-bind="visible: !uploadCompleted() && !uploadFailed()">
+                            <div class="bcms-progress" style="width: 0;" data-bind="style: { width: uploadProgress() + '%' }"></div>
+                        </div>
+                        <div class="bcms-upload-description" data-bind="visible: uploadFailed">
+                            <span data-bind="visible: !(failureMessage() != null && failureMessage().length > 0)">@MediaGlobalization.MultiFileUpload_Failed</span>
+                            <span data-bind="visible: failureMessage() != null && failureMessage().length > 0, text: failureMessage"></span>
+                        </div>
+                        <div class="bcms-upload-description" data-bind="visible: uploadCompleted">
+                            @MediaGlobalization.MultiFileUpload_Success
+                        </div>
+                    </div>
+                    <!-- ko if: uploadCompleted() && !uploadFailed() -->
+                    <div class="bcms-uploaded-info" data-bind="text: uploadProgress() + '%'"></div>
+                    <div class="bcms-upload-size-info"><b>@MediaGlobalization.MultiFileUpload_FileSize</b><span data-bind="text: fileSizeFormated"></span></div>
+                    <div class="bcms-media-delete-holder">
+                        <a class="bcms-icn-delete" data-bind="click: function() { $root.removeUpload($data); }">@RootGlobalization.Button_Remove</a>
+                    </div>                  
+                    <!-- /ko -->
+
+                    <!-- ko if: uploadFailed() -->
+                    <div class="bcms-uploaded-info">&nbsp;</div>
+                    <div class="bcms-upload-size-info">&nbsp;</div>
+                    <div class="bcms-media-delete-holder">
+                        <a class="bcms-icn-delete" data-bind="click: function() { $root.removeUpload($data); }">@RootGlobalization.Button_Remove</a>
+                    </div>                  
+                    <!-- /ko -->
+                </div>
+            </div>
+        </script>
+    </div>
+</div>

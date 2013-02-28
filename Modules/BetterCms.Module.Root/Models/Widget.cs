@@ -17,13 +17,17 @@ namespace BetterCms.Module.Root.Models
             }
         }
 
+        public override Content CopyDataTo(Content content)
+        {
+            var copy = (Widget)base.CopyDataTo(content);
+            copy.Category = Category;
+
+            return copy;
+        }
+
         public override Content Clone()
         {
-            return new Widget
-                {
-                    Name = Name,
-                    Category = Category
-                };
+            return CopyDataTo(new Widget());
         }
     }
 }

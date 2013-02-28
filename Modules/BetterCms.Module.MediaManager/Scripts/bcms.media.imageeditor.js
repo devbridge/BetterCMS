@@ -1,53 +1,45 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'jquery.Jcrop'],
-    function($, bcms, modal, siteSettings, forms, dynamicContent, jcrop) {
+define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'jquery.Jcrop', 'bcms.ko.extenders'],
+    function($, bcms, modal, siteSettings, forms, dynamicContent, jcrop, ko) {
         'use strict';
 
         var imageEditor = {},
             selectors = {
-                imageEditLink: ".bcms-btn-main",
                 imageToEdit: ".bcms-croped-block img",
                 imageVersionField: "#image-version-field",
                 imageCaption: "#Caption",
                 imageFileName: "#image-file-name",
                 imageFileSize: "#image-file-size",
-                imageDimensions: "#image-dimensions",
                 imageAlignment: "input[name=ImageAlign]:checked",
                 imageAlignmentControls: ".bcms-alignment-controls",
 
-                imageSizeEditLink: ".bcms-file-link",
-                imageSizeEditBox: ".bcms-file-edit",
+                imageEditorForm: 'form:first',
+
                 imageSizeEditBoxWidth: "#image-width",
                 imageSizeEditBoxHeight: "#image-height",
-                imageSizeEditBoxOk: "#bcms-save-imagesize",
-                imageSizeEditBoxClose: "div.bcms-file-edit .bcms-tip-close",
+                
+                imageTitleEditInput: "#bcms-image-title-editor",
 
-                imageToCrop: ".bcms-crop-image-block img",
-                imageToCropCoordX1: ".bcms-crop-image-x1",
-                imageToCropCoordX2: ".bcms-crop-image-x2",
-                imageToCropCoordY1: ".bcms-crop-image-y1",
-                imageToCropCoordY2: ".bcms-crop-image-y2",
+                imageToCrop: ".bcms-croped-block img"
             },
             links = {
                 imageEditorDialogUrl: null,
-                imageEditorInsertDialogUrl: null,
-                imageEditorCroppingDialogUrl: null,
-                imageResizeUrl: null,
+                imageEditorInsertDialogUrl: null
             },
             globalization = {
                 imageEditorDialogTitle: null,
                 imageEditorInsertDialogTitle: null,
                 imageEditorInsertDialogAcceptButton: null,
                 imageEditorUpdateFailureMessageTitle: null,
-                imageEditorUpdateFailureMessageMessage: null,
-                imageEditorResizeFailureMessageTitle: null,
-                imageEditorResizeFailureMessageMessage: null,
-                imageEditorCroppingDialogTitle: null,
-                imageEditorCropFailureMessageTitle: null,
-                imageEditorCropFailureMessageMessage: null,
-            };
+                imageEditorUpdateFailureMessageMessage: null
+            },
+            constants = {
+                maxHeightToFit: 557,
+                maxWidthToFit: 839,
+            },
+            jCropApi = null;
 
         /**
         * Assign objects to module.
@@ -78,7 +70,7 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                 onLoad: function (dialog) {
                     var url = $.format(links.imageEditorDialogUrl, imageId);
                     dynamicContent.bindDialog(dialog, url, {
-                        contentAvailable: imageEditor.initImageEditorDialogEvents,
+                        contentAvailable: initImageEditorDialogEvents,
                         beforePost: function () {
                             var newVersion = $(selectors.imageToEdit).data('version');
                             if (newVersion > 0) {
@@ -91,7 +83,7 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                             }
                             dialog.close();
                         },
-                        postError: function() {
+                        postError: function () {
                             modal.alert({
                                 title: globalization.imageEditorUpdateFailureMessageTitle,
                                 content: globalization.imageEditorUpdateFailureMessageMessage,
@@ -112,179 +104,362 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                 onLoad: function (dialog) {
                     var url = $.format(links.imageEditorInsertDialogUrl, image.id());
                     dynamicContent.setContentFromUrl(dialog, url, {
-                        done: function (content) {
-                            // NOTE: attach events if needed.
-                        },
+                        done: function () {
+                            initInsertImageWithOptionsDialogEvents(dialog);
+                        }
                     });
                 },
-                onAcceptClick: function (dialog) {
+                onAccept: function (dialog) {
                     var imageUrl = dialog.container.find(selectors.imageToEdit).attr("src"),
                         caption = dialog.container.find(selectors.imageCaption).val(),
                         align = dialog.container.find(selectors.imageAlignment).val();
                     dialog.close();
                     callback(image, imageUrl, caption, align);
+                    return false;
                 }
             });
         };
+
+        /**
+        * Editor base view model
+        */
+        var EditorBaseViewModel = (function () {
+            function EditorBaseViewModel() {
+                var self = this;
+
+                self.isOpened = ko.observable(false);
+                
+                self.open = function () {
+                    self.isOpened(true);
+                };
+
+                self.close = function () {
+                    self.onClose();
+                    self.isOpened(false);
+                };
+
+                self.save = function (element) {
+                    if (self.onSave($(element))) {
+                        self.isOpened(false);
+                    }
+                };
+            }
+            
+            EditorBaseViewModel.prototype.onSave = function () { };
+            
+            EditorBaseViewModel.prototype.onClose = function () { };
+
+            return EditorBaseViewModel;
+        })();
+        
+        /**
+        * Title editor view model
+        */
+        var TitleEditorViewModel = (function (_super) {
+            bcms.extendsClass(TitleEditorViewModel, _super);
+
+            function TitleEditorViewModel(dialog, title) {
+                _super.call(this);
+
+                var self = this;
+
+                self.input = dialog.container.find(selectors.imageTitleEditInput);
+                
+                self.title = ko.observable(title);
+                self.oldTitle = ko.observable(title);
+            }
+
+            TitleEditorViewModel.prototype.onSave = function () {
+                if (this.input.valid()) {
+                    this.oldTitle(this.title());
+
+                    return true;
+                }
+
+                return false;
+            };
+
+            TitleEditorViewModel.prototype.onClose = function () {
+                this.title(this.oldTitle());
+                this.input.blur();
+            };
+
+            return TitleEditorViewModel;
+        })(EditorBaseViewModel);
+
+        /**
+        * Image editor view model
+        */
+        var ImageEditorViewModel = (function (_super) {
+            bcms.extendsClass(ImageEditorViewModel, _super);
+
+            function ImageEditorViewModel(dialog, json) {
+                _super.call(this);
+
+                var self = this;
+
+                self.dialog = dialog;
+
+                self.widthInput = dialog.container.find(selectors.imageSizeEditBoxWidth);
+                self.heightInput = dialog.container.find(selectors.imageSizeEditBoxHeight);
+                self.image = dialog.container.find(selectors.imageToCrop);
+
+                self.originalWidth = json.OriginalImageWidth;
+                self.originalHeight = json.OriginalImageHeight;
+                self.width = ko.observable(json.ImageWidth);
+                self.height = ko.observable(json.ImageHeight);
+                self.oldWidth = ko.observable(json.ImageWidth);
+                self.oldHeight = ko.observable(json.ImageHeight);
+                self.fit = ko.observable(false);
+                self.calculatedWidth = ko.observable(json.ImageWidth);
+                self.calculatedHeight = ko.observable(json.ImageHeight);
+                self.cropCoordX1 = ko.observable(json.CropCoordX1);
+                self.cropCoordX2 = ko.observable(json.CropCoordX2);
+                self.cropCoordY1 = ko.observable(json.CropCoordY1);
+                self.cropCoordY2 = ko.observable(json.CropCoordY2);
+                self.keepAspectRatio = ko.observable(false);
+                self.url = json.OriginalImageUrl + '?version=' + json.Version;
+
+                // Recalculate image dimensions on image change
+                self.fit.subscribe(function () {
+                    recalculate();
+                });
+                self.oldWidth.subscribe(function () {
+                    recalculate();
+                });
+                self.oldHeight.subscribe(function () {
+                    recalculate();
+                });
+                self.keepAspectRatio.subscribe(function () {
+                    self.changeHeight();
+                });
+
+                self.widthAndHeight = ko.computed(function () {
+                    return self.oldWidth() + ' x ' + self.oldHeight();
+                });
+
+                self.changeHeight = function() {
+                    if (self.keepAspectRatio() && self.widthInput.valid() && self.oldWidth != self.width()) {
+                        var ratio = self.width() / (self.originalWidth || 1);
+
+                        self.height(Math.round(self.originalHeight * ratio));
+                    }
+                    
+                    return true;
+                };
+                
+                self.changeWidth = function () {
+                    if (self.keepAspectRatio() && self.heightInput.valid() && self.oldHeight != self.height()) {
+                        var ratio = self.height() / (self.originalHeight || 1);
+
+                        self.width(Math.round(self.originalWidth * ratio));
+                    }
+                    
+                    return true;
+                };
+
+                self.calculateWidth = ko.computed(function () {
+                    if (self.fit() && self.width() > constants.maxWidthToFit) {
+                        return constants.maxWidthToFit;
+                    }
+                    return self.width();
+                });
+
+                self.calculateHeight = ko.computed(function () {
+                    if (self.fit() && self.height() > constants.maxHeightToFit) {
+                        return constants.maxHeightToFit;
+                    }
+                    return self.height();
+                });
+
+                self.restoreOriginalSize = function() {
+                    self.width(self.originalWidth);
+                    self.height(self.originalHeight);
+                    self.save();
+                };
+
+                self.onCropCoordsUpdated = function (coords) {
+                    if (coords != null) {
+                        self.cropCoordX1(coords.x);
+                        self.cropCoordY1(coords.y);
+                        self.cropCoordX2(coords.x2);
+                        self.cropCoordY2(coords.y2);
+                    } else {
+                        self.removeCrop();
+                    }
+                };
+
+                self.hasCrop = ko.computed(function () {
+                    return self.cropCoordX1() != 0
+                        || self.cropCoordY1() != 0
+                        || self.cropCoordX2() != self.originalWidth
+                        || self.cropCoordY2() != self.originalHeight;
+                });
+
+                self.removeCrop = function () {
+                    self.cropCoordX1(0);
+                    self.cropCoordY1(0);
+                    self.cropCoordX2(self.originalWidth);
+                    self.cropCoordY2(self.originalHeight);
+
+                    addCropper();
+                };
+
+                self.changeFit = function() {
+                    self.fit(!self.fit());
+                };
+                
+                self.changeAspectRatio = function () {
+                    self.keepAspectRatio(!self.keepAspectRatio());
+                };
+
+                function recalculate() {
+                    var calcWidth = self.oldWidth(),
+                        calcHeight = self.oldHeight(),
+                        scaleX = constants.maxWidthToFit > 0 ? calcWidth / constants.maxWidthToFit : 0,
+                        scaleY = constants.maxHeightToFit > 0 ? calcHeight / constants.maxHeightToFit : 0;
+
+                    if (self.fit() && (calcHeight > constants.maxHeightToFit || calcWidth > constants.maxWidthToFit)) {
+                        
+                        if (scaleX > scaleY) {
+                            calcWidth = constants.maxWidthToFit;
+                            calcHeight = scaleX > 0 ? calcHeight / scaleX : 0;
+                        } else {
+                            calcHeight = constants.maxHeightToFit;
+                            calcWidth = scaleY > 0 ? calcWidth / scaleY : 0;
+                        }
+                    }
+                    
+                    self.calculatedWidth(calcWidth);
+                    self.calculatedHeight(calcHeight);
+
+                    if (jCropApi != null) {
+                        addCropper();
+                    }
+                }
+                
+                function initialize() {
+                    destroyJCrop();
+                    jCropApi = null;
+
+                    self.image.load(function () {
+                        self.fit(true);
+                        addCropper();
+                    });
+                    self.image.attr('src', self.url);
+                }
+
+                function addCropper() {
+                    destroyJCrop();
+                    
+                    var cropperOptions = {
+                        onChange: self.onCropCoordsUpdated,
+                        onSelect: self.onCropCoordsUpdated,
+                        onRelease: self.onCropCoordsUpdated,
+                        trueSize: [self.originalWidth, self.originalHeight],
+                    };
+                    if (self.hasCrop()) {
+                        cropperOptions.setSelect = [self.cropCoordX1(), self.cropCoordY1(), self.cropCoordX2(), self.cropCoordY2()];
+                    }
+
+                    setTimeout(function() {
+                        self.image.Jcrop(cropperOptions, function() {
+                            jCropApi = this;
+                        });
+                    }, 10);
+                }
+                
+                function destroyJCrop() {
+                    if (jCropApi != null) {
+                        jCropApi.destroy();
+                    }
+                }
+
+                initialize();
+            }
+
+            ImageEditorViewModel.prototype.onSave = function (element) {
+                // Call recalculation, if "keep aspect ratio" is checked
+                if (element.get(0) == this.widthInput.get(0)) {
+                    this.changeHeight();
+                } else if (element.get(0) == this.heightInput.get(0)) {
+                    this.changeWidth();
+                }
+                
+                if (this.widthInput.valid() && this.heightInput.valid()) {
+                    this.oldWidth(this.width());
+                    this.oldHeight(this.height());
+
+                    return true;
+                }
+
+                return false;
+            };
+
+            ImageEditorViewModel.prototype.onClose = function () {
+                this.width(this.oldWidth());
+                this.height(this.oldHeight());
+                this.heightInput.blur();
+                this.widthInput.blur();
+            };
+            
+            return ImageEditorViewModel;
+        })(EditorBaseViewModel);
+
+        /**
+        * Image edit form view model
+        */
+        function ImageEditViewModel(titleEditorViewModel, imageEditorViewModel) {
+            var self = this;
+
+            self.titleEditorViewModel = titleEditorViewModel;
+            self.imageEditorViewModel = imageEditorViewModel;
+        }
 
         /**
         * Initializes ImageEditor dialog events.
         */
-        imageEditor.initImageEditorDialogEvents = function (dialog) {
-            dialog.container.find(selectors.imageEditLink).on('click', function () {
-                imageEditor.showImageCroppingDialog(dialog);
-            });
+        function initImageEditorDialogEvents(dialog, content) {
 
-            dialog.container.find(selectors.imageToEdit).on('click', function () {
-                var img = $(this),
-                    src = img.attr('src');
-                if (src) {
-                    modal.imagePreview(src, img.attr('alt'));
-                }
-            });
+            var data = content.Data ? content.Data : { };
 
-            dialog.container.find(selectors.imageSizeEditLink).on('click', function () {
-                dialog.container.find(selectors.imageSizeEditBox).show();
-                dialog.container.find(selectors.imageSizeEditLink).hide();
-            });
+            // Create view models for editor boxes and for form
+            var titleEditorViewModel = new TitleEditorViewModel(dialog, data.Title);
+            
+            var imageEditorViewModel = new ImageEditorViewModel(dialog, data);
+            
+            var viewModel = new ImageEditViewModel(titleEditorViewModel, imageEditorViewModel);
+            ko.applyBindings(viewModel, dialog.container.find(selectors.imageEditorForm).get(0));
 
-            dialog.container.find(selectors.imageSizeEditBoxClose).on('click', function () {
-                dialog.container.find(selectors.imageSizeEditBox).hide();
-                dialog.container.find(selectors.imageSizeEditLink).show();
-            });
-
-            dialog.container.find(selectors.imageSizeEditBoxOk).on('click', function () {
-                if (imageEditor.onImageResize(dialog) === true) {
-                    dialog.container.find(selectors.imageSizeEditBox).hide();
-                    dialog.container.find(selectors.imageSizeEditLink).show();
-                }
-            });
-
+            // Image alignment
             dialog.container.find(selectors.imageAlignmentControls).children().each(function () {
-                var item = this;
-                $(item).on('click', function () {
-                    dialog.container.find(selectors.imageAlignmentControls).children().each(function () {
-                        $(this).attr('class', $(this).attr('class').replace('-active', ''));
-                        $('input', this).removeAttr('checked');
-                    });
-                    $(item).attr('class', $(item).attr('class') + '-active');
-                    $('input', item).attr('checked', 'true');
+                setImageAlignment(this, dialog);
+            });
+        }
+
+        /**
+        * Initializes inserting image options dialog events.
+        */
+        function initInsertImageWithOptionsDialogEvents(dialog) {
+            // Image alignment
+            dialog.container.find(selectors.imageAlignmentControls).children().each(function() {
+                setImageAlignment(this, dialog);
+            });
+        }
+
+        /**
+        * Changes CSS class for selected image alignment type
+        */
+        function setImageAlignment(item, dialog) {
+            $(item).on('click', function() {
+                dialog.container.find(selectors.imageAlignmentControls).children().each(function() {
+                    $(this).attr('class', $(this).attr('class').replace('-active', ''));
+                    $('input', this).removeAttr('checked');
                 });
+                $(item).attr('class', $(item).attr('class') + '-active');
+                $('input', item).attr('checked', 'true');
             });
-        };
-
-        /**
-        * Resize image.
-        */
-        imageEditor.onImageResize = function (editorDialog) {
-            var widthIsValid = $(selectors.imageSizeEditBoxWidth).valid(),
-                heightIsValid = $(selectors.imageSizeEditBoxHeight).valid();
-
-            if (!widthIsValid || !heightIsValid) {
-                return false;
-            }
-
-            var id = $(selectors.imageToEdit).data('id'),
-                width = $(selectors.imageSizeEditBoxWidth).val(),
-                height = $(selectors.imageSizeEditBoxHeight).val(),
-                version = $(selectors.imageToEdit).data('version'),
-                url = $.format(links.imageResizeUrl, id, width, height, version),
-                onComplete = function(json) {
-                    if (json.Success) {
-                        imageEditor.updateImage(editorDialog, json.Data);
-                    } else {
-                        modal.alert({
-                            title: globalization.imageEditorResizeFailureMessageTitle,
-                            content: globalization.imageEditorResizeFailureMessageMessage,
-                        });
-                    }
-                };
-
-            $.ajax({
-                type: 'POST',
-                url: url,
-                contentType: 'application/json; charset=utf-8',
-                dataType: 'json'
-            })
-            .done(function (result) {
-                onComplete(result);
-            })
-            .fail(function (response) {
-                onComplete(bcms.parseFailedResponse(response));
-            });
-            return true;
-        };
-
-        /**
-        * Show image cropping dialog.
-        */
-        imageEditor.showImageCroppingDialog = function (editorDialog) {
-            var imageId = editorDialog.container.find(selectors.imageToEdit).data('id');
-            modal.open({
-                title: globalization.imageEditorCroppingDialogTitle,
-                onLoad: function (cropperDialog) {
-                    var url = $.format(links.imageEditorCroppingDialogUrl, imageId),
-                        onFail = function() {
-                            modal.alert({
-                                title: globalization.imageEditorCropFailureMessageTitle,
-                                content: globalization.imageEditorCropFailureMessageMessage,
-                                onClose: function () {
-                                    cropperDialog.close();
-                                }
-                            });
-                        };
-
-                    dynamicContent.bindDialog(cropperDialog, url, {
-                        contentAvailable: imageEditor.initImageCroppingDialogEvents,
-                        postSuccess: function (json) {
-                            if (json.Success) {
-                                imageEditor.updateImage(editorDialog, json.Data);
-                            } else {
-                                onFail();
-                            }
-                        },
-                        postError: onFail
-                    });
-                }
-            });
-        };
-
-        /**
-        * Update image and properties.
-        */
-        imageEditor.updateImage = function(editorDialog, data) {
-            editorDialog.container.find(selectors.imageToEdit).attr('src', data.Url + '?version=' + Math.random());
-            editorDialog.container.find(selectors.imageToEdit).data('version', data.Version);
-            editorDialog.container.find(selectors.imageFileName).text(data.FileName + '.' + data.FileExtension);
-            editorDialog.container.find(selectors.imageFileSize).text(data.FileSize);
-            editorDialog.container.find(selectors.imageDimensions).text(data.ImageWidth + ' x ' + data.ImageHeight);
-        };
-
-        /**
-        * Initializes ImageCropping dialog events.
-        */
-        imageEditor.initImageCroppingDialogEvents = function (dialog) {
-            var x1Input = dialog.container.find(selectors.imageToCropCoordX1),
-                y1Input = dialog.container.find(selectors.imageToCropCoordY1),
-                x2Input = dialog.container.find(selectors.imageToCropCoordX2),
-                y2Input = dialog.container.find(selectors.imageToCropCoordY2),
-                onCropCoordsUpdated = function(coords) {
-                    x1Input.val(Math.round(coords.x));
-                    y1Input.val(Math.round(coords.y));
-                    x2Input.val(Math.round(coords.x2));
-                    y2Input.val(Math.round(coords.y2));
-                };
-
-            var image = dialog.container.find(selectors.imageToCrop);
-            image.load(function() {
-                image.Jcrop({
-                    onChange: onCropCoordsUpdated,
-                    onSelect: onCropCoordsUpdated,
-                    trueSize: [image[0].naturalWidth, image[0].naturalHeight],
-                    setSelect: [x1Input.val(), y1Input.val(), x2Input.val(), y2Input.val()],
-                });
-            });
-        };
+        }
 
         /**
         * Initializes page module.

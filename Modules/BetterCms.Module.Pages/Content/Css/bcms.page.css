@@ -32,7 +32,6 @@ div.bcms-editseo-modal {
 
 .bcms-editseo-window {
     width: 670px;
-    /*padding: 0 30px 0 0;*/
     min-height: 100%;
 }
 
@@ -61,7 +60,7 @@ div.bcms-editseo-modal {
 }
 
     .bcms-edit-urlpath-box .bcms-tooltip-mark {
-        top: 17px;
+        top: 19px;
         left: 20px;
     }
 
@@ -100,6 +99,7 @@ div.bcms-editseo-modal {
 .bcms-edit-label {
     display: inline-block;
     vertical-align: middle;
+    cursor: pointer;
 }
 
 /*Add New Content Tabbed Page*/
@@ -188,11 +188,11 @@ a.bcms-slider-next {
 }
 
 .bcms-title-holder .bcms-content-titles {
-    position: absolute;
-    padding-bottom: 0;
-    bottom: 0;
-    left: 0;
     font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-bottom: 0;
 }
 
 .bcms-controls-holder .bcms-icn-delete {
@@ -218,27 +218,13 @@ a.bcms-slider-next {
     position: relative;
     width: 124px;
     height: 124px;
-    margin-bottom: 5px;
-    border: 2px solid #c6c6c6;
+    border: 1px solid #c6c6c6;
     background: url('images/bcms-no-image-2.png') no-repeat center center #f5f5f5;
 }
 
-.bcms-uploaded-image img {
-    max-width: 100%;
-}
-
-/*.bcms-uploaded-image a.bcms-remove-image {
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 20px;
-        height: 20px;
-        background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAOCAYAAAGHjXZ5AAAAbElEQVQoz5WSSxbAIAgDs/H+B/Qw0xXWys/ueASHhKcAARKgOcRbzCE+0mpY4UYd7QfjnAgRkZAuLXeetBBpPYcKjVlzp/Riii0N7bgsVrR6pYmE6pELlA1Wrq7sZXHU2asgbd4KnH657uKAHm4iCGmg/EKuAAAAAElFTkSuQmCC') no-repeat center center;
-        border-radius: 2px;
-        cursor: pointer;
-        text-indent: 9999px;
-        z-index: 1;
-    }*/
+    .bcms-uploaded-image img {
+        max-width: 100%;
+    }
 
 .bcms-upload-info {
     display: inline-block;
@@ -252,13 +238,13 @@ a.bcms-slider-next {
     }
 
 .bcms-upload-info-text {
-    height: 88px;
+    height: 86px;
     font-size: 12px;
     overflow: hidden;
 }
 
 .bcms-tags-box-holder {
-    padding: 25px 0 0 40px;
+    padding: 10px 0 0 30px;
     margin: 0 0 20px -30px;
     border-top: 1px solid #c6c6c6;
     border-bottom: 1px solid #c6c6c6;
@@ -346,7 +332,7 @@ hr.bcms-settings-separator {
 /*content*/
 .bcms-top-block-holder {
     padding: 20px 20px 20px 30px;
-    height: 35px;
+    height: 30px;
 }
 
     .bcms-top-block-holder .bcms-large-titles {
@@ -418,23 +404,18 @@ hr.bcms-settings-separator {
         padding: 5px;
     }
 
-td.bcms-history-table {
-    padding: 0;
+.bcms-history-grid thead tr {
+    display: block;
+}
+
+.bcms-history-cell:hover {
+    background-color: #fff;
 }
 
 .bcms-scroll-tbody {
     height: 160px;
-    overflow-y: auto;
+    overflow-y: scroll;
 }
-
-    .bcms-scroll-tbody .bcms-tables td:first-child {
-        width: 49px;
-        vertical-align: middle;
-    }
-
-    .bcms-scroll-tbody td {
-        vertical-align: middle;
-    }
 
     .bcms-scroll-tbody tr:hover a.bcms-icn-preview {
         background-position: -60px -133px;
@@ -454,16 +435,20 @@ td.bcms-history-table {
             background-position: right -1151px;
         }
 
+    .bcms-scroll-tbody tbody td {
+        vertical-align: middle;
+    }
+
 .bcms-published-state {
     color: #24597e;
 }
 
 .bcms-draft-state {
-    color: #e64343;
+    color: #20cd00;
 }
 
 .bcms-archived-state {
-    color: #20cd00;
+    color: #e64343;
 }
 
 /*Analytics page*/
@@ -473,9 +458,3 @@ td.bcms-history-table {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
-/*
-transition: all 0.1s ease-in-out;
--moz-transition: all 0.1s ease-in-out;
--webkit-transition: all 0.1s ease-in-out;
-*/

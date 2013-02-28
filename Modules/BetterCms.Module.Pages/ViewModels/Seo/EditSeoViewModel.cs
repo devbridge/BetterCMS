@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
+using BetterCms.Core.Models;
 using BetterCms.Module.Pages.Content.Resources;
 
 namespace BetterCms.Module.Pages.ViewModels.Seo
@@ -33,7 +34,7 @@ namespace BetterCms.Module.Pages.ViewModels.Seo
         /// The page title.
         /// </value>
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "EditSeo_PageTitle_RequiredMessage")]
-        [StringLength(200, MinimumLength = 1, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "EditSeo_PageTitle_MaxLengthMessage")]
+        [StringLength(MaxLength.Name, MinimumLength = 1, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "EditSeo_PageTitle_MaxLengthMessage")]
         public string PageTitle { get; set; }
 
         /// <summary>
@@ -70,6 +71,7 @@ namespace BetterCms.Module.Pages.ViewModels.Seo
         /// <value>
         /// The meta title.
         /// </value>        
+        [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "EditSeo_MetaTitle_MaxLengthMessage")]
         public string MetaTitle { get; set; }
 
         /// <summary>

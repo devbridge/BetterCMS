@@ -24,6 +24,7 @@
     };
 }
 
+@Html.SiteSettingsMessagesBox()
 
 @using (Html.BeginForm<RoleController>(f => f.RolesListView(null), FormMethod.Post, new { @id = "bcms-role-form" }))
 {

@@ -16,7 +16,10 @@ define('bcms.preview', ['jquery', 'bcms', 'bcms.modal', 'bcms.dynamicContent'], 
             elementsToDisable: '.bcms-modal-content a, .bcms-modal-content input, .bcms-modal-content select'
         },
 
-        links = {},
+        links = {
+            previewPageUrl: null
+        },
+        
         globalization = {};
 
     // Assign objects to module
@@ -25,8 +28,9 @@ define('bcms.preview', ['jquery', 'bcms', 'bcms.modal', 'bcms.dynamicContent'], 
     preview.links = links;
     preview.globalization = globalization;
 
-    preview.initialize = function(container) {
-        container.find(selectors.previewZoom).on('click', function() {
+    preview.initialize = function (container, selector) {
+        selector = selector || selectors.previewZoom;
+        container.find(selector).on('click', function () {
             var self = $(this),
                 title = self.data('previewTitle'),
                 url = self.data('previewUrl');
@@ -48,5 +52,10 @@ define('bcms.preview', ['jquery', 'bcms', 'bcms.modal', 'bcms.dynamicContent'], 
         });
     };
 
+    preview.previewPageContent = function (pageId, pageContentId) {
+        var link = $.format(links.previewPageUrl, pageId, pageContentId);
+        window.open(link, bcms.previewWindow, 'toolbar=yes,location=yes,directories=yes,status=yes,menubar=yes,scrollbars=yes,copyhistory=yes,resizable=yes');
+    };
+    
     return preview;
 });

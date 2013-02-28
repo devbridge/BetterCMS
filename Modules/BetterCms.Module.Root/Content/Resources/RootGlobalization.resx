@@ -135,6 +135,9 @@
   <data name="Button_AddNew" xml:space="preserve">
     <value>Add New +</value>
   </data>
+  <data name="Button_Browse" xml:space="preserve">
+    <value>Browse</value>
+  </data>
   <data name="Button_Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
@@ -146,6 +149,9 @@
   </data>
   <data name="Button_Edit" xml:space="preserve">
     <value>Edit</value>
+  </data>
+  <data name="Button_History" xml:space="preserve">
+    <value>History</value>
   </data>
   <data name="Button_Insert" xml:space="preserve">
     <value>Insert</value>
@@ -165,6 +171,9 @@
   <data name="Button_Rename" xml:space="preserve">
     <value>Rename</value>
   </data>
+  <data name="Button_Restore" xml:space="preserve">
+    <value>Restore</value>
+  </data>
   <data name="Button_Save" xml:space="preserve">
     <value>Save</value>
   </data>
@@ -183,6 +192,15 @@
   <data name="Confirm_Delete_DefaultMessage" xml:space="preserve">
     <value>Are you sure you want to delete selected object?</value>
   </data>
+  <data name="ContentStatus_Draft" xml:space="preserve">
+    <value>Draft</value>
+  </data>
+  <data name="ContentStatus_Published" xml:space="preserve">
+    <value>Published</value>
+  </data>
+  <data name="ContentStatus_PublishedWithDraft" xml:space="preserve">
+    <value>Published (with draft)</value>
+  </data>
   <data name="Grid_NoDataAvailable_Message" xml:space="preserve">
     <value>There is no data available.</value>
   </data>
@@ -195,8 +213,14 @@
   <data name="Message_Deleting" xml:space="preserve">
     <value>Deleting ...</value>
   </data>
+  <data name="Message_EntityNotFoundException" xml:space="preserve">
+    <value>The record does not exist. Probably it was deleted by another user. Please refresh page.</value>
+  </data>
   <data name="Message_FailedToLoadDialog" xml:space="preserve">
     <value>Failed to load dialog. Please retry.</value>
+  </data>
+  <data name="Message_FailedToRenderContent" xml:space="preserve">
+    <value>Failed To Render Content.</value>
   </data>
   <data name="Message_FailedToSaveData" xml:space="preserve">
     <value>Unable to save information. Please retry.</value>
@@ -263,5 +287,14 @@
   </data>
   <data name="WaterMark_Search" xml:space="preserve">
     <value>Search...</value>
+  </data>
+  <data name="WidgetStatus_Draft" xml:space="preserve">
+    <value>Draft</value>
+  </data>
+  <data name="WidgetStatus_Published" xml:space="preserve">
+    <value>Published</value>
+  </data>
+  <data name="WidgetStatus_PublishedWithDraft" xml:space="preserve">
+    <value>Published (With Draft)</value>
   </data>
 </root>

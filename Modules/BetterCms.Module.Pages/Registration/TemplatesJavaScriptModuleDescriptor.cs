@@ -33,6 +33,7 @@ namespace BetterCms.Module.Pages.Registration
                                     new JavaScriptModuleGlobalization(this, "editTemplateRegionTitle", () => PagesGlobalization.SiteSettings_TemplatesMenuItem),
                                     new JavaScriptModuleGlobalization(this, "deleteTemplateConfirmMessage", () => PagesGlobalization.SiteSettings_Template_DeleteCategoryMessage),
                                     new JavaScriptModuleGlobalization(this, "deleteRegionConfirmMessage", () => PagesGlobalization.DeleteRegion_Confirmation_Message),
+                                    new JavaScriptModuleGlobalization(this, "previewImageNotFoundMessage", () => PagesGlobalization.EditTemplate_PreviewImageNotFound_Message),
                                 };
         }
     }

@@ -141,8 +141,6 @@
     <Compile Include="Models\Maps\BlogPostContentMap.cs" />
     <Compile Include="Models\Maps\BlogPostMap.cs" />
     <Compile Include="Models\Maps\OptionMap.cs" />
-    <Compile Include="Models\Migrations\Migration201301221400.cs" />
-    <Compile Include="Models\Migrations\Migration201301211600.cs" />
     <Compile Include="Models\Option.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
     <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />
@@ -161,6 +159,7 @@
     <EmbeddedResource Include="Content\Resources\BlogGlobalization.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>BlogGlobalization.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Content\Styles\bcms.blog.css" />
     <EmbeddedResource Include="Content\Styles\Images\sprite-blog.png" />
@@ -204,28 +203,26 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\Blog\Partial\" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Views\Author\Partial\ImageCell.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Author\Partial\ListTemplate.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Blog\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Option\Templates.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\EditorTemplates\SiteSettingBoolean.cshtml" />
+    <EmbeddedResource Include="Views\Shared\EditorTemplates\PageStatus.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Views\Author\Partial\ListTemplate.cshtml" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
     <EmbeddedResource Include="Views\Blog\EditBlogPost.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Blog\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

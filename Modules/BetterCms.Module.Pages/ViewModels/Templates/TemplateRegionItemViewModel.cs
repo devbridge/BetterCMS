@@ -1,5 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+
+using BetterCms.Core.Models;
 using BetterCms.Module.Root.Mvc.Grids;
 
 namespace BetterCms.Module.Pages.ViewModels.Templates
@@ -16,11 +18,11 @@ namespace BetterCms.Module.Pages.ViewModels.Templates
         /// <value>
         /// The description.
         /// </value>
-        [StringLength(512)]
+        [StringLength(MaxLength.Name)]
         public string Description { get; set; }
         
         [Required]
-        [StringLength(512)]
+        [StringLength(MaxLength.Name)]
         public string Identifier { get; set; }
 
         public bool Equals(TemplateRegionItemViewModel other)

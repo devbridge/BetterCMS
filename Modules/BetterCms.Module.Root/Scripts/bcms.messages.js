@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define */
 
-define('bcms.messages', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, modal) {
+define('bcms.messages', ['jquery'], function ($) {
     'use strict';
 
     var messages = {},
@@ -13,11 +13,12 @@ define('bcms.messages', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, mod
     // Selectors used in the module to locate DOM elements:
         selectors = {
             messagesBox: '#bcms-messages-box',
-            messages: '.bcms-messages:first',
+            messages: '.bcms-messages-type-1:first, .bcms-messages-type-2:first',
             success: '.bcms-success-messages:first',
             info: '.bcms-info-messages:first',
             warn: '.bcms-warning-messages:first',
-            error: '.bcms-error-messages:first'
+            error: '.bcms-error-messages:first',
+            scrollable: '.bcms-scroll-window',
         },
 
         links = {},
@@ -48,20 +49,20 @@ define('bcms.messages', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, mod
             var parentContainer = options.container;
             do {
                 if (options.container instanceof $) {
-                    container = parentContainer.find(selectors.messages);
+                    container = parentContainer.find(selectors.messages).first();
                 } else {
-                    container = $(parentContainer).find(selectors.messages);
+                    container = $(parentContainer).find(selectors.messages).first();
                 }
                 if (container.length === 0) {
                     parentContainer = parentContainer.parent();
                 }
             } while (container.length === 0 && parentContainer.length !== 0);
         } else if (options.containerId) {
-            container = $('#' + options.containerId).find(selectors.messages);
+            container = $('#' + options.containerId).find(selectors.messages).first();
         } else if (options.messageBoxId) {
             container = $('#' + options.messageBoxId);
         } else {
-            container = $(selectors.messages);
+            container = $(selectors.messages).first();
         }
 
         this.container = container;
@@ -112,14 +113,13 @@ define('bcms.messages', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, mod
                 if (options.enableAutoHide) {
                     setTimeout(function () {
                         element.animate({
-                            'line-height': '1px',                            
-                            opacity: 0.2
-                        }, 350,
+                            'line-height': '1px'
+                        }, 200,
                             function () {
                                 var parent = $(this).parent('ul:first');
                                 $(this).remove();
                                 if (parent.find('li').length === 0) {
-                                    parent.fadeOut('fast', function() { $(this).hide(); });
+                                    parent.fadeOut(100, function () { $(this).hide(); });
                                 }
                             });
                     }, options.autoHideTimeout);
@@ -141,35 +141,23 @@ define('bcms.messages', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, mod
             container: container
         });
 
+        messagesBox.clearMessages();
+        
         if (json.Messages) {
-            messagesBox.clearMessages();
-            for (var i = 0; i < json.Messages.length; i++) {
+            var i = 0;
+            for (i = 0; i < json.Messages.length; i++) {
                 if (json.Success) {
                     messagesBox.addSuccessMessage(json.Messages[i]);
                 } else {
                     messagesBox.addErrorMessage(json.Messages[i]);
                 }
             }
+            if (i > 0) {
+                $(messagesBox.container).closest(selectors.scrollable).scrollTop(0);
+            }
         }
 
         return messagesBox;
-    };
-
-    messages.showMessages = function (json) {
-        if (json.Messages) {
-            var content = "";
-
-            for (var i = 0; i < json.Messages.length; i++) {
-                if (content) {
-                    content += "<br />";
-                }
-                content += json.Messages[i];
-            }
-
-            modal.alert({
-                content: content
-            });
-        }
     };
 
     return messages;

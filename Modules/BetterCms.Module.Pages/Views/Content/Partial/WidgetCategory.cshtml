@@ -1,5 +1,7 @@
-﻿@using BetterCms.Module.Pages.Content.Resources
+﻿@using BetterCms.Core.Models
+@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
+@using BetterCms.Module.Pages.Models
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
 
@@ -15,6 +17,8 @@
                 
                 for (int i = 0; i < Model.Widgets.Count; i++)
                 {
+                    var widget = Model.Widgets[i];
+                    
                     if (i % 3 == 0 && i != 0)
                     {
                         @:</div>
@@ -22,17 +26,39 @@
                     }
 
                     <div class="bcms-preview-block" 
-                         data-id="@Model.Widgets[i].Id"                          
-                         data-version="@Model.Widgets[i].Version"       
-                         data-type="@Model.Widgets[i].WidgetType"
-                         data-category-id="@(Model.Widgets[i].CategoryId ?? Guid.Empty)">
+                         data-id="@widget.Id"                          
+                         data-version="@widget.Version"       
+                         data-type="@widget.WidgetType"
+                         data-category-id="@(widget.CategoryId ?? Guid.Empty)">
                         <div class="bcms-title-holder">
-                            <div class="bcms-content-titles">@Model.Widgets[i].Name</div>
+                            <div class="bcms-content-titles">@widget.Name</div>                                                 
                         </div>
-                        @Html.PreviewContentBox(Html.BuildUrlFromExpression<WidgetsController>(f => f.PreviewHtmlContentWidget(Model.Widgets[i].Id.ToString())), Model.Widgets[i].Name)    
+                        @if (!string.IsNullOrWhiteSpace(widget.PreviewImageUrl))
+                        {
+                            @Html.PreviewContentBox(widget.PreviewImageUrl, widget.Name, true)
+                        }
+                        else
+                        {
+                            if (widget.WidgetType.HasValue && widget.WidgetType.Value == WidgetType.ServerControl)
+                            {
+                                @Html.PreviewContentBox(Html.BuildUrlFromExpression<WidgetsController>(f => f.PreviewWidget(widget.Id.ToString())), widget.Name)
+                            }
+                            else
+                            {
+                                @Html.PreviewContentBox(Html.BuildUrlFromExpression<WidgetsController>(f => f.PreviewHtmlContentWidget(widget.Id.ToString())), widget.Name)
+                            }
+                        }
+
                         <div class="bcms-controls-holder">
                             <div class="bcms-btn-small bcms-content-insert-button" >@PagesGlobalization.AddPageContent_WidgetTab_InsertButton</div>
-                            <a class="bcms-icn-edit bcms-content-edit-button">@PagesGlobalization.AddPageContent_WidgetTab_EditButton</a>
+                             @if (!widget.Status.Equals(ContentStatus.Published.ToString()))
+                             {
+                                <a class="bcms-icn-edit bcms-content-edit-button bcms-edit-draft">@PagesGlobalization.AddPageContent_WidgetTab_EditButton</a>
+                             }
+                             else
+                             {
+                                <a class="bcms-icn-edit bcms-content-edit-button">@PagesGlobalization.AddPageContent_WidgetTab_EditButton</a>
+                             }
                             <a class="bcms-icn-delete bcms-content-delete-button">@PagesGlobalization.AddPageContent_WidgetTab_DeleteButton</a>
                         </div>
                     </div>

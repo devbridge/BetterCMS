@@ -16,7 +16,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// <summary>
         /// Creates edit SEO modal dialog for given page.
         /// </summary>
-        /// <param name="pageId">The page id.</param>
+        /// <param name="pageId">A page id.</param>
         /// <returns>
         /// ViewResult to render edit SEO modal dialog.
         /// </returns>
@@ -24,8 +24,8 @@ namespace BetterCms.Module.Pages.Controllers
         public ActionResult EditSeo(string pageId)
         {
             EditSeoViewModel model = GetCommand<GetPageSeoCommand>().ExecuteCommand(pageId.ToGuidOrDefault());
-
-            return View(model);
+            var view = RenderView("EditSeo", model);
+            return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>

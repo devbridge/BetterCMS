@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+
+using BetterCms.Core.Models;
 using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Models;
 
@@ -9,6 +11,8 @@ namespace BetterCms.Module.MediaManager.ViewModels.Images
     /// </summary>
     public class ImageViewModel
     {
+        private const string dimensionRegularExpression = "^[1-9][0-9]{0,3}$";
+
         /// <summary>
         /// Gets or sets the id.
         /// </summary>
@@ -23,7 +27,18 @@ namespace BetterCms.Module.MediaManager.ViewModels.Images
         /// <value>
         /// The caption.
         /// </value>
+        [StringLength(MaxLength.Uri, ErrorMessageResourceType = typeof(MediaGlobalization), ErrorMessageResourceName = "ImageEditor_Dialog_ImageCaption_MaxLengthMessage")]
         public string Caption { get; set; }
+
+        /// <summary>
+        /// Gets or sets the title.
+        /// </summary>
+        /// <value>
+        /// The title.
+        /// </value>
+        [Required]
+        [StringLength(MaxLength.Name)]
+        public string Title { get; set; }
 
         /// <summary>
         /// Gets or sets the URL.
@@ -80,7 +95,7 @@ namespace BetterCms.Module.MediaManager.ViewModels.Images
         /// The width of the image.
         /// </value>
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(MediaGlobalization), ErrorMessageResourceName = "ImageEditor_Dialog_ImageWidth_RequiredMessage")]
-        [Range(0, 10000, ErrorMessageResourceType = typeof(MediaGlobalization), ErrorMessageResourceName = "ImageEditor_Dialog_ImageWidth_RangeMessage")]
+        [RegularExpression(dimensionRegularExpression, ErrorMessageResourceType = typeof(MediaGlobalization), ErrorMessageResourceName = "ImageEditor_Dialog_ImageWidth_RangeMessage")]
         public int ImageWidth { get; set; }
 
         /// <summary>
@@ -90,8 +105,24 @@ namespace BetterCms.Module.MediaManager.ViewModels.Images
         /// The height of the image.
         /// </value>
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(MediaGlobalization), ErrorMessageResourceName = "ImageEditor_Dialog_ImageHeight_RequiredMessage")]
-        [Range(0, 10000, ErrorMessageResourceType = typeof(MediaGlobalization), ErrorMessageResourceName = "ImageEditor_Dialog_ImageHeight_RangeMessage")]
+        [RegularExpression(dimensionRegularExpression, ErrorMessageResourceType = typeof(MediaGlobalization), ErrorMessageResourceName = "ImageEditor_Dialog_ImageHeight_RangeMessage")]
         public int ImageHeight { get; set; }
+
+        /// <summary>
+        /// Gets or sets the original image width.
+        /// </summary>
+        /// <value>
+        /// The original image width.
+        /// </value>
+        public int OriginalImageWidth { get; set; }
+
+        /// <summary>
+        /// Gets or sets the original image height.
+        /// </summary>
+        /// <value>
+        /// The original image height.
+        /// </value>
+        public int OriginalImageHeight { get; set; }
 
         /// <summary>
         /// Gets or sets the image align.
@@ -107,7 +138,7 @@ namespace BetterCms.Module.MediaManager.ViewModels.Images
         /// <value>
         /// The crop X coordinate.
         /// </value>
-        public string CropCoordX1 { get; set; }
+        public int CropCoordX1 { get; set; }
 
         /// <summary>
         /// Gets or sets the second crop point X coordinate.
@@ -115,7 +146,7 @@ namespace BetterCms.Module.MediaManager.ViewModels.Images
         /// <value>
         /// The crop X coordinate.
         /// </value>
-        public string CropCoordX2 { get; set; }
+        public int CropCoordX2 { get; set; }
 
         /// <summary>
         /// Gets or sets the first crop point Y coordinate.
@@ -123,7 +154,7 @@ namespace BetterCms.Module.MediaManager.ViewModels.Images
         /// <value>
         /// The crop Y coordinate.
         /// </value>
-        public string CropCoordY1 { get; set; }
+        public int CropCoordY1 { get; set; }
 
         /// <summary>
         /// Gets or sets the second crop point Y coordinate.
@@ -131,6 +162,6 @@ namespace BetterCms.Module.MediaManager.ViewModels.Images
         /// <value>
         /// The crop Y coordinate.
         /// </value>
-        public string CropCoordY2 { get; set; }
+        public int CropCoordY2 { get; set; }
     }
 }

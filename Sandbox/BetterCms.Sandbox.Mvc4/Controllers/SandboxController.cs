@@ -1,4 +1,7 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web;
+using System.Web.Mvc;
+using System.Web.Security;
 
 namespace BetterCms.Sandbox.Mvc4.Controllers
 {
@@ -17,6 +20,32 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
         public ActionResult Widget05()
         {
             return PartialView("~/Views/Widgets/05.cshtml");
+        }
+
+        [AllowAnonymous]
+        public ActionResult Login()
+        {
+            var authTicket = new FormsAuthenticationTicket(1, "BetterCMS test user", DateTime.Now, DateTime.Now.AddMonths(1), true, "User,Admin");
+
+            string cookieContents = FormsAuthentication.Encrypt(authTicket);
+            var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, cookieContents)
+            {
+                Expires = authTicket.Expiration,
+                Path = FormsAuthentication.FormsCookiePath
+            };
+
+            HttpContext.Response.Cookies.Add(cookie);
+
+            return Redirect("/");
+        }
+
+        [AllowAnonymous]
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            FormsAuthentication.SignOut();
+
+            return Redirect("/");
         }
     }
 }

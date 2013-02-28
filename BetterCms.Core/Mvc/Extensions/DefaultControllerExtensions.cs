@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Web.Mvc;
 
@@ -83,15 +84,15 @@ namespace BetterCms.Core.Mvc.Extensions
         /// </summary>
         /// <param name="controllerType">Type of the controller.</param>
         /// <returns>Controller action names.</returns>
-        public IEnumerable<string> GetControllerActions(Type controllerType)
+        public IEnumerable<MethodInfo> GetControllerActions(Type controllerType)
         {
             var methods = controllerType.GetMethods();
-            var actions = new List<string>();
+            var actions = new List<MethodInfo>();
             foreach (var method in methods)
             {
-                if (method.IsPublic && method.ReturnParameter != null && typeof(ActionResult).IsAssignableFrom(method.ReturnParameter.ParameterType) && !actions.Contains(method.Name))
+                if (method.IsPublic && method.ReturnParameter != null && typeof(ActionResult).IsAssignableFrom(method.ReturnParameter.ParameterType) && !actions.Any(f => f.Name == method.Name))
                 {
-                    actions.Add(method.Name);
+                    actions.Add(method);
                 }
             }
 
@@ -103,7 +104,7 @@ namespace BetterCms.Core.Mvc.Extensions
         /// </summary>
         /// <typeparam name="TController">The type of the controller.</typeparam>
         /// <returns>Controller action names.</returns>
-        public IEnumerable<string> GetControllerActions<TController>() where TController : ControllerBase
+        public IEnumerable<MethodInfo> GetControllerActions<TController>() where TController : ControllerBase
         {
             var controllerType = typeof(TController);
             return GetControllerActions(controllerType);

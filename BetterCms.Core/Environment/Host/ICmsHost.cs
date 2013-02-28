@@ -44,7 +44,7 @@ namespace BetterCms.Core.Environment.Host
         /// Called when host ends web request.
         /// </summary>
         /// <param name="application">The host application.</param>
-        void OnEndRequest(HttpApplication application);
+        void OnEndRequest(HttpApplication application);        
 
         /// <summary>
         /// Method to restarts the host application domain.

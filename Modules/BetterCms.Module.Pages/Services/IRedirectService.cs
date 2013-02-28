@@ -54,5 +54,15 @@ namespace BetterCms.Module.Pages.Services
         /// <param name="url">The URL.</param>
         /// <returns>Redirect url</returns>
         string GetRedirect(string url);
+
+        /// <summary>
+        /// Gets riderects if such redirect exists.
+        /// </summary>
+        /// <param name="pageUrl">The page URL.</param>
+        /// <param name="id">The redirect Id.</param>
+        /// <returns>
+        /// Redirect entity or null, if such redirect doesn't already exists
+        /// </returns>
+        Redirect GetPageRedirect(string pageUrl, Guid? id = null);
     }
 }

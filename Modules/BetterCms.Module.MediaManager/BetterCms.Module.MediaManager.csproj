@@ -123,16 +123,15 @@
     <Compile Include="Command\Folder\DeleteFolderCommandRequest.cs" />
     <Compile Include="Command\Files\GetFiles\GetFilesCommand.cs" />
     <Compile Include="Command\Folder\SaveFolderCommand.cs" />
+    <Compile Include="Command\Files\DownloadFile\DownloadFileCommand.cs" />
+    <Compile Include="Command\Files\DownloadFile\DownloadFileCommandResponse.cs" />
     <Compile Include="Command\MediaManager\GetMediaItemsCommandBase.cs" />
     <Compile Include="Command\MediaManager\RenameMedia\RenameMediaCommand.cs" />
     <Compile Include="Command\Upload\ConfirmUpload\ConfirmUploadCommand.cs" />
     <Compile Include="Command\MediaManager\DeleteMedia\DeleteMediaCommand.cs" />
     <Compile Include="Command\MediaManager\DeleteMedia\DeleteMediaCommandRequest.cs" />
-    <Compile Include="Command\Images\ResizeImage\ResizeImageCommandRequest.cs" />
-    <Compile Include="Command\Images\ResizeImage\ResizeImageCommand.cs" />
     <Compile Include="Command\Images\SaveImage\SaveImageDataCommand.cs" />
     <Compile Include="Command\Images\GetImage\GetImageCommand.cs" />
-    <Compile Include="Command\Images\CropImage\CropImageCommand.cs" />
     <Compile Include="Command\Images\GetImages\GetImagesCommand.cs" />
     <Compile Include="Command\Upload\ConfirmUpload\ConfirmUploadResponse.cs" />
     <Compile Include="Command\Upload\GetMultiFileUpload\GetMultiFileUploadCommand.cs" />
@@ -154,6 +153,7 @@
     <Compile Include="Controllers\VideosController.cs" />
     <Compile Include="Controllers\FilesController.cs" />
     <Compile Include="Controllers\MediaManagerController.cs" />
+    <Compile Include="Helpers\WrappedJsonResult.cs" />
     <Compile Include="MediaManagerModuleDescriptor.cs" />
     <Compile Include="Models\Maps\MediaMap.cs" />
     <Compile Include="Models\Maps\MediaFileMap.cs" />
@@ -167,7 +167,6 @@
     <Compile Include="Models\Media.cs" />
     <Compile Include="Models\MediaImage.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
-    <Compile Include="Models\Migrations\Migration201301161410.cs" />
     <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />
     <Compile Include="Registration\ImageEditorJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\MediaUploadJavaScriptModuleDescriptor.cs" />
@@ -204,15 +203,10 @@
     <EmbeddedResource Include="Content\Css\Images\loading.gif" />
     <EmbeddedResource Include="Content\Css\Images\sprite-media-1.png" />
     <EmbeddedResource Include="Content\Css\Images\sprite-media-2.png" />
-    <EmbeddedResource Include="Scripts\html5Upload.js" />
-    <EmbeddedResource Include="Scripts\jquery.Jcrop.js" />
-    <EmbeddedResource Include="Content\Css\jquery.Jcrop.css" />
-    <EmbeddedResource Include="Content\Css\Images\Jcrop.gif" />
     <EmbeddedResource Include="Content\Css\Images\sprite-media-3.png" />
     <EmbeddedResource Include="Content\Css\Images\bcms-no-image-1.png" />
     <EmbeddedResource Include="Content\Css\Images\bcms-no-image-2.png" />
     <EmbeddedResource Include="Content\Css\Images\bcms-no-image-3.png" />
-    <EmbeddedResource Include="Scripts\bcms.media.upload.js" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BetterCMS.Configuration\BetterCms.Configuration.csproj">
@@ -240,29 +234,19 @@
     <EmbeddedResource Include="Scripts\bcms.contextMenu.js" />
     <EmbeddedResource Include="Scripts\bcms.media.imageeditor.js" />
     <EmbeddedResource Include="Scripts\bcms.media.js" />
+    <EmbeddedResource Include="Scripts\bcms.media.upload.js" />
+    <EmbeddedResource Include="Scripts\html5Upload.js" />
+    <EmbeddedResource Include="Scripts\jquery.Jcrop.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Helpers\" />
     <Folder Include="Mvc\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Images\ImageCropper.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Images\ImageEditor.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Images\ImageEditorInsert.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Images\ImageInsert.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Upload\MultiFileUpload.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Videos\VideosTab.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />
@@ -278,6 +262,15 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Files\FileInsert.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Upload\SingleFileUpload.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Images\ImageEditorInsert.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Images\ImageEditor.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

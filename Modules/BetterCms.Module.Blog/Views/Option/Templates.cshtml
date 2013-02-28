@@ -2,19 +2,17 @@
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc.Helpers
 
-@* TODO: need to implement templates preview *@
-
 <div class="bcms-blog-templates-container">
     
     <div class="bcms-top-block-holder">
         <div class="bcms-large-titles">@BlogGlobalization.SiteSettings_Templates_Title</div>
         <div class="bcms-search-block">
             <input type="text" class="bcms-editor-field-box" placeholder="@RootGlobalization.WaterMark_Search" data-bind="value: searchQuery, valueUpdate: 'afterkeydown', enterPress: search">
-            <div class="bcms-btn-search" data-bind="click: search">@RootGlobalization.Button_Search</div>
+            <div class="bcms-btn-search bcms-search-query" data-bind="click: search">@RootGlobalization.Button_Search</div>
         </div>
     </div>
 
-    @Html.MessagesBox("bcms-blog-templates-messages")
+    @Html.TabbedContentMessagesBox()
                     
     <div class="bcms-blog-templates-container">
         <!-- ko foreach: templateRows -->

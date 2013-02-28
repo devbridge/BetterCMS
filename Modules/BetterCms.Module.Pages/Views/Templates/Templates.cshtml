@@ -1,6 +1,7 @@
 ﻿@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.SiteSettings
+@using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc.Grids.Extensions
 @using BetterCms.Module.Root.Mvc.Grids.TableRenderers
 @using BetterCms.Module.Root.Mvc.Helpers
@@ -32,11 +33,13 @@
         <div class="bcms-large-titles">@PagesGlobalization.SiteSettings_Templates_Title</div>
         <div class="bcms-btn-links-main" id="bcms-register-template-button">@PagesGlobalization.SiteSettings_Widgets_RegisterNew</div>
         <div class="bcms-search-block">
-            @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box" })
+            @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
             <div class="bcms-btn-search" id="bcms-template-search-btn">@PagesGlobalization.SiteSettings_Template_Search</div>
         </div>
-        @Html.MessagesBox("bcms-templates-messages")
     </div>    
+    
+    @Html.SiteSettingsMessagesBox()
+
     @(Html
           .Grid(Model.Items)
           .Sort(Model.GridOptions)

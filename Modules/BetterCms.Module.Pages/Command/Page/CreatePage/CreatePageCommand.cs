@@ -39,13 +39,25 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
         /// <returns>Created page</returns>
         public virtual SavePageResponse Execute(AddNewPageViewModel request)
         {
+            // Create / fix page url
             var pageUrl = request.PageUrl;
-            if (pageUrl == null && !string.IsNullOrWhiteSpace(request.PageTitle))
+            var createPageUrl = (pageUrl == null);
+            if (createPageUrl && !string.IsNullOrWhiteSpace(request.PageTitle))
             {
                 pageUrl = request.PageTitle.Transliterate();
             }
-
             pageUrl = redirectService.FixUrl(pageUrl);
+
+            // Add parent page url, if is set
+            if (createPageUrl)
+            {
+                var parentPageUrl = request.ParentPageUrl.Trim('/');
+                if (!string.IsNullOrWhiteSpace(parentPageUrl))
+                {
+                    pageUrl = string.Concat(parentPageUrl, pageUrl);
+                    pageUrl = redirectService.FixUrl(pageUrl);
+                }
+            }
 
             // Validate Url
             pageService.ValidatePageUrl(pageUrl);
@@ -54,7 +66,8 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
                 {
                     PageUrl = pageUrl,
                     Title = request.PageTitle,
-                    Layout = Repository.AsProxy<Root.Models.Layout>(request.TemplateId)
+                    Layout = Repository.First<Root.Models.Layout>(request.TemplateId),
+                    IsPublic = true
                 };
                 
             Repository.Save(page);

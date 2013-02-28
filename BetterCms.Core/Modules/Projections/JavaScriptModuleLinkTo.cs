@@ -24,13 +24,18 @@ namespace BetterCms.Core.Modules.JsModule
 
         private JavaScriptModuleDescriptor javaScriptModule;
 
+        private bool fullUrl;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="JavaScriptModuleLinkTo{TController}" /> class.
         /// </summary>
-        /// <param name="name">The name.</param>
+        /// <param name="javaScriptModule">The java script module.</param>
+        /// <param name="linkName">Name of the link.</param>
         /// <param name="urlExpression">The URL expression.</param>
-        public JavaScriptModuleLinkTo(JavaScriptModuleDescriptor javaScriptModule, string linkName, Expression<Action<TController>> urlExpression)
+        /// <param name="fullUrl">if set to <c>true</c> renders full URL.</param>
+        public JavaScriptModuleLinkTo(JavaScriptModuleDescriptor javaScriptModule, string linkName, Expression<Action<TController>> urlExpression, bool fullUrl = false)
         {
+            this.fullUrl = fullUrl;
             this.javaScriptModule = javaScriptModule;
             this.urlExpression = urlExpression;
             this.linkName = linkName;
@@ -49,6 +54,15 @@ namespace BetterCms.Core.Modules.JsModule
             try
             {
                 string url = HttpUtility.UrlDecode(html.BuildUrlFromExpression(urlExpression));
+                if (fullUrl)
+                {
+                    var requestUrl =html.ViewContext.HttpContext.Request.Url;
+                    if (requestUrl != null)
+                    {
+                        bool isCustomPort = requestUrl.Scheme == Uri.UriSchemeHttp && requestUrl.Port != 80 || requestUrl.Scheme == Uri.UriSchemeHttps && requestUrl.Port != 433;
+                        url = string.Concat(requestUrl.Scheme, "://", requestUrl.Host, isCustomPort ? ":" + requestUrl.Port : string.Empty, url);
+                    }
+                }
                 string link = string.Format("{0}.links.{1} = '{2}';", javaScriptModule.FriendlyName, linkName, url);
                 html.ViewContext.Writer.WriteLine(link);
             }

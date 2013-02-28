@@ -4,7 +4,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 using BetterCms.Core.Models;
+
+using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.MediaManager.ViewModels;
+using BetterCms.Module.Pages.Mvc.Attributes;
 using BetterCms.Module.Root.Models;
 
 namespace BetterCms.Module.Blog.ViewModels.Blog
@@ -19,6 +22,14 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// </value>
         [Required]
         public virtual Guid Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the content id.
+        /// </summary>
+        /// <value>
+        /// The content id.
+        /// </value>
+        public virtual Guid ContentId { get; set; }
 
         /// <summary>
         /// Gets or sets the entity version.
@@ -63,7 +74,8 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// <value>
         /// The live from date.
         /// </value>
-        [Required]
+        [DateValidation(ErrorMessageResourceType = typeof(BlogGlobalization), ErrorMessageResourceName = "BlogPost_LiveFrom_DateNotValidationMessage")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(BlogGlobalization), ErrorMessageResourceName = "BlogPost_LiveFrom_RequiredMessage")]
         public virtual DateTime LiveFromDate { get; set; }
 
         /// <summary>
@@ -72,6 +84,8 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// <value>
         /// The live to date.
         /// </value>
+        [DateValidation(ErrorMessageResourceType = typeof(BlogGlobalization), ErrorMessageResourceName = "BlogPost_LiveTo_DateNotValidationMessage")]
+        [EndDateValidation(StartDateProperty = "LiveFromDate", ErrorMessageResourceType = typeof(BlogGlobalization), ErrorMessageResourceName = "BlogPost_LiveTo_ValidationMessage")]
         public virtual DateTime? LiveToDate { get; set; }
 
         /// <summary>
@@ -83,12 +97,44 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         public virtual Guid? AuthorId { get; set; }
 
         /// <summary>
+        /// Gets or sets the parent page URL.
+        /// </summary>
+        /// <value>
+        /// The parent page URL.
+        /// </value>
+        public string ParentPageUrl { get; set; }
+
+        /// <summary>
         /// Gets or sets the cathegory.
         /// </summary>
         /// <value>
         /// The cathegory.
         /// </value>
         public virtual Guid? CategoryId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the desirable status for the saved widget.
+        /// </summary>
+        /// <value>
+        /// The desirable status.
+        /// </value>
+        public ContentStatus DesirableStatus { get; set; }
+
+        /// <summary>
+        /// Gets or sets the current status.
+        /// </summary>
+        /// <value>
+        /// The current status.
+        /// </value>
+        public ContentStatus CurrentStatus { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether blog post content has published version.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if blog post content has published version; otherwise, <c>false</c>.
+        /// </value>
+        public bool HasPublishedContent { get; set; }
 
         /// <summary>
         /// Gets or sets the post tags.

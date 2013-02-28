@@ -27,13 +27,13 @@
         column.For(model => model.OptionDefaultValue)
             .Named(PagesGlobalization.PageWidgetOptions_OptionDefaultValueColumn)
             .Sortable(false)
-            .HeaderAttributes(@style => "width: 160px;")
-            .Attributes(@class => "bcms-option-key");
+            .HeaderAttributes(@style => "width: 160px; text-align: left")
+            .Attributes(@class => "bcms-option-key", @style => "text-align: left");
     };
 }
 
 <div class="bcms-scroll-window">
-    <div class="bcms-padded-content">
+    
         <div class="bcms-input-list-holder">
             @using (Html.BeginForm<ContentController>(c => c.PageContentOptions((PageContentOptionsViewModel)null), FormMethod.Post, new { @id = "bcms-options-form", @class = "bcms-ajax-form" }))
             {              
@@ -41,5 +41,5 @@
                 @Html.HiddenFor(model => model.PageContentId)
             }
         </div>
-    </div>
+   
 </div>

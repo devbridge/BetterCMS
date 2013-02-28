@@ -28,13 +28,27 @@ namespace BetterCms.Module.Root.Models
         public virtual string Title { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether page is published.
+        /// Gets or sets the page status.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if page is published; otherwise, <c>false</c>.
+        /// The page status.
         /// </value>
-        public virtual bool IsPublished { get; set; }
+        public virtual PageStatus Status { get; set; }
 
+        /// <summary>
+        /// Gets a value indicating whether this page is available for not authenticated users.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this page is available for not authenticated users; otherwise, <c>false</c>.
+        /// </value>
+        public virtual bool IsPublic { get; set; }
+
+        /// <summary>
+        /// Gets or sets the page published date.
+        /// </summary>
+        /// <value>
+        /// The page published date.
+        /// </value>
         public virtual DateTime? PublishedOn { get; set; }
 
         /// <summary>
@@ -89,14 +103,6 @@ namespace BetterCms.Module.Root.Models
         /// <value>
         /// The page contents.
         /// </value>
-        public virtual IList<PageContent> PageContents { get; set; }
-
-        /// <summary>
-        /// Gets or sets a contents history for this page.
-        /// </summary>
-        /// <value>
-        /// A contents history for this page.
-        /// </value>
-        public virtual IList<PageContentHistory> PageContentHistory { get; set; }
+        public virtual IList<PageContent> PageContents { get; set; }        
     }
 }

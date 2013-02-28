@@ -1,5 +1,4 @@
 ﻿@model BetterCms.Core.Models.IPage
-
 @{
     Layout = "~/Areas/bcms-Root/Views/Shared/BaseLayout.cshtml";
 }
@@ -10,28 +9,32 @@
 }
 
 <div class="page">
+
     <header class="page-header">
-        <div class="page-frame">
+        <div class="page-frame clearfix">
             @RenderSection("CMSHeader", false)
         </div>
     </header>
 
-    <div class="page-container clearfix">
-        <h1>@Model.Title</h1>
-        
-        <aside class="page-left-sidebar-2">
-            @RenderSection("CMSLeftSide", false)
-        </aside>
+    <div class="page-block">
+        <div class="page-frame clearfix">
 
-        <section class="page-content-2">
-            @RenderSection("CMSMainContent", false)
-            @RenderBody()
-        </section>
+            <section class="two-col-left">
+                @RenderSection("CMSMainContent", false)
+                @RenderBody()
+            </section>
+
+            <aside class="col-right">
+                @RenderSection("CMSLeftSide", false)
+            </aside>
+
+        </div>
     </div>
+
 </div>
 
 <footer class="page-footer">
-    <div class="page-frame">
+    <div class="page-frame clearfix">
         @RenderSection("CMSFooter", false)
     </div>
 </footer>

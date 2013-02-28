@@ -58,7 +58,30 @@ namespace BetterCms.Module.Root.Mvc
         /// </returns>
         public static string ToFormattedDateString(this DateTime dateTime)
         {
-            return dateTime.ToString("MMM dd, yyyy");
+            return dateTime.ToString("MMM dd, yyyy");            
+        }
+
+        public static string ToFormatedTimeString(this TimeSpan timeSpan)
+        {
+            string format = timeSpan.Days >= 1 ? "d'.'hh':'mm" : "hh':'mm";
+            return timeSpan.ToString(format);
+        }
+
+        /// <summary>
+        /// Converts date source to formatted date string.
+        /// </summary>
+        /// <param name="dateTime">The date time.</param>
+        /// <returns>
+        /// Formatted date.
+        /// </returns>
+        public static string ToFormattedDateString(this DateTime? dateTime)
+        {
+            return dateTime != null ? dateTime.Value.ToFormattedDateString() : string.Empty;
+        }
+
+        public static string ToFormatedTimeString(this TimeSpan? timeSpan)
+        {
+            return timeSpan != null ? timeSpan.Value.ToFormatedTimeString() : null;
         }
     }
 }

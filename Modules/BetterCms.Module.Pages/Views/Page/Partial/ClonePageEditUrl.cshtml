@@ -1,0 +1,24 @@
+﻿@using BetterCms.Module.Pages.Content.Resources
+@using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Mvc.UI
+
+@model BetterCms.Module.Pages.ViewModels.Page.ClonePageViewModel
+
+<div class="bcms-input-list-holder">
+    @Html.Tooltip(PagesGlobalization.ClonePage_NewUrl_Tooltip_Title, PagesGlobalization.ClonePage_NewUrl_Tooltip_Description)
+    <div class="bcms-content-titles">@PagesGlobalization.ClonePage_NewUrl<a id="bcms-page-editpermalink">@RootGlobalization.Button_Edit</a></div>
+    <div class="bcms-editseo-urlpath" id="bcms-page-permalink-info">@(string.IsNullOrWhiteSpace(Model.PageUrl) ? Html.Raw("&nbsp;") : new MvcHtmlString(Html.Encode(Model.PageUrl)))</div>
+</div>
+
+<div class="bcms-edit-urlpath-box" style="display: none;">
+    <div class="bcms-tip-close">@PagesGlobalization.EditSeo_EditUrlPath_Close</div>
+
+    @Html.Tooltip(PagesGlobalization.ClonePage_EditNewUrl_Tooltip_Title, PagesGlobalization.ClonePage_EditNewUrl_Tooltip_Description)    
+    @Html.Hidden("PageNewUrlHidden", Model.PageUrl, new { @id = "bcms-page-permalink" })
+
+    <div class="bcms-content-titles">@PagesGlobalization.ClonePage_EditNewUrl_Title</div>
+    @Html.TextBoxFor(model => model.PageUrl, new { @id = "bcms-page-permalink-edit", @class = "bcms-editor-field-box", @style = "width: 503px;" })
+    
+    <div class="bcms-btn-small" id="bcms-save-permalink">@RootGlobalization.Button_Ok</div>
+    <div class="bcms-btn-links-small">@RootGlobalization.Button_Cancel</div>
+</div>

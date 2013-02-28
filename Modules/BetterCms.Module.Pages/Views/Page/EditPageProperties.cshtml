@@ -8,7 +8,10 @@
 @using Microsoft.Web.Mvc
 
 @model EditPagePropertiesViewModel
-
+@if (Model == null)
+{
+    return;
+}
 @{
     var tagsTemplateViewModel = new BetterCms.Module.Pages.ViewModels.Tags.TagsTemplateViewModel
     {
@@ -24,10 +27,10 @@
 </div>
 
 <div class="bcms-scroll-window">
+    @Html.TabbedContentMessagesBox()
     <div class="bcms-padded-content">
         @using (Html.BeginForm<PageController>(f => f.EditPageProperties((EditPagePropertiesViewModel)null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
         {
-            @Html.MessagesBox("edit-page-properties-messages")
             <div id="bcms-tab-1" class="bcms-tab-single">               
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Title, PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Description)
@@ -42,7 +45,8 @@
                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageImage_Title:</div>
                     <div class="bcms-uploaded-image">
                         <!-- ko if: image().url() -->
-                        <a href="#" data-bind="click: image().preview"><img data-bind="attr: {src: image().thumbnailUrl(), alt: image().tooltip() }" /></a>
+                        <a href="#" class="bcms-remove-image" data-bind="click: image().remove.bind(image())">@RootGlobalization.Button_Remove</a>
+                        <a href="#" data-bind="click: image().preview.bind(image())"><img data-bind="attr: {src: image().versionedThumnailUrl(), alt: image().tooltip() }" /></a>
                         <!-- /ko -->
                     </div>
                     <div class="bcms-upload-info">
@@ -66,15 +70,15 @@
                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_Title</div>
                     <div class="bcms-checkbox-holder">
                         @Html.CheckBoxFor(model => model.IsVisibleToEveryone)
-                        @PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_VisibleToEveryone
+                        <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_VisibleToEveryone</div>
                     </div>
                     <div class="bcms-checkbox-holder">
                         @Html.CheckBoxFor(model => model.UseNoFollow)
-                        @PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseNoFollow
+                        <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseNoFollow</div>
                     </div>
                     <div class="bcms-checkbox-holder">
                         @Html.CheckBoxFor(model => model.UseNoIndex)
-                        @PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseNoIndex
+                        <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseNoIndex</div>
                     </div>
                 </div>
                 @Html.HiddenFor(model => model.TemplateId, new { @id = "TemplateId" })

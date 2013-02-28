@@ -1,0 +1,45 @@
+﻿@using BetterCms.Module.Pages.Content.Resources
+@using BetterCms.Module.Pages.Controllers
+@using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Mvc.Helpers
+@using Microsoft.Web.Mvc
+
+@model BetterCms.Module.Pages.ViewModels.Content.PageContentViewModel
+
+<div class="bcms-tab-header">
+    <a class="bcms-tab bcms-tab-active" href="#bcms-tab-1">@PagesGlobalization.AddPageContent_RegularContentTab_Title</a>
+    <a class="bcms-tab" href="#bcms-tab-2">@PagesGlobalization.AddPageContent_WidgetTab_Title</a>
+</div>
+
+<div class="bcms-scroll-window">
+    @Html.TabbedContentMessagesBox()
+    <div class="bcms-padded-content">
+            
+        <div id="bcms-tab-1" class="bcms-tab-single">
+            @using (Html.BeginForm<ContentController>(c => c.SavePageHtmlContent(null), FormMethod.Post, new { @id = "bcms-content-form", @class = "bcms-ajax-form" }))
+            {              
+                @Html.Partial("Partial/EditHtmlContent", Model)                  
+                @Html.HiddenFor(model => model.Id, new { @id = "bcmsPageContentId"})
+                @Html.HiddenFor(model => model.ContentId, new { @id = "bcmsContentId"})
+                @Html.HiddenFor(model => model.PageId)
+                @Html.HiddenFor(model => model.RegionId, new { @id = "bcmsContentToRegionId" })
+                @Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status"})
+            }
+        </div>
+
+        <div id="bcms-tab-2" class="bcms-tab-single">
+            <div class="bcms-top-block-holder">
+                <div class="bcms-btn-links-main" id="bcms-create-advanced-content-button">@PagesGlobalization.AddPageContent_WidgetTab_AddNewButton</div>
+                <div class="bcms-btn-links-main" id="bcms-registeradvanced-content-button">@PagesGlobalization.AddPageContent_WidgetTab_RegisterButton</div>
+                <div class="bcms-search-block">
+                    <input type="text" id="bcms-advanced-content-search" class="bcms-editor-field-box" placeholder="@RootGlobalization.WaterMark_Search" />
+                    <div class="bcms-btn-search" id="bcms-advanced-content-search-btn">@PagesGlobalization.AddPageContent_WidgetTab_SearchButton</div>
+                </div>
+            </div>
+            <div class="bcms-content-sliders" id="bcms-advanced-contents-container">
+                @Html.Partial("Partial/WidgetCategories", Model.WidgetCategories)
+            </div>
+        </div>
+                
+    </div>
+</div>

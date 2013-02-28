@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Helpers;
 
-using BetterCms.Configuration;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions;
+using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Exceptions.Service;
 using BetterCms.Core.Services.Storage;
-using BetterCms.Core.Web;
+using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Mvc;
 
@@ -47,11 +47,6 @@ namespace BetterCms.Module.MediaManager.Services
         private readonly IStorageService storageService;
 
         /// <summary>
-        /// The configuration.
-        /// </summary>
-        private readonly ICmsConfiguration configuration;
-
-        /// <summary>
         /// The repository.
         /// </summary>
         private readonly IRepository repository;
@@ -66,23 +61,29 @@ namespace BetterCms.Module.MediaManager.Services
         /// </summary>
         private readonly ISessionFactoryProvider sessionFactoryProvider;
 
+        /// <summary>
+        /// The media file service
+        /// </summary>
         private readonly IMediaFileService mediaFileService;
+
+        /// <summary>
+        /// The image file format
+        /// </summary>
+        public static IDictionary<string, ImageFormat> transparencyFormats = new Dictionary<string, ImageFormat>(StringComparer.OrdinalIgnoreCase) { { "png", ImageFormat.Png }, { "gif", ImageFormat.Gif } };
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultMediaImageService" /> class.
         /// </summary>
         /// <param name="mediaFileService">The media file service.</param>
         /// <param name="storageService">The storage service.</param>
-        /// <param name="configuration">The configuration.</param>
         /// <param name="repository">The repository.</param>
         /// <param name="unitOfWork">The unit of work.</param>
         /// <param name="sessionFactoryProvider">The session factory provider.</param>
-        public DefaultMediaImageService(IMediaFileService mediaFileService, IStorageService storageService, ICmsConfiguration configuration, IRepository repository, ISessionFactoryProvider sessionFactoryProvider, IUnitOfWork unitOfWork)
+        public DefaultMediaImageService(IMediaFileService mediaFileService, IStorageService storageService, IRepository repository, ISessionFactoryProvider sessionFactoryProvider, IUnitOfWork unitOfWork)
         {
             this.mediaFileService = mediaFileService;
             this.sessionFactoryProvider = sessionFactoryProvider;
             this.storageService = storageService;
-            this.configuration = configuration;
             this.repository = repository;
             this.unitOfWork = unitOfWork;
         }
@@ -167,8 +168,18 @@ namespace BetterCms.Module.MediaManager.Services
         public MediaImage UploadImage(Guid rootFolderId, string fileName, long fileLength, Stream fileStream)
         {
             string folderName = mediaFileService.CreateRandomFolderName();
+            Size size;
 
-            Size size = GetImageSize(fileStream);
+            try
+            {
+                size = GetImageSize(fileStream);
+            }
+            catch (ImagingException ex)
+            {
+                var message = MediaGlobalization.MultiFileUpload_ImageFormatNotSuported;
+                const string logMessage = "Failed to get image size.";
+                throw new ValidationException(() => message, logMessage, ex);
+            }
 
             using (var thumbnailImage = new MemoryStream())
             {
@@ -248,6 +259,15 @@ namespace BetterCms.Module.MediaManager.Services
                 originalUpload.Start();
                 thumbnailUpload.Start();
 
+                try
+                {
+                    Task.WaitAll(new[] { imageUpload, originalUpload, thumbnailUpload });
+                }
+                catch (AggregateException ae)
+                {
+                    throw ae.Flatten();
+                }
+
                 return image;
             }
         }
@@ -268,11 +288,11 @@ namespace BetterCms.Module.MediaManager.Services
                     return img.Size;
                 }
             }
-            catch (Exception e)
+            catch (ArgumentException e)
             {
                 throw new ImagingException(string.Format("Stream {0} is not valid image stream. Can not determine image size.", imageStream.GetType()), e);
             }
-        }
+        }        
 
         /// <summary>
         /// Resizes the image and crop to fit.
@@ -288,25 +308,53 @@ namespace BetterCms.Module.MediaManager.Services
                 sourceStream.CopyTo(tempStream);               
 
                 var image = new WebImage(tempStream);
-                
+               
                 // Make image rectangular.
                 WebImage croppedImage;
-                var diff = (image.Width - image.Height) / 2.0;
-                if (diff > 0)
+
+                ImageFormat format = null;
+                if (transparencyFormats.TryGetValue(image.ImageFormat, out format))
                 {
-                    croppedImage = image.Crop(0, Convert.ToInt32(Math.Floor(diff)), 0, Convert.ToInt32(Math.Ceiling(diff)));
-                }
-                else if (diff < 0)
-                {
-                    diff = Math.Abs(diff);
-                    croppedImage = image.Crop(Convert.ToInt32(Math.Floor(diff)), 0, Convert.ToInt32(Math.Ceiling(diff)));
+                    using (Image resizedBitmap = new Bitmap(size.Width, size.Height))
+                    {
+                        using (Bitmap source = new Bitmap(new MemoryStream(image.GetBytes())))
+                        {
+                            using (Graphics g = Graphics.FromImage(resizedBitmap))
+                            {
+                                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                                g.DrawImage(source, 0, 0, size.Width, size.Height);
+                            }
+                        }
+                        using (MemoryStream ms = new MemoryStream())
+                        {
+                            resizedBitmap.Save(ms, ImageFormat.Png);
+                            croppedImage = new WebImage(ms);
+                        }
+                    }
                 }
                 else
                 {
-                    croppedImage = image;
+
+                    var diff = (image.Width - image.Height) / 2.0;
+                    if (diff > 0)
+                    {
+                        croppedImage = image.Crop(0, Convert.ToInt32(Math.Floor(diff)), 0, Convert.ToInt32(Math.Ceiling(diff)));
+                    }
+                    else if (diff < 0)
+                    {
+                        diff = Math.Abs(diff);
+                        croppedImage = image.Crop(Convert.ToInt32(Math.Floor(diff)), 0, Convert.ToInt32(Math.Ceiling(diff)));
+                    }
+                    else
+                    {
+                        croppedImage = image;
+                    }
+                    croppedImage = croppedImage.Resize(size.Width, size.Height);
                 }
 
-                var resizedImage = croppedImage.Resize(size.Width, size.Height);
+
+                var resizedImage = croppedImage;
 
                 var bytes = resizedImage.GetBytes();
                 destinationStream.Write(bytes, 0, bytes.Length);                
@@ -314,70 +362,17 @@ namespace BetterCms.Module.MediaManager.Services
         }
 
         /// <summary>
-        /// Crops the image.
-        /// </summary>
-        /// <param name="mediaImageId">The media image id.</param>
-        /// <param name="version">The version.</param>
-        /// <param name="x1">The x1.</param>
-        /// <param name="y1">The y1.</param>
-        /// <param name="x2">The x2.</param>
-        /// <param name="y2">The y2.</param>
-        public void CropImage(Guid mediaImageId, int version, int x1, int y1, int x2, int y2)
-        {
-            var imageEntity = GetImageEntity(mediaImageId, version);
-
-            var downloadResponse = storageService.DownloadObject(imageEntity.OriginalUri);
-            var image = new WebImage(downloadResponse.ResponseStream);
-            var croppedImage = image.Crop(y1, x1, image.Height - y2, image.Width - x2);
-            var bytes = croppedImage.GetBytes();
-            var memoryStream = new MemoryStream(bytes);
-            storageService.UploadObject(new UploadRequest { InputStream = memoryStream, Uri = imageEntity.FileUri });
-
-            imageEntity.Width = croppedImage.Width;
-            imageEntity.Height = croppedImage.Height;
-            imageEntity.Size = bytes.Length;
-            imageEntity.Version = version;
-
-            UpdateThumbnail(imageEntity, ThumbnailSize);
-
-            repository.Save(imageEntity);
-        }
-
-        /// <summary>
-        /// Resizes the image.
-        /// </summary>
-        /// <param name="mediaImageId">The media image id.</param>
-        /// <param name="version">The version.</param>
-        /// <param name="width">The width.</param>
-        /// <param name="height">The height.</param>
-        public void ResizeImage(Guid mediaImageId, int version, int width, int height)
-        {
-            var imageEntity = this.GetImageEntity(mediaImageId, version);
-
-            var downloadResponse = storageService.DownloadObject(imageEntity.OriginalUri);
-            var image = new WebImage(downloadResponse.ResponseStream);
-            var resizedImage = image.Resize(width, height, false);
-            var bytes = resizedImage.GetBytes();
-            var memoryStream = new MemoryStream(bytes);
-            storageService.UploadObject(new UploadRequest { InputStream = memoryStream, Uri = imageEntity.FileUri });
-
-            imageEntity.Width = resizedImage.Width;
-            imageEntity.Height = resizedImage.Height;
-            imageEntity.Size = bytes.Length;
-            imageEntity.Version = version;
-
-            UpdateThumbnail(imageEntity, ThumbnailSize);
-
-            repository.Save(imageEntity);
-        }
-
-        /// <summary>
         /// Updates the thumbnail.
         /// </summary>
         /// <param name="mediaImage">The media image.</param>
         /// <param name="size">The size.</param>
-        private void UpdateThumbnail(MediaImage mediaImage, Size size)
+        public void UpdateThumbnail(MediaImage mediaImage, Size size)
         {
+            if (size.IsEmpty)
+            {
+                size = ThumbnailSize;
+            }
+
             var downloadResponse = storageService.DownloadObject(mediaImage.FileUri);
 
             using (var memoryStream = new MemoryStream())
@@ -390,35 +385,6 @@ namespace BetterCms.Module.MediaManager.Services
                 mediaImage.ThumbnailHeight = size.Height;
                 mediaImage.ThumbnailSize = memoryStream.Length;
             }
-        }
-
-        /// <summary>
-        /// Gets the image entity.
-        /// </summary>
-        /// <param name="mediaImageId">The media image id.</param>
-        /// <param name="version">The version.</param>
-        /// <returns>Image entity.</returns>
-        /// <exception cref="CmsException">Image not found or Image was modified.</exception>
-        private MediaImage GetImageEntity(Guid mediaImageId, int version)
-        {
-            var imageEntity = repository.AsQueryable<MediaImage>().FirstOrDefault(f => f.Id == mediaImageId);
-
-            if (imageEntity == null)
-            {
-                throw new CmsException(string.Format("Image not found by id={0}.", mediaImageId));
-            }
-
-            if (imageEntity.Version != version)
-            {
-                throw new CmsException(string.Format("Image with id={0} was modified.", mediaImageId));
-            }
-
-            if (!storageService.ObjectExists(imageEntity.OriginalUri))
-            {
-                throw new CmsException(string.Format("Image not found in the storage by URI={0}.", imageEntity.OriginalUri));
-            }
-
-            return imageEntity;
         }
 
         private void ExecuteActionOnThreadSeparatedSessionWithNoConcurrencyTracking(Action<ISession> work)

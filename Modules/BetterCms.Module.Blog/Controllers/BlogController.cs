@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Web.Mvc;
 
+using BetterCms.Core.Models;
 using BetterCms.Module.Blog.Commands.GetBlogPost;
 using BetterCms.Module.Blog.Commands.GetBlogPostList;
 using BetterCms.Module.Blog.Commands.SaveBlogPost;
+using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.Blog.ViewModels.Blog;
-
+using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
@@ -20,11 +22,16 @@ namespace BetterCms.Module.Blog.Controllers
         }
 
         [HttpGet]
-        public virtual ActionResult CreateBlogPost()
+        public virtual ActionResult CreateBlogPost(string parentPageUrl)
         {
             var model = GetCommand<GetBlogPostCommand>().ExecuteCommand(Guid.Empty);
             var view = RenderView("EditBlogPost", model);
-            var success = model != null;
+            var success = false;
+            if (model != null)
+            {
+                model.ParentPageUrl = parentPageUrl;
+                success = true;
+            }
 
             return ComboWireJson(success, view, model, JsonRequestBehavior.AllowGet);
         }
@@ -35,7 +42,7 @@ namespace BetterCms.Module.Blog.Controllers
             var model = GetCommand<GetBlogPostCommand>().ExecuteCommand(id.ToGuidOrDefault());
             var view = RenderView("EditBlogPost", model);
             var success = model != null;
-
+           
             return ComboWireJson(success, view, model, JsonRequestBehavior.AllowGet);
         }
 
@@ -43,7 +50,10 @@ namespace BetterCms.Module.Blog.Controllers
         public virtual ActionResult SaveBlogPost(BlogPostViewModel model)
         {
             var response = GetCommand<SaveBlogPostCommand>().ExecuteCommand(model);
-
+            if (response != null)
+            {
+                Messages.AddSuccess(BlogGlobalization.CreatePost_CreatedSuccessfully_Message);
+            }
             return WireJson(response != null, response);
         }
     }

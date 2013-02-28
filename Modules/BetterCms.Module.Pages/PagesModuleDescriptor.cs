@@ -20,6 +20,9 @@ namespace BetterCms.Module.Pages
     /// </summary>
     public class PagesModuleDescriptor : ModuleDescriptor
     {
+        /// <summary>
+        /// The module name.
+        /// </summary>
         internal const string ModuleName = "pages";
 
         /// <summary>
@@ -57,7 +60,15 @@ namespace BetterCms.Module.Pages
         /// </summary>
         private readonly WidgetsJavaScriptModuleDescriptor widgetsJavaScriptModuleDescriptor;
 
+        /// <summary>
+        /// bcms.pages.templates.js java script module descriptor.
+        /// </summary>
         private readonly TemplatesJavaScriptModuleDescriptor templatesJavaScriptModuleDescriptor;
+
+        /// <summary>
+        /// bcms.pages.history.js java script module descriptor.
+        /// </summary>
+        private readonly HistoryJavaScriptModuleDescriptor historyJavaScriptModuleDescriptor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PagesModuleDescriptor" /> class.
@@ -72,6 +83,7 @@ namespace BetterCms.Module.Pages
             tagsJavaScriptModuleDescriptor = new TagsJavaScriptModuleDescriptor(this);
             redirectsJavaScriptModuleDescriptor = new RedirectsJavaScriptModuleDescriptor(this);
             templatesJavaScriptModuleDescriptor = new TemplatesJavaScriptModuleDescriptor(this);
+            historyJavaScriptModuleDescriptor = new HistoryJavaScriptModuleDescriptor(this);
         }
 
         /// <summary>
@@ -170,10 +182,17 @@ namespace BetterCms.Module.Pages
                     seoJavaScriptModuleDescriptor,
                     tagsJavaScriptModuleDescriptor,
                     widgetsJavaScriptModuleDescriptor,
-                    templatesJavaScriptModuleDescriptor
+                    templatesJavaScriptModuleDescriptor,
+                    historyJavaScriptModuleDescriptor
                 };
         }
 
+        /// <summary>
+        /// Registers the sidebar main projections.
+        /// </summary>
+        /// <param name="containerBuilder">The container builder.</param>
+        /// <param name="configuration">The configuration.</param>
+        /// <returns>Sidebar main action projections.</returns>
         public override IEnumerable<IPageActionProjection> RegisterSidebarMainProjections(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
         {
             return new IPageActionProjection[]
@@ -185,30 +204,30 @@ namespace BetterCms.Module.Pages
                                      page => new DropDownListProjectionItem
                                          {
                                              Order = 1,
-                                             Text = () => page.IsPublished 
+                                             Text = () => page.Status == PageStatus.Published
                                                                 ? PagesGlobalization.Sidebar_PageStatusPublished 
                                                                 : PagesGlobalization.Sidebar_PageStatusPublish,
-                                             Value = page.IsPublished 
+                                             Value = page.Status == PageStatus.Published
                                                                 ? "published"
                                                                 : "publish",
-                                             IsSelected = page.IsPublished                                             
+                                             IsSelected = page.Status == PageStatus.Published                                             
                                          }, 
 
                                      page => new DropDownListProjectionItem
                                          {
                                              Order = 2,
-                                             Text = () => page.IsPublished 
+                                             Text = () => page.Status == PageStatus.Published 
                                                                 ? PagesGlobalization.Sidebar_PageStatusUnpublish
                                                                 : PagesGlobalization.Sidebar_PageStatusUnpublished,
                                                                     
-                                             Value = page.IsPublished
+                                             Value = page.Status == PageStatus.Published
                                                                 ? "unpublish"
                                                                 : "unpublished",
-                                             IsSelected = !page.IsPublished
+                                             IsSelected = page.Status != PageStatus.Published
                                          }
                                 },
                                 Order = 10,
-                                CssClass = page => !page.IsPublished ? "bcms-sidemenu-select" : "bcms-sidemenu-select bcms-select-published"
+                                CssClass = page => page.Status != PageStatus.Published ? "bcms-sidemenu-select" : "bcms-sidemenu-select bcms-select-published"
                         }, 
                     
                     new ButtonActionProjection(pagePropertiesJavaScriptModuleDescriptor, page => "editPageProperties")
@@ -225,7 +244,7 @@ namespace BetterCms.Module.Pages
                                 CssClass = page => page.HasSEO ? "bcms-sidemenu-btn bcms-btn-ok" : "bcms-sidemenu-btn bcms-btn-warn"
                             },
 
-                    new SeparatorProjection(40){CssClass = page => "bcms-sidebar-separator"}, 
+                    new SeparatorProjection(40) { CssClass = page => "bcms-sidebar-separator" }, 
 
                     new InheriteProjection(
                         "div",
@@ -258,6 +277,12 @@ namespace BetterCms.Module.Pages
                 };
         }
 
+        /// <summary>
+        /// Registers the sidebar side projections.
+        /// </summary>
+        /// <param name="containerBuilder">The container builder.</param>
+        /// <param name="configuration">The configuration.</param>
+        /// <returns>Sidebar action projections.</returns>
         public override IEnumerable<IPageActionProjection> RegisterSidebarSideProjections(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
         {
             return new IPageActionProjection[]
@@ -265,11 +290,11 @@ namespace BetterCms.Module.Pages
                       new HtmlElementProjection("div")
                           {
                               Id = page => "bcms-sidemenu-pubstatus",
-                              Tooltip = page => page.IsPublished 
+                              Tooltip = page => page.Status == PageStatus.Published 
                                                     ? PagesGlobalization.Sidebar_PageStatusPublishedTooltip
                                                     : PagesGlobalization.Sidebar_PageStatusUnpublishedTooltip,
                               Order = 10,
-                              CssClass = page => page.IsPublished 
+                              CssClass = page => page.Status == PageStatus.Published 
                                                     ? "bcms-sidemenu-pubstatus"
                                                     : "bcms-sidemenu-pubstatus bcms-pubstatus-warn"
                           }, 
@@ -288,6 +313,12 @@ namespace BetterCms.Module.Pages
                 };
         }
 
+        /// <summary>
+        /// Registers the site settings projections.
+        /// </summary>
+        /// <param name="containerBuilder">The container builder.</param>
+        /// <param name="configuration">The configuration.</param>
+        /// <returns>Settings action projections.</returns>
         public override IEnumerable<IPageActionProjection> RegisterSiteSettingsProjections(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
         {
             return new IPageActionProjection[]
@@ -332,7 +363,7 @@ namespace BetterCms.Module.Pages
 
                     new SeparatorProjection(3500), 
 
-                    new LinkActionProjection(this.redirectsJavaScriptModuleDescriptor, page => "loadSiteSettingsRedirectList")
+                    new LinkActionProjection(redirectsJavaScriptModuleDescriptor, page => "loadSiteSettingsRedirectList")
                         {
                             Order = 4000,
                             Title = () => PagesGlobalization.SiteSettings_Redirects,

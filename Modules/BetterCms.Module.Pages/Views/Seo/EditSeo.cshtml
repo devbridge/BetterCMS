@@ -1,16 +1,20 @@
 ﻿@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.Seo
-@using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc.Helpers
 @using BetterCms.Module.Root.Mvc.UI
 @using Microsoft.Web.Mvc
-@model BetterCms.Module.Pages.ViewModels.Seo.EditSeoViewModel
 
+@model EditSeoViewModel
+@if (Model == null)
+{ 
+    return;
+}
 <div class="bcms-scroll-window">
+    @Html.TabbedContentMessagesBox()
     <div class="bcms-padded-content">
         <div class="bcms-editseo-window">
-            @Html.MessagesBox("bcms-editseo-messages")            
+           
             @using (Html.BeginForm<SeoController>(f => f.EditSeo((EditSeoViewModel)null), FormMethod.Post, new { @class = "bcms-ajax-form" })) 
             {
                 <div class="bcms-input-list-holder">

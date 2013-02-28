@@ -5,19 +5,22 @@
 @using BetterCms.Module.Root.Mvc.UI
 @using Microsoft.Web.Mvc
 
-@model BetterCms.Module.Pages.ViewModels.Templates.TemplateEditViewModel
-
+@model TemplateEditViewModel
+@if (Model == null)
+{
+    return;
+}
 <div class="bcms-tab-header">
     <a class="bcms-tab bcms-tab-active" href="#bcms-tab-1">@PagesGlobalization.EditTemplate_BasicPropertiesTab_Title</a>
     <a class="bcms-tab" href="#bcms-tab-2">@PagesGlobalization.EditTemplate_OptionsTab_Title</a>
 </div>
-           
+
 <div class="bcms-scroll-window">
-    <div class="bcms-padded-content">
-        @Html.MessagesBox("bcms-edit-template-messages")
-        @using (Html.BeginForm<TemplatesController>(c => c.RegisterTemplate((TemplateEditViewModel)null), FormMethod.Post, new { @id = "bcms-template-form", @class = "bcms-ajax-form" }))
-        {
-            <div id="bcms-tab-1" class="bcms-tab-single">
+    @Html.TabbedContentMessagesBox("bcms-edit-template-messages")
+    @using (Html.BeginForm<TemplatesController>(c => c.RegisterTemplate((TemplateEditViewModel)null), FormMethod.Post, new { @id = "bcms-template-form", @class = "bcms-ajax-form" }))
+    {
+        <div id="bcms-tab-1" class="bcms-tab-single">
+            <div class="bcms-padded-content">
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.Template_Title_Tooltip_Title, PagesGlobalization.Template_Title_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.Template_Title_Title:</div>
@@ -29,34 +32,31 @@
                     <div class="bcms-content-titles">@PagesGlobalization.Template_Url_Title:</div>
                     @Html.TextBoxFor(model => model.Url, new { @class = "bcms-editor-field-box", @style = "width: 523px;" })
                 </div>
-                
+
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.Template_Preview_Image_Tooltip_Title, PagesGlobalization.TemplatePreviewImageUrl_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.TemplatePreviewImageUrl_Title:</div>
                     @Html.TextBoxFor(model => model.PreviewImageUrl, new { @class = "bcms-editor-field-box", @style = "width: 523px;" })
                 </div>
-                
+
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.Template_Preview_Image_Tooltip_Title, PagesGlobalization.TemplatePreviewImageUrl_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.TemplatePreviewImage_Title:</div>
-                </div>
 
-                <div class="bcms-thumbnails-preview">
                     <div class="bcms-preview-module-image">
                         <img id="bcms-template-preview-image" src="@Model.PreviewImageUrl" alt="" />
                     </div>
+
                 </div>
             </div>
+        </div>
               
-            <div id="bcms-tab-2" class="bcms-tab-single">
-                @Html.Partial("Partial/EditTemplateRegions")
-            </div>
+        <div id="bcms-tab-2" class="bcms-tab-single">
+            @Html.Partial("Partial/EditTemplateRegions")
+        </div>
             
-            @Html.HiddenFor(model => model.Id)
-            @Html.HiddenFor(model => model.Version)
-            @Html.HiddenSubmit()
-        } 
-        
-    </div>
-     
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.Version)
+        @Html.HiddenSubmit()
+    }
 </div>

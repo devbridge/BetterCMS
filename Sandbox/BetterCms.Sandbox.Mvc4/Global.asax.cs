@@ -5,6 +5,7 @@ using System.Web.Configuration;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Web.Security;
 
 using BetterCms.Core;
 using BetterCms.Core.Environment.Host;
@@ -56,22 +57,17 @@ namespace BetterCms.Sandbox.Mvc4
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
         {
-            string roles = System.Configuration.ConfigurationManager.AppSettings["TestUserRoles"];
-            string name = System.Configuration.ConfigurationManager.AppSettings["TestUserName"];
-
-            string[] rolesList;
-            if (!string.IsNullOrWhiteSpace(roles))
+            HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+            if (authCookie != null)
             {
-                rolesList = roles.Split(',');
+                FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(authCookie.Value);
+                if (authTicket != null)
+                {
+                    var identity = new GenericIdentity(authTicket.Name, "Forms");
+                    var principal = new GenericPrincipal(identity, new[] { "User", "Admin" });
+                    Context.User = principal;
+                }
             }
-            else
-            {
-                rolesList = new string[0];
-            }
-
-
-            var principal = new GenericPrincipal(new GenericIdentity(name), rolesList);
-            HttpContext.Current.User = principal;
         }
     }
 }

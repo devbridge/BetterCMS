@@ -40,14 +40,15 @@ namespace BetterCms.Module.Blog.Commands.GetAuthorList
                             Id = author.Id,
                             Version = author.Version,
                             Name = author.Name,
-                            Image =
-                                new ImageSelectorViewModel
-                                    {
-                                        ImageId = author.Image.Id,
-                                        ImageUrl = author.Image.PublicUrl,
-                                        ThumbnailUrl = author.Image.PublicThumbnailUrl,
-                                        ImageTooltip = author.Image.Caption
-                                    }
+                            Image = author.Image == null ? null :
+                                    new ImageSelectorViewModel
+                                        {
+                                            ImageId = author.Image.Id,
+                                            ImageVersion = author.Image.Version,
+                                            ImageUrl = author.Image.PublicUrl,
+                                            ThumbnailUrl = author.Image.PublicThumbnailUrl,
+                                            ImageTooltip = author.Image.Caption
+                                        }
                         });
 
             var count = query.ToRowCountFutureValue();

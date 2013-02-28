@@ -13,7 +13,7 @@ namespace BetterCms.Module.Pages.Accessors
     [Serializable]
     public class HtmlContentWidgetAccessor : ContentAccessor<HtmlContentWidget>
     {
-        public HtmlContentWidgetAccessor(HtmlContentWidget content, IList<IPageContentOption> options)
+        public HtmlContentWidgetAccessor(HtmlContentWidget content, IList<IOption> options)
             : base(content, options)
         {
         }
@@ -25,7 +25,8 @@ namespace BetterCms.Module.Pages.Accessors
 
         public override string GetHtml(HtmlHelper html)
         {
-            if (!string.IsNullOrWhiteSpace(Content.Html))
+
+            if (Content.UseHtml && !string.IsNullOrWhiteSpace(Content.Html))
             {
                 return Content.Html;
             }

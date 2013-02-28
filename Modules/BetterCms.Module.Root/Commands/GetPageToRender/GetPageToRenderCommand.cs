@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
+using BetterCms.Core.Exceptions;
+using BetterCms.Core.Models;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Services;
@@ -10,28 +13,31 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Projections;
 using BetterCms.Module.Root.ViewModels.Cms;
 
-using NHibernate;
-using NHibernate.Criterion;
+using NHibernate.Linq;
 
 namespace BetterCms.Module.Root.Commands.GetPageToRender
 {
     public class GetPageToRenderCommand : CommandBase, ICommand<GetPageToRenderRequest, CmsRequestViewModel>
     {
-        private IPageAccessor pageAccessor;
+        private readonly IPageAccessor pageAccessor;
 
-        private PageContentProjectionFactory pageContentProjectionFactory;
+        private readonly PageContentProjectionFactory pageContentProjectionFactory;
 
         private PageJavaScriptProjectionFactory pageJavaScriptProjectionFactory;
 
         private PageStylesheetProjectionFactory pageStylesheetProjectionFactory;
+        
+        private readonly ICmsConfiguration cmsConfiguration;
 
         public GetPageToRenderCommand(IPageAccessor pageAccessor, PageContentProjectionFactory pageContentProjectionFactory,
-            PageStylesheetProjectionFactory pageStylesheerProjectionFactory, PageJavaScriptProjectionFactory pageJavaScriptProjectionFactory)
+            PageStylesheetProjectionFactory pageStylesheetProjectionFactory, PageJavaScriptProjectionFactory pageJavaScriptProjectionFactory,
+            ICmsConfiguration cmsConfiguration)
         {
             this.pageContentProjectionFactory = pageContentProjectionFactory;
-            this.pageStylesheetProjectionFactory = pageStylesheerProjectionFactory;
+            this.pageStylesheetProjectionFactory = pageStylesheetProjectionFactory;
             this.pageJavaScriptProjectionFactory = pageJavaScriptProjectionFactory;
             this.pageAccessor = pageAccessor;
+            this.cmsConfiguration = cmsConfiguration;
         }
 
         /// <summary>
@@ -41,56 +47,29 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
         /// <returns>Executed command result.</returns>
         public CmsRequestViewModel Execute(GetPageToRenderRequest request)
         {
-            Page pageAlias = null;
-            ICriterion pageFilter = Restrictions.Eq(
-                NHibernate.Criterion.Projections.SqlFunction("lower", NHibernateUtil.String, NHibernate.Criterion.Projections.Property(() => pageAlias.PageUrl)),
-                request.VirtualPath.ToLowerInvariant());
-
-
-            Page page;
-            if (request.PreviewPageContentId == null)
-            {
-                page = UnitOfWork.Session.QueryOver(() => pageAlias)
-                              .Where(pageFilter)
-                              .Where(p => !p.IsDeleted)
-                              .Fetch(f => f.Layout)
-                              .Eager.Fetch(f => f.Layout.LayoutRegions)
-                              .Eager.Fetch(f => f.Layout.LayoutRegions[0].Region)
-                              .Eager.Fetch(f => f.PageContents)
-                              .Eager.Fetch(f => f.PageContents[0].Content)
-                              .Eager.Fetch(f => f.PageContents[0].Options)
-                              .Eager.Fetch(f => f.PageContents[0].Options[0].ContentOption)
-                              .Eager.SingleOrDefault();
-            }
-            else
-            {
-                page = UnitOfWork.Session.QueryOver(() => pageAlias)
-                              .Where(pageFilter)
-                              .Where(p => !p.IsDeleted)
-                              .Fetch(f => f.Layout)
-                              .Eager.Fetch(f => f.Layout.LayoutRegions)
-                              .Eager.Fetch(f => f.Layout.LayoutRegions[0].Region)
-                              .Eager.Fetch(f => f.PageContents)
-                              .Eager.Fetch(f => f.PageContents[0].Content)
-                              .Eager.Fetch(f => f.PageContents[0].Options)
-                              .Eager.Fetch(f => f.PageContents[0].Options[0].ContentOption)
-                              .Eager.SingleOrDefault();
-            }
+            var pageQuery = GetPageFutureQuery(request);
+            var pageContentsQuery = GetPageContentFutureQuery(request);
+            
+            var page = pageQuery.FirstOrDefault();
             if (page == null)
             {
-                var redirect = pageAccessor.GetRedirect(request.VirtualPath);
-                if (!string.IsNullOrWhiteSpace(redirect))
-                {
-                    return new CmsRequestViewModel(new RedirectViewModel(redirect));
-                }
-
-                return null;
+                return Redirect(request.PageUrl);
             }
 
-            var contentProjections = page.PageContents.Distinct().Select(f => pageContentProjectionFactory.Create(f)).ToList();
-            
+            // Redirect user to login page, if page is inaccessible for public users
+            // and user is not authenticated
+            if (request.PreviewPageContentId == null && !request.IsAuthenticated && !page.IsPublic && !string.IsNullOrWhiteSpace(cmsConfiguration.LoginUrl))
+            {
+                // TODO: uncomment redirect to login form, when login form will be im
+                return null;
+                // return Redirect(cmsConfiguration.LoginUrl);
+            }
+
+            var pageContents = pageContentsQuery.ToList();
+            var contentProjections = pageContents.Distinct().Select(f => CreatePageContentProjection(request, f)).Where(c => c != null).ToList();
+
             RenderPageViewModel renderPageViewModel = new RenderPageViewModel(page);
-            
+            renderPageViewModel.CanManageContent = request.CanManageContent;
             renderPageViewModel.LayoutPath = page.Layout.LayoutPath;
 
             renderPageViewModel.Regions =
@@ -104,19 +83,150 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             renderPageViewModel.Contents = contentProjections;
             renderPageViewModel.Metadata = pageAccessor.GetPageMetaData(page).ToList();
 
-            // Styles
+            // Attach styles.
             var styles = new List<IStylesheetAccessor>();
             styles.Add(pageStylesheetProjectionFactory.Create(page));
             styles.AddRange(contentProjections);
             renderPageViewModel.Stylesheets = styles;
 
-            // JavaScripts
+            // Attach JavaScript includes.
             var js = new List<IJavaScriptAccessor>();
             js.Add(pageJavaScriptProjectionFactory.Create(page));
             js.AddRange(contentProjections);
             renderPageViewModel.JavaScripts = js;
 
             return new CmsRequestViewModel(renderPageViewModel);
+        }
+
+        private PageContentProjection CreatePageContentProjection(GetPageToRenderRequest request, PageContent pageContent)
+        {
+            Models.Content contentToProject = null;
+            
+            if (request.PreviewPageContentId != null && request.PreviewPageContentId.Value == pageContent.Id)
+            {
+                // Looks for the preview content version first.
+                if (pageContent.Content.Status == ContentStatus.Preview)
+                {
+                    contentToProject = pageContent.Content;
+                }
+                else
+                {
+                    contentToProject = pageContent.Content.History.FirstOrDefault(f => f.Status == ContentStatus.Preview);
+                }
+            }
+
+            if (contentToProject == null && (request.CanManageContent || request.PreviewPageContentId != null))
+            {
+                // Look for the draft content version if we are in the edit or preview mode.
+                if (pageContent.Content.Status == ContentStatus.Draft)
+                {
+                    contentToProject = pageContent.Content;
+                }
+                else
+                {
+                    contentToProject = pageContent.Content.History.FirstOrDefault(f => f.Status == ContentStatus.Draft);
+                }
+            }
+            
+            if (contentToProject == null && pageContent.Content.Status == ContentStatus.Published)
+            {
+                IHtmlContent htmlContent = pageContent.Content as IHtmlContent;
+                if (!request.CanManageContent && htmlContent != null && (DateTime.Now < htmlContent.ActivationDate || (htmlContent.ExpirationDate.HasValue && htmlContent.ExpirationDate.Value < DateTime.Now)))
+                {
+                    // Invisible for user because of activation dates.
+                    return null;
+                }
+
+                // Otherwise take published version.
+                contentToProject = pageContent.Content;
+            }
+
+            if (contentToProject == null)
+            {
+                throw new CmsException(string.Format("A content version was not found to project on the page. PageContent={0}; Request={1};", pageContent, request));
+            }
+
+            List<IOption> options = new List<IOption>();
+            options.AddRange(pageContent.Options);
+            options.AddRange(pageContent.Content.ContentOptions.Where(f => !pageContent.Options.Any(g => g.Key.Trim().Equals(f.Key.Trim(), StringComparison.OrdinalIgnoreCase))));
+
+            return pageContentProjectionFactory.Create(pageContent, contentToProject, options);
+        }
+
+        private IEnumerable<Page> GetPageFutureQuery(GetPageToRenderRequest request)
+        {
+            IQueryable<Page> query = Repository.AsQueryable<Page>()                                               
+                                               .Fetch(f => f.Layout)
+                                               .ThenFetchMany(f => f.LayoutRegions)
+                                               .ThenFetch(f => f.Region)
+                                               .Where(f => !f.IsDeleted);
+
+            if (request.PageId == null)
+            {
+                query = query.Where(f => f.PageUrl.ToLower() == request.PageUrl.ToLowerInvariant());
+            }
+            else
+            {
+                query = query.Where(f => f.Id == request.PageId);
+            }
+
+            // If page is not published, page is not found
+            if (!request.IsAuthenticated && request.PreviewPageContentId == null)
+            {
+                query = query.Where(f => f.Status == PageStatus.Published);
+            }
+
+            return query.ToFuture();
+        }
+
+        private IEnumerable<PageContent> GetPageContentFutureQuery(GetPageToRenderRequest request)
+        {
+            IQueryable<PageContent> pageContentsQuery =
+                Repository.AsQueryable<PageContent>()                          
+                          .Fetch(f => f.Content).ThenFetchMany(f => f.ContentOptions)
+                          .FetchMany(f => f.Options);
+
+            if (request.CanManageContent || request.PreviewPageContentId != null)
+            {
+                pageContentsQuery = pageContentsQuery.Fetch(f => f.Content).ThenFetchMany(f => f.History);
+            }
+
+            if (request.PageId == null)
+            {
+                pageContentsQuery = pageContentsQuery.Where(f => f.Page.PageUrl.ToLower() == request.PageUrl.ToLowerInvariant());
+            }
+            else
+            {
+                pageContentsQuery = pageContentsQuery.Where(f => f.Page.Id == request.PageId);
+            }
+
+            if (request.PreviewPageContentId != null)
+            {
+                pageContentsQuery = pageContentsQuery.Where(f => f.Content.Status == ContentStatus.Published || f.Content.Status == ContentStatus.Draft || f.Id == request.PreviewPageContentId.Value);
+            }
+            else if (request.CanManageContent)
+            {
+                pageContentsQuery = pageContentsQuery.Where(f => f.Content.Status == ContentStatus.Published || f.Content.Status == ContentStatus.Draft);               
+            }
+            else
+            {
+                pageContentsQuery = pageContentsQuery.Where(f => f.Content.Status == ContentStatus.Published);
+            }
+
+            pageContentsQuery = pageContentsQuery.Where(f => !f.IsDeleted && !f.Content.IsDeleted && !f.Page.IsDeleted);
+
+            return pageContentsQuery.ToFuture();
+        }
+
+        private CmsRequestViewModel Redirect(string redirectUrl)
+        {
+            var redirect = pageAccessor.GetRedirect(redirectUrl);
+            if (!string.IsNullOrWhiteSpace(redirect))
+            {
+                return new CmsRequestViewModel(new RedirectViewModel(redirect));
+            }
+
+            return null;
         }
     }
 }

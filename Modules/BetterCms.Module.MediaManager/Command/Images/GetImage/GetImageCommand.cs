@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.Models;
@@ -15,6 +14,12 @@ namespace BetterCms.Module.MediaManager.Command.Images.GetImage
     /// </summary>
     public class GetImageCommand : CommandBase, ICommand<Guid, ImageViewModel>
     {
+        /// <summary>
+        /// Gets or sets the media file service.
+        /// </summary>
+        /// <value>
+        /// The media file service.
+        /// </value>
         public IMediaFileService MediaFileService { get; set; }
 
         /// <summary>
@@ -24,30 +29,28 @@ namespace BetterCms.Module.MediaManager.Command.Images.GetImage
         /// <returns>The view model.</returns>
         public ImageViewModel Execute(Guid imageId)
         {
-            return Repository.AsQueryable<MediaImage>()
-                .Where(f => f.Id == imageId)
-                .ToList()
-                .Select(f => new ImageViewModel
-                                 {                                     
-                                     Id = f.Id.ToString(),
-                                     Caption = f.Caption,
-                                     Url = f.PublicUrl,
-                                     Version = f.Version.ToString(CultureInfo.InvariantCulture),
-                                     FileName = f.OriginalFileName,
-                                     FileExtension = f.OriginalFileExtension,
-                                     FileSize = MediaFileService.GetFileSizeText(f.Size),
-                                     ImageWidth = f.Width,
-                                     ImageHeight = f.Height,
-                                     ImageAlign = f.ImageAlign.HasValue ? f.ImageAlign.Value : MediaImageAlign.Left,
-                                     CropCoordX1 = f.CropCoordX1.HasValue ? f.CropCoordX1.Value.ToString(CultureInfo.InvariantCulture) : "0",
-                                     CropCoordY1 = f.CropCoordY1.HasValue ? f.CropCoordY1.Value.ToString(CultureInfo.InvariantCulture) : "0",
-                                     CropCoordX2 = f.CropCoordX2.HasValue ? f.CropCoordX2.Value.ToString(CultureInfo.InvariantCulture) : f.Width.ToString(CultureInfo.InvariantCulture),
-                                     CropCoordY2 = f.CropCoordY2.HasValue ? f.CropCoordY2.Value.ToString(CultureInfo.InvariantCulture) : f.Height.ToString(CultureInfo.InvariantCulture),
-                                     OriginalImageUrl = f.PublicOriginallUrl
-                                 })
-                .FirstOrDefault();
+            var image = Repository.First<MediaImage>(imageId);
+            return new ImageViewModel
+                {
+                    Id = image.Id.ToString(),
+                    Caption = image.Caption,
+                    Title = image.Title,
+                    Url = image.PublicUrl,
+                    Version = image.Version.ToString(CultureInfo.InvariantCulture),
+                    FileName = image.OriginalFileName,
+                    FileExtension = image.OriginalFileExtension,
+                    FileSize = MediaFileService.GetFileSizeText(image.Size),
+                    ImageWidth = image.Width,
+                    ImageHeight = image.Height,
+                    OriginalImageWidth = image.OriginalWidth,
+                    OriginalImageHeight = image.OriginalHeight,
+                    ImageAlign = image.ImageAlign.HasValue ? image.ImageAlign.Value : MediaImageAlign.Left,
+                    CropCoordX1 = image.CropCoordX1.HasValue ? image.CropCoordX1.Value : 0,
+                    CropCoordY1 = image.CropCoordY1.HasValue ? image.CropCoordY1.Value : 0,
+                    CropCoordX2 = image.CropCoordX2.HasValue ? image.CropCoordX2.Value : image.OriginalWidth,
+                    CropCoordY2 = image.CropCoordY2.HasValue ? image.CropCoordY2.Value : image.OriginalHeight,
+                    OriginalImageUrl = image.PublicOriginallUrl
+                };
         }
-
-        
     }
 }

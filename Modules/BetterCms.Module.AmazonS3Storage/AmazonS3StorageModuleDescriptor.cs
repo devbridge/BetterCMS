@@ -1,6 +1,8 @@
 ﻿using Autofac;
 
+using BetterCms.Configuration;
 using BetterCms.Core.Modules;
+using BetterCms.Core.Services.Storage;
 
 namespace BetterCms.Module.AmazonS3Storage
 {
@@ -45,6 +47,10 @@ namespace BetterCms.Module.AmazonS3Storage
         /// <param name="configuration">The configuration.</param>
         public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder, ICmsConfiguration configuration)
         {
+            if (configuration.Storage.ServiceType == StorageServiceType.Auto)
+            {
+                containerBuilder.RegisterType<AmazonS3StorageService>().As<IStorageService>().SingleInstance();
+            }
         }
     }
 }

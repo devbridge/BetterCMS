@@ -116,6 +116,8 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="BetterCmsContext.cs" />
+    <Compile Include="DataAccess\DataContext\QueryableExtensions.cs" />
+    <Compile Include="DataAccess\DataContext\QueryOverExtensions.cs" />
     <Compile Include="DataAccess\DataContext\EventListeners\DeleteEventListener.cs" />
     <Compile Include="DataAccess\DataContext\EventListeners\EventListenerHelper.cs" />
     <Compile Include="DataAccess\DataContext\EventListeners\SaveOrUpdateEventListener.cs" />
@@ -134,6 +136,9 @@
     <Compile Include="Environment\Assemblies\DefaultAssemblyManager.cs" />
     <Compile Include="Environment\Assemblies\IAssemblyManager.cs" />
     <Compile Include="Models\ContentStatus.cs" />
+    <Compile Include="Models\PageStatus.cs" />
+    <Compile Include="Models\IOption.cs" />
+    <Compile Include="Models\IHistorical.cs" />
     <Compile Include="Models\IEntity.cs" />
     <Compile Include="Models\ICategory.cs" />
     <Compile Include="Models\IHtmlContent.cs" />
@@ -141,6 +146,8 @@
     <Compile Include="Security\AuthorizeAttribute.cs" />
     <Compile Include="Security\IUserRole.cs" />
     <Compile Include="Models\IWidget.cs" />
+    <Compile Include="Modules\Projections\EmptyContentAccessor.cs" />
+    <Compile Include="Mvc\Attributes\IgnoreAutoRouteAttribute.cs" />
     <Compile Include="Security\UserRole.cs" />
     <Compile Include="Services\Storage\FtpStorageService.cs" />
     <Compile Include="Services\Storage\DownloadResponse.cs" />
@@ -188,7 +195,7 @@
     <Compile Include="Exceptions\Service\StorageException.cs" />
     <Compile Include="Exceptions\Service\TagException.cs" />
     <Compile Include="Exceptions\Service\UserException.cs" />
-    <Compile Include="Models\ContentOptionType.cs" />
+    <Compile Include="Models\OptionType.cs" />
     <Compile Include="Models\IContentOption.cs" />
     <Compile Include="Models\IPageContent.cs" />
     <Compile Include="Models\IRegion.cs" />

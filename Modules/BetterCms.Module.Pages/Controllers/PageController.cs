@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 
+using BetterCms.Core.Models;
 using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Command.Page.ClonePage;
 using BetterCms.Module.Pages.Command.Page.CreatePage;
@@ -22,16 +23,15 @@ using BetterCms.Module.Root.Mvc.Helpers;
 
 namespace BetterCms.Module.Pages.Controllers
 {
-
-
     /// <summary>
-    /// Controller for CMS pages: create / edit / delete pages
+    /// Controller for CMS pages: create / edit / delete pages.
     /// </summary>
     public class PageController : CmsControllerBase
     {
         /// <summary>
         /// Renders a page list for the site settings dialog.
         /// </summary>
+        /// <param name="request">The request.</param>
         /// <returns>
         /// Rendered pages list.
         /// </returns>
@@ -40,16 +40,18 @@ namespace BetterCms.Module.Pages.Controllers
             var model = GetCommand<GetPagesListCommand>().ExecuteCommand(request);
             return View(model);
         }
+
         /// <summary>
         /// Creates add new page modal dialog.
         /// </summary>
+        /// <param name="parentPageUrl">The parent page URL.</param>
         /// <returns>
         /// ViewResult to render add new page modal dialog.
         /// </returns>
         [HttpGet]
-        public ActionResult AddNewPage()
+        public ActionResult AddNewPage(string parentPageUrl)
         {
-            AddNewPageViewModel model = new AddNewPageViewModel();
+            AddNewPageViewModel model = new AddNewPageViewModel { ParentPageUrl = parentPageUrl };
             model.Templates = GetCommand<GetTemplatesCommand>().ExecuteCommand(new GetTemplatesRequest()).Templates;
 
             // Select first template as active
@@ -77,9 +79,11 @@ namespace BetterCms.Module.Pages.Controllers
                 if (response != null)
                 {
                     response.PageUrl = Http.GetAbsolutePath(response.PageUrl);
+                    Messages.AddSuccess(PagesGlobalization.SavePage_CreatedSuccessfully_Message);
                     return Json(new WireJson { Success = true, Data = response });
                 }
             }
+
             return Json(new WireJson(false));
         }
 
@@ -132,6 +136,7 @@ namespace BetterCms.Module.Pages.Controllers
                     return Json(new WireJson { Success = true, Data = response });
                 }
             }
+
             return Json(new WireJson { Success = false });
         }
 
@@ -146,7 +151,8 @@ namespace BetterCms.Module.Pages.Controllers
         public ActionResult DeletePageConfirmation(string id)
         {
             var model = GetCommand<GetPageForDeleteCommand>().ExecuteCommand(id.ToGuidOrDefault());
-            return View(model);
+            var view = RenderView("DeletePageConfirmation", model ?? new DeletePageViewModel());
+            return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -164,23 +170,40 @@ namespace BetterCms.Module.Pages.Controllers
                 Messages.AddSuccess(PagesGlobalization.DeletePage_DeletedSuccessfully_Message);
                 return Json(new WireJson { Success = true });
             }
+
             return Json(new WireJson { Success = false });
         }
 
+        /// <summary>
+        /// Clones the page.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns>
+        /// Json result status.
+        /// </returns>
         [HttpGet]
         public ActionResult ClonePage(string id)
         {
             var model = GetCommand<GetPageForCloningCommand>().ExecuteCommand(id.ToGuidOrDefault());
-            return View(model);
+            var view = RenderView("ClonePage", model ?? new ClonePageViewModel());
+            return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Clones the page.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns>
+        /// Json result status.
+        /// </returns>
         [HttpPost]
         public ActionResult ClonePage(ClonePageViewModel model)
         {
-            if (GetCommand<ClonePageCommand>().ExecuteCommand(model))
+            model = GetCommand<ClonePageCommand>().ExecuteCommand(model);
+            if (model != null)
             {
                 Messages.AddSuccess(string.Format(PagesGlobalization.ClonePage_Dialog_Success, model.PageUrl));
-                return Json(new WireJson { Success = true, Data = model.PageUrl, DataType = "redirect" });
+                return Json(new WireJson { Success = true, Data = model });
             }
 
             return Json(new WireJson { Success = false });
@@ -211,20 +234,32 @@ namespace BetterCms.Module.Pages.Controllers
                     : PagesGlobalization.PublishPage_FailedToUnpublishPage_Message;
                 Messages.AddError(message);
             }
+
             return Json(new WireJson { Success = success });
         }
 
         /// <summary>
         /// Converts the string to slug.
         /// </summary>
-        /// <returns>URL, created from text</returns>
+        /// <param name="text">The text.</param>
+        /// <param name="senderId">The sender id.</param>
+        /// <returns>
+        /// URL, created from text.
+        /// </returns>
         public ActionResult ConvertStringToSlug(string text, string senderId)
         {
+            const int maxLength = MaxLength.Url - 5;
+            
             var slug = text.Transliterate();
             if (string.IsNullOrWhiteSpace(slug))
             {
                 slug = "-";
             }
+            if (slug.Length >= maxLength)
+            {
+                slug = slug.Substring(0, maxLength);
+            }
+
             return Json(new { Text = text, Url = slug, SenderId = senderId }, JsonRequestBehavior.AllowGet);
         }
     }

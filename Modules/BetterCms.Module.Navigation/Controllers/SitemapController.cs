@@ -1,8 +1,10 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
 
 using BetterCms.Module.Navigation.Command.Sitemap.DeleteSitemapNode;
 using BetterCms.Module.Navigation.Command.Sitemap.GetPageLinks;
 using BetterCms.Module.Navigation.Command.Sitemap.GetSitemap;
+using BetterCms.Module.Navigation.Command.Sitemap.SaveSitemap;
 using BetterCms.Module.Navigation.Command.Sitemap.SaveSitemapNode;
 using BetterCms.Module.Navigation.Content.Resources;
 using BetterCms.Module.Navigation.ViewModels.Sitemap;
@@ -54,6 +56,17 @@ namespace BetterCms.Module.Navigation.Controllers
         }
 
         /// <summary>
+        /// Saves the sitemap.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns>Action result.</returns>
+        [HttpPost]
+        public ActionResult SaveSitemap(List<SitemapNodeViewModel> model)
+        {
+            return Json(new WireJson { Success = GetCommand<SaveSitemapCommand>().ExecuteCommand(model) });
+        }
+
+        /// <summary>
         /// Adds the new page.
         /// </summary>
         /// <returns>Rendered sitemap container.</returns>
@@ -79,6 +92,7 @@ namespace BetterCms.Module.Navigation.Controllers
                 var data = new SitemapAndPageLinksViewModel { PageLinks = response };
                 return Json(new WireJson { Success = true, Data = data });
             }
+
             return Json(new WireJson { Success = false });
         }
 

@@ -1,20 +1,14 @@
-﻿using BetterCms.Module.MediaManager.Command.Images;
-using BetterCms.Module.MediaManager.Command.Images.CropImage;
+﻿using System.Web.Mvc;
+
 using BetterCms.Module.MediaManager.Command.Images.GetImage;
 using BetterCms.Module.MediaManager.Command.Images.GetImages;
 using BetterCms.Module.MediaManager.Command.Images.SaveImage;
-
 using BetterCms.Module.MediaManager.Command.MediaManager.DeleteMedia;
-
 using BetterCms.Module.MediaManager.Content.Resources;
-
 using BetterCms.Module.MediaManager.ViewModels.Images;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
-
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
-
-using System.Web.Mvc;
 
 namespace BetterCms.Module.MediaManager.Controllers
 {
@@ -26,7 +20,12 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// <summary>
         /// Gets the images list.
         /// </summary>
-        /// <returns>List of images</returns>
+        /// <param name="options">
+        /// The options.
+        /// </param>
+        /// <returns>
+        /// List of images
+        /// </returns>
         public ActionResult GetImagesList(MediaManagerViewModel options)
         {
             var success = true;
@@ -71,20 +70,20 @@ namespace BetterCms.Module.MediaManager.Controllers
         [HttpGet]
         public ActionResult ImageEditor(string imageId)
         {
-            var model = GetCommand<GetImageCommand>().Execute(imageId.ToGuidOrDefault());
-
-            return View(model);
+            var model = GetCommand<GetImageCommand>().ExecuteCommand(imageId.ToGuidOrDefault());
+            var view = RenderView("ImageEditor", model ?? new ImageViewModel());
+            return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
         /// Image insert editor.
         /// </summary>
         /// <param name="imageId">The image id.</param>
-        /// <returns></returns>
+        /// <returns>Image insert view.</returns>
         [HttpGet]
         public ActionResult ImageEditorInsert(string imageId)
         {
-            var model = GetCommand<GetImageCommand>().Execute(imageId.ToGuidOrDefault());
+            var model = GetCommand<GetImageCommand>().ExecuteCommand(imageId.ToGuidOrDefault());
 
             return View(model);
         }
@@ -97,61 +96,13 @@ namespace BetterCms.Module.MediaManager.Controllers
         [HttpPost]
         public ActionResult ImageEditor(ImageViewModel model)
         {
-            GetCommand<SaveImageDataCommand>().Execute(model);
-            var result = GetCommand<GetImageCommand>().Execute(model.Id.ToGuidOrDefault());
+            if (GetCommand<SaveImageDataCommand>().ExecuteCommand(model))
+            {
+                var result = GetCommand<GetImageCommand>().ExecuteCommand(model.Id.ToGuidOrDefault());
+                return Json(new WireJson { Success = result != null, Data = result });
+            }
 
-            return Json(new WireJson { Success = true, Data = result });
-        }
-
-        /// <summary>
-        /// Image cropper dialog.
-        /// </summary>
-        /// <param name="imageId">The image id.</param>
-        /// <returns>The view.</returns>
-        [HttpGet]
-        public ActionResult ImageCropper(string imageId)
-        {
-            var model = GetCommand<GetImageCommand>().Execute(imageId.ToGuidOrDefault());
-
-            return View(model);
-        }
-
-        /// <summary>
-        /// Image cropper dialog post.
-        /// </summary>
-        /// <param name="model">The model.</param>
-        /// <returns>Json result.</returns>
-        [HttpPost]
-        public ActionResult ImageCropper(ImageViewModel model)
-        {
-            GetCommand<CropImageCommand>().Execute(model);
-            var result = GetCommand<GetImageCommand>().Execute(model.Id.ToGuidOrDefault());
-
-            return Json(new WireJson { Success = true, Data = result });
-        }
-
-        /// <summary>
-        /// Image resize.
-        /// </summary>
-        /// <param name="imageId">The image id.</param>
-        /// <param name="width">The width.</param>
-        /// <param name="height">The height.</param>
-        /// <param name="version">The version.</param>
-        /// <returns>Json result.</returns>
-        [HttpPost]
-        public ActionResult ImageResize(string imageId, string width, string height, string version)
-        {
-            var request = new ResizeImageCommandRequest
-                              {
-                                  Id = imageId.ToGuidOrDefault(),
-                                  Width = width.ToIntOrDefault(),
-                                  Height = height.ToIntOrDefault(),
-                                  Version = version.ToIntOrDefault(),
-                              };
-            GetCommand<ResizeImageCommand>().Execute(request);
-            var model = GetCommand<GetImageCommand>().Execute(request.Id);
-
-            return Json(new WireJson { Success = true, Data = model });
+            return Json(new WireJson { Success = false });
         }
 
         /// <summary>
@@ -189,9 +140,13 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// <returns>Json result.</returns>
         public ActionResult GetImage(string imageId)
         {
-            var result = GetCommand<GetImageCommand>().Execute(imageId.ToGuidOrDefault());
+            var result = GetCommand<GetImageCommand>().ExecuteCommand(imageId.ToGuidOrDefault());
+            if (result != null)
+            {
+                return Json(new WireJson { Success = true, Data = result });
+            }
 
-            return Json(new WireJson { Success = true, Data = result });
+            return Json(new WireJson { Success = false });
         }
     }
 }
