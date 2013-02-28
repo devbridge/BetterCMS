@@ -95,8 +95,20 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
         editor.initRowEvents(container);
 
         editor.resetAutoGenerateNameId();
+        
         editor.setInputNames(container);
     };
+
+    /**
+    * Removed unobtrusive validator and adds new
+    */
+    function replaceUnobtrusiveValidator(form) {
+        if ($.validator && $.validator.unobtrusive) {
+            form.removeData("validator");
+            form.removeData("unobtrusiveValidation");
+            $.validator.unobtrusive.parse(form);
+        }
+    }
 
     /**
     * Setup selectors
@@ -292,11 +304,7 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
 
             options.switchRowToEdit(newRow);
 
-            if ($.validator && $.validator.unobtrusive) {
-                form.removeData("validator");
-                form.removeData("unobtrusiveValidation");
-                $.validator.unobtrusive.parse(form);
-            }
+            replaceUnobtrusiveValidator(form);
 
             editor.initRowEvents(newRow, container);
 
@@ -515,6 +523,7 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
 
             editor.setRowInputNames(row);
         });
+        replaceUnobtrusiveValidator($(container).find(selectors.firstForm));
     };
 
     /**
@@ -531,7 +540,12 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
                     counterSet = true;
                     index = autoGenerateNameId++;
                 }
-                input.attr('name', $.format(pattern, index));
+                var name = $.format(pattern, index);
+                input.attr('name', name);
+                
+                var validator = input.parents(selectors.firstCell).find("span.field-validation-valid, span.field-validation-error");
+                validator.data('valmsg-for', name);
+                validator.attr('data-valmsg-for', name);
             }
         });
     };

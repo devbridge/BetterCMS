@@ -15,7 +15,7 @@
     {
         column.EditButtonColumn();
 
-        column.For(model => Html.InlineEditColumn(m => model.Name, "bcms-tag-name", "bcms-tag-old-name"))
+        column.For(model => Html.InlineEditColumnWithNamePattern(m => model.Name, "bcms-tag-name", "bcms-tag-old-name", "TagName_{0}"))
             .Named(PagesGlobalization.SiteSettings_Tags_TagColumn)
             .SortColumnName("Name")
             .Encode(false);
