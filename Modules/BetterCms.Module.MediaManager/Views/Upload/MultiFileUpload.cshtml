@@ -2,7 +2,6 @@
 @using BetterCms.Module.MediaManager.Controllers
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc
-@using BetterCms.Module.Root.Mvc.UI
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
 @model BetterCms.Module.MediaManager.ViewModels.Upload.MultiFileUploadViewModel
@@ -17,7 +16,7 @@
                 @Html.HiddenFor(f => f.RootFolderId)
                 @if (Model.RootFolderId.HasDefaultValue())
                 {
-                    @Html.Tooltip(MediaGlobalization.MultiFileUpload_SelectFolder_Help_Title, MediaGlobalization.MultiFileUpload_SelectFolder_Help_Message)            
+                    @Html.Tooltip(MediaGlobalization.MultiFileUpload_SelectFolder_Help_Message)            
                     <div class="bcms-content-titles">@MediaGlobalization.MultiFileUpload_SelectFolder</div>
                     @Html.DropDownListFor(f => f.SelectedFolderId, Model.Folders.Select(o => new SelectListItem { Selected = Model.SelectedFolderId == o.Item1, Text = o.Item2, Value = o.Item1.ToString() }), new { @class = "bcms-global-select" })
                 }

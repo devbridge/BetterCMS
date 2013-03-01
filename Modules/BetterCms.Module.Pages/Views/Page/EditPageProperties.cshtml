@@ -1,10 +1,8 @@
 ﻿@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
-@using BetterCms.Module.Pages.Helpers
 @using BetterCms.Module.Pages.ViewModels.Page
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc.Helpers
-@using BetterCms.Module.Root.Mvc.UI
 @using Microsoft.Web.Mvc
 
 @model EditPagePropertiesViewModel
@@ -15,7 +13,6 @@
 @{
     var tagsTemplateViewModel = new BetterCms.Module.Pages.ViewModels.Tags.TagsTemplateViewModel
     {
-        TooltipTitle = PagesGlobalization.EditPageProperties_BasicPropertiesTab_AddTags_Tooltip_Title,
         TooltipDescription = PagesGlobalization.EditPageProperties_BasicPropertiesTab_AddTags_Tooltip_Description
     };
 }
@@ -33,7 +30,7 @@
         {
             <div id="bcms-tab-1" class="bcms-tab-single">
                 <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Title, PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Description)
+                    @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageName_Title</div>
 
                     <div class="bcms-input-box">
@@ -45,7 +42,7 @@
                 @Html.Partial("Partial/PagePropertiesEditPermalink")
 
                 <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageImage_Tooltip_Title, PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageImage_Tooltip_Description)
+                    @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageImage_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageImage_Title:</div>
                     <div class="bcms-uploaded-image">
                         <!-- ko if: image().url() -->
@@ -61,7 +58,7 @@
                 </div>
 
                 <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_Category_Tooltip_Title, PagesGlobalization.EditPageProperties_BasicPropertiesTab_Category_Tooltip_Description)
+                    @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_Category_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_Category_Title:</div>
                     @Html.DropDownListFor(model => model.CategoryId, Model.Categories.ToSelectList(Model.CategoryId), string.Empty, new { @class = "bcms-global-select" })
                 </div>
@@ -71,7 +68,7 @@
                 </div>
 
                 <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_Tooltip_Title, PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_Tooltip_Description)
+                    @Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_Title</div>
                     <div class="bcms-checkbox-holder">
                         @Html.CheckBoxFor(model => model.IsVisibleToEveryone)
@@ -94,13 +91,13 @@
 
             <div id="bcms-tab-2" class="bcms-tab-single">
                 <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageCss_Tooltip_Title, PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageCss_Tooltip_Description)
+                    @Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageCss_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageCss_Title</div>
                     @Html.TextAreaFor(model => model.PageCSS, new { @class = "bcms-editor-field-area" })
                 </div>
 
                 <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageJavascript_Tooltip_Title, PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageJavascript_Tooltip_Description)
+                    @Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageJavascript_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageJavascript_Title</div>
                     @Html.TextAreaFor(model => model.PageJavascript, new { @class = "bcms-editor-field-area" })
                 </div>
@@ -109,7 +106,7 @@
             <div id="bcms-tab-3" class="bcms-tab-single">
 
                 <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.EditPageProperties_LayoutPropertiesTab_Layout_Tooltip_Title, PagesGlobalization.EditPageProperties_LayoutPropertiesTab_Layout_Tooltip_Description)
+                    @Html.Tooltip(PagesGlobalization.EditPageProperties_LayoutPropertiesTab_Layout_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_LayoutPropertiesTab_ChooseLayout_Title:</div>
                 </div>
 

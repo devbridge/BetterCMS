@@ -3,7 +3,6 @@
 @using BetterCms.Module.Pages.ViewModels.Page
 
 @using BetterCms.Module.Root.Mvc.Helpers
-@using BetterCms.Module.Root.Mvc.UI
 @using Microsoft.Web.Mvc
 
 @model DeletePageViewModel
@@ -17,7 +16,7 @@
                 <div>@PagesGlobalization.DeletePage_Dialog_ConfirmationMessage_Text</div>
             </div>
             <div class="bcms-input-list-holder">
-                @Html.Tooltip(PagesGlobalization.DeletePage_Dialog_RedurectUrl_Tooltip_Title, PagesGlobalization.DeletePage_Dialog_RedurectUrl_Tooltip_Description)
+                @Html.Tooltip(PagesGlobalization.DeletePage_Dialog_RedurectUrl_Tooltip_Description)
                 <div class="bcms-content-titles">@PagesGlobalization.DeletePage_Dialog_RedirectUrl</div>
                 <div class="bcms-input-box">
                     @Html.TextBoxFor(m => m.RedirectUrl, new { @class = "bcms-editor-field-box", @id = "PageTitle" })
@@ -26,7 +25,7 @@
             </div>
 
             <div class="bcms-input-list-holder">
-                @Html.Tooltip(PagesGlobalization.DeletePage_Dialog_SecurityWord_Tooltip_Title, PagesGlobalization.DeletePage_Dialog_SecurityWord_Tooltip_Description)
+                @Html.Tooltip(PagesGlobalization.DeletePage_Dialog_SecurityWord_Tooltip_Description)
                 <div class="bcms-content-titles">@PagesGlobalization.DeletePage_Dialog_SecurityWord</div>
                 <div class="bcms-input-box">
                     @Html.TextBoxFor(m => m.SecurityWord, new { @class = "bcms-editor-field-box", @id = "PageTitle" })

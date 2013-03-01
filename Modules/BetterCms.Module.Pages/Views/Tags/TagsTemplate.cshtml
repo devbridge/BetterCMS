@@ -1,11 +1,11 @@
 ﻿@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Root.Content.Resources
-@using BetterCms.Module.Root.Mvc.UI
+@using BetterCms.Module.Root.Mvc.Helpers
 
 @model BetterCms.Module.Pages.ViewModels.Tags.TagsTemplateViewModel
 
 <div class="bcms-input-list-holder">
-    @Html.Tooltip(Model.TooltipTitle, Model.TooltipDescription)
+    @Html.Tooltip(Model.TooltipDescription)
     <div class="bcms-content-titles">
         @PagesGlobalization.TagsTemplate_AddTags_Title
         <div class="bcms-btn-plus" data-bind="css: {'bcms-btn-plus-expand': isExpanded()}, click: expandCollapse">&nbsp;</div>

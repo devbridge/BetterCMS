@@ -1,9 +1,9 @@
 ﻿@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Root.Content.Resources
-@using BetterCms.Module.Root.Mvc.UI
+@using BetterCms.Module.Root.Mvc.Helpers
 @model BetterCms.Module.Pages.ViewModels.Seo.EditSeoViewModel
 <div class="bcms-input-list-holder">
-    @Html.Tooltip(PagesGlobalization.EditSeo_UrlPath_Tooltip_Title, PagesGlobalization.EditSeo_UrlPath_Tooltip_Description)
+    @Html.Tooltip(PagesGlobalization.EditSeo_UrlPath_Tooltip_Description)
     <div class="bcms-content-titles">@PagesGlobalization.EditSeo_UrlPath<a id="bcms-editseo-editurlpath">@RootGlobalization.Button_Edit</a></div>
     <div class="bcms-editseo-urlpath">@Html.Raw(string.IsNullOrWhiteSpace(Model.PageUrlPath) ? "&nbsp;" : Html.Encode(Model.PageUrlPath))</div>
     @Html.HiddenFor(f => f.PageUrlPath)

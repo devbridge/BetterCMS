@@ -15,7 +15,6 @@
 @{
     var tagsTemplateViewModel = new BetterCms.Module.Pages.ViewModels.Tags.TagsTemplateViewModel
     {
-        TooltipTitle = BlogGlobalization.EditBlockPost_Tags_Tooltip_Title,
         TooltipDescription = BlogGlobalization.EditBlockPost_Tags_Tooltip_Description
     };
 }
@@ -55,7 +54,7 @@
             <div class="bcms-blog-left">
 
                 <div class="bcms-input-list-holder">
-                    @Html.Tooltip(BlogGlobalization.EditBlockPost_Title_Tooltip_Title, BlogGlobalization.EditBlockPost_Title_Tooltip_Description)
+                    @Html.Tooltip(BlogGlobalization.EditBlockPost_Title_Tooltip_Description)
                     <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_Title_Title</div>
                     <div class="bcms-input-box">
                         @Html.TextBoxFor(m => m.Title, new { @style = "width: 510px;", @class = "bcms-editor-field-box" })
@@ -63,7 +62,7 @@
                     </div>
                 </div>
                 <div class="bcms-input-list-holder">
-                    @Html.Tooltip(BlogGlobalization.EditBlockPost_IntroText_Tooltip_Title, BlogGlobalization.EditBlockPost_IntroText_Tooltip_Description)
+                    @Html.Tooltip(BlogGlobalization.EditBlockPost_IntroText_Tooltip_Description)
                     <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_IntroText_Title</div>
                     <div class="bcms-textarea-box">
                         @Html.TextAreaFor(m => m.IntroText, new { @style = "width: 510px; height: 170px;", @class = "bcms-editor-field-area" })
@@ -71,7 +70,7 @@
                     </div>
                 </div>
                 <div class="bcms-input-list-holder">
-                    @Html.Tooltip(BlogGlobalization.EditBlockPost_Content_Tooltip_Title, BlogGlobalization.EditBlockPost_Content_Tooltip_Description)
+                    @Html.Tooltip(BlogGlobalization.EditBlockPost_Content_Tooltip_Description)
                     <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_Content_Title</div>
                     @Html.TextAreaFor(model => model.Content, new { @id = "bcms-contenthtml" })
                 </div>
@@ -81,7 +80,7 @@
 
                 <div class="bcms-blog-dates-holder">
                     <div class="bcms-input-field-holder">
-                        @Html.Tooltip(BlogGlobalization.EditBlockPost_LiveDates_Tooltip_Title, BlogGlobalization.EditBlockPost_LiveDates_Tooltip_Description)
+                        @Html.Tooltip(BlogGlobalization.EditBlockPost_LiveDates_Tooltip_Description)
                         <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_LiveFrom_Title</div>
                         @Html.DateTextBoxFor(model => model.LiveFromDate, Model.LiveFromDate, new Dictionary<string, object> { { "class", "bcms-editor-field-box bcms-datepicker" }, { "style", "width: 127px;" } })
                     </div>
@@ -92,7 +91,7 @@
                 </div>
 
                 <div class="bcms-input-field-holder">
-                    @Html.Tooltip(BlogGlobalization.EditBlockPost_FeaturedImage_Tooltip_Title, BlogGlobalization.EditBlockPost_FeaturedImage_Tooltip_Description)
+                    @Html.Tooltip(BlogGlobalization.EditBlockPost_FeaturedImage_Tooltip_Description)
                     <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_FeaturedImage_Title</div>
                     <div class="bcms-uploaded-image">
                         <!-- ko if: image().url() -->
@@ -108,13 +107,13 @@
                 </div>
 
                 <div class="bcms-input-field-holder">
-                    @Html.Tooltip(BlogGlobalization.EditBlockPost_Author_Tooltip_Title, BlogGlobalization.EditBlockPost_Author_Tooltip_Description)
+                    @Html.Tooltip(BlogGlobalization.EditBlockPost_Author_Tooltip_Description)
                     <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_Author_Title</div>
                     @Html.DropDownListFor(model => model.AuthorId, Model.Authors.ToSelectList(Model.AuthorId), string.Empty, new { @class = "bcms-global-select", @style = "width: 245px;" })
                 </div>
 
                 <div class="bcms-input-field-holder">
-                    @Html.Tooltip(BlogGlobalization.EditBlockPost_Category_Tooltip_Title, BlogGlobalization.EditBlockPost_Category_Tooltip_Description)
+                    @Html.Tooltip(BlogGlobalization.EditBlockPost_Category_Tooltip_Description)
                     <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_Category_Title</div>
                     @Html.DropDownListFor(model => model.CategoryId, Model.Categories.ToSelectList(Model.CategoryId), string.Empty, new { @class = "bcms-global-select", @style = "width: 245px;" })
                 </div>

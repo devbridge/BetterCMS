@@ -2,7 +2,6 @@
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.Widgets
 @using BetterCms.Module.Root.Mvc.Helpers
-@using BetterCms.Module.Root.Mvc.UI
 @using Microsoft.Web.Mvc
 
 @model EditServerControlWidgetViewModel
@@ -22,7 +21,7 @@
         <div id="bcms-tab-1" class="bcms-tab-single">
             <div class="bcms-padded-content">
                 <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.Widget_Title_Tooltip_Title, PagesGlobalization.Widget_Title_Tooltip_Description)
+                    @Html.Tooltip(PagesGlobalization.Widget_Title_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.Widget_Title_Title:</div>
                     <div class="bcms-input-box" style="width: 523px;">
                         @Html.TextBoxFor(model => model.Name, new { @class = "bcms-editor-field-box" })
@@ -31,13 +30,13 @@
                 </div>
 
                 <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.Widget_Category_Tooltip_Title, PagesGlobalization.Widget_Category_Tooltip_Description)
+                    @Html.Tooltip(PagesGlobalization.Widget_Category_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.Widget_Category_Title:</div>
                     @Html.DropDownListFor(model => model.CategoryId, Model.Categories.ToSelectList(Model.CategoryId), PagesGlobalization.Widget_Category_SelectCategory, new { @class = "bcms-global-select" })
                 </div>
 
                 <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.Widget_Url_Tooltip_Title, PagesGlobalization.Widget_Url_Tooltip_Description)
+                    @Html.Tooltip(PagesGlobalization.Widget_Url_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.Widget_Url_Title:</div>
                     <div class="bcms-input-box" style="width: 523px;">
                         @Html.TextBoxFor(model => model.Url, new { @class = "bcms-editor-field-box" })
@@ -46,7 +45,7 @@
                 </div>
 
                 <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.Widget_Preview_Image_Tooltip_Title, PagesGlobalization.WidgetPreviewImageUrl_Tooltip_Description)
+                    @Html.Tooltip(PagesGlobalization.WidgetPreviewImageUrl_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.WidgetPreviewImageUrl_Title:</div>
                     <div class="bcms-input-box" style="width: 523px;">
                         @Html.TextBoxFor(model => model.PreviewImageUrl, new { @class = "bcms-editor-field-box" })
@@ -55,7 +54,7 @@
                 </div>
 
                 <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.Widget_Preview_Image_Tooltip_Title, PagesGlobalization.WidgetPreviewImageUrl_Tooltip_Description)
+                    @Html.Tooltip(PagesGlobalization.WidgetPreviewImageUrl_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.WidgetPreviewImage_Title:</div>
 
                     <div class="bcms-preview-module-image">
