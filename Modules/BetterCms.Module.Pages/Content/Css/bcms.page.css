@@ -35,14 +35,6 @@ div.bcms-editseo-modal {
     min-height: 100%;
 }
 
-    .bcms-editseo-window .bcms-editor-field-area {
-        width: 100%;
-    }
-
-    .bcms-editseo-window .bcms-editor-field-box {
-        width: 100%;
-    }
-
 .bcms-editseo-urlpath {
     font-size: 12px;
     color: #595959;
@@ -53,33 +45,9 @@ div.bcms-editseo-modal {
     min-width: 503px;
     max-width: 620px;
     z-index: 1;
-    padding: 15px 30px 30px 40px;
-    margin: -40px 0 15px -20px;
-    border: 1px solid #a6a6a6;
-    background-color: #f5f5f5;
+    padding-bottom: 10px;
+    margin: -40px 0 0 0;
 }
-
-    .bcms-edit-urlpath-box .bcms-tooltip-mark {
-        top: 19px;
-        left: 20px;
-    }
-
-    .bcms-edit-urlpath-box .bcms-editor-field-box {
-        background: #fff;
-        box-shadow: inset 0 3px 12px rgba(0, 0, 0, 0.10);
-    }
-
-    .bcms-edit-urlpath-box .input-validation-error:focus {
-        background: #fcecec;
-        border: 1px solid #e64343;
-        box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
-    }
-
-    .bcms-edit-urlpath-box .input-validation-error {
-        background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAJCAYAAAF8oY2FAAAAZElEQVQY02N45uw8DYi/MsAZ////Z0AQQKH/YA6QYYcsuhxD5D8QO0LpTOyCIAtAElBJO5ClIEYmskoUW2ACMDdgqsRlZgtU5Rcg9kZS4A0VA8m1MCBJZEAlkHEG3G6iFRJrNQAfBNhPNe12LwAAAABJRU5ErkJggg==') no-repeat 98% center #fcecec;
-        border: 1px solid #e64343;
-        box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
-    }
 
 .bcms-permissions-column {
     float: left;
@@ -88,7 +56,7 @@ div.bcms-editseo-modal {
 }
 
 .bcms-edit-check-field {
-    padding: 10px 0 20px;
+    padding: 10px 0 0;
 }
 
     .bcms-edit-check-field input[type="checkbox"] {
@@ -266,8 +234,8 @@ a.bcms-slider-next {
 }
 
     .bcms-addpage-title .bcms-tooltip-mark {
-        top: 1px;
-        left: -20px;
+        top: 4px;
+        left: -15px;
     }
 
 /*new page placement*/
@@ -353,6 +321,7 @@ hr.bcms-settings-separator {
     .bcms-preview-module-image img {
         display: block;
         width: 100%;
+        background: #f5f5f5;
     }
 
 /*history page*/

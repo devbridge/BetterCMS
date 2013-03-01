@@ -1,11 +1,10 @@
 ﻿@using BetterCms.Module.Root.Mvc.Helpers
-@using BetterCms.Module.Root.Mvc.UI
 @using BetterCms.Module.Users.Content.Resources
 @using BetterCms.Module.Users.Controllers
 @using BetterCms.Module.Users.ViewModels.Role
 @using Microsoft.Web.Mvc
 
-@model BetterCms.Module.Users.ViewModels.Role.EditRoleViewModel
+@model EditRoleViewModel
             
 <div class="bcms-scroll-window">
     <div class="bcms-padded-content">
@@ -13,7 +12,7 @@
         @using (Html.BeginForm<RoleController>(f => f.CreateRole((EditRoleViewModel)null), FormMethod.Post, new { @id = "bcms-role-form", @class = "bcms-ajax-form" }))
         {
             <div class="bcms-input-list-holder">
-                @Html.Tooltip(UsersGlobalization.Role_AddNew_Dialog_RoleTooltip_Title, UsersGlobalization.Role_AddNew_Dialog_Tooltip_Description)
+                @Html.Tooltip(UsersGlobalization.Role_AddNew_Dialog_Tooltip_Description)
                 <div class="bcms-content-titles">@UsersGlobalization.Role_AddNew_Dialog_RoleName_Title</div>
                 @Html.TextBoxFor(m => m.RoleName, new { @class = "bcms-editor-field-box" })  
             </div>

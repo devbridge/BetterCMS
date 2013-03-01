@@ -11,21 +11,23 @@
 @model BetterCms.Module.Root.ViewModels.SiteSettings.SearchableGridViewModel<TagItemViewModel>
 
 @{
-    Action<ColumnBuilder<TagItemViewModel>> columns = column =>
+    Action<ColumnBuilder<TagItemViewModel>> columns;
+}
+
+@using (Html.BeginForm<TagsController>(f => f.ListTags(null), FormMethod.Post, new { @id = "bcms-tags-form" }))
+{
+    columns = column =>
     {
         column.EditButtonColumn();
 
-        column.For(model => Html.InlineEditColumn(m => model.Name, "bcms-tag-name", "bcms-tag-old-name"))
+        column.For(model => Html.InlineEditColumnWithNamePattern(m => model.Name, "bcms-tag-name", "bcms-tag-old-name", "TagName_{0}"))
             .Named(PagesGlobalization.SiteSettings_Tags_TagColumn)
             .SortColumnName("Name")
             .Encode(false);
 
         column.InlineEditControlsColumn();
     };
-}
-
-@using (Html.BeginForm<TagsController>(f => f.ListTags(null), FormMethod.Post, new { @id = "bcms-tags-form" }))
-{
+    
     @Html.HiddenGridOptions(Model.GridOptions)
 
     <div class="bcms-twocols-title-block">
@@ -35,7 +37,8 @@
             @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
             <div class="bcms-btn-search" id="bcms-tags-search-btn">@PagesGlobalization.SiteSettings_Tags_Search</div>
         </div>
-    </div>    
+    </div>
+    
     @Html.SiteSettingsMessagesBox()
     @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<TagItemViewModel>())
     @Html.HiddenSubmit()

@@ -253,5 +253,16 @@ define('bcms', ['jquery'], function ($) {
         }
     };
 
+    /**
+    * Recreates form's uobtrusive validator
+    */
+    app.updateFormValidator = function(form) {
+        if (form && $.validator && $.validator.unobtrusive) {
+            form.removeData("validator");
+            form.removeData("unobtrusiveValidation");
+            $.validator.unobtrusive.parse(form);
+        }
+    };
+
     return app;
 });
