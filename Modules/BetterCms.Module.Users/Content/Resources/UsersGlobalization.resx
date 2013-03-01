@@ -297,4 +297,7 @@
   <data name="User_Password_MaxLengthMessage" xml:space="preserve">
     <value>Password should not be longer than 255 characters.</value>
   </data>
+  <data name="SaveUser_CreatedSuccessfully_Message" xml:space="preserve">
+    <value>User created successfully.</value>
+  </data>
 </root>
