@@ -38,6 +38,7 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
             constants = {
                 maxHeightToFit: 557,
                 maxWidthToFit: 839,
+                jcropBackgroundColor: '#F5F5F5'
             },
             jCropApi = null;
 
@@ -357,6 +358,7 @@ define('bcms.media.imageeditor', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSett
                         onSelect: self.onCropCoordsUpdated,
                         onRelease: self.onCropCoordsUpdated,
                         trueSize: [self.originalWidth, self.originalHeight],
+                        bgColor: constants.jcropBackgroundColor
                     };
                     if (self.hasCrop()) {
                         cropperOptions.setSelect = [self.cropCoordX1(), self.cropCoordY1(), self.cropCoordX2(), self.cropCoordY2()];

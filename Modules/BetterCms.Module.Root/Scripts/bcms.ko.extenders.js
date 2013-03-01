@@ -3,6 +3,11 @@
 define('bcms.ko.extenders', ['jquery', 'bcms', 'knockout'], function ($, bcms, ko) {
     'use strict';
 
+    ko.globalization = {
+        maximumLengthMessage: null,
+        requiredFieldMessage: null
+    };
+
     ko.maxLength = {
         email: 400,
         name: 200,
@@ -129,7 +134,7 @@ define('bcms.ko.extenders', ['jquery', 'bcms', 'knockout'], function ($, bcms, k
         var ruleName = 'required';
         return koValidationExtender(ruleName, target, function (newValue) {
             var hasError = (!newValue),
-                message = hasError ? overrideMessage || "This field is required." : "";
+                message = hasError ? overrideMessage || ko.globalization.requiredFieldMessage : "";
 
             target.validator.setError(ruleName, hasError, message);
         });
@@ -138,13 +143,15 @@ define('bcms.ko.extenders', ['jquery', 'bcms', 'knockout'], function ($, bcms, k
     /**
     * Extend knockout: add maximum length validation
     */
-    ko.extenders.maxLength = function (target, maxLength) {
-        var ruleName = 'maxLength';
+    ko.extenders.maxLength = function (target, options) {
+        var ruleName = 'maxLength',
+            maxLength = options.maxLength,
+            message = options.message || ko.globalization.maximumLengthMessage;
         return koValidationExtender(ruleName, target, function (newValue) {
             var hasError = (newValue != null && newValue.length > maxLength),
-                message = hasError ? "" : $.format("Maximum length cannot exceed {0}.", maxLength);
+                showMessage = hasError ? $.format(message, maxLength) : '';
             
-            target.validator.setError(ruleName, hasError, message);
+            target.validator.setError(ruleName, hasError, showMessage);
         });
     };
 

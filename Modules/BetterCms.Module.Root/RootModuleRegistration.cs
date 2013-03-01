@@ -166,8 +166,8 @@ namespace BetterCms.Module.Root
                     new TooltipJavaScriptModuleDescriptor(this),
                     new InlineEditorJavaScriptModuleDescriptor(this),
                     new PreviewJavaScriptModuleDescriptor(this), 
+                    new KnockoutExtendersJavaScriptModuleDescriptor(this), 
                     new JavaScriptModuleDescriptor(this, "bcms.ko.grid", "/file/bcms-root/scripts/bcms.ko.grid"),
-                    new JavaScriptModuleDescriptor(this, "bcms.ko.extenders", "/file/bcms-root/scripts/bcms.ko.extenders"),
                     new RedirectJavaScriptModuleDescriptor(this),
                 };
         }
