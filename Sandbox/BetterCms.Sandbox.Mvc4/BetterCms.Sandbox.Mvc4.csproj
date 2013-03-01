@@ -178,6 +178,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Content Include="App_Data\BetterCMS\Modules\readme.txt" />
     <Content Include="Global.asax" />
+    <Content Include="icn-validation-error.png" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
