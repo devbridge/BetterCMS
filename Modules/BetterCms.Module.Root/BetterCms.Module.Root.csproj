@@ -182,6 +182,7 @@
     <Compile Include="Projections\PageJavaScriptProjection.cs" />
     <Compile Include="Registration\AuthenticationJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\ContentJavaScriptModuleDescriptor.cs" />
+    <Compile Include="Registration\KnockoutExtendersJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\PreviewJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\UserRoles.cs" />
     <Compile Include="Registration\RedirectJavaScriptModuleDescriptor.cs" />
