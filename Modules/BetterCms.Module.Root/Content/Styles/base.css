@@ -2352,7 +2352,8 @@ ul.bcms-info-messages {
 
 a.ui-state-default:hover {
     font-weight: normal;
-    background-color: #fff;
+    background-color: #d4f0ff;
+    color: #0383df;
 }
 
 .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {

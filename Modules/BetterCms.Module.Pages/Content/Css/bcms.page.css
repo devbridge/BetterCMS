@@ -321,6 +321,7 @@ hr.bcms-settings-separator {
     .bcms-preview-module-image img {
         display: block;
         width: 100%;
+        background: #f5f5f5;
     }
 
 /*history page*/
