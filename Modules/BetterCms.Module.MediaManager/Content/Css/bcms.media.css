@@ -3,6 +3,22 @@
     padding: 0 35px 20px;
 }
 
+    .bcms-file-manager-inner .bcms-input-list-holder:first-of-type {
+        padding-top: 20px;
+    }
+
+        .bcms-file-manager-inner .bcms-input-list-holder:first-of-type .bcms-tooltip-mark {
+            top: 24px;
+        }
+
+.bcms-edit-file-info .bcms-input-list-holder:first-child {
+    padding-top: 0;
+}
+
+    .bcms-edit-file-info .bcms-input-list-holder:first-child .bcms-tooltip-mark {
+        top: 4px;
+    }
+
 .bcms-icn-delete-link {
     float: right;
     line-height: 24px;
@@ -111,14 +127,6 @@
     border: 1px solid #a6a6a6;
     background-color: #f5f5f5;
 }
-
-    .bcms-file-edit .bcms-content-titles {
-        margin: 0 5px 0 15px;
-    }
-
-    .bcms-file-edit .bcms-editor-field-box {
-        margin: 0 5px;
-    }
 
     .bcms-file-edit a {
         display: block;

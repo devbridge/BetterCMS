@@ -35,14 +35,6 @@ div.bcms-editseo-modal {
     min-height: 100%;
 }
 
-    .bcms-editseo-window .bcms-editor-field-area {
-        width: 100%;
-    }
-
-    .bcms-editseo-window .bcms-editor-field-box {
-        width: 100%;
-    }
-
 .bcms-editseo-urlpath {
     font-size: 12px;
     color: #595959;

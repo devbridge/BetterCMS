@@ -1137,6 +1137,8 @@ a.bcms-error-close {
 /*Tooltips*/
 .bcms-tooltip-mark {
     position: absolute;
+    top: 4px;
+    left: -15px;
     width: 12px;
     height: 12px;
     background: url('images/sprite-base-1.png') no-repeat -3px -777px;
@@ -1156,20 +1158,18 @@ a.bcms-error-close {
 }
 
 .bcms-tooltip-box {
-    width: 308px;
-    padding: 15px;
+    width: 300px;
+    padding: 5px;
     position: relative;
     background: #eff9fd;
     border: 1px solid #c6c6c6;
 }
 
-    .bcms-tooltip-box h4 {
-        margin: 0;
-    }
-
     .bcms-tooltip-box p {
-        font-size: 11px;
         line-height: 19px;
+        padding: 0;
+        margin: 0;
+        font-size: 11px;
         font-family: 'Open Sans', sans-serif;
     }
 
@@ -1415,11 +1415,6 @@ a.bcms-btn-close {
         .bcms-input-list-holder:first-child .bcms-tooltip-mark {
             top: 24px;
         }
-
-    .bcms-input-list-holder .bcms-tooltip-mark {
-        top: 4px;
-        left: -15px;
-    }
 
 .bcms-checkbox-holder {
     padding: 5px 0;
@@ -2165,18 +2160,19 @@ span.field-validation-error {
     position: absolute;
     right: 1px;
     top: 50%;
-    width: 28px;
+    width: 18px;
     height: 28px;
     margin-top: -14px;
-    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAFMLZykAAAAbUlEQVQoz2N45uw8DYi/MsAZ////B2NUBlDqP1wAyLGDcZBVLCeo4j8QO0LpTNIUgBwH44CMBzkYXUEmsgnIkiiuxCZJnAnEuKEFasIXIPZGUuwNFQPJtWCzHiXQgYoyoBqQcQYujdQzgFIvAACFG3m8e8veBgAAAABJRU5ErkJggg==') no-repeat center center #FCECEC;
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAJCAYAAAF8oY2FAAAAZElEQVQY02N45uw8DYi/MsAZ////Z0AQQKH/YA6QYYcsuhxD5D8QO0LpTOyCIAtAElBJO5ClIEYmskoUW2ACMDdgqsRlZgtU5Rcg9kZS4A0VA8m1MCBJZEAlkHEG3G6iFRJrNQAfBNhPNe12LwAAAABJRU5ErkJggg==') no-repeat center center #FCECEC;
 }
 
     span.field-validation-error > span {
         visibility: hidden;
         position: absolute;
-        right: 0;
+        right: -9px;
         bottom: 32px;
         min-width: 161px;
+        line-height: 15px;
         padding: 5px;
         color: #E64343;
         background: #FCECEC;
