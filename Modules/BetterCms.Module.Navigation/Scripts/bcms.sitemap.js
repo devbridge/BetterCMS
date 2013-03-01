@@ -440,11 +440,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         */
         function updateValidation() {
             var form = $(selectors.sitemapForm);
-            if ($.validator && $.validator.unobtrusive) {
-                form.removeData("validator");
-                form.removeData("unobtrusiveValidation");
-                $.validator.unobtrusive.parse(form);
-            }
+            bcms.updateFormValidator(form);
         }
         // --------------------------------------------------------------------
         

@@ -132,6 +132,9 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                         for (var i = medias.length - 1; i >= 0; i--) {
                             var mediaItem = convertToMediaModel(medias[i]);
                             self.medias.unshift(mediaItem);
+
+                            // Replace unobtrusive validator
+                            bcms.updateFormValidator(self.container.find(selectors.firstForm));
                         }
                     }
                 }
@@ -169,6 +172,9 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             });
 
             self.medias.unshift(newFolder);
+            
+            // Replace unobtrusive validator
+            bcms.updateFormValidator(self.container.find(selectors.firstForm));
         };
 
         self.uploadMedia = function () {
@@ -1036,17 +1042,6 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     };
 
     /**
-    * Replace form's unobtrusive validation.
-    */
-    function addUnobtrusiveValidator(form) {
-        if ($.validator && $.validator.unobtrusive) {
-            form.removeData("validator");
-            form.removeData("unobtrusiveValidation");
-            $.validator.unobtrusive.parse(form);
-        }
-    };
-
-    /**
     * Creates params for getting folder with filter/search/sort options
     */
     function createFolderParams(folderId, folderViewModel) {
@@ -1125,6 +1120,9 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
                 // Map grid options
                 folderViewModel.gridOptions(new MediaItemsOptionsViewModel(json.Data));
+
+                // Replace unobtrusive validator
+                bcms.updateFormValidator(folderViewModel.container.find(selectors.firstForm));
             }
 
             return true;
@@ -1197,7 +1195,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         if (parseJsonResults(json, folderViewModel)) {
             ko.applyBindings(folderViewModel, context);
 
-            addUnobtrusiveValidator(folderViewModel.container.find(selectors.firstForm));
+            bcms.updateFormValidator(folderViewModel.container.find(selectors.firstForm));
         }
     }
 
