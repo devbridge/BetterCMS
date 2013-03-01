@@ -188,7 +188,7 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
             var textBoxAttributes = new Dictionary<string, object>
                                         {
                                             {"id", null},
-                                            {"Name", namePattern},
+                                            {"name", namePattern},
                                             {"style", "display:none; width:100%;"},
                                             {"class", string.Format("bcms-editor-field-box {0}", textBoxClassName)}
                                         };
@@ -196,6 +196,13 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
             {
                 textBoxAttributes.Add("data-name-pattern", namePattern);
             }
+
+            // Merge validation attributes: add fake name, because 
+            // attributes are not returned second time for same input
+            var metadata = ModelMetadata.FromLambdaExpression(expression, htmlHelper.ViewData);
+            var attributes = htmlHelper.GetUnobtrusiveValidationAttributes(Guid.NewGuid().ToString(), metadata);
+            textBoxAttributes = MergeAttributes(textBoxAttributes, attributes);
+
             var textBox = htmlHelper.TextBoxFor(expression, textBoxAttributes);
 
             // Hidden field
@@ -210,6 +217,24 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
             div.AddCssClass("bcms-input-box");
 
             return new MvcHtmlString(div.ToString());
+        }
+
+        /// <summary>
+        /// Merges the attributes.
+        /// </summary>
+        /// <param name="attributes1">The attributes1.</param>
+        /// <param name="attributes2">The attributes2.</param>
+        /// <returns>Merged attributes</returns>
+        private static Dictionary<string, object> MergeAttributes(Dictionary<string, object> attributes1, IDictionary<string, object> attributes2)
+        {
+            foreach (var pair in attributes2)
+            {
+                if (!attributes1.ContainsKey(pair.Key))
+                {
+                    attributes1.Add(pair.Key, pair.Value);
+                }
+            }
+            return attributes1;
         }
     }
 }
