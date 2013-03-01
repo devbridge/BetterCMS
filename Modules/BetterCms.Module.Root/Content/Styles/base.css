@@ -1158,20 +1158,18 @@ a.bcms-error-close {
 }
 
 .bcms-tooltip-box {
-    width: 308px;
-    padding: 15px;
+    width: 300px;
+    padding: 5px;
     position: relative;
     background: #eff9fd;
     border: 1px solid #c6c6c6;
 }
 
-    .bcms-tooltip-box h4 {
-        margin: 0;
-    }
-
     .bcms-tooltip-box p {
-        font-size: 11px;
         line-height: 19px;
+        padding: 0;
+        margin: 0;
+        font-size: 11px;
         font-family: 'Open Sans', sans-serif;
     }
 

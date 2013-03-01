@@ -10,7 +10,7 @@ namespace BetterCms.Module.Root.Mvc.UI
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("<div class=\"bcms-tooltip-mark\"");
-            sb.AppendFormat(" data-title=\"{0}\"", title);
+           // sb.AppendFormat(" data-title=\"{0}\"", title);
             sb.AppendFormat(" data-message=\"{0}\"", HttpUtility.HtmlEncode(message));
             sb.Append("></div>");
 
