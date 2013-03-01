@@ -14,7 +14,7 @@
             escPress: onCancelEdit, 
             event: {blur: onBlurField}, 
             click: onStopEvent @(Model.AutoFocus ? ", hasfocus: isActive() && hasFocus" : "") " />
-            <!-- ko if: @(Model.ValueBind).hasError && @(Model.ValueBind).hasError() -->
+            <!-- ko if: !isNew() &&  @(Model.ValueBind).hasError && @(Model.ValueBind).hasError() -->
             <span class="field-validation-error">
                 <span data-bind="text: @(Model.ValueBind).validationMessage()"></span>
             </span>
