@@ -11,7 +11,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                 sitemapSearchInput: "bcms-search-input",
                 sitemapAddNodeDataBind: "#bcms-sitemap-addnode",
                 sitemapAddNewPageDataBind: "#bcms-sitemap-addnewpage",
-                sitemapForm: "#bcms-sitemap-form",
+                sitemapForm: ".bcms-sitemap-form",
                 sitemapMessagesContainer: '#bcms-site-settings-placeholder'
             },
             links = {
@@ -92,8 +92,8 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         * Shows add new page to sitemap dialog.
         */
         sitemap.loadAddNewPageDialog = function(data) {
-            if (data && data.Data && (data.Data.Title || data.Data.PageTitle) && (data.Data.Url || data.Data.PageUrl)) {
-                var addPageController = new AddNewPageMapController(data.Data.Title || data.Data.PageTitle, data.Data.Url || data.Data.PageUrl);
+            if (data && data.Data && data.Data.Data && (data.Data.Data.Title || data.Data.Data.PageTitle) && (data.Data.Data.Url || data.Data.Data.PageUrl)) {
+                var addPageController = new AddNewPageMapController(data.Data.Data.Title || data.Data.Data.PageTitle, data.Data.Data.Url || data.Data.Data.PageUrl);
                 modal.open({
                     title: globalization.sitemapAddNewPageDialogTitle,
                     onLoad: function(dialog) {
@@ -154,14 +154,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                     var context = self.container.find(selectors.sitemapSearchDataBind).get(0);
                     if (context) {
                         ko.applyBindings(self.sitemapSearchModel, context);
-
-                        // Update validation.
-                        var form = self.container.find(selectors.sitemapForm);
-                        if ($.validator && $.validator.unobtrusive) {
-                            form.removeData("validator");
-                            form.removeData("unobtrusiveValidation");
-                            $.validator.unobtrusive.parse(form);
-                        }
+                        updateValidation();
                     }
                 }
             };
@@ -177,7 +170,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
 
             self.initialize = function (content, dialog) {
                 self.container = dialog.container;
-                sitemap.activeMessageContainer = self.container.find(selectors.sitemapMessagesContainer);
+                sitemap.activeMessageContainer = self.container;
                 sitemap.activeLoadingContainer = self.container.find(selectors.sitemapAddNodeDataBind);
 
                 sitemap.showMessage(content);
@@ -201,14 +194,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                     var context = self.container.find(selectors.sitemapAddNodeDataBind).get(0);
                     if (context) {
                         ko.applyBindings(self.pageLinksModel, context);
-
-                        // Update validation.
-                        var form = self.container.find('FORM');
-                        if ($.validator && $.validator.unobtrusive) {
-                            form.removeData("validator");
-                            form.removeData("unobtrusiveValidation");
-                            $.validator.unobtrusive.parse(form);
-                        }
+                        updateValidation();
                     }
                 }
             };
@@ -233,7 +219,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
 
             self.initialize = function (content, dialog) {
                 self.container = dialog.container;
-                sitemap.activeMessageContainer = self.container.find(selectors.sitemapMessagesContainer);
+                sitemap.activeMessageContainer = self.container;
                 sitemap.activeLoadingContainer = self.container.find(selectors.sitemapAddNewPageDataBind);
 
                 sitemap.showMessage(content);
@@ -260,14 +246,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                     var context = self.container.find(selectors.sitemapAddNewPageDataBind).get(0);
                     if (context) {
                         ko.applyBindings(self.newPageModel, context);
-
-                        // Update validation.
-                        var form = self.container.find('FORM');
-                        if ($.validator && $.validator.unobtrusive) {
-                            form.removeData("validator");
-                            form.removeData("unobtrusiveValidation");
-                            $.validator.unobtrusive.parse(form);
-                        }
+                        updateValidation();
                     }
                 }
             };
@@ -419,6 +398,8 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                                 if (originalDragObject.dropped && $.isFunction(originalDragObject.dropped)) {
                                     originalDragObject.dropped(dragObject);
                                 }
+                                
+                                updateValidation();
                             }
                         };
                     if (dropZoneObject.getSitemap && !dropZoneObject.getSitemap().settings.canDropNode) {
@@ -452,6 +433,14 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             if (lastNotDeletedNode != null) {
                 lastNotDeletedNode.isLastNode(true);
             }
+        }
+        
+        /**
+        * Helper function to update validation.
+        */
+        function updateValidation() {
+            var form = $(selectors.sitemapForm);
+            bcms.updateFormValidator(form);
         }
         // --------------------------------------------------------------------
         
@@ -606,6 +595,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
 
                 var dataToSend = JSON.stringify(self.composeJsonNodes()),
                     onSaveCompleted = function (json) {
+                        messages.refreshBox(sitemap.activeMessageContainer, json);
                         sitemap.showLoading(false);
                         if (onDoneCallback && $.isFunction(onDoneCallback)) {
                             onDoneCallback(json);

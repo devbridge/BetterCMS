@@ -1,4 +1,6 @@
-﻿namespace BetterCms.Module.MediaManager.Command.MediaManager.DownloadMedia
+﻿using System.IO;
+
+namespace BetterCms.Module.MediaManager.Command.MediaManager.DownloadMedia
 {
     /// <summary>
     /// Response data for download command.
@@ -6,12 +8,12 @@
     public class DownloadFileCommandResponse
     {
         /// <summary>
-        /// Gets or sets the name of the file.
+        /// Gets or sets the file stream.
         /// </summary>
         /// <value>
-        /// The name of the file.
+        /// The file stream.
         /// </value>
-        public string FileName { get; set; }
+        public Stream FileStream { get; set; }
 
         /// <summary>
         /// Gets or sets the type of the content.

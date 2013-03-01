@@ -25,7 +25,7 @@
                 <div class="bcms-content-titles">
                     @MediaGlobalization.ImageEditor_Dialog_CropImage_Title
 
-                    <a href="#" class="bcms-icn-delete-link" data-bind="visible: imageEditorViewModel.hasCrop(), click: imageEditorViewModel.removeCrop">Remove crop</a>
+                    <a class="bcms-icn-delete-link" data-bind="visible: imageEditorViewModel.hasCrop(), click: imageEditorViewModel.removeCrop">Remove crop</a>
                     <div class="bcms-crop-checkbox">
                         <input type="checkbox" data-bind="checked: imageEditorViewModel.fit" />
                         <div class="bcms-edit-label" data-bind="click: imageEditorViewModel.changeFit">@MediaGlobalization.ImageEditor_Dialog_FitImage_Title</div>
@@ -42,23 +42,26 @@
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_Caption_Tooltip_Title, MediaGlobalization.ImageEditor_Dialog_Caption_Tooltip_Description)
                     <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_Caption:</div>
-                    @Html.TextBoxFor(f => f.Caption, new { @class = "bcms-editor-field-box", @id = "Caption" })
+                    <div class="bcms-input-box">
+                        @Html.TextBoxFor(f => f.Caption, new { @class = "bcms-editor-field-box", @id = "Caption" })
+                        @Html.ValidationMessageFor(f => f.Caption)
+                    </div>
                 </div>
 
                 <div class="bcms-file-info-text" data-bind="with: titleEditorViewModel">
                     <b>@MediaGlobalization.ImageEditor_Dialog_ImageName_Title:</b><div class="bcms-editing-text" data-bind="text: oldTitle()"></div>
                     <a class="bcms-file-link" data-bind="click: open, visible: !isOpened()">@RootGlobalization.Button_Edit</a>
-                    <div class="bcms-file-edit" data-bind="style: {'display': isOpened() ? 'block' : 'none' }" style="display: none;">
-                        <div class="bcms-tip-close" data-bind="click: close">@RootGlobalization.Button_Close</div>
-                        @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_ImageTitle_Tooltip_Title, MediaGlobalization.ImageEditor_Dialog_ImageTitle_Tooltip_Description)
+                    <div class="bcms-file-edit" data-bind="style: { 'display': isOpened() ? 'block' : 'none' }" style="display: none;">
                         <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_ImageTitle_Title:</div>
-                        @Html.TextBoxFor(f => f.Title, new
-                                                           {
-                                                               @class = "bcms-editor-field-box",
-                                                               @style = "width: 255px;",
-                                                               @id = "bcms-image-title-editor",
-                                                               @data_bind = "value: title, valueUpdate: 'afterkeydown', enterPress: save, escPress: close"
-                                                           })
+                        <div class="bcms-custom-input-box" style="width: 255px;">
+                            @Html.TextBoxFor(f => f.Title, new
+                            {
+                                @class = "bcms-editor-field-box",
+                                @id = "bcms-image-title-editor",
+                                @data_bind = "value: title, valueUpdate: 'afterkeydown', enterPress: save, escPress: close"
+                            })
+                            @Html.ValidationMessageFor(f => f.Title)
+                        </div>
                         <div class="bcms-btn-small" data-bind="click: save">@RootGlobalization.Button_Ok</div>
                         <div class="bcms-btn-links-small" data-bind="click: close">@RootGlobalization.Button_Cancel</div>
                     </div>
@@ -73,9 +76,7 @@
                     <b>@MediaGlobalization.ImageEditor_Dialog_Dimensions:</b>
                     <div class="bcms-editing-text" data-bind="text: widthAndHeight()">@Model.ImageWidth x @Model.ImageHeight</div>
                     <a class="bcms-file-link" data-bind="click: open, visible: !isOpened()">@RootGlobalization.Button_Edit</a>
-                    <div class="bcms-file-edit" data-bind="style: {'display': isOpened() ? 'block' : 'none' }">
-                        <div class="bcms-tip-close" data-bind="click: close">@RootGlobalization.Button_Close</div>
-                        @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_ChangeSize_Tooltip_Title, MediaGlobalization.ImageEditor_Dialog_ChangeSize_Tooltip_Description)
+                    <div class="bcms-file-edit" data-bind="style: { 'display': isOpened() ? 'block' : 'none' }">
                         <div class="bcms-content-titles">
                             @MediaGlobalization.ImageEditor_Dialog_ChangeSize_Title
                             <div class="bcms-crop-checkbox">
@@ -85,25 +86,29 @@
                             </div>
                         </div>
                         <span>@MediaGlobalization.ImageEditor_Dialog_ChangeSize_Width:</span>
-                        @Html.TextBoxFor(f => f.ImageWidth, new
-                                                                {
-                                                                    @class = "bcms-editor-field-box",
-                                                                    @style = "width: 75px;",
-                                                                    @id = "image-width",
-                                                                    @data_bind = "value: width, valueUpdate: 'afterkeydown', enterPress: save, escPress: close, event: { change: changeHeight }"
-                                                                })
+                        <div class="bcms-custom-input-box" style="width: 75px;">
+                            @Html.TextBoxFor(f => f.ImageWidth, new
+                               {
+                                   @class = "bcms-editor-field-box",
+                                   @id = "image-width",
+                                   @data_bind = "value: width, valueUpdate: 'afterkeydown', enterPress: save, escPress: close, event: { change: changeHeight }"
+                               })
+                            @Html.ValidationMessageFor(f => f.ImageWidth)
+                        </div>
                         <span>@MediaGlobalization.ImageEditor_Dialog_ChangeSize_Height:</span>
-                        @Html.TextBoxFor(f => f.ImageHeight, new
-                                                                 {
-                                                                     @class = "bcms-editor-field-box",
-                                                                     @style = "width: 75px;",
-                                                                     @id = "image-height",
-                                                                     @data_bind = "value: height, valueUpdate: 'afterkeydown', enterPress: save, escPress: close, event: { change: changeWidth }"
-                                                                 })
+                        <div class="bcms-custom-input-box" style="width: 75px;">
+                            @Html.TextBoxFor(f => f.ImageHeight, new
+                           {
+                               @class = "bcms-editor-field-box",
+                               @id = "image-height",
+                               @data_bind = "value: height, valueUpdate: 'afterkeydown', enterPress: save, escPress: close, event: { change: changeWidth }"
+                           })
+                            @Html.ValidationMessageFor(f => f.ImageHeight)
+                        </div>
                         <div class="bcms-btn-small" data-bind="click: save">@RootGlobalization.Button_Ok</div>
                         <div class="bcms-btn-links-small" data-bind="click: close">@RootGlobalization.Button_Cancel</div>
 
-                        <a href="#" data-bind="click: restoreOriginalSize">@MediaGlobalization.ImageEditor_Dialog_RestoreOriginalSize_Title</a>
+                        <a data-bind="click: restoreOriginalSize">@MediaGlobalization.ImageEditor_Dialog_RestoreOriginalSize_Title</a>
                     </div>
                 </div>
             </div>

@@ -534,6 +534,7 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', 'bcms.
             isPreviewAvailable: true,
             onSaveAndPublishClick: null,
             onPreviewClick: null,
+            disableSaveDraft: false,
             onSaveDraftClick: null
         }, options);
 
@@ -579,17 +580,23 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', 'bcms.
         options.buttons = extraButtons;
         options.acceptTitle = globalization.saveDraft;
         
-        options.onAcceptClick = function(dialog) {
-            if ($.isFunction(options.onSaveDraftClick)) {
-                if (options.onSaveDraftClick(dialog) !== false) {
+        if (options.disableSaveDraft) {
+            options.disableAccept = true;
+            options.onAcceptClick = null;
+            saveAndPublishButton.css(classes.saveButton);
+        } else {
+            options.onAcceptClick = function (dialog) {
+                if ($.isFunction(options.onSaveDraftClick)) {
+                    if (options.onSaveDraftClick(dialog) !== false) {
+                        changeContentDesirableStatus(dialog, bcms.contentStatus.draft);
+                        dialog.submitForm();
+                    }
+                } else {
                     changeContentDesirableStatus(dialog, bcms.contentStatus.draft);
                     dialog.submitForm();
                 }
-            } else {
-                changeContentDesirableStatus(dialog, bcms.contentStatus.draft);
-                dialog.submitForm();
-            }
-        };
+            };
+        }
         
         modal.open(options);
     };

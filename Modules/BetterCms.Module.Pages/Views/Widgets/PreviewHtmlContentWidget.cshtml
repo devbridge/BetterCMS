@@ -10,6 +10,9 @@
         @Html.Raw(Model.CustomCSS)
     </style>
 }
-<div class="bcms-scroll-window">
-    @Html.Raw(Model.PageContent)
-</div>
+@if (Model.EnableCustomHtml)
+{
+    <div class="bcms-scroll-window">
+        @Html.Raw(Model.PageContent)
+    </div>
+}

@@ -102,7 +102,8 @@ namespace BetterCms.Module.MediaManager.Controllers
             var model = GetCommand<DownloadFileCommand>().Execute(id.ToGuidOrDefault());
             if (model != null)
             {
-                return File(model.FileName, model.ContentMimeType, model.FileDownloadName);
+                model.FileStream.Position = 0;
+                return File(model.FileStream, model.ContentMimeType, model.FileDownloadName);
             }
 
             if (!string.IsNullOrWhiteSpace(CmsConfiguration.PageNotFoundUrl))

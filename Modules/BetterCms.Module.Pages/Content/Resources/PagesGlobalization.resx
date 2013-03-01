@@ -1158,4 +1158,7 @@
   <data name="SavePageStatus_PageIsInInappropriateStatus_Message" xml:space="preserve">
     <value>Page status is inappropriate. Can not change it.</value>
   </data>
+  <data name="SavePage_CreatedSuccessfully_Message" xml:space="preserve">
+    <value>Page created succesfully.</value>
+  </data>
 </root>

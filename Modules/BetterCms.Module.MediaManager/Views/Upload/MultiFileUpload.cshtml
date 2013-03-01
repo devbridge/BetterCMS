@@ -13,17 +13,17 @@
 
         @using (Html.BeginForm<UploadController>(f => f.SaveUploads(null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
         {
-            <div class="bcms-input-list-holder">
-                @Html.Tooltip(MediaGlobalization.MultiFileUpload_SelectFolder_Help_Title, MediaGlobalization.MultiFileUpload_SelectFolder_Help_Message)            
-                <div class="bcms-content-titles">@MediaGlobalization.MultiFileUpload_SelectFolder</div>
+            <div class="bcms-input-list-holder">                
                 @Html.HiddenFor(f => f.RootFolderId)
                 @if (Model.RootFolderId.HasDefaultValue())
                 {
+                    @Html.Tooltip(MediaGlobalization.MultiFileUpload_SelectFolder_Help_Title, MediaGlobalization.MultiFileUpload_SelectFolder_Help_Message)            
+                    <div class="bcms-content-titles">@MediaGlobalization.MultiFileUpload_SelectFolder</div>
                     @Html.DropDownListFor(f => f.SelectedFolderId, Model.Folders.Select(o => new SelectListItem { Selected = Model.SelectedFolderId == o.Item1, Text = o.Item2, Value = o.Item1.ToString() }), new { @class = "bcms-global-select" })
                 }
                 else
                 {
-                    @Html.HiddenFor(f => f.SelectedFolderId, new {@Value = Model.RootFolderId})
+                    @Html.HiddenFor(f => f.SelectedFolderId, new { @Value = Model.RootFolderId })
                 }
             </div>
 
@@ -47,10 +47,10 @@
                 <div data-bind="css: { 'bcms-upload-block':true, 'bcms-upload-success':uploadCompleted(), 'bcms-upload-failed':uploadFailed() }">
                     <div class="bcms-upload-file-titles" data-bind="text: fileName"></div>
                     @Html.HiddenFor(model => model.UploadedFiles, new
-                                                                      {
-                                                                          id = (string)null,
-                                                                          data_bind = "value:fileId()"
-                                                                      })
+               {
+                   id = (string)null,
+                   data_bind = "value:fileId()"
+               })
                     <div class="bcms-upload-bar-holder">
                         <div class="bcms-progress-bar" data-bind="visible: !uploadCompleted() && !uploadFailed()">
                             <div class="bcms-progress" style="width: 0;" data-bind="style: { width: uploadProgress() + '%' }"></div>
@@ -62,8 +62,13 @@
                         <div class="bcms-upload-description" data-bind="visible: uploadCompleted">
                             @MediaGlobalization.MultiFileUpload_Success
                         </div>
-                    </div>
+                    </div>                    
+                    <!-- ko if: isProgressVisable() -->
                     <div class="bcms-uploaded-info" data-bind="text: uploadProgress() + '%'"></div>
+                    <!-- /ko -->
+                    <!-- ko if: !isProgressVisable() -->
+                    <div class="bcms-uploaded-info">&nbsp;</div>
+                    <!-- /ko -->
                     <div class="bcms-upload-size-info"><b>@MediaGlobalization.MultiFileUpload_FileSize</b><span data-bind="text: fileSizeFormated"></span></div>
                     <div class="bcms-media-delete-holder">
                         <a class="bcms-icn-delete" data-bind="click: function() { $root.removeUpload($data); }, text: uploadCompleted() || uploadFailed() ? '@RootGlobalization.Button_Remove' : '@RootGlobalization.Button_Cancel'"></a>                        

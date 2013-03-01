@@ -60,6 +60,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         /// <param name="tagService">The tag service.</param>
         /// <param name="optionService">The option service.</param>
         /// <param name="contentService">The content service.</param>
+        /// <param name="redirectService">The redirect service.</param>
         public SaveBlogPostCommand(ITagService tagService, IOptionService optionService, IContentService contentService, IRedirectService redirectService)
         {
             this.tagService = tagService;
@@ -111,16 +112,23 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                 var parentPageUrl = request.ParentPageUrl.Trim('/');
                 if (!string.IsNullOrWhiteSpace(parentPageUrl))
                 {
-                    var postUrl = GeneratePageUrl(request.Title);
-                    var pageUrl = string.Concat(parentPageUrl, postUrl);
-                    blogPost.PageUrl = redirectService.FixUrl(pageUrl);
+                    var url = "/" + request.Title.Transliterate();
+                    var pageUrl = string.Concat(parentPageUrl, url);
+                    pageUrl = AddUrlPathSuffixIfNeeded(pageUrl);
+                    blogPost.PageUrl = pageUrl;
                 }
                 else
                 {
                     blogPost.PageUrl = GeneratePageUrl(request.Title);
                 }
+
                 blogPost.IsPublic = true;
                 blogPost.Layout = layout;
+                UpdateStatus(blogPost, request.DesirableStatus);
+            }
+            else if(request.DesirableStatus == ContentStatus.Published)
+            {
+                UpdateStatus(blogPost, request.DesirableStatus);
             }
 
             // Push to change modified data each time save button is pressed
@@ -142,8 +150,6 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
 
             content = (BlogPostContent)contentService.SaveContentWithStatusUpdate(content, request.DesirableStatus);
             pageContent.Content = content;
-
-            UpdateStatus(blogPost, request.DesirableStatus);
 
             Repository.Save(blogPost);
             Repository.Save(content);
@@ -203,7 +209,10 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         {
             var layoutId = optionService.GetDefaultTemplateId();
 
-            Layout layout = layoutId.HasValue ? Repository.AsProxy<Layout>(layoutId.Value) : GetFirstCompatibleLayout();
+            var layout = (layoutId.HasValue
+                                 ? Repository.AsQueryable<Layout>(l => l.Id == layoutId.Value).FirstOrDefault()
+                                 : null) ?? GetFirstCompatibleLayout();
+
             if (layout == null)
             {
                 var message = BlogGlobalization.SaveBlogPost_LayoutNotFound_Message;
@@ -275,7 +284,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         }
 
         /// <summary>
-        /// Path exists in db.
+        /// Path exists in database.
         /// </summary>
         /// <param name="url">The URL.</param>
         /// <returns>Url path.</returns>

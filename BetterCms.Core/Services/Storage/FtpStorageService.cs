@@ -81,7 +81,7 @@ namespace BetterCms.Core.Services.Storage
 
             try
             {
-                var absolutePath = ResolvePath(request.Uri.LocalPath);
+                var absolutePath = ResolvePath(request.Uri.AbsoluteUri);
 
                 if (request.CreateDirectory)
                 {
@@ -109,16 +109,23 @@ namespace BetterCms.Core.Services.Storage
             }
         }
 
+        /// <summary>
+        /// Downloads the object.
+        /// </summary>
+        /// <param name="uri">The URI.</param>
+        /// <returns><c>DownloadResponse</c> response.</returns>
+        /// <exception cref="StorageException">if file downloading failed.</exception>
         public DownloadResponse DownloadObject(Uri uri)
         {
             CheckUri(uri);
 
             try
             {
-                var request = (HttpWebRequest)WebRequest.Create(uri);
-                var response = request.GetResponse();
-                var downloadResponse = new DownloadResponse();
-                downloadResponse.Uri = uri;
+                var ftpRequest = CreateFtpRequest(uri.ToString());
+                ftpRequest.Method = WebRequestMethods.Ftp.DownloadFile;
+
+                var response = ftpRequest.GetResponse();
+                var downloadResponse = new DownloadResponse { Uri = uri };
 
                 using (var responseStream = response.GetResponseStream())
                 {

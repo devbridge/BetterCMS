@@ -5,6 +5,7 @@ using System.Linq;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions;
+using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Models;
 using BetterCms.Core.Services;
 using BetterCms.Module.Root.Models;
@@ -73,7 +74,7 @@ namespace BetterCms.Module.Root.Services
 
             if (originalContent == null)
             {
-                throw new CmsException(string.Format("An original content was not found by id={0}.", updatedContent.Id));
+                throw new EntityNotFoundException(typeof(Models.Content), updatedContent.Id);
             }
             
             if (originalContent.Original != null)

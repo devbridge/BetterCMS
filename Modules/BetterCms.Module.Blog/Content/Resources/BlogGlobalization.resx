@@ -291,4 +291,7 @@
   <data name="SiteSettings_Templates_Title" xml:space="preserve">
     <value>Select Default Blog Template</value>
   </data>
+  <data name="CreatePost_CreatedSuccessfully_Message" xml:space="preserve">
+    <value>Post created successfully</value>
+  </data>
 </root>

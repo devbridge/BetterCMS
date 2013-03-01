@@ -5,10 +5,10 @@
 <td @Html.Raw(Model.Attributes)>
     <div class="bcms-author-picture">
         <!-- ko if: image().url() && isActive() -->
-        <a href="#" class="bcms-remove-image" data-bind="click: image().remove.bind(image())">@RootGlobalization.Button_Remove</a>
+        <a class="bcms-remove-image" data-bind="click: image().remove.bind(image())">@RootGlobalization.Button_Remove</a>
         <!-- /ko -->
         <!-- ko if: image().url() -->
-        <a href="#" data-bind="click: image().preview.bind(image())"><img data-bind="attr: {src: image().versionedThumnailUrl(), alt: image().tooltip() }" /></a>
+        <a data-bind="click: image().preview.bind(image())"><img data-bind="attr: {src: image().versionedThumnailUrl(), alt: image().tooltip() }" /></a>
         <!-- /ko -->
     </div>
 

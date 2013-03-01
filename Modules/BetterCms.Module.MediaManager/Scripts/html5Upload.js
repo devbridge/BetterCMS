@@ -39,7 +39,7 @@ define(function () {
         self.uploadSize = file.size;
         self.uploadedBytes = 0;
         self.eventHandlers = {};
-        self.abort = function() {
+        self.abort = function () {
             console.log('Abort impossible. File upload not initialized for file ' + self.fileName);
         };
         self.events = {
@@ -57,10 +57,18 @@ define(function () {
                 file = null;
                 (self.eventHandlers.onCompleted || noop)(data);
             },
-            onError: function(status, response) {
+            onError: function (status, response) {
                 console.log('Event: upload onError (status code ' + status + ')');
                 file = null;
                 (self.eventHandlers.onError || noop)();
+            },
+            onTransfer: function (transferProg) {
+                if (transferProg >= 100) {
+                    transferProg = 0;
+                } else {
+                    transferProg += 10;
+                }
+                (self.eventHandlers.onTransfer || noop)(transferProg);
             }
         };
     }
@@ -169,6 +177,9 @@ define(function () {
 
                 // Update file size because it might be bigger than reported by the fileSize:
                 upload.events.onProgress(event.total, event.loaded);
+                if (event.total == event.loaded) {
+                    upload.events.onTransfer();
+                }
             };
 
             // Triggered when upload is completed:

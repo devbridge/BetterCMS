@@ -111,10 +111,10 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
                     });
                 },
                 onAccept: function () {
-                    htmlEditor.destroyAllHtmlEditorInstances();
+                    htmlEditor.destroyHtmlEditorInstance();
                 },
                 onClose: function () {
-                    htmlEditor.destroyAllHtmlEditorInstances();
+                    htmlEditor.destroyHtmlEditorInstance();
                 }
             });
         };
@@ -141,10 +141,10 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
                     });
                 },
                 onAccept: function () {
-                    htmlEditor.destroyAllHtmlEditorInstances();
+                    htmlEditor.destroyHtmlEditorInstance();
                 },
                 onClose: function () {
-                    htmlEditor.destroyAllHtmlEditorInstances();
+                    htmlEditor.destroyHtmlEditorInstance();
                     
                     if ($.isFunction(onCloseCallback)) {
                         onCloseCallback();
@@ -160,6 +160,7 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
 
             modal.edit({
                 isPreviewAvailable: availablePreviewOnPageContentId != null,
+                disableSaveDraft: true,
                 title: globalization.editWidgetDialogTitle,
                 onClose: onCloseCallback,
                 onLoad: function(childDialog) {
@@ -185,6 +186,7 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
         widgets.openCreateServerControlWidgetDialog = function (onSaveCallback, availablePreviewOnPageContentId) {
             modal.edit({
                 isPreviewAvailable: availablePreviewOnPageContentId != null,
+                disableSaveDraft: true,
                 title: globalization.createWidgetDialogTitle,
                 onLoad: function (childDialog) {
                     dynamicContent.bindDialog(childDialog, links.loadCreateServerControlWidgetDialogUrl, {
@@ -391,6 +393,7 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
                         var template = $(selectors.widgetRowTemplate),
                             newRow = $(template.html()).find(selectors.widgetRowTemplateFirstRow);
                         setWidgetFields(newRow, json);
+                        messages.refreshBox(container, json);
                         newRow.insertBefore($(selectors.widgetsTableFirstRow, container));
                         initializeSiteSettingsWidgetListEvents(newRow);
                         grid.showHideEmptyRow(container);

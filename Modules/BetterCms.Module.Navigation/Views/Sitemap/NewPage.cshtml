@@ -39,7 +39,7 @@
 
             <div class="bcms-placement-holder">
                 @* Form is required for unobtrusive validation. *@
-                @using (Html.BeginForm<SitemapController>(f => f.Index(null), FormMethod.Post, new { @id = "bcms-sitemap-form" }))
+                @using (Html.BeginForm<SitemapController>(f => f.Index(null), FormMethod.Post, new { @class = "bcms-sitemap-form" }))
                 {
                     @Html.Partial("Partial/Sitemap", new SitemapNodeViewModel())
                 }

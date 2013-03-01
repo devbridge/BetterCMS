@@ -44,10 +44,10 @@
     }
     @using (Html.BeginForm<BlogController>(c => c.SaveBlogPost(null), FormMethod.Post, new { @id = "bcms-blog-post-form", @class = "bcms-ajax-form" }))
     {
-        @Html.HiddenFor(model => model.Id, new {data_bind = "value: id()"})
-        @Html.HiddenFor(model => model.Version, new {data_bind = "value: version()"})
-        @Html.HiddenFor(model => model.Image.ImageId, new {data_bind = "value: image().id()"})
-        @Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status"})
+        @Html.HiddenFor(model => model.Id, new { data_bind = "value: id()" })
+        @Html.HiddenFor(model => model.Version, new { data_bind = "value: version()" })
+        @Html.HiddenFor(model => model.Image.ImageId, new { data_bind = "value: image().id()" })
+        @Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status" })
         @Html.HiddenFor(modal => modal.ParentPageUrl)
 
         <div class="bcms-new-blog-content">
@@ -57,12 +57,18 @@
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(BlogGlobalization.EditBlockPost_Title_Tooltip_Title, BlogGlobalization.EditBlockPost_Title_Tooltip_Description)
                     <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_Title_Title</div>
-                    @Html.TextBoxFor(m => m.Title, new {@style = "width: 510px;", @class = "bcms-editor-field-box"})
+                    <div class="bcms-input-box">
+                        @Html.TextBoxFor(m => m.Title, new { @style = "width: 510px;", @class = "bcms-editor-field-box" })
+                        @Html.ValidationMessageFor(m => m.Title)
+                    </div>
                 </div>
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(BlogGlobalization.EditBlockPost_IntroText_Tooltip_Title, BlogGlobalization.EditBlockPost_IntroText_Tooltip_Description)
                     <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_IntroText_Title</div>
-                    @Html.TextAreaFor(m => m.IntroText, new {@style = "width: 510px; height: 170px;", @class = "bcms-editor-field-area"})
+                    <div class="bcms-textarea-box">
+                        @Html.TextAreaFor(m => m.IntroText, new { @style = "width: 510px; height: 170px;", @class = "bcms-editor-field-area" })
+                        @Html.ValidationMessageFor(m => m.IntroText)
+                    </div>
                 </div>
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(BlogGlobalization.EditBlockPost_Content_Tooltip_Title, BlogGlobalization.EditBlockPost_Content_Tooltip_Description)
@@ -90,8 +96,9 @@
                     <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_FeaturedImage_Title</div>
                     <div class="bcms-uploaded-image">
                         <!-- ko if: image().url() -->
-                        <a href="#" class="bcms-remove-image" data-bind="click: image().remove.bind(image())">@RootGlobalization.Button_Remove</a>
-                        <a href="#" data-bind="click: image().preview.bind(image())"><img data-bind="attr: {src: image().versionedThumnailUrl(), alt: image().tooltip() }" /></a>
+                        <a class="bcms-remove-image" data-bind="click: image().remove.bind(image())">@RootGlobalization.Button_Remove</a>
+                        <a data-bind="click: image().preview.bind(image())">
+                            <img data-bind="attr: {src: image().versionedThumnailUrl(), alt: image().tooltip() }" /></a>
                         <!-- /ko -->
                     </div>
                     <div class="bcms-upload-info">

@@ -2,17 +2,17 @@
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc.UI
 @model BetterCms.Module.Pages.ViewModels.Seo.EditSeoViewModel
-<div class="bcms-input-list-holder">                
+<div class="bcms-input-list-holder">
     @Html.Tooltip(PagesGlobalization.EditSeo_UrlPath_Tooltip_Title, PagesGlobalization.EditSeo_UrlPath_Tooltip_Description)
     <div class="bcms-content-titles">@PagesGlobalization.EditSeo_UrlPath<a id="bcms-editseo-editurlpath">@RootGlobalization.Button_Edit</a></div>
-    <div class="bcms-editseo-urlpath">@Html.Raw(string.IsNullOrWhiteSpace(Model.PageUrlPath) ? "&nbsp;" : Html.Encode(Model.PageUrlPath))</div>   
-    @Html.HiddenFor(f => f.PageUrlPath)                 
+    <div class="bcms-editseo-urlpath">@Html.Raw(string.IsNullOrWhiteSpace(Model.PageUrlPath) ? "&nbsp;" : Html.Encode(Model.PageUrlPath))</div>
+    @Html.HiddenFor(f => f.PageUrlPath)
 </div>
 <div class="bcms-edit-urlpath-box" style="display: none;">
-    <div class="bcms-tip-close">@PagesGlobalization.EditSeo_EditUrlPath_Close</div>
-    @Html.Tooltip(PagesGlobalization.EditSeo_EditUrlPath_Tooltip_Title, PagesGlobalization.EditSeo_EditUrlPath_Tooltip_Description)
-    <div class="bcms-content-titles">@PagesGlobalization.EditSeo_EditUrlPath_Title</div>
-    @Html.TextBoxFor(f => f.ChangedUrlPath, new { @class = "bcms-editor-field-box", style = "width: 503px;"})    
+    <div class="bcms-custom-input-box" style="width: 503px;">
+        @Html.TextBoxFor(f => f.ChangedUrlPath, new { @class = "bcms-editor-field-box" })
+        @Html.ValidationMessageFor(f => f.ChangedUrlPath)
+    </div>
     <div id="bcms-editseo-editurlpath-save" class="bcms-btn-small">@RootGlobalization.Button_Ok</div>
     <div id="bcms-editseo-editurlpath-cancel" class="bcms-btn-links-small">@RootGlobalization.Button_Cancel</div>
     <div class="bcms-edit-check-field">
