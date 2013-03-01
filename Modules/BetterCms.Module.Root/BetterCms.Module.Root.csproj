@@ -173,6 +173,7 @@
     <Compile Include="Mvc\Helpers\PreviewHelper.cs" />
     <Compile Include="Mvc\Helpers\RegionContentWrapper.cs" />
     <Compile Include="Mvc\Helpers\StringHelper.cs" />
+    <Compile Include="Mvc\Helpers\ValidationExtensions.cs" />
     <Compile Include="Projections\PageStylesheetProjectionFactory.cs" />
     <Compile Include="Projections\PageJavaScriptProjectionFactory.cs" />
     <Compile Include="Projections\PageStylesheetProjection.cs" />

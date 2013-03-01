@@ -100,17 +100,6 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
     };
 
     /**
-    * Removed unobtrusive validator and adds new
-    */
-    function replaceUnobtrusiveValidator(form) {
-        if ($.validator && $.validator.unobtrusive) {
-            form.removeData("validator");
-            form.removeData("unobtrusiveValidation");
-            $.validator.unobtrusive.parse(form);
-        }
-    }
-
-    /**
     * Setup selectors
     */
     editor.initializeSelectors = function (opts) {
@@ -304,7 +293,7 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
 
             options.switchRowToEdit(newRow);
 
-            replaceUnobtrusiveValidator(form);
+            bcms.updateFormValidator(form);
 
             editor.initRowEvents(newRow, container);
 
@@ -523,7 +512,8 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
 
             editor.setRowInputNames(row);
         });
-        replaceUnobtrusiveValidator($(container).find(selectors.firstForm));
+        
+        bcms.updateFormValidator($(container).find(selectors.firstForm));
     };
 
     /**

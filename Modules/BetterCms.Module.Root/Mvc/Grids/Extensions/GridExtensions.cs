@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Web.Mvc.Html;
 
 using BetterCms.Module.Root.Content.Resources;
+using BetterCms.Module.Root.Mvc.Helpers;
 
 using MvcContrib.UI.Grid;
 
@@ -188,7 +189,7 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
             var textBoxAttributes = new Dictionary<string, object>
                                         {
                                             {"id", null},
-                                            {"Name", namePattern},
+                                            {"name", namePattern},
                                             {"style", "display:none; width:100%;"},
                                             {"class", string.Format("bcms-editor-field-box {0}", textBoxClassName)}
                                         };
@@ -196,6 +197,11 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
             {
                 textBoxAttributes.Add("data-name-pattern", namePattern);
             }
+
+            // Merge validation attributes: add fake name, because 
+            // attributes are not returned second time for same input
+            textBoxAttributes = htmlHelper.MergeValidationAttributes(expression, textBoxAttributes);
+
             var textBox = htmlHelper.TextBoxFor(expression, textBoxAttributes);
 
             // Hidden field

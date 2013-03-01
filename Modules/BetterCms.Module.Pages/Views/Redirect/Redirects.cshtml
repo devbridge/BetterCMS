@@ -11,7 +11,12 @@
 @model BetterCms.Module.Root.ViewModels.SiteSettings.SearchableGridViewModel<SiteSettingRedirectViewModel>
            
 @{
-    Action<ColumnBuilder<SiteSettingRedirectViewModel>> columns = column =>
+    Action<ColumnBuilder<SiteSettingRedirectViewModel>> columns;
+}
+
+@using (Html.BeginForm<RedirectController>(f => f.Redirects(null), FormMethod.Post, new { @id = "bcms-redirects-form" }))
+{
+    columns = column =>
     {
         column.EditButtonColumn();
 
@@ -28,10 +33,7 @@
 
         column.InlineEditControlsColumn();
     };
-}
-
-@using (Html.BeginForm<RedirectController>(f => f.Redirects(null), FormMethod.Post, new { @id = "bcms-redirects-form" }))
-{
+    
     @Html.HiddenGridOptions(Model.GridOptions)
 
     <div class="bcms-twocols-title-block">

@@ -94,13 +94,17 @@
                     <div class="bcms-media-name" data-bind="text: name()"></div>
                     <!-- /ko -->
                     <div class="bcms-media-input-box">
-                        @Html.TextBoxFor(m => m.Name, new Dictionary<string, object>
-                         {
-                           {"data-bind", "value: name, valueUpdate: 'afterkeydown', enterPress: saveMedia.bind($data, $root), escPress: cancelEditMedia.bind($data, $root), hasfocus: isActive(), event: {blur: blurMediaField.bind($data, $root)}, attr: {id: nameDomId}, click: stopEvent "},
-                           {"class", "bcms-grid-input"},
-                           {"Name", (string) null},
-                         })
-                        @Html.ValidationMessageFor(m => m.Name)
+                        @{
+                            var attributes = new Dictionary<string, object>
+                            {
+                                {"data-bind", "value: name, valueUpdate: 'afterkeydown', enterPress: saveMedia.bind($data, $root), escPress: cancelEditMedia.bind($data, $root), hasfocus: isActive(), event: {blur: blurMediaField.bind($data, $root)}, attr: {id: nameDomId, name: nameDomId}, click: stopEvent "},
+                                {"class", "bcms-grid-input"}
+                            };
+                            attributes = Html.MergeValidationAttributes(m => m.Name, attributes);
+                            
+                            @Html.TextBoxFor(m => m.Name, attributes)
+                            @Html.ValidationMessageFor(m => m.Name, null, new { @data_bind = "attr: {'data-valmsg-for': nameDomId}" })
+                        }
                     </div>
                     <div class="bcms-media-inner-controls">
                         <div class="bcms-btn-small" data-bind="click: saveMedia.bind($data, $root)">@RootGlobalization.Button_Save</div>
