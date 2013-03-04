@@ -1,0 +1,115 @@
+﻿@model BetterCms.Module.Users.ViewModels.LoginViewModel
+@{
+    if (Model == null)
+    {
+        Html.RenderPartial("~/Areas/bcms-users/Views/Widgets/Login.cshtml", new BetterCms.Module.Users.ViewModels.LoginViewModel());
+        return;
+    }
+    var isAuthenticated = Html.ViewContext.HttpContext.User != null && Html.ViewContext.HttpContext.User.Identity.IsAuthenticated;
+}
+<div class="@ViewBag.MainDivCssClass">
+    <form id="bcms-userlogin-form" action="@(isAuthenticated ? ViewBag.LogOutUrl : ViewBag.LogInUrl)">
+        @if (!isAuthenticated)
+        {
+            <p>@ViewBag.TitleText</p>
+            <p id="bcms-userlogin-form-validation"></p>
+
+            @Html.LabelFor(m => m.UserName, (string)ViewBag.UserNameLabelText)
+            @Html.TextBoxFor(m => m.UserName)
+            @Html.ValidationMessageFor(m => m.UserName)
+
+            @Html.LabelFor(m => m.Password, (string)ViewBag.PasswordLabelText)
+            @Html.PasswordFor(m => m.Password)
+            @Html.ValidationMessageFor(m => m.Password)
+
+            if (ViewBag.ShowFieldRememberMe != null && bool.Parse(ViewBag.ShowFieldRememberMe))
+            {
+                @Html.CheckBoxFor(m => m.RememberMe)
+                @Html.LabelFor(m => m.RememberMe, (string)ViewBag.RememberMeLabelText)
+            }
+        }
+        else
+        {
+            <p id="bcms-userlogin-form-validation"></p>
+            <p>@string.Format(ViewBag.UserLoggedInText, User.Identity.Name)</p>
+        }
+        <input id="bcms-userlogin-form-button" type="button" value="@(isAuthenticated ? ViewBag.LogOutButtonText : ViewBag.LogInButtonText)">
+    </form>
+</div>
+<script type="text/javascript">
+    function ScriptLoaded(scriptElement, onScriptLoaded) {
+        if (document.all) {
+            scriptElement.onreadystatechange = function () {
+                if (this.readyState == 'loaded' || this.readyState == 'complete') {
+                    if (onScriptLoaded) {
+                        onScriptLoaded();
+                    }
+                }
+            };
+        } else {
+            scriptElement.onload = function () {
+                if (onScriptLoaded) {
+                    onScriptLoaded();
+                }
+            };
+        }
+    }
+
+    function LoadJavaScript(lodeIt, filename, onScriptLoaded) {
+        if (lodeIt) {
+            var scriptElement = document.createElement('script');
+            scriptElement.setAttribute("type", "text/javascript");
+            scriptElement.setAttribute("src", filename);
+            ScriptLoaded(scriptElement, onScriptLoaded);
+            document.getElementsByTagName("head")[0].appendChild(scriptElement);
+        } else {
+            if (onScriptLoaded) {
+                onScriptLoaded();
+            }
+        }
+    };
+
+    LoadJavaScript(typeof jQuery == 'undefined', "http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.7.2.min.js", function() {
+        console.log("jquery: OK");
+            LoadJavaScript(true, "http://ajax.aspnetcdn.com/ajax/jquery.validate/1.7/jquery.validate.min.js", function() {
+                console.log("jquery.validate: OK");
+                LoadJavaScript(true, "http://ajax.aspnetcdn.com/ajax/mvc/3.0/jquery.unobtrusive-ajax.min.js", function() {
+                    console.log("jquery.unobtrusive-ajax: OK");
+                    LoadJavaScript(true, "http://ajax.aspnetcdn.com/ajax/mvc/3.0/jquery.validate.unobtrusive.min.js", function () {
+                        console.log("jquery.validate.unobtrusive: OK");
+
+                        var form = $("#bcms-userlogin-form"),
+                            message = $("#bcms-userlogin-form-validation"),
+                            button = $("#bcms-userlogin-form-button");
+
+                        button.click(function () {
+                            if (form.validate().form()) {
+                                message.html("");
+                                $.ajax({
+                                    type: 'POST',
+                                    cache: false,
+                                    url: form.attr('action'),
+                                    data: form.serializeArray(),
+                                    success: function (data) {
+                                        if (data.Success) {
+                                            location.reload(true);
+                                        } else {
+                                            if (data.Message) {
+                                                message.html(data.Message);
+                                            } else {
+                                                message.html("Failed.");
+                                            }
+                                        }
+                                    },
+                                    error: function(jqXHR, textStatus, errorThrown) {
+                                        alert(textStatus + ': ' + errorThrown);
+                                    }
+                                });
+                            }
+                        });
+                    });
+                });
+            });
+        });
+</script>
+

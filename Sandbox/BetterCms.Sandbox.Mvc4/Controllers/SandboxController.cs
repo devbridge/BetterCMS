@@ -3,6 +3,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 
+using BetterCms.Sandbox.Mvc4.Models;
+
 namespace BetterCms.Sandbox.Mvc4.Controllers
 {
     public class SandboxController : Controller
@@ -46,6 +48,22 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
             FormsAuthentication.SignOut();
 
             return Redirect("/");
+        }
+
+        [AllowAnonymous]
+        public ActionResult LoginJson(LoginViewModel login)
+        {
+            Login();
+
+            return Json(new { Success = true });
+        }
+
+        [AllowAnonymous]
+        public ActionResult LogoutJson(LoginViewModel login)
+        {
+            Logout();
+
+            return Json(new { Success = true });
         }
     }
 }

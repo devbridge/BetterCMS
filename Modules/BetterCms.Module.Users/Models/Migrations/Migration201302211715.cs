@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-using BetterCms.Core.DataAccess.DataContext.Migrations;
+﻿using BetterCms.Core.DataAccess.DataContext.Migrations;
 using BetterCms.Core.Models;
 
 using FluentMigrator;
@@ -20,8 +15,8 @@ namespace BetterCms.Module.Users.Models.Migrations
 
         public override void Up()
         {
-            Alter.Table("Users").InSchema(SchemaName).AlterColumn("Password").AsAnsiString(255).NotNullable();
-            Alter.Table("Users").InSchema(SchemaName).AddColumn("Salt").AsAnsiString(255).NotNullable();
+            Alter.Table("Users").InSchema(SchemaName).AlterColumn("Password").AsAnsiString(MaxLength.Password).NotNullable();
+            Alter.Table("Users").InSchema(SchemaName).AddColumn("Salt").AsAnsiString(MaxLength.Password).NotNullable();
         }
 
         public override void Down()

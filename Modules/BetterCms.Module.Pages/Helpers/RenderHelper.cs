@@ -33,7 +33,7 @@ namespace BetterCms.Module.Pages.Helpers
                     }
                 }
 
-                return html.Partial(widgetUrl, model, viewData);
+                return html.Partial(widgetUrl, null, viewData);
             }
             catch (Exception ex)
             {
