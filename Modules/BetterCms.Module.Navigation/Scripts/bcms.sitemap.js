@@ -506,6 +506,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             self.someNodeIsOver = ko.observable(false);     // Someone is dragging some node over the sitemap, but not over the particular node.
             self.activeZone = ko.observable(DropZoneTypes.None);
             self.showHasNoDataMessage = ko.observable(false);
+            self.savingInProgress = false;                  // To prevent multiple saving.
 
             self.settings = {
                 canEditNode: false,
@@ -600,23 +601,27 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                         if (onDoneCallback && $.isFunction(onDoneCallback)) {
                             onDoneCallback(json);
                         }
+                        self.savingInProgress = false;
                     };
-
-                $.ajax({
-                    url: links.saveSitemapUrl,
-                    type: 'POST',
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
-                    cache: false,
-                    data: dataToSend,
-                    beforeSend: function () { sitemap.showLoading(true); }
-                })
-                    .done(function (json) {
-                        onSaveCompleted(json);
+                
+                if (!self.savingInProgress) {
+                    self.savingInProgress = true;
+                    $.ajax({
+                        url: links.saveSitemapUrl,
+                        type: 'POST',
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+                        cache: false,
+                        data: dataToSend,
+                        beforeSend: function () { sitemap.showLoading(true); }
                     })
-                    .fail(function (response) {
-                        onSaveCompleted(bcms.parseFailedResponse(response));
-                    });
+                        .done(function (json) {
+                            onSaveCompleted(json);
+                        })
+                        .fail(function (response) {
+                            onSaveCompleted(bcms.parseFailedResponse(response));
+                        });
+                }
             };
 
             // Parsing / composing.

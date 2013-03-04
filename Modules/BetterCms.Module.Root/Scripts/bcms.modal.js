@@ -482,8 +482,8 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', 'bcms.
                     if (canHandleKeyPress()) {
                         e.preventDefault();
                         if (topModal != lastEscModal) {
-                            topModal.closeClick();
                             lastEscModal = topModal;
+                            topModal.closeClick();
                         }
                     }
                 }
@@ -492,8 +492,8 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', 'bcms.
                     if (canHandleKeyPress()) {
                         e.preventDefault();
                         if (topModal != lastEnterModal) {
-                            topModal.acceptClick();
                             lastEnterModal = topModal;
+                            topModal.acceptClick();
                         }
                     }
                 }
