@@ -24,16 +24,14 @@
     };
 }
 
-@Html.SiteSettingsMessagesBox()
-
 @using (Html.BeginForm<RoleController>(f => f.RolesListView(null), FormMethod.Post, new { @id = "bcms-role-form" }))
 {
     @Html.HiddenGridOptions(Model.GridOptions)
 
     <div class="bcms-top-block-holder">
-        <div id="bcms-create-role-button" class="bcms-btn-links-main">@UsersGlobalization.Role_Dialog_AddNew</div>
-        @Html.MessagesBox("bcms-role-messages")
- </div> 
+        <div id="bcms-create-role-button" class="bcms-btn-links-main">@UsersGlobalization.Role_Dialog_AddNew</div>        
+    </div> 
+    @Html.SiteSettingsMessagesBox("bcms-role-messages")
        
     @(Html
           .Grid(Model.Items)
@@ -41,8 +39,8 @@
           .Columns(columns)
           .Attributes(@class => "bcms-tables")
               .RowAttributes(delegate(GridRowViewData<RoleItemViewModel> row)
-                  {
-                      return new Dictionary<string, object>
+              {
+                  return new Dictionary<string, object>
                               {
                                     {"data-id", row.Item.Id},
                                     {"data-version", row.Item.Version}

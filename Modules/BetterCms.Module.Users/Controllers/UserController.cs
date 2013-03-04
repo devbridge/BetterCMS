@@ -39,10 +39,7 @@ namespace BetterCms.Module.Users.Controllers
             var response = GetCommand<SaveUserCommand>().Execute(model);
             if (response != null)
             {
-                if (response.Id.HasDefaultValue())
-                {
-                    Messages.AddSuccess(UsersGlobalization.SaveRole_CreatedSuccessfully_Message);
-                }
+                Messages.AddSuccess(UsersGlobalization.SaveUser_CreatedSuccessfully_Message);
                 return Json(new WireJson { Success = true, Data = response });
             }
             return Json(new WireJson { Success = false });

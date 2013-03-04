@@ -36,11 +36,10 @@
     <div class="bcms-search-block">
         @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box", @placeholder = RootGlobalization.WaterMark_Search })
         <div class="bcms-btn-search" id="bcms-users-search-btn">@UsersGlobalization.User_Dialog_Search</div>
-    </div>
-    @Html.MessagesBox("bcms-users-messages")
+    </div>    
 </div>
 
-@Html.SiteSettingsMessagesBox()
+@Html.SiteSettingsMessagesBox("bcms-users-messages")
 @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables", @id => "bcms-users-grid").RowAttributes(delegate(GridRowViewData<UserItemViewModel> row)
                   {
                       return new Dictionary<string, object>

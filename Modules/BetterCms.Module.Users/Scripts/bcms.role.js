@@ -15,8 +15,8 @@ define('bcms.role', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             roleNameCell: '.bcms-role-name',
             roleRowTemplate: '#bcms-role-list-row-template',
             roleTableFirstRow: 'table.bcms-tables > tbody > tr:first',
-            roleRowTemplateFirstRow: 'tr:first'
-                
+            roleRowTemplateFirstRow: 'tr:first',
+            messagesContainer: '#bcms-role-messages'   
         },
 
         links = {
@@ -78,6 +78,7 @@ define('bcms.role', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
                         setRoleFields(newRow, json);
                         newRow.insertBefore($(selectors.roleTableFirstRow, container));
                         initRoleEvents(newRow);
+                        messages.refreshBox(container, json);
                         grid.showHideEmptyRow(container);
                     }
                 };
@@ -100,16 +101,7 @@ define('bcms.role', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             return false;
         });
     }
-        
-          /**
-        * Search site settings template.
-        */
-        function searchRoles(form) {
-            grid.submitGridForm(form, function (data) {
-                siteSettings.setContent(data);
-                role.initializeRoleList();
-            });
-        };
+                
 
     /**
     * Calls function, which opens dialog for a role editing.
@@ -119,10 +111,9 @@ define('bcms.role', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
                 id = row.data('id');
 
         editRoleWindow(id, function (data) {
-        if (data.Data != null) {
-        setRoleFields(row, data);
-        grid.showHideEmptyRow(container);
-        }
+            if (data.Data != null) {
+                setRoleFields(row, data);
+                grid.showHideEmptyRow(container);}
         });
     };
 

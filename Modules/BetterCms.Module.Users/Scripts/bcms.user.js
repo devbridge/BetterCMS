@@ -79,6 +79,7 @@ define('bcms.user', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
                 setUserFields(newRow, json);
                 newRow.insertBefore($(selectors.userTableFirstRow, container));
                 initUserEvents(newRow);
+                messages.refreshBox(container, json);
                 grid.showHideEmptyRow(container);
             }
         };

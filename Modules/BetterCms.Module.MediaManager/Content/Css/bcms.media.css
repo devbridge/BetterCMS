@@ -3,6 +3,22 @@
     padding: 0 35px 20px;
 }
 
+    .bcms-file-manager-inner .bcms-input-list-holder:first-of-type {
+        padding-top: 20px;
+    }
+
+        .bcms-file-manager-inner .bcms-input-list-holder:first-of-type .bcms-tooltip-mark {
+            top: 24px;
+        }
+
+.bcms-edit-file-info .bcms-input-list-holder:first-child {
+    padding-top: 0;
+}
+
+    .bcms-edit-file-info .bcms-input-list-holder:first-child .bcms-tooltip-mark {
+        top: 4px;
+    }
+
 .bcms-icn-delete-link {
     float: right;
     line-height: 24px;
@@ -111,14 +127,6 @@
     border: 1px solid #a6a6a6;
     background-color: #f5f5f5;
 }
-
-    .bcms-file-edit .bcms-content-titles {
-        margin: 0 5px 0 15px;
-    }
-
-    .bcms-file-edit .bcms-editor-field-box {
-        margin: 0 5px;
-    }
 
     .bcms-file-edit a {
         display: block;
@@ -508,17 +516,22 @@ div.bcms-nomedia-data {
     font-size: 14px;
 }
 
+.bcms-media-items-block img {
+    background: #f5f5f5;
+}
+
 /*media manger files*/
 .bcms-list .bcms-grid-input {
     display: none;
-    position: absolute;
+    /*position: absolute;
     left: 135px;
-    top: 50%;
+    top: 50%;*/
     height: 30px;
-    width: 380px;
+    /*width: 380px;*/
+    width: 100%;
     line-height: 18px;
     padding: 6px;
-    margin: -15px 0 0;
+    /*margin: -15px 0 0;*/
     border: 1px solid #1894e4;
     box-shadow: 0 0 3px 0 rgba(24,145,230,0.35);
     font-family: "Open Sans", sans-serif;
@@ -673,10 +686,7 @@ input.bcms-grid-input:focus {
 
     .bcms-grid .bcms-image-box .bcms-grid-input {
         display: none;
-        position: absolute;
-        bottom: 5px;
-        left: 4px;
-        width: 94px;
+        width: 100%;
         margin: 0;
         border: 1px solid #c6c6c6;
         box-sizing: border-box;
@@ -867,10 +877,7 @@ input.bcms-grid-input:focus {
 
     .bcms-grid .bcms-folder-box .bcms-grid-input {
         display: none;
-        position: absolute;
-        bottom: 5px;
-        left: 4px;
-        width: 95px;
+        width: 100%;
         margin: 0;
         border: 1px solid #c6c6c6;
         box-sizing: border-box;
@@ -1117,11 +1124,9 @@ input.bcms-grid-input:focus {
 
     .bcms-grid .bcms-file-box .bcms-grid-input {
         display: none;
-        position: absolute;
-        bottom: 5px;
-        left: 4px;
-        width: 95px;
+        width: 100%;
         margin: 0;
+        border: 1px solid #c6c6c6;
         box-sizing: border-box;
         -moz-box-sizing: border-box;
     }
