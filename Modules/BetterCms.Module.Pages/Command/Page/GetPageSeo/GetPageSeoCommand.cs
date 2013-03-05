@@ -48,7 +48,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageSeo
             {
                 model.PageId = page.PageId;
                 model.Version = page.Version;
-                model.CreatePermanentRedirect = false;
+                model.CreatePermanentRedirect = true;
                 model.PageTitle = page.PageTitle;
                 model.PageUrlPath = page.PageUrl;
                 model.ChangedUrlPath = page.PageUrl;
@@ -56,7 +56,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageSeo
                 model.MetaKeywords = page.MetaKeywords;
                 model.MetaDescription = page.MetaDescription;
                 model.IsInSitemap = page.IsInSitemap;
-                model.CreatePermanentRedirect = true;
+                model.UpdateSitemap = true;
             }
 
             return model;

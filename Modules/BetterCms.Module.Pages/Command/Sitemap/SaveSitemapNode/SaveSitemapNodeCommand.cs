@@ -1,5 +1,4 @@
 ﻿using BetterCms.Core.Mvc.Commands;
-using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Sitemap;
 using BetterCms.Module.Root.Mvc;
@@ -26,25 +25,11 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemapNode
         /// <returns>Execution result.</returns>
         public SitemapNodeViewModel Execute(SitemapNodeViewModel request)
         {
-            var node = request.Id.HasDefaultValue()
-                ? new SitemapNode()
-                : Repository.AsProxy<SitemapNode>(request.Id);
+            UnitOfWork.BeginTransaction();
 
-            var oldUrl = request.Url;
-            var newUrl = node.Url;
+            var node = SitemapService.SaveNode(request.Id, request.Version, request.Url, request.Title, request.DisplayOrder, request.ParentId);
 
-            node.Version = request.Version;
-            node.Title = request.Title;
-            node.Url = request.Url;
-            node.DisplayOrder = request.DisplayOrder;
-            node.ParentNode = request.ParentId.HasDefaultValue()
-                ? null
-                : Repository.AsProxy<SitemapNode>(request.ParentId);
-
-            Repository.Save(node);
             UnitOfWork.Commit();
-
-            SitemapService.UpdatedPageProperties(request.Id.HasDefaultValue(), node.IsDeleted, oldUrl, newUrl);
 
             return new SitemapNodeViewModel
                 {

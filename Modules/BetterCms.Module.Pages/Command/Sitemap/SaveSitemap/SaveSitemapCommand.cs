@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Models;
@@ -47,37 +46,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
 
             foreach (var node in nodes)
             {
-                var sitemapNode = node.Id.HasDefaultValue()
-                    ? new SitemapNode()
-                    : Repository.First<SitemapNode>(node.Id);
-
-                var oldUrl = sitemapNode.Url;
-                var newUrl = node.Url;
-
-                sitemapNode.IsDeleted = node.IsDeleted || (parentNode != null && parentNode.IsDeleted);
-
-                if (sitemapNode.IsDeleted)
-                {
-                    if (!sitemapNode.Id.HasDefaultValue())
-                    {
-                        Repository.Delete(sitemapNode);
-                    }
-                }
-                else
-                {
-                    sitemapNode.Version = node.Version;
-                    sitemapNode.Title = node.Title;
-                    sitemapNode.Url = node.Url;
-                    sitemapNode.DisplayOrder = node.DisplayOrder;
-                    if (parentNode != null && !parentNode.Id.HasDefaultValue())
-                    {
-                        sitemapNode.ParentNode = parentNode;
-                    }
-
-                    Repository.Save(sitemapNode);
-                }
-
-                SitemapService.UpdatedPageProperties(node.Id.HasDefaultValue(), sitemapNode.IsDeleted, oldUrl, newUrl);
+                var sitemapNode = SitemapService.SaveNode(node.Id, node.Version, node.Url, node.Title, node.DisplayOrder, node.ParentId, node.IsDeleted || (parentNode != null && parentNode.IsDeleted), parentNode);
 
                 SaveNodeList(node.ChildNodes, sitemapNode);
             }

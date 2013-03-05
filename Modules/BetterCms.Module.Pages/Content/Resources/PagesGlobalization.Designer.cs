@@ -1060,7 +1060,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create permanent redirect entry from old URL to new URL.
+        ///   Looks up a localized string similar to Create permanent redirect entry from old URL to new URL..
         /// </summary>
         public static string EditPageProperties_AdvancedPropertiesTab_CreatePermanentRedirectToOldUrl_Title {
             get {
@@ -1164,6 +1164,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string EditPageProperties_AdvancedPropertiesTab_Title {
             get {
                 return ResourceManager.GetString("EditPageProperties_AdvancedPropertiesTab_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update sitemap with new URL..
+        /// </summary>
+        public static string EditPageProperties_AdvancedPropertiesTab_UpdateSitemap_Title {
+            get {
+                return ResourceManager.GetString("EditPageProperties_AdvancedPropertiesTab_UpdateSitemap_Title", resourceCulture);
             }
         }
         
@@ -1420,7 +1429,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create permanent redirect entry from old URL to new URL.
+        ///   Looks up a localized string similar to Create permanent redirect entry from old URL to new URL..
         /// </summary>
         public static string EditSeo_EditUrlPath_PermanentRedirect {
             get {
@@ -1443,6 +1452,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string EditSeo_EditUrlPath_Tooltip_Description {
             get {
                 return ResourceManager.GetString("EditSeo_EditUrlPath_Tooltip_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update sitemap with new URL..
+        /// </summary>
+        public static string EditSeo_EditUrlPath_UpdateSitemap {
+            get {
+                return ResourceManager.GetString("EditSeo_EditUrlPath_UpdateSitemap", resourceCulture);
             }
         }
         

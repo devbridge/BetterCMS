@@ -346,7 +346,7 @@
     <value>Widget deleted successfully</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_CreatePermanentRedirectToOldUrl_Title" xml:space="preserve">
-    <value>Create permanent redirect entry from old URL to new URL</value>
+    <value>Create permanent redirect entry from old URL to new URL.</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_EditUrlPath_Tooltip_Description" xml:space="preserve">
     <value>Page URL must start and end with "/" and can contain only following characters: '0-9', 'a-z', '-', '/', '_'</value>
@@ -448,7 +448,7 @@
     <value>Close</value>
   </data>
   <data name="EditSeo_EditUrlPath_PermanentRedirect" xml:space="preserve">
-    <value>Create permanent redirect entry from old URL to new URL</value>
+    <value>Create permanent redirect entry from old URL to new URL.</value>
   </data>
   <data name="EditSeo_EditUrlPath_Title" xml:space="preserve">
     <value>Page URL</value>
@@ -1052,5 +1052,11 @@
   </data>
   <data name="EditSeo_Messages_NotInSitemapWarnMessage" xml:space="preserve">
     <value>Page is not in sitemap.</value>
+  </data>
+  <data name="EditPageProperties_AdvancedPropertiesTab_UpdateSitemap_Title" xml:space="preserve">
+    <value>Update sitemap with new URL.</value>
+  </data>
+  <data name="EditSeo_EditUrlPath_UpdateSitemap" xml:space="preserve">
+    <value>Update sitemap with new URL.</value>
   </data>
 </root>

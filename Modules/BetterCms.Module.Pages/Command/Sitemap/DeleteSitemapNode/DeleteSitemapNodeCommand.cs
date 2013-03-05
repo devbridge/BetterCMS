@@ -1,5 +1,4 @@
 ﻿using BetterCms.Core.Mvc.Commands;
-using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Sitemap;
 using BetterCms.Module.Root.Mvc;
@@ -26,12 +25,9 @@ namespace BetterCms.Module.Pages.Command.Sitemap.DeleteSitemapNode
         /// <returns>Execution result.</returns>
         public bool Execute(SitemapNodeViewModel request)
         {
-            var node = Repository.First<SitemapNode>(request.Id);
-            node.Version = request.Version;
+            UnitOfWork.BeginTransaction();
 
-            Repository.Delete(node);
-
-            SitemapService.UpdatedPageProperties(request.Id.HasDefaultValue(), true, node.Url, string.Empty);
+            SitemapService.DeleteNode(request.Id, request.Version);
 
             UnitOfWork.Commit();
 

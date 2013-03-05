@@ -66,6 +66,14 @@ namespace BetterCms.Module.Pages.ViewModels.Seo
         public bool CreatePermanentRedirect { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether [update sitemap].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if update sitemap; otherwise, <c>false</c>.
+        /// </value>
+        public bool UpdateSitemap { get; set; }
+
+        /// <summary>
         /// Gets or sets the meta title.
         /// </summary>
         /// <value>
