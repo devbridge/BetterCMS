@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Sitemap;
 using BetterCms.Module.Root.Mvc;
 
@@ -12,6 +14,14 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
     /// </summary>
     public class SaveSitemapCommand : CommandBase, ICommand<IList<SitemapNodeViewModel>>
     {
+        /// <summary>
+        /// Gets or sets the sitemap service.
+        /// </summary>
+        /// <value>
+        /// The sitemap service.
+        /// </value>
+        public ISitemapService SitemapService { get; set; }
+
         /// <summary>
         /// Executes the specified request.
         /// </summary>
@@ -39,7 +49,10 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
             {
                 var sitemapNode = node.Id.HasDefaultValue()
                     ? new SitemapNode()
-                    : Repository.AsProxy<SitemapNode>(node.Id);
+                    : Repository.First<SitemapNode>(node.Id);
+
+                var oldUrl = sitemapNode.Url;
+                var newUrl = node.Url;
 
                 sitemapNode.IsDeleted = node.IsDeleted || (parentNode != null && parentNode.IsDeleted);
 
@@ -64,8 +77,10 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
                     Repository.Save(sitemapNode);
                 }
 
+                SitemapService.UpdatedPageProperties(node.Id.HasDefaultValue(), sitemapNode.IsDeleted, oldUrl, newUrl);
+
                 SaveNodeList(node.ChildNodes, sitemapNode);
             }
         }
-    }
+   }
 }

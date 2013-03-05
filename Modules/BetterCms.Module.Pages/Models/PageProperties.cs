@@ -19,13 +19,13 @@ namespace BetterCms.Module.Pages.Models
         public virtual bool UseNoFollow { get; set; }
         public virtual bool UseNoIndex { get; set; }
 
-        public virtual bool IsInSitemap { get; set; }
+        public virtual int NodeCountInSitemap { get; set; }
 
         public override bool HasSEO
         {
             get
             {
-                return base.HasSEO && IsInSitemap;
+                return base.HasSEO && NodeCountInSitemap > 0;
             }
         }
 
@@ -45,7 +45,7 @@ namespace BetterCms.Module.Pages.Models
             duplicate.MetaKeywords = MetaKeywords;
             duplicate.MetaDescription = MetaDescription;
             duplicate.IsPublic = IsPublic;
-            duplicate.IsInSitemap = IsInSitemap;
+            duplicate.NodeCountInSitemap = NodeCountInSitemap;
             duplicate.UseCanonicalUrl = UseCanonicalUrl;
             duplicate.CustomCss = CustomCss;
             duplicate.CustomJS = CustomJS;

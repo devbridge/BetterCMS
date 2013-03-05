@@ -38,7 +38,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageSeo
                             MetaTitle = f.MetaTitle,
                             MetaKeywords = f.MetaKeywords,
                             MetaDescription = f.MetaDescription,
-                            IsInSitemap = f.IsInSitemap,
+                            IsInSitemap = f.NodeCountInSitemap > 0,
                             Version = f.Version
                         })
                 .FirstOne();

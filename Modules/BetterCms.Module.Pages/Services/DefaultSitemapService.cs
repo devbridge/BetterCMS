@@ -73,5 +73,63 @@ namespace BetterCms.Module.Pages.Services
 
             return node;
         }
+
+        public void UpdatedPageProperties(bool isNodeNew, bool isNodeDeleted, string oldUrl, string newUrl)
+        {
+            oldUrl = (oldUrl ?? string.Empty).ToUpper();
+            newUrl = (newUrl ?? string.Empty).ToUpper();
+
+            if (isNodeNew)
+            {
+                if (string.IsNullOrEmpty(newUrl))
+                {
+                    return;
+                }
+
+                // New sitemap node created.
+                if (!isNodeDeleted)
+                {
+                    var page = repository.FirstOrDefault<PageProperties>(p => p.PageUrl.ToUpper() == newUrl);
+                    if (page != null)
+                    {
+                        page.NodeCountInSitemap += 1;
+                        repository.Save(page);
+                    }
+                }
+            }
+            else if (isNodeDeleted)
+            {
+                if (string.IsNullOrEmpty(oldUrl))
+                {
+                    return;
+                }
+
+                // Sitemap node deleted.
+                var page = repository.FirstOrDefault<PageProperties>(p => p.PageUrl.ToUpper() == oldUrl);
+                if (page != null && page.NodeCountInSitemap > 0)
+                {
+                    page.NodeCountInSitemap -= 1;
+                    repository.Save(page);
+                }
+            }
+            else if (oldUrl != newUrl)
+            {
+                // Url in sitemap node changed.
+                var pages = repository.AsQueryable<PageProperties>(p => p.PageUrl.ToUpper() == newUrl || p.PageUrl.ToUpper() == oldUrl).ToList();
+                foreach (var page in pages)
+                {
+                    if (page.PageUrl == oldUrl && page.NodeCountInSitemap > 0)
+                    {
+                        page.NodeCountInSitemap -= 1;
+                        repository.Save(page);
+                    }
+                    else if (page.PageUrl == newUrl)
+                    {
+                        page.NodeCountInSitemap += 1;
+                        repository.Save(page);
+                    }
+                }
+            }
+        }
     }
 }

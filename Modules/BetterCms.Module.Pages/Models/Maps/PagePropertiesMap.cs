@@ -15,7 +15,7 @@ namespace BetterCms.Module.Pages.Models.Maps
             Map(x => x.UseCanonicalUrl).Not.Nullable();
             Map(x => x.UseNoFollow).Not.Nullable();
             Map(x => x.UseNoIndex).Not.Nullable();
-            Map(x => x.IsInSitemap).Not.Nullable();
+            Map(x => x.NodeCountInSitemap).Not.Nullable();
 
             References(x => x.Category).Cascade.SaveUpdate().LazyLoad();
             References(x => x.Image).Cascade.SaveUpdate().LazyLoad();

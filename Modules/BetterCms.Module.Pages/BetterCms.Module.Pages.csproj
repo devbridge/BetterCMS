@@ -217,6 +217,7 @@
     <Compile Include="Models\IServerControlWidget.cs" />
     <Compile Include="Models\Maps\HtmlContentMap.cs" />
     <Compile Include="Models\Maps\SitemapNodeMap.cs" />
+    <Compile Include="Models\Migrations\Migration201303051146.cs" />
     <Compile Include="Models\Migrations\Migration201303050900.cs" />
     <Compile Include="Models\Migrations\Migration201303041556.cs" />
     <Compile Include="Models\Migrations\Migration201302050830.cs" />

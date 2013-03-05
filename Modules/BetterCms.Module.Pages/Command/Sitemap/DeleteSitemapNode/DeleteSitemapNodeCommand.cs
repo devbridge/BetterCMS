@@ -26,10 +26,13 @@ namespace BetterCms.Module.Pages.Command.Sitemap.DeleteSitemapNode
         /// <returns>Execution result.</returns>
         public bool Execute(SitemapNodeViewModel request)
         {
-            var node = Repository.AsProxy<SitemapNode>(request.Id);
+            var node = Repository.First<SitemapNode>(request.Id);
             node.Version = request.Version;
 
             Repository.Delete(node);
+
+            SitemapService.UpdatedPageProperties(request.Id.HasDefaultValue(), true, node.Url, string.Empty);
+
             UnitOfWork.Commit();
 
             return true;

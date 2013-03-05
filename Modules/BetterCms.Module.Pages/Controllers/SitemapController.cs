@@ -38,6 +38,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// Edits the sitemap.
         /// </summary>
         /// <returns>Rendered sitemap container.</returns>
+        [HttpGet]
         public ActionResult EditSitemap()
         {
             var sitemap = GetCommand<GetSitemapCommand>().ExecuteCommand(string.Empty);
@@ -70,6 +71,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// Adds the new page.
         /// </summary>
         /// <returns>Rendered sitemap container.</returns>
+        [HttpGet]
         public ActionResult AddNewPage()
         {
             var sitemap = GetCommand<GetSitemapCommand>().ExecuteCommand(string.Empty);
