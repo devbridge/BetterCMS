@@ -92,8 +92,8 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         * Shows add new page to sitemap dialog.
         */
         sitemap.loadAddNewPageDialog = function(data) {
-            if (data && data.Data && (data.Data.Title || data.Data.PageTitle) && (data.Data.Url || data.Data.PageUrl)) {
-                var addPageController = new AddNewPageMapController(data.Data.Title || data.Data.PageTitle, data.Data.Url || data.Data.PageUrl);
+            if (data && data.Data && data.Data.Data && (data.Data.Data.Title || data.Data.Data.PageTitle) && (data.Data.Data.Url || data.Data.Data.PageUrl)) {
+                var addPageController = new AddNewPageMapController(data.Data.Data.Title || data.Data.Data.PageTitle, data.Data.Data.Url || data.Data.Data.PageUrl);
                 modal.open({
                     title: globalization.sitemapAddNewPageDialogTitle,
                     onLoad: function(dialog) {
@@ -440,11 +440,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
         */
         function updateValidation() {
             var form = $(selectors.sitemapForm);
-            if ($.validator && $.validator.unobtrusive) {
-                form.removeData("validator");
-                form.removeData("unobtrusiveValidation");
-                $.validator.unobtrusive.parse(form);
-            }
+            bcms.updateFormValidator(form);
         }
         // --------------------------------------------------------------------
         
@@ -510,6 +506,7 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
             self.someNodeIsOver = ko.observable(false);     // Someone is dragging some node over the sitemap, but not over the particular node.
             self.activeZone = ko.observable(DropZoneTypes.None);
             self.showHasNoDataMessage = ko.observable(false);
+            self.savingInProgress = false;                  // To prevent multiple saving.
 
             self.settings = {
                 canEditNode: false,
@@ -604,23 +601,27 @@ define('bcms.sitemap', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bc
                         if (onDoneCallback && $.isFunction(onDoneCallback)) {
                             onDoneCallback(json);
                         }
+                        self.savingInProgress = false;
                     };
-
-                $.ajax({
-                    url: links.saveSitemapUrl,
-                    type: 'POST',
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
-                    cache: false,
-                    data: dataToSend,
-                    beforeSend: function () { sitemap.showLoading(true); }
-                })
-                    .done(function (json) {
-                        onSaveCompleted(json);
+                
+                if (!self.savingInProgress) {
+                    self.savingInProgress = true;
+                    $.ajax({
+                        url: links.saveSitemapUrl,
+                        type: 'POST',
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+                        cache: false,
+                        data: dataToSend,
+                        beforeSend: function () { sitemap.showLoading(true); }
                     })
-                    .fail(function (response) {
-                        onSaveCompleted(bcms.parseFailedResponse(response));
-                    });
+                        .done(function (json) {
+                            onSaveCompleted(json);
+                        })
+                        .fail(function (response) {
+                            onSaveCompleted(bcms.parseFailedResponse(response));
+                        });
+                }
             };
 
             // Parsing / composing.

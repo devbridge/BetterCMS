@@ -2,7 +2,6 @@
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.Templates
 @using BetterCms.Module.Root.Mvc.Helpers
-@using BetterCms.Module.Root.Mvc.UI
 @using Microsoft.Web.Mvc
 
 @model TemplateEditViewModel
@@ -22,25 +21,34 @@
         <div id="bcms-tab-1" class="bcms-tab-single">
             <div class="bcms-padded-content">
                 <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.Template_Title_Tooltip_Title, PagesGlobalization.Template_Title_Tooltip_Description)
+                    @Html.Tooltip(PagesGlobalization.Template_Title_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.Template_Title_Title:</div>
-                    @Html.TextBoxFor(model => model.Name, new { @class = "bcms-editor-field-box", @style = "width: 523px;" })
+                    <div class="bcms-input-box" style="width: 523px;">
+                        @Html.TextBoxFor(model => model.Name, new { @class = "bcms-editor-field-box" })
+                        @Html.ValidationMessageFor(m => m.Name)
+                    </div>
                 </div>
 
                 <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.Template_Url_Tooltip_Title, PagesGlobalization.Template_Url_Tooltip_Description)
+                    @Html.Tooltip(PagesGlobalization.Template_Url_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.Template_Url_Title:</div>
-                    @Html.TextBoxFor(model => model.Url, new { @class = "bcms-editor-field-box", @style = "width: 523px;" })
+                    <div class="bcms-input-box" style="width: 523px;">
+                        @Html.TextBoxFor(model => model.Url, new { @class = "bcms-editor-field-box" })
+                        @Html.ValidationMessageFor(m => m.Url)
+                    </div>
                 </div>
 
                 <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.Template_Preview_Image_Tooltip_Title, PagesGlobalization.TemplatePreviewImageUrl_Tooltip_Description)
+                    @Html.Tooltip(PagesGlobalization.TemplatePreviewImageUrl_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.TemplatePreviewImageUrl_Title:</div>
-                    @Html.TextBoxFor(model => model.PreviewImageUrl, new { @class = "bcms-editor-field-box", @style = "width: 523px;" })
+                    <div class="bcms-input-box" style="width: 523px;">
+                        @Html.TextBoxFor(model => model.PreviewImageUrl, new { @class = "bcms-editor-field-box" })
+                        @Html.ValidationMessageFor(m => m.PreviewImageUrl)
+                    </div>
                 </div>
 
                 <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.Template_Preview_Image_Tooltip_Title, PagesGlobalization.TemplatePreviewImageUrl_Tooltip_Description)
+                    @Html.Tooltip(PagesGlobalization.TemplatePreviewImageUrl_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.TemplatePreviewImage_Title:</div>
 
                     <div class="bcms-preview-module-image">

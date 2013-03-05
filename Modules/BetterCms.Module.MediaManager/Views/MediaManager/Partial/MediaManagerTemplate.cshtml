@@ -3,12 +3,11 @@
 @using BetterCms.Module.Root.Mvc.Helpers
 
 @model BetterCms.Module.MediaManager.ViewModels.MediaManager.MediaViewModel
-
 <script type="text/html" id="bcms-media-list-template">
     <div class="bcms-top-block-holder">
         <div class="bcms-media-controls-holder">
-            <a id="bcms-list-view" class="bcms-select-list" data-bind="click: switchViewStyle, css: {'bcms-select-active': !isGrid()}"></a>
-            <a id="bcms-grid-view" class="bcms-select-grid" data-bind="click: switchViewStyle, css: {'bcms-select-active': isGrid()}"></a>
+            <a id="bcms-list-view" class="bcms-select-list" data-bind="click: switchViewStyle, css: { 'bcms-select-active': !isGrid() }"></a>
+            <a id="bcms-grid-view" class="bcms-select-grid" data-bind="click: switchViewStyle, css: { 'bcms-select-active': isGrid() }"></a>
             <div class="bcms-vertical-separator"></div>
             <!-- ko if: isRootFolder() -->
             <a class="bcms-media-new-folder" data-bind="click: addNewFolder">@MediaGlobalization.MediaManager_NewFolder</a>
@@ -23,7 +22,7 @@
     </div>
 
     <div class="bcms-breadcrumbs-holder">
-        <div data-bind="foreach: path().pathFolders()"><a class="bcms-breadcrumbs-root" href="#" data-bind="text: pathName(), click: openMedia.bind($data, $root)"></a></div>
+        <div data-bind="foreach: path().pathFolders()"><a class="bcms-breadcrumbs-root" href="#" data-bind="    text: pathName(), click: openMedia.bind($data, $root)"></a></div>
     </div>
 
     @Html.SiteSettingsMessagesBox(null, new Dictionary<string, string> { { "data-bind", "attr: { id: domId() }" } })
@@ -32,10 +31,10 @@
         <div class="bcms-media-sorting-block">
             <div class="bcms-media-col-1"></div>
             <div class="bcms-media-col-2">
-                <a class="bcms-sort-arrow" data-bind="click: sortMedia.bind($root, 'Title'), css: {'bcms-sort-arrow-top': isSortedAscending('Title'), 'bcms-sort-arrow-bottom': isSortedDescending('Title') }">@MediaGlobalization.MediaList_FileNameColumn</a>
+                <a class="bcms-sort-arrow" data-bind="click: sortMedia.bind($root, 'Title'), css: { 'bcms-sort-arrow-top': isSortedAscending('Title'), 'bcms-sort-arrow-bottom': isSortedDescending('Title') }">@MediaGlobalization.MediaList_FileNameColumn</a>
             </div>
             <div class="bcms-media-col-3">
-                <a class="bcms-sort-arrow" data-bind="click: sortMedia.bind($root, 'FileExtension'), css: {'bcms-sort-arrow-top': isSortedAscending('FileExtension'), 'bcms-sort-arrow-bottom': isSortedDescending('FileExtension') }">@MediaGlobalization.MediaList_FileTypeColumn</a>
+                <a class="bcms-sort-arrow" data-bind="click: sortMedia.bind($root, 'FileExtension'), css: { 'bcms-sort-arrow-top': isSortedAscending('FileExtension'), 'bcms-sort-arrow-bottom': isSortedDescending('FileExtension') }">@MediaGlobalization.MediaList_FileTypeColumn</a>
             </div>
         </div>
 
@@ -47,7 +46,7 @@
             </div>
         </div>
         <!-- /ko -->
-        
+
         <!-- ko if: showNoDataInfoDiv() -->
         <div class="bcms-nomedia-data">@RootGlobalization.Grid_NoDataAvailable_Message</div>
         <!-- /ko -->
@@ -55,7 +54,7 @@
         <div data-bind="foreach: medias()">
             <div data-bind="click: openMedia.bind($data, $root), event: { contextmenu: contextMenu.show }, css: rowClassNames()">
 
-                <div class="bcms-media-context" data-bind="click: stopEvent, attr: {id: contextMenu.domId}">
+                <div class="bcms-media-context" data-bind="click: stopEvent, attr: { id: contextMenu.domId }">
                     <a class="bcms-btn-close">@RootGlobalization.Button_Close</a>
                     <!-- ko if: isImage() -->
                     <a class="bcms-media-content-link" href="#" data-bind="click: previewImage.bind($data, $root)">@MediaGlobalization.MediaManager_ButtonPreviewImage</a>
@@ -85,7 +84,7 @@
                 <div class="bcms-media-items-block">
                     <div data-bind="css: iconClassNames()">
                         <!-- ko if: isImage() -->
-                        <img alt="" data-bind="attr: {alt: tooltip, src: getImageUrl()}" />
+                        <img data-bind="attr: { alt: tooltip, src: getImageUrl() }" />
                         <!-- /ko -->
                     </div>
                     <div class="bcms-media-name" data-bind="text: name()"></div>
@@ -94,13 +93,19 @@
                     <!-- ko if: isImage() -->
                     <div class="bcms-media-name" data-bind="text: name()"></div>
                     <!-- /ko -->
-                    @Html.TextBoxFor(m => m.Name, new Dictionary<string, object>
-                                                        {
-                                                            {"data-bind", "value: name, valueUpdate: 'afterkeydown', enterPress: saveMedia.bind($data, $root), escPress: cancelEditMedia.bind($data, $root), hasfocus: isActive(), event: {blur: blurMediaField.bind($data, $root)}, attr: {id: nameDomId}, click: stopEvent "},
-                                                            {"class", "bcms-grid-input"},
-                                                            {"Name", (string) null},
-                                                        })
-
+                    <div class="bcms-media-input-box">
+                        @{
+                            var attributes = new Dictionary<string, object>
+                            {
+                                {"data-bind", "value: name, valueUpdate: 'afterkeydown', enterPress: saveMedia.bind($data, $root), escPress: cancelEditMedia.bind($data, $root), hasfocus: isActive(), event: {blur: blurMediaField.bind($data, $root)}, attr: {id: nameDomId, name: nameDomId}, click: stopEvent "},
+                                {"class", "bcms-grid-input"}
+                            };
+                            attributes = Html.MergeValidationAttributes(m => m.Name, attributes);
+                            
+                            @Html.TextBoxFor(m => m.Name, attributes)
+                            @Html.ValidationMessageFor(m => m.Name, null, new { @data_bind = "attr: {'data-valmsg-for': nameDomId}" })
+                        }
+                    </div>
                     <div class="bcms-media-inner-controls">
                         <div class="bcms-btn-small" data-bind="click: saveMedia.bind($data, $root)">@RootGlobalization.Button_Save</div>
                         <div class="bcms-btn-links-small" data-bind="click: cancelEditMedia.bind($data, $root)">@RootGlobalization.Button_Cancel</div>

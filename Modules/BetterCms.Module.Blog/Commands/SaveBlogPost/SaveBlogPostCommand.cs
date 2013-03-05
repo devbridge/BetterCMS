@@ -126,6 +126,11 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
 
                 blogPost.IsPublic = true;
                 blogPost.Layout = layout;
+                UpdateStatus(blogPost, request.DesirableStatus);
+            }
+            else if(request.DesirableStatus == ContentStatus.Published)
+            {
+                UpdateStatus(blogPost, request.DesirableStatus);
             }
 
             // Push to change modified data each time save button is pressed
@@ -147,8 +152,6 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
 
             content = (BlogPostContent)contentService.SaveContentWithStatusUpdate(content, request.DesirableStatus);
             pageContent.Content = content;
-
-            UpdateStatus(blogPost, request.DesirableStatus);
 
             Repository.Save(blogPost);
             Repository.Save(content);

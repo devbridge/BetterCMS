@@ -183,9 +183,6 @@
   <data name="ImageEditor_Dialog_Caption_Tooltip_Description" xml:space="preserve">
     <value>Change your image title.</value>
   </data>
-  <data name="ImageEditor_Dialog_Caption_Tooltip_Title" xml:space="preserve">
-    <value>Caption</value>
-  </data>
   <data name="ImageEditor_Dialog_ChangeSize_Height" xml:space="preserve">
     <value>Height</value>
   </data>
@@ -195,9 +192,6 @@
   <data name="ImageEditor_Dialog_ChangeSize_Tooltip_Description" xml:space="preserve">
     <value>Purpose of image size changing is ...</value>
   </data>
-  <data name="ImageEditor_Dialog_ChangeSize_Tooltip_Title" xml:space="preserve">
-    <value>Image Size</value>
-  </data>
   <data name="ImageEditor_Dialog_ChangeSize_Width" xml:space="preserve">
     <value>Width</value>
   </data>
@@ -205,9 +199,6 @@
     <value>Crop image</value>
   </data>
   <data name="ImageEditor_Dialog_CropImage_Tooltip_Description" xml:space="preserve">
-    <value>Crop image</value>
-  </data>
-  <data name="ImageEditor_Dialog_CropImage_Tooltip_Title" xml:space="preserve">
     <value>Crop image</value>
   </data>
   <data name="ImageEditor_Dialog_Dimensions" xml:space="preserve">
@@ -226,7 +217,7 @@
     <value>Caption max length exceeded.</value>
   </data>
   <data name="ImageEditor_Dialog_ImageHeight_RangeMessage" xml:space="preserve">
-    <value>Image height can not be less than 0 px and bigger that 9999.</value>
+    <value>Image height can not be less than 1 px and bigger that 9999.</value>
   </data>
   <data name="ImageEditor_Dialog_ImageHeight_RequiredMessage" xml:space="preserve">
     <value>Image height is required.</value>
@@ -240,11 +231,8 @@
   <data name="ImageEditor_Dialog_ImageTitle_Tooltip_Description" xml:space="preserve">
     <value>Image Name</value>
   </data>
-  <data name="ImageEditor_Dialog_ImageTitle_Tooltip_Title" xml:space="preserve">
-    <value>Image Name</value>
-  </data>
   <data name="ImageEditor_Dialog_ImageWidth_RangeMessage" xml:space="preserve">
-    <value>Image width can not be less than 0 px and bigger that 9999.</value>
+    <value>Image width can not be less than 1 px and bigger that 9999.</value>
   </data>
   <data name="ImageEditor_Dialog_ImageWidth_RequiredMessage" xml:space="preserve">
     <value>Image width is required.</value>
@@ -368,9 +356,6 @@
   </data>
   <data name="MultiFileUpload_SelectFolder_Help_Message" xml:space="preserve">
     <value>Select a folder where your files will be stored.</value>
-  </data>
-  <data name="MultiFileUpload_SelectFolder_Help_Title" xml:space="preserve">
-    <value>Select Folder</value>
   </data>
   <data name="MultiFileUpload_Success" xml:space="preserve">
     <value>Success! File uploaded.</value>

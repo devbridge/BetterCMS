@@ -285,6 +285,12 @@
   <data name="UserRole_EditSiteSettings" xml:space="preserve">
     <value>Edit Site Settings</value>
   </data>
+  <data name="Validation_FieldIsRequired_Message" xml:space="preserve">
+    <value>This field is required.</value>
+  </data>
+  <data name="Validation_MaximumLengthExceeded_Message" xml:space="preserve">
+    <value>Maximum length cannot exceed {0}.</value>
+  </data>
   <data name="WaterMark_Search" xml:space="preserve">
     <value>Search...</value>
   </data>

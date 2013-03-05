@@ -12,7 +12,6 @@
 @using MvcContrib.UI.Grid
 
 @model ContentHistoryViewModel
-
 @helper PreviewLink(ContentHistoryItem item)
 {
     <a class="bcms-icn-preview" data-id="@item.Id">@RootGlobalization.Button_Preview</a>
@@ -22,11 +21,11 @@
 {
     if (item.Status == ContentStatus.Archived)
     {
-        <a class="bcms-icn-restore" data-id="@item.Id" data-version="@item.Version">@RootGlobalization.Button_Restore</a>
-    } 
+    <a class="bcms-icn-restore" data-id="@item.Id" data-version="@item.Version">@RootGlobalization.Button_Restore</a>
+    }
     else
     {
-        @:&nbsp;
+    @:&nbsp;
     }
 }
 
@@ -35,22 +34,22 @@
     switch (status)
     {
         case ContentStatus.Archived:
-            @:<div class="bcms-archived-state">@statusName</div>
+    @:<div class="bcms-archived-state">@statusName</div>
 
             break;
 
         case ContentStatus.Draft:
-            @:<div class="bcms-draft-state">@statusName</div>
+    @:<div class="bcms-draft-state">@statusName</div>
         
             break;
 
         case ContentStatus.Published:
-            @:<div class="bcms-published-state">@statusName</div>    
+    @:<div class="bcms-published-state">@statusName</div>
         
             break;
-            
+
         default:
-            @:statusName
+    @:statusName
             break;
     }
 }
@@ -99,11 +98,11 @@
                .Encode(false)
                .Named(string.Empty)
                .Sortable(false)
-               .HeaderAttributes(@style => "width: 160px;", @class => "bcms-tables-nohover")
-               .Attributes(@style => "width: 144px;");         
+               .HeaderAttributes(@style => "width: 170px;", @class => "bcms-tables-nohover")
+               .Attributes(@style => "width: 144px;");
     };
 }
-      
+
 <div class="bcms-scroll-window">
 
     <div class="bcms-history-preview-holder">
@@ -116,7 +115,7 @@
     </div>
 
     <div class="bcms-history-table-holder">
-                       
+
         @using (Html.BeginForm<HistoryController>(f => f.ContentHistory((GetContentHistoryRequest)null), FormMethod.Post, new { @id = "bcms-pagecontenthistory-form" }))
         {                        
             @Html.HiddenGridOptions(Model.GridOptions)
@@ -124,7 +123,7 @@
 
             <div class="bcms-history-table-top">
                 <div class="bcms-large-titles">@PagesGlobalization.ContentHistory_OlderVersions</div>
-                <div class="bcms-search-block">                    
+                <div class="bcms-search-block">
                     @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box", @placeholder = RootGlobalization.WaterMark_Search })
                     <div class="bcms-btn-search" id="bcms-pagecontenthistory-search-btn">@RootGlobalization.Button_Search</div>
                 </div>
@@ -132,10 +131,10 @@
             @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables bcms-history-grid").RenderUsing(new ScrollableEditableHtmlTableGridRenderer<ContentHistoryItem>()
                                                                                                                                  {
                                                                                                                                      InternalTableCssClass = "bcms-history-cell"
-                                                                                                                                 
+
                                                                                                                                  })
             @Html.HiddenSubmit()
-        }    
+        }
     </div>
 </div>
 

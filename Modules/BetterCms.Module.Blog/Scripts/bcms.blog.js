@@ -200,6 +200,8 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             row.find(selectors.siteSettingsBlogCellPrefix + 'ModifiedByUser').html(json.Data.ModifiedByUser);
             row.find(selectors.siteSettingsBlogCellPrefix + 'CreatedOn').html(json.Data.CreatedOn);
 
+            messages.refreshBox(selectors.siteSettingsBlogsListForm, json);
+
             row.find(selectors.siteSettingsBlogTitleCell).data('url', json.Data.PageUrl);
             row.find(selectors.siteSettingsBlogEditButton).data('id', json.Data.Id);
             row.find(selectors.siteSettingsBlogDeleteButton).data('id', json.Data.Id);
@@ -453,7 +455,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
 
             var self = this;
 
-            self.name = ko.observable().extend({ required: "" }).extend({ maxLength: ko.maxLength.name });
+            self.name = ko.observable().extend({ required: "", maxLength: { maxLength: ko.maxLength.name } });
             self.image = ko.observable(new AuthorImageViewModel(self));
             self.oldImageId = item.Image != null ? item.Image.ImageId : '';
 

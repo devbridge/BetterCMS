@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Web.Mvc.Html;
 
 using BetterCms.Module.Root.Content.Resources;
+using BetterCms.Module.Root.Mvc.Helpers;
 
 using MvcContrib.UI.Grid;
 
@@ -188,7 +189,7 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
             var textBoxAttributes = new Dictionary<string, object>
                                         {
                                             {"id", null},
-                                            {"Name", namePattern},
+                                            {"name", namePattern},
                                             {"style", "display:none; width:100%;"},
                                             {"class", string.Format("bcms-editor-field-box {0}", textBoxClassName)}
                                         };
@@ -196,12 +197,25 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
             {
                 textBoxAttributes.Add("data-name-pattern", namePattern);
             }
+
+            // Merge validation attributes: add fake name, because 
+            // attributes are not returned second time for same input
+            textBoxAttributes = htmlHelper.MergeValidationAttributes(expression, textBoxAttributes);
+
             var textBox = htmlHelper.TextBoxFor(expression, textBoxAttributes);
 
             // Hidden field
             var hiddenField = htmlHelper.HiddenFor(expression, new { @id = (string)null, @Name = (string)null, @class = hiddenFieldClassName });
 
-            return new MvcHtmlString(string.Concat(link.ToString(TagRenderMode.Normal), textBox.ToString(), hiddenField.ToString()));
+            // Validation box
+            var validationBox = htmlHelper.ValidationMessageFor(expression, null);
+
+            // Div
+            var div = new TagBuilder("div");
+            div.InnerHtml = string.Concat(link.ToString(TagRenderMode.Normal), textBox.ToString(), validationBox.ToString(), hiddenField.ToString());
+            div.AddCssClass("bcms-input-box");
+
+            return new MvcHtmlString(div.ToString());
         }
     }
 }

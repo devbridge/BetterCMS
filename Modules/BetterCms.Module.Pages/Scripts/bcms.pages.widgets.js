@@ -111,10 +111,10 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
                     });
                 },
                 onAccept: function () {
-                    htmlEditor.destroyAllHtmlEditorInstances();
+                    htmlEditor.destroyHtmlEditorInstance();
                 },
                 onClose: function () {
-                    htmlEditor.destroyAllHtmlEditorInstances();
+                    htmlEditor.destroyHtmlEditorInstance();
                 }
             });
         };
@@ -393,6 +393,7 @@ define('bcms.pages.widgets', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker',
                         var template = $(selectors.widgetRowTemplate),
                             newRow = $(template.html()).find(selectors.widgetRowTemplateFirstRow);
                         setWidgetFields(newRow, json);
+                        messages.refreshBox(container, json);
                         newRow.insertBefore($(selectors.widgetsTableFirstRow, container));
                         initializeSiteSettingsWidgetListEvents(newRow);
                         grid.showHideEmptyRow(container);

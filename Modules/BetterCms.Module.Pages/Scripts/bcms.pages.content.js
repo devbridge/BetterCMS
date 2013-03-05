@@ -180,15 +180,18 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
             });
 
             dialog.container.find(selectors.widgetCreateButton).on('click', function () {
-                widgets.openCreateHtmlContentWidgetDialog(function () {
+                widgets.openCreateHtmlContentWidgetDialog(function (json) {
+                    htmlEditor.updateEditorContent(selectors.htmlEditor);
                     // Reload search results after category was created.
                     pagesContent.updateWidgetCategoryList(dialog);
+                    messages.refreshBox(dialog.container, json);
                 }, null);
             });
 
             dialog.container.find(selectors.widgetRegisterButton).on('click', function () {
-                widgets.openCreateServerControlWidgetDialog(function () {
+                widgets.openCreateServerControlWidgetDialog(function (json) {
                     pagesContent.updateWidgetCategoryList(dialog);
+                    messages.refreshBox(dialog.container, json);
                 }, null);
             });
 

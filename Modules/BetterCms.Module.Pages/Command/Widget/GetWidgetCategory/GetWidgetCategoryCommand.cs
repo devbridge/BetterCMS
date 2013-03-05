@@ -92,13 +92,17 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
             categories.ForEach(c => c.Widgets = contents.Where(x => x.CategoryId == c.CategoryId).ToList());
 
             // Move uncategorized contents to fake category
-            var uncategorized = contents.Where(c => c.CategoryId == null).ToList();
+            var uncategorized = contents.Where(c => c.CategoryId == null);
+
+            // Workaround for deleted categories:
+            uncategorized = contents.Where(c => c.CategoryId != null && !categories.Any(x => x.CategoryId == c.CategoryId)).Concat(uncategorized);
+
             if (uncategorized.Any())
             {
                 var category = new WidgetCategoryViewModel
                     {
                         CategoryName = PagesGlobalization.AddPageContent_WidgetTab_UncategorizedWidget_Title,
-                        Widgets = uncategorized
+                        Widgets = uncategorized.ToList()
                     };
                 categories.Add(category);
             }

@@ -168,9 +168,11 @@ define('bcms', ['jquery'], function ($) {
         var indexHighest = 0;
 
         $('body').children().each(function () {
-            var indexCurrent = parseInt($(this).css("z-index"), 10);
-            if (indexCurrent > indexHighest) {
-                indexHighest = indexCurrent;
+            if (!$(this).hasClass('cke_panel')) {   //ckeditor bug fix
+                var indexCurrent = parseInt($(this).css("z-index"), 10);
+                if (indexCurrent > indexHighest) {
+                    indexHighest = indexCurrent;
+                }
             }
         });
 
@@ -248,6 +250,17 @@ define('bcms', ['jquery'], function ($) {
                 event.stopPropagation();
                 event.preventDefault();
             }
+        }
+    };
+
+    /**
+    * Recreates form's uobtrusive validator
+    */
+    app.updateFormValidator = function(form) {
+        if (form && $.validator && $.validator.unobtrusive) {
+            form.removeData("validator");
+            form.removeData("unobtrusiveValidation");
+            $.validator.unobtrusive.parse(form);
         }
     };
 

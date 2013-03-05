@@ -123,17 +123,11 @@
   <data name="EditUser_Email_Tooltip_Description" xml:space="preserve">
     <value />
   </data>
-  <data name="EditUser_Email_Tooltip_Title" xml:space="preserve">
-    <value>Email</value>
-  </data>
   <data name="EditUser_FirstName_Title" xml:space="preserve">
     <value>First name</value>
   </data>
   <data name="EditUser_FirstName_Tooltip_Description" xml:space="preserve">
     <value />
-  </data>
-  <data name="EditUser_FirstName_Tooltip_Title" xml:space="preserve">
-    <value>First name</value>
   </data>
   <data name="EditUser_Image_Title" xml:space="preserve">
     <value>User Image</value>
@@ -144,17 +138,11 @@
   <data name="EditUser_LastName_Tooltip_Description" xml:space="preserve">
     <value />
   </data>
-  <data name="EditUser_LastName_Tooltip_Title" xml:space="preserve">
-    <value>Last name</value>
-  </data>
   <data name="EditUser_Password_Title" xml:space="preserve">
     <value>Password</value>
   </data>
   <data name="EditUser_Password_Tooltip_Description" xml:space="preserve">
     <value />
-  </data>
-  <data name="EditUser_Password_Tooltip_Title" xml:space="preserve">
-    <value>Password</value>
   </data>
   <data name="EditUser_RetypePassword_Title" xml:space="preserve">
     <value>Retype password</value>
@@ -162,17 +150,11 @@
   <data name="EditUser_RetypePassword_Tooltip_Description" xml:space="preserve">
     <value />
   </data>
-  <data name="EditUser_RetypePassword_Tooltip_Title" xml:space="preserve">
-    <value>Retype password</value>
-  </data>
   <data name="EditUser_Role_Title" xml:space="preserve">
     <value>Role</value>
   </data>
   <data name="EditUser_Role_Tooltip_Description" xml:space="preserve">
     <value />
-  </data>
-  <data name="EditUser_Role_Tooltip_Title" xml:space="preserve">
-    <value>Role</value>
   </data>
   <data name="EditUser_UploadImage_Button_Title" xml:space="preserve">
     <value>Select Image</value>
@@ -183,16 +165,10 @@
   <data name="EditUser_UserImage_Tooltip_Description" xml:space="preserve">
     <value />
   </data>
-  <data name="EditUser_UserImage_Tooltip_Title" xml:space="preserve">
-    <value>User Image</value>
-  </data>
   <data name="EditUser_UserName_Title" xml:space="preserve">
     <value>User name</value>
   </data>
   <data name="EditUser_UserName_Tooltip_Description" xml:space="preserve">
-    <value>User name</value>
-  </data>
-  <data name="EditUser_UserName_Tooltip_Title" xml:space="preserve">
     <value>User name</value>
   </data>
   <data name="EditUser_Window_Title" xml:space="preserve">
@@ -202,9 +178,6 @@
     <value>Set Role Permissions</value>
   </data>
   <data name="Role_AddNew_Dialog_RoleName_Title" xml:space="preserve">
-    <value>Role Name</value>
-  </data>
-  <data name="Role_AddNew_Dialog_RoleTooltip_Title" xml:space="preserve">
     <value>Role Name</value>
   </data>
   <data name="Role_AddNew_Dialog_Tooltip_Description" xml:space="preserve">

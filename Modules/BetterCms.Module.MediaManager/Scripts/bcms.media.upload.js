@@ -287,6 +287,7 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
         self.uploadSpeedFormatted = ko.observable();
         self.fileName = file.fileName;
         self.fileSizeFormated = formatFileSize(file.fileSize);
+        self.isProgressVisable = ko.observable(true);
 
         self.uploadCompleted.subscribe(function (newValue) {
             if (newValue === true) {
@@ -332,7 +333,7 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
                     var fileModel = new FileViewModel(file);
                     uploadsModel.activeUploads.push(fileModel);
                     uploadsModel.uploads.push(fileModel);
-
+                    var transferAnimationId;
                     file.on({
                         // Called after received response from the server
                         onCompleted: function(data) {
@@ -343,6 +344,8 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
                                 fileModel.fileId(result.Data.FileId);
                                 fileModel.version(result.Data.Version);
                                 fileModel.type(result.Data.Type);
+                                clearInterval(transferAnimationId);
+                                fileModel.isProgressVisable(true);
                             } else {
                                 fileModel.uploadFailed(true);
                                 fileModel.failureMessage('');
@@ -351,6 +354,8 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
                                     for (var i in result.Messages) {
                                         failureMessages += result.Messages[i] + ' ';
                                     }
+                                    clearInterval(transferAnimationId);
+                                    fileModel.isProgressVisable(true);
                                     fileModel.failureMessage(failureMessages);
                                 }
                             }
@@ -364,6 +369,17 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
                         onError: function() {
                             fileModel.uploadFailed(true);
                             uploadsModel.activeUploads.remove(fileModel);
+                        },
+
+                        onTransfer: function () {
+                            fileModel.isProgressVisable(false);
+                            transferAnimationId = setInterval(function () {
+                                if (fileModel.uploadProgress() >= 100) {
+                                    fileModel.uploadProgress(0);
+                                } else {
+                                    fileModel.uploadProgress(fileModel.uploadProgress() + 20);
+                                };
+                            }, 200);
                         }
                     });
                 }

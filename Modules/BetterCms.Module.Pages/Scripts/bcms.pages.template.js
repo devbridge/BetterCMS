@@ -230,6 +230,7 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
                         var rowtemplate = $(selectors.templateRowTemplate),
                             newRow = $(rowtemplate.html()).find(selectors.templateRowTemplateFirstRow);
                         setTemplateFields(newRow, json);
+                        messages.refreshBox(selectors.templatesListForm, json);
                         newRow.insertBefore($(selectors.templateTableFirstRow, container));
                         initializeTemplateListEvents(newRow);
                         grid.showHideEmptyRow(container);
@@ -265,11 +266,11 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
         function searchTemplates(form, container) {
             grid.submitGridForm(form, function (data) {
                 siteSettings.setContent(data);
-                initializeTemplatesList();                
+                initializeTemplatesList();
                 var searchInput = container.find(selectors.templateSearchField);
                 var val = searchInput.val();
                 searchInput.focus().val("");
-                searchInput.val(val);  
+                searchInput.val(val);
             });
         };
 

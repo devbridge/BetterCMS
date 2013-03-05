@@ -5,6 +5,7 @@ using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Blog.Commands.GetBlogPost;
 using BetterCms.Module.Blog.Commands.GetBlogPostList;
 using BetterCms.Module.Blog.Commands.SaveBlogPost;
+using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Root.Mvc;
@@ -49,7 +50,13 @@ namespace BetterCms.Module.Blog.Controllers
         public virtual ActionResult SaveBlogPost(BlogPostViewModel model)
         {
             var response = GetCommand<SaveBlogPostCommand>().ExecuteCommand(model);
-
+            if (response != null)
+            {
+                if (model.DesirableStatus != ContentStatus.Preview)
+                {
+                    Messages.AddSuccess(BlogGlobalization.CreatePost_CreatedSuccessfully_Message);
+                }
+            }
             return WireJson(response != null, response);
         }
     }

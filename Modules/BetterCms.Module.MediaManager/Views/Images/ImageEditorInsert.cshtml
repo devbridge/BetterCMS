@@ -1,7 +1,6 @@
 ﻿@using BetterCms.Core.DataContracts.Enums
 @using BetterCms.Module.MediaManager.Models
 @using Microsoft.Web.Mvc
-@using BetterCms.Module.Root.Mvc.UI
 @using BetterCms.Module.Root.Mvc.Helpers
 @using BetterCms.Module.MediaManager.Content.Resources
 @using BetterCms.Module.MediaManager.Controllers
@@ -27,7 +26,7 @@
             
             <div class="bcms-edit-file-info">
                 <div class="bcms-input-list-holder">
-                    @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_Caption_Tooltip_Title, MediaGlobalization.ImageEditor_Dialog_Caption_Tooltip_Description)
+                    @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_Caption_Tooltip_Description)
                     <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_Caption:</div>
                     @Html.TextBoxFor(f => f.Caption, new { @class = "bcms-editor-field-box", @id = "Caption" })
                 </div>

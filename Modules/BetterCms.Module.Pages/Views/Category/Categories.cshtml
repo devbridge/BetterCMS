@@ -11,21 +11,23 @@
 @model BetterCms.Module.Root.ViewModels.SiteSettings.SearchableGridViewModel<CategoryItemViewModel>
 
 @{
-    Action<ColumnBuilder<CategoryItemViewModel>> columns = column =>
+    Action<ColumnBuilder<CategoryItemViewModel>> columns;
+}
+
+@using (Html.BeginForm<CategoryController>(f => f.Categories(null), FormMethod.Post, new { @id = "bcms-categories-form" }))
+{
+    columns = column =>
     {
         column.EditButtonColumn();
 
-        column.For(model => Html.InlineEditColumn(m => model.Name, "bcms-category-name", "bcms-category-old-name"))
+        column.For(model => Html.InlineEditColumnWithNamePattern(m => model.Name, "bcms-category-name", "bcms-category-old-name", "CategoryName_{0}"))
             .Named(PagesGlobalization.SiteSettings_Categories_NameColumn)
             .SortColumnName("Name")
             .Encode(false);
 
         column.InlineEditControlsColumn();
     };
-}
-
-@using (Html.BeginForm<CategoryController>(f => f.Categories(null), FormMethod.Post, new { @id = "bcms-categories-form" }))
-{
+    
     @Html.HiddenGridOptions(Model.GridOptions)
 
     <div class="bcms-twocols-title-block">

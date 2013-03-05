@@ -2,7 +2,6 @@
 @using BetterCms.Module.MediaManager.Controllers
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc
-@using BetterCms.Module.Root.Mvc.UI
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
 @model BetterCms.Module.MediaManager.ViewModels.Upload.MultiFileUploadViewModel
@@ -17,7 +16,7 @@
                 @Html.HiddenFor(f => f.RootFolderId)
                 @if (Model.RootFolderId.HasDefaultValue())
                 {
-                    @Html.Tooltip(MediaGlobalization.MultiFileUpload_SelectFolder_Help_Title, MediaGlobalization.MultiFileUpload_SelectFolder_Help_Message)            
+                    @Html.Tooltip(MediaGlobalization.MultiFileUpload_SelectFolder_Help_Message)            
                     <div class="bcms-content-titles">@MediaGlobalization.MultiFileUpload_SelectFolder</div>
                     @Html.DropDownListFor(f => f.SelectedFolderId, Model.Folders.Select(o => new SelectListItem { Selected = Model.SelectedFolderId == o.Item1, Text = o.Item2, Value = o.Item1.ToString() }), new { @class = "bcms-global-select" })
                 }
@@ -62,8 +61,13 @@
                         <div class="bcms-upload-description" data-bind="visible: uploadCompleted">
                             @MediaGlobalization.MultiFileUpload_Success
                         </div>
-                    </div>
+                    </div>                    
+                    <!-- ko if: isProgressVisable() -->
                     <div class="bcms-uploaded-info" data-bind="text: uploadProgress() + '%'"></div>
+                    <!-- /ko -->
+                    <!-- ko if: !isProgressVisable() -->
+                    <div class="bcms-uploaded-info">&nbsp;</div>
+                    <!-- /ko -->
                     <div class="bcms-upload-size-info"><b>@MediaGlobalization.MultiFileUpload_FileSize</b><span data-bind="text: fileSizeFormated"></span></div>
                     <div class="bcms-media-delete-holder">
                         <a class="bcms-icn-delete" data-bind="click: function() { $root.removeUpload($data); }, text: uploadCompleted() || uploadFailed() ? '@RootGlobalization.Button_Remove' : '@RootGlobalization.Button_Cancel'"></a>                        

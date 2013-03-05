@@ -173,6 +173,7 @@
     <Compile Include="Mvc\Helpers\PreviewHelper.cs" />
     <Compile Include="Mvc\Helpers\RegionContentWrapper.cs" />
     <Compile Include="Mvc\Helpers\StringHelper.cs" />
+    <Compile Include="Mvc\Helpers\ValidationExtensions.cs" />
     <Compile Include="Projections\PageStylesheetProjectionFactory.cs" />
     <Compile Include="Projections\PageJavaScriptProjectionFactory.cs" />
     <Compile Include="Projections\PageStylesheetProjection.cs" />
@@ -181,6 +182,7 @@
     <Compile Include="Projections\PageJavaScriptProjection.cs" />
     <Compile Include="Registration\AuthenticationJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\ContentJavaScriptModuleDescriptor.cs" />
+    <Compile Include="Registration\KnockoutExtendersJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\PreviewJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\UserRoles.cs" />
     <Compile Include="Registration\RedirectJavaScriptModuleDescriptor.cs" />
@@ -470,7 +472,6 @@
     <EmbeddedResource Include="Scripts\bcms.datepicker.js" />
     <EmbeddedResource Include="Scripts\bcms.grid.js" />
     <EmbeddedResource Include="Scripts\bcms.htmlEditor.js" />
-    <EmbeddedResource Include="Scripts\bcms.inlineEdit.js" />
     <EmbeddedResource Include="Scripts\bcms.ko.grid.js" />
     <EmbeddedResource Include="Scripts\bcms.messages.js" />
     <EmbeddedResource Include="Scripts\bcms.preview.js" />
@@ -515,6 +516,7 @@
     <EmbeddedResource Include="Content\Styles\base.css" />
     <EmbeddedResource Include="Scripts\spinner.jquery.js" />
     <EmbeddedResource Include="Scripts\html5shiv.js" />
+    <EmbeddedResource Include="Scripts\bcms.inlineEdit.js" />
     <Content Include="Views\Web.config" />
     <EmbeddedResource Include="Views\Sidebar\Container.cshtml" />
     <EmbeddedResource Include="Views\Rendering\RenderMainJsFile.cshtml" />

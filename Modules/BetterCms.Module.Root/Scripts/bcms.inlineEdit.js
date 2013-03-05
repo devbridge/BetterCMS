@@ -14,7 +14,8 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
             firstForm: 'form:first',
             firstEditableInput: 'input[type="text"]:first',
             editableInput: 'input[type="text"]',
-            fieldInputs: 'td > input.bcms-editor-field-box',
+            fieldInputs: 'td > .bcms-input-box > input.bcms-editor-field-box',
+            allInputs: 'td input',
             fieldValues: '.bcms-grid-item-info',
             deleteRowLink: 'a.bcms-icn-delete',
             rowMessage: '.bcms-grid-item-message',
@@ -95,6 +96,7 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
         editor.initRowEvents(container);
 
         editor.resetAutoGenerateNameId();
+        
         editor.setInputNames(container);
     };
 
@@ -292,11 +294,7 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
 
             options.switchRowToEdit(newRow);
 
-            if ($.validator && $.validator.unobtrusive) {
-                form.removeData("validator");
-                form.removeData("unobtrusiveValidation");
-                $.validator.unobtrusive.parse(form);
-            }
+            bcms.updateFormValidator(form);
 
             editor.initRowEvents(newRow, container);
 
@@ -515,6 +513,8 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
 
             editor.setRowInputNames(row);
         });
+        
+        bcms.updateFormValidator($(container).find(selectors.firstForm));
     };
 
     /**
@@ -523,7 +523,7 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
     editor.setRowInputNames = function (row) {
         var counterSet = false,
             index = null;
-        row.find(selectors.fieldInputs).each(function () {
+        row.find(selectors.allInputs).each(function () {
             var input = $(this),
                 pattern = input.data('namePattern');
             if (pattern) {
@@ -531,7 +531,12 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
                     counterSet = true;
                     index = autoGenerateNameId++;
                 }
-                input.attr('name', $.format(pattern, index));
+                var name = $.format(pattern, index);
+                input.attr('name', name);
+                
+                var validator = input.parents(selectors.firstCell).find("span.field-validation-valid, span.field-validation-error");
+                validator.data('valmsg-for', name);
+                validator.attr('data-valmsg-for', name);
             }
         });
     };

@@ -259,15 +259,6 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Caption.
-        /// </summary>
-        public static string ImageEditor_Dialog_Caption_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("ImageEditor_Dialog_Caption_Tooltip_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Height.
         /// </summary>
         public static string ImageEditor_Dialog_ChangeSize_Height {
@@ -295,15 +286,6 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Image Size.
-        /// </summary>
-        public static string ImageEditor_Dialog_ChangeSize_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("ImageEditor_Dialog_ChangeSize_Tooltip_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Width.
         /// </summary>
         public static string ImageEditor_Dialog_ChangeSize_Width {
@@ -327,15 +309,6 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         public static string ImageEditor_Dialog_CropImage_Tooltip_Description {
             get {
                 return ResourceManager.GetString("ImageEditor_Dialog_CropImage_Tooltip_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Crop image.
-        /// </summary>
-        public static string ImageEditor_Dialog_CropImage_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("ImageEditor_Dialog_CropImage_Tooltip_Title", resourceCulture);
             }
         }
         
@@ -385,7 +358,7 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Image height can not be less than 0 px and bigger that 9999..
+        ///   Looks up a localized string similar to Image height can not be less than 1 px and bigger that 9999..
         /// </summary>
         public static string ImageEditor_Dialog_ImageHeight_RangeMessage {
             get {
@@ -430,16 +403,7 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Image Name.
-        /// </summary>
-        public static string ImageEditor_Dialog_ImageTitle_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("ImageEditor_Dialog_ImageTitle_Tooltip_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Image width can not be less than 0 px and bigger that 9999..
+        ///   Looks up a localized string similar to Image width can not be less than 1 px and bigger that 9999..
         /// </summary>
         public static string ImageEditor_Dialog_ImageWidth_RangeMessage {
             get {
@@ -822,15 +786,6 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         public static string MultiFileUpload_SelectFolder_Help_Message {
             get {
                 return ResourceManager.GetString("MultiFileUpload_SelectFolder_Help_Message", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select Folder.
-        /// </summary>
-        public static string MultiFileUpload_SelectFolder_Help_Title {
-            get {
-                return ResourceManager.GetString("MultiFileUpload_SelectFolder_Help_Title", resourceCulture);
             }
         }
         
