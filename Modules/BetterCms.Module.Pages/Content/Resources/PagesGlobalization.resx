@@ -1050,4 +1050,7 @@
   <data name="SavePage_CreatedSuccessfully_Message" xml:space="preserve">
     <value>Page created succesfully.</value>
   </data>
+  <data name="EditSeo_Messages_NotInSitemapWarnMessage" xml:space="preserve">
+    <value>Page is not in sitemap.</value>
+  </data>
 </root>

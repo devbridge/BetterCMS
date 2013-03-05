@@ -91,6 +91,14 @@ namespace BetterCms.Module.Pages.ViewModels.Seo
         public string MetaDescription { get; set; }
 
         /// <summary>
+        /// Gets or sets the is in sitemap.
+        /// </summary>
+        /// <value>
+        /// The is in sitemap.
+        /// </value>
+        public bool IsInSitemap { get; set; }
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>
