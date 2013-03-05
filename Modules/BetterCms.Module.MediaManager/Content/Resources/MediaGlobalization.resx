@@ -217,7 +217,7 @@
     <value>Caption max length exceeded.</value>
   </data>
   <data name="ImageEditor_Dialog_ImageHeight_RangeMessage" xml:space="preserve">
-    <value>Image height can not be less than 0 px and bigger that 9999.</value>
+    <value>Image height can not be less than 1 px and bigger that 9999.</value>
   </data>
   <data name="ImageEditor_Dialog_ImageHeight_RequiredMessage" xml:space="preserve">
     <value>Image height is required.</value>
@@ -232,7 +232,7 @@
     <value>Image Name</value>
   </data>
   <data name="ImageEditor_Dialog_ImageWidth_RangeMessage" xml:space="preserve">
-    <value>Image width can not be less than 0 px and bigger that 9999.</value>
+    <value>Image width can not be less than 1 px and bigger that 9999.</value>
   </data>
   <data name="ImageEditor_Dialog_ImageWidth_RequiredMessage" xml:space="preserve">
     <value>Image width is required.</value>

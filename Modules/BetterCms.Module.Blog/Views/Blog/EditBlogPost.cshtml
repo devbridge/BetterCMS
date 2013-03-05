@@ -83,10 +83,12 @@
                         @Html.Tooltip(BlogGlobalization.EditBlockPost_LiveDates_Tooltip_Description)
                         <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_LiveFrom_Title</div>
                         @Html.DateTextBoxFor(model => model.LiveFromDate, Model.LiveFromDate, new Dictionary<string, object> { { "class", "bcms-editor-field-box bcms-datepicker" }, { "style", "width: 127px;" } })
+                        @Html.ValidationMessageFor(m => m.LiveFromDate)
                     </div>
                     <div class="bcms-input-field-holder">
                         <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_LiveTo_Title</div>
                         @Html.DateTextBoxFor(model => model.LiveToDate, Model.LiveToDate, new Dictionary<string, object> { { "class", "bcms-editor-field-box bcms-datepicker" }, { "style", "width: 127px;" } })
+                        @Html.ValidationMessageFor(m => m.LiveToDate)
                     </div>
                 </div>
 
