@@ -9,14 +9,17 @@
         @Html.Tooltip(PagesGlobalization.AddPageContent_RegularContentTab_ContentName_Tooltip_Description)
         <div class="bcms-content-titles">@PagesGlobalization.AddPageContent_RegularContentTab_ContentName_Title:</div>
         @Html.TextBoxFor(model => model.ContentName, new { @class = "bcms-editor-field-box", @style = "width: 523px;" })
+        @Html.ValidationMessageFor(model=> model.ContentName)
     </div>
     <div class="bcms-input-field-holder">
         <div class="bcms-content-titles">@PagesGlobalization.AddPageContent_RegularContentTab_LiveFrom_Title:</div>
         @Html.DateTextBoxFor(model => model.LiveFrom, Model.LiveFrom, new Dictionary<string, object> { { "class", "bcms-editor-field-box bcms-datepicker" }, { "style", "width: 127px;" } })
+        @Html.ValidationMessageFor(model=> model.LiveFrom)
     </div>
     <div class="bcms-input-field-holder">
         <div class="bcms-content-titles">@PagesGlobalization.AddPageContent_RegularContentTab_LiveTo_Title:</div>
         @Html.DateTextBoxFor(model => model.LiveTo, Model.LiveTo, new Dictionary<string, object> { { "class", "bcms-editor-field-box bcms-datepicker" }, { "style", "width: 127px;" } })
+        @Html.ValidationMessageFor(model=> model.LiveTo)
     </div>
 </div>
 <div class="bcms-text-editor-holder">
@@ -30,6 +33,7 @@
 <div class="bcms-input-list-holder" id="bcms-custom-css-container">
     <div class="bcms-content-titles">@PagesGlobalization.HtmlContent_CustomCss_Title</div>
     @Html.TextAreaFor(model => model.CustomCss, new { @class = "bcms-editor-field-area", @style = "width:820px;" })
+    @Html.ValidationMessageFor(model=> model.CustomCss)
 </div>
 
 <div class="bcms-edit-check-field">
@@ -39,4 +43,5 @@
 <div class="bcms-input-list-holder" id="bcms-custom-js-container">
     <div class="bcms-content-titles">@PagesGlobalization.HtmlContent_CustomJs_Title</div>
     @Html.TextAreaFor(model => model.CustomJs, new { @class = "bcms-editor-field-area", @style = "width:820px;" })
+    @Html.ValidationMessageFor(model=> model.CustomJs)
 </div>

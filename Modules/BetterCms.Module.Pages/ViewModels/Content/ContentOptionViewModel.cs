@@ -25,6 +25,7 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// The option key.
         /// </value>
         [Required]
+        [StringLength(MaxLength.Name)]
         public string OptionKey { get; set; }
 
         /// <summary>
