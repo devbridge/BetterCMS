@@ -115,8 +115,9 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Api\DataApiContext.cs" />
     <Compile Include="CmsContext.cs" />
-    <Compile Include="CmsApiContext.cs" />
+    <Compile Include="Api\ApiContext.cs" />
     <Compile Include="DataAccess\DataContext\QueryableExtensions.cs" />
     <Compile Include="DataAccess\DataContext\QueryOverExtensions.cs" />
     <Compile Include="DataAccess\DataContext\EventListeners\DeleteEventListener.cs" />

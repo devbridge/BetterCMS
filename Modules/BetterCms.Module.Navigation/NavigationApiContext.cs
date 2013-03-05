@@ -1,6 +1,6 @@
 ﻿using Autofac;
 
-using BetterCms.Core;
+using BetterCms.Core.Api;
 using BetterCms.Core.Exceptions;
 using BetterCms.Module.Navigation.DataServices;
 
@@ -9,14 +9,14 @@ namespace BetterCms.Module.Navigation
     /// <summary>
     /// Navigation API context.
     /// </summary>
-    public class NavigationApiContext : CmsApiContext
+    public class NavigationApiContext : DataApiContext
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="NavigationApiContext" /> class.
         /// </summary>
-        /// <param name="container">The container.</param>
-        public NavigationApiContext(ILifetimeScope container)
-            : base(container)
+        /// <param name="lifetimeScope">The container.</param>
+        public NavigationApiContext(ILifetimeScope lifetimeScope)
+            : base(lifetimeScope)
         {
         }
 
@@ -31,12 +31,7 @@ namespace BetterCms.Module.Navigation
         {
             get
             {
-                if (container.IsRegistered<ISitemapApiService>())
-                {
-                    return container.Resolve<ISitemapApiService>();
-                }
-
-                throw new CmsException("Sitemap API service was not initialized.");
+                return Resolve<ISitemapApiService>();                
             }
         }
     }

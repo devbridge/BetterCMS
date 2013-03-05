@@ -119,9 +119,11 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Accessors\BlogPostContentAccessor.cs" />
+    <Compile Include="Api\Events\BlogPostEventArgs.cs" />
+    <Compile Include="Api\Events\BlogEvents.cs" />
     <Compile Include="BlogModuleConstants.cs" />
     <Compile Include="BlogModuleDescriptor.cs" />
-    <Compile Include="BlogsApiContext.cs" />
+    <Compile Include="Api\BlogsApiContext.cs" />
     <Compile Include="Commands\DeleteAuthor\DeleteAuthorCommand.cs" />
     <Compile Include="Commands\GetAuthorList\GetAuthorListCommand.cs" />
     <Compile Include="Commands\GetBlogPostList\GetBlogPostListCommand.cs" />
@@ -139,10 +141,6 @@
     <Compile Include="Controllers\AuthorController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\OptionController.cs" />
-    <Compile Include="DataServices\DefaultAuthorApiService.cs" />
-    <Compile Include="DataServices\DefaultBlogApiService.cs" />
-    <Compile Include="DataServices\IAuthorApiService.cs" />
-    <Compile Include="DataServices\IBlogApiService.cs" />
     <Compile Include="Models\Author.cs" />
     <Compile Include="Models\BlogPost.cs" />
     <Compile Include="Models\BlogPostContent.cs" />
@@ -226,7 +224,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Views\Author\Partial\ListTemplate.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="DataServices\" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Blog\EditBlogPost.cshtml" />
   </ItemGroup>

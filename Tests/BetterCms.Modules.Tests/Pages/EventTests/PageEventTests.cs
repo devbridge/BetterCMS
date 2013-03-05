@@ -1,4 +1,7 @@
-﻿using BetterCms.Module.Pages.Events;
+﻿using BetterCms.Api;
+using BetterCms.Core;
+using BetterCms.Module.MediaManager;
+using BetterCms.Module.Pages.Api.Events;
 using BetterCms.Module.Pages.Models;
 
 using NUnit.Framework;
@@ -16,13 +19,21 @@ namespace BetterCms.Test.Module.Pages.EventTests
         {
             firedCreated = false;
             
-            PagesEvents.Instance.OnPageCreated(null, new PageCreatedEventArgs(new PageProperties()));
+            using (var api1 = CmsContext.CreateApiContextOf<PagesApiContext>())
+            {
+                using (var api2 = CmsContext.CreateApiContextOf<MediaApiContext>(api1))
+                {
+                    
+                }
+            }
+
+            PagesApiContext.Events.OnPageCreated(null, new PagePropertiesEventArgs(new PageProperties()));
             System.Threading.Thread.Sleep(10);
             Assert.IsFalse(firedCreated);
 
             PagesEvents.Instance.PageCreated += delegate { firedCreated = true; };
 
-            PagesEvents.Instance.OnPageCreated(null, new PageCreatedEventArgs(new PageProperties()));
+            PagesEvents.Instance.OnPageCreated(null, new PagePropertiesEventArgs(new PageProperties()));
             System.Threading.Thread.Sleep(10);
             Assert.IsTrue(firedCreated);
         }

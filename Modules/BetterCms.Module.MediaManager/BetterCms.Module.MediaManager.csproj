@@ -118,6 +118,8 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Api\Events\MediaEventArgs.cs" />
+    <Compile Include="Api\Events\MediaManagerEvents.cs" />
     <Compile Include="Command\Audios\GetAudios\GetAudiosCommand.cs" />
     <Compile Include="Command\Folder\DeleteFolderCommand.cs" />
     <Compile Include="Command\Folder\DeleteFolderCommandRequest.cs" />
@@ -153,10 +155,8 @@
     <Compile Include="Controllers\VideosController.cs" />
     <Compile Include="Controllers\FilesController.cs" />
     <Compile Include="Controllers\MediaManagerController.cs" />
-    <Compile Include="DataServices\DefaultMediaApiService.cs" />
-    <Compile Include="DataServices\IMediaApiService.cs" />
     <Compile Include="Helpers\WrappedJsonResult.cs" />
-    <Compile Include="MediaManagerApiContext.cs" />
+    <Compile Include="Api\MediaManagerApiContext.cs" />
     <Compile Include="MediaManagerModuleDescriptor.cs" />
     <Compile Include="Models\MediaImageAlign.cs" />
     <Compile Include="Models\MediaType.cs" />
@@ -243,6 +243,7 @@
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="DataServices\" />
     <Folder Include="Mvc\" />
   </ItemGroup>
   <ItemGroup>

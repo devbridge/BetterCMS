@@ -6,10 +6,9 @@ using System.Web.Mvc;
 
 using Autofac;
 
+using BetterCms.Api;
 using BetterCms.Core.DataContracts;
-using BetterCms.Core.Models;
 using BetterCms.Core.Modules.Projections;
-using BetterCms.Core.Mvc;
 using BetterCms.Core.Mvc.Attributes;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Mvc.Extensions;
@@ -221,6 +220,7 @@ namespace BetterCms.Core.Modules
         public virtual void RegisterModuleCommands(ModuleRegistrationContext registrationContext, ContainerBuilder containerBuilder, ICmsConfiguration configuration)
         {
             Assembly assembly = GetType().Assembly;
+
             Type[] commandTypes = new[]
                 {
                     typeof(ICommand),
@@ -231,6 +231,19 @@ namespace BetterCms.Core.Modules
             containerBuilder
                 .RegisterAssemblyTypes(assembly)
                 .Where(scan => commandTypes.Any(commandType => IsAssignableToGenericType(scan, commandType)))
+                .AsImplementedInterfaces()
+                .AsSelf()
+                .PropertiesAutowired()
+                .InstancePerLifetimeScope();
+        }
+
+        public virtual void RegisterModuleApiContexts(ModuleRegistrationContext registrationContext, ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        {
+            Assembly assembly = GetType().Assembly;
+            
+            containerBuilder
+                .RegisterAssemblyTypes(assembly)
+                .Where(scan => IsAssignableToGenericType(scan, typeof(ApiContext)))
                 .AsImplementedInterfaces()
                 .AsSelf()
                 .PropertiesAutowired()

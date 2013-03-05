@@ -24,34 +24,6 @@ namespace BetterCms.Module.Pages.DataServices
             this.repository = repository;
         }
 
-        /// <summary>
-        /// Gets the list of redirect entities.
-        /// </summary>
-        /// <param name="filter">The filter.</param>
-        /// <param name="order">The order.</param>
-        /// <param name="orderDescending">if set to <c>true</c> order by descending.</param>
-        /// <param name="pageNumber">The page number.</param>
-        /// <param name="itemsPerPage">The items per page.</param>
-        /// <returns>
-        /// The list of redirect entities
-        /// </returns>
-        public IList<Redirect> GetRedirects(Expression<Func<Redirect, bool>> filter = null, Expression<Func<Redirect, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
-        {
-            try
-            {
-                if (order == null)
-                {
-                    order = p => p.PageUrl;
-                }
-
-                return repository.AsQueryable(filter, order, orderDescending, pageNumber, itemsPerPage).ToList();
-            }
-            catch (Exception inner)
-            {
-                const string message = "Failed to get redirects list.";
-                Logger.Error(message, inner);
-                throw new CmsApiException(message, inner);
-            }
-        }
+        
     }
 }

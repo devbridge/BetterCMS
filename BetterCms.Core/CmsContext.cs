@@ -4,8 +4,12 @@ using System.Web.Mvc;
 using System.Web.Routing;
 
 using Autofac;
+using Autofac.Core;
+using Autofac.Core.Activators.Reflection;
 
+using BetterCms.Api;
 using BetterCms.Configuration;
+using BetterCms.Core.Api;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataAccess.DataContext.Migrations;
@@ -37,13 +41,21 @@ namespace BetterCms.Core
         /// </summary>
         /// <typeparam name="TApiContext">The type of the API content.</typeparam>
         /// <returns></returns>
-        public static TApiContext CreateDataApi<TApiContext>() where TApiContext : CmsApiContext
+        public static TApiContext CreateApiContextOf<TApiContext>(ApiContext parentApiContext = null) where TApiContext : ApiContext
         {
-            return (TApiContext)Activator.CreateInstance(typeof(TApiContext), ContextScopeProvider.CreateChildContainer());
-        }
+            ILifetimeScope lifetimeScope;
 
-        // TBD. To access and handle current page data.
-        //public static CmsCurrentContenxt Current { get; private set; }
+            if (parentApiContext == null)
+            {
+                lifetimeScope = ContextScopeProvider.CreateChildContainer();
+            }
+            else
+            {
+                lifetimeScope = parentApiContext.GetLifetimeScope();
+            }
+
+            return lifetimeScope.Resolve<TApiContext>(new Parameter[] {  new PositionalParameter(0, lifetimeScope) });
+        }
 
         /// <summary>
         /// Constructs the host context.
@@ -84,7 +96,7 @@ namespace BetterCms.Core
             builder.RegisterInstance(cmsConfiguration).As<ICmsConfiguration>().SingleInstance();
 
             builder.RegisterType<DefaultCmsHost>().As<ICmsHost>().SingleInstance();
-            builder.RegisterType<CmsApiContext>().AsSelf().SingleInstance();
+            builder.RegisterType<ApiContext>().AsSelf().SingleInstance();
             builder.RegisterType<DefaultSessionFactoryProvider>().As<ISessionFactoryProvider>().SingleInstance();
             builder.RegisterType<DefaultAssemblyLoader>().As<IAssemblyLoader>().SingleInstance();
             builder.RegisterType<DefaultAssemblyManager>().As<IAssemblyManager>().SingleInstance();

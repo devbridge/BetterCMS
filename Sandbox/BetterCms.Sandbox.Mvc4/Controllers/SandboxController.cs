@@ -60,9 +60,12 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
         public ActionResult TestApi()
         {
             IList<MediaFolder> folders;
-            using (var api = CmsContext.CreateDataApi<MediaManagerApiContext>())
+            using (var mediaApi = CmsContext.CreateApiContextOf<MediaManagerApiContext>())
             {
-                folders = api.Medias.GetFolders(MediaType.Image);
+                using (var navigationApi = CmsContext.CreateApiContextOf<NavigationApiContext>(mediaApi))
+                {
+                    folders = mediaApi.Medias.GetFolders(MediaType.Image);
+                }
             }
 
             var count = folders.Count;
@@ -77,10 +80,10 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
 
         public ActionResult TestNavigationApi()
         {
-            var message = new StringBuilder("No sitemap data found!");
+            var message = new StringBuilder("No sitemap data found!");            
 
-            using (var api = CmsContext.CreateDataApi<NavigationApiContext>())
-            {
+            using (var api = CmsContext.CreateApiContextOf<NavigationApiContext>())
+            {              
                 var sitemap = api.Sitemap.GetSitemapTree();
                 message.Clear();
                 message.AppendFormat("Sitemap contains {0} root nodes:", sitemap.Count);

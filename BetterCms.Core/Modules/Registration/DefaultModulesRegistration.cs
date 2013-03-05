@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
-using System.Web.Mvc;
 using System.Web.Routing;
 
 using Autofac;
@@ -237,6 +235,7 @@ namespace BetterCms.Core.Modules.Registration
            
             moduleDescriptor.RegisterModuleTypes(registrationContext, containerBuilder, cmsConfiguration);            
             moduleDescriptor.RegisterModuleCommands(registrationContext, containerBuilder, cmsConfiguration);
+            moduleDescriptor.RegisterModuleApiContexts(registrationContext, containerBuilder, cmsConfiguration);
             moduleDescriptor.RegisterModuleControllers(registrationContext, containerBuilder, cmsConfiguration, controllerExtensions);
             moduleDescriptor.RegisterCustomRoutes(registrationContext, containerBuilder, cmsConfiguration);
 

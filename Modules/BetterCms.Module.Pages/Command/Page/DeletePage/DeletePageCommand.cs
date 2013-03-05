@@ -1,10 +1,11 @@
 ﻿using System;
 
+using BetterCms.Api;
 using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Module.Pages.Api.Events;
 using BetterCms.Module.Pages.Content.Resources;
-using BetterCms.Module.Pages.Events;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
@@ -100,8 +101,8 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
             // Commit
             UnitOfWork.Commit();
 
-            // Notifying, that page is deleted
-            PagesApiContext.Events.OnPageDeleted(this, new PageDeletedEventArgs(page));
+            // Notifying, that page is deleted.
+            PagesApiContext.Events.OnPageDeleted(page);
 
             return true;
         }

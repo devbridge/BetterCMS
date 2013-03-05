@@ -6,7 +6,6 @@ using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Blog.Accessors;
 using BetterCms.Module.Blog.Content.Resources;
-using BetterCms.Module.Blog.DataServices;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.Registration;
 using BetterCms.Module.Blog.Services;
@@ -27,7 +26,7 @@ namespace BetterCms.Module.Blog
         /// <summary>
         /// The blog java script module descriptor
         /// </summary>
-        private BlogJavaScriptModuleDescriptor blogJavaScriptModuleDescriptor;
+        private readonly BlogJavaScriptModuleDescriptor blogJavaScriptModuleDescriptor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlogModuleDescriptor" /> class.
