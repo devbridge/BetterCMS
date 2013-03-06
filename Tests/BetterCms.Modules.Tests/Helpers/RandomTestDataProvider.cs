@@ -6,7 +6,6 @@ using BetterCms.Module.Blog.Models;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
-using BetterCms.Module.Navigation.Models;
 using BetterCms.Module.Users.Models;
 
 using BlogOption = BetterCms.Module.Blog.Models.Option;

@@ -64,10 +64,6 @@
       <Project>{f3e41793-e8ed-4ba8-a1ab-cba1e47b0786}</Project>
       <Name>BetterCms.Module.MediaManager</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Modules\BetterCms.Module.Navigation\BetterCms.Module.Navigation.csproj">
-      <Project>{5383227a-9cb8-4978-91d1-8168ec817d16}</Project>
-      <Name>BetterCms.Module.Navigation</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCms.Module.Pages\BetterCms.Module.Pages.csproj">
       <Project>{fc04d4c2-8688-498f-b546-292c7e3688a9}</Project>
       <Name>BetterCms.Module.Pages</Name>

@@ -17,7 +17,12 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageSeo
         /// The page service
         /// </summary>
         private readonly IPageService pageService;
-        
+
+        /// <summary>
+        /// The sitemap service.
+        /// </summary>
+        private readonly ISitemapService sitemapService;
+
         /// <summary>
         /// The redirect service
         /// </summary>
@@ -28,9 +33,11 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageSeo
         /// </summary>
         /// <param name="redirectService">The redirect service.</param>
         /// <param name="pageService">The page service.</param>
-        public SavePageSeoCommand(IRedirectService redirectService, IPageService pageService)
+        /// <param name="sitemapService">The sitemap service.</param>
+        public SavePageSeoCommand(IRedirectService redirectService, IPageService pageService, ISitemapService sitemapService)
         {
             this.pageService = pageService;
+            this.sitemapService = sitemapService;
             this.redirectService = redirectService;
         }
 
@@ -60,6 +67,10 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageSeo
                         Repository.Save(redirect);
                     }
                 }
+
+                page.NodeCountInSitemap = model.UpdateSitemap
+                    ? sitemapService.ChangeUrl(page.PageUrl, model.ChangedUrlPath)
+                    : sitemapService.NodesWithUrl(model.ChangedUrlPath);
 
                 page.PageUrl = model.ChangedUrlPath;
             }

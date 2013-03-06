@@ -38,6 +38,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageSeo
                             MetaTitle = f.MetaTitle,
                             MetaKeywords = f.MetaKeywords,
                             MetaDescription = f.MetaDescription,
+                            IsInSitemap = f.NodeCountInSitemap > 0,
                             Version = f.Version
                         })
                 .FirstOne();
@@ -47,14 +48,15 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageSeo
             {
                 model.PageId = page.PageId;
                 model.Version = page.Version;
-                model.CreatePermanentRedirect = false;
+                model.CreatePermanentRedirect = true;
                 model.PageTitle = page.PageTitle;
                 model.PageUrlPath = page.PageUrl;
                 model.ChangedUrlPath = page.PageUrl;
                 model.MetaTitle = page.MetaTitle;
                 model.MetaKeywords = page.MetaKeywords;
                 model.MetaDescription = page.MetaDescription;
-                model.CreatePermanentRedirect = true;
+                model.IsInSitemap = page.IsInSitemap;
+                model.UpdateSitemap = true;
             }
 
             return model;

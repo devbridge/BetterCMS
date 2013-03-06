@@ -326,10 +326,6 @@ copy $(SolutionDir)Modules\BetterCms.Module.MediaManager\bin\BetterCms.Module.Me
 
 copy $(SolutionDir)Modules\BetterCms.Module.Templates\bin\BetterCms.Module.Templates.dll $(ProjectDir)App_Data\BetterCms\Modules /Y
 copy $(SolutionDir)Modules\BetterCms.Module.Templates\bin\BetterCms.Module.Templates.pdb $(ProjectDir)App_Data\BetterCms\Modules /Y
-
-copy $(SolutionDir)Modules\BetterCms.Module.Navigation\bin\BetterCms.Module.Navigation.dll $(ProjectDir)App_Data\BetterCms\Modules /Y
-copy $(SolutionDir)Modules\BetterCms.Module.Navigation\bin\BetterCms.Module.Navigation.pdb $(ProjectDir)App_Data\BetterCms\Modules /Y
-
 </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>

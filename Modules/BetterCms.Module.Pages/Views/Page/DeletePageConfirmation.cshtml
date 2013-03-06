@@ -28,11 +28,23 @@
                 @Html.Tooltip(PagesGlobalization.DeletePage_Dialog_SecurityWord_Tooltip_Description)
                 <div class="bcms-content-titles">@PagesGlobalization.DeletePage_Dialog_SecurityWord</div>
                 <div class="bcms-input-box">
-                    @Html.TextBoxFor(m => m.SecurityWord, new { @class = "bcms-editor-field-box", @id = "PageTitle" })
+                    @Html.TextBoxFor(m => m.SecurityWord, new { @class = "bcms-editor-field-box", @id = "SecurityWord" })
                     @Html.ValidationMessageFor(f => f.SecurityWord)
                 </div>
             </div>
-            
+
+            if (Model.IsInSitemap)
+            {
+                <div class="bcms-input-list-holder">
+                    @Html.Tooltip(PagesGlobalization.DeletePage_Dialog_UpdateSitemap_Description)
+                    <div class="bcms-content-titles">@PagesGlobalization.DeletePage_Dialog_UpdateSitemap</div>
+                    <div class="bcms-edit-check-field">
+                        @Html.CheckBoxFor(m => m.UpdateSitemap, new { @id = "UpdateSitemap" })
+                        <div class="bcms-edit-label">@PagesGlobalization.DeletePage_Dialog_UpdateSitemap_RemovePageFromSitemap</div>
+                    </div>
+                </div>
+            }
+
             @Html.HiddenFor(m => m.PageId)
             @Html.HiddenFor(m => m.Version)
             @Html.HiddenSubmit()
