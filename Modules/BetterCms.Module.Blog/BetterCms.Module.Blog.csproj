@@ -224,9 +224,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Views\Author\Partial\ListTemplate.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DataServices\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Views\Blog\EditBlogPost.cshtml" />
   </ItemGroup>

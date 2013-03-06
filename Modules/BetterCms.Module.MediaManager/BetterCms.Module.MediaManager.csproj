@@ -243,7 +243,6 @@
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DataServices\" />
     <Folder Include="Mvc\" />
   </ItemGroup>
   <ItemGroup>

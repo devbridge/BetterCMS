@@ -468,9 +468,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Views\Shared\EditorTemplates\PageStatus.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DataServices\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

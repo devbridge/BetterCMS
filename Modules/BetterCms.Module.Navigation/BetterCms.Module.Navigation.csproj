@@ -129,13 +129,11 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Controllers\SitemapController.cs" />
-    <Compile Include="DataServices\DefaultSitemapApiService.cs" />
-    <Compile Include="DataServices\ISitemapApiService.cs" />
     <Compile Include="Models\SitemapNode.cs" />
     <Compile Include="Models\Maps\SitemapNodeMap.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
     <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />
-    <Compile Include="NavigationApiContext.cs" />
+    <Compile Include="Api\NavigationApiContext.cs" />
     <Compile Include="Registration\SitemapJavaScriptModuleDescriptor.cs" />
     <Compile Include="NavigationModuleDescriptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

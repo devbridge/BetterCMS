@@ -147,7 +147,6 @@
     <Compile Include="DataContracts\IPageContentOption.cs" />
     <Compile Include="DataContracts\IRegion.cs" />
     <Compile Include="DataContracts\IWidget.cs" />
-    <Compile Include="DataServices\ApiServiceBase.cs" />
     <Compile Include="Dependencies\ContextScopeProvider.cs" />
     <Compile Include="Environment\ApplicationStart\BetterCmsEntrypoint.cs" />
     <Compile Include="Dependencies\PerWebRequestContainerProvider.cs" />

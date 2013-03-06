@@ -3,44 +3,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-using BetterCms.Core.DataAccess;
+using Autofac;
+
 using BetterCms.Core.DataAccess.DataContext;
-using BetterCms.Core.DataServices;
 using BetterCms.Core.Exceptions.Api;
 using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Module.Navigation.Models;
 using BetterCms.Module.Navigation.Services;
 
-namespace BetterCms.Module.Navigation.DataServices
+// ReSharper disable CheckNamespace
+namespace BetterCms.Api
+// ReSharper restore CheckNamespace
 {
     /// <summary>
-    /// Navigation API service implementation.
+    /// Navigation API context.
     /// </summary>
-    public class DefaultSitemapApiService : ApiServiceBase, ISitemapApiService
+    public class NavigationApiContext : DataApiContext
     {
-        /// <summary>
-        /// The repository.
-        /// </summary>
-        private readonly IRepository repository;
-
         /// <summary>
         /// The sitemap service.
         /// </summary>
         private readonly ISitemapService sitemapService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DefaultSitemapApiService"/> class.
+        /// Initializes a new instance of the <see cref="NavigationApiContext" /> class.
         /// </summary>
-        /// <param name="repository">
-        /// The repository.
-        /// </param>
-        /// <param name="sitemapService">
-        /// The sitemap Service.
-        /// </param>
-        public DefaultSitemapApiService(IRepository repository, ISitemapService sitemapService)
+        /// <param name="lifetimeScope">The container.</param>
+        public NavigationApiContext(ILifetimeScope lifetimeScope)
+            : base(lifetimeScope)
         {
-            this.repository = repository;
-            this.sitemapService = sitemapService;
+            sitemapService = Resolve<ISitemapService>();
         }
 
         /// <summary>
@@ -71,7 +63,7 @@ namespace BetterCms.Module.Navigation.DataServices
         {
             try
             {
-                return repository.First<SitemapNode>(id);
+                return Repository.First<SitemapNode>(id);
             }
             catch (Exception inner)
             {
@@ -99,7 +91,7 @@ namespace BetterCms.Module.Navigation.DataServices
                     order = p => p.Title;
                 }
 
-                return repository.AsQueryable(filter, order, orderDescending, pageNumber, itemsPerPage).ToList();
+                return Repository.AsQueryable(filter, order, orderDescending, pageNumber, itemsPerPage).ToList();
             }
             catch (Exception inner)
             {
