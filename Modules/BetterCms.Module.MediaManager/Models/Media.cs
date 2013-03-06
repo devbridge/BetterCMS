@@ -1,5 +1,6 @@
 using System;
 
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;
 
 namespace BetterCms.Module.MediaManager.Models

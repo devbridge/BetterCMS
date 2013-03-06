@@ -119,6 +119,7 @@
     </Compile>
     <Compile Include="Accessors\PageStylesheetAccessor.cs" />
     <Compile Include="Accessors\PageJavaScriptAccessor.cs" />
+    <Compile Include="DataContracts\Enums\PageLoadableChilds.cs" />
     <Compile Include="Command\Content\DeletePageContent\DeletePageContentCommand.cs" />
     <Compile Include="Command\Content\DeletePageContent\DeletePageContentCommandRequest.cs" />
     <Compile Include="Command\Content\GetPageHtmlContent\GetPageHtmlContentCommand.cs" />
@@ -209,6 +210,8 @@
     <Compile Include="Controllers\SiteSettingsController.cs" />
     <Compile Include="Controllers\SeoController.cs" />
     <Compile Include="Controllers\ContentController.cs" />
+    <Compile Include="Api\Events\PageEvents.cs" />
+    <Compile Include="Api\Events\PagePropertiesEventArgs.cs" />
     <Compile Include="Helpers\CssHelper.cs" />
     <Compile Include="Helpers\HttpHelper.cs" />
     <Compile Include="Helpers\ListModelBindingExtensions.cs" />
@@ -239,6 +242,7 @@
     <Compile Include="Mvc\Attributes\CustomPageUrlValidationAttribute.cs" />
     <Compile Include="Mvc\Attributes\DateValidationAttribute.cs" />
     <Compile Include="Mvc\Attributes\EndDateValidationAttribute.cs" />
+    <Compile Include="Api\PagesApiContext.cs" />
     <Compile Include="PagesConstants.cs" />
     <Compile Include="Accessors\HtmlContentWidgetAccessor.cs" />
     <Compile Include="Accessors\HtmlContentAccessor.cs" />
@@ -249,9 +253,12 @@
     <Compile Include="Registration\PagesContentJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\PageTagsJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\RedirectsJavaScriptModuleDescriptor.cs" />
+    <Compile Include="Services\DefaultHistoryService.cs" />
     <Compile Include="Services\DefaultSitemapService.cs" />
     <Compile Include="Services\DefaultTagService.cs" />
     <Compile Include="Services\DefaultWidgetsService.cs" />
+    <Compile Include="Services\IHistoryService.cs" />
+    <Compile Include="Services\IPageService.cs" />
     <Compile Include="Services\ISitemapService.cs" />
     <Compile Include="Services\ITagService.cs" />
     <Compile Include="Services\IWidgetsService.cs" />
@@ -287,7 +294,6 @@
     <Compile Include="Registration\SeoJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\PagePropertiesJavaScriptModuleDescriptor.cs" />
     <Compile Include="Services\DefaultPageService.cs" />
-    <Compile Include="Services\IPageService.cs" />
     <Compile Include="ViewModels\Widgets\WidgetCategoryViewModel.cs" />
     <Compile Include="ViewModels\Widgets\WidgetViewModel.cs" />
     <Compile Include="ViewModels\Content\PageContentViewModel.cs" />

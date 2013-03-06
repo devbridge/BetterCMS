@@ -94,6 +94,11 @@ namespace BetterCms.Core.DataAccess
             return AsQueryable<TEntity>().Where(filter).FirstOrDefault();
         }
 
+        public IQueryOver<TEntity, TEntity> AsQueryOver<TEntity>() where TEntity : Entity
+        {
+            return UnitOfWork.Session.QueryOver<TEntity>().Where(f => !f.IsDeleted);
+        }
+
         public virtual IQueryable<TEntity> AsQueryable<TEntity>(Expression<Func<TEntity, bool>> filter) where TEntity : Entity
         {
             return AsQueryable<TEntity>().Where(filter);

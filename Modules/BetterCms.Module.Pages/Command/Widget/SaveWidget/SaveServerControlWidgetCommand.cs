@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Mvc;
-using BetterCms.Core.Models;
+
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Widgets;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
-using System.Linq;
-
 using BetterCms.Module.Root.Services;
-
-using NHibernate.Linq;
 
 namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
 {

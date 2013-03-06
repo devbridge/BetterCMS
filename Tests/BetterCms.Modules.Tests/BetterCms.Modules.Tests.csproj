@@ -110,6 +110,8 @@
     <Compile Include="Blog\ModelTests\MapTests\BlogPostMapTest.cs" />
     <Compile Include="Blog\ModelTests\MapTests\BlogPostContentMapTest.cs" />
     <Compile Include="Blog\ModelTests\MapTests\OptionMapTest.cs" />
+    <Compile Include="Blog\ServiceTests\DefaultBlogPostApiServiceTest.cs" />
+    <Compile Include="Blog\ServiceTests\DefaultAuthorApiServiceTest.cs" />
     <Compile Include="Common\SecurityTest.cs" />
     <Compile Include="Common\SerializationTest.cs" />
     <Compile Include="ControllerTestBase.cs" />
@@ -117,12 +119,21 @@
     <Compile Include="MediaManager\ModelTests\MapTests\MediaFolderMapTest.cs" />
     <Compile Include="MediaManager\ModelTests\MapTests\MediaImageMapTest.cs" />
     <Compile Include="MediaManager\ModelTests\MapTests\MediaMapTest.cs" />
+    <Compile Include="MediaManager\ServiceTests\DefaultMediaApiServiceIntegrationTests.cs" />
+    <Compile Include="Pages\ServicesTests\DefaultWidgetApiServiceTest.cs" />
+    <Compile Include="Navigation\ServicesTests\DefaultSitemapApiServiceTest.cs" />
     <Compile Include="Pages\CommandTests\ContentTests\SortPageContentCommandIntegrationTest.cs" />
     <Compile Include="Pages\CommandTests\WidgetTests\DeleteWidgetCommandTest.cs" />
     <Compile Include="Pages\CommandTests\WidgetTests\GetSiteSettingsWidgetsIntegrationTest.cs" />
+    <Compile Include="Pages\EventTests\PageEventTests.cs" />
     <Compile Include="Pages\HelperTests\StringHelperTests.cs" />
     <Compile Include="Pages\ModelTests\ConcurrencyTests\ConcurrencyTests.cs" />
+    <Compile Include="Pages\ServicesTests\DefaultHistoryApiServiceTest.cs" />
+    <Compile Include="Pages\ServicesTests\DefaultLayoutApiServiceTest.cs" />
+    <Compile Include="Pages\ServicesTests\DefaultCategoryApiServiceTest.cs" />
+    <Compile Include="Pages\ServicesTests\DefaultRedirectApiServiceTest.cs" />
     <Compile Include="Pages\ServicesTests\DefaultContentServiceTest.cs" />
+    <Compile Include="Pages\ServicesTests\DefaultTagApiServiceTest.cs" />
     <Compile Include="SerializationTestBase.cs" />
     <Compile Include="DatabaseTestBase.cs" />
     <Compile Include="Helpers\HttpContextExtensionMethods.cs" />
@@ -186,7 +197,9 @@
     <None Include="Config\nlog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BetterCMS.Configuration\BetterCms.Configuration.csproj">

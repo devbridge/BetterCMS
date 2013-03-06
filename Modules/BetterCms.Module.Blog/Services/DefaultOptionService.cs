@@ -6,7 +6,7 @@ using BetterCms.Module.Root.Models;
 
 namespace BetterCms.Module.Blog.Services
 {
-    public class DefaultOptionService : IOptionService
+    internal class DefaultOptionService : IOptionService
     {
         /// <summary>
         /// The unit of work

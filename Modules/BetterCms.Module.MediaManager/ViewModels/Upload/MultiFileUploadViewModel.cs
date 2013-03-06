@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.MediaManager.Models;
 
 namespace BetterCms.Module.MediaManager.ViewModels.Upload

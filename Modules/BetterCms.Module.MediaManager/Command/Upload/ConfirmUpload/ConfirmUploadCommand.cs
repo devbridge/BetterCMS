@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
-using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
-using BetterCms.Module.MediaManager.Content.Resources;
+
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 using BetterCms.Module.MediaManager.ViewModels.Upload;

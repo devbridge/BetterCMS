@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 
+using BetterCms.Api;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Models;
@@ -160,6 +162,15 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
 
             // Commit
             UnitOfWork.Commit();
+
+            if (request.Id.HasDefaultValue())
+            {
+                BlogsApiContext.Events.OnBlogCreated(blogPost);
+            }
+            else
+            {
+                BlogsApiContext.Events.OnBlogUpdated(blogPost);
+            }
 
             return new SaveBlogPostCommandResponse
                        {

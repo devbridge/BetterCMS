@@ -178,7 +178,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Content Include="App_Data\BetterCMS\Modules\readme.txt" />
     <Content Include="Global.asax" />
-    <Content Include="icn-validation-error.png" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -210,6 +209,14 @@
     <ProjectReference Include="..\..\Modules\BetterCMS.Module.AppFabricCache\BetterCms.Module.AppFabricCache.csproj">
       <Project>{573925f2-f15f-4cbe-8f13-7c67da06df0d}</Project>
       <Name>BetterCms.Module.AppFabricCache</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.MediaManager\BetterCms.Module.MediaManager.csproj">
+      <Project>{F3E41793-E8ED-4BA8-A1AB-CBA1E47B0786}</Project>
+      <Name>BetterCms.Module.MediaManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.Navigation\BetterCms.Module.Navigation.csproj">
+      <Project>{5383227A-9CB8-4978-91D1-8168EC817D16}</Project>
+      <Name>BetterCms.Module.Navigation</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

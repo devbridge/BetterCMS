@@ -5,13 +5,14 @@ using System.Web;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataContracts;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Exceptions.Service;
-using BetterCms.Core.Models;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Core.Services;
 using BetterCms.Core.Services.Caching;
 using BetterCms.Core.Web;
+
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
 
@@ -22,7 +23,7 @@ using RootPage = BetterCms.Module.Root.Models.Page;
 
 namespace BetterCms.Module.Pages.Services
 {
-    public class DefaultPageService : IPageAccessor, IPageService
+    internal class DefaultPageService : IPageAccessor, IPageService
     {
         private readonly ICacheService cacheService;
         private readonly IRepository repository;

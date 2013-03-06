@@ -1,4 +1,5 @@
-﻿using BetterCms.Core.Exceptions;
+﻿using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Core.Exceptions;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;

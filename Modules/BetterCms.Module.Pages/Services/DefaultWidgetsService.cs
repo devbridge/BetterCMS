@@ -2,7 +2,7 @@
 
 namespace BetterCms.Module.Pages.Services
 {
-    public class DefaultWidgetsService : IWidgetsService
+    internal class DefaultWidgetsService : IWidgetsService
     {
         /// <summary>
         /// The unit of work
