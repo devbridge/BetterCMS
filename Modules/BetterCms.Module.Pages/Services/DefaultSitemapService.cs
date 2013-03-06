@@ -89,6 +89,32 @@ namespace BetterCms.Module.Pages.Services
         }
 
         /// <summary>
+        /// Deletes the node without page update.
+        /// </summary>
+        /// <param name="node">The node.</param>
+        public void DeleteNodeWithoutPageUpdate(SitemapNode node)
+        {
+            repository.Delete(node);
+        }
+
+        /// <summary>
+        /// Gets the nodes by URL.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <returns>Node list.</returns>
+        public IList<SitemapNode> GetNodesByUrl(string url)
+        {
+            url = (url ?? string.Empty).ToLower();
+
+            if (string.IsNullOrEmpty(url))
+            {
+                return new List<SitemapNode>();
+            }
+
+            return repository.AsQueryable<SitemapNode>(n => n.Url.ToLower() == url).ToList();
+        }
+
+        /// <summary>
         /// Saves the node.
         /// </summary>
         /// <param name="id">The id.</param>

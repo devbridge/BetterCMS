@@ -880,6 +880,33 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Update sitemap.
+        /// </summary>
+        public static string DeletePage_Dialog_UpdateSitemap {
+            get {
+                return ResourceManager.GetString("DeletePage_Dialog_UpdateSitemap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove page from sitemap..
+        /// </summary>
+        public static string DeletePage_Dialog_UpdateSitemap_Description {
+            get {
+                return ResourceManager.GetString("DeletePage_Dialog_UpdateSitemap_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove this page from sitemap..
+        /// </summary>
+        public static string DeletePage_Dialog_UpdateSitemap_RemovePageFromSitemap {
+            get {
+                return ResourceManager.GetString("DeletePage_Dialog_UpdateSitemap_RemovePageFromSitemap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Page successfully deleted. Please wait, you are being redirected to home page..
         /// </summary>
         public static string DeletePage_SuccessMessage_Message {
@@ -894,6 +921,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string DeletePage_SuccessMessage_Title {
             get {
                 return ResourceManager.GetString("DeletePage_SuccessMessage_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Can not remove this page from the sitemap, because it has child nodes..
+        /// </summary>
+        public static string DeletePageCommand_SitemapNodeHasChildNodes_Message {
+            get {
+                return ResourceManager.GetString("DeletePageCommand_SitemapNodeHasChildNodes_Message", resourceCulture);
             }
         }
         

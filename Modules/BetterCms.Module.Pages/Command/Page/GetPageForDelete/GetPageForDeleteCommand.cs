@@ -22,16 +22,14 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageForDelete
         /// <returns>Delete confirmation view model.</returns>
         public DeletePageViewModel Execute(Guid request)
         {
-            PageProperties alias = null;
-            DeletePageViewModel modelAlias = null;
+            var page = Repository.First<PageProperties>(request);
 
-            return UnitOfWork.Session.QueryOver(() => alias)
-                          .Where(p => p.Id == request && !p.IsDeleted)
-                          .SelectList(select => select
-                              .Select(() => alias.Id).WithAlias(() => modelAlias.PageId)
-                              .Select(() => alias.Version).WithAlias(() => modelAlias.Version))
-                          .TransformUsing(Transformers.AliasToBean<DeletePageViewModel>())
-                          .First<DeletePageViewModel, PageProperties>();
+            return new DeletePageViewModel
+                {
+                    PageId = page.Id,
+                    Version = page.Version,
+                    IsInSitemap = page.NodeCountInSitemap > 0
+                };
         }
     }
 }

@@ -1059,4 +1059,16 @@
   <data name="EditSeo_EditUrlPath_UpdateSitemap" xml:space="preserve">
     <value>Update sitemap with new URL.</value>
   </data>
+  <data name="DeletePage_Dialog_UpdateSitemap" xml:space="preserve">
+    <value>Update sitemap</value>
+  </data>
+  <data name="DeletePage_Dialog_UpdateSitemap_Description" xml:space="preserve">
+    <value>Remove page from sitemap.</value>
+  </data>
+  <data name="DeletePage_Dialog_UpdateSitemap_RemovePageFromSitemap" xml:space="preserve">
+    <value>Remove this page from sitemap.</value>
+  </data>
+  <data name="DeletePageCommand_SitemapNodeHasChildNodes_Message" xml:space="preserve">
+    <value>Can not remove this page from the sitemap, because it has child nodes.</value>
+  </data>
 </root>

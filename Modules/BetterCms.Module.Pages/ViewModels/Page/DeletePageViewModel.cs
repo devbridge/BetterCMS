@@ -41,6 +41,22 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public string SecurityWord { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether this instance is in sitemap.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is in sitemap; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsInSitemap { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [update sitemap].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [update sitemap]; otherwise, <c>false</c>.
+        /// </value>
+        public bool UpdateSitemap { get; set; }
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>
