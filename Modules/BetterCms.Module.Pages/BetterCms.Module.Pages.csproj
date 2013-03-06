@@ -141,6 +141,11 @@
     <Compile Include="Command\Layout\SaveTemplate\SaveTemplateResponse.cs" />
     <Compile Include="Command\Page\ClonePage\ClonePageCommand.cs" />
     <Compile Include="Command\Page\GetPageForCloning\GetPageForDeleteCommand.cs" />
+    <Compile Include="Command\Sitemap\DeleteSitemapNode\DeleteSitemapNodeCommand.cs" />
+    <Compile Include="Command\Sitemap\GetPageLinks\GetPageLinksCommand.cs" />
+    <Compile Include="Command\Sitemap\GetSitemap\GetSitemapCommand.cs" />
+    <Compile Include="Command\Sitemap\SaveSitemapNode\SaveSitemapNodeCommand.cs" />
+    <Compile Include="Command\Sitemap\SaveSitemap\SaveSitemapCommand.cs" />
     <Compile Include="Command\Widget\DeleteWidget\DeleteWidgetCommand.cs" />
     <Compile Include="Command\Widget\DeleteWidget\DeleteWidgetRequest.cs" />
     <Compile Include="Command\Widget\GetHtmlContentWidgetForEdit\GetHtmlContentWidgetForEditCommand.cs" />
@@ -184,12 +189,18 @@
     <Compile Include="Command\Widget\SaveWidget\SaveServerControlWidgetCommand.cs" />
     <Compile Include="Command\Widget\SaveWidget\SaveWidgetCommandBase.cs" />
     <Compile Include="Command\Widget\SaveWidget\SaveWidgetResponse.cs" />
+    <Compile Include="Content\Resources\NavigationGlobalization.Designer.cs">
+      <DependentUpon>NavigationGlobalization.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Content\Resources\PagesGlobalization.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PagesGlobalization.resx</DependentUpon>
     </Compile>
     <Compile Include="Controllers\HistoryController.cs" />
+    <Compile Include="Controllers\SitemapController.cs" />
     <Compile Include="Controllers\TemplatesController.cs" />
     <Compile Include="Controllers\WidgetsController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
@@ -208,6 +219,10 @@
     <Compile Include="Helpers\TimeHelper.cs" />
     <Compile Include="Models\IServerControlWidget.cs" />
     <Compile Include="Models\Maps\HtmlContentMap.cs" />
+    <Compile Include="Models\Maps\SitemapNodeMap.cs" />
+    <Compile Include="Models\Migrations\Migration201303051146.cs" />
+    <Compile Include="Models\Migrations\Migration201303050900.cs" />
+    <Compile Include="Models\Migrations\Migration201303041556.cs" />
     <Compile Include="Models\Migrations\Migration201302050830.cs" />
     <Compile Include="Models\ServerControlWidget.cs" />
     <Compile Include="Models\HtmlContent.cs" />
@@ -222,6 +237,7 @@
     <Compile Include="Models\PageProperties.cs" />
     <Compile Include="Models\PageTag.cs" />
     <Compile Include="Models\Redirect.cs" />
+    <Compile Include="Models\SitemapNode.cs" />
     <Compile Include="Models\WidgetType.cs" />
     <Compile Include="Mvc\Attributes\CustomPageUrlValidationAttribute.cs" />
     <Compile Include="Mvc\Attributes\DateValidationAttribute.cs" />
@@ -232,15 +248,18 @@
     <Compile Include="Accessors\HtmlContentAccessor.cs" />
     <Compile Include="Accessors\ServerControlWidgetAccessor.cs" />
     <Compile Include="Registration\HistoryJavaScriptModuleDescriptor.cs" />
+    <Compile Include="Registration\SitemapJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\TemplatesJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\PagesContentJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\PageTagsJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\RedirectsJavaScriptModuleDescriptor.cs" />
     <Compile Include="Services\DefaultHistoryService.cs" />
+    <Compile Include="Services\DefaultSitemapService.cs" />
     <Compile Include="Services\DefaultTagService.cs" />
     <Compile Include="Services\DefaultWidgetsService.cs" />
     <Compile Include="Services\IHistoryService.cs" />
     <Compile Include="Services\IPageService.cs" />
+    <Compile Include="Services\ISitemapService.cs" />
     <Compile Include="Services\ITagService.cs" />
     <Compile Include="Services\IWidgetsService.cs" />
     <Compile Include="Services\DefaultCategoryService.cs" />
@@ -254,6 +273,10 @@
     <Compile Include="ViewModels\Content\PageContentSortViewModel.cs" />
     <Compile Include="ViewModels\History\ContentHistoryItem.cs" />
     <Compile Include="ViewModels\History\ContentHistoryViewModel.cs" />
+    <Compile Include="ViewModels\Sitemap\PageLinkViewModel.cs" />
+    <Compile Include="ViewModels\Sitemap\SearchableSitemapViewModel.cs" />
+    <Compile Include="ViewModels\Sitemap\SitemapAndPageLinksViewModel.cs" />
+    <Compile Include="ViewModels\Sitemap\SitemapNodeViewModel.cs" />
     <Compile Include="ViewModels\SiteSettings\SiteSettingTemplateItemViewModel.cs" />
     <Compile Include="ViewModels\SiteSettings\SiteSettingTemplateListViewModel.cs" />
     <Compile Include="ViewModels\Tags\TagsTemplateViewModel.cs" />
@@ -288,6 +311,11 @@
     <Compile Include="ViewModels\Tags\TagItemViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Content\Resources\NavigationGlobalization.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>NavigationGlobalization.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Content\Resources\PagesGlobalization.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PagesGlobalization.Designer.cs</LastGenOutput>
@@ -326,6 +354,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Content\Css\Images\sprite-base-2.png" />
+    <EmbeddedResource Include="Content\Css\bcms.navigation.css" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
@@ -343,6 +373,7 @@
     <EmbeddedResource Include="Scripts\bcms.pages.template.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.history.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.widgets.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.sitemap.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -468,7 +499,21 @@
   <ItemGroup>
     <EmbeddedResource Include="Views\Shared\EditorTemplates\PageStatus.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Sitemap\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Sitemap\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Sitemap\NewPage.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Sitemap\Partial\Sitemap.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Seo\Partial\WarnMessageAboutSitemap.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

@@ -72,6 +72,11 @@ namespace BetterCms.Module.Pages
         private readonly HistoryJavaScriptModuleDescriptor historyJavaScriptModuleDescriptor;
 
         /// <summary>
+        /// bcms.pages.sitemap.js java script module descriptor.
+        /// </summary>
+        private readonly SitemapJavaScriptModuleDescriptor sitemapJavaScriptModuleDescriptor;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="PagesModuleDescriptor" /> class.
         /// </summary>
         public PagesModuleDescriptor()
@@ -85,6 +90,7 @@ namespace BetterCms.Module.Pages
             redirectsJavaScriptModuleDescriptor = new RedirectsJavaScriptModuleDescriptor(this);
             templatesJavaScriptModuleDescriptor = new TemplatesJavaScriptModuleDescriptor(this);
             historyJavaScriptModuleDescriptor = new HistoryJavaScriptModuleDescriptor(this);
+            sitemapJavaScriptModuleDescriptor = new SitemapJavaScriptModuleDescriptor(this);
         }
 
         /// <summary>
@@ -149,7 +155,8 @@ namespace BetterCms.Module.Pages
             containerBuilder.RegisterType<DefaultCategoryService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultWidgetsService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultTagService>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            containerBuilder.RegisterType<DefaultHistoryService>().AsImplementedInterfaces().InstancePerLifetimeScope();            
+
+            containerBuilder.RegisterType<DefaultSitemapService>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
 
         /// <summary>
@@ -162,7 +169,8 @@ namespace BetterCms.Module.Pages
         {
             return new[]
                 {
-                    "/file/bcms-pages/Content/Css/bcms.page.css"
+                    "/file/bcms-pages/Content/Css/bcms.page.css",
+                    "/file/bcms-pages/Content/Css/bcms.navigation.css"
                 };
         }
 
@@ -185,7 +193,8 @@ namespace BetterCms.Module.Pages
                     tagsJavaScriptModuleDescriptor,
                     widgetsJavaScriptModuleDescriptor,
                     templatesJavaScriptModuleDescriptor,
-                    historyJavaScriptModuleDescriptor
+                    historyJavaScriptModuleDescriptor,
+                    sitemapJavaScriptModuleDescriptor
                 };
         }
 
@@ -370,7 +379,14 @@ namespace BetterCms.Module.Pages
                             Order = 4000,
                             Title = () => PagesGlobalization.SiteSettings_Redirects,
                             CssClass = page => "bcms-sidebar-link"
-                        }
+                        },
+
+                    new LinkActionProjection(sitemapJavaScriptModuleDescriptor, page => "loadSiteSettingsSitemap")
+                        {
+                            Order = 4500,
+                            Title = () => NavigationGlobalization.SiteSettings_SitemapMenuItem,
+                            CssClass = page => "bcms-sidebar-link"
+                        }                                      
                 };
         }       
     }
