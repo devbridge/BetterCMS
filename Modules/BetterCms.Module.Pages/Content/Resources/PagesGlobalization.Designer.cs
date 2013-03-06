@@ -178,7 +178,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page permalink is invalid. Link must start and end with &quot;/&quot; and can contain only following characters: &apos;0-9&apos;, &apos;a-z&apos;, &apos;-&apos;, &apos;/&apos;, &apos;_&apos;.
+        ///   Looks up a localized string similar to Page permalink is invalid. Link must start and end with &quot;/&quot;, can contain only following characters: &apos;0-9&apos;, &apos;a-z&apos;, &apos;-&apos;, &apos;/&apos;, &apos;_&apos; and no more than 260 alphanumeric characters between the &apos;/&apos;..
         /// </summary>
         public static string AddNewPageProperties_PagePermalink_InvalidMessage {
             get {
@@ -1384,7 +1384,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page permalink is invalid. Link must start and end with &quot;/&quot; and can contain only following characters: &apos;0-9&apos;, &apos;a-z&apos;, &apos;-&apos;, &apos;/&apos;, &apos;_&apos;.
+        ///   Looks up a localized string similar to Page permalink is invalid. Link must start and end with &quot;/&quot;, can contain only following characters: &apos;0-9&apos;, &apos;a-z&apos;, &apos;-&apos;, &apos;/&apos;, &apos;_&apos; and no more than 260 alphanumeric characters between the &apos;/&apos;..
         /// </summary>
         public static string EditPageProperties_PagePermalink_InvalidMessage {
             get {
