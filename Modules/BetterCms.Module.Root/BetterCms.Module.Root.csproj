@@ -475,7 +475,6 @@
     <EmbeddedResource Include="Scripts\bcms.messages.js" />
     <EmbeddedResource Include="Scripts\bcms.preview.js" />
     <EmbeddedResource Include="Scripts\bcms.redirect.js" />
-    <EmbeddedResource Include="Scripts\bcms.sidemenu.js" />
     <EmbeddedResource Include="Scripts\bcms.tabs.js" />
     <EmbeddedResource Include="Scripts\bcms.tooltip.js" />
     <EmbeddedResource Include="Scripts\jquery-ui-1.9.0.js" />

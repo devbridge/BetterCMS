@@ -183,6 +183,7 @@
     <EmbeddedResource Include="file\bcms-pages\scripts\bcms.pages.js" />
     <EmbeddedResource Include="file\bcms-pages\scripts\bcms.pages.widgets.js" />
     <EmbeddedResource Include="file\bcms-blog\scripts\bcms.blog.js" />
+    <EmbeddedResource Include="file\bcms-root\scripts\bcms.sidemenu.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

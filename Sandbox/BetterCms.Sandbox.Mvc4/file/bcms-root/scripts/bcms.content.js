@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define */
 
-define('bcms.content', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, modal) {
+define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
     'use strict';
 
     var content = {},
@@ -28,7 +28,6 @@ define('bcms.content', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, moda
             renderedContents: 'script[type="text/html"]'
         },
         resizeTimer,
-        contents,
         currentContentDom,
         regionRectangles = $(),
         contentRectangles = $(),
@@ -50,36 +49,6 @@ define('bcms.content', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, moda
         var overlay = contentViewModel.overlay;
         
         overlay.animate({ 'opacity': 1 }, 200);
-
-        /* // TODO: 
-        console.log('Show Overlay');
-
-        var padding = 7,
-            extra = padding * 2,
-            // TODO: width = (element.width() + extra) + 'px',
-            // TODO: height = (element.height() + extra) + 'px',
-            width = (viewModel.width + extra) + 'px',
-            height = (viewModel.height + extra) + 'px',
-            adjustPosition = '-' + padding + 'px',
-            background = $(selectors.contentOverlayBg, overlay);
-            //offset = element.offset();
-
-        background.css({
-            'width': width,
-            'height': height
-        });
-
-        overlay.css({
-            'width': width,
-            'height': height,
-            'top': adjustPosition,
-            'left': adjustPosition,
-            'opacity': 0
-        })
-            .show()
-            // TODO: .offset({ top: offset.top - padding, left: offset.left - padding })
-            .offset({ top: viewModel.top - padding, left: viewModel.left - padding })
-            .animate({ 'opacity': 1 }, 200);*/
     };
 
     /**
@@ -118,6 +87,15 @@ define('bcms.content', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, moda
     * Forces each content outline to update it's position:
     */
     content.refreshContentsPosition = function () {
+
+        if (!bcms.editModeIsOn() || pageViewModel == null) {
+            return;
+        }
+
+        $.each(pageViewModel.contents, function () {
+            this.recalculatePositions();
+        });
+
         contentRectangles.each(function () {
 
             var padding = 7,
@@ -149,7 +127,14 @@ define('bcms.content', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, moda
     * Forces each region outline to update it's position:
     */
     content.refreshRegionsPosition = function () {
-        console.log('Resizing content');
+        
+        if (!bcms.editModeIsOn() || pageViewModel == null) {
+            return;
+        }
+
+        $.each(pageViewModel.regions, function () {
+            this.recalculatePositions();
+        });
 
         var actionsContainerWidth = regionRectangles.first().find(selectors.regionActions).width() + 4;
 
@@ -312,7 +297,8 @@ define('bcms.content', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, moda
     * Updates region content versions:
     */
     content.updateRegionContentVersions = function (region, listOfIdVersion) {
-        /*var pageContentItems = $(selectors.content, region.data('target'));
+        /* TODO:
+        var pageContentItems = $(selectors.content, region.data('target'));
         for (var i = 0; i < listOfIdVersion.length; i++) {
             pageContentItems.each(function() {
                 if ($(this).data('pageContentId') == listOfIdVersion[i].Id) {
@@ -517,15 +503,11 @@ define('bcms.content', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, moda
         });
 
         $.each(pageViewModel.regions, function () {
-            this.recalculatePositions();
-            
             content.highlightRegion(this);
             content.initRegionEvents(this);
         });
         
         $.each(pageViewModel.contents, function () {
-            this.recalculatePositions();
-            
             content.createContentOverlay(this);
             content.initOverlayEvents(this);
         });
@@ -535,7 +517,10 @@ define('bcms.content', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, moda
 
         $(window).on('resize', function () {
             clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(content.refreshRegionsPosition, 100);
+            resizeTimer = setTimeout(function () {
+                content.refreshRegionsPosition();
+                content.refreshContentsPosition();
+            }, 100);
         });
     };
 
@@ -552,6 +537,33 @@ define('bcms.content', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, moda
     };
 
     /**
+    * Occurs when edit mode is turned off
+    */
+    function onEditModeOff() {
+        content.cancelSortMode();
+        
+        if (pageViewModel != null) {
+            $.each(pageViewModel.contents, function () {
+                this.overlay.hide();
+            });
+        }
+    }
+
+    /**
+    * Occurs when edit mode is turned on
+    */
+    function onEditModeOn() {
+        if (pageViewModel != null) {
+            $.each(pageViewModel.contents, function () {
+                this.overlay.show();
+            });
+        }
+
+        content.refreshContentsPosition();
+        content.refreshRegionsPosition();
+    }
+
+    /**
     * Initializes sidebar module.
     */
     content.init = function () {
@@ -562,7 +574,8 @@ define('bcms.content', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, moda
     /**
     * Subscribe to event, so that when edit mode is turned off cancel sort mode
     */
-    bcms.on(bcms.events.editModeOff, content.cancelSortMode);
+    bcms.on(bcms.events.editModeOff, onEditModeOff);
+    bcms.on(bcms.events.editModeOn, onEditModeOn);
 
     /**
     * Register initialization

@@ -13,6 +13,7 @@ define('bcms', ['jquery'], function ($) {
 
         events = {
             editModeOff: 'editModeOff',
+            editModeOn: 'editModeOn',
             addPageContent: 'addPageContent',
             sortPageContent: 'sortPageContent',
             createContentOverlay: 'createContentOverlay',
