@@ -47,7 +47,7 @@ namespace BetterCms.Module.Navigation.ViewModels.Sitemap
         /// </value>
         [StringLength(MaxLength.Url)]
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(NavigationGlobalization), ErrorMessageResourceName = "Sitemap_Dialog_NodeUrl_RequiredMessage")]
-        [RegularExpression(PagesConstants.PageUrlRegularExpression, ErrorMessageResourceType = typeof(NavigationGlobalization), ErrorMessageResourceName = "Sitemap_Dialog_NodeUrl_InvalidSymbol")]
+        [RegularExpression(PagesConstants.SiteMapUrlRegularExpression, ErrorMessageResourceType = typeof(NavigationGlobalization), ErrorMessageResourceName = "Sitemap_Dialog_NodeUrl_InvalidSymbol")]
         public string Url { get; set; }
 
         /// <summary>
