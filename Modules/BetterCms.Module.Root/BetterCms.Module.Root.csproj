@@ -468,7 +468,6 @@
     <EmbeddedResource Include="Scripts\WysiHtml5\wysihtml5-0.3.0.js" />
     <EmbeddedResource Include="Scripts\WysiHtml5\wysihtml5-parser-rules.js" />
     <EmbeddedResource Include="Scripts\bcms.authentication.js" />
-    <EmbeddedResource Include="Scripts\bcms.content.js" />
     <EmbeddedResource Include="Scripts\bcms.datepicker.js" />
     <EmbeddedResource Include="Scripts\bcms.grid.js" />
     <EmbeddedResource Include="Scripts\bcms.htmlEditor.js" />

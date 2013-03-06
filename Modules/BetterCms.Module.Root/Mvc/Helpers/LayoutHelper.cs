@@ -35,7 +35,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                     foreach (var projection in projections)
                     {
                         // Add Html
-                        using (new RegionContentWrapper(contentsBuilder, htmlHelper,  projection, model.CanManageContent))
+                        using (new RegionContentWrapper(contentsBuilder, projection, model.CanManageContent))
                         {
                             contentsBuilder.Append(projection.GetHtml(htmlHelper));
                         }

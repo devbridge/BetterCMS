@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Text;
-using System.Web.Mvc;
 
 using BetterCms.Core.Models;
 using BetterCms.Module.Root.Projections;
@@ -12,13 +11,9 @@ namespace BetterCms.Module.Root.Mvc.Helpers
     /// </summary>
     public class RegionContentWrapper : IDisposable
     {
-        public const string PageContentIdPattern = "bcms-content-{0}";
-
         private readonly StringBuilder sb;
         private readonly PageContentProjection content;
         private readonly bool allowContentManagement;
-
-        private HtmlHelper html;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RegionContentWrapper" /> class.
@@ -26,14 +21,16 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// <param name="sb">The string builder.</param>
         /// <param name="content">The region content.</param>
         /// <param name="allowContentManagement">if set to <c>true</c> allows content management.</param>
-        public RegionContentWrapper(StringBuilder sb, HtmlHelper html, PageContentProjection content, bool allowContentManagement)
+        public RegionContentWrapper(StringBuilder sb, PageContentProjection content, bool allowContentManagement)
         {
-            this.html = html;
             this.sb = sb;
             this.content = content;
             this.allowContentManagement = allowContentManagement;
 
-            RenderOpeningTags();
+            if (allowContentManagement)
+            {
+                RenderOpeningTags();
+            }
         }
 
         /// <summary>
@@ -41,7 +38,10 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// </summary>
         public void Dispose()
         {
-            RenderClosingTags();
+            if (allowContentManagement)
+            {
+                RenderClosingTags();
+            }
         }
 
         /// <summary>
@@ -49,22 +49,13 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// </summary>
         private void RenderOpeningTags()
         {
-            string id = string.Format(PageContentIdPattern, content.ContentId);
-
-            if (allowContentManagement)
-            {
-                string cssClass = content.GetRegionWrapperCssClass(html);
-
-                sb.AppendFormat(@"<div id=""{0}"" class=""clearfix bcms-content {1}"" data-page-content-id=""{2}"" data-content-id=""{3}"" data-page-content-version=""{4}"" data-content-version=""{5}""{6}>",
-                    id,
-                    cssClass,
-                    content.PageContentId,
-                    content.ContentId,
-                    content.PageContentVersion,
-                    content.ContentVersion,
-                    content.PageContentStatus == ContentStatus.Draft ? " data-draft=\"true\"" : null);
-                sb.AppendLine();
-            }
+            sb.AppendFormat(@"<script type=""text/html"" data-page-content-id=""{0}"" data-content-id=""{1}"" data-page-content-version=""{2}"" data-content-version=""{3}""{4}>",
+                content.PageContentId,
+                content.ContentId,
+                content.PageContentVersion,
+                content.ContentVersion,
+                content.PageContentStatus == ContentStatus.Draft ? " data-draft=\"true\"" : null);
+            sb.AppendLine();
         }
 
         /// <summary>
@@ -74,7 +65,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         {
             if (allowContentManagement)
             {
-                sb.AppendLine(@"</div>");
+                sb.AppendLine(@"</script>");
             }
         }
     }

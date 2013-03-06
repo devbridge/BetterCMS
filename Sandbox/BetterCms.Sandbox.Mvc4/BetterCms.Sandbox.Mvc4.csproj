@@ -177,6 +177,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Content Include="App_Data\BetterCMS\Modules\readme.txt" />
+    <EmbeddedResource Include="file\bcms-root\scripts\bcms.content.js" />
     <Content Include="Global.asax" />
     <Content Include="icn-validation-error.png" />
     <Content Include="Web.config">
@@ -188,7 +189,6 @@
     <Folder Include="file\bcms-blog\scripts\" />
     <Folder Include="file\bcms-media\scripts\" />
     <Folder Include="file\bcms-pages\scripts\" />
-    <Folder Include="file\bcms-root\scripts\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

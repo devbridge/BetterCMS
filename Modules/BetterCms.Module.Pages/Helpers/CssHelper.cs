@@ -11,6 +11,18 @@ namespace BetterCms.Module.Pages.Helpers
     public static class CssHelper
     {
         /// <summary>
+        /// Fixes the CSS selectors.
+        /// </summary>
+        /// <param name="css">The CSS.</param>
+        /// <returns>
+        /// Fixed CSS
+        /// </returns>
+        public static string FixCss(string css)
+        {
+            return PrefixCssSelectorsForSingleRule(css, string.Empty);
+        }
+
+        /// <summary>
         /// Add the prefix to CSS selector.
         /// </summary>
         /// <param name="css">The CSS.</param>
