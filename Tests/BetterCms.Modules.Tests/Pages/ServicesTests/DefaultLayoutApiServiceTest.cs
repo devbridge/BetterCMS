@@ -2,7 +2,6 @@
 using System.Linq;
 
 using BetterCms.Core.DataAccess;
-using BetterCms.Module.Pages.DataServices;
 using BetterCms.Module.Root.Models;
 
 using Moq;

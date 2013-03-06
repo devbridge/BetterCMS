@@ -5,7 +5,9 @@ using System.Linq.Expressions;
 
 using Autofac;
 
+using BetterCms.Core.DataAccess;
 using BetterCms.Core.Exceptions.Api;
+using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Module.Pages.Api.Events;
 using BetterCms.Module.Pages.DataContracts.Enums;
 using BetterCms.Module.Pages.Models;
@@ -22,8 +24,16 @@ namespace BetterCms.Api
 {
     public class PagesApiContext : DataApiContext
     {
-        private static PagesEvents events;
+        private static readonly PageEvents events;
 
+        /// <summary>
+        /// The sitemap service.
+        /// </summary>
+        private readonly ISitemapService sitemapService;
+
+        /// <summary>
+        /// The history service.
+        /// </summary>
         private readonly IHistoryService historyService;
 
         /// <summary>
@@ -31,18 +41,36 @@ namespace BetterCms.Api
         /// </summary>
         static PagesApiContext()
         {
-            events = new PagesEvents();
+            events = new PageEvents();
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PagesApiContext" /> class.
         /// </summary>
-        /// <param name="lifetimeScope">The container.</param>
-        public PagesApiContext(ILifetimeScope lifetimeScope)
-            : base(lifetimeScope)
+        /// <param name="lifetimeScope">The lifetime scope.</param>
+        /// <param name="repository">The repository.</param>
+        /// <param name="sitemapService">The sitemap service.</param>
+        /// <param name="historyService">The history service.</param>
+        public PagesApiContext(ILifetimeScope lifetimeScope, IRepository repository = null, ISitemapService sitemapService = null, IHistoryService historyService = null)
+            : base(lifetimeScope, repository)
         {
-            events = new PagesEvents();
-            historyService = Resolve<IHistoryService>();
+            if (historyService == null)
+            {
+                this.historyService = Resolve<IHistoryService>();
+            }
+            else
+            {
+                this.historyService = historyService;
+            }
+
+            if (sitemapService == null)
+            {
+                this.sitemapService = Resolve<ISitemapService>();
+            }
+            else
+            {
+                this.sitemapService = sitemapService;
+            }
         }
 
         /// <summary>
@@ -51,7 +79,7 @@ namespace BetterCms.Api
         /// <value>
         /// The events.
         /// </value>
-        public static PagesEvents Events
+        public static PageEvents Events
         {
             get
             {
@@ -610,7 +638,72 @@ namespace BetterCms.Api
             }
         }
 
+        /// <summary>
+        /// Gets the sitemap tree.
+        /// </summary>
+        /// <returns>Returns list with root nodes.</returns>
+        public IList<SitemapNode> GetSitemapTree()
+        {
+            try
+            {
+                return sitemapService.GetRootNodes(string.Empty);
+            }
+            catch (Exception inner)
+            {
+                var message = string.Format("Failed to get sitemap tree.");
+                Logger.Error(message, inner);
+                throw new CmsApiException(message, inner);
+            }
+        }
 
+        /// <summary>
+        /// Gets the node.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns> Returns sitemap node or exception <see cref="EntityNotFoundException" />.</returns>
+        /// <exception cref="EntityNotFoundException">If node was not wound.</exception>
+        public SitemapNode GetNode(Guid id)
+        {
+            try
+            {
+                return Repository.First<SitemapNode>(id);
+            }
+            catch (Exception inner)
+            {
+                var message = string.Format("Failed to get sitemap node by id={0}.", id);
+                Logger.Error(message, inner);
+                throw new CmsApiException(message, inner);
+            }
+        }
+
+        /// <summary>
+        /// Gets the nodes.
+        /// </summary>
+        /// <param name="filter">The filter.</param>
+        /// <param name="order">The order.</param>
+        /// <param name="orderDescending">if set to <c>true</c> [order descending].</param>
+        /// <param name="pageNumber">The page number.</param>
+        /// <param name="itemsPerPage">The items per page.</param>
+        /// <returns>Returns the list with sitemap nodes.</returns>
+        public IList<SitemapNode> GetNodes(Expression<Func<SitemapNode, bool>> filter = null, Expression<Func<SitemapNode, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
+        {
+            try
+            {
+                if (order == null)
+                {
+                    order = p => p.Title;
+                }
+
+                return Repository.AsQueryable(filter, order, orderDescending, pageNumber, itemsPerPage).ToList();
+            }
+            catch (Exception inner)
+            {
+                var message = string.Format("Failed to get sitemap nodes.");
+                Logger.Error(message, inner);
+                throw new CmsApiException(message, inner);
+            }
+        }
+        
         /// <summary>
         /// Fetches the child by given parameters.
         /// </summary>

@@ -210,7 +210,7 @@
     <Compile Include="Controllers\SiteSettingsController.cs" />
     <Compile Include="Controllers\SeoController.cs" />
     <Compile Include="Controllers\ContentController.cs" />
-    <Compile Include="Api\Events\PagesEvents.cs" />
+    <Compile Include="Api\Events\PageEvents.cs" />
     <Compile Include="Api\Events\PagePropertiesEventArgs.cs" />
     <Compile Include="Helpers\CssHelper.cs" />
     <Compile Include="Helpers\HttpHelper.cs" />

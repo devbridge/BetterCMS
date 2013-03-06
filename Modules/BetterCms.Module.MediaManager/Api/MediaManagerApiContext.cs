@@ -4,6 +4,7 @@ using System.Linq;
 
 using Autofac;
 
+using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions.Api;
 using BetterCms.Module.MediaManager.Api.Events;
@@ -20,7 +21,7 @@ namespace BetterCms.Api
     /// </summary>
     public class MediaManagerApiContext : DataApiContext
     {
-        private static MediaManagerEvents events;
+        private static readonly MediaManagerEvents events;
 
         /// <summary>
         /// Initializes the <see cref="MediaManagerApiContext" /> class.
@@ -33,9 +34,10 @@ namespace BetterCms.Api
         /// <summary>
         /// Initializes a new instance of the <see cref="MediaManagerApiContext" /> class.
         /// </summary>
-        /// <param name="lifetimeScope">The container.</param>
-        public MediaManagerApiContext(ILifetimeScope lifetimeScope)
-            : base(lifetimeScope)
+        /// <param name="lifetimeScope">The lifetime scope.</param>
+        /// <param name="repository">The repository.</param>
+        public MediaManagerApiContext(ILifetimeScope lifetimeScope, IRepository repository = null)
+            : base(lifetimeScope, repository)
         {
         }
 

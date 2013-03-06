@@ -145,10 +145,7 @@ namespace BetterCms.Module.Blog
             RegisterJavaScriptRendererType<PageJavaScriptAccessor, BlogPost>(containerBuilder);
 
             containerBuilder.RegisterType<DefaultOptionService>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            containerBuilder.RegisterType<DefaultAuthorService>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            
-            containerBuilder.RegisterType<DefaultAuthorApiService>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            containerBuilder.RegisterType<DefaultBlogApiService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultAuthorService>().AsImplementedInterfaces().InstancePerLifetimeScope();                       
         }
     }
 }

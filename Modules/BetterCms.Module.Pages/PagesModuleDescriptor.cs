@@ -144,6 +144,7 @@ namespace BetterCms.Module.Pages
         public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder, ICmsConfiguration configuration)
         {
             RegisterStylesheetRendererType<PageStylesheetAccessor, PageProperties>(containerBuilder);
+
             RegisterJavaScriptRendererType<PageJavaScriptAccessor, PageProperties>(containerBuilder);
 
             RegisterContentRendererType<HtmlContentAccessor, HtmlContent>(containerBuilder);
@@ -155,7 +156,7 @@ namespace BetterCms.Module.Pages
             containerBuilder.RegisterType<DefaultCategoryService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultWidgetsService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultTagService>().AsImplementedInterfaces().InstancePerLifetimeScope();
-
+            containerBuilder.RegisterType<DefaultHistoryService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultSitemapService>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
 

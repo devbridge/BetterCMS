@@ -7,10 +7,9 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 
+using BetterCms.Api;
 using BetterCms.Core;
-using BetterCms.Module.MediaManager;
 using BetterCms.Module.MediaManager.Models;
-using BetterCms.Module.Navigation;
 
 namespace BetterCms.Sandbox.Mvc4.Controllers
 {
@@ -62,10 +61,7 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
             IList<MediaFolder> folders;
             using (var mediaApi = CmsContext.CreateApiContextOf<MediaManagerApiContext>())
             {
-                using (var navigationApi = CmsContext.CreateApiContextOf<NavigationApiContext>(mediaApi))
-                {
-                    folders = mediaApi.Medias.GetFolders(MediaType.Image);
-                }
+                folders = mediaApi.GetFolders(MediaType.Image);
             }
 
             var count = folders.Count;
@@ -80,31 +76,9 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
 
         public ActionResult TestNavigationApi()
         {
-            var message = new StringBuilder("No sitemap data found!");            
-
-            using (var api = CmsContext.CreateApiContextOf<NavigationApiContext>())
-            {              
-                var sitemap = api.Sitemap.GetSitemapTree();
-                message.Clear();
-                message.AppendFormat("Sitemap contains {0} root nodes:", sitemap.Count);
-                message.Append("<br><br>GetSitemapTree():<br>");
-                message.Append(string.Join("<br> ", sitemap.Select(n => string.Format("<b>{0}</b>: {1}", n.Title, n.Url))));
-
-                if (sitemap.Count > 0)
-                {
-                    var node = api.Sitemap.GetNode(sitemap[0].Id);
-                    message.Append("<br><br>GetNode(id):<br>");
-                    message.Append(node.Title);
-
-                    var letter = sitemap[0].Title.ToArray()[0];
-                    var nodes = api.Sitemap.GetNodes(n => n.Title.Contains(letter.ToString(CultureInfo.InvariantCulture)));
-                    message.AppendFormat("<br><br>GetNodes(where title contains '{0}'):<br>", letter);
-                    message.AppendFormat("{0} nodes found.", nodes.Count);
-                }
-            }
+            var message = new StringBuilder("No sitemap data found!");                     
 
             return Content(message.ToString());
-        }
-        
+        }        
     }
 }

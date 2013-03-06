@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 
+using BetterCms.Api;
 using BetterCms.Core.DataAccess;
-using BetterCms.Module.Pages.DataServices;
 
 using Moq;
 
@@ -23,15 +23,17 @@ namespace BetterCms.Test.Module.Pages.ServicesTests
                 .Setup(f => f.AsQueryable<BetterCms.Module.Root.Models.Category>())
                 .Returns(new[] { category1, category2 }.AsQueryable());
 
-            var service = new DefaultCategoryApiService(repositoryMock.Object);
-            var categories = service.GetCategories();
+            using (var api = new PagesApiContext(Container.BeginLifetimeScope(), repositoryMock.Object))
+            {
+                var categories = api.GetCategories();
 
-            Assert.IsNotNull(categories);
-            Assert.AreEqual(categories.Count, 2);
+                Assert.IsNotNull(categories);
+                Assert.AreEqual(categories.Count, 2);
 
-            var category = categories.FirstOrDefault(l => category1.Id == l.Id);
-            Assert.IsNotNull(category);
-            Assert.AreEqual(category1.Name, category.Name);
+                var category = categories.FirstOrDefault(l => category1.Id == l.Id);
+                Assert.IsNotNull(category);
+                Assert.AreEqual(category1.Name, category.Name);
+            }
         }
         
         [Test]
@@ -42,11 +44,13 @@ namespace BetterCms.Test.Module.Pages.ServicesTests
                 .Setup(f => f.AsQueryable<BetterCms.Module.Root.Models.Category>())
                 .Returns(new BetterCms.Module.Root.Models.Category[] { }.AsQueryable());
 
-            var service = new DefaultCategoryApiService(repositoryMock.Object);
-            var categories = service.GetCategories();
+            using (var service = new PagesApiContext(Container.BeginLifetimeScope(), repositoryMock.Object))
+            {
+                var categories = service.GetCategories();
 
-            Assert.IsNotNull(categories);
-            Assert.IsEmpty(categories);
+                Assert.IsNotNull(categories);
+                Assert.IsEmpty(categories);
+            }
         }
     }
 }

@@ -24,7 +24,7 @@ namespace BetterCms.Module.Root.Models.Migrations
             Create
                 .Column("Status")
                 .OnTable("Pages").InSchema(rootModuleSchemaName)
-                .AsInt32().NotNullable().WithDefaultValue(4);
+                .AsInt32().NotNullable().WithDefaultValue(3);
             
             // Drop column from page properties
             Delete

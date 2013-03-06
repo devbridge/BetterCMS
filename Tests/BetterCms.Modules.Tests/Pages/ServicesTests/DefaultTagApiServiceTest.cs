@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
+using BetterCms.Api;
 using BetterCms.Core.DataAccess;
-using BetterCms.Module.Pages.DataServices;
 
 using Moq;
 
@@ -19,16 +19,18 @@ namespace BetterCms.Test.Module.Pages.ServicesTests
             var fakeTags = CreateTags().ToList();
             var repositoryMock = MockRepository(fakeTags);
 
-            var service = new DefaultTagApiService(repositoryMock.Object);
-            var tags = service.GetTags();
+            using (var service = new PagesApiContext(Container.BeginLifetimeScope(), repositoryMock.Object))
+            {
+                var tags = service.GetTags();
 
-            Assert.IsNotNull(tags);
-            Assert.AreEqual(tags.Count, fakeTags.Count);
+                Assert.IsNotNull(tags);
+                Assert.AreEqual(tags.Count, fakeTags.Count);
 
-            var fakeTag = fakeTags[0];
-            var tag = tags.FirstOrDefault(l => fakeTag.Id == l.Id);
-            Assert.IsNotNull(tag);
-            Assert.AreEqual(fakeTag.Name, tag.Name);
+                var fakeTag = fakeTags[0];
+                var tag = tags.FirstOrDefault(l => fakeTag.Id == l.Id);
+                Assert.IsNotNull(tag);
+                Assert.AreEqual(fakeTag.Name, tag.Name);
+            }
         }
 
         [Test]
@@ -37,16 +39,18 @@ namespace BetterCms.Test.Module.Pages.ServicesTests
             var fakeTags = CreateTags().ToList();
             var repositoryMock = MockRepository(fakeTags);
 
-            var service = new DefaultTagApiService(repositoryMock.Object);
-            var tags = service.GetTags(t => t.Name.Contains("Tag"), null, true);
+            using (var service = new PagesApiContext(Container.BeginLifetimeScope(), repositoryMock.Object))
+            {
+                var tags = service.GetTags(t => t.Name.Contains("Tag"), null, true);
 
-            Assert.IsNotNull(tags);
-            Assert.AreEqual(tags.Count, 3);
+                Assert.IsNotNull(tags);
+                Assert.AreEqual(tags.Count, 3);
 
-            var fakeTag = fakeTags.First(t => t.Name == "Tag3");
-            var tag = tags[0];
-            Assert.IsNotNull(tag);
-            Assert.AreEqual(fakeTag.Id, tag.Id);
+                var fakeTag = fakeTags.First(t => t.Name == "Tag3");
+                var tag = tags[0];
+                Assert.IsNotNull(tag);
+                Assert.AreEqual(fakeTag.Id, tag.Id);
+            }
         }
 
         [Test]
@@ -55,16 +59,18 @@ namespace BetterCms.Test.Module.Pages.ServicesTests
             var fakeTags = CreateTags().ToList();
             var repositoryMock = MockRepository(fakeTags);
 
-            var service = new DefaultTagApiService(repositoryMock.Object);
-            var tags = service.GetTags(t => t.Name.Contains("Tag"), null, true, 2, 1);
+            using (var service = new PagesApiContext(Container.BeginLifetimeScope(), repositoryMock.Object))
+            {
+                var tags = service.GetTags(t => t.Name.Contains("Tag"), null, true, 2, 1);
 
-            Assert.IsNotNull(tags);
-            Assert.AreEqual(tags.Count, 1);
+                Assert.IsNotNull(tags);
+                Assert.AreEqual(tags.Count, 1);
 
-            var fakeTag = fakeTags.First(t => t.Name == "Tag2");
-            var tag = tags[0];
-            Assert.IsNotNull(tag);
-            Assert.AreEqual(fakeTag.Id, tag.Id);
+                var fakeTag = fakeTags.First(t => t.Name == "Tag2");
+                var tag = tags[0];
+                Assert.IsNotNull(tag);
+                Assert.AreEqual(fakeTag.Id, tag.Id);
+            }
         }
         
         [Test]
@@ -75,11 +81,13 @@ namespace BetterCms.Test.Module.Pages.ServicesTests
                 .Setup(f => f.AsQueryable<BetterCms.Module.Root.Models.Tag>())
                 .Returns(new BetterCms.Module.Root.Models.Tag[] { }.AsQueryable());
 
-            var service = new DefaultTagApiService(repositoryMock.Object);
-            var tags = service.GetTags();
+            using (var service = new PagesApiContext(Container.BeginLifetimeScope(), repositoryMock.Object))
+            {
+                var tags = service.GetTags();
 
-            Assert.IsNotNull(tags);
-            Assert.IsEmpty(tags);
+                Assert.IsNotNull(tags);
+                Assert.IsEmpty(tags);
+            }
         }
 
         private Mock<IRepository> MockRepository(IEnumerable<BetterCms.Module.Root.Models.Tag> tags)

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using BetterCms.Api;
 using BetterCms.Core.DataAccess;
-using BetterCms.Module.Pages.DataServices;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
 
@@ -24,21 +24,22 @@ namespace BetterCms.Test.Module.Pages.ServicesTests
             var widgets = CreateFakeWidgets();
             var repositoryMock = MockRepository(widgets);
 
-            var service = new DefaultWidgetApiService(repositoryMock.Object);
+            using (var service = new PagesApiContext(Container.BeginLifetimeScope(), repositoryMock.Object))
+            {
+                var htmlWidget = service.GetHtmlContentWidget(new Guid());
+                Assert.IsNotNull(htmlWidget);
 
-            var htmlWidget = service.GetHtmlContentWidget(new Guid());
-            Assert.IsNotNull(htmlWidget);
+                var serverWidget = service.GetServerControlWidget(new Guid());
+                Assert.IsNotNull(serverWidget);
 
-            var serverWidget = service.GetServerControlWidget(new Guid());
-            Assert.IsNotNull(serverWidget);
+                var allWidgets = service.GetWidgets();
+                Assert.IsNotNull(allWidgets);
+                Assert.AreEqual(widgets.Count(), allWidgets.Count());
 
-            var allWidgets = service.GetWidgets();
-            Assert.IsNotNull(allWidgets);
-            Assert.AreEqual(widgets.Count(), allWidgets.Count());
-
-            var pageWidgets = service.GetPageWidgets(pageId);
-            Assert.IsNotNull(pageWidgets);
-            Assert.AreEqual(1, pageWidgets.Count());
+                var pageWidgets = service.GetPageWidgets(pageId);
+                Assert.IsNotNull(pageWidgets);
+                Assert.AreEqual(1, pageWidgets.Count());
+            }
         }
 
         private Widget[] CreateFakeWidgets()

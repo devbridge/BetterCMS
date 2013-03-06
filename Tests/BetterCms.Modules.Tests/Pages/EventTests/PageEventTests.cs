@@ -19,21 +19,13 @@ namespace BetterCms.Test.Module.Pages.EventTests
         {
             firedCreated = false;
             
-            using (var api1 = CmsContext.CreateApiContextOf<PagesApiContext>())
-            {
-                using (var api2 = CmsContext.CreateApiContextOf<MediaApiContext>(api1))
-                {
-                    
-                }
-            }
-
-            PagesApiContext.Events.OnPageCreated(null, new PagePropertiesEventArgs(new PageProperties()));
+            PagesApiContext.Events.OnPageCreated(new PageProperties());
             System.Threading.Thread.Sleep(10);
             Assert.IsFalse(firedCreated);
 
-            PagesEvents.Instance.PageCreated += delegate { firedCreated = true; };
+            PagesApiContext.Events.PageCreated += delegate { firedCreated = true; };
 
-            PagesEvents.Instance.OnPageCreated(null, new PagePropertiesEventArgs(new PageProperties()));
+            PagesApiContext.Events.OnPageCreated(new PageProperties());
             System.Threading.Thread.Sleep(10);
             Assert.IsTrue(firedCreated);
         }
@@ -43,13 +35,13 @@ namespace BetterCms.Test.Module.Pages.EventTests
         {
             firedDeleted = false;
 
-            PagesEvents.Instance.OnPageDeleted(null, new PageDeletedEventArgs(new PageProperties()));
+            PagesApiContext.Events.OnPageDeleted(new PageProperties());
             System.Threading.Thread.Sleep(10);
             Assert.IsFalse(firedDeleted);
 
-            PagesEvents.Instance.PageDeleted += delegate { firedDeleted = true; };
+            PagesApiContext.Events.PageDeleted += delegate { firedDeleted = true; };
 
-            PagesEvents.Instance.OnPageDeleted(null, new PageDeletedEventArgs(new PageProperties()));
+            PagesApiContext.Events.OnPageDeleted(new PageProperties());
             System.Threading.Thread.Sleep(10);
             Assert.IsTrue(firedDeleted);
         }

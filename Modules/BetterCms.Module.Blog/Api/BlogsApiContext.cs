@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 
 using Autofac;
 
+using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions.Api;
 using BetterCms.Module.Blog.Api.Events;
@@ -18,7 +19,7 @@ namespace BetterCms.Api
 {
     public class BlogsApiContext : DataApiContext
     {
-        private static BlogEvents events;
+        private static readonly BlogEvents events;
 
         /// <summary>
         /// Initializes the <see cref="BlogsApiContext" /> class.
@@ -31,9 +32,10 @@ namespace BetterCms.Api
         /// <summary>
         /// Initializes a new instance of the <see cref="BlogsApiContext" /> class.
         /// </summary>
-        /// <param name="lifetimeScope">The container.</param>
-        public BlogsApiContext(ILifetimeScope lifetimeScope)
-            : base(lifetimeScope)
+        /// <param name="lifetimeScope">The lifetime scope.</param>
+        /// <param name="repository">The repository.</param>
+        public BlogsApiContext(ILifetimeScope lifetimeScope, IRepository repository = null)
+            : base(lifetimeScope, repository)
         {
         }
 

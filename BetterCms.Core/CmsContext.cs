@@ -5,11 +5,9 @@ using System.Web.Routing;
 
 using Autofac;
 using Autofac.Core;
-using Autofac.Core.Activators.Reflection;
 
 using BetterCms.Api;
 using BetterCms.Configuration;
-using BetterCms.Core.Api;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataAccess.DataContext.Migrations;
@@ -18,6 +16,7 @@ using BetterCms.Core.Environment.Assemblies;
 using BetterCms.Core.Environment.FileSystem;
 using BetterCms.Core.Environment.Host;
 using BetterCms.Core.Exceptions;
+using BetterCms.Core.Exceptions.Api;
 using BetterCms.Core.Modules.Registration;
 using BetterCms.Core.Mvc;
 using BetterCms.Core.Mvc.Commands;
@@ -54,7 +53,19 @@ namespace BetterCms.Core
                 lifetimeScope = parentApiContext.GetLifetimeScope();
             }
 
-            return lifetimeScope.Resolve<TApiContext>(new Parameter[] {  new PositionalParameter(0, lifetimeScope) });
+            if (!lifetimeScope.IsRegistered<TApiContext>())
+            {
+                throw new CmsApiException(string.Format("A '{0}' type is unknown as Better CMS API context.", typeof(TApiContext).Name));
+            }
+
+            var apiContext = lifetimeScope.Resolve<TApiContext>(new Parameter[] { new PositionalParameter(0, lifetimeScope) });
+
+            if (parentApiContext != null)
+            {
+                apiContext.MarkParentLifetimeScope();
+            }
+
+            return apiContext;                        
         }
 
         /// <summary>

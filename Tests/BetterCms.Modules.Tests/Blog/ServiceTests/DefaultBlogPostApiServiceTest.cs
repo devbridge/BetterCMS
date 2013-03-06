@@ -1,13 +1,4 @@
-﻿using System.Linq;
-
-using BetterCms.Core.DataAccess;
-using BetterCms.Module.Blog.DataServices;
-
-using Moq;
-
-using NUnit.Framework;
-
-namespace BetterCms.Test.Module.Blog.ServiceTests
+﻿namespace BetterCms.Test.Module.Blog.ServiceTests
 {
     // TODO: MOCK FETCH
     //[TestFixture]

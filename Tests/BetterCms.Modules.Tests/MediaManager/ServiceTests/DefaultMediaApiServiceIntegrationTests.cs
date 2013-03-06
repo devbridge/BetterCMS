@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Linq;
 
+using BetterCms.Api;
+using BetterCms.Core;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
-using BetterCms.Module.MediaManager.DataServices;
+
 using BetterCms.Module.MediaManager.Models;
 
 using NHibernate;
@@ -22,15 +24,17 @@ namespace BetterCms.Test.Module.MediaManager.ServiceTests
             {
                 var medias = CreateFakeMedias(session);
                 var repository = CreateRepository(session);
-                var service = new DefaultMediaApiService(repository);
 
-                // Images1 folder has 2 images and 2 folders
-                var folder = medias.First(m => m is MediaFolder && m.Title == "Images1");
-                var folderMedias = service.GetFolderMedias(MediaType.Image, folder.Id);
-                Assert.IsNotNull(folderMedias);
-                Assert.AreEqual(folderMedias.Count, 4);
-                Assert.AreEqual(folderMedias.Count(m => m is MediaImage), 2);
-                Assert.AreEqual(folderMedias.Count(m => m is MediaFolder), 2);
+                using (var api = new MediaManagerApiContext(Container.BeginLifetimeScope(), repository))
+                {                                                            
+                    // Images1 folder has 2 images and 2 folders
+                    var folder = medias.First(m => m is MediaFolder && m.Title == "Images1");
+                    var folderMedias = api.GetFolderMedias(MediaType.Image, folder.Id);
+                    Assert.IsNotNull(folderMedias);
+                    Assert.AreEqual(folderMedias.Count, 4);
+                    Assert.AreEqual(folderMedias.Count(m => m is MediaImage), 2);
+                    Assert.AreEqual(folderMedias.Count(m => m is MediaFolder), 2);
+                }
             });
         }
 
@@ -41,12 +45,13 @@ namespace BetterCms.Test.Module.MediaManager.ServiceTests
             {
                 CreateFakeMedias(session, false);
                 var repository = CreateRepository(session);
-                var service = new DefaultMediaApiService(repository);
-
-                // Root images folder has at least 2 folders and at least 3 files
-                var folderMedias = service.GetFolderMedias(MediaType.Image, itemsPerPage: 5);
-                Assert.IsNotNull(folderMedias);
-                Assert.AreEqual(folderMedias.Count, 5);
+                using (var service = new MediaManagerApiContext(Container.BeginLifetimeScope(), repository))
+                {
+                    // Root images folder has at least 2 folders and at least 3 files
+                    var folderMedias = service.GetFolderMedias(MediaType.Image, itemsPerPage: 5);
+                    Assert.IsNotNull(folderMedias);
+                    Assert.AreEqual(folderMedias.Count, 5);
+                }
             });
         }
 
@@ -57,12 +62,13 @@ namespace BetterCms.Test.Module.MediaManager.ServiceTests
             {
                 CreateFakeMedias(session, false);
                 var repository = CreateRepository(session);
-                var service = new DefaultMediaApiService(repository);
-
-                // Root files folder has at least 1 folder and 1 file
-                var folderMedias = service.GetFolderMedias(MediaType.File, itemsPerPage:2);
-                Assert.IsNotNull(folderMedias);
-                Assert.AreEqual(folderMedias.Count, 2);
+                using (var service = new MediaManagerApiContext(Container.BeginLifetimeScope(), repository))
+                {
+                    // Root files folder has at least 1 folder and 1 file
+                    var folderMedias = service.GetFolderMedias(MediaType.File, itemsPerPage: 2);
+                    Assert.IsNotNull(folderMedias);
+                    Assert.AreEqual(folderMedias.Count, 2);
+                }
             });
         }
 
@@ -73,11 +79,12 @@ namespace BetterCms.Test.Module.MediaManager.ServiceTests
             {
                 CreateFakeMedias(session);
                 var repository = CreateRepository(session);
-                var service = new DefaultMediaApiService(repository);
-
-                var images = service.GetImages(itemsPerPage:3);
-                Assert.IsNotNull(images);
-                Assert.AreEqual(images.Count, 3);
+                using (var service = new MediaManagerApiContext(Container.BeginLifetimeScope(), repository))
+                {
+                    var images = service.GetImages(itemsPerPage: 3);
+                    Assert.IsNotNull(images);
+                    Assert.AreEqual(images.Count, 3);
+                }
             });
         }
         
@@ -85,14 +92,17 @@ namespace BetterCms.Test.Module.MediaManager.ServiceTests
         public void Should_Return_Files_List_Successfully()
         {
             RunActionInTransaction(session =>
-            {
+            {                
                 CreateFakeMedias(session);
                 var repository = CreateRepository(session);
-                var service = new DefaultMediaApiService(repository);
 
-                var files = service.GetFiles(itemsPerPage:3);
-                Assert.IsNotNull(files);
-                Assert.AreEqual(files.Count, 3);
+                using (var service = new MediaManagerApiContext(Container.BeginLifetimeScope(), repository))
+                {
+                    var files = service.GetFiles(itemsPerPage: 3);
+                    Assert.IsNotNull(files);
+                    Assert.GreaterOrEqual(files.Count, 1);
+                    Assert.LessOrEqual(files.Count, 3);
+                }
             });
         }
         
@@ -103,15 +113,17 @@ namespace BetterCms.Test.Module.MediaManager.ServiceTests
             {
                 CreateFakeMedias(session);
                 var repository = CreateRepository(session);
-                var service = new DefaultMediaApiService(repository);
 
-                var imageFolders = service.GetFolders(MediaType.Image, itemsPerPage:3);
-                Assert.IsNotNull(imageFolders);
-                Assert.AreEqual(imageFolders.Count, 3);
+                using (var service = new MediaManagerApiContext(Container.BeginLifetimeScope(), repository))
+                {
+                    var imageFolders = service.GetFolders(MediaType.Image, itemsPerPage: 2);                    
+                    Assert.IsNotNull(imageFolders);
+                    Assert.LessOrEqual(imageFolders.Count, 2);
 
-                var fileFolders = service.GetFolders(MediaType.File, itemsPerPage: 3);
-                Assert.IsNotNull(fileFolders);
-                Assert.AreEqual(fileFolders.Count, 3);
+                    var fileFolders = service.GetFolders(MediaType.File, itemsPerPage: 2);
+                    Assert.IsNotNull(fileFolders);
+                    Assert.LessOrEqual(fileFolders.Count, 2);
+                }
             });
         }
 
@@ -122,11 +134,12 @@ namespace BetterCms.Test.Module.MediaManager.ServiceTests
             {
                 var file = CreateFakeFile(session);
                 var repository = CreateRepository(session);
-                var service = new DefaultMediaApiService(repository);
-
-                var loadedFile = service.GetFile(file.Id);
-                Assert.IsNotNull(loadedFile);
-                Assert.AreEqual(loadedFile.Id, file.Id);
+                using (var service = new MediaManagerApiContext(Container.BeginLifetimeScope(), repository))
+                {
+                    var loadedFile = service.GetFile(file.Id);
+                    Assert.IsNotNull(loadedFile);
+                    Assert.AreEqual(loadedFile.Id, file.Id);
+                }
             });
 
             /*var medias = CreateFakeMedias();
@@ -146,11 +159,12 @@ namespace BetterCms.Test.Module.MediaManager.ServiceTests
             {
                 var image = CreateFakeImage(session);
                 var repository = CreateRepository(session);
-                var service = new DefaultMediaApiService(repository);
-
-                var loadedImage = service.GetImage(image.Id);
-                Assert.IsNotNull(loadedImage);
-                Assert.AreEqual(loadedImage.Id, image.Id);
+                using (var service = new MediaManagerApiContext(Container.BeginLifetimeScope(), repository))
+                {
+                    var loadedImage = service.GetImage(image.Id);
+                    Assert.IsNotNull(loadedImage);
+                    Assert.AreEqual(loadedImage.Id, image.Id);
+                }
             });
 
             /*var medias = CreateFakeMedias();

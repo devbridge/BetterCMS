@@ -5,7 +5,7 @@ namespace BetterCms.Module.Pages.Api.Events
     /// <summary>
     /// Attachable page events container
     /// </summary>
-    public class PagesEvents
+    public class PageEvents
     {
         /// <summary>
         /// Delegate to handle a page creation event.

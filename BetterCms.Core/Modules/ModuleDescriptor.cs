@@ -156,7 +156,7 @@ namespace BetterCms.Core.Modules
         /// <param name="containerBuilder">The container builder.</param>
         /// <param name="configuration">The configuration.</param>
         /// <param name="controllerExtensions">The controller extensions.</param>
-        public virtual void RegisterModuleControllers(ModuleRegistrationContext registrationContext, ContainerBuilder containerBuilder, ICmsConfiguration configuration, IControllerExtensions controllerExtensions)
+        internal void RegisterModuleControllers(ModuleRegistrationContext registrationContext, ContainerBuilder containerBuilder, ICmsConfiguration configuration, IControllerExtensions controllerExtensions)
         {
             var controllerTypes = controllerExtensions.GetControllerTypes(GetType().Assembly);
 
@@ -217,7 +217,7 @@ namespace BetterCms.Core.Modules
         /// <param name="registrationContext">The area registration context.</param>
         /// <param name="containerBuilder">The container builder.</param>
         /// <param name="configuration">The CMS configuration.</param>
-        public virtual void RegisterModuleCommands(ModuleRegistrationContext registrationContext, ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        internal void RegisterModuleCommands(ModuleRegistrationContext registrationContext, ContainerBuilder containerBuilder, ICmsConfiguration configuration)
         {
             Assembly assembly = GetType().Assembly;
 
@@ -237,13 +237,13 @@ namespace BetterCms.Core.Modules
                 .InstancePerLifetimeScope();
         }
 
-        public virtual void RegisterModuleApiContexts(ModuleRegistrationContext registrationContext, ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        internal void RegisterModuleApiContexts(ModuleRegistrationContext registrationContext, ContainerBuilder containerBuilder, ICmsConfiguration configuration)
         {
             Assembly assembly = GetType().Assembly;
             
             containerBuilder
                 .RegisterAssemblyTypes(assembly)
-                .Where(scan => IsAssignableToGenericType(scan, typeof(ApiContext)))
+                .AssignableTo(typeof(ApiContext))                
                 .AsImplementedInterfaces()
                 .AsSelf()
                 .PropertiesAutowired()

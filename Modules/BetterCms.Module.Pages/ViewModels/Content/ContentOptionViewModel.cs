@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Core.Models;
 
 namespace BetterCms.Module.Pages.ViewModels.Content
 {

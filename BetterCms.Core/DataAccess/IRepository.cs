@@ -3,6 +3,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using BetterCms.Core.Models;
 
+using NHibernate;
+
 namespace BetterCms.Core.DataAccess
 {
     /// <summary>
@@ -20,6 +22,8 @@ namespace BetterCms.Core.DataAccess
         TEntity FirstOrDefault<TEntity>(Guid id) where TEntity : Entity;
 
         TEntity FirstOrDefault<TEntity>(Expression<Func<TEntity, bool>> filter) where TEntity : Entity;
+
+        IQueryOver<TEntity, TEntity> AsQueryOver<TEntity>() where TEntity : Entity;
 
         IQueryable<TEntity> AsQueryable<TEntity>() where TEntity : Entity;
 

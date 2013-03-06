@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-using BetterCms.Module.Pages.DataServices;
+using BetterCms.Api;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
@@ -19,22 +19,27 @@ namespace BetterCms.Test.Module.Pages.ServicesTests
         public void Should_Return_History_List_Successfully()
         {
             var serviceMock = MockHistoryService(CreateFakeContents());
-            var service = new DefaultHistoryApiService(serviceMock.Object);
-            var history = service.GetContentHistory(Guid.NewGuid());
 
-            Assert.IsNotNull(history);
-            Assert.AreEqual(history.Count, 4);
+            using (var service = new PagesApiContext(Container.BeginLifetimeScope(), null, null, serviceMock.Object))
+            {
+                var history = service.GetContentHistory(Guid.NewGuid());
+
+                Assert.IsNotNull(history);
+                Assert.AreEqual(history.Count, 4);
+            }
         }
 
         [Test]
         public void Should_Return_Empty_List_Successfully()
         {
             var serviceMock = MockHistoryService();
-            var service = new DefaultHistoryApiService(serviceMock.Object);
-            var history = service.GetContentHistory(Guid.NewGuid());
+            using (var service = new PagesApiContext(Container.BeginLifetimeScope(), null, null, serviceMock.Object))
+            {
+                var history = service.GetContentHistory(Guid.NewGuid());
 
-            Assert.IsNotNull(history);
-            Assert.AreEqual(history.Count, 0);
+                Assert.IsNotNull(history);
+                Assert.AreEqual(history.Count, 0);
+            }
         }
 
         [Test]
@@ -42,12 +47,14 @@ namespace BetterCms.Test.Module.Pages.ServicesTests
         {
             var contents = CreateFakeContents();
             var serviceMock = MockHistoryService(contents);
-            var service = new DefaultHistoryApiService(serviceMock.Object);
-            var history = service.GetContentHistory(Guid.NewGuid(), order:c => c.Name, orderDescending:true);
+            using (var service = new PagesApiContext(Container.BeginLifetimeScope(), null, null, serviceMock.Object))
+            {
+                var history = service.GetContentHistory(Guid.NewGuid(), order: c => c.Name, orderDescending: true);
 
-            Assert.IsNotNull(history);
-            Assert.AreEqual(history.Count, 4);
-            Assert.AreEqual(history[1].Id, contents.First(c => c.Name == "Test_1").Id);
+                Assert.IsNotNull(history);
+                Assert.AreEqual(history.Count, 4);
+                Assert.AreEqual(history[1].Id, contents.First(c => c.Name == "Test_1").Id);
+            }
         }
         
         [Test]
@@ -56,12 +63,15 @@ namespace BetterCms.Test.Module.Pages.ServicesTests
             var filteredName = "Test_1"; 
             var contents = CreateFakeContents();
             var serviceMock = MockHistoryService(contents);
-            var service = new DefaultHistoryApiService(serviceMock.Object);
-            var history = service.GetContentHistory(Guid.NewGuid(), c => c.Name == filteredName);
 
-            Assert.IsNotNull(history);
-            Assert.AreEqual(history.Count, 1);
-            Assert.AreEqual(history[0].Id, contents.First(c => c.Name == filteredName).Id);
+            using (var service = new PagesApiContext(Container.BeginLifetimeScope(), null, null, serviceMock.Object))
+            {
+                var history = service.GetContentHistory(Guid.NewGuid(), c => c.Name == filteredName);
+
+                Assert.IsNotNull(history);
+                Assert.AreEqual(history.Count, 1);
+                Assert.AreEqual(history[0].Id, contents.First(c => c.Name == filteredName).Id);
+            }
         }
 
         private Content[] CreateFakeContents()
@@ -82,6 +92,7 @@ namespace BetterCms.Test.Module.Pages.ServicesTests
         private Mock<IHistoryService> MockHistoryService(Content[] contents = null)
         {
             var serviceMock = new Mock<IHistoryService>();
+
             serviceMock
                 .Setup(h => h.GetContentHistory(It.IsAny<Guid>(), It.IsAny<SearchableGridOptions>()))
                 .Returns(contents ?? new Content[0]);

@@ -6,7 +6,6 @@ using Autofac;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.MediaManager.Content.Resources;
-using BetterCms.Module.MediaManager.DataServices;
 using BetterCms.Module.MediaManager.Registration;
 using BetterCms.Module.MediaManager.Services;
 
@@ -98,9 +97,7 @@ namespace BetterCms.Module.MediaManager
         public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder, ICmsConfiguration configuration)
         {
             containerBuilder.RegisterType<DefaultMediaFileService>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            containerBuilder.RegisterType<DefaultMediaImageService>().AsImplementedInterfaces().InstancePerLifetimeScope();
-
-            containerBuilder.RegisterType<DefaultMediaApiService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultMediaImageService>().AsImplementedInterfaces().InstancePerLifetimeScope();            
         }
 
         /// <summary>
