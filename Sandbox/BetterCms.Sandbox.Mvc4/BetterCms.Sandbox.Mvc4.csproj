@@ -178,17 +178,19 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Content Include="App_Data\BetterCMS\Modules\readme.txt" />
     <EmbeddedResource Include="file\bcms-root\scripts\bcms.content.js" />
+    <EmbeddedResource Include="file\bcms-root\scripts\bcms.js" />
+    <EmbeddedResource Include="file\bcms-pages\scripts\bcms.pages.content.js" />
+    <EmbeddedResource Include="file\bcms-pages\scripts\bcms.pages.js" />
+    <EmbeddedResource Include="file\bcms-pages\scripts\bcms.pages.widgets.js" />
+    <EmbeddedResource Include="file\bcms-blog\scripts\bcms.blog.js" />
     <Content Include="Global.asax" />
-    <Content Include="icn-validation-error.png" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="file\bcms-blog\scripts\" />
     <Folder Include="file\bcms-media\scripts\" />
-    <Folder Include="file\bcms-pages\scripts\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

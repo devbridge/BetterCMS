@@ -328,15 +328,12 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Scripts\bcms.pages.content.js" />
-    <EmbeddedResource Include="Scripts\bcms.pages.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.properties.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.redirects.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.seo.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.tags.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.template.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.history.js" />
-    <EmbeddedResource Include="Scripts\bcms.pages.widgets.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>

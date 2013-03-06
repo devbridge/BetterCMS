@@ -15,13 +15,8 @@ define('bcms', ['jquery'], function ($) {
             editModeOff: 'editModeOff',
             addPageContent: 'addPageContent',
             sortPageContent: 'sortPageContent',
-            showOverlay: 'showOverlay',
-            hideOverlay: 'hideOverlay',
-            editContent: 'editContent',
-            configureContent: 'configureContent',
-            deleteContent: 'deleteContent',
-            contentHistory: 'contentHistory',
-            pageCreated: 'pageCreated',
+            createContentOverlay: 'createContentOverlay',
+            pageCreated: 'pageCreated'
         },
 
         eventListeners = {},

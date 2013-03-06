@@ -17,9 +17,9 @@ namespace BetterCms.Module.Pages.Accessors
         {
         }
 
-        public override string GetRegionWrapperCssClass(HtmlHelper html)
+        public override string GetContentWrapperType()
         {
-            return "bcms-content-regular";
+            return "html-content";
         }
 
         public override string GetHtml(HtmlHelper html)

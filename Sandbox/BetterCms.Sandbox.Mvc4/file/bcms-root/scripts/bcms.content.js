@@ -13,8 +13,11 @@ define('bcms.content', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, moda
             content: '.bcms-content',
             contentDelete: '.bcms-content-delete',
             contentEdit: '.bcms-content-edit',
+            contentEditInnerDiv: '.bcms-content-edit .bcms-content-icon',
             contentHistory: '.bcms-content-history',
             contentConfigure: '.bcms-content-configure',
+
+            regionOverlay: '#bcms-region-overlay-template',
             region: '.bcms-region',
             regionTop: '.bcms-region-top',
             regionBottom: '.bcms-region-bottom',
@@ -26,12 +29,13 @@ define('bcms.content', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, moda
         },
         resizeTimer,
         contents,
-        overlay,
         currentContentDom,
         regionRectangles = $(),
+        contentRectangles = $(),
         sortableRegions = [],
         links = {},
-        globalization = {};
+        globalization = {},
+        pageViewModel;
 
     // Assign objects to module
     content.selectors = selectors;
@@ -41,8 +45,13 @@ define('bcms.content', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, moda
     /**
     * Shows overlay over content region:
     */
-    content.showOverlay = function (viewModel) {
+    content.showOverlay = function (contentViewModel) {
 
+        var overlay = contentViewModel.overlay;
+        
+        overlay.animate({ 'opacity': 1 }, 200);
+
+        /* // TODO: 
         console.log('Show Overlay');
 
         var padding = 7,
@@ -70,14 +79,14 @@ define('bcms.content', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, moda
             .show()
             // TODO: .offset({ top: offset.top - padding, left: offset.left - padding })
             .offset({ top: viewModel.top - padding, left: viewModel.left - padding })
-            .animate({ 'opacity': 1 }, 200);
+            .animate({ 'opacity': 1 }, 200);*/
     };
 
     /**
     * Draws visual line over CMS region:
     */
     content.highlightRegion = function (regionViewModel) {
-        var container = $('#bcms-region-overlay-template'),
+        var container = $(selectors.regionOverlay),
             template = container.html(),
             rectangle = $(template);
 
@@ -86,6 +95,54 @@ define('bcms.content', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, moda
         regionRectangles = regionRectangles.add(rectangle);
 
         regionViewModel.overlay = rectangle;
+    };
+    
+    /**
+    * Creates overlay for content:
+    */
+    content.createContentOverlay = function (contentViewModel) {
+        var container = $(selectors.contentOverlay),
+            template = container.html(),
+            rectangle = $(template);
+
+        rectangle.data('target', contentViewModel);
+        rectangle.insertBefore(container);
+        contentRectangles = contentRectangles.add(rectangle);
+
+        contentViewModel.overlay = rectangle;
+        
+        bcms.trigger(bcms.events.createContentOverlay, contentViewModel);
+    };
+
+    /**
+    * Forces each content outline to update it's position:
+    */
+    content.refreshContentsPosition = function () {
+        contentRectangles.each(function () {
+
+            var padding = 7,
+                extra = padding * 2,
+                rectangle = $(this),
+                contentViewModel = rectangle.data('target'),
+                width = (contentViewModel.width + extra) + 'px',
+                height = (contentViewModel.height + extra) + 'px',
+                top = (contentViewModel.top - padding) + 'px',
+                left = (contentViewModel.left - padding) + 'px',
+                background = $(selectors.contentOverlayBg, rectangle);
+
+            background.css({
+                'width': width,
+                'height': height
+            });
+
+            rectangle.css({
+                'width': width,
+                'height': height,
+                'top': top,
+                'left': left,
+                'opacity': 0
+            });
+        });
     };
 
     /**
@@ -100,13 +157,9 @@ define('bcms.content', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, moda
 
             var padding = 10,
                 rectangle = $(this),
-                // TODO: element = rectangle.data('target'),
                 regionViewModel = rectangle.data('target'),
                 width = regionViewModel.width + (padding * 2),
                 height = regionViewModel.height;
-                // TODO: offset = element.offset(),
-                // TODO: width = element.width() + (padding * 2),
-                // TODO: height = element.height();
 
             $(selectors.regionTop, rectangle).css({ width: width + 'px' });
             $(selectors.regionBottom, rectangle).css({ width: width + 'px', top: (height - 2) + 'px' });
@@ -115,8 +168,6 @@ define('bcms.content', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, moda
             $(selectors.regionActions, rectangle).css({ left: width - actionsContainerWidth + 'px' });
 
             rectangle.css({
-                // TODO: top: offset.top + 'px',
-                // TODO: left: offset.left - padding + 'px'
                 top: regionViewModel.top + 'px',
                 left: regionViewModel.left - padding + 'px'
             });
@@ -126,111 +177,50 @@ define('bcms.content', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, moda
     /**
     * Initializes events for content overlay:
     */
-    content.initOverlayEvents = function (pageViewModel) {
+    content.initOverlayEvents = function (contentViewModel) {
 
-        contents = pageViewModel.contents;
+        var overlay = contentViewModel.overlay;
 
-        var html = $(selectors.contentOverlay).html(),
-            $html = $(html).hide();
-
-        overlay = $html.appendTo('body');
-        
         $(selectors.contentDelete, overlay).on('click', function () {
-            bcms.trigger(bcms.events.deleteContent, $(currentContentDom));
+            contentViewModel.onDeleteContent();
         });
 
         $(selectors.contentEdit, overlay).on('click', function () {
-            bcms.trigger(bcms.events.editContent, $(currentContentDom));
+            contentViewModel.onEditContent();
         });
 
         $(selectors.contentHistory, overlay).on('click', function () {
-            bcms.trigger(bcms.events.contentHistory, $(currentContentDom));
+            contentViewModel.onContentHistory();
         });
 
         $(selectors.contentConfigure, overlay).on('click', function () {
-            bcms.trigger(bcms.events.configureContent, $(currentContentDom));
+            contentViewModel.onConfigureContent();
         });
 
         overlay.on('mouseleave', function () {
-            content.hideOverlay();
-
-            bcms.trigger(bcms.events.hideOverlay);
+            // console.log('Content mouse leave');
+            content.hideOverlay(contentViewModel);
         });
 
-        $(contents).each(function () {
-            var contentViewModel = this;
-            
-            contentViewModel.elements.on('mouseover', function () {
-                if (!bcms.editModeIsOn() || currentContentDom === contentViewModel.elements) {
-                    // console.log('Exit content mouse over');
-                    return;
-                }
-
-                console.log('Content mouse over');
-                currentContentDom = contentViewModel.elements;
-
-                var element = $(this);
-                // element.css('outline', '1px solid red');
-                content.showOverlay(contentViewModel);
-
-                bcms.trigger(bcms.events.showOverlay, element);
-            });
-        });
-
-        /*
-        TODO:
-        contents = $(selectors.content);
-
-        var html = $(selectors.contentOverlay).html(),
-            $html = $(html).hide();
-
-        overlay = $html.appendTo('body');
-
-        $(selectors.contentDelete, overlay).on('click', function () {
-            bcms.trigger(bcms.events.deleteContent, $(currentContentDom));
-        });
-
-        $(selectors.contentEdit, overlay).on('click', function () {
-            bcms.trigger(bcms.events.editContent, $(currentContentDom));
-        });
-
-        $(selectors.contentHistory, overlay).on('click', function () {
-            bcms.trigger(bcms.events.contentHistory, $(currentContentDom));
-        });
-
-        $(selectors.contentConfigure, overlay).on('click', function () {
-            bcms.trigger(bcms.events.configureContent, $(currentContentDom));
-        });
-
-        overlay.on('mouseleave', function () {
-            content.hideOverlay();
-
-            bcms.trigger(bcms.events.hideOverlay);
-        });
-
-        contents.on('mouseover', function () {
-            if (!bcms.editModeIsOn() || currentContentDom === this) {
+        overlay.on('mouseover', function () {
+            if (!bcms.editModeIsOn() || currentContentDom === overlay) {
                 // console.log('Exit content mouse over');
                 return;
             }
 
-            console.log('Content mouse over');
-            currentContentDom = this;
-
-            var element = $(this);
-            // element.css('outline', '1px solid red');
-            content.showOverlay(element);
-
-            bcms.trigger(bcms.events.showOverlay, element);
-        });*/
+            // console.log('Content mouse over');
+            currentContentDom = overlay;
+            content.showOverlay(contentViewModel);
+        });
     };
 
     /**
     * Hides content overlay:
     */
-    content.hideOverlay = function () {
+    content.hideOverlay = function (contentViewModel) {
         currentContentDom = null;
-        overlay.hide();
+
+        contentViewModel.overlay.animate({ 'opacity': 0 }, 200);
     };
 
     /**
@@ -279,7 +269,8 @@ define('bcms.content', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, moda
                 $(this).data('content').show();
             } else {
                 // Get reference to content and append to region in same order as sorted items:
-                $(this).data('content').appendTo(regionViewModel.overlay).show();
+                // TODO: $(this).data('content').appendTo(regionViewModel.overlay).show();
+                $(this).data('content').show();
             }
 
             $(this).remove();
@@ -339,6 +330,9 @@ define('bcms.content', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, moda
         return html.replace(regex, '');
     };
 
+    /**
+    * Function calculates top, left positions and width and height for specified list of DOM elements
+    */
     function calculatePositions(elements) {
         var right = 0,
             bottom = 0,
@@ -392,6 +386,9 @@ define('bcms.content', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, moda
         };
     }
 
+    /**
+    * Page view model
+    */
     function PageViewModel() {
         var self = this;
 
@@ -399,31 +396,78 @@ define('bcms.content', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, moda
         self.contents = [];
     }
 
+    /**
+    * Page region view model
+    */
     function RegionViewModel(id, elements, regionContents) {
-        var self = this,
-            positions = calculatePositions(elements);
+        var self = this;
 
         self.id = id;
         self.elements = elements;
         self.contents = regionContents;
         self.overlay = null;
         
-        self.left = positions.left;
-        self.top = positions.top;
-        self.width = positions.width;
-        self.height = positions.height;
+        self.left = 0;
+        self.top = 0;
+        self.width = 0;
+        self.height = 0;
+
+        self.recalculatePositions = function() {
+            var positions = calculatePositions(self.elements);
+            
+            self.left = positions.left;
+            self.top = positions.top;
+            self.width = positions.width;
+            self.height = positions.height;
+        };
     }
     
-    function ContentViewModel(elements) {
-        var self = this,
-            positions = calculatePositions(elements);;
+    /**
+    * Page content view model
+    */
+    function ContentViewModel(elements, contentContainer) {
+        var self = this;
 
         self.elements = elements;
+        self.overlay = null;
 
-        self.left = positions.left;
-        self.top = positions.top;
-        self.width = positions.width;
-        self.height = positions.height;
+        self.contentId = contentContainer.data('contentId');
+        self.pageContentId = contentContainer.data('pageContentId');
+        self.contentVersion = contentContainer.data('contentVersion');
+        self.pageContentVersion = contentContainer.data('pageContentVersion');
+        self.contentType = contentContainer.data('contentType');
+        self.draft = contentContainer.data('draft');
+
+        self.left = 0;
+        self.top = 0;
+        self.width = 0;
+        self.height = 0;
+
+        self.recalculatePositions = function () {
+            var positions = calculatePositions(self.elements);
+            
+            self.left = positions.left;
+            self.top = positions.top;
+            self.width = positions.width;
+            self.height = positions.height;
+        };
+
+        self.onEditContent = function() {};
+        self.onDeleteContent = function() {};
+        self.onConfigureContent = function() {};
+        self.onContentHistory = function() {};
+
+        self.removeConfigureButton = function () {
+            self.overlay.find(selectors.contentConfigure).remove();
+        };
+
+        self.removeDeleteButton = function () {
+            self.overlay.find(selectors.contentDelete).remove();
+        };
+
+        self.addDraftIcon = function () {
+            self.overlay.find(selectors.contentEditInnerDiv).html('<div>*</div>');
+        };
 
         return self;
     }
@@ -434,7 +478,7 @@ define('bcms.content', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, moda
     content.initRegions = function () {
         console.log('Highlight regions');
 
-        var pageViewModel = new PageViewModel();
+        pageViewModel = new PageViewModel();
 
         // Loop through all the regions
         $(selectors.renderedRegions).each(function () {
@@ -450,17 +494,18 @@ define('bcms.content', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, moda
 
                 // Loop through all the region contents
                 regionContents.each(function() {
-                    var htmlScript = $($(this).html());
+                    var contentContainer = $(this),
+                        htmlScript = $(contentContainer.html());
 
                     regionContentContainer.append(htmlScript);
 
-                    var contentViewModel = new ContentViewModel(htmlScript);
+                    var contentViewModel = new ContentViewModel(htmlScript, contentContainer);
                     regionContentViewModels.push(contentViewModel);
                     pageViewModel.contents.push(contentViewModel);
                 });
 
                 // Replace html script with html content
-                regionContent = $(regionContentContainer.html());
+                regionContent = $(regionContentContainer);
                 region.replaceWith(regionContent);
                 
                 regionViewModel = new RegionViewModel(id, regionContent, regionContentViewModels);
@@ -468,24 +513,30 @@ define('bcms.content', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, moda
                 regionViewModel = new RegionViewModel(id, region, regionContentViewModels);
             }
 
-            content.highlightRegion(regionViewModel);
             pageViewModel.regions.push(regionViewModel);
         });
 
         $.each(pageViewModel.regions, function () {
+            this.recalculatePositions();
+            
+            content.highlightRegion(this);
             content.initRegionEvents(this);
+        });
+        
+        $.each(pageViewModel.contents, function () {
+            this.recalculatePositions();
+            
+            content.createContentOverlay(this);
+            content.initOverlayEvents(this);
         });
 
         content.refreshRegionsPosition();
+        content.refreshContentsPosition();
 
         $(window).on('resize', function () {
             clearTimeout(resizeTimer);
             resizeTimer = setTimeout(content.refreshRegionsPosition, 100);
         });
-
-        /*
-        content.initOverlayEvents(pageViewModel);
-        */
     };
 
     /**
@@ -505,7 +556,6 @@ define('bcms.content', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, moda
     */
     content.init = function () {
         console.log('Initializing content module');
-        // content.initOverlayEvents();
         content.initRegions();
     };
 

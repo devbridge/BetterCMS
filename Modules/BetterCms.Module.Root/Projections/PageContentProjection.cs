@@ -94,9 +94,9 @@ namespace BetterCms.Module.Root.Projections
             }
         }
 
-        public string GetRegionWrapperCssClass(HtmlHelper html)
+        public string GetContentWrapperType()
         {
-            return contentAccessor.GetRegionWrapperCssClass(html);
+            return contentAccessor.GetContentWrapperType();
         }
 
         public string GetHtml(HtmlHelper html)

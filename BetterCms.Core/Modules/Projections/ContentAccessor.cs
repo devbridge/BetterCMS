@@ -18,7 +18,7 @@ namespace BetterCms.Core.Modules.Projections
 
     public interface IHtmlAccessor
     {
-        string GetRegionWrapperCssClass(HtmlHelper html);
+        string GetContentWrapperType();
 
         string GetHtml(HtmlHelper html);
     }
@@ -41,7 +41,7 @@ namespace BetterCms.Core.Modules.Projections
             Options = options;
         }
 
-        public abstract string GetRegionWrapperCssClass(HtmlHelper html);
+        public abstract string GetContentWrapperType();
 
         public abstract string GetHtml(HtmlHelper html);
 
