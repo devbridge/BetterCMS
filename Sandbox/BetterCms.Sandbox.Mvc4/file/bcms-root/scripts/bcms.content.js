@@ -391,7 +391,9 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
                 return true;
             }
 
-            if (targetOffset != null) {
+            // Process only if offset is found and width or height are more that zero
+            // (fix for various tags, such as scripts, text nodes, etc)
+            if (targetOffset != null && (targetWidth > 0 || targetHeight > 0)) {
                 if (targetOffset.top < top) {
                     top = targetOffset.top;
                 }
@@ -509,6 +511,13 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
     }
 
     /**
+    * Decodes text with HTML encoding
+    */
+    function htmlDecode(value) {
+        return $('<div/>').html(value).text();
+    }
+
+    /**
     * Initializes events for regions:
     */
     content.initRegions = function () {
@@ -531,7 +540,7 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
                 // Loop through all the region contents
                 regionContents.each(function() {
                     var contentContainer = $(this),
-                        htmlScript = $(contentContainer.get(0).innerHTML);
+                        htmlScript = $(htmlDecode(contentContainer.get(0).innerHTML));
 
                     regionContentContainer.append(htmlScript);
 

@@ -62,11 +62,14 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// </summary>
         private void RenderClosingTags()
         {
-            sb.AppendLine(@"<div class=""clearfix""></div>");
-            
             if (allowContentManagement)
             {
+                sb.AppendLine(@"&lt;div class=&quot;clearfix&quot;&gt;&lt;/div&gt;");
                 sb.AppendLine(@"</script>");
+            }
+            else
+            {
+                sb.AppendLine(@"<div class=""clearfix""></div>");
             }
         }
     }
