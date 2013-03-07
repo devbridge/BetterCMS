@@ -46,11 +46,6 @@ namespace BetterCms.Module.Pages.Api.Events
         public event DefaultEventHandler<SingleItemEventArgs<PageContent>> PageContentInserted;
          
         /// <summary>
-        /// Occurs when a page is rendering.
-        /// </summary>
-        public event DefaultEventHandler<PageRenderingEventArgs> PageRendering;
-
-        /// <summary>
         /// Called when page is created.
         /// </summary>
         public void OnPageCreated(PageProperties page)
@@ -101,14 +96,6 @@ namespace BetterCms.Module.Pages.Api.Events
             if (PageSeoStatusChanged != null)
             {
                 PageSeoStatusChanged(new SingleItemEventArgs<PageProperties>(page));
-            }
-        }
-
-        public void OnPageRendering(RenderPageViewModel renderPageData)
-        {
-            if (PageRendering != null)
-            {
-                PageRendering(new PageRenderingEventArgs(renderPageData));
             }
         }
         

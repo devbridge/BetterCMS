@@ -12,10 +12,14 @@ using BetterCms.Core.Exceptions;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Root.Projections;
 
+using Common.Logging;
+
 namespace BetterCms.Sandbox.Mvc4
 {
     public class MvcApplication : HttpApplication
     {
+        private static readonly ILog Log = LogManager.GetCurrentClassLogger();
+
         private static ICmsHost cmsHost;
 
         protected void Application_Start()
@@ -29,8 +33,48 @@ namespace BetterCms.Sandbox.Mvc4
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             
             cmsHost.OnApplicationStart(this);
+            
+            AddPageEvents();
+        }
 
+        private void AddPageEvents()
+        {
             RootApiContext.Events.PageRendering += Events_PageRendering;
+
+            PagesApiContext.Events.PageCreated += args =>
+                {
+                    Log.Info("PageCreated: " + args.Item.ToString());
+                };
+
+            PagesApiContext.Events.PageCloned += args =>
+            {
+                Log.Info("PageCloned: " + args.Item.ToString());
+            };
+
+            PagesApiContext.Events.PageDeleted += args =>
+            {
+                Log.Info("PageDeleted: " + args.Item.ToString());
+            };
+
+            PagesApiContext.Events.PageContentInserted += args =>
+            {
+                Log.Info("PageContentInserted: " + args.Item.ToString());
+            };
+
+            PagesApiContext.Events.PagePropertiesChanged += args =>
+            {
+                Log.Info("PagePropertiesChanged: " + args.Item.ToString());
+            };
+
+            PagesApiContext.Events.PagePublishStatusChanged += args =>
+            {
+                Log.Info("PagePublishStatusChanged: " + args.Item.ToString());
+            };
+
+            PagesApiContext.Events.PageSeoStatusChanged += args =>
+            {
+                Log.Info("PageSeoStatusChanged: " + args.Item.ToString());
+            };
         }
 
         void Events_PageRendering(Module.Root.Api.Events.PageRenderingEventArgs args)
