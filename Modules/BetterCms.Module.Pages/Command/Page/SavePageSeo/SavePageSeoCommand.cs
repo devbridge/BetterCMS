@@ -54,6 +54,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageSeo
             var page = Repository.First<PageProperties>(model.PageId);
 
             bool initialHasSeo = page.HasSEO;
+            Models.Redirect newRedirect = null;
 
             page.Version = model.Version;
             page.Title = model.PageTitle;
@@ -70,6 +71,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageSeo
                     if (redirect != null)
                     {
                         Repository.Save(redirect);
+                        newRedirect = redirect;
                     }
                 }
 
@@ -87,9 +89,16 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageSeo
             Repository.Save(page);
             UnitOfWork.Commit();
 
+            // Notify about SEO change.
             if (page.HasSEO != initialHasSeo)
             {
                 PagesApiContext.Events.OnPageSeoStatusChanged(page);
+            }
+
+            // Notify about new redirect creation.
+            if (newRedirect != null)
+            {
+                PagesApiContext.Events.OnRedirectCreated(newRedirect);
             }
 
             return new EditSeoViewModel { PageUrlPath = page.PageUrl };

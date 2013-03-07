@@ -42,7 +42,7 @@ namespace BetterCms.Module.Pages.Api.Events
 
         /// <summary>
         /// Occurs when a widget is inserted.
-        /// </summary>
+        /// </summary>        
         public event DefaultEventHandler<SingleItemEventArgs<PageContent>> PageContentInserted;
          
         /// <summary>

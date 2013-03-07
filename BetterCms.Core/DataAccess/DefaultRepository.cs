@@ -124,11 +124,15 @@ namespace BetterCms.Core.DataAccess
             UnitOfWork.Session.Delete(entity);
         }
 
-        public virtual TEntity Delete<TEntity>(Guid id, int version) where TEntity : Entity
+        public virtual TEntity Delete<TEntity>(Guid id, int version, bool useProxy = true) where TEntity : Entity
         {
-            TEntity entity = AsProxy<TEntity>(id);
+            TEntity entity = useProxy
+                                ? AsProxy<TEntity>(id)
+                                : First<TEntity>(id);
+
             entity.Version = version;
             UnitOfWork.Session.Delete(entity);
+
             return entity;
         }
 

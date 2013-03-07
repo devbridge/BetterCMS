@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Api;
@@ -158,11 +159,13 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             Repository.Save(pageContent);
 
             // Save tags
-            tagService.SavePageTags(blogPost, request.Tags);
+            IList<Tag> newTags;
+            tagService.SavePageTags(blogPost, request.Tags, out newTags);
 
             // Commit
             UnitOfWork.Commit();
 
+            // Notify about new or updated blog post.
             if (request.Id.HasDefaultValue())
             {
                 BlogsApiContext.Events.OnBlogCreated(blogPost);
@@ -171,6 +174,9 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             {
                 BlogsApiContext.Events.OnBlogUpdated(blogPost);
             }
+
+            // Notify about new created tags.
+            PagesApiContext.Events.OnTagCreated(newTags);            
 
             return new SaveBlogPostCommandResponse
                        {

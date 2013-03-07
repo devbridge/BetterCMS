@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 using BetterCms.Api;
 using BetterCms.Core.Exceptions;
@@ -59,10 +61,13 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         /// <returns>Save response.</returns>
         /// <exception cref="CmsException">Failed to save page properties.</exception>
         public SavePageResponse Execute(EditPagePropertiesViewModel request)
-        {
+        {            
             UnitOfWork.BeginTransaction();
 
             var page = Repository.First<PageProperties>(request.Id);
+
+            Models.Redirect redirectCreated = null;
+            bool initialSeoStatus = page.HasSEO;
 
             request.PageUrl = redirectService.FixUrl(request.PageUrl);
 
@@ -77,6 +82,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                     if (redirect != null)
                     {
                         Repository.Save(redirect);
+                        redirectCreated = redirect;
                     }
                 }
 
@@ -109,12 +115,28 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             Repository.Save(page);
 
             // Save tags
-            tagService.SavePageTags(page, request.Tags);
+            IList<Root.Models.Tag> newTags;
+            tagService.SavePageTags(page, request.Tags, out newTags);
 
             UnitOfWork.Commit();
 
-            // Notify.
+            // Notify about page properties change.
             PagesApiContext.Events.OnPagePropertiesChanged(page);
+
+            // Notify about redirect creation.
+            if (redirectCreated != null)
+            {
+                PagesApiContext.Events.OnRedirectCreated(redirectCreated);
+            }
+
+            // Notify about SEO status change.
+            if (initialSeoStatus != page.HasSEO)
+            {
+                PagesApiContext.Events.OnPageSeoStatusChanged(page);
+            }
+
+            // Notify about new tags.
+            PagesApiContext.Events.OnTagCreated(newTags);
 
             return new SavePageResponse(page);
         }

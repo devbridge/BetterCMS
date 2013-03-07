@@ -35,6 +35,154 @@ namespace BetterCms.Sandbox.Mvc4
             cmsHost.OnApplicationStart(this);
             
             AddPageEvents();
+            AddRedirectEvents();
+            AddTagEvents();
+            AddCategoryEvents();
+            AddWidgetEvents();
+            AddBlogPostEvents();
+            AddBlogAuthorEvents();
+            AddMediaManagerEvents();
+        }
+
+        private void AddMediaManagerEvents()
+        {
+            MediaManagerApiContext.Events.MediaFileUploaded += args =>
+            {
+                Log.Info("MediaFileUploaded:" + args.Item.ToString());
+            };
+
+            MediaManagerApiContext.Events.MediaFileUpdated += args =>
+            {
+                Log.Info("MediaFileUpdated:" + args.Item.ToString());
+            };
+
+            MediaManagerApiContext.Events.MediaFileDeleted += args =>
+            {
+                Log.Info("MediaFileDeleted:" + args.Item.ToString());
+            };
+
+            MediaManagerApiContext.Events.MediaFolderCreated += args =>
+            {
+                Log.Info("MediaFolderCreated:" + args.Item.ToString());
+            };
+
+            MediaManagerApiContext.Events.MediaFolderUpdated += args =>
+            {
+                Log.Info("MediaFolderUpdated:" + args.Item.ToString());
+            };
+
+            MediaManagerApiContext.Events.MediaFolderDeleted += args =>
+            {
+                Log.Info("MediaFolderDeleted:" + args.Item.ToString());
+            };
+        }
+
+        private void AddBlogPostEvents()
+        {
+            BlogsApiContext.Events.BlogCreated += args =>
+            {
+                Log.Info("BlogCreated:" + args.Item.ToString());
+            };
+
+            BlogsApiContext.Events.BlogUpdated += args =>
+            {
+                Log.Info("BlogUpdated:" + args.Item.ToString());
+            };
+
+            BlogsApiContext.Events.BlogDeleted += args =>
+            {
+                Log.Info("BlogDeleted:" + args.Item.ToString());
+            };
+        }
+
+        private void AddBlogAuthorEvents()
+        {
+            BlogsApiContext.Events.AuthorCreated += args =>
+            {
+                Log.Info("AuthorCreated:" + args.Item.ToString());
+            };
+
+            BlogsApiContext.Events.AuthorUpdated += args =>
+            {
+                Log.Info("AuthorUpdated:" + args.Item.ToString());
+            };
+
+            BlogsApiContext.Events.AuthorDeleted += args =>
+            {
+                Log.Info("AuthorDeleted:" + args.Item.ToString());
+            };    
+        }
+
+        private void AddWidgetEvents()
+        {
+            PagesApiContext.Events.WidgetCreated += args =>
+            {
+                Log.Info("WidgetCreated:" + args.Item.ToString());
+            };
+
+            PagesApiContext.Events.WidgetUpdated += args =>
+            {
+                Log.Info("WidgetUpdated:" + args.Item.ToString());
+            };
+
+            PagesApiContext.Events.WidgetDeleted += args =>
+            {
+                Log.Info("WidgetDeleted:" + args.Item.ToString());
+            };
+        }
+        
+        private void AddCategoryEvents()
+        {
+            PagesApiContext.Events.CategoryCreated += args =>
+            {
+                Log.Info("CategoryCreated:" + args.Item.ToString());
+            };
+
+            PagesApiContext.Events.CategoryUpdated += args =>
+            {
+                Log.Info("CategoryUpdated:" + args.Item.ToString());
+            };
+
+            PagesApiContext.Events.CategoryDeleted += args =>
+            {
+                Log.Info("CategoryDeleted:" + args.Item.ToString());
+            };
+        }
+
+        private void AddTagEvents()
+        {
+            PagesApiContext.Events.TagCreated += args =>
+                {
+                    Log.Info("TagCreated:" + args.Item.ToString());
+                };
+
+            PagesApiContext.Events.TagUpdated += args =>
+            {
+                Log.Info("TagUpdated:" + args.Item.ToString());
+            };
+
+            PagesApiContext.Events.TagDeleted += args =>
+            {
+                Log.Info("TagDeleted:" + args.Item.ToString());
+            };
+        }
+
+        private void AddRedirectEvents()
+        {
+            PagesApiContext.Events.RedirectCreated += args =>
+                {
+                    Log.Info("RedirectCreated:" + args.Item.ToString());
+                };
+
+            PagesApiContext.Events.RedirectUpdated += args =>
+                {
+                    Log.Info("RedirectUpdated:" + args.Item.ToString());
+                };
+
+            PagesApiContext.Events.RedirectDeleted += args =>
+                {
+                    Log.Info("RedirectDeleted:" + args.Item.ToString());
+                };
         }
 
         private void AddPageEvents()
@@ -78,7 +226,7 @@ namespace BetterCms.Sandbox.Mvc4
         }
 
         void Events_PageRendering(Module.Root.Api.Events.PageRenderingEventArgs args)
-        {            
+        {                        
             args.RenderPageData.Metadata.Add(new MetaDataProjection("test-metadata", "hello world!"));
         }
 
