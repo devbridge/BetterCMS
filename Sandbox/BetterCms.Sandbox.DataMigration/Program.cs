@@ -11,7 +11,6 @@ using BetterCms.Module.Blog;
 using BetterCms.Module.MediaManager;
 using BetterCms.Module.Pages;
 using BetterCms.Module.Root;
-using BetterCms.Module.Navigation;
 using BetterCms.Module.Templates;
 using BetterCms.Module.Users;
 
@@ -31,7 +30,6 @@ namespace BetterCms.Sandbox.DataMigration
                     (new ModuleDescriptor[]
                     {
                         new BlogModuleDescriptor(),
-                        new NavigationModuleDescriptor(),
                         new TemplatesModuleDescriptor(),
                         new MediaManagerModuleDescriptor(),
                         new PagesModuleDescriptor(),

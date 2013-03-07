@@ -255,7 +255,8 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messages', 
             self.id = ko.observable(item.Id);
             self.version = ko.observable(item.Version);
             self.isActive = ko.observable(item.IsActive || false);
-            self.processing = ko.observable(false);
+            self.saving = ko.observable(false);
+            self.deleting = ko.observable(false);
             self.hasFocus = ko.observable(true);
             self.hasError = ko.observable(false);
             self.isSelected = false;
@@ -380,7 +381,7 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messages', 
                 return;
             }
 
-            self.processing(true);
+            self.deleting(true);
             var container = self.parent.container,
                 items = self.parent.items,
                 message = self.getDeleteConfirmationMessage(),
@@ -393,6 +394,7 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messages', 
                         items.remove(self);
                     }
                     confirmDialog.close();
+                    self.deleting(false);
                 },
                 confirmDialog = modal.confirm({
                     content: message || '',
@@ -405,13 +407,14 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messages', 
                         })
                             .done(function(json) {
                                 onDeleteCompleted(json);
-                                self.processing(false);
                             })
                             .fail(function(response) {
                                 onDeleteCompleted(bcms.parseFailedResponse(response));
-                                self.processing(false);
                             });
                         return false;
+                    },
+                    onClose: function () {
+                        self.deleting(false);
                     }
                 });
         };
@@ -425,7 +428,7 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messages', 
 
         grid.ItemViewModel.prototype.saveItem = function () {
             var self = this;
-            self.processing(true);
+            self.saving(true);
             
             var url = self.parent.saveUrl,
                 canSave = url && this.isActive() && this.hasChanges() && this.isValid(),
@@ -451,11 +454,11 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messages', 
                 })
                     .done(function(json) {
                         self.onAfterItemSaved(json);
-                        self.processing(false);
+                        self.saving(false);
                     })
                     .fail(function(response) {
                         self.onAfterItemSaved(bcms.parseFailedResponse(response));
-                        self.processing(false);
+                        self.saving(false);
                     });
             } else {
                 if (!keepActive) {
@@ -465,7 +468,7 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messages', 
                 if (removeFromList) {
                     this.parent.items.remove(this);
                 }
-                self.processing(false);
+                self.saving(false);
             }
         };
 

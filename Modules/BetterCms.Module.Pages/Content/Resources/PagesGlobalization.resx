@@ -121,7 +121,7 @@
     <value>Add New Content</value>
   </data>
   <data name="AddNewPageProperties_PagePermalink_InvalidMessage" xml:space="preserve">
-    <value>Page permalink is invalid. Link must start and end with "/" and can contain only following characters: '0-9', 'a-z', '-', '/', '_'</value>
+    <value>Page permalink is invalid. Link must start and end with "/", can contain only following characters: '0-9', 'a-z', '-', '/', '_' and no more than 260 alphanumeric characters between the '/'.</value>
   </data>
   <data name="AddNewPageProperties_PagePermalink_MaxLengthMessage" xml:space="preserve">
     <value>Page permalink max length exceeded.</value>
@@ -346,7 +346,7 @@
     <value>Widget deleted successfully</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_CreatePermanentRedirectToOldUrl_Title" xml:space="preserve">
-    <value>Create permanent redirect entry from old URL to new URL</value>
+    <value>Create permanent redirect entry from old URL to new URL.</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_EditUrlPath_Tooltip_Description" xml:space="preserve">
     <value>Page URL must start and end with "/" and can contain only following characters: '0-9', 'a-z', '-', '/', '_'</value>
@@ -421,7 +421,7 @@
     <value>Layout</value>
   </data>
   <data name="EditPageProperties_PagePermalink_InvalidMessage" xml:space="preserve">
-    <value>Page permalink is invalid. Link must start and end with "/" and can contain only following characters: '0-9', 'a-z', '-', '/', '_'</value>
+    <value>Page permalink is invalid. Link must start and end with "/", can contain only following characters: '0-9', 'a-z', '-', '/', '_' and no more than 260 alphanumeric characters between the '/'.</value>
   </data>
   <data name="EditPageProperties_PagePermalink_MaxLengthMessage" xml:space="preserve">
     <value>Page URL max length exceeded.</value>
@@ -448,7 +448,7 @@
     <value>Close</value>
   </data>
   <data name="EditSeo_EditUrlPath_PermanentRedirect" xml:space="preserve">
-    <value>Create permanent redirect entry from old URL to new URL</value>
+    <value>Create permanent redirect entry from old URL to new URL.</value>
   </data>
   <data name="EditSeo_EditUrlPath_Title" xml:space="preserve">
     <value>Page URL</value>
@@ -1049,5 +1049,26 @@
   </data>
   <data name="SavePage_CreatedSuccessfully_Message" xml:space="preserve">
     <value>Page created succesfully.</value>
+  </data>
+  <data name="EditSeo_Messages_NotInSitemapWarnMessage" xml:space="preserve">
+    <value>Page is not in sitemap.</value>
+  </data>
+  <data name="EditPageProperties_AdvancedPropertiesTab_UpdateSitemap_Title" xml:space="preserve">
+    <value>Update sitemap with new URL.</value>
+  </data>
+  <data name="EditSeo_EditUrlPath_UpdateSitemap" xml:space="preserve">
+    <value>Update sitemap with new URL.</value>
+  </data>
+  <data name="DeletePage_Dialog_UpdateSitemap" xml:space="preserve">
+    <value>Update sitemap</value>
+  </data>
+  <data name="DeletePage_Dialog_UpdateSitemap_Description" xml:space="preserve">
+    <value>Remove page from sitemap.</value>
+  </data>
+  <data name="DeletePage_Dialog_UpdateSitemap_RemovePageFromSitemap" xml:space="preserve">
+    <value>Remove this page from sitemap.</value>
+  </data>
+  <data name="DeletePageCommand_SitemapNodeHasChildNodes_Message" xml:space="preserve">
+    <value>Can not remove this page from the sitemap, because it has child nodes.</value>
   </data>
 </root>

@@ -358,7 +358,7 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Image height can not be less than 0 px and bigger that 9999..
+        ///   Looks up a localized string similar to Image height can not be less than 1 px and bigger that 9999..
         /// </summary>
         public static string ImageEditor_Dialog_ImageHeight_RangeMessage {
             get {
@@ -403,7 +403,7 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Image width can not be less than 0 px and bigger that 9999..
+        ///   Looks up a localized string similar to Image width can not be less than 1 px and bigger that 9999..
         /// </summary>
         public static string ImageEditor_Dialog_ImageWidth_RangeMessage {
             get {

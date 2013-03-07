@@ -1,0 +1,20 @@
+﻿@using BetterCms.Module.Pages.Content.Resources
+
+@model BetterCms.Module.Pages.ViewModels.Seo.EditSeoViewModel
+
+@if (!Model.IsInSitemap)
+{
+    <div class="bcms-messages-type-1">
+        <ul class="bcms-success-messages" style="display: none">
+        </ul>
+        <ul class="bcms-info-messages" style="display: none">
+        </ul>
+        <ul class="bcms-warning-messages">
+            <li>
+                @PagesGlobalization.EditSeo_Messages_NotInSitemapWarnMessage
+            </li>
+        </ul>
+        <ul class="bcms-error-messages" style="display: none">
+        </ul>
+    </div>
+}

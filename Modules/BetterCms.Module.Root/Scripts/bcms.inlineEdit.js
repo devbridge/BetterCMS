@@ -15,6 +15,7 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
             firstEditableInput: 'input[type="text"]:first',
             editableInput: 'input[type="text"]',
             fieldInputs: 'td > .bcms-input-box > input.bcms-editor-field-box',
+            allInputs: 'td input',
             fieldValues: '.bcms-grid-item-info',
             deleteRowLink: 'a.bcms-icn-delete',
             rowMessage: '.bcms-grid-item-message',
@@ -522,7 +523,7 @@ define('bcms.inlineEdit', ['jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcm
     editor.setRowInputNames = function (row) {
         var counterSet = false,
             index = null;
-        row.find(selectors.fieldInputs).each(function () {
+        row.find(selectors.allInputs).each(function () {
             var input = $(this),
                 pattern = input.data('namePattern');
             if (pattern) {
