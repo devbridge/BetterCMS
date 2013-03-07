@@ -27,10 +27,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             this.content = content;
             this.allowContentManagement = allowContentManagement;
 
-            if (allowContentManagement)
-            {
-                RenderOpeningTags();
-            }
+            RenderOpeningTags();
         }
 
         /// <summary>
@@ -38,10 +35,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// </summary>
         public void Dispose()
         {
-            if (allowContentManagement)
-            {
-                RenderClosingTags();
-            }
+            RenderClosingTags();
         }
 
         /// <summary>
@@ -49,14 +43,18 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// </summary>
         private void RenderOpeningTags()
         {
-            sb.AppendFormat(@"<script type=""text/html"" data-page-content-id=""{0}"" data-content-id=""{1}"" data-page-content-version=""{2}"" data-content-version=""{3}"" data-content-type=""{4}"" {5}>",
-                content.PageContentId,
-                content.ContentId,
-                content.PageContentVersion,
-                content.ContentVersion,
-                content.GetContentWrapperType(),
-                content.PageContentStatus == ContentStatus.Draft ? " data-draft=\"true\"" : null);
-            sb.AppendLine();
+            if (allowContentManagement)
+            {
+                sb.AppendFormat(
+                    @"<script type=""text/html"" data-page-content-id=""{0}"" data-content-id=""{1}"" data-page-content-version=""{2}"" data-content-version=""{3}"" data-content-type=""{4}"" {5}>",
+                    content.PageContentId,
+                    content.ContentId,
+                    content.PageContentVersion,
+                    content.ContentVersion,
+                    content.GetContentWrapperType(),
+                    content.PageContentStatus == ContentStatus.Draft ? " data-draft=\"true\"" : null);
+                sb.AppendLine();
+            }
         }
 
         /// <summary>
@@ -64,6 +62,8 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// </summary>
         private void RenderClosingTags()
         {
+            sb.AppendLine(@"<div class=""clearfix""></div>");
+            
             if (allowContentManagement)
             {
                 sb.AppendLine(@"</script>");

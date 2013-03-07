@@ -34,7 +34,8 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
         sortableRegions = [],
         links = {},
         globalization = {},
-        pageViewModel;
+        pageViewModel,
+        opacityAnimationSpeed = 50;
 
     // Assign objects to module
     content.selectors = selectors;
@@ -48,7 +49,7 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
 
         var overlay = contentViewModel.overlay;
         
-        overlay.animate({ 'opacity': 1 }, 200);
+        overlay.animate({ 'opacity': 1 }, opacityAnimationSpeed);
     };
 
     /**
@@ -205,7 +206,7 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
     content.hideOverlay = function (contentViewModel) {
         currentContentDom = null;
 
-        contentViewModel.overlay.animate({ 'opacity': 0 }, 200);
+        contentViewModel.overlay.animate({ 'opacity': 0 }, opacityAnimationSpeed);
     };
 
     /**
@@ -226,15 +227,13 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
         $('.bcms-region-sortdone', regionViewModel.overlay).on('click', function () {
             content.turnSortModeOff(regionViewModel);
 
-            /*
-            TODO
             var pageContents = [];
-            $(content.selectors.content, target).each(function () {
-                pageContents.push({ 'Id': $(this).data('pageContentId'), 'Version': $(this).data('pageContentVersion') });
+            $.each(regionViewModel.contents, function () {
+                pageContents.push({ 'Id': this.pageContentId, 'Version': this.pageContentVersion });
             });
-            var model = { region: region, data: { 'pageId': bcms.pageId, 'regionId': regionId, 'pageContents': pageContents } };
+            var model = { region: regionViewModel, data: { 'pageId': bcms.pageId, 'regionId': regionViewModel.id, 'pageContents': pageContents } };
 
-            bcms.trigger(bcms.events.sortPageContent, model);*/
+            bcms.trigger(bcms.events.sortPageContent, model);
         });
     };
 
@@ -247,22 +246,57 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
 
         regionViewModel.overlay.sortable('destroy');
 
-        // TODO: fix order
+        var regionContents = [];
 
         $('.bcms-sort-wrapper', regionViewModel.overlay).each(function () {
-            if (cancel) {
-                $(this).data('content').show();
-            } else {
-                // Get reference to content and append to region in same order as sorted items:
-                // TODO: $(this).data('content').appendTo(regionViewModel.overlay).show();
-                $(this).data('content').show();
-            }
+            var viewModel = $(this).data('target');
+
+            regionContents.push(viewModel);
 
             $(this).remove();
         });
 
+        if (!cancel) {
+            reorderRegionContents(regionContents, regionViewModel.contents);
+            regionViewModel.contents = regionContents;
+        }
+
+        $.each(regionContents, function () {
+            this.elements.show();
+            this.overlay.show();
+        });
+
         content.refreshRegionsPosition();
+        content.refreshContentsPosition();
     };
+
+    function reorderRegionContents(contents, contentsBefore) {
+        var reorder = false,
+            i, j, viewModel;
+
+        // Check if DOM reorder is needed
+        for (i = 0; i < contents.length; i ++) {
+            if (contentsBefore[i].contentId != contents[i].contentId) {
+                reorder = true;
+                break;
+            }
+        }
+        if (!reorder) {
+            return;
+        }
+
+        // Loop through all the reordered contents, starting from the second one
+        for (i = contents.length-1; i > 0; i--) {
+            viewModel = contents[i];
+            
+            var firstContent = viewModel.elements[0],
+                elements = contents[i - 1].elements;
+            
+            for (j = 0; j < elements.length; j++) {
+                $(elements[j]).insertBefore(firstContent);
+            }
+        }
+    }
 
     /**
     * Turns region content sorting mode ON:
@@ -275,18 +309,18 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
         $('.bcms-region-sortdone', regionViewModel.overlay).show();
 
         $(regionViewModel.contents).each(function () {
-            var contentDiv = this.elements,
-                sortWrapper = $('<div class="bcms-sort-wrapper" />'),
-                contentCopy = contentDiv.html(),
-                contentCopyClean = content.removeScripts(contentCopy);
+            var sortWrapper = $('<div class="bcms-sort-wrapper" />'),
+                contentCopyClean = getCleanHtml(this.elements);
             
             $('<div class="bcms-sort-content" />').html(contentCopyClean).appendTo(sortWrapper);
             sortWrapper.append('<div class="bcms-sort-overlay bcms-content-overlaybg" />');
 
             // Store reference to content so it can be sorted later:
-            sortWrapper.data('content', contentDiv);
+            sortWrapper.data('target', this);
 
-            contentDiv.hide();
+            this.elements.hide();
+            this.overlay.hide();
+            
             regionViewModel.overlay.append(sortWrapper);
         });
 
@@ -294,18 +328,34 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
     };
 
     /**
+    * Merges html from all elements and removes scripts
+    */
+    function getCleanHtml(elements) {
+        var html = '',
+            currentHtml;
+
+        elements.each(function (index, element) {
+            currentHtml = $(element).prop('outerHTML');
+            if (currentHtml) {
+                html += currentHtml;
+            }
+        });
+
+        return content.removeScripts(html);
+    }
+
+    /**
     * Updates region content versions:
     */
-    content.updateRegionContentVersions = function (region, listOfIdVersion) {
-        /* TODO:
-        var pageContentItems = $(selectors.content, region.data('target'));
+    content.updateRegionContentVersions = function (regionViewModel, listOfIdVersion) {
+
         for (var i = 0; i < listOfIdVersion.length; i++) {
-            pageContentItems.each(function() {
-                if ($(this).data('pageContentId') == listOfIdVersion[i].Id) {
-                    $(this).data('pageContentVersion', listOfIdVersion[i].Version);
+            $.each(regionViewModel.contents, function () {
+                if (this.pageContentId == listOfIdVersion[i].Id) {
+                    this.pageContentVersion = listOfIdVersion[i].Version;
                 }
             });
-        }*/
+        }
     };
 
     /**
@@ -481,7 +531,7 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
                 // Loop through all the region contents
                 regionContents.each(function() {
                     var contentContainer = $(this),
-                        htmlScript = $(contentContainer.html());
+                        htmlScript = $(contentContainer.get(0).innerHTML);
 
                     regionContentContainer.append(htmlScript);
 
@@ -491,7 +541,7 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
                 });
 
                 // Replace html script with html content
-                regionContent = $(regionContentContainer);
+                regionContent = $(regionContentContainer.children());
                 region.replaceWith(regionContent);
                 
                 regionViewModel = new RegionViewModel(id, regionContent, regionContentViewModels);
