@@ -37,7 +37,8 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                         // Add Html
                         using (new RegionContentWrapper(contentsBuilder, projection, model.CanManageContent))
                         {
-                            contentsBuilder.Append(projection.GetHtml(htmlHelper));
+                            var content = HttpUtility.HtmlEncode(projection.GetHtml(htmlHelper));
+                            contentsBuilder.Append(content);
                         }
                     }
                 }
