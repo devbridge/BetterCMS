@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Principal;
 using System.Web;
 using System.Web.Configuration;
@@ -7,13 +9,19 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
 
+using Autofac;
+
 using BetterCms.Core;
+using BetterCms.Core.Dependencies;
 using BetterCms.Core.Environment.Host;
+using BetterCms.Core.Modules.Registration;
 
 namespace BetterCms.Sandbox.Mvc4
 {
     public class MvcApplication : HttpApplication
     {
+        public const string UserRolesKey = "UserRoles";
+
         private static ICmsHost cmsHost;
 
         protected void Application_Start()
@@ -25,8 +33,15 @@ namespace BetterCms.Sandbox.Mvc4
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            
-            cmsHost.OnApplicationStart(this);            
+
+            var container = ContextScopeProvider.CreateChildContainer();
+            var modulesRegistration = container.Resolve<IModulesRegistration>();
+            var userRoles = new List<string> { "User", "Admin" };
+            var roles = modulesRegistration.GetUserAccessRoles().Select(m => m.Name).ToList();
+            userRoles.AddRange(roles);
+            Application[UserRolesKey] = userRoles;
+
+            cmsHost.OnApplicationStart(this);
         }
 
         protected void Application_BeginRequest()
@@ -64,7 +79,7 @@ namespace BetterCms.Sandbox.Mvc4
                 if (authTicket != null)
                 {
                     var identity = new GenericIdentity(authTicket.Name, "Forms");
-                    var principal = new GenericPrincipal(identity, new[] { "User", "Admin" });
+                    var principal = new GenericPrincipal(identity, ((List<string>)Application[MvcApplication.UserRolesKey]).ToArray());
                     Context.User = principal;
                 }
             }

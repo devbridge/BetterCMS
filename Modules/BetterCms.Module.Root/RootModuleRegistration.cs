@@ -174,7 +174,7 @@ namespace BetterCms.Module.Root
 
         public override IEnumerable<IUserRole> RegisterUserRoles(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
         {
-            return new[] { new UserRole(UserRoles.EditSiteSettings, RootGlobalization.UserRole_EditSiteSettings) };
+            return new[] { new UserRole(RootModuleConstants.UserRoles.EditSiteSettings, RootGlobalization.UserRole_EditSiteSettings) };
         }
 
         public override IEnumerable<IPageActionProjection> RegisterSidebarHeaderProjections(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
@@ -200,7 +200,7 @@ namespace BetterCms.Module.Root
                             Title = () => RootGlobalization.Sidebar_SiteSettingsButtonTitle,
                             CssClass = page => "bcms-sidemenu-btn bcms-btn-settings",
                             Order = 500,
-                            IsVisible = (page, principal) => principal.IsInRole(UserRoles.EditSiteSettings)
+                            IsVisible = (page, principal) => principal.IsInRole(RootModuleConstants.UserRoles.EditSiteSettings)
                         }
                 };
         }
