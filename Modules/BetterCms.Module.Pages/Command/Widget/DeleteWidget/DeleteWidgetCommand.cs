@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 
+using BetterCms.Api;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Content.Resources;
@@ -33,9 +34,11 @@ namespace BetterCms.Module.Pages.Command.Widget.DeleteWidget
                                               string.Format("A widget {0}(id={1}) can't be deleted because it is in use.", widget.Name, request.WidgetId));
             }
 
-            Repository.Delete(widget);
-            
+            Repository.Delete(widget);            
             UnitOfWork.Commit();
+
+            // Notify.
+            PagesApiContext.Events.OnWidgetDeleted(widget);
 
             return true;
         }

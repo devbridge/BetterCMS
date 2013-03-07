@@ -1,5 +1,6 @@
 ﻿using System;
 
+using BetterCms.Api;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Models;
@@ -52,6 +53,8 @@ namespace BetterCms.Module.Pages.Command.Page.SavePagePublishStatus
 
             if (page != null)
             {
+                var initialStatus = page.Status;
+
                 if (page.Status == PageStatus.Draft || page.Status == PageStatus.Preview)
                 {
                     var message = string.Format(PagesGlobalization.SavePageStatus_PageIsInInappropriateStatus_Message);
@@ -69,8 +72,13 @@ namespace BetterCms.Module.Pages.Command.Page.SavePagePublishStatus
                     page.Status = PageStatus.Unpublished;
                 }
 
-                Repository.Save(page);
+                Repository.Save(page);                
                 UnitOfWork.Commit();
+
+                if (page.Status != initialStatus)
+                {
+                    PagesApiContext.Events.OnPagePublishStatusChanged(page);
+                }
             }
 
             return true;

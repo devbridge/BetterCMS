@@ -24,7 +24,7 @@ namespace BetterCms.Module.MediaManager.Command.Upload.Upload
             {
                 var media = MediaFileService.UploadFile(request.Type, request.RootFolderId, request.FileName, request.FileLength, request.FileStream);
 
-                MediaManagerApiContext.Events.OnNewMediaUploaded(media);
+                MediaManagerApiContext.Events.OnMediaFileUploaded(media);
 
                 return media;
             }
@@ -33,7 +33,7 @@ namespace BetterCms.Module.MediaManager.Command.Upload.Upload
             {
                 var media = MediaImageService.UploadImage(request.RootFolderId, request.FileName, request.FileLength, request.FileStream);
                 
-                MediaManagerApiContext.Events.OnNewMediaUploaded(media);
+                MediaManagerApiContext.Events.OnMediaFileUploaded(media);
 
                 return media;
             }

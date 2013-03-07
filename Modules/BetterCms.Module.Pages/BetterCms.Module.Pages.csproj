@@ -119,6 +119,11 @@
     </Compile>
     <Compile Include="Accessors\PageStylesheetAccessor.cs" />
     <Compile Include="Accessors\PageJavaScriptAccessor.cs" />
+    <Compile Include="Api\Events\CategoryEvents.cs" />
+    <Compile Include="Api\Events\WidgetEvents.cs" />
+    <Compile Include="Api\Events\TagEvents.cs" />
+    <Compile Include="Api\Events\RedirectEvents.cs" />
+    <Compile Include="Api\Events\PageRenderingEventArgs.cs" />
     <Compile Include="DataContracts\Enums\PageLoadableChilds.cs" />
     <Compile Include="Command\Content\DeletePageContent\DeletePageContentCommand.cs" />
     <Compile Include="Command\Content\DeletePageContent\DeletePageContentCommandRequest.cs" />
@@ -211,7 +216,6 @@
     <Compile Include="Controllers\SeoController.cs" />
     <Compile Include="Controllers\ContentController.cs" />
     <Compile Include="Api\Events\PageEvents.cs" />
-    <Compile Include="Api\Events\PagePropertiesEventArgs.cs" />
     <Compile Include="Helpers\CssHelper.cs" />
     <Compile Include="Helpers\HttpHelper.cs" />
     <Compile Include="Helpers\ListModelBindingExtensions.cs" />

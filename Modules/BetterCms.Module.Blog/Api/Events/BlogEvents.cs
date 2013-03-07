@@ -1,50 +1,33 @@
 ﻿using BetterCms.Api;
 using BetterCms.Module.Blog.Models;
+using BetterCms.Module.Pages.Models;
 
 namespace BetterCms.Module.Blog.Api.Events
 {
     /// <summary>
     /// Attachable blog events container
     /// </summary>
-    public class BlogEvents
+    public partial class BlogsApiEvents : EventsBase
     {
-        /// <summary>
-        /// Delegate to handle a blog post creation event.
-        /// </summary>
-        /// <param name="args">The <see cref="Pages.Api.Events.PagePropertiesEventArgs" /> instance containing the event data.</param>
-        public delegate void BlogCreatedEventHandler(BlogPostEventArgs args);
-
-        /// <summary>
-        /// Delegate to handle a blog post update event.
-        /// </summary>
-        /// <param name="args">The <see cref="Pages.Api.Events.PagePropertiesEventArgs" /> instance containing the event data.</param>
-        public delegate void BlogUpdatedEventHandler(BlogPostEventArgs args);
-
-        /// <summary>
-        /// Delegate to handle a blog post deletion event.
-        /// </summary>
-        /// <param name="args">The <see cref="Pages.Api.Events.PagePropertiesEventArgs" /> instance containing the event data.</param>
-        public delegate void BlogDeletedEventHandler(BlogPostEventArgs args);
-
         /// <summary>
         /// Occurs when blog post is created.
         /// </summary>
-        public event BlogCreatedEventHandler BlogCreated;
+        public event DefaultEventHandler<SingleItemEventArgs<BlogPost>> BlogCreated;
 
         /// <summary>
         /// Occurs when blog post is updated.
         /// </summary>
-        public event BlogUpdatedEventHandler BlogUpdated;
+        public event DefaultEventHandler<SingleItemEventArgs<BlogPost>> BlogUpdated;
 
         /// <summary>
         /// Occurs when blog post is deleted.
         /// </summary>
-        public event BlogDeletedEventHandler BlogDeleted;
+        public event DefaultEventHandler<SingleItemEventArgs<BlogPost>> BlogDeleted;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlogEvents" /> class.
         /// </summary>
-        public BlogEvents()
+        public BlogsApiEvents()
         {
             PagesApiContext.Events.PageDeleted += OnPageDeleted;
         }
@@ -56,7 +39,7 @@ namespace BetterCms.Module.Blog.Api.Events
         {
             if (BlogCreated != null)
             {
-                BlogCreated(new BlogPostEventArgs(blog));
+                BlogCreated(new SingleItemEventArgs<BlogPost>(blog));
             }
         }
 
@@ -67,7 +50,7 @@ namespace BetterCms.Module.Blog.Api.Events
         {
             if (BlogUpdated != null)
             {
-                BlogUpdated(new BlogPostEventArgs(blog));
+                BlogUpdated(new SingleItemEventArgs<BlogPost>(blog));
             }
         }
 
@@ -78,15 +61,15 @@ namespace BetterCms.Module.Blog.Api.Events
         {
             if (BlogDeleted != null)
             {
-                BlogDeleted(new BlogPostEventArgs(blog));
+                BlogDeleted(new SingleItemEventArgs<BlogPost>(blog));
             }
         }
 
-        private void OnPageDeleted(Pages.Api.Events.PagePropertiesEventArgs args)
+        private void OnPageDeleted(SingleItemEventArgs<PageProperties> args)
         {
-            if (args.Page is BlogPost)
+            if (args != null && args.Item is BlogPost)
             {
-                OnBlogDeleted((BlogPost)args.Page);
+                OnBlogDeleted((BlogPost)args.Item);
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 
+using BetterCms.Api;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.Models;
@@ -111,6 +112,9 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             tagService.SavePageTags(page, request.Tags);
 
             UnitOfWork.Commit();
+
+            // Notify.
+            PagesApiContext.Events.OnPagePropertiesChanged(page);
 
             return new SavePageResponse(page);
         }

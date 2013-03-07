@@ -116,6 +116,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Api\DataApiContext.cs" />
+    <Compile Include="Api\Events.cs" />
     <Compile Include="CmsContext.cs" />
     <Compile Include="Api\ApiContext.cs" />
     <Compile Include="DataAccess\DataContext\QueryableExtensions.cs" />

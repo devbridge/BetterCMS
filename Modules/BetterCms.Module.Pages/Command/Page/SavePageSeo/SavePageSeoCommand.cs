@@ -1,5 +1,6 @@
 ﻿using System;
 
+using BetterCms.Api;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
@@ -51,6 +52,9 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageSeo
         public virtual EditSeoViewModel Execute(EditSeoViewModel model)
         {
             var page = Repository.First<PageProperties>(model.PageId);
+
+            bool initialHasSeo = page.HasSEO;
+
             page.Version = model.Version;
             page.Title = model.PageTitle;
 
@@ -59,6 +63,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageSeo
             if (!string.Equals(model.PageUrlPath, model.ChangedUrlPath, StringComparison.OrdinalIgnoreCase))
             {
                 pageService.ValidatePageUrl(model.ChangedUrlPath, model.PageId);
+
                 if (model.CreatePermanentRedirect)
                 {
                     var redirect = redirectService.CreateRedirectEntity(model.PageUrlPath, model.ChangedUrlPath);
@@ -81,6 +86,11 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageSeo
 
             Repository.Save(page);
             UnitOfWork.Commit();
+
+            if (page.HasSEO != initialHasSeo)
+            {
+                PagesApiContext.Events.OnPageSeoStatusChanged(page);
+            }
 
             return new EditSeoViewModel { PageUrlPath = page.PageUrl };
         }

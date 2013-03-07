@@ -1,5 +1,6 @@
 ﻿using System;
 
+using BetterCms.Api;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc;
 using BetterCms.Core.Mvc.Commands;
@@ -52,6 +53,15 @@ namespace BetterCms.Module.Pages.Commands.SaveCategory
 
             Repository.Save(category);                       
             UnitOfWork.Commit();
+
+            if (categoryItem.Id == default(Guid))
+            {
+                PagesApiContext.Events.OnCategoryCreated(category);
+            }
+            else
+            {
+                PagesApiContext.Events.OnCategoryUpdated(category);
+            }
 
             return new CategoryItemViewModel
                 {

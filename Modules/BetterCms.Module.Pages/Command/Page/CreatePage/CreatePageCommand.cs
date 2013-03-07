@@ -1,6 +1,7 @@
 ﻿using System;
 
 using BetterCms.Api;
+using BetterCms.Core.Exceptions;
 using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.Pages.Command.Page.SavePageProperties;

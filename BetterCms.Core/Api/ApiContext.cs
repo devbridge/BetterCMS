@@ -11,7 +11,7 @@ namespace BetterCms.Api
 // ReSharper restore CheckNamespace
 {
     public abstract class ApiContext : IDisposable
-    {
+    {        
         /// <summary>
         /// The current class logger.
         /// </summary>

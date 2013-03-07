@@ -24,7 +24,7 @@ namespace BetterCms.Api
 {
     public class PagesApiContext : DataApiContext
     {
-        private static readonly PageEvents events;
+        private static readonly PagesApiEvents events;
 
         /// <summary>
         /// The sitemap service.
@@ -41,7 +41,7 @@ namespace BetterCms.Api
         /// </summary>
         static PagesApiContext()
         {
-            events = new PageEvents();
+            events = new PagesApiEvents();
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace BetterCms.Api
         /// <value>
         /// The events.
         /// </value>
-        public static PageEvents Events
+        public static PagesApiEvents Events
         {
             get
             {

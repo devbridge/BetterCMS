@@ -119,8 +119,8 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Accessors\BlogPostContentAccessor.cs" />
-    <Compile Include="Api\Events\BlogPostEventArgs.cs" />
     <Compile Include="Api\Events\BlogEvents.cs" />
+    <Compile Include="Api\Events\AuthorEvents.cs" />
     <Compile Include="BlogModuleConstants.cs" />
     <Compile Include="BlogModuleDescriptor.cs" />
     <Compile Include="Api\BlogsApiContext.cs" />

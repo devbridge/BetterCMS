@@ -1,4 +1,5 @@
-﻿using BetterCms.Core.Mvc.Commands;
+﻿using BetterCms.Api;
+using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.ViewModels.Author;
 using BetterCms.Module.MediaManager.Models;
@@ -36,6 +37,15 @@ namespace BetterCms.Module.Blog.Commands.SaveAuthor
 
             Repository.Save(author);
             UnitOfWork.Commit();
+
+            if (isNew)
+            {
+                BlogsApiContext.Events.OnAuthorCreated(author);
+            }
+            else
+            {
+                BlogsApiContext.Events.OnAuthorUpdated(author);
+            }
 
             return new AuthorViewModel
                        {

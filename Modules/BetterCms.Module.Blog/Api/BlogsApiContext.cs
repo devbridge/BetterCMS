@@ -19,14 +19,14 @@ namespace BetterCms.Api
 {
     public class BlogsApiContext : DataApiContext
     {
-        private static readonly BlogEvents events;
+        private static readonly BlogsApiEvents events;
 
         /// <summary>
         /// Initializes the <see cref="BlogsApiContext" /> class.
         /// </summary>
         static BlogsApiContext()
         {
-            events = new BlogEvents();
+            events = new BlogsApiEvents();
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace BetterCms.Api
         /// <value>
         /// The events.
         /// </value>
-        public static BlogEvents Events
+        public static BlogsApiEvents Events
         {
             get
             {

@@ -35,7 +35,7 @@ namespace BetterCms.Core.DataAccess
 
         void Delete<TEntity>(TEntity entity) where TEntity : Entity;
 
-        void Delete<TEntity>(Guid id, int version) where TEntity : Entity;
+        TEntity Delete<TEntity>(Guid id, int version) where TEntity : Entity;
 
         void Attach<TEntity>(TEntity entity) where TEntity : Entity;
 

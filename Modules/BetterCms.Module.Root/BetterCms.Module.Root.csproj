@@ -116,6 +116,9 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Api\Events\RootEvents.cs" />
+    <Compile Include="Api\Events\PageRenderingEventArgs.cs" />
+    <Compile Include="Api\RootApiContext.cs" />
     <Compile Include="Commands\GetPageToRender\GetPageToRenderRequest.cs" />
     <Compile Include="Commands\GetPageToRender\GetPageToRenderCommand.cs" />
     <Compile Include="Content\Resources\RootGlobalization.Designer.cs">

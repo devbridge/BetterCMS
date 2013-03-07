@@ -5,8 +5,12 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
 
+using BetterCms.Api;
 using BetterCms.Core;
 using BetterCms.Core.Environment.Host;
+using BetterCms.Core.Exceptions;
+using BetterCms.Core.Modules.Projections;
+using BetterCms.Module.Root.Projections;
 
 namespace BetterCms.Sandbox.Mvc4
 {
@@ -25,6 +29,13 @@ namespace BetterCms.Sandbox.Mvc4
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             
             cmsHost.OnApplicationStart(this);
+
+            RootApiContext.Events.PageRendering += Events_PageRendering;
+        }
+
+        void Events_PageRendering(Module.Root.Api.Events.PageRenderingEventArgs args)
+        {            
+            args.RenderPageData.Metadata.Add(new MetaDataProjection("test-metadata", "hello world!"));
         }
 
         protected void Application_BeginRequest()
