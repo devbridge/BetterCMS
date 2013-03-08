@@ -36,16 +36,26 @@ namespace BetterCms.Module.MediaManager.Command.Images.GetImages
                     .Select(() => alias.PublicThumbnailUrl).WithAlias(() => modelAlias.ThumbnailUrl)
                     .Select(() => alias.PublicUrl).WithAlias(() => modelAlias.PublicUrl)
                     .Select(IsProcessing()).WithAlias(() => modelAlias.IsProcessing)
+                    .Select(IsFailed()).WithAlias(() => modelAlias.IsFailed)
                     .Select(() => alias.Size).WithAlias(() => modelAlias.Size);
         }
 
         /// <summary>
-        /// Gets the is processing conditions.
+        /// Creates restriction which determines whether media item upload is still processing.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>NHybernate Criterion</returns>
         protected override ICriterion GetIsProcessingConditions()
         {
-            return Restrictions.Where(() => !alias.IsUploaded || !alias.IsThumbnailUploaded || !alias.IsOriginalUploaded);
+            return Restrictions.Where(() => alias.IsUploaded == null || alias.IsThumbnailUploaded == null || alias.IsOriginalUploaded == null);
+        }
+
+        /// <summary>
+        /// Creates restriction which determines whether media item upload is still processing.
+        /// </summary>
+        /// <returns>NHybernate Criterion</returns>
+        protected override ICriterion GetIsFailedConditions()
+        {
+            return Restrictions.Where(() => alias.IsUploaded == false || alias.IsThumbnailUploaded == false || alias.IsOriginalUploaded == false);
         }
     }
 }

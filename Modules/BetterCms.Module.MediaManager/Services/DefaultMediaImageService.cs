@@ -117,7 +117,7 @@ namespace BetterCms.Module.MediaManager.Services
 
             try
             {
-                if (image.IsUploaded)
+                if (image.IsUploaded.HasValue && image.IsUploaded.Value)
                 {
                     removeImageFileTasks.Add(
                         new Task(
@@ -125,7 +125,7 @@ namespace BetterCms.Module.MediaManager.Services
                                 { storageService.RemoveObject(image.FileUri); }));
                 }
 
-                if (image.IsOriginalUploaded)
+                if (image.IsOriginalUploaded.HasValue && image.IsOriginalUploaded.Value)
                 {
                     removeImageFileTasks.Add(
                         new Task(
@@ -133,7 +133,7 @@ namespace BetterCms.Module.MediaManager.Services
                                 { storageService.RemoveObject(image.OriginalUri); }));
                 }
 
-                if (image.IsThumbnailUploaded)
+                if (image.IsThumbnailUploaded.HasValue && image.IsThumbnailUploaded.Value)
                 {
                     removeImageFileTasks.Add(
                         new Task(
@@ -224,17 +224,17 @@ namespace BetterCms.Module.MediaManager.Services
 
                 image.ImageAlign = null;
                 image.IsTemporary = true;
-                image.IsUploaded = false;
-                image.IsThumbnailUploaded = false;
-                image.IsOriginalUploaded = false;
+                image.IsUploaded = null;
+                image.IsThumbnailUploaded = null;
+                image.IsOriginalUploaded = null;
 
                 unitOfWork.BeginTransaction();
                 repository.Save(image);
                 unitOfWork.Commit();
 
-                Task imageUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(fileStream, image.FileUri, image.Id, img => { img.IsUploaded = true; });
-                Task originalUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(fileStream, image.OriginalUri, image.Id, img => { img.IsOriginalUploaded = true; });
-                Task thumbnailUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(thumbnailImage, image.ThumbnailUri, image.Id, img => { img.IsThumbnailUploaded = true; });
+                Task imageUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(fileStream, image.FileUri, image.Id, img => { img.IsUploaded = true; }, img => { img.IsUploaded = false; });
+                Task originalUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(fileStream, image.OriginalUri, image.Id, img => { img.IsOriginalUploaded = true; }, img => { img.IsOriginalUploaded = false; });
+                Task thumbnailUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(thumbnailImage, image.ThumbnailUri, image.Id, img => { img.IsThumbnailUploaded = true; }, img => { img.IsThumbnailUploaded = false; });
 
                 Task.Factory.ContinueWhenAll(
                     new[]
@@ -248,8 +248,11 @@ namespace BetterCms.Module.MediaManager.Services
                         // During uploading progress Cancel action can by executed. Need to remove uploaded images from the storage.
                         ExecuteActionOnThreadSeparatedSessionWithNoConcurrencyTracking(session =>
                             {
-                                var media = session.Get<MediaImage>(image.Id);                                
-                                if (media.IsCanceled && (media.IsUploaded || media.IsThumbnailUploaded || media.IsOriginalUploaded))
+                                var media = session.Get<MediaImage>(image.Id);
+                                var isUploaded = (media.IsUploaded.HasValue && media.IsUploaded.Value)
+                                                  || (media.IsThumbnailUploaded.HasValue && media.IsThumbnailUploaded.Value)
+                                                  || (media.IsOriginalUploaded.HasValue && media.IsOriginalUploaded.Value);
+                                if (media.IsCanceled && isUploaded)
                                 {
                                     RemoveImageWithFiles(media.Id, media.Version);
                                 }
@@ -259,16 +262,6 @@ namespace BetterCms.Module.MediaManager.Services
                 imageUpload.Start();
                 originalUpload.Start();
                 thumbnailUpload.Start();
-
-                /* Need to handle failures
-                try
-                {
-                    Task.WaitAll(new[] { imageUpload, originalUpload, thumbnailUpload });
-                }
-                catch (AggregateException ae)
-                {
-                    throw ae.Flatten();
-                }*/
 
                 return image;
             }

@@ -30,6 +30,7 @@ namespace BetterCms.Module.MediaManager.Command.Files.GetFiles
                     .Select(() => alias.OriginalFileExtension).WithAlias(() => modelAlias.FileExtension)
                     .Select(() => alias.PublicUrl).WithAlias(() => modelAlias.PublicUrl)
                     .Select(IsProcessing()).WithAlias(() => modelAlias.IsProcessing)
+                    .Select(IsFailed()).WithAlias(() => modelAlias.IsFailed)
                     .Select(() => alias.Size).WithAlias(() => modelAlias.Size);
         }
     }
