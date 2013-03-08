@@ -59,6 +59,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                                 UseNoFollow = page.UseNoFollow,
                                 UseNoIndex = page.UseNoIndex,
                                 IsVisibleToEveryone = page.IsPublic,
+                                IsInSitemap = page.NodeCountInSitemap > 0,
                                 TemplateId = page.Layout.Id,
                                 CategoryId = page.Category.Id,
                                 Image = page.Image == null ? null :
@@ -78,6 +79,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                 model.Tags = tagService.GetPageTagNames(id);
                 model.RedirectFromOldUrl = true;
                 model.Categories = categoryService.GetCategories();
+                model.UpdateSitemap = true;
             }
 
             return model;

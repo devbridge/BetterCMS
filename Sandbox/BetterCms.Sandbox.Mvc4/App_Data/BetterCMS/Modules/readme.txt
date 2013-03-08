@@ -1,1 +1,1 @@
-This directory is dedicated for holding modules.
+This directory is dedicated for BetterCMS modules.

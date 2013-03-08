@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 
+using BetterCms.Api;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Root.Models;
@@ -42,8 +43,10 @@ namespace BetterCms.Module.Pages.Command.Content.InsertContent
             }
 
             Repository.Save(pageContent);
-
             UnitOfWork.Commit();
+
+            // Notify.
+            PagesApiContext.Events.OnPageContentInserted(pageContent);
 
             return true;
         }

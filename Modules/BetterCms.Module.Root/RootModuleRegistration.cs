@@ -2,7 +2,6 @@
 
 using Autofac;
 
-using BetterCms.Core.Models;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Core.Security;
@@ -12,6 +11,8 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Projections;
 using BetterCms.Module.Root.Registration;
 using BetterCms.Module.Root.Services;
+
+using Common.Logging;
 
 namespace BetterCms.Module.Root
 {
@@ -25,6 +26,8 @@ namespace BetterCms.Module.Root
         private AuthenticationScriptModuleDescriptor authenticationScriptModuleDescriptor;
 
         private SiteSettingsJavaScriptModuleDescriptor siteSettingsJavaScriptModuleDescriptor;
+
+        private static readonly ILog Log = LogManager.GetCurrentClassLogger();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RootModuleDescriptor" /> class.

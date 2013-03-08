@@ -1,6 +1,5 @@
-﻿using BetterCms.Core.Mvc;
+﻿using BetterCms.Api;
 using BetterCms.Core.Mvc.Commands;
-using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
@@ -18,8 +17,12 @@ namespace BetterCms.Module.Pages.Commands.DeleteCategory
         /// <returns>Executed command result.</returns>
         public bool Execute(DeleteCategoryCommandRequest request)
         {
-            Repository.Delete<Category>(request.CategoryId, request.Version);
+            var category = Repository.Delete<Category>(request.CategoryId, request.Version);
             UnitOfWork.Commit();
+
+            // Notify.
+            PagesApiContext.Events.OnCategoryDeleted(category);
+
             return true;
         }
     }

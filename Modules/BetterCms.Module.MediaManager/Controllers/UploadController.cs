@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
-using BetterCms.Core.Services.Storage;
+using BetterCms.Core.DataContracts.Enums;
+
 using BetterCms.Module.MediaManager.Command.Upload;
 using BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload;
 using BetterCms.Module.MediaManager.Command.Upload.GetMultiFileUpload;

@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
+using BetterCms.Api;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Models;
@@ -76,6 +78,8 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
             pageTags.ForEach(pageTag => ClonePageTags(pageTag, newPage));
 
             UnitOfWork.Commit();
+
+            PagesApiContext.Events.OnPageCloned(newPage);
 
             return new ClonePageViewModel
                        {

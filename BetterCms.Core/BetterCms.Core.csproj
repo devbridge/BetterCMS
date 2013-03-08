@@ -115,7 +115,10 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="BetterCmsContext.cs" />
+    <Compile Include="Api\DataApiContext.cs" />
+    <Compile Include="Api\Events.cs" />
+    <Compile Include="CmsContext.cs" />
+    <Compile Include="Api\ApiContext.cs" />
     <Compile Include="DataAccess\DataContext\QueryableExtensions.cs" />
     <Compile Include="DataAccess\DataContext\QueryOverExtensions.cs" />
     <Compile Include="DataAccess\DataContext\EventListeners\DeleteEventListener.cs" />
@@ -127,25 +130,34 @@
     <Compile Include="DataAccess\DataContext\Migrations\DefaultMigrationRunner.cs" />
     <Compile Include="DataAccess\DataContext\Migrations\IMigrationRunner.cs" />
     <Compile Include="DataAccess\DataContext\Migrations\MigrationExtensions.cs" />
+    <Compile Include="DataAccess\DataContext\RepositoryExtensions.cs" />
     <Compile Include="DataAccess\DataContext\RestrictionsExtensions.cs" />
     <Compile Include="DataAccess\DataContext\SessionExtensions.cs" />
+    <Compile Include="DataContracts\Enums\ContentStatus.cs" />
+    <Compile Include="DataContracts\Enums\OptionType.cs" />
+    <Compile Include="DataContracts\ICategory.cs" />
+    <Compile Include="DataContracts\IContent.cs" />
+    <Compile Include="DataContracts\IContentOption.cs" />
+    <Compile Include="DataContracts\IEntity.cs" />
+    <Compile Include="DataContracts\IHistorical.cs" />
+    <Compile Include="DataContracts\IHtmlContent.cs" />
+    <Compile Include="DataContracts\IHtmlContentWidget.cs" />
+    <Compile Include="DataContracts\IOption.cs" />
+    <Compile Include="DataContracts\IPage.cs" />
+    <Compile Include="DataContracts\IPageContent.cs" />
+    <Compile Include="DataContracts\IPageContentOption.cs" />
+    <Compile Include="DataContracts\IRegion.cs" />
+    <Compile Include="DataContracts\IWidget.cs" />
     <Compile Include="Dependencies\ContextScopeProvider.cs" />
     <Compile Include="Environment\ApplicationStart\BetterCmsEntrypoint.cs" />
     <Compile Include="Dependencies\PerWebRequestContainerProvider.cs" />
     <Compile Include="Dependencies\PerWebRequestLifetimeModule.cs" />
     <Compile Include="Environment\Assemblies\DefaultAssemblyManager.cs" />
     <Compile Include="Environment\Assemblies\IAssemblyManager.cs" />
-    <Compile Include="Models\ContentStatus.cs" />
-    <Compile Include="Models\PageStatus.cs" />
-    <Compile Include="Models\IOption.cs" />
-    <Compile Include="Models\IHistorical.cs" />
-    <Compile Include="Models\IEntity.cs" />
-    <Compile Include="Models\ICategory.cs" />
-    <Compile Include="Models\IHtmlContent.cs" />
-    <Compile Include="Models\IHtmlContentWidget.cs" />
+    <Compile Include="DataContracts\Enums\PageStatus.cs" />
+    <Compile Include="Exceptions\Api\CmsApiException.cs" />
     <Compile Include="Security\AuthorizeAttribute.cs" />
     <Compile Include="Security\IUserRole.cs" />
-    <Compile Include="Models\IWidget.cs" />
     <Compile Include="Modules\Projections\EmptyContentAccessor.cs" />
     <Compile Include="Mvc\Attributes\IgnoreAutoRouteAttribute.cs" />
     <Compile Include="Security\UserRole.cs" />
@@ -195,16 +207,9 @@
     <Compile Include="Exceptions\Service\StorageException.cs" />
     <Compile Include="Exceptions\Service\TagException.cs" />
     <Compile Include="Exceptions\Service\UserException.cs" />
-    <Compile Include="Models\OptionType.cs" />
-    <Compile Include="Models\IContentOption.cs" />
-    <Compile Include="Models\IPageContent.cs" />
-    <Compile Include="Models\IRegion.cs" />
-    <Compile Include="Models\IPageContentOption.cs" />
-    <Compile Include="Models\IContent.cs" />
     <Compile Include="Models\EntitySubClassMapBase.cs" />
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\EntityMapBase.cs" />
-    <Compile Include="Models\IPage.cs" />
     <Compile Include="Models\MaxLength.cs" />
     <Compile Include="Modules\ModuleRegistrationContext.cs" />
     <Compile Include="Modules\Projections\ButtonActionProjection.cs" />
@@ -277,9 +282,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Themes\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\BetterCMS.Configuration\BetterCms.Configuration.csproj">
       <Project>{DA2B225E-6AEE-4465-8B08-4D5B1C1CED49}</Project>

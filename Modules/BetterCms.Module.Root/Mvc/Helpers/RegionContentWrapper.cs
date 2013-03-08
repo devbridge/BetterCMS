@@ -2,7 +2,7 @@
 using System.Text;
 using System.Web.Mvc;
 
-using BetterCms.Core.Models;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Root.Projections;
 
 namespace BetterCms.Module.Root.Mvc.Helpers

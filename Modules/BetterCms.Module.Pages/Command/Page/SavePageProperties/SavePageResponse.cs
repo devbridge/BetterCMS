@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Globalization;
 
+using BetterCms.Core.DataContracts;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Mvc;

@@ -4,6 +4,7 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
+using BetterCms.Api;
 using BetterCms.Core.Mvc.Attributes;
 using BetterCms.Core.Services;
 using BetterCms.Core.Services.Caching;
@@ -77,6 +78,9 @@ namespace BetterCms.Module.Root.Controllers
 
                     ViewBag.pageId = model.RenderPage.Id;
                     
+                    // Notify.
+                    RootApiContext.Events.OnPageRendering(model.RenderPage);
+
                     return View(model.RenderPage);
                 }
             }

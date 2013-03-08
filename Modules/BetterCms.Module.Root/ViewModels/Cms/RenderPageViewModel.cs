@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using BetterCms.Core.DataContracts;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Root.Projections;

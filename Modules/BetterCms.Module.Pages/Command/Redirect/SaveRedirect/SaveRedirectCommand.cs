@@ -1,4 +1,5 @@
-﻿using BetterCms.Core.Exceptions.Mvc;
+﻿using BetterCms.Api;
+using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Content.Resources;
@@ -69,6 +70,16 @@ namespace BetterCms.Module.Pages.Command.Redirect.SaveRedirect
 
             Repository.Save(redirect);
             UnitOfWork.Commit();
+
+            // Notify.
+            if (request.Id.HasDefaultValue())
+            {
+                PagesApiContext.Events.OnRedirectCreated(redirect);
+            }
+            else
+            {
+                PagesApiContext.Events.OnRedirectUpdated(redirect);
+            }
 
             return new SiteSettingRedirectViewModel
             {

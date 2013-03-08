@@ -54,7 +54,7 @@ namespace BetterCms.Core.Environment.ApplicationStart
             try
             {
                 logger.Info("Creating BetterCMS context dependencies container...");
-                ContextScopeProvider.RegisterTypes(BetterCmsContext.InitializeContainer());
+                ContextScopeProvider.RegisterTypes(CmsContext.InitializeContainer());
             }
             catch (Exception ex)
             {
@@ -80,7 +80,7 @@ namespace BetterCms.Core.Environment.ApplicationStart
             try
             {
                 logger.Info("Load assemblies...");
-                BetterCmsContext.LoadAssemblies();
+                CmsContext.LoadAssemblies();
             }
             catch (Exception ex)
             {

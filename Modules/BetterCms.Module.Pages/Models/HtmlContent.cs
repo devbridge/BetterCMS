@@ -1,5 +1,6 @@
 using System;
 
+using BetterCms.Core.DataContracts;
 using BetterCms.Core.Models;
 
 using NHibernate.Proxy;

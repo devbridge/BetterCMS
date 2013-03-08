@@ -4,6 +4,7 @@ using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Models;
@@ -14,7 +15,7 @@ using NHibernate.Linq;
 
 namespace BetterCms.Module.Root.Services
 {
-    public class DefaultContentService : IContentService
+    internal class DefaultContentService : IContentService
     {
         /// <summary>
         /// A security service.
