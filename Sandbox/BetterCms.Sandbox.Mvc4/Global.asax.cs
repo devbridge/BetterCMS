@@ -38,11 +38,11 @@ namespace BetterCms.Sandbox.Mvc4
 
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            var container = ContextScopeProvider.CreateChildContainer();
-            var modulesRegistration = container.Resolve<IModulesRegistration>();
             var userRoles = new List<string> { "User", "Admin" };
-            var roles = modulesRegistration.GetUserAccessRoles().Select(m => m.Name).ToList();
-            userRoles.AddRange(roles);
+//            var container = ContextScopeProvider.CreateChildContainer();
+//            var modulesRegistration = container.Resolve<IModulesRegistration>();
+//            var roles = modulesRegistration.GetUserAccessRoles().Select(m => m.Name).ToList();
+//            userRoles.AddRange(roles);
             Application[UserRolesKey] = userRoles;
             
             cmsHost.OnApplicationStart(this);

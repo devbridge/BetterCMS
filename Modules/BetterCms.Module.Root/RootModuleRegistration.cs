@@ -189,7 +189,7 @@ namespace BetterCms.Module.Root
                             Order = 10,
                             CssClass = page => "bcms-logout-btn",
                         },
-                    new RenderActionProjection<AuthenticationController>(f => f.Info()) { AccessRole = string.Empty }
+                    new RenderActionProjection<AuthenticationController>(f => f.Info())// { AccessRole = string.Empty }
                 };
         }
 
@@ -202,7 +202,7 @@ namespace BetterCms.Module.Root
                             Title = () => RootGlobalization.Sidebar_SiteSettingsButtonTitle,
                             CssClass = page => "bcms-sidemenu-btn bcms-btn-settings",
                             Order = 500,
-                            AccessRole = RootModuleConstants.UserRoles.EditSiteSettings
+                            // AccessRole = RootModuleConstants.UserRoles.EditSiteSettings
                         }
                 };
         }
