@@ -10,12 +10,7 @@ namespace BetterCms.Module.Pages.Models.Migrations
     /// </summary>
     [Migration(201303041556)]
     public class Migration201303041556 : DefaultMigration
-    {
-        /// <summary>
-        /// The navigation module schema name.
-        /// </summary>
-        private readonly string navigationModuleSchemaName = "bcms_navigation";
-
+    {        
         /// <summary>
         /// Initializes a new instance of the <see cref="Migration201303041556"/> class.
         /// </summary>
@@ -28,40 +23,25 @@ namespace BetterCms.Module.Pages.Models.Migrations
         /// </summary>
         public override void Up()
         {
-            if (Schema.Schema(navigationModuleSchemaName).Table("SitemapNodes").Exists())
-            {
-                Alter.Table("SitemapNodes").InSchema(navigationModuleSchemaName).ToSchema(SchemaName);
-            }
-            else
-            {
-                CreateSitemapNodesTable(SchemaName);
-            }
+            CreateSitemapNodesTable();            
         }
 
         /// <summary>
         /// The down.
         /// </summary>
         public override void Down()
-        {
-            if (Schema.Schema(navigationModuleSchemaName).Table("SitemapNodes").Exists())
-            {
-                Alter.Table("SitemapNodes").InSchema(SchemaName).ToSchema(navigationModuleSchemaName);
-            }
-            else
-            {
-                CreateSitemapNodesTable(navigationModuleSchemaName);
-            }
+        {            
+            Delete.Table("SitemapNodes").InSchema(SchemaName);
         }
 
         /// <summary>
         /// The create sitemap nodes table.
         /// </summary>
-        /// <param name="schemaName">Name of the schema.</param>
-        private void CreateSitemapNodesTable(string schemaName)
+        private void CreateSitemapNodesTable()
         {
             Create
                .Table("SitemapNodes")
-               .InSchema(schemaName)
+               .InSchema(SchemaName)
 
                .WithCmsBaseColumns()
                .WithColumn("Title").AsString(MaxLength.Name).NotNullable()
@@ -71,16 +51,16 @@ namespace BetterCms.Module.Pages.Models.Migrations
 
             Create
                 .ForeignKey("FK_Cms_SitemapNodes_ParentNodeId_SitemapNodes_Id")
-                .FromTable("SitemapNodes").InSchema(schemaName).ForeignColumn("ParentNodeId")
-                .ToTable("SitemapNodes").InSchema(schemaName).PrimaryColumn("Id");
+                .FromTable("SitemapNodes").InSchema(SchemaName).ForeignColumn("ParentNodeId")
+                .ToTable("SitemapNodes").InSchema(SchemaName).PrimaryColumn("Id");
 
             Create
                 .Index("IX_Cms_SitemapNodes_Title")
-                .OnTable("SitemapNodes").InSchema(schemaName).OnColumn("Title").Ascending();
+                .OnTable("SitemapNodes").InSchema(SchemaName).OnColumn("Title").Ascending();
 
             Create
                 .Index("IX_Cms_SitemapNodes_ParentNodeId")
-                .OnTable("SitemapNodes").InSchema(schemaName).OnColumn("ParentNodeId").Ascending();
+                .OnTable("SitemapNodes").InSchema(SchemaName).OnColumn("ParentNodeId").Ascending();
         }
     }
 }
