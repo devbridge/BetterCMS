@@ -230,7 +230,7 @@ define('bcms.pages.tags', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSe
 
         self.isExpanded = ko.observable(false);
         self.tags = ko.observableArray();
-        self.newTag = ko.observable();
+        self.newTag = ko.observable().extend({ maxLength: { maxLength: ko.maxLength.name } });
 
         if (tagsList) {
             for (var i = 0; i < tagsList.length; i ++) {
@@ -246,15 +246,18 @@ define('bcms.pages.tags', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSe
         self.addTag = function () {
             var newTag = self.newTag();
             if (newTag) {
-                for (var i = 0; i < self.tags().length; i ++) {
-                    if (self.tags()[i].name() == newTag) {
-                        return;
+                if (newTag.length <= ko.maxLength.name) {
+                    for (var i = 0; i < self.tags().length; i++) {
+                        if (self.tags()[i].name() == newTag) {
+                            return;
+                        }
                     }
+                    var tagViewModel = new tags.TagViewModel(self, newTag);
+                    self.tags.push(tagViewModel);
                 }
-                var tagViewModel = new tags.TagViewModel(self, newTag);
-                self.tags.push(tagViewModel);
+                return;
             }
-            self.clearTag();
+           self.clearTag();
         };
 
         self.clearTag = function() {
