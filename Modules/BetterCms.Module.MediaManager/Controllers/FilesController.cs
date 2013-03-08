@@ -99,7 +99,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// <returns>File to download.</returns>
         public ActionResult Download(string id)
         {
-            var model = GetCommand<DownloadFileCommand>().Execute(id.ToGuidOrDefault());
+            var model = GetCommand<DownloadFileCommand>().ExecuteCommand(id.ToGuidOrDefault());
             if (model != null)
             {
                 model.FileStream.Position = 0;

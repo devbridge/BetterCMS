@@ -23,20 +23,20 @@ namespace BetterCms.Module.Users.Controllers
 
         public ActionResult Index(SearchableGridOptions request)
         {
-            var users = GetCommand<GetUsersCommand>().Execute(request);
+            var users = GetCommand<GetUsersCommand>().ExecuteCommand(request);
             var model = new SearchableGridViewModel<UserItemViewModel>(users, new SearchableGridOptions(), users.Count);
             return View(model);
         }
 
         public ActionResult EditUser(string id)
         {
-            var model = GetCommand<GetUserCommand>().Execute(id.ToGuidOrDefault());
+            var model = GetCommand<GetUserCommand>().ExecuteCommand(id.ToGuidOrDefault());
             return PartialView("EditUserView", model);
         }
 
         public ActionResult SaveUser(EditUserViewModel model)
         {
-            var response = GetCommand<SaveUserCommand>().Execute(model);
+            var response = GetCommand<SaveUserCommand>().ExecuteCommand(model);
             if (response != null)
             {
                 Messages.AddSuccess(UsersGlobalization.SaveUser_CreatedSuccessfully_Message);
