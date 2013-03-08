@@ -338,6 +338,8 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.type = item.Type;
             self.nameDomId = 'name_' + staticDomId++;
             self.updateUrl = links.renameMediaUrl;
+            self.isProcessing = ko.observable(item.IsProcessing || false);
+            self.isFailed = ko.observable(item.IsFailed || false);
 
             self.isActive = ko.observable(item.IsActive || false);
             self.isSelected = ko.observable(false);
@@ -657,6 +659,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     * Opens media for seleting or editing
     */
     function editOrSelectMedia(folderViewModel, item, data, event) {
+        if (item.isProcessing() || item.isFailed()) {
+            return;
+        }
+
         // Call open, if view model is not in selectable mode
         if (!folderViewModel.canSelectMedia()) {
             item.editMedia(folderViewModel, data, event);
@@ -1013,6 +1019,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     * Open delete confirmation and delete media item.
     */
     function deleteMediaItem(url, message, folderViewModel, item) {
+        if (item.isProcessing()) {
+            return;
+        }
+
         var onDeleteCompleted = function (json) {
                 messages.refreshBox(folderViewModel.container, json);
                 if (json.Success) {

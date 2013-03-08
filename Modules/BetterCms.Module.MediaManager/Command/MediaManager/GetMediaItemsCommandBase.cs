@@ -12,6 +12,7 @@ using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
 using MvcContrib.Sorting;
 
+using NHibernate;
 using NHibernate.Criterion;
 using NHibernate.Criterion.Lambda;
 using NHibernate.Transform;
@@ -199,7 +200,49 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
                     .Select(() => alias.Title).WithAlias(() => modelAlias.Name)
                     .Select(() => alias.OriginalFileExtension).WithAlias(() => modelAlias.FileExtension)
                     .Select(() => alias.PublicUrl).WithAlias(() => modelAlias.PublicUrl)
+                    .Select(IsProcessing()).WithAlias(() => modelAlias.IsProcessing)
+                    .Select(IsFailed()).WithAlias(() => modelAlias.IsFailed)
                     .Select(() => alias.Version).WithAlias(() => modelAlias.Version);
+        }
+
+        /// <summary>
+        /// Creates projection, which determines whether media item upload is still processing.
+        /// </summary>
+        /// <returns>Conditional projection</returns>
+        protected IProjection IsProcessing()
+        {
+            return Projections.Conditional(GetIsProcessingConditions(),
+                Projections.Constant(true, NHibernateUtil.Boolean),
+                Projections.Constant(false, NHibernateUtil.Boolean));
+        }
+
+        /// <summary>
+        /// Creates projection, which determines whether media item's upload has failed.
+        /// </summary>
+        /// <returns>Conditional projection</returns>
+        protected IProjection IsFailed()
+        {
+            return Projections.Conditional(GetIsFailedConditions(),
+                Projections.Constant(true, NHibernateUtil.Boolean),
+                Projections.Constant(false, NHibernateUtil.Boolean));
+        }
+
+        /// <summary>
+        /// Creates restriction which determines whether media item upload is still processing.
+        /// </summary>
+        /// <returns>NHybernate Criterion</returns>
+        protected virtual ICriterion GetIsProcessingConditions()
+        {
+            return Restrictions.Where(() => alias.IsUploaded == null);
+        }
+        
+        /// <summary>
+        /// Creates restriction which determines whether media item upload is still processing.
+        /// </summary>
+        /// <returns>NHybernate Criterion</returns>
+        protected virtual ICriterion GetIsFailedConditions()
+        {
+            return Restrictions.Where(() => alias.IsUploaded == false);
         }
     }
 }

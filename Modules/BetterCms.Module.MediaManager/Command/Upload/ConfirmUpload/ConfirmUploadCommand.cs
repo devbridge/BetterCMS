@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Api;
-using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Mvc.Commands;
 
@@ -70,6 +69,8 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
         private MediaFileViewModel Convert(MediaFile file)
         {
             MediaFileViewModel model;
+            bool isProcessing = !file.IsUploaded.HasValue;
+            bool isFailed = file.IsUploaded.HasValue && !file.IsUploaded.Value;
 
             if (file.Type == MediaType.File)
             {
@@ -90,6 +91,10 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
                                                     ThumbnailUrl = imageFile.PublicThumbnailUrl,
                                                     Tooltip = imageFile.Title
                                                 };
+                isProcessing = isProcessing || !imageFile.IsOriginalUploaded.HasValue || !imageFile.IsThumbnailUploaded.HasValue;
+                isFailed = isFailed 
+                    || (imageFile.IsOriginalUploaded.HasValue && !imageFile.IsOriginalUploaded.Value)
+                    || (imageFile.IsThumbnailUploaded.HasValue && !imageFile.IsThumbnailUploaded.Value);
             }
             else
             {
@@ -103,6 +108,8 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
             model.ContentType = MediaContentType.File;
             model.PublicUrl = file.PublicUrl;
             model.FileExtension = file.OriginalFileExtension;
+            model.IsProcessing = isProcessing;
+            model.IsFailed = isFailed;
 
             return model;
         }

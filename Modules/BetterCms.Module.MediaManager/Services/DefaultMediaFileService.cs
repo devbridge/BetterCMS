@@ -14,6 +14,8 @@ using BetterCms.Core.Web;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Mvc;
 
+using Common.Logging;
+
 using NHibernate;
 
 namespace BetterCms.Module.MediaManager.Services
@@ -70,7 +72,7 @@ namespace BetterCms.Module.MediaManager.Services
 
             try
             {
-                if (file.IsUploaded)
+                if (file.IsUploaded.HasValue && file.IsUploaded.Value)
                 {
                     Task removeFile = 
                             new Task(() =>
@@ -123,13 +125,13 @@ namespace BetterCms.Module.MediaManager.Services
             file.PublicUrl = GetPublicFileUrl(type, folderName, fileName);
             file.IsTemporary = true;
             file.IsCanceled = false;
-            file.IsUploaded = false;
+            file.IsUploaded = null;
 
             unitOfWork.BeginTransaction();
             repository.Save(file);
             unitOfWork.Commit();
 
-            Task fileUploadTask = UploadMediaFileToStorage<MediaFile>(fileStream, file.FileUri, file.Id, media => { media.IsUploaded = true; });
+            Task fileUploadTask = UploadMediaFileToStorage<MediaFile>(fileStream, file.FileUri, file.Id, media => { media.IsUploaded = true; }, media => { media.IsUploaded = false; });
             fileUploadTask.ContinueWith(
                 task =>
                     {
@@ -138,7 +140,7 @@ namespace BetterCms.Module.MediaManager.Services
                             session =>
                                 {
                                     var media = session.Get<MediaFile>(file.Id);
-                                    if (media.IsCanceled && media.IsUploaded)
+                                    if (media.IsCanceled && media.IsUploaded.HasValue && media.IsUploaded.Value)
                                     {
                                         RemoveFile(media.Id, media.Version);
                                     }
@@ -172,14 +174,16 @@ namespace BetterCms.Module.MediaManager.Services
         /// <summary>
         /// Creates a task to upload a file to the storage.
         /// </summary>
+        /// <typeparam name="TMedia">The type of the media.</typeparam>
         /// <param name="sourceStream">The source stream.</param>
         /// <param name="fileUri">The file URI.</param>
         /// <param name="mediaId">The media id.</param>
-        /// <param name="updateMediaAfterUpload">An action to update a specific field for the media after image upload.</param>
+        /// <param name="updateMediaAfterUpload">An action to update a specific field for the media after file upload.</param>
+        /// <param name="updateMediaAfterFail">An action to update a specific field for the media after file upload fails.</param>
         /// <returns>
         /// Upload file task.
         /// </returns>
-        public Task UploadMediaFileToStorage<TMedia>(Stream sourceStream, Uri fileUri, Guid mediaId, Action<TMedia> updateMediaAfterUpload) where TMedia : MediaFile
+        public Task UploadMediaFileToStorage<TMedia>(Stream sourceStream, Uri fileUri, Guid mediaId, Action<TMedia> updateMediaAfterUpload, Action<TMedia> updateMediaAfterFail) where TMedia : MediaFile
         {
             var stream = new MemoryStream();
 
@@ -201,19 +205,35 @@ namespace BetterCms.Module.MediaManager.Services
              .ContinueWith(
                 t =>
                 {
-                    stream.Close();
-                    stream.Dispose();
+                    if (t.Exception == null)
+                    {
+                        ExecuteActionOnThreadSeparatedSessionWithNoConcurrencyTracking(session =>
+                        {
+                            var media = session.Get<TMedia>(mediaId);
+                            updateMediaAfterUpload(media);
+                            session.SaveOrUpdate(media);
+                            session.Flush();
+                        });
+                    }
+                    else
+                    {
+                        ExecuteActionOnThreadSeparatedSessionWithNoConcurrencyTracking(session =>
+                        {
+                            var media = session.Get<TMedia>(mediaId);
+                            updateMediaAfterFail(media);
+                            session.SaveOrUpdate(media);
+                            session.Flush();
+                        });
+
+                        // Log exception
+                        LogManager.GetCurrentClassLogger().Error("Failed to upload file.", t.Exception.Flatten());
+                    }
                 })
              .ContinueWith(
                 t =>
                 {
-                    ExecuteActionOnThreadSeparatedSessionWithNoConcurrencyTracking(session =>
-                    {
-                        var media = session.Get<TMedia>(mediaId);
-                        updateMediaAfterUpload(media);
-                        session.SaveOrUpdate(media);
-                        session.Flush();
-                    });
+                    stream.Close();
+                    stream.Dispose();
                 });
 
             return task;

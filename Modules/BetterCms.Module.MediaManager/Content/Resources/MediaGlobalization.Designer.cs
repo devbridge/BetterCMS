@@ -682,6 +682,24 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to process file.
+        /// </summary>
+        public static string MediaManager_FailedToProcessFile_Message {
+            get {
+                return ResourceManager.GetString("MediaManager_FailedToProcessFile_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File is still processing.
+        /// </summary>
+        public static string MediaManager_FileStillProcessing_Message {
+            get {
+                return ResourceManager.GetString("MediaManager_FileStillProcessing_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Folder.
         /// </summary>
         public static string MediaManager_NewFolder {
