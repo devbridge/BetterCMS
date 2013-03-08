@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Blog.Models;

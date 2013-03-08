@@ -1,3 +1,5 @@
+using BetterCms.Core.DataContracts;
+
 using FluentNHibernate.Mapping;
 
 namespace BetterCms.Core.Models

@@ -1,4 +1,5 @@
-﻿using BetterCms.Core.Mvc;
+﻿using BetterCms.Api;
+using BetterCms.Core.Mvc;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.ViewModels.SiteSettings;
 using BetterCms.Module.Root.Mvc;
@@ -14,8 +15,10 @@ namespace BetterCms.Module.Pages.Command.Redirect.DeleteRedirect
         /// <returns></returns>
         public bool Execute(SiteSettingRedirectViewModel request)
         {
-            Repository.Delete<Models.Redirect>(request.Id, request.Version);
+            var redirect = Repository.Delete<Models.Redirect>(request.Id, request.Version);
             UnitOfWork.Commit();
+
+            PagesApiContext.Events.OnRedirectDeleted(redirect);
 
             return true;
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 
 using BetterCms.Core.DataAccess.DataContext.Migrations;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;
 
 using FluentMigrator;

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Text;
 
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;
+
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Models;
@@ -508,7 +510,7 @@ namespace BetterCms.Tests.Helpers
             return entity;
         }
 
-        public MediaFile CreateNewMediaFile(MediaFolder folder = null, MediaType type = MediaType.Image)
+        public MediaFile CreateNewMediaFile(MediaFolder folder = null, MediaType type = MediaType.File)
         {
             var entity = new MediaFile();
 

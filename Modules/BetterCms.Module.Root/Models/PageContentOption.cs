@@ -1,5 +1,7 @@
 using System;
 
+using BetterCms.Core.DataContracts;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;
 
 namespace BetterCms.Module.Root.Models

@@ -4,7 +4,8 @@ using System.Diagnostics.CodeAnalysis;
 
 using Autofac;
 
-using BetterCms.Core.Models;
+using BetterCms.Core.DataContracts;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Pages.Accessors;
@@ -143,6 +144,7 @@ namespace BetterCms.Module.Pages
         public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder, ICmsConfiguration configuration)
         {
             RegisterStylesheetRendererType<PageStylesheetAccessor, PageProperties>(containerBuilder);
+
             RegisterJavaScriptRendererType<PageJavaScriptAccessor, PageProperties>(containerBuilder);
 
             RegisterContentRendererType<HtmlContentAccessor, HtmlContent>(containerBuilder);
@@ -154,7 +156,7 @@ namespace BetterCms.Module.Pages
             containerBuilder.RegisterType<DefaultCategoryService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultWidgetsService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultTagService>().AsImplementedInterfaces().InstancePerLifetimeScope();
-
+            containerBuilder.RegisterType<DefaultHistoryService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultSitemapService>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
 

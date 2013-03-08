@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using BetterCms.Api;
 using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Module.Pages.Api.Events;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
@@ -134,6 +136,9 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
 
             // Commit
             UnitOfWork.Commit();
+
+            // Notifying, that page is deleted.
+            PagesApiContext.Events.OnPageDeleted(page);
 
             return true;
         }

@@ -10,7 +10,7 @@ using NHibernate.Transform;
 
 namespace BetterCms.Module.Blog.Services
 {
-    public class DefaultAuthorService : IAuthorService
+    internal class DefaultAuthorService : IAuthorService
     {
         /// <summary>
         /// The unit of work

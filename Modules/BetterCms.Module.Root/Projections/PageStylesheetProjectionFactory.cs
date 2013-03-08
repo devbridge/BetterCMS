@@ -3,6 +3,7 @@
 using Autofac;
 using Autofac.Core;
 
+using BetterCms.Core.DataContracts;
 using BetterCms.Core.Dependencies;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Models;

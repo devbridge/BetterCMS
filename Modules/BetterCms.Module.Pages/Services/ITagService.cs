@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Root.Models;
 
 namespace BetterCms.Module.Pages.Services
 {
@@ -11,7 +12,8 @@ namespace BetterCms.Module.Pages.Services
         /// </summary>
         /// <param name="page">The page.</param>
         /// <param name="tags">The tags.</param>
-        void SavePageTags(PageProperties page, IList<string> tags);
+        /// <param name="newCreatedTags">A list of new tags.</param>
+        void SavePageTags(PageProperties page, IList<string> tags, out IList<Tag> newCreatedTags);
 
         /// <summary>
         /// Gets the page tag names.

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Web.Mvc;
 
+using BetterCms.Core.DataContracts;
 using BetterCms.Core.Models;
 using BetterCms.Core.Modules.Projections;
 
