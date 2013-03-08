@@ -1,4 +1,6 @@
-﻿using System.Security.Principal;
+﻿using System;
+using System.Security.Principal;
+using System.Web;
 
 namespace BetterCms.Core.Services
 {
@@ -73,5 +75,24 @@ namespace BetterCms.Core.Services
         ///   <c>true</c> if specified principal can publish page; otherwise, <c>false</c>.
         /// </returns>
         bool CanPublishPage(IPrincipal principal);
+
+        /// <summary>
+        /// Determines whether the specified principal is authorized.
+        /// </summary>
+        /// <param name="principal">The principal.</param>
+        /// <param name="roles">The roles.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified principal is authorized; otherwise, <c>false</c>.
+        /// </returns>
+        bool IsAuthorized(IPrincipal principal, string roles);
+
+        /// <summary>
+        /// Determines whether the current principal is authorized.
+        /// </summary>
+        /// <param name="roles">The roles.</param>
+        /// <returns>
+        ///   <c>true</c> if the current principal is authorized; otherwise, <c>false</c>.
+        /// </returns>
+        bool IsAuthorized(string roles);
     }
 }

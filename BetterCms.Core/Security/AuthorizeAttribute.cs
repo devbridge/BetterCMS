@@ -1,7 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Web;
+
+using Autofac;
+
+using BetterCms.Core.Dependencies;
+using BetterCms.Core.Services;
 
 namespace BetterCms.Core.Security
 {
@@ -11,16 +14,30 @@ namespace BetterCms.Core.Security
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
     public class BcmsAuthorizeAttribute : System.Web.Mvc.AuthorizeAttribute
     {
-// NOTE: brain storming.
-//        protected override bool AuthorizeCore(System.Web.HttpContextBase httpContext)
-//        {
-//            if (httpContext.User != null && httpContext.User.Identity.IsAuthenticated && httpContext.User.IsInRole("BCMS_SUPER_USER_ROLE"))
-//            {
-//                return true;
-//            }
-//
-//            return base.AuthorizeCore(httpContext);
-//        }
+        /// <summary>
+        /// When overridden, provides an entry point for custom authorization checks.
+        /// </summary>
+        /// <param name="httpContext">The HTTP context, which encapsulates all HTTP-specific information about an individual HTTP request.</param>
+        /// <returns>
+        /// true if the user is authorized; otherwise, false.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">if httpContext is null.</exception>
+        protected override bool AuthorizeCore(HttpContextBase httpContext)
+        {
+            if (httpContext == null)
+            {
+                throw new ArgumentNullException("httpContext");
+            }
+
+            var container = PerWebRequestContainerProvider.GetLifetimeScope(httpContext);
+            if (container != null && container.IsRegistered<ISecurityService>())
+            {
+                var security = container.Resolve<ISecurityService>();
+                return security.IsAuthorized(httpContext.User, Roles);
+            }
+
+            return base.AuthorizeCore(httpContext);
+        }
 
         /// <summary>
         /// Processes HTTP requests that fail authorization.

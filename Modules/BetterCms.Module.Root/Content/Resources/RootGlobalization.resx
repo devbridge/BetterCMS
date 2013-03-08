@@ -207,6 +207,9 @@
   <data name="Info_DefaultTitle" xml:space="preserve">
     <value>Information</value>
   </data>
+  <data name="Message_AccessForbidden" xml:space="preserve">
+    <value>Forbidden: Access is denied.</value>
+  </data>
   <data name="Message_ConcurentDataException" xml:space="preserve">
     <value>The record was updated by another user. Please refresh page before performing update.</value>
   </data>

@@ -188,9 +188,8 @@ namespace BetterCms.Module.Root
                         {
                             Order = 10,
                             CssClass = page => "bcms-logout-btn",
-                            IsVisible = (page, principal) => principal.Identity.IsAuthenticated
                         },
-                    new RenderActionProjection<AuthenticationController>(f => f.Info()) { IsVisible = (page, principal) => principal.Identity.IsAuthenticated }
+                    new RenderActionProjection<AuthenticationController>(f => f.Info()) { AccessRole = string.Empty }
                 };
         }
 
@@ -203,7 +202,7 @@ namespace BetterCms.Module.Root
                             Title = () => RootGlobalization.Sidebar_SiteSettingsButtonTitle,
                             CssClass = page => "bcms-sidemenu-btn bcms-btn-settings",
                             Order = 500,
-                            IsVisible = (page, principal) => principal.IsInRole(RootModuleConstants.UserRoles.EditSiteSettings)
+                            AccessRole = RootModuleConstants.UserRoles.EditSiteSettings
                         }
                 };
         }

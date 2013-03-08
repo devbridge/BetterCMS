@@ -6,7 +6,6 @@ using BetterCms.Core.Security;
 using BetterCms.Core.Services;
 using BetterCms.Module.Root.Models.SiteSettingsMenu;
 using BetterCms.Module.Root.Mvc;
-using BetterCms.Module.Root.Registration;
 using BetterCms.Module.Root.ViewModels;
 
 using Common.Logging;

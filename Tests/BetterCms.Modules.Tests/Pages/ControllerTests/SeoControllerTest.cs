@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Core.Services;
 using BetterCms.Module.Pages.Command.Page.GetPageSeo;
 using BetterCms.Module.Pages.Command.Page.SavePageSeo;
 using BetterCms.Module.Pages.Controllers;
@@ -70,8 +71,10 @@ namespace BetterCms.Test.Module.Pages.ControllerTests
             Mock<IRedirectService> redirectService = new Mock<IRedirectService>();
             Mock<IPageService> pageService = new Mock<IPageService>();
             Mock<ISitemapService> sitemapService = new Mock<ISitemapService>();
+            Mock<ISecurityService> securityService = new Mock<ISecurityService>();
             Mock<SavePageSeoCommand> savePageSeoCommandMock = new Mock<SavePageSeoCommand>(redirectService.Object, pageService.Object, sitemapService.Object);
 
+            savePageSeoCommandMock.SetupGet(x => x.SecurityService).Returns(securityService.Object);
             savePageSeoCommandMock.Setup(f => f.Execute(It.IsAny<EditSeoViewModel>())).Returns(new EditSeoViewModel()).Verifiable();
 
             SeoController seoController = new SeoController();

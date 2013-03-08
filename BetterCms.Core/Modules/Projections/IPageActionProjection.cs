@@ -4,6 +4,7 @@ using System.Web.Mvc;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Models;
+using BetterCms.Core.Services;
 
 namespace BetterCms.Core.Modules.Projections
 {
@@ -43,14 +44,14 @@ namespace BetterCms.Core.Modules.Projections
         /// <value>
         /// The role.
         /// </value>
-        Func<IPage, IPrincipal, bool> IsVisible { get; set; }
+        string AccessRole { get; set; }
 
         /// <summary>
         /// Renders an action projection to given html output.
         /// </summary>
         /// <param name="page">The page.</param>
-        /// <param name="principal"></param>
+        /// <param name="securityService"></param>
         /// <param name="html">The html helper.</param>
-        void Render(IPage page, IPrincipal principal, HtmlHelper html);
+        void Render(IPage page, ISecurityService securityService, HtmlHelper html);
     }
 }

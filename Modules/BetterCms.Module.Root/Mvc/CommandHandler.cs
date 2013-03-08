@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Security.Authentication;
 using System.Text;
 
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Exceptions.Mvc;
+using BetterCms.Core.Exceptions.Service;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Root.Content.Resources;
 
@@ -30,8 +32,13 @@ namespace BetterCms.Module.Root.Mvc
         {
             try
             {
-                command.Execute();
-                return true;
+                if (command.CanExecute())
+                {
+                    command.Execute();
+                    return true;
+                }
+
+                HandleSecurityException(new SecurityException("Forbidden: Access is denied. User do not has permission to execute command."), command);
             }
             catch (ValidationException ex)
             {
@@ -44,6 +51,10 @@ namespace BetterCms.Module.Root.Mvc
             catch (EntityNotFoundException ex)
             {
                 HandleEntityNotFoundException(ex, command);
+            }
+            catch (SecurityException ex)
+            {
+                HandleSecurityException(ex, command);
             }
             catch (CmsException ex)
             {
@@ -68,8 +79,13 @@ namespace BetterCms.Module.Root.Mvc
         {
             try
             {
-                command.Execute(request);
-                return true;
+                if (command.CanExecute())
+                {
+                    command.Execute(request);
+                    return true;
+                }
+
+                HandleSecurityException(new SecurityException("Forbidden: Access is denied. User do not has permission to execute command."), command);
             }
             catch (ValidationException ex)
             {
@@ -82,6 +98,10 @@ namespace BetterCms.Module.Root.Mvc
             catch (EntityNotFoundException ex)
             {
                 HandleEntityNotFoundException(ex, command, request);
+            }
+            catch (SecurityException ex)
+            {
+                HandleSecurityException(ex, command, request);
             }
             catch (CmsException ex)
             {
@@ -107,7 +127,12 @@ namespace BetterCms.Module.Root.Mvc
         {
             try
             {
-                return command.Execute(request);
+                if (command.CanExecute())
+                {
+                    return command.Execute(request);
+                }
+
+                HandleSecurityException(new SecurityException("Forbidden: Access is denied. User do not has permission to execute command."), command);
             }
             catch (ValidationException ex)
             {
@@ -120,6 +145,10 @@ namespace BetterCms.Module.Root.Mvc
             catch (EntityNotFoundException ex)
             {
                 HandleEntityNotFoundException(ex, command, request);
+            }
+            catch (SecurityException ex)
+            {
+                HandleSecurityException(ex, command, request);
             }
             catch (CmsException ex)
             {
@@ -193,6 +222,21 @@ namespace BetterCms.Module.Root.Mvc
             if (command.Context != null)
             {
                 command.Context.Messages.AddError(message);
+            }
+        }
+
+        /// <summary>
+        /// Handles the security exception.
+        /// </summary>
+        /// <param name="ex">The ex.</param>
+        /// <param name="command">The command.</param>
+        /// <param name="request">The request.</param>
+        private static void HandleSecurityException(SecurityException ex, ICommandBase command, object request = null)
+        {
+            Log.Error(FormatCommandExceptionMessage(command, request), ex);
+            if (command.Context != null)
+            {
+                command.Context.Messages.AddError(RootGlobalization.Message_AccessForbidden);
             }
         }
 

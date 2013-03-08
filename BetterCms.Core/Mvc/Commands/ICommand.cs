@@ -1,8 +1,37 @@
-﻿namespace BetterCms.Core.Mvc.Commands
+﻿using System.Security.Principal;
+
+using BetterCms.Core.Services;
+
+namespace BetterCms.Core.Mvc.Commands
 {
+    /// <summary>
+    /// Defines command base contract.
+    /// </summary>
     public interface ICommandBase
     {
+        /// <summary>
+        /// Gets or sets the context.
+        /// </summary>
+        /// <value>
+        /// The context.
+        /// </value>
         ICommandContext Context { get; set; }
+
+        /// <summary>
+        /// Gets or sets the security service.
+        /// </summary>
+        /// <value>
+        /// The security service.
+        /// </value>
+        ISecurityService SecurityService { get; set; }
+
+        /// <summary>
+        /// Determines whether this instance can execute.
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if this instance can execute; otherwise, <c>false</c>.
+        /// </returns>
+        bool CanExecute();
     }
 
     /// <summary>

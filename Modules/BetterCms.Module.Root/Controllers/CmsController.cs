@@ -24,20 +24,16 @@ namespace BetterCms.Module.Root.Controllers
         /// <summary>
         /// The cache service
         /// </summary>
-        private readonly ICacheService cacheService;        
-
-        private readonly ISecurityService securityService;
+        private readonly ICacheService cacheService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CmsController" /> class.
         /// </summary>
-        /// <param name="pageAccessor">The page accessor.</param>
         /// <param name="cmsConfiguration">The configuration loader.</param>
         /// <param name="cacheService">The cache service.</param>
         /// <param name="securityService">The security service.</param>
-        public CmsController(IPageAccessor pageAccessor, ICmsConfiguration cmsConfiguration, ICacheService cacheService, ISecurityService securityService)
+        public CmsController(ICmsConfiguration cmsConfiguration, ICacheService cacheService)
         {
-            this.securityService = securityService;            
             this.cmsConfiguration = cmsConfiguration;
             this.cacheService = cacheService;
         }
@@ -92,8 +88,8 @@ namespace BetterCms.Module.Root.Controllers
         {
             CmsRequestViewModel model;
             virtualPath = VirtualPathUtility.AppendTrailingSlash(virtualPath);            
-            IPrincipal principal = securityService.GetCurrentPrincipal();
-            bool canManageContent = securityService.CanManageContent(principal);
+            IPrincipal principal = SecurityService.GetCurrentPrincipal();
+            bool canManageContent = SecurityService.CanManageContent(principal);
             var useCaching = cmsConfiguration.Cache.Enabled && !canManageContent;
             var request = new GetPageToRenderRequest {
                                                          PageUrl = virtualPath,

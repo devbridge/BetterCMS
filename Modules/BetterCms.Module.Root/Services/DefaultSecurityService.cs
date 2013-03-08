@@ -136,6 +136,44 @@ namespace BetterCms.Module.Root.Services
         }
 
         /// <summary>
+        /// Determines whether the specified principal is authorized.
+        /// </summary>
+        /// <param name="principal">The principal.</param>
+        /// <param name="roles">The roles.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified principal is authorized; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsAuthorized(IPrincipal principal, string roles)
+        {
+            if (principal != null && principal.Identity.IsAuthenticated)
+            {
+                if (string.IsNullOrEmpty(roles))
+                {
+                    return true;
+                }
+
+                var roleList = roles.Split(',').Select(r => r.Trim()).Where(r => !string.IsNullOrEmpty(r)).ToList();
+
+                // TODO: upgrade with configuration: superUser; role conversion.
+                return roleList.Any(principal.IsInRole);
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Determines whether the current principal is authorized.
+        /// </summary>
+        /// <param name="roles">The roles.</param>
+        /// <returns>
+        ///   <c>true</c> if the current principal is authorized; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsAuthorized(string roles)
+        {
+            return IsAuthorized(GetCurrentPrincipal(), roles);
+        }
+
+        /// <summary>
         /// Determines whether principal has any of specified roles.
         /// </summary>
         /// <param name="principal">The principal.</param>

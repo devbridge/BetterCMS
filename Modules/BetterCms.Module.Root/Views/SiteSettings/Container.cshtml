@@ -1,4 +1,5 @@
 ﻿@using BetterCms.Core.Modules.Projections
+@using BetterCms.Module.Root.Mvc
 @model BetterCms.Module.Root.Models.SiteSettingsMenu.SiteSettingsContainerViewModel
 <div id="bcms-site-settings" class="bcms-scroll-window">
     <div class="bcms-columns-container">
@@ -15,7 +16,7 @@
                     }
                     else
                     {
-                        menuItem.Render(Model.MenuItems.Page, User, Html);
+                        menuItem.Render(Model.MenuItems.Page, (ViewContext.Controller as CmsControllerBase).SecurityService, Html);
                     }
                 }
                 <hr class="bcms-settings-separator">

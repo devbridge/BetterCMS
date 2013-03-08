@@ -8,6 +8,7 @@ using System.Web.UI;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Models;
+using BetterCms.Core.Services;
 
 namespace BetterCms.Core.Modules.Projections
 {
@@ -52,11 +53,11 @@ namespace BetterCms.Core.Modules.Projections
         /// Renders an action projection to given html output.
         /// </summary>
         /// <param name="page">The page.</param>
-        /// <param name="principal"></param>
+        /// <param name="securityService"></param>
         /// <param name="html">The html helper.</param>
-        public override void Render(IPage page, IPrincipal principal, HtmlHelper html)
+        public override void Render(IPage page, ISecurityService securityService, HtmlHelper html)
         {
-            if (IsVisible != null && !IsVisible(page, principal))
+            if (AccessRole != null && !securityService.IsAuthorized(AccessRole))
             {
                 return;
             }
@@ -73,7 +74,7 @@ namespace BetterCms.Core.Modules.Projections
                     {
                         foreach (var htmlElementProjection in ChildProjections.OrderBy(f => f.Order))
                         {
-                            htmlElementProjection.Render(page, principal, html);
+                            htmlElementProjection.Render(page, securityService, html);
                         }
                     }
 
