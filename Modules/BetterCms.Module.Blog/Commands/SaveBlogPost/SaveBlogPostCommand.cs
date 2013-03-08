@@ -53,9 +53,9 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         private readonly IContentService contentService;
 
         /// <summary>
-        /// The redirect service
+        /// The cms configuration
         /// </summary>
-        private readonly IRedirectService redirectService;
+        private readonly ICmsConfiguration configuration;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SaveBlogPostCommand" /> class.
@@ -64,12 +64,12 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         /// <param name="optionService">The option service.</param>
         /// <param name="contentService">The content service.</param>
         /// <param name="redirectService">The redirect service.</param>
-        public SaveBlogPostCommand(ITagService tagService, IOptionService optionService, IContentService contentService, IRedirectService redirectService)
+        public SaveBlogPostCommand(ITagService tagService, IOptionService optionService, IContentService contentService, ICmsConfiguration configuration)
         {
             this.tagService = tagService;
             this.optionService = optionService;
             this.contentService = contentService;
-            this.redirectService = redirectService;
+            this.configuration = configuration;
         }
 
         /// <summary>
@@ -112,18 +112,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             blogPost.Version = request.Version;
             if (isNew)
             {
-                var parentPageUrl = request.ParentPageUrl.Trim('/');
-                if (!string.IsNullOrWhiteSpace(parentPageUrl))
-                {
-                    var url = "/" + request.Title.Transliterate();
-                    var pageUrl = string.Concat(parentPageUrl, url);
-                    pageUrl = AddUrlPathSuffixIfNeeded(pageUrl);
-                    blogPost.PageUrl = pageUrl;
-                }
-                else
-                {
-                    blogPost.PageUrl = GeneratePageUrl(request.Title);
-                }
+                blogPost.PageUrl = GeneratePageUrl(request.Title);
 
                 blogPost.IsPublic = true;
                 blogPost.Layout = layout;
@@ -322,7 +311,14 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         /// <returns>Url path.</returns>
         private string AddUrlPathSuffixIfNeeded(string url)
         {
-            var fullUrl = string.Format("/{0}/", url);
+            var urlPrefix = configuration.ArticleUrlPrefix;                      
+            urlPrefix = urlPrefix.TrimEnd('/');
+            
+            if (urlPrefix == "" || urlPrefix.IndexOf("{0}") == -1)
+            {
+                urlPrefix = "/{0}";
+            }
+            var fullUrl = string.Format(urlPrefix+"/", url);
 
             // Check, if such record exists
             var exists = PathExistsInDb(fullUrl);
@@ -330,7 +326,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             if (exists)
             {
                 // Load all titles
-                var urlToReplace = string.Format("/{0}-", url);
+                var urlToReplace = string.Format(urlPrefix + "-", url);
                 var urlToSearch = string.Format("{0}%", urlToReplace);
                 Page alias = null;
 
@@ -375,7 +371,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                 }
                 else
                 {
-                    fullUrl = string.Format("/{0}-{1}/", url, maxNr);
+                    fullUrl = string.Format(urlPrefix + "-{1}/", url, maxNr);
                 }
 
                 if (recheckInDb)
