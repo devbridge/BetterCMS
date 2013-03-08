@@ -1,8 +1,8 @@
-﻿using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Module.MediaManager.Command.MediaManager;
+﻿using BetterCms.Module.MediaManager.Command.MediaManager;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 
+using NHibernate.Criterion;
 using NHibernate.Criterion.Lambda;
 
 namespace BetterCms.Module.MediaManager.Command.Images.GetImages
@@ -35,7 +35,17 @@ namespace BetterCms.Module.MediaManager.Command.Images.GetImages
                     .Select(() => alias.OriginalFileExtension).WithAlias(() => modelAlias.FileExtension)
                     .Select(() => alias.PublicThumbnailUrl).WithAlias(() => modelAlias.ThumbnailUrl)
                     .Select(() => alias.PublicUrl).WithAlias(() => modelAlias.PublicUrl)
+                    .Select(IsProcessing()).WithAlias(() => modelAlias.IsProcessing)
                     .Select(() => alias.Size).WithAlias(() => modelAlias.Size);
+        }
+
+        /// <summary>
+        /// Gets the is processing conditions.
+        /// </summary>
+        /// <returns></returns>
+        protected override ICriterion GetIsProcessingConditions()
+        {
+            return Restrictions.Where(() => !alias.IsUploaded || !alias.IsThumbnailUploaded || !alias.IsOriginalUploaded);
         }
     }
 }

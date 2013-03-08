@@ -53,9 +53,13 @@
 
         <div data-bind="foreach: medias()">
             <div data-bind="click: openMedia.bind($data, $root), event: { contextmenu: contextMenu.show }, css: rowClassNames()">
-
+                
                 <div class="bcms-media-context" data-bind="click: stopEvent, attr: { id: contextMenu.domId }">
                     <a class="bcms-btn-close">@RootGlobalization.Button_Close</a>
+                    <!--  ko if: isProcessing() -->
+                    @MediaGlobalization.MediaManager_FileStillProcessing_Message
+                    <!-- /ko -->
+                    <!--  ko if: !isProcessing() && !isFailed() -->
                     <!-- ko if: isImage() -->
                     <a class="bcms-media-content-link" href="#" data-bind="click: previewImage.bind($data, $root)">@MediaGlobalization.MediaManager_ButtonPreviewImage</a>
                     <!-- /ko -->
@@ -78,7 +82,10 @@
                     <!-- ko if: !isFolder() && !isImage() && $root.canInsertMedia() -->
                     <a class="bcms-media-content-link" href="#" data-bind="click: insertMedia.bind($data, $root)">@MediaGlobalization.MediaManager_ButtonInsertFile</a>
                     <!-- /ko -->
+                    <!-- /ko -->
+                    <!--  ko if: !isProcessing() -->
                     <a class="bcms-media-content-link" href="#" data-bind="click: deleteMedia.bind($data, $root)">@RootGlobalization.Button_Delete</a>
+                    <!-- /ko -->
                 </div>
 
                 <div class="bcms-media-items-block">
@@ -87,7 +94,15 @@
                         <img data-bind="attr: { alt: tooltip, src: getImageUrl() }" />
                         <!-- /ko -->
                     </div>
-                    <div class="bcms-media-name" data-bind="text: name()"></div>
+                    <div class="bcms-media-name">
+                        <!-- ko text: name() --><!-- /ko -->
+                        <!--  ko if: isProcessing() -->
+                        <br /><span style="color: navy;">@MediaGlobalization.MediaManager_FileStillProcessing_Message</span>
+                        <!-- /ko -->
+                        <!--  ko if: isFailed() -->
+                        <br /><span style="color: red;">@MediaGlobalization.MediaManager_FailedToProcessFile_Message</span>
+                        <!-- /ko -->
+                    </div>
                 </div>
                 <div class="bcms-media-edit-controls">
                     <!-- ko if: isImage() -->
@@ -110,8 +125,12 @@
                         <div class="bcms-btn-small" data-bind="click: saveMedia.bind($data, $root)">@RootGlobalization.Button_Save</div>
                         <div class="bcms-btn-links-small" data-bind="click: cancelEditMedia.bind($data, $root)">@RootGlobalization.Button_Cancel</div>
                     </div>
+                    <!--  ko if: !isProcessing() && !isFailed() -->
                     <a class="bcms-icn-edit" data-bind="click: editMedia.bind($data, $root)">@RootGlobalization.Button_Edit</a>
+                    <!-- /ko -->
+                    <!--  ko if: !isProcessing() && !isFailed() -->
                     <a class="bcms-icn-delete" data-bind="click: deleteMedia.bind($data, $root)">@RootGlobalization.Button_Delete</a>
+                    <!-- /ko -->
                 </div>
             </div>
         </div>

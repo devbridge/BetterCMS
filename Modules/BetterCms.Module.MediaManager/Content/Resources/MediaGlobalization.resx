@@ -384,4 +384,10 @@
   <data name="ImageEditor_Dialog_KeepAspectRatio" xml:space="preserve">
     <value>Keep aspect ratio</value>
   </data>
+  <data name="MediaManager_FailedToProcessFile_Message" xml:space="preserve">
+    <value>Failed to process file</value>
+  </data>
+  <data name="MediaManager_FileStillProcessing_Message" xml:space="preserve">
+    <value>File is still processing</value>
+  </data>
 </root>

@@ -70,6 +70,7 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
         private MediaFileViewModel Convert(MediaFile file)
         {
             MediaFileViewModel model;
+            bool isProcessing = !file.IsUploaded;
 
             if (file.Type == MediaType.File)
             {
@@ -90,6 +91,7 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
                                                     ThumbnailUrl = imageFile.PublicThumbnailUrl,
                                                     Tooltip = imageFile.Title
                                                 };
+                isProcessing = isProcessing || !imageFile.IsOriginalUploaded || !imageFile.IsThumbnailUploaded;
             }
             else
             {
@@ -103,6 +105,7 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
             model.ContentType = MediaContentType.File;
             model.PublicUrl = file.PublicUrl;
             model.FileExtension = file.OriginalFileExtension;
+            model.IsProcessing = isProcessing;
 
             return model;
         }

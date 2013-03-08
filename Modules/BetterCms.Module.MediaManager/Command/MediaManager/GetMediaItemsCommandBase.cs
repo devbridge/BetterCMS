@@ -12,6 +12,7 @@ using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
 using MvcContrib.Sorting;
 
+using NHibernate;
 using NHibernate.Criterion;
 using NHibernate.Criterion.Lambda;
 using NHibernate.Transform;
@@ -199,7 +200,28 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
                     .Select(() => alias.Title).WithAlias(() => modelAlias.Name)
                     .Select(() => alias.OriginalFileExtension).WithAlias(() => modelAlias.FileExtension)
                     .Select(() => alias.PublicUrl).WithAlias(() => modelAlias.PublicUrl)
+                    .Select(IsProcessing()).WithAlias(() => modelAlias.IsProcessing)
                     .Select(() => alias.Version).WithAlias(() => modelAlias.Version);
+        }
+
+        /// <summary>
+        /// Determines whether this instance is processing.
+        /// </summary>
+        /// <returns></returns>
+        protected IProjection IsProcessing()
+        {
+            return Projections.Conditional(GetIsProcessingConditions(),
+                Projections.Constant(true, NHibernateUtil.Boolean),
+                Projections.Constant(false, NHibernateUtil.Boolean));
+        }
+
+        /// <summary>
+        /// Gets the is processing conditions.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual ICriterion GetIsProcessingConditions()
+        {
+            return Restrictions.Where(() => !alias.IsUploaded);
         }
     }
 }
