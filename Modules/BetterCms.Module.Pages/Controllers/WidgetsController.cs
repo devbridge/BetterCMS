@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Linq;
 
-using BetterCms.Core.Models;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Pages.Command.Widget.DeleteWidget;
 using BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit;
 using BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit;
@@ -9,7 +9,6 @@ using BetterCms.Module.Pages.Command.Widget.GetSiteSettingsWidgets;
 using BetterCms.Module.Pages.Command.Widget.SaveWidget;
 
 using BetterCms.Module.Pages.Content.Resources;
-
 using BetterCms.Module.Pages.ViewModels.Widgets;
 
 using BetterCms.Module.Root.Models;

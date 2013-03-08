@@ -1,5 +1,6 @@
 ﻿using System;
 
+using BetterCms.Api;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
@@ -32,6 +33,15 @@ namespace BetterCms.Module.MediaManager.Command.Folder
 
             Repository.Save(folder);
             UnitOfWork.Commit();
+
+            if (request.Id == default(Guid))
+            {
+                MediaManagerApiContext.Events.OnMediaFolderCreated(folder);
+            }
+            else
+            {
+                MediaManagerApiContext.Events.OnMediaFolderUpdated(folder);
+            }
 
             return new MediaFolderViewModel
                        {

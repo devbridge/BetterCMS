@@ -45,7 +45,7 @@ namespace BetterCms.Test.Module.Common
                 builder.Append(name + ", ");
             }
 
-            Assert.AreEqual(0, viewModelNames.Count, string.Format("Not all view models has ToString ovverride methods: {0}", builder));
+            Assert.AreEqual(0, viewModelNames.Count, string.Format("Not all view models has ToString override methods: {0}", builder));
         }
     }
 }

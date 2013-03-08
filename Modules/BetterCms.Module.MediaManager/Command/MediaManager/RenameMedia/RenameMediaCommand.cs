@@ -1,4 +1,5 @@
-﻿using BetterCms.Core.Mvc.Commands;
+﻿using BetterCms.Api;
+using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
@@ -21,6 +22,15 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager.RenameMedia
 
             Repository.Save(media);
             UnitOfWork.Commit();
+
+            if (media is MediaFolder)
+            {
+                MediaManagerApiContext.Events.OnMediaFolderUpdated((MediaFolder)media);
+            }
+            else if (media is MediaFile)
+            {
+                MediaManagerApiContext.Events.OnMediaFileUpdated((MediaFile)media);
+            }
 
             return new MediaViewModel
             {

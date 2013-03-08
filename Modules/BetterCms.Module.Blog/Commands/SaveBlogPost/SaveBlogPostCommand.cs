@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
+using BetterCms.Api;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Models;
@@ -156,10 +159,24 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             Repository.Save(pageContent);
 
             // Save tags
-            tagService.SavePageTags(blogPost, request.Tags);
+            IList<Tag> newTags;
+            tagService.SavePageTags(blogPost, request.Tags, out newTags);
 
             // Commit
             UnitOfWork.Commit();
+
+            // Notify about new or updated blog post.
+            if (request.Id.HasDefaultValue())
+            {
+                BlogsApiContext.Events.OnBlogCreated(blogPost);
+            }
+            else
+            {
+                BlogsApiContext.Events.OnBlogUpdated(blogPost);
+            }
+
+            // Notify about new created tags.
+            PagesApiContext.Events.OnTagCreated(newTags);            
 
             return new SaveBlogPostCommandResponse
                        {

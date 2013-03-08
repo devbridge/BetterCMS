@@ -3,6 +3,7 @@ using System.Linq;
 
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Root.Models;
 
 using NHibernate.Criterion;
 
@@ -11,12 +12,12 @@ namespace BetterCms.Module.Pages.Services
     /// <summary>
     /// Helper service for handling page tags
     /// </summary>
-    public class DefaultTagService : ITagService
+    internal class DefaultTagService : ITagService
     {
         /// <summary>
         /// The unit of work
         /// </summary>
-        private IUnitOfWork unitOfWork;
+        private readonly IUnitOfWork unitOfWork;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultTagService" /> class.
@@ -32,9 +33,12 @@ namespace BetterCms.Module.Pages.Services
         /// </summary>
         /// <param name="page">The page.</param>
         /// <param name="tags">The tags.</param>
-        public void SavePageTags(PageProperties page, IList<string> tags)
+        /// <param name="newCreatedTags">The new created tags.</param>
+        public void SavePageTags(PageProperties page, IList<string> tags, out IList<Tag> newCreatedTags)
         {
-            Root.Models.Tag tagAlias = null;
+            newCreatedTags = new List<Tag>();
+            
+            Tag tagAlias = null;
 
             // Tags merge:
             IList<PageTag> pageTags = unitOfWork.Session.QueryOver<PageTag>()
@@ -50,9 +54,10 @@ namespace BetterCms.Module.Pages.Services
                 {
                     tag = tags.FirstOrDefault(s => s.ToLower() == pageTags[i].Tag.Name.ToLower());
                 }
+
                 if (tag == null)
                 {
-                    unitOfWork.Session.Delete(pageTags[i]);
+                    unitOfWork.Session.Delete(pageTags[i]);                    
                 }
             }
 
@@ -72,26 +77,26 @@ namespace BetterCms.Module.Pages.Services
                 if (tagsInsert.Count > 0)
                 {
                     // Get existing tags:
-                    IList<Root.Models.Tag> existingTags = unitOfWork.Session.QueryOver(() => tagAlias)
-                                                                .Where(Restrictions.In(NHibernate.Criterion.Projections.Property(() => tagAlias.Name), tagsInsert))
-                                                                .List<Root.Models.Tag>();
+                    IList<Tag> existingTags = unitOfWork.Session.QueryOver(() => tagAlias)
+                                                                .Where(Restrictions.In(Projections.Property(() => tagAlias.Name), tagsInsert))
+                                                                .List<Tag>();
 
                     foreach (string tag in tagsInsert)
                     {
                         PageTag pageTag = new PageTag();
                         pageTag.Page = page;
 
-                        Root.Models.Tag existTag = existingTags.FirstOrDefault(t => t.Name.ToLower() == tag.ToLower());
+                        Tag existTag = existingTags.FirstOrDefault(t => t.Name.ToLower() == tag.ToLower());
                         if (existTag != null)
                         {
                             pageTag.Tag = existTag;
                         }
                         else
                         {
-                            Root.Models.Tag newTag = new Root.Models.Tag();
+                            Tag newTag = new Tag();
                             newTag.Name = tag;
                             unitOfWork.Session.SaveOrUpdate(newTag);
-
+                            newCreatedTags.Add(newTag);
                             pageTag.Tag = newTag;
                         }
 

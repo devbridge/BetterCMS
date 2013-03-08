@@ -57,7 +57,7 @@ namespace BetterCms.Test.Module
 
         private static ILifetimeScope CreateContainer()
         {
-            ContainerBuilder updater = BetterCmsContext.InitializeContainer();
+            ContainerBuilder updater = CmsContext.InitializeContainer();
            
             updater.RegisterType<StubMappingResolver>().As<IMappingResolver>();
             ContextScopeProvider.RegisterTypes(updater);

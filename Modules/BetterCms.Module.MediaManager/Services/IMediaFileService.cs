@@ -4,8 +4,6 @@ using System.Threading.Tasks;
 
 using BetterCms.Module.MediaManager.Models;
 
-using NHibernate;
-
 namespace BetterCms.Module.MediaManager.Services
 {
     public interface IMediaFileService

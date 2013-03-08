@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using BetterCms.Api;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
-using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
-using BetterCms.Module.MediaManager.Content.Resources;
+
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 using BetterCms.Module.MediaManager.ViewModels.Upload;
@@ -55,6 +56,12 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
                 UnitOfWork.Commit();
 
                 response.Medias = files.Select(Convert).ToList();
+
+                // Notify.
+                foreach (var mediaFile in files)
+                {
+                    MediaManagerApiContext.Events.OnMediaFileUpdated(mediaFile);
+                }
             }
 
             return response;

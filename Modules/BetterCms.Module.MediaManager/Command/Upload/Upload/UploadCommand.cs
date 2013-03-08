@@ -1,4 +1,5 @@
-﻿using BetterCms.Core.Exceptions;
+﻿using BetterCms.Api;
+using BetterCms.Core.Exceptions;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
@@ -18,14 +19,23 @@ namespace BetterCms.Module.MediaManager.Command.Upload.Upload
 
         public MediaFile Execute(UploadFileRequest request)
         {
+            
             if (request.Type == MediaType.File || request.Type == MediaType.Audio || request.Type == MediaType.Video)
             {
-                return MediaFileService.UploadFile(request.Type, request.RootFolderId, request.FileName, request.FileLength, request.FileStream);
+                var media = MediaFileService.UploadFile(request.Type, request.RootFolderId, request.FileName, request.FileLength, request.FileStream);
+
+                MediaManagerApiContext.Events.OnMediaFileUploaded(media);
+
+                return media;
             }
 
             if (request.Type == MediaType.Image)
             {
-                return MediaImageService.UploadImage(request.RootFolderId, request.FileName, request.FileLength, request.FileStream);
+                var media = MediaImageService.UploadImage(request.RootFolderId, request.FileName, request.FileLength, request.FileStream);
+                
+                MediaManagerApiContext.Events.OnMediaFileUploaded(media);
+
+                return media;
             }
 
             throw new CmsException(string.Format("A given media type {0} is not supported to upload.", request.Type));

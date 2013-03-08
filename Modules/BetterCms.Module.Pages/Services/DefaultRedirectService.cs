@@ -13,7 +13,7 @@ using NHibernate.Linq;
 
 namespace BetterCms.Module.Pages.Services
 {
-    public class DefaultRedirectService : IRedirectService
+    internal class DefaultRedirectService : IRedirectService
     {
         /// <summary>
         /// The unit of work

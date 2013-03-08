@@ -1,5 +1,7 @@
 using System;
 
+using BetterCms.Core.DataContracts.Enums;
+
 namespace BetterCms.Module.MediaManager.Models
 {
     [Serializable]
