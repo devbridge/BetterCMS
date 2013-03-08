@@ -246,7 +246,7 @@ define('bcms.pages.tags', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSe
         self.addTag = function () {
             var newTag = self.newTag();
             if (newTag) {
-                if (newTag.length <= ko.maxLength.name) {
+                if (!self.newTag.hasError()) {
                     for (var i = 0; i < self.tags().length; i++) {
                         if (self.tags()[i].name() == newTag) {
                             return;
