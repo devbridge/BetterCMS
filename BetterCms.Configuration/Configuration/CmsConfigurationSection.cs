@@ -22,6 +22,7 @@ namespace BetterCms.Configuration
         private const string SecurityNode = "security";
         private const string ModuleGalleryNode = "moduleGallery";
         private const string WorkingDirectoryRootPathAttribute = "workingDirectoryRootPath";
+        private const string ArticleUrlPrefixAttribute = "articleUrlPrefix";
         
         #region Attributes
 
@@ -153,6 +154,18 @@ namespace BetterCms.Configuration
         {
             get { return Convert.ToString(this[PageNotFoundUrlAttribute]); }
             set { this[PageNotFoundUrlAttribute] = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the article url prefix.
+        /// </summary>
+        /// <value>
+        /// The article url prefix.
+        /// </value>
+        [ConfigurationProperty(ArticleUrlPrefixAttribute, IsRequired = false)]
+        public string ArticleUrlPrefix {
+            get {return Convert.ToString(this[ArticleUrlPrefixAttribute]); }
+            set { this[ArticleUrlPrefixAttribute] = value; }
         }
 
         #endregion
