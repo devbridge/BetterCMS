@@ -46,8 +46,7 @@
         @Html.HiddenFor(model => model.Id, new { data_bind = "value: id()" })
         @Html.HiddenFor(model => model.Version, new { data_bind = "value: version()" })
         @Html.HiddenFor(model => model.Image.ImageId, new { data_bind = "value: image().id()" })
-        @Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status" })
-        @Html.HiddenFor(modal => modal.ParentPageUrl)
+        @Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status" })        
 
         <div class="bcms-new-blog-content">
 
@@ -57,10 +56,13 @@
                     @Html.Tooltip(BlogGlobalization.EditBlockPost_Title_Tooltip_Description)
                     <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_Title_Title</div>
                     <div class="bcms-input-box">
-                        @Html.TextBoxFor(m => m.Title, new { @style = "width: 510px;", @class = "bcms-editor-field-box" })
+                        @Html.TextBoxFor(m => m.Title, new { @style = "width: 510px;", @class = "bcms-editor-field-box", @id="bcms-editor-blog-title" })
                         @Html.ValidationMessageFor(m => m.Title)
                     </div>
                 </div>
+
+                @Html.Partial("Partial/AddNewBlogEditPermalink")
+
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(BlogGlobalization.EditBlockPost_IntroText_Tooltip_Description)
                     <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_IntroText_Title</div>

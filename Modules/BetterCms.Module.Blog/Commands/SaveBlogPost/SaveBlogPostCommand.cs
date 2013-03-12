@@ -58,18 +58,24 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         private readonly ICmsConfiguration configuration;
 
         /// <summary>
+        /// The page service
+        /// </summary>
+        private readonly IPageService pageService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SaveBlogPostCommand" /> class.
         /// </summary>
         /// <param name="tagService">The tag service.</param>
         /// <param name="optionService">The option service.</param>
         /// <param name="contentService">The content service.</param>
         /// <param name="redirectService">The redirect service.</param>
-        public SaveBlogPostCommand(ITagService tagService, IOptionService optionService, IContentService contentService, ICmsConfiguration configuration)
+        public SaveBlogPostCommand(ITagService tagService, IOptionService optionService, IContentService contentService, ICmsConfiguration configuration, IPageService pageService)
         {
             this.tagService = tagService;
             this.optionService = optionService;
             this.contentService = contentService;
             this.configuration = configuration;
+            this.pageService = pageService;
         }
 
         /// <summary>
@@ -112,8 +118,16 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             blogPost.Version = request.Version;
             if (isNew)
             {
-                blogPost.PageUrl = GeneratePageUrl(request.Title);
-
+                if (request.BlogUrl != null)
+                {
+                    blogPost.PageUrl = request.BlogUrl;
+                    pageService.ValidatePageUrl(blogPost.PageUrl);
+                }
+                else
+                {
+                    blogPost.PageUrl = GeneratePageUrl(request.Title);
+                }               
+               
                 blogPost.IsPublic = true;
                 blogPost.Layout = layout;
                 UpdateStatus(blogPost, request.DesirableStatus);

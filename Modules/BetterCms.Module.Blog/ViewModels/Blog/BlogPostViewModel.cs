@@ -98,12 +98,12 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         public virtual Guid? AuthorId { get; set; }
 
         /// <summary>
-        /// Gets or sets the parent page URL.
+        /// Gets or sets the blog URL.
         /// </summary>
         /// <value>
-        /// The parent page URL.
+        /// The blog URL.
         /// </value>
-        public string ParentPageUrl { get; set; }
+        public string BlogUrl { get; set; }
 
         /// <summary>
         /// Gets or sets the cathegory.

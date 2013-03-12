@@ -29,7 +29,16 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             overlayConfigure: '.bcms-content-configure',
             overlayDelete: '.bcms-content-delete',
             overlay: '.bcms-content-overlay',
-            destroyDraftVersionLink: '.bcms-messages-draft-destroy'
+            destroyDraftVersionLink: '.bcms-messages-draft-destroy',
+            
+            blogTitle: "#bcms-editor-blog-title",
+            editPermalink: '#bcms-page-editpermalink',
+	        editPermalinkBox: '.bcms-edit-urlpath-box',
+	        editPermalinkClose: 'div.bcms-edit-urlpath-box .bcms-tip-close, div.bcms-edit-urlpath-box .bcms-btn-links-small',
+	        editPermalinkSave: '#bcms-save-permalink',
+	        editPermalinkHiddenField: '#bcms-page-permalink',
+	        editPermalinkEditField: '#bcms-page-permalink-edit',
+	        editPermalinkInfoField: '#bcms-page-permalink-info'
         },
         links = {
             loadSiteSettingsBlogsUrl: null,
@@ -41,7 +50,8 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             deleteAuthorsUrl: null,
             saveAuthorsUrl: null,
             loadTemplatesUrl: null,
-            saveDefaultTemplateUrl: null
+            saveDefaultTemplateUrl: null,
+            convertStringToSlugUrl: null
         },
         globalization = {
             createNewPostDialogTitle: null,
@@ -55,12 +65,14 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         },
         classes = {
             regionBlogPostContent: 'bcms-blog-post-content',
-        };
+        },
+        pageUrlManuallyEdited = false;
 
     // Assign objects to module.
     blog.links = links;
     blog.globalization = globalization;
     blog.selectors = selectors;
+    blog.senderId = 0;
 
     blog.authorsViewModel = null;
     blog.templatesViewModel = null;
@@ -82,7 +94,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     */
     function openBlogEditForm(url, title, postSuccess, onClose, calledFromPage) {
         var blogViewModel;
-
+        var permalinkValue;
         modal.edit({
             title: title,
             onLoad: function (dialog) {
@@ -92,7 +104,19 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
                     },
 
                     beforePost: function () {
+                        if (!pageUrlManuallyEdited) {
+                            var blogUrlField = dialog.container.find(selectors.editPermalinkEditField);
+                            permalinkValue = blogUrlField.val();
+                            blogUrlField.val(null);
+                        }
                         htmlEditor.updateEditorContent();
+                    },
+                    
+                     postError: function () {
+                        if (!pageUrlManuallyEdited) {
+                            var blogUrlField = dialog.container.find(selectors.editPermalinkEditField);
+                            blogUrlField.val(permalinkValue);
+                        }
                     },
                     
                     postSuccess: function (json) {
@@ -136,6 +160,8 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         dialog.container.find(selectors.datePickers).initializeDatepicker(globalization.datePickerTooltipTitle);
         
         htmlEditor.initializeHtmlEditor(selectors.htmlEditor);
+
+        initializePermalinkBox(dialog, true);
 
         var tagsViewModel = new tags.TagsListViewModel(tagsList);
 
@@ -658,6 +684,138 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
         bcms.on(bcms.events.editContent, onEditContent);
     };
     
+    function initializePermalinkBox(dialog, addPrefix) {
+        pageUrlManuallyEdited = false;
+        
+        dialog.container.find(selectors.editPermalink).on('click', function () {
+            blog.showAddNewPageEditPermalinkBox(dialog);
+        });
+
+        dialog.container.find(selectors.editPermalinkClose).on('click', function () {
+            blog.closeAddNewPageEditPermalinkBox(dialog);
+        });
+
+        dialog.container.find(selectors.editPermalinkSave).on('click', function () {
+            blog.saveAddNewPageEditPermalinkBox(dialog);
+        });
+
+        dialog.container.find(selectors.blogTitle).on('keyup', function () {
+            blog.changeUrlSlug(dialog, addPrefix);
+        });
+
+        dialog.container.find(selectors.editPermalinkEditField).on('keyup', function () {
+            pageUrlManuallyEdited = true;
+        });
+        
+        dialog.container.find(selectors.addNewPageForm).on('submit', function () {
+            if (!dialog.container.find(selectors.editPermalinkEditField).valid()) {
+                blog.showAddNewPageEditPermalinkBox(dialog);
+            }
+        });
+        
+        bcms.preventInputFromSubmittingForm(dialog.container.find(selectors.editPermalinkEditField), {
+            preventedEnter: function () {
+                dialog.container.find(selectors.editPermalinkEditField).blur();
+                blog.saveAddNewPageEditPermalinkBox(dialog);
+            },
+            preventedEsc: function () {
+                dialog.container.find(selectors.editPermalinkEditField).blur();
+                blog.closeAddNewPageEditPermalinkBox(dialog);
+            }
+        });
+    }
+	
+	
+ /**
+    * Changes page slug
+    */
+    blog.changeUrlSlug = function (dialog, addPrefix) {
+        var oldText = $.trim(dialog.container.find(selectors.blogTitle).val());
+        setTimeout(function() {
+            var text = $.trim(dialog.container.find(selectors.blogTitle).val()),
+                senderId = blog.senderId++,
+                onComplete = function (json) {
+                    if (json && json.SenderId == senderId && json.Url) {
+                        var slug = json.Url,
+                            url = (slug ? slug : '');
+
+                        dialog.container.find(selectors.editPermalinkEditField).val(url);
+                        dialog.container.find(selectors.editPermalinkHiddenField).val(url);
+                        dialog.container.find(selectors.editPermalinkInfoField).html(url);
+                        
+                        pageUrlManuallyEdited = false;
+                    }
+                };
+
+            if (text && oldText == text) {
+                $.ajax({
+                    type: 'GET',
+                    url: $.format(links.convertStringToSlugUrl, encodeURIComponent(text), senderId),
+                    dataType: 'json',
+                })
+                    .done(function(result) {
+                        onComplete(result);
+                    })
+                    .fail(function(response) {
+                        onComplete(response);
+                    });
+            }
+        }, 400);
+    };
+	
+	
+	//editinimo funkcijos
+	  /**
+    * Shows edit permalink box in AddNewPage dialog.
+    */
+    blog.showAddNewPageEditPermalinkBox = function (dialog) {
+        dialog.container.find(selectors.editPermalinkBox).show();
+        dialog.container.find(selectors.editPermalink).hide();
+        dialog.container.find(selectors.editPermalinkEditField).focus();
+    };
+
+    /**
+    * Sets changed permalink value in PageProperties dialog
+    */
+    blog.saveAddNewPageEditPermalinkBox = function (dialog) {
+        if ($(selectors.editPermalinkEditField).valid()) {
+            var value = dialog.container.find(selectors.editPermalinkEditField).val();
+            dialog.container.find(selectors.editPermalinkHiddenField).val(value);
+            dialog.container.find(selectors.editPermalinkInfoField).html(value ? value : "&nbsp;");
+
+            createBlogPost.hideAddNewPageEditPermalinkBox(dialog);
+        }
+    };
+    
+    /**
+    * Closes edit permalink box in AddNewPage dialog.
+    */
+    blog.closeAddNewPageEditPermalinkBox = function (dialog) {
+        var value = dialog.container.find(selectors.editPermalinkHiddenField).val(),
+            permalinkEditField = dialog.container.find(selectors.editPermalinkEditField);
+        permalinkEditField.val(value);
+        permalinkEditField.blur();
+
+        blog.hideAddNewPageEditPermalinkBox(dialog);
+    };
+
+    /**
+    * Hides edit permalink box in AddNewPage dialog.
+    */
+    blog.hideAddNewPageEditPermalinkBox = function (dialog) {
+        dialog.container.find(selectors.editPermalinkBox).hide();
+        dialog.container.find(selectors.editPermalink).show();
+    };
+	
+	 /**
+    * Shows edit permalink box in AddNewPage dialog.
+    */
+    blog.showAddNewPageEditPermalinkBox = function (dialog) {
+        dialog.container.find(selectors.editPermalinkBox).show();
+        dialog.container.find(selectors.editPermalink).hide();
+        dialog.container.find(selectors.editPermalinkEditField).focus();
+    };
+
     /**
     * Register initialization
     */
