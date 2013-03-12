@@ -1,0 +1,29 @@
+﻿@using BetterCms.Module.Blog.Content.Resources
+@using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Mvc.Helpers
+
+@model BetterCms.Module.Blog.ViewModels.Blog.BlogPostViewModel
+<div class="bcms-input-list-holder">
+    @Html.Tooltip(BlogGlobalization.EditBlogPost_Permalink_Tooltip_Description)
+    <div class="bcms-content-titles">@BlogGlobalization.EditBlogPost_Permalink<a id="bcms-page-editpermalink">@RootGlobalization.Button_Edit</a></div>
+    <div class="bcms-editseo-urlpath" id="bcms-page-permalink-info">@(string.IsNullOrWhiteSpace(Model.BlogUrl) ? Html.Raw("&nbsp;") : new MvcHtmlString(Html.Encode(Model.BlogUrl)))</div>
+</div>
+
+<div class="bcms-edit-urlpath-box" style="display: none;">
+
+    @Html.Hidden("PagePermalinkHidden", Model.BlogUrl, new { @id = "bcms-page-permalink" })
+
+    <div class="bcms-custom-input-box">
+        @Html.TextBoxFor(model => model.BlogUrl, new { @id = "bcms-page-permalink-edit", @class = "bcms-editor-field-box", @style = "width: 503px;" })
+        @Html.ValidationMessageFor(f => f.BlogUrl)
+    </div>
+    @if (Model.Id != Guid.Empty)
+    {
+        <div class="bcms-edit-check-field">
+            @Html.CheckBoxFor(model => model.RedirectFromOldUrl)
+            <div class="bcms-edit-label">@BlogGlobalization.EditBlogPost_CreatePermanentRedirectToOldUrl_Title</div>
+        </div>
+    }
+    <div class="bcms-btn-small" id="bcms-save-permalink">@RootGlobalization.Button_Ok</div>
+    <div class="bcms-btn-links-small">@RootGlobalization.Button_Cancel</div>
+</div>

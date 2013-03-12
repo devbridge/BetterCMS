@@ -48,7 +48,8 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
             var createPageUrl = (pageUrl == null);
             if (createPageUrl && !string.IsNullOrWhiteSpace(request.PageTitle))
             {
-                pageUrl = request.PageTitle.Transliterate();
+                pageUrl = pageService.CreatePagePermalink(request.PageTitle);
+                //pageUrl = request.PageTitle.Transliterate();
             }
             pageUrl = redirectService.FixUrl(pageUrl);
 
