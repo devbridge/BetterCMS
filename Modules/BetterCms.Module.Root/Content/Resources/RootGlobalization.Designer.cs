@@ -574,7 +574,7 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Maximum length cannot exceed {0}..
+        ///   Looks up a localized string similar to Maximum length cannot exceed {0} characters..
         /// </summary>
         public static string Validation_MaximumLengthExceeded_Message {
             get {

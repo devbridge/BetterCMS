@@ -1753,7 +1753,6 @@ a.bcms-btn-close {
 /*Tags & Default Tags Holders*/
 .bcms-tags-field-holder {
     position: absolute;
-    border: 1px solid #d1d1d1;
     top: 0;
     right: -125px;
 }
@@ -1769,35 +1768,12 @@ a.bcms-btn-close {
     color: #000;
     vertical-align: middle;
     background-color: #f5f5f5;
+    border: 1px solid #d1d1d1;
 }
 
     .bcms-add-tags-field:focus {
         outline: none;
     }
-
-.bcms-tags-field-holder:after, .bcms-tags-field-holder:before {
-    right: 100%;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
-}
-
-.bcms-tags-field-holder:after {
-    border-right-color: #f5f5f5;
-    border-width: 7px;
-    top: 50%;
-    margin-top: -7px;
-}
-
-.bcms-tags-field-holder:before {
-    border-right-color: #d1d1d1;
-    border-width: 8px;
-    top: 50%;
-    margin-top: -8px;
-}
 
 .bcms-single-tag {
     position: relative;
@@ -1833,6 +1809,61 @@ a.bcms-btn-close {
         overflow: hidden;
         cursor: pointer;
     }
+
+.bcms-single-tag-active {
+    -webkit-animation: duplicateTag 1.5s 3;
+}
+
+@keyframes duplicateTag {
+    0% {
+        background-color: #def8ff;
+        border: 1px solid #95d3e7;
+    }
+
+    50% {
+        background: #fcecec;
+        border: 1px solid #e64343;
+    }
+
+    100% {
+        background-color: #def8ff;
+        border: 1px solid #95d3e7;
+    }
+}
+
+@-moz-keyframes duplicateTag {
+    0% {
+        background-color: #def8ff;
+        border: 1px solid #95d3e7;
+    }
+
+    50% {
+        background: #fcecec;
+        border: 1px solid #e64343;
+    }
+
+    100% {
+        background-color: #def8ff;
+        border: 1px solid #95d3e7;
+    }
+}
+
+@-webkit-keyframes duplicateTag {
+    0% {
+        background-color: #def8ff;
+        border: 1px solid #95d3e7;
+    }
+
+    50% {
+        background: #fcecec;
+        border: 1px solid #e64343;
+    }
+
+    100% {
+        background-color: #def8ff;
+        border: 1px solid #95d3e7;
+    }
+}
 
 /*search*/
 .bcms-search-block {
@@ -2283,6 +2314,75 @@ ul.bcms-info-messages {
     overflow: hidden;
     text-indent: 9999px;
 }
+
+/*tag validation errors*/
+.tag-validation-error {
+    background-color: #fcecec;
+    border: 1px solid #e64343;
+    box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
+}
+
+    .tag-validation-error:focus {
+        background: #fcecec;
+        border: 1px solid #e64343;
+        box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
+    }
+
+        .tag-validation-error:focus + .tag-field-validation-error span {
+            visibility: visible;
+        }
+
+span.tag-field-validation-error {
+    position: absolute;
+    right: 1px;
+    top: 50%;
+    width: 18px;
+    height: 22px;
+    margin-top: -11px;
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAJCAYAAAF8oY2FAAAAZElEQVQY02N45uw8DYi/MsAZ////Z0AQQKH/YA6QYYcsuhxD5D8QO0LpTOyCIAtAElBJO5ClIEYmskoUW2ACMDdgqsRlZgtU5Rcg9kZS4A0VA8m1MCBJZEAlkHEG3G6iFRJrNQAfBNhPNe12LwAAAABJRU5ErkJggg==') no-repeat center center #FCECEC;
+}
+
+    span.tag-field-validation-error > span {
+        visibility: hidden;
+        position: absolute;
+        right: -9px;
+        bottom: 26px;
+        min-width: 161px;
+        line-height: 15px;
+        padding: 5px;
+        color: #E64343;
+        background: #FCECEC;
+        border: 1px solid #E64343;
+        vertical-align: middle;
+        font-size: 10px;
+        font-family: 'Open Sans', sans-serif;
+    }
+
+        span.tag-field-validation-error > span:after, span.tag-field-validation-error > span:before {
+            top: 100%;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+        }
+
+        span.tag-field-validation-error > span:after {
+            border-top-color: #FCECEC;
+            border-width: 10px;
+            right: 7px;
+            margin-left: -10px;
+        }
+
+        span.tag-field-validation-error > span:before {
+            border-top-color: #E64343;
+            border-width: 11px;
+            right: 6px;
+            margin-left: -11px;
+        }
+
+
 
 /*override jquery ui*/
 .ui-datepicker-trigger {

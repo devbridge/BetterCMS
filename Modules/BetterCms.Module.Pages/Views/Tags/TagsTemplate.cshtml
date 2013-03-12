@@ -11,7 +11,7 @@
         <div class="bcms-btn-plus" data-bind="css: {'bcms-btn-plus-expand': isExpanded()}, click: expandCollapse">&nbsp;</div>
         <div class="bcms-tags-field-holder" data-bind="visible: isExpanded()">
             <input type="text" class="bcms-add-tags-field" style="width: 107px;" data-bind="
-                css: { 'input-validation-error': newTag.hasError()},
+                css: { 'tag-validation-error': newTag.hasError()},
                 value: newTag, 
                 valueUpdate: 'afterkeydown', 
                 hasfocus: isExpanded(), 
@@ -19,7 +19,7 @@
                 escPress: clearTag, 
                 event: {blur: addTag}" />
             <!-- ko if: newTag.hasError()  -->
-                <span class="field-validation-error">
+                <span class="tag-field-validation-error">
                     <span data-bind="text: newTag.validationMessage()"></span>
                 </span>
             <!-- /ko -->
