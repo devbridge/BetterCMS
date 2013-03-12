@@ -161,9 +161,20 @@ namespace BetterCms.Module.Root.Services
 
                 var roleList = ParseRoles(roles);
 
-                // TODO: upgrade with configuration: superUser; role conversion.
+                if (!configuration.Security.UseCustomRoles)
+                {
+                    return roleList.Any(principal.IsInRole);
+                }
 
-                return roleList.Any(principal.IsInRole);
+                // Check for configuration defined user roles.
+                foreach (var role in roleList)
+                {
+                    var translatedRoles = ParseRoles(configuration.Security.Translate(role));
+                    if (translatedRoles.Any(principal.IsInRole))
+                    {
+                        return true;
+                    }
+                }
             }
 
             return false;
