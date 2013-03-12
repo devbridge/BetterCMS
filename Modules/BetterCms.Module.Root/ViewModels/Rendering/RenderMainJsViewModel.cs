@@ -32,6 +32,7 @@ namespace BetterCms.Module.Root.ViewModels.Rendering
         /// <c>true</c> if error trace enabled in client side; otherwise, <c>false</c>.
         /// </value>
         public bool EnableClientSideErrorTrace { get; set; }
+   
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

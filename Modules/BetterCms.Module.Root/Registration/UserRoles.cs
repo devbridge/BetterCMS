@@ -1,7 +1,4 @@
-﻿using BetterCms.Core.Security;
-using BetterCms.Module.Root.Content.Resources;
-
-namespace BetterCms.Module.Root.Registration
+﻿namespace BetterCms.Module.Root.Registration
 {
     /// <summary>
     /// Module permissions.
