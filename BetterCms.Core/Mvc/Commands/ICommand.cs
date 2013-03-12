@@ -1,6 +1,4 @@
-﻿using System.Security.Principal;
-
-using BetterCms.Core.Services;
+﻿using BetterCms.Core.Services;
 
 namespace BetterCms.Core.Mvc.Commands
 {
@@ -24,14 +22,6 @@ namespace BetterCms.Core.Mvc.Commands
         /// The security service.
         /// </value>
         ISecurityService SecurityService { get; set; }
-
-        /// <summary>
-        /// Determines whether this instance can execute.
-        /// </summary>
-        /// <returns>
-        ///   <c>true</c> if this instance can execute; otherwise, <c>false</c>.
-        /// </returns>
-        bool CanExecute();
     }
 
     /// <summary>

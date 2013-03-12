@@ -16,20 +16,6 @@ namespace BetterCms.Module.Pages.Command.Page.SavePagePublishStatus
     public class SavePagePublishStatusCommand : CommandBase, ICommand<SavePagePublishStatusRequest, bool>
     {
         /// <summary>
-        /// Gets or sets the access roles.
-        /// </summary>
-        /// <value>
-        /// The access roles.
-        /// </value>
-        protected override string AccessRoles
-        {
-            get
-            {
-                return PagesConstants.UserRoles.PublishPage;        // This is used in CanExecute() by CommandHandler.
-            }
-        }
-
-        /// <summary>
         /// Executes the specified request.
         /// </summary>
         /// <param name="request">The request.</param>
@@ -37,7 +23,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePagePublishStatus
         /// <exception cref="System.ComponentModel.DataAnnotations.ValidationException">If page status is not correct.</exception>
         public bool Execute(SavePagePublishStatusRequest request)
         {
-            DemandAccess(PagesConstants.UserRoles.PublishPage);     // This would rise exception.
+            DemandAccess(PagesConstants.UserRoles.PublishPage);     // This would rise security exception if user has no access.
 
             var page = UnitOfWork.Session
                 .QueryOver<PageProperties>().Where(p => p.Id == request.PageId && !p.IsDeleted)

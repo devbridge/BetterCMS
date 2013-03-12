@@ -46,36 +46,6 @@ namespace BetterCms.Module.Root.Mvc
         public virtual ISecurityService SecurityService { get; set; }
 
         /// <summary>
-        /// Gets or sets the access roles.
-        /// </summary>
-        /// <value>
-        /// The access roles.
-        /// </value>
-        protected virtual string AccessRoles { get; set; }
-
-        /// <summary>
-        /// Determines whether this instance can execute.
-        /// </summary>
-        /// <returns>
-        ///   <c>true</c> if this instance can execute; otherwise, <c>false</c>.
-        /// </returns>
-        public bool CanExecute()
-        {
-            if (SecurityService == null)
-            {
-                throw new ArgumentNullException();
-            }
-
-            // Allow anonymous.
-            if (AccessRoles == null)
-            {
-                return true;
-            }
-
-            return SecurityService.IsAuthorized(Context.User, AccessRoles);
-        }
-
-        /// <summary>
         /// Demands the access.
         /// </summary>
         /// <param name="roles">The roles.</param>

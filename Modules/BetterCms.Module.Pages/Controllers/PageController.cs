@@ -217,7 +217,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// <returns>
         /// Json with delete result status.
         /// </returns>
-        [BcmsAuthorize]
+        [BcmsAuthorize(Roles = PagesConstants.UserRoles.PublishPage)]
         [HttpPost]
         public ActionResult ChangePublishStatus(SavePagePublishStatusRequest request)
         {

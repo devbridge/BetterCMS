@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Security.Authentication;
 using System.Text;
 
 using BetterCms.Core.Exceptions;
@@ -32,13 +31,8 @@ namespace BetterCms.Module.Root.Mvc
         {
             try
             {
-                if (command.CanExecute())
-                {
-                    command.Execute();
-                    return true;
-                }
-
-                HandleSecurityException(new SecurityException("Forbidden: Access is denied. User do not has permission to execute command."), command);
+                command.Execute();
+                return true;
             }
             catch (ValidationException ex)
             {
@@ -79,13 +73,8 @@ namespace BetterCms.Module.Root.Mvc
         {
             try
             {
-                if (command.CanExecute())
-                {
-                    command.Execute(request);
-                    return true;
-                }
-
-                HandleSecurityException(new SecurityException("Forbidden: Access is denied. User do not has permission to execute command."), command);
+                command.Execute(request);
+                return true;
             }
             catch (ValidationException ex)
             {
@@ -127,12 +116,7 @@ namespace BetterCms.Module.Root.Mvc
         {
             try
             {
-                if (command.CanExecute())
-                {
-                    return command.Execute(request);
-                }
-
-                HandleSecurityException(new SecurityException("Forbidden: Access is denied. User do not has permission to execute command."), command);
+                return command.Execute(request);
             }
             catch (ValidationException ex)
             {
