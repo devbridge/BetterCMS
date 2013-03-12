@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Security.Principal;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions.Service;
-using BetterCms.Core.Mvc;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Services;
 
@@ -22,14 +20,6 @@ namespace BetterCms.Module.Root.Mvc
         /// A command executing context.
         /// </value>
         public ICommandContext Context { get; set; }
-
-        /// <summary>
-        /// Gets the access roles.
-        /// </summary>
-        /// <value>
-        /// The access roles.
-        /// </value>
-        public virtual string AccessRoles { get; set; }
 
         /// <summary>
         /// Gets or sets the repository. This property is auto wired.
@@ -54,6 +44,14 @@ namespace BetterCms.Module.Root.Mvc
         /// The security service.
         /// </value>
         public virtual ISecurityService SecurityService { get; set; }
+
+        /// <summary>
+        /// Gets or sets the access roles.
+        /// </summary>
+        /// <value>
+        /// The access roles.
+        /// </value>
+        protected virtual string AccessRoles { get; set; }
 
         /// <summary>
         /// Determines whether this instance can execute.
@@ -82,7 +80,7 @@ namespace BetterCms.Module.Root.Mvc
         /// </summary>
         /// <param name="roles">The roles.</param>
         /// <exception cref="SecurityException">Forbidden: Access is denied.</exception>
-        public void DemandAccess(string roles)
+        protected void DemandAccess(string roles)
         {
             if (SecurityService == null)
             {

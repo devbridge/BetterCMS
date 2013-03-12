@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 
 using BetterCms.Core.Models;
+using BetterCms.Core.Security;
 using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Command.Page.ClonePage;
 using BetterCms.Module.Pages.Command.Page.CreatePage;
@@ -216,6 +217,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// <returns>
         /// Json with delete result status.
         /// </returns>
+        [BcmsAuthorize]
         [HttpPost]
         public ActionResult ChangePublishStatus(SavePagePublishStatusRequest request)
         {

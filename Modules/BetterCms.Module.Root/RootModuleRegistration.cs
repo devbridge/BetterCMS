@@ -179,8 +179,8 @@ namespace BetterCms.Module.Root
         {
             return new[]
                 {
-                    new UserRole(RootModuleConstants.UserRoles.EditSiteSettings, RootGlobalization.UserRole_EditSiteSettings),
-                    new UserRole(RootModuleConstants.UserRoles.ManageContent, RootGlobalization.UserRole_EditSiteSettings), 
+                    new UserRole(RootModuleConstants.UserRoles.EditSiteSettings, () => RootGlobalization.UserRole_EditSiteSettings),
+                    new UserRole(RootModuleConstants.UserRoles.ManageContent, () => RootGlobalization.UserRole_EditSiteSettings), 
                 };
         }
 

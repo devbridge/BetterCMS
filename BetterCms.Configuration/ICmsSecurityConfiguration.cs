@@ -14,12 +14,12 @@ namespace BetterCms
         string FullAccessRoles { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to use custom roles.
+        /// Gets a value indicating whether to use custom roles.
         /// </summary>
         /// <value>
         ///   <c>true</c> if custom roles are used; otherwise, <c>false</c>.
         /// </value>
-        bool UseCustomRoles { get; set; }
+        bool UseCustomRoles { get; }
 
         /// <summary>
         /// Translates the specified access role.

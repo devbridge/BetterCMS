@@ -14,9 +14,9 @@ namespace BetterCms.Configuration
         private const string FullAccessRolesAttribute = "fullAccessRoles";
 
         /// <summary>
-        /// The use custom roles attribute.
+        /// The custom roles attribute.
         /// </summary>
-        private const string UseCustomRolesAttribute = "useCustomRoles";
+        private const string CustomRolesAttribute = "customRoles";
 
         /// <summary>
         /// Gets or sets the full access roles.
@@ -33,16 +33,30 @@ namespace BetterCms.Configuration
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to use custom roles.
+        /// Gets a value indicating whether to use custom roles.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if custom roles are used otherwise, <c>false</c>.
+        ///   <c>true</c> if custom roles are used; otherwise, <c>false</c>.
         /// </value>
-        [ConfigurationProperty(UseCustomRolesAttribute, IsRequired = false, DefaultValue = false)]
         public bool UseCustomRoles
         {
-            get { return Convert.ToBoolean(this[UseCustomRolesAttribute]); }
-            set { this[UseCustomRolesAttribute] = value; }
+            get { return CustomRoles.Count > 0; }
+        }
+
+        /// <summary>
+        /// Gets the custom roles.
+        /// </summary>
+        /// <value>
+        /// The custom roles.
+        /// </value>
+        [ConfigurationProperty(CustomRolesAttribute, IsDefaultCollection = false)]
+        [ConfigurationCollection(typeof(CustomRolesCollection))]
+        public CustomRolesCollection CustomRoles
+        {
+            get
+            {
+                return this[CustomRolesAttribute] as CustomRolesCollection;
+            }
         }
 
         /// <summary>
@@ -52,10 +66,10 @@ namespace BetterCms.Configuration
         /// <returns>Translated role to custom role.</returns>
         public string Translate(string accessRole)
         {
-            var result = Convert.ToString(this[accessRole]);
-            return string.IsNullOrEmpty(result)
-                ? accessRole
-                : result;
+            var result = CustomRoles.GetElementByKey(accessRole);
+            return result != null
+                ? result.Roles
+                : accessRole;
         }
     }
 }
