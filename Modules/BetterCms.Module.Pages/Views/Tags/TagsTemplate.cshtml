@@ -26,7 +26,7 @@
         </div>
     </div>
     <div class="bcms-single-tag-holder" data-bind="foreach: tags()">
-        <div class="bcms-single-tag"><span data-bind="text: name()"></span><a data-bind="click: remove">@RootGlobalization.Button_Remove</a></div>
+        <div class="bcms-single-tag" data-bind="css: { 'bcms-single-tag-active': isActive() }"><span data-bind="text: name()"></span><a data-bind="    click: remove">@RootGlobalization.Button_Remove</a></div>
         <input type="hidden" data-bind="attr:{ name: getTagInputName($index()), value: name() }" />
     </div>
 </div>
