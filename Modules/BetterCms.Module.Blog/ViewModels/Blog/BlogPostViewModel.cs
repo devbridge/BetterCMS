@@ -172,6 +172,14 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         public ImageSelectorViewModel Image { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether to create permanent redirect from old URL to new URL.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if create permanent redirect from old URL to new URL; otherwise, <c>false</c>.
+        /// </value>
+        public bool RedirectFromOldUrl { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="BlogPostViewModel" /> class.
         /// </summary>
         public BlogPostViewModel()

@@ -17,7 +17,13 @@
         @Html.TextBoxFor(model => model.BlogUrl, new { @id = "bcms-page-permalink-edit", @class = "bcms-editor-field-box", @style = "width: 503px;" })
         @Html.ValidationMessageFor(f => f.BlogUrl)
     </div>
-
+    @if (Model.Id != Guid.Empty)
+    {
+        <div class="bcms-edit-check-field">
+            @Html.CheckBoxFor(model => model.RedirectFromOldUrl)
+            <div class="bcms-edit-label">@BlogGlobalization.EditBlogPost_CreatePermanentRedirectToOldUrl_Title</div>
+        </div>
+    }
     <div class="bcms-btn-small" id="bcms-save-permalink">@RootGlobalization.Button_Ok</div>
     <div class="bcms-btn-links-small">@RootGlobalization.Button_Cancel</div>
 </div>

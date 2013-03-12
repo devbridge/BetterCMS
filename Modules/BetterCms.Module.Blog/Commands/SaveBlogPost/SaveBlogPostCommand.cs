@@ -6,7 +6,6 @@ using BetterCms.Api;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Mvc;
-using BetterCms.Core.Models;
 using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.Blog.Content.Resources;
@@ -20,10 +19,8 @@ using BetterCms.Module.Pages.Services;
 
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
-using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Services;
 
-using NHibernate.Criterion;
 
 namespace BetterCms.Module.Blog.Commands.SaveBlogPost
 {
@@ -53,14 +50,13 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         private readonly IContentService contentService;
 
         /// <summary>
-        /// The cms configuration
-        /// </summary>
-        private readonly ICmsConfiguration configuration;
-
-        /// <summary>
         /// The page service
         /// </summary>
         private readonly IPageService pageService;
+
+        private readonly IBlogService blogService;
+
+        private readonly IRedirectService redirectService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SaveBlogPostCommand" /> class.
@@ -69,13 +65,15 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         /// <param name="optionService">The option service.</param>
         /// <param name="contentService">The content service.</param>
         /// <param name="redirectService">The redirect service.</param>
-        public SaveBlogPostCommand(ITagService tagService, IOptionService optionService, IContentService contentService, ICmsConfiguration configuration, IPageService pageService)
+        public SaveBlogPostCommand(ITagService tagService, IOptionService optionService, IContentService contentService, 
+                                    IPageService pageService, IBlogService blogService, IRedirectService redirectService)
         {
             this.tagService = tagService;
             this.optionService = optionService;
             this.contentService = contentService;
-            this.configuration = configuration;
             this.pageService = pageService;
+            this.blogService = blogService;
+            this.redirectService = redirectService;
         }
 
         /// <summary>
@@ -92,6 +90,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             BlogPost blogPost;
             BlogPostContent content = null;
             PageContent pageContent = null;
+            Pages.Models.Redirect redirectCreated = null;
 
             // Loading blog post and it's content, or creating new, if such not exists
             if (!isNew)
@@ -101,6 +100,21 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                 if (content != null)
                 {
                     pageContent = Repository.FirstOrDefault<PageContent>(c => c.Page == blogPost && c.Region == region && !c.IsDeleted && c.Content == content);
+                }
+                if (!string.Equals(blogPost.PageUrl, request.BlogUrl, StringComparison.OrdinalIgnoreCase) && request.BlogUrl != null)
+                {
+                    request.BlogUrl = redirectService.FixUrl(request.BlogUrl);
+                    pageService.ValidatePageUrl(request.BlogUrl, request.Id);
+                    if (request.RedirectFromOldUrl)
+                    {
+                        var redirect = redirectService.CreateRedirectEntity(blogPost.PageUrl, request.BlogUrl);
+                        if (redirect != null)
+                        {
+                            Repository.Save(redirect);
+                            redirectCreated = redirect;
+                        }
+                    }
+                    blogPost.PageUrl = request.BlogUrl;
                 }
             }
             else
@@ -125,7 +139,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                 }
                 else
                 {
-                    blogPost.PageUrl = GeneratePageUrl(request.Title);
+                    blogPost.PageUrl = blogService.CreateBlogPermalink(request.Title);
                 }               
                
                 blogPost.IsPublic = true;
@@ -179,7 +193,13 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             }
 
             // Notify about new created tags.
-            PagesApiContext.Events.OnTagCreated(newTags);            
+            PagesApiContext.Events.OnTagCreated(newTags);
+
+            // Notify about redirect creation.
+            if (redirectCreated != null)
+            {
+                PagesApiContext.Events.OnRedirectCreated(redirectCreated);
+            }
 
             return new SaveBlogPostCommandResponse
                        {
@@ -288,114 +308,6 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             }
 
             return null;
-        }
-
-        /// <summary>
-        /// Generates the page URL.
-        /// </summary>
-        /// <param name="title">The title.</param>
-        /// <returns>Url path</returns>
-        private string GeneratePageUrl(string title)
-        {
-            var url = title.Transliterate();
-            url = AddUrlPathSuffixIfNeeded(url);
-
-            return url;
-        }
-
-        /// <summary>
-        /// Path exists in database.
-        /// </summary>
-        /// <param name="url">The URL.</param>
-        /// <returns>Url path.</returns>
-        private bool PathExistsInDb(string url)
-        {
-            var exists = UnitOfWork.Session
-                .QueryOver<Page>()
-                .Where(p => !p.IsDeleted && p.PageUrl == url)
-                .Select(p => p.Id)
-                .RowCount();
-            return exists > 0;
-        }
-
-        /// <summary>
-        /// Adds the URL path suffix if needed.
-        /// </summary>
-        /// <param name="url">The URL.</param>
-        /// <returns>Url path.</returns>
-        private string AddUrlPathSuffixIfNeeded(string url)
-        {
-            var urlPrefix = configuration.ArticleUrlPrefix;                      
-            urlPrefix = urlPrefix.TrimEnd('/');
-            
-            if (urlPrefix == "" || urlPrefix.IndexOf("{0}") == -1)
-            {
-                urlPrefix = "/{0}";
-            }
-            var fullUrl = string.Format(urlPrefix+"/", url);
-
-            // Check, if such record exists
-            var exists = PathExistsInDb(fullUrl);
-
-            if (exists)
-            {
-                // Load all titles
-                var urlToReplace = string.Format(urlPrefix + "-", url);
-                var urlToSearch = string.Format("{0}%", urlToReplace);
-                Page alias = null;
-
-                var paths = UnitOfWork.Session
-                    .QueryOver(() => alias)
-                    .Where(p => !p.IsDeleted)
-                    .Where(Restrictions.InsensitiveLike(Projections.Property(() => alias.PageUrl), urlToSearch))
-                    .Select(p => p.PageUrl)
-                    .List<string>();
-
-                int maxNr = 0;
-                var recheckInDb = false;
-                foreach (var path in paths)
-                {
-                    int pathNr;
-                    if (int.TryParse(path.Replace(urlToReplace, null).Trim('/'), out pathNr))
-                    {
-                        if (pathNr > maxNr)
-                        {
-                            maxNr = pathNr;
-                        }
-                    }
-                    else
-                    {
-                        recheckInDb = true;
-                    }
-                }
-
-                if (maxNr == int.MaxValue)
-                {
-                    recheckInDb = true;
-                }
-                else
-                {
-                    maxNr++;
-                }
-
-                if (string.IsNullOrWhiteSpace(url))
-                {
-                    fullUrl = "-";
-                    recheckInDb = true;
-                }
-                else
-                {
-                    fullUrl = string.Format(urlPrefix + "-{1}/", url, maxNr);
-                }
-
-                if (recheckInDb)
-                {
-                    url = string.Format(fullUrl.Trim('/'));
-                    return AddUrlPathSuffixIfNeeded(url);
-                }
-            }
-
-            return fullUrl;
         }
     }
 }

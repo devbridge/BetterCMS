@@ -84,7 +84,7 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
     page.globalization = globalization;
     page.senderId = 0;
 
-    page.initializePermalinkBox = function (dialog, addPrefix, actionUrl, titleField) {
+    page.initializePermalinkBox = function (dialog, addPrefix, actionUrl, titleField, autoGenarate) {
         pageUrlManuallyEdited = false;
         
         dialog.container.find(selectors.editPermalink).on('click', function () {
@@ -99,9 +99,11 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             page.saveAddNewPageEditPermalinkBox(dialog);
         });
 
-        dialog.container.find(titleField).on('keyup', function () {
-            page.changeUrlSlug(dialog, addPrefix, actionUrl, titleField);
-        });
+        if (autoGenarate) {
+            dialog.container.find(titleField).on('keyup', function() {
+                page.changeUrlSlug(dialog, addPrefix, actionUrl, titleField);
+            });
+        }
 
         dialog.container.find(selectors.editPermalinkEditField).on('keyup', function () {
             pageUrlManuallyEdited = true;
@@ -132,7 +134,7 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
     * Initializes AddNewPage dialog events.
     */
     page.initAddNewPageDialogEvents = function (dialog) {
-        page.initializePermalinkBox(dialog, true, links.convertStringToSlugUrl, selectors.addNewPageTitleInput);
+        page.initializePermalinkBox(dialog, true, links.convertStringToSlugUrl, selectors.addNewPageTitleInput, true);
 
         var infoMessageClosed = localStorage.getItem(keys.addNewPageInfoMessageClosed);
         if (infoMessageClosed && infoMessageClosed === '1') {
@@ -560,7 +562,7 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 var url = $.format(links.clonePageDialogUrl, bcms.pageId);
                 dynamicContent.bindDialog(dialog, url, {
                     contentAvailable: function () {
-                        page.initializePermalinkBox(dialog, false, links.convertStringToSlugUrl, selectors.addNewPageTitleInput);
+                        page.initializePermalinkBox(dialog, false, links.convertStringToSlugUrl, selectors.addNewPageTitleInput, true);
                     },
 
                     beforePost: function () {

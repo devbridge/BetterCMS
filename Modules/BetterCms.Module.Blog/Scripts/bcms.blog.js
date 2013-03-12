@@ -155,13 +155,18 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     function initEditBlogPostDialogEvents(dialog, content, calledFromPage, postSuccess) {
         var data = content.Data,
             image = data.Image,
-            tagsList = data.Tags;
+            tagsList = data.Tags,
+            newPost = false;
         dialog.container.find(selectors.datePickers).initializeDatepicker(globalization.datePickerTooltipTitle);
         
         htmlEditor.initializeHtmlEditor(selectors.htmlEditor);
-
-        pages.initializePermalinkBox(dialog, false, links.convertStringToSlugUrl, selectors.blogTitle);
-
+        
+        if (data.Version == 0) {
+            newPost = true;
+        }
+        
+        pages.initializePermalinkBox(dialog, false, links.convertStringToSlugUrl, selectors.blogTitle, newPost);
+        
         var tagsViewModel = new tags.TagsListViewModel(tagsList);
 
         var blogViewModel = new BlogPostViewModel(image, tagsViewModel, data.Id, data.Version);

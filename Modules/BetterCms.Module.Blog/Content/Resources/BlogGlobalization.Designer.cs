@@ -331,6 +331,15 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create permanent redirect entry from old URL to new URL..
+        /// </summary>
+        public static string EditBlogPost_CreatePermanentRedirectToOldUrl_Title {
+            get {
+                return ResourceManager.GetString("EditBlogPost_CreatePermanentRedirectToOldUrl_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Page permalink max length exceeded..
         /// </summary>
         public static string EditBlogPost_PagePermalink_MaxLengthMessage {
