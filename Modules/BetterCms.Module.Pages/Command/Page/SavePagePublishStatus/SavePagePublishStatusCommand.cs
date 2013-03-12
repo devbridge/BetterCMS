@@ -39,13 +39,15 @@ namespace BetterCms.Module.Pages.Command.Page.SavePagePublishStatus
         /// <exception cref="System.ComponentModel.DataAnnotations.ValidationException">If user has no rights or page status is inappropriate.</exception>
         public bool Execute(SavePagePublishStatusRequest request)
         {
-            var principal = securityService.GetCurrentPrincipal();
-            if (!securityService.CanPublishPage(principal))
-            {
-                var message = string.Format(PagesGlobalization.SavePagePublishStatus_NoPermission_Message);
-                var logMessage = string.Format("User has no permission to change page publish status. User: {0}", principal.Identity.Name);
-                throw new ValidationException(() => message, logMessage);
-            }
+// TODO: remove after review.
+//            var principal = securityService.GetCurrentPrincipal();
+//            if (!securityService.CanPublishPage(principal))
+//            {
+//                var message = string.Format(PagesGlobalization.SavePagePublishStatus_NoPermission_Message);
+//                var logMessage = string.Format("User has no permission to change page publish status. User: {0}", principal.Identity.Name);
+//                throw new ValidationException(() => message, logMessage);
+//            }
+            DemandAccess(PagesConstants.UserRoles.PublishPage);
 
             var page = UnitOfWork.Session
                 .QueryOver<PageProperties>().Where(p => p.Id == request.PageId && !p.IsDeleted)

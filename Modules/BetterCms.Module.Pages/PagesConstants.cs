@@ -4,6 +4,14 @@ namespace BetterCms.Module.Pages
 {
     public static class PagesConstants
     {
+        /// <summary>
+        /// Module permissions.
+        /// </summary>
+        public static class UserRoles
+        {
+            public const string PublishPage = "PublishPage";
+        }
+
         public const string PageUrlRegularExpression = @"(^/$)|((?!.*//)(^(/{1}[\w\-]{0,260})+/{1}$))";
 
         public static class PageIds

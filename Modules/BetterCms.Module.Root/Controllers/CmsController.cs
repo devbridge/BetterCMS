@@ -88,8 +88,8 @@ namespace BetterCms.Module.Root.Controllers
         {
             CmsRequestViewModel model;
             virtualPath = VirtualPathUtility.AppendTrailingSlash(virtualPath);            
-            IPrincipal principal = SecurityService.GetCurrentPrincipal();
-            bool canManageContent = SecurityService.CanManageContent(principal);
+            var principal = SecurityService.GetCurrentPrincipal();
+            bool canManageContent = SecurityService.IsAuthorized(principal, RootModuleConstants.UserRoles.ManageContent);
             var useCaching = cmsConfiguration.Cache.Enabled && !canManageContent;
             var request = new GetPageToRenderRequest {
                                                          PageUrl = virtualPath,

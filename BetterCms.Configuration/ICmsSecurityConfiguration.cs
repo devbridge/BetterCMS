@@ -1,20 +1,31 @@
 namespace BetterCms
 {
+    /// <summary>
+    /// Security configuration contract.
+    /// </summary>
     public interface ICmsSecurityConfiguration
     {
+        /// <summary>
+        /// Gets or sets the full access roles.
+        /// </summary>
+        /// <value>
+        /// The full access roles.
+        /// </value>
         string FullAccessRoles { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether to use custom roles.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if custom roles are used; otherwise, <c>false</c>.
+        /// </value>
         bool UseCustomRoles { get; set; }
 
+        /// <summary>
+        /// Translates the specified access role.
+        /// </summary>
+        /// <param name="accessRole">The access role.</param>
+        /// <returns>Roles from configuration file.</returns>
         string Translate(string accessRole);
-
-
-        // TODO: remove below - obsolete.
-
-        string ContentManagementRoles { get; set; }
-
-        string ContentPublishingRoles { get; set; }        
-
-        string PagePublishingRoles { get; set; }        
     }
 }

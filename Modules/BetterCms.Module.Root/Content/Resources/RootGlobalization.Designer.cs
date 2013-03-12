@@ -574,6 +574,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manage Content.
+        /// </summary>
+        public static string UserRole_ManageContent {
+            get {
+                return ResourceManager.GetString("UserRole_ManageContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This field is required..
         /// </summary>
         public static string Validation_FieldIsRequired_Message {

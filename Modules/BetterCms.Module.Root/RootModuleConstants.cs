@@ -11,6 +11,8 @@
             /// Permission for user to edit site settings.
             /// </summary>
             public const string EditSiteSettings = "EditSiteSettings";
+
+            public const string ManageContent = "ManageContent";
         }
 
         public const string EditableGridTemplate = "~/Areas/bcms-root/Views/Shared/EditableGrid/Grid.cshtml";
