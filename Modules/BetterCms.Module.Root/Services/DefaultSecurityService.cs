@@ -152,9 +152,17 @@ namespace BetterCms.Module.Root.Services
                     return true;
                 }
 
-                var roleList = roles.Split(',').Select(r => r.Trim()).Where(r => !string.IsNullOrEmpty(r)).ToList();
+                var fullAccessRoles = ParseRoles(configuration.Security.FullAccessRoles);
+                if (fullAccessRoles.Any(principal.IsInRole))
+                {
+                    // User is in full access role.
+                    return true;
+                }
+
+                var roleList = ParseRoles(roles);
 
                 // TODO: upgrade with configuration: superUser; role conversion.
+
                 return roleList.Any(principal.IsInRole);
             }
 
@@ -194,6 +202,7 @@ namespace BetterCms.Module.Root.Services
             }
             catch (Exception e)
             {
+                // TODO: handle exception.
             }
 
             return hasAnyOfRoles;
