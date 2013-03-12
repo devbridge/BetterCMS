@@ -331,6 +331,15 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Page permalink max length exceeded..
+        /// </summary>
+        public static string EditBlogPost_PagePermalink_MaxLengthMessage {
+            get {
+                return ResourceManager.GetString("EditBlogPost_PagePermalink_MaxLengthMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change Post URL.
         /// </summary>
         public static string EditBlogPost_Permalink {

@@ -84,7 +84,7 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
     page.globalization = globalization;
     page.senderId = 0;
 
-    function initializePermalinkBox(dialog, addPrefix) {
+    page.initializePermalinkBox = function (dialog, addPrefix, actionUrl, titleField) {
         pageUrlManuallyEdited = false;
         
         dialog.container.find(selectors.editPermalink).on('click', function () {
@@ -99,8 +99,8 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             page.saveAddNewPageEditPermalinkBox(dialog);
         });
 
-        dialog.container.find(selectors.addNewPageTitleInput).on('keyup', function () {
-            page.changeUrlSlug(dialog, addPrefix);
+        dialog.container.find(titleField).on('keyup', function () {
+            page.changeUrlSlug(dialog, addPrefix, actionUrl, titleField);
         });
 
         dialog.container.find(selectors.editPermalinkEditField).on('keyup', function () {
@@ -123,13 +123,16 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 page.closeAddNewPageEditPermalinkBox(dialog);
             }
         });
-    }
+    };
 
+    page.isEditedPageUrlManually = function() {
+        return pageUrlManuallyEdited;
+    };
     /**
     * Initializes AddNewPage dialog events.
     */
     page.initAddNewPageDialogEvents = function (dialog) {
-        initializePermalinkBox(dialog, true);
+        page.initializePermalinkBox(dialog, true, links.convertStringToSlugUrl, selectors.addNewPageTitleInput);
 
         var infoMessageClosed = localStorage.getItem(keys.addNewPageInfoMessageClosed);
         if (infoMessageClosed && infoMessageClosed === '1') {
@@ -332,17 +335,18 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
     /**
     * Changes page slug
     */
-    page.changeUrlSlug = function (dialog, addPrefix) {
-        var oldText = $.trim(dialog.container.find(selectors.addNewPageTitleInput).val());
+    page.changeUrlSlug = function (dialog, addPrefix, action, titleInput) {
+        var oldText = $.trim(dialog.container.find(titleInput).val());
         setTimeout(function() {
-            var text = $.trim(dialog.container.find(selectors.addNewPageTitleInput).val()),
+            var text = $.trim(dialog.container.find(titleInput).val()),
                 senderId = page.senderId++,
                 onComplete = function (json) {
                     if (json && json.SenderId == senderId && json.Url) {
                         var slug = json.Url,
-                            url = (slug ? slug + '/' : '');
+                            url = (slug ? slug : '');
 
                         if (addPrefix) {
+                            url += '/'; 
                             var prefix = window.location.pathname;
                             if (prefix.substr(prefix.length - 1, 1) != '/') {
                                 prefix += '/';
@@ -365,7 +369,7 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
             if (text && oldText == text) {
                 $.ajax({
                     type: 'GET',
-                    url: $.format(links.convertStringToSlugUrl, encodeURIComponent(text), senderId),
+                    url: $.format(action, encodeURIComponent(text), senderId),
                     dataType: 'json',
                 })
                     .done(function(result) {
@@ -556,7 +560,7 @@ define('bcms.pages', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms
                 var url = $.format(links.clonePageDialogUrl, bcms.pageId);
                 dynamicContent.bindDialog(dialog, url, {
                     contentAvailable: function () {
-                        initializePermalinkBox(dialog, false);
+                        page.initializePermalinkBox(dialog, false, links.convertStringToSlugUrl, selectors.addNewPageTitleInput);
                     },
 
                     beforePost: function () {

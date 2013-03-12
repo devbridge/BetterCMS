@@ -103,6 +103,8 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// <value>
         /// The blog URL.
         /// </value>
+        [CustomPageUrlValidation]
+        [StringLength(MaxLength.Url, MinimumLength = 1, ErrorMessageResourceType = typeof(BlogGlobalization), ErrorMessageResourceName = "EditBlogPost_PagePermalink_MaxLengthMessage")]
         public string BlogUrl { get; set; }
 
         /// <summary>

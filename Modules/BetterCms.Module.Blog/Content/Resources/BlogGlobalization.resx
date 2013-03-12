@@ -270,6 +270,9 @@
   <data name="CreatePost_CreatedSuccessfully_Message" xml:space="preserve">
     <value>Post created successfully</value>
   </data>
+  <data name="EditBlogPost_PagePermalink_MaxLengthMessage" xml:space="preserve">
+    <value>Page permalink max length exceeded.</value>
+  </data>
   <data name="EditBlogPost_Permalink" xml:space="preserve">
     <value>Change Post URL</value>
   </data>
