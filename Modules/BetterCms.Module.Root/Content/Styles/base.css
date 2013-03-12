@@ -2131,6 +2131,15 @@ a.bcms-sort-arrow-top:hover {
     position: relative;
 }
 
+.bcms-date-input-box {
+    display: inline-block;
+    position: relative;
+}
+
+    .bcms-date-input-box .field-validation-error {
+        right: 23px;
+    }
+
 .bcms-textarea-box {
     position: relative;
 }
@@ -2278,7 +2287,7 @@ ul.bcms-info-messages {
 /*override jquery ui*/
 .ui-datepicker-trigger {
     position: absolute;
-    top: 36px;
+    top: 6px;
     right: 5px;
     cursor: pointer;
 }
