@@ -230,7 +230,7 @@ define('bcms.pages.tags', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSe
 
         self.isExpanded = ko.observable(false);
         self.tags = ko.observableArray();
-        self.newTag = ko.observable();
+        self.newTag = ko.observable().extend({ maxLength: { maxLength: ko.maxLength.name } });
 
         if (tagsList) {
             for (var i = 0; i < tagsList.length; i ++) {
@@ -243,16 +243,24 @@ define('bcms.pages.tags', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSe
             self.clearTag();
         };
 
-        self.addTag = function () {
+        self.addTag = function() {
             var newTag = self.newTag();
             if (newTag) {
-                for (var i = 0; i < self.tags().length; i ++) {
-                    if (self.tags()[i].name() == newTag) {
-                        return;
+                if (!self.newTag.hasError()) {
+                    for (var i = 0; i < self.tags().length; i++) {
+                        var tag = self.tags()[i];
+                        if (tag.name() == newTag) {
+                            tag.isActive(true);
+                            setTimeout(function() {
+                                tag.isActive(false);
+                            }, 4000);
+                            self.clearTag();
+                            return;
+                        }
                     }
+                    var tagViewModel = new tags.TagViewModel(self, newTag);
+                    self.tags.push(tagViewModel);
                 }
-                var tagViewModel = new tags.TagViewModel(self, newTag);
-                self.tags.push(tagViewModel);
             }
             self.clearTag();
         };
@@ -271,6 +279,7 @@ define('bcms.pages.tags', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSe
         self.parent = parent;
         self.pattern = 'Tags[{0}]';
 
+        self.isActive = ko.observable(false);
         self.name = ko.observable(tagName);
 
         self.remove = function () {

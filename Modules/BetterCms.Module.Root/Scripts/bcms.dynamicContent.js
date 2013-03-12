@@ -68,7 +68,9 @@ define('bcms.dynamicContent', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bc
                 if (content.Success) {
                     dialog.setContent(content.Html, contentId);
                 } else {
-                    dialog.close();
+                    if (dialog.close) {
+                        dialog.close();
+                    }
                     if (content.Messages && content.Messages.length > 0) {
                         modal.showMessages(content);
                     } else {
@@ -76,6 +78,8 @@ define('bcms.dynamicContent', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bc
                             content: globalization.failedLoadDialogMessage
                         });
                     }
+                    dynamicConent.hideLoading(dialog);
+
                     return;
                 }
             } else {

@@ -14,6 +14,8 @@ namespace BetterCms.Module.Pages
 
         public const string PageUrlRegularExpression = @"(^/$)|((?!.*//)(^(/{1}[\w\-]{0,260})+/{1}$))";
 
+        public const string SiteMapUrlRegularExpression = @"^/?[\w\-/].*/?";
+
         public static class PageIds
         {
             public static Guid PageDefault = new Guid("B638896E-B8BB-472F-8DFF-A0B83FF1F36F");

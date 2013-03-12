@@ -295,7 +295,7 @@
     <value>This field is required.</value>
   </data>
   <data name="Validation_MaximumLengthExceeded_Message" xml:space="preserve">
-    <value>Maximum length cannot exceed {0}.</value>
+    <value>Maximum length cannot exceed {0} characters.</value>
   </data>
   <data name="WaterMark_Search" xml:space="preserve">
     <value>Search...</value>

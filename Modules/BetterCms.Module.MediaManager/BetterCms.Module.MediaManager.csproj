@@ -169,6 +169,7 @@
     <Compile Include="Models\Media.cs" />
     <Compile Include="Models\MediaImage.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
+    <Compile Include="Models\Migrations\Migration201303081430.cs" />
     <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />
     <Compile Include="Registration\ImageEditorJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\MediaUploadJavaScriptModuleDescriptor.cs" />

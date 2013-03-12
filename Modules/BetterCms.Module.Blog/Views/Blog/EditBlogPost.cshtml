@@ -82,13 +82,17 @@
                     <div class="bcms-input-field-holder">
                         @Html.Tooltip(BlogGlobalization.EditBlockPost_LiveDates_Tooltip_Description)
                         <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_LiveFrom_Title</div>
-                        @Html.DateTextBoxFor(model => model.LiveFromDate, Model.LiveFromDate, new Dictionary<string, object> { { "class", "bcms-editor-field-box bcms-datepicker" }, { "style", "width: 127px;" } })
-                        @Html.ValidationMessageFor(m => m.LiveFromDate)
+                        <div class="bcms-date-input-box">
+                            @Html.DateTextBoxFor(model => model.LiveFromDate, Model.LiveFromDate, new Dictionary<string, object> { { "class", "bcms-editor-field-box bcms-datepicker" }, { "style", "width: 127px;" } })
+                            @Html.ValidationMessageFor(m => m.LiveFromDate)
+                        </div>
                     </div>
                     <div class="bcms-input-field-holder">
                         <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_LiveTo_Title</div>
-                        @Html.DateTextBoxFor(model => model.LiveToDate, Model.LiveToDate, new Dictionary<string, object> { { "class", "bcms-editor-field-box bcms-datepicker" }, { "style", "width: 127px;" } })
-                        @Html.ValidationMessageFor(m => m.LiveToDate)
+                        <div class="bcms-date-input-box">
+                            @Html.DateTextBoxFor(model => model.LiveToDate, Model.LiveToDate, new Dictionary<string, object> { { "class", "bcms-editor-field-box bcms-datepicker" }, { "style", "width: 127px;" } })
+                            @Html.ValidationMessageFor(m => m.LiveToDate)
+                        </div>
                     </div>
                 </div>
 
@@ -99,7 +103,7 @@
                         <!-- ko if: image().url() -->
                         <a class="bcms-remove-image" data-bind="click: image().remove.bind(image())">@RootGlobalization.Button_Remove</a>
                         <a data-bind="click: image().preview.bind(image())">
-                            <img data-bind="attr: {src: image().versionedThumnailUrl(), alt: image().tooltip() }" /></a>
+                            <img data-bind="attr: { src: image().versionedThumnailUrl(), alt: image().tooltip() }" /></a>
                         <!-- /ko -->
                     </div>
                     <div class="bcms-upload-info">
