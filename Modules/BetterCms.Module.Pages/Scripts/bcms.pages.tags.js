@@ -253,7 +253,7 @@ define('bcms.pages.tags', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSe
                             tag.isActive(true);
                             setTimeout(function() {
                                 tag.isActive(false);
-                            }, 500);
+                            }, 4000);
                             self.clearTag();
                             return;
                         }
