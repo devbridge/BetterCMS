@@ -1644,6 +1644,7 @@ a.bcms-btn-close {
         display: block;
         width: 208px;
         height: 175px;
+        background: #f5f5f5;
     }
 
     .bcms-preview-box:hover > .bcms-zoom-overlay {
@@ -1736,6 +1737,7 @@ a.bcms-btn-close {
         display: block;
         height: 175px;
         width: 208px;
+        background: #f5f5f5;
     }
 
     .bcms-grid-image-holder:hover > .bcms-zoom-overlay {
