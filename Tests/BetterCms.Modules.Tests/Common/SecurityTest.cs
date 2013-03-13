@@ -5,7 +5,6 @@ using System.Web.Mvc;
 
 using Autofac;
 
-using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Blog;
 using BetterCms.Module.MediaManager;
 using BetterCms.Module.Pages;
@@ -31,14 +30,13 @@ namespace BetterCms.Test.Module.Common
         [Test]
         public void All_Controllers_Needs_BcmsAuthorize_Attribute()
         {
-            return; // TODO: remove this after all controllers/actions will be marked with authorize that need it.
-
             var controllersToSkip = new Dictionary<string, string[]>
                 {
                     // Controller Name                          Actions
                     { "CmsController",                  new[] { "Index" } },
                     { "EmbeddedResourcesController",    new[] { "Index" } },
                     { "RenderingController",            new[] { "*" } },
+                    { "FilesController",                new[] { "Download" } },
                 };
 
             var testItems = new List<Type>
@@ -99,46 +97,6 @@ namespace BetterCms.Test.Module.Common
                 var roles = descriptor.RegisterUserRoles(container, cmsConfigurationMock.Object);
                 Assert.IsNotNull(roles);
             }
-        }
-
-        [Test]
-        public void All_Action_Projections_in_Modules_Should_Contain_IsVisible_Setted()
-        {
-// TODO: update or remove if no longer needed.
-//            foreach (var descriptor in moduleDescriptors)
-//            {
-//                IList<IPageActionProjection> allProjections = new List<IPageActionProjection>();
-//                IEnumerable<IPageActionProjection> projections;
-//
-//                projections = descriptor.RegisterSidebarHeaderProjections(container, cmsConfigurationMock.Object);
-//                if (projections != null)
-//                {
-//                    projections.ToList().ForEach(allProjections.Add);
-//                }
-//
-//                projections = descriptor.RegisterSidebarMainProjections(container, cmsConfigurationMock.Object);
-//                if (projections != null)
-//                {
-//                    projections.ToList().ForEach(allProjections.Add);
-//                }
-//
-//                projections = descriptor.RegisterSidebarSideProjections(container, cmsConfigurationMock.Object);
-//                if (projections != null)
-//                {
-//                    projections.ToList().ForEach(allProjections.Add);
-//                }
-//
-//                projections = descriptor.RegisterSiteSettingsProjections(container, cmsConfigurationMock.Object);
-//                if (projections != null)
-//                {
-//                    projections.ToList().ForEach(allProjections.Add);
-//                }
-//
-//                foreach (var projection in allProjections)
-//                {
-//                    Assert.IsNotNull(projection.AccessRole);
-//                }
-//            }
         }
     }
 }

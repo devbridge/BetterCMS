@@ -1,12 +1,13 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
+using BetterCms.Core.Security;
 using BetterCms.Module.MediaManager.Command.Files.DownloadFile;
 using BetterCms.Module.MediaManager.Command.Files.GetFiles;
 using BetterCms.Module.MediaManager.Command.MediaManager.DeleteMedia;
 using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
-
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
@@ -32,6 +33,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// <returns>
         /// List of files.
         /// </returns>
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.DeleteContent)]
         public ActionResult GetFilesList(MediaManagerViewModel options)
         {
             var success = true;
@@ -58,6 +60,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// Json with result status.
         /// </returns>
         [HttpPost]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.DeleteContent)]
         public ActionResult FileDelete(string id, string version)
         {
             var request = new DeleteMediaCommandRequest
@@ -83,6 +86,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// <returns>
         /// The view.
         /// </returns>
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         public ActionResult FileInsert()
         {
             var files = GetCommand<GetFilesCommand>().ExecuteCommand(new MediaManagerViewModel());
