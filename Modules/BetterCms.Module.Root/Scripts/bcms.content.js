@@ -17,6 +17,7 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
             contentHistory: '.bcms-content-history',
             contentConfigure: '.bcms-content-configure',
 
+            regionsAndContents: '.bcms-region-start, .bcms-region-end, .bcms-content-start, .bcms-content-end',
             regionOverlay: '#bcms-region-overlay-template',
             region: '.bcms-region',
             regionTop: '.bcms-region-top',
@@ -25,7 +26,19 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
             regionRight: '.bcms-region-right',
             regionActions: '.bcms-region-actions',
             renderedRegions: '.bcms-render-region',
-            renderedContents: 'script[type="text/html"]'
+            renderedContents: 'script[type="text/html"]',
+            
+            regionAddContentButtons: '.bcms-region-addcontent',
+            regionSortButtons: '.bcms-region-sortcontent',
+            regionSortDoneButtons: '.bcms-region-sortdone',
+            regionButtons: '.bcms-region-button',
+            regionSortWrappers: '.bcms-sort-wrapper'
+        },
+        classes = {
+            regionStart: 'bcms-region-start',
+            regionEnd: 'bcms-region-end',
+            contentStart: 'bcms-content-start',
+            contentEnd: 'bcms-content-end'
         },
         resizeTimer,
         currentContentDom,
@@ -220,15 +233,15 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
 
         var regionId = regionViewModel.id;
 
-        $('.bcms-region-addcontent', regionViewModel.overlay).on('click', function () {
+        $(selectors.regionAddContentButtons, regionViewModel.overlay).on('click', function () {
             bcms.trigger(bcms.events.addPageContent, regionId);
         });
 
-        $('.bcms-region-sortcontent', regionViewModel.overlay).on('click', function () {
+        $(selectors.regionSortButtons, regionViewModel.overlay).on('click', function () {
             content.turnSortModeOn(regionViewModel);
         });
 
-        $('.bcms-region-sortdone', regionViewModel.overlay).on('click', function() {
+        $(selectors.regionSortDoneButtons, regionViewModel.overlay).on('click', function() {
             var hasChanges = content.turnSortModeOff(regionViewModel);
 
             if (hasChanges) {
@@ -273,14 +286,14 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
         var regionContents = [],
             hasChanges = false;
 
-        $('.bcms-region-button', regionViewModel.overlay).show();
-        $('.bcms-region-sortdone', regionViewModel.overlay).hide();
+        $(selectors.regionButtons, regionViewModel.overlay).show();
+        $(selectors.regionSortDoneButtons, regionViewModel.overlay).hide();
 
         regionViewModel.overlay.sortable('destroy');
         regionViewModel.isSorting = false;
         regionViewModel.sortingContents = [];
 
-        $('.bcms-sort-wrapper', regionViewModel.overlay).each(function () {
+        $(selectors.regionSortWrappers, regionViewModel.overlay).each(function () {
             var viewModel = $(this).data('target');
 
             regionContents.push(viewModel);
@@ -313,8 +326,8 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
 
         sortableRegions.push(regionViewModel);
         
-        $('.bcms-region-button', regionViewModel.overlay).hide();
-        $('.bcms-region-sortdone', regionViewModel.overlay).show();
+        $(selectors.regionButtons, regionViewModel.overlay).hide();
+        $(selectors.regionSortDoneButtons, regionViewModel.overlay).show();
 
         $(regionViewModel.contents).each(function () {
             var sortWrapper = $('<div class="bcms-sort-wrapper" />');
@@ -476,14 +489,14 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
 
         pageViewModel = new PageViewModel();
 
-        var tags = $('.bcms-region-start, .bcms-region-end, .bcms-content-start, .bcms-content-end').toArray(),
+        var tags = $(selectors.regionsAndContents).toArray(),
             tagsCount = tags.length,
             regionStart,
             i;
         
         for (i = 0; i < tagsCount; i++) {
             regionStart = $(tags[i]);
-            if (regionStart.hasClass("bcms-region-start")) {
+            if (regionStart.hasClass(classes.regionStart)) {
                 var regionContentViewModels = [],
                     currentTag,
                     j,
@@ -493,15 +506,15 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
                 for (j = i; j < tagsCount; j++) {
                     currentTag = $(tags[j]);
 
-                    if (currentTag.hasClass("bcms-content-start")) {
+                    if (currentTag.hasClass(classes.contentStart)) {
                         contentStart = currentTag;
                         contentStartFound = true;
-                    } else if (currentTag.hasClass("bcms-content-end") && contentStartFound) {
+                    } else if (currentTag.hasClass(classes.contentEnd) && contentStartFound) {
                         contentStartFound = false;
                         
                         var contentViewModel = new ContentViewModel(contentStart, currentTag);
                         regionContentViewModels.push(contentViewModel);
-                    } else if (currentTag.hasClass("bcms-region-end")) {
+                    } else if (currentTag.hasClass(classes.regionEnd)) {
                         var regionViewModel = new RegionViewModel(regionStart, currentTag, regionContentViewModels);
 
                         pageViewModel.regions.push(regionViewModel);
