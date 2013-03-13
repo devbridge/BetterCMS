@@ -8,6 +8,7 @@ using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Exceptions.Service;
+using BetterCms.Core.Models;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Core.Services;
 using BetterCms.Core.Services.Caching;
@@ -15,6 +16,7 @@ using BetterCms.Core.Web;
 
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Root.Mvc.Helpers;
 
 using NHibernate.Linq;
 
@@ -128,6 +130,22 @@ namespace BetterCms.Module.Pages.Services
                 var logMessage = string.Format("Page with entered URL {0} already exists.", url);
                 throw new ValidationException(() => PagesGlobalization.ValidatePageUrlCommand_UrlAlreadyExists_Message, logMessage);
             }
+        }
+
+        public string CreatePagePermalink(string url)
+        {
+            const int maxLength = MaxLength.Url - 5;
+
+            var slug = url.Transliterate();
+            if (string.IsNullOrWhiteSpace(slug))
+            {
+                slug = "-";
+            }
+            if (slug.Length >= maxLength)
+            {
+                slug = slug.Substring(0, maxLength);
+            }
+            return slug;
         }
 
         /// <summary>

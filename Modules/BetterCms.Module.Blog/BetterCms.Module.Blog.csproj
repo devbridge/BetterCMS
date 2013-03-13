@@ -154,8 +154,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registration\BlogJavaScriptModuleDescriptor.cs" />
     <Compile Include="Services\DefaultAuthorService.cs" />
+    <Compile Include="Services\DefaultBlogService.cs" />
     <Compile Include="Services\DefaultOptionService.cs" />
     <Compile Include="Services\IAuthorService.cs" />
+    <Compile Include="Services\IBlogService.cs" />
     <Compile Include="Services\IOptionService.cs" />
     <Compile Include="ViewModels\Author\AuthorViewModel.cs" />
     <Compile Include="ViewModels\Blog\BlogPostViewModel.cs" />
@@ -224,7 +226,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Views\Author\Partial\ListTemplate.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Blog\Partial\AddNewBlogEditPermalink.cshtml" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Blog\EditBlogPost.cshtml" />
   </ItemGroup>

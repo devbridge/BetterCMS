@@ -506,6 +506,44 @@ div.bcms-upload-success {
     cursor: pointer;
 }
 
+
+/*loading spinner*/
+.bcms-grid .bcms-processing-file {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    background: #fff;
+    color: #20cd00;
+    font-size: 12px;
+}
+
+.bcms-grid .bcms-failed-file {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    background: #fff;
+    color: #e64343;
+    font-size: 12px;
+}
+
+.bcms-list .bcms-processing-file {
+    color: #20cd00;
+    font-size: 12px;
+}
+
+.bcms-list .bcms-failed-file {
+    color: #e64343;
+    font-size: 12px;
+}
+
 /*no data available in media manger*/
 div.bcms-nomedia-data {
     position: relative;
@@ -1116,7 +1154,7 @@ input.bcms-grid-input:focus {
         position: absolute;
         bottom: 15px;
         left: 0;
-        width: 105px;
+        width: 103px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;

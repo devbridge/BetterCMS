@@ -15,6 +15,7 @@ using BetterCms.Module.Pages.Command.Page.SavePageProperties;
 using BetterCms.Module.Pages.Command.Page.SavePagePublishStatus;
 using BetterCms.Module.Pages.Commands.GetTemplates;
 using BetterCms.Module.Pages.Content.Resources;
+using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
@@ -29,6 +30,11 @@ namespace BetterCms.Module.Pages.Controllers
     /// </summary>
     public class PageController : CmsControllerBase
     {
+        private readonly  IPageService pageService;
+        public PageController(IPageService pageService)
+        {
+            this.pageService = pageService;
+        }
         /// <summary>
         /// Renders a page list for the site settings dialog.
         /// </summary>
@@ -250,17 +256,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// </returns>
         public ActionResult ConvertStringToSlug(string text, string senderId)
         {
-            const int maxLength = MaxLength.Url - 5;
-            
-            var slug = text.Transliterate();
-            if (string.IsNullOrWhiteSpace(slug))
-            {
-                slug = "-";
-            }
-            if (slug.Length >= maxLength)
-            {
-                slug = slug.Substring(0, maxLength);
-            }
+            var slug = pageService.CreatePagePermalink(text);
 
             return Json(new { Text = text, Url = slug, SenderId = senderId }, JsonRequestBehavior.AllowGet);
         }

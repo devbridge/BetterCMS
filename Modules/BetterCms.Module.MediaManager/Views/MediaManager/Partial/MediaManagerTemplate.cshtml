@@ -97,10 +97,10 @@
                     <div class="bcms-media-name">
                         <!-- ko text: name() --><!-- /ko -->
                         <!--  ko if: isProcessing() -->
-                        <br /><span style="color: navy;">@MediaGlobalization.MediaManager_FileStillProcessing_Message</span>
+                        <br /><span class="bcms-processing-file">@MediaGlobalization.MediaManager_FileStillProcessing_Message</span>
                         <!-- /ko -->
                         <!--  ko if: isFailed() -->
-                        <br /><span style="color: red;">@MediaGlobalization.MediaManager_FailedToProcessFile_Message</span>
+                        <br /><span class="bcms-failed-file">@MediaGlobalization.MediaManager_FailedToProcessFile_Message</span>
                         <!-- /ko -->
                     </div>
                 </div>
