@@ -15,6 +15,15 @@ namespace BetterCms.Core.Security
     public class BcmsAuthorizeAttribute : System.Web.Mvc.AuthorizeAttribute
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="BcmsAuthorizeAttribute"/> class.
+        /// </summary>
+        /// <param name="roles">The roles.</param>
+        public BcmsAuthorizeAttribute(params string[] roles)
+        {
+            Roles = string.Join(",", roles);
+        }
+
+        /// <summary>
         /// When overridden, provides an entry point for custom authorization checks.
         /// </summary>
         /// <param name="httpContext">The HTTP context, which encapsulates all HTTP-specific information about an individual HTTP request.</param>

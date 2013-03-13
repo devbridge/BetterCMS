@@ -15,7 +15,7 @@ namespace BetterCms.Module.Root.Controllers
     /// <summary>
     /// Site settings menu controller.
     /// </summary>
-//    [BcmsAuthorize(Roles = RootModuleConstants.UserRoles.EditSiteSettings)]
+    [BcmsAuthorize]
     public class SiteSettingsController : CmsControllerBase
     {
         /// <summary>

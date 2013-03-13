@@ -2,8 +2,7 @@
 using System.Web.Mvc;
 using System.Web.Security;
 
-using BetterCms.Core.Mvc;
-using BetterCms.Core.Services;
+using BetterCms.Core.Security;
 using BetterCms.Module.Root.Models.Authentication;
 using BetterCms.Module.Root.Mvc;
 
@@ -14,6 +13,7 @@ namespace BetterCms.Module.Root.Controllers
     /// <summary>
     /// User authentication handling controller.
     /// </summary>
+    [BcmsAuthorize]
     public class AuthenticationController : CmsControllerBase
     {
         /// <summary>

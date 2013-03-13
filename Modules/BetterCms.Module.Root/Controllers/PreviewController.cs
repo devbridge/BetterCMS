@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 
 using BetterCms.Core.Mvc.Attributes;
-using BetterCms.Core.Services;
+using BetterCms.Core.Security;
 using BetterCms.Module.Root.Commands.GetPageToRender;
 using BetterCms.Module.Root.Mvc;
 
@@ -10,6 +10,7 @@ namespace BetterCms.Module.Root.Controllers
     /// <summary>
     /// Preview controller.
     /// </summary>
+    [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.DeleteContent)]
     public class PreviewController : CmsControllerBase
     {
         /// <summary>
