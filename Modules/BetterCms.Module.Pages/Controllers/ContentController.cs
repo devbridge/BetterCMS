@@ -69,6 +69,7 @@ namespace BetterCms.Module.Pages.Controllers
             return PartialView(model.WidgetCategories);
         }
 
+        // TODO: remove action; update command.
         /// <summary>
         /// Creates widget categories partial view for given category.
         /// </summary>
@@ -78,7 +79,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// </returns>
         [HttpPost]
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
-        public ActionResult WidgetCategory(string categoryId)
+        private ActionResult WidgetCategory(string categoryId)
         {
             var result = GetCommand<GetWidgetCategoryCommand>().ExecuteCommand(new GetWidgetCategoryRequest
                                                                             {
