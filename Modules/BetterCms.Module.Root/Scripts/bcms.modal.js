@@ -465,7 +465,7 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', 'bcms.
     */
     function canHandleKeyPress() {
         var element = $(document.activeElement);
-        return element.is('body') || element.is('div') || element.is('input') || element.is('select') || element.is(selectors.close);
+        return element.is('body') || element.is('div') || element.is('input') || element.is(selectors.close);
     }
 
     /**
