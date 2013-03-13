@@ -6,6 +6,7 @@ using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Mvc;
 
 namespace BetterCms.Module.Pages.Command.Page.SavePagePublishStatus
@@ -23,7 +24,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePagePublishStatus
         /// <exception cref="System.ComponentModel.DataAnnotations.ValidationException">If page status is not correct.</exception>
         public bool Execute(SavePagePublishStatusRequest request)
         {
-            DemandAccess(PagesConstants.UserRoles.PublishPage);     // This would rise security exception if user has no access.
+            DemandAccess(RootModuleConstants.UserRoles.PublishContent);     // This would rise security exception if user has no access.
 
             var page = UnitOfWork.Session
                 .QueryOver<PageProperties>().Where(p => p.Id == request.PageId && !p.IsDeleted)

@@ -16,7 +16,7 @@ using BetterCms.Module.Pages.Command.Page.SavePagePublishStatus;
 using BetterCms.Module.Pages.Commands.GetTemplates;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.ViewModels.Page;
-
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
@@ -217,7 +217,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// <returns>
         /// Json with delete result status.
         /// </returns>
-        [BcmsAuthorize(Roles = PagesConstants.UserRoles.PublishPage)]
+        [BcmsAuthorize(Roles = RootModuleConstants.UserRoles.PublishContent)]
         [HttpPost]
         public ActionResult ChangePublishStatus(SavePagePublishStatusRequest request)
         {

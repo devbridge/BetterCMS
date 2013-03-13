@@ -179,8 +179,10 @@ namespace BetterCms.Module.Root
         {
             return new[]
                 {
-                    new UserRole(RootModuleConstants.UserRoles.EditSiteSettings, () => RootGlobalization.UserRole_EditSiteSettings),
-                    new UserRole(RootModuleConstants.UserRoles.ManageContent, () => RootGlobalization.UserRole_EditSiteSettings), 
+                    new UserRole(RootModuleConstants.UserRoles.EditContent, () => RootGlobalization.UserRole_EditContent),
+                    new UserRole(RootModuleConstants.UserRoles.PublishContent, () => RootGlobalization.UserRole_PublishContent), 
+                    new UserRole(RootModuleConstants.UserRoles.DeleteContent, () => RootGlobalization.UserRole_DeleteContent), 
+                    new UserRole(RootModuleConstants.UserRoles.Administration, () => RootGlobalization.UserRole_Administration), 
                 };
         }
 
@@ -193,7 +195,7 @@ namespace BetterCms.Module.Root
                             Order = 10,
                             CssClass = page => "bcms-logout-btn",
                         },
-                    new RenderActionProjection<AuthenticationController>(f => f.Info()) { AccessRole = string.Empty } // All authenticated users.
+                    new RenderActionProjection<AuthenticationController>(f => f.Info())
                 };
         }
 
@@ -206,7 +208,6 @@ namespace BetterCms.Module.Root
                             Title = () => RootGlobalization.Sidebar_SiteSettingsButtonTitle,
                             CssClass = page => "bcms-sidemenu-btn bcms-btn-settings",
                             Order = 500,
-                            AccessRole = RootModuleConstants.UserRoles.EditSiteSettings
                         }
                 };
         }

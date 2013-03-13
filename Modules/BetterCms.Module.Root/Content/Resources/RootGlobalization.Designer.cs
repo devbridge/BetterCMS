@@ -565,20 +565,38 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit Site Settings.
+        ///   Looks up a localized string similar to Manage Widgets, Templates, Users, etc..
         /// </summary>
-        public static string UserRole_EditSiteSettings {
+        public static string UserRole_Administration {
             get {
-                return ResourceManager.GetString("UserRole_EditSiteSettings", resourceCulture);
+                return ResourceManager.GetString("UserRole_Administration", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manage Content.
+        ///   Looks up a localized string similar to Delete Content, Images, Files, Folders, etc..
         /// </summary>
-        public static string UserRole_ManageContent {
+        public static string UserRole_DeleteContent {
             get {
-                return ResourceManager.GetString("UserRole_ManageContent", resourceCulture);
+                return ResourceManager.GetString("UserRole_DeleteContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add / Edit Content.
+        /// </summary>
+        public static string UserRole_EditContent {
+            get {
+                return ResourceManager.GetString("UserRole_EditContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Publish / Unpublish Content, Restore Content from History.
+        /// </summary>
+        public static string UserRole_PublishContent {
+            get {
+                return ResourceManager.GetString("UserRole_PublishContent", resourceCulture);
             }
         }
         
