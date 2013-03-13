@@ -130,8 +130,10 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                 return; // Sorting is needed for more than one item.
             }
 
-            var info = modal.alert({
+            var info = modal.info({
                 content: globalization.sortingPageContentMessage,
+                disableCancel: true,
+                disableAccept: true,
             });
 
             var url = links.sortPageContentUrl,

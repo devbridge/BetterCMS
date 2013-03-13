@@ -263,9 +263,6 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
         }
 
         $.each(regionContents, function () {
-            $.each(this.elements, function () {
-                $(this).show();
-            });
             this.overlay.show();
         });
 
@@ -311,53 +308,17 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
     /**
     * Function calculates top, left positions and width and height for specified list of DOM elements
     */
-    function calculatePositions(elements) {
-        var right = 0,
-            bottom = 0,
-            maxValue = 9999999,
-            top = maxValue,
-            left = maxValue,
-            calculatableElements = [elements[0], elements[elements.length - 1]];
-
-        $.each(calculatableElements, function (index, self) {
-            var element = $(self),
-                targetOffset = element.offset(),
-                targetWidth,
-                targetHeight;
-
-            // Exception handling for empty text nodes
-            try {
-                targetWidth = $(this).outerWidth();
-                targetHeight = $(this).outerHeight();
-            } catch (exc) {
-                // Do nothing
-                return true;
-            }
-
-            // Process only if offset is found and width or height are more that zero
-            // (fix for various tags, such as scripts, text nodes, etc)
-            if (targetOffset != null && (targetWidth > 0 || targetHeight > 0)) {
-                if (targetOffset.top < top) {
-                    top = targetOffset.top;
-                }
-                if (targetOffset.left < left) {
-                    left = targetOffset.left;
-                }
-                if (targetOffset.left + targetWidth > right) {
-                    right = targetOffset.left + targetWidth;
-                }
-                if (targetOffset.top + targetHeight > bottom) {
-                    bottom = targetOffset.top + targetHeight;
-                }
-            }
-        });
-
-        if (left == maxValue) {
-            left = 0;
-        }
-        if (top == maxValue) {
-            top = 0;
-        }
+    function calculatePositions(start, end) {
+        var $start = $(start),
+            $end = $(end),
+            startOffset = $start.offset() || {},
+            endOffset = $end.offset() || {},
+            endWidth = $end.outerWidth(),
+            endHeight = $end.outerHeight(),
+            top = startOffset.top,
+            left = startOffset.left,
+            right = endOffset.left + endWidth,
+            bottom = endOffset.top + endHeight;
 
         return {
             left: left,
@@ -380,11 +341,12 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
     /**
     * Page region view model
     */
-    function RegionViewModel(id, elements, regionContents) {
+    function RegionViewModel(regionStart, regionEnd, regionContents) {
         var self = this;
 
-        self.id = id;
-        self.elements = elements;
+        self.id = regionStart.data('id');
+        self.regionStart = regionStart;
+        self.regionEnd = regionEnd;
         self.contents = regionContents;
         self.overlay = null;
         
@@ -394,7 +356,7 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
         self.height = 0;
 
         self.recalculatePositions = function() {
-            var positions = calculatePositions(self.elements);
+            var positions = calculatePositions(self.regionStart, self.regionEnd);
             
             self.left = positions.left;
             self.top = positions.top;
@@ -406,19 +368,20 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
     /**
     * Page content view model
     */
-    function ContentViewModel(elements, contentContainer) {
+    function ContentViewModel(contentStart, contentEnd) {
         var self = this;
 
-        self.elements = elements;
+        self.contentStart = contentStart;
+        self.contentEnd = contentEnd;
         self.overlay = null;
 
-        self.contentId = contentContainer.data('contentId');
-        self.pageContentId = contentContainer.data('pageContentId');
-        self.contentVersion = contentContainer.data('contentVersion');
-        self.pageContentVersion = contentContainer.data('pageContentVersion');
-        self.contentType = contentContainer.data('contentType');
-        self.draft = contentContainer.data('draft');
-        self.title = contentContainer.data('contentTitle');
+        self.contentId = contentStart.data('contentId');
+        self.pageContentId = contentStart.data('pageContentId');
+        self.contentVersion = contentStart.data('contentVersion');
+        self.pageContentVersion = contentStart.data('pageContentVersion');
+        self.contentType = contentStart.data('contentType');
+        self.draft = contentStart.data('draft');
+        self.title = contentStart.data('contentTitle');
 
         self.left = 0;
         self.top = 0;
@@ -426,7 +389,7 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
         self.height = 0;
 
         self.recalculatePositions = function () {
-            var positions = calculatePositions(self.elements);
+            var positions = calculatePositions(self.contentStart, self.contentEnd);
             
             self.left = positions.left;
             self.top = positions.top;
@@ -470,8 +433,7 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
         for (i = 0; i < tagsCount; i++) {
             regionStart = $(tags[i]);
             if (regionStart.hasClass("bcms-region-start")) {
-                var regionId = regionStart.data('id'),
-                    regionContentViewModels = [],
+                var regionContentViewModels = [],
                     currentTag,
                     j,
                     contentStartFound = false,
@@ -486,11 +448,10 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
                     } else if (currentTag.hasClass("bcms-content-end") && contentStartFound) {
                         contentStartFound = false;
                         
-                        var contentViewModel = new ContentViewModel([contentStart, currentTag], contentStart);
+                        var contentViewModel = new ContentViewModel(contentStart, currentTag);
                         regionContentViewModels.push(contentViewModel);
                     } else if (currentTag.hasClass("bcms-region-end")) {
-                        var regionElements = [regionStart, currentTag],
-                            regionViewModel = new RegionViewModel(regionId, regionElements, regionContentViewModels);
+                        var regionViewModel = new RegionViewModel(regionStart, currentTag, regionContentViewModels);
 
                         pageViewModel.regions.push(regionViewModel);
                         $.each(regionContentViewModels, function() {

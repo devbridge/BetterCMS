@@ -10,8 +10,6 @@ using System.Web.WebPages;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Root.ViewModels.Cms;
 
-using HtmlAgilityPack;
-
 namespace BetterCms.Module.Root.Mvc.Helpers
 {
     /// <summary>
@@ -40,11 +38,6 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                         using (new RegionContentWrapper(contentsBuilder, projection, model.CanManageContent))
                         {
                             var content = projection.GetHtml(htmlHelper);
-                            if (model.CanManageContent)
-                            {
-                                //content = FixHTML(content);
-                                //content = HttpUtility.HtmlEncode(content);
-                            }
                             contentsBuilder.Append(content);
                         }
                     }
@@ -107,31 +100,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
 
             return null;
         }
-
-        /// <summary>
-        /// Fixes the HTML - wraps root text nodes with bcms tag.
-        /// </summary>
-        /// <param name="html">The HTML.</param>
-        /// <returns>
-        /// Fixed HTML with root text nodes, wrapped with bcms tag.
-        /// </returns>
-        private static string FixHTML(string html)
-        {
-            var doc = new HtmlDocument();
-
-            doc.OptionFixNestedTags = false;
-            doc.OptionAutoCloseOnEnd = false;
-            doc.OptionCheckSyntax = false;
-
-            doc.LoadHtml(html);
-            doc.WrapRootTextNodes();
-
-            var textWriter = new StringWriter();
-            doc.Save(textWriter);
-
-            return textWriter.ToString();
-        }
-
+        
         /// <summary>
         /// Renders the page custom JavaScript.
         /// </summary>

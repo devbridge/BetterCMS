@@ -11,6 +11,10 @@ namespace BetterCms.Module.Root.Mvc.Helpers
     /// </summary>
     public class RegionContentWrapper : IDisposable
     {
+        private const string ContentStartClassName = "bcms-content-start";
+        private const string ContentEndClassName = "bcms-content-end";
+        private const string ClearFixClassName = "clearfix";
+
         private readonly StringBuilder sb;
         private readonly PageContentProjection content;
         private readonly bool allowContentManagement;
@@ -46,24 +50,16 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             if (allowContentManagement)
             {
                 sb.AppendFormat(
-                    @"<div class=""bcms-content-start"" data-page-content-id=""{0}"" data-content-id=""{1}"" data-page-content-version=""{2}"" data-content-version=""{3}"" data-content-type=""{4}"" data-content-title=""{5}"" {6}></div>",
-                    content.PageContentId,
-                    content.ContentId,
-                    content.PageContentVersion,
-                    content.ContentVersion,
-                    content.GetContentWrapperType(),
-                    content.GetTitle(),
-                    content.PageContentStatus == ContentStatus.Draft ? " data-draft=\"true\"" : null);
+                    @"<div class=""{0}"" data-page-content-id=""{1}"" data-content-id=""{2}"" data-page-content-version=""{3}"" data-content-version=""{4}"" data-content-type=""{5}"" data-content-title=""{6}"" {7}></div>",
+                    ContentStartClassName, // 0
+                    content.PageContentId, // 1
+                    content.ContentId, // 2
+                    content.PageContentVersion, // 3
+                    content.ContentVersion, // 4
+                    content.GetContentWrapperType(), // 5
+                    content.GetTitle(), // 6
+                    content.PageContentStatus == ContentStatus.Draft ? " data-draft=\"true\"" : null); // 7
                 sb.AppendLine();
-                /*sb.AppendFormat(
-                    @"<script type=""text/html"" data-page-content-id=""{0}"" data-content-id=""{1}"" data-page-content-version=""{2}"" data-content-version=""{3}"" data-content-type=""{4}"" {5}>",
-                    content.PageContentId,
-                    content.ContentId,
-                    content.PageContentVersion,
-                    content.ContentVersion,
-                    content.GetContentWrapperType(),
-                    content.PageContentStatus == ContentStatus.Draft ? " data-draft=\"true\"" : null);
-                sb.AppendLine();*/
             }
         }
 
@@ -74,13 +70,11 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         {
             if (allowContentManagement)
             {
-                sb.AppendLine(@"<div class=""bcms-content-end clearfix""></div>");
-                /*sb.AppendLine(@"&lt;div class=&quot;bcms-content-end clearfix&quot;&gt;&lt;/div&gt;");*/
-                /*sb.AppendLine(@"</script>");*/
+                sb.AppendFormat(@"<div class=""{0} {1}""></div>", ContentEndClassName, ClearFixClassName).AppendLine();
             }
             else
             {
-                sb.AppendLine(@"<div class=""clearfix""></div>");
+                sb.AppendFormat(@"<div class=""{0}""></div>", ClearFixClassName).AppendLine();
             }
         }
     }

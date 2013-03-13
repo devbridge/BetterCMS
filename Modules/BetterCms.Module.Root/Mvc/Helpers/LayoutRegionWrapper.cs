@@ -10,6 +10,9 @@ namespace BetterCms.Module.Root.Mvc.Helpers
     /// </summary>
     public class LayoutRegionWrapper : IDisposable
     {
+        private const string RegionStartClassName = "bcms-region-start";
+        private const string RegionEndClassName = "bcms-region-end";
+
         private readonly StringBuilder sb;
         private readonly PageRegionViewModel region;
         private readonly bool allowContentManagement;
@@ -48,7 +51,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// </summary>
         private void RenderOpeningTags()
         {
-            sb.AppendFormat(@"<div class=""bcms-region-start"" data-id=""{0}""></div>", region.RegionId);
+            sb.AppendFormat(@"<div class=""{0}"" data-id=""{1}""></div>", RegionStartClassName, region.RegionId);
             sb.AppendLine();
         }
 
@@ -57,7 +60,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// </summary>
         private void RenderClosingTags()
         {
-            sb.AppendLine(@"<div class=""bcms-region-end""></div>");
+            sb.AppendFormat(@"<div class=""{0}""></div>", RegionEndClassName).AppendLine();
         }
     }
 }
