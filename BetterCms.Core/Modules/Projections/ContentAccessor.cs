@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 
 using BetterCms.Core.DataContracts;
-using BetterCms.Core.Models;
 
 namespace BetterCms.Core.Modules.Projections
 {
@@ -22,6 +21,8 @@ namespace BetterCms.Core.Modules.Projections
         string GetContentWrapperType();
 
         string GetHtml(HtmlHelper html);
+
+        string GetTitle();
     }
 
     public interface IContentAccessor : IHtmlAccessor, IStylesheetAccessor, IJavaScriptAccessor
@@ -40,6 +41,11 @@ namespace BetterCms.Core.Modules.Projections
         {
             Content = content;
             Options = options;
+        }
+
+        public virtual string GetTitle()
+        {
+            return Content.Name;
         }
 
         public abstract string GetContentWrapperType();

@@ -19,6 +19,11 @@ namespace BetterCms.Core.Modules.Projections
         {
             return null;
         }
+        
+        public override string GetTitle()
+        {
+            return null;
+        }
 
         public override string GetHtml(HtmlHelper html)
         {

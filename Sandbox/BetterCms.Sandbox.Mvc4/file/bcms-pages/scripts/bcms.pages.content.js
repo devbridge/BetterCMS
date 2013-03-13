@@ -63,6 +63,7 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                 deleteContentFailureMessageMessage: null,
                 sortPageContentFailureMessageTitle: null,
                 sortPageContentFailureMessageMessage: null,
+                sortingPageContentMessage: null,
                 errorTitle: null,
                 insertingWidgetInfoMessage: null,
                 insertingWidgetInfoHeader: null,
@@ -128,7 +129,11 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
             if (model.data.pageContents.length < 2) {
                 return; // Sorting is needed for more than one item.
             }
-            
+
+            var info = modal.alert({
+                content: globalization.sortingPageContentMessage,
+            });
+
             var url = links.sortPageContentUrl,
                 alertOnError = function() {
                     modal.alert({
@@ -145,9 +150,10 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                 dataType: 'json',
                 cache: false,
                 data: dataToSend,
-                success: function(json) {
-                    if (json.Success && json.Data != null) {
-                        content.updateRegionContentVersions(model.region, json.Data.UpdatedPageContents);
+                success: function (json) {
+                    info.close();
+                    if (json.Success) {
+                        redirect.ReloadWithAlert();
                     } else {
                         if (json.Messages && json.Messages.length > 0) {
                             modal.showMessages(json);
@@ -157,6 +163,7 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                     }
                 },
                 error: function () {
+                    info.close();
                     alertOnError();
                 }
             });

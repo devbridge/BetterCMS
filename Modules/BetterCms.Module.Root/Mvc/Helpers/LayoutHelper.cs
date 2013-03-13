@@ -43,7 +43,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                             if (model.CanManageContent)
                             {
                                 //content = FixHTML(content);
-                                content = HttpUtility.HtmlEncode(content);
+                                //content = HttpUtility.HtmlEncode(content);
                             }
                             contentsBuilder.Append(content);
                         }

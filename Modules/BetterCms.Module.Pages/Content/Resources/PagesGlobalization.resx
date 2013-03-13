@@ -1071,4 +1071,7 @@
   <data name="DeletePageCommand_SitemapNodeHasChildNodes_Message" xml:space="preserve">
     <value>Can not remove this page from the sitemap, because it has child nodes.</value>
   </data>
+  <data name="SortPageContent_Info_Message" xml:space="preserve">
+    <value>Sorting page contents. Please wait.</value>
+  </data>
 </root>

@@ -100,6 +100,11 @@ namespace BetterCms.Module.Root.Projections
             return contentAccessor.GetContentWrapperType();
         }
 
+        public string GetTitle()
+        {
+            return contentAccessor.GetTitle();
+        }
+
         public string GetHtml(HtmlHelper html)
         {
             return contentAccessor.GetHtml(html);

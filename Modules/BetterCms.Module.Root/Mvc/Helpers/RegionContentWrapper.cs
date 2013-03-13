@@ -46,6 +46,16 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             if (allowContentManagement)
             {
                 sb.AppendFormat(
+                    @"<div class=""bcms-content-start"" data-page-content-id=""{0}"" data-content-id=""{1}"" data-page-content-version=""{2}"" data-content-version=""{3}"" data-content-type=""{4}"" data-content-title=""{5}"" {6}></div>",
+                    content.PageContentId,
+                    content.ContentId,
+                    content.PageContentVersion,
+                    content.ContentVersion,
+                    content.GetContentWrapperType(),
+                    content.GetTitle(),
+                    content.PageContentStatus == ContentStatus.Draft ? " data-draft=\"true\"" : null);
+                sb.AppendLine();
+                /*sb.AppendFormat(
                     @"<script type=""text/html"" data-page-content-id=""{0}"" data-content-id=""{1}"" data-page-content-version=""{2}"" data-content-version=""{3}"" data-content-type=""{4}"" {5}>",
                     content.PageContentId,
                     content.ContentId,
@@ -53,7 +63,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                     content.ContentVersion,
                     content.GetContentWrapperType(),
                     content.PageContentStatus == ContentStatus.Draft ? " data-draft=\"true\"" : null);
-                sb.AppendLine();
+                sb.AppendLine();*/
             }
         }
 
@@ -64,8 +74,9 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         {
             if (allowContentManagement)
             {
-                sb.AppendLine(@"&lt;div class=&quot;clearfix&quot;&gt;&lt;/div&gt;");
-                sb.AppendLine(@"</script>");
+                sb.AppendLine(@"<div class=""bcms-content-end clearfix""></div>");
+                /*sb.AppendLine(@"&lt;div class=&quot;bcms-content-end clearfix&quot;&gt;&lt;/div&gt;");*/
+                /*sb.AppendLine(@"</script>");*/
             }
             else
             {
