@@ -121,6 +121,14 @@ namespace BetterCms
         string PageNotFoundUrl { get; set; }
 
         /// <summary>
+        /// Gets or sets the article url prefix.
+        /// </summary>
+        /// <value>
+        /// The article url prefix.
+        /// </value>
+        string ArticleUrlPrefix { get; set; }
+
+        /// <summary>
         /// Gets the url of nuget feed for BetterCms modules.
         /// </summary>
         ICmsModuleGalleryConfiguration ModuleGallery { get; }

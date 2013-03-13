@@ -23,13 +23,15 @@ namespace BetterCms.Module.MediaManager.Services
         /// <summary>
         /// Creates a task to upload a file to the storage.
         /// </summary>
+        /// <typeparam name="TMedia">The type of the media.</typeparam>
         /// <param name="sourceStream">The source stream.</param>
         /// <param name="fileUri">The file URI.</param>
         /// <param name="mediaId">The media id.</param>
-        /// <param name="updateMediaAfterUpload">An action to update a specific field for the media after image upload.</param>
+        /// <param name="updateMediaAfterUpload">An action to update a specific field for the media after file upload.</param>
+        /// <param name="updateMediaAfterFail">>An action to update a specific field for the media after file upload fails.</param>
         /// <returns>
         /// Upload file task.
         /// </returns>
-        Task UploadMediaFileToStorage<TMedia>(Stream sourceStream, Uri fileUri, Guid mediaId, Action<TMedia> updateMediaAfterUpload) where TMedia : MediaFile;
+        Task UploadMediaFileToStorage<TMedia>(Stream sourceStream, Uri fileUri, Guid mediaId, Action<TMedia> updateMediaAfterUpload, Action<TMedia> updateMediaAfterFail) where TMedia : MediaFile;
     }
 }

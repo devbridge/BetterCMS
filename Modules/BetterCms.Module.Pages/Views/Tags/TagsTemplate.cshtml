@@ -10,11 +10,23 @@
         @PagesGlobalization.TagsTemplate_AddTags_Title
         <div class="bcms-btn-plus" data-bind="css: {'bcms-btn-plus-expand': isExpanded()}, click: expandCollapse">&nbsp;</div>
         <div class="bcms-tags-field-holder" data-bind="visible: isExpanded()">
-            <input type="text" class="bcms-add-tags-field" style="width: 107px;" data-bind="value: newTag, valueUpdate: 'afterkeydown', hasfocus: isExpanded(), enterPress: addTag, escPress: clearTag, event: {blur: addTag}" />
+            <input type="text" class="bcms-add-tags-field" style="width: 107px;" data-bind="
+                css: { 'tag-validation-error': newTag.hasError()},
+                value: newTag, 
+                valueUpdate: 'afterkeydown', 
+                hasfocus: isExpanded(), 
+                enterPress: addTag, 
+                escPress: clearTag, 
+                event: {blur: addTag}" />
+            <!-- ko if: newTag.hasError()  -->
+                <span class="tag-field-validation-error">
+                    <span data-bind="text: newTag.validationMessage()"></span>
+                </span>
+            <!-- /ko -->
         </div>
     </div>
     <div class="bcms-single-tag-holder" data-bind="foreach: tags()">
-        <div class="bcms-single-tag"><span data-bind="text: name()"></span><a data-bind="click: remove">@RootGlobalization.Button_Remove</a></div>
+        <div class="bcms-single-tag" data-bind="css: { 'bcms-single-tag-active': isActive() }"><span data-bind="text: name()"></span><a data-bind="    click: remove">@RootGlobalization.Button_Remove</a></div>
         <input type="hidden" data-bind="attr:{ name: getTagInputName($index()), value: name() }" />
     </div>
 </div>

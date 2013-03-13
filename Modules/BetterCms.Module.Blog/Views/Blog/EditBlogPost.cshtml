@@ -46,8 +46,7 @@
         @Html.HiddenFor(model => model.Id, new { data_bind = "value: id()" })
         @Html.HiddenFor(model => model.Version, new { data_bind = "value: version()" })
         @Html.HiddenFor(model => model.Image.ImageId, new { data_bind = "value: image().id()" })
-        @Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status" })
-        @Html.HiddenFor(modal => modal.ParentPageUrl)
+        @Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status" })        
 
         <div class="bcms-new-blog-content">
 
@@ -57,10 +56,13 @@
                     @Html.Tooltip(BlogGlobalization.EditBlockPost_Title_Tooltip_Description)
                     <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_Title_Title</div>
                     <div class="bcms-input-box">
-                        @Html.TextBoxFor(m => m.Title, new { @style = "width: 510px;", @class = "bcms-editor-field-box" })
+                        @Html.TextBoxFor(m => m.Title, new { @style = "width: 510px;", @class = "bcms-editor-field-box", @id="bcms-editor-blog-title" })
                         @Html.ValidationMessageFor(m => m.Title)
                     </div>
                 </div>
+
+                @Html.Partial("Partial/AddNewBlogEditPermalink")
+
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(BlogGlobalization.EditBlockPost_IntroText_Tooltip_Description)
                     <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_IntroText_Title</div>
@@ -82,13 +84,17 @@
                     <div class="bcms-input-field-holder">
                         @Html.Tooltip(BlogGlobalization.EditBlockPost_LiveDates_Tooltip_Description)
                         <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_LiveFrom_Title</div>
-                        @Html.DateTextBoxFor(model => model.LiveFromDate, Model.LiveFromDate, new Dictionary<string, object> { { "class", "bcms-editor-field-box bcms-datepicker" }, { "style", "width: 127px;" } })
-                        @Html.ValidationMessageFor(m => m.LiveFromDate)
+                        <div class="bcms-date-input-box">
+                            @Html.DateTextBoxFor(model => model.LiveFromDate, Model.LiveFromDate, new Dictionary<string, object> { { "class", "bcms-editor-field-box bcms-datepicker" }, { "style", "width: 127px;" } })
+                            @Html.ValidationMessageFor(m => m.LiveFromDate)
+                        </div>
                     </div>
                     <div class="bcms-input-field-holder">
                         <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_LiveTo_Title</div>
-                        @Html.DateTextBoxFor(model => model.LiveToDate, Model.LiveToDate, new Dictionary<string, object> { { "class", "bcms-editor-field-box bcms-datepicker" }, { "style", "width: 127px;" } })
-                        @Html.ValidationMessageFor(m => m.LiveToDate)
+                        <div class="bcms-date-input-box">
+                            @Html.DateTextBoxFor(model => model.LiveToDate, Model.LiveToDate, new Dictionary<string, object> { { "class", "bcms-editor-field-box bcms-datepicker" }, { "style", "width: 127px;" } })
+                            @Html.ValidationMessageFor(m => m.LiveToDate)
+                        </div>
                     </div>
                 </div>
 
@@ -99,7 +105,7 @@
                         <!-- ko if: image().url() -->
                         <a class="bcms-remove-image" data-bind="click: image().remove.bind(image())">@RootGlobalization.Button_Remove</a>
                         <a data-bind="click: image().preview.bind(image())">
-                            <img data-bind="attr: {src: image().versionedThumnailUrl(), alt: image().tooltip() }" /></a>
+                            <img data-bind="attr: { src: image().versionedThumnailUrl(), alt: image().tooltip() }" /></a>
                         <!-- /ko -->
                     </div>
                     <div class="bcms-upload-info">

@@ -28,7 +28,16 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             siteSettingsBlogsTableFirstRow: 'table.bcms-tables > tbody > tr:first',
             overlayConfigure: '.bcms-content-configure',
             overlayDelete: '.bcms-content-delete',
-            destroyDraftVersionLink: '.bcms-messages-draft-destroy'
+            destroyDraftVersionLink: '.bcms-messages-draft-destroy',
+            
+            blogTitle: "#bcms-editor-blog-title",
+            editPermalink: '#bcms-page-editpermalink',
+	        editPermalinkBox: '.bcms-edit-urlpath-box',
+	        editPermalinkClose: 'div.bcms-edit-urlpath-box .bcms-tip-close, div.bcms-edit-urlpath-box .bcms-btn-links-small',
+	        editPermalinkSave: '#bcms-save-permalink',
+	        editPermalinkHiddenField: '#bcms-page-permalink',
+	        editPermalinkEditField: '#bcms-page-permalink-edit',
+	        editPermalinkInfoField: '#bcms-page-permalink-info'
         },
         links = {
             loadSiteSettingsBlogsUrl: null,
@@ -40,7 +49,8 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             deleteAuthorsUrl: null,
             saveAuthorsUrl: null,
             loadTemplatesUrl: null,
-            saveDefaultTemplateUrl: null
+            saveDefaultTemplateUrl: null,
+            convertStringToSlugUrl: null
         },
         globalization = {
             createNewPostDialogTitle: null,
@@ -60,6 +70,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     blog.links = links;
     blog.globalization = globalization;
     blog.selectors = selectors;
+    blog.senderId = 0;
 
     blog.authorsViewModel = null;
     blog.templatesViewModel = null;
@@ -81,7 +92,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     */
     function openBlogEditForm(url, title, postSuccess, onClose, calledFromPage) {
         var blogViewModel;
-
+        var permalinkValue;
         modal.edit({
             title: title,
             onLoad: function (dialog) {
@@ -91,7 +102,19 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
                     },
 
                     beforePost: function () {
+                        if (!pages.isEditedPageUrlManually()) {
+                            var blogUrlField = dialog.container.find(selectors.editPermalinkEditField);
+                            permalinkValue = blogUrlField.val();
+                            blogUrlField.val(null);
+                        }
                         htmlEditor.updateEditorContent();
+                    },
+                    
+                     postError: function () {
+                        if (!pages.isEditedPageUrlManually()) {
+                            var blogUrlField = dialog.container.find(selectors.editPermalinkEditField);
+                            blogUrlField.val(permalinkValue);
+                        }
                     },
                     
                     postSuccess: function (json) {
@@ -131,11 +154,18 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     function initEditBlogPostDialogEvents(dialog, content, calledFromPage, postSuccess) {
         var data = content.Data,
             image = data.Image,
-            tagsList = data.Tags;
+            tagsList = data.Tags,
+            newPost = false;
         dialog.container.find(selectors.datePickers).initializeDatepicker(globalization.datePickerTooltipTitle);
         
         htmlEditor.initializeHtmlEditor(selectors.htmlEditor);
-
+        
+        if (data.Version == 0) {
+            newPost = true;
+        }
+        
+        pages.initializePermalinkBox(dialog, false, links.convertStringToSlugUrl, selectors.blogTitle, newPost);
+        
         var tagsViewModel = new tags.TagsListViewModel(tagsList);
 
         var blogViewModel = new BlogPostViewModel(image, tagsViewModel, data.Id, data.Version);
@@ -651,6 +681,7 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     */
     bcms.on(bcms.events.createContentOverlay, onCreateContentOverlay);
     
+
     /**
     * Register initialization
     */
