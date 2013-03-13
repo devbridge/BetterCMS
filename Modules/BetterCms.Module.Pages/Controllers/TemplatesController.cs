@@ -1,21 +1,25 @@
-﻿using System.Web.Mvc;
-using System.Linq;
+﻿using System.Linq;
+using System.Web.Mvc;
+
+using BetterCms.Core.Security;
 using BetterCms.Module.Pages.Command.Layout.DeleteTemplate;
 using BetterCms.Module.Pages.Command.Layout.GetSiteSettingsTemplates;
 using BetterCms.Module.Pages.Command.Layout.GetTemplate;
 using BetterCms.Module.Pages.Command.Layout.GetTemplatesForEdit;
 using BetterCms.Module.Pages.Command.Layout.SaveTemplate;
-using BetterCms.Module.Pages.Command.Widget.DeleteWidget;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.ViewModels.Templates;
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
-using NHibernate.Util;
-
 namespace BetterCms.Module.Pages.Controllers
 {
+    /// <summary>
+    /// Template management.
+    /// </summary>
+    [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
     public class TemplatesController : CmsControllerBase
     {
         /// <summary>
@@ -52,7 +56,6 @@ namespace BetterCms.Module.Pages.Controllers
             }
             return Json(new WireJson { Success = false });
         }
-    
 
         /// <summary>
         /// Creates modal dialog for creating a new template.

@@ -25,18 +25,17 @@ namespace BetterCms.Test.Module.Common
         private readonly ContainerBuilder container = new ContainerBuilder();
         private readonly Mock<ICmsConfiguration> cmsConfigurationMock = new Mock<ICmsConfiguration>();
 
+        /// <summary>
+        /// Test checks if all controllers contains [BcmsAuthorize] attribute.
+        /// </summary>
         [Test]
-        public void All_Controllers_Needs_Authorize_Attribute()
+        public void All_Controllers_Needs_BcmsAuthorize_Attribute()
         {
-            // Test checks if controller contains [Authorize] attribute.
-            //    If controller must be public - write it name to skip check.
-            //    But if controller is skipped - all its actions will be checked for [Authorize].
-            //       If controller action needs to be available for not logged in user - write it name to skip check.
-
             return; // TODO: remove this after all controllers/actions will be marked with authorize that need it.
 
             var controllersToSkip = new Dictionary<string, string[]>
                 {
+                    // Controller Name                          Actions
                     { "CmsController",                  new[] { "Index" } },
                     { "EmbeddedResourcesController",    new[] { "Index" } },
                     { "RenderingController",            new[] { "*" } },
@@ -61,12 +60,15 @@ namespace BetterCms.Test.Module.Common
                 {
                     if (!controllersToSkip.ContainsKey(controller.Name))
                     {
-                        Assert.IsNotNull(Attribute.GetCustomAttribute(controller, typeof(AuthorizeAttribute)), string.Format("{0} class without BcmsAuthorize attribute.", controller.Name));
+                        Assert.IsNotNull(
+                            Attribute.GetCustomAttribute(controller, typeof(AuthorizeAttribute)),
+                            string.Format("{0} class without BcmsAuthorize attribute.", controller.Name));
                     }
                     else
                     {
                         var actionsToSkip = controllersToSkip[controller.Name];
-                        if (controllersToSkip[controller.Name].Length > 0 && actionsToSkip[0] == "*")
+
+                        if (actionsToSkip.Length > 0 && actionsToSkip[0] == "*")
                         {
                             // Skip all controller actions.
                         }

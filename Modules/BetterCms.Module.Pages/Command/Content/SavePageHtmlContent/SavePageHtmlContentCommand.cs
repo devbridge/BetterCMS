@@ -8,6 +8,7 @@ using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Content;
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
@@ -24,7 +25,12 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
         }
 
         public SavePageHtmlContentResponse Execute(PageContentViewModel request)
-        {                       
+        {
+            if (request.DesirableStatus == ContentStatus.Published)
+            {
+                DemandAccess(RootModuleConstants.UserRoles.PublishContent);
+            }
+
             UnitOfWork.BeginTransaction();
 
             PageContent pageContent = null;            

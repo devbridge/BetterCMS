@@ -50,14 +50,14 @@ namespace BetterCms.Module.Root.Mvc
         /// </summary>
         /// <param name="roles">The roles.</param>
         /// <exception cref="SecurityException">Forbidden: Access is denied.</exception>
-        protected void DemandAccess(string roles)
+        protected void DemandAccess(params string[] roles)
         {
             if (SecurityService == null)
             {
                 throw new ArgumentNullException();
             }
 
-            if (!SecurityService.IsAuthorized(Context.User, roles))
+            if (!SecurityService.IsAuthorized(Context.User, string.Join(",", roles)))
             {
                 throw new SecurityException("Forbidden: Access is denied.");
             }

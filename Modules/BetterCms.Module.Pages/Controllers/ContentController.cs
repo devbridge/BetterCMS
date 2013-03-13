@@ -2,8 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 
-using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Module.Pages.Command.Content.DeletePageContent;
+using BetterCms.Core.Security;
 using BetterCms.Module.Pages.Command.Content.DeletePageContent;
 using BetterCms.Module.Pages.Command.Content.GetPageContentOptions;
 using BetterCms.Module.Pages.Command.Content.GetPageHtmlContent;
@@ -12,9 +11,8 @@ using BetterCms.Module.Pages.Command.Content.SavePageContentOptions;
 using BetterCms.Module.Pages.Command.Content.SavePageHtmlContent;
 using BetterCms.Module.Pages.Command.Content.SortPageContent;
 using BetterCms.Module.Pages.Command.Widget.GetWidgetCategory;
-
-using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.ViewModels.Content;
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
@@ -23,6 +21,7 @@ namespace BetterCms.Module.Pages.Controllers
     /// <summary>
     /// Controller for content management.
     /// </summary>
+    [BcmsAuthorize]
     public class ContentController : CmsControllerBase
     {
         /// <summary>
@@ -35,6 +34,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// Json with result status.
         /// </returns>
         [HttpPost]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         public ActionResult InsertContentToPage(string pageId, string contentId, string regionId)
         {
             var request = new InsertContentToPageRequest
@@ -60,6 +60,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// ViewResult to render a widget categories partial view.
         /// </returns>
         [HttpGet]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         public ActionResult Widgets(string query)
         {
             var request = new GetWidgetCategoryRequest { Filter = query };
@@ -76,6 +77,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// Html with rendered partial view.
         /// </returns>
         [HttpPost]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         public ActionResult WidgetCategory(string categoryId)
         {
             var result = GetCommand<GetWidgetCategoryCommand>().ExecuteCommand(new GetWidgetCategoryRequest
@@ -97,6 +99,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// ViewResult to render add page content modal dialog.
         /// </returns>
         [HttpGet]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         public ActionResult AddPageHtmlContent(string pageId, string regionId)
         {
             var viewModel = new PageContentViewModel
@@ -120,6 +123,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// JSON with result status and redirect URL.
         /// </returns>
         [HttpPost]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent)]
         public ActionResult SavePageHtmlContent(PageContentViewModel model)
         {
             var result = GetCommand<SavePageHtmlContentCommand>().ExecuteCommand(model);
@@ -152,6 +156,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// ViewResult to render an edit content dialog.
         /// </returns>
         [HttpGet]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         public ActionResult EditPageHtmlContent(string pageContentId)
         {
             var model = GetCommand<GetPageHtmlContentCommand>().ExecuteCommand(pageContentId.ToGuidOrDefault());
@@ -167,6 +172,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// ViewResult to render page content options modal dialog.
         /// </returns>
         [HttpGet]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         public ActionResult PageContentOptions(string pageContentId)
         {
             var model = GetCommand<GetPageContentOptionsCommand>().ExecuteCommand(pageContentId.ToGuidOrDefault());
@@ -182,6 +188,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// Json with result status.
         /// </returns>
         [HttpPost]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         public ActionResult PageContentOptions(PageContentOptionsViewModel model)
         {
             bool success = GetCommand<SavePageContentOptionsCommand>().ExecuteCommand(model);
@@ -199,6 +206,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// Json with result status.
         /// </returns>
         [HttpPost]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.DeleteContent)]
         public ActionResult DeletePageContent(string pageContentId, string pageContentVersion, string contentVersion)
         {
             var request = new DeletePageContentCommandRequest
@@ -208,7 +216,7 @@ namespace BetterCms.Module.Pages.Controllers
                                   ContentVersion = contentVersion.ToIntOrDefault(),
                               };
 
-            bool success = GetCommand<DeletePageContentCommand>().ExecuteCommand(request);
+            var success = GetCommand<DeletePageContentCommand>().ExecuteCommand(request);
 
             return Json(new WireJson(success));
         }
@@ -221,6 +229,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// Json with result status.
         /// </returns>
         [HttpPost]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         public ActionResult SortPageContent(PageContentSortViewModel model)
         {
             var response = GetCommand<SortPageContentCommand>().ExecuteCommand(model);

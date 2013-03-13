@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
 
+using BetterCms.Core.Security;
 using BetterCms.Module.Pages.Command.Sitemap.DeleteSitemapNode;
 using BetterCms.Module.Pages.Command.Sitemap.GetPageLinks;
 using BetterCms.Module.Pages.Command.Sitemap.GetSitemap;
@@ -8,6 +9,7 @@ using BetterCms.Module.Pages.Command.Sitemap.SaveSitemap;
 using BetterCms.Module.Pages.Command.Sitemap.SaveSitemapNode;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.ViewModels.Sitemap;
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
@@ -16,6 +18,7 @@ namespace BetterCms.Module.Pages.Controllers
     /// <summary>
     /// Handles sitemap logic.
     /// </summary>
+    [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
     public class SitemapController : CmsControllerBase
     {
         /// <summary>

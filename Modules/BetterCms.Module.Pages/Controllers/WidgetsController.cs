@@ -1,22 +1,25 @@
-﻿using System.Web.Mvc;
-using System.Linq;
+﻿using System.Linq;
+using System.Web.Mvc;
 
-using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Core.Security;
 using BetterCms.Module.Pages.Command.Widget.DeleteWidget;
 using BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit;
 using BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit;
 using BetterCms.Module.Pages.Command.Widget.GetSiteSettingsWidgets;
 using BetterCms.Module.Pages.Command.Widget.SaveWidget;
-
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.ViewModels.Widgets;
-
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
 namespace BetterCms.Module.Pages.Controllers
 {
+    /// <summary>
+    /// Widget management.
+    /// </summary>
+    [BcmsAuthorize]
     public class WidgetsController : CmsControllerBase
     {                    
         /// <summary>
@@ -28,6 +31,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// Json with result status.
         /// </returns>
         [HttpPost]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
         public ActionResult DeleteWidget(string id, string version)
         {
             var request = new DeleteWidgetRequest
@@ -54,6 +58,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// ViewResult to render a dialog for the new html content widget creation.
         /// </returns>
         [HttpGet]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
         public ActionResult CreateHtmlContentWidget()
         {
             var model = GetCommand<GetHtmlContentWidgetForEditCommand>().ExecuteCommand(null);
@@ -67,10 +72,12 @@ namespace BetterCms.Module.Pages.Controllers
         /// <summary>
         /// Creates modal dialog for editing an html content widget.
         /// </summary>
+        /// <param name="id">The id.</param>
         /// <returns>
         /// ViewResult to render a dialog for the html content widget editing.
         /// </returns>
         [HttpGet]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
         public ActionResult EditHtmlContentWidget(string id)
         {
             var model = GetCommand<GetHtmlContentWidgetForEditCommand>().ExecuteCommand(id.ToGuidOrDefault());
@@ -86,6 +93,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// Json with result status.
         /// </returns>
         [HttpPost]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
         public ActionResult EditHtmlContentWidget(EditHtmlContentWidgetViewModel model)
         {
             if (ModelState.IsValid)
@@ -112,6 +120,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// ViewResult to render new widget modal dialog.
         /// </returns>
         [HttpGet]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
         public ActionResult CreateServerControlWidget()
         {
             var model = GetCommand<GetServerControlWidgetForEditCommand>().ExecuteCommand(null);
@@ -122,10 +131,12 @@ namespace BetterCms.Module.Pages.Controllers
         /// <summary>
         /// Creates modal dialog for editing a widget.
         /// </summary>
+        /// <param name="id">The id.</param>
         /// <returns>
         /// ViewResult to render editing widget modal dialog.
         /// </returns>
         [HttpGet]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
         public ActionResult EditServerControlWidget(string id)
         {
             var model = GetCommand<GetServerControlWidgetForEditCommand>().ExecuteCommand(id.ToGuidOrDefault());
@@ -141,6 +152,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// Json with result status.
         /// </returns>
         [HttpPost]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
         public ActionResult EditServerControlWidget(EditServerControlWidgetViewModel model)
         {
             if (ModelState.IsValid)
@@ -167,7 +179,8 @@ namespace BetterCms.Module.Pages.Controllers
         }
 
         // TODO: remote it. use previewUrl.
-        [HttpGet]        
+        [HttpGet]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration, RootModuleConstants.UserRoles.EditContent)]
         public ActionResult PreviewHtmlContentWidget(string contentId)
         {
             HtmlContentWidgetViewModel model = GetCommand<GetHtmlContentWidgetForEditCommand>().ExecuteCommand(contentId.ToGuidOrDefault());
@@ -177,6 +190,7 @@ namespace BetterCms.Module.Pages.Controllers
 
         // TODO: remote it. use previewUrl.
         [HttpGet]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration, RootModuleConstants.UserRoles.EditContent)]
         public ActionResult PreviewWidget(string widgetId)
         {
             ServerControlWidgetViewModel model = GetCommand<GetServerControlWidgetForEditCommand>().ExecuteCommand(widgetId.ToGuidOrDefault());
@@ -187,7 +201,11 @@ namespace BetterCms.Module.Pages.Controllers
         /// <summary>
         /// Renders a widgets list for the site settings dialog.
         /// </summary>
-        /// <returns>Rendered widgets list.</returns>
+        /// <param name="request">The request.</param>
+        /// <returns>
+        /// Rendered widgets list.
+        /// </returns>
+        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
         public ActionResult Widgets(SearchableGridOptions request)
         {
             var model = GetCommand<GetSiteSettingsWidgetsCommand>().ExecuteCommand(request);

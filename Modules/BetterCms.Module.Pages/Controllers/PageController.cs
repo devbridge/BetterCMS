@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 
-using BetterCms.Core.Models;
 using BetterCms.Core.Security;
 using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Command.Page.ClonePage;
@@ -21,20 +20,29 @@ using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
-using BetterCms.Module.Root.Mvc.Helpers;
 
 namespace BetterCms.Module.Pages.Controllers
 {
     /// <summary>
     /// Controller for CMS pages: create / edit / delete pages.
     /// </summary>
+    [BcmsAuthorize]
     public class PageController : CmsControllerBase
     {
-        private readonly  IPageService pageService;
+        /// <summary>
+        /// The page service.
+        /// </summary>
+        private readonly IPageService pageService;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PageController"/> class.
+        /// </summary>
+        /// <param name="pageService">The page service.</param>
         public PageController(IPageService pageService)
         {
             this.pageService = pageService;
         }
+
         /// <summary>
         /// Renders a page list for the site settings dialog.
         /// </summary>
@@ -42,6 +50,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// <returns>
         /// Rendered pages list.
         /// </returns>
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         public ActionResult Pages(SearchableGridOptions request)
         {
             var model = GetCommand<GetPagesListCommand>().ExecuteCommand(request);
@@ -56,6 +65,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// ViewResult to render add new page modal dialog.
         /// </returns>
         [HttpGet]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         public ActionResult AddNewPage(string parentPageUrl)
         {
             AddNewPageViewModel model = new AddNewPageViewModel { ParentPageUrl = parentPageUrl };
@@ -78,6 +88,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// <param name="model">The model.</param>
         /// <returns>Json with result status and redirect url.</returns>
         [HttpPost]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         public ActionResult AddNewPage(AddNewPageViewModel model)
         {
             if (ModelState.IsValid)
@@ -102,6 +113,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// ViewResult to render edit page properties modal dialog.
         /// </returns>
         [HttpGet]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         public ActionResult EditPageProperties(string pageId)
         {
             var model = GetCommand<GetPagePropertiesCommand>().ExecuteCommand(pageId.ToGuidOrDefault());
@@ -132,6 +144,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// <param name="model">The model.</param>
         /// <returns>Json with result status and redirect url.</returns>
         [HttpPost]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         public ActionResult EditPageProperties(EditPagePropertiesViewModel model)
         {
             if (ModelState.IsValid)
@@ -155,6 +168,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// ViewResult to render delete page confirmation modal dialog.
         /// </returns>
         [HttpGet]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.DeleteContent)]
         public ActionResult DeletePageConfirmation(string id)
         {
             var model = GetCommand<GetPageForDeleteCommand>().ExecuteCommand(id.ToGuidOrDefault());
@@ -170,6 +184,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// Json with delete result status.
         /// </returns>
         [HttpPost]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.DeleteContent)]
         public ActionResult DeletePage(DeletePageViewModel model)
         {
             if (GetCommand<DeletePageCommand>().ExecuteCommand(model))
@@ -189,6 +204,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// Json result status.
         /// </returns>
         [HttpGet]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         public ActionResult ClonePage(string id)
         {
             var model = GetCommand<GetPageForCloningCommand>().ExecuteCommand(id.ToGuidOrDefault());
@@ -204,6 +220,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// Json result status.
         /// </returns>
         [HttpPost]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         public ActionResult ClonePage(ClonePageViewModel model)
         {
             model = GetCommand<ClonePageCommand>().ExecuteCommand(model);
@@ -223,8 +240,8 @@ namespace BetterCms.Module.Pages.Controllers
         /// <returns>
         /// Json with delete result status.
         /// </returns>
-        [BcmsAuthorize(Roles = RootModuleConstants.UserRoles.PublishContent)]
         [HttpPost]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.PublishContent)]
         public ActionResult ChangePublishStatus(SavePagePublishStatusRequest request)
         {
             var success = GetCommand<SavePagePublishStatusCommand>().ExecuteCommand(request);
