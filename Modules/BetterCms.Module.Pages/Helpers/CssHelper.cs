@@ -19,7 +19,7 @@ namespace BetterCms.Module.Pages.Helpers
         /// </returns>
         public static string FixCss(string css)
         {
-            return PrefixCssSelectorsForSingleRule(css, string.Empty);
+            return PrefixCssSelectorsForSingleRule(string.Empty, css);
         }
 
         /// <summary>
