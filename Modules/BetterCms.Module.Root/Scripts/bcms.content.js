@@ -127,33 +127,35 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
     /**
     * Forces each region outline to update it's position:
     */
-    content.refreshRegionsPosition = function () {
+    content.refreshRegionsPosition = function (regionViewModels) {
         
         if (!bcms.editModeIsOn() || pageViewModel == null) {
             return;
         }
 
-        $.each(pageViewModel.regions, function () {
+        regionViewModels = regionViewModels || pageViewModel.regions;
+
+        $.each(regionViewModels, function () {
             this.recalculatePositions();
         });
 
         var actionsContainerWidth = regionRectangles.first().find(selectors.regionActions).width() + 4;
 
-        regionRectangles.each(function () {
+        $.each(regionViewModels, function () {
 
             var padding = 10,
-                rectangle = $(this),
-                regionViewModel = rectangle.data('target'),
+                regionViewModel = this,
+                overlay = regionViewModel.overlay,
                 width = regionViewModel.width + (padding * 2),
                 height = regionViewModel.height;
 
-            $(selectors.regionTop, rectangle).css({ width: width + 'px' });
-            $(selectors.regionBottom, rectangle).css({ width: width + 'px', top: (height - 2) + 'px' });
-            $(selectors.regionLeft, rectangle).css({ height: height + 'px' });
-            $(selectors.regionRight, rectangle).css({ height: height + 'px', left: (width - 2) + 'px' });
-            $(selectors.regionActions, rectangle).css({ left: width - actionsContainerWidth + 'px' });
+            $(selectors.regionTop, overlay).css({ width: width + 'px' });
+            $(selectors.regionBottom, overlay).css({ width: width + 'px', top: (height - 2) + 'px' });
+            $(selectors.regionLeft, overlay).css({ height: height + 'px' });
+            $(selectors.regionRight, overlay).css({ height: height + 'px', left: (width - 2) + 'px' });
+            $(selectors.regionActions, overlay).css({ left: width - actionsContainerWidth + 'px' });
 
-            rectangle.css({
+            overlay.css({
                 top: regionViewModel.top + 'px',
                 left: regionViewModel.left - padding + 'px',
                 width: width + 'px',
@@ -226,29 +228,57 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
             content.turnSortModeOn(regionViewModel);
         });
 
-        $('.bcms-region-sortdone', regionViewModel.overlay).on('click', function () {
-            content.turnSortModeOff(regionViewModel);
+        $('.bcms-region-sortdone', regionViewModel.overlay).on('click', function() {
+            var hasChanges = content.turnSortModeOff(regionViewModel);
 
-            var pageContents = [];
-            $.each(regionViewModel.contents, function () {
-                pageContents.push({ 'Id': this.pageContentId, 'Version': this.pageContentVersion });
-            });
-            var model = { region: regionViewModel, data: { 'pageId': bcms.pageId, 'regionId': regionViewModel.id, 'pageContents': pageContents } };
+            if (hasChanges) {
+                var pageContents = [],
+                    model;
 
-            bcms.trigger(bcms.events.sortPageContent, model);
+                $.each(regionViewModel.contents, function() {
+                    pageContents.push({ 'Id': this.pageContentId, 'Version': this.pageContentVersion });
+                });
+                model = {
+                    region: regionViewModel,
+                    data: {
+                        'pageId': bcms.pageId,
+                        'regionId': regionViewModel.id,
+                        'pageContents': pageContents,
+                        'hasChanges': hasChanges,
+                    }
+                };
+
+                bcms.trigger(bcms.events.sortPageContent, model);
+            }
         });
     };
+
+    /**
+    * Checks if contents order has changed
+    */
+    function hasContentsOrderChanged(before, after) {
+        for (var i = 0; i < before.length; i ++) {
+            if (!after[i] || after[i].contentId != before[i].contentId) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     /**
     * Turns region content sorting mode OFF:
     */
     content.turnSortModeOff = function (regionViewModel, cancel) {
+        var regionContents = [],
+            hasChanges = false;
+
         $('.bcms-region-button', regionViewModel.overlay).show();
         $('.bcms-region-sortdone', regionViewModel.overlay).hide();
 
         regionViewModel.overlay.sortable('destroy');
-
-        var regionContents = [];
+        regionViewModel.isSorting = false;
+        regionViewModel.sortingContents = [];
 
         $('.bcms-sort-wrapper', regionViewModel.overlay).each(function () {
             var viewModel = $(this).data('target');
@@ -259,6 +289,7 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
         });
 
         if (!cancel) {
+            hasChanges = hasContentsOrderChanged(regionViewModel.contents, regionContents);
             regionViewModel.contents = regionContents;
         }
 
@@ -268,12 +299,17 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
 
         content.refreshRegionsPosition();
         content.refreshContentsPosition();
+
+        return hasChanges;
     };
 
     /**
     * Turns region content sorting mode ON:
     */
     content.turnSortModeOn = function (regionViewModel) {
+
+        regionViewModel.isSorting = true;
+        regionViewModel.sortingContents = [];
 
         sortableRegions.push(regionViewModel);
         
@@ -292,9 +328,12 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
             this.overlay.hide();
 
             regionViewModel.overlay.append(sortWrapper);
+
+            regionViewModel.sortingContents.push(sortWrapper);
         });
 
         regionViewModel.overlay.sortable();
+        content.refreshRegionsPosition();
     };
 
     /**
@@ -349,6 +388,9 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
         self.regionEnd = regionEnd;
         self.contents = regionContents;
         self.overlay = null;
+
+        self.isSorting = false;
+        self.sortingContents = [];
         
         self.left = 0;
         self.top = 0;
@@ -362,6 +404,15 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
             self.top = positions.top;
             self.width = positions.width;
             self.height = positions.height;
+            
+            if (self.isSorting && self.sortingContents.length > 0) {
+                for (var i = 0; i < self.sortingContents.length; i ++) {
+                    var sortPositions = calculatePositions(self.regionStart, self.sortingContents[i]);
+                    if (sortPositions.height > self.height) {
+                        self.height = sortPositions.height;
+                    }
+                }
+            }
         };
     }
     
