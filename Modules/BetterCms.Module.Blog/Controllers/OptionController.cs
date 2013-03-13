@@ -1,14 +1,24 @@
 ﻿using System.Web.Mvc;
 
+using BetterCms.Core.Security;
 using BetterCms.Module.Blog.Commands.GetTemplatesList;
 using BetterCms.Module.Blog.Commands.SaveDefaultTemplate;
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Mvc;
 
 namespace BetterCms.Module.Blog.Controllers
 {
+    /// <summary>
+    /// Manage blogs options.
+    /// </summary>
+    [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
     public class OptionController : CmsControllerBase
     {
-        public virtual ActionResult Templates()
+        /// <summary>
+        /// Gets templates list.
+        /// </summary>
+        /// <returns>Template list.</returns>
+        public ActionResult Templates()
         {
             var templates = GetCommand<GetTemplatesCommand>().ExecuteCommand(true);
             var view = RenderView("Templates");
@@ -16,8 +26,13 @@ namespace BetterCms.Module.Blog.Controllers
             return ComboWireJson(templates != null, view, templates, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Saves the default template.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns>Json result</returns>
         [HttpPost]
-        public virtual ActionResult SaveDefaultTemplate(string id)
+        public ActionResult SaveDefaultTemplate(string id)
         {
             var response = GetCommand<SaveDefaultTemplateCommand>().ExecuteCommand(id.ToGuidOrDefault());
 

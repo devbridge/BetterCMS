@@ -16,7 +16,7 @@ using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Services;
-
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
@@ -83,6 +83,11 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         /// <returns>Blog post view model</returns>
         public SaveBlogPostCommandResponse Execute(BlogPostViewModel request)
         {
+            if (request.DesirableStatus == ContentStatus.Published)
+            {
+                DemandAccess(RootModuleConstants.UserRoles.PublishContent);
+            }
+
             var layout = LoadLayout();
             var region = LoadRegion();
             var isNew = request.Id.HasDefaultValue();
@@ -101,6 +106,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                 {
                     pageContent = Repository.FirstOrDefault<PageContent>(c => c.Page == blogPost && c.Region == region && !c.IsDeleted && c.Content == content);
                 }
+
                 if (!string.Equals(blogPost.PageUrl, request.BlogUrl, StringComparison.OrdinalIgnoreCase) && request.BlogUrl != null)
                 {
                     request.BlogUrl = redirectService.FixUrl(request.BlogUrl);
@@ -146,7 +152,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                 blogPost.Layout = layout;
                 UpdateStatus(blogPost, request.DesirableStatus);
             }
-            else if(request.DesirableStatus == ContentStatus.Published)
+            else if (request.DesirableStatus == ContentStatus.Published)
             {
                 UpdateStatus(blogPost, request.DesirableStatus);
             }
