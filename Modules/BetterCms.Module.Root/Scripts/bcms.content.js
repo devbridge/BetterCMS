@@ -20,10 +20,6 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
             regionsAndContents: '.bcms-region-start, .bcms-region-end, .bcms-content-start, .bcms-content-end',
             regionOverlay: '#bcms-region-overlay-template',
             region: '.bcms-region',
-            regionTop: '.bcms-region-top',
-            regionBottom: '.bcms-region-bottom',
-            regionLeft: '.bcms-region-left',
-            regionRight: '.bcms-region-right',
             regionActions: '.bcms-region-actions',
             renderedRegions: '.bcms-render-region',
             renderedContents: 'script[type="text/html"]',
@@ -161,11 +157,7 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
                 overlay = regionViewModel.overlay,
                 width = regionViewModel.width + (padding * 2),
                 height = regionViewModel.height;
-
-            $(selectors.regionTop, overlay).css({ width: width + 'px' });
-            $(selectors.regionBottom, overlay).css({ width: width + 'px', top: (height - 2) + 'px' });
-            $(selectors.regionLeft, overlay).css({ height: height + 'px' });
-            $(selectors.regionRight, overlay).css({ height: height + 'px', left: (width - 2) + 'px' });
+            
             $(selectors.regionActions, overlay).css({ left: width - actionsContainerWidth + 'px' });
 
             overlay.css({
