@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console, document */
 
-define('bcms.redirect', ['jquery', 'bcms', 'bcms.modal'], function ($, bcms, modal) {
+define('bcms.redirect', ['bcms.jquery', 'bcms', 'bcms.modal'], function ($, bcms, modal) {
     'use strict';
 
     var redirect = {},

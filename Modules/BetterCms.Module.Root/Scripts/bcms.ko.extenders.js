@@ -1,6 +1,6 @@
 ﻿/*global define, console */
 
-define('bcms.ko.extenders', ['jquery', 'bcms', 'knockout'], function ($, bcms, ko) {
+define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout'], function ($, bcms, ko) {
     'use strict';
 
     ko.globalization = {

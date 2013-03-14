@@ -1,4 +1,6 @@
-﻿/*global define, console */
+﻿define('bcms.spinner.jquery', ['bcms.jquery'], function(jquery) {
+
+/*global define, console */
 
 (function ($) {
     'use strict';
@@ -151,4 +153,6 @@
 
     spinner.init();
     
-})(jQuery);
+})(jquery);
+    
+});

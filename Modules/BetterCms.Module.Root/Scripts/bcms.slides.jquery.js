@@ -1,6 +1,7 @@
+define('bcms.slides.jquery', ['bcms.jquery'], function(jquery) {
+
 /*
-* !!! ATTENTION !!!
-* Edited by DevBridge 
+* Edited by the DevBridge BetterCMS team.
 * Line 57:
 * Code before changes: $('.' + option.next + ', .' + option.prev).fadeOut(0);
 * Code after changes: $('.' + option.next + ', .' + option.prev, elem).fadeOut(0);
@@ -560,4 +561,6 @@
 			}
 		}));
 	};
-})(jQuery);
+})(jquery);
+
+});

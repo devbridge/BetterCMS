@@ -2,10 +2,10 @@
 /*global define, console */
 
 /**
-* Source taken from http://luke.breuer.com/tutorial/javascript-context-menu-tutorial.htm#firefox_option and modified by DevBridge 
+* Source taken from http://luke.breuer.com/tutorial/javascript-context-menu-tutorial.htm#firefox_option and modified by the DevBridge BetterCMS team.
 */
 
-define('bcms.contextMenu', ['jquery', 'bcms'],
+define('bcms.contextMenu', ['bcms.jquery', 'bcms'],
     function ($, bcms) {
         'use strict';
 
