@@ -718,16 +718,11 @@ a.bcms-remove-image {
 }
 
 /* Conetnt region */
-
-.bcms-region {
-}
-
 .bcms-region-overlay {
     position: absolute;
     display: none;
-    padding-bottom: 10px;
     outline: 0;
-    overflow: visible;
+    overflow: hidden;
     border: 1px dashed #009AEB;
 }
 
@@ -735,30 +730,15 @@ a.bcms-remove-image {
     display: block;
 }
 
-/*.bcms-region-top, .bcms-region-right, .bcms-region-bottom, .bcms-region-left {
+.bcms-show-overlay > .bcms-hidden-overlay-bg {
     position: absolute;
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAwNy8yMC8xMlav2uMAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAAAG0lEQVQImWP8////f8bZbxgYGGa9/v/v37//AGf7DAO4mrMxAAAAAElFTkSuQmCC);
-}*/
-
-.bcms-region-top, .bcms-region-bottom {
-    height: 2px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAFRlDm/AAAAHUlEQVQI12P4//8/AxRDqQcPHjAAMUIQyoFQEAAA0/UuXeg1e3EAAAAASUVORK5CYII=') repeat 0 0;
+    z-index: 0;
 }
-
-.bcms-region-right, .bcms-region-left {
-    width: 2px;
-}
-
-/*.bcms-region-top {
-}
-
-.bcms-region-right {
-}
-
-.bcms-region-bottom {
-}
-
-.bcms-region-left {
-}*/
 
 .bcms-region-actions {
     position: absolute;
@@ -804,33 +784,22 @@ a.bcms-remove-image {
 .bcms-sort-wrapper {
     position: relative;
     height: 80px;
-    margin: 10px 0;
+    margin-top: 10px;
     padding: 5px 10px;
+    background: rgba(0,0,0,0.05);
     overflow: hidden;
     cursor: move;
+    z-index: 10;
 }
 
-.bcms-sort-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-/* Content selectors */
-.bcms-content { /* used to find content on the page */
-    position: relative;
+.bcms-sort-content {
+    text-transform: uppercase;
 }
 
 .bcms-content-overlay {
     position: absolute;
-    z-index: 1002;
-}
-
-.bcms-content-overlaybg {
-    /*background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAwNy8yMC8xMlav2uMAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAAAPElEQVQYlYXOsQ0AIAwDwTdjsP+epgMCJHx9sizbnS1JnLUfsL1QBuZSBQDaD1yfXkBSRC8QljIwUQUABsxrGyy9w6cVAAAAAElFTkSuQmCC);*/
-    background: rgba(0,0,0,0.6);
+    z-index: 10;
+    background: rgba(0,0,0,0.05);
 }
 
 .bcms-content-actions {

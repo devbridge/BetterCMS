@@ -262,7 +262,8 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
         $(selectors.regionButtons, regionViewModel.overlay).show();
         $(selectors.regionSortDoneButtons, regionViewModel.overlay).hide();
 
-        regionViewModel.overlay.sortable('destroy');
+        regionViewModel.overlay.find('.bcms-sorting-block').sortable('destroy');
+        regionViewModel.overlay.removeClass('bcms-show-overlay');
         regionViewModel.isSorting = false;
         regionViewModel.sortingContents = [];
 
@@ -313,12 +314,13 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
 
             this.overlay.hide();
 
-            regionViewModel.overlay.append(sortWrapper);
+            regionViewModel.overlay.find('.bcms-sorting-block').append(sortWrapper);
 
             regionViewModel.sortingContents.push(sortWrapper);
         });
 
-        regionViewModel.overlay.sortable();
+        regionViewModel.overlay.find('.bcms-sorting-block').sortable();
+        regionViewModel.overlay.addClass('bcms-show-overlay');
         content.refreshRegionsPosition();
     };
 
@@ -330,8 +332,8 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
             $end = $(end),
             startOffset = $start.offset() || {},
             endOffset = $end.offset() || {},
-            endWidth = $end.outerWidth(),
-            endHeight = $end.outerHeight(),
+            endWidth = $end.outerWidth(true),
+            endHeight = $end.outerHeight(true),
             top = startOffset.top,
             left = startOffset.left,
             right = endOffset.left + endWidth,
@@ -420,10 +422,10 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
         self.recalculatePositions = function () {
             var positions = calculatePositions(self.contentStart, self.contentEnd);
             
-            self.left = positions.left;
-            self.top = positions.top;
-            self.width = positions.width;
-            self.height = positions.height;
+            self.left = positions.left + 1;
+            self.top = positions.top + 1;
+            self.width = positions.width ;
+            self.height = positions.height ;
         };
 
         self.onEditContent = function() {};
