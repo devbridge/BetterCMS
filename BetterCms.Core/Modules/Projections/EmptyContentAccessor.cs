@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Models;
@@ -16,7 +15,12 @@ namespace BetterCms.Core.Modules.Projections
             this.contentHtml = contentHtml;
         }
 
-        public override string GetRegionWrapperCssClass(HtmlHelper html)
+        public override string GetContentWrapperType()
+        {
+            return null;
+        }
+        
+        public override string GetTitle()
         {
             return null;
         }

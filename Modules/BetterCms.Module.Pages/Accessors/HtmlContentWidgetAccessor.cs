@@ -7,7 +7,6 @@ using BetterCms.Core.Models;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
-using BetterCms.Module.Root.Mvc.Helpers;
 
 namespace BetterCms.Module.Pages.Accessors
 {
@@ -19,9 +18,9 @@ namespace BetterCms.Module.Pages.Accessors
         {
         }
 
-        public override string GetRegionWrapperCssClass(HtmlHelper html)
+        public override string GetContentWrapperType()
         {
-            return "bcms-content-advanced";
+            return "html-widget";
         }
 
         public override string GetHtml(HtmlHelper html)
@@ -39,8 +38,7 @@ namespace BetterCms.Module.Pages.Accessors
         {
             if (Content.UseCustomCss && !string.IsNullOrWhiteSpace(Content.CustomCss))
             {
-                var selectorPrefix = string.Concat("#", string.Format(RegionContentWrapper.PageContentIdPattern, Content.Id));
-                var css = CssHelper.PrefixCssSelectors(Content.CustomCss, selectorPrefix);
+                var css = CssHelper.FixCss(Content.CustomCss);
                 if (!string.IsNullOrWhiteSpace(css))
                 {
                     return css;

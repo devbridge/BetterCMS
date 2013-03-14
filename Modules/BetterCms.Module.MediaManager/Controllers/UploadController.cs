@@ -5,6 +5,7 @@ using System.Web.Mvc;
 
 using BetterCms.Core.Security;
 using BetterCms.Module.MediaManager.Command.Upload;
+using BetterCms.Module.MediaManager.Command.Upload.CheckFileStatuses;
 using BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload;
 using BetterCms.Module.MediaManager.Command.Upload.GetMultiFileUpload;
 using BetterCms.Module.MediaManager.Command.Upload.UndoUpload;
@@ -146,7 +147,14 @@ namespace BetterCms.Module.MediaManager.Controllers
 
                 if (media != null)
                 {
-                    return Json(new WireJson(true, new { FileId = media.Id, Version = media.Version, Type = (int)rootFolderType }));
+                    return WireJson(true, new
+                                              {
+                                                  FileId = media.Id, 
+                                                  Version = media.Version, 
+                                                  Type = (int)rootFolderType, 
+                                                  IsProcessing = !media.IsUploaded.HasValue,
+                                                  IsFailed = media.IsUploaded == false,
+                                              });
                 }
             }
 
@@ -164,7 +172,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         [HttpPost]
         public ActionResult RemoveFileUpload(string fileId, string version, string type)
         {
-            var result = GetCommand<UndoUploadCommand>().ExecuteCommand(new UndoUploadRequest
+            GetCommand<UndoUploadCommand>().ExecuteCommand(new UndoUploadRequest
                                                                             {
                                                                                 FileId = fileId.ToGuidOrDefault(),
                                                                                 Version = version.ToIntOrDefault(),
@@ -221,6 +229,14 @@ namespace BetterCms.Module.MediaManager.Controllers
             }
 
             return true;
+        }
+
+        [HttpPost]
+        public ActionResult CheckFilesStatuses(List<string> ids)
+        {
+            var result = GetCommand<CheckFilesStatusesCommand>().ExecuteCommand(ids);
+
+            return WireJson(result != null, result);
         }
     }
 }

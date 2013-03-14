@@ -470,7 +470,6 @@
     <EmbeddedResource Include="Scripts\WysiHtml5\wysihtml5-0.3.0.js" />
     <EmbeddedResource Include="Scripts\WysiHtml5\wysihtml5-parser-rules.js" />
     <EmbeddedResource Include="Scripts\bcms.authentication.js" />
-    <EmbeddedResource Include="Scripts\bcms.content.js" />
     <EmbeddedResource Include="Scripts\bcms.datepicker.js" />
     <EmbeddedResource Include="Scripts\bcms.grid.js" />
     <EmbeddedResource Include="Scripts\bcms.htmlEditor.js" />
@@ -478,7 +477,6 @@
     <EmbeddedResource Include="Scripts\bcms.messages.js" />
     <EmbeddedResource Include="Scripts\bcms.preview.js" />
     <EmbeddedResource Include="Scripts\bcms.redirect.js" />
-    <EmbeddedResource Include="Scripts\bcms.sidemenu.js" />
     <EmbeddedResource Include="Scripts\bcms.tabs.js" />
     <EmbeddedResource Include="Scripts\bcms.tooltip.js" />
     <EmbeddedResource Include="Scripts\jquery-ui-1.9.0.js" />
@@ -500,7 +498,6 @@
     <EmbeddedResource Include="Scripts\bcms.modal.js" />
     <EmbeddedResource Include="Scripts\bcms.siteSettings.js" />
     <EmbeddedResource Include="Scripts\bcms.forms.js" />
-    <EmbeddedResource Include="Scripts\bcms.js" />
     <EmbeddedResource Include="Scripts\bcms.ko.extenders.js" />
     <EmbeddedResource Include="Content\Styles\images\bcms-logo.png" />
     <EmbeddedResource Include="Content\Styles\images\bcms-no-image-1.png" />
@@ -519,6 +516,9 @@
     <EmbeddedResource Include="Scripts\html5shiv.js" />
     <EmbeddedResource Include="Scripts\bcms.inlineEdit.js" />
     <EmbeddedResource Include="Scripts\bcms.dynamicContent.js" />
+    <EmbeddedResource Include="Scripts\bcms.content.js" />
+    <EmbeddedResource Include="Scripts\bcms.js" />
+    <EmbeddedResource Include="Scripts\bcms.sidemenu.js" />
     <Content Include="Views\Web.config" />
     <EmbeddedResource Include="Views\Sidebar\Container.cshtml" />
     <EmbeddedResource Include="Views\Rendering\RenderMainJsFile.cshtml" />
@@ -608,6 +608,15 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Shared\RootLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\Partial\SupportBrowser.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\Partial\SupportCookie.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\Partial\SupportJavaScript.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
