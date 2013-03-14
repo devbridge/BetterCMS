@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 
-using BetterCms.Core.Services;
+using BetterCms.Core.Security;
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
@@ -13,6 +14,10 @@ using BetterCms.Module.Users.ViewModels.Role;
 
 namespace BetterCms.Module.Users.Controllers
 {
+    /// <summary>
+    /// Role management.
+    /// </summary>
+    [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
     public class RoleController : CmsControllerBase
     {
         /// <summary>
@@ -20,9 +25,7 @@ namespace BetterCms.Module.Users.Controllers
         /// </summary>
         /// <param name="id">The role id.</param>
         /// <param name="version">The version.</param>
-        /// <returns>
-        /// Json with status.
-        /// </returns>
+        /// <returns>Json with status.</returns>
         [HttpPost]
         public ActionResult DeleteRole(string id, string version)
         {
@@ -41,24 +44,35 @@ namespace BetterCms.Module.Users.Controllers
             return Json(new WireJson(success));
         }
 
+        /// <summary>
+        /// Creates the role view.
+        /// </summary>
+        /// <returns>Role create view.</returns>
         public ActionResult CreatRoleView()
         {
             var model = GetCommand<GetRoleForEditCommand>().ExecuteCommand(null);
-
-            return PartialView("EditRoleView",model);
+            return PartialView("EditRoleView", model);
         }
 
+        /// <summary>
+        /// Edits the role view.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns>Role edit view.</returns>
         public ActionResult EditRoleView(string id)
         {
             var model = GetCommand<GetRoleForEditCommand>().ExecuteCommand(id.ToGuidOrDefault());
-
             return PartialView(model);
         }
 
+        /// <summary>
+        /// Creates the role.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns>Json with status.</returns>
         [HttpPost]
         public ActionResult CreateRole(EditRoleViewModel model)
         {
-
             if (ModelState.IsValid)
             {
                 var response = GetCommand<SaveRoleCommand>().ExecuteCommand(model);
@@ -66,8 +80,9 @@ namespace BetterCms.Module.Users.Controllers
                 {
                    if (model.Id.HasDefaultValue())
                     {
-                                Messages.AddSuccess(UsersGlobalization.SaveRole_CreatedSuccessfully_Message);
+                        Messages.AddSuccess(UsersGlobalization.SaveRole_CreatedSuccessfully_Message);
                     }
+
                     return Json(new WireJson { Success = true, Data = response });
                 }
             }
@@ -75,14 +90,16 @@ namespace BetterCms.Module.Users.Controllers
             return Json(new WireJson { Success = false });
         }
 
-        
-
+        /// <summary>
+        /// Roles list for Site Settings.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>Role list view.</returns>
         public ActionResult RolesListView(SearchableGridOptions request)
         {
             var roleList = GetCommand<GetRolesCommand>().ExecuteCommand(request);            
             var model = new SiteSettingRoleListViewModel(roleList, new SearchableGridOptions(), roleList.Count);
             return View(model);
         }
-
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 
-using BetterCms.Core.Services;
+using BetterCms.Core.Security;
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
@@ -15,8 +16,17 @@ using BetterCms.Module.Users.ViewModels.User;
 
 namespace BetterCms.Module.Users.Controllers
 {
+    /// <summary>
+    /// User management.
+    /// </summary>
+    [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
     public class UserController : CmsControllerBase
     {
+        /// <summary>
+        /// User list for Site Settings.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>User list view.</returns>
         public ActionResult Index(SearchableGridOptions request)
         {
             var users = GetCommand<GetUsersCommand>().ExecuteCommand(request);
@@ -24,12 +34,22 @@ namespace BetterCms.Module.Users.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Edits the user.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns>User edit view.</returns>
         public ActionResult EditUser(string id)
         {
             var model = GetCommand<GetUserCommand>().ExecuteCommand(id.ToGuidOrDefault());
             return PartialView("EditUserView", model);
         }
 
+        /// <summary>
+        /// Saves the user.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns>Json status result.</returns>
         public ActionResult SaveUser(EditUserViewModel model)
         {
             var response = GetCommand<SaveUserCommand>().ExecuteCommand(model);
@@ -38,12 +58,19 @@ namespace BetterCms.Module.Users.Controllers
                 Messages.AddSuccess(UsersGlobalization.SaveUser_CreatedSuccessfully_Message);
                 return Json(new WireJson { Success = true, Data = response });
             }
+
             return Json(new WireJson { Success = false });
         }
 
+        /// <summary>
+        /// Deletes the user.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <param name="version">The version.</param>
+        /// <returns>Json status result.</returns>
         public ActionResult DeleteUser(string id, string version)
         {
-            bool success = GetCommand<DeleteUserCommand>().ExecuteCommand(
+            var success = GetCommand<DeleteUserCommand>().ExecuteCommand(
                 new DeleteUserCommandRequest
                 {
                     UserId = id.ToGuidOrDefault(),
@@ -54,8 +81,8 @@ namespace BetterCms.Module.Users.Controllers
             {
                 Messages.AddSuccess(UsersGlobalization.DeleteUser_DeletedSuccessfully_Message);
             }
+
             return Json(new WireJson(success));
         }
-
     }
 }
