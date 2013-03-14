@@ -281,12 +281,15 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
         };
         
         // When one of file status is "Processing", checking file status repeatedly
-        self.timeout = 500;
+        self.timeout = 10000;
         self.timer = null;
 
-        self.startStatusChecking = function () {
+        self.startStatusChecking = function (timeout) {
             if (!self.timer) {
-                self.timer = setTimeout(self.checkStatus, self.timeout);
+                if (!timeout) {
+                    timeout = self.timeout;
+                }
+                self.timer = setTimeout(self.checkStatus, timeout);
             }
         };
         
@@ -448,7 +451,7 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
                                     fileModel.uploadProcessing(true);
                                     fileModel.isProgressVisible(false);
                                     
-                                    uploadsModel.startStatusChecking();
+                                    uploadsModel.startStatusChecking(500);
                                 }
                             } else {
                                 fileModel.uploadFailed(true);

@@ -9,7 +9,6 @@ using System.Web.Helpers;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
-using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Exceptions.Service;
@@ -232,25 +231,7 @@ namespace BetterCms.Module.MediaManager.Services
                 repository.Save(image);
                 unitOfWork.Commit();
 
-                // TODO:
-                Task imageUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(fileStream, image.FileUri, image.Id, 
-                    img =>
-                        {
-                            if (img.Title.Contains("processing"))
-                            {
-                                img.IsUploaded = null;
-                            }
-                            else if (img.Title.Contains("fail"))
-                            {
-                                img.IsUploaded = false;
-                            }
-                            else
-                            {
-                                img.IsUploaded = true;
-                            }
-                        }, img => { img.IsUploaded = false; });
-
-                // TODO: Task imageUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(fileStream, image.FileUri, image.Id, img => { /*img.IsUploaded = true;*/ }, img => { img.IsUploaded = false; });
+                Task imageUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(fileStream, image.FileUri, image.Id, img => { img.IsUploaded = true; }, img => { img.IsUploaded = false; });
                 Task originalUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(fileStream, image.OriginalUri, image.Id, img => { img.IsOriginalUploaded = true; }, img => { img.IsOriginalUploaded = false; });
                 Task thumbnailUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(thumbnailImage, image.ThumbnailUri, image.Id, img => { img.IsThumbnailUploaded = true; }, img => { img.IsThumbnailUploaded = false; });
 
