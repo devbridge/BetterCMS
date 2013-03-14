@@ -1,3 +1,5 @@
+define('bcms.jqueryui', ['bcms.jquery'], function(jquery) {
+    
 /*! jQuery UI - v1.9.0 - 2012-10-05
 * http://jqueryui.com
 * Includes: jquery.ui.core.js, jquery.ui.widget.js, jquery.ui.mouse.js, jquery.ui.draggable.js, jquery.ui.droppable.js, jquery.ui.resizable.js, jquery.ui.selectable.js, jquery.ui.sortable.js, jquery.ui.effect.js, jquery.ui.accordion.js, jquery.ui.autocomplete.js, jquery.ui.button.js, jquery.ui.datepicker.js, jquery.ui.dialog.js, jquery.ui.effect-blind.js, jquery.ui.effect-bounce.js, jquery.ui.effect-clip.js, jquery.ui.effect-drop.js, jquery.ui.effect-explode.js, jquery.ui.effect-fade.js, jquery.ui.effect-fold.js, jquery.ui.effect-highlight.js, jquery.ui.effect-pulsate.js, jquery.ui.effect-scale.js, jquery.ui.effect-shake.js, jquery.ui.effect-slide.js, jquery.ui.effect-transfer.js, jquery.ui.menu.js, jquery.ui.position.js, jquery.ui.progressbar.js, jquery.ui.slider.js, jquery.ui.spinner.js, jquery.ui.tabs.js, jquery.ui.tooltip.js
@@ -329,7 +331,7 @@ $.extend( $.ui, {
 	}
 });
 
-})( jQuery );
+})( jquery );
 
 (function( $, undefined ) {
 
@@ -822,7 +824,7 @@ if ( $.uiBackCompat !== false ) {
 	};
 }
 
-})( jQuery );
+})( jquery );
 
 (function( $, undefined ) {
 
@@ -979,7 +981,7 @@ $.widget("ui.mouse", {
 	_mouseCapture: function(event) { return true; }
 });
 
-})(jQuery);
+})(jquery);
 
 (function( $, undefined ) {
 
@@ -1785,7 +1787,7 @@ $.ui.plugin.add("draggable", "zIndex", {
 	}
 });
 
-})(jQuery);
+})(jquery);
 
 (function( $, undefined ) {
 
@@ -2064,7 +2066,7 @@ $.ui.ddmanager = {
 	}
 };
 
-})(jQuery);
+})(jquery);
 
 (function( $, undefined ) {
 
@@ -2852,7 +2854,7 @@ var isNumber = function(value) {
 	return !isNaN(parseInt(value, 10));
 };
 
-})(jQuery);
+})(jquery);
 
 (function( $, undefined ) {
 
@@ -3099,7 +3101,7 @@ $.widget("ui.selectable", $.ui.mouse, {
 
 });
 
-})(jQuery);
+})(jquery);
 
 (function( $, undefined ) {
 
@@ -4172,9 +4174,9 @@ $.widget("ui.sortable", $.ui.mouse, {
 
 });
 
-})(jQuery);
+})(jquery);
 
-;(jQuery.effects || (function($, undefined) {
+;(jquery.effects || (function($, undefined) {
 
 var backCompat = $.uiBackCompat !== false,
 	// prefix used for storing data on .data()
@@ -4839,7 +4841,7 @@ colors = jQuery.Color.names = {
 	_default: "#ffffff"
 };
 
-})( jQuery );
+})( jquery );
 
 
 
@@ -4864,7 +4866,7 @@ var classAnimationActions = [ "add", "remove", "toggle" ],
 $.each([ "borderLeftStyle", "borderRightStyle", "borderBottomStyle", "borderTopStyle" ], function( _, prop ) {
 	$.fx.step[ prop ] = function( fx ) {
 		if ( fx.end !== "none" && !fx.setAttr || fx.pos === 1 && !fx.setAttr ) {
-			jQuery.style( fx.elem, prop, fx.end );
+			jquery.style( fx.elem, prop, fx.end );
 			fx.setAttr = true;
 		}
 	};
@@ -4960,7 +4962,7 @@ $.effects.animateClass = function( value, duration, easing, callback ) {
 		allAnimations = allAnimations.map(function() {
 			var styleInfo = this,
 				dfd = $.Deferred(),
-				opts = jQuery.extend({}, o, {
+				opts = jquery.extend({}, o, {
 					queue: false,
 					complete: function() {
 						dfd.resolve( styleInfo );
@@ -5442,7 +5444,7 @@ $.each( baseEasings, function( name, easeIn ) {
 
 })();
 
-})(jQuery));
+})(jquery));
 
 (function( $, undefined ) {
 
@@ -6013,7 +6015,7 @@ if ( $.uiBackCompat !== false ) {
 			}
 			_create.call( this );
 		};
-	}( jQuery, jQuery.ui.accordion.prototype ) );
+	}( jquery, jquery.ui.accordion.prototype ) );
 
 	// height options
 	(function( $, prototype ) {
@@ -6058,7 +6060,7 @@ if ( $.uiBackCompat !== false ) {
 				}
 			}
 		});
-	}( jQuery, jQuery.ui.accordion.prototype ) );
+	}( jquery, jquery.ui.accordion.prototype ) );
 
 	// icon options
 	(function( $, prototype ) {
@@ -6075,7 +6077,7 @@ if ( $.uiBackCompat !== false ) {
 			}
 			_createIcons.call( this );
 		};
-	}( jQuery, jQuery.ui.accordion.prototype ) );
+	}( jquery, jquery.ui.accordion.prototype ) );
 
 	// expanded active option, activate method
 	(function( $, prototype ) {
@@ -6094,10 +6096,10 @@ if ( $.uiBackCompat !== false ) {
 			}
 			return _findActive.call( this, index );
 		};
-	}( jQuery, jQuery.ui.accordion.prototype ) );
+	}( jquery, jquery.ui.accordion.prototype ) );
 
 	// resize method
-	jQuery.ui.accordion.prototype.resize = jQuery.ui.accordion.prototype.refresh;
+	jquery.ui.accordion.prototype.resize = jquery.ui.accordion.prototype.refresh;
 
 	// change events
 	(function( $, prototype ) {
@@ -6130,7 +6132,7 @@ if ( $.uiBackCompat !== false ) {
 			}
 			return ret;
 		};
-	}( jQuery, jQuery.ui.accordion.prototype ) );
+	}( jquery, jquery.ui.accordion.prototype ) );
 
 	// animated option
 	// NOTE: this only provides support for "slide", "bounceslide", and easings
@@ -6164,10 +6166,10 @@ if ( $.uiBackCompat !== false ) {
 
 			_create.call( this );
 		};
-	}( jQuery, jQuery.ui.accordion.prototype ) );
+	}( jquery, jquery.ui.accordion.prototype ) );
 }
 
-})( jQuery );
+})( jquery );
 
 (function( $, undefined ) {
 
@@ -6753,7 +6755,7 @@ $.widget( "ui.autocomplete", $.ui.autocomplete, {
 });
 
 
-}( jQuery ));
+}( jquery ));
 
 (function( $, undefined ) {
 
@@ -7155,7 +7157,7 @@ $.widget( "ui.buttonset", {
 	}
 });
 
-}( jQuery ) );
+}( jquery ) );
 
 (function( $, undefined ) {
 
@@ -8989,7 +8991,7 @@ $.datepicker.version = "1.9.0";
 // Add another global to avoid noConflict issues with inline event handlers
 window['DP_jQuery_' + dpuuid] = $;
 
-})(jQuery);
+})(jquery);
 
 (function( $, undefined ) {
 
@@ -9818,7 +9820,7 @@ $.extend( $.ui.dialog.overlay.prototype, {
 	}
 });
 
-}( jQuery ) );
+}( jquery ) );
 
 (function( $, undefined ) {
 
@@ -9888,7 +9890,7 @@ $.effects.effect.blind = function( o, done ) {
 
 };
 
-})(jQuery);
+})(jquery);
 
 (function( $, undefined ) {
 
@@ -9989,7 +9991,7 @@ $.effects.effect.bounce = function( o, done ) {
 
 };
 
-})(jQuery);
+})(jquery);
 
 (function( $, undefined ) {
 
@@ -10044,7 +10046,7 @@ $.effects.effect.clip = function( o, done ) {
 
 };
 
-})(jQuery);
+})(jquery);
 
 (function( $, undefined ) {
 
@@ -10097,7 +10099,7 @@ $.effects.effect.drop = function( o, done ) {
 	});
 };
 
-})(jQuery);
+})(jquery);
 
 (function( $, undefined ) {
 
@@ -10182,7 +10184,7 @@ $.effects.effect.explode = function( o, done ) {
 	}
 };
 
-})(jQuery);
+})(jquery);
 
 (function( $, undefined ) {
 
@@ -10200,7 +10202,7 @@ $.effects.effect.fade = function( o, done ) {
 	});
 };
 
-})( jQuery );
+})( jquery );
 
 (function( $, undefined ) {
 
@@ -10264,7 +10266,7 @@ $.effects.effect.fold = function( o, done ) {
 
 };
 
-})(jQuery);
+})(jquery);
 
 (function( $, undefined ) {
 
@@ -10302,7 +10304,7 @@ $.effects.effect.highlight = function( o, done ) {
 		});
 };
 
-})(jQuery);
+})(jquery);
 
 (function( $, undefined ) {
 
@@ -10353,7 +10355,7 @@ $.effects.effect.pulsate = function( o, done ) {
 	elem.dequeue();
 };
 
-})(jQuery);
+})(jquery);
 
 (function( $, undefined ) {
 
@@ -10632,7 +10634,7 @@ $.effects.effect.size = function( o, done ) {
 
 };
 
-})(jQuery);
+})(jquery);
 
 (function( $, undefined ) {
 
@@ -10694,7 +10696,7 @@ $.effects.effect.shake = function( o, done ) {
 
 };
 
-})(jQuery);
+})(jquery);
 
 (function( $, undefined ) {
 
@@ -10746,7 +10748,7 @@ $.effects.effect.slide = function( o, done ) {
 	});
 };
 
-})(jQuery);
+})(jquery);
 
 (function( $, undefined ) {
 
@@ -10781,7 +10783,7 @@ $.effects.effect.transfer = function( o, done ) {
 			});
 };
 
-})(jQuery);
+})(jquery);
 
 (function( $, undefined ) {
 
@@ -11376,7 +11378,7 @@ $.widget( "ui.menu", {
 	}
 });
 
-}( jQuery ));
+}( jquery ));
 
 (function( $, undefined ) {
 
@@ -11881,10 +11883,10 @@ if ( $.uiBackCompat !== false ) {
 				offset: undefined
 			} ) );
 		};
-	}( jQuery ) );
+	}( jquery ) );
 }
 
-}( jQuery ) );
+}( jquery ) );
 
 (function( $, undefined ) {
 
@@ -11976,7 +11978,7 @@ $.widget( "ui.progressbar", {
 	}
 });
 
-})( jQuery );
+})( jquery );
 
 (function( $, undefined ) {
 
@@ -12599,7 +12601,7 @@ $.widget( "ui.slider", $.ui.mouse, {
 
 });
 
-}(jQuery));
+}(jquery));
 
 (function( $ ) {
 
@@ -13066,7 +13068,7 @@ $.widget( "ui.spinner", {
 	}
 });
 
-}( jQuery ) );
+}( jquery ) );
 
 (function( $, undefined ) {
 
@@ -14411,7 +14413,7 @@ if ( $.uiBackCompat !== false ) {
 	});
 }
 
-})( jQuery );
+})( jquery );
 
 (function( $ ) {
 
@@ -14739,4 +14741,7 @@ $.widget( "ui.tooltip", {
 	}
 });
 
-}( jQuery ) );
+}(jquery));
+    
+
+});

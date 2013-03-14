@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, browser: true, devel: true */
 /*global define*/
 
-define(function () {
+define(['bcms.jquery'], function ($) {
     'use strict';
 
     var module = {},

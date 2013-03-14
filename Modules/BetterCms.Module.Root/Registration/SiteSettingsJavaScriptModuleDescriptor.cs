@@ -9,7 +9,7 @@ namespace BetterCms.Module.Root.Registration
     public class SiteSettingsJavaScriptModuleDescriptor : JavaScriptModuleDescriptor
     {
         public SiteSettingsJavaScriptModuleDescriptor(ModuleDescriptor containerModule)
-            : base(containerModule, "bcms.siteSettings", "/file/bcms-root/scripts/bcms.siteSettings")
+            : base(containerModule, "bcms.siteSettings")
         {
 
             Links = new IActionProjection[]

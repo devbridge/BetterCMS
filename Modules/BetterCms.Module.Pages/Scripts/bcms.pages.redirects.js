@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.pages.redirects', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.inlineEdit', 'bcms.grid'], function ($, bcms, dynamicContent, siteSettings, editor, grid) {
+define('bcms.pages.redirects', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.inlineEdit', 'bcms.grid'], function ($, bcms, dynamicContent, siteSettings, editor, grid) {
     'use strict';
 
     var redirect = {},

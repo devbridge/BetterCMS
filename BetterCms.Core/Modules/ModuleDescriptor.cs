@@ -63,6 +63,19 @@ namespace BetterCms.Core.Modules
         }
 
         /// <summary>
+        /// Gets the base script path.
+        /// </summary>
+        /// <value>
+        /// The base script path.
+        /// </value>
+        public virtual string BaseScriptPath
+        {
+            get
+            {
+                return string.Format("/file/{0}/scripts/", AreaName).ToLowerInvariant();
+            }
+        }
+        /// <summary>
         /// Gets the name of the assembly.
         /// </summary>
         /// <value>

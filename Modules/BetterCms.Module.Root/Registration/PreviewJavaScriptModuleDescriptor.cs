@@ -10,7 +10,7 @@ namespace BetterCms.Module.Root.Registration
     public class PreviewJavaScriptModuleDescriptor : JavaScriptModuleDescriptor
     {
         public PreviewJavaScriptModuleDescriptor(ModuleDescriptor containerModule)
-            : base(containerModule, "bcms.preview", "/file/bcms-root/scripts/bcms.preview")
+            : base(containerModule, "bcms.preview")
         {           
             Links = new IActionProjection[]
                 {   
