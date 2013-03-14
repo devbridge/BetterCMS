@@ -9,8 +9,6 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
         // Selectors used in the module to locate DOM elements:
         selectors = {
             contentOverlay: '#bcms-content-overlay',
-            contentOverlayBg: '.bcms-content-overlaybg',
-            content: '.bcms-content',
             contentDelete: '.bcms-content-delete',
             contentEdit: '.bcms-content-edit',
             contentEditInnerDiv: '.bcms-content-edit .bcms-content-icon',
@@ -19,10 +17,6 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
 
             regionsAndContents: '.bcms-region-start, .bcms-region-end, .bcms-content-start, .bcms-content-end',
             regionOverlay: '#bcms-region-overlay-template',
-            region: '.bcms-region',
-            regionActions: '.bcms-region-actions',
-            renderedRegions: '.bcms-render-region',
-            renderedContents: 'script[type="text/html"]',
             
             regionAddContentButtons: '.bcms-region-addcontent',
             regionSortButtons: '.bcms-region-sortcontent',
@@ -108,20 +102,12 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
 
         contentRectangles.each(function () {
 
-            var padding = 7,
-                extra = padding * 2,
-                rectangle = $(this),
+            var rectangle = $(this),
                 contentViewModel = rectangle.data('target'),
-                width = (contentViewModel.width + extra) + 'px',
-                height = (contentViewModel.height + extra) + 'px',
-                top = (contentViewModel.top - padding) + 'px',
-                left = (contentViewModel.left - padding) + 'px',
-                background = $(selectors.contentOverlayBg, rectangle);
-
-            background.css({
-                'width': width,
-                'height': height
-            });
+                width = contentViewModel.width + 'px',
+                height = contentViewModel.height + 'px',
+                top = contentViewModel.top + 'px',
+                left = contentViewModel.left + 'px';
 
             rectangle.css({
                 'width': width,
@@ -148,21 +134,16 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
             this.recalculatePositions();
         });
 
-        var actionsContainerWidth = regionRectangles.first().find(selectors.regionActions).width() + 4;
-
         $.each(regionViewModels, function () {
 
-            var padding = 10,
-                regionViewModel = this,
+            var regionViewModel = this,
                 overlay = regionViewModel.overlay,
-                width = regionViewModel.width + (padding * 2),
+                width = regionViewModel.width,
                 height = regionViewModel.height;
-            
-            $(selectors.regionActions, overlay).css({ left: width - actionsContainerWidth + 'px' });
 
             overlay.css({
                 top: regionViewModel.top + 'px',
-                left: regionViewModel.left - padding + 'px',
+                left: regionViewModel.left + 'px',
                 width: width + 'px',
                 height: height + 'px'
             });
@@ -339,14 +320,6 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
 
         regionViewModel.overlay.sortable();
         content.refreshRegionsPosition();
-    };
-
-    /**
-    * Removes script blocks from HTML string:
-    */
-    content.removeScripts = function (html) {
-        var regex = new RegExp('<script.*?>.*?</script>', 'gi');
-        return html.replace(regex, '');
     };
 
     /**
