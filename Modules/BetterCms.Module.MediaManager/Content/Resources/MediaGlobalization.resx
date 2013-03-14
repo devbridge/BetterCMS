@@ -390,4 +390,7 @@
   <data name="MediaManager_FileStillProcessing_Message" xml:space="preserve">
     <value>File is still processing</value>
   </data>
+  <data name="MultiFileUpload_Processing_ServerSide" xml:space="preserve">
+    <value>Upload completed. File is still processing in the server.</value>
+  </data>
 </root>

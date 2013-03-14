@@ -465,7 +465,7 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', 'bcms.
     */
     function canHandleKeyPress() {
         var element = $(document.activeElement);
-        return element.is('body') || element.is('div') || element.is('input') || element.is('select') || element.is(selectors.close);
+        return element.is('body') || element.is('div') || element.is('input') || element.is(selectors.close);
     }
 
     /**
@@ -545,22 +545,26 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', 'bcms.
                     desirableStatus.val(status);
                 } else {
                     throw new Error($.format('Dialog {0} should contain hidden input for a desirable status.', dialog.title));
-                }                
-            };
-           
-        var saveAndPublishButton = new ButtonViewModel(globalization.saveAndPublish, classes.grayButton, 2, function(dialog) {
-            if ($.isFunction(options.onSaveAndPublishClick)) {
-                if (options.onSaveAndPublishClick(dialog) !== false) {
+                }
+            },
+            saveAndPublishAction = function(dialog) {
+                if ($.isFunction(options.onSaveAndPublishClick)) {
+                    if (options.onSaveAndPublishClick(dialog) !== false) {
+                        changeContentDesirableStatus(dialog, bcms.contentStatus.published);
+                        dialog.submitForm();
+                    }
+                } else {
                     changeContentDesirableStatus(dialog, bcms.contentStatus.published);
                     dialog.submitForm();
                 }
-            } else {
-                changeContentDesirableStatus(dialog, bcms.contentStatus.published);
-                dialog.submitForm();
-            }
+            };
 
-        });
-        extraButtons.push(saveAndPublishButton);
+        if (!options.disableSaveDraft) {
+            var saveAndPublishButton = new ButtonViewModel(globalization.saveAndPublish, classes.grayButton, 2, function(dialog) {
+                saveAndPublishAction(dialog);
+            });            
+            extraButtons.push(saveAndPublishButton);
+        }
 
         if (!!options.isPreviewAvailable) {
             var previewButton = new ButtonViewModel(globalization.preview, classes.grayButton, 3, function(dialog) {
@@ -578,13 +582,13 @@ define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', 'bcms.
         }
         
         options.buttons = extraButtons;
-        options.acceptTitle = globalization.saveDraft;
+        
         
         if (options.disableSaveDraft) {
-            options.disableAccept = true;
-            options.onAcceptClick = null;
-            saveAndPublishButton.css(classes.saveButton);
-        } else {
+            options.acceptTitle = globalization.saveAndPublish;
+            options.onAcceptClick = function(dialog) {saveAndPublishAction(dialog);};            
+        } else {            
+            options.acceptTitle = globalization.saveDraft;
             options.onAcceptClick = function (dialog) {
                 if ($.isFunction(options.onSaveDraftClick)) {
                     if (options.onSaveDraftClick(dialog) !== false) {

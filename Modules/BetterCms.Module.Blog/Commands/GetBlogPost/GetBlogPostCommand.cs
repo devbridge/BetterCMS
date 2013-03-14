@@ -78,6 +78,7 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
                                 Id = bp.Id,
                                 Version = bp.Version,
                                 Title = bp.Title,
+                                BlogUrl = bp.PageUrl,
                                 IntroText = bp.Description,
                                 AuthorId = bp.Author.Id,
                                 CategoryId = bp.Category.Id,
@@ -154,6 +155,7 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
 
             model.Authors = authorService.GetAuthors();
             model.Categories = categoryService.GetCategories();
+            model.RedirectFromOldUrl = true;
 
             return model;
         }

@@ -35,9 +35,10 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                     foreach (var projection in projections)
                     {
                         // Add Html
-                        using (new RegionContentWrapper(contentsBuilder, htmlHelper,  projection, model.CanManageContent))
+                        using (new RegionContentWrapper(contentsBuilder, projection, model.CanManageContent))
                         {
-                            contentsBuilder.Append(projection.GetHtml(htmlHelper));
+                            var content = projection.GetHtml(htmlHelper);
+                            contentsBuilder.Append(content);
                         }
                     }
                 }
@@ -99,7 +100,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
 
             return null;
         }
-
+        
         /// <summary>
         /// Renders the page custom JavaScript.
         /// </summary>

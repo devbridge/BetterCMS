@@ -270,4 +270,16 @@
   <data name="CreatePost_CreatedSuccessfully_Message" xml:space="preserve">
     <value>Post created successfully</value>
   </data>
+  <data name="EditBlogPost_PagePermalink_MaxLengthMessage" xml:space="preserve">
+    <value>Page permalink max length exceeded.</value>
+  </data>
+  <data name="EditBlogPost_Permalink" xml:space="preserve">
+    <value>Change Post URL</value>
+  </data>
+  <data name="EditBlogPost_Permalink_Tooltip_Description" xml:space="preserve">
+    <value>Edit Post URL</value>
+  </data>
+  <data name="EditBlogPost_CreatePermanentRedirectToOldUrl_Title" xml:space="preserve">
+    <value>Create permanent redirect entry from old URL to new URL.</value>
+  </data>
 </root>
