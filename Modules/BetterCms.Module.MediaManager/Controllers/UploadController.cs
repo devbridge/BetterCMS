@@ -118,7 +118,14 @@ namespace BetterCms.Module.MediaManager.Controllers
 
                 if (media != null)
                 {
-                    return Json(new WireJson(true, new { FileId = media.Id, Version = media.Version, Type = (int)rootFolderType }));
+                    return WireJson(true, new
+                                              {
+                                                  FileId = media.Id, 
+                                                  Version = media.Version, 
+                                                  Type = (int)rootFolderType, 
+                                                  IsProcessing = !media.IsUploaded.HasValue,
+                                                  IsFailed = media.IsUploaded == false,
+                                              });
                 }
             }
             return Json(new WireJson(false));
@@ -176,6 +183,25 @@ namespace BetterCms.Module.MediaManager.Controllers
             }
 
             return true;
+        }
+
+        [HttpPost]
+        public ActionResult CheckFilesStatuses(List<string> ids)
+        {
+            List<dynamic> result = new List<dynamic>();
+            if (ids != null)
+            {
+                for (int i = 0; i < ids.Count; i++)
+                {
+                    result.Add(new
+                    {
+                        Id = ids[i],
+                        IsProcessing = false,
+                        IsFailed = true
+                    });
+                }
+            }
+            return WireJson(true, result);
         }
     }
 }
