@@ -74,11 +74,12 @@ namespace BetterCms.Core.Modules.Projections
         /// <param name="page">The page.</param>
         /// <param name="securityService"></param>
         /// <param name="html">The HTML.</param>
-        public virtual void Render(IPage page, ISecurityService securityService, HtmlHelper html)
+        /// <returns><c>true</c> on success, otherwise <c>false</c>.</returns>
+        public virtual bool Render(IPage page, ISecurityService securityService, HtmlHelper html)
         {
             if (AccessRole != null && !securityService.IsAuthorized(AccessRole))
             {
-                return;
+                return false;
             }
 
             using (HtmlControlRenderer control = new HtmlControlRenderer(Tag))
@@ -90,6 +91,8 @@ namespace BetterCms.Core.Modules.Projections
                     control.RenderControl(writer);
                 }
             }
+
+            return true;
         }
 
         /// <summary>

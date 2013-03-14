@@ -50,8 +50,9 @@ namespace BetterCms.Core.Modules.Projections
         /// Renders an action projection to given html output.
         /// </summary>
         /// <param name="page">The page.</param>
-        /// <param name="securityService"></param>
+        /// <param name="securityService">The security service.</param>
         /// <param name="html">The html helper.</param>
-        void Render(IPage page, ISecurityService securityService, HtmlHelper html);
+        /// <returns><c>true</c> on success, otherwise <c>false</c>.</returns>
+        bool Render(IPage page, ISecurityService securityService, HtmlHelper html);
     }
 }

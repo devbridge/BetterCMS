@@ -7,19 +7,31 @@
             <div id="bcms-site-settings-menu" class="bcms-leftcol-inner">
                 <!---<div class="bcms-links-block">  !-->              
                 <hr class="bcms-settings-separator">    
-                @foreach (var menuItem in Model.MenuItems.Projections)
-                {
-                    if (menuItem is SeparatorProjection)
+                @{
+                    var lastItemIsHr = true;
+                    foreach (var menuItem in Model.MenuItems.Projections)
+                    {
+                        if (menuItem is SeparatorProjection)
+                        {
+                            if (!lastItemIsHr)
+                            {
+                                <hr class="bcms-settings-separator" />
+                                lastItemIsHr = true;
+                            }
+                        }
+                        else
+                        {
+                            if (menuItem.Render(Model.MenuItems.Page, (ViewContext.Controller as CmsControllerBase).SecurityService, Html))
+                            {
+                                lastItemIsHr = false;
+                            }
+                        }
+                    }
+                    if (!lastItemIsHr)
                     {
                         <hr class="bcms-settings-separator" />
-
-                    }
-                    else
-                    {
-                        menuItem.Render(Model.MenuItems.Page, (ViewContext.Controller as CmsControllerBase).SecurityService, Html);
                     }
                 }
-                <hr class="bcms-settings-separator">
             </div>
         </div>
        
