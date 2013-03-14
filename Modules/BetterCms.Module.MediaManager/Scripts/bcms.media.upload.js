@@ -230,6 +230,15 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
             fileModel.type(newImg.Type);
             fileModel.uploadProgress(100);
 
+            if (newImg.IsFailed) {
+                fileModel.uploadFailed(true);
+                fileModel.failureMessage(globalization.failedToProcessFile);
+            } else if (newImg.IsProcessing) {
+                fileModel.uploadProcessing(true);
+
+                uploadsModel.startStatusChecking(uploadsModel.firstTimeout);
+            }
+
             uploadsModel.uploads.push(fileModel);
             uploadsModel.activeUploads.remove(fileModel);
         });
@@ -282,6 +291,7 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
         
         // When one of file status is "Processing", checking file status repeatedly
         self.timeout = 10000;
+        self.firstTimeout = 500;
         self.timer = null;
 
         self.startStatusChecking = function (timeout) {
@@ -447,11 +457,14 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
                                 fileModel.isProgressVisible(true);
                                 fileModel.uploadCompleted(true);
                                 
-                                if (result.Data.IsProcessing) {
+                                if (result.Data.IsFailed) {
+                                    fileModel.uploadFailed(true);
+                                    fileModel.failureMessage(globalization.failedToProcessFile);
+                                } else if (result.Data.IsProcessing) {
                                     fileModel.uploadProcessing(true);
                                     fileModel.isProgressVisible(false);
                                     
-                                    uploadsModel.startStatusChecking(500);
+                                    uploadsModel.startStatusChecking(uploadsModel.firstTimeout);
                                 }
                             } else {
                                 fileModel.uploadFailed(true);
