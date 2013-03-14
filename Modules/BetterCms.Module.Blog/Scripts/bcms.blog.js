@@ -28,7 +28,6 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             siteSettingsBlogsTableFirstRow: 'table.bcms-tables > tbody > tr:first',
             overlayConfigure: '.bcms-content-configure',
             overlayDelete: '.bcms-content-delete',
-            overlay: '.bcms-content-overlay',
             destroyDraftVersionLink: '.bcms-messages-draft-destroy',
             
             blogTitle: "#bcms-editor-blog-title",
@@ -63,8 +62,8 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
             templatesTabTitle: null,
             datePickerTooltipTitle: null
         },
-        classes = {
-            regionBlogPostContent: 'bcms-blog-post-content',
+        contentTypes = {
+            blogContent: 'blog-post-content'
         };
 
     // Assign objects to module.
@@ -652,41 +651,36 @@ define('bcms.blog', ['jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.
     }
 
     /**
-    * Called when edit overlay is shown
+    * Called when content overlay is created
     */
-    function onShowOverlay(sender) {
-        var element = $(sender),
-            overlay = $(selectors.overlay);
-
-        if (element.hasClass(classes.regionBlogPostContent)) {
-            overlay.find(selectors.overlayConfigure).hide();
-            overlay.find(selectors.overlayDelete).hide();
-        }
-    }
-        
-    /**
-    * Called when editing page content
-    */
-    function onEditContent(sender) {
-        var element = $(sender),
-            onSave = function () {
+    function onCreateContentOverlay(contentViewModel) {
+        var onSave = function () {
                 redirect.ReloadWithAlert();
             };
+        
+        if (contentViewModel.contentType == contentTypes.blogContent) {
+            contentViewModel.removeConfigureButton();
+            contentViewModel.removeDeleteButton();
 
-        if (element.hasClass(classes.regionBlogPostContent)) {
-            editBlogPost(bcms.pageId, onSave, true);
+            // Edit
+            contentViewModel.onEditContent = function() {
+                editBlogPost(bcms.pageId, onSave, true);
+            };
         }
-    };
+    }
 
     /**
     * Initializes blog module.
     */
     blog.init = function () {
         console.log('Initializing blog module');
-        
-        bcms.on(bcms.events.showOverlay, onShowOverlay);
-        bcms.on(bcms.events.editContent, onEditContent);
     };
+
+    /**
+    * Subscribe to events
+    */
+    bcms.on(bcms.events.createContentOverlay, onCreateContentOverlay);
+    
 
     /**
     * Register initialization

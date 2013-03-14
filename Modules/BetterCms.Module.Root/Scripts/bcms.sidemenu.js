@@ -129,6 +129,7 @@ define('bcms.sidemenu', ['jquery', 'bcms', 'bcms.modal', 'jqueryui'], function (
     sidemenu.turnEditModeOn = function () {
         localStorage.setItem(keys.editingOn, '1');
         $(selectors.html).addClass(classes.editingOnClass);
+        bcms.trigger(bcms.events.editModeOn);
     };
 
     /**
