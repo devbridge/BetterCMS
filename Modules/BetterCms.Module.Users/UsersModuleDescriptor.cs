@@ -8,6 +8,7 @@ using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.JsModule;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Blog.Registration;
+using BetterCms.Module.Root;
 using BetterCms.Module.Users.Content.Resources;
 using BetterCms.Module.Users.Registration;
 using BetterCms.Module.Users.Services;
@@ -123,6 +124,7 @@ namespace BetterCms.Module.Users
                             Order = 4100,
                             Title = () => UsersGlobalization.SiteSettings_UserMenuItem,
                             CssClass = page => "bcms-sidebar-link",
+                            AccessRole = RootModuleConstants.UserRoles.Administration
                         }                                      
                 };
         }
