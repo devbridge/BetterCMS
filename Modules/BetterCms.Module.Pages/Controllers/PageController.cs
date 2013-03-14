@@ -50,7 +50,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// <returns>
         /// Rendered pages list.
         /// </returns>
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.DeleteContent)]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.DeleteContent)]
         public ActionResult Pages(SearchableGridOptions request)
         {
             var model = GetCommand<GetPagesListCommand>().ExecuteCommand(request);

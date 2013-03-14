@@ -130,7 +130,7 @@ namespace BetterCms.Module.Blog
                             Order = 1200,
                             Title = () => BlogGlobalization.SiteSettings_BlogsMenuItem,
                             CssClass = page => "bcms-sidebar-link",
-                            AccessRole = RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.DeleteContent)
+                            AccessRole = RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.DeleteContent)
                         }                                      
                 };
         }

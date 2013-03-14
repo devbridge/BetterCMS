@@ -40,7 +40,7 @@ namespace BetterCms.Module.Blog.Controllers
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns>Blog post list html.</returns>
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.DeleteContent)]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.DeleteContent)]
         public ActionResult Index(SearchableGridOptions request)
         {
             var model = GetCommand<GetBlogPostListCommand>().ExecuteCommand(request ?? new SearchableGridOptions());

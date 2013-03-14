@@ -347,7 +347,7 @@ namespace BetterCms.Module.Pages
                             Order = 1000,
                             Title = () => PagesGlobalization.SiteSettings_PagesMenuItem,
                             CssClass = page => "bcms-sidebar-link",
-                            AccessRole = RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.DeleteContent)
+                            AccessRole = RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.DeleteContent)
                         },
                     
                     new SeparatorProjection(1500), 
