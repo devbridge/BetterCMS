@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Principal;
 using System.Web;
 
+using BetterCms.Core.Modules.Registration;
 using BetterCms.Core.Services;
 
 namespace BetterCms.Module.Root.Services
@@ -24,12 +25,18 @@ namespace BetterCms.Module.Root.Services
         private readonly ICmsConfiguration configuration;
 
         /// <summary>
+        /// The modules registration.
+        /// </summary>
+        private readonly IModulesRegistration modulesRegistration;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="DefaultSecurityService" /> class.
         /// </summary>
         /// <param name="configuration">The configuration.</param>
-        public DefaultSecurityService(ICmsConfiguration configuration)
+        public DefaultSecurityService(ICmsConfiguration configuration, IModulesRegistration modulesRegistration)
         {
             this.configuration = configuration;
+            this.modulesRegistration = modulesRegistration;
         }
 
         /// <summary>
@@ -64,6 +71,15 @@ namespace BetterCms.Module.Root.Services
             return HttpContext.Current != null
                 ? HttpContext.Current.User
                 : null;
+        }
+
+        /// <summary>
+        /// Gets all roles.
+        /// </summary>
+        /// <returns>Role list.</returns>
+        public string[] GetAllRoles()
+        {
+            return modulesRegistration.GetUserAccessRoles().Select(m => m.Name).ToArray();
         }
 
         /// <summary>

@@ -92,11 +92,7 @@ namespace BetterCms.Module.Root.Controllers
 
             var canManageContent = SecurityService.IsAuthorized(
                 principal,
-                RootModuleConstants.UserRoles.MultipleRoles(
-                    RootModuleConstants.UserRoles.EditContent,
-                    RootModuleConstants.UserRoles.PublishContent,
-                    RootModuleConstants.UserRoles.DeleteContent,
-                    RootModuleConstants.UserRoles.Administration));
+                RootModuleConstants.UserRoles.MultipleRoles(SecurityService.GetAllRoles()));
 
             var useCaching = cmsConfiguration.Cache.Enabled && !canManageContent;
             var request = new GetPageToRenderRequest {

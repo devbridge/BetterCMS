@@ -22,6 +22,12 @@ namespace BetterCms.Core.Services
         IPrincipal GetCurrentPrincipal();
 
         /// <summary>
+        /// Gets all roles.
+        /// </summary>
+        /// <returns>Role list.</returns>
+        string[] GetAllRoles();
+
+        /// <summary>
         /// Determines whether the specified principal is authorized.
         /// </summary>
         /// <param name="principal">The principal.</param>
