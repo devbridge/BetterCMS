@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.pages.properties', ['jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bcms.dynamicContent', 'bcms.pages.tags', 'bcms.ko.extenders', 'bcms.media', 'bcms.redirect'],
+define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bcms.dynamicContent', 'bcms.pages.tags', 'bcms.ko.extenders', 'bcms.media', 'bcms.redirect'],
     function ($, bcms, modal, forms, dynamicContent, tags, ko, media, redirect) {
     'use strict';
 

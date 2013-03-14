@@ -17,7 +17,7 @@ namespace BetterCms.Module.Pages.Registration
         /// </summary>
         /// <param name="containerModule">The container module.</param>
         public WidgetsJavaScriptModuleDescriptor(ModuleDescriptor containerModule)
-            : base(containerModule, "bcms.pages.widgets", "/file/bcms-pages/scripts/bcms.pages.widgets")
+            : base(containerModule, "bcms.pages.widgets")
         {
 
             Links = new IActionProjection[]

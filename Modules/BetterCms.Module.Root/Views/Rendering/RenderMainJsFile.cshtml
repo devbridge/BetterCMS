@@ -1,6 +1,6 @@
 ﻿@using BetterCms.Module.Root.Mvc.Helpers
 @model BetterCms.Module.Root.ViewModels.Rendering.RenderMainJsViewModel
-/*! Better CMS
+/* Better CMS
 * https://github.com/devbridge/BetterCMS
 */
 
@@ -11,38 +11,31 @@ var console = window.console || {
     error: jQuery.noop
 };
 
-requirejs.config({
-    enforceDefine: false,
-    paths: {     
-        @Model.JavaScriptModules.RenderCommaSeparatedNamePathPairs(),
-@*
-        'jqueryui': 'http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.23/jquery-ui',
-        'jqueryvalidate': 'http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min',
-        'jqueryunobtrusive': 'http://ajax.aspnetcdn.com/ajax/mvc/3.0/jquery.unobtrusive-ajax.min',
-        'jqueryvalidateunobtrusive': 'http://ajax.aspnetcdn.com/ajax/mvc/3.0/jquery.validate.unobtrusive.min',
-        'knockout': 'http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.0',
-*@
-        'jqueryui': '/file/bcms-root/scripts/jquery-ui-1.9.0',
-        'jqueryvalidate': '/file/bcms-root/scripts/jquery.validate',
-        'jqueryunobtrusive': '/file/bcms-root/scripts/jquery.unobtrusive-ajax',
-        'jqueryvalidateunobtrusive': '/file/bcms-root/scripts/jquery.validate.unobtrusive.min',
-        'knockout': '/file/bcms-root/scripts/knockout-2.2.0.debug',
+/*
 
-        'ckeditor': '/file/bcms-root/scripts/ckeditor/ckeditor'
-},
-    shim: {       
-       'jqueryvalidate': ['jqueryui'],
-       'jqueryunobtrusive': ['jqueryvalidate'],
-       'jqueryvalidateunobtrusive': ['jqueryunobtrusive']
-    },
-    waitSeconds: 15
-});
+S3: bettercms.s3.amazonaws.com
+S3 CDN: d3hf62uppzvupw.cloudfront.net
 
-requirejs(['jquery', 'bcms', 'bcms.processor', 'jqueryvalidateunobtrusive', 'slides.jquery', 'spinner.jquery', 'bcms.ko.extenders'],
+
+\version\bcms.root\bcms.root.min.js
+\version\bcms.pages.min.js
+\version\bcms.blog.min.js
+*/
+
+@if (Model.UseMinReferences)
+{
+    @Html.Partial("Partial/RequireJsReleaseConfig", Model)
+}
+else
+{
+    @Html.Partial("Partial/RequireJsDebugConfig", Model)    
+}
+
+requirejs(['bcms.jquery', 'bcms', 'bcms.processor'],
 
     function ($, bcms, processor) {
         'use strict';
-        console.log('Main app entry point');              
+        console.log('BetterCMS JS entry point.');
 
         $(function () {
             bcms.pageId = $('body').data("pageId");

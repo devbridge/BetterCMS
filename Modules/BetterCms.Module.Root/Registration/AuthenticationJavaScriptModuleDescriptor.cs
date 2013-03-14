@@ -16,7 +16,7 @@ namespace BetterCms.Module.Root.Registration
         /// </summary>
         /// <param name="containerModule">The container module.</param>
         public AuthenticationScriptModuleDescriptor(ModuleDescriptor containerModule)
-            : base(containerModule, "bcms.authentication", "/file/bcms-root/scripts/bcms.authentication")
+            : base(containerModule, "bcms.authentication")
         {
             Links = new IActionProjection[]
                 {

@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console, document */
 
-define('bcms.modal', ['jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', 'bcms.forms'], function ($, bcms, tabs, ko, forms) {
+define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', 'bcms.forms'], function ($, bcms, tabs, ko, forms) {
     'use strict';
 
     var modal = {},

@@ -9,7 +9,7 @@ namespace BetterCms.Module.Root.Registration
     public class DynamicContentJavaScriptModuleDescriptor : JavaScriptModuleDescriptor
     {
         public DynamicContentJavaScriptModuleDescriptor(ModuleDescriptor containerModule)
-            : base(containerModule, "bcms.dynamicContent", "/file/bcms-root/scripts/bcms.dynamicContent")
+            : base(containerModule, "bcms.dynamicContent")
         {
 
             Links = new IActionProjection[]

@@ -146,7 +146,7 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         /// <c>true</c> if whether current user can manage page content; otherwise, <c>false</c>.
         /// </value>
         public bool CanManageContent { get; set; }
-
+        
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
