@@ -5,6 +5,11 @@
     Layout = "RootLayout.cshtml";
 }
 
+<!--[if lt IE 9]>
+     @Html.Partial("Partial/SupportBrowser")
+<![endif]-->
+
+
 @RenderBody()
 
 @section CmsMetaTitle {
@@ -29,6 +34,10 @@
     {
         <link rel="stylesheet" type="text/css" href="@Url.Content("~/file/bcms-root/Content/Styles/base.css")" />
         
+        @*TEMPORARY*@
+        <link href="http://dve9d4b1d190c.cloudfront.net/files/messagescdn.css?v=476ui768823" rel="stylesheet" type="text/css" />
+        @*END OF*@
+        
         @Html.Action("RenderStyleSheetIncludes", "Rendering")
     }
 
@@ -43,9 +52,6 @@
     {
         <script type="text/javascript" data-main="@Url.Content("~/file/bcms-root/scripts/main")" src="@Url.Content("~/file/bcms-root/Scripts/require-jquery.js")"></script>        
     }
-    <!--[if lt IE 9]>
-            <script src="@Url.Content("~/file/bcms-root/Scripts/html5shiv.js")"></script>
-    <![endif]-->
 }
 
 @section CmsBodyAttributes {@(Html.Raw(Model.CanManageContent ? string.Format(@" data-page-id = ""{0}""", @ViewBag.pageId) : string.Empty))}
