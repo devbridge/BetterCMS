@@ -157,7 +157,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// ViewResult to render an edit content dialog.
         /// </returns>
         [HttpGet]
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent)]
         public ActionResult EditPageHtmlContent(string pageContentId)
         {
             var model = GetCommand<GetPageHtmlContentCommand>().ExecuteCommand(pageContentId.ToGuidOrDefault());

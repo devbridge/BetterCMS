@@ -31,6 +31,11 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
                 DemandAccess(RootModuleConstants.UserRoles.PublishContent);
             }
 
+            if (request.Id == default(Guid) || request.DesirableStatus != ContentStatus.Published)
+            {
+                DemandAccess(RootModuleConstants.UserRoles.EditContent);
+            }
+
             UnitOfWork.BeginTransaction();
 
             PageContent pageContent = null;            
@@ -56,19 +61,38 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
 
             pageContent.Page = Repository.AsProxy<Root.Models.Page>(request.PageId);
             pageContent.Region = Repository.AsProxy<Region>(request.RegionId);
+
+            var contentToSave = new HtmlContent
+                {
+                    Id = request.ContentId,
+                    ActivationDate = request.LiveFrom,
+                    ExpirationDate = TimeHelper.FormatEndDate(request.LiveTo),
+                    Name = request.ContentName,
+                    Html = request.PageContent ?? string.Empty,
+                    UseCustomCss = request.EnabledCustomCss,
+                    CustomCss = request.CustomCss,
+                    UseCustomJs = request.EanbledCustomJs,
+                    CustomJs = request.CustomJs
+                };
+
+            // Preserve content if user is not authorized to change it.
+            if (!SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent) && request.Id != default(Guid))
+            {
+                var originalContent = Repository.First<HtmlContent>(request.ContentId);
+                var contentToPublish = (HtmlContent)(originalContent.History != null
+                    ? originalContent.History.FirstOrDefault(c => c.Status == ContentStatus.Draft)
+                    : originalContent);
+
+                contentToSave.Name = contentToPublish.Name;
+                contentToSave.Html = contentToPublish.Html;
+                contentToSave.UseCustomCss = contentToPublish.UseCustomCss;
+                contentToSave.CustomCss = contentToPublish.CustomCss;
+                contentToSave.UseCustomJs = contentToPublish.UseCustomJs;
+                contentToSave.CustomJs = contentToPublish.CustomJs;
+            }
+
             pageContent.Content = contentService.SaveContentWithStatusUpdate(
-                new HtmlContent
-                    {
-                        Id = request.ContentId,
-                        Name = request.ContentName,
-                        ActivationDate = request.LiveFrom,
-                        ExpirationDate = TimeHelper.FormatEndDate(request.LiveTo),
-                        Html = request.PageContent ?? string.Empty,
-                        UseCustomCss = request.EnabledCustomCss,
-                        CustomCss = request.CustomCss,
-                        UseCustomJs = request.EanbledCustomJs,
-                        CustomJs = request.CustomJs                      
-                    },
+                contentToSave,
                 request.DesirableStatus);
             
             Repository.Save(pageContent);
