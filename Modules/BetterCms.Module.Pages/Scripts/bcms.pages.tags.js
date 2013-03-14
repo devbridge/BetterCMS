@@ -243,21 +243,26 @@ define('bcms.pages.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms.s
             self.clearTag();
         };
 
-        self.addTag = function () {
+        self.addTag = function() {
             var newTag = self.newTag();
             if (newTag) {
                 if (!self.newTag.hasError()) {
                     for (var i = 0; i < self.tags().length; i++) {
-                        if (self.tags()[i].name() == newTag) {
+                        var tag = self.tags()[i];
+                        if (tag.name() == newTag) {
+                            tag.isActive(true);
+                            setTimeout(function() {
+                                tag.isActive(false);
+                            }, 4000);
+                            self.clearTag();
                             return;
                         }
                     }
                     var tagViewModel = new tags.TagViewModel(self, newTag);
                     self.tags.push(tagViewModel);
                 }
-                return;
             }
-           self.clearTag();
+            self.clearTag();
         };
 
         self.clearTag = function() {
@@ -274,6 +279,7 @@ define('bcms.pages.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms.s
         self.parent = parent;
         self.pattern = 'Tags[{0}]';
 
+        self.isActive = ko.observable(false);
         self.name = ko.observable(tagName);
 
         self.remove = function () {

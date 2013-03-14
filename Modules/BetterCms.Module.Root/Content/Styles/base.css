@@ -725,10 +725,10 @@ a.bcms-remove-image {
 .bcms-region-overlay {
     position: absolute;
     display: none;
-    top: 0;
-    left: 0;
+    padding-bottom: 10px;
     outline: 0;
     overflow: visible;
+    border: 1px dashed #009AEB;
 }
 
 .bcms-on .bcms-region-overlay {
@@ -801,15 +801,12 @@ a.bcms-remove-image {
 
 /* Content sorting */
 .bcms-sort-wrapper {
+    position: relative;
     height: 80px;
-    margin: 10px -10px 10px -10px;
-    padding: 1px 10px;
-}
-
-.bcms-sort-wrapper {
+    margin: 10px 0;
+    padding: 5px 10px;
     overflow: hidden;
     cursor: move;
-    position: relative;
 }
 
 .bcms-sort-overlay {
@@ -819,6 +816,7 @@ a.bcms-remove-image {
     width: 100%;
     height: 100%;
 }
+
 /* Content selectors */
 .bcms-content { /* used to find content on the page */
     position: relative;
@@ -830,7 +828,8 @@ a.bcms-remove-image {
 }
 
 .bcms-content-overlaybg {
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAwNy8yMC8xMlav2uMAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAAAPElEQVQYlYXOsQ0AIAwDwTdjsP+epgMCJHx9sizbnS1JnLUfsL1QBuZSBQDaD1yfXkBSRC8QljIwUQUABsxrGyy9w6cVAAAAAElFTkSuQmCC);
+    /*background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAwNy8yMC8xMlav2uMAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAAAPElEQVQYlYXOsQ0AIAwDwTdjsP+epgMCJHx9sizbnS1JnLUfsL1QBuZSBQDaD1yfXkBSRC8QljIwUQUABsxrGyy9w6cVAAAAAElFTkSuQmCC);*/
+    background: rgba(0,0,0,0.6);
 }
 
 .bcms-content-actions {
@@ -1644,6 +1643,7 @@ a.bcms-btn-close {
         display: block;
         width: 208px;
         height: 175px;
+        background: #f5f5f5;
     }
 
     .bcms-preview-box:hover > .bcms-zoom-overlay {
@@ -1736,6 +1736,7 @@ a.bcms-btn-close {
         display: block;
         height: 175px;
         width: 208px;
+        background: #f5f5f5;
     }
 
     .bcms-grid-image-holder:hover > .bcms-zoom-overlay {
@@ -1753,7 +1754,6 @@ a.bcms-btn-close {
 /*Tags & Default Tags Holders*/
 .bcms-tags-field-holder {
     position: absolute;
-    border: 1px solid #d1d1d1;
     top: 0;
     right: -125px;
 }
@@ -1769,35 +1769,12 @@ a.bcms-btn-close {
     color: #000;
     vertical-align: middle;
     background-color: #f5f5f5;
+    border: 1px solid #d1d1d1;
 }
 
     .bcms-add-tags-field:focus {
         outline: none;
     }
-
-.bcms-tags-field-holder:after, .bcms-tags-field-holder:before {
-    right: 100%;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
-}
-
-.bcms-tags-field-holder:after {
-    border-right-color: #f5f5f5;
-    border-width: 7px;
-    top: 50%;
-    margin-top: -7px;
-}
-
-.bcms-tags-field-holder:before {
-    border-right-color: #d1d1d1;
-    border-width: 8px;
-    top: 50%;
-    margin-top: -8px;
-}
 
 .bcms-single-tag {
     position: relative;
@@ -1833,6 +1810,61 @@ a.bcms-btn-close {
         overflow: hidden;
         cursor: pointer;
     }
+
+.bcms-single-tag-active {
+    -webkit-animation: duplicateTag 1.5s 3;
+}
+
+@keyframes duplicateTag {
+    0% {
+        background-color: #def8ff;
+        border: 1px solid #95d3e7;
+    }
+
+    50% {
+        background: #fcecec;
+        border: 1px solid #e64343;
+    }
+
+    100% {
+        background-color: #def8ff;
+        border: 1px solid #95d3e7;
+    }
+}
+
+@-moz-keyframes duplicateTag {
+    0% {
+        background-color: #def8ff;
+        border: 1px solid #95d3e7;
+    }
+
+    50% {
+        background: #fcecec;
+        border: 1px solid #e64343;
+    }
+
+    100% {
+        background-color: #def8ff;
+        border: 1px solid #95d3e7;
+    }
+}
+
+@-webkit-keyframes duplicateTag {
+    0% {
+        background-color: #def8ff;
+        border: 1px solid #95d3e7;
+    }
+
+    50% {
+        background: #fcecec;
+        border: 1px solid #e64343;
+    }
+
+    100% {
+        background-color: #def8ff;
+        border: 1px solid #95d3e7;
+    }
+}
 
 /*search*/
 .bcms-search-block {
@@ -2131,6 +2163,15 @@ a.bcms-sort-arrow-top:hover {
     position: relative;
 }
 
+.bcms-date-input-box {
+    display: inline-block;
+    position: relative;
+}
+
+    .bcms-date-input-box .field-validation-error {
+        right: 23px;
+    }
+
 .bcms-textarea-box {
     position: relative;
 }
@@ -2275,10 +2316,79 @@ ul.bcms-info-messages {
     text-indent: 9999px;
 }
 
+/*tag validation errors*/
+.tag-validation-error {
+    background-color: #fcecec;
+    border: 1px solid #e64343;
+    box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
+}
+
+    .tag-validation-error:focus {
+        background: #fcecec;
+        border: 1px solid #e64343;
+        box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
+    }
+
+        .tag-validation-error:focus + .tag-field-validation-error span {
+            visibility: visible;
+        }
+
+span.tag-field-validation-error {
+    position: absolute;
+    right: 1px;
+    top: 50%;
+    width: 18px;
+    height: 22px;
+    margin-top: -11px;
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAJCAYAAAF8oY2FAAAAZElEQVQY02N45uw8DYi/MsAZ////Z0AQQKH/YA6QYYcsuhxD5D8QO0LpTOyCIAtAElBJO5ClIEYmskoUW2ACMDdgqsRlZgtU5Rcg9kZS4A0VA8m1MCBJZEAlkHEG3G6iFRJrNQAfBNhPNe12LwAAAABJRU5ErkJggg==') no-repeat center center #FCECEC;
+}
+
+    span.tag-field-validation-error > span {
+        visibility: hidden;
+        position: absolute;
+        right: -9px;
+        bottom: 26px;
+        min-width: 161px;
+        line-height: 15px;
+        padding: 5px;
+        color: #E64343;
+        background: #FCECEC;
+        border: 1px solid #E64343;
+        vertical-align: middle;
+        font-size: 10px;
+        font-family: 'Open Sans', sans-serif;
+    }
+
+        span.tag-field-validation-error > span:after, span.tag-field-validation-error > span:before {
+            top: 100%;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+        }
+
+        span.tag-field-validation-error > span:after {
+            border-top-color: #FCECEC;
+            border-width: 10px;
+            right: 7px;
+            margin-left: -10px;
+        }
+
+        span.tag-field-validation-error > span:before {
+            border-top-color: #E64343;
+            border-width: 11px;
+            right: 6px;
+            margin-left: -11px;
+        }
+
+
+
 /*override jquery ui*/
 .ui-datepicker-trigger {
     position: absolute;
-    top: 36px;
+    top: 6px;
     right: 5px;
     cursor: pointer;
 }

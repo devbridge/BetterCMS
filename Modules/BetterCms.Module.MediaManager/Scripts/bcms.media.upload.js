@@ -27,11 +27,13 @@ define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms
             loadUploadFilesDialogUrl: null,
             uploadFileToServerUrl: null,
             undoFileUploadUrl: null,
-            loadUploadSingleFileDialogUrl: null
+            loadUploadSingleFileDialogUrl: null,
+            checkUploadedFileStatuses: null
         },
 
         globalization = {
-            uploadFilesDialogTitle: null
+            uploadFilesDialogTitle: null,
+            failedToProcessFile: null
         };
 
     /**
@@ -63,7 +65,8 @@ define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms
                             dialog.container.showLoading();
                         },
 
-                        postSuccess: function(json) {
+                        postSuccess: function (json) {
+                            options.uploads.stopStatusChecking();
                             if (onSaveCallback && $.isFunction(onSaveCallback)) {
                                 onSaveCallback(json);
                             }
@@ -74,8 +77,9 @@ define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms
                         }
                     });
                 },
-                onCancel: function() {
+                onClose: function() {
                     options.uploads.removeAllUploads();
+                    options.uploads.stopStatusChecking();
                 }
             });
         } else {
@@ -99,6 +103,7 @@ define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms
                                         onSaveCallback(json);
                                     }
                                 } finally {
+                                    options.uploads.stopStatusChecking();
                                     dialog.close();
                                 }
                             }
@@ -110,6 +115,7 @@ define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms
                         data: formToSubmit.serialize()
                     })
                         .done(function(response) {
+
                             onComplete(response);
                         })
                         .fail(function(response) {
@@ -118,8 +124,9 @@ define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms
                     
                     return false;
                 },
-                onCancel: function() {
+                onClose: function () {
                     options.uploads.removeAllUploads();
+                    options.uploads.stopStatusChecking();
                 }
             });
         }
@@ -272,6 +279,98 @@ define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms
                 abortUpload(uploads[i]);
             }
         };
+        
+        // When one of file status is "Processing", checking file status repeatedly
+        self.timeout = 10000;
+        self.timer = null;
+
+        self.startStatusChecking = function (timeout) {
+            if (!self.timer) {
+                if (!timeout) {
+                    timeout = self.timeout;
+                }
+                self.timer = setTimeout(self.checkStatus, timeout);
+            }
+        };
+        
+        self.stopStatusChecking = function () {
+            console.log('Stop status checking');
+            if (self.timer) {
+                clearTimeout(self.timer);
+                self.timer = null;
+            }
+        };
+
+        self.checkStatus = function () {
+            var ids = self.getProcessingIds(),
+                onFail = function() {
+                    console.log('Failed to check uploaded files statuses');
+                    self.startStatusChecking();
+                },
+                hasProcessing = false;
+
+            self.timer = null;
+
+            if (ids.length > 0) {
+                console.log('Checking status');
+
+                $.ajax({
+                    type: 'POST',
+                    cache: false,
+                    url: links.checkUploadedFileStatuses,
+                    data: JSON.stringify({ ids: ids }),
+                    contentType: 'application/json; charset=utf-8'
+                })
+                    .done(function (response) {
+                        if (response.Success) {
+                            if (response.Data && response.Data.length  > 0) {
+                                for (var i = 0; i < response.Data.length; i++) {
+                                    var item = response.Data[i],
+                                        id = item.Id,
+                                        isProcessing = item.IsProcessing === true,
+                                        isFailed = item.IsFailed === true;
+                                    if (id) {
+                                        for (var j = 0; j < self.uploads().length; j ++) {
+                                            if (self.uploads()[j].fileId() == id) {
+                                                if (isFailed) {
+                                                    self.uploads()[j].uploadFailed(true);
+                                                    self.uploads()[j].uploadProcessing(false);
+                                                    self.uploads()[j].failureMessage(globalization.failedToProcessFile);
+                                                } else if (!isProcessing) {
+                                                    self.uploads()[j].uploadProcessing(false);
+                                                } else if (isProcessing) {
+                                                    hasProcessing = true;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            if (hasProcessing) {
+                                self.startStatusChecking();
+                            }
+                        } else {
+                            onFail();
+                        }
+                    })
+                    .fail(function (response) {
+                        onFail();
+                    });
+            } else {
+                console.log('Stop checking');
+            }
+        };
+
+        self.getProcessingIds = function() {
+            var ids = [],
+                i;
+            for (i = 0; i < self.uploads().length; i++) {
+                if (self.uploads()[i].uploadProcessing()) {
+                    ids.push(self.uploads()[i].fileId());
+                }
+            }
+            return ids;
+        };
     } 
 
     function FileViewModel(file) {
@@ -283,11 +382,12 @@ define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms
         self.uploadProgress = ko.observable(0);
         self.uploadCompleted = ko.observable(false);
         self.uploadFailed = ko.observable(false);
+        self.uploadProcessing = ko.observable(false);
         self.failureMessage = ko.observable("");
         self.uploadSpeedFormatted = ko.observable();
         self.fileName = file.fileName;
         self.fileSizeFormated = formatFileSize(file.fileSize);
-        self.isProgressVisable = ko.observable(true);
+        self.isProgressVisible = ko.observable(true);
 
         self.uploadCompleted.subscribe(function (newValue) {
             if (newValue === true) {
@@ -340,12 +440,19 @@ define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms
                             var result = JSON.parse(data);
                             if (result.Success) {
                                 uploadsModel.activeUploads.remove(fileModel);
-                                fileModel.uploadCompleted(true);
                                 fileModel.fileId(result.Data.FileId);
                                 fileModel.version(result.Data.Version);
                                 fileModel.type(result.Data.Type);
                                 clearInterval(transferAnimationId);
-                                fileModel.isProgressVisable(true);
+                                fileModel.isProgressVisible(true);
+                                fileModel.uploadCompleted(true);
+                                
+                                if (result.Data.IsProcessing) {
+                                    fileModel.uploadProcessing(true);
+                                    fileModel.isProgressVisible(false);
+                                    
+                                    uploadsModel.startStatusChecking(500);
+                                }
                             } else {
                                 fileModel.uploadFailed(true);
                                 fileModel.failureMessage('');
@@ -355,7 +462,7 @@ define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms
                                         failureMessages += result.Messages[i] + ' ';
                                     }
                                     clearInterval(transferAnimationId);
-                                    fileModel.isProgressVisable(true);
+                                    fileModel.isProgressVisible(true);
                                     fileModel.failureMessage(failureMessages);
                                 }
                             }
@@ -372,7 +479,7 @@ define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms
                         },
 
                         onTransfer: function () {
-                            fileModel.isProgressVisable(false);
+                            fileModel.isProgressVisible(false);
                             transferAnimationId = setInterval(function () {
                                 if (fileModel.uploadProgress() >= 100) {
                                     fileModel.uploadProgress(0);

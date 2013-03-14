@@ -9,18 +9,15 @@ define('bcms', ['bcms.jquery'], function ($) {
 
     // Selectors used in the module to locate DOM elements:
         selectors = {
+            zIndexContainers: 'body div:not(div div)'
         },
 
         events = {
             editModeOff: 'editModeOff',
+            editModeOn: 'editModeOn',
             addPageContent: 'addPageContent',
             sortPageContent: 'sortPageContent',
-            showOverlay: 'showOverlay',
-            hideOverlay: 'hideOverlay',
-            editContent: 'editContent',
-            configureContent: 'configureContent',
-            deleteContent: 'deleteContent',
-            contentHistory: 'contentHistory',
+            createContentOverlay: 'createContentOverlay',
             pageCreated: 'pageCreated',
         },
 
@@ -167,7 +164,7 @@ define('bcms', ['bcms.jquery'], function ($) {
     app.getHighestZindex = function () {
         var indexHighest = 0;
 
-        $('body').children().each(function () {
+        $(selectors.zIndexContainers).each(function () {
             if (!$(this).hasClass('cke_panel')) {   //ckeditor bug fix
                 var indexCurrent = parseInt($(this).css("z-index"), 10);
                 if (indexCurrent > indexHighest) {

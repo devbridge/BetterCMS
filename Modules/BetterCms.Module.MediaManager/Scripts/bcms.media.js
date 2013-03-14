@@ -340,6 +340,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.updateUrl = links.renameMediaUrl;
             self.isProcessing = ko.observable(item.IsProcessing || false);
             self.isFailed = ko.observable(item.IsFailed || false);
+            self.savePressed = false;
 
             self.isActive = ko.observable(item.IsActive || false);
             self.isSelected = ko.observable(false);
@@ -448,6 +449,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
         MediaItemBaseViewModel.prototype.saveMedia = function (folderViewModel, data, event) {
             bcms.stopEventPropagation(event);
+            this.savePressed = true;
             saveMedia(folderViewModel, this);
         };
 
@@ -709,11 +711,12 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             input = folderViewModel.container.find(idSelector),
             loaderContainer = $(input.closest(siteSettings.selectors.loaderContainer).get(0) || input.closest(modal.selectors.scrollWindow).get(0));
 
-        if (item.oldName != item.name() && item.isActive()) {
+        clearTimeout(blurTimer);
+
+        if (item.savePressed || (item.oldName != item.name() && item.isActive())) {
             if (input.valid()) {
                 var params = item.toJson(),
                     onSaveCompleted = function (json) {
-                        clearTimeout(blurTimer);
                         loaderContainer.hideLoading();
                         messages.refreshBox(folderViewModel.container, json);
                         if (json.Success && json.Data) {
@@ -740,10 +743,15 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                     .fail(function(response) {
                         onSaveCompleted(bcms.parseFailedResponse(response));
                     });
+            } else {
+                if (item.savePressed) {
+                    input.focus();
+                }
             }
         } else {
             item.isActive(false);
         }
+        item.savePressed = false;
     }
 
     /**

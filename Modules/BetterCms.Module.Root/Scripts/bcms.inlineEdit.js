@@ -8,6 +8,7 @@ define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bcms.modal',
         selectors = {},
         defaultSelectors = {
             row: 'tr',
+            editableRows: 'tr:visible:has("td")',
             rowCells: 'td',
             firstRow: 'tr:first',
             firstCell: 'td:first',
@@ -29,6 +30,7 @@ define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bcms.modal',
             fieldHiddenValue: 'input[type="hidden"]:first',
             fieldVisibleValue: '.bcms-grid-item-info:first',
             prependNewRowTo: 'tbody',
+            firstInvalidField: '.input-validation-error:first',
         },
         links = {
         },
@@ -111,6 +113,24 @@ define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bcms.modal',
     };
 
     /**
+    * Selects / unselects row
+    */
+    function setRowSelectedStatus(row, isSelected) {
+        if (isSelected) {
+            var rows = row.parents(selectors.firstTable).find(selectors.editableRows),
+                id = row.find(selectors.editRowLink).data('id');
+            rows.each(function () {
+                var self = $(this);
+                if (id != self.find(selectors.editRowLink).data('id')) {
+                    self.data('isSelected', false);
+                }
+            });
+        }
+
+        row.data('isSelected', isSelected);
+    }
+
+    /**
     * Initializes rows events
     */
     editor.initRowEvents = function(initContainer) {
@@ -118,6 +138,7 @@ define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bcms.modal',
             bcms.stopEventPropagation(event);
             
             var row = $(this).parents(selectors.firstRow);
+            setRowSelectedStatus(row, true);
             editor.editRow(row);
         });
 
@@ -125,6 +146,8 @@ define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bcms.modal',
             bcms.stopEventPropagation(event);
             
             var row = $(this).parents(selectors.firstRow);
+            setRowSelectedStatus(row, true);
+            row.data('savePressed', true);
             editor.saveRow(row);
         });
 
@@ -132,6 +155,7 @@ define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bcms.modal',
             bcms.stopEventPropagation(event);
             
             var row = $(this).parents(selectors.firstRow);
+            setRowSelectedStatus(row, true);
             editor.cancelRowEdit(row);
         });
         
@@ -139,6 +163,7 @@ define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bcms.modal',
             bcms.stopEventPropagation(event);
             
             var row = $(this).parents(selectors.firstRow);
+            setRowSelectedStatus(row, true);
             editor.deleteRow(row);
         });
 
@@ -159,15 +184,25 @@ define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bcms.modal',
     * Checks if row is valid
     */
     editor.isRowValid = function(row) {
-        var valid = true;
+        var valid = true,
+            firstInput = null;
 
         row.find(selectors.fieldInputs).each(function () {
             var input = $(this);
 
             if (!input.valid()) {
+                if (!firstInput) {
+                    firstInput = input;
+                }
                 valid = false;
             }
         });
+
+        if (!valid && firstInput && row.data('savePressed')) {
+            firstInput.focus();
+            setRowSelectedStatus(row, false);
+            row.data('savePressed', false);
+        }
 
         return valid;
     };
@@ -250,15 +285,13 @@ define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bcms.modal',
                         unbind = true;
                     }
                 } else {
-                    if (row.data('new')) {
-                        row.remove();
-                        options.showHideEmptyRow(formContainer);
-                        rowAdded = false;
+                    if (!row.data('new') || !row.data('isSelected')) {
+                        editor.cancelRowEdit(row);
+                        unbind = true;
                     }
-
-                    options.switchRowToView(row);
-                    unbind = true;
                 }
+                
+                setRowSelectedStatus(row, false);
             }
 
             if (unbind) {
@@ -331,7 +364,6 @@ define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bcms.modal',
             //
             if (options.saveUrl) {
                 var rowData = options.rowDataExtractor(row),
-                    savingMessage = row.find(selectors.rowMessage),
                     saveLink = row.find(selectors.saveRowLink),
                     cancelLink = row.find(selectors.cancelLink),
                     url = options.saveUrl,

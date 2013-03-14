@@ -28,7 +28,8 @@ namespace BetterCms.Module.Blog.Registration
                             new JavaScriptModuleLinkTo<AuthorController>(this, "deleteAuthorsUrl", c => c.DeleteAuthor(null, null)),
                             new JavaScriptModuleLinkTo<AuthorController>(this, "saveAuthorsUrl", c => c.SaveAuthor(null)),
                             new JavaScriptModuleLinkTo<OptionController>(this, "loadTemplatesUrl", c => c.Templates()),
-                            new JavaScriptModuleLinkTo<OptionController>(this, "saveDefaultTemplateUrl", c => c.SaveDefaultTemplate("{0}"))
+                            new JavaScriptModuleLinkTo<OptionController>(this, "saveDefaultTemplateUrl", c => c.SaveDefaultTemplate("{0}")),
+                            new JavaScriptModuleLinkTo<BlogController>(this, "convertStringToSlugUrl", c => c.ConvertStringToSlug("{0}", "{1}"))
                         };
 
             Globalization = new IActionProjection[]

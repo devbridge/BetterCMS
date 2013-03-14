@@ -81,6 +81,10 @@ define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepic
                 draftStatus: 'bcms-icn-draft',
                 publishStatus: 'bcms-icn-published',
                 draftPublStatus: 'bcms-icn-pubdraft'
+            },
+            contentTypes = {
+                htmlWidget: 'html-widget',
+                serverWidget: 'server-widget'
             };
 
         /**
@@ -561,32 +565,50 @@ define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepic
         };
         
         /**
-        * Called when editing page content
+        * Called when creating page content overlay
         */
-        function onEditContent(sender) {
-            var element = $(sender),
-                contentId = element.data('contentId'),
-                pageContentId = element.data('pageContentId'),
-                onSave = function (json) {
+        function onCreateContentOverlay(contentViewModel) {
+            var contentId = contentViewModel.contentId,
+                pageContentId = contentViewModel.pageContentId,
+                onSave = function(json) {
                     var result = json != null ? json.Data : null;
                     if (result && result.DesirableStatus === bcms.contentStatus.preview) {
                         try {
                             preview.previewPageContent(bcms.pageId, result.PreviewOnPageContentId);
                         } finally {
                             return false;
-                        }                        
+                        }
                     } else {
                         redirect.ReloadWithAlert();
-                    }                    
+                    }
+                    return true;
+                };
+            
+            if (contentViewModel.contentType == contentTypes.serverWidget) {
+                // Edit
+                contentViewModel.onEditContent = function () {
+                    widgets.openEditServerControlWidgetDialog(contentId, onSave, pageContentId);
                 };
 
-            if (element.hasClass(classes.regionWidget)) {
-                widgets.openEditServerControlWidgetDialog(contentId, onSave, pageContentId);
-            } else if (element.hasClass(classes.regionAdvancedContent)) {
-                widgets.openEditHtmlContentWidgetDialog(contentId, onSave, pageContentId);
+                // Configure
+                contentViewModel.onConfigureContent = function() {
+                    widgets.configureWidget(pageContentId, function () {
+                        redirect.ReloadWithAlert();
+                    });
+                };
+            } else if (contentViewModel.contentType == contentTypes.htmlWidget) {
+                contentViewModel.removeConfigureButton();
+
+                // Edit
+                contentViewModel.onEditContent = function() {
+                    widgets.openEditHtmlContentWidgetDialog(contentId, onSave, pageContentId);
+                };
             }
         }
 
+        /**
+        * Called when editing page content
+        */
         function onWidgetCloseCallback(onSaveCallback, json) {
             if ($.isFunction(onSaveCallback)) {
                 onSaveCallback(json);
@@ -598,12 +620,12 @@ define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepic
         */
         widgets.init = function () {
             console.log('Initializing bcms.pages.widgets module.');
-
-            /**
-            * Subscribe to events
-            */
-            bcms.on(bcms.events.editContent, onEditContent);
         };
+        
+        /**
+        * Subscribe to events
+        */
+        bcms.on(bcms.events.createContentOverlay, onCreateContentOverlay);
 
         /**
         * Register initialization
