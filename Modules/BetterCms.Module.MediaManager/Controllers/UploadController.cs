@@ -172,7 +172,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         [HttpPost]
         public ActionResult RemoveFileUpload(string fileId, string version, string type)
         {
-            GetCommand<UndoUploadCommand>().ExecuteCommand(new UndoUploadRequest
+            var result = GetCommand<UndoUploadCommand>().ExecuteCommand(new UndoUploadRequest
                                                                             {
                                                                                 FileId = fileId.ToGuidOrDefault(),
                                                                                 Version = version.ToIntOrDefault(),
