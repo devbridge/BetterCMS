@@ -772,6 +772,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Upload completed. File is still processing in the server..
+        /// </summary>
+        public static string MultiFileUpload_Processing_ServerSide {
+            get {
+                return ResourceManager.GetString("MultiFileUpload_Processing_ServerSide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to save uploaded files..
         /// </summary>
         public static string MultiFileUpload_SaveFailed {
