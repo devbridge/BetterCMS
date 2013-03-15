@@ -4,10 +4,12 @@
 /*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define */
 
-define('bcms.processor', ['bcms.jquery', @Model.RenderCommaSeparatedNames()], function ($, @Model.RenderCommaSeparatedFriendlyNames()) {
+define('bcms.processor', [@Model.RenderCommaSeparatedNames()], function (@Model.RenderCommaSeparatedFriendlyNames()) {
     'use strict';
+    
+    var $ = require('bcms.jquery'),
 
-    var processor = {},
+        processor = {},
 
         selectors = {
             onClickModuleAction: '.bcms-onclick-action',

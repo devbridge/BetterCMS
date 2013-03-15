@@ -86,12 +86,11 @@ namespace BetterCms.Module.Blog
         /// <summary>
         /// Registers java script modules.
         /// </summary>
-        /// <param name="containerBuilder">The container builder.</param>
         /// <param name="configuration">The CMS configuration.</param>
         /// <returns>
         /// Enumerator of known JS modules list.
         /// </returns>
-        public override IEnumerable<JavaScriptModuleDescriptor> RegisterJavaScriptModules(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        public override IEnumerable<JavaScriptModuleDescriptor> RegisterJavaScriptModules(ICmsConfiguration configuration)
         {
             return new[]
                 {

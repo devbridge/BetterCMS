@@ -8,9 +8,7 @@ using System.Web.Security;
 using BetterCms.Api;
 using BetterCms.Core;
 using BetterCms.Core.Environment.Host;
-using BetterCms.Core.Exceptions;
 using BetterCms.Core.Modules.Projections;
-using BetterCms.Module.Root.Projections;
 
 using Common.Logging;
 

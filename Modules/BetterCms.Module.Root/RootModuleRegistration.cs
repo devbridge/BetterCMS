@@ -164,7 +164,7 @@ namespace BetterCms.Module.Root
                     new[] { typeof(CmsController).Namespace });
         }
 
-        public override IEnumerable<JavaScriptModuleDescriptor> RegisterJavaScriptModules(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        public override IEnumerable<JavaScriptModuleDescriptor> RegisterJavaScriptModules(ICmsConfiguration configuration)
         {
             return new []
                 {
@@ -176,8 +176,8 @@ namespace BetterCms.Module.Root
                     new JavaScriptModuleDescriptor(this, "bcms.grid"), 
                     new HtmlEditorJavaScriptModuleDescriptor(this),                     
                     new InlineEditorJavaScriptModuleDescriptor(this),
-                    
-                    new JavaScriptModuleDescriptor(this, "bcms.jqueryui", "bcms.jquery-ui-1.9.0.js"),                    
+                    new JavaScriptModuleDescriptor(this, "bcms.jquery", "bcms.jquery-1.7.2"),
+                    new JavaScriptModuleDescriptor(this, "bcms.jqueryui", "bcms.jquery-ui-1.9.0"),
                     new JavaScriptModuleDescriptor(this, "bcms.jquery.unobtrusive", "bcms.jquery.unobtrusive-ajax"),
                     new JavaScriptModuleDescriptor(this, "bcms.jquery.validate"),
                     new JavaScriptModuleDescriptor(this, "bcms.jquery.validate.unobtrusive"),

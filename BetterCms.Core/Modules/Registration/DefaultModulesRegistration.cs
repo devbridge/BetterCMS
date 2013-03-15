@@ -243,7 +243,7 @@ namespace BetterCms.Core.Modules.Registration
 
             knownModules.Add(moduleDescriptor.AreaName.ToLowerInvariant(), registrationContext);
             
-            var jsModules = moduleDescriptor.RegisterJavaScriptModules(containerBuilder, cmsConfiguration);            
+            var jsModules = moduleDescriptor.RegisterJavaScriptModules(cmsConfiguration);            
             if (jsModules != null)
             {
                 foreach (var jsModuleDescriptor in jsModules)

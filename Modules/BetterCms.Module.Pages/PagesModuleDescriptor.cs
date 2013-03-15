@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Web.Optimization;
 
 using Autofac;
 
@@ -178,12 +179,11 @@ namespace BetterCms.Module.Pages
         /// <summary>
         /// Gets known client side modules in page module.
         /// </summary>
-        /// <param name="containerBuilder">The container builder.</param>
         /// <param name="configuration">The CMS configuration.</param>
         /// <returns>List of known client side modules in page module.</returns>
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
-        public override IEnumerable<JavaScriptModuleDescriptor> RegisterJavaScriptModules(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
-        {
+        public override IEnumerable<JavaScriptModuleDescriptor> RegisterJavaScriptModules(ICmsConfiguration configuration)
+        {            
             return new JavaScriptModuleDescriptor[]
                 {
                     pagesJavaScriptModuleDescriptor,

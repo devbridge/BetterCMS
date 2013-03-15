@@ -72,15 +72,11 @@
             }
 
             (function() {
-                var rjs = window.require;
-                if (!rjs) {
+                var r = window.require;
+                if (!r) {
                     AddRequireJsScript();
-                } else if (rjs.version < '2.0.0') {
-                    var message = "BetterCMS supports RequireJS from 2.0.0 version. Please visit http://requirejs.org/ and do upgrade.";
-                    if (console && console.log) {
-                        console.log(message);
-                    }
-                    alert(message);                    
+                } else if (r.version < '2.0.0') {                    
+                    alert("BetterCMS supports RequireJS from 2.0.0 version. Please visit http://requirejs.org/ and do upgrade.");                    
                     return;
                 }
                 AddBetterCmsMainJsScript();

@@ -4,14 +4,13 @@
 requirejs.config({
     enforceDefine: false,
 
-    urlArgs: 'ver=' + '@DateTime.Now.Ticks',
+    urlArgs: 'ver=' + '@GetType().Assembly.GetName().Version.ToString()',
 
     paths: {     
-         @Model.JavaScriptModules.RenderCommaSeparatedNamePathPairs(),            
-        'bcms.jquery': '/file/bcms-root/scripts/bcms.jquery-1.7.2',
+         @Model.JavaScriptModules.RenderCommaSeparatedNamePathPairs(),
         'knockout': '/file/bcms-root/scripts/knockout-2.2.0',
         'ckeditor': '/file/bcms-root/scripts/ckeditor/ckeditor'
     },    
 
     waitSeconds: 15
-});
+});z
