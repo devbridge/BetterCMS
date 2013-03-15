@@ -25,8 +25,8 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
         public override SaveWidgetResponse Execute(EditHtmlContentWidgetViewModel request)
         {
             UnitOfWork.BeginTransaction();
-
-            HtmlContentWidget widget = (HtmlContentWidget)ContentService.SaveContentWithStatusUpdate(GetHtmlContentWidgetFromRequest(request), request.DesirableStatus);
+            var widgetContent = GetHtmlContentWidgetFromRequest(request);
+            HtmlContentWidget widget = (HtmlContentWidget)ContentService.SaveContentWithStatusUpdate(widgetContent, request.DesirableStatus);
             Repository.Save(widget);
 
             UnitOfWork.Commit();
@@ -47,8 +47,8 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
             return new SaveWidgetResponse
                     {
                         Id = widget.Id,
-                        WidgetName = widget.Name,
-                        CategoryName = widget.Category != null ? widget.Category.Name : null,
+                        WidgetName = request.Name, 
+                        CategoryName = widgetContent.Category != null ? widgetContent.Category.Name : null,
                         Version = widget.Version,
                         WidgetType = WidgetType.HtmlContent.ToString(),
                         IsPublished = widget.Status == ContentStatus.Published,
