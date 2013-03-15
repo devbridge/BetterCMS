@@ -498,7 +498,6 @@
     <EmbeddedResource Include="Content\Styles\images\modal-back.png" />
     <EmbeddedResource Include="Content\Styles\images\sprite-base-1.png" />
     <EmbeddedResource Include="Content\Styles\images\sprite-base-2.png" />
-    <EmbeddedResource Include="Content\Styles\base.css" />
     <EmbeddedResource Include="Scripts\bcms.spinner.jquery.js" />
     <EmbeddedResource Include="Scripts\html5shiv.js" />
     <EmbeddedResource Include="Scripts\bcms.inlineEdit.js" />
@@ -506,9 +505,10 @@
     <EmbeddedResource Include="Scripts\bcms.jquery-ui-1.9.0.js" />
     <EmbeddedResource Include="Scripts\bcms.jquery-1.7.2.js" />
     <EmbeddedResource Include="Scripts\require.js" />
-    <EmbeddedResource Include="Scripts\bcms.content.js" />
     <EmbeddedResource Include="Scripts\bcms.js" />
     <EmbeddedResource Include="Scripts\bcms.sidemenu.js" />
+    <EmbeddedResource Include="Scripts\bcms.content.js" />
+    <EmbeddedResource Include="Content\Styles\base.css" />
     <Content Include="Views\Web.config" />
     <EmbeddedResource Include="Views\Sidebar\Container.cshtml" />
     <EmbeddedResource Include="Views\Rendering\RenderMainJsFile.cshtml" />

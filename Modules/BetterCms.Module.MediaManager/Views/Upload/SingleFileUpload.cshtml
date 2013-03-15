@@ -35,7 +35,7 @@
             <div id="bcms-files-dropzone" class="bcms-dropzone">
                 <div class="bcms-dropzone-infotext" data-bind="text: !(activeUploads().length > 0) ? '@MediaGlobalization.SingleFileUpload_DragDropBox' : '@MediaGlobalization.MultiFileUpload_Uploading'"></div>
                 <div class="bcms-btn-upload-files" data-bind="visible: !(activeUploads().length > 0)">
-                    <label for="uploadFile" class="bcms-btn-upload-files-text" onclick="if ($.browser.mozilla) { $('#' + $(this).attr('for')).click(); return false; }">@MediaGlobalization.MultiFileUpload_UploadButton</label>
+                    <label for="uploadFile" class="bcms-btn-upload-files-text">@MediaGlobalization.MultiFileUpload_UploadButton</label>
                     <input type="file" name="uploadFile" id="uploadFile" style="position: absolute; left: -999em; top: -999em;" />
                 </div>
             </div>
@@ -60,7 +60,7 @@
         <div id="Images"></div>
         <script type="text/html" id="bcms-file-upload-template">
             <div data-bind="foreach: uploads">
-                <div data-bind="css: { 'bcms-upload-block':true, 'bcms-upload-success':uploadCompleted(), 'bcms-upload-failed':uploadFailed() }">
+                <div data-bind="css: { 'bcms-upload-block':true, 'bcms-upload-success':uploadCompleted() && !uploadProcessing() && !uploadFailed(), 'bcms-upload-failed':uploadFailed() }">
                     <div class="bcms-upload-file-titles" data-bind="text: fileName"></div>
                     @Html.HiddenFor(model => model.UploadedFiles, new
                {
@@ -68,14 +68,17 @@
                    data_bind = "value:fileId()"
                })
                     <div class="bcms-upload-bar-holder">
-                        <div class="bcms-progress-bar" data-bind="visible: !uploadCompleted() && !uploadFailed()">
+                        <div class="bcms-progress-bar" data-bind="visible: !uploadCompleted() && !uploadFailed() && !uploadProcessing()">
                             <div class="bcms-progress" style="width: 0;" data-bind="style: { width: uploadProgress() + '%' }"></div>
                         </div>
-                        <div class="bcms-upload-description" data-bind="visible: uploadFailed">
+                        <div class="bcms-upload-description" data-bind="visible: uploadProcessing()">
+                            @MediaGlobalization.MultiFileUpload_Processing_ServerSide
+                        </div>
+                        <div class="bcms-upload-description" data-bind="visible: uploadFailed()">
                             <span data-bind="visible: !(failureMessage() != null && failureMessage().length > 0)">@MediaGlobalization.MultiFileUpload_Failed</span>
                             <span data-bind="visible: failureMessage() != null && failureMessage().length > 0, text: failureMessage"></span>
                         </div>
-                        <div class="bcms-upload-description" data-bind="visible: uploadCompleted">
+                        <div class="bcms-upload-description" data-bind="visible: uploadCompleted() && !uploadProcessing() && !uploadFailed()">
                             @MediaGlobalization.MultiFileUpload_Success
                         </div>
                     </div>
