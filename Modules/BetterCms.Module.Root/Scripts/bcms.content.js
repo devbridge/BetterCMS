@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define */
 
-define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
+define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
     'use strict';
 
     var content = {},
@@ -9,8 +9,6 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
         // Selectors used in the module to locate DOM elements:
         selectors = {
             contentOverlay: '#bcms-content-overlay',
-            contentOverlayBg: '.bcms-content-overlaybg',
-            content: '.bcms-content',
             contentDelete: '.bcms-content-delete',
             contentEdit: '.bcms-content-edit',
             contentEditInnerDiv: '.bcms-content-edit .bcms-content-icon',
@@ -19,26 +17,20 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
 
             regionsAndContents: '.bcms-region-start, .bcms-region-end, .bcms-content-start, .bcms-content-end',
             regionOverlay: '#bcms-region-overlay-template',
-            region: '.bcms-region',
-            regionTop: '.bcms-region-top',
-            regionBottom: '.bcms-region-bottom',
-            regionLeft: '.bcms-region-left',
-            regionRight: '.bcms-region-right',
-            regionActions: '.bcms-region-actions',
-            renderedRegions: '.bcms-render-region',
-            renderedContents: 'script[type="text/html"]',
             
             regionAddContentButtons: '.bcms-region-addcontent',
             regionSortButtons: '.bcms-region-sortcontent',
             regionSortDoneButtons: '.bcms-region-sortdone',
             regionButtons: '.bcms-region-button',
-            regionSortWrappers: '.bcms-sort-wrapper'
+            regionSortWrappers: '.bcms-sort-wrapper',
+            regionSortBlock: '.bcms-sorting-block'
         },
         classes = {
             regionStart: 'bcms-region-start',
             regionEnd: 'bcms-region-end',
             contentStart: 'bcms-content-start',
-            contentEnd: 'bcms-content-end'
+            contentEnd: 'bcms-content-end',
+            regionSortOverlay: 'bcms-show-overlay'
         },
         resizeTimer,
         currentContentDom,
@@ -77,7 +69,12 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
         rectangle.insertBefore(container);
         regionRectangles = regionRectangles.add(rectangle);
 
+        if (bcms.editModeIsOn()) {
+            rectangle.show();
+        }
+
         regionViewModel.overlay = rectangle;
+        regionViewModel.sortBlock = regionViewModel.overlay.find(selectors.regionSortBlock);
     };
     
     /**
@@ -91,7 +88,11 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
         rectangle.data('target', contentViewModel);
         rectangle.insertBefore(container);
         contentRectangles = contentRectangles.add(rectangle);
-
+        
+        if (bcms.editModeIsOn()) {
+            rectangle.show();
+        }
+        
         contentViewModel.overlay = rectangle;
         
         bcms.trigger(bcms.events.createContentOverlay, contentViewModel);
@@ -112,20 +113,12 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
 
         contentRectangles.each(function () {
 
-            var padding = 7,
-                extra = padding * 2,
-                rectangle = $(this),
+            var rectangle = $(this),
                 contentViewModel = rectangle.data('target'),
-                width = (contentViewModel.width + extra) + 'px',
-                height = (contentViewModel.height + extra) + 'px',
-                top = (contentViewModel.top - padding) + 'px',
-                left = (contentViewModel.left - padding) + 'px',
-                background = $(selectors.contentOverlayBg, rectangle);
-
-            background.css({
-                'width': width,
-                'height': height
-            });
+                width = contentViewModel.width + 'px',
+                height = contentViewModel.height + 'px',
+                top = contentViewModel.top + 'px',
+                left = contentViewModel.left + 'px';
 
             rectangle.css({
                 'width': width,
@@ -152,25 +145,16 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
             this.recalculatePositions();
         });
 
-        var actionsContainerWidth = regionRectangles.first().find(selectors.regionActions).width() + 4;
-
         $.each(regionViewModels, function () {
 
-            var padding = 10,
-                regionViewModel = this,
+            var regionViewModel = this,
                 overlay = regionViewModel.overlay,
-                width = regionViewModel.width + (padding * 2),
+                width = regionViewModel.width,
                 height = regionViewModel.height;
-
-            $(selectors.regionTop, overlay).css({ width: width + 'px' });
-            $(selectors.regionBottom, overlay).css({ width: width + 'px', top: (height - 2) + 'px' });
-            $(selectors.regionLeft, overlay).css({ height: height + 'px' });
-            $(selectors.regionRight, overlay).css({ height: height + 'px', left: (width - 2) + 'px' });
-            $(selectors.regionActions, overlay).css({ left: width - actionsContainerWidth + 'px' });
 
             overlay.css({
                 top: regionViewModel.top + 'px',
-                left: regionViewModel.left - padding + 'px',
+                left: regionViewModel.left + 'px',
                 width: width + 'px',
                 height: height + 'px'
             });
@@ -289,7 +273,8 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
         $(selectors.regionButtons, regionViewModel.overlay).show();
         $(selectors.regionSortDoneButtons, regionViewModel.overlay).hide();
 
-        regionViewModel.overlay.sortable('destroy');
+        regionViewModel.sortBlock.sortable('destroy');
+        regionViewModel.overlay.removeClass(classes.regionSortOverlay);
         regionViewModel.isSorting = false;
         regionViewModel.sortingContents = [];
 
@@ -340,21 +325,14 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
 
             this.overlay.hide();
 
-            regionViewModel.overlay.append(sortWrapper);
+            regionViewModel.sortBlock.append(sortWrapper);
 
             regionViewModel.sortingContents.push(sortWrapper);
         });
 
-        regionViewModel.overlay.sortable();
+        regionViewModel.sortBlock.sortable();
+        regionViewModel.overlay.addClass(classes.regionSortOverlay);
         content.refreshRegionsPosition();
-    };
-
-    /**
-    * Removes script blocks from HTML string:
-    */
-    content.removeScripts = function (html) {
-        var regex = new RegExp('<script.*?>.*?</script>', 'gi');
-        return html.replace(regex, '');
     };
 
     /**
@@ -365,8 +343,8 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
             $end = $(end),
             startOffset = $start.offset() || {},
             endOffset = $end.offset() || {},
-            endWidth = $end.outerWidth(),
-            endHeight = $end.outerHeight(),
+            endWidth = $end.outerWidth(true),
+            endHeight = $end.outerHeight(true),
             top = startOffset.top,
             left = startOffset.left,
             right = endOffset.left + endWidth,
@@ -401,6 +379,7 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
         self.regionEnd = regionEnd;
         self.contents = regionContents;
         self.overlay = null;
+        self.sortBlock = null;
 
         self.isSorting = false;
         self.sortingContents = [];
@@ -455,10 +434,10 @@ define('bcms.content', ['jquery', 'bcms'], function ($, bcms) {
         self.recalculatePositions = function () {
             var positions = calculatePositions(self.contentStart, self.contentEnd);
             
-            self.left = positions.left;
-            self.top = positions.top;
-            self.width = positions.width;
-            self.height = positions.height;
+            self.left = positions.left + 1;
+            self.top = positions.top + 1;
+            self.width = positions.width ;
+            self.height = positions.height ;
         };
 
         self.onEditContent = function() {};

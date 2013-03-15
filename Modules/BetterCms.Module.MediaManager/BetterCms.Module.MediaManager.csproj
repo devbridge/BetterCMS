@@ -128,6 +128,7 @@
     <Compile Include="Command\Files\DownloadFile\DownloadFileCommandResponse.cs" />
     <Compile Include="Command\MediaManager\GetMediaItemsCommandBase.cs" />
     <Compile Include="Command\MediaManager\RenameMedia\RenameMediaCommand.cs" />
+    <Compile Include="Command\Upload\CheckFileStatuses\CheckFilesStatusesCommand.cs" />
     <Compile Include="Command\Upload\ConfirmUpload\ConfirmUploadCommand.cs" />
     <Compile Include="Command\MediaManager\DeleteMedia\DeleteMediaCommand.cs" />
     <Compile Include="Command\MediaManager\DeleteMedia\DeleteMediaCommandRequest.cs" />
@@ -157,6 +158,7 @@
     <Compile Include="Helpers\WrappedJsonResult.cs" />
     <Compile Include="Api\MediaManagerApiContext.cs" />
     <Compile Include="MediaManagerModuleDescriptor.cs" />
+    <Compile Include="Models\Extensions\MediaFileExtensions.cs" />
     <Compile Include="Models\MediaImageAlign.cs" />
     <Compile Include="Models\MediaType.cs" />
     <Compile Include="Models\Maps\MediaMap.cs" />
@@ -238,8 +240,8 @@
     <EmbeddedResource Include="Scripts\bcms.media.imageeditor.js" />
     <EmbeddedResource Include="Scripts\bcms.media.js" />
     <EmbeddedResource Include="Scripts\bcms.media.upload.js" />
-    <EmbeddedResource Include="Scripts\html5Upload.js" />
-    <EmbeddedResource Include="Scripts\jquery.Jcrop.js" />
+    <EmbeddedResource Include="Scripts\bcms.html5Upload.js" />
+    <EmbeddedResource Include="Scripts\bcms.jquery.Jcrop.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>

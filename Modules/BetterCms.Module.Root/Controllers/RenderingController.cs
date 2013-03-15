@@ -42,16 +42,17 @@ namespace BetterCms.Module.Root.Controllers
         }
 
         /// <summary>
-        /// Renders main.js (entry point of requirejs) java script.
+        /// Renders bcms.main.js or bcms.main.min.js (entry point of the BetterCMS client side).
         /// </summary>
-        /// <returns>main.js file with client side entry point.</returns>
+        /// <returns>main.js or main.min.js file with client side entry point.</returns>
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
         //[OutputCache(Duration = 120, Location = OutputCacheLocation.ServerAndClient)]
         [IgnoreAutoRoute]
-        public ActionResult RenderMainJsFile()
+        public ActionResult RenderMainJsFile(bool useMinReferences)
         {
             RenderMainJsViewModel model = new RenderMainJsViewModel();
             model.JavaScriptModules = RetrieveJsModulesModel();
+            model.UseMinReferences = useMinReferences;
 #if (DEBUG)
             model.EnableClientSideErrorTrace = true;
 #endif

@@ -7,7 +7,7 @@ namespace BetterCms.Module.Root.Registration
     public class RedirectJavaScriptModuleDescriptor : JavaScriptModuleDescriptor
     {
         public RedirectJavaScriptModuleDescriptor(ModuleDescriptor containerModule)
-            : base(containerModule, "bcms.redirect", "/file/bcms-root/scripts/bcms.redirect")
+            : base(containerModule, "bcms.redirect")
         {
 
             Links = new IActionProjection[]

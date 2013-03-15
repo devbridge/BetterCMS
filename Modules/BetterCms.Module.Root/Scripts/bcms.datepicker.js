@@ -1,6 +1,6 @@
 ﻿/*global define, console */
 
-define('bcms.datepicker', ['jquery', 'bcms'], function ($, bcms) {
+define('bcms.datepicker', ['bcms.jquery', 'bcms', 'bcms.jquery.validate.unobtrusive'], function ($, bcms) {
     'use strict';
 
     var datepicker = {},

@@ -7,7 +7,7 @@ namespace BetterCms.Module.Root.Registration
     public class SidemenuJavaScriptModuleDescriptor : JavaScriptModuleDescriptor
     {
         public SidemenuJavaScriptModuleDescriptor(ModuleDescriptor containerModule)
-            : base(containerModule, "bcms.sidemenu", "/file/bcms-root/scripts/bcms.sidemenu")
+            : base(containerModule, "bcms.sidemenu")
         {
 
             Links = new IActionProjection[]

@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages', 'bcms.preview', 'bcms.grid', 'bcms.inlineEdit', 'slides.jquery'],
+define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepicker', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages', 'bcms.preview', 'bcms.grid', 'bcms.inlineEdit', 'bcms.slides.jquery'],
     function ($, bcms, modal, datepicker, dynamicContent, siteSettings, messages, preview, grid, editor) {
         'use strict';
 
@@ -62,7 +62,7 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
 
 
         /**
-        * Opens ServerControlWidget edit dialog.
+        * Opens template edit dialog.
         */
         template.openEditTemplateDialog = function (templateId, onSaveCallback) {
             modal.open({
@@ -185,29 +185,6 @@ define('bcms.pages.template', ['jquery', 'bcms', 'bcms.modal', 'bcms.datepicker'
                         return false;
                     }
                 });
-        };
-
-        /**
-        * Opens dialog for editing template options 
-        */
-        template.configureWidget = function (pageContentId, onSaveCallback) {
-            modal.open({
-                title: globalization.editTemplateRegionTitle,
-                onLoad: function (dialog) {
-                    var url = $.format(links.loadTemplateRegionDialogUrl, pageContentId);
-                    dynamicContent.bindDialog(dialog, url, {
-                        contentAvailable: function (contentDialog) {
-                            editor.initialize(contentDialog.container, {});
-                        },
-
-                        postSuccess: function () {
-                            if ($.isFunction(onSaveCallback)) {
-                                onSaveCallback();
-                            }
-                        }
-                    });
-                }
-            });
         };
 
         /**

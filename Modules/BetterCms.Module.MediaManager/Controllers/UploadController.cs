@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 
-using BetterCms.Core.DataContracts.Enums;
-
 using BetterCms.Module.MediaManager.Command.Upload;
+using BetterCms.Module.MediaManager.Command.Upload.CheckFileStatuses;
 using BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload;
 using BetterCms.Module.MediaManager.Command.Upload.GetMultiFileUpload;
 using BetterCms.Module.MediaManager.Command.Upload.UndoUpload;
@@ -13,8 +12,8 @@ using BetterCms.Module.MediaManager.Command.Upload.Upload;
 using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Helpers;
 using BetterCms.Module.MediaManager.Models;
-using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels.Upload;
+
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
@@ -22,13 +21,6 @@ namespace BetterCms.Module.MediaManager.Controllers
 {
     public class UploadController : CmsControllerBase
     {
-        private readonly IMediaImageService mediaService;
-
-        public UploadController(IMediaImageService mediaService)
-        {
-            this.mediaService = mediaService;
-        }
-
         [HttpGet]
         public ActionResult MultiFileUpload(string folderId, string folderType)
         {
@@ -80,7 +72,9 @@ namespace BetterCms.Module.MediaManager.Controllers
                             fileName = media.OriginalFileName,
                             fileSize = media.Size,
                             Version = media.Version,
-                            Type = request.Type
+                            Type = request.Type,
+                            IsProcessing = !media.IsUploaded.HasValue,
+                            IsFailed = media.IsUploaded == false,
                         }
                     };
                 }
@@ -118,7 +112,14 @@ namespace BetterCms.Module.MediaManager.Controllers
 
                 if (media != null)
                 {
-                    return Json(new WireJson(true, new { FileId = media.Id, Version = media.Version, Type = (int)rootFolderType }));
+                    return WireJson(true, new
+                                              {
+                                                  FileId = media.Id, 
+                                                  Version = media.Version, 
+                                                  Type = (int)rootFolderType, 
+                                                  IsProcessing = !media.IsUploaded.HasValue,
+                                                  IsFailed = media.IsUploaded == false,
+                                              });
                 }
             }
             return Json(new WireJson(false));
@@ -127,7 +128,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         [HttpPost]
         public ActionResult RemoveFileUpload(string fileId, string version, string type)
         {
-            var result = GetCommand<UndoUploadCommand>().ExecuteCommand(new UndoUploadRequest
+            GetCommand<UndoUploadCommand>().ExecuteCommand(new UndoUploadRequest
                                                                             {
                                                                                 FileId = fileId.ToGuidOrDefault(),
                                                                                 Version = version.ToIntOrDefault(),
@@ -176,6 +177,14 @@ namespace BetterCms.Module.MediaManager.Controllers
             }
 
             return true;
+        }
+
+        [HttpPost]
+        public ActionResult CheckFilesStatuses(List<string> ids)
+        {
+            var result = GetCommand<CheckFilesStatusesCommand>().ExecuteCommand(ids);
+
+            return WireJson(result != null, result);
         }
     }
 }

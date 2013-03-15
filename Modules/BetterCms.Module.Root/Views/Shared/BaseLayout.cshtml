@@ -50,7 +50,45 @@
 @section CmsHeadScripts {
     @if (Model.CanManageContent)
     {
-        <script type="text/javascript" data-main="@Url.Content("~/file/bcms-root/scripts/main")" src="@Url.Content("~/file/bcms-root/Scripts/require-jquery.js")"></script>        
+        <script type="text/javascript">
+            function AddRequireJsScript() {
+                var scriptTag = document.createElement('script');
+                scriptTag.type = 'text/javascript';
+                scriptTag.async = false;
+                //rjs.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + '.js';
+                scriptTag.src = "@Url.Content("~/file/bcms-root/Scripts/require.js")";
+                var tag = document.getElementsByTagName('script')[0];
+                tag.parentNode.insertBefore(scriptTag, tag);
+            }
+
+            function AddBetterCmsMainJsScript() {
+                var scriptTag = document.createElement('script');
+                scriptTag.type = 'text/javascript';
+                scriptTag.async = false;
+                //rjs.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + '.js';
+                scriptTag.src = "@Url.Content("~/file/bcms-root/Scripts/bcms.main.js")";
+                var tag = document.getElementsByTagName('script')[0];
+                tag.parentNode.insertBefore(scriptTag, tag);
+            }
+
+            (function() {
+                var rjs = window.require;
+                if (!rjs) {
+                    AddRequireJsScript();
+                } else if (rjs.version < '2.0.0') {
+                    var message = "BetterCMS supports RequireJS from 2.0.0 version. Please visit http://requirejs.org/ and do upgrade.";
+                    if (console && console.log) {
+                        console.log(message);
+                    }
+                    alert(message);                    
+                    return;
+                }
+                AddBetterCmsMainJsScript();
+            })();
+        </script>
+        <!--[if lt IE 9]>
+            <script src="@Url.Content("~/file/bcms-root/Scripts/html5shiv.js")"></script>
+        <![endif]-->
     }
 }
 

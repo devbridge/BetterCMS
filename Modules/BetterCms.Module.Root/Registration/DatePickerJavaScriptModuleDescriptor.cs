@@ -6,7 +6,7 @@ namespace BetterCms.Module.Root.Registration
     public class DatePickerJavaScriptModuleDescriptor : JavaScriptModuleDescriptor
     {
         public DatePickerJavaScriptModuleDescriptor(ModuleDescriptor containerModule)
-            : base(containerModule, "bcms.datePicker", "/file/bcms-root/scripts/bcms.datePicker")
+            : base(containerModule, "bcms.datepicker")
         {
 
             Links = new IActionProjection[]

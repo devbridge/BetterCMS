@@ -16,7 +16,7 @@ namespace BetterCms.Module.Blog.Registration
         /// </summary>
         /// <param name="containerModule">The container module.</param>
         public UserJavaScriptModuleDescriptor(ModuleDescriptor containerModule)
-            : base(containerModule, "bcms.user", "/file/bcms-users/scripts/bcms.user")
+            : base(containerModule, "bcms.user")
         {
             Links = new IActionProjection[]
                         {
