@@ -68,6 +68,7 @@ define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms
 
                         postSuccess: function (json) {
                             options.uploads.stopStatusChecking();
+                            options.uploads.removeFailedUploads();
                             if (onSaveCallback && $.isFunction(onSaveCallback)) {
                                 onSaveCallback(json);
                             }
@@ -105,6 +106,7 @@ define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms
                                     }
                                 } finally {
                                     options.uploads.stopStatusChecking();
+                                    options.uploads.removeFailedUploads();
                                     dialog.close();
                                 }
                             }
@@ -292,6 +294,14 @@ define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms
             }
         };
         
+        self.removeFailedUploads = function () {
+            for (var i = 0; i < self.uploads().length; i++) {
+                if (self.uploads()[i].uploadFailed()) {
+                    abortUpload(self.uploads()[i]);
+                }
+            }
+        };
+        
         // When one of file status is "Processing", checking file status repeatedly
         self.timeout = 10000;
         self.firstTimeout = 500;
@@ -307,7 +317,6 @@ define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms
         };
         
         self.stopStatusChecking = function () {
-            console.log('Stop status checking');
             if (self.timer) {
                 clearTimeout(self.timer);
                 self.timer = null;
@@ -325,8 +334,6 @@ define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms
             self.timer = null;
 
             if (ids.length > 0) {
-                console.log('Checking status');
-
                 $.ajax({
                     type: 'POST',
                     cache: false,
@@ -369,8 +376,6 @@ define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms
                     .fail(function (response) {
                         onFail();
                     });
-            } else {
-                console.log('Stop checking');
             }
         };
 

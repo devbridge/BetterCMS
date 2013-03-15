@@ -30,6 +30,7 @@ namespace BetterCms.Module.MediaManager.Command.Images.GetImages
             return builder
                     .Select(() => alias.Id).WithAlias(() => modelAlias.Id)
                     .Select(() => alias.Title).WithAlias(() => modelAlias.Name)
+                    .Select(() => alias.CreatedOn).WithAlias(() => modelAlias.CreatedOn)
                     .Select(() => alias.Version).WithAlias(() => modelAlias.Version)
                     .Select(() => alias.Caption).WithAlias(() => modelAlias.Tooltip)
                     .Select(() => alias.OriginalFileExtension).WithAlias(() => modelAlias.FileExtension)
