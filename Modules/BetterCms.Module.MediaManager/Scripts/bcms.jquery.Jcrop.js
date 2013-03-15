@@ -28,8 +28,8 @@
  *
  * }}}
  */
-define('bcms.jcrop', ['bcms.jquery'],
-    function (jquery) {
+define('bcms.jquery.jcrop', ['bcms.jquery'], function (jquery) {
+        
     (function($) {
 
         $.Jcrop = function(obj, opt) {

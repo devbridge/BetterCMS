@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Mvc.Grids;
@@ -13,6 +12,8 @@ namespace BetterCms.Module.MediaManager.ViewModels.MediaManager
         public virtual Guid Id { get; set; }
 
         public virtual int Version { get; set; }
+        
+        public DateTime CreatedOn { get; set; }
 
         [Required]
         [StringLength(MaxLength.Name)]

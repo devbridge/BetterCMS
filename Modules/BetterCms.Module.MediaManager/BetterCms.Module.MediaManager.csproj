@@ -241,7 +241,7 @@
     <EmbeddedResource Include="Scripts\bcms.media.js" />
     <EmbeddedResource Include="Scripts\bcms.media.upload.js" />
     <EmbeddedResource Include="Scripts\bcms.html5Upload.js" />
-    <EmbeddedResource Include="Scripts\bcms.jquery.Jcrop.js" />
+    <EmbeddedResource Include="Scripts\bcms.jquery.jcrop.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>

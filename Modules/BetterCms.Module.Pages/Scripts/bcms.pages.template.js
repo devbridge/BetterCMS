@@ -62,7 +62,7 @@ define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepi
 
 
         /**
-        * Opens ServerControlWidget edit dialog.
+        * Opens template edit dialog.
         */
         template.openEditTemplateDialog = function (templateId, onSaveCallback) {
             modal.open({
@@ -185,29 +185,6 @@ define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepi
                         return false;
                     }
                 });
-        };
-
-        /**
-        * Opens dialog for editing template options 
-        */
-        template.configureWidget = function (pageContentId, onSaveCallback) {
-            modal.open({
-                title: globalization.editTemplateRegionTitle,
-                onLoad: function (dialog) {
-                    var url = $.format(links.loadTemplateRegionDialogUrl, pageContentId);
-                    dynamicContent.bindDialog(dialog, url, {
-                        contentAvailable: function (contentDialog) {
-                            editor.initialize(contentDialog.container, {});
-                        },
-
-                        postSuccess: function () {
-                            if ($.isFunction(onSaveCallback)) {
-                                onSaveCallback();
-                            }
-                        }
-                    });
-                }
-            });
         };
 
         /**
