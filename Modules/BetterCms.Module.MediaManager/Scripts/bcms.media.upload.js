@@ -16,7 +16,8 @@ define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms
             fileUploadingTarget: '#UploadTarget',
             fileUploadingInput: '#uploadFile',
             fileUploadingResult: '#jsonResult',
-            folderDropDown: '#SelectedFolderId'
+            folderDropDown: '#SelectedFolderId',
+            uploadButtonLabel: '.bcms-btn-upload-files-text'
         },
 
         classes = {
@@ -167,6 +168,8 @@ define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms
                     clearInterval(uploadAnimationId);
                 }
             };
+
+        dialog.container.find(selectors.uploadButtonLabel).on('click', fixUploadButtonForMozilla);
 
         // On folder changed
         dialog.container.find(selectors.fileUploadingForm).find(selectors.folderDropDown).on('change', function () {
@@ -428,6 +431,8 @@ define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms
             return false;
         });
 
+        dialog.container.find(selectors.uploadButtonLabel).on('click', fixUploadButtonForMozilla);
+
         if (html5Upload.fileApiSupported()) {
 
             var context = document.getElementById('bcms-media-uploads');
@@ -509,6 +514,14 @@ define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms
         } 
     }
         
+    function fixUploadButtonForMozilla() {
+        if ($.browser.mozilla) {
+            $('#' + $(this).attr('for')).click();
+            return false;
+        }
+        return true;
+    }
+
     function trimTrailingZeros(number) {
         return number.toFixed(1).replace(/\.0+$/, '');
     }
