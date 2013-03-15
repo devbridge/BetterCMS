@@ -721,6 +721,7 @@ a.bcms-remove-image {
 .bcms-region-overlay {
     position: absolute;
     display: none;
+    min-height: 35px;
     outline: 0;
     overflow: hidden;
     border: 1px dashed #009AEB;
@@ -793,7 +794,7 @@ a.bcms-remove-image {
 }
 
 .bcms-sort-content {
-    text-transform: uppercase;
+    text-transform: capitalize;
 }
 
 .bcms-content-overlay {
