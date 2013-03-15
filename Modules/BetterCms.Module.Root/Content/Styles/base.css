@@ -725,6 +725,8 @@ a.bcms-remove-image {
     outline: 0;
     overflow: hidden;
     border: 1px dashed #009AEB;
+    top: 0;
+    left: 0;
 }
 
 .bcms-on .bcms-region-overlay {
@@ -801,6 +803,9 @@ a.bcms-remove-image {
     position: absolute;
     z-index: 10;
     background: rgba(0,0,0,0.05);
+    display: none;
+    top: 0;
+    left: 0;
 }
 
 .bcms-content-actions {

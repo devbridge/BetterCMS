@@ -22,13 +22,15 @@ define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             regionSortButtons: '.bcms-region-sortcontent',
             regionSortDoneButtons: '.bcms-region-sortdone',
             regionButtons: '.bcms-region-button',
-            regionSortWrappers: '.bcms-sort-wrapper'
+            regionSortWrappers: '.bcms-sort-wrapper',
+            regionSortBlock: '.bcms-sorting-block'
         },
         classes = {
             regionStart: 'bcms-region-start',
             regionEnd: 'bcms-region-end',
             contentStart: 'bcms-content-start',
-            contentEnd: 'bcms-content-end'
+            contentEnd: 'bcms-content-end',
+            regionSortOverlay: 'bcms-show-overlay'
         },
         resizeTimer,
         currentContentDom,
@@ -67,7 +69,12 @@ define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         rectangle.insertBefore(container);
         regionRectangles = regionRectangles.add(rectangle);
 
+        if (bcms.editModeIsOn()) {
+            rectangle.show();
+        }
+
         regionViewModel.overlay = rectangle;
+        regionViewModel.sortBlock = regionViewModel.overlay.find(selectors.regionSortBlock);
     };
     
     /**
@@ -81,7 +88,11 @@ define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         rectangle.data('target', contentViewModel);
         rectangle.insertBefore(container);
         contentRectangles = contentRectangles.add(rectangle);
-
+        
+        if (bcms.editModeIsOn()) {
+            rectangle.show();
+        }
+        
         contentViewModel.overlay = rectangle;
         
         bcms.trigger(bcms.events.createContentOverlay, contentViewModel);
@@ -262,8 +273,8 @@ define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         $(selectors.regionButtons, regionViewModel.overlay).show();
         $(selectors.regionSortDoneButtons, regionViewModel.overlay).hide();
 
-        regionViewModel.overlay.find('.bcms-sorting-block').sortable('destroy');
-        regionViewModel.overlay.removeClass('bcms-show-overlay');
+        regionViewModel.sortBlock.sortable('destroy');
+        regionViewModel.overlay.removeClass(classes.regionSortOverlay);
         regionViewModel.isSorting = false;
         regionViewModel.sortingContents = [];
 
@@ -314,13 +325,13 @@ define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
 
             this.overlay.hide();
 
-            regionViewModel.overlay.find('.bcms-sorting-block').append(sortWrapper);
+            regionViewModel.sortBlock.append(sortWrapper);
 
             regionViewModel.sortingContents.push(sortWrapper);
         });
 
-        regionViewModel.overlay.find('.bcms-sorting-block').sortable();
-        regionViewModel.overlay.addClass('bcms-show-overlay');
+        regionViewModel.sortBlock.sortable();
+        regionViewModel.overlay.addClass(classes.regionSortOverlay);
         content.refreshRegionsPosition();
     };
 
@@ -338,6 +349,9 @@ define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             left = startOffset.left,
             right = endOffset.left + endWidth,
             bottom = endOffset.top + endHeight;
+
+        // console.log($.format("Left: {0} Top: {1} Width: {2} Height: {3}", left, top, right - left, bottom - top));
+        console.log($.format("Left: {0} Top: {1}, Name: {2}", left, top, $start.prop('tagName')));
 
         return {
             left: left,
@@ -368,6 +382,7 @@ define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         self.regionEnd = regionEnd;
         self.contents = regionContents;
         self.overlay = null;
+        self.sortBlock = null;
 
         self.isSorting = false;
         self.sortingContents = [];
