@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;
+
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Mvc.Attributes;
 using BetterCms.Module.Pages.ViewModels.Widgets;

@@ -156,25 +156,16 @@
   <data name="EditBlockPost_Author_Tooltip_Description" xml:space="preserve">
     <value>Author</value>
   </data>
-  <data name="EditBlockPost_Author_Tooltip_Title" xml:space="preserve">
-    <value>Author</value>
-  </data>
   <data name="EditBlockPost_Category_Title" xml:space="preserve">
     <value>Category</value>
   </data>
   <data name="EditBlockPost_Category_Tooltip_Description" xml:space="preserve">
     <value>Category</value>
   </data>
-  <data name="EditBlockPost_Category_Tooltip_Title" xml:space="preserve">
-    <value>Category</value>
-  </data>
   <data name="EditBlockPost_Content_Title" xml:space="preserve">
     <value>Full Post</value>
   </data>
   <data name="EditBlockPost_Content_Tooltip_Description" xml:space="preserve">
-    <value>Full Post</value>
-  </data>
-  <data name="EditBlockPost_Content_Tooltip_Title" xml:space="preserve">
     <value>Full Post</value>
   </data>
   <data name="EditBlockPost_FeaturedImage_Description" xml:space="preserve">
@@ -186,22 +177,13 @@
   <data name="EditBlockPost_FeaturedImage_Tooltip_Description" xml:space="preserve">
     <value>Featured Image</value>
   </data>
-  <data name="EditBlockPost_FeaturedImage_Tooltip_Title" xml:space="preserve">
-    <value>Featured Image</value>
-  </data>
   <data name="EditBlockPost_IntroText_Title" xml:space="preserve">
     <value>Intro / Featured Text</value>
   </data>
   <data name="EditBlockPost_IntroText_Tooltip_Description" xml:space="preserve">
     <value>Intro / Featured Text</value>
   </data>
-  <data name="EditBlockPost_IntroText_Tooltip_Title" xml:space="preserve">
-    <value>Intro / Featured Text</value>
-  </data>
   <data name="EditBlockPost_LiveDates_Tooltip_Description" xml:space="preserve">
-    <value>Live dates</value>
-  </data>
-  <data name="EditBlockPost_LiveDates_Tooltip_Title" xml:space="preserve">
     <value>Live dates</value>
   </data>
   <data name="EditBlockPost_LiveFrom_Title" xml:space="preserve">
@@ -216,16 +198,10 @@
   <data name="EditBlockPost_Tags_Tooltip_Description" xml:space="preserve">
     <value>Add Tags</value>
   </data>
-  <data name="EditBlockPost_Tags_Tooltip_Title" xml:space="preserve">
-    <value>Add Tags</value>
-  </data>
   <data name="EditBlockPost_Title_Title" xml:space="preserve">
     <value>Title of the Post</value>
   </data>
   <data name="EditBlockPost_Title_Tooltip_Description" xml:space="preserve">
-    <value>Title of the Post</value>
-  </data>
-  <data name="EditBlockPost_Title_Tooltip_Title" xml:space="preserve">
     <value>Title of the Post</value>
   </data>
   <data name="EditPost_Dialog_Title" xml:space="preserve">
@@ -293,5 +269,17 @@
   </data>
   <data name="CreatePost_CreatedSuccessfully_Message" xml:space="preserve">
     <value>Post created successfully</value>
+  </data>
+  <data name="EditBlogPost_PagePermalink_MaxLengthMessage" xml:space="preserve">
+    <value>Page permalink max length exceeded.</value>
+  </data>
+  <data name="EditBlogPost_Permalink" xml:space="preserve">
+    <value>Change Post URL</value>
+  </data>
+  <data name="EditBlogPost_Permalink_Tooltip_Description" xml:space="preserve">
+    <value>Edit Post URL</value>
+  </data>
+  <data name="EditBlogPost_CreatePermanentRedirectToOldUrl_Title" xml:space="preserve">
+    <value>Create permanent redirect entry from old URL to new URL.</value>
   </data>
 </root>

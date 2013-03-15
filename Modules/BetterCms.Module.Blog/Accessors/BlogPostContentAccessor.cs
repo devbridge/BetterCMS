@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Web.Mvc;
 
+using BetterCms.Core.DataContracts;
 using BetterCms.Core.Models;
 using BetterCms.Core.Modules.Projections;
 
@@ -17,9 +18,9 @@ namespace BetterCms.Module.Blog.Accessors
         {
         }
 
-        public override string GetRegionWrapperCssClass(HtmlHelper html)
+        public override string GetContentWrapperType()
         {
-            return "bcms-blog-post-content";
+            return "blog-post-content";
         }
 
         public override string GetHtml(HtmlHelper html)

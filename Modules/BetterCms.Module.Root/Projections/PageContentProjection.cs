@@ -2,7 +2,8 @@ using System;
 using System.Runtime.Serialization;
 using System.Web.Mvc;
 
-using BetterCms.Core.Models;
+using BetterCms.Core.DataContracts;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Modules.Projections;
 
 namespace BetterCms.Module.Root.Projections
@@ -94,9 +95,14 @@ namespace BetterCms.Module.Root.Projections
             }
         }
 
-        public string GetRegionWrapperCssClass(HtmlHelper html)
+        public string GetContentWrapperType()
         {
-            return contentAccessor.GetRegionWrapperCssClass(html);
+            return contentAccessor.GetContentWrapperType();
+        }
+
+        public string GetTitle()
+        {
+            return contentAccessor.GetTitle();
         }
 
         public string GetHtml(HtmlHelper html)

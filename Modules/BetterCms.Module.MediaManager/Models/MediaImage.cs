@@ -1,5 +1,7 @@
 using System;
 
+using BetterCms.Core.DataContracts.Enums;
+
 namespace BetterCms.Module.MediaManager.Models
 {
     [Serializable]
@@ -29,7 +31,7 @@ namespace BetterCms.Module.MediaManager.Models
 
         public virtual Uri OriginalUri { get; set; }
 
-        public virtual bool IsOriginalUploaded { get; set; }
+        public virtual bool? IsOriginalUploaded { get; set; }
 
         public virtual string PublicOriginallUrl { get; set; }
 
@@ -41,7 +43,7 @@ namespace BetterCms.Module.MediaManager.Models
 
         public virtual Uri ThumbnailUri { get; set; }
 
-        public virtual bool IsThumbnailUploaded { get; set; }
+        public virtual bool? IsThumbnailUploaded { get; set; }
 
         public virtual string PublicThumbnailUrl { get; set; }        
     }

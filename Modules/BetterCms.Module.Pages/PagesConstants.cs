@@ -4,7 +4,9 @@ namespace BetterCms.Module.Pages
 {
     public static class PagesConstants
     {
-        public const string PageUrlRegularExpression = @"^/?[\w\-/]*/?$";
+        public const string PageUrlRegularExpression = @"(^/$)|((?!.*//)(^(/{1}[\w\-]{0,260})+/{1}$))";
+
+        public const string SiteMapUrlRegularExpression = @"^/?[\w\-/].*/?";
 
         public static class PageIds
         {

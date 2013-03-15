@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'bcms.pages.widgets', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages', 'bcms.preview', 'bcms.grid', 'bcms.inlineEdit', 'slides.jquery', 'bcms.redirect', 'bcms.pages.history'],
+define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.content', 'bcms.pages.widgets', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages', 'bcms.preview', 'bcms.grid', 'bcms.inlineEdit', 'bcms.slides.jquery', 'bcms.redirect', 'bcms.pages.history'],
     function($, bcms, modal, content, widgets, datepicker, htmlEditor, dynamicContent, siteSettings, messages, preview, grid, editor, slides, redirect, history) {
         'use strict';
 
@@ -34,12 +34,6 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
 
                 widgetsContent: '.bcms-widgets',
 
-                overlayEdit: '.bcms-content-edit',
-                overlayConfigure: '.bcms-content-configure',
-                overlayDelete: '.bcms-content-delete',
-                overlay: '.bcms-content-overlay',
-                overlayEditIconDiv: '.bcms-content-edit .bcms-content-icon',
-
                 enableCustomJs: '#bcms-enable-custom-js',
                 enableCustomCss: '#bcms-enable-custom-css',
                 customJsContainer: '#bcms-custom-js-container',
@@ -47,10 +41,7 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
             },
             classes = {
                 sliderPrev: 'bcms-slider-prev',
-                sliderNext: 'bcms-slider-next',
-                regionContent: 'bcms-content-regular',
-                regionAdvancedContent: 'bcms-content-advanced',
-                regionWidget: 'bcms-content-widget'
+                sliderNext: 'bcms-slider-next'
             },
             links = {
                 loadWidgetsUrl: null,
@@ -72,11 +63,15 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                 deleteContentFailureMessageMessage: null,
                 sortPageContentFailureMessageTitle: null,
                 sortPageContentFailureMessageMessage: null,
+                sortingPageContentMessage: null,
                 errorTitle: null,
                 insertingWidgetInfoMessage: null,
                 insertingWidgetInfoHeader: null,
                 insertingWidgetErrorMessage: null,
                 datePickerTooltipTitle: null
+            },
+            contentTypes = {
+                htmlContent: 'html-content'
             };
 
         /**
@@ -134,7 +129,13 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
             if (model.data.pageContents.length < 2) {
                 return; // Sorting is needed for more than one item.
             }
-            
+
+            var info = modal.info({
+                content: globalization.sortingPageContentMessage,
+                disableCancel: true,
+                disableAccept: true,
+            });
+
             var url = links.sortPageContentUrl,
                 alertOnError = function() {
                     modal.alert({
@@ -151,9 +152,10 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                 dataType: 'json',
                 cache: false,
                 data: dataToSend,
-                success: function(json) {
-                    if (json.Success && json.Data != null) {
-                        content.updateRegionContentVersions(model.region, json.Data.UpdatedPageContents);
+                success: function (json) {
+                    info.close();
+                    if (json.Success) {
+                        redirect.ReloadWithAlert();
                     } else {
                         if (json.Messages && json.Messages.length > 0) {
                             modal.showMessages(json);
@@ -163,6 +165,7 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                     }
                 },
                 error: function () {
+                    info.close();
                     alertOnError();
                 }
             });
@@ -180,16 +183,18 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
             });
 
             dialog.container.find(selectors.widgetCreateButton).on('click', function () {
-                widgets.openCreateHtmlContentWidgetDialog(function () {
+                widgets.openCreateHtmlContentWidgetDialog(function (json) {
                     htmlEditor.updateEditorContent(selectors.htmlEditor);
                     // Reload search results after category was created.
                     pagesContent.updateWidgetCategoryList(dialog);
+                    messages.refreshBox(dialog.container, json);
                 }, null);
             });
 
             dialog.container.find(selectors.widgetRegisterButton).on('click', function () {
-                widgets.openCreateServerControlWidgetDialog(function () {
+                widgets.openCreateServerControlWidgetDialog(function (json) {
                     pagesContent.updateWidgetCategoryList(dialog);
+                    messages.refreshBox(dialog.container, json);
                 }, null);
             });
 
@@ -372,85 +377,39 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
                 });
             });
         };
-               
-        /**
-        * Called when edit overlay is shown
-        */
-        pagesContent.onShowOverlay = function(sender) {
-            var element = $(sender),
-                overlay = $(selectors.overlay);
 
-            if (element.hasClass(classes.regionContent)) {
-                overlay.find(selectors.overlayConfigure).hide();
-            } else if (element.hasClass(classes.regionAdvancedContent)) {
-                overlay.find(selectors.overlayConfigure).hide();
-            } else if (element.hasClass(classes.regionWidget)) {
+        /**
+        * Called when content overlay is created
+        */
+        function onCreateContentOverlay(contentViewModel) {
+            var contentId = contentViewModel.contentId,
+                pageContentId = contentViewModel.pageContentId,
+                contentVersion = contentViewModel.contentVersion,
+                pageContentVersion = contentViewModel.pageContentVersion;
+
+            if (contentViewModel.contentType == contentTypes.htmlContent) {
+                contentViewModel.removeConfigureButton();
+
+                // Edit content
+                contentViewModel.onEditContent = function() {
+                    pagesContent.editPageContent(pageContentId);
+                };
             }
-            if (element.data('draft')) {
-                overlay.find(selectors.overlayEditIconDiv).html('<div>*</div>');
-            }
-        };
-
-        /**
-        * Called when edit overlay is hidden
-        */
-        pagesContent.onHideOverlay = function() {
-            var overlay = $(selectors.overlay);
-
-            overlay.find(selectors.overlayEdit).show();
-            overlay.find(selectors.overlayConfigure).show();
-            overlay.find(selectors.overlayDelete).show();
-
-            overlay.find(selectors.overlayEditIconDiv).html('');
-        };
-
-        /**
-        * Called when editing page content
-        */
-        pagesContent.onEditContent = function(sender) {
-            var element = $(sender),
-                contentId = element.data('pageContentId');
-
-            if (element.hasClass(classes.regionContent)) {
-                pagesContent.editPageContent(contentId);
-            }
-        };
-
-        /**
-        * Called when deleting page content
-        */
-        pagesContent.onDeleteContent = function(sender) {
-            var element = $(sender),
-                pageContentId = element.data('pageContentId'),
-                pageContentVersion = element.data('pageContentVersion'),
-                contentVersion = element.data('contentVersion');
             
-            pagesContent.removeContentFromPage(pageContentId, pageContentVersion, contentVersion);
-        };
+            // Delete content
+            contentViewModel.onDeleteContent = function () {
+                pagesContent.removeContentFromPage(pageContentId, pageContentVersion, contentVersion);
+            };
+            
+            // Content history
+            contentViewModel.onContentHistory = function() {
+                history.openPageContentHistoryDialog(contentId, pageContentId);
+            };
 
-        /**
-        * Called when showing content history
-        */
-        pagesContent.onContentHistory = function(sender) {
-            var element = $(sender),
-                contentId = element.data('contentId'),
-                pageContentId = element.data('pageContentId');
-
-            history.openPageContentHistoryDialog(contentId, pageContentId);
-        };
-
-        /**
-        * Called when configuring page content
-        */
-        pagesContent.onConfigureContent = function(sender) {
-            var element = $(sender),
-                pageContentId = element.data('pageContentId');
-
-            if (element.hasClass(classes.regionWidget)) {
-                widgets.configureWidget(pageContentId, function () {
-                    redirect.ReloadWithAlert();
-                });
-            }            
+            // Change draft icon
+            if (contentViewModel.draft) {
+                contentViewModel.addDraftIcon();
+            }
         };
 
         /**
@@ -565,19 +524,14 @@ define('bcms.pages.content', ['jquery', 'bcms', 'bcms.modal', 'bcms.content', 'b
         */
         pagesContent.init = function() {
             console.log('Initializing bcms.pages.content module.');
-
-            /**
-            * Subscribe to events
-            */
-            bcms.on(bcms.events.addPageContent, pagesContent.onAddNewContent);
-            bcms.on(bcms.events.sortPageContent, pagesContent.onSortPageContent);
-            bcms.on(bcms.events.showOverlay, pagesContent.onShowOverlay);
-            bcms.on(bcms.events.hideOverlay, pagesContent.onHideOverlay);
-            bcms.on(bcms.events.editContent, pagesContent.onEditContent);
-            bcms.on(bcms.events.deleteContent, pagesContent.onDeleteContent);
-            bcms.on(bcms.events.contentHistory, pagesContent.onContentHistory);
-            bcms.on(bcms.events.configureContent, pagesContent.onConfigureContent);
         };
+
+        /**
+        * Subscribe to events
+        */
+        bcms.on(bcms.events.addPageContent, pagesContent.onAddNewContent);
+        bcms.on(bcms.events.sortPageContent, pagesContent.onSortPageContent);
+        bcms.on(bcms.events.createContentOverlay, onCreateContentOverlay);
 
         /**
         * Register initialization

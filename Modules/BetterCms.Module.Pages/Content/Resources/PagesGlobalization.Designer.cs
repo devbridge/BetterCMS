@@ -106,15 +106,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit Page URL.
-        /// </summary>
-        public static string AddNewPage_EditPermalink_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("AddNewPage_EditPermalink_Tooltip_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to 1. Create a page title (H1).
         /// </summary>
         public static string AddNewPage_PageTitle {
@@ -133,16 +124,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create  a page title.
-        /// </summary>
-        public static string AddNewPage_PageTitle_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("AddNewPage_PageTitle_Tooltip_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Change Page URL.
+        ///   Looks up a localized string similar to 2. Change Page URL.
         /// </summary>
         public static string AddNewPage_Permalink {
             get {
@@ -156,15 +138,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string AddNewPage_Permalink_Tooltip_Description {
             get {
                 return ResourceManager.GetString("AddNewPage_Permalink_Tooltip_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Edit Page URL.
-        /// </summary>
-        public static string AddNewPage_Permalink_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("AddNewPage_Permalink_Tooltip_Title", resourceCulture);
             }
         }
         
@@ -205,16 +178,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select a template.
-        /// </summary>
-        public static string AddNewPage_Template_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("AddNewPage_Template_Tooltip_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Page permalink is invalid. Link must start and end with &quot;/&quot; and can contain only following characters: &apos;0-9&apos;, &apos;a-z&apos;, &apos;-&apos;, &apos;/&apos;, &apos;_&apos;.
+        ///   Looks up a localized string similar to Page permalink is invalid. Link must start and end with &quot;/&quot;, can contain only following characters: &apos;0-9&apos;, &apos;a-z&apos;, &apos;-&apos;, &apos;/&apos;, &apos;_&apos; and no more than 260 alphanumeric characters between the &apos;/&apos;..
         /// </summary>
         public static string AddNewPageProperties_PagePermalink_InvalidMessage {
             get {
@@ -300,15 +264,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string AddPageContent_RegularContentTab_ContentName_Tooltip_Description {
             get {
                 return ResourceManager.GetString("AddPageContent_RegularContentTab_ContentName_Tooltip_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Content Name.
-        /// </summary>
-        public static string AddPageContent_RegularContentTab_ContentName_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("AddPageContent_RegularContentTab_ContentName_Tooltip_Title", resourceCulture);
             }
         }
         
@@ -457,15 +412,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Title.
-        /// </summary>
-        public static string ClonePage_Dialog_PageTitle_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("ClonePage_Dialog_PageTitle_Tooltip_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to New Page URL.
         /// </summary>
         public static string ClonePage_Dialog_PageUrl {
@@ -480,15 +426,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string ClonePage_Dialog_PageUrl_Tooltip_Description {
             get {
                 return ResourceManager.GetString("ClonePage_Dialog_PageUrl_Tooltip_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Page URL.
-        /// </summary>
-        public static string ClonePage_Dialog_PageUrl_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("ClonePage_Dialog_PageUrl_Tooltip_Title", resourceCulture);
             }
         }
         
@@ -531,15 +468,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         /// <summary>
         ///   Looks up a localized string similar to New Page URL.
         /// </summary>
-        public static string ClonePage_EditNewUrl_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("ClonePage_EditNewUrl_Tooltip_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to New Page URL.
-        /// </summary>
         public static string ClonePage_NewUrl {
             get {
                 return ResourceManager.GetString("ClonePage_NewUrl", resourceCulture);
@@ -552,15 +480,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string ClonePage_NewUrl_Tooltip_Description {
             get {
                 return ResourceManager.GetString("ClonePage_NewUrl_Tooltip_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Edit New Page URL.
-        /// </summary>
-        public static string ClonePage_NewUrl_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("ClonePage_NewUrl_Tooltip_Title", resourceCulture);
             }
         }
         
@@ -934,15 +853,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Redirect URL (optional).
-        /// </summary>
-        public static string DeletePage_Dialog_RedurectUrl_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("DeletePage_Dialog_RedurectUrl_Tooltip_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Type word DELETE to confirm deletion.
         /// </summary>
         public static string DeletePage_Dialog_SecurityWord {
@@ -961,20 +871,38 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Type word DELETE to confirm deletion.
-        /// </summary>
-        public static string DeletePage_Dialog_SecurityWord_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("DeletePage_Dialog_SecurityWord_Tooltip_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Delete page.
         /// </summary>
         public static string DeletePage_Dialog_Title {
             get {
                 return ResourceManager.GetString("DeletePage_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update sitemap.
+        /// </summary>
+        public static string DeletePage_Dialog_UpdateSitemap {
+            get {
+                return ResourceManager.GetString("DeletePage_Dialog_UpdateSitemap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove page from sitemap..
+        /// </summary>
+        public static string DeletePage_Dialog_UpdateSitemap_Description {
+            get {
+                return ResourceManager.GetString("DeletePage_Dialog_UpdateSitemap_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove this page from sitemap..
+        /// </summary>
+        public static string DeletePage_Dialog_UpdateSitemap_RemovePageFromSitemap {
+            get {
+                return ResourceManager.GetString("DeletePage_Dialog_UpdateSitemap_RemovePageFromSitemap", resourceCulture);
             }
         }
         
@@ -993,6 +921,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string DeletePage_SuccessMessage_Title {
             get {
                 return ResourceManager.GetString("DeletePage_SuccessMessage_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Can not remove this page from the sitemap, because it has child nodes..
+        /// </summary>
+        public static string DeletePageCommand_SitemapNodeHasChildNodes_Message {
+            get {
+                return ResourceManager.GetString("DeletePageCommand_SitemapNodeHasChildNodes_Message", resourceCulture);
             }
         }
         
@@ -1159,7 +1096,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create permanent redirect entry from old URL to new URL.
+        ///   Looks up a localized string similar to Create permanent redirect entry from old URL to new URL..
         /// </summary>
         public static string EditPageProperties_AdvancedPropertiesTab_CreatePermanentRedirectToOldUrl_Title {
             get {
@@ -1173,15 +1110,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string EditPageProperties_AdvancedPropertiesTab_EditUrlPath_Tooltip_Description {
             get {
                 return ResourceManager.GetString("EditPageProperties_AdvancedPropertiesTab_EditUrlPath_Tooltip_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Edit Page URL.
-        /// </summary>
-        public static string EditPageProperties_AdvancedPropertiesTab_EditUrlPath_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("EditPageProperties_AdvancedPropertiesTab_EditUrlPath_Tooltip_Title", resourceCulture);
             }
         }
         
@@ -1204,15 +1132,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page Css.
-        /// </summary>
-        public static string EditPageProperties_AdvancedPropertiesTab_PageCss_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("EditPageProperties_AdvancedPropertiesTab_PageCss_Tooltip_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Custom JavaScript.
         /// </summary>
         public static string EditPageProperties_AdvancedPropertiesTab_PageJavascript_Title {
@@ -1227,15 +1146,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string EditPageProperties_AdvancedPropertiesTab_PageJavascript_Tooltip_Description {
             get {
                 return ResourceManager.GetString("EditPageProperties_AdvancedPropertiesTab_PageJavascript_Tooltip_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Custom JavaScript.
-        /// </summary>
-        public static string EditPageProperties_AdvancedPropertiesTab_PageJavascript_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("EditPageProperties_AdvancedPropertiesTab_PageJavascript_Tooltip_Title", resourceCulture);
             }
         }
         
@@ -1258,15 +1168,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit Page URL.
-        /// </summary>
-        public static string EditPageProperties_AdvancedPropertiesTab_PageUrl_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("EditPageProperties_AdvancedPropertiesTab_PageUrl_Tooltip_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Privacy.
         /// </summary>
         public static string EditPageProperties_AdvancedPropertiesTab_Privacy_Title {
@@ -1285,15 +1186,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Privacy.
-        /// </summary>
-        public static string EditPageProperties_AdvancedPropertiesTab_Privacy_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("EditPageProperties_AdvancedPropertiesTab_Privacy_Tooltip_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to This page is visible to everyone.
         /// </summary>
         public static string EditPageProperties_AdvancedPropertiesTab_Privacy_VisibleToEveryone {
@@ -1308,6 +1200,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string EditPageProperties_AdvancedPropertiesTab_Title {
             get {
                 return ResourceManager.GetString("EditPageProperties_AdvancedPropertiesTab_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update sitemap with new URL..
+        /// </summary>
+        public static string EditPageProperties_AdvancedPropertiesTab_UpdateSitemap_Title {
+            get {
+                return ResourceManager.GetString("EditPageProperties_AdvancedPropertiesTab_UpdateSitemap_Title", resourceCulture);
             }
         }
         
@@ -1348,29 +1249,11 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add Categories.
-        /// </summary>
-        public static string EditPageProperties_BasicPropertiesTab_AddCategories_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("EditPageProperties_BasicPropertiesTab_AddCategories_Tooltip_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Add tags.
         /// </summary>
         public static string EditPageProperties_BasicPropertiesTab_AddTags_Tooltip_Description {
             get {
                 return ResourceManager.GetString("EditPageProperties_BasicPropertiesTab_AddTags_Tooltip_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add tags.
-        /// </summary>
-        public static string EditPageProperties_BasicPropertiesTab_AddTags_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("EditPageProperties_BasicPropertiesTab_AddTags_Tooltip_Title", resourceCulture);
             }
         }
         
@@ -1389,15 +1272,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string EditPageProperties_BasicPropertiesTab_Category_Tooltip_Description {
             get {
                 return ResourceManager.GetString("EditPageProperties_BasicPropertiesTab_Category_Tooltip_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Category.
-        /// </summary>
-        public static string EditPageProperties_BasicPropertiesTab_Category_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("EditPageProperties_BasicPropertiesTab_Category_Tooltip_Title", resourceCulture);
             }
         }
         
@@ -1429,15 +1303,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page image.
-        /// </summary>
-        public static string EditPageProperties_BasicPropertiesTab_PageImage_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("EditPageProperties_BasicPropertiesTab_PageImage_Tooltip_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Page Name.
         /// </summary>
         public static string EditPageProperties_BasicPropertiesTab_PageName_Title {
@@ -1452,15 +1317,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Description {
             get {
                 return ResourceManager.GetString("EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Page title.
-        /// </summary>
-        public static string EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Title", resourceCulture);
             }
         }
         
@@ -1521,15 +1377,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Layout.
         /// </summary>
-        public static string EditPageProperties_LayoutPropertiesTab_Layout_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("EditPageProperties_LayoutPropertiesTab_Layout_Tooltip_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Layout.
-        /// </summary>
         public static string EditPageProperties_LayoutPropertiesTab_Title {
             get {
                 return ResourceManager.GetString("EditPageProperties_LayoutPropertiesTab_Title", resourceCulture);
@@ -1537,7 +1384,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page permalink is invalid. Link must start and end with &quot;/&quot; and can contain only following characters: &apos;0-9&apos;, &apos;a-z&apos;, &apos;-&apos;, &apos;/&apos;, &apos;_&apos;.
+        ///   Looks up a localized string similar to Page permalink is invalid. Link must start and end with &quot;/&quot;, can contain only following characters: &apos;0-9&apos;, &apos;a-z&apos;, &apos;-&apos;, &apos;/&apos;, &apos;_&apos; and no more than 260 alphanumeric characters between the &apos;/&apos;..
         /// </summary>
         public static string EditPageProperties_PagePermalink_InvalidMessage {
             get {
@@ -1618,7 +1465,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create permanent redirect entry from old URL to new URL.
+        ///   Looks up a localized string similar to Create permanent redirect entry from old URL to new URL..
         /// </summary>
         public static string EditSeo_EditUrlPath_PermanentRedirect {
             get {
@@ -1645,11 +1492,20 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit Page URL.
+        ///   Looks up a localized string similar to Update sitemap with new URL..
         /// </summary>
-        public static string EditSeo_EditUrlPath_Tooltip_Title {
+        public static string EditSeo_EditUrlPath_UpdateSitemap {
             get {
-                return ResourceManager.GetString("EditSeo_EditUrlPath_Tooltip_Title", resourceCulture);
+                return ResourceManager.GetString("EditSeo_EditUrlPath_UpdateSitemap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Page is not in sitemap..
+        /// </summary>
+        public static string EditSeo_Messages_NotInSitemapWarnMessage {
+            get {
+                return ResourceManager.GetString("EditSeo_Messages_NotInSitemapWarnMessage", resourceCulture);
             }
         }
         
@@ -1672,15 +1528,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Meta Description.
-        /// </summary>
-        public static string EditSeo_MetaDescription_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("EditSeo_MetaDescription_Tooltip_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Meta Keywords.
         /// </summary>
         public static string EditSeo_MetaKeywords {
@@ -1695,15 +1542,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string EditSeo_MetaKeywords_Tooltip_Description {
             get {
                 return ResourceManager.GetString("EditSeo_MetaKeywords_Tooltip_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Meta Keywords.
-        /// </summary>
-        public static string EditSeo_MetaKeywords_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("EditSeo_MetaKeywords_Tooltip_Title", resourceCulture);
             }
         }
         
@@ -1731,15 +1569,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string EditSeo_MetaTitle_Tooltip_Description {
             get {
                 return ResourceManager.GetString("EditSeo_MetaTitle_Tooltip_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Meta Title.
-        /// </summary>
-        public static string EditSeo_MetaTitle_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("EditSeo_MetaTitle_Tooltip_Title", resourceCulture);
             }
         }
         
@@ -1780,15 +1609,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page Title.
-        /// </summary>
-        public static string EditSeo_PageTitle_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("EditSeo_PageTitle_Tooltip_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Page URL path is invalid. Link must start and end with &quot;/&quot; and can contain only following characters: &apos;0-9&apos;, &apos;a-z&apos;, &apos;-&apos;, &apos;/&apos;, &apos;_&apos;.
         /// </summary>
         public static string EditSeo_PageUrlPath_InvalidMessage {
@@ -1821,15 +1641,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string EditSeo_UrlPath_Tooltip_Description {
             get {
                 return ResourceManager.GetString("EditSeo_UrlPath_Tooltip_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Edit Page URL.
-        /// </summary>
-        public static string EditSeo_UrlPath_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("EditSeo_UrlPath_Tooltip_Title", resourceCulture);
             }
         }
         
@@ -1969,15 +1780,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Widget Category.
-        /// </summary>
-        public static string HtmlContentWidget_Category_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("HtmlContentWidget_Category_Tooltip_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Content name max length exceeded..
         /// </summary>
         public static string HtmlContentWidget_ContentName_MaxLengthMessage {
@@ -2010,15 +1812,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string HtmlContentWidget_ContentName_Tooltip_Description {
             get {
                 return ResourceManager.GetString("HtmlContentWidget_ContentName_Tooltip_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Content Name.
-        /// </summary>
-        public static string HtmlContentWidget_ContentName_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("HtmlContentWidget_ContentName_Tooltip_Title", resourceCulture);
             }
         }
         
@@ -2869,20 +2662,20 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sorting page contents. Please wait..
+        /// </summary>
+        public static string SortPageContent_Info_Message {
+            get {
+                return ResourceManager.GetString("SortPageContent_Info_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Tags.
         /// </summary>
         public static string TagsTemplate_AddTags_Title {
             get {
                 return ResourceManager.GetString("TagsTemplate_AddTags_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Title.
-        /// </summary>
-        public static string Template_Preview_Image_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("Template_Preview_Image_Tooltip_Title", resourceCulture);
             }
         }
         
@@ -2905,15 +2698,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Title.
-        /// </summary>
-        public static string Template_Title_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("Template_Title_Tooltip_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Template Path.
         /// </summary>
         public static string Template_Url_Title {
@@ -2932,11 +2716,11 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Template Path.
+        ///   Looks up a localized string similar to Preview.
         /// </summary>
-        public static string Template_Url_Tooltip_Title {
+        public static string TemplateImagePreview_Tooltip_Description {
             get {
-                return ResourceManager.GetString("Template_Url_Tooltip_Title", resourceCulture);
+                return ResourceManager.GetString("TemplateImagePreview_Tooltip_Description", resourceCulture);
             }
         }
         
@@ -3058,24 +2842,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Category.
-        /// </summary>
-        public static string Widget_Category_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("Widget_Category_Tooltip_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Title.
-        /// </summary>
-        public static string Widget_Preview_Image_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("Widget_Preview_Image_Tooltip_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Title.
         /// </summary>
         public static string Widget_Title_Title {
@@ -3094,15 +2860,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Title.
-        /// </summary>
-        public static string Widget_Title_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("Widget_Title_Tooltip_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Widget Path.
         /// </summary>
         public static string Widget_Url_Title {
@@ -3117,15 +2874,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string Widget_Url_Tooltip_Description {
             get {
                 return ResourceManager.GetString("Widget_Url_Tooltip_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Widget Path.
-        /// </summary>
-        public static string Widget_Url_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("Widget_Url_Tooltip_Title", resourceCulture);
             }
         }
         
@@ -3162,6 +2910,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string WidgetPreviewImage_Title {
             get {
                 return ResourceManager.GetString("WidgetPreviewImage_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Purpose of Page URL is .......
+        /// </summary>
+        public static string WidgetPreviewImage_Tooltip_Description {
+            get {
+                return ResourceManager.GetString("WidgetPreviewImage_Tooltip_Description", resourceCulture);
             }
         }
         

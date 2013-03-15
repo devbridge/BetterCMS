@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console, document */
 
-define('bcms.tooltip', ['jquery', 'bcms'], function ($, bcms) {
+define('bcms.tooltip', ['bcms.jquery', 'bcms'], function ($, bcms) {
     'use strict';
 
     var tooltip = {},
@@ -9,7 +9,6 @@ define('bcms.tooltip', ['jquery', 'bcms'], function ($, bcms) {
 
     // Selectors used in the module to locate DOM elements.
         selectors = {
-            title: 'h4',
             message: 'p',
             close: '.bcms-tip-close',
             arrowContainer: '.bcms-tooltip-box'
@@ -33,16 +32,11 @@ define('bcms.tooltip', ['jquery', 'bcms'], function ($, bcms) {
             container = $(template);
 
         this.options = $.extend({
-            title: null,
             message: null,
             elementPositioning: null
         }, options);
 
         this.container = container;
-
-        if (options.title) {
-            this.setTitle(options.title);
-        }
 
         if (options.message) {
             this.setMessage(options.message);
@@ -106,11 +100,6 @@ define('bcms.tooltip', ['jquery', 'bcms'], function ($, bcms) {
             container.css({ top: top, left: left });
         },
 
-        setTitle: function (text) {
-            this.title = text;
-            this.container.find(selectors.title).empty().append(text);
-        },
-
         setMessage: function (text) {
             this.message = text;
             this.container.find(selectors.message).empty().append(text);
@@ -152,15 +141,13 @@ define('bcms.tooltip', ['jquery', 'bcms'], function ($, bcms) {
                     popup.hide();
                 }
             } else {
-                var title = element.data('title'),
-                    message = element.data('message');
+                var message = element.data('message');
 
-                if (title || message) {
+                if (message) {
                     tooltip.hideVisible();
                     popup = tooltip.create(
                         element,
                         {
-                            title: title,
                             message: message,
                             elementPositioning:
                                 {

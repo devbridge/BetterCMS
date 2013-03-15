@@ -12,6 +12,8 @@ namespace BetterCms.Module.MediaManager.ViewModels.MediaManager
         public virtual Guid Id { get; set; }
 
         public virtual int Version { get; set; }
+        
+        public DateTime CreatedOn { get; set; }
 
         [Required]
         [StringLength(MaxLength.Name)]

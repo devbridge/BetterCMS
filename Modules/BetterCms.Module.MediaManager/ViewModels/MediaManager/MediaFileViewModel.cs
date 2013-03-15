@@ -11,6 +11,10 @@ namespace BetterCms.Module.MediaManager.ViewModels.MediaManager
 
         public virtual string PublicUrl { get; set; }
 
+        public virtual bool IsProcessing { get; set; }
+        
+        public virtual bool IsFailed { get; set; }
+
         public MediaFileViewModel()
         {
             Type = MediaType.File;

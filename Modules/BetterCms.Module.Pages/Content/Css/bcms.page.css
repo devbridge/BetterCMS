@@ -192,6 +192,7 @@ a.bcms-slider-next {
 
     .bcms-uploaded-image img {
         max-width: 100%;
+        background: #f5f5f5;
     }
 
 .bcms-upload-info {

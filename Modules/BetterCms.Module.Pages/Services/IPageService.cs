@@ -8,5 +8,7 @@ namespace BetterCms.Module.Pages.Services
     public interface IPageService
     {        
         void ValidatePageUrl(string url, Guid? pageId = null);
+
+        string CreatePagePermalink(string url);
     }
 }

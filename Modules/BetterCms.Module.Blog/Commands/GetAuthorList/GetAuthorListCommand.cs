@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.ViewModels.Author;

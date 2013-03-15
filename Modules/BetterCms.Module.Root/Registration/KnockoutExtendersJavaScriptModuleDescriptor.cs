@@ -7,7 +7,7 @@ namespace BetterCms.Module.Root.Registration
     public class KnockoutExtendersJavaScriptModuleDescriptor : JavaScriptModuleDescriptor
     {
         public KnockoutExtendersJavaScriptModuleDescriptor(ModuleDescriptor containerModule)
-            : base(containerModule, "bcms.ko.extenders", "/file/bcms-root/scripts/bcms.ko.extenders")
+            : base(containerModule, "bcms.ko.extenders")
         {
             Links = new IActionProjection[]
                 {   

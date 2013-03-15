@@ -1,4 +1,8 @@
-﻿using BetterCms.Core.Mvc.Commands;
+﻿using System;
+
+using BetterCms.Api;
+using BetterCms.Core.Exceptions;
+using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.Pages.Command.Page.SavePageProperties;
 using BetterCms.Module.Pages.Models;
@@ -44,7 +48,8 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
             var createPageUrl = (pageUrl == null);
             if (createPageUrl && !string.IsNullOrWhiteSpace(request.PageTitle))
             {
-                pageUrl = request.PageTitle.Transliterate();
+                pageUrl = pageService.CreatePagePermalink(request.PageTitle);
+                //pageUrl = request.PageTitle.Transliterate();
             }
             pageUrl = redirectService.FixUrl(pageUrl);
 
@@ -72,6 +77,9 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
                 
             Repository.Save(page);
             UnitOfWork.Commit();
+
+            // Notifying, that page is created
+            PagesApiContext.Events.OnPageCreated(page);
 
             return new SavePageResponse(page);
         }

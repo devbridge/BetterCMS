@@ -1,4 +1,4 @@
-﻿@model BetterCms.Core.Models.IPage
+﻿@model BetterCms.Core.DataContracts.IPage
 @{
     Layout = "~/Areas/bcms-Root/Views/Shared/BaseLayout.cshtml";
 }
@@ -6,6 +6,13 @@
 @section Styles {
     <link rel="stylesheet" type="text/css" href="@Url.Content("/file/bcms-templates/Content/Css/bcms.templates.css")" />
     @RenderSection("Styles", false)
+}
+
+@section HeadScripts {
+    <!--[if lt IE 9]>
+            <script src="@Url.Content("/file/bcms-templates/Scripts/html5shiv.js")"></script>
+    <![endif]-->
+    @RenderSection("HeadScripts", false)
 }
 
 <div class="page">

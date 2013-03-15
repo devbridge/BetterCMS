@@ -118,6 +118,7 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Api\Events\MediaManagerEvents.cs" />
     <Compile Include="Command\Audios\GetAudios\GetAudiosCommand.cs" />
     <Compile Include="Command\Folder\DeleteFolderCommand.cs" />
     <Compile Include="Command\Folder\DeleteFolderCommandRequest.cs" />
@@ -127,6 +128,7 @@
     <Compile Include="Command\Files\DownloadFile\DownloadFileCommandResponse.cs" />
     <Compile Include="Command\MediaManager\GetMediaItemsCommandBase.cs" />
     <Compile Include="Command\MediaManager\RenameMedia\RenameMediaCommand.cs" />
+    <Compile Include="Command\Upload\CheckFileStatuses\CheckFilesStatusesCommand.cs" />
     <Compile Include="Command\Upload\ConfirmUpload\ConfirmUploadCommand.cs" />
     <Compile Include="Command\MediaManager\DeleteMedia\DeleteMediaCommand.cs" />
     <Compile Include="Command\MediaManager\DeleteMedia\DeleteMediaCommandRequest.cs" />
@@ -154,19 +156,22 @@
     <Compile Include="Controllers\FilesController.cs" />
     <Compile Include="Controllers\MediaManagerController.cs" />
     <Compile Include="Helpers\WrappedJsonResult.cs" />
+    <Compile Include="Api\MediaManagerApiContext.cs" />
     <Compile Include="MediaManagerModuleDescriptor.cs" />
+    <Compile Include="Models\Extensions\MediaFileExtensions.cs" />
+    <Compile Include="Models\MediaImageAlign.cs" />
+    <Compile Include="Models\MediaType.cs" />
     <Compile Include="Models\Maps\MediaMap.cs" />
     <Compile Include="Models\Maps\MediaFileMap.cs" />
     <Compile Include="Models\Maps\MediaFolderMap.cs" />
     <Compile Include="Models\Maps\MediaImageMap.cs" />
     <Compile Include="Models\MediaContentType.cs" />
-    <Compile Include="Models\MediaImageAlign.cs" />
     <Compile Include="Models\MediaFile.cs" />
-    <Compile Include="Models\MediaType.cs" />
     <Compile Include="Models\MediaFolder.cs" />
     <Compile Include="Models\Media.cs" />
     <Compile Include="Models\MediaImage.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
+    <Compile Include="Models\Migrations\Migration201303081430.cs" />
     <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />
     <Compile Include="Registration\ImageEditorJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\MediaUploadJavaScriptModuleDescriptor.cs" />
@@ -235,8 +240,8 @@
     <EmbeddedResource Include="Scripts\bcms.media.imageeditor.js" />
     <EmbeddedResource Include="Scripts\bcms.media.js" />
     <EmbeddedResource Include="Scripts\bcms.media.upload.js" />
-    <EmbeddedResource Include="Scripts\html5Upload.js" />
-    <EmbeddedResource Include="Scripts\jquery.Jcrop.js" />
+    <EmbeddedResource Include="Scripts\bcms.html5Upload.js" />
+    <EmbeddedResource Include="Scripts\bcms.jquery.Jcrop.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>

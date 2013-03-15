@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Web.Mvc;
 
-using BetterCms.Core.Models;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Blog.Commands.GetBlogPost;
 using BetterCms.Module.Blog.Commands.GetBlogPostList;
 using BetterCms.Module.Blog.Commands.SaveBlogPost;
 using BetterCms.Module.Blog.Content.Resources;
+using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Root.Mvc;
@@ -15,6 +16,13 @@ namespace BetterCms.Module.Blog.Controllers
 {
     public class BlogController : CmsControllerBase
     {
+        private readonly IBlogService blogService;
+
+        public BlogController(IBlogService blogService)
+        {
+            this.blogService = blogService;
+        }
+
         public virtual ActionResult Index(SearchableGridOptions request)
         {
             var model = GetCommand<GetBlogPostListCommand>().ExecuteCommand(request ?? new SearchableGridOptions());
@@ -29,7 +37,7 @@ namespace BetterCms.Module.Blog.Controllers
             var success = false;
             if (model != null)
             {
-                model.ParentPageUrl = parentPageUrl;
+                model.BlogUrl = parentPageUrl;
                 success = true;
             }
 
@@ -58,6 +66,14 @@ namespace BetterCms.Module.Blog.Controllers
                 }
             }
             return WireJson(response != null, response);
+        }
+
+        
+        public ActionResult ConvertStringToSlug(string text, string senderId)
+        {
+            var slug = blogService.CreateBlogPermalink(text);
+
+            return Json(new { Text = text, Url = slug, SenderId = senderId }, JsonRequestBehavior.AllowGet);
         }
     }
 }

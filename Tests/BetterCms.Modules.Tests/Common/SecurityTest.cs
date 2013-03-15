@@ -8,7 +8,6 @@ using Autofac;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Blog;
 using BetterCms.Module.MediaManager;
-using BetterCms.Module.Navigation;
 using BetterCms.Module.Pages;
 using BetterCms.Module.Root;
 using BetterCms.Module.Templates;
@@ -62,7 +61,6 @@ namespace BetterCms.Test.Module.Common
                     new TestItem(typeof(PagesModuleDescriptor),  new List<string> { "" }, new List<string> { "" }),
                     new TestItem(typeof(BlogModuleDescriptor),  new List<string> { "" }, new List<string> { "" }),
                     new TestItem(typeof(MediaManagerModuleDescriptor),  new List<string> { "" }, new List<string> { "" }),
-                    new TestItem(typeof(NavigationModuleDescriptor),  new List<string> { "" }, new List<string> { "" }),
                     new TestItem(typeof(TemplatesModuleDescriptor),  new List<string> { "" }, new List<string> { "" }),
                 };
 

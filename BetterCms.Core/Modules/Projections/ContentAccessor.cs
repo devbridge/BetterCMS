@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Web.Mvc;
 
-using BetterCms.Core.Models;
+using BetterCms.Core.DataContracts;
 
 namespace BetterCms.Core.Modules.Projections
 {
@@ -18,9 +18,11 @@ namespace BetterCms.Core.Modules.Projections
 
     public interface IHtmlAccessor
     {
-        string GetRegionWrapperCssClass(HtmlHelper html);
+        string GetContentWrapperType();
 
         string GetHtml(HtmlHelper html);
+
+        string GetTitle();
     }
 
     public interface IContentAccessor : IHtmlAccessor, IStylesheetAccessor, IJavaScriptAccessor
@@ -41,7 +43,12 @@ namespace BetterCms.Core.Modules.Projections
             Options = options;
         }
 
-        public abstract string GetRegionWrapperCssClass(HtmlHelper html);
+        public virtual string GetTitle()
+        {
+            return Content.Name;
+        }
+
+        public abstract string GetContentWrapperType();
 
         public abstract string GetHtml(HtmlHelper html);
 

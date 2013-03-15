@@ -16,7 +16,7 @@ namespace BetterCms.Module.MediaManager.Registration
         /// </summary>
         /// <param name="containerModule">The container module.</param>
         public MediaManagerJavaScriptModuleDescriptor(ModuleDescriptor containerModule)
-            : base(containerModule, "bcms.media", "/file/bcms-media/scripts/bcms.media")
+            : base(containerModule, "bcms.media")
         {
             Links = new IActionProjection[]
                 {

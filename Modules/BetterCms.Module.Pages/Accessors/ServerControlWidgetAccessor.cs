@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Web.Mvc;
 
+using BetterCms.Core.DataContracts;
 using BetterCms.Core.Models;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Pages.Models;
@@ -62,9 +63,9 @@ namespace BetterCms.Module.Pages.Accessors
             }
         }
 
-        public override string GetRegionWrapperCssClass(HtmlHelper html)
+        public override string GetContentWrapperType()
         {
-            return "bcms-content-widget";
+            return "server-widget";
         }
 
         public override string GetHtml(HtmlHelper html)

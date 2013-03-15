@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.modal', 'html5Upload', 'bcms.ko.extenders', 'bcms.messages'],
+define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms.modal', 'bcms.html5Upload', 'bcms.ko.extenders', 'bcms.messages'],
     function ($, bcms, dynamicContent, modal, html5Upload, ko, messages) {
     'use strict';
 
@@ -16,7 +16,8 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
             fileUploadingTarget: '#UploadTarget',
             fileUploadingInput: '#uploadFile',
             fileUploadingResult: '#jsonResult',
-            folderDropDown: '#SelectedFolderId'
+            folderDropDown: '#SelectedFolderId',
+            uploadButtonLabel: '.bcms-btn-upload-files-text'
         },
 
         classes = {
@@ -27,11 +28,13 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
             loadUploadFilesDialogUrl: null,
             uploadFileToServerUrl: null,
             undoFileUploadUrl: null,
-            loadUploadSingleFileDialogUrl: null
+            loadUploadSingleFileDialogUrl: null,
+            checkUploadedFileStatuses: null
         },
 
         globalization = {
-            uploadFilesDialogTitle: null
+            uploadFilesDialogTitle: null,
+            failedToProcessFile: null
         };
 
     /**
@@ -63,7 +66,9 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
                             dialog.container.showLoading();
                         },
 
-                        postSuccess: function(json) {
+                        postSuccess: function (json) {
+                            options.uploads.stopStatusChecking();
+                            options.uploads.removeFailedUploads();
                             if (onSaveCallback && $.isFunction(onSaveCallback)) {
                                 onSaveCallback(json);
                             }
@@ -74,8 +79,9 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
                         }
                     });
                 },
-                onCancel: function() {
+                onClose: function() {
                     options.uploads.removeAllUploads();
+                    options.uploads.stopStatusChecking();
                 }
             });
         } else {
@@ -99,6 +105,8 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
                                         onSaveCallback(json);
                                     }
                                 } finally {
+                                    options.uploads.stopStatusChecking();
+                                    options.uploads.removeFailedUploads();
                                     dialog.close();
                                 }
                             }
@@ -110,6 +118,7 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
                         data: formToSubmit.serialize()
                     })
                         .done(function(response) {
+
                             onComplete(response);
                         })
                         .fail(function(response) {
@@ -118,8 +127,9 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
                     
                     return false;
                 },
-                onCancel: function() {
+                onClose: function () {
                     options.uploads.removeAllUploads();
+                    options.uploads.stopStatusChecking();
                 }
             });
         }
@@ -160,6 +170,8 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
                     clearInterval(uploadAnimationId);
                 }
             };
+
+        dialog.container.find(selectors.uploadButtonLabel).on('click', fixUploadButtonForMozilla);
 
         // On folder changed
         dialog.container.find(selectors.fileUploadingForm).find(selectors.folderDropDown).on('change', function () {
@@ -223,6 +235,15 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
             fileModel.type(newImg.Type);
             fileModel.uploadProgress(100);
 
+            if (newImg.IsFailed) {
+                fileModel.uploadFailed(true);
+                fileModel.failureMessage(globalization.failedToProcessFile);
+            } else if (newImg.IsProcessing) {
+                fileModel.uploadProcessing(true);
+
+                uploadsModel.startStatusChecking(uploadsModel.firstTimeout);
+            }
+
             uploadsModel.uploads.push(fileModel);
             uploadsModel.activeUploads.remove(fileModel);
         });
@@ -272,6 +293,102 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
                 abortUpload(uploads[i]);
             }
         };
+        
+        self.removeFailedUploads = function () {
+            for (var i = 0; i < self.uploads().length; i++) {
+                if (self.uploads()[i].uploadFailed()) {
+                    abortUpload(self.uploads()[i]);
+                }
+            }
+        };
+        
+        // When one of file status is "Processing", checking file status repeatedly
+        self.timeout = 10000;
+        self.firstTimeout = 500;
+        self.timer = null;
+
+        self.startStatusChecking = function (timeout) {
+            if (!self.timer) {
+                if (!timeout) {
+                    timeout = self.timeout;
+                }
+                self.timer = setTimeout(self.checkStatus, timeout);
+            }
+        };
+        
+        self.stopStatusChecking = function () {
+            if (self.timer) {
+                clearTimeout(self.timer);
+                self.timer = null;
+            }
+        };
+
+        self.checkStatus = function () {
+            var ids = self.getProcessingIds(),
+                onFail = function() {
+                    console.log('Failed to check uploaded files statuses');
+                    self.startStatusChecking();
+                },
+                hasProcessing = false;
+
+            self.timer = null;
+
+            if (ids.length > 0) {
+                $.ajax({
+                    type: 'POST',
+                    cache: false,
+                    url: links.checkUploadedFileStatuses,
+                    data: JSON.stringify({ ids: ids }),
+                    contentType: 'application/json; charset=utf-8'
+                })
+                    .done(function (response) {
+                        if (response.Success) {
+                            if (response.Data && response.Data.length  > 0) {
+                                for (var i = 0; i < response.Data.length; i++) {
+                                    var item = response.Data[i],
+                                        id = item.Id,
+                                        isProcessing = item.IsProcessing === true,
+                                        isFailed = item.IsFailed === true;
+                                    if (id) {
+                                        for (var j = 0; j < self.uploads().length; j ++) {
+                                            if (self.uploads()[j].fileId() == id) {
+                                                if (isFailed) {
+                                                    self.uploads()[j].uploadFailed(true);
+                                                    self.uploads()[j].uploadProcessing(false);
+                                                    self.uploads()[j].failureMessage(globalization.failedToProcessFile);
+                                                } else if (!isProcessing) {
+                                                    self.uploads()[j].uploadProcessing(false);
+                                                } else if (isProcessing) {
+                                                    hasProcessing = true;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            if (hasProcessing) {
+                                self.startStatusChecking();
+                            }
+                        } else {
+                            onFail();
+                        }
+                    })
+                    .fail(function (response) {
+                        onFail();
+                    });
+            }
+        };
+
+        self.getProcessingIds = function() {
+            var ids = [],
+                i;
+            for (i = 0; i < self.uploads().length; i++) {
+                if (self.uploads()[i].uploadProcessing()) {
+                    ids.push(self.uploads()[i].fileId());
+                }
+            }
+            return ids;
+        };
     } 
 
     function FileViewModel(file) {
@@ -283,11 +400,12 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
         self.uploadProgress = ko.observable(0);
         self.uploadCompleted = ko.observable(false);
         self.uploadFailed = ko.observable(false);
+        self.uploadProcessing = ko.observable(false);
         self.failureMessage = ko.observable("");
         self.uploadSpeedFormatted = ko.observable();
         self.fileName = file.fileName;
         self.fileSizeFormated = formatFileSize(file.fileSize);
-        self.isProgressVisable = ko.observable(true);
+        self.isProgressVisible = ko.observable(true);
 
         self.uploadCompleted.subscribe(function (newValue) {
             if (newValue === true) {
@@ -318,6 +436,8 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
             return false;
         });
 
+        dialog.container.find(selectors.uploadButtonLabel).on('click', fixUploadButtonForMozilla);
+
         if (html5Upload.fileApiSupported()) {
 
             var context = document.getElementById('bcms-media-uploads');
@@ -340,12 +460,22 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
                             var result = JSON.parse(data);
                             if (result.Success) {
                                 uploadsModel.activeUploads.remove(fileModel);
-                                fileModel.uploadCompleted(true);
                                 fileModel.fileId(result.Data.FileId);
                                 fileModel.version(result.Data.Version);
                                 fileModel.type(result.Data.Type);
                                 clearInterval(transferAnimationId);
-                                fileModel.isProgressVisable(true);
+                                fileModel.isProgressVisible(true);
+                                fileModel.uploadCompleted(true);
+                                
+                                if (result.Data.IsFailed) {
+                                    fileModel.uploadFailed(true);
+                                    fileModel.failureMessage(globalization.failedToProcessFile);
+                                } else if (result.Data.IsProcessing) {
+                                    fileModel.uploadProcessing(true);
+                                    fileModel.isProgressVisible(false);
+                                    
+                                    uploadsModel.startStatusChecking(uploadsModel.firstTimeout);
+                                }
                             } else {
                                 fileModel.uploadFailed(true);
                                 fileModel.failureMessage('');
@@ -355,7 +485,7 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
                                         failureMessages += result.Messages[i] + ' ';
                                     }
                                     clearInterval(transferAnimationId);
-                                    fileModel.isProgressVisable(true);
+                                    fileModel.isProgressVisible(true);
                                     fileModel.failureMessage(failureMessages);
                                 }
                             }
@@ -372,7 +502,7 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
                         },
 
                         onTransfer: function () {
-                            fileModel.isProgressVisable(false);
+                            fileModel.isProgressVisible(false);
                             transferAnimationId = setInterval(function () {
                                 if (fileModel.uploadProgress() >= 100) {
                                     fileModel.uploadProgress(0);
@@ -389,6 +519,14 @@ define('bcms.media.upload', ['jquery', 'bcms', 'bcms.dynamicContent', 'bcms.moda
         } 
     }
         
+    function fixUploadButtonForMozilla() {
+        if ($.browser.mozilla) {
+            $('#' + $(this).attr('for')).click();
+            return false;
+        }
+        return true;
+    }
+
     function trimTrailingZeros(number) {
         return number.toFixed(1).replace(/\.0+$/, '');
     }

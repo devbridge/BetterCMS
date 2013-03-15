@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
+using BetterCms.Api;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Mvc;
-using BetterCms.Core.Models;
+
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Widgets;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
-using System.Linq;
-
 using BetterCms.Module.Root.Services;
-
-using NHibernate.Linq;
 
 namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
 {
@@ -50,6 +49,19 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
             Repository.Save(widget);
 
             UnitOfWork.Commit();
+
+            // Notify.
+            if (widget.Status != ContentStatus.Preview)
+            {
+                if (request.Id == default(Guid))
+                {
+                    PagesApiContext.Events.OnWidgetCreated(widget);
+                }
+                else
+                {
+                    PagesApiContext.Events.OnWidgetUpdated(widget);
+                }
+            }
 
             return new SaveWidgetResponse
                        {

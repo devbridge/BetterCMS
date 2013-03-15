@@ -94,6 +94,11 @@ namespace BetterCms.Core.DataAccess
             return AsQueryable<TEntity>().Where(filter).FirstOrDefault();
         }
 
+        public IQueryOver<TEntity, TEntity> AsQueryOver<TEntity>() where TEntity : Entity
+        {
+            return UnitOfWork.Session.QueryOver<TEntity>().Where(f => !f.IsDeleted);
+        }
+
         public virtual IQueryable<TEntity> AsQueryable<TEntity>(Expression<Func<TEntity, bool>> filter) where TEntity : Entity
         {
             return AsQueryable<TEntity>().Where(filter);
@@ -119,11 +124,16 @@ namespace BetterCms.Core.DataAccess
             UnitOfWork.Session.Delete(entity);
         }
 
-        public virtual void Delete<TEntity>(Guid id, int version) where TEntity : Entity
+        public virtual TEntity Delete<TEntity>(Guid id, int version, bool useProxy = true) where TEntity : Entity
         {
-            TEntity entity = AsProxy<TEntity>(id);
+            TEntity entity = useProxy
+                                ? AsProxy<TEntity>(id)
+                                : First<TEntity>(id);
+
             entity.Version = version;
             UnitOfWork.Session.Delete(entity);
+
+            return entity;
         }
 
         public virtual void Attach<TEntity>(TEntity entity) where TEntity : Entity

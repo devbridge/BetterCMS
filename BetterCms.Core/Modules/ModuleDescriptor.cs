@@ -6,9 +6,9 @@ using System.Web.Mvc;
 
 using Autofac;
 
-using BetterCms.Core.Models;
+using BetterCms.Api;
+using BetterCms.Core.DataContracts;
 using BetterCms.Core.Modules.Projections;
-using BetterCms.Core.Mvc;
 using BetterCms.Core.Mvc.Attributes;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Mvc.Extensions;
@@ -62,6 +62,19 @@ namespace BetterCms.Core.Modules
             }
         }
 
+        /// <summary>
+        /// Gets the base script path.
+        /// </summary>
+        /// <value>
+        /// The base script path.
+        /// </value>
+        public virtual string BaseScriptPath
+        {
+            get
+            {
+                return string.Format("/file/{0}/scripts/", AreaName).ToLowerInvariant();
+            }
+        }
         /// <summary>
         /// Gets the name of the assembly.
         /// </summary>
@@ -156,7 +169,7 @@ namespace BetterCms.Core.Modules
         /// <param name="containerBuilder">The container builder.</param>
         /// <param name="configuration">The configuration.</param>
         /// <param name="controllerExtensions">The controller extensions.</param>
-        public virtual void RegisterModuleControllers(ModuleRegistrationContext registrationContext, ContainerBuilder containerBuilder, ICmsConfiguration configuration, IControllerExtensions controllerExtensions)
+        internal void RegisterModuleControllers(ModuleRegistrationContext registrationContext, ContainerBuilder containerBuilder, ICmsConfiguration configuration, IControllerExtensions controllerExtensions)
         {
             var controllerTypes = controllerExtensions.GetControllerTypes(GetType().Assembly);
 
@@ -217,9 +230,10 @@ namespace BetterCms.Core.Modules
         /// <param name="registrationContext">The area registration context.</param>
         /// <param name="containerBuilder">The container builder.</param>
         /// <param name="configuration">The CMS configuration.</param>
-        public virtual void RegisterModuleCommands(ModuleRegistrationContext registrationContext, ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        internal void RegisterModuleCommands(ModuleRegistrationContext registrationContext, ContainerBuilder containerBuilder, ICmsConfiguration configuration)
         {
             Assembly assembly = GetType().Assembly;
+
             Type[] commandTypes = new[]
                 {
                     typeof(ICommand),
@@ -230,6 +244,19 @@ namespace BetterCms.Core.Modules
             containerBuilder
                 .RegisterAssemblyTypes(assembly)
                 .Where(scan => commandTypes.Any(commandType => IsAssignableToGenericType(scan, commandType)))
+                .AsImplementedInterfaces()
+                .AsSelf()
+                .PropertiesAutowired()
+                .InstancePerLifetimeScope();
+        }
+
+        internal void RegisterModuleApiContexts(ModuleRegistrationContext registrationContext, ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        {
+            Assembly assembly = GetType().Assembly;
+            
+            containerBuilder
+                .RegisterAssemblyTypes(assembly)
+                .AssignableTo(typeof(ApiContext))                
                 .AsImplementedInterfaces()
                 .AsSelf()
                 .PropertiesAutowired()

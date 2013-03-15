@@ -1,6 +1,6 @@
 ﻿using System;
 
-using BetterCms.Core.Models;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Root.Mvc.Grids;
 
 namespace BetterCms.Module.Pages.ViewModels.History

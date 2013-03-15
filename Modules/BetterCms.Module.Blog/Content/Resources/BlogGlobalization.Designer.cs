@@ -187,15 +187,6 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Author.
-        /// </summary>
-        public static string EditBlockPost_Author_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("EditBlockPost_Author_Tooltip_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Category.
         /// </summary>
         public static string EditBlockPost_Category_Title {
@@ -214,15 +205,6 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Category.
-        /// </summary>
-        public static string EditBlockPost_Category_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("EditBlockPost_Category_Tooltip_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Full Post.
         /// </summary>
         public static string EditBlockPost_Content_Title {
@@ -237,15 +219,6 @@ namespace BetterCms.Module.Blog.Content.Resources {
         public static string EditBlockPost_Content_Tooltip_Description {
             get {
                 return ResourceManager.GetString("EditBlockPost_Content_Tooltip_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Full Post.
-        /// </summary>
-        public static string EditBlockPost_Content_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("EditBlockPost_Content_Tooltip_Title", resourceCulture);
             }
         }
         
@@ -277,15 +250,6 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Featured Image.
-        /// </summary>
-        public static string EditBlockPost_FeaturedImage_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("EditBlockPost_FeaturedImage_Tooltip_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Intro / Featured Text.
         /// </summary>
         public static string EditBlockPost_IntroText_Title {
@@ -304,29 +268,11 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Intro / Featured Text.
-        /// </summary>
-        public static string EditBlockPost_IntroText_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("EditBlockPost_IntroText_Tooltip_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Live dates.
         /// </summary>
         public static string EditBlockPost_LiveDates_Tooltip_Description {
             get {
                 return ResourceManager.GetString("EditBlockPost_LiveDates_Tooltip_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Live dates.
-        /// </summary>
-        public static string EditBlockPost_LiveDates_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("EditBlockPost_LiveDates_Tooltip_Title", resourceCulture);
             }
         }
         
@@ -367,15 +313,6 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add Tags.
-        /// </summary>
-        public static string EditBlockPost_Tags_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("EditBlockPost_Tags_Tooltip_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Title of the Post.
         /// </summary>
         public static string EditBlockPost_Title_Title {
@@ -394,11 +331,38 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Title of the Post.
+        ///   Looks up a localized string similar to Create permanent redirect entry from old URL to new URL..
         /// </summary>
-        public static string EditBlockPost_Title_Tooltip_Title {
+        public static string EditBlogPost_CreatePermanentRedirectToOldUrl_Title {
             get {
-                return ResourceManager.GetString("EditBlockPost_Title_Tooltip_Title", resourceCulture);
+                return ResourceManager.GetString("EditBlogPost_CreatePermanentRedirectToOldUrl_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Page permalink max length exceeded..
+        /// </summary>
+        public static string EditBlogPost_PagePermalink_MaxLengthMessage {
+            get {
+                return ResourceManager.GetString("EditBlogPost_PagePermalink_MaxLengthMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change Post URL.
+        /// </summary>
+        public static string EditBlogPost_Permalink {
+            get {
+                return ResourceManager.GetString("EditBlogPost_Permalink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Post URL.
+        /// </summary>
+        public static string EditBlogPost_Permalink_Tooltip_Description {
+            get {
+                return ResourceManager.GetString("EditBlogPost_Permalink_Tooltip_Description", resourceCulture);
             }
         }
         

@@ -3,6 +3,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using BetterCms.Core.Models;
 
+using NHibernate;
+
 namespace BetterCms.Core.DataAccess
 {
     /// <summary>
@@ -21,6 +23,8 @@ namespace BetterCms.Core.DataAccess
 
         TEntity FirstOrDefault<TEntity>(Expression<Func<TEntity, bool>> filter) where TEntity : Entity;
 
+        IQueryOver<TEntity, TEntity> AsQueryOver<TEntity>() where TEntity : Entity;
+
         IQueryable<TEntity> AsQueryable<TEntity>() where TEntity : Entity;
 
         IQueryable<TEntity> AsQueryable<TEntity>(Expression<Func<TEntity, bool>> filter) where TEntity : Entity;
@@ -31,7 +35,7 @@ namespace BetterCms.Core.DataAccess
 
         void Delete<TEntity>(TEntity entity) where TEntity : Entity;
 
-        void Delete<TEntity>(Guid id, int version) where TEntity : Entity;
+        TEntity Delete<TEntity>(Guid id, int version, bool useProxy = true) where TEntity : Entity;
 
         void Attach<TEntity>(TEntity entity) where TEntity : Entity;
 

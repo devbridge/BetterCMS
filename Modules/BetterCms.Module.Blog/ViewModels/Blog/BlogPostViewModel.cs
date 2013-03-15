@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;
 
 using BetterCms.Module.Blog.Content.Resources;
@@ -97,12 +98,14 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         public virtual Guid? AuthorId { get; set; }
 
         /// <summary>
-        /// Gets or sets the parent page URL.
+        /// Gets or sets the blog URL.
         /// </summary>
         /// <value>
-        /// The parent page URL.
+        /// The blog URL.
         /// </value>
-        public string ParentPageUrl { get; set; }
+        [CustomPageUrlValidation]
+        [StringLength(MaxLength.Url, MinimumLength = 1, ErrorMessageResourceType = typeof(BlogGlobalization), ErrorMessageResourceName = "EditBlogPost_PagePermalink_MaxLengthMessage")]
+        public string BlogUrl { get; set; }
 
         /// <summary>
         /// Gets or sets the cathegory.
@@ -167,6 +170,14 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// The image view model.
         /// </value>
         public ImageSelectorViewModel Image { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to create permanent redirect from old URL to new URL.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if create permanent redirect from old URL to new URL; otherwise, <c>false</c>.
+        /// </value>
+        public bool RedirectFromOldUrl { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlogPostViewModel" /> class.

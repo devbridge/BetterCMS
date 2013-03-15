@@ -26,7 +26,7 @@ namespace BetterCms.Module.Blog
         /// <summary>
         /// The blog java script module descriptor
         /// </summary>
-        private BlogJavaScriptModuleDescriptor blogJavaScriptModuleDescriptor;
+        private readonly BlogJavaScriptModuleDescriptor blogJavaScriptModuleDescriptor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlogModuleDescriptor" /> class.
@@ -145,7 +145,8 @@ namespace BetterCms.Module.Blog
             RegisterJavaScriptRendererType<PageJavaScriptAccessor, BlogPost>(containerBuilder);
 
             containerBuilder.RegisterType<DefaultOptionService>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            containerBuilder.RegisterType<DefaultAuthorService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultAuthorService>().AsImplementedInterfaces().InstancePerLifetimeScope(); 
+            containerBuilder.RegisterType<DefaultBlogService>().AsImplementedInterfaces().InstancePerLifetimeScope();          
         }
     }
 }

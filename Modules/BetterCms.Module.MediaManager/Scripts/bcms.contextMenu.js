@@ -2,10 +2,10 @@
 /*global define, console */
 
 /**
-* Source taken from http://luke.breuer.com/tutorial/javascript-context-menu-tutorial.htm#firefox_option and modified by DevBridge 
+* Source taken from http://luke.breuer.com/tutorial/javascript-context-menu-tutorial.htm#firefox_option and modified by the DevBridge BetterCMS team.
 */
 
-define('bcms.contextMenu', ['jquery', 'bcms'],
+define('bcms.contextMenu', ['bcms.jquery', 'bcms'],
     function ($, bcms) {
         'use strict';
 
@@ -135,12 +135,14 @@ define('bcms.contextMenu', ['jquery', 'bcms'],
                     top = event.pageY - target.offset().top,
                     scrollHeight = contextMenuContainer.scrollParent().height(),
                     scrollWidth = contextMenuContainer.scrollParent().width(),
-                    scrollTop = contextMenuContainer.scrollParent().offset().top,
-                    scrollLeft = contextMenuContainer.scrollParent().offset().left,
+                    scrollParentOffset = contextMenuContainer.scrollParent().offset(),
+                    scrollTop = scrollParentOffset ? scrollParentOffset.top : 0,
+                    scrollLeft = scrollParentOffset ? scrollParentOffset.left : 0,
                     menuHeight = contextMenuContainer.outerHeight(),
                     menuWidth = contextMenuContainer.outerWidth(),
-                    totalHeight = contextMenuContainer.parent().offset().top + top + menuHeight - scrollTop,
-                    totalWidth = contextMenuContainer.parent().offset().left + left + menuWidth - scrollLeft + leftPadding,
+                    parentOffset = contextMenuContainer.parent().offset(),
+                    totalHeight = (parentOffset ? parentOffset.top : 0) + top + menuHeight - scrollTop,
+                    totalWidth = (parentOffset ? parentOffset.left : 0) + left + menuWidth - scrollLeft + leftPadding,
                     addBottomClass = false,
                     addRightClass = false,
                     className;

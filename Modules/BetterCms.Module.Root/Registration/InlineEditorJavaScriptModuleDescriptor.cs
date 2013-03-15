@@ -14,7 +14,7 @@ namespace BetterCms.Module.Root.Registration
         /// </summary>
         /// <param name="containerModule">The container module.</param>
         public InlineEditorJavaScriptModuleDescriptor(ModuleDescriptor containerModule)
-            : base(containerModule, "bcms.inlineEdit", "/file/bcms-root/scripts/bcms.inlineEdit")
+            : base(containerModule, "bcms.inlineEdit")
         {
 
             Links = new IActionProjection[]

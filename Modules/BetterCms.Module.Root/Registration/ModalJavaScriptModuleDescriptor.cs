@@ -7,7 +7,7 @@ namespace BetterCms.Module.Root.Registration
     public class ModalJavaScriptModuleDescriptor : JavaScriptModuleDescriptor
     {
         public ModalJavaScriptModuleDescriptor(ModuleDescriptor containerModule)
-            : base(containerModule, "bcms.modal", "/file/bcms-root/scripts/bcms.modal")
+            : base(containerModule, "bcms.modal")
         {
 
             Links = new IActionProjection[]

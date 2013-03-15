@@ -1,5 +1,6 @@
 ﻿using BetterCms.Module.MediaManager.Command.MediaManager;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Models.Extensions;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 
 using NHibernate.Criterion.Lambda;
@@ -29,11 +30,14 @@ namespace BetterCms.Module.MediaManager.Command.Images.GetImages
             return builder
                     .Select(() => alias.Id).WithAlias(() => modelAlias.Id)
                     .Select(() => alias.Title).WithAlias(() => modelAlias.Name)
+                    .Select(() => alias.CreatedOn).WithAlias(() => modelAlias.CreatedOn)
                     .Select(() => alias.Version).WithAlias(() => modelAlias.Version)
                     .Select(() => alias.Caption).WithAlias(() => modelAlias.Tooltip)
                     .Select(() => alias.OriginalFileExtension).WithAlias(() => modelAlias.FileExtension)
                     .Select(() => alias.PublicThumbnailUrl).WithAlias(() => modelAlias.ThumbnailUrl)
                     .Select(() => alias.PublicUrl).WithAlias(() => modelAlias.PublicUrl)
+                    .Select(alias.GetIsProcessingConditions()).WithAlias(() => modelAlias.IsProcessing)
+                    .Select(alias.GetIsFailedConditions()).WithAlias(() => modelAlias.IsFailed)
                     .Select(() => alias.Size).WithAlias(() => modelAlias.Size);
         }
     }

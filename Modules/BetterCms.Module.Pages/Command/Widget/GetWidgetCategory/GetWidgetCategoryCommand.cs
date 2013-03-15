@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.Models;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Commands;
+
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Widgets;
@@ -74,7 +75,27 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
                 widgetsQuery = widgetsQuery.Where(c => c.Name.ToLower().Contains(request.Filter.ToLowerInvariant()));
             }
 
-            var contents = widgetsQuery.OrderBy(f => f.Name).ToFuture().ToList().Select(CreateWidgetViewModel);
+            // Load all widgets
+            var contentEntities = widgetsQuery.OrderBy(f => f.Name).ToFuture().ToList();
+
+            // Load drafts for published widgets
+            var ids = contentEntities.Where(c => c.Status == ContentStatus.Published).Select(c => c.Id).ToArray();
+            List<Root.Models.Widget> drafts;
+            if (ids.Length > 0)
+            {
+                drafts = Repository
+                    .AsQueryable<Root.Models.Widget>()
+                    .Fetch(c => c.Category)
+                    .Where(c => ids.Contains(c.Original.Id) && c.Status == ContentStatus.Draft && !c.IsDeleted)
+                    .ToList();
+            }
+            else
+            {
+                drafts = new List<Root.Models.Widget>();
+            }
+
+            // Map to view models
+            var contents = contentEntities.Select(f => CreateWidgetViewModel(f, drafts.FirstOrDefault(d => d.Original.Id == f.Id)));
 
             List<WidgetCategoryViewModel> categories;
 
@@ -91,13 +112,17 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
             categories.ForEach(c => c.Widgets = contents.Where(x => x.CategoryId == c.CategoryId).ToList());
 
             // Move uncategorized contents to fake category
-            var uncategorized = contents.Where(c => c.CategoryId == null).ToList();
+            var uncategorized = contents.Where(c => c.CategoryId == null);
+
+            // Workaround for deleted categories:
+            uncategorized = contents.Where(c => c.CategoryId != null && !categories.Any(x => x.CategoryId == c.CategoryId)).Concat(uncategorized);
+
             if (uncategorized.Any())
             {
                 var category = new WidgetCategoryViewModel
                     {
                         CategoryName = PagesGlobalization.AddPageContent_WidgetTab_UncategorizedWidget_Title,
-                        Widgets = uncategorized
+                        Widgets = uncategorized.ToList()
                     };
                 categories.Add(category);
             }
@@ -111,7 +136,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
                        };
         }
 
-        private WidgetViewModel CreateWidgetViewModel(Root.Models.Widget widget)
+        private WidgetViewModel CreateWidgetViewModel(Root.Models.Widget widget, Root.Models.Widget draft)
         {
             WidgetViewModel result;
             if (widget is HtmlContentWidget)
@@ -146,22 +171,32 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
             }
 
             result.Id = widget.Id;
-            result.Name = widget.Name;
             result.PreviewImageUrl = widget.PreviewUrl;
             result.Version = widget.Version;
-            result.CategoryId = widget.Category != null ? widget.Category.Id : (Guid?)null;
-            result.Status = Status(widget);
+            result.Status = Status(widget, draft);
+
+            if (draft != null && !result.Status.Equals(ContentStatus.Published.ToString()))
+            {
+                result.Name = draft.Name;
+                result.CategoryId = draft.Category != null ? draft.Category.Id : (Guid?)null;
+            }
+            else
+            {
+                result.Name = widget.Name;
+                result.CategoryId = widget.Category != null ? widget.Category.Id : (Guid?)null;
+            }
 
             return result;
         }
 
-        private string Status(Root.Models.Widget widget)
+        private string Status(Root.Models.Widget widget, Root.Models.Widget draft)
         {
-            if (widget.Status == ContentStatus.Published && widget.History.Any(f => f.Status == ContentStatus.Draft))
+            if (widget.Status == ContentStatus.Published && draft != null)
             {
                 return ContentStatus.Published.ToString() + "/" + ContentStatus.Draft.ToString();
             }
-            else if (widget.Status == ContentStatus.Draft)
+            
+            if (widget.Status == ContentStatus.Draft)
             {
                 return ContentStatus.Draft.ToString();
             }

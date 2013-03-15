@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using BetterCms.Core.DataContracts;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Root.Projections;
@@ -144,7 +146,7 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         /// <c>true</c> if whether current user can manage page content; otherwise, <c>false</c>.
         /// </value>
         public bool CanManageContent { get; set; }
-
+        
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>

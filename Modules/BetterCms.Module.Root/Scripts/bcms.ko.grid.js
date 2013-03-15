@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.ko.grid', ['jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messages', 'bcms.modal'],
+define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messages', 'bcms.modal'],
     function ($, bcms, ko, messages, modal) {
     'use strict';
 
@@ -13,7 +13,8 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messages', 
             ascending: 0,
             descending: 1
         },
-        staticDomId = 1;
+        staticDomId = 1,
+        saveTimers = [];
 
     /**
     * Assign objects to module.
@@ -255,12 +256,14 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messages', 
             self.id = ko.observable(item.Id);
             self.version = ko.observable(item.Version);
             self.isActive = ko.observable(item.IsActive || false);
-            self.processing = ko.observable(false);
+            self.saving = ko.observable(false);
+            self.deleting = ko.observable(false);
             self.hasFocus = ko.observable(true);
             self.hasError = ko.observable(false);
             self.isSelected = false;
             self.isNew = ko.observable(item.IsNew || false);
             self.registeredFields = [];
+            self.savePressed = false;
             
             self.onOpen = function (data, event) {
                 bcms.stopEventPropagation(event);
@@ -284,6 +287,7 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messages', 
 
             self.onSave = function (data, event) {
                 bcms.stopEventPropagation(event);
+                self.savePressed = true;
                 self.saveItem();
             };
 
@@ -352,17 +356,33 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messages', 
         };
 
         grid.ItemViewModel.prototype.cancelOrSaveItem = function () {
-            var self = this;
-            setTimeout(function () {
-                if (!self.isSelected && self.isActive()) {
-                    if (!self.id() && !self.hasChanges()) {
-                        self.cancelEditItem();
-                    } else {
-                        self.saveItem();
+            var self = this,
+                saveTimer = setTimeout(function () {
+                    removeSaveTimer(self);
+                    if (!self.isSelected && self.isActive()) {
+                        if (!self.id() && !self.hasChanges()) {
+                            self.cancelEditItem();
+                        } else {
+                            self.saveItem();
+                        }
                     }
-                }
-            }, 500);
+                }, 500);
+
+            saveTimers.push({id: self.id, timer: saveTimer});
         };
+
+        function removeSaveTimer(self, clear) {
+            for (var i = 0; i < saveTimers.length; i ++) {
+                if (self.id == saveTimers[i].id) {
+                    if (clear) {
+                        clearTimeout(saveTimers[i].timer);
+                    }
+                    console.log(saveTimers);
+                    saveTimers.splice(i, 1);
+                    console.log(saveTimers);
+                }
+            }
+        }
 
         grid.ItemViewModel.prototype.getDeleteParams = function() {
             return {
@@ -380,7 +400,7 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messages', 
                 return;
             }
 
-            self.processing(true);
+            self.deleting(true);
             var container = self.parent.container,
                 items = self.parent.items,
                 message = self.getDeleteConfirmationMessage(),
@@ -393,6 +413,7 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messages', 
                         items.remove(self);
                     }
                     confirmDialog.close();
+                    self.deleting(false);
                 },
                 confirmDialog = modal.confirm({
                     content: message || '',
@@ -405,13 +426,14 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messages', 
                         })
                             .done(function(json) {
                                 onDeleteCompleted(json);
-                                self.processing(false);
                             })
                             .fail(function(response) {
                                 onDeleteCompleted(bcms.parseFailedResponse(response));
-                                self.processing(false);
                             });
                         return false;
+                    },
+                    onClose: function () {
+                        self.deleting(false);
                     }
                 });
         };
@@ -425,12 +447,16 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messages', 
 
         grid.ItemViewModel.prototype.saveItem = function () {
             var self = this;
-            self.processing(true);
+            self.saving(true);
+            removeSaveTimer(self, true);
             
             var url = self.parent.saveUrl,
                 canSave = url && this.isActive() && this.hasChanges() && this.isValid(),
-                removeFromList = this.isActive() && !this.hasChanges() && !this.id(),
-                keepActive = !this.isValid();
+                removeFromList = this.isActive() && !this.hasChanges() && this.isValid() && !this.id(),
+                keepActive = !this.isValid(),
+                keepFocus = !canSave && !removeFromList && keepActive && self.savePressed;
+
+            self.savePressed = false;
 
             // Mark item as no new anymore, if trying to save
             self.isNew(false);
@@ -451,11 +477,11 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messages', 
                 })
                     .done(function(json) {
                         self.onAfterItemSaved(json);
-                        self.processing(false);
+                        self.saving(false);
                     })
                     .fail(function(response) {
                         self.onAfterItemSaved(bcms.parseFailedResponse(response));
-                        self.processing(false);
+                        self.saving(false);
                     });
             } else {
                 if (!keepActive) {
@@ -465,7 +491,12 @@ define('bcms.ko.grid', ['jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messages', 
                 if (removeFromList) {
                     this.parent.items.remove(this);
                 }
-                self.processing(false);
+
+                self.saving(false);
+            }
+            
+            if (keepFocus) {
+                this.hasFocus(true);
             }
         };
 

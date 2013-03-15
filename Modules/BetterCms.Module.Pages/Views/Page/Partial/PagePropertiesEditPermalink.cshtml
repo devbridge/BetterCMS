@@ -1,10 +1,10 @@
 ﻿@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Root.Content.Resources
-@using BetterCms.Module.Root.Mvc.UI
+@using BetterCms.Module.Root.Mvc.Helpers
 
 @model BetterCms.Module.Pages.ViewModels.Page.EditPagePropertiesViewModel
 <div class="bcms-input-list-holder">
-    @Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageUrl_Tooltip_Title, PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageUrl_Tooltip_Description)
+    @Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageUrl_Tooltip_Description)
     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageUrl_Title<a onclick="return false" id="bcms-pageproperties-editpermalink">@RootGlobalization.Button_Edit</a></div>
     <div class="bcms-editseo-urlpath" id="bcms-page-permalink-info">@(string.IsNullOrWhiteSpace(Model.PageUrl) ? Html.Raw("&nbsp;") : new MvcHtmlString(Html.Encode(Model.PageUrl)))</div>
 </div>
@@ -23,4 +23,11 @@
         @Html.CheckBoxFor(model => model.RedirectFromOldUrl)
         <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_CreatePermanentRedirectToOldUrl_Title</div>
     </div>
+    @if (Model.IsInSitemap)
+    {
+        <div class="bcms-edit-check-field">
+            @Html.CheckBoxFor(model => model.UpdateSitemap)
+            <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UpdateSitemap_Title</div>
+        </div>
+    }
 </div>

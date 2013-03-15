@@ -121,7 +121,7 @@
     <value>Add New Content</value>
   </data>
   <data name="AddNewPageProperties_PagePermalink_InvalidMessage" xml:space="preserve">
-    <value>Page permalink is invalid. Link must start and end with "/" and can contain only following characters: '0-9', 'a-z', '-', '/', '_'</value>
+    <value>Page permalink is invalid. Link must start and end with "/", can contain only following characters: '0-9', 'a-z', '-', '/', '_' and no more than 260 alphanumeric characters between the '/'.</value>
   </data>
   <data name="AddNewPageProperties_PagePermalink_MaxLengthMessage" xml:space="preserve">
     <value>Page permalink max length exceeded.</value>
@@ -147,25 +147,16 @@
   <data name="AddNewPage_EditPermalink_Tooltip_Description" xml:space="preserve">
     <value>Page URL must start and end with "/" and can contain only following characters: '0-9', 'a-z', '-', '/, '_'</value>
   </data>
-  <data name="AddNewPage_EditPermalink_Tooltip_Title" xml:space="preserve">
-    <value>Edit Page URL</value>
-  </data>
   <data name="AddNewPage_PageTitle" xml:space="preserve">
     <value>1. Create a page title (H1)</value>
   </data>
   <data name="AddNewPage_PageTitle_Tooltip_Description" xml:space="preserve">
     <value>Create  a page title</value>
   </data>
-  <data name="AddNewPage_PageTitle_Tooltip_Title" xml:space="preserve">
-    <value>Create  a page title</value>
-  </data>
   <data name="AddNewPage_Permalink" xml:space="preserve">
-    <value>Change Page URL</value>
+    <value>2. Change Page URL</value>
   </data>
   <data name="AddNewPage_Permalink_Tooltip_Description" xml:space="preserve">
-    <value>Edit Page URL</value>
-  </data>
-  <data name="AddNewPage_Permalink_Tooltip_Title" xml:space="preserve">
     <value>Edit Page URL</value>
   </data>
   <data name="AddNewPage_SelectTemplateButton_Title" xml:space="preserve">
@@ -178,9 +169,6 @@
     <value>&lt;b&gt;The layout of this page is based on a template.&lt;/b&gt; Select a template from options below. &#x3;If you need an additional template contact your system administrator to create a custom template.</value>
   </data>
   <data name="AddNewPage_Template_Tooltip_Description" xml:space="preserve">
-    <value>Select a template</value>
-  </data>
-  <data name="AddNewPage_Template_Tooltip_Title" xml:space="preserve">
     <value>Select a template</value>
   </data>
   <data name="AddPageContent_WidgetTab_AddNewButton" xml:space="preserve">
@@ -216,9 +204,6 @@
   <data name="AddPageContent_RegularContentTab_ContentName_Tooltip_Description" xml:space="preserve">
     <value>Content Name</value>
   </data>
-  <data name="AddPageContent_RegularContentTab_ContentName_Tooltip_Title" xml:space="preserve">
-    <value>Content Name</value>
-  </data>
   <data name="AddPageContent_RegularContentTab_LiveFrom_Title" xml:space="preserve">
     <value>Live From</value>
   </data>
@@ -240,9 +225,6 @@
   <data name="HtmlContentWidget_Category_Tooltip_Description" xml:space="preserve">
     <value>Widget Category</value>
   </data>
-  <data name="HtmlContentWidget_Category_Tooltip_Title" xml:space="preserve">
-    <value>Widget Category</value>
-  </data>
   <data name="HtmlContentWidget_ContentName_MaxLengthMessage" xml:space="preserve">
     <value>Content name max length exceeded.</value>
   </data>
@@ -253,9 +235,6 @@
     <value>Content Name</value>
   </data>
   <data name="HtmlContentWidget_ContentName_Tooltip_Description" xml:space="preserve">
-    <value>Content Name</value>
-  </data>
-  <data name="HtmlContentWidget_ContentName_Tooltip_Title" xml:space="preserve">
     <value>Content Name</value>
   </data>
   <data name="ClonePage_Dialog_CloneButton" xml:space="preserve">
@@ -273,17 +252,11 @@
   <data name="ClonePage_Dialog_PageTitle_Tooltip_Description" xml:space="preserve">
     <value>New page title</value>
   </data>
-  <data name="ClonePage_Dialog_PageTitle_Tooltip_Title" xml:space="preserve">
-    <value>Title</value>
-  </data>
   <data name="ClonePage_Dialog_PageUrl" xml:space="preserve">
     <value>New Page URL</value>
   </data>
   <data name="ClonePage_Dialog_PageUrl_Tooltip_Description" xml:space="preserve">
     <value>New Page URL</value>
-  </data>
-  <data name="ClonePage_Dialog_PageUrl_Tooltip_Title" xml:space="preserve">
-    <value>Page URL</value>
   </data>
   <data name="ClonePage_Dialog_Title" xml:space="preserve">
     <value>Clone Page</value>
@@ -342,16 +315,10 @@
   <data name="DeletePage_Dialog_RedurectUrl_Tooltip_Description" xml:space="preserve">
     <value>Redirect URL (optional)</value>
   </data>
-  <data name="DeletePage_Dialog_RedurectUrl_Tooltip_Title" xml:space="preserve">
-    <value>Redirect URL (optional)</value>
-  </data>
   <data name="DeletePage_Dialog_SecurityWord" xml:space="preserve">
     <value>Type word DELETE to confirm deletion</value>
   </data>
   <data name="DeletePage_Dialog_SecurityWord_Tooltip_Description" xml:space="preserve">
-    <value>Type word DELETE to confirm deletion</value>
-  </data>
-  <data name="DeletePage_Dialog_SecurityWord_Tooltip_Title" xml:space="preserve">
     <value>Type word DELETE to confirm deletion</value>
   </data>
   <data name="DeletePage_Dialog_Title" xml:space="preserve">
@@ -379,21 +346,15 @@
     <value>Widget deleted successfully</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_CreatePermanentRedirectToOldUrl_Title" xml:space="preserve">
-    <value>Create permanent redirect entry from old URL to new URL</value>
+    <value>Create permanent redirect entry from old URL to new URL.</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_EditUrlPath_Tooltip_Description" xml:space="preserve">
     <value>Page URL must start and end with "/" and can contain only following characters: '0-9', 'a-z', '-', '/', '_'</value>
-  </data>
-  <data name="EditPageProperties_AdvancedPropertiesTab_EditUrlPath_Tooltip_Title" xml:space="preserve">
-    <value>Edit Page URL</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_PageCss_Title" xml:space="preserve">
     <value>Page CSS</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_PageCss_Tooltip_Description" xml:space="preserve">
-    <value>Page Css</value>
-  </data>
-  <data name="EditPageProperties_AdvancedPropertiesTab_PageCss_Tooltip_Title" xml:space="preserve">
     <value>Page Css</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_PageUrl_Title" xml:space="preserve">
@@ -402,16 +363,10 @@
   <data name="EditPageProperties_AdvancedPropertiesTab_PageUrl_Tooltip_Description" xml:space="preserve">
     <value>Edit Page URL</value>
   </data>
-  <data name="EditPageProperties_AdvancedPropertiesTab_PageUrl_Tooltip_Title" xml:space="preserve">
-    <value>Edit Page URL</value>
-  </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_Privacy_Title" xml:space="preserve">
     <value>Privacy</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_Privacy_Tooltip_Description" xml:space="preserve">
-    <value>Privacy</value>
-  </data>
-  <data name="EditPageProperties_AdvancedPropertiesTab_Privacy_Tooltip_Title" xml:space="preserve">
     <value>Privacy</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_Privacy_VisibleToEveryone" xml:space="preserve">
@@ -432,16 +387,10 @@
   <data name="EditPageProperties_BasicPropertiesTab_AddCategories_Tooltip_Description" xml:space="preserve">
     <value>Add Categories</value>
   </data>
-  <data name="EditPageProperties_BasicPropertiesTab_AddCategories_Tooltip_Title" xml:space="preserve">
-    <value>Add Categories</value>
-  </data>
   <data name="TagsTemplate_AddTags_Title" xml:space="preserve">
     <value>Add Tags</value>
   </data>
   <data name="EditPageProperties_BasicPropertiesTab_AddTags_Tooltip_Description" xml:space="preserve">
-    <value>Add tags</value>
-  </data>
-  <data name="EditPageProperties_BasicPropertiesTab_AddTags_Tooltip_Title" xml:space="preserve">
     <value>Add tags</value>
   </data>
   <data name="EditPageProperties_BasicPropertiesTab_PageImage_Title" xml:space="preserve">
@@ -450,16 +399,10 @@
   <data name="EditPageProperties_BasicPropertiesTab_PageImage_Tooltip_Description" xml:space="preserve">
     <value>Page description</value>
   </data>
-  <data name="EditPageProperties_BasicPropertiesTab_PageImage_Tooltip_Title" xml:space="preserve">
-    <value>Page image</value>
-  </data>
   <data name="EditPageProperties_BasicPropertiesTab_PageName_Title" xml:space="preserve">
     <value>Page Name</value>
   </data>
   <data name="EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Description" xml:space="preserve">
-    <value>Page title</value>
-  </data>
-  <data name="EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Title" xml:space="preserve">
     <value>Page title</value>
   </data>
   <data name="EditPageProperties_BasicPropertiesTab_RemoveButton" xml:space="preserve">
@@ -474,14 +417,11 @@
   <data name="EditPageProperties_LayoutPropertiesTab_Layout_Tooltip_Description" xml:space="preserve">
     <value>Layout</value>
   </data>
-  <data name="EditPageProperties_LayoutPropertiesTab_Layout_Tooltip_Title" xml:space="preserve">
-    <value>Layout</value>
-  </data>
   <data name="EditPageProperties_LayoutPropertiesTab_Title" xml:space="preserve">
     <value>Layout</value>
   </data>
   <data name="EditPageProperties_PagePermalink_InvalidMessage" xml:space="preserve">
-    <value>Page permalink is invalid. Link must start and end with "/" and can contain only following characters: '0-9', 'a-z', '-', '/', '_'</value>
+    <value>Page permalink is invalid. Link must start and end with "/", can contain only following characters: '0-9', 'a-z', '-', '/', '_' and no more than 260 alphanumeric characters between the '/'.</value>
   </data>
   <data name="EditPageProperties_PagePermalink_MaxLengthMessage" xml:space="preserve">
     <value>Page URL max length exceeded.</value>
@@ -508,7 +448,7 @@
     <value>Close</value>
   </data>
   <data name="EditSeo_EditUrlPath_PermanentRedirect" xml:space="preserve">
-    <value>Create permanent redirect entry from old URL to new URL</value>
+    <value>Create permanent redirect entry from old URL to new URL.</value>
   </data>
   <data name="EditSeo_EditUrlPath_Title" xml:space="preserve">
     <value>Page URL</value>
@@ -516,17 +456,11 @@
   <data name="EditSeo_EditUrlPath_Tooltip_Description" xml:space="preserve">
     <value>Page URL must start and end with "/" and can contain only following characters: '0-9', 'a-z', '-', '/', '_'</value>
   </data>
-  <data name="EditSeo_EditUrlPath_Tooltip_Title" xml:space="preserve">
-    <value>Edit Page URL</value>
-  </data>
   <data name="EditSeo_MetaDescription" xml:space="preserve">
     <value>Meta Description</value>
   </data>
   <data name="EditSeo_MetaDescription_Tooltip_Description" xml:space="preserve">
     <value>Purpose of meta description is ......</value>
-  </data>
-  <data name="EditSeo_MetaDescription_Tooltip_Title" xml:space="preserve">
-    <value>Meta Description</value>
   </data>
   <data name="EditSeo_MetaKeywords" xml:space="preserve">
     <value>Meta Keywords</value>
@@ -534,17 +468,11 @@
   <data name="EditSeo_MetaKeywords_Tooltip_Description" xml:space="preserve">
     <value>Purpose of meta keywords is ......</value>
   </data>
-  <data name="EditSeo_MetaKeywords_Tooltip_Title" xml:space="preserve">
-    <value>Meta Keywords</value>
-  </data>
   <data name="EditSeo_MetaTitle" xml:space="preserve">
     <value>Meta Title</value>
   </data>
   <data name="EditSeo_MetaTitle_Tooltip_Description" xml:space="preserve">
     <value>Purpose of meta title is ......</value>
-  </data>
-  <data name="EditSeo_MetaTitle_Tooltip_Title" xml:space="preserve">
-    <value>Meta Title</value>
   </data>
   <data name="EditSeo_PageTitle" xml:space="preserve">
     <value>Page Title</value>
@@ -558,9 +486,6 @@
   <data name="EditSeo_PageTitle_Tooltip_Description" xml:space="preserve">
     <value>Page title is for...</value>
   </data>
-  <data name="EditSeo_PageTitle_Tooltip_Title" xml:space="preserve">
-    <value>Page Title</value>
-  </data>
   <data name="EditSeo_PageUrlPath_InvalidMessage" xml:space="preserve">
     <value>Page URL path is invalid. Link must start and end with "/" and can contain only following characters: '0-9', 'a-z', '-', '/', '_'</value>
   </data>
@@ -571,9 +496,6 @@
     <value>Page URL</value>
   </data>
   <data name="EditSeo_UrlPath_Tooltip_Description" xml:space="preserve">
-    <value>Edit Page URL</value>
-  </data>
-  <data name="EditSeo_UrlPath_Tooltip_Title" xml:space="preserve">
     <value>Edit Page URL</value>
   </data>
   <data name="EditWidget_BasicPropertiesTab_Title" xml:space="preserve">
@@ -792,25 +714,16 @@
   <data name="Widget_Category_Tooltip_Description" xml:space="preserve">
     <value>Category</value>
   </data>
-  <data name="Widget_Category_Tooltip_Title" xml:space="preserve">
-    <value>Category</value>
-  </data>
   <data name="Widget_Title_Title" xml:space="preserve">
     <value>Title</value>
   </data>
   <data name="Widget_Title_Tooltip_Description" xml:space="preserve">
     <value>Title</value>
   </data>
-  <data name="Widget_Title_Tooltip_Title" xml:space="preserve">
-    <value>Title</value>
-  </data>
   <data name="Widget_Url_Title" xml:space="preserve">
     <value>Widget Path</value>
   </data>
   <data name="Widget_Url_Tooltip_Description" xml:space="preserve">
-    <value>Widget Path</value>
-  </data>
-  <data name="Widget_Url_Tooltip_Title" xml:space="preserve">
     <value>Widget Path</value>
   </data>
   <data name="Widget_VirtualPathNotExists_Message" xml:space="preserve">
@@ -900,9 +813,6 @@
   <data name="WidgetPreviewImage_Title" xml:space="preserve">
     <value>Preview</value>
   </data>
-  <data name="Widget_Preview_Image_Tooltip_Title" xml:space="preserve">
-    <value>Title</value>
-  </data>
   <data name="SiteSettings_TemplatesMenuItem" xml:space="preserve">
     <value>Templates</value>
   </data>
@@ -927,25 +837,16 @@
   <data name="TemplatePreviewImage_Title" xml:space="preserve">
     <value>Preview</value>
   </data>
-  <data name="Template_Preview_Image_Tooltip_Title" xml:space="preserve">
-    <value>Title</value>
-  </data>
   <data name="Template_Title_Title" xml:space="preserve">
     <value>Title</value>
   </data>
   <data name="Template_Title_Tooltip_Description" xml:space="preserve">
     <value>Title</value>
   </data>
-  <data name="Template_Title_Tooltip_Title" xml:space="preserve">
-    <value>Title</value>
-  </data>
   <data name="Template_Url_Title" xml:space="preserve">
     <value>Template Path</value>
   </data>
   <data name="Template_Url_Tooltip_Description" xml:space="preserve">
-    <value>Template Path</value>
-  </data>
-  <data name="Template_Url_Tooltip_Title" xml:space="preserve">
     <value>Template Path</value>
   </data>
   <data name="CreatTemplate_Dialog_Title" xml:space="preserve">
@@ -1020,16 +921,10 @@
   <data name="EditPageProperties_BasicPropertiesTab_Category_Tooltip_Description" xml:space="preserve">
     <value>Category</value>
   </data>
-  <data name="EditPageProperties_BasicPropertiesTab_Category_Tooltip_Title" xml:space="preserve">
-    <value>Category</value>
-  </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_PageJavascript_Title" xml:space="preserve">
     <value>Custom JavaScript</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_PageJavascript_Tooltip_Description" xml:space="preserve">
-    <value>Custom JavaScript</value>
-  </data>
-  <data name="EditPageProperties_AdvancedPropertiesTab_PageJavascript_Tooltip_Title" xml:space="preserve">
     <value>Custom JavaScript</value>
   </data>
   <data name="EditPageProperties_LayoutPropertiesTab_ChooseLayout_Title" xml:space="preserve">
@@ -1116,16 +1011,10 @@
   <data name="ClonePage_EditNewUrl_Tooltip_Description" xml:space="preserve">
     <value>Page URL must start and end with "/" and can contain only following characters: '0-9', 'a-z', '-', '/, '_'</value>
   </data>
-  <data name="ClonePage_EditNewUrl_Tooltip_Title" xml:space="preserve">
-    <value>New Page URL</value>
-  </data>
   <data name="ClonePage_NewUrl" xml:space="preserve">
     <value>New Page URL</value>
   </data>
   <data name="ClonePage_NewUrl_Tooltip_Description" xml:space="preserve">
-    <value>Edit New Page URL</value>
-  </data>
-  <data name="ClonePage_NewUrl_Tooltip_Title" xml:space="preserve">
     <value>Edit New Page URL</value>
   </data>
   <data name="SaveWidget_DublicateOptionName_Message" xml:space="preserve">
@@ -1160,5 +1049,35 @@
   </data>
   <data name="SavePage_CreatedSuccessfully_Message" xml:space="preserve">
     <value>Page created succesfully.</value>
+  </data>
+  <data name="EditSeo_Messages_NotInSitemapWarnMessage" xml:space="preserve">
+    <value>Page is not in sitemap.</value>
+  </data>
+  <data name="EditPageProperties_AdvancedPropertiesTab_UpdateSitemap_Title" xml:space="preserve">
+    <value>Update sitemap with new URL.</value>
+  </data>
+  <data name="EditSeo_EditUrlPath_UpdateSitemap" xml:space="preserve">
+    <value>Update sitemap with new URL.</value>
+  </data>
+  <data name="DeletePage_Dialog_UpdateSitemap" xml:space="preserve">
+    <value>Update sitemap</value>
+  </data>
+  <data name="DeletePage_Dialog_UpdateSitemap_Description" xml:space="preserve">
+    <value>Remove page from sitemap.</value>
+  </data>
+  <data name="DeletePage_Dialog_UpdateSitemap_RemovePageFromSitemap" xml:space="preserve">
+    <value>Remove this page from sitemap.</value>
+  </data>
+  <data name="DeletePageCommand_SitemapNodeHasChildNodes_Message" xml:space="preserve">
+    <value>Can not remove this page from the sitemap, because it has child nodes.</value>
+  </data>
+  <data name="SortPageContent_Info_Message" xml:space="preserve">
+    <value>Sorting page contents. Please wait.</value>
+  </data>
+  <data name="TemplateImagePreview_Tooltip_Description" xml:space="preserve">
+    <value>Preview</value>
+  </data>
+  <data name="WidgetPreviewImage_Tooltip_Description" xml:space="preserve">
+    <value>Purpose of Page URL is ......</value>
   </data>
 </root>

@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define */
 
-define('bcms.sidemenu', ['jquery', 'bcms', 'bcms.modal', 'jqueryui'], function ($, bcms) {
+define('bcms.sidemenu', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.jqueryui'], function ($, bcms) {
     'use strict';
 
     var sidemenu = {},
@@ -129,6 +129,7 @@ define('bcms.sidemenu', ['jquery', 'bcms', 'bcms.modal', 'jqueryui'], function (
     sidemenu.turnEditModeOn = function () {
         localStorage.setItem(keys.editingOn, '1');
         $(selectors.html).addClass(classes.editingOnClass);
+        bcms.trigger(bcms.events.editModeOn);
     };
 
     /**
@@ -244,5 +245,6 @@ define('bcms.sidemenu', ['jquery', 'bcms', 'bcms.modal', 'jqueryui'], function (
     };
 
     bcms.registerInit(sidemenu.init);
+    
     return sidemenu;
 });

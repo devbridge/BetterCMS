@@ -1,9 +1,7 @@
 ﻿@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.Page
-
 @using BetterCms.Module.Root.Mvc.Helpers
-@using BetterCms.Module.Root.Mvc.UI
 @using Microsoft.Web.Mvc
 
 @model ClonePageViewModel
@@ -17,7 +15,7 @@
                 <div>@PagesGlobalization.ClonePage_Dialog_ConfirmationMessage_Text</div>
             </div>
             <div class="bcms-input-list-holder">
-                @Html.Tooltip(PagesGlobalization.ClonePage_Dialog_PageTitle_Tooltip_Title, PagesGlobalization.ClonePage_Dialog_PageTitle_Tooltip_Description)
+                @Html.Tooltip(PagesGlobalization.ClonePage_Dialog_PageTitle_Tooltip_Description)
                 <div class="bcms-content-titles">@PagesGlobalization.ClonePage_Dialog_PageTitle</div>
                 <div class="bcms-input-box">
                     @Html.TextBoxFor(m => m.PageTitle, new { @class = "bcms-editor-field-box" })
@@ -25,8 +23,8 @@
                 </div>
             </div>
 
-@*<div class="bcms-input-list-holder">
-                @Html.Tooltip(PagesGlobalization.ClonePage_Dialog_PageUrl_Tooltip_Title, PagesGlobalization.ClonePage_Dialog_PageUrl_Tooltip_Description)
+            @*<div class="bcms-input-list-holder">
+                @Html.Tooltip(PagesGlobalization.ClonePage_Dialog_PageUrl_Tooltip_Description)
                 <div class="bcms-content-titles">@PagesGlobalization.ClonePage_Dialog_PageUrl</div>
                 @Html.TextBoxFor(m => m.PageUrl, new { @class = "bcms-editor-field-box" })
             </div>*@

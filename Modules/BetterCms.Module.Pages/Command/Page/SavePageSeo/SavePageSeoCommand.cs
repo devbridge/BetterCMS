@@ -1,5 +1,6 @@
 ﻿using System;
 
+using BetterCms.Api;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
@@ -17,7 +18,12 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageSeo
         /// The page service
         /// </summary>
         private readonly IPageService pageService;
-        
+
+        /// <summary>
+        /// The sitemap service.
+        /// </summary>
+        private readonly ISitemapService sitemapService;
+
         /// <summary>
         /// The redirect service
         /// </summary>
@@ -28,9 +34,11 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageSeo
         /// </summary>
         /// <param name="redirectService">The redirect service.</param>
         /// <param name="pageService">The page service.</param>
-        public SavePageSeoCommand(IRedirectService redirectService, IPageService pageService)
+        /// <param name="sitemapService">The sitemap service.</param>
+        public SavePageSeoCommand(IRedirectService redirectService, IPageService pageService, ISitemapService sitemapService)
         {
             this.pageService = pageService;
+            this.sitemapService = sitemapService;
             this.redirectService = redirectService;
         }
 
@@ -44,6 +52,10 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageSeo
         public virtual EditSeoViewModel Execute(EditSeoViewModel model)
         {
             var page = Repository.First<PageProperties>(model.PageId);
+
+            bool initialHasSeo = page.HasSEO;
+            Models.Redirect newRedirect = null;
+
             page.Version = model.Version;
             page.Title = model.PageTitle;
 
@@ -52,14 +64,20 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageSeo
             if (!string.Equals(model.PageUrlPath, model.ChangedUrlPath, StringComparison.OrdinalIgnoreCase))
             {
                 pageService.ValidatePageUrl(model.ChangedUrlPath, model.PageId);
+
                 if (model.CreatePermanentRedirect)
                 {
                     var redirect = redirectService.CreateRedirectEntity(model.PageUrlPath, model.ChangedUrlPath);
                     if (redirect != null)
                     {
                         Repository.Save(redirect);
+                        newRedirect = redirect;
                     }
                 }
+
+                page.NodeCountInSitemap = model.UpdateSitemap
+                    ? sitemapService.ChangeUrl(page.PageUrl, model.ChangedUrlPath)
+                    : sitemapService.NodesWithUrl(model.ChangedUrlPath);
 
                 page.PageUrl = model.ChangedUrlPath;
             }
@@ -70,6 +88,18 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageSeo
 
             Repository.Save(page);
             UnitOfWork.Commit();
+
+            // Notify about SEO change.
+            if (page.HasSEO != initialHasSeo)
+            {
+                PagesApiContext.Events.OnPageSeoStatusChanged(page);
+            }
+
+            // Notify about new redirect creation.
+            if (newRedirect != null)
+            {
+                PagesApiContext.Events.OnRedirectCreated(newRedirect);
+            }
 
             return new EditSeoViewModel { PageUrlPath = page.PageUrl };
         }

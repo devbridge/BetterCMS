@@ -4,7 +4,6 @@ using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Controllers;
 using BetterCms.Module.Root.Content.Resources;
-using BetterCms.Module.Root.Controllers;
 
 namespace BetterCms.Module.Pages.Registration
 {
@@ -18,7 +17,7 @@ namespace BetterCms.Module.Pages.Registration
         /// </summary>
         /// <param name="containerModule">The container module.</param>
         public PagesContentJavaScriptModuleDescriptor(ModuleDescriptor containerModule)
-            : base(containerModule, "bcms.pages.content", "/file/bcms-pages/scripts/bcms.pages.content")
+            : base(containerModule, "bcms.pages.content")
         {
 
             Links = new IActionProjection[]
@@ -41,7 +40,9 @@ namespace BetterCms.Module.Pages.Registration
                     new JavaScriptModuleGlobalization(this, "insertingWidgetInfoMessage", () => PagesGlobalization.AddPageContent_InsertingWidget_Information_Message),
                     new JavaScriptModuleGlobalization(this, "insertingWidgetInfoHeader", () => PagesGlobalization.AddPageContent_InsertingWidget_Information_Header),
                     new JavaScriptModuleGlobalization(this, "insertingWidgetErrorMessage", () => PagesGlobalization.AddPageContent_InsertingWidget_Information_Message),
-                                        
+                    
+                    new JavaScriptModuleGlobalization(this, "sortingPageContentMessage", () => PagesGlobalization.SortPageContent_Info_Message),
+
                     new JavaScriptModuleGlobalization(this, "deleteContentConfirmationTitle", () => PagesGlobalization.DeletePageContent_ConfirmationTitle),
                     new JavaScriptModuleGlobalization(this, "deleteContentConfirmationMessage", () => PagesGlobalization.DeletePageContent_ConfirmationMessage),
                     new JavaScriptModuleGlobalization(this, "deleteContentSuccessMessageTitle", () => PagesGlobalization.DeletePageContent_SuccessMessage_Title),

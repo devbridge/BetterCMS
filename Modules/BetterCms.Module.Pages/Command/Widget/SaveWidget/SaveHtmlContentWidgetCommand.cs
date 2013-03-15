@@ -1,8 +1,11 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
-using BetterCms.Core.Models;
+using BetterCms.Api;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Widgets;
+
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
@@ -22,21 +25,34 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
         public override SaveWidgetResponse Execute(EditHtmlContentWidgetViewModel request)
         {
             UnitOfWork.BeginTransaction();
-
-            HtmlContentWidget content = (HtmlContentWidget)ContentService.SaveContentWithStatusUpdate(GetHtmlContentWidgetFromRequest(request), request.DesirableStatus);
-            Repository.Save(content);
+            var widgetContent = GetHtmlContentWidgetFromRequest(request);
+            HtmlContentWidget widget = (HtmlContentWidget)ContentService.SaveContentWithStatusUpdate(widgetContent, request.DesirableStatus);
+            Repository.Save(widget);
 
             UnitOfWork.Commit();
 
+            // Notify.
+            if (widget.Status != ContentStatus.Preview)
+            {
+                if (request.Id == default(Guid))
+                {
+                    PagesApiContext.Events.OnWidgetCreated(widget);
+                }
+                else
+                {
+                    PagesApiContext.Events.OnWidgetUpdated(widget);
+                }
+            }
+
             return new SaveWidgetResponse
                     {
-                        Id = content.Id,
-                        WidgetName = content.Name,
-                        CategoryName = content.Category != null ? content.Category.Name : null,
-                        Version = content.Version,
+                        Id = widget.Id,
+                        WidgetName = request.Name, 
+                        CategoryName = widgetContent.Category != null ? widgetContent.Category.Name : null,
+                        Version = widget.Version,
                         WidgetType = WidgetType.HtmlContent.ToString(),
-                        IsPublished = content.Status == ContentStatus.Published,
-                        HasDraft = content.Status == ContentStatus.Draft || content.History != null && content.History.Any(f => f.Status == ContentStatus.Draft),
+                        IsPublished = widget.Status == ContentStatus.Published,
+                        HasDraft = widget.Status == ContentStatus.Draft || widget.History != null && widget.History.Any(f => f.Status == ContentStatus.Draft),
                         DesirableStatus = request.DesirableStatus,
                         PreviewOnPageContentId = request.PreviewOnPageContentId
                     };

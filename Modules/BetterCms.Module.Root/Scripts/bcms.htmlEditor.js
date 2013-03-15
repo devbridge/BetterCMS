@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define */
 
-define('bcms.htmlEditor', ['jquery', 'bcms', 'ckeditor'], function ($, bcms) {
+define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], function ($, bcms) {
     'use strict';
 
     var htmlEditor = {},
@@ -56,7 +56,10 @@ define('bcms.htmlEditor', ['jquery', 'bcms', 'ckeditor'], function ($, bcms) {
     };
     
     htmlEditor.destroyHtmlEditorInstance = function () {
-        CKEDITOR.instances[htmlEditor.id].destroy();
+        var editor = CKEDITOR.instances[htmlEditor.id];
+        if (editor) {
+            editor.destroy();
+        }
     };
 
     htmlEditor.setSourceMode = function (id) {

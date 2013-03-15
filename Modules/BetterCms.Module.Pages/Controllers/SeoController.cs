@@ -3,7 +3,6 @@
 using BetterCms.Module.Pages.Command.Page.GetPageSeo;
 using BetterCms.Module.Pages.Command.Page.SavePageSeo;
 using BetterCms.Module.Pages.ViewModels.Seo;
-using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
 namespace BetterCms.Module.Pages.Controllers

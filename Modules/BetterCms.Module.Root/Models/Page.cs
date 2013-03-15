@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using BetterCms.Core.DataContracts;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;
 
 namespace BetterCms.Module.Root.Models
@@ -57,11 +59,13 @@ namespace BetterCms.Module.Root.Models
         /// <value>
         ///   <c>true</c> if this page has SEO; otherwise, <c>false</c>.
         /// </value>
-        bool IPage.HasSEO
+        public virtual bool HasSEO
         {
             get
             {
-                return !string.IsNullOrWhiteSpace(MetaTitle) && !string.IsNullOrWhiteSpace(MetaKeywords) && !string.IsNullOrWhiteSpace(MetaDescription);
+                return !string.IsNullOrWhiteSpace(MetaTitle)
+                    && !string.IsNullOrWhiteSpace(MetaKeywords)
+                    && !string.IsNullOrWhiteSpace(MetaDescription);
             }
         }
 
