@@ -46,11 +46,9 @@
                 <div data-bind="css: { 
                         'bcms-upload-block':true, 'bcms-upload-success':uploadCompleted() && !uploadProcessing() && !uploadFailed(), 'bcms-upload-failed':uploadFailed() }">
                     <div class="bcms-upload-file-titles" data-bind="text: fileName"></div>
-                    @Html.HiddenFor(model => model.UploadedFiles, new
-               {
-                   id = (string)null,
-                   data_bind = "value:fileId()"
-               })
+                    <!-- ko if: !uploadFailed() -->
+                    @Html.HiddenFor(model => model.UploadedFiles, new { id = (string)null, data_bind = "value:fileId()" })
+                    <!-- /ko -->
                     <div class="bcms-upload-bar-holder">
                         <div class="bcms-progress-bar" data-bind="visible: !uploadCompleted() && !uploadFailed() && !uploadProcessing()">
                             <div class="bcms-progress" style="width: 0;" data-bind="style: { width: uploadProgress() + '%' }"></div>

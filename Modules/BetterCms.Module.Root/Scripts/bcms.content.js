@@ -350,9 +350,6 @@ define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             right = endOffset.left + endWidth,
             bottom = endOffset.top + endHeight;
 
-        // console.log($.format("Left: {0} Top: {1} Width: {2} Height: {3}", left, top, right - left, bottom - top));
-        console.log($.format("Left: {0} Top: {1}, Name: {2}", left, top, $start.prop('tagName')));
-
         return {
             left: left,
             top: top,
