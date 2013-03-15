@@ -1074,4 +1074,10 @@
   <data name="SortPageContent_Info_Message" xml:space="preserve">
     <value>Sorting page contents. Please wait.</value>
   </data>
+  <data name="TemplateImagePreview_Tooltip_Description" xml:space="preserve">
+    <value>Preview</value>
+  </data>
+  <data name="WidgetPreviewImage_Tooltip_Description" xml:space="preserve">
+    <value>Purpose of Page URL is ......</value>
+  </data>
 </root>
