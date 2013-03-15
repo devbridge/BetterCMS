@@ -466,9 +466,6 @@
     <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\close.png" />
     <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\mini.png" />
     <EmbeddedResource Include="Scripts\ckeditor\styles.js" />
-    <EmbeddedResource Include="Scripts\Libs\knockout-2.1.0.js" />
-    <EmbeddedResource Include="Scripts\WysiHtml5\wysihtml5-0.3.0.js" />
-    <EmbeddedResource Include="Scripts\WysiHtml5\wysihtml5-parser-rules.js" />
     <EmbeddedResource Include="Scripts\bcms.authentication.js" />
     <EmbeddedResource Include="Scripts\bcms.datepicker.js" />
     <EmbeddedResource Include="Scripts\bcms.grid.js" />
@@ -479,22 +476,11 @@
     <EmbeddedResource Include="Scripts\bcms.redirect.js" />
     <EmbeddedResource Include="Scripts\bcms.tabs.js" />
     <EmbeddedResource Include="Scripts\bcms.tooltip.js" />
-    <EmbeddedResource Include="Scripts\jquery-ui-1.9.0.js" />
-    <EmbeddedResource Include="Scripts\jquery-ui-1.9.0.min.js" />
-    <EmbeddedResource Include="Scripts\jquery-ui.min.js" />
-    <EmbeddedResource Include="Scripts\jquery.unobtrusive-ajax.js" />
-    <EmbeddedResource Include="Scripts\jquery.unobtrusive-ajax.min.js" />
-    <EmbeddedResource Include="Scripts\jquery.validate-vsdoc.js" />
-    <EmbeddedResource Include="Scripts\jquery.validate.js" />
-    <EmbeddedResource Include="Scripts\jquery.validate.min.js" />
-    <EmbeddedResource Include="Scripts\jquery.validate.unobtrusive.js" />
-    <EmbeddedResource Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <EmbeddedResource Include="Scripts\knockout-2.2.0.debug.js" />
+    <EmbeddedResource Include="Scripts\bcms.jquery.unobtrusive-ajax.js" />
+    <EmbeddedResource Include="Scripts\bcms.jquery.validate.js" />
+    <EmbeddedResource Include="Scripts\bcms.jquery.validate.unobtrusive.js" />
     <EmbeddedResource Include="Scripts\knockout-2.2.0.js" />
-    <EmbeddedResource Include="Scripts\popup.js" />
-    <EmbeddedResource Include="Scripts\require-jquery.js" />
-    <EmbeddedResource Include="Scripts\require.js" />
-    <EmbeddedResource Include="Scripts\slides.jquery.js" />
+    <EmbeddedResource Include="Scripts\bcms.slides.jquery.js" />
     <EmbeddedResource Include="Scripts\bcms.modal.js" />
     <EmbeddedResource Include="Scripts\bcms.siteSettings.js" />
     <EmbeddedResource Include="Scripts\bcms.forms.js" />
@@ -511,14 +497,17 @@
     <EmbeddedResource Include="Content\Styles\images\modal-back.png" />
     <EmbeddedResource Include="Content\Styles\images\sprite-base-1.png" />
     <EmbeddedResource Include="Content\Styles\images\sprite-base-2.png" />
-    <EmbeddedResource Include="Content\Styles\base.css" />
-    <EmbeddedResource Include="Scripts\spinner.jquery.js" />
+    <EmbeddedResource Include="Scripts\bcms.spinner.jquery.js" />
     <EmbeddedResource Include="Scripts\html5shiv.js" />
     <EmbeddedResource Include="Scripts\bcms.inlineEdit.js" />
     <EmbeddedResource Include="Scripts\bcms.dynamicContent.js" />
-    <EmbeddedResource Include="Scripts\bcms.content.js" />
+    <EmbeddedResource Include="Scripts\bcms.jquery-ui-1.9.0.js" />
+    <EmbeddedResource Include="Scripts\bcms.jquery-1.7.2.js" />
+    <EmbeddedResource Include="Scripts\require.js" />
     <EmbeddedResource Include="Scripts\bcms.js" />
     <EmbeddedResource Include="Scripts\bcms.sidemenu.js" />
+    <EmbeddedResource Include="Scripts\bcms.content.js" />
+    <EmbeddedResource Include="Content\Styles\base.css" />
     <Content Include="Views\Web.config" />
     <EmbeddedResource Include="Views\Sidebar\Container.cshtml" />
     <EmbeddedResource Include="Views\Rendering\RenderMainJsFile.cshtml" />
@@ -608,6 +597,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Shared\RootLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Rendering\Partial\RequireJsDebugConfig.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Rendering\Partial\RequireJsReleaseConfig.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Shared\Partial\SupportBrowser.cshtml" />

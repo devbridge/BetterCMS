@@ -129,9 +129,9 @@ namespace BetterCms.Module.MediaManager
                     mediaJavaScriptModuleDescriptor,
                     mediaUploadModuleDescriptor,
                     imageEditorModuleDescriptor,
-                    new JavaScriptModuleDescriptor(this, "html5Upload", "/file/bcms-media/scripts/html5Upload"),
-                    new JavaScriptModuleDescriptor(this, "jquery.Jcrop", "/file/bcms-media/scripts/jquery.Jcrop"),
-                    new JavaScriptModuleDescriptor(this, "bcms.contextMenu", "/file/bcms-media/scripts/bcms.contextMenu")
+                    new JavaScriptModuleDescriptor(this, "bcms.html5Upload"),
+                    new JavaScriptModuleDescriptor(this, "bcms.jquery.Jcrop"),
+                    new JavaScriptModuleDescriptor(this, "bcms.contextMenu")
                 };
         }
 

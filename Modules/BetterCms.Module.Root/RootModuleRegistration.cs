@@ -105,13 +105,26 @@ namespace BetterCms.Module.Root
         {            
             context.MapRoute(
                 "bcms_" + AreaName + "_MainJs",
-                string.Format("file/{0}/Scripts/main.js", AreaName),
+                string.Format("file/{0}/Scripts/bcms.main.js", AreaName),
                 new
                     {
                         area = AreaName,
                         controller = "Rendering",
-                        action = "RenderMainJsFile"
+                        action = "RenderMainJsFile",
+                        useMinReferences = false
                     },
+                new[] { typeof(RenderingController).Namespace });
+
+            context.MapRoute(
+                "bcms_" + AreaName + "_MainMinJs",
+                string.Format("file/{0}/Scripts/bcms.main.min.js", AreaName),
+                new
+                {
+                    area = AreaName,
+                    controller = "Rendering",
+                    action = "RenderMainJsFile",
+                    useMinReferences = true
+                },
                 new[] { typeof(RenderingController).Namespace });
 
             context.MapRoute(
@@ -155,23 +168,34 @@ namespace BetterCms.Module.Root
         {
             return new []
                 {
-                    authenticationScriptModuleDescriptor,
-                    siteSettingsJavaScriptModuleDescriptor,
+                    authenticationScriptModuleDescriptor,                    
                     new ContentJavaScriptModuleDescriptor(this),       
                     new DatePickerJavaScriptModuleDescriptor(this), 
                     new DynamicContentJavaScriptModuleDescriptor(this), 
                     new FormsJavaScriptModuleDescriptor(this),
+                    new JavaScriptModuleDescriptor(this, "bcms.grid"), 
                     new HtmlEditorJavaScriptModuleDescriptor(this),                     
+                    new InlineEditorJavaScriptModuleDescriptor(this),
+                    
+                    new JavaScriptModuleDescriptor(this, "bcms.jqueryui", "bcms.jquery-ui-1.9.0.js"),                    
+                    new JavaScriptModuleDescriptor(this, "bcms.jquery.unobtrusive", "bcms.jquery.unobtrusive-ajax"),
+                    new JavaScriptModuleDescriptor(this, "bcms.jquery.validate"),
+                    new JavaScriptModuleDescriptor(this, "bcms.jquery.validate.unobtrusive"),
+                    new JavaScriptModuleDescriptor(this, "bcms"), 
+                    new KnockoutExtendersJavaScriptModuleDescriptor(this), 
+                    new JavaScriptModuleDescriptor(this, "bcms.ko.grid"),                    
+
                     new MessagesJavaScriptModuleDescriptor(this), 
                     new ModalJavaScriptModuleDescriptor(this), 
-                    new SidemenuJavaScriptModuleDescriptor(this),                     
-                    new TabsJavaScriptModuleDescriptor(this), 
-                    new TooltipJavaScriptModuleDescriptor(this),
-                    new InlineEditorJavaScriptModuleDescriptor(this),
                     new PreviewJavaScriptModuleDescriptor(this), 
-                    new KnockoutExtendersJavaScriptModuleDescriptor(this), 
-                    new JavaScriptModuleDescriptor(this, "bcms.ko.grid", "/file/bcms-root/scripts/bcms.ko.grid"),
                     new RedirectJavaScriptModuleDescriptor(this),
+                    new SidemenuJavaScriptModuleDescriptor(this),                     
+                    siteSettingsJavaScriptModuleDescriptor,
+                    new JavaScriptModuleDescriptor(this, "bcms.slides.jquery"),
+                    new JavaScriptModuleDescriptor(this, "bcms.spinner.jquery"),
+                    new TabsJavaScriptModuleDescriptor(this), 
+                    new TooltipJavaScriptModuleDescriptor(this),                    
+                    new JavaScriptModuleDescriptor(this,"bcms.processor")        
                 };
         }
 

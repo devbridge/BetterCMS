@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define */
 
-define('bcms.authentication', ['jquery', 'bcms', 'bcms.modal'],
+define('bcms.authentication', ['bcms.jquery', 'bcms', 'bcms.modal'],
     function ($, bcms, modal) {
     'use strict';
 

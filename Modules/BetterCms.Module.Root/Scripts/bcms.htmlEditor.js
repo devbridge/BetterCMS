@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define */
 
-define('bcms.htmlEditor', ['jquery', 'bcms', 'ckeditor'], function ($, bcms) {
+define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], function ($, bcms) {
     'use strict';
 
     var htmlEditor = {},

@@ -49,7 +49,7 @@ namespace BetterCms.Module.AmazonS3Storage
         {
             if (configuration.Storage.ServiceType == StorageServiceType.Auto)
             {
-                //containerBuilder.RegisterType<WindowsAzureStorageService>().As<IStorageService>().SingleInstance();
+                containerBuilder.RegisterType<WindowsAzureStorageService>().As<IStorageService>().SingleInstance();
             }
         }
     }

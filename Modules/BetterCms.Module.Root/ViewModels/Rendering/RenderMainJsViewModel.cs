@@ -34,6 +34,14 @@ namespace BetterCms.Module.Root.ViewModels.Rendering
         public bool EnableClientSideErrorTrace { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether to use *.min.js references.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if use *.min.js references; otherwise, <c>false</c>.
+        /// </value>
+        public bool UseMinReferences { get; set; }
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>

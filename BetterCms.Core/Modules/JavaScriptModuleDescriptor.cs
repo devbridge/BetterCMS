@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using BetterCms.Core.Modules.Projections;
 
@@ -13,15 +14,20 @@ namespace BetterCms.Core.Modules
         /// Initializes a new instance of the <see cref="JavaScriptModuleDescriptor" /> class.
         /// </summary>
         /// <param name="containerModule">The container module.</param>
-        /// <param name="name">The name.</param>
-        /// <param name="path">The path.</param>
-        public JavaScriptModuleDescriptor(ModuleDescriptor containerModule, string name, string path)
+        /// <param name="name">The module name.</param>
+        /// <param name="fileName">A name of the module file.</param>
+        public JavaScriptModuleDescriptor(ModuleDescriptor containerModule, string name, string fileName = null)
         {
             ContainerModule = containerModule;
             Name = name;
-            Path = path;
             Links = new List<IActionProjection>();
             Globalization = new List<IActionProjection>();
+
+            Path = System.IO.Path.Combine(containerModule.BaseScriptPath, fileName ?? name);
+            if (Path != null && Path.EndsWith(".js"))
+            {
+                Path = Path.Substring(0, Path.LastIndexOf(".js", StringComparison.OrdinalIgnoreCase));
+            }
         }
 
         /// <summary>
