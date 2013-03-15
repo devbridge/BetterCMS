@@ -36,21 +36,6 @@ namespace BetterCms.Module.Pages.Command.Widget.GetSiteSettingsWidgets
             var query = Repository.AsQueryable<Root.Models.Widget>()
                           .Where(f => f.IsDeleted == false && f.Original == null && (f.Status == ContentStatus.Published || f.Status == ContentStatus.Draft));
 
-            var ids = query.Where(c => c.Status == ContentStatus.Published).Select(c => c.Id).ToArray();
-            List<Root.Models.Widget> drafts;
-            if (ids.Length > 0)
-            {
-                drafts = Repository
-                    .AsQueryable<Root.Models.Widget>()
-                    .Fetch(c => c.Category)
-                    .Where(c => ids.Contains(c.Original.Id) && c.Status == ContentStatus.Draft && !c.IsDeleted)
-                    .ToList();
-            }
-            else
-            {
-                drafts = new List<Root.Models.Widget>();
-            }
-
             gridOptions.SetDefaultSortingOptions("WidgetName");
 
             if (gridOptions.Column == "Status")
@@ -66,7 +51,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetSiteSettingsWidgets
                                       CategoryName = f.Category.Name,
                                       WidgetEntityType = f.GetType(),
                                       IsPublished = f.Status == ContentStatus.Published,
-                                      HasDraft = f.Status == ContentStatus.Draft || f.History.Any(d => d.Status == ContentStatus.Draft)
+                                      HasDraft = f.Status == ContentStatus.Draft
                                   });
 
             if (!string.IsNullOrWhiteSpace(gridOptions.SearchQuery))
@@ -86,7 +71,24 @@ namespace BetterCms.Module.Pages.Command.Widget.GetSiteSettingsWidgets
                 modelQuery = modelQuery.AddSortingAndPaging(gridOptions);
             }
 
+            // Load widgets
             var widgets = modelQuery.ToFuture().ToList();
+
+            // Load drafts
+            var ids = widgets.Where(c => c.IsPublished).Select(c => c.Id).ToArray();
+            List<Root.Models.Widget> drafts;
+            if (ids.Length > 0)
+            {
+                drafts = Repository
+                    .AsQueryable<Root.Models.Widget>()
+                    .Fetch(c => c.Category)
+                    .Where(c => ids.Contains(c.Original.Id) && c.Status == ContentStatus.Draft && !c.IsDeleted)
+                    .ToList();
+            }
+            else
+            {
+                drafts = new List<Root.Models.Widget>();
+            }
 
             widgets.ForEach(
                 item =>
@@ -108,6 +110,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetSiteSettingsWidgets
                         {                            
                             item.CategoryName = draft.Category != null ? draft.Category.Name : "";
                             item.WidgetName = draft.Name;
+                            item.HasDraft = true;
                         }
                     });
 

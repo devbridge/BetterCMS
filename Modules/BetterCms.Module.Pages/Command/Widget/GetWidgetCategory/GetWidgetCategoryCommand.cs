@@ -173,7 +173,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
             result.Id = widget.Id;
             result.PreviewImageUrl = widget.PreviewUrl;
             result.Version = widget.Version;
-            result.Status = Status(widget);
+            result.Status = Status(widget, draft);
 
             if (draft != null && !result.Status.Equals(ContentStatus.Published.ToString()))
             {
@@ -189,13 +189,14 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
             return result;
         }
 
-        private string Status(Root.Models.Widget widget)
+        private string Status(Root.Models.Widget widget, Root.Models.Widget draft)
         {
-            if (widget.Status == ContentStatus.Published && widget.History.Any(f => f.Status == ContentStatus.Draft))
+            if (widget.Status == ContentStatus.Published && draft != null)
             {
                 return ContentStatus.Published.ToString() + "/" + ContentStatus.Draft.ToString();
             }
-            else if (widget.Status == ContentStatus.Draft)
+            
+            if (widget.Status == ContentStatus.Draft)
             {
                 return ContentStatus.Draft.ToString();
             }
