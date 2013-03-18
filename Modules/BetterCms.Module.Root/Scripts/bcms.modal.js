@@ -159,6 +159,10 @@ define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', '
             acceptButton.disabled(!!this.options.disableAccept);
         }
         
+        this.disableAcceptButton = function () {
+            acceptButton.disabled(true);
+        };
+
         /* Cancel action button: */
         var cancelButton = new ButtonViewModel();
         cancelButton.order = 10;

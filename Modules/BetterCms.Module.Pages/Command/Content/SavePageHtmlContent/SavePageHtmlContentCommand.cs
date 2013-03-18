@@ -80,7 +80,7 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
             {
                 var originalContent = Repository.First<HtmlContent>(request.ContentId);
                 var contentToPublish = (HtmlContent)(originalContent.History != null
-                    ? originalContent.History.FirstOrDefault(c => c.Status == ContentStatus.Draft)
+                    ? originalContent.History.FirstOrDefault(c => c.Status == ContentStatus.Draft) ?? originalContent
                     : originalContent);
 
                 contentToSave.Name = contentToPublish.Name;
