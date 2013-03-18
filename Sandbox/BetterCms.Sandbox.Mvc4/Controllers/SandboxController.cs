@@ -39,7 +39,7 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
         [AllowAnonymous]
         public ActionResult Login()
         {
-            var roles = string.Join(",", (List<string>)HttpContext.Application[MvcApplication.UserRolesKey]);
+            var roles = string.Join(",", Roles.GetRolesForUser(string.Empty));
             var authTicket = new FormsAuthenticationTicket(1, "BetterCMS test user", DateTime.Now, DateTime.Now.AddMonths(1), true, roles);
 
             string cookieContents = FormsAuthentication.Encrypt(authTicket);

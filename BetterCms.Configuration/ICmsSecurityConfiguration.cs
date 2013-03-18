@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace BetterCms
 {
     /// <summary>
@@ -27,5 +29,11 @@ namespace BetterCms
         /// <param name="accessRole">The access role.</param>
         /// <returns>Roles from configuration file.</returns>
         string Translate(string accessRole);
+
+        /// <summary>
+        /// Gets the custom roles.
+        /// </summary>
+        /// <returns>Permission mapping to roles.</returns>
+        Dictionary<string, string> GetCustomRoles();
     }
 }

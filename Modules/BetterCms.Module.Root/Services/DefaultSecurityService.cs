@@ -83,6 +83,15 @@ namespace BetterCms.Module.Root.Services
         }
 
         /// <summary>
+        /// Gets the configuration.
+        /// </summary>
+        /// <returns>BetterCMS security configuration.</returns>
+        public ICmsSecurityConfiguration GetConfiguration()
+        {
+            return configuration.Security;
+        }
+
+        /// <summary>
         /// Determines whether the specified principal is authorized.
         /// </summary>
         /// <param name="principal">The principal.</param>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 
 namespace BetterCms.Configuration
@@ -57,6 +58,22 @@ namespace BetterCms.Configuration
             {
                 return this[CustomRolesAttribute] as CustomRolesCollection;
             }
+        }
+
+        /// <summary>
+        /// Gets the custom roles.
+        /// </summary>
+        /// <returns>Permission mapping to roles.</returns>
+        public Dictionary<string, string> GetCustomRoles()
+        {
+            var roles = new Dictionary<string, string>();
+            for (var i = 0; i < CustomRoles.Count; i++)
+            {
+                var role = CustomRoles[i];
+                roles.Add(role.Permission, role.Roles);
+            }
+
+            return roles;
         }
 
         /// <summary>

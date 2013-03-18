@@ -185,6 +185,7 @@ namespace BetterCms.Module.Root
                     new KnockoutExtendersJavaScriptModuleDescriptor(this), 
                     new JavaScriptModuleDescriptor(this, "bcms.ko.grid"),                    
 
+                    new SecurityJavaScriptModuleDescriptor(this), 
                     new MessagesJavaScriptModuleDescriptor(this), 
                     new ModalJavaScriptModuleDescriptor(this), 
                     new PreviewJavaScriptModuleDescriptor(this), 

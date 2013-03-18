@@ -185,6 +185,7 @@
     <Compile Include="Projections\PageJavaScriptProjection.cs" />
     <Compile Include="Registration\AuthenticationJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\ContentJavaScriptModuleDescriptor.cs" />
+    <Compile Include="Registration\SecurityJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\KnockoutExtendersJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\PreviewJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\RedirectJavaScriptModuleDescriptor.cs" />
@@ -508,6 +509,7 @@
     <EmbeddedResource Include="Scripts\bcms.sidemenu.js" />
     <EmbeddedResource Include="Scripts\bcms.content.js" />
     <EmbeddedResource Include="Content\Styles\base.css" />
+    <EmbeddedResource Include="Scripts\bcms.security.js" />
     <Content Include="Views\Web.config" />
     <EmbeddedResource Include="Views\Sidebar\Container.cshtml" />
     <EmbeddedResource Include="Views\Rendering\RenderMainJsFile.cshtml" />
@@ -612,6 +614,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Shared\Partial\SupportJavaScript.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\Partial\User.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

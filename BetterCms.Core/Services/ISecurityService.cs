@@ -28,6 +28,12 @@ namespace BetterCms.Core.Services
         string[] GetAllRoles();
 
         /// <summary>
+        /// Gets the configuration.
+        /// </summary>
+        /// <returns>BetterCMS security configuration.</returns>
+        ICmsSecurityConfiguration GetConfiguration();
+
+        /// <summary>
         /// Determines whether the specified principal is authorized.
         /// </summary>
         /// <param name="principal">The principal.</param>

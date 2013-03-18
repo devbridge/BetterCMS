@@ -39,6 +39,7 @@ requirejs(['bcms.jquery', 'bcms', 'bcms.processor'],
 
         $(function () {
             bcms.pageId = $('body').data("pageId");
+            bcms.securityProfile = $.parseJSON($('#bcms-security-data').html());
             bcms.errorTrace = @(Model.EnableClientSideErrorTrace ? "true" : "false");
             processor.init();
             bcms.init();

@@ -22,8 +22,6 @@ namespace BetterCms.Sandbox.Mvc4
 {
     public class MvcApplication : HttpApplication
     {
-        public const string UserRolesKey = "UserRoles";
-
         private static readonly ILog Log = LogManager.GetCurrentClassLogger();
 
         private static ICmsHost cmsHost;
@@ -38,13 +36,6 @@ namespace BetterCms.Sandbox.Mvc4
 
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            var userRoles = new List<string> { "User", "Admin" };
-//            var container = ContextScopeProvider.CreateChildContainer();
-//            var modulesRegistration = container.Resolve<IModulesRegistration>();
-//            var roles = modulesRegistration.GetUserAccessRoles().Select(m => m.Name).ToList();
-//            userRoles.AddRange(roles);
-            Application[UserRolesKey] = userRoles;
-            
             cmsHost.OnApplicationStart(this);
             
             AddPageEvents();
@@ -278,7 +269,7 @@ namespace BetterCms.Sandbox.Mvc4
                 if (authTicket != null)
                 {
                     var identity = new GenericIdentity(authTicket.Name, "Forms");
-                    var principal = new GenericPrincipal(identity, ((List<string>)Application[MvcApplication.UserRolesKey]).ToArray());
+                    var principal = new GenericPrincipal(identity,  Roles.GetRolesForUser(string.Empty));
                     Context.User = principal;
                 }
             }

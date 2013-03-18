@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Caching;
@@ -65,7 +66,9 @@ namespace BetterCms.Module.Users.Provider
             {
                 return null;
             }
-
+#if DEBUG
+            return GetUserRoles(username);
+#endif
             if (!Roles.CacheRolesInCookie)
             {
                 var cacheKey = string.Format("UserRoles_{0}", username);
@@ -84,8 +87,15 @@ namespace BetterCms.Module.Users.Provider
         private string[] GetUserRoles(string username)
         {
             // TODO: implement.
-            var userRoles = modulesRegistration.GetUserAccessRoles().Select(m => m.Name).ToList();
-            userRoles.AddRange(new[] { "User", "Admin" });
+            var userRoles = new List<string>();
+            userRoles.AddRange(modulesRegistration.GetUserAccessRoles().Select(m => m.Name).ToList());
+//            userRoles.AddRange(new[] { "User", "Admin" });
+
+//            userRoles.AddRange(new[] { "BcmsEditContent" });
+//            userRoles.AddRange(new[] { "BcmsPublishContent" });
+//            userRoles.AddRange(new[] { "BcmsDeleteContent" });
+//            userRoles.AddRange(new[] { "BcmsAdministration" });
+
             return userRoles.ToArray();
         }
 
