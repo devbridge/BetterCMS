@@ -2,7 +2,7 @@
 @model BetterCms.Module.Root.ViewModels.Rendering.RenderMainJsViewModel
 
 requirejs.config({
-    enforceDefine: false,
+    enforceDefine: true,
 
     urlArgs: 'ver=' + '@GetType().Assembly.GetName().Version.ToString()',
 
@@ -13,4 +13,4 @@ requirejs.config({
     },    
 
     waitSeconds: 15
-});z
+});

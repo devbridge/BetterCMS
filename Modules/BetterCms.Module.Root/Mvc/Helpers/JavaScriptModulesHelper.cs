@@ -36,9 +36,10 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// </summary>
         /// <param name="modules">The modules.</param>
         /// <returns>Html string of comma separated js friendly names.</returns>
-        public static HtmlString RenderCommaSeparatedNamePathPairs(this IEnumerable<JavaScriptModuleViewModel> modules)
+        public static HtmlString RenderCommaSeparatedNamePathPairs(this IEnumerable<JavaScriptModuleViewModel> modules, string forcedPath = null, params string [] ignoreForcedPathForModules)
         {
-            return new HtmlString(string.Join(", ", modules.Select(f => string.Concat("'", f.Name, "' : '", f.Path, "'"))));
+            return new HtmlString(string.Join(", ", 
+                modules.Select(f => string.Concat("'", f.Name, "' : '", forcedPath != null && (ignoreForcedPathForModules == null || !ignoreForcedPathForModules.Contains(f.Name)) ? forcedPath : f.Path, "'"))));
         }
     }
 }
