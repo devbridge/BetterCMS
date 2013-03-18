@@ -79,7 +79,7 @@ define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms
                         }
                     });
                 },
-                onClose: function() {
+                onCloseClick: function () {
                     options.uploads.removeAllUploads();
                     options.uploads.stopStatusChecking();
                 }
@@ -127,7 +127,7 @@ define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms
                     
                     return false;
                 },
-                onClose: function () {
+                onCloseClick: function () {
                     options.uploads.removeAllUploads();
                     options.uploads.stopStatusChecking();
                 }
