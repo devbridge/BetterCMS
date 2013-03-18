@@ -41,7 +41,7 @@ namespace BetterCms.Api
         {
         }
 
-        public static MediaManagerEvents Events
+        public new static MediaManagerEvents Events
         {
             get
             {
