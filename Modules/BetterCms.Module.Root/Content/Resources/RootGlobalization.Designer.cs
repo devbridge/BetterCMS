@@ -583,6 +583,24 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The field {0} must math the regular expression {1}..
+        /// </summary>
+        public static string Validation_RegularExpressionAttribute_Message {
+            get {
+                return ResourceManager.GetString("Validation_RegularExpressionAttribute_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Field {0} is required..
+        /// </summary>
+        public static string Validation_RequiredAttribute_Message {
+            get {
+                return ResourceManager.GetString("Validation_RequiredAttribute_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search....
         /// </summary>
         public static string WaterMark_Search {

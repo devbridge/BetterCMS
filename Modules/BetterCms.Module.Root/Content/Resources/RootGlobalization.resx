@@ -291,6 +291,12 @@
   <data name="Validation_MaximumLengthExceeded_Message" xml:space="preserve">
     <value>Maximum length cannot exceed {0} characters.</value>
   </data>
+  <data name="Validation_RegularExpressionAttribute_Message" xml:space="preserve">
+    <value>The field {0} must math the regular expression {1}.</value>
+  </data>
+  <data name="Validation_RequiredAttribute_Message" xml:space="preserve">
+    <value>Field {0} is required.</value>
+  </data>
   <data name="WaterMark_Search" xml:space="preserve">
     <value>Search...</value>
   </data>

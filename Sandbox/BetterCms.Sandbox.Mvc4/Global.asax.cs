@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
@@ -10,6 +11,7 @@ using BetterCms.Core;
 using BetterCms.Core.Environment.Host;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Modules.Projections;
+using BetterCms.Module.Root.Mvc.Adapters;
 using BetterCms.Module.Root.Projections;
 
 using Common.Logging;
@@ -42,6 +44,8 @@ namespace BetterCms.Sandbox.Mvc4
             AddBlogPostEvents();
             AddBlogAuthorEvents();
             AddMediaManagerEvents();
+
+            RegisterValidationAdapters();
         }
 
         private void AddMediaManagerEvents()
@@ -269,6 +273,20 @@ namespace BetterCms.Sandbox.Mvc4
                     Context.User = principal;
                 }
             }
+        }
+
+        /// <summary>
+        /// Registers the validation adapters.
+        /// </summary>
+        private void RegisterValidationAdapters()
+        {
+            DataAnnotationsModelValidatorProvider.RegisterAdapter(
+                typeof(RequiredAttribute),
+                typeof(DefaultRequiredAttributeAdapter));
+            
+            DataAnnotationsModelValidatorProvider.RegisterAdapter(
+                typeof(RegularExpressionAttribute),
+                typeof(DefaultRegularExpressionAttributeAdapter));
         }
     }
 }
