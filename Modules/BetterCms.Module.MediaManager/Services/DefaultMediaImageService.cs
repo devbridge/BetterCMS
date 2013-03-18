@@ -232,23 +232,6 @@ namespace BetterCms.Module.MediaManager.Services
                 unitOfWork.Commit();
 
                 Task imageUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(fileStream, image.FileUri, image.Id, img => { img.IsUploaded = true; }, img => { img.IsUploaded = false; });
-                /* TODO: remove after testsTask imageUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(fileStream, image.FileUri, image.Id, 
-                    img =>
-                        {
-                            if (img.Title.Contains("fail"))
-                            {
-                                img.IsUploaded = false;
-                            }
-                            else if (img.Title.Contains("processing"))
-                            {
-                                img.IsUploaded = null;
-                            }
-                            else
-                            {
-                                img.IsUploaded = true;
-                            }
-
-                        }, img => { img.IsUploaded = false; });*/
                 Task originalUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(fileStream, image.OriginalUri, image.Id, img => { img.IsOriginalUploaded = true; }, img => { img.IsOriginalUploaded = false; });
                 Task thumbnailUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(thumbnailImage, image.ThumbnailUri, image.Id, img => { img.IsThumbnailUploaded = true; }, img => { img.IsThumbnailUploaded = false; });
 

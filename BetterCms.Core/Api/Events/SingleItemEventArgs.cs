@@ -13,9 +13,4 @@ namespace BetterCms.Api
             Item = item;
         }
     }
-
-    public abstract class EventsBase
-    {
-        public delegate void DefaultEventHandler<in TArgs>(TArgs args) where TArgs : EventArgs;
-    }
 }

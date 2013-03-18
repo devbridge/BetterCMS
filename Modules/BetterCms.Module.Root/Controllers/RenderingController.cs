@@ -54,7 +54,7 @@ namespace BetterCms.Module.Root.Controllers
             model.JavaScriptModules = RetrieveJsModulesModel();
             model.UseMinReferences = useMinReferences;
 #if (DEBUG)
-            model.EnableClientSideErrorTrace = true;
+            model.IsDebugMode = true;
 #endif
             return View(model, "text/javascript");
         }

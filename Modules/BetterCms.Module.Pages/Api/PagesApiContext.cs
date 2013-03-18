@@ -79,7 +79,7 @@ namespace BetterCms.Api
         /// <value>
         /// The events.
         /// </value>
-        public static PagesApiEvents Events
+        public new static PagesApiEvents Events
         {
             get
             {

@@ -1,3 +1,4 @@
+using System;
 using BetterCms.Configuration;
 
 namespace BetterCms
@@ -9,6 +10,8 @@ namespace BetterCms
         string ContentRoot { get; set; }
 
         StorageServiceType ServiceType { get; set; }
+
+        TimeSpan ProcessTimeout { get; set; }
 
         string GetValue(string key);
     }

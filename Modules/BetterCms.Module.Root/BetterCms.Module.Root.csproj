@@ -168,6 +168,8 @@
     <Compile Include="Models\Region.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\Widget.cs" />
+    <Compile Include="Mvc\Adapters\DefaultRegularExpressionAttributeAdapter.cs" />
+    <Compile Include="Mvc\Adapters\DefaultRequiredAttributeAdapter.cs" />
     <Compile Include="Mvc\CommandBase.cs" />
     <Compile Include="Mvc\CommandHandler.cs" />
     <Compile Include="Mvc\Converters.cs" />
@@ -516,8 +518,8 @@
     <EmbeddedResource Include="Scripts\require.js" />
     <EmbeddedResource Include="Scripts\bcms.js" />
     <EmbeddedResource Include="Scripts\bcms.sidemenu.js" />
-    <EmbeddedResource Include="Scripts\bcms.content.js" />
     <EmbeddedResource Include="Content\Styles\base.css" />
+    <EmbeddedResource Include="Scripts\bcms.content.js" />
     <Content Include="BuildConfiguration.xml" />
     <EmbeddedResource Include="Content\Styles\images\icn-zoom-notcompatible.png" />
     <EmbeddedResource Include="Scripts\bcms.root.min.js" />

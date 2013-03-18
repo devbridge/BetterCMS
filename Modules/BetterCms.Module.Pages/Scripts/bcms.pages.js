@@ -452,9 +452,7 @@ define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 
             siteSettings.setContent(data);
             page.initializeSiteSettingsPagesList(data);
             var searchInput = container.find(selectors.siteSettingsPagesSearchField);           
-            var val = searchInput.val();
-            searchInput.focus().val("");
-            searchInput.val(val);            
+            grid.focusSearchInput(searchInput);
         });
     };
 

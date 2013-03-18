@@ -45,7 +45,7 @@ namespace BetterCms.Api
         /// <value>
         /// The events.
         /// </value>
-        public static BlogsApiEvents Events
+        public new static BlogsApiEvents Events
         {
             get
             {

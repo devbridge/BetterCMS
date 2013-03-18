@@ -343,9 +343,7 @@ define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', '
             container.html(data);
             initializeSiteSettingsBlogsList(container, data);           
             var searchInput = container.find(selectors.siteSettingsBlogsSearchInput);
-            var val = searchInput.val();
-            searchInput.focus().val("");
-            searchInput.val(val);       
+            grid.focusSearchInput(searchInput);
         });
     }
 

@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.jquery.Jcrop', 'bcms.ko.extenders'],
+define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.jquery.jcrop', 'bcms.ko.extenders'],
     function($, bcms, modal, siteSettings, forms, dynamicContent, jcrop, ko) {
         'use strict';
 
@@ -462,18 +462,6 @@ define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.sit
                 $('input', item).attr('checked', 'true');
             });
         }
-
-        /**
-        * Initializes page module.
-        */
-        imageEditor.init = function() {
-            console.log('Initializing bcms.media.imageeditor module.');
-        };
-
-        /**
-        * Register initialization
-        */
-        bcms.registerInit(imageEditor.init);
 
         return imageEditor;
     });
