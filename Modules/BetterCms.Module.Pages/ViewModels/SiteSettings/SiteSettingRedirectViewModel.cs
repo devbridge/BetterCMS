@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 
 using BetterCms.Core.Models;
+using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Root.Mvc.Grids;
 
 namespace BetterCms.Module.Pages.ViewModels.SiteSettings
@@ -31,7 +32,7 @@ namespace BetterCms.Module.Pages.ViewModels.SiteSettings
         /// The page URL.
         /// </value>
         [Required(AllowEmptyStrings = false)]
-        [RegularExpression(PagesConstants.PageUrlRegularExpression)]
+        [RegularExpression(PagesConstants.PageUrlRegularExpression, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "PageProperties_PageUrl_InvalidMessage")]
         [StringLength(MaxLength.Url)]
         public string PageUrl { get; set; }
 
@@ -42,7 +43,7 @@ namespace BetterCms.Module.Pages.ViewModels.SiteSettings
         /// The redirect URL.
         /// </value>
         [Required(AllowEmptyStrings = false)]
-        [RegularExpression(PagesConstants.PageUrlRegularExpression)]
+        [RegularExpression(PagesConstants.PageUrlRegularExpression, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "RedirectUrl_InvalidMessage")]
         [StringLength(MaxLength.Url)]
         public string RedirectUrl { get; set; }
 

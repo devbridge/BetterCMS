@@ -8,7 +8,7 @@ namespace BetterCms.Module.Pages.Mvc.Attributes
 {
     public class CustomPageUrlValidationAttribute : ValidationAttribute, IClientValidatable
     {
-        private readonly string errorMessage = PagesGlobalization.AddNewPageProperties_PagePermalink_InvalidMessage;
+        private readonly string errorMessage = PagesGlobalization.PageProperties_PageUrl_InvalidMessage;
         private const string clientValidationRule = "pageurlvalidation";
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)

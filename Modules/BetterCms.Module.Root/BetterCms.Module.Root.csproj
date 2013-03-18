@@ -159,6 +159,9 @@
     <Compile Include="Models\Region.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\Widget.cs" />
+    <Compile Include="Mvc\Adapters\AttributeAdapterHelper.cs" />
+    <Compile Include="Mvc\Adapters\DefaultStringLengthAttributeAdapter.cs" />
+    <Compile Include="Mvc\Adapters\DefaultRangeAttributeAdapter.cs" />
     <Compile Include="Mvc\Adapters\DefaultRegularExpressionAttributeAdapter.cs" />
     <Compile Include="Mvc\Adapters\DefaultRequiredAttributeAdapter.cs" />
     <Compile Include="Mvc\CommandBase.cs" />

@@ -10,8 +10,7 @@ namespace BetterCms.Module.Root.Mvc.Adapters
         public DefaultRequiredAttributeAdapter(ModelMetadata metadata, ControllerContext context, RequiredAttribute attribute)
             : base(metadata, context, attribute)
         {
-            attribute.ErrorMessageResourceType = typeof(RootGlobalization);
-            attribute.ErrorMessageResourceName = "Validation_RequiredAttribute_Message";
+            AttributeAdapterHelper.SetValidationAttributeErrorMessage(metadata, attribute, typeof(RootGlobalization), "Validation_RequiredAttribute_Message");
         }
     }
 }

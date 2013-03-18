@@ -10,8 +10,7 @@ namespace BetterCms.Module.Root.Mvc.Adapters
         public DefaultRegularExpressionAttributeAdapter(ModelMetadata metadata, ControllerContext context, RegularExpressionAttribute attribute)
             : base(metadata, context, attribute)
         {
-            attribute.ErrorMessageResourceType = typeof(RootGlobalization);
-            attribute.ErrorMessageResourceName = "Validation_RegularExpressionAttribute_Message";
+            AttributeAdapterHelper.SetValidationAttributeErrorMessage(metadata, attribute, typeof(RootGlobalization), "Validation_RegularExpressionAttribute_Message");
         }
     }
 }

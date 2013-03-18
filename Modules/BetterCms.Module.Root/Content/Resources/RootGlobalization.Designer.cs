@@ -583,7 +583,16 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The field {0} must math the regular expression {1}..
+        ///   Looks up a localized string similar to Field must be a number with value between {1} and {2}..
+        /// </summary>
+        public static string Validation_RangeAttribute_Message {
+            get {
+                return ResourceManager.GetString("Validation_RangeAttribute_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The field must match the regular expression..
         /// </summary>
         public static string Validation_RegularExpressionAttribute_Message {
             get {
@@ -592,11 +601,20 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Field {0} is required..
+        ///   Looks up a localized string similar to Field is required..
         /// </summary>
         public static string Validation_RequiredAttribute_Message {
             get {
                 return ResourceManager.GetString("Validation_RequiredAttribute_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The field must be the string with a maximum length of {1}..
+        /// </summary>
+        public static string Validation_StringLengthAttribute_Message {
+            get {
+                return ResourceManager.GetString("Validation_StringLengthAttribute_Message", resourceCulture);
             }
         }
         

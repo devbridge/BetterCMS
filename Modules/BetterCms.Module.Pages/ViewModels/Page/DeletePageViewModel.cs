@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
+using BetterCms.Module.Pages.Content.Resources;
+
 namespace BetterCms.Module.Pages.ViewModels.Page
 {
     public class DeletePageViewModel
@@ -27,7 +29,7 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// <value>
         /// The redirect URL.
         /// </value>
-        [RegularExpression(PagesConstants.PageUrlRegularExpression)]
+        [RegularExpression(PagesConstants.PageUrlRegularExpression, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "RedirectUrl_InvalidMessage")]
         public string RedirectUrl { get; set; }
 
         /// <summary>
@@ -37,7 +39,7 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// The security word.
         /// </value>
         [Required]
-        [RegularExpression("^[Dd][Ee][Ll][Ee][Tt][Ee]$")]
+        [RegularExpression("^[Dd][Ee][Ll][Ee][Tt][Ee]$", ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "DeletePage_EnterDelete_Message")]
         public string SecurityWord { get; set; }
 
         /// <summary>
