@@ -12,6 +12,8 @@ namespace BetterCms.Configuration
 
         private const string ServiceTypeAttribute = "serviceType";
 
+        private const string ProcessTimeoutAttribute = "processTimeout";
+
         [ConfigurationProperty(ContentRootAttribute, IsRequired = true)]
         public string ContentRoot
         {
@@ -43,6 +45,13 @@ namespace BetterCms.Configuration
         {
             get { return (StorageServiceType)this[ServiceTypeAttribute]; }
             set { this[ServiceTypeAttribute] = value; }
+        }
+
+        [ConfigurationProperty(ProcessTimeoutAttribute, IsRequired = false, DefaultValue = "00:30:00")]
+        public TimeSpan ProcessTimeout
+        {
+            get { return (TimeSpan)this[ProcessTimeoutAttribute]; }
+            set { this[ProcessTimeoutAttribute] = value; }
         }
 
         public KeyValueElement this[int index]

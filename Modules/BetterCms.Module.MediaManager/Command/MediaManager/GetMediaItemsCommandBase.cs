@@ -24,6 +24,14 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
         where TEntity: MediaFile
     {
         /// <summary>
+        /// Gets or sets the configuration.
+        /// </summary>
+        /// <value>
+        /// The configuration.
+        /// </value>
+        public ICmsConfiguration Configuration { get; set; }
+
+        /// <summary>
         /// The model alias
         /// </summary>
         protected TModel modelAlias;
@@ -185,6 +193,15 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             query.AddSortingAndPaging(request);
 
             var items = query.List<TModel>();
+
+            // Set processed items as failed, if file processing lasts more than specified timeout
+            var timeout = Configuration.Storage.ProcessTimeout;
+            var now = DateTime.Now;
+            items
+                .Where(m => m.IsProcessing && m.CreatedOn.Add(timeout) < now)
+                .ToList()
+                .ForEach(item => { item.IsProcessing = false; item.IsFailed = true; });
+
             return items;
         }
 
@@ -198,6 +215,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             return builder
                     .Select(() => alias.Id).WithAlias(() => modelAlias.Id)
                     .Select(() => alias.Title).WithAlias(() => modelAlias.Name)
+                    .Select(() => alias.CreatedOn).WithAlias(() => modelAlias.CreatedOn)
                     .Select(() => alias.OriginalFileExtension).WithAlias(() => modelAlias.FileExtension)
                     .Select(() => alias.PublicUrl).WithAlias(() => modelAlias.PublicUrl)
                     .Select(alias.GetIsProcessingConditions()).WithAlias(() => modelAlias.IsProcessing)

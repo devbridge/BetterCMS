@@ -101,7 +101,9 @@ namespace BetterCms.Module.MediaManager.Controllers
                             fileName = media.OriginalFileName,
                             fileSize = media.Size,
                             Version = media.Version,
-                            Type = request.Type
+                            Type = request.Type,
+                            IsProcessing = !media.IsUploaded.HasValue,
+                            IsFailed = media.IsUploaded == false,
                         }
                     };
                 }

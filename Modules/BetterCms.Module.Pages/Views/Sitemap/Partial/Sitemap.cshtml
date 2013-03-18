@@ -1,5 +1,6 @@
 ﻿@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Mvc.Helpers
 
 @model BetterCms.Module.Pages.ViewModels.Sitemap.SitemapNodeViewModel
 <!-- ko with: sitemap -->
@@ -59,7 +60,7 @@
                 <!-- ko if: getSitemap().settings.canEditNode -->
                 <div class="bcms-edit-node">
                     <div class="bcms-edit-node-holder">
-                        <div class="bcms-tooltip-mark" data-message="@NavigationGlobalization.Sitemap_NodeEdit_Title_Tooltip_Message"></div>
+                        @Html.Tooltip(NavigationGlobalization.Sitemap_NodeEdit_Title_Tooltip_Message)
                         <div class="bcms-input-box" style="width: 65%;">
                             @Html.TextBoxFor(m => m.Title, new
                             {
@@ -71,7 +72,7 @@
                         </div>
                     </div>
                     <div class="bcms-edit-node-holder">
-                        <div class="bcms-tooltip-mark" data-message="@NavigationGlobalization.Sitemap_NodeEdit_Url_Tooltip_Message"></div>
+                        @Html.Tooltip(NavigationGlobalization.Sitemap_NodeEdit_Url_Tooltip_Message)
                         <div class="bcms-custom-input-box" style="width: 65%;">
                             @Html.TextBoxFor(m => m.Url, new
                             {
