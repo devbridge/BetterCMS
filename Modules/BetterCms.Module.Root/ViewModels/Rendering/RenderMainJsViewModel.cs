@@ -26,12 +26,12 @@ namespace BetterCms.Module.Root.ViewModels.Rendering
         public IEnumerable<JavaScriptModuleViewModel> JavaScriptModules { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether error trace is enabled in client side.
+        /// Gets or sets a value indicating whether debug mode is on.
         /// </summary>
         /// <value>
-        /// <c>true</c> if error trace enabled in client side; otherwise, <c>false</c>.
+        /// <c>true</c> if debug mode is on; otherwise, <c>false</c>.
         /// </value>
-        public bool EnableClientSideErrorTrace { get; set; }
+        public bool IsDebugMode { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to use *.min.js references.
@@ -49,7 +49,7 @@ namespace BetterCms.Module.Root.ViewModels.Rendering
         /// </returns>
         public override string ToString()
         {
-            return string.Format("EnabledClientSideErrorTrace: {0}", EnableClientSideErrorTrace);
+            return string.Format("IsDebugMode: {0}", IsDebugMode);
         }
     }
 }
