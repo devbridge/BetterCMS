@@ -39,8 +39,12 @@ requirejs(['bcms.jquery', 'bcms', 'bcms.processor'],
 
         $(function () {
             bcms.pageId = $('body').data("pageId");
-            bcms.errorTrace = @(Model.EnableClientSideErrorTrace ? "true" : "false");
+            bcms.errorTrace = @(Model.IsDebugMode ? "true" : "false");
             processor.init();
             bcms.init();
-        });
+            @if (Model.IsDebugMode)
+            {
+                <text>window.bj = $;</text>
+            }
+    });
 });

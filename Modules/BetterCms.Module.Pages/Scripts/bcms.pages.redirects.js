@@ -88,11 +88,7 @@ define('bcms.pages.redirects', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'b
             siteSettings.setContent(data);
             redirect.initializeSiteSettingsRedirectsList(data);
             var searchInput = container.find(selectors.searchField);  
-            setTimeout(function() {
-                var val = searchInput.val();
-                searchInput.focus().val("");
-                searchInput.val(val);
-            }, 50);
+            grid.focusSearchInput(searchInput);
         });
     };
 

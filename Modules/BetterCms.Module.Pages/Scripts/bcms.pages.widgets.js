@@ -412,7 +412,7 @@ define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepic
 
             form.on('submit', function(event) {
                 event.preventDefault();
-                searchSiteSettingsWidgets(form);
+                searchSiteSettingsWidgets(form, container);
                 return false;
             });
 
@@ -439,9 +439,7 @@ define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepic
                 siteSettings.setContent(data);
                 initializeSiteSettingsWidgetsList();                
                 var searchInput = container.find(selectors.widgetsSearchField);
-                var val = searchInput.val();
-                searchInput.focus().val("");
-                searchInput.val(val);
+                grid.focusSearchInput(searchInput);
             });
         };
 

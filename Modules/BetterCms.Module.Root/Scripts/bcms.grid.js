@@ -11,7 +11,8 @@ define('bcms.grid', ['bcms.jquery', 'bcms'], function ($, bcms) {
             anyRow: 'tbody > tr:not(.bcms-grid-empty-row):first',
             sortColumnHeaders: 'a.bcms-sort-arrow',
             hiddenSortColumnField: '#bcms-grid-sort-column',
-            hiddenSortDirectionField: '#bcms-grid-sort-direction'
+            hiddenSortDirectionField: '#bcms-grid-sort-direction',
+            formLoaderContainer: '.bcms-rightcol',
         },
         links = {
             
@@ -64,7 +65,11 @@ define('bcms.grid', ['bcms.jquery', 'bcms'], function ($, bcms) {
     * Submits site settings list form
     */
     grid.submitGridForm = function (form, onSuccess) {
-//        $(form).showLoading();
+        var container = form.parents(selectors.formLoaderContainer);
+        if (container.length == 0) {
+            container = form;
+        }
+        $(container).showLoading();
         $.ajax({
             type: 'POST',
             contentType: 'application/x-www-form-urlencoded',
@@ -72,16 +77,25 @@ define('bcms.grid', ['bcms.jquery', 'bcms'], function ($, bcms) {
             cache: false,
             url: form.attr('action'),
             data: form.serialize(),
-//            error: function() {
-//                $(form).hideLoading();
-//            },
+            error: function() {
+                $(container).hideLoading();
+            },
             success: function (data) {
-//                $(form).hideLoading();
+                $(container).hideLoading();
                 if ($.isFunction(onSuccess)) {
                     onSuccess(data);
                 }
             }
         });
+    };
+
+    /**
+    * Focuses search input and puts cursor to end of input
+    */
+    grid.focusSearchInput = function(searchInput) {
+        var val = searchInput.val();
+        searchInput.focus().val("");
+        searchInput.val(val);
     };
 
     /**
