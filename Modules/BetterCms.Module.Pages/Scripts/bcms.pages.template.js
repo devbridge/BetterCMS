@@ -245,9 +245,7 @@ define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepi
                 siteSettings.setContent(data);
                 initializeTemplatesList();
                 var searchInput = container.find(selectors.templateSearchField);
-                var val = searchInput.val();
-                searchInput.focus().val("");
-                searchInput.val(val);
+                grid.focusSearchInput(searchInput);
             });
         };
 
