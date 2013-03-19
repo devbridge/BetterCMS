@@ -2,6 +2,7 @@
 
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;
+using BetterCms.Module.Root.Content.Resources;
 
 namespace BetterCms.Module.Pages.ViewModels.Widgets
 {
@@ -40,10 +41,16 @@ namespace BetterCms.Module.Pages.ViewModels.Widgets
         /// <value>
         /// The widget url.
         /// </value>
-        [Required]
-        [StringLength(MaxLength.Url)]
+        [Required(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_RequiredAttribute_Message")]
+        [StringLength(MaxLength.Url, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
         public string Url { get; set; }
 
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
         public override string ToString()
         {
             return string.Format("{0}, Url: {1}", base.ToString(), Url);

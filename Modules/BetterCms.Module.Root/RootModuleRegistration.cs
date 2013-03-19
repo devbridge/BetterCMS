@@ -2,14 +2,12 @@
 
 using Autofac;
 
-using BetterCms.Api;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Core.Security;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Controllers;
 using BetterCms.Module.Root.Mvc;
-using BetterCms.Module.Root.Mvc.Adapters;
 using BetterCms.Module.Root.Projections;
 using BetterCms.Module.Root.Registration;
 using BetterCms.Module.Root.Services;
@@ -38,8 +36,6 @@ namespace BetterCms.Module.Root
         {    
             authenticationScriptModuleDescriptor = new AuthenticationScriptModuleDescriptor(this);
             siteSettingsJavaScriptModuleDescriptor = new SiteSettingsJavaScriptModuleDescriptor(this);
-
-            ApiContext.Events.HostStart += AttributeAdapterHelper.RegisterValidationAdapters;
         }
 
         /// <summary>

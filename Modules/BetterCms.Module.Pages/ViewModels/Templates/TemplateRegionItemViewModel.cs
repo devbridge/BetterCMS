@@ -2,14 +2,27 @@
 using System.ComponentModel.DataAnnotations;
 
 using BetterCms.Core.Models;
+using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Mvc.Grids;
 
 namespace BetterCms.Module.Pages.ViewModels.Templates
 {
     public class TemplateRegionItemViewModel : IEditableGridItem, IEquatable<TemplateRegionItemViewModel> 
     {
+        /// <summary>
+        /// Gets or sets the region id.
+        /// </summary>
+        /// <value>
+        /// The region id.
+        /// </value>
         public Guid Id { get; set; }
 
+        /// <summary>
+        /// Gets or sets the region version.
+        /// </summary>
+        /// <value>
+        /// The region version.
+        /// </value>
         public int Version { get; set; }
 
         /// <summary>
@@ -18,11 +31,17 @@ namespace BetterCms.Module.Pages.ViewModels.Templates
         /// <value>
         /// The description.
         /// </value>
-        [StringLength(MaxLength.Name)]
+        [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
         public string Description { get; set; }
-        
-        [Required]
-        [StringLength(MaxLength.Name)]
+
+        /// <summary>
+        /// Gets or sets the region identifier.
+        /// </summary>
+        /// <value>
+        /// The region identifier.
+        /// </value>
+        [Required(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_RequiredAttribute_Message")]
+        [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
         public string Identifier { get; set; }
 
         public bool Equals(TemplateRegionItemViewModel other)

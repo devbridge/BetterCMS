@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 using BetterCms.Core.Models;
 using BetterCms.Module.MediaManager.ViewModels;
+using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Mvc.Grids;
 
 namespace BetterCms.Module.Blog.ViewModels.Author
@@ -15,7 +16,7 @@ namespace BetterCms.Module.Blog.ViewModels.Author
         /// <value>
         /// The author id.
         /// </value>
-        [Required]
+        [Required(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_RequiredAttribute_Message")]
         public virtual Guid Id { get; set; }
 
         /// <summary>
@@ -24,7 +25,7 @@ namespace BetterCms.Module.Blog.ViewModels.Author
         /// <value>
         /// The entity version.
         /// </value>
-        [Required]
+        [Required(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_RequiredAttribute_Message")]
         public virtual int Version { get; set; }
 
         /// <summary>
@@ -33,8 +34,8 @@ namespace BetterCms.Module.Blog.ViewModels.Author
         /// <value>
         /// The author name.
         /// </value>
-        [Required]
-        [StringLength(MaxLength.Name)]
+        [Required(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_RequiredAttribute_Message")]
+        [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
         public virtual string Name { get; set; }
 
         /// <summary>

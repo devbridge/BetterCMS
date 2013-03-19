@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 
 using BetterCms.Module.Pages.Content.Resources;
+using BetterCms.Module.Root.Content.Resources;
 
 namespace BetterCms.Module.Pages.ViewModels.Page
 {
@@ -38,7 +39,7 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// <value>
         /// The security word.
         /// </value>
-        [Required]
+        [Required(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_RequiredAttribute_Message")]
         [RegularExpression("^[Dd][Ee][Ll][Ee][Tt][Ee]$", ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "DeletePage_EnterDelete_Message")]
         public string SecurityWord { get; set; }
 
