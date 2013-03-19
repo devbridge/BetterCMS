@@ -2,6 +2,8 @@
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.Page
 
+@using BetterCms.Module.Root
+@using BetterCms.Module.Root.Mvc
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
 
@@ -33,7 +35,7 @@
                 </div>
             </div>
 
-            if (Model.IsInSitemap)
+            if (Model.IsInSitemap && (ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
             {
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.DeletePage_Dialog_UpdateSitemap_Description)
