@@ -539,6 +539,7 @@ define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', '
             onSaveAndPublishClick: null,
             onPreviewClick: null,
             disableSaveDraft: false,
+            disableSaveAndPublish: false,
             onSaveDraftClick: null
         }, options);
 
@@ -561,12 +562,21 @@ define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', '
                     changeContentDesirableStatus(dialog, bcms.contentStatus.published);
                     dialog.submitForm();
                 }
+            },
+            saveDraftAction = function (dialog) {
+                if ($.isFunction(options.onSaveDraftClick)) {
+                    if (options.onSaveDraftClick(dialog) !== false) {
+                        changeContentDesirableStatus(dialog, bcms.contentStatus.draft);
+                        dialog.submitForm();
+                    }
+                } else {
+                    changeContentDesirableStatus(dialog, bcms.contentStatus.draft);
+                    dialog.submitForm();
+                }
             };
 
-        if (!options.disableSaveDraft) {
-            var saveAndPublishButton = new ButtonViewModel(globalization.saveAndPublish, classes.grayButton, 2, function(dialog) {
-                saveAndPublishAction(dialog);
-            });            
+        if (!options.disableSaveDraft && !options.disableSaveAndPublish) {
+            var saveAndPublishButton = new ButtonViewModel(globalization.saveAndPublish, classes.grayButton, 2, saveAndPublishAction);            
             extraButtons.push(saveAndPublishButton);
         }
 
@@ -588,22 +598,14 @@ define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', '
         options.buttons = extraButtons;
         
         
-        if (options.disableSaveDraft) {
+        if (options.disableSaveDraft && !options.disableSaveAndPublish) {
             options.acceptTitle = globalization.saveAndPublish;
-            options.onAcceptClick = function(dialog) {saveAndPublishAction(dialog);};            
-        } else {            
+            options.onAcceptClick = saveAndPublishAction;            
+        } else if (!options.disableSaveDraft) {
             options.acceptTitle = globalization.saveDraft;
-            options.onAcceptClick = function (dialog) {
-                if ($.isFunction(options.onSaveDraftClick)) {
-                    if (options.onSaveDraftClick(dialog) !== false) {
-                        changeContentDesirableStatus(dialog, bcms.contentStatus.draft);
-                        dialog.submitForm();
-                    }
-                } else {
-                    changeContentDesirableStatus(dialog, bcms.contentStatus.draft);
-                    dialog.submitForm();
-                }
-            };
+            options.onAcceptClick = saveDraftAction;
+        } else {
+            options.disableAccept = true;
         }
         
         modal.open(options);

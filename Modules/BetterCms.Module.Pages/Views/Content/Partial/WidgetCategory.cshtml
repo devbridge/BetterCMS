@@ -2,6 +2,8 @@
 @using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.Models
+@using BetterCms.Module.Root
+@using BetterCms.Module.Root.Mvc
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
 
@@ -51,15 +53,18 @@
 
                         <div class="bcms-controls-holder">
                             <div class="bcms-btn-small bcms-content-insert-button" >@PagesGlobalization.AddPageContent_WidgetTab_InsertButton</div>
-                             @if (!widget.Status.Equals(ContentStatus.Published.ToString()))
-                             {
-                                <a class="bcms-icn-edit bcms-content-edit-button bcms-edit-draft">@PagesGlobalization.AddPageContent_WidgetTab_EditButton</a>
-                             }
-                             else
-                             {
-                                <a class="bcms-icn-edit bcms-content-edit-button">@PagesGlobalization.AddPageContent_WidgetTab_EditButton</a>
-                             }
-                            <a class="bcms-icn-delete bcms-content-delete-button">@PagesGlobalization.AddPageContent_WidgetTab_DeleteButton</a>
+                            @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.Administration))
+                            {
+                                if (!widget.Status.Equals(ContentStatus.Published.ToString()))
+                                {
+                                    <a class="bcms-icn-edit bcms-content-edit-button bcms-edit-draft">@PagesGlobalization.AddPageContent_WidgetTab_EditButton</a>
+                                }
+                                else
+                                {
+                                    <a class="bcms-icn-edit bcms-content-edit-button">@PagesGlobalization.AddPageContent_WidgetTab_EditButton</a>
+                                }
+                                <a class="bcms-icn-delete bcms-content-delete-button">@PagesGlobalization.AddPageContent_WidgetTab_DeleteButton</a>
+                            }
                         </div>
                     </div>
                 }
