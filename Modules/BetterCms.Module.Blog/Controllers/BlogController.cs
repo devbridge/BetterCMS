@@ -73,7 +73,7 @@ namespace BetterCms.Module.Blog.Controllers
         /// </summary>
         /// <param name="id">The id.</param>
         /// <returns>Json result.</returns>
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent)]
         [HttpGet]
         public ActionResult EditBlogPost(string id)
         {
