@@ -129,7 +129,6 @@ a.bcms-slider-prev, a.bcms-slider-next {
     z-index: 10;
     opacity: 0;
     transition: opacity 0.1s ease-in-out;
-    -moz-transition: opacity 0.1s ease-in-out;
     -webkit-transition: opacity 0.1s ease-in-out;
 }
 

@@ -389,7 +389,6 @@ a.bcms-icn-delete {
     font-size: 12px;
     font-weight: 600;
     transition: all 0.1s ease-in-out;
-    -moz-transition: all 0.1s ease-in-out;
     -webkit-transition: all 0.1s ease-in-out;
 }
 
@@ -1506,7 +1505,6 @@ a.bcms-btn-close {
         font-weight: 700;
         text-decoration: none;
         transition: all 0.1s ease-in-out;
-        -moz-transition: all 0.1s ease-in-out;
         -webkit-transition: all 0.1s ease-in-out;
     }
 
@@ -1548,7 +1546,6 @@ a.bcms-btn-close {
         font-weight: 700;
         text-decoration: none;
         transition: all 0.1s ease-in-out;
-        -moz-transition: all 0.1s ease-in-out;
         -webkit-transition: all 0.1s ease-in-out;
     }
 
@@ -1611,7 +1608,6 @@ a.bcms-btn-close {
         opacity: 1;
         filter: Alpha(opacity=100);
         transition: opacity 0.2s ease-in-out;
-        -moz-transition: opacity 0.2s ease-in-out;
         -webkit-transition: opacity 0.2s ease-in-out;
     }
 
@@ -1754,7 +1750,6 @@ a.bcms-btn-close {
     text-overflow: ellipsis;
     overflow: hidden;
     transition: background-color 0.1s ease-in-out;
-    -moz-transition: background-color 0.1s ease-in-out;
     -webkit-transition: background-color 0.1s ease-in-out;
 }
 
@@ -1776,6 +1771,7 @@ a.bcms-btn-close {
     }
 
 .bcms-single-tag-active {
+    animation: duplicateTag 1.5s 3;
     -webkit-animation: duplicateTag 1.5s 3;
 }
 
@@ -1786,24 +1782,7 @@ a.bcms-btn-close {
     }
 
     50% {
-        background: #fcecec;
-        border: 1px solid #e64343;
-    }
-
-    100% {
-        background-color: #def8ff;
-        border: 1px solid #95d3e7;
-    }
-}
-
-@-moz-keyframes duplicateTag {
-    0% {
-        background-color: #def8ff;
-        border: 1px solid #95d3e7;
-    }
-
-    50% {
-        background: #fcecec;
+        background-color: #fcecec;
         border: 1px solid #e64343;
     }
 
@@ -1820,7 +1799,7 @@ a.bcms-btn-close {
     }
 
     50% {
-        background: #fcecec;
+        background-color: #fcecec;
         border: 1px solid #e64343;
     }
 
@@ -1903,7 +1882,6 @@ th.bcms-tables-nohover:hover {
 .bcms-table-row-active {
     background-color: #effcfe;
     transition: background-color 0.5s ease-out;
-    -moz-transition: background-color 0.5s ease-out;
     -webkit-transition: background-color 0.5s ease-out;
 }
 

@@ -78,7 +78,6 @@ a {
     color: #2eadd5;
     text-decoration: none;
     transition: color 0.1s ease-in;
-    -moz-transition: color 0.1s ease-in;
     -webkit-transition: color 0.1s ease-in;
 }
 
@@ -214,7 +213,6 @@ input[type="submit"].btn-secondary, input[type="submit"].btn-primary {
         font-family: 'Opan Sans', sans-serif;
         border-top: 1px solid #24a2c9;
         transition: background 0.1s ease-in-out;
-        -moz-transition: background 0.1s ease-in-out;
         -webkit-transition: background 0.1s ease-in-out;
     }
 
@@ -260,7 +258,6 @@ a.bcms-logo {
         font-family: 'Open Sans', sans-serif;
         text-align: center;
         transition: color 0.1s ease-in;
-        -moz-transition: color 0.1s ease-in;
         -webkit-transition: color 0.1s ease-in;
     }
 
