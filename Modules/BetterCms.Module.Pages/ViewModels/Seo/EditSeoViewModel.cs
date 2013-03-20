@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 using BetterCms.Core.Models;
 using BetterCms.Module.Pages.Content.Resources;
+using BetterCms.Module.Root.Content.Resources;
 
 namespace BetterCms.Module.Pages.ViewModels.Seo
 {
@@ -43,7 +44,7 @@ namespace BetterCms.Module.Pages.ViewModels.Seo
         /// <value>
         /// The page URL path.
         /// </value>
-        [Required(AllowEmptyStrings = false)]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_RequiredAttribute_Message")]
         [RegularExpression(PagesConstants.PageUrlRegularExpression, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "EditSeo_PageUrlPath_InvalidMessage")]
         public string PageUrlPath { get; set; }
 
@@ -53,7 +54,7 @@ namespace BetterCms.Module.Pages.ViewModels.Seo
         /// <value>
         /// The changed URL path.
         /// </value>
-        [Required(AllowEmptyStrings = false)]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_RequiredAttribute_Message")]
         [RegularExpression(PagesConstants.PageUrlRegularExpression, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "EditSeo_PageUrlPath_InvalidMessage")]
         public string ChangedUrlPath { get; set; }
 

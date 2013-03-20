@@ -507,9 +507,9 @@
     <EmbeddedResource Include="Scripts\require.js" />
     <EmbeddedResource Include="Scripts\bcms.js" />
     <EmbeddedResource Include="Scripts\bcms.sidemenu.js" />
-    <EmbeddedResource Include="Scripts\bcms.content.js" />
     <EmbeddedResource Include="Content\Styles\base.css" />
     <EmbeddedResource Include="Scripts\bcms.security.js" />
+    <EmbeddedResource Include="Scripts\bcms.content.js" />
     <Content Include="Views\Web.config" />
     <EmbeddedResource Include="Views\Sidebar\Container.cshtml" />
     <EmbeddedResource Include="Views\Rendering\RenderMainJsFile.cshtml" />

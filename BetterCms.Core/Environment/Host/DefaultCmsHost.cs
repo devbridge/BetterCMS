@@ -9,6 +9,7 @@ using System.Web.Hosting;
 using System.Web.Routing;
 using System.Web.Mvc;
 
+using BetterCms.Api;
 using BetterCms.Core.DataAccess.DataContext.Migrations;
 using BetterCms.Core.Environment.Assemblies;
 using BetterCms.Core.Exceptions;
@@ -84,6 +85,9 @@ namespace BetterCms.Core.Environment.Host
 
                 modulesRegistration.RegisterKnownModuleRoutes(RouteTable.Routes);
                 MigrateDatabase();
+                
+                // Notify.
+                ApiContext.Events.OnHostStart(this);
 
                 Logger.Info("BetterCMS host application started.");
             }

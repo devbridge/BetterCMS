@@ -58,7 +58,7 @@
         <div data-bind="foreach: medias()">
             <div data-bind="click: openMedia.bind($data, $root), event: { contextmenu: contextMenu.show }, css: rowClassNames()">
                 
-                <div class="bcms-media-context" data-bind="click: stopEvent, attr: { id: contextMenu.domId }">
+                <div class="bcms-media-context bcms-layer" data-bind="click: stopEvent, attr: { id: contextMenu.domId }">
                     <a class="bcms-btn-close">@RootGlobalization.Button_Close</a>
                     <!--  ko if: isProcessing() -->
                     @MediaGlobalization.MediaManager_FileStillProcessing_Message

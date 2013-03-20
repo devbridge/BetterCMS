@@ -267,8 +267,9 @@ define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', '
         */
         acceptClick: function () {
             if (this.onAction(this.options.onAcceptClick) === true) {
-                this.accept();
+                return this.accept();
             }
+            return false;
         },
 
         /*
@@ -277,7 +278,9 @@ define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', '
         accept: function () {
             if (this.onAction(this.options.onAccept) === true) {
                 this.destroy();
+                return true;
             }
+            return false;
         },
 
         /*
@@ -496,8 +499,9 @@ define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', '
                     if (canHandleKeyPress()) {
                         e.preventDefault();
                         if (topModal != lastEnterModal) {
-                            lastEnterModal = topModal;
-                            topModal.acceptClick();
+                            if (topModal.acceptClick()) {
+                                lastEnterModal = topModal;
+                            }
                         }
                     }
                 }

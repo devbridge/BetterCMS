@@ -67,9 +67,7 @@ define('bcms.pages.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms.s
             siteSettings.setContent(data);
             tags.initSiteSettingsTagsEvents(data);   
             var searchInput = container.find(selectors.tagsSearchField);
-            var val = searchInput.val();
-            searchInput.focus().val("");
-            searchInput.val(val);
+            grid.focusSearchInput(searchInput);
         });
     };
 
@@ -145,9 +143,7 @@ define('bcms.pages.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms.s
             siteSettings.setContent(data);
             tags.initSiteSettingsCategoriesEvents(data);                  
             var searchInput = container.find(selectors.categoriesSearchField);
-            var val = searchInput.val();
-            searchInput.focus().val("");
-            searchInput.val(val);
+            grid.focusSearchInput(searchInput);
         });
     };
 

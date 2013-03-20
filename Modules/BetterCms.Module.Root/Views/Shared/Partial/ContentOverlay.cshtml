@@ -1,7 +1,7 @@
-﻿@using BetterCms.Module.Root
+@using BetterCms.Module.Root
 @using BetterCms.Module.Root.Mvc
 <script type="text/html" id="bcms-content-overlay">
-    <div class="bcms-content-overlay">
+    <div class="bcms-content-overlay bcms-layer">
         <div class="bcms-content-actions">
             @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent)))
             {

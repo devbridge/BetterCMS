@@ -48,7 +48,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetSiteSettingsWidgets
                                       Id = f.Id,
                                       Version = f.Version,
                                       WidgetName = f.Name,
-                                      CategoryName = f.Category.Name,
+                                      CategoryName = (!f.Category.IsDeleted) ? f.Category.Name : null,
                                       WidgetEntityType = f.GetType(),
                                       IsPublished = f.Status == ContentStatus.Published,
                                       HasDraft = f.Status == ContentStatus.Draft
@@ -108,7 +108,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetSiteSettingsWidgets
                         }
                         if (draft != null)
                         {                            
-                            item.CategoryName = draft.Category != null ? draft.Category.Name : "";
+                            item.CategoryName = draft.Category != null && !draft.Category.IsDeleted ? draft.Category.Name : "";
                             item.WidgetName = draft.Name;
                             item.HasDraft = true;
                         }

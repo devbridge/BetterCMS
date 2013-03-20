@@ -69,6 +69,8 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
 
             PagesApiContext.Events.OnPageCreated(new PageProperties());
 
+            ApiContext.Events.HostStart += Core_HostStart;
+
             IList<MediaFolder> folders;
             using (var mediaApi = CmsContext.CreateApiContextOf<MediaManagerApiContext>())
             {                
@@ -84,6 +86,11 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
             }
 
             return Content(message);
+        }
+
+        void Core_HostStart(SingleItemEventArgs<Core.Environment.Host.ICmsHost> args)
+        {
+            throw new NotImplementedException();
         }
 
         private void EventsOnPageCreated(SingleItemEventArgs<PageProperties> args)

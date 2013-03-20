@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 using BetterCms.Core.Models;
 using BetterCms.Module.Pages.Content.Resources;
+using BetterCms.Module.Root.Content.Resources;
 
 namespace BetterCms.Module.Pages.ViewModels.Sitemap
 {
@@ -34,7 +35,7 @@ namespace BetterCms.Module.Pages.ViewModels.Sitemap
         /// <value>
         /// The title.
         /// </value>
-        [StringLength(MaxLength.Name)]
+        [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(NavigationGlobalization), ErrorMessageResourceName = "Sitemap_Dialog_NodeTitle_RequiredMessage")]
         public string Title { get; set; }
 
@@ -44,7 +45,7 @@ namespace BetterCms.Module.Pages.ViewModels.Sitemap
         /// <value>
         /// The URL.
         /// </value>
-        [StringLength(MaxLength.Url)]
+        [StringLength(MaxLength.Url, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(NavigationGlobalization), ErrorMessageResourceName = "Sitemap_Dialog_NodeUrl_RequiredMessage")]
         [RegularExpression(PagesConstants.SiteMapUrlRegularExpression, ErrorMessageResourceType = typeof(NavigationGlobalization), ErrorMessageResourceName = "Sitemap_Dialog_NodeUrl_InvalidSymbol")]
         public string Url { get; set; }
