@@ -52,6 +52,8 @@ define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messag
             self.items = ko.observableArray();
             self.options = ko.observable();
             self.container = container;
+
+            self.rowAdded = false;
             
             self.messagesDomId = function () {
                 var id = staticDomId++;
@@ -82,11 +84,15 @@ define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messag
             };
 
             self.addNewItem = function () {
-                var newItem = self.createItem({
-                    IsActive: true,
-                    IsNew: true
-                });
-                self.items.unshift(newItem);
+                if (!self.rowAdded) {
+                    self.rowAdded = true;
+
+                    var newItem = self.createItem({
+                        IsActive: true,
+                        IsNew: true
+                    });
+                    self.items.unshift(newItem);
+                }
             };
             
             self.searchItems = function () {
@@ -458,6 +464,7 @@ define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messag
 
             // Mark item as no new anymore, if trying to save
             self.isNew(false);
+            self.parent.rowAdded = false;
 
             if (!url) {
                 console.log("Save url is not specified");
@@ -523,6 +530,7 @@ define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messag
         grid.ItemViewModel.prototype.cancelEditItem = function () {
             if (!this.id()) {
                 this.parent.items.remove(this);
+                this.parent.rowAdded = false;
             } else {
                 this.restoreOldValues();
             }
