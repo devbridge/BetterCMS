@@ -216,7 +216,7 @@ define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.content
         */
         pagesContent.initializeEditContentForm = function (dialog) {
             dialog.container.find(selectors.dataPickers).initializeDatepicker();
-            htmlEditor.initializeHtmlEditor(selectors.htmlEditor, { readOnly: !security.IsAuthorized(["BcmsEditContent"]) });
+            htmlEditor.initializeHtmlEditor(selectors.htmlEditor);
             pagesContent.initializeCustomTextArea(dialog);
             
             dialog.container.find(selectors.destroyDraftVersionLink).on('click', function () {
