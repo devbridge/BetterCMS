@@ -37,12 +37,17 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult Login()
+        public ActionResult Login(string roles)
         {
-            var roles = string.Join(",", Roles.GetRolesForUser(string.Empty));
+//            var roles = string.Join(",", Roles.GetRolesForUser(string.Empty));
+            if (string.IsNullOrEmpty(roles))
+            {
+                roles = "Owner";
+            }
+
             var authTicket = new FormsAuthenticationTicket(1, "BetterCMS test user", DateTime.Now, DateTime.Now.AddMonths(1), true, roles);
 
-            string cookieContents = FormsAuthentication.Encrypt(authTicket);
+            var cookieContents = FormsAuthentication.Encrypt(authTicket);
             var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, cookieContents)
             {
                 Expires = authTicket.Expiration,
@@ -109,7 +114,7 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
         [AllowAnonymous]
         public ActionResult LoginJson(LoginViewModel login)
         {
-            Login();
+            Login(string.Empty);
 
             return Json(new { Success = true });
         }

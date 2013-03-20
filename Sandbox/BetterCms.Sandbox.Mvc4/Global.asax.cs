@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
 using System.Web;
@@ -7,13 +6,9 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
 
-using Autofac;
-
 using BetterCms.Api;
 using BetterCms.Core;
-using BetterCms.Core.Dependencies;
 using BetterCms.Core.Environment.Host;
-using BetterCms.Core.Modules.Registration;
 using BetterCms.Core.Modules.Projections;
 
 using Common.Logging;
@@ -262,15 +257,23 @@ namespace BetterCms.Sandbox.Mvc4
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
         {
-            HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+            var authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
             if (authCookie != null)
             {
-                FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(authCookie.Value);
+                var authTicket = FormsAuthentication.Decrypt(authCookie.Value);
                 if (authTicket != null)
                 {
                     var identity = new GenericIdentity(authTicket.Name, "Forms");
-                    var principal = new GenericPrincipal(identity,  Roles.GetRolesForUser(string.Empty));
+                    var roles = authTicket.UserData.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Distinct().ToArray();
+                    var principal = new GenericPrincipal(identity, roles);
                     Context.User = principal;
+
+                    if (!Roles.Enabled)
+                    {
+                        // These roles are used only for client side GUI features hiding.
+                        // All server side logic is based on IPrincipal.IsInRole()
+                        Context.Cache[string.Format("{0}_Roles", identity.Name)] = roles;
+                    }
                 }
             }
         }
