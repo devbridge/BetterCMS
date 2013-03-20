@@ -120,8 +120,8 @@
   <data name="AddNewContent_Dialog_Title" xml:space="preserve">
     <value>Add New Content</value>
   </data>
-  <data name="AddNewPageProperties_PagePermalink_InvalidMessage" xml:space="preserve">
-    <value>Page permalink is invalid. Link must start and end with "/", can contain only following characters: '0-9', 'a-z', '-', '/', '_' and no more than 260 alphanumeric characters between the '/'.</value>
+  <data name="PageProperties_PageUrl_InvalidMessage" xml:space="preserve">
+    <value>Page url is invalid. Link must start and end with "/", can contain only following characters: '0-9', 'a-z', '-', '/', '_' and no more than 260 alphanumeric characters between the '/'.</value>
   </data>
   <data name="AddNewPageProperties_PagePermalink_MaxLengthMessage" xml:space="preserve">
     <value>Page permalink max length exceeded.</value>
@@ -1079,5 +1079,11 @@
   </data>
   <data name="WidgetPreviewImage_Tooltip_Description" xml:space="preserve">
     <value>Purpose of Page URL is ......</value>
+  </data>
+  <data name="DeletePage_EnterDelete_Message" xml:space="preserve">
+    <value>Type word DELETE to confirm deletion.</value>
+  </data>
+  <data name="RedirectUrl_InvalidMessage" xml:space="preserve">
+    <value>Redirect url is invalid. Link must start and end with "/", can contain only following characters: '0-9', 'a-z', '-', '/', '_' and no more than 260 alphanumeric characters between the '/'.</value>
   </data>
 </root>

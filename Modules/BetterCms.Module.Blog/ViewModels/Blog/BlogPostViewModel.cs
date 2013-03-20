@@ -9,6 +9,7 @@ using BetterCms.Core.Models;
 using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Mvc.Attributes;
+using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 
 namespace BetterCms.Module.Blog.ViewModels.Blog
@@ -21,7 +22,7 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// <value>
         /// The blog post id.
         /// </value>
-        [Required]
+        [Required(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_RequiredAttribute_Message")]
         public virtual Guid Id { get; set; }
 
         /// <summary>
@@ -38,7 +39,7 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// <value>
         /// The entity version.
         /// </value>
-        [Required]
+        [Required(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_RequiredAttribute_Message")]
         public virtual int Version { get; set; }
 
         /// <summary>
@@ -47,8 +48,8 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// <value>
         /// The blog title.
         /// </value>
-        [Required]
-        [StringLength(MaxLength.Name)]
+        [Required(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_RequiredAttribute_Message")]
+        [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
         public virtual string Title { get; set; }
 
         /// <summary>
@@ -57,7 +58,7 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// <value>
         /// The blog intro text.
         /// </value>
-        [StringLength(MaxLength.Text)]
+        [StringLength(MaxLength.Text, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
         public virtual string IntroText { get; set; }
 
         /// <summary>

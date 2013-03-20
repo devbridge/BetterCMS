@@ -60,3 +60,4 @@ logs
 /Modules/BetterCms.Module.Templates/Content/Css/bcms.templates.min.css
 /Modules/BetterCms.Module.Users/Content/Css/bcms.users.min.css
 /Modules/BetterCms.Module.Users/Scripts/bcms.users.min.js
+/Modules/BetterCms.Module.Pages/Scripts/bcms.pages.min.js

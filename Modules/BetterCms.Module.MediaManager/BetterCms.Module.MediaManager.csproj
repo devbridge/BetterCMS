@@ -203,12 +203,10 @@
       <LastGenOutput>MediaGlobalization.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Content\Css\bcms.media.css" />
     <EmbeddedResource Include="Content\Css\Images\icn-zoom.png" />
     <EmbeddedResource Include="Content\Css\Images\loading.gif" />
     <EmbeddedResource Include="Content\Css\Images\sprite-media-1.png" />
     <EmbeddedResource Include="Content\Css\Images\sprite-media-2.png" />
-    <EmbeddedResource Include="Content\Css\Images\sprite-media-3.png" />
     <EmbeddedResource Include="Content\Css\Images\bcms-no-image-1.png" />
     <EmbeddedResource Include="Content\Css\Images\bcms-no-image-2.png" />
     <EmbeddedResource Include="Content\Css\Images\bcms-no-image-3.png" />
@@ -229,6 +227,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="BuildConfiguration.xml" />
+    <EmbeddedResource Include="Content\Css\bcms.media.css" />
+    <EmbeddedResource Include="Content\Css\Images\sprite-media-3.png" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>

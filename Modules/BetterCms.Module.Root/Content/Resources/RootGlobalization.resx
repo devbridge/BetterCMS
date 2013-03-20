@@ -291,11 +291,17 @@
   <data name="Validation_MaximumLengthExceeded_Message" xml:space="preserve">
     <value>Maximum length cannot exceed {0} characters.</value>
   </data>
+  <data name="Validation_RangeAttribute_Message" xml:space="preserve">
+    <value>Field must be a number with value between {1} and {2}.</value>
+  </data>
   <data name="Validation_RegularExpressionAttribute_Message" xml:space="preserve">
-    <value>The field {0} must math the regular expression {1}.</value>
+    <value>The field must match the regular expression.</value>
   </data>
   <data name="Validation_RequiredAttribute_Message" xml:space="preserve">
-    <value>Field {0} is required.</value>
+    <value>Field is required.</value>
+  </data>
+  <data name="Validation_StringLengthAttribute_Message" xml:space="preserve">
+    <value>The field must be the string with a maximum length of {1}.</value>
   </data>
   <data name="WaterMark_Search" xml:space="preserve">
     <value>Search...</value>

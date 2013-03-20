@@ -2,6 +2,8 @@
 using System.ComponentModel.DataAnnotations;
 
 using BetterCms.Core.Models;
+using BetterCms.Module.Pages.Content.Resources;
+using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Mvc.Grids;
 
 namespace BetterCms.Module.Pages.ViewModels.SiteSettings
@@ -30,9 +32,9 @@ namespace BetterCms.Module.Pages.ViewModels.SiteSettings
         /// <value>
         /// The page URL.
         /// </value>
-        [Required(AllowEmptyStrings = false)]
-        [RegularExpression(PagesConstants.PageUrlRegularExpression)]
-        [StringLength(MaxLength.Url)]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_RequiredAttribute_Message")]
+        [RegularExpression(PagesConstants.PageUrlRegularExpression, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "PageProperties_PageUrl_InvalidMessage")]
+        [StringLength(MaxLength.Url, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
         public string PageUrl { get; set; }
 
         /// <summary>
@@ -41,9 +43,9 @@ namespace BetterCms.Module.Pages.ViewModels.SiteSettings
         /// <value>
         /// The redirect URL.
         /// </value>
-        [Required(AllowEmptyStrings = false)]
-        [RegularExpression(PagesConstants.PageUrlRegularExpression)]
-        [StringLength(MaxLength.Url)]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_RequiredAttribute_Message")]
+        [RegularExpression(PagesConstants.PageUrlRegularExpression, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "RedirectUrl_InvalidMessage")]
+        [StringLength(MaxLength.Url, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
         public string RedirectUrl { get; set; }
 
         /// <summary>

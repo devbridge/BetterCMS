@@ -168,8 +168,6 @@
     <Compile Include="Models\Region.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\Widget.cs" />
-    <Compile Include="Mvc\Adapters\DefaultRegularExpressionAttributeAdapter.cs" />
-    <Compile Include="Mvc\Adapters\DefaultRequiredAttributeAdapter.cs" />
     <Compile Include="Mvc\CommandBase.cs" />
     <Compile Include="Mvc\CommandHandler.cs" />
     <Compile Include="Mvc\Converters.cs" />

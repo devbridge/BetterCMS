@@ -14,6 +14,19 @@
         {
             if (!string.IsNullOrWhiteSpace(virtualPath))
             {
+                // Fix virtual path
+                if (!virtualPath.StartsWith("~"))
+                {
+                    if (virtualPath.StartsWith("/"))
+                    {
+                        virtualPath = string.Concat("~", virtualPath);
+                    }
+                    else
+                    {
+                        virtualPath = string.Concat("~/", virtualPath);
+                    }
+                }
+
                 return System.Web.Hosting.HostingEnvironment.VirtualPathProvider.FileExists(virtualPath);
             }
             

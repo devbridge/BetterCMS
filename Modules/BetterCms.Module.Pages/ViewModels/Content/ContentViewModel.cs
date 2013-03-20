@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 using BetterCms.Core.Models;
+using BetterCms.Module.Root.Content.Resources;
 
 namespace BetterCms.Module.Pages.ViewModels.Content
 {
@@ -14,7 +15,7 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// <value>
         /// The content id.
         /// </value>
-        [Required]
+        [Required(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_RequiredAttribute_Message")]
         public virtual Guid Id { get; set; }
 
         /// <summary>
@@ -23,7 +24,7 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// <value>
         /// The entity version.
         /// </value>
-        [Required]
+        [Required(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_RequiredAttribute_Message")]
         public virtual int Version { get; set; }
 
         /// <summary>
@@ -32,10 +33,16 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// <value>
         /// The title.
         /// </value>
-        [Required]
-        [StringLength(MaxLength.Name)]
+        [Required(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_RequiredAttribute_Message")]
+        [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
         public virtual string Name { get; set; }
 
+        /// <summary>
+        /// Gets or sets the content status.
+        /// </summary>
+        /// <value>
+        /// The content status.
+        /// </value>
         public virtual string Status { get; set; }
 
         /// <summary>
