@@ -52,3 +52,11 @@ logs
 /Sandbox/BetterCms.Sandbox.Mvc4/uploads
 /Modules/BetterCms.Module.Root/Content/Styles/bcms.root.min.css
 /Modules/BetterCms.Module.Root/Scripts/bcms.root.min.js
+/Modules/BetterCms.Module.Blog/Content/Styles/bcms.blog.min.css
+/Modules/BetterCms.Module.Blog/Scripts/bcms.blog.min.js
+/Modules/BetterCms.Module.MediaManager/Content/Css/bcms.media.min.css
+/Modules/BetterCms.Module.MediaManager/Scripts/bcms.media.min.js
+/Modules/BetterCms.Module.Pages/Content/Css/bcms.pages.min.css
+/Modules/BetterCms.Module.Templates/Content/Css/bcms.templates.min.css
+/Modules/BetterCms.Module.Users/Content/Css/bcms.users.min.css
+/Modules/BetterCms.Module.Users/Scripts/bcms.users.min.js

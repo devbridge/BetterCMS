@@ -362,6 +362,8 @@
   <ItemGroup>
     <EmbeddedResource Include="Content\Css\Images\sprite-base-2.png" />
     <EmbeddedResource Include="Content\Css\bcms.navigation.css" />
+    <Content Include="BuildConfiguration.xml" />
+    <Content Include="Content\Css\bcms.pages.min.css" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
@@ -380,6 +382,7 @@
     <EmbeddedResource Include="Scripts\bcms.pages.content.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.widgets.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.min.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -562,4 +565,7 @@
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>$(MSBuildBinPath)\msbuild.exe /p:Configuration=$(ConfigurationName) /p:SolutionDir=$(SolutionDir) /p:ProjectDir=$(ProjectDir) "$(ProjectDir)BuildConfiguration.xml"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

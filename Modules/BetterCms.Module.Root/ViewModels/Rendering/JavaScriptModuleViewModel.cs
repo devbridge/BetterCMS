@@ -35,6 +35,14 @@ namespace BetterCms.Module.Root.Models.Rendering
         public string Path { get; set; }
 
         /// <summary>
+        /// Gets or sets the minified path.
+        /// </summary>
+        /// <value>
+        /// The minified path.
+        /// </value>
+        public string MinifiedPath { get; set; }
+
+        /// <summary>
         /// Gets or sets registered links.
         /// </summary>
         /// <value>

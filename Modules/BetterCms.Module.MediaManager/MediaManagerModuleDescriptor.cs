@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 using Autofac;
@@ -122,7 +123,7 @@ namespace BetterCms.Module.MediaManager
         /// <returns>List of known client side modules in page module.</returns>
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
         public override IEnumerable<JavaScriptModuleDescriptor> RegisterJavaScriptModules(ICmsConfiguration configuration)
-        {
+        {            
             return new[]
                 {
                     mediaJavaScriptModuleDescriptor,
@@ -152,7 +153,5 @@ namespace BetterCms.Module.MediaManager
                         }                                      
                 };
         }
-
-        
     }
 }

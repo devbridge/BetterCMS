@@ -5,7 +5,8 @@ requirejs.config({
     enforceDefine: false,    
 
     paths: {     
-         @Model.JavaScriptModules.RenderCommaSeparatedNamePathPairs("/file/bcms-root/scripts/bcms.root.min", "bcms.processor"),
+        @Model.JavaScriptModules.RenderCommaSeparatedNamePathPairs(new [] { "bcms.processor" }, true),
+        'bcms.processor': '/file/bcms-root/scripts/bcms.processor',
         'knockout': '/file/bcms-root/scripts/knockout-2.2.0',
         'ckeditor': '/file/bcms-root/scripts/ckeditor/ckeditor'
     },    

@@ -22,7 +22,7 @@ S3 CDN: d3hf62uppzvupw.cloudfront.net
 \version\bcms.blog.min.js
 */
 
-@if (Model.UseMinReferences)
+@if (!Model.UseMinReferences)
 {
     @Html.Partial("Partial/RequireJsReleaseConfig", Model)
 }

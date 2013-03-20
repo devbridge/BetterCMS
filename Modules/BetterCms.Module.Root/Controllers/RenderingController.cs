@@ -113,6 +113,7 @@ namespace BetterCms.Module.Root.Controllers
                                 {
                                     Name = f.Name,
                                     Path = f.Path,
+                                    MinifiedPath = f.ContainerModule.MinifiedScriptPath,
                                     FriendlyName = f.FriendlyName,
                                     Links = new ProjectionsViewModel
                                         {                                            

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Web.Mvc;
@@ -73,6 +74,20 @@ namespace BetterCms.Core.Modules
             get
             {
                 return string.Format("/file/{0}/scripts/", AreaName).ToLowerInvariant();
+            }
+        }
+
+        /// <summary>
+        /// Gets the minified script path.
+        /// </summary>
+        /// <value>
+        /// The minified script path.
+        /// </value>
+        public virtual string MinifiedScriptPath
+        {
+            get
+            {
+                return Path.Combine(BaseScriptPath, string.Format("bcms.{0}.min", Name));
             }
         }
         /// <summary>

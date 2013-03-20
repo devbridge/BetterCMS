@@ -35,11 +35,15 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// Renders the comma separated name and path pairs.
         /// </summary>
         /// <param name="modules">The modules.</param>
-        /// <returns>Html string of comma separated js friendly names.</returns>
-        public static HtmlString RenderCommaSeparatedNamePathPairs(this IEnumerable<JavaScriptModuleViewModel> modules, string forcedPath = null, params string [] ignoreForcedPathForModules)
+        /// <param name="ignoreJsModules">The ignore js modules.</param>
+        /// <param name="useMinifiedPaths">if set to <c>true</c> use minified paths.</param>
+        /// <returns>
+        /// Html string of comma separated js friendly names.
+        /// </returns>
+        public static HtmlString RenderCommaSeparatedNamePathPairs(this IEnumerable<JavaScriptModuleViewModel> modules, string[] ignoreJsModules = null, bool useMinifiedPaths = false)
         {
             return new HtmlString(string.Join(", ", 
-                modules.Select(f => string.Concat("'", f.Name, "' : '", forcedPath != null && (ignoreForcedPathForModules == null || !ignoreForcedPathForModules.Contains(f.Name)) ? forcedPath : f.Path, "'"))));
+                modules.Where(f => ignoreJsModules == null || !ignoreJsModules.Contains(f.Name)).Select(f => string.Concat("'", f.Name, "' : '", useMinifiedPaths ? f.MinifiedPath : f.Path, "'"))));
         }
     }
 }

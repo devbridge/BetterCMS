@@ -140,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Content\Css\bcms.templates.css" />
+    <Content Include="BuildConfiguration.xml" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
@@ -204,4 +205,7 @@
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>$(MSBuildBinPath)\msbuild.exe /p:Configuration=$(ConfigurationName) /p:SolutionDir=$(SolutionDir) /p:ProjectDir=$(ProjectDir) "$(ProjectDir)BuildConfiguration.xml"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

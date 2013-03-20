@@ -49,6 +49,7 @@ namespace BetterCms.Module.AmazonS3Storage
         {
             if (configuration.Storage.ServiceType == StorageServiceType.Auto)
             {
+                // TODO: check if Storage module is registered if throw cmsexception.                
                 containerBuilder.RegisterType<WindowsAzureStorageService>().As<IStorageService>().SingleInstance();
             }
         }

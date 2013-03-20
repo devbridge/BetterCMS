@@ -448,7 +448,7 @@ define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', '
 
         return AuthorImageViewModel;
         
-    })(media.ImageSelectorViewModel);
+    })(media.ImageSelectorViewModel); 
 
     /**
     * Authors list view model

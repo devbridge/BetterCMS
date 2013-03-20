@@ -228,6 +228,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BuildConfiguration.xml" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
@@ -242,6 +243,7 @@
     <EmbeddedResource Include="Scripts\bcms.media.upload.js" />
     <EmbeddedResource Include="Scripts\bcms.html5Upload.js" />
     <EmbeddedResource Include="Scripts\bcms.jquery.jcrop.js" />
+    <EmbeddedResource Include="Scripts\bcms.media.min.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -319,4 +321,7 @@
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>$(MSBuildBinPath)\msbuild.exe /p:Configuration=$(ConfigurationName) /p:SolutionDir=$(SolutionDir) /p:ProjectDir=$(ProjectDir) "$(ProjectDir)BuildConfiguration.xml"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
