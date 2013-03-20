@@ -35,6 +35,22 @@ namespace BetterCms.Module.MediaManager.Models.Migrations
 
         public override void Down()
         {
+            // Set null values to false
+            Update
+                .Table("MediaFiles").InSchema(SchemaName)
+                .Set(new { IsUploaded = false })
+                .Where(new { IsUploaded = (int?)null });
+
+            Update
+                .Table("MediaImages").InSchema(SchemaName)
+                .Set(new { IsOriginalUploaded = false })
+                .Where(new { IsOriginalUploaded = (int?)null });
+            
+            Update
+                .Table("MediaImages").InSchema(SchemaName)
+                .Set(new { IsThumbnailUploaded = false })
+                .Where(new { IsThumbnailUploaded = (int?)null });
+
             // Set IsUploaded as not nullable
             Alter
                 .Column("IsUploaded")
