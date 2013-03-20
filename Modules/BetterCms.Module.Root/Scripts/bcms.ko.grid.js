@@ -314,7 +314,7 @@ define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messag
             self.restoreOldValues = function () {
                 for (var i = 0; i < self.registeredFields.length; i++) {
                     var field = self.registeredFields[i];
-                    
+
                     field.restoreOldValue();
                 }
             };
@@ -342,7 +342,7 @@ define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messag
             return false;
         };
 
-        grid.ItemViewModel.prototype.blurField = function() {
+        grid.ItemViewModel.prototype.blurField = function () {
             this.cancelOrSaveItem();
         };
 
@@ -377,9 +377,7 @@ define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messag
                     if (clear) {
                         clearTimeout(saveTimers[i].timer);
                     }
-                    console.log(saveTimers);
                     saveTimers.splice(i, 1);
-                    console.log(saveTimers);
                 }
             }
         }
@@ -523,12 +521,12 @@ define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messag
         };
 
         grid.ItemViewModel.prototype.cancelEditItem = function () {
-            this.isActive(false);
             if (!this.id()) {
                 this.parent.items.remove(this);
             } else {
                 this.restoreOldValues();
             }
+            this.isActive(false);
         };
 
         grid.ItemViewModel.prototype.getDeleteConfirmationMessage = function () {
