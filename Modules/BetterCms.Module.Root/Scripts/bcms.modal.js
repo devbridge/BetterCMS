@@ -46,7 +46,9 @@ define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', '
             saveDraft: null,
             saveAndPublish: null,
             preview: null,
-        };
+        },
+        
+        isGlobalKeyPressEventAttached = false;
 
     /**
     /* Assign objects to module.
@@ -406,6 +408,10 @@ define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', '
                     $(this).remove();
                 });
             }
+
+            if (modal.getCount() < 1) {
+                removeGlobalEvents();
+            }
         },
 
         /**
@@ -415,8 +421,6 @@ define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', '
             if (this.disableMaxHeight) {
                 return;
             }
-
-            console.log("Maximize height for " + this.title + " modal window.");
 
             var viewportHeight = $(window).height(),
                 elemOuter = this.container.find(selectors.elemOuter),
@@ -446,7 +450,7 @@ define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', '
     * Binds to a window resize event.
     */
     function addGlobalResizeModalEvent() {
-        $(window).on('resize.bcms.modal', function () {
+        $(document).on('resize.bcms.modal', function () {
             clearTimeout(resizeTimer);
 
             resizeTimer = setTimeout(function () {
@@ -454,10 +458,6 @@ define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', '
                 if (topModal) {
                     topModal.maximizeHeight();
                     isResized = true;
-                }
-
-                if (modal.getCount() < 1) {
-                    removeGlobalEvents();
                 }
             }, 200);
         });
@@ -502,10 +502,6 @@ define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', '
                     }
                 }
             }
-
-            if (modal.getCount() < 1) {
-                removeGlobalEvents();
-            }
         });
     }
 
@@ -513,9 +509,8 @@ define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', '
     * Removes global modal window events if no modals exists.
     */
     function removeGlobalEvents() {
-        if (modal.getCount() === 0) {
-            $(document).off('.bcms.modal');
-        }
+        isGlobalKeyPressEventAttached = false;
+        $(document).off('.bcms.modal');
     }
     
     /**
@@ -525,9 +520,10 @@ define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', '
         var modalWindow = new ModalWindow(options);
         modalWindow.open();
 
-        if (modal.getCount() === 1) {
+        if (!isGlobalKeyPressEventAttached) {
             addGlobalKeyPressEvent();
             addGlobalResizeModalEvent();
+            isGlobalKeyPressEventAttached = true;
         }
 
         return modalWindow;
