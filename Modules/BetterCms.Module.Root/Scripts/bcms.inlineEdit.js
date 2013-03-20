@@ -234,6 +234,7 @@ define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bcms.modal',
     */
     editor.cancelRowEdit = function (row) {
         if (row.data('new')) {
+            row.find(selectors.editableInput).blur();
             row.remove();
             options.showHideEmptyRow(formContainer);
             rowAdded = false;

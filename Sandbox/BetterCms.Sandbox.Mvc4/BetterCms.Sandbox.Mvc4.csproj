@@ -191,7 +191,7 @@
     <Folder Include="file\bcms-media\Content\Css\Images\" />
     <Folder Include="file\bcms-media\scripts\" />
     <Folder Include="file\bcms-pages\scripts\" />
-    <Folder Include="file\bcms-root\" />
+    <Folder Include="file\bcms-root\scripts\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
