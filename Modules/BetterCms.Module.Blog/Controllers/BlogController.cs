@@ -2,35 +2,59 @@
 using System.Web.Mvc;
 
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Core.Security;
 using BetterCms.Module.Blog.Commands.GetBlogPost;
 using BetterCms.Module.Blog.Commands.GetBlogPostList;
 using BetterCms.Module.Blog.Commands.SaveBlogPost;
 using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Blog.ViewModels.Blog;
-using BetterCms.Module.Pages.Content.Resources;
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
 namespace BetterCms.Module.Blog.Controllers
 {
+    /// <summary>
+    /// Blogs management.
+    /// </summary>
+    [BcmsAuthorize]
     public class BlogController : CmsControllerBase
     {
+        /// <summary>
+        /// The blog service.
+        /// </summary>
         private readonly IBlogService blogService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlogController"/> class.
+        /// </summary>
+        /// <param name="blogService">The blog service.</param>
         public BlogController(IBlogService blogService)
         {
             this.blogService = blogService;
         }
 
-        public virtual ActionResult Index(SearchableGridOptions request)
+        /// <summary>
+        /// List with blog posts for Site Settings.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>Blog post list html.</returns>
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.DeleteContent)]
+        public ActionResult Index(SearchableGridOptions request)
         {
             var model = GetCommand<GetBlogPostListCommand>().ExecuteCommand(request ?? new SearchableGridOptions());
             return View(model);
         }
 
+        /// <summary>
+        /// Creates the blog post.
+        /// </summary>
+        /// <param name="parentPageUrl">The parent page URL.</param>
+        /// <returns>Json result.</returns>
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         [HttpGet]
-        public virtual ActionResult CreateBlogPost(string parentPageUrl)
+        public ActionResult CreateBlogPost(string parentPageUrl)
         {
             var model = GetCommand<GetBlogPostCommand>().ExecuteCommand(Guid.Empty);
             var view = RenderView("EditBlogPost", model);
@@ -44,8 +68,14 @@ namespace BetterCms.Module.Blog.Controllers
             return ComboWireJson(success, view, model, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Edits the blog post.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns>Json result.</returns>
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent)]
         [HttpGet]
-        public virtual ActionResult EditBlogPost(string id)
+        public ActionResult EditBlogPost(string id)
         {
             var model = GetCommand<GetBlogPostCommand>().ExecuteCommand(id.ToGuidOrDefault());
             var view = RenderView("EditBlogPost", model);
@@ -54,8 +84,14 @@ namespace BetterCms.Module.Blog.Controllers
             return ComboWireJson(success, view, model, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Saves the blog post.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns>Json result.</returns>
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent)]
         [HttpPost]
-        public virtual ActionResult SaveBlogPost(BlogPostViewModel model)
+        public ActionResult SaveBlogPost(BlogPostViewModel model)
         {
             var response = GetCommand<SaveBlogPostCommand>().ExecuteCommand(model);
             if (response != null)
@@ -65,10 +101,17 @@ namespace BetterCms.Module.Blog.Controllers
                     Messages.AddSuccess(BlogGlobalization.CreatePost_CreatedSuccessfully_Message);
                 }
             }
+
             return WireJson(response != null, response);
         }
 
-        
+        /// <summary>
+        /// Converts the string to slug.
+        /// </summary>
+        /// <param name="text">The text.</param>
+        /// <param name="senderId">The sender id.</param>
+        /// <returns>Json result.</returns>
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         public ActionResult ConvertStringToSlug(string text, string senderId)
         {
             var slug = blogService.CreateBlogPermalink(text);

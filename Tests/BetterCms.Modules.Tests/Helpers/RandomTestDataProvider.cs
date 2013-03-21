@@ -618,5 +618,34 @@ namespace BetterCms.Tests.Helpers
 
             return entity;
         }
+
+        public UserRoles CreateNewUserRoles(Role role = null, Users user = null)
+        {
+            var entity = new UserRoles();
+
+            PopulateBaseFields(entity);
+
+            entity.Role = role ?? CreateNewRole();
+            entity.User = user ?? CreateNewUsers();
+
+            return entity;
+        }
+
+        public Users CreateNewUsers()
+        {
+            var entity = new Users();
+
+            PopulateBaseFields(entity);
+
+            entity.UserName = ProvideRandomString(MaxLength.Name);
+            entity.FirstName = ProvideRandomString(MaxLength.Name);
+            entity.LastName = ProvideRandomString(MaxLength.Name);
+            entity.Email = ProvideRandomString(MaxLength.Email);
+            entity.Password = ProvideRandomString(MaxLength.Password);
+            entity.Salt = ProvideRandomString(MaxLength.Password);
+            entity.Image = CreateNewMediaImage();
+
+            return entity;
+        }
     }
 }

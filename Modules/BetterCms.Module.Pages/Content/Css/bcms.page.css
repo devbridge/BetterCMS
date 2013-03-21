@@ -129,7 +129,6 @@ a.bcms-slider-prev, a.bcms-slider-next {
     z-index: 10;
     opacity: 0;
     transition: opacity 0.1s ease-in-out;
-    -moz-transition: opacity 0.1s ease-in-out;
     -webkit-transition: opacity 0.1s ease-in-out;
 }
 
@@ -320,7 +319,6 @@ hr.bcms-settings-separator {
 }
 
     .bcms-preview-module-image img {
-        display: block;
         width: 100%;
         background: #f5f5f5;
     }

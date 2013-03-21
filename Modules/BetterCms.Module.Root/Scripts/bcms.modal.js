@@ -46,7 +46,9 @@ define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', '
             saveDraft: null,
             saveAndPublish: null,
             preview: null,
-        };
+        },
+        
+        isGlobalKeyPressEventAttached = false;
 
     /**
     /* Assign objects to module.
@@ -159,6 +161,16 @@ define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', '
             acceptButton.disabled(!!this.options.disableAccept);
         }
         
+        this.disableAcceptButton = function () {
+            acceptButton.disabled(true);
+        };
+
+        this.disableExtraButtons = function() {
+            for (var j in options.buttons) {
+                options.buttons[j].disabled(true);
+            }
+        };
+
         /* Cancel action button: */
         var cancelButton = new ButtonViewModel();
         cancelButton.order = 10;
@@ -263,8 +275,9 @@ define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', '
         */
         acceptClick: function () {
             if (this.onAction(this.options.onAcceptClick) === true) {
-                this.accept();
+                return this.accept();
             }
+            return false;
         },
 
         /*
@@ -273,7 +286,9 @@ define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', '
         accept: function () {
             if (this.onAction(this.options.onAccept) === true) {
                 this.destroy();
+                return true;
             }
+            return false;
         },
 
         /*
@@ -403,6 +418,10 @@ define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', '
                     $(this).remove();
                 });
             }
+
+            if (modal.getCount() < 1) {
+                removeGlobalEvents();
+            }
         },
 
         /**
@@ -412,8 +431,6 @@ define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', '
             if (this.disableMaxHeight) {
                 return;
             }
-
-            console.log("Maximize height for " + this.title + " modal window.");
 
             var viewportHeight = $(window).height(),
                 elemOuter = this.container.find(selectors.elemOuter),
@@ -443,7 +460,7 @@ define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', '
     * Binds to a window resize event.
     */
     function addGlobalResizeModalEvent() {
-        $(window).on('resize.bcms.modal', function () {
+        $(document).on('resize.bcms.modal', function () {
             clearTimeout(resizeTimer);
 
             resizeTimer = setTimeout(function () {
@@ -451,10 +468,6 @@ define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', '
                 if (topModal) {
                     topModal.maximizeHeight();
                     isResized = true;
-                }
-
-                if (modal.getCount() < 1) {
-                    removeGlobalEvents();
                 }
             }, 200);
         });
@@ -492,15 +505,12 @@ define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', '
                     if (canHandleKeyPress()) {
                         e.preventDefault();
                         if (topModal != lastEnterModal) {
-                            lastEnterModal = topModal;
-                            topModal.acceptClick();
+                            if (topModal.acceptClick()) {
+                                lastEnterModal = topModal;
+                            }
                         }
                     }
                 }
-            }
-
-            if (modal.getCount() < 1) {
-                removeGlobalEvents();
             }
         });
     }
@@ -509,9 +519,8 @@ define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', '
     * Removes global modal window events if no modals exists.
     */
     function removeGlobalEvents() {
-        if (modal.getCount() === 0) {
-            $(document).off('.bcms.modal');
-        }
+        isGlobalKeyPressEventAttached = false;
+        $(document).off('.bcms.modal');
     }
     
     /**
@@ -521,9 +530,10 @@ define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', '
         var modalWindow = new ModalWindow(options);
         modalWindow.open();
 
-        if (modal.getCount() === 1) {
+        if (!isGlobalKeyPressEventAttached) {
             addGlobalKeyPressEvent();
             addGlobalResizeModalEvent();
+            isGlobalKeyPressEventAttached = true;
         }
 
         return modalWindow;
@@ -535,6 +545,7 @@ define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', '
             onSaveAndPublishClick: null,
             onPreviewClick: null,
             disableSaveDraft: false,
+            disableSaveAndPublish: false,
             onSaveDraftClick: null
         }, options);
 
@@ -557,12 +568,21 @@ define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', '
                     changeContentDesirableStatus(dialog, bcms.contentStatus.published);
                     dialog.submitForm();
                 }
+            },
+            saveDraftAction = function (dialog) {
+                if ($.isFunction(options.onSaveDraftClick)) {
+                    if (options.onSaveDraftClick(dialog) !== false) {
+                        changeContentDesirableStatus(dialog, bcms.contentStatus.draft);
+                        dialog.submitForm();
+                    }
+                } else {
+                    changeContentDesirableStatus(dialog, bcms.contentStatus.draft);
+                    dialog.submitForm();
+                }
             };
 
-        if (!options.disableSaveDraft) {
-            var saveAndPublishButton = new ButtonViewModel(globalization.saveAndPublish, classes.grayButton, 2, function(dialog) {
-                saveAndPublishAction(dialog);
-            });            
+        if (!options.disableSaveDraft && !options.disableSaveAndPublish) {
+            var saveAndPublishButton = new ButtonViewModel(globalization.saveAndPublish, classes.grayButton, 2, saveAndPublishAction);            
             extraButtons.push(saveAndPublishButton);
         }
 
@@ -584,22 +604,14 @@ define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', '
         options.buttons = extraButtons;
         
         
-        if (options.disableSaveDraft) {
+        if (options.disableSaveDraft && !options.disableSaveAndPublish) {
             options.acceptTitle = globalization.saveAndPublish;
-            options.onAcceptClick = function(dialog) {saveAndPublishAction(dialog);};            
-        } else {            
+            options.onAcceptClick = saveAndPublishAction;            
+        } else if (!options.disableSaveDraft) {
             options.acceptTitle = globalization.saveDraft;
-            options.onAcceptClick = function (dialog) {
-                if ($.isFunction(options.onSaveDraftClick)) {
-                    if (options.onSaveDraftClick(dialog) !== false) {
-                        changeContentDesirableStatus(dialog, bcms.contentStatus.draft);
-                        dialog.submitForm();
-                    }
-                } else {
-                    changeContentDesirableStatus(dialog, bcms.contentStatus.draft);
-                    dialog.submitForm();
-                }
-            };
+            options.onAcceptClick = saveDraftAction;
+        } else {
+            options.disableAccept = true;
         }
         
         modal.open(options);

@@ -1,11 +1,12 @@
 ﻿using System.Web.Mvc;
 
+using BetterCms.Core.Security;
 using BetterCms.Module.Blog.Commands.DeleteAuthor;
 using BetterCms.Module.Blog.Commands.GetAuthorList;
 using BetterCms.Module.Blog.Commands.SaveAuthor;
 using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.Blog.ViewModels.Author;
-
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
@@ -14,13 +15,14 @@ namespace BetterCms.Module.Blog.Controllers
     /// <summary>
     /// Blog authors controller.
     /// </summary>
+    [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
     public class AuthorController : CmsControllerBase
     {
         /// <summary>
         /// Lists the template.
         /// </summary>
         /// <returns>Json result.</returns>
-        public virtual ActionResult ListTemplate()
+        public ActionResult ListTemplate()
         {
             var view = RenderView("Partial/ListTemplate", null);
             var authors = GetCommand<GetAuthorListCommand>().ExecuteCommand(new SearchableGridOptions());
@@ -33,7 +35,7 @@ namespace BetterCms.Module.Blog.Controllers
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns>Json result.</returns>
-        public virtual ActionResult AuthorsList(SearchableGridOptions request)
+        public ActionResult AuthorsList(SearchableGridOptions request)
         {
             var model = GetCommand<GetAuthorListCommand>().ExecuteCommand(request);
             return WireJson(model != null, model);
@@ -45,7 +47,7 @@ namespace BetterCms.Module.Blog.Controllers
         /// <param name="model">The model.</param>
         /// <returns>Json result.</returns>
         [HttpPost]
-        public virtual ActionResult SaveAuthor(AuthorViewModel model)
+        public ActionResult SaveAuthor(AuthorViewModel model)
         {
             var success = false;
             AuthorViewModel response = null;
@@ -58,6 +60,7 @@ namespace BetterCms.Module.Blog.Controllers
                     {
                         Messages.AddSuccess(BlogGlobalization.CreateAuthor_CreatedSuccessfully_Message);
                     }
+
                     success = true;
                 }
             }
@@ -72,7 +75,7 @@ namespace BetterCms.Module.Blog.Controllers
         /// <param name="version">The version.</param>
         /// <returns>Json result.</returns>
         [HttpPost]
-        public virtual ActionResult DeleteAuthor(string id, string version)
+        public ActionResult DeleteAuthor(string id, string version)
         {
             var request = new AuthorViewModel { Id = id.ToGuidOrDefault(), Version = version.ToIntOrDefault() };
             var success = GetCommand<DeleteAuthorCommand>().ExecuteCommand(request);

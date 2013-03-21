@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
+using BetterCms.Module.Root.Content.Resources;
+
 namespace BetterCms.Module.Pages.ViewModels.Content
 {
     public class ContentSortViewModel
@@ -11,7 +13,7 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// <value>
         /// The content id.
         /// </value>
-        [Required]
+        [Required(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_RequiredAttribute_Message")]
         public virtual Guid Id { get; set; }
 
         /// <summary>
@@ -20,7 +22,7 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// <value>
         /// The entity version.
         /// </value>
-        [Required]
+        [Required(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_RequiredAttribute_Message")]
         public virtual int Version { get; set; }
 
         /// <summary>

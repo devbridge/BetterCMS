@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+
 using BetterCms.Core.Models;
+using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Mvc.Grids;
 
 namespace BetterCms.Module.Pages.ViewModels.Templates
@@ -30,8 +32,8 @@ namespace BetterCms.Module.Pages.ViewModels.Templates
         /// <value>
         /// The name.
         /// </value>
-        [Required]
-        [StringLength(MaxLength.Name)]
+        [Required(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_RequiredAttribute_Message")]
+        [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
         public string Name { get; set; }
 
         /// <summary>
@@ -40,7 +42,7 @@ namespace BetterCms.Module.Pages.ViewModels.Templates
         /// <value>
         /// The image URL.
         /// </value>        
-        [StringLength(MaxLength.Url)]
+        [StringLength(MaxLength.Url, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
         public string PreviewImageUrl { get; set; }
 
         /// <summary>
@@ -49,8 +51,8 @@ namespace BetterCms.Module.Pages.ViewModels.Templates
         /// <value>
         /// The template url.
         /// </value>
-        [Required]
-        [StringLength(MaxLength.Url)]
+        [Required(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_RequiredAttribute_Message")]
+        [StringLength(MaxLength.Url, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
         public string Url { get; set; }
 
         /// <summary>

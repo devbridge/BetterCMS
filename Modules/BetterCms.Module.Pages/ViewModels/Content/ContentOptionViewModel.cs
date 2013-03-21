@@ -2,6 +2,7 @@
 
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;
+using BetterCms.Module.Root.Content.Resources;
 
 namespace BetterCms.Module.Pages.ViewModels.Content
 {
@@ -24,8 +25,8 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// <value>
         /// The option key.
         /// </value>
-        [Required]
-        [StringLength(MaxLength.Name)]
+        [Required(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_RequiredAttribute_Message")]
+        [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
         public string OptionKey { get; set; }
 
         /// <summary>

@@ -1,4 +1,6 @@
-﻿namespace BetterCms.Core.Security
+﻿using System;
+
+namespace BetterCms.Core.Security
 {
     /// <summary>
     /// Defines interface to access entity properties.
@@ -13,6 +15,9 @@
         /// <summary>
         /// Gets the localized name.
         /// </summary>
-        string LocalizedName { get; }
+        /// <value>
+        /// The name of the localized.
+        /// </value>
+        Func<string> LocalizedName { get; }
     }
 }

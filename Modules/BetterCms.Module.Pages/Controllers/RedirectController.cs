@@ -1,22 +1,28 @@
 ﻿using System.Web.Mvc;
 
+using BetterCms.Core.Security;
 using BetterCms.Module.Pages.Command.Redirect.DeleteRedirect;
 using BetterCms.Module.Pages.Command.Redirect.GetRedirectsList;
 using BetterCms.Module.Pages.Command.Redirect.SaveRedirect;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.ViewModels.SiteSettings;
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
 namespace BetterCms.Module.Pages.Controllers
 {
+    [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
     public class RedirectController : CmsControllerBase
     {
         /// <summary>
         /// Renders a redirects list for the site settings dialog.
         /// </summary>
-        /// <returns>Rendered redirects list.</returns>
+        /// <param name="request">The request.</param>
+        /// <returns>
+        /// Rendered redirects list.
+        /// </returns>
         public ActionResult Redirects(SearchableGridOptions request)
         {
             var model = GetCommand<GetRedirectsListCommand>().ExecuteCommand(request);

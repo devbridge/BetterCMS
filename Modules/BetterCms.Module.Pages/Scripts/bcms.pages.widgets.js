@@ -3,8 +3,8 @@
 
 define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepicker', 'bcms.htmlEditor',
                               'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages', 'bcms.preview', 'bcms.grid', 'bcms.inlineEdit', 'bcms.slides.jquery', 'bcms.redirect',
-                              'bcms.pages.history'],
-    function($, bcms, modal, datepicker, htmlEditor, dynamicContent, siteSettings, messages, preview, grid, editor, slides, redirect, contentHistory) {
+                              'bcms.pages.history', 'bcms.security'],
+    function ($, bcms, modal, datepicker, htmlEditor, dynamicContent, siteSettings, messages, preview, grid, editor, slides, redirect, contentHistory, security) {
         'use strict';
 
         var widgets = {},
@@ -73,7 +73,9 @@ define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepic
                 siteSettingsWidgetsListForm: '#bcms-widgets-form',
 
                 addOptionLink: '#bcms-add-option-button',
-                optionsTable: '#bcms-options-grid'
+                optionsTable: '#bcms-options-grid',
+
+                editInSourceModeHiddenField: '#bcms-edit-in-source-mode'
             },
             classes = {
                 regionAdvancedContent: 'bcms-content-advanced',
@@ -103,12 +105,19 @@ define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepic
                 title: globalization.createHtmlContentWidgetDialogTitle,
                 onLoad: function(childDialog) {
                     dynamicContent.bindDialog(childDialog, links.loadCreateHtmlContentWidgetDialogUrl, {
-                        contentAvailable: function (dialog) {
-                            initializeEditHtmlContentWidgetForm(dialog, availablePreviewOnPageContentId, postSuccess);
+                        contentAvailable: function (dialog, content) {
+                            var editInSourceMode = false;
+                            if (content && content.Data && content.Data.EditInSourceMode) {
+                                editInSourceMode = true;
+                            }
+                            initializeEditHtmlContentWidgetForm(dialog, availablePreviewOnPageContentId, postSuccess, editInSourceMode);
                         },
 
                         beforePost: function() {
                             htmlEditor.updateEditorContent(selectors.htmlContentWidgetContentHtmlEditor);
+                            
+                            var editInSourceMode = htmlEditor.isSourceMode(selectors.htmlContentWidgetContentHtmlEditor);
+                            childDialog.container.find(selectors.editInSourceModeHiddenField).val(editInSourceMode);
                         },
 
                         postSuccess: postSuccess
@@ -133,12 +142,19 @@ define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepic
                 title: globalization.editAdvancedContentDialogTitle,
                 onLoad: function(childDialog) {
                     dynamicContent.bindDialog(childDialog, $.format(links.loadEditHtmlContentWidgetDialogUrl, id), {
-                        contentAvailable: function (dialog) {
-                            initializeEditHtmlContentWidgetForm(dialog, availablePreviewOnPageContentId, postSuccess);
+                        contentAvailable: function (dialog, content) {
+                            var editInSourceMode = false;
+                            if (content && content.Data && content.Data.EditInSourceMode) {
+                                editInSourceMode = true;
+                            }
+                            initializeEditHtmlContentWidgetForm(dialog, availablePreviewOnPageContentId, postSuccess, editInSourceMode);
                         },
 
                         beforePost: function() {
                             htmlEditor.updateEditorContent(selectors.htmlContentWidgetContentHtmlEditor);
+                            
+                            var editInSourceMode = htmlEditor.isSourceMode(selectors.htmlContentWidgetContentHtmlEditor);
+                            childDialog.container.find(selectors.editInSourceModeHiddenField).val(editInSourceMode);
                         },
 
                         postSuccess: postSuccess
@@ -207,7 +223,7 @@ define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepic
        /**
        * Initializes 'Edit Html Content Widget' dialog form.
        */
-        function initializeEditHtmlContentWidgetForm(dialog, availablePreviewOnPageContentId, onSaveCallback) {
+        function initializeEditHtmlContentWidgetForm(dialog, availablePreviewOnPageContentId, onSaveCallback, editInSourceMode) {
             if (availablePreviewOnPageContentId !== null) {
                 dialog.container.find(selectors.widgetPreviewPageContentId).val(availablePreviewOnPageContentId);
             }
@@ -239,8 +255,10 @@ define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepic
             });
             
             htmlEditor.initializeHtmlEditor(selectors.htmlContentWidgetContentHtmlEditor);
-            htmlEditor.setSourceMode(selectors.htmlContentWidgetContentHtmlEditor);               
-            
+            if (editInSourceMode) {
+                htmlEditor.setSourceMode(selectors.htmlContentWidgetContentHtmlEditor);
+            }
+
             showHideCustomCssText(dialog);
             showHideCustomJsText(dialog);
             showHideCustomHtmlText(dialog);
@@ -299,6 +317,12 @@ define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepic
                     widgets.openEditServerControlWidgetDialog(publishedId, onSaveCallback, availablePreviewOnPageContentId, onCloseCallback);
                 });
             });
+            
+            // IE fix: by default, while loading, picture is hidden
+            var previewImage = dialog.container.find(selectors.widgetPreviewImage);
+            if (previewImage.attr('src')) {
+                previewImage.show();
+            }
         };
 
         /*
@@ -594,6 +618,20 @@ define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepic
                         redirect.ReloadWithAlert();
                     });
                 };
+
+                if (!security.IsAuthorized(["BcmsAdministration"])) {
+                    contentViewModel.removeHistoryButton();
+                    contentViewModel.removeEditButton();
+                }
+
+                if (!security.IsAuthorized(["BcmsEditContent"])) {
+                    contentViewModel.removeConfigureButton();
+                }
+                
+                if (!security.IsAuthorized(["BcmsDeleteContent"])) {
+                    contentViewModel.removeDeleteButton();
+                }
+                
             } else if (contentViewModel.contentType == contentTypes.htmlWidget) {
                 contentViewModel.removeConfigureButton();
 
@@ -601,6 +639,15 @@ define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepic
                 contentViewModel.onEditContent = function() {
                     widgets.openEditHtmlContentWidgetDialog(contentId, onSave, pageContentId);
                 };
+                
+                if (!security.IsAuthorized(["BcmsAdministration"])) {
+                    contentViewModel.removeHistoryButton();
+                    contentViewModel.removeEditButton();
+                }
+
+                if (!security.IsAuthorized(["BcmsDeleteContent"])) {
+                    contentViewModel.removeDeleteButton();
+                }
             }
         }
 

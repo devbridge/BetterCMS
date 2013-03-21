@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 using BetterCms.Core.Models;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Mvc.Grids;
 
 namespace BetterCms.Module.MediaManager.ViewModels.MediaManager
@@ -15,8 +16,8 @@ namespace BetterCms.Module.MediaManager.ViewModels.MediaManager
         
         public DateTime CreatedOn { get; set; }
 
-        [Required]
-        [StringLength(MaxLength.Name)]
+        [Required(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_RequiredAttribute_Message")]
+        [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
         public virtual string Name { get; set; }
 
         public virtual MediaType Type { get; set; }

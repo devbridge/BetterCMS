@@ -65,6 +65,7 @@
             @Html.HiddenFor(model => model.Version)
             @Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status" })
             @Html.HiddenFor(modal => modal.PreviewOnPageContentId, new { @class = "bcms-preview-page-content-id" })
+            @Html.HiddenFor(model => model.EditInSourceMode, new { @id = "bcms-edit-in-source-mode" })
             @Html.HiddenSubmit()
         }
     </div>

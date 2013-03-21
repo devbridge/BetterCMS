@@ -1,7 +1,6 @@
 using System;
 
 using BetterCms.Core.DataContracts;
-using BetterCms.Core.Models;
 using BetterCms.Module.Root.Models;
 
 namespace BetterCms.Module.Pages.Models
@@ -21,6 +20,8 @@ namespace BetterCms.Module.Pages.Models
 
         public virtual bool UseCustomJs { get; set; }
 
+        public virtual bool EditInSourceMode { get; set; }
+
         public override Root.Models.Content CopyDataTo(Root.Models.Content content)
         {
             var copy = (HtmlContentWidget)base.CopyDataTo(content);
@@ -30,6 +31,7 @@ namespace BetterCms.Module.Pages.Models
             copy.UseHtml = UseHtml;
             copy.CustomJs = CustomJs;
             copy.UseCustomJs = UseCustomJs;
+            copy.EditInSourceMode = EditInSourceMode;
 
             return copy;
         }

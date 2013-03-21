@@ -222,4 +222,55 @@
   <data name="DeleteRole_Confirmation_Message" xml:space="preserve">
     <value>Are you sure you want to delete this role?</value>
   </data>
+  <data name="DeleteUser_Confirmation_Message" xml:space="preserve">
+    <value>Are you sure you want to delete this user?</value>
+  </data>
+  <data name="DeleteUser_DeletedSuccessfully_Message" xml:space="preserve">
+    <value>User deleted successfully.</value>
+  </data>
+  <data name="Role_RoleName_MaxLengthMessage" xml:space="preserve">
+    <value>Role name should not be longer than 200 characters.</value>
+  </data>
+  <data name="Role_RoleName_RequiredMessage" xml:space="preserve">
+    <value>Role name is required.</value>
+  </data>
+  <data name="User_Email_MaxLengthMessage" xml:space="preserve">
+    <value>Email should not be longer than 400 characters.</value>
+  </data>
+  <data name="User_Email_RequiredMessage" xml:space="preserve">
+    <value>Email is required.</value>
+  </data>
+  <data name="User_Email_ValidMessage" xml:space="preserve">
+    <value>Email format is not valid.</value>
+  </data>
+  <data name="User_FirstName_MaxLengthMessage" xml:space="preserve">
+    <value>First name should not be longer than 200 characters.</value>
+  </data>
+  <data name="User_LastName_MaxLengthMessage" xml:space="preserve">
+    <value>Last name should not be longer than 200 characters.</value>
+  </data>
+  <data name="User_Password_LengthMessage" xml:space="preserve">
+    <value>Password should not be shorter than 4 characters and not be longer than 255 characters.</value>
+  </data>
+  <data name="User_Password_RequiredMessage" xml:space="preserve">
+    <value>Password is required.</value>
+  </data>
+  <data name="User_RetypePassword_EqualMessage" xml:space="preserve">
+    <value>Retyped password isn't the same as password.</value>
+  </data>
+  <data name="User_RetypePassword_RequiredMessage" xml:space="preserve">
+    <value>Retype password is required.</value>
+  </data>
+  <data name="User_UserName_MaxLengthMessage" xml:space="preserve">
+    <value>User name should not be longer than 200 characters.</value>
+  </data>
+  <data name="User_UserName_RequiredMessage" xml:space="preserve">
+    <value>User name is required.</value>
+  </data>
+  <data name="User_Password_MaxLengthMessage" xml:space="preserve">
+    <value>Password should not be longer than 255 characters.</value>
+  </data>
+  <data name="SaveUser_CreatedSuccessfully_Message" xml:space="preserve">
+    <value>User created successfully.</value>
+  </data>
 </root>

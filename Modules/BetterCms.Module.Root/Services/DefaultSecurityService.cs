@@ -1,24 +1,42 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
 using System.Web;
 
+using BetterCms.Core.Modules.Registration;
 using BetterCms.Core.Services;
 
 namespace BetterCms.Module.Root.Services
 {
+    /// <summary>
+    /// Default security service contract realization.
+    /// </summary>
     public class DefaultSecurityService : ISecurityService
     {
+        /// <summary>
+        /// The roles splitter.
+        /// </summary>
         private static readonly char[] RolesSplitter = new[] { ',' };
+
+        /// <summary>
+        /// The configuration service.
+        /// </summary>
         private readonly ICmsConfiguration configuration;
+
+        /// <summary>
+        /// The modules registration.
+        /// </summary>
+        private readonly IModulesRegistration modulesRegistration;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultSecurityService" /> class.
         /// </summary>
         /// <param name="configuration">The configuration.</param>
-        public DefaultSecurityService(ICmsConfiguration configuration)
+        public DefaultSecurityService(ICmsConfiguration configuration, IModulesRegistration modulesRegistration)
         {
             this.configuration = configuration;
+            this.modulesRegistration = modulesRegistration;
         }
 
         /// <summary>
@@ -43,122 +61,91 @@ namespace BetterCms.Module.Root.Services
         }
 
         /// <summary>
-        /// Gets the content management roles.
-        /// </summary>
-        /// <value>
-        /// The content management roles.
-        /// </value>
-        public string[] ContentManagementRoles
-        {
-            get { return ParseRoles(configuration.Security.ContentManagementRoles); }
-        }
-
-        /// <summary>
-        /// Gets the content publishing roles.
-        /// </summary>
-        /// <value>
-        /// The content publishing roles.
-        /// </value>
-        public string[] ContentPublishingRoles
-        {
-            get { return ParseRoles(configuration.Security.ContentPublishingRoles); }
-        }
-
-        /// <summary>
-        /// Gets the page publishing roles.
-        /// </summary>
-        /// <value>
-        /// The page publishing roles.
-        /// </value>
-        public string[] PagePublishingRoles
-        {
-            get { return ParseRoles(configuration.Security.PagePublishingRoles); }
-        }
-
-        /// <summary>
-        /// Gets the publisher roles.
-        /// </summary>
-        /// <value>
-        /// The publisher roles.
-        /// </value>
-        public string[] PublisherRoles
-        {
-            get { return ContentPublishingRoles.Union(PagePublishingRoles).ToArray(); }
-        }
-
-        /// <summary>
         /// Gets the current principal.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// Current IPrincipal.
+        /// </returns>
         public IPrincipal GetCurrentPrincipal()
         {
-            if (HttpContext.Current != null)
-            {
-                return HttpContext.Current.User;
-            }
-            return null;
+            return HttpContext.Current != null
+                ? HttpContext.Current.User
+                : null;
         }
 
         /// <summary>
-        /// Determines whether specified principal can manage page content.
+        /// Gets all roles.
         /// </summary>
-        /// <param name="principal"></param>
-        /// <returns>
-        ///   <c>true</c> if specified principal can manage page content; otherwise, <c>false</c>.
-        /// </returns>
-        public bool CanManageContent(IPrincipal principal)
+        /// <returns>Role list.</returns>
+        public string[] GetAllRoles()
         {
-            return HasAnyOfRoles(principal, ContentManagementRoles);
+            return modulesRegistration.GetUserAccessRoles().Select(m => m.Name).ToArray();
         }
 
         /// <summary>
-        /// Determines whether specified principal can publish page content.
+        /// Gets the configuration.
         /// </summary>
-        /// <param name="principal"></param>
-        /// <returns>
-        ///   <c>true</c> if specified principal can publish page content; otherwise, <c>false</c>.
-        /// </returns>
-        public bool CanPublishContent(IPrincipal principal)
+        /// <returns>BetterCMS security configuration.</returns>
+        public ICmsSecurityConfiguration GetConfiguration()
         {
-            return HasAnyOfRoles(principal, ContentPublishingRoles);
+            return configuration.Security;
         }
 
         /// <summary>
-        /// Determines whether specified principal can publish page.
-        /// </summary>
-        /// <param name="principal"></param>
-        /// <returns>
-        ///   <c>true</c> if specified principal can publish page; otherwise, <c>false</c>.
-        /// </returns>
-        public bool CanPublishPage(IPrincipal principal)
-        {
-            return HasAnyOfRoles(principal, PagePublishingRoles);
-        }
-
-        /// <summary>
-        /// Determines whether principal has any of specified roles.
+        /// Determines whether the specified principal is authorized.
         /// </summary>
         /// <param name="principal">The principal.</param>
-        /// <param name="roles">The array of role names.</param>
+        /// <param name="roles">The roles.</param>
         /// <returns>
-        ///   <c>true</c> if principal has any of specified roles; otherwise, <c>false</c>.
+        ///   <c>true</c> if the specified principal is authorized; otherwise, <c>false</c>.
         /// </returns>
-        private static bool HasAnyOfRoles(IPrincipal principal, string[] roles)
+        public bool IsAuthorized(IPrincipal principal, string roles)
         {
-            var hasAnyOfRoles = false;
-
-            try
+            if (principal != null && principal.Identity.IsAuthenticated)
             {
-                if (principal != null && roles != null && roles.Length > 0)
+                if (string.IsNullOrEmpty(roles))
                 {
-                    hasAnyOfRoles = principal.Identity.IsAuthenticated && roles.Any(principal.IsInRole);
+                    return true;
+                }
+
+                var fullAccessRoles = ParseRoles(configuration.Security.FullAccessRoles);
+                if (fullAccessRoles.Any(principal.IsInRole))
+                {
+                    // User is in full access role.
+                    return true;
+                }
+
+                var roleList = ParseRoles(roles);
+
+                if (!configuration.Security.UseCustomRoles)
+                {
+                    return roleList.Any(principal.IsInRole);
+                }
+
+                // Check for configuration defined user roles.
+                foreach (var role in roleList)
+                {
+                    var translatedRoles = ParseRoles(configuration.Security.Translate(role));
+                    if (translatedRoles.Any(principal.IsInRole))
+                    {
+                        return true;
+                    }
                 }
             }
-            catch (Exception e)
-            {
-            }
 
-            return hasAnyOfRoles;
+            return false;
+        }
+
+        /// <summary>
+        /// Determines whether the current principal is authorized.
+        /// </summary>
+        /// <param name="roles">The roles.</param>
+        /// <returns>
+        ///   <c>true</c> if the current principal is authorized; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsAuthorized(string roles)
+        {
+            return IsAuthorized(GetCurrentPrincipal(), roles);
         }
 
         /// <summary>
@@ -166,13 +153,11 @@ namespace BetterCms.Module.Root.Services
         /// </summary>
         /// <param name="roles">The roles.</param>
         /// <returns>Array of parsed roles</returns>
-        private static string[] ParseRoles(string roles)
+        private static IEnumerable<string> ParseRoles(string roles)
         {
-            if (!string.IsNullOrEmpty(roles))
-            {
-                return roles.Split(RolesSplitter, StringSplitOptions.RemoveEmptyEntries).Distinct().ToArray();
-            }
-            return new string[] { };
+            return !string.IsNullOrEmpty(roles)
+                ? roles.Split(RolesSplitter, StringSplitOptions.RemoveEmptyEntries).Distinct().ToArray()
+                : new string[] { };
         }
     }
 }

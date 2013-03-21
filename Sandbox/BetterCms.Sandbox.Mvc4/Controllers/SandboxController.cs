@@ -15,6 +15,8 @@ using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Api.Events;
 using BetterCms.Module.Pages.Models;
 
+using BetterCms.Sandbox.Mvc4.Models;
+
 namespace BetterCms.Sandbox.Mvc4.Controllers
 {
     public class SandboxController : Controller
@@ -35,11 +37,17 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult Login()
+        public ActionResult Login(string roles)
         {
-            var authTicket = new FormsAuthenticationTicket(1, "BetterCMS test user", DateTime.Now, DateTime.Now.AddMonths(1), true, "User,Admin");
+//            var roles = string.Join(",", Roles.GetRolesForUser(string.Empty));
+            if (string.IsNullOrEmpty(roles))
+            {
+                roles = "Owner";
+            }
 
-            string cookieContents = FormsAuthentication.Encrypt(authTicket);
+            var authTicket = new FormsAuthenticationTicket(1, "BetterCMS test user", DateTime.Now, DateTime.Now.AddMonths(1), true, roles);
+
+            var cookieContents = FormsAuthentication.Encrypt(authTicket);
             var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, cookieContents)
             {
                 Expires = authTicket.Expiration,
@@ -66,6 +74,8 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
 
             PagesApiContext.Events.OnPageCreated(new PageProperties());
 
+            ApiContext.Events.HostStart += Core_HostStart;
+
             IList<MediaFolder> folders;
             using (var mediaApi = CmsContext.CreateApiContextOf<MediaManagerApiContext>())
             {                
@@ -83,6 +93,11 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
             return Content(message);
         }
 
+        void Core_HostStart(SingleItemEventArgs<Core.Environment.Host.ICmsHost> args)
+        {
+            throw new NotImplementedException();
+        }
+
         private void EventsOnPageCreated(SingleItemEventArgs<PageProperties> args)
         {
             
@@ -95,5 +110,21 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
 
             return Content(message.ToString());
         }        
+
+        [AllowAnonymous]
+        public ActionResult LoginJson(LoginViewModel login)
+        {
+            Login(string.Empty);
+
+            return Json(new { Success = true });
+        }
+
+        [AllowAnonymous]
+        public ActionResult LogoutJson(LoginViewModel login)
+        {
+            Logout();
+
+            return Json(new { Success = true });
+        }
     }
 }

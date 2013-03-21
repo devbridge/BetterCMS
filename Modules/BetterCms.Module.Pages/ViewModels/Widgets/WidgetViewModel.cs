@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using BetterCms.Core.Models;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Content;
+using BetterCms.Module.Root.Content.Resources;
 
 namespace BetterCms.Module.Pages.ViewModels.Widgets
 {
@@ -26,7 +27,7 @@ namespace BetterCms.Module.Pages.ViewModels.Widgets
         /// <value>
         /// The image URL.
         /// </value>        
-        [StringLength(MaxLength.Url)]        
+        [StringLength(MaxLength.Url, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]      
         public virtual string PreviewImageUrl { get; set; }
 
         /// <summary>

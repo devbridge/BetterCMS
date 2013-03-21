@@ -207,6 +207,9 @@
   <data name="Info_DefaultTitle" xml:space="preserve">
     <value>Information</value>
   </data>
+  <data name="Message_AccessForbidden" xml:space="preserve">
+    <value>Forbidden: Access is denied.</value>
+  </data>
   <data name="Message_ConcurentDataException" xml:space="preserve">
     <value>The record was updated by another user. Please refresh page before performing update.</value>
   </data>
@@ -282,8 +285,17 @@
   <data name="SiteSettings_Title" xml:space="preserve">
     <value>Site Settings</value>
   </data>
-  <data name="UserRole_EditSiteSettings" xml:space="preserve">
-    <value>Edit Site Settings</value>
+  <data name="UserRole_Administration" xml:space="preserve">
+    <value>Manage Widgets, Templates, Users, etc.</value>
+  </data>
+  <data name="UserRole_DeleteContent" xml:space="preserve">
+    <value>Delete Content, Images, Files, Folders, etc.</value>
+  </data>
+  <data name="UserRole_EditContent" xml:space="preserve">
+    <value>Add / Edit Content</value>
+  </data>
+  <data name="UserRole_PublishContent" xml:space="preserve">
+    <value>Publish / Unpublish Content, Restore Content from History</value>
   </data>
   <data name="Validation_FieldIsRequired_Message" xml:space="preserve">
     <value>This field is required.</value>
@@ -291,11 +303,17 @@
   <data name="Validation_MaximumLengthExceeded_Message" xml:space="preserve">
     <value>Maximum length cannot exceed {0} characters.</value>
   </data>
+  <data name="Validation_RangeAttribute_Message" xml:space="preserve">
+    <value>Field must be a number with value between {1} and {2}.</value>
+  </data>
   <data name="Validation_RegularExpressionAttribute_Message" xml:space="preserve">
-    <value>The field {0} must math the regular expression {1}.</value>
+    <value>The field must match the regular expression.</value>
   </data>
   <data name="Validation_RequiredAttribute_Message" xml:space="preserve">
-    <value>Field {0} is required.</value>
+    <value>Field is required.</value>
+  </data>
+  <data name="Validation_StringLengthAttribute_Message" xml:space="preserve">
+    <value>The field must be the string with a maximum length of {1}.</value>
   </data>
   <data name="WaterMark_Search" xml:space="preserve">
     <value>Search...</value>

@@ -696,10 +696,16 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     */
     function cancelEditMedia(folderViewModel, item) {
         item.isActive(false);
+
         if (!item.id()) {
             folderViewModel.medias.remove(item);
         } else {
             item.name(item.oldName);
+
+            // Re-validate after old value is set
+            var idSelector = '#' + item.nameDomId,
+                input = folderViewModel.container.find(idSelector);
+            input.valid();
         }
     }
 

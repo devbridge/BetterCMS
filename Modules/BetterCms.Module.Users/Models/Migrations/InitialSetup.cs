@@ -34,12 +34,12 @@ namespace BetterCms.Module.Users.Models.Migrations
         private void CreateUsersTable()
         {
             Create.Table("Users").InSchema(SchemaName).WithCmsBaseColumns()
-                 .WithColumn("UserName").AsAnsiString(MaxLength.Name).NotNullable()
-                 .WithColumn("FirstName").AsAnsiString(MaxLength.Name).Nullable()
-                 .WithColumn("LastName").AsAnsiString(MaxLength.Name).Nullable()
-                 .WithColumn("Email").AsAnsiString(MaxLength.Email).NotNullable()
-                 .WithColumn("Password").AsAnsiString(MaxLength.Name).NotNullable()
-                 .WithColumn("ImageId").AsGuid().Nullable();
+                   .WithColumn("UserName").AsAnsiString(MaxLength.Name).NotNullable()
+                   .WithColumn("FirstName").AsAnsiString(MaxLength.Name).Nullable()
+                   .WithColumn("LastName").AsAnsiString(MaxLength.Name).Nullable()
+                   .WithColumn("Email").AsAnsiString(MaxLength.Email).NotNullable()
+                   .WithColumn("Password").AsAnsiString(MaxLength.Name).NotNullable()
+                   .WithColumn("ImageId").AsGuid().Nullable();
         }
 
         private void RemoveUsersTable()

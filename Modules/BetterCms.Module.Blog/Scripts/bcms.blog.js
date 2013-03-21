@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.grid', 'bcms.pages', 'bcms.ko.extenders', 'bcms.media', 'bcms.pages.tags', 'bcms.ko.grid', 'bcms.messages', 'bcms.redirect', 'bcms.pages.history', 'bcms.preview'],
-    function ($, bcms, modal, siteSettings, dynamicContent, datepicker, htmlEditor, grid, pages, ko, media, tags, kogrid, messages, redirect, history, preview) {
+define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.grid', 'bcms.pages', 'bcms.ko.extenders', 'bcms.media', 'bcms.pages.tags', 'bcms.ko.grid', 'bcms.messages', 'bcms.redirect', 'bcms.pages.history', 'bcms.preview', 'bcms.security'],
+    function ($, bcms, modal, siteSettings, dynamicContent, datepicker, htmlEditor, grid, pages, ko, media, tags, kogrid, messages, redirect, history, preview, security) {
     'use strict';
 
     var blog = { },
@@ -91,10 +91,14 @@ define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', '
     * Opens blog edit form
     */
     function openBlogEditForm(url, title, postSuccess, onClose, calledFromPage) {
-        var blogViewModel;
-        var permalinkValue;
+        var canEdit = security.IsAuthorized(["BcmsEditContent"]),
+            blogViewModel,
+            permalinkValue;
         modal.edit({
             title: title,
+            disableSaveDraft: !canEdit,
+            isPreviewAvailable: canEdit,
+            disableSaveAndPublish: !security.IsAuthorized(["BcmsPublishContent"]),
             onLoad: function (dialog) {
                 dynamicContent.bindDialog(dialog, url, {
                     contentAvailable: function (dialog, content) {
@@ -354,13 +358,15 @@ define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', '
         var tabs = [];
 
         var blogs = new siteSettings.TabViewModel(globalization.blogPostsTabTitle, links.loadSiteSettingsBlogsUrl, initializeSiteSettingsBlogsList);
-        var authors = new siteSettings.TabViewModel(globalization.authorsTabTitle, links.loadAuthorsTemplateUrl, initializeSiteSettingsAuthorsList);
-        var templates = new siteSettings.TabViewModel(globalization.templatesTabTitle, links.loadTemplatesUrl, initializeSiteSettingsTemplatesList);
-        
         tabs.push(blogs);
-        tabs.push(authors);
-        tabs.push(templates);
-        
+
+        if (security.IsAuthorized(["BcmsEditContent"])) {
+            var authors = new siteSettings.TabViewModel(globalization.authorsTabTitle, links.loadAuthorsTemplateUrl, initializeSiteSettingsAuthorsList);
+            var templates = new siteSettings.TabViewModel(globalization.templatesTabTitle, links.loadTemplatesUrl, initializeSiteSettingsTemplatesList);
+            tabs.push(authors);
+            tabs.push(templates);
+        }
+
         siteSettings.initContentTabs(tabs);
     };
 

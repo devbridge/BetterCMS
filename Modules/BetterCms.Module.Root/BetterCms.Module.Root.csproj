@@ -159,8 +159,6 @@
     <Compile Include="Models\Region.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\Widget.cs" />
-    <Compile Include="Mvc\Adapters\DefaultRegularExpressionAttributeAdapter.cs" />
-    <Compile Include="Mvc\Adapters\DefaultRequiredAttributeAdapter.cs" />
     <Compile Include="Mvc\CommandBase.cs" />
     <Compile Include="Mvc\CommandHandler.cs" />
     <Compile Include="Mvc\Converters.cs" />
@@ -187,9 +185,9 @@
     <Compile Include="Projections\PageJavaScriptProjection.cs" />
     <Compile Include="Registration\AuthenticationJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\ContentJavaScriptModuleDescriptor.cs" />
+    <Compile Include="Registration\SecurityJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\KnockoutExtendersJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\PreviewJavaScriptModuleDescriptor.cs" />
-    <Compile Include="Registration\UserRoles.cs" />
     <Compile Include="Registration\RedirectJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\InlineEditorJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\ModalJavaScriptModuleDescriptor.cs" />
@@ -510,6 +508,7 @@
     <EmbeddedResource Include="Scripts\bcms.js" />
     <EmbeddedResource Include="Scripts\bcms.sidemenu.js" />
     <EmbeddedResource Include="Content\Styles\base.css" />
+    <EmbeddedResource Include="Scripts\bcms.security.js" />
     <EmbeddedResource Include="Scripts\bcms.content.js" />
     <Content Include="Views\Web.config" />
     <EmbeddedResource Include="Views\Sidebar\Container.cshtml" />
@@ -615,6 +614,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Shared\Partial\SupportJavaScript.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\Partial\User.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

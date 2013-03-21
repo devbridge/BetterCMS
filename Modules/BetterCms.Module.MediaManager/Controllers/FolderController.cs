@@ -1,13 +1,19 @@
 ﻿using System.Web.Mvc;
 
+using BetterCms.Core.Security;
 using BetterCms.Module.MediaManager.Command.Folder;
 using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
 namespace BetterCms.Module.MediaManager.Controllers
 {
+    /// <summary>
+    /// Folder manager.
+    /// </summary>
+    [BcmsAuthorize]
     public class FolderController : CmsControllerBase
     {
         /// <summary>
@@ -15,6 +21,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// </summary>
         /// <param name="folder">The folder data.</param>
         /// <returns>Json with status.</returns>
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         [HttpPost]
         public ActionResult SaveFolder(MediaFolderViewModel folder)
         {
@@ -42,6 +49,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// <returns>
         /// Json with status.
         /// </returns>
+        [BcmsAuthorize(RootModuleConstants.UserRoles.DeleteContent)]
         [HttpPost]
         public ActionResult DeleteFolder(string id, string version)
         {

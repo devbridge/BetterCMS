@@ -50,7 +50,13 @@ input[type="text"] {
     background: none;
 }
 
-/* Sidemenu: */
+/*Sidemenu*/
+.bcms-disabled-content {
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+    cursor: default;
+}
+
 hr.bcms-sidebar-separator {
     border-style: solid none solid none;
     border-width: 1px;
@@ -383,7 +389,6 @@ a.bcms-icn-delete {
     font-size: 12px;
     font-weight: 600;
     transition: all 0.1s ease-in-out;
-    -moz-transition: all 0.1s ease-in-out;
     -webkit-transition: all 0.1s ease-in-out;
 }
 
@@ -699,16 +704,24 @@ a.bcms-remove-image {
     position: absolute;
     display: none;
     min-height: 35px;
-    outline: 0;
-    overflow: hidden;
+    border: 1px solid #fff;
+}
+
+.bcms-region-overlay-inner {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    margin: -1px;
+    min-height: 35px;
     border: 1px dashed #009AEB;
+    overflow: hidden;
 }
 
 .bcms-on .bcms-region-overlay {
     display: block;
 }
 
-.bcms-show-overlay > .bcms-hidden-overlay-bg {
+.bcms-show-overlay .bcms-hidden-overlay-bg {
     position: absolute;
     left: 0;
     top: 0;
@@ -764,7 +777,7 @@ a.bcms-remove-image {
     height: 80px;
     margin-top: 10px;
     padding: 5px 10px;
-    background: rgba(0,0,0,0.05);
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAAEFsT2yAAAAEElEQVQI12NgYGDgZUAmeAEBpgA16fkHewAAAABJRU5ErkJggg==');
     overflow: hidden;
     cursor: move;
     z-index: 10;
@@ -779,7 +792,7 @@ a.bcms-remove-image {
 .bcms-content-overlay {
     position: absolute;
     z-index: 10;
-    background: rgba(0,0,0,0.05);
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAAEFsT2yAAAAEElEQVQI12NgYGDgZUAmeAEBpgA16fkHewAAAABJRU5ErkJggg==');
     display: none;
     top: 0;
     left: 0;
@@ -1492,7 +1505,6 @@ a.bcms-btn-close {
         font-weight: 700;
         text-decoration: none;
         transition: all 0.1s ease-in-out;
-        -moz-transition: all 0.1s ease-in-out;
         -webkit-transition: all 0.1s ease-in-out;
     }
 
@@ -1534,7 +1546,6 @@ a.bcms-btn-close {
         font-weight: 700;
         text-decoration: none;
         transition: all 0.1s ease-in-out;
-        -moz-transition: all 0.1s ease-in-out;
         -webkit-transition: all 0.1s ease-in-out;
     }
 
@@ -1597,7 +1608,6 @@ a.bcms-btn-close {
         opacity: 1;
         filter: Alpha(opacity=100);
         transition: opacity 0.2s ease-in-out;
-        -moz-transition: opacity 0.2s ease-in-out;
         -webkit-transition: opacity 0.2s ease-in-out;
     }
 
@@ -1705,9 +1715,9 @@ a.bcms-btn-close {
 }
 
 .bcms-add-tags-field {
-    height: 10px;
-    line-height: 18px;
-    padding: 6px 3px;
+    height: 16px;
+    line-height: 16px;
+    padding: 3px;
     margin: 0;
     border: 0;
     font-family: "Open Sans", sans-serif;
@@ -1725,6 +1735,7 @@ a.bcms-btn-close {
 .bcms-single-tag {
     position: relative;
     display: inline-block;
+    max-width: 280px;
     margin: 4px 4px 3px 0;
     height: 22px;
     line-height: 21px;
@@ -1735,8 +1746,10 @@ a.bcms-btn-close {
     font-size: 12px;
     color: #000;
     cursor: default;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
     transition: background-color 0.1s ease-in-out;
-    -moz-transition: background-color 0.1s ease-in-out;
     -webkit-transition: background-color 0.1s ease-in-out;
 }
 
@@ -1758,6 +1771,7 @@ a.bcms-btn-close {
     }
 
 .bcms-single-tag-active {
+    animation: duplicateTag 1.5s 3;
     -webkit-animation: duplicateTag 1.5s 3;
 }
 
@@ -1768,24 +1782,7 @@ a.bcms-btn-close {
     }
 
     50% {
-        background: #fcecec;
-        border: 1px solid #e64343;
-    }
-
-    100% {
-        background-color: #def8ff;
-        border: 1px solid #95d3e7;
-    }
-}
-
-@-moz-keyframes duplicateTag {
-    0% {
-        background-color: #def8ff;
-        border: 1px solid #95d3e7;
-    }
-
-    50% {
-        background: #fcecec;
+        background-color: #fcecec;
         border: 1px solid #e64343;
     }
 
@@ -1802,7 +1799,7 @@ a.bcms-btn-close {
     }
 
     50% {
-        background: #fcecec;
+        background-color: #fcecec;
         border: 1px solid #e64343;
     }
 
@@ -1885,7 +1882,6 @@ th.bcms-tables-nohover:hover {
 .bcms-table-row-active {
     background-color: #effcfe;
     transition: background-color 0.5s ease-out;
-    -moz-transition: background-color 0.5s ease-out;
     -webkit-transition: background-color 0.5s ease-out;
 }
 
@@ -2139,7 +2135,7 @@ a.bcms-sort-arrow-top:hover {
         box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
     }
 
-        .input-validation-error:focus + .field-validation-error span {
+        .input-validation-error:focus ~ .field-validation-error span {
             visibility: visible;
         }
 

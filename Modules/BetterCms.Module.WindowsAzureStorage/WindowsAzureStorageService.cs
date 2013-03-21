@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.IO;
 using System.Net;
 
@@ -8,7 +7,6 @@ using BetterCms.Core.Services.Storage;
 
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Auth;
-using Microsoft.WindowsAzure.Storage.Blob;
 
 using StorageException = BetterCms.Core.Exceptions.Service.StorageException;
 
@@ -86,38 +84,13 @@ namespace BetterCms.Module.AmazonS3Storage
                 }
 
                 var blob = container.GetBlockBlobReference(request.Uri.AbsoluteUri);
-                if (request.Headers != null && request.Headers.Count > 0)
+             
+                if (request.InputStream.Position != 0)
                 {
-                    if (request.Headers["content-type"] != null)
-                    {
-                        blob.Properties.ContentType = request.MetaData["content-type"];
-                    }
+                    request.InputStream.Position = 0;
                 }
 
-
-                if (request.MetaData != null && request.MetaData.Count > 0)
-                {                    
-                    foreach (KeyValuePair<string, string> metadata in request.MetaData)
-                    {
-                        blob.Metadata.Add(metadata);
-                    }                    
-                }
-
-
-
-/*
                 blob.UploadFromStream(request.InputStream);
-                putRequest.WithBucketName(containerName).WithKey(key).WithCannedACL(S3CannedACL.PublicRead).WithInputStream(request.InputStream);
-
-                if (request.Headers != null && request.Headers.Count > 0)
-                {
-                    putRequest.AddHeaders(request.Headers);
-                }
-
-                if (request.MetaData != null && request.MetaData.Count > 0)
-                {
-                    putRequest.WithMetaData(request.MetaData);
-                }*/
             }
             catch (Exception e)
             {
@@ -158,76 +131,71 @@ namespace BetterCms.Module.AmazonS3Storage
             CheckUri(sourceUri);
             CheckUri(destinationUri);
 
-        /*    try
+            try
             {
-                var sourceKey = sourceUri.AbsolutePath.TrimStart('/');
-                var destinationKey = destinationUri.AbsolutePath.TrimStart('/');
+                var client = cloudStorageAccount.CreateCloudBlobClient();
+                var container = client.GetContainerReference(containerName);
+                var destinationBlob = container.GetBlockBlobReference(destinationUri.AbsoluteUri);
 
-                using (var client = CreateAmazonS3Client())
-                {
-                    var request = new CopyObjectRequest()
-                        .WithSourceBucket(containerName)
-                        .WithDestinationBucket(containerName)
-                        .WithCannedACL(S3CannedACL.PublicRead)
-                        .WithSourceKey(sourceKey)
-                        .WithDestinationKey(destinationKey)
-                        .WithDirective(S3MetadataDirective.COPY);
-
-                    client.CopyObject(request);
-
-                }
+                destinationBlob.StartCopyFromBlob(sourceUri);
             }
             catch (Exception e)
             {
                 throw new StorageException(string.Format("Failed to copy object. SourceUrl: {0}, DestinationUrl: {1}", sourceUri, destinationUri), e);
-            }*/
+            }
         }
 
         public void RemoveObject(Uri uri)
         {
             CheckUri(uri);
-
-        /*    try
+            try
             {
-                var sourceKey = uri.AbsolutePath.TrimStart('/');
+                var client = cloudStorageAccount.CreateCloudBlobClient();
+                var container = client.GetContainerReference(containerName);
+                var blob = container.GetBlockBlobReference(uri.AbsoluteUri);
 
-                using (var client = CreateAmazonS3Client())
-                {
-                    var request = new DeleteObjectRequest()
-                        .WithKey(sourceKey)
-                        .WithBucketName(containerName);
-
-                    client.DeleteObject(request);
-                }
+                blob.DeleteIfExists();
             }
             catch (Exception e)
             {
                 throw new StorageException(string.Format("Failed to delete object. Uri: {0}", uri), e);
-            }*/
+            }
         }
 
-        public void RemoveObjectBucket(Uri uri)
+        public void RemoveFolder(Uri uri)
         {
             CheckUri(uri);
 
-    /*        try
+            var client = cloudStorageAccount.CreateCloudBlobClient();
+            var container = client.GetContainerReference(containerName);
+            var prefix = GetBlobDirectory(uri.AbsolutePath);
+
+            var blobs = client.GetContainerReference(containerName);
+
+            var blobsList = blobs.GetDirectoryReference(prefix).ListBlobs(true);
+            try
             {
-                var sourceKey = uri.AbsolutePath.TrimStart('/');
-
-                using (var client = CreateAmazonS3Client())
+                foreach (var blob in blobsList)
                 {
-                    var request = new DeleteObjectRequest()
-                        .WithKey(sourceKey)
-                        .WithBucketName(containerName);
-
-                    client.DeleteObject(request);
+                    container.GetBlockBlobReference(blob.Uri.AbsoluteUri).DeleteIfExists();
                 }
             }
             catch (Exception e)
             {
-                throw new StorageException(string.Format("Failed to delete object. Uri: {0}", uri), e);
-            }*/
+                throw new StorageException(string.Format("Failed to delete folder. Uri: {0}", uri), e);
+            }
         }
+
+        private string GetBlobDirectory(string path)
+        {
+            var index = path.LastIndexOf('/');
+            var result = path.Remove(index);
+            result = result.TrimStart('/');
+            index = result.IndexOf('/');
+            result = result.Substring(index + 1);
+
+            return result;
+        }  
 
         private void CheckUri(Uri uri)
         {
