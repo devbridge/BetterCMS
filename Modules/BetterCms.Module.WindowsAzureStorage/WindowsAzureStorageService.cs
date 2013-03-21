@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.IO;
 using System.Net;
 
@@ -8,7 +7,6 @@ using BetterCms.Core.Services.Storage;
 
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Auth;
-using Microsoft.WindowsAzure.Storage.Blob;
 
 using StorageException = BetterCms.Core.Exceptions.Service.StorageException;
 
@@ -86,23 +84,7 @@ namespace BetterCms.Module.AmazonS3Storage
                 }
 
                 var blob = container.GetBlockBlobReference(request.Uri.AbsoluteUri);
-
-               
-                if (request.Headers != null && request.Headers.Count > 0)
-                {
-                    if (request.Headers["content-type"] != null)
-                    {                        
-                        blob.Properties.ContentType = request.Headers["content-type"];
-                    }                    
-                }
-
-                if (request.MetaData != null && request.MetaData.Count > 0)
-                {
-                    foreach (KeyValuePair<string, string> metadata in request.MetaData)
-                    {
-                        blob.Metadata.Add(metadata);
-                    }
-                }
+             
                 if (request.InputStream.Position != 0)
                 {
                     request.InputStream.Position = 0;
@@ -149,12 +131,12 @@ namespace BetterCms.Module.AmazonS3Storage
             CheckUri(sourceUri);
             CheckUri(destinationUri);
 
-            var client = cloudStorageAccount.CreateCloudBlobClient();
-            var container = client.GetContainerReference(containerName);
-
-            var destinationBlob = container.GetBlockBlobReference(destinationUri.AbsoluteUri);
             try
             {
+                var client = cloudStorageAccount.CreateCloudBlobClient();
+                var container = client.GetContainerReference(containerName);
+                var destinationBlob = container.GetBlockBlobReference(destinationUri.AbsoluteUri);
+
                 destinationBlob.StartCopyFromBlob(sourceUri);
             }
             catch (Exception e)
@@ -166,12 +148,12 @@ namespace BetterCms.Module.AmazonS3Storage
         public void RemoveObject(Uri uri)
         {
             CheckUri(uri);
-
-            var client = cloudStorageAccount.CreateCloudBlobClient();
-            var container = client.GetContainerReference(containerName);
-            var blob = container.GetBlockBlobReference(uri.AbsoluteUri);
             try
             {
+                var client = cloudStorageAccount.CreateCloudBlobClient();
+                var container = client.GetContainerReference(containerName);
+                var blob = container.GetBlockBlobReference(uri.AbsoluteUri);
+
                 blob.DeleteIfExists();
             }
             catch (Exception e)
@@ -190,10 +172,10 @@ namespace BetterCms.Module.AmazonS3Storage
 
             var blobs = client.GetContainerReference(containerName);
 
-            var listBlobs = blobs.GetDirectoryReference(prefix).ListBlobs(true);
+            var blobsList = blobs.GetDirectoryReference(prefix).ListBlobs(true);
             try
             {
-                foreach (var blob in listBlobs)
+                foreach (var blob in blobsList)
                 {
                     container.GetBlockBlobReference(blob.Uri.AbsoluteUri).DeleteIfExists();
                 }
