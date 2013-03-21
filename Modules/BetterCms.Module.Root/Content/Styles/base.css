@@ -2135,7 +2135,7 @@ a.bcms-sort-arrow-top:hover {
         box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
     }
 
-        .input-validation-error:focus + .field-validation-error span {
+        .input-validation-error:focus ~ .field-validation-error span {
             visibility: visible;
         }
 
