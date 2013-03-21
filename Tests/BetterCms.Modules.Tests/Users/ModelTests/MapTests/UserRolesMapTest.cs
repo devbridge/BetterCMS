@@ -6,6 +6,7 @@ namespace BetterCms.Test.Module.Users.ModelTests.MapTests
     class UserRolesMapTest : DatabaseTestBase
     {
         [Test]
+        [Ignore]
         public void Should_Insert_And_Retrieve_UserRoles_Successfully()
         {
             var entity = TestDataProvider.CreateNewUserRoles();
