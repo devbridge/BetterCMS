@@ -1,17 +1,13 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Reflection;
 using System.Web.Mvc;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Environment.Host;
 using BetterCms.Core.Exceptions;
-using BetterCms.Core.Models;
 using BetterCms.Core.Modules.Registration;
-using BetterCms.Core.Mvc;
-using BetterCms.Core.Mvc.Extensions;
+using BetterCms.Core.Security;
 using BetterCms.Core.Services;
-using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Models.Sidebar;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels;
@@ -23,7 +19,7 @@ namespace BetterCms.Module.Root.Controllers
     /// <summary>
     /// Side menu controller.
     /// </summary>
-    [Authorize]
+    [BcmsAuthorize]
     public class SidebarController : CmsControllerBase
     {
         /// <summary>

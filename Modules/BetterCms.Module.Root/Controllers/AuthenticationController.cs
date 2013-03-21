@@ -2,7 +2,7 @@
 using System.Web.Mvc;
 using System.Web.Security;
 
-using BetterCms.Core.Mvc;
+using BetterCms.Core.Security;
 using BetterCms.Module.Root.Models.Authentication;
 using BetterCms.Module.Root.Mvc;
 
@@ -13,6 +13,7 @@ namespace BetterCms.Module.Root.Controllers
     /// <summary>
     /// User authentication handling controller.
     /// </summary>
+    [BcmsAuthorize]
     public class AuthenticationController : CmsControllerBase
     {
         /// <summary>
@@ -24,7 +25,6 @@ namespace BetterCms.Module.Root.Controllers
         /// Returns view with user information.
         /// </summary>
         /// <returns>Rendered view with user information.</returns>
-        [Authorize]
         public ActionResult Info()
         {
             InfoViewModel model = new InfoViewModel();
@@ -38,7 +38,6 @@ namespace BetterCms.Module.Root.Controllers
         /// Executes FormsAuthentication.SignOut action and redirects to default page.
         /// </summary>
         /// <returns>Returns redirect action to default page.</returns>
-        [Authorize]
         public ActionResult Logout()
         {
             try

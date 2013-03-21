@@ -1,22 +1,30 @@
 ﻿using System.Web.Mvc;
 
+using BetterCms.Core.Security;
 using BetterCms.Module.MediaManager.Command.MediaManager.DeleteMedia;
 using BetterCms.Module.MediaManager.Command.Videos.GetVideos;
 using BetterCms.Module.MediaManager.Content.Resources;
-
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
-
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
 namespace BetterCms.Module.MediaManager.Controllers
 {
+    /// <summary>
+    /// Video manager.
+    /// </summary>
+    [BcmsAuthorize]
     public class VideosController : CmsControllerBase
     {
         /// <summary>
         /// Gets the videos list.
         /// </summary>
-        /// <returns>List of videos</returns>
+        /// <param name="options">The options.</param>
+        /// <returns>
+        /// List of videos
+        /// </returns>
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.DeleteContent)]
         public ActionResult GetVideosList(MediaManagerViewModel options)
         {
             var success = true;
@@ -30,6 +38,7 @@ namespace BetterCms.Module.MediaManager.Controllers
             {
                 success = false;
             }
+
             return Json(new WireJson { Success = success, Data = model });
         }
 
@@ -42,6 +51,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// Json with result status.
         /// </returns>
         [HttpPost]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.DeleteContent)]
         public ActionResult VideoDelete(string id, string version)
         {
             var request = new DeleteMediaCommandRequest

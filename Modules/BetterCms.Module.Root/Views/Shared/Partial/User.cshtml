@@ -1,0 +1,31 @@
+﻿@using BetterCms.Module.Root.Mvc
+@{
+    string[] userRoles;
+    if (Roles.Enabled)
+    {
+        userRoles = Roles.GetRolesForUser();
+    }
+    else
+    {
+        var roles = Context.Cache[string.Format("{0}_Roles", User.Identity.Name)] as string[];
+        if (roles != null)
+        {
+            userRoles = roles;
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    userRoles = userRoles.Select(r => string.Format("\"{0}\"", r)).ToArray();
+    var securityConfig = (ViewContext.Controller as CmsControllerBase).SecurityService.GetConfiguration();
+    var customRoles = securityConfig.GetCustomRoles().Select(r => string.Format("\"{0}\" : \"{1}\"", r.Key, r.Value)).ToArray();
+}
+<script type="application/json" id="bcms-security-data">
+    { 
+        "CurrentUserRoles" : [@Html.Raw(string.Join(", ", userRoles))],
+        "FullAccessRoles"  : "@securityConfig.FullAccessRoles",
+        "CustomRoles"      : { @Html.Raw(string.Join(", ", customRoles)) }
+    }
+</script>

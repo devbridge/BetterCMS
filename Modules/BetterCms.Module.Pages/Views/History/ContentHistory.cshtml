@@ -3,6 +3,7 @@
 @using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.History
+@using BetterCms.Module.Root
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc
 @using BetterCms.Module.Root.Mvc.Grids.Extensions
@@ -19,9 +20,9 @@
 
 @helper RestoreLink(ContentHistoryItem item)
 {
-    if (item.Status == ContentStatus.Archived)
+    if (item.Status == ContentStatus.Archived && (ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.PublishContent))
     {
-    <a class="bcms-icn-restore" data-id="@item.Id" data-version="@item.Version">@RootGlobalization.Button_Restore</a>
+        <a class="bcms-icn-restore" data-id="@item.Id" data-version="@item.Version">@RootGlobalization.Button_Restore</a>
     }
     else
     {

@@ -1,11 +1,12 @@
 ﻿using System.Web.Mvc;
 
+using BetterCms.Core.Security;
 using BetterCms.Module.Pages.Commands.DeleteCategory;
 using BetterCms.Module.Pages.Commands.GetCategoryList;
 using BetterCms.Module.Pages.Commands.SaveCategory;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.ViewModels.Category;
-
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
@@ -15,6 +16,7 @@ namespace BetterCms.Module.Pages.Controllers
     /// <summary>
     /// Handles categories logic.
     /// </summary>
+    [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
     public class CategoryController : CmsControllerBase
     {       
         /// <summary>

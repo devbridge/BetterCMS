@@ -1,10 +1,12 @@
 ﻿using System.Web.Mvc;
 
+using BetterCms.Core.Security;
 using BetterCms.Module.Pages.Command.Tag.GetTagList;
 using BetterCms.Module.Pages.Commands.DeleteTag;
 using BetterCms.Module.Pages.Commands.SaveTag;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.ViewModels.Tags;
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
@@ -14,6 +16,7 @@ namespace BetterCms.Module.Pages.Controllers
     /// <summary>
     /// Handles site settings logic for Pages module.
     /// </summary>
+    [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
     public class TagsController : CmsControllerBase
     {
         /// <summary>

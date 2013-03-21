@@ -2,46 +2,11 @@
 
 namespace BetterCms.Core.Services
 {
+    /// <summary>
+    /// Security service contract.
+    /// </summary>
     public interface ISecurityService
     {
-        /// <summary>
-        /// Gets the content management roles.
-        /// </summary>
-        /// <value>
-        /// The content management roles.
-        /// </value>
-        string[] ContentManagementRoles { get; }
-
-        /// <summary>
-        /// Gets the content publishing roles.
-        /// </summary>
-        /// <value>
-        /// The content publishing roles.
-        /// </value>
-        string[] ContentPublishingRoles { get; }
-
-        /// <summary>
-        /// Gets the page publishing roles.
-        /// </summary>
-        /// <value>
-        /// The page publishing roles.
-        /// </value>
-        string[] PagePublishingRoles { get; }
-
-        /// <summary>
-        /// Gets the publisher roles.
-        /// </summary>
-        /// <value>
-        /// The publisher roles.
-        /// </value>
-        string[] PublisherRoles { get; }
-
-        /// <summary>
-        /// Gets the current principal.
-        /// </summary>
-        /// <returns></returns>
-        IPrincipal GetCurrentPrincipal();
-
         /// <summary>
         /// Gets the name of the get current principal.
         /// </summary>
@@ -51,27 +16,40 @@ namespace BetterCms.Core.Services
         string CurrentPrincipalName { get; }
 
         /// <summary>
-        /// Determines whether specified principal can manage page content.
+        /// Gets the current principal.
         /// </summary>
-        /// <returns>
-        ///   <c>true</c> if specified principal can manage page content; otherwise, <c>false</c>.
-        /// </returns>
-        bool CanManageContent(IPrincipal principal);
+        /// <returns>Current IPrincipal.</returns>
+        IPrincipal GetCurrentPrincipal();
 
         /// <summary>
-        /// Determines whether specified principal can publish page content.
+        /// Gets all roles.
         /// </summary>
-        /// <returns>
-        ///   <c>true</c> if specified principal can publish page content; otherwise, <c>false</c>.
-        /// </returns>
-        bool CanPublishContent(IPrincipal principal);
+        /// <returns>Role list.</returns>
+        string[] GetAllRoles();
 
         /// <summary>
-        /// Determines whether specified principal can publish page.
+        /// Gets the configuration.
         /// </summary>
+        /// <returns>BetterCMS security configuration.</returns>
+        ICmsSecurityConfiguration GetConfiguration();
+
+        /// <summary>
+        /// Determines whether the specified principal is authorized.
+        /// </summary>
+        /// <param name="principal">The principal.</param>
+        /// <param name="roles">The roles.</param>
         /// <returns>
-        ///   <c>true</c> if specified principal can publish page; otherwise, <c>false</c>.
+        ///   <c>true</c> if the specified principal is authorized; otherwise, <c>false</c>.
         /// </returns>
-        bool CanPublishPage(IPrincipal principal);
+        bool IsAuthorized(IPrincipal principal, string roles);
+
+        /// <summary>
+        /// Determines whether the current principal is authorized.
+        /// </summary>
+        /// <param name="roles">The roles.</param>
+        /// <returns>
+        ///   <c>true</c> if the current principal is authorized; otherwise, <c>false</c>.
+        /// </returns>
+        bool IsAuthorized(string roles);
     }
 }

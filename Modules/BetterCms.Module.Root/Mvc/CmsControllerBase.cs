@@ -4,8 +4,12 @@ using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 
+using Autofac;
+
+using BetterCms.Core.Dependencies;
 using BetterCms.Core.Mvc;
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Core.Services;
 using BetterCms.Core.Web;
 using BetterCms.Module.Root.Models;
 
@@ -22,6 +26,20 @@ namespace BetterCms.Module.Root.Mvc
         private const string UserMessagesViewDataKey = "_UserMessages";
 
         private HttpContextTool httpContextTool;
+
+        public ISecurityService SecurityService
+        {
+            get
+            {
+                var container = PerWebRequestContainerProvider.GetLifetimeScope(HttpContext);
+                if (container != null && container.IsRegistered<ISecurityService>())
+                {
+                    return container.Resolve<ISecurityService>();
+                }
+
+                return null;
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CmsControllerBase" /> class.

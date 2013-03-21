@@ -10,6 +10,7 @@ using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.Registration;
 using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Pages.Accessors;
+using BetterCms.Module.Root;
 
 namespace BetterCms.Module.Blog
 {
@@ -78,7 +79,8 @@ namespace BetterCms.Module.Blog
                         {
                             Title = () => BlogGlobalization.Sidebar_AddNewPostButtonTitle,
                             Order = 200,
-                            CssClass = page => "bcms-sidemenu-btn bcms-btn-blog-add"
+                            CssClass = page => "bcms-sidemenu-btn bcms-btn-blog-add",
+                            AccessRole = RootModuleConstants.UserRoles.EditContent
                         }
                 };
         }
@@ -127,7 +129,8 @@ namespace BetterCms.Module.Blog
                         {
                             Order = 1200,
                             Title = () => BlogGlobalization.SiteSettings_BlogsMenuItem,
-                            CssClass = page => "bcms-sidebar-link"
+                            CssClass = page => "bcms-sidebar-link",
+                            AccessRole = RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.DeleteContent)
                         }                                      
                 };
         }

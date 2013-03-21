@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.content', 'bcms.pages.widgets', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages', 'bcms.preview', 'bcms.grid', 'bcms.inlineEdit', 'bcms.slides.jquery', 'bcms.redirect', 'bcms.pages.history'],
-    function($, bcms, modal, content, widgets, datepicker, htmlEditor, dynamicContent, siteSettings, messages, preview, grid, editor, slides, redirect, history) {
+define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.content', 'bcms.pages.widgets', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages', 'bcms.preview', 'bcms.grid', 'bcms.inlineEdit', 'bcms.slides.jquery', 'bcms.redirect', 'bcms.pages.history', 'bcms.security'],
+    function($, bcms, modal, content, widgets, datepicker, htmlEditor, dynamicContent, siteSettings, messages, preview, grid, editor, slides, redirect, history, security) {
         'use strict';
 
         var pagesContent = {},
@@ -87,8 +87,8 @@ define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.content
             
             modal.edit({
                 title: globalization.addNewContentDialogTitle,
-              
-                onLoad: function(dialog) {
+                disableSaveAndPublish: !security.IsAuthorized(["BcmsPublishContent"]),
+                onLoad: function (dialog) {
                     var url = $.format(links.loadAddNewHtmlContentDialogUrl, bcms.pageId, regionId);
                     dynamicContent.bindDialog(dialog, url, {
                         contentAvailable: pagesContent.initializeAddNewContentForm,
@@ -394,6 +394,15 @@ define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.content
                 contentViewModel.onEditContent = function() {
                     pagesContent.editPageContent(pageContentId);
                 };
+                
+                if (!security.IsAuthorized(["BcmsEditContent", "BcmsPublishContent"])) {
+                    contentViewModel.removeHistoryButton();
+                    contentViewModel.removeEditButton();
+                }
+                
+                if (!security.IsAuthorized(["BcmsDeleteContent"])) {
+                    contentViewModel.removeDeleteButton();
+                }
             }
             
             // Delete content
@@ -416,8 +425,12 @@ define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.content
         * Opens dialog for editing page regular content  
         */
         pagesContent.editPageContent = function (contentId, onCloseClick) {
+            var canEdit = security.IsAuthorized(["BcmsEditContent"]);
             modal.edit({
                 title: globalization.editContentDialogTitle,
+                disableSaveDraft: !canEdit,
+                isPreviewAvailable: canEdit,
+                disableSaveAndPublish: !security.IsAuthorized(["BcmsPublishContent"]),
                 onCloseClick: onCloseClick,
                 onLoad: function (dialog) {
                     var url = $.format(links.editPageContentUrl, contentId);

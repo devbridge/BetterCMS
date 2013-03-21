@@ -3,8 +3,8 @@
 
 define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepicker', 'bcms.htmlEditor',
                               'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages', 'bcms.preview', 'bcms.grid', 'bcms.inlineEdit', 'bcms.slides.jquery', 'bcms.redirect',
-                              'bcms.pages.history'],
-    function($, bcms, modal, datepicker, htmlEditor, dynamicContent, siteSettings, messages, preview, grid, editor, slides, redirect, contentHistory) {
+                              'bcms.pages.history', 'bcms.security'],
+    function ($, bcms, modal, datepicker, htmlEditor, dynamicContent, siteSettings, messages, preview, grid, editor, slides, redirect, contentHistory, security) {
         'use strict';
 
         var widgets = {},
@@ -594,6 +594,20 @@ define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepic
                         redirect.ReloadWithAlert();
                     });
                 };
+
+                if (!security.IsAuthorized(["BcmsAdministration"])) {
+                    contentViewModel.removeHistoryButton();
+                    contentViewModel.removeEditButton();
+                }
+
+                if (!security.IsAuthorized(["BcmsEditContent"])) {
+                    contentViewModel.removeConfigureButton();
+                }
+                
+                if (!security.IsAuthorized(["BcmsDeleteContent"])) {
+                    contentViewModel.removeDeleteButton();
+                }
+                
             } else if (contentViewModel.contentType == contentTypes.htmlWidget) {
                 contentViewModel.removeConfigureButton();
 
@@ -601,6 +615,15 @@ define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepic
                 contentViewModel.onEditContent = function() {
                     widgets.openEditHtmlContentWidgetDialog(contentId, onSave, pageContentId);
                 };
+                
+                if (!security.IsAuthorized(["BcmsAdministration"])) {
+                    contentViewModel.removeHistoryButton();
+                    contentViewModel.removeEditButton();
+                }
+
+                if (!security.IsAuthorized(["BcmsDeleteContent"])) {
+                    contentViewModel.removeDeleteButton();
+                }
             }
         }
 

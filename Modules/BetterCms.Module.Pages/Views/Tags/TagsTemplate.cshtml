@@ -1,14 +1,16 @@
 ﻿@using BetterCms.Module.Pages.Content.Resources
+@using BetterCms.Module.Root
 @using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Mvc
 @using BetterCms.Module.Root.Mvc.Helpers
 
 @model BetterCms.Module.Pages.ViewModels.Tags.TagsTemplateViewModel
-
+@{ var canEdit = (ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent); }
 <div class="bcms-input-list-holder">
     @Html.Tooltip(Model.TooltipDescription)
     <div class="bcms-content-titles">
         @PagesGlobalization.TagsTemplate_AddTags_Title
-        <div class="bcms-btn-plus" data-bind="css: {'bcms-btn-plus-expand': isExpanded()}, click: expandCollapse">&nbsp;</div>
+        <div class="bcms-btn-plus" data-bind="css: {'bcms-btn-plus-expand': isExpanded()}@(canEdit ? ", click: expandCollapse" : string.Empty)">&nbsp;</div>
         <div class="bcms-tags-field-holder" data-bind="visible: isExpanded()">
             <input type="text" class="bcms-add-tags-field" style="width: 107px;" data-bind="
                 css: { 'tag-validation-error': newTag.hasError()},
@@ -26,7 +28,7 @@
         </div>
     </div>
     <div class="bcms-single-tag-holder" data-bind="foreach: tags()">
-        <div class="bcms-single-tag" data-bind="css: { 'bcms-single-tag-active': isActive() }"><span data-bind="text: name()"></span><a data-bind="    click: remove">@RootGlobalization.Button_Remove</a></div>
+        <div class="bcms-single-tag" data-bind="css: { 'bcms-single-tag-active': isActive() }"><span data-bind="text: name()"></span><a data-bind="@(canEdit ? "click: remove" : string.Empty)">@RootGlobalization.Button_Remove</a></div>
         <input type="hidden" data-bind="attr:{ name: getTagInputName($index()), value: name() }" />
     </div>
 </div>

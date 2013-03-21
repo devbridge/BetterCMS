@@ -1,5 +1,7 @@
 ﻿@using BetterCms.Module.MediaManager.Content.Resources
+@using BetterCms.Module.Root
 @using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Mvc
 @using BetterCms.Module.Root.Mvc.Helpers
 
 @model BetterCms.Module.MediaManager.ViewModels.MediaManager.MediaViewModel
@@ -8,12 +10,14 @@
         <div class="bcms-media-controls-holder">
             <a id="bcms-list-view" class="bcms-select-list" data-bind="click: switchViewStyle, css: { 'bcms-select-active': !isGrid() }"></a>
             <a id="bcms-grid-view" class="bcms-select-grid" data-bind="click: switchViewStyle, css: { 'bcms-select-active': isGrid() }"></a>
-            <div class="bcms-vertical-separator"></div>
-            <!-- ko if: isRootFolder() -->
-            <a class="bcms-media-new-folder" data-bind="click: addNewFolder">@MediaGlobalization.MediaManager_NewFolder</a>
-            <!-- /ko -->
-
-            <a class="bcms-media-new-file" data-bind="click: uploadMedia, text: uploadButtonTitle()"></a>
+            @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
+            {
+                <div class="bcms-vertical-separator"></div>
+                <!-- ko if: isRootFolder() -->
+                <a class="bcms-media-new-folder" data-bind="click: addNewFolder">@MediaGlobalization.MediaManager_NewFolder</a>
+                <!-- /ko -->
+                <a class="bcms-media-new-file" data-bind="click: uploadMedia, text: uploadButtonTitle()"></a>
+            }
         </div>
         <div class="bcms-search-block">
             <input id="bcms-search-input" name="MediaSearch" data-bind="value: gridOptions().searchQuery, valueUpdate: 'afterkeydown', enterPress: searchMedia" class="bcms-editor-field-box" type="text" placeholder="@RootGlobalization.WaterMark_Search" />
@@ -83,9 +87,12 @@
                     <a class="bcms-media-content-link" href="#" data-bind="click: insertMedia.bind($data, $root)">@MediaGlobalization.MediaManager_ButtonInsertFile</a>
                     <!-- /ko -->
                     <!-- /ko -->
-                    <!--  ko if: !isProcessing() -->
-                    <a class="bcms-media-content-link" href="#" data-bind="click: deleteMedia.bind($data, $root)">@RootGlobalization.Button_Delete</a>
-                    <!-- /ko -->
+                    @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.DeleteContent))
+                    {
+                        <!--  ko if: !isProcessing() -->
+                        <a class="bcms-media-content-link" href="#" data-bind="click: deleteMedia.bind($data, $root)">@RootGlobalization.Button_Delete</a>
+                        <!-- /ko -->
+                    }
                 </div>
 
                 <div class="bcms-media-items-block">
@@ -128,9 +135,12 @@
                     <!--  ko if: !isProcessing() && !isFailed() -->
                     <a class="bcms-icn-edit" data-bind="click: editMedia.bind($data, $root)">@RootGlobalization.Button_Edit</a>
                     <!-- /ko -->
-                    <!--  ko if: !isProcessing() -->
-                    <a class="bcms-icn-delete" data-bind="click: deleteMedia.bind($data, $root)">@RootGlobalization.Button_Delete</a>
-                    <!-- /ko -->
+                    @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.DeleteContent))
+                    {
+                        <!--  ko if: !isProcessing() -->
+                        <a class="bcms-icn-delete" data-bind="click: deleteMedia.bind($data, $root)">@RootGlobalization.Button_Delete</a>
+                        <!-- /ko -->
+                    }
                 </div>
             </div>
         </div>

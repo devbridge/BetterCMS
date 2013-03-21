@@ -1,21 +1,30 @@
 ﻿using System.Web.Mvc;
 
+using BetterCms.Core.Security;
 using BetterCms.Module.MediaManager.Command.Audios.GetAudios;
 using BetterCms.Module.MediaManager.Command.MediaManager.DeleteMedia;
 using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
-
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
 namespace BetterCms.Module.MediaManager.Controllers
 {
+    /// <summary>
+    /// Audio manager.
+    /// </summary>
+    [BcmsAuthorize]
     public class AudiosController : CmsControllerBase
     {
         /// <summary>
         /// Gets the audios list.
         /// </summary>
-        /// <returns>List of audios</returns>
+        /// <param name="options">The options.</param>
+        /// <returns>
+        /// List of audios.
+        /// </returns>
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.DeleteContent)]
         public ActionResult GetAudiosList(MediaManagerViewModel options)
         {
             var success = true;
@@ -29,6 +38,7 @@ namespace BetterCms.Module.MediaManager.Controllers
             {
                 success = false;
             }
+
             return Json(new WireJson { Success = success, Data = model });
         }
 
@@ -40,6 +50,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// <returns>
         /// Json with result status.
         /// </returns>
+        [BcmsAuthorize(RootModuleConstants.UserRoles.DeleteContent)]
         [HttpPost]
         public ActionResult AudioDelete(string id, string version)
         {
@@ -48,6 +59,7 @@ namespace BetterCms.Module.MediaManager.Controllers
                 Id = id.ToGuidOrDefault(),
                 Version = version.ToIntOrDefault()
             };
+
             if (GetCommand<DeleteMediaCommand>().ExecuteCommand(request))
             {
                 Messages.AddSuccess(MediaGlobalization.DeleteAudio_DeletedSuccessfully_Message);

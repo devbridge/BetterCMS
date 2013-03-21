@@ -10,6 +10,7 @@ using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Mvc;
 
 namespace BetterCms.Module.Pages.Command.Page.DeletePage
@@ -62,6 +63,11 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
             request.RedirectUrl = redirectService.FixUrl(request.RedirectUrl);
 
             IList<SitemapNode> sitemapNodes = null;
+
+            if (request.UpdateSitemap)
+            {
+                DemandAccess(RootModuleConstants.UserRoles.EditContent);
+            }
 
             if (request.UpdateSitemap && page.NodeCountInSitemap > 0)
             {

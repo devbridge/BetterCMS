@@ -1,11 +1,18 @@
 ﻿@using BetterCms.Module.Blog.Content.Resources
+@using BetterCms.Module.Root
 @using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Mvc
 @using BetterCms.Module.Root.Mvc.Helpers
 
 @model BetterCms.Module.Blog.ViewModels.Blog.BlogPostViewModel
 <div class="bcms-input-list-holder">
     @Html.Tooltip(BlogGlobalization.EditBlogPost_Permalink_Tooltip_Description)
-    <div class="bcms-content-titles">@BlogGlobalization.EditBlogPost_Permalink<a id="bcms-page-editpermalink">@RootGlobalization.Button_Edit</a></div>
+    <div class="bcms-content-titles">@BlogGlobalization.EditBlogPost_Permalink
+        @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
+        {
+            <a id="bcms-page-editpermalink">@RootGlobalization.Button_Edit</a>
+        }
+    </div>
     <div class="bcms-editseo-urlpath" id="bcms-page-permalink-info">@(string.IsNullOrWhiteSpace(Model.BlogUrl) ? Html.Raw("/") : new MvcHtmlString(Html.Encode(Model.BlogUrl)))</div>
 </div>
 

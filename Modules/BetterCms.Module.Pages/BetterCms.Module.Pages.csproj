@@ -210,7 +210,6 @@
     <Compile Include="Controllers\RedirectController.cs" />
     <Compile Include="Controllers\PageController.cs" />
     <Compile Include="Controllers\TagsController.cs" />
-    <Compile Include="Controllers\SiteSettingsController.cs" />
     <Compile Include="Controllers\SeoController.cs" />
     <Compile Include="Controllers\ContentController.cs" />
     <Compile Include="Api\Events\PageEvents.cs" />

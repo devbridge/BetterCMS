@@ -445,6 +445,14 @@ define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         self.onConfigureContent = function() {};
         self.onContentHistory = function() {};
 
+        self.removeHistoryButton = function () {
+            self.overlay.find(selectors.contentHistory).remove();
+        };
+
+        self.removeEditButton = function () {
+            self.overlay.find(selectors.contentEdit).remove();
+        };
+
         self.removeConfigureButton = function () {
             self.overlay.find(selectors.contentConfigure).remove();
         };
