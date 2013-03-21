@@ -61,6 +61,7 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
                         UseCustomCss = request.EnabledCustomCss,
                         CustomCss = request.CustomCss,
                         UseCustomJs = request.EanbledCustomJs,
+                        EditInSourceMode = request.EditInSourceMode,
                         CustomJs = request.CustomJs                      
                     },
                 request.DesirableStatus);

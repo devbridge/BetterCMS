@@ -37,7 +37,9 @@ define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.content
                 enableCustomJs: '#bcms-enable-custom-js',
                 enableCustomCss: '#bcms-enable-custom-css',
                 customJsContainer: '#bcms-custom-js-container',
-                customCssContainer: '#bcms-custom-css-container'
+                customCssContainer: '#bcms-custom-css-container',
+                
+                editInSourceModeHiddenField: '#bcms-edit-in-source-mode'
             },
             classes = {
                 sliderPrev: 'bcms-slider-prev',
@@ -91,10 +93,19 @@ define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.content
                 onLoad: function(dialog) {
                     var url = $.format(links.loadAddNewHtmlContentDialogUrl, bcms.pageId, regionId);
                     dynamicContent.bindDialog(dialog, url, {
-                        contentAvailable: pagesContent.initializeAddNewContentForm,
+                        contentAvailable: function (contentDialog, data) {
+                            var editInSourceMode = false;
+                            if (data && data.Data && data.Data.EditInSourceMode) {
+                                editInSourceMode = true;
+                            }
+                            pagesContent.initializeAddNewContentForm(contentDialog, editInSourceMode);
+                        },
 
                         beforePost: function() {
-                                htmlEditor.updateEditorContent(selectors.htmlEditor);   
+                            htmlEditor.updateEditorContent(selectors.htmlEditor);
+
+                            var editInSourceMode = htmlEditor.isSourceMode(selectors.htmlEditor);
+                            dialog.container.find(selectors.editInSourceModeHiddenField).val(editInSourceMode);
                         },
 
                         postSuccess: function (json) {                            
@@ -174,7 +185,7 @@ define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.content
         /**
         * Initializes content dialog form.
         */
-        pagesContent.initializeAddNewContentForm = function (dialog) {
+        pagesContent.initializeAddNewContentForm = function (dialog, editInSourceMode) {
             dialog.container.find(selectors.dataPickers).initializeDatepicker(globalization.datePickerTooltipTitle);
 
             dialog.container.find(selectors.widgetsSearchButton).on('click', function () {
@@ -207,6 +218,9 @@ define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.content
             pagesContent.initializeWidgets(dialog.container, dialog);
 
             htmlEditor.initializeHtmlEditor(selectors.htmlEditor);
+            if (editInSourceMode) {
+                htmlEditor.setSourceMode(selectors.htmlEditor);
+            }
 
             pagesContent.initializeCustomTextArea(dialog);
         };
@@ -214,9 +228,14 @@ define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.content
         /**
         * Initializes content edit dialog form.
         */
-        pagesContent.initializeEditContentForm = function (dialog) {
+        pagesContent.initializeEditContentForm = function (dialog, editInSourceMode) {
             dialog.container.find(selectors.dataPickers).initializeDatepicker();
+
             htmlEditor.initializeHtmlEditor(selectors.htmlEditor);
+            if (editInSourceMode) {
+                htmlEditor.setSourceMode(selectors.htmlEditor);
+            }
+
             pagesContent.initializeCustomTextArea(dialog);
             
             dialog.container.find(selectors.destroyDraftVersionLink).on('click', function () {
@@ -422,10 +441,19 @@ define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.content
                 onLoad: function (dialog) {
                     var url = $.format(links.editPageContentUrl, contentId);
                     dynamicContent.bindDialog(dialog, url, {
-                        contentAvailable: pagesContent.initializeEditContentForm,
+                        contentAvailable: function (contentDialog, data) {
+                            var editInSourceMode = false;
+                            if (data && data.Data && data.Data.EditInSourceMode) {
+                                editInSourceMode = true;
+                            }
+                            pagesContent.initializeEditContentForm(contentDialog, editInSourceMode);
+                        },
 
                         beforePost: function () {
                             htmlEditor.updateEditorContent();
+                            
+                            var editInSourceMode = htmlEditor.isSourceMode(selectors.htmlEditor);
+                            dialog.container.find(selectors.editInSourceModeHiddenField).val(editInSourceMode);
                         },
 
                         postSuccess: function (json) {

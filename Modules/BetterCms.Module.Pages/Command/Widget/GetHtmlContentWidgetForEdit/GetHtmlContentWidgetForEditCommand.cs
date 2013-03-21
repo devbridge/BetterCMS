@@ -43,30 +43,32 @@ namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
         {
             EditHtmlContentWidgetViewModel model = null;
 
-             var categories = categoryService.GetCategories();
+            var categories = categoryService.GetCategories();
 
-             if (widgetId.HasValue && widgetId.Value != Guid.Empty)
+            if (widgetId.HasValue && widgetId.Value != Guid.Empty)
             {
                 var htmlContentWidget = contentService.GetContentForEdit(widgetId.Value) as HtmlContentWidget;
-                
+
                 if (htmlContentWidget != null)
                 {
-                    model = new EditHtmlContentWidgetViewModel {
-                                                                   Id = htmlContentWidget.Id,
-                                                                   Version = htmlContentWidget.Version,
-                                                                   CategoryId = htmlContentWidget.Category != null ? htmlContentWidget.Category.Id : (Guid?)null,
-                                                                   Name = htmlContentWidget.Name,
-                                                                   PageContent = htmlContentWidget.Html,
-                                                                   EnableCustomHtml = htmlContentWidget.UseHtml,
-                                                                   EnableCustomCSS = htmlContentWidget.UseCustomCss,
-                                                                   CustomCSS = htmlContentWidget.CustomCss,
-                                                                   EnableCustomJS = htmlContentWidget.UseCustomJs,
-                                                                   CustomJS = htmlContentWidget.CustomJs,
-                                                                   WidgetType = WidgetType.HtmlContent,
-                                                                   PreviewImageUrl = null,
-                                                                   CurrentStatus = htmlContentWidget.Status,
-                                                                   HasPublishedContent = htmlContentWidget.Original != null
-                                                               };
+                    model = new EditHtmlContentWidgetViewModel
+                                {
+                                    Id = htmlContentWidget.Id,
+                                    Version = htmlContentWidget.Version,
+                                    CategoryId = htmlContentWidget.Category != null ? htmlContentWidget.Category.Id : (Guid?)null,
+                                    Name = htmlContentWidget.Name,
+                                    PageContent = htmlContentWidget.Html,
+                                    EnableCustomHtml = htmlContentWidget.UseHtml,
+                                    EnableCustomCSS = htmlContentWidget.UseCustomCss,
+                                    EditInSourceMode = htmlContentWidget.EditInSourceMode,
+                                    CustomCSS = htmlContentWidget.CustomCss,
+                                    EnableCustomJS = htmlContentWidget.UseCustomJs,
+                                    CustomJS = htmlContentWidget.CustomJs,
+                                    WidgetType = WidgetType.HtmlContent,
+                                    PreviewImageUrl = null,
+                                    CurrentStatus = htmlContentWidget.Status,
+                                    HasPublishedContent = htmlContentWidget.Original != null
+                                };
                 }
 
                 if (model == null)
@@ -80,7 +82,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
             }
 
             model.Categories = categories.ToList();
-            
+
             return model;
         }
     }
