@@ -137,6 +137,12 @@ define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepi
                     image.removeAttr("src");
                 }
             });
+            
+            // IE fix: by default, while loading, picture is hidden
+            var previewImage = dialog.container.find(selectors.templatePreviewImage);
+            if (previewImage.attr('src')) {
+                previewImage.show();
+            }
         };
 
         /*

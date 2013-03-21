@@ -317,6 +317,12 @@ define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepic
                     widgets.openEditServerControlWidgetDialog(publishedId, onSaveCallback, availablePreviewOnPageContentId, onCloseCallback);
                 });
             });
+            
+            // IE fix: by default, while loading, picture is hidden
+            var previewImage = dialog.container.find(selectors.widgetPreviewImage);
+            if (previewImage.attr('src')) {
+                previewImage.show();
+            }
         };
 
         /*
