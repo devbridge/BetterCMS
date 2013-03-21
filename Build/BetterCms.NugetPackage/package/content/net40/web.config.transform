@@ -13,12 +13,6 @@
     <customErrors mode="Off" />
   </system.web>
   <system.webServer>
-    <roleManager cookieProtection="All" cacheRolesInCookie="true" enabled="true" defaultProvider="BetterCmsRoleProvider">
-      <providers>
-        <clear/>
-        <add name="BetterCmsRoleProvider" type="BetterCms.Module.Users.Provider.RoleProvider" cacheTimeoutInMinutes="10"/>
-      </providers>
-    </roleManager>
     <httpErrors existingResponse="PassThrough"/>
     <validation validateIntegratedModeConfiguration="false" />
     <modules runAllManagedModulesForAllRequests="true" />
