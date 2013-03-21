@@ -53,9 +53,12 @@ define('bcms.security', ['bcms.jquery', 'bcms'], function ($, bcms) {
                     return true;
                 }
             }
+            
+            return false;
         }
-        
-        return false;
+
+        console.log("No security data provided for GUI.");
+        return true; // This means that security data is not provided for GUI - no GUI hiding will be performed.
     };
 
     function anyInArray(sourceArray, lookInArray) {
