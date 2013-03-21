@@ -80,7 +80,7 @@ namespace BetterCms.Core.Services.Storage
             }
         }
 
-        public void RemoveObjectBucket(Uri uri)
+        public void RemoveFolder(Uri uri)
         {
             CheckUri(uri);
             

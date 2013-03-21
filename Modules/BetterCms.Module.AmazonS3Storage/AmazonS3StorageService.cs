@@ -192,7 +192,7 @@ namespace BetterCms.Module.AmazonS3Storage
             }
         }
 
-        public void RemoveObjectBucket(Uri uri)
+        public void RemoveFolder(Uri uri)
         {
             CheckUri(uri);
 

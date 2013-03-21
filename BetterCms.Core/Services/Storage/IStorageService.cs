@@ -14,6 +14,6 @@ namespace BetterCms.Core.Services.Storage
 
         void RemoveObject(Uri uri);
 
-        void RemoveObjectBucket(Uri uri);
+        void RemoveFolder(Uri uri);
     }
 }
