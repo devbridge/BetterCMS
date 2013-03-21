@@ -284,7 +284,7 @@ define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 
                     },
 
                     postSuccess: function (data) {
-                        if (bcms.trigger(bcms.events.pageCreated, { Data: data, Callback: postSuccess }) <= 0) {
+                        if (bcms.trigger(bcms.events.pageCreated, { Data: data.Data, Callback: postSuccess }) <= 0) {
                             if (postSuccess && $.isFunction(postSuccess)) {
                                 postSuccess(data);
                             }
@@ -297,8 +297,8 @@ define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 
 
     page.addNewPage = function() {
         page.openCreatePageDialog(function (data) {
-            if (data.Data && data.Data.Data && data.Data.Data.PageUrl) {
-                redirect.RedirectWithAlert(data.Data.Data.PageUrl);
+            if (data.Data && data.Data.PageUrl) {
+                redirect.RedirectWithAlert(data.Data.PageUrl);
             }
         });
     };
