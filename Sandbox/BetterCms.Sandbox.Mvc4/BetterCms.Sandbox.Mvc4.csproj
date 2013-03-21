@@ -178,7 +178,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Content Include="App_Data\BetterCMS\Modules\readme.txt" />
-    <Content Include="error.html" />
+    <Content Include="404.html" />
+    <Content Include="500.html" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">
