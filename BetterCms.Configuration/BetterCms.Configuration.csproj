@@ -105,6 +105,8 @@
     <Compile Include="Configuration\CmsModuleGalleryConfigurationElement.cs" />
     <Compile Include="Configuration\CmsCacheConfigurationElement.cs" />
     <Compile Include="Configuration\CacheServiceType.cs" />
+    <Compile Include="Configuration\CustomRoleElement.cs" />
+    <Compile Include="Configuration\CustomRolesCollection.cs" />
     <Compile Include="Configuration\DefaultConfigurationLoader.cs" />
     <Compile Include="Configuration\CmsSecurityConfigurationElement.cs" />
     <Compile Include="Configuration\StorageServiceType.cs" />

@@ -4,7 +4,7 @@ using BetterCms.Module.Root.Mvc;
 namespace BetterCms.Module.Users.Commands.Role.DeleteRole
 {
     /// <summary>
-    /// A command to delete given category.
+    /// A command to delete given role.
     /// </summary>
     public class DeleteRoleCommand : CommandBase, ICommand<DeleteRoleCommandRequest, bool>
     {

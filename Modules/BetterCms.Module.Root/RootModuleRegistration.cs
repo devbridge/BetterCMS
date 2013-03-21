@@ -185,6 +185,7 @@ namespace BetterCms.Module.Root
                     new KnockoutExtendersJavaScriptModuleDescriptor(this), 
                     new JavaScriptModuleDescriptor(this, "bcms.ko.grid"),                    
 
+                    new SecurityJavaScriptModuleDescriptor(this), 
                     new MessagesJavaScriptModuleDescriptor(this), 
                     new ModalJavaScriptModuleDescriptor(this), 
                     new PreviewJavaScriptModuleDescriptor(this), 
@@ -201,7 +202,13 @@ namespace BetterCms.Module.Root
 
         public override IEnumerable<IUserRole> RegisterUserRoles(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
         {
-            return new[] { new UserRole(UserRoles.EditSiteSettings, RootGlobalization.UserRole_EditSiteSettings) };
+            return new[]
+                {
+                    new UserRole(RootModuleConstants.UserRoles.EditContent, () => RootGlobalization.UserRole_EditContent),
+                    new UserRole(RootModuleConstants.UserRoles.PublishContent, () => RootGlobalization.UserRole_PublishContent), 
+                    new UserRole(RootModuleConstants.UserRoles.DeleteContent, () => RootGlobalization.UserRole_DeleteContent), 
+                    new UserRole(RootModuleConstants.UserRoles.Administration, () => RootGlobalization.UserRole_Administration), 
+                };
         }
 
         public override IEnumerable<IPageActionProjection> RegisterSidebarHeaderProjections(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
@@ -212,9 +219,8 @@ namespace BetterCms.Module.Root
                         {
                             Order = 10,
                             CssClass = page => "bcms-logout-btn",
-                            IsVisible = (page, principal) => principal.Identity.IsAuthenticated
                         },
-                    new RenderActionProjection<AuthenticationController>(f => f.Info()) { IsVisible = (page, principal) => principal.Identity.IsAuthenticated }
+                    new RenderActionProjection<AuthenticationController>(f => f.Info())
                 };
         }
 
@@ -227,7 +233,6 @@ namespace BetterCms.Module.Root
                             Title = () => RootGlobalization.Sidebar_SiteSettingsButtonTitle,
                             CssClass = page => "bcms-sidemenu-btn bcms-btn-settings",
                             Order = 500,
-                            IsVisible = (page, principal) => true // TODO: Uncomment this: principal.IsInRole(UserRoles.EditSiteSettings)
                         }
                 };
         }

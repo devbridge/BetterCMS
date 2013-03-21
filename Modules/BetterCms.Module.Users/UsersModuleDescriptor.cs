@@ -8,8 +8,10 @@ using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.JsModule;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Blog.Registration;
+using BetterCms.Module.Root;
 using BetterCms.Module.Users.Content.Resources;
 using BetterCms.Module.Users.Registration;
+using BetterCms.Module.Users.Services;
 
 namespace BetterCms.Module.Users
 {
@@ -121,9 +123,21 @@ namespace BetterCms.Module.Users
                             Order = 4100,
                             Title = () => UsersGlobalization.SiteSettings_UserMenuItem,
                             CssClass = page => "bcms-sidebar-link",
-                            IsVisible = (page, principle) => false, // TODO: implement.
+                            AccessRole = RootModuleConstants.UserRoles.Administration
                         }                                      
                 };
+        }
+
+        /// <summary>
+        /// Registers module types.
+        /// </summary>
+        /// <param name="context">The area registration context.</param>
+        /// <param name="containerBuilder">The container builder.</param>
+        /// <param name="configuration">The configuration.</param>
+        public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        {
+            containerBuilder.RegisterType<DefaultRoleService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultAuthentictionService>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
     }
 }

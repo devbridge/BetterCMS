@@ -82,10 +82,7 @@ namespace BetterCms.Module.Pages.Services
         {
             var node = repository.First<SitemapNode>(id);
             node.Version = version;
-
-            repository.Delete(node);
-
-            UpdatedPageProperties(id.HasDefaultValue(), true, node.Url, string.Empty);
+            DeleteNode(node);
         }
 
         /// <summary>
@@ -218,6 +215,22 @@ namespace BetterCms.Module.Pages.Services
         }
 
         /// <summary>
+        /// Deletes the node.
+        /// </summary>
+        /// <param name="node">The node.</param>
+        private void DeleteNode(SitemapNode node)
+        {
+            foreach (var childNode in node.ChildNodes)
+            {
+                DeleteNode(childNode);
+            }
+
+            repository.Delete(node);
+
+            UpdatedPageProperties(false, true, node.Url, string.Empty);
+        }
+
+        /// <summary>
         /// Updates page properties.
         /// </summary>
         /// <param name="isNodeNew">if set to <c>true</c> [is node new].</param>
@@ -226,8 +239,8 @@ namespace BetterCms.Module.Pages.Services
         /// <param name="newUrl">The new URL.</param>
         private void UpdatedPageProperties(bool isNodeNew, bool isNodeDeleted, string oldUrl, string newUrl)
         {
-            oldUrl = (oldUrl ?? string.Empty).ToUpper();
-            newUrl = (newUrl ?? string.Empty).ToUpper();
+            oldUrl = (oldUrl ?? string.Empty).ToLower();
+            newUrl = (newUrl ?? string.Empty).ToLower();
 
             if (isNodeNew)
             {
@@ -239,7 +252,7 @@ namespace BetterCms.Module.Pages.Services
                 // New sitemap node created.
                 if (!isNodeDeleted)
                 {
-                    var page = repository.FirstOrDefault<PageProperties>(p => p.PageUrl.ToUpper() == newUrl);
+                    var page = repository.FirstOrDefault<PageProperties>(p => p.PageUrl.ToLower() == newUrl);
                     if (page != null)
                     {
                         page.NodeCountInSitemap += 1;
@@ -255,7 +268,7 @@ namespace BetterCms.Module.Pages.Services
                 }
 
                 // Sitemap node deleted.
-                var page = repository.FirstOrDefault<PageProperties>(p => p.PageUrl.ToUpper() == oldUrl);
+                var page = repository.FirstOrDefault<PageProperties>(p => p.PageUrl.ToLower() == oldUrl);
                 if (page != null && page.NodeCountInSitemap > 0)
                 {
                     page.NodeCountInSitemap -= 1;
@@ -265,15 +278,15 @@ namespace BetterCms.Module.Pages.Services
             else if (oldUrl != newUrl)
             {
                 // Url in sitemap node changed.
-                var pages = repository.AsQueryable<PageProperties>(p => p.PageUrl.ToUpper() == newUrl || p.PageUrl.ToUpper() == oldUrl).ToList();
+                var pages = repository.AsQueryable<PageProperties>(p => p.PageUrl.ToLower() == newUrl || p.PageUrl.ToLower() == oldUrl).ToList();
                 foreach (var page in pages)
                 {
-                    if (page.PageUrl == oldUrl && page.NodeCountInSitemap > 0)
+                    if (page.PageUrl.ToLower() == oldUrl && page.NodeCountInSitemap > 0)
                     {
                         page.NodeCountInSitemap -= 1;
                         repository.Save(page);
                     }
-                    else if (page.PageUrl == newUrl)
+                    else if (page.PageUrl.ToLower() == newUrl)
                     {
                         page.NodeCountInSitemap += 1;
                         repository.Save(page);

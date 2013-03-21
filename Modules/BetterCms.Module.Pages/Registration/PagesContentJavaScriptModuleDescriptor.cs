@@ -19,17 +19,14 @@ namespace BetterCms.Module.Pages.Registration
         public PagesContentJavaScriptModuleDescriptor(ModuleDescriptor containerModule)
             : base(containerModule, "bcms.pages.content")
         {
-
             Links = new IActionProjection[]
                 {      
-                    new JavaScriptModuleLinkTo<ContentController>(this, "loadWidgetsFromCategoryUrl", controller => controller.WidgetCategory("{1}")),
                     new JavaScriptModuleLinkTo<ContentController>(this, "loadWidgetsUrl", controller => controller.Widgets("{0}")),
                     new JavaScriptModuleLinkTo<ContentController>(this, "loadAddNewHtmlContentDialogUrl", controller => controller.AddPageHtmlContent("{0}", "{1}")),
                     new JavaScriptModuleLinkTo<ContentController>(this, "insertContentToPageUrl", controller => controller.InsertContentToPage("{0}", "{1}", "{2}")),
                     new JavaScriptModuleLinkTo<ContentController>(this, "deletePageContentUrl", controller => controller.DeletePageContent("{0}", "{1}", "{2}")),
                     new JavaScriptModuleLinkTo<ContentController>(this, "editPageContentUrl", controller => controller.EditPageHtmlContent("{0}")),
-                    new JavaScriptModuleLinkTo<ContentController>(this, "sortPageContentUrl", controller => controller.SortPageContent(null)),
-                   
+                    new JavaScriptModuleLinkTo<ContentController>(this, "sortPageContentUrl", controller => controller.SortPageContent(null))
                 };
 
             Globalization = new IActionProjection[]

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Web;
+using System.Web.Security;
+
 using BetterCms.Core.Dependencies;
 using BetterCms.Core.Environment.ApplicationStart;
 using BetterCms.Core.Exceptions;
@@ -85,6 +87,18 @@ namespace BetterCms.Core.Environment.ApplicationStart
             catch (Exception ex)
             {
                 string message = "Failed to load assemblies.";
+                logger.Fatal(message, ex);
+
+                throw new CmsException(message, ex);
+            }
+
+            try
+            {
+                // TODO: implement
+            }
+            catch (Exception ex)
+            {
+                string message = "Failed to initialize role provider.";
                 logger.Fatal(message, ex);
 
                 throw new CmsException(message, ex);

@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define */
 
-define('bcms.sidemenu', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.jqueryui'], function ($, bcms) {
+define('bcms.sidemenu', ['bcms.jquery', 'bcms', 'bcms.security'], function ($, bcms, security) {
     'use strict';
 
     var sidemenu = {},
@@ -144,7 +144,7 @@ define('bcms.sidemenu', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.jqueryui'], 
     /**
     * Initializes sidebar module.
     */
-    sidemenu.init = function () {
+    sidemenu.init = function() {
 
         console.log('Initialize sidebar');
         $(selectors.container).hide();
@@ -174,11 +174,12 @@ define('bcms.sidemenu', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.jqueryui'], 
             sidemenu.open(true);
         }
 
-        if (editingOn) {
+        var canTurnEditOn = security.IsAuthorized(["BcmsEditContent", "BcmsPublishContent", "BcmsDeleteContent"]);
+        if (editingOn && canTurnEditOn) {
             sidemenu.turnEditModeOn();
         }
 
-        $(selectors.leftRightHandle).on('click', function () {
+        $(selectors.leftRightHandle).on('click', function() {
             if (sidemenuContainer.hasClass(classes.sideMenuRight)) {
                 sidemenu.moveToLeft();
             } else {
@@ -186,7 +187,7 @@ define('bcms.sidemenu', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.jqueryui'], 
             }
         });
 
-        $(selectors.openCloseHandle).on('click', function () {
+        $(selectors.openCloseHandle).on('click', function() {
             if (sidemenu.isOpen()) {
                 sidemenu.close();
             } else {
@@ -194,13 +195,15 @@ define('bcms.sidemenu', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.jqueryui'], 
             }
         });
 
-        $(selectors.editOnOffHandle).on('click', function () {
-            if ($(selectors.html).hasClass(classes.editingOnClass)) {
-                sidemenu.turnEditModeOff();
-            } else {
-                sidemenu.turnEditModeOn();
-            }
-        });
+        if (canTurnEditOn) {
+            $(selectors.editOnOffHandle).on('click', function () {
+                if ($(selectors.html).hasClass(classes.editingOnClass)) {
+                    sidemenu.turnEditModeOff();
+                } else {
+                    sidemenu.turnEditModeOn();
+                }
+            });
+        }
 
         sidemenuContainer.draggable({
             axis: 'y',

@@ -1,8 +1,27 @@
-﻿namespace BetterCms.Core.Mvc.Commands
+﻿using BetterCms.Core.Services;
+
+namespace BetterCms.Core.Mvc.Commands
 {
+    /// <summary>
+    /// Defines command base contract.
+    /// </summary>
     public interface ICommandBase
     {
+        /// <summary>
+        /// Gets or sets the context.
+        /// </summary>
+        /// <value>
+        /// The context.
+        /// </value>
         ICommandContext Context { get; set; }
+
+        /// <summary>
+        /// Gets or sets the security service.
+        /// </summary>
+        /// <value>
+        /// The security service.
+        /// </value>
+        ISecurityService SecurityService { get; set; }
     }
 
     /// <summary>

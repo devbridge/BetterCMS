@@ -2,6 +2,7 @@
 @using BetterCms.Module.Blog.Content.Resources
 @using BetterCms.Module.Blog.Controllers
 @using BetterCms.Module.Blog.ViewModels.Blog
+@using BetterCms.Module.Root
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc.Grids.Extensions
 @using BetterCms.Module.Root.Mvc.Grids.TableRenderers
@@ -15,7 +16,14 @@
 @{
     Action<ColumnBuilder<SiteSettingBlogPostViewModel>> columns = column =>
     {
-        column.EditButtonColumn();
+        if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent)))
+        {
+            column.EditButtonColumn();
+        }
+        else
+        {
+            column.EmptyColumn();
+        }
 
         column.For(m => string.Format("<a class=\"bcms-tables-link bcms-blog-Title\" data-id=\"{0}\" data-url=\"{2}\">{1}</a>", m.Id, m.Title, m.PageUrl))
             .Named(BlogGlobalization.SiteSettings_Blogs_TitleColumn)
@@ -43,7 +51,10 @@
            .HeaderAttributes(@style => "width: 65px; text-align: center")
            .Attributes(@class => "bcms-blog-IsPublished");
 
-        column.DeleteButtonColumn();
+        if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.DeleteContent))
+        {
+            column.DeleteButtonColumn();
+        }
     };
 }
 
@@ -52,7 +63,10 @@
     @Html.HiddenGridOptions(Model.GridOptions)
 
     <div class="bcms-top-block-holder">
-        <div class="bcms-btn-links-main" id="bcms-create-blog-button">@BlogGlobalization.SiteSettings_Blogs_AddNew</div>
+        @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
+        {
+            <div class="bcms-btn-links-main" id="bcms-create-blog-button">@BlogGlobalization.SiteSettings_Blogs_AddNew</div>
+        }
         <div class="bcms-search-block">
             @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
             <div class="bcms-btn-search" id="bcms-blogs-search-btn">@BlogGlobalization.SiteSettings_Blogs_Search</div>

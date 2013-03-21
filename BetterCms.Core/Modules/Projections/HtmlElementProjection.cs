@@ -5,6 +5,7 @@ using System.Web.UI;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Models;
+using BetterCms.Core.Services;
 
 namespace BetterCms.Core.Modules.Projections
 {
@@ -60,7 +61,7 @@ namespace BetterCms.Core.Modules.Projections
         /// <value>
         /// The role.
         /// </value>
-        public Func<IPage, IPrincipal, bool> IsVisible { get; set; }
+        public string AccessRole { get; set; }
 
         /// <summary>
         /// Gets html element tag name.
@@ -71,13 +72,14 @@ namespace BetterCms.Core.Modules.Projections
         /// Renders a control.
         /// </summary>
         /// <param name="page">The page.</param>
-        /// <param name="principal">The principal.</param>
+        /// <param name="securityService"></param>
         /// <param name="html">The HTML.</param>
-        public virtual void Render(IPage page, IPrincipal principal, HtmlHelper html)
+        /// <returns><c>true</c> on success, otherwise <c>false</c>.</returns>
+        public virtual bool Render(IPage page, ISecurityService securityService, HtmlHelper html)
         {
-            if (IsVisible != null && !IsVisible(page, principal))
+            if (AccessRole != null && !securityService.IsAuthorized(AccessRole))
             {
-                return;
+                return false;
             }
 
             using (HtmlControlRenderer control = new HtmlControlRenderer(Tag))
@@ -89,6 +91,8 @@ namespace BetterCms.Core.Modules.Projections
                     control.RenderControl(writer);
                 }
             }
+
+            return true;
         }
 
         /// <summary>

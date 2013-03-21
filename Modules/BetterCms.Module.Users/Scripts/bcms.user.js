@@ -1,18 +1,24 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define */
 
-define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.inlineEdit', 'bcms.dynamicContent', 'bcms.role'], function ($, bcms, modal, siteSettings, editor, dynamicContent, role) {
+define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.inlineEdit', 'bcms.dynamicContent', 'bcms.role', 'bcms.media', 'bcms.messages', 'bcms.grid'], 
+    function ($, bcms, modal, siteSettings, editor, dynamicContent, role, media, messages, grid) {
     'use strict';
 
     var user = {},
         selectors = {
             siteSettingsUserCreateButton: "#bcms-create-user-button",
-            siteSettingsRoleCreatButton: "#bcms-create-role-button",
             usersTable: '#bcms-users-grid',
-
-            roleForm: '#bcms-role-form',
-            roleRowEditButtons: '.bcms-grid-item-edit-button',
-            roleParentRow: 'tr:first'
+            userUploadImageButton: "#bcms-open-uploader-button",
+            userImageId: ".bcms-user-image-id",
+            userImage: ".bcms-user-image-url",
+            userRowEditButtons: '.bcms-grid-item-edit-button',
+            userRowDeleteButton: '.bcms-grid-item-delete-button',
+            userParentRow: 'tr:first',
+            userNameCell: '.bcms-user-name',
+            userRowTemplate: '#bcms-users-list-row-template',
+            userTableFirstRow: 'table.bcms-tables > tbody > tr:first',
+            userRowTemplateFirstRow: 'tr:first'
         },
 
         links = {
@@ -20,8 +26,7 @@ define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', '
             loadSiteSettingsUserUrl: null,
             loadSiteSettingsRoleUrl: null,
             loadEditUserUrl: null,
-            loadCreatRoleUrl: null,
-            loadEditRoleUrl: null
+            deleteUserUrl: null
 
         },
 
@@ -29,8 +34,10 @@ define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', '
             confirmLogoutMessage: null,
             usersListTabTitle: null,
             usersAddNewTitle: null,
+            editUserTitle: null,
             rolesListTabTitle: null,
-            rolesAddNewTitle: null
+            rolesAddNewTitle: null,
+            deleteUserConfirmMessage: null
         };
 
     // Assign objects to module.
@@ -49,7 +56,7 @@ define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', '
 
         var users = new siteSettings.TabViewModel(globalization.usersListTabTitle, links.loadSiteSettingsUsersUrl, initSiteSettingsUserEvents);
 
-        var roles = new siteSettings.TabViewModel(role.globalization.rolesListTabTitle, role.links.loadSiteSettingsRoleUrl, role.initSiteSettingsRoleEvents);
+        var roles = new siteSettings.TabViewModel(role.globalization.rolesListTabTitle, role.links.loadSiteSettingsRoleUrl, role.initializeRoleListForm);
 
         tabs.push(users);
 
@@ -59,45 +66,170 @@ define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', '
         editor.initialize(container, {});
     };
 
-    /*roles.initSiteSettingsRoleEvents = function(container, json) {
-        var html = json.Html,
-            data = (json.Success == true) ? json.Data : null;
-
-        container.html(html);
-
-        container.find(selectors.siteSettingsRoleCreatButton).on('click', function() {
-            user.openCreatRoleDialog();
-        });
-    };*/
 
     /**
     * Initializes site settings user list
     */
-    function initSiteSettingsUserEvents(container, json) {
-        var html = json.Html,
-            data = (json.Success == true) ? json.Data : null;
+    function initSiteSettingsUserEvents(container) {
 
-        container.html(html);
+        var onUserCreated = function (json) {
+            if (json.Success && json.Data != null) {
+                var rowtemplate = $(selectors.userRowTemplate),
+                            newRow = $(rowtemplate.html()).find(selectors.userRowTemplateFirstRow);
+                setUserFields(newRow, json);
+                newRow.insertBefore($(selectors.userTableFirstRow, container));
+                initUserEvents(newRow);
+                messages.refreshBox(container, json);
+                grid.showHideEmptyRow(container);
+            }
+        };
 
         container.find(selectors.siteSettingsUserCreateButton).on('click', function () {
-            user.openCreatUserDialog();
-            //editor.addNewRow(container);
+            user.openCreatUserDialog(onUserCreated);
+        });
+        initUserEvents(container);
+     }
+        
+    function initUserEvents(container) {
+        container.find(selectors.userRowEditButtons).on('click', function () {
+            editUser(container, $(this));
+        });
+        container.find(selectors.userRowDeleteButton).on('click', function () {
+            deleteUser(container, $(this));
         });
     }
 
-    user.openCreatUserDialog = function () {//(onSaveCallback) {
+    user.openCreatUserDialog = function (onSaveCallback) {
         modal.open({
             title: globalization.usersAddNewTitle,
             onLoad: function (childDialog) {
                 dynamicContent.bindDialog(childDialog, links.loadEditUserUrl, {
-                    //contentAvailable: initializeEditTemplateForm,
+                    contentAvailable: initUserCreatEvents,
 
-                    //postSuccess: onSaveCallback
+                    postSuccess: onSaveCallback
                 });
             }
         });
     };
+        
+    function initUserCreatEvents(dialog) {
+        var onImageInsert = function(image) {            
+            dialog.container.find(selectors.userImageId).val(image.id());
+            dialog.container.find(selectors.userImage).attr('src', image.thumbnailUrl);
+        };
+        dialog.container.find(selectors.userUploadImageButton).on('click', function () {            
+            media.openImageInsertDialog(onImageInsert);          
+        });        
+    };
 
+     /**
+    * Calls function, which opens dialog for a user editing.
+    */
+    function editUser(container, self) {
+        var row = self.parents(selectors.userParentRow),
+                id = row.data('id');
+
+        editUserWindow(id, function (data) {
+        if (data.Data != null) {
+            setUserFields(row, data);
+        grid.showHideEmptyRow(container);
+        }
+        });
+    };
+
+    function editUserWindow(templateId, onSaveCallback) {
+        user.openEditUserDialog(templateId, onSaveCallback);
+    };
+        
+    user.openEditUserDialog = function (templateId, onSaveCallback) {
+    modal.open({
+            title: globalization.editUserTitle,
+            onLoad: function (childDialog) {
+                dynamicContent.bindDialog(childDialog, $.format(links.loadEditUserUrl, templateId), {
+                    contentAvailable: initializeEditUserForm,
+
+                    beforePost: function (form) {
+                        editor.resetAutoGenerateNameId();
+                        editor.setInputNames(form);
+                    },
+
+                    postSuccess: onSaveCallback
+                });
+            }
+        });
+    };
+        
+    function initializeEditUserForm() {
+        var dialog = siteSettings.getModalDialog(),
+            container = dialog.container;
+        
+        var form = container.find(selectors.userForm);
+
+        form.on('submit', function (event) {
+            event.preventDefault();
+            return false;
+        });
+    }
+        
+    /**
+    * Set values, returned from server to row fields
+    */
+    function setUserFields(row, json) {
+        row.data('id', json.Data.Id);
+        row.data('version', json.Data.Version);
+        row.find(selectors.userNameCell).html(json.Data.UserName);
+    };
+        
+    user.deleteUser = function (userId, userVersion, userName, onDeleteCallback) {
+        var url = $.format(links.deleteUserUrl, userId, userVersion),
+            message = $.format(globalization.deleteUserConfirmMessage, userName),
+            onDeleteCompleted = function (json) {
+                try {
+                    if (json.Success && $.isFunction(onDeleteCallback)) {
+                        onDeleteCallback(json);
+                    }
+                } finally {
+                    confirmDialog.close();
+                }
+            },
+            confirmDialog = modal.confirm({
+                content: message,
+                onAccept: function () {
+                    $.ajax({
+                        type: 'POST',
+                        url: url,
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+                        cache: false
+                    })
+                    .done(function (json) {
+                        onDeleteCompleted(json);
+                    })
+                    .fail(function (response) {
+                        onDeleteCompleted(bcms.parseFailedResponse(response));
+                    });
+                    return false;
+                }
+            });
+        };
+        
+        /**
+        * Deletes user from site settings role list.
+        */
+        function deleteUser(container, self) {
+            var row = self.parents(selectors.userParentRow),
+                id = row.data('id'),
+                version = row.data('version'),
+                name = row.find(selectors.userNameCell).html();
+
+            user.deleteUser(id, version, name, function(data) {
+                messages.refreshBox(container, data);
+                if (data.Success) {
+                    row.remove();
+                    grid.showHideEmptyRow(container);
+                }
+            });
+        };
 
     bcms.registerInit(user.init);
 
