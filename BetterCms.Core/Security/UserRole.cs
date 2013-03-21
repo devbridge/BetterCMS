@@ -1,4 +1,6 @@
-﻿namespace BetterCms.Core.Security
+﻿using System;
+
+namespace BetterCms.Core.Security
 {
     /// <summary>
     /// Implements permission interface properties.
@@ -10,7 +12,7 @@
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="localizedName">Name of the localized.</param>
-        public UserRole(string name, string localizedName)
+        public UserRole(string name, Func<string> localizedName)
         {
             Name = name;
             LocalizedName = localizedName;
@@ -27,6 +29,6 @@
         /// <value>
         /// The localized name.
         /// </value>
-        public string LocalizedName { get; private set; }
+        public Func<string> LocalizedName { get; private set; }
     }
 }

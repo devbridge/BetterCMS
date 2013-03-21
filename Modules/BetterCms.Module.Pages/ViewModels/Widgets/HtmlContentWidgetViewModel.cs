@@ -78,6 +78,7 @@ namespace BetterCms.Module.Pages.ViewModels.Widgets
 
         public bool EnableCustomJS { get; set; }
 
+        [AllowHtml]
         public string CustomJS { get; set; }       
 
         public override string ToString()

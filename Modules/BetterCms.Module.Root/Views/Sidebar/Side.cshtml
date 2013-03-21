@@ -1,4 +1,5 @@
 ﻿@using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Mvc
 @model BetterCms.Module.Root.ViewModels.PageProjectionsViewModel
 <div id="bcms-sidemenu-handle">
     <div title="@RootGlobalization.Sidebar_OpenShowTitle" id="bcms-sidemenu-hide">
@@ -9,7 +10,7 @@
         @foreach (var projection in Model.Projections)
         {
             <div class="bcms-sidemenu-separator">&nbsp;</div>
-            projection.Render(Model.Page, User, Html);  
+            projection.Render(Model.Page, (ViewContext.Controller as CmsControllerBase).SecurityService, Html);  
         }
     </div>
     <div title="@RootGlobalization.Sidebar_DragTitle" id="bcms-sidemenu-draghandle">&nbsp;</div>

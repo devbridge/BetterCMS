@@ -12,6 +12,7 @@ using BetterCms.Core.Environment.Assemblies;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Core.Mvc.Extensions;
 using BetterCms.Core.Mvc.Routes;
+using BetterCms.Core.Security;
 
 using Common.Logging;
 
@@ -57,6 +58,8 @@ namespace BetterCms.Core.Modules.Registration
         /// </summary>
         private readonly Dictionary<string, JavaScriptModuleDescriptor> knownJavaScriptModules;
 
+        private readonly List<IUserRole> knownUserRoles;
+
         /// <summary>
         /// Thread safe list of registered action projections for a sidebar main content.
         /// </summary>
@@ -98,6 +101,7 @@ namespace BetterCms.Core.Modules.Registration
             knownModuleDescriptorTypes = new Dictionary<string, Type>();
             knownModules = new Dictionary<string, ModuleRegistrationContext>();
             knownJavaScriptModules = new Dictionary<string, JavaScriptModuleDescriptor>();
+            knownUserRoles = new List<IUserRole>();
             knownSidebarHeadContentItems = new List<IPageActionProjection>();
             knownSidebarContentItems = new List<IPageActionProjection>();
             knownSidebarBodyContentItems = new List<IPageActionProjection>();
@@ -147,6 +151,11 @@ namespace BetterCms.Core.Modules.Registration
         public IEnumerable<JavaScriptModuleDescriptor> GetJavaScriptModules()
         {
             return knownJavaScriptModules.Values;
+        }
+
+        public IEnumerable<IUserRole> GetUserAccessRoles()
+        {
+            return knownUserRoles;
         }
 
         /// <summary>
@@ -251,6 +260,9 @@ namespace BetterCms.Core.Modules.Registration
                     knownJavaScriptModules.Add(jsModuleDescriptor.Name, jsModuleDescriptor);
                 }
             }
+
+            var userRoles = moduleDescriptor.RegisterUserRoles(containerBuilder, cmsConfiguration);
+            UpdateConcurrentBagWithEnumerator(knownUserRoles, userRoles);
 
             var sidebarHeadProjections = moduleDescriptor.RegisterSidebarHeaderProjections(containerBuilder, cmsConfiguration);
             UpdateConcurrentBagWithEnumerator(knownSidebarHeadContentItems, sidebarHeadProjections);
@@ -362,9 +374,9 @@ namespace BetterCms.Core.Modules.Registration
         {            
             if (enumerator != null)
             {
-                foreach (var sidebarHeadProjection in enumerator)
+                foreach (var item in enumerator)
                 {
-                    bag.Add(sidebarHeadProjection);
+                    bag.Add(item);
                 }
             }
         }

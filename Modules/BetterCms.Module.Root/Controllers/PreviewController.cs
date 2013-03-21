@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 
 using BetterCms.Core.Mvc.Attributes;
+using BetterCms.Core.Security;
 using BetterCms.Module.Root.Commands.GetPageToRender;
 using BetterCms.Module.Root.Mvc;
 
@@ -9,6 +10,7 @@ namespace BetterCms.Module.Root.Controllers
     /// <summary>
     /// Preview controller.
     /// </summary>
+    [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
     public class PreviewController : CmsControllerBase
     {
         /// <summary>
@@ -22,12 +24,12 @@ namespace BetterCms.Module.Root.Controllers
         [IgnoreAutoRoute]
         public ActionResult Index(string pageId, string pageContentId)
         {
-            GetPageToRenderRequest request = new GetPageToRenderRequest {
-                                                                            PageId = pageId.ToGuidOrDefault(),
-                                                                            PreviewPageContentId = pageContentId.ToGuidOrDefault(),
-                                                                            IsPreview = true
-                                                                        };
-        
+            GetPageToRenderRequest request = new GetPageToRenderRequest
+                {
+                    PageId = pageId.ToGuidOrDefault(),
+                    PreviewPageContentId = pageContentId.ToGuidOrDefault(),
+                    IsPreview = true
+                };
 
             var model = GetCommand<GetPageToRenderCommand>().ExecuteCommand(request);
 

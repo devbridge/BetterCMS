@@ -8,6 +8,7 @@ using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Registration;
 using BetterCms.Module.MediaManager.Services;
+using BetterCms.Module.Root;
 
 namespace BetterCms.Module.MediaManager
 {
@@ -148,7 +149,8 @@ namespace BetterCms.Module.MediaManager
                         {
                             Order = 2400,
                             Title = () => MediaGlobalization.SiteSettings_MediaManagerMenuItem,
-                            CssClass = page => "bcms-sidebar-link"
+                            CssClass = page => "bcms-sidebar-link",
+                            AccessRole = RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.DeleteContent)
                         }                                      
                 };
         }

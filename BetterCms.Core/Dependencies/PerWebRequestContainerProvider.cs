@@ -55,6 +55,16 @@ namespace BetterCms.Core.Dependencies
         }
 
         /// <summary>
+        /// Gets the lifetime scope.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <returns>The child container.</returns>
+        public static ILifetimeScope GetLifetimeScope(HttpContextBase context)
+        {
+            return context.Items[PerWebRequestContainerKey] as ILifetimeScope;
+        }
+
+        /// <summary>
         /// Disposes the managed resources.
         /// </summary>
         protected void DisposeManagedResources()
@@ -71,6 +81,11 @@ namespace BetterCms.Core.Dependencies
             }
         }
 
+        /// <summary>
+        /// Disposes the current scope.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The <see cref="EventArgs"/> instance containing the event data.</param>
         internal static void DisposeCurrentScope(object sender, EventArgs args)
         {
             var httpApplication = sender as HttpApplication;

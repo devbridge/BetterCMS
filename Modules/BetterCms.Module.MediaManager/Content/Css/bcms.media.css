@@ -615,7 +615,6 @@ input.bcms-grid-input:focus {
 .bcms-list div.bcms-media-click-active {
     background-color: #effcfe;
     transition: background-color 0.5s ease-out;
-    -moz-transition: background-color 0.5s ease-out;
     -webkit-transition: background-color 0.5s ease-out;
 }
 
@@ -626,7 +625,6 @@ input.bcms-grid-input:focus {
 .bcms-grid div.bcms-media-click-active {
     background-color: #effcfe;
     transition: background-color 0.5s ease-out;
-    -moz-transition: background-color 0.5s ease-out;
     -webkit-transition: background-color 0.5s ease-out;
 }
 

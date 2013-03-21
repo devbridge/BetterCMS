@@ -1,7 +1,19 @@
-﻿@model BetterCms.Module.Root.ViewModels.PageProjectionsViewModel
+﻿@using BetterCms.Core.Modules.Projections
+@using BetterCms.Module.Root.Mvc
+@model BetterCms.Module.Root.ViewModels.PageProjectionsViewModel
 <div class="bcms-sidemenu-body">
-        @foreach (var projection in Model.Projections)
+    @{
+        var lastItemWasSeparator = true;
+        foreach (var projection in Model.Projections)
         {
-            projection.Render(Model.Page, User, Html);
+            var isSeparator = projection is SeparatorProjection;
+            if (!(lastItemWasSeparator && isSeparator))
+            {
+                if (projection.Render(Model.Page, (ViewContext.Controller as CmsControllerBase).SecurityService, Html))
+                {
+                    lastItemWasSeparator = isSeparator;
+                }
+            }
         }
+    }
 </div>

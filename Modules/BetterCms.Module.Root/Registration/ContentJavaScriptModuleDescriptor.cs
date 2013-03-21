@@ -24,6 +24,7 @@ namespace BetterCms.Module.Root.Registration
             Globalization = new IActionProjection[]
                 {              
                     new JavaScriptModuleGlobalization(this, "failedLoadDialogMessage", () => RootGlobalization.Message_FailedToLoadDialog),        
+                    new JavaScriptModuleGlobalization(this, "forbiddenDialogMessage", () => RootGlobalization.Message_AccessForbidden),        
                 };
         }
     }

@@ -158,7 +158,7 @@
     <Compile Include="Environment\Assemblies\IAssemblyManager.cs" />
     <Compile Include="DataContracts\Enums\PageStatus.cs" />
     <Compile Include="Exceptions\Api\CmsApiException.cs" />
-    <Compile Include="Security\AuthorizeAttribute.cs" />
+    <Compile Include="Security\BcmsAuthorizeAttribute.cs" />
     <Compile Include="Security\IUserRole.cs" />
     <Compile Include="Modules\Projections\EmptyContentAccessor.cs" />
     <Compile Include="Mvc\Attributes\IgnoreAutoRouteAttribute.cs" />

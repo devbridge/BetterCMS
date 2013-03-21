@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 
+using BetterCms.Core.Security;
 using BetterCms.Module.MediaManager.Command.Images.GetImage;
 using BetterCms.Module.MediaManager.Command.Images.GetImages;
 using BetterCms.Module.MediaManager.Command.Images.SaveImage;
@@ -7,6 +8,7 @@ using BetterCms.Module.MediaManager.Command.MediaManager.DeleteMedia;
 using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.ViewModels.Images;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
@@ -15,6 +17,7 @@ namespace BetterCms.Module.MediaManager.Controllers
     /// <summary>
     /// Handles site settings logic for Pages module.
     /// </summary>
+    [BcmsAuthorize]
     public class ImagesController : CmsControllerBase
     {
         /// <summary>
@@ -26,6 +29,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// <returns>
         /// List of images
         /// </returns>
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.DeleteContent)]
         public ActionResult GetImagesList(MediaManagerViewModel options)
         {
             var success = true;
@@ -53,6 +57,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// <returns>
         /// The view.
         /// </returns>
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         public ActionResult ImageInsert()
         {
             var images = GetCommand<GetImagesCommand>().ExecuteCommand(new MediaManagerViewModel());
@@ -68,6 +73,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// <param name="imageId">The image id.</param>
         /// <returns>The view.</returns>
         [HttpGet]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         public ActionResult ImageEditor(string imageId)
         {
             var model = GetCommand<GetImageCommand>().ExecuteCommand(imageId.ToGuidOrDefault());
@@ -81,6 +87,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// <param name="imageId">The image id.</param>
         /// <returns>Image insert view.</returns>
         [HttpGet]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         public ActionResult ImageEditorInsert(string imageId)
         {
             var model = GetCommand<GetImageCommand>().ExecuteCommand(imageId.ToGuidOrDefault());
@@ -94,6 +101,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// <param name="model">The model.</param>
         /// <returns>Json result.</returns>
         [HttpPost]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         public ActionResult ImageEditor(ImageViewModel model)
         {
             if (GetCommand<SaveImageDataCommand>().ExecuteCommand(model))
@@ -114,6 +122,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// Json with result status.
         /// </returns>
         [HttpPost]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.DeleteContent)]
         public ActionResult ImageDelete(string id, string version)
         {
             var request = new DeleteMediaCommandRequest
@@ -138,6 +147,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// </summary>
         /// <param name="imageId">The image id.</param>
         /// <returns>Json result.</returns>
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         public ActionResult GetImage(string imageId)
         {
             var result = GetCommand<GetImageCommand>().ExecuteCommand(imageId.ToGuidOrDefault());

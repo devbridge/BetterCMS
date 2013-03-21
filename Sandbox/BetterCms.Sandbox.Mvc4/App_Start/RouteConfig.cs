@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Http;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace BetterCms.Sandbox.Mvc4
@@ -20,6 +15,9 @@ namespace BetterCms.Sandbox.Mvc4
 
             routes.MapRoute("login", "login", new { controller = "Sandbox", action = "Login" });
             routes.MapRoute("logout", "logout", new { controller = "Sandbox", action = "Logout" });
+
+            routes.MapRoute("loginJson", "loginJson", new { controller = "Sandbox", action = "LoginJson" });
+            routes.MapRoute("logoutJson", "logoutJson", new { controller = "Sandbox", action = "LogoutJson" });
         }
     }
 }

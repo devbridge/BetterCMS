@@ -756,9 +756,6 @@
   <data name="PageWidgetOptions_Dialog_Title" xml:space="preserve">
     <value>Edit page widget options</value>
   </data>
-  <data name="SavePagePublishStatus_NoPermission_Message" xml:space="preserve">
-    <value>You have no permission to change page publish status.</value>
-  </data>
   <data name="SiteSettings_Widgets_RegisterNew" xml:space="preserve">
     <value>Register +</value>
   </data>

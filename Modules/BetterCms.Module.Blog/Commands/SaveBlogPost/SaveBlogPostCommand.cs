@@ -6,6 +6,7 @@ using BetterCms.Api;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Mvc;
+using BetterCms.Core.Exceptions.Service;
 using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.Blog.Content.Resources;
@@ -16,11 +17,10 @@ using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Services;
-
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
-
 
 namespace BetterCms.Module.Blog.Commands.SaveBlogPost
 {
@@ -54,8 +54,14 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         /// </summary>
         private readonly IPageService pageService;
 
+        /// <summary>
+        /// The blog service.
+        /// </summary>
         private readonly IBlogService blogService;
 
+        /// <summary>
+        /// The redirect service.
+        /// </summary>
         private readonly IRedirectService redirectService;
 
         /// <summary>
@@ -64,6 +70,8 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         /// <param name="tagService">The tag service.</param>
         /// <param name="optionService">The option service.</param>
         /// <param name="contentService">The content service.</param>
+        /// <param name="pageService">The page service.</param>
+        /// <param name="blogService">The blog service.</param>
         /// <param name="redirectService">The redirect service.</param>
         public SaveBlogPostCommand(ITagService tagService, IOptionService optionService, IContentService contentService, 
                                     IPageService pageService, IBlogService blogService, IRedirectService redirectService)
@@ -83,9 +91,27 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         /// <returns>Blog post view model</returns>
         public SaveBlogPostCommandResponse Execute(BlogPostViewModel request)
         {
+            if (request.DesirableStatus == ContentStatus.Published)
+            {
+                DemandAccess(RootModuleConstants.UserRoles.PublishContent);
+            }
+
             var layout = LoadLayout();
             var region = LoadRegion();
             var isNew = request.Id.HasDefaultValue();
+            var userCanEdit = false;
+
+            if (isNew || request.DesirableStatus != ContentStatus.Published)
+            {
+                DemandAccess(RootModuleConstants.UserRoles.EditContent);
+                userCanEdit = true;
+            }
+            else
+            {
+                userCanEdit = SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent);
+            }
+
+            // UnitOfWork.BeginTransaction(); // NOTE: this causes concurrent data exception.
 
             BlogPost blogPost;
             BlogPostContent content = null;
@@ -101,7 +127,8 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                 {
                     pageContent = Repository.FirstOrDefault<PageContent>(c => c.Page == blogPost && c.Region == region && !c.IsDeleted && c.Content == content);
                 }
-                if (!string.Equals(blogPost.PageUrl, request.BlogUrl, StringComparison.OrdinalIgnoreCase) && request.BlogUrl != null)
+
+                if (userCanEdit && !string.Equals(blogPost.PageUrl, request.BlogUrl, StringComparison.OrdinalIgnoreCase) && request.BlogUrl != null)
                 {
                     request.BlogUrl = redirectService.FixUrl(request.BlogUrl);
                     pageService.ValidatePageUrl(request.BlogUrl, request.Id);
@@ -114,6 +141,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                             redirectCreated = redirect;
                         }
                     }
+
                     blogPost.PageUrl = request.BlogUrl;
                 }
             }
@@ -127,9 +155,19 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                 pageContent = new PageContent { Region = region, Page = blogPost };
             }
 
-            blogPost.Title = request.Title;
-            blogPost.Description = request.IntroText;
+            // Push to change modified data each time.
+            blogPost.ModifiedOn = DateTime.Now;
             blogPost.Version = request.Version;
+
+            if (userCanEdit)
+            {
+                blogPost.Title = request.Title;
+                blogPost.Description = request.IntroText;
+                blogPost.Author = request.AuthorId.HasValue ? Repository.AsProxy<Author>(request.AuthorId.Value) : null;
+                blogPost.Category = request.CategoryId.HasValue ? Repository.AsProxy<Category>(request.CategoryId.Value) : null;
+                blogPost.Image = (request.Image != null && request.Image.ImageId.HasValue) ? Repository.AsProxy<MediaImage>(request.Image.ImageId.Value) : null;
+            }
+
             if (isNew)
             {
                 if (request.BlogUrl != null)
@@ -146,20 +184,13 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                 blogPost.Layout = layout;
                 UpdateStatus(blogPost, request.DesirableStatus);
             }
-            else if(request.DesirableStatus == ContentStatus.Published)
+            else if (request.DesirableStatus == ContentStatus.Published)
             {
                 UpdateStatus(blogPost, request.DesirableStatus);
             }
 
-            // Push to change modified data each time save button is pressed
-            blogPost.ModifiedOn = DateTime.Now;
-
-            blogPost.Author = request.AuthorId.HasValue ? Repository.AsProxy<Author>(request.AuthorId.Value) : null;
-            blogPost.Category = request.CategoryId.HasValue ? Repository.AsProxy<Category>(request.CategoryId.Value) : null;
-            blogPost.Image = (request.Image != null && request.Image.ImageId.HasValue) ? Repository.AsProxy<MediaImage>(request.Image.ImageId.Value) : null;
-
-            // Set content and save with status change
-            content = new BlogPostContent
+            // Create content.
+            var newContent = new BlogPostContent
                           {
                               Id = content != null ? content.Id : Guid.Empty,
                               Name = request.Title,
@@ -168,22 +199,41 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                               ExpirationDate = TimeHelper.FormatEndDate(request.LiveToDate)
                           };
 
-            content = (BlogPostContent)contentService.SaveContentWithStatusUpdate(content, request.DesirableStatus);
+            // Preserve content if user is not authorized to change it.
+            if (!userCanEdit)
+            {
+                if (content == null)
+                {
+                    throw new SecurityException("Forbidden: Access is denied."); // User has no rights to create new content.
+                }
+
+                var contentToPublish = (BlogPostContent)(content.History != null
+                    ? content.History.FirstOrDefault(c => c.Status == ContentStatus.Draft) ?? content
+                    : content);
+
+                newContent.Name = contentToPublish.Name;
+                newContent.Html = contentToPublish.Html;
+            }
+
+            content = (BlogPostContent)contentService.SaveContentWithStatusUpdate(newContent, request.DesirableStatus);
             pageContent.Content = content;
 
             Repository.Save(blogPost);
             Repository.Save(content);
             Repository.Save(pageContent);
 
-            // Save tags
-            IList<Tag> newTags;
-            tagService.SavePageTags(blogPost, request.Tags, out newTags);
+            // Save tags if user has edit right.
+            IList<Tag> newTags = null;
+            if (userCanEdit)
+            {
+                tagService.SavePageTags(blogPost, request.Tags, out newTags);
+            }
 
             // Commit
             UnitOfWork.Commit();
 
             // Notify about new or updated blog post.
-            if (request.Id.HasDefaultValue())
+            if (isNew)
             {
                 BlogsApiContext.Events.OnBlogCreated(blogPost);
             }

@@ -2041,15 +2041,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You have no permission to change page publish status..
-        /// </summary>
-        public static string SavePagePublishStatus_NoPermission_Message {
-            get {
-                return ResourceManager.GetString("SavePagePublishStatus_NoPermission_Message", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Page status is inappropriate. Can not change it..
         /// </summary>
         public static string SavePageStatus_PageIsInInappropriateStatus_Message {

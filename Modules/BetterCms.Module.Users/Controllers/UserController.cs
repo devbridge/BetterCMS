@@ -1,40 +1,88 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
+using BetterCms.Core.Security;
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 using BetterCms.Module.Root.ViewModels.SiteSettings;
+using BetterCms.Module.Users.Commands.User;
+using BetterCms.Module.Users.Commands.User.DeleteUser;
+using BetterCms.Module.Users.Commands.User.GetUser;
+using BetterCms.Module.Users.Commands.User.GetUsersList;
+using BetterCms.Module.Users.Content.Resources;
 using BetterCms.Module.Users.ViewModels;
+using BetterCms.Module.Users.ViewModels.User;
 
 namespace BetterCms.Module.Users.Controllers
 {
+    /// <summary>
+    /// User management.
+    /// </summary>
+    [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
     public class UserController : CmsControllerBase
     {
-        //
-        // GET: /User/
-
+        /// <summary>
+        /// User list for Site Settings.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>User list view.</returns>
         public ActionResult Index(SearchableGridOptions request)
         {
-            
-            IList<UserViewModel> user = new List<UserViewModel>();
-            user.Add(new UserViewModel(){Name = "test"});
-            user.Add(new UserViewModel() { Name = "test1" });
-            var model = new SearchableGridViewModel<UserViewModel>(user, new SearchableGridOptions(), 0);
+            var users = GetCommand<GetUsersCommand>().ExecuteCommand(request);
+            var model = new SearchableGridViewModel<UserItemViewModel>(users, new SearchableGridOptions(), users.Count);
             return View(model);
         }
 
-        public ActionResult EditUser()
+        /// <summary>
+        /// Edits the user.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns>User edit view.</returns>
+        public ActionResult EditUser(string id)
         {
-            var model = new EditUserViewModel();
-            var roles = new List<LookupKeyValue>();
-            roles.Add(new LookupKeyValue() { Key = "0", Value = "... Select role ..." });
-            roles.Add(new LookupKeyValue(){Key = "0", Value = "Administrator"});
-            roles.Add(new LookupKeyValue() { Key = "0", Value = "Content editor" });
-            model.Roles = roles;
+            var model = GetCommand<GetUserCommand>().ExecuteCommand(id.ToGuidOrDefault());
             return PartialView("EditUserView", model);
         }
 
+        /// <summary>
+        /// Saves the user.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns>Json status result.</returns>
+        public ActionResult SaveUser(EditUserViewModel model)
+        {
+            var response = GetCommand<SaveUserCommand>().ExecuteCommand(model);
+            if (response != null)
+            {
+                Messages.AddSuccess(UsersGlobalization.SaveUser_CreatedSuccessfully_Message);
+                return Json(new WireJson { Success = true, Data = response });
+            }
+
+            return Json(new WireJson { Success = false });
+        }
+
+        /// <summary>
+        /// Deletes the user.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <param name="version">The version.</param>
+        /// <returns>Json status result.</returns>
+        public ActionResult DeleteUser(string id, string version)
+        {
+            var success = GetCommand<DeleteUserCommand>().ExecuteCommand(
+                new DeleteUserCommandRequest
+                {
+                    UserId = id.ToGuidOrDefault(),
+                    Version = version.ToIntOrDefault()
+                });
+
+            if (success)
+            {
+                Messages.AddSuccess(UsersGlobalization.DeleteUser_DeletedSuccessfully_Message);
+            }
+
+            return Json(new WireJson(success));
+        }
     }
 }

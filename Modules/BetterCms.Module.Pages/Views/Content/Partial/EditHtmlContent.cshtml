@@ -1,54 +1,78 @@
-﻿@using BetterCms.Module.Pages.Content.Resources
+﻿@using System.Reflection
+@using BetterCms.Module.Pages.Content.Resources
+@using BetterCms.Module.Root
+@using BetterCms.Module.Root.Mvc
 @using BetterCms.Module.Root.Mvc.Helpers
 @using BetterCms.Module.Root.Mvc.UI
 
 @model BetterCms.Module.Pages.ViewModels.Content.PageContentViewModel
-           
+@{ var canEdit = (ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent); }
+
+@functions
+{
+    private static Dictionary<string, object> GetAttributesObject(bool canEdit, dynamic properties)
+    {
+        var attributes = new Dictionary<string, object>();
+
+        foreach (var prop in properties.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public))
+        {
+            attributes.Add(prop.Name, prop.GetValue(properties, null));
+        }
+        
+        if (!canEdit)
+        {
+            attributes.Add("disabled", "disabled");
+        }
+        return attributes;
+    }
+}
+
 @Html.HiddenFor(model => model.EditInSourceMode, new { @id = "bcms-edit-in-source-mode" })
+
 <div class="bcms-newcontent-top">
-    <div class="bcms-input-field-holder">
+    <div class="bcms-input-field-holder @(!canEdit ? "bcms-disabled-content" : string.Empty)">
         @Html.Tooltip(PagesGlobalization.AddPageContent_RegularContentTab_ContentName_Tooltip_Description)
         <div class="bcms-content-titles">@PagesGlobalization.AddPageContent_RegularContentTab_ContentName_Title:</div>
         <div class="bcms-custom-input-box">
-            @Html.TextBoxFor(model => model.ContentName, new { @class = "bcms-editor-field-box", @style = "width: 523px;" })
+            @Html.TextBoxFor(model => model.ContentName, GetAttributesObject(canEdit, new { @class = "bcms-editor-field-box", style = "width: 523px;" }))
             @Html.ValidationMessageFor(model => model.ContentName)
         </div>
     </div>
     <div class="bcms-input-field-holder">
         <div class="bcms-content-titles">@PagesGlobalization.AddPageContent_RegularContentTab_LiveFrom_Title:</div>
         <div class="bcms-date-input-box">
-            @Html.DateTextBoxFor(model => model.LiveFrom, Model.LiveFrom, new Dictionary<string, object> { { "class", "bcms-editor-field-box bcms-datepicker" }, { "style", "width: 127px;" } })
+            @Html.DateTextBoxFor(model => model.LiveFrom, Model.LiveFrom, GetAttributesObject(true, new { @class = "bcms-editor-field-box bcms-datepicker", @style = "width: 127px;"  }))
             @Html.ValidationMessageFor(model => model.LiveFrom)
         </div>
     </div>
     <div class="bcms-input-field-holder">
         <div class="bcms-content-titles">@PagesGlobalization.AddPageContent_RegularContentTab_LiveTo_Title:</div>
         <div class="bcms-date-input-box">
-            @Html.DateTextBoxFor(model => model.LiveTo, Model.LiveTo, new Dictionary<string, object> { { "class", "bcms-editor-field-box bcms-datepicker" }, { "style", "width: 127px;" } })
+            @Html.DateTextBoxFor(model => model.LiveTo, Model.LiveTo, GetAttributesObject(true, new { @class = "bcms-editor-field-box bcms-datepicker", @style = "width: 127px;" }))
             @Html.ValidationMessageFor(model => model.LiveTo)
         </div>
     </div>
 </div>
-<div class="bcms-text-editor-holder">
-    @Html.TextAreaFor(model => model.PageContent, new { @id = "bcms-contenthtml" })
+<div class="bcms-text-editor-holder @(!canEdit ? "bcms-disabled-content" : string.Empty)">
+    @Html.TextAreaFor(model => model.PageContent, GetAttributesObject(canEdit, new { @id = "bcms-contenthtml" }))
 </div>
 
-<div class="bcms-edit-check-field">
-    @Html.CheckBoxFor(model => model.EnabledCustomCss, new { @id = "bcms-enable-custom-css" })
+<div class="bcms-edit-check-field @(!canEdit ? "bcms-disabled-content" : string.Empty)">
+    @Html.CheckBoxFor(model => model.EnabledCustomCss, GetAttributesObject(canEdit, new { @id = "bcms-enable-custom-css" }))
     <div class="bcms-edit-label">@Html.Raw(PagesGlobalization.HtmlContent_EnableCustomCss_Title)</div>
 </div>
-<div class="bcms-input-list-holder" id="bcms-custom-css-container">
+<div class="bcms-input-list-holder @(!canEdit ? "bcms-disabled-content" : string.Empty)" id="bcms-custom-css-container">
     <div class="bcms-content-titles">@PagesGlobalization.HtmlContent_CustomCss_Title</div>
-    @Html.TextAreaFor(model => model.CustomCss, new { @class = "bcms-editor-field-area", @style = "width:820px;" })
+    @Html.TextAreaFor(model => model.CustomCss, GetAttributesObject(canEdit, new { @class = "bcms-editor-field-area", @style = "width:820px;" }))
     @Html.ValidationMessageFor(model => model.CustomCss)
 </div>
 
-<div class="bcms-edit-check-field">
-    @Html.CheckBoxFor(model => model.EanbledCustomJs, new { @id = "bcms-enable-custom-js" })
+<div class="bcms-edit-check-field @(!canEdit ? "bcms-disabled-content" : string.Empty)">
+    @Html.CheckBoxFor(model => model.EanbledCustomJs, GetAttributesObject(canEdit, new { @id = "bcms-enable-custom-js" }))
     <div class="bcms-edit-label">@Html.Raw(PagesGlobalization.HtmlContent_EnableCustomJs_Title)</div>
 </div>
-<div class="bcms-input-list-holder" id="bcms-custom-js-container">
+<div class="bcms-input-list-holder @(!canEdit ? "bcms-disabled-content" : string.Empty)" id="bcms-custom-js-container">
     <div class="bcms-content-titles">@PagesGlobalization.HtmlContent_CustomJs_Title</div>
-    @Html.TextAreaFor(model => model.CustomJs, new { @class = "bcms-editor-field-area", @style = "width:820px;" })
+    @Html.TextAreaFor(model => model.CustomJs, GetAttributesObject(canEdit, new { @class = "bcms-editor-field-area", @style = "width:820px;" }))
     @Html.ValidationMessageFor(model => model.CustomJs)
 </div>

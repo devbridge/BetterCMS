@@ -1,8 +1,10 @@
 ﻿using System.Web.Mvc;
 
+using BetterCms.Core.Security;
 using BetterCms.Module.Pages.Command.Page.GetPageSeo;
 using BetterCms.Module.Pages.Command.Page.SavePageSeo;
 using BetterCms.Module.Pages.ViewModels.Seo;
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Mvc;
 
 namespace BetterCms.Module.Pages.Controllers
@@ -10,6 +12,7 @@ namespace BetterCms.Module.Pages.Controllers
     /// <summary>
     /// Defines logic to handle page SEO information.
     /// </summary>
+    [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
     public class SeoController : CmsControllerBase
     {
         /// <summary>

@@ -1,7 +1,10 @@
-﻿using BetterCms.Core.DataAccess;
+﻿using System;
+
+using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
-using BetterCms.Core.Mvc;
+using BetterCms.Core.Exceptions.Service;
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Core.Services;
 
 namespace BetterCms.Module.Root.Mvc
 {
@@ -33,5 +36,31 @@ namespace BetterCms.Module.Root.Mvc
         /// The unit of work.
         /// </value>
         public virtual IUnitOfWork UnitOfWork { get; set; }
+
+        /// <summary>
+        /// Gets or sets the security service.
+        /// </summary>
+        /// <value>
+        /// The security service.
+        /// </value>
+        public virtual ISecurityService SecurityService { get; set; }
+
+        /// <summary>
+        /// Demands the access.
+        /// </summary>
+        /// <param name="roles">The roles.</param>
+        /// <exception cref="SecurityException">Forbidden: Access is denied.</exception>
+        protected void DemandAccess(params string[] roles)
+        {
+            if (SecurityService == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            if (!SecurityService.IsAuthorized(Context.User, string.Join(",", roles)))
+            {
+                throw new SecurityException("Forbidden: Access is denied.");
+            }
+        }
     }
 }
