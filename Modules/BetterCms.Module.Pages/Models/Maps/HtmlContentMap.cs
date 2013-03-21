@@ -15,7 +15,8 @@ namespace BetterCms.Module.Pages.Models.Maps
             Map(x => x.CustomCss).Nullable().Length(int.MaxValue);
             Map(x => x.UseCustomCss).Not.Nullable();
             Map(x => x.CustomJs).Nullable().Length(int.MaxValue);
-            Map(x => x.UseCustomJs).Not.Nullable(); 
+            Map(x => x.UseCustomJs).Not.Nullable();
+            Map(x => x.EditInSourceMode).Not.Nullable(); 
         }
     }
 }

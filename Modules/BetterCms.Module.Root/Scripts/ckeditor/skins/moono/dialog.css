@@ -101,7 +101,6 @@ a.cke_dialog_tab {
     border: 1px solid #c6c6c6;
     background: #e5e5e5;
     transition: all 0.1s ease-in-out;
-    -moz-transition: all 0.1s ease-in-out;
     -webkit-transition: all 0.1s ease-in-out;
 }
 
