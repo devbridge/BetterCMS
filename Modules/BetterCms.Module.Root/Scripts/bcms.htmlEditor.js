@@ -68,6 +68,11 @@ define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], function ($, bcms
             instance.setMode('source');
         });
     };
+    
+    htmlEditor.isSourceMode = function (id) {
+        var instance = CKEDITOR.instances[id];
+        return instance.mode === 'source';
+    };
 
     htmlEditor.updateEditorContent = function (textareaId) {
         var id = textareaId ? textareaId : htmlEditor.id;

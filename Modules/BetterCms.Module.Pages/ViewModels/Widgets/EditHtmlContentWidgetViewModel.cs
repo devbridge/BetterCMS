@@ -26,6 +26,20 @@ namespace BetterCms.Module.Pages.ViewModels.Widgets
         /// </value>
         public IList<LookupKeyValue> Categories { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether content editor must be opened in source mode.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if content editor must be opened in source mode; otherwise, <c>false</c>.
+        /// </value>
+        public bool EditInSourceMode { get; set; }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
         public override string ToString()
         {
             return string.Format("{0}", base.ToString());

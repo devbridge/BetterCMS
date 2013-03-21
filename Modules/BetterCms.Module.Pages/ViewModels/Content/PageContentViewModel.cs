@@ -124,6 +124,14 @@ namespace BetterCms.Module.Pages.ViewModels.Content
 
         public bool EnabledCustomCss { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether content editor must be opened in source mode.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if content editor must be opened in source mode; otherwise, <c>false</c>.
+        /// </value>
+        public bool EditInSourceMode { get; set; }
+
         public string CustomJs { get; set; }
 
         public string CustomCss { get; set; }

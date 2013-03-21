@@ -26,6 +26,9 @@
         return attributes;
     }
 }
+
+@Html.HiddenFor(model => model.EditInSourceMode, new { @id = "bcms-edit-in-source-mode" })
+
 <div class="bcms-newcontent-top">
     <div class="bcms-input-field-holder @(!canEdit ? "bcms-disabled-content" : string.Empty)">
         @Html.Tooltip(PagesGlobalization.AddPageContent_RegularContentTab_ContentName_Tooltip_Description)
