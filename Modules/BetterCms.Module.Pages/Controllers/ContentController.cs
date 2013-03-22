@@ -208,7 +208,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// Json with result status.
         /// </returns>
         [HttpPost]
-        [BcmsAuthorize(RootModuleConstants.UserRoles.DeleteContent)]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         public ActionResult DeletePageContent(string pageContentId, string pageContentVersion, string contentVersion)
         {
             var request = new DeletePageContentCommandRequest

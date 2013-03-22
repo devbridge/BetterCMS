@@ -626,9 +626,6 @@ define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepic
 
                 if (!security.IsAuthorized(["BcmsEditContent"])) {
                     contentViewModel.removeConfigureButton();
-                }
-                
-                if (!security.IsAuthorized(["BcmsDeleteContent"])) {
                     contentViewModel.removeDeleteButton();
                 }
                 
@@ -645,7 +642,7 @@ define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepic
                     contentViewModel.removeEditButton();
                 }
 
-                if (!security.IsAuthorized(["BcmsDeleteContent"])) {
+                if (!security.IsAuthorized(["BcmsEditContent"])) {
                     contentViewModel.removeDeleteButton();
                 }
             }

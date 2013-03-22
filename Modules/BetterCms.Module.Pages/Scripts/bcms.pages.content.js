@@ -417,9 +417,6 @@ define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.content
                 if (!security.IsAuthorized(["BcmsEditContent", "BcmsPublishContent"])) {
                     contentViewModel.removeHistoryButton();
                     contentViewModel.removeEditButton();
-                }
-                
-                if (!security.IsAuthorized(["BcmsDeleteContent"])) {
                     contentViewModel.removeDeleteButton();
                 }
             }

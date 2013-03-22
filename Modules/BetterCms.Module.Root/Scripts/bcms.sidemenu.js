@@ -174,7 +174,7 @@ define('bcms.sidemenu', ['bcms.jquery', 'bcms', 'bcms.security'], function ($, b
             sidemenu.open(true);
         }
 
-        var canTurnEditOn = security.IsAuthorized(["BcmsEditContent", "BcmsPublishContent", "BcmsDeleteContent"]);
+        var canTurnEditOn = security.IsAuthorized(["BcmsEditContent", "BcmsPublishContent"]);
         if (editingOn && canTurnEditOn) {
             sidemenu.turnEditModeOn();
         }
