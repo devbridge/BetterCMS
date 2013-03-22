@@ -106,7 +106,7 @@ define('bcms.sidemenu', ['bcms.jquery', 'bcms', 'bcms.security'], function ($, b
         localStorage.setItem(keys.sideMenuOnTheRight, '1');
         sidemenuContainer.css({
             'left': 'auto',
-            'right': sidemenu.isOpen() ? '0px' : '-250px'
+            'right': sidemenu.isOpen() ? '0px' : '-260px'
         }).addClass(classes.sideMenuRight);
         sidemenuContainer.find(selectors.footerTextHolder).html(globalization.stickLeftMenuTitle);
     };
@@ -117,7 +117,7 @@ define('bcms.sidemenu', ['bcms.jquery', 'bcms', 'bcms.security'], function ($, b
     sidemenu.moveToLeft = function () {
         localStorage.removeItem(keys.sideMenuOnTheRight);
         sidemenuContainer.css({
-            'left': sidemenu.isOpen() ? '0px' : '-250px',
+            'left': sidemenu.isOpen() ? '0px' : '-260px',
             'right': 'auto'
         }).removeClass(classes.sideMenuRight);
         sidemenuContainer.find(selectors.footerTextHolder).html(globalization.stickRightMenuTitle);
