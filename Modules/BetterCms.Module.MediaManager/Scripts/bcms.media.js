@@ -930,7 +930,12 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             } else {
                 imageUrl += '&version=' + version;
             }
-            var img = '<img src="' + imageUrl + '" alt="' + caption + '" align="' + align + '"/>';
+            var img = "";
+            if (imageAlign == 2) {
+                img = '<img src="' + imageUrl + '" alt="' + caption + '"/>';
+            } else {
+                img = '<img src="' + imageUrl + '" alt="' + caption + '" style="float:' + align + '"/>';  
+            }
             if (contentEditor.mode == 'source') {
                 var oldData = contentEditor.getData();
 
