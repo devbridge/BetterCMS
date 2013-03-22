@@ -260,20 +260,28 @@ namespace BetterCms.Sandbox.Mvc4
             var authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
             if (authCookie != null)
             {
-                var authTicket = FormsAuthentication.Decrypt(authCookie.Value);
-                if (authTicket != null)
+                try
                 {
-                    var identity = new GenericIdentity(authTicket.Name, "Forms");
-                    var roles = authTicket.UserData.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Distinct().ToArray();
-                    var principal = new GenericPrincipal(identity, roles);
-                    Context.User = principal;
-
-                    if (!Roles.Enabled)
+                    var authTicket = FormsAuthentication.Decrypt(authCookie.Value);
+                    if (authTicket != null)
                     {
-                        // These roles are used only for client side GUI features hiding.
-                        // All server side logic is based on IPrincipal.IsInRole()
-                        Context.Cache[string.Format("{0}_Roles", identity.Name)] = roles;
+                        var identity = new GenericIdentity(authTicket.Name, "Forms");
+                        var roles = authTicket.UserData.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Distinct().ToArray();
+                        var principal = new GenericPrincipal(identity, roles);
+                        Context.User = principal;
+
+                        if (!Roles.Enabled)
+                        {
+                            // These roles are used only for client side GUI features hiding.
+                            // All server side logic is based on IPrincipal.IsInRole()
+                            Context.Cache[string.Format("{0}_Roles", identity.Name)] = roles;
+                        }
                     }
+                }
+                catch
+                {
+                    Session.Clear();
+                    FormsAuthentication.SignOut();
                 }
             }
         }
