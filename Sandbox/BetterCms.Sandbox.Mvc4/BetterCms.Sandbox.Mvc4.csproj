@@ -178,7 +178,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Content Include="App_Data\BetterCMS\Modules\readme.txt" />
-    <Content Include="error.html" />
+    <Content Include="404.html" />
+    <Content Include="500.html" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">
@@ -229,6 +230,10 @@
     <ProjectReference Include="..\..\Modules\BetterCms.Module.Root\BetterCms.Module.Root.csproj">
       <Project>{66e7e4df-eeea-4b1e-8663-a1b430eb7375}</Project>
       <Name>BetterCms.Module.Root</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.WindowsAzureStorage\BetterCms.Module.WindowsAzureStorage.csproj">
+      <Project>{6E8E91D9-AEB9-432F-9647-68FA2DEF2CA9}</Project>
+      <Name>BetterCms.Module.WindowsAzureStorage</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

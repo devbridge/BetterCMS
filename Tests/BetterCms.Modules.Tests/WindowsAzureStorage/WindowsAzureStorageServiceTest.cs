@@ -1,11 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
-using System.Net;
 
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Auth;
-using Microsoft.WindowsAzure.Storage.Blob;
+using BetterCms.Configuration;
+using BetterCms.Core.Services.Storage;
+using BetterCms.Module.AmazonS3Storage;
+
+
+using Moq;
 
 using NUnit.Framework;
 
@@ -14,74 +16,115 @@ namespace BetterCms.Test.Module.WindowsAzureStorage
     [TestFixture]
     public class WindowsAzureStorageServiceTest
     {
-        private CloudStorageAccount cloudStorageAccount = CloudStorageAccount.DevelopmentStorageAccount;
-/*            
+        private ICmsConfiguration CreateCmsConfigurationMock()
+        {
+            Mock<ICmsConfiguration> cmsConfigurationMock = new Mock<ICmsConfiguration>();
+            Mock<ICmsStorageConfiguration> storageConfigurationMock = new Mock<ICmsStorageConfiguration>();
+            cmsConfigurationMock.Setup(f => f.Storage).Returns(storageConfigurationMock.Object);
+            storageConfigurationMock.Setup(f => f.ContentRoot).Returns("ftp://test.ftp.com/cms/content");
+            storageConfigurationMock.Setup(f => f.ServiceType).Returns(StorageServiceType.Auto);
+            storageConfigurationMock.Setup(f => f.GetValue(It.Is<string>(s => s == "AzureAccountName"))).Returns("accountName");
+            storageConfigurationMock.Setup(f => f.GetValue(It.Is<string>(s => s == "AzureSecondaryKey"))).Returns("password");
+            storageConfigurationMock.Setup(f => f.GetValue(It.Is<string>(s => s == "AzureUseHttps"))).Returns("true");
+            storageConfigurationMock.Setup(f => f.GetValue(It.Is<string>(s => s == "AzureContainerName"))).Returns("container");
+
+            return cmsConfigurationMock.Object;
+        }
+
+        private void GetUploadRequest(Uri uri, IStorageService azure)
+        {
+            var request = new UploadRequest();                      
+
+            using (var file = File.OpenRead(@"C:\Users\Vytautas\Pictures\Koala.jpg"))
+            {
+                request.InputStream = file;
+                request.Uri = uri;
+                request.CreateDirectory = true;
+                azure.UploadObject(request);                
+            }           
+        }
+
         [Test]
+        [Ignore]
         public void Should_Check_If_Object_Exists()
         {
-            var client = cloudStorageAccount.CreateCloudBlobClient();
-            client.ParallelOperationThreadCount = 1;
+            ICmsConfiguration config = CreateCmsConfigurationMock();
 
-            var exits = client.GetBlobReferenceFromServer(new Uri("http://bettercms.blob.core.windows.net/temp/47.jpg")).Exists();
-            bool notExist;
+            var azureClient = new WindowsAzureStorageService(config);
+            var uri = new Uri("http://bettercms.blob.core.windows.net/temp/47.jpg");
+            GetUploadRequest(uri, azureClient);
+            bool exits = azureClient.ObjectExists(uri);
 
-            try
-            {
-                notExist = client.GetBlobReferenceFromServer(new Uri("http://bettercms.blob.core.windows.net/temp/47__.jpg")).Exists();
-            }
-            catch (StorageException e)
-            {
-                if (e.RequestInformation.HttpStatusCode == (int)HttpStatusCode.NotFound)
-                {
-                    notExist = false;
-                }
-                else
-                {
-                    throw;
-                }
-            }
-            
+            bool notExist = azureClient.ObjectExists(new Uri("http://bettercms.blob.core.windows.net/temp/47      .jpg"));
+
             Assert.IsTrue(exits);
             Assert.IsFalse(notExist);
         }
 
         [Test]
+        [Ignore]
         public void Should_Upload_Object()
         {
-            var client = cloudStorageAccount.CreateCloudBlobClient();
-            client.ParallelOperationThreadCount = 1;
+            var azureClient = new WindowsAzureStorageService(CreateCmsConfigurationMock());           
+           
+            var uri = new Uri("http://bettercms.blob.core.windows.net/temp/Koala2.jpg");
 
-            var container = client.GetContainerReference("temp");
-            var path = new Uri("http://bettercms.blob.core.windows.net/temp/newFile3.jpg").AbsoluteUri;
-            var blob = container.GetBlockBlobReference(path);
+            GetUploadRequest(uri, azureClient);
 
-            using (var file = File.OpenRead(@"C:\Users\Paulius\Pictures\tg3.png"))
-            {
-                blob.Properties.ContentType = @"image\jpeg";
-                blob.UploadFromStream(file);
-            }
+            Assert.IsTrue(azureClient.ObjectExists(uri));
+            azureClient.RemoveObject(uri);
         }
 
         [Test]
+        [Ignore]
         public void Should_Download_Object()
         {
-            var client = cloudStorageAccount.CreateCloudBlobClient();
-            client.ParallelOperationThreadCount = 1;
-
-            var blob = client.GetBlobReferenceFromServer(new Uri("http://bettercms.blob.core.windows.net/temp/47.jpg"));
-            using (var memoryStream = new MemoryStream())
-            {
-                blob.DownloadToStream(memoryStream);
-
-                Assert.IsTrue(memoryStream.Length > 0);
-            }            
+            var azureClient = new WindowsAzureStorageService(CreateCmsConfigurationMock());
+            var uri = new Uri("http://bettercms.blob.core.windows.net/temp/newFile4.jpg");
+            GetUploadRequest(uri, azureClient);
+            var file = azureClient.DownloadObject(uri);
+            Assert.IsTrue(file.ResponseStream.Length > 0);
+            azureClient.RemoveObject(uri);
         }
 
         [Test]
-        public void T()
+        [Ignore]
+        public void Should_Copy_Object()
         {
-            //NameValueCollection 
+            var azureClient = new WindowsAzureStorageService(CreateCmsConfigurationMock());
+            var source = new Uri("http://bettercms.blob.core.windows.net/temp/newFile4.jpg");
+            GetUploadRequest(source, azureClient);
+            var destination = new Uri("http://bettercms.blob.core.windows.net/temp/newFile4 copy.jpg");
+            azureClient.CopyObject(new Uri("http://bettercms.blob.core.windows.net/temp/newFile4.jpg"), destination);
+            Assert.IsTrue(azureClient.ObjectExists(destination));
+            azureClient.RemoveObject(source);
+            azureClient.RemoveObject(destination);
         }
- * */
+
+        [Test]
+        [Ignore]
+        public void Should_Remove_Object()
+        {
+
+            var azureClient = new WindowsAzureStorageService(CreateCmsConfigurationMock());
+            var uri = new Uri("http://bettercms.blob.core.windows.net/temp/newFile4copy.jpg");
+            GetUploadRequest(uri, azureClient);
+            azureClient.RemoveObject(uri);
+            Assert.IsFalse(azureClient.ObjectExists(uri));
+        }
+
+        [Test]
+        [Ignore]
+        public void Should_Remove_Folder()
+        {
+            var uri = new Uri("http://bettercms.blob.core.windows.net/temp/folder/gifas.gif");
+            var uri1 = new Uri("http://bettercms.blob.core.windows.net/temp/folder/gifas1.gif");
+            var azureClient = new WindowsAzureStorageService(CreateCmsConfigurationMock());
+            GetUploadRequest(uri, azureClient);
+            GetUploadRequest(uri1, azureClient);
+            azureClient.RemoveFolder(uri);
+            Assert.IsFalse(azureClient.ObjectExists(uri));
+            Assert.IsFalse(azureClient.ObjectExists(uri1));
+        }
     }
 }

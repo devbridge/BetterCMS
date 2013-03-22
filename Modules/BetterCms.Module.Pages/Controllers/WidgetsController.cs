@@ -65,8 +65,11 @@ namespace BetterCms.Module.Pages.Controllers
             model.EnableCustomCSS = true;
             model.EnableCustomHtml = true;
             model.EnableCustomJS = true;
+            model.EditInSourceMode = true;
 
-            return PartialView("EditHtmlContentWidget", model);
+            var view = RenderView("EditHtmlContentWidget", model);
+
+            return ComboWireJson(true, view, model, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>

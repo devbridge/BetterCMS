@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 
 using BetterCms.Api;
+using BetterCms.Core.Exceptions;
 using BetterCms.Core.Mvc.Attributes;
 using BetterCms.Core.Services;
 using BetterCms.Core.Services.Caching;
@@ -31,7 +32,6 @@ namespace BetterCms.Module.Root.Controllers
         /// </summary>
         /// <param name="cmsConfiguration">The configuration loader.</param>
         /// <param name="cacheService">The cache service.</param>
-        /// <param name="securityService">The security service.</param>
         public CmsController(ICmsConfiguration cmsConfiguration, ICacheService cacheService)
         {
             this.cmsConfiguration = cmsConfiguration;
@@ -49,36 +49,44 @@ namespace BetterCms.Module.Root.Controllers
         {
             var virtualPath = HttpUtility.UrlDecode(Http.GetAbsolutePath());
             bool pageNotFound = false;
-            
-            CmsRequestViewModel model = GetRequestModel(virtualPath);
-           
-            if (model == null && !string.IsNullOrWhiteSpace(cmsConfiguration.PageNotFoundUrl))            
-            {
-                model = GetRequestModel(HttpUtility.UrlDecode(cmsConfiguration.PageNotFoundUrl));
-                pageNotFound = true;
-            }
+            CmsRequestViewModel model;
 
-            if (model != null)
-            {                
-                if (model.Redirect != null && !string.IsNullOrEmpty(model.Redirect.RedirectUrl))
+            try
+            {
+                model = GetRequestModel(virtualPath);
+
+                if (model == null && !string.IsNullOrWhiteSpace(cmsConfiguration.PageNotFoundUrl))
                 {
-                    return new RedirectResult(model.Redirect.RedirectUrl, true);
+                    model = GetRequestModel(HttpUtility.UrlDecode(cmsConfiguration.PageNotFoundUrl));
+                    pageNotFound = true;
                 }
-                
-                if (model.RenderPage != null)
+
+                if (model != null)
                 {
-                    if (pageNotFound)
+                    if (model.Redirect != null && !string.IsNullOrEmpty(model.Redirect.RedirectUrl))
                     {
-                        Response.StatusCode = 404;
+                        return new RedirectResult(model.Redirect.RedirectUrl, true);
                     }
 
-                    ViewBag.pageId = model.RenderPage.Id;
-                    
-                    // Notify.
-                    RootApiContext.Events.OnPageRendering(model.RenderPage);
+                    if (model.RenderPage != null)
+                    {
+                        if (pageNotFound)
+                        {
+                            Response.StatusCode = 404;
+                        }
 
-                    return View(model.RenderPage);
+                        ViewBag.pageId = model.RenderPage.Id;
+
+                        // Notify.
+                        RootApiContext.Events.OnPageRendering(model.RenderPage);
+
+                        return View(model.RenderPage);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                throw new HttpException(500, "Failed to load a CMS page.", ex);
             }
 
             return HttpNotFound();
@@ -108,7 +116,8 @@ namespace BetterCms.Module.Root.Controllers
             }
             else
             {
-                model = GetCommand<GetPageToRenderCommand>().ExecuteCommand(request);
+                var command = GetCommand<GetPageToRenderCommand>();
+                model = command.Execute(request);
             }
 
             return model;

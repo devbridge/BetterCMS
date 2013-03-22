@@ -72,7 +72,8 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
                     UseCustomCss = request.EnabledCustomCss,
                     CustomCss = request.CustomCss,
                     UseCustomJs = request.EanbledCustomJs,
-                    CustomJs = request.CustomJs
+                    CustomJs = request.CustomJs,
+                    EditInSourceMode = request.EditInSourceMode
                 };
 
             // Preserve content if user is not authorized to change it.
@@ -89,6 +90,7 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
                 contentToSave.CustomCss = contentToPublish.CustomCss;
                 contentToSave.UseCustomJs = contentToPublish.UseCustomJs;
                 contentToSave.CustomJs = contentToPublish.CustomJs;
+                contentToSave.EditInSourceMode = contentToPublish.EditInSourceMode;
             }
 
             pageContent.Content = contentService.SaveContentWithStatusUpdate(

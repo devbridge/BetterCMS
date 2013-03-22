@@ -133,6 +133,8 @@ define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout'], function ($, bc
     ko.extenders.required = function (target, overrideMessage) {
         var ruleName = 'required';
         return koValidationExtender(ruleName, target, function (newValue) {
+            newValue = $.trim(newValue);
+
             var hasError = (!newValue),
                 message = hasError ? overrideMessage || ko.globalization.requiredFieldMessage : "";
 

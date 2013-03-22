@@ -81,7 +81,7 @@ namespace BetterCms.Module.MediaManager.Services
                             })
                             .ContinueWith(task =>
                             {
-                                storageService.RemoveObjectBucket(file.FileUri);
+                                storageService.RemoveFolder(file.FileUri);
                             });
 
                     removeFile.Start();

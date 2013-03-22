@@ -27,6 +27,7 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
             UnitOfWork.BeginTransaction();
             var widgetContent = GetHtmlContentWidgetFromRequest(request);
             HtmlContentWidget widget = (HtmlContentWidget)ContentService.SaveContentWithStatusUpdate(widgetContent, request.DesirableStatus);
+            widget.EditInSourceMode = request.EditInSourceMode;
             Repository.Save(widget);
 
             UnitOfWork.Commit();

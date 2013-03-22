@@ -145,7 +145,7 @@ namespace BetterCms.Module.MediaManager.Services
                     Task.Factory.ContinueWhenAll(
                         removeImageFileTasks.ToArray(),
                         result =>
-                            { storageService.RemoveObjectBucket(image.FileUri); });
+                            { storageService.RemoveFolder(image.FileUri); });
 
                     removeImageFileTasks.ForEach(task => task.Start());
                 }
