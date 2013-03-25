@@ -33,7 +33,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// <returns>
         /// List of files.
         /// </returns>
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.DeleteContent)]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.DeleteContent, RootModuleConstants.UserRoles.Administration)]
         public ActionResult GetFilesList(MediaManagerViewModel options)
         {
             var success = true;
@@ -86,7 +86,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// <returns>
         /// The view.
         /// </returns>
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration)]
         public ActionResult FileInsert()
         {
             var files = GetCommand<GetFilesCommand>().ExecuteCommand(new MediaManagerViewModel());
