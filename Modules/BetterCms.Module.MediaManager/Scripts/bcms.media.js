@@ -152,6 +152,8 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         self.canInsertMedia = ko.observable(false);
         self.canInsertMediaWithOptions = ko.observable(false);
 
+        self.rowAdded = false;
+
         self.gridOptions = ko.observable();
 
         self.isRootFolder = function () {
@@ -166,15 +168,19 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         };
 
         self.addNewFolder = function () {
-            var newFolder = new MediaFolderViewModel({
-                IsActive: true,
-                Type: self.path().currentFolder().type
-            });
+            if (!self.rowAdded) {
+                self.rowAdded = true;
 
-            self.medias.unshift(newFolder);
-            
-            // Replace unobtrusive validator
-            bcms.updateFormValidator(self.container.find(selectors.firstForm));
+                var newFolder = new MediaFolderViewModel({
+                    IsActive: true,
+                    Type: self.path().currentFolder().type
+                });
+
+                self.medias.unshift(newFolder);
+
+                // Replace unobtrusive validator
+                bcms.updateFormValidator(self.container.find(selectors.firstForm));
+            }
         };
 
         self.uploadMedia = function () {
@@ -715,6 +721,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     */
     function cancelEditMedia(folderViewModel, item) {
         item.isActive(false);
+        folderViewModel.rowAdded = false;
 
         if (!item.id()) {
             folderViewModel.medias.remove(item);
@@ -741,6 +748,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             loaderContainer = $(input.closest(siteSettings.selectors.loaderContainer).get(0) || input.closest(modal.selectors.scrollWindow).get(0));
 
         clearTimeout(blurTimer);
+        folderViewModel.rowAdded = false;
 
         if (item.savePressed || (item.oldName != item.name() && item.isActive())) {
             if (input.valid()) {
