@@ -20,7 +20,7 @@
 
 @helper RestoreLink(ContentHistoryItem item)
 {
-    if (item.Status == ContentStatus.Archived && (ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.PublishContent))
+    if (item.CanCurrentUserRestoreIt)
     {
         <a class="bcms-icn-restore" data-id="@item.Id" data-version="@item.Version">@RootGlobalization.Button_Restore</a>
     }

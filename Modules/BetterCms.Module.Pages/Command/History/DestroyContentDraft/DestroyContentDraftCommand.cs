@@ -5,6 +5,7 @@ using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Mvc;
 
 using NHibernate.Linq;
@@ -48,6 +49,16 @@ namespace BetterCms.Module.Pages.Command.History.DestroyContentDraft
             if (content.Original == null)
             {
                 throw new CmsException(string.Format("Draft version cannot be destroyed - it has no published original version. Id: {0}, Status: {1}", content.Id, content.Status));
+            }
+
+            var contentType = content.GetType();
+            if (contentType == typeof(HtmlContentWidget) || contentType == typeof(ServerControlWidget))
+            {
+                DemandAccess(RootModuleConstants.UserRoles.Administration);
+            }
+            else
+            {
+                DemandAccess(RootModuleConstants.UserRoles.PublishContent);
             }
 
             Repository.Delete(content);
