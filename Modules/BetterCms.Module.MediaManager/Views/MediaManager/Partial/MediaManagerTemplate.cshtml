@@ -63,7 +63,10 @@
                     <!--  ko if: isProcessing() -->
                     @MediaGlobalization.MediaManager_FileStillProcessing_Message
                     <!-- /ko -->
-                    <!--  ko if: !isProcessing() && !isFailed() -->
+                    <!--  ko if: isDeleting() -->
+                    @RootGlobalization.Message_Deleting
+                    <!-- /ko -->
+                    <!--  ko if: !isProcessing() && !isFailed() && !isDeleting() -->
                     <!-- ko if: isImage() -->
                     <a class="bcms-media-content-link" href="#" data-bind="click: previewImage.bind($data, $root)">@MediaGlobalization.MediaManager_ButtonPreviewImage</a>
                     <!-- /ko -->
@@ -92,7 +95,7 @@
                     <!-- /ko -->
                     @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.DeleteContent))
                     {
-                        <!--  ko if: !isProcessing() -->
+                        <!--  ko if: !isProcessing() && !isDeleting() -->
                         <a class="bcms-media-content-link" href="#" data-bind="click: deleteMedia.bind($data, $root)">@RootGlobalization.Button_Delete</a>
                         <!-- /ko -->
                     }
@@ -111,6 +114,9 @@
                         <!-- /ko -->
                         <!--  ko if: isFailed() -->
                         <br /><span class="bcms-failed-file">@MediaGlobalization.MediaManager_FailedToProcessFile_Message</span>
+                        <!-- /ko -->
+                        <!--  ko if: isDeleting() -->
+                        <br /><span class="bcms-failed-file">@RootGlobalization.Message_Deleting</span>
                         <!-- /ko -->
                     </div>
                 </div>
@@ -137,13 +143,13 @@
                     </div>
                     @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
                     {
-                        <!--  ko if: !isProcessing() && !isFailed() -->
+                        <!--  ko if: !isProcessing() && !isFailed() && !isDeleting() -->
                         <a class="bcms-icn-edit" data-bind="click: editMedia.bind($data, $root)">@RootGlobalization.Button_Edit</a>
                         <!-- /ko -->
                     }
                     @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.DeleteContent))
                     {
-                        <!--  ko if: !isProcessing() -->
+                        <!--  ko if: !isProcessing() && !isDeleting() -->
                         <a class="bcms-icn-delete" data-bind="click: deleteMedia.bind($data, $root)">@RootGlobalization.Button_Delete</a>
                         <!-- /ko -->
                     }

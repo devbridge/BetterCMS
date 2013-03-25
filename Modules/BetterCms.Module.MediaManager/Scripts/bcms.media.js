@@ -344,6 +344,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
             self.isActive = ko.observable(item.IsActive || false);
             self.isSelected = ko.observable(false);
+            self.isDeleting = ko.observable(false);
 
             self.contextMenu = new MediaItemContextMenuViewModel();
 
@@ -433,11 +434,17 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
         MediaItemBaseViewModel.prototype.editMedia = function (folderViewModel, data, event) {
             bcms.stopEventPropagation(event);
+            if (this.isDeleting()) {
+                return;
+            }
             this.renameMedia(folderViewModel, data, event);
         };
             
         MediaItemBaseViewModel.prototype.renameMedia = function (folderViewModel, data, event) {
             bcms.stopEventPropagation(event);
+            if (this.isDeleting()) {
+                return;
+            }
             this.isActive(true);
         };
             
@@ -527,6 +534,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
         MediaImageViewModel.prototype.editMedia = function (folderViewModel, data, event) {
             bcms.stopEventPropagation(event);
+            if (this.isDeleting()) {
+                return;
+            }
+
             if (security.IsAuthorized(["BcmsEditContent"])) {
                 var self = this;
                 imageEditor.onEditImage(self.id(), function (json) {
@@ -538,11 +549,13 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
         MediaImageViewModel.prototype.insertMedia = function (folderViewModel, data, event) {
             bcms.stopEventPropagation(event);
+
             insertImage(this, false, folderViewModel.onMediaSelect);
         };
 
         MediaImageViewModel.prototype.insertMediaWithOptions = function (folderViewModel, data, event) {
             bcms.stopEventPropagation(event);
+
             insertImage(this, true, folderViewModel.onMediaSelect);
         };
 
@@ -652,6 +665,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
         MediaFolderViewModel.prototype.openMedia = function (folderViewModel, data, event) {
             bcms.stopEventPropagation(event);
+            if (this.isDeleting()) {
+                return;
+            }
+
             changeFolder(this.id(), folderViewModel);
         };
 
@@ -662,7 +679,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     * Opens media for seleting or editing
     */
     function editOrSelectMedia(folderViewModel, item, data, event) {
-        if (item.isProcessing() || item.isFailed()) {
+        if (item.isProcessing() || item.isFailed() || item.isDeleting()) {
             return;
         }
 
@@ -714,6 +731,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     * Saves media after inline edit
     */
     function saveMedia(folderViewModel, item) {
+        if (item.isDeleting()) {
+            return;
+        }
+
         var idSelector = '#' + item.nameDomId,
             input = folderViewModel.container.find(idSelector),
             loaderContainer = $(input.closest(siteSettings.selectors.loaderContainer).get(0) || input.closest(modal.selectors.scrollWindow).get(0));
@@ -874,6 +895,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     * Called when image is selected from images list.
     */
     function insertImage(selectedMedia, withOptions, onImageInsert) {
+        if (selectedMedia.isDeleting()) {
+            return;
+        }
+
         var mediaId = selectedMedia.id(),
             alertOnError = function() {
                 modal.alert({
@@ -1039,7 +1064,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     * Open delete confirmation and delete media item.
     */
     function deleteMediaItem(url, message, folderViewModel, item) {
-        if (item.isProcessing()) {
+        if (item.isProcessing() || item.isDeleting()) {
             return;
         }
 
@@ -1047,12 +1072,15 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 messages.refreshBox(folderViewModel.container, json);
                 if (json.Success) {
                     folderViewModel.medias.remove(item);
+                } else {
+                    item.isDeleting(false);
                 }
                 confirmDialog.close();
             },
             confirmDialog = modal.confirm({
                 content: message,
                 onAccept: function () {
+                    item.isDeleting(true);
                     $.ajax({
                         type: 'POST',
                         url: url,
@@ -1066,7 +1094,6 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                     .fail(function (response) {
                         onDeleteCompleted(bcms.parseFailedResponse(response));
                     });
-                    return false;
                 }
             });
     };

@@ -3,6 +3,7 @@ using BetterCms.Core.Modules.JsModule;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Controllers;
+using BetterCms.Module.Root.Content.Resources;
 
 namespace BetterCms.Module.Pages.Registration
 {
@@ -34,6 +35,7 @@ namespace BetterCms.Module.Pages.Registration
                                     new JavaScriptModuleGlobalization(this, "deleteTemplateConfirmMessage", () => PagesGlobalization.SiteSettings_Template_DeleteCategoryMessage),
                                     new JavaScriptModuleGlobalization(this, "deleteRegionConfirmMessage", () => PagesGlobalization.DeleteRegion_Confirmation_Message),
                                     new JavaScriptModuleGlobalization(this, "previewImageNotFoundMessage", () => PagesGlobalization.EditTemplate_PreviewImageNotFound_Message),
+                                    new JavaScriptModuleGlobalization(this, "deletingMessage", () => RootGlobalization.Message_Deleting),
                                 };
         }
     }
