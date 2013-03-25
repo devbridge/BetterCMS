@@ -8,6 +8,8 @@ using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
 
+using MvcContrib.Sorting;
+
 using NHibernate.Linq;
 
 namespace BetterCms.Module.Pages.Services
@@ -99,14 +101,7 @@ namespace BetterCms.Module.Pages.Services
             }
 
             // Order
-            if (string.IsNullOrWhiteSpace(gridOptions.Column))
-            {
-                history = history.AsQueryable().OrderBy(o => o.Status).ThenByDescending(o => o.CreatedOn).AddPaging(gridOptions).ToList();
-            }
-            else
-            {
-                history = history.AsQueryable().AddSortingAndPaging(gridOptions).ToList();
-            }
+            history = AddSortAndPaging(history, gridOptions);
 
             return history;
         }
@@ -156,6 +151,54 @@ namespace BetterCms.Module.Pages.Services
                     || (!string.IsNullOrEmpty(statusName) && statusName.Contains(searchQuery));
             }
             return true;
+        }
+
+        /// <summary>
+        /// Adds the sort and paging.
+        /// </summary>
+        /// <param name="history">The history.</param>
+        /// <param name="gridOptions">The grid options.</param>
+        /// <returns></returns>
+        private List<Root.Models.Content> AddSortAndPaging(List<Root.Models.Content> history, Root.Mvc.Grids.GridOptions.SearchableGridOptions gridOptions)
+        {
+            if (string.IsNullOrWhiteSpace(gridOptions.Column))
+            {
+                history = history.AsQueryable().OrderBy(o => o.Status).ThenByDescending(o => o.CreatedOn).AddPaging(gridOptions).ToList();
+            }
+            else if (gridOptions.Column == "StatusName")
+            {
+                history = (gridOptions.Direction == SortDirection.Ascending)
+                              ? history.AsQueryable().OrderBy(o => GetStatusName(o.Status)).AddPaging(gridOptions).ToList()
+                              : history.AsQueryable().OrderByDescending(o => GetStatusName(o.Status)).AddPaging(gridOptions).ToList();
+            }
+            else if (gridOptions.Column == "DisplayedFor")
+            {
+                System.Linq.Expressions.Expression<Func<Root.Models.Content, TimeSpan?>> orderExpression =
+                    (c) => c.Status == ContentStatus.Archived && c.PublishedOn != null
+                        ? c.CreatedOn - c.PublishedOn.Value
+                        : (TimeSpan?)null;
+
+                history = (gridOptions.Direction == SortDirection.Ascending)
+                              ? history.AsQueryable().OrderBy(orderExpression).AddPaging(gridOptions).ToList()
+                              : history.AsQueryable().OrderByDescending(orderExpression).AddPaging(gridOptions).ToList();
+            }
+            else if (gridOptions.Column == "ArchivedOn")
+            {
+                System.Linq.Expressions.Expression<Func<Root.Models.Content, DateTime?>> orderExpression =
+                    (c) => c.Status == ContentStatus.Archived
+                        ? c.CreatedOn
+                        : (DateTime?)null;
+
+                history = (gridOptions.Direction == SortDirection.Ascending)
+                              ? history.AsQueryable().OrderBy(orderExpression).AddPaging(gridOptions).ToList()
+                              : history.AsQueryable().OrderByDescending(orderExpression).AddPaging(gridOptions).ToList();
+            }
+            else
+            {
+                history = history.AsQueryable().AddSortingAndPaging(gridOptions).ToList();
+            }
+
+            return history;
         }
     }
 }
