@@ -27,7 +27,6 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
             UnitOfWork.BeginTransaction();
             var widgetContent = GetHtmlContentWidgetFromRequest(request);
             HtmlContentWidget widget = (HtmlContentWidget)ContentService.SaveContentWithStatusUpdate(widgetContent, request.DesirableStatus);
-            widget.EditInSourceMode = request.EditInSourceMode;
             Repository.Save(widget);
 
             UnitOfWork.Commit();
@@ -59,7 +58,7 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
                     };
         }
 
-        private HtmlContentWidget GetHtmlContentWidgetFromRequest(HtmlContentWidgetViewModel request)
+        private HtmlContentWidget GetHtmlContentWidgetFromRequest(EditHtmlContentWidgetViewModel request)
         {
             HtmlContentWidget content = new HtmlContentWidget();
             content.Id = request.Id;
@@ -81,6 +80,7 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
             content.UseCustomJs = request.EnableCustomJS;
             content.CustomJs = request.CustomJS;           
             content.Version = request.Version;
+            content.EditInSourceMode = request.EditInSourceMode;
 
             return content;
         }
