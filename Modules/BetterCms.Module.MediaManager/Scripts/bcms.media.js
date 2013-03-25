@@ -543,6 +543,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 imageEditor.onEditImage(self.id(), function (json) {
                     self.version(json.Version);
                     self.name(json.Title);
+                    self.oldName = json.Title;
                 });
             }
         };
