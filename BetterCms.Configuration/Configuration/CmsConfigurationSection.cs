@@ -85,7 +85,7 @@ namespace BetterCms.Configuration
             set { this[WorkingDirectoryRootPathAttribute] = value; }
         }
 
-        [ConfigurationProperty(UseMinifiedResourcesAttribute, IsRequired = false, DefaultValue = true)]
+        [ConfigurationProperty(UseMinifiedResourcesAttribute, IsRequired = false, DefaultValue = false)]
         public bool UseMinifiedResources
         {
             get { return Convert.ToBoolean(this[UseMinifiedResourcesAttribute]); }
