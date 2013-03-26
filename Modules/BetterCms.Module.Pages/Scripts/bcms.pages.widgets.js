@@ -28,7 +28,8 @@ define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepic
                 previewImageNotFoundMessage: null,
                 widgetStatusPublished: null,
                 widgetStatusDraft: null,
-                widgetStatusPublishedWithDraft: null
+                widgetStatusPublishedWithDraft: null,
+                deletingMessage: null
             },
             selectors = {                                
                 enableCustomCss: '#bcms-enable-custom-css',
@@ -59,6 +60,8 @@ define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepic
                 widgetRowEditButton: '.bcms-grid-item-edit-button',
                 widgetRowHistoryButton: '.bcms-grid-item-history-button',
                 widgetsRowDeleteButtons: '.bcms-grid-item-delete-button',
+                widgetsRowDeleteMessage: '.bcms-grid-item-message',
+                widgetsRowDeleteElementsToHide: '.bcms-grid-item-delete-button, .bcms-grid-item-edit-button, bcms-widget-status, .bcms-widget-status > div, .bcms-grid-item-history-button',
                 widgetParentRow: 'tr:first',
                 widgetNameCell: '.bcms-widget-name',
                 widgetCategoryNameCell: '.bcms-category-name',
@@ -342,24 +345,32 @@ define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepic
         /**
         * Deletes widget.
         */
-        widgets.deleteWidget = function(widgetId, widgetVersion, widgetName, onDeleteCallback, onErrorCallback) {
-            var url = $.format(links.deleteWidgetUrl, widgetId, widgetVersion),
+        widgets.deleteWidget = function (row, onDeleteCallback, onErrorCallback) {
+            var widgetId = row.data('id'),
+                widgetVersion = row.data('version'),
+                widgetName = row.find(selectors.widgetNameCell).html(),
+                url = $.format(links.deleteWidgetUrl, widgetId, widgetVersion),
                 message = $.format(globalization.deleteWidgetConfirmMessage, widgetName),
+                messageDiv = row.find(selectors.widgetsRowDeleteMessage),
+                elementsToHide = row.find(selectors.widgetsRowDeleteElementsToHide),
                 onDeleteCompleted = function(json) {
-                    try {
-                        if (json.Success && $.isFunction(onDeleteCallback)) {
-                            onDeleteCallback(json);
-                        }
-                        else if (!json.Success && $.isFunction(onErrorCallback)) {
-                            onErrorCallback(json);
-                        }
-                    } finally {
-                        confirmDialog.close();
+                    messageDiv.html('');
+                    messageDiv.hide();
+                    elementsToHide.show();
+                    if (json.Success && $.isFunction(onDeleteCallback)) {
+                        onDeleteCallback(json);
+                    } else if (!json.Success && $.isFunction(onErrorCallback)) {
+                        onErrorCallback(json);
                     }
-                },
-                confirmDialog = modal.confirm({
+                };
+            
+                modal.confirm({
                     content: message,
-                    onAccept: function() {
+                    onAccept: function () {
+                        elementsToHide.hide();
+                        messageDiv.show();
+                        messageDiv.html(globalization.deletingMessage);
+
                         $.ajax({
                             type: 'POST',
                             url: url,
@@ -373,7 +384,6 @@ define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepic
                         .fail(function(response) {
                             onDeleteCompleted(bcms.parseFailedResponse(response));
                         });
-                        return false;
                     }
                 });
         };
@@ -510,13 +520,9 @@ define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepic
         * Deletes widget from site settings widgets list.
         */
         function deleteSiteSettingsWidget(container, self) {
-            var row = self.parents(selectors.widgetParentRow),
-                id = row.data('id'),
-                version = row.data('version'),
-                name = row.find(selectors.widgetNameCell).html();
+            var row = self.parents(selectors.widgetParentRow);
 
-            widgets.deleteWidget(id, version, name,
-                function(data) {
+            widgets.deleteWidget(row, function(data) {
                     messages.refreshBox(row, data);
                     if (data.Success) {
                         row.remove();
@@ -626,9 +632,6 @@ define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepic
 
                 if (!security.IsAuthorized(["BcmsEditContent"])) {
                     contentViewModel.removeConfigureButton();
-                }
-                
-                if (!security.IsAuthorized(["BcmsDeleteContent"])) {
                     contentViewModel.removeDeleteButton();
                 }
                 
@@ -645,7 +648,7 @@ define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepic
                     contentViewModel.removeEditButton();
                 }
 
-                if (!security.IsAuthorized(["BcmsDeleteContent"])) {
+                if (!security.IsAuthorized(["BcmsEditContent"])) {
                     contentViewModel.removeDeleteButton();
                 }
             }

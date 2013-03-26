@@ -2,7 +2,8 @@
 using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
-
+using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
 
@@ -34,6 +35,16 @@ namespace BetterCms.Module.Pages.Command.History.RestoreContentVersion
                 .AsQueryable<Root.Models.Content>(p => p.Id == pageContentId)
                 .Fetch(f => f.Original)
                 .First();
+
+            var contentType = content.GetType();
+            if (contentType == typeof(HtmlContentWidget) || contentType == typeof(ServerControlWidget))
+            {
+                DemandAccess(RootModuleConstants.UserRoles.Administration);
+            }
+            else
+            {
+                DemandAccess(RootModuleConstants.UserRoles.PublishContent);
+            }
 
             contentService.RestoreContentFromArchive(content);
 

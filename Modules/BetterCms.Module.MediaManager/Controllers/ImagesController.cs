@@ -29,7 +29,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// <returns>
         /// List of images
         /// </returns>
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.DeleteContent)]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.DeleteContent, RootModuleConstants.UserRoles.Administration)]
         public ActionResult GetImagesList(MediaManagerViewModel options)
         {
             var success = true;
@@ -57,7 +57,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// <returns>
         /// The view.
         /// </returns>
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration)]
         public ActionResult ImageInsert()
         {
             var images = GetCommand<GetImagesCommand>().ExecuteCommand(new MediaManagerViewModel());
@@ -87,7 +87,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// <param name="imageId">The image id.</param>
         /// <returns>Image insert view.</returns>
         [HttpGet]
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration)]
         public ActionResult ImageEditorInsert(string imageId)
         {
             var model = GetCommand<GetImageCommand>().ExecuteCommand(imageId.ToGuidOrDefault());
@@ -147,7 +147,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// </summary>
         /// <param name="imageId">The image id.</param>
         /// <returns>Json result.</returns>
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration)]
         public ActionResult GetImage(string imageId)
         {
             var result = GetCommand<GetImageCommand>().ExecuteCommand(imageId.ToGuidOrDefault());

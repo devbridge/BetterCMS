@@ -22,7 +22,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// <param name="contentId">The content id.</param>
         /// <returns>Content history view html.</returns>
         [HttpGet]
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent)]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.Administration)]
         public ActionResult ContentHistory(string contentId)
         {
             var model = GetCommand<GetContentHistoryCommand>().ExecuteCommand(new GetContentHistoryRequest
@@ -52,7 +52,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// <param name="id">The id.</param>
         /// <returns>Content preview html.</returns>
         [HttpGet]
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent)]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.Administration)]
         public ActionResult ContentVersion(string id)
         {
             var model = GetCommand<GetContentVersionCommand>().ExecuteCommand(id.ToGuidOrDefault());
@@ -66,7 +66,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// <param name="id">The id.</param>
         /// <returns>Json result.</returns>
         [HttpPost]
-        [BcmsAuthorize(RootModuleConstants.UserRoles.PublishContent)]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.Administration)]
         public ActionResult RestorePageContentVersion(string id)
         {
             var result = GetCommand<RestoreContentVersionCommand>().ExecuteCommand(id.ToGuidOrDefault());
@@ -80,7 +80,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// <param name="id">The id.</param>
         /// <returns>Json result.</returns>
         [HttpPost]
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration)]
         public ActionResult DestroyContentDraft(string id)
         {
             var response = GetCommand<DestroyContentDraftCommand>().ExecuteCommand(id.ToGuidOrDefault());

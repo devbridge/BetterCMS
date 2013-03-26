@@ -25,7 +25,7 @@
             column.EmptyColumn();
         }
 
-        column.For(m => string.Format("<a class=\"bcms-tables-link bcms-page-title\" data-id=\"{0}\"  data-url=\"{2}\">{1}</a>", m.Id, m.Title, m.Url))
+        column.For(m => string.Format("<a class=\"bcms-tables-link bcms-page-title\" data-id=\"{0}\" data-url=\"{2}\">{1}</a>", m.Id, m.Title, m.Url))
             .Named(PagesGlobalization.SiteSettings_Pages_TitleColumn)
             .SortColumnName("Title")
             .Attributes()

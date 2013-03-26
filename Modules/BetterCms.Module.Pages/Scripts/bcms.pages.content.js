@@ -419,7 +419,7 @@ define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.content
                     contentViewModel.removeEditButton();
                 }
                 
-                if (!security.IsAuthorized(["BcmsDeleteContent"])) {
+                if (!security.IsAuthorized(["BcmsEditContent"])) {
                     contentViewModel.removeDeleteButton();
                 }
             }

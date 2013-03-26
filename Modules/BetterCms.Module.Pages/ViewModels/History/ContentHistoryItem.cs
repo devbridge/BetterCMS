@@ -26,5 +26,7 @@ namespace BetterCms.Module.Pages.ViewModels.History
         public ContentStatus Status { get; set; }
 
         public string StatusName { get; set; }
+
+        public bool CanCurrentUserRestoreIt { get; set; }
     }
 }

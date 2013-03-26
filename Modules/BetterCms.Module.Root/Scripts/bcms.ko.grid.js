@@ -404,37 +404,37 @@ define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messag
                 return;
             }
 
-            self.deleting(true);
             var container = self.parent.container,
                 items = self.parent.items,
                 message = self.getDeleteConfirmationMessage(),
                 params = self.getDeleteParams(),
-                onDeleteCompleted = function (json) {
+                onDeleteCompleted = function(json) {
                     if (container != null) {
                         messages.refreshBox(container, json);
                     }
                     if (json.Success) {
                         items.remove(self);
                     }
-                    confirmDialog.close();
                     self.deleting(false);
                 },
                 confirmDialog = modal.confirm({
                     content: message || '',
-                    onAccept: function() {
+                    onAccept: function () {
+                        confirmDialog.close();
+                        self.deleting(true);
                         $.ajax({
                             type: 'POST',
                             url: url,
                             cache: false,
                             data: params
                         })
-                            .done(function(json) {
-                                onDeleteCompleted(json);
-                            })
-                            .fail(function(response) {
-                                onDeleteCompleted(bcms.parseFailedResponse(response));
-                            });
-                        return false;
+                        .done(function (json) {
+                            onDeleteCompleted(json);
+                        })
+                        .fail(function (response) {
+                            onDeleteCompleted(bcms.parseFailedResponse(response));
+                        });
+                        return true;
                     },
                     onClose: function () {
                         self.deleting(false);

@@ -17,6 +17,14 @@ namespace BetterCms.Module.Pages.ViewModels.SiteSettings
         public Guid Id { get; set; }
 
         /// <summary>
+        /// Gets or sets the compare id.
+        /// </summary>
+        /// <value>
+        /// The compare id.
+        /// </value>
+        public Guid CompareId { get; set; } // Used only for selection.
+
+        /// <summary>
         /// Gets or sets the entity version.
         /// </summary>
         /// <value>
