@@ -193,21 +193,21 @@
     <Compile Include="Projections\PageContentProjectionFactory.cs" />
     <Compile Include="Projections\PageJavaScriptProjection.cs" />
     <Compile Include="Registration\AuthenticationJavaScriptModuleDescriptor.cs" />
-    <Compile Include="Registration\ContentJavaScriptModuleDescriptor.cs" />
-    <Compile Include="Registration\SecurityJavaScriptModuleDescriptor.cs" />
-    <Compile Include="Registration\KnockoutExtendersJavaScriptModuleDescriptor.cs" />
-    <Compile Include="Registration\PreviewJavaScriptModuleDescriptor.cs" />
-    <Compile Include="Registration\RedirectJavaScriptModuleDescriptor.cs" />
-    <Compile Include="Registration\InlineEditorJavaScriptModuleDescriptor.cs" />
-    <Compile Include="Registration\ModalJavaScriptModuleDescriptor.cs" />
-    <Compile Include="Registration\SideMenuJavaScriptModuleDescriptor.cs" />
-    <Compile Include="Registration\SiteSettingsJavaScriptModuleDescriptor.cs" />
-    <Compile Include="Registration\TooltipJavaScriptModuleDescriptor.cs" />
-    <Compile Include="Registration\DatePickerJavaScriptModuleDescriptor.cs" />
-    <Compile Include="Registration\DynamicContentJavaScriptModuleDescriptor.cs" />
-    <Compile Include="Registration\FormsJavaScriptModuleDescriptor.cs" />
-    <Compile Include="Registration\HtmlEditorJavaScriptModuleDescriptor.cs" />
-    <Compile Include="Registration\MessagesJavaScriptModuleDescriptor.cs" />
+    <Compile Include="Registration\ContentJsModuleIncludeDescriptor.cs" />
+    <Compile Include="Registration\SecurityJsModuleIncludeDescriptor.cs" />
+    <Compile Include="Registration\KnockoutExtendersJsModuleIncludeDescriptor.cs" />
+    <Compile Include="Registration\PreviewJsModuleIncludeDescriptor.cs" />
+    <Compile Include="Registration\RedirectJsModuleIncludeDescriptor.cs" />
+    <Compile Include="Registration\InlineEditorJsModuleIncludeDescriptor.cs" />
+    <Compile Include="Registration\ModalJsModuleIncludeDescriptor.cs" />
+    <Compile Include="Registration\SidemenuJsModuleIncludeDescriptor.cs" />
+    <Compile Include="Registration\SiteSettingsJsModuleIncludeDescriptor.cs" />
+    <Compile Include="Registration\TooltipJsModuleIncludeDescriptor.cs" />
+    <Compile Include="Registration\DatePickerJsModuleIncludeDescriptor.cs" />
+    <Compile Include="Registration\DynamicContentJsModuleIncludeDescriptor.cs" />
+    <Compile Include="Registration\FormsJsModuleIncludeDescriptor.cs" />
+    <Compile Include="Registration\HtmlEditorJsModuleIncludeDescriptor.cs" />
+    <Compile Include="Registration\MessagesJsModuleIncludeDescriptor.cs" />
     <Compile Include="Models\LookupKeyValue.cs" />
     <Compile Include="Models\Maps\PageMap.cs" />
     <Compile Include="Models\Maps\UserMap.cs" />
@@ -219,7 +219,7 @@
     <Compile Include="Models\WireJson.cs" />
     <Compile Include="Mvc\Helpers\FormHelper.cs" />
     <Compile Include="Mvc\Helpers\MessagesHelper.cs" />
-    <Compile Include="Registration\TabsJavaScriptModuleDescriptor.cs" />
+    <Compile Include="Registration\TabsJsModuleIncludeDescriptor.cs" />
     <Compile Include="RootModuleConstants.cs" />
     <Compile Include="Services\DefaultContentService.cs" />
     <Compile Include="Services\DefaultSecurityService.cs" />
@@ -257,7 +257,6 @@
       <LastGenOutput>RootGlobalization.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Content\Styles\qunit-1.9.0.css" />
     <EmbeddedResource Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <EmbeddedResource Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <EmbeddedResource Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -489,7 +488,6 @@
     <EmbeddedResource Include="Scripts\bcms.jquery.unobtrusive-ajax.js" />
     <EmbeddedResource Include="Scripts\bcms.jquery.validate.js" />
     <EmbeddedResource Include="Scripts\bcms.jquery.validate.unobtrusive.js" />
-    <EmbeddedResource Include="Scripts\knockout-2.2.0.js" />
     <EmbeddedResource Include="Scripts\bcms.slides.jquery.js" />
     <EmbeddedResource Include="Scripts\bcms.modal.js" />
     <EmbeddedResource Include="Scripts\bcms.siteSettings.js" />
@@ -513,7 +511,6 @@
     <EmbeddedResource Include="Scripts\bcms.dynamicContent.js" />
     <EmbeddedResource Include="Scripts\bcms.jquery-ui-1.9.0.js" />
     <EmbeddedResource Include="Scripts\bcms.jquery-1.7.2.js" />
-    <EmbeddedResource Include="Scripts\require.js" />
     <EmbeddedResource Include="Scripts\bcms.js" />
     <EmbeddedResource Include="Scripts\bcms.sidemenu.js" />
     <EmbeddedResource Include="Content\Styles\base.css" />
@@ -522,6 +519,22 @@
     <Content Include="BuildConfiguration.xml" />
     <EmbeddedResource Include="Content\Styles\images\icn-zoom-notcompatible.png" />
     <EmbeddedResource Include="Scripts\bcms.root.min.js" />
+    <EmbeddedResource Include="Content\Styles\bcms.root.min.css" />
+    <EmbeddedResource Include="Scripts\knockout-2.2.1.js" />
+    <EmbeddedResource Include="Scripts\knockout-2.2.1.min.js" />
+    <EmbeddedResource Include="Scripts\require-2.1.5.js" />
+    <EmbeddedResource Include="Scripts\require-2.1.5.min.js" />
+    <Content Include="Content\Styles\images\cookies.png" />
+    <Content Include="Content\Styles\images\error-back.png" />
+    <Content Include="Content\Styles\images\error-bg.png" />
+    <Content Include="Content\Styles\images\js.png" />
+    <Content Include="Content\Styles\images\message-bg.jpg" />
+    <Content Include="Content\Styles\images\message-chrome.png" />
+    <Content Include="Content\Styles\images\message-circle.png" />
+    <Content Include="Content\Styles\images\message-ff.png" />
+    <Content Include="Content\Styles\images\message-ie.png" />
+    <Content Include="Content\Styles\images\msg-bg.jpg" />
+    <EmbeddedResource Include="Content\Styles\bcms.messages.css" />
     <Content Include="Views\Web.config" />
     <EmbeddedResource Include="Views\Sidebar\Container.cshtml" />
     <EmbeddedResource Include="Views\Rendering\RenderMainJsFile.cshtml" />
@@ -611,12 +624,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Shared\RootLayout.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Rendering\Partial\RequireJsDebugConfig.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Rendering\Partial\RequireJsReleaseConfig.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Shared\Partial\SupportBrowser.cshtml" />

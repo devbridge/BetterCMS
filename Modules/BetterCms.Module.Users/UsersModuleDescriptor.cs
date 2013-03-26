@@ -5,9 +5,7 @@ using Autofac;
 
 using BetterCms.Core.Models;
 using BetterCms.Core.Modules;
-using BetterCms.Core.Modules.JsModule;
 using BetterCms.Core.Modules.Projections;
-using BetterCms.Module.Blog.Registration;
 using BetterCms.Module.Root;
 using BetterCms.Module.Users.Content.Resources;
 using BetterCms.Module.Users.Registration;
@@ -27,14 +25,14 @@ namespace BetterCms.Module.Users
         /// <summary>
         /// The user java script module descriptor
         /// </summary>
-        private readonly UserJavaScriptModuleDescriptor userJavaScriptModuleDescriptor;
+        private readonly UserJsModuleIncludeDescriptor userJsModuleIncludeDescriptor;
 
          /// <summary>
         /// Initializes a new instance of the <see cref="UsersModuleDescriptor" /> class.
         /// </summary>
-        public UsersModuleDescriptor()
+        public UsersModuleDescriptor(ICmsConfiguration configuration) : base(configuration)
         {
-            userJavaScriptModuleDescriptor = new UserJavaScriptModuleDescriptor(this);
+            userJsModuleIncludeDescriptor = new UserJsModuleIncludeDescriptor(this);
         }
 
         /// <summary>
@@ -81,30 +79,27 @@ namespace BetterCms.Module.Users
 
         /// <summary>
         /// Registers the style sheet files.
-        /// </summary>
-        /// <param name="containerBuilder">The container builder.</param>
-        /// <param name="configuration">The configuration.</param>
+        /// </summary>        
         /// <returns>Enumerator of known module style sheet files.</returns>
-        public override IEnumerable<string> RegisterStyleSheetFiles(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        public override IEnumerable<CssIncludeDescriptor> RegisterCssIncludes()
         {
             return new[]
                 {
-                    "/file/bcms-users/Content/Css/bcms.users.css"
+                    new CssIncludeDescriptor(this, "bcms.users.css") 
                 };
         }
 
         /// <summary>
         /// Gets known client side modules in page module.
         /// </summary>
-        /// <param name="configuration">The CMS configuration.</param>
         /// <returns>List of known client side modules in page module.</returns>
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
-        public override IEnumerable<JavaScriptModuleDescriptor> RegisterJavaScriptModules(ICmsConfiguration configuration)
+        public override IEnumerable<JsIncludeDescriptor> RegisterJsIncludes()
         {
-            return new JavaScriptModuleDescriptor[]
+            return new JsIncludeDescriptor[]
                 {
-                    userJavaScriptModuleDescriptor,
-                    new RoleJavaScriptModuleDescriptor(this) 
+                    userJsModuleIncludeDescriptor,
+                    new RoleJsModuleIncludeDescriptor(this) 
                 };
         }
 
@@ -112,13 +107,12 @@ namespace BetterCms.Module.Users
         /// Registers the site settings projections.
         /// </summary>
         /// <param name="containerBuilder">The container builder.</param>
-        /// <param name="configuration">The configuration.</param>
         /// <returns>List of page action projections.</returns>
-        public override IEnumerable<IPageActionProjection> RegisterSiteSettingsProjections(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        public override IEnumerable<IPageActionProjection> RegisterSiteSettingsProjections(ContainerBuilder containerBuilder)
         {
             return new IPageActionProjection[]
                 {
-                    new LinkActionProjection(userJavaScriptModuleDescriptor, page => "loadSiteSettingsUsers")
+                    new LinkActionProjection(userJsModuleIncludeDescriptor, page => "loadSiteSettingsUsers")
                         {
                             Order = 4100,
                             Title = () => UsersGlobalization.SiteSettings_UserMenuItem,
@@ -133,8 +127,7 @@ namespace BetterCms.Module.Users
         /// </summary>
         /// <param name="context">The area registration context.</param>
         /// <param name="containerBuilder">The container builder.</param>
-        /// <param name="configuration">The configuration.</param>
-        public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
             containerBuilder.RegisterType<DefaultRoleService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultAuthentictionService>().AsImplementedInterfaces().InstancePerLifetimeScope();

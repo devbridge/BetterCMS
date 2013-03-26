@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using BetterCms.Module.Root.Models.Rendering;
 
@@ -40,6 +41,14 @@ namespace BetterCms.Module.Root.ViewModels.Rendering
         ///   <c>true</c> if use *.min.js references; otherwise, <c>false</c>.
         /// </value>
         public bool UseMinReferences { get; set; }
+
+        /// <summary>
+        /// Gets or sets the CMS version.
+        /// </summary>
+        /// <value>
+        /// The version.
+        /// </value>
+        public Version Version { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

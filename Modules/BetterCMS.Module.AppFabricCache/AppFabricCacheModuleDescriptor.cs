@@ -40,14 +40,22 @@ namespace BetterCms.Module.AppFabricCache
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="AppFabricCacheModuleDescriptor" /> class.
+        /// </summary>
+        /// <param name="configuration">The configuration.</param>
+        public AppFabricCacheModuleDescriptor(ICmsConfiguration configuration)
+            : base(configuration)
+        {
+        }
+
+        /// <summary>
         /// Registers module types.
         /// </summary>
         /// <param name="context">The area registration context.</param>
         /// <param name="containerBuilder">The container builder.</param>
-        /// <param name="configuration">The configuration.</param>
-        public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
-            if (configuration.Cache.CacheType == CacheServiceType.Auto)
+            if (Configuration.Cache.CacheType == CacheServiceType.Auto)
             {
                 containerBuilder.RegisterType<AppFabricCacheService>().As<ICacheService>().SingleInstance();
             }

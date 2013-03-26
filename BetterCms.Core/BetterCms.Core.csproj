@@ -158,6 +158,9 @@
     <Compile Include="Environment\Assemblies\IAssemblyManager.cs" />
     <Compile Include="DataContracts\Enums\PageStatus.cs" />
     <Compile Include="Exceptions\Api\CmsApiException.cs" />
+    <Compile Include="Modules\CssIncludeDescriptor.cs" />
+    <Compile Include="Modules\Projections\JavaScriptModuleLink.cs" />
+    <Compile Include="Mvc\Extensions\VirtualPath.cs" />
     <Compile Include="Security\BcmsAuthorizeAttribute.cs" />
     <Compile Include="Security\IUserRole.cs" />
     <Compile Include="Modules\Projections\EmptyContentAccessor.cs" />
@@ -228,7 +231,7 @@
     <Compile Include="Modules\Projections\RenderActionProjection.cs" />
     <Compile Include="Modules\Projections\IPageActionProjection.cs" />
     <Compile Include="Modules\Projections\JavaScriptModuleGlobalization.cs" />
-    <Compile Include="Modules\JavaScriptModuleDescriptor.cs" />
+    <Compile Include="Modules\JsIncludeDescriptor.cs" />
     <Compile Include="Modules\Projections\JavaScriptModuleLinkTo.cs" />
     <Compile Include="Modules\Projections\SeparatorProjection.cs" />
     <Compile Include="Modules\Registration\IModulesRegistration.cs" />

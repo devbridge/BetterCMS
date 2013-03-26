@@ -1,0 +1,147 @@
+﻿.bcms-msg-message-page {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: #38393c;
+    background: url('images/message-bg.jpg');
+    overflow: hidden;
+    font-family: 'Arial', sans-serif;
+    z-index: 9999;
+}
+
+.bcms-msg-message-block {
+    width: 786px;
+    margin: 0 auto;
+}
+
+.bcms-msg-message-top {
+    padding: 15px 30px;
+    margin: 70px 0 30px;
+    color: #fff;
+    background: #ce2b27;
+    font-size: 23px;
+    font-weight: 200;
+}
+
+    .bcms-msg-message-top span {
+        font-weight: 700;
+    }
+
+.bcms-msg-message-lower {
+    position: relative;
+    line-height: 1em;
+    margin-bottom: 40px;
+    font-size: 44px;
+    text-align: center;
+}
+
+    .bcms-msg-message-lower span {
+        padding: 0 5px;
+    }
+
+.bcms-msg-lower-upper {
+    line-height: 1.5em;
+    padding-bottom: 14px;
+    font-size: 22px;
+}
+
+.bcms-msg-lower-lower {
+    line-height: 1.5em;
+    padding-top: 14px;
+    font-size: 22px;
+}
+
+.bcms-msg-message-upgrade {
+    position: absolute;
+    top: 35px;
+    left: 235px;
+    width: 189px;
+    height: 72px;
+    background: url('images/message-circle.png') no-repeat;
+}
+
+.bcms-msg-choose-browser a {
+    float: left;
+    width: 250px;
+    padding: 186px 0 10px;
+    color: #38393c;
+    border: 1px dashed #d7d7d7;
+    background-color: #fff;
+    background-position: center 25px;
+    background-repeat: no-repeat;
+    font-size: 24px;
+    text-decoration: none;
+    text-align: center;
+}
+
+    .bcms-msg-choose-browser a:hover {
+        color: #000000;
+        border: 1px dashed #ce2b27;
+		text-decoration: none;
+    }
+
+.bcms-msg-download-chrome, .bcms-msg-download-ff {
+    margin-right: 14px;
+}
+
+.bcms-msg-download-chrome {
+    background-image: url('images/message-chrome.png');
+}
+
+.bcms-msg-download-ff {
+    background-image: url('images/message-ff.png');
+}
+
+.bcms-msg-download-ie {
+    background-image: url('images/message-ie.png');
+}
+
+.bcms-msg-message-close {
+    float: right;
+    padding-top: 10px;
+    color: #ce2b27;
+    cursor: pointer;
+}
+
+.bcms-msg-message-close:hover{
+	text-decoration: underline;
+}
+    .bcms-msg-top-page {
+        height: 74px;
+        padding-top: 20px;
+        color: #5f4126;
+        background: url('images/msg-bg.jpg');
+        overflow: hidden;
+        font-family: Arial, sans-serif;
+    }
+
+    .bcms-msg-top-holder {
+        position: relative;
+        width: 540px;
+        margin: 0 auto;
+    }
+
+    .bcms-msg-top-block {
+        text-align: center;
+        font-size: 14px;
+    }
+
+    .bcms-msg-cookies {
+        position: absolute;
+        right: -140px;
+        top: -21px;
+        width: 119px;
+        height: 85px;
+        background: url('images/cookies.png') no-repeat center top;
+    }
+
+    .bcms-msg-js {
+    position: absolute;
+right: -140px;
+top: -20px;
+width: 195px;
+height: 93px;
+background: url('images/js.png') no-repeat center top;
+    }

@@ -152,7 +152,7 @@
     <Compile Include="Models\Migrations\InitialSetup.cs" />
     <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Registration\BlogJavaScriptModuleDescriptor.cs" />
+    <Compile Include="Registration\BlogJsModuleIncludeDescriptor.cs" />
     <Compile Include="Services\DefaultAuthorService.cs" />
     <Compile Include="Services\DefaultBlogService.cs" />
     <Compile Include="Services\DefaultOptionService.cs" />
@@ -181,6 +181,7 @@
     <EmbeddedResource Include="Scripts\bcms.blog.js" />
     <Content Include="BuildConfiguration.xml" />
     <EmbeddedResource Include="Scripts\bcms.blog.min.js" />
+    <EmbeddedResource Include="Content\Styles\bcms.blog.min.css" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>

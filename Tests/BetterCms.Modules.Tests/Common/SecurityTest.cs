@@ -5,6 +5,7 @@ using System.Web.Mvc;
 
 using Autofac;
 
+using BetterCms.Configuration;
 using BetterCms.Module.Blog;
 using BetterCms.Module.MediaManager;
 using BetterCms.Module.Pages;
@@ -21,7 +22,7 @@ namespace BetterCms.Test.Module.Common
     [TestFixture]
     public class SecurityTest : TestBase
     {
-        private readonly RootModuleDescriptor[] moduleDescriptors = new[] { new RootModuleDescriptor() };
+        private readonly RootModuleDescriptor[] moduleDescriptors = new[] { new RootModuleDescriptor(new CmsConfigurationSection()) };
         private readonly ContainerBuilder container = new ContainerBuilder();
         private readonly Mock<ICmsConfiguration> cmsConfigurationMock = new Mock<ICmsConfiguration>();
 
@@ -96,7 +97,7 @@ namespace BetterCms.Test.Module.Common
         {
             foreach (var descriptor in moduleDescriptors)
             {
-                var roles = descriptor.RegisterUserRoles(container, cmsConfigurationMock.Object);
+                var roles = descriptor.RegisterUserRoles(container);
                 Assert.IsNotNull(roles);
             }
         }

@@ -40,14 +40,22 @@ namespace BetterCms.Module.AmazonS3Storage
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="WindowsAzureStorageModuleDescriptor" /> class.
+        /// </summary>
+        /// <param name="configuration">The configuration.</param>
+        public WindowsAzureStorageModuleDescriptor(ICmsConfiguration configuration)
+            : base(configuration)
+        {
+        }
+
+        /// <summary>
         /// Registers module types.
         /// </summary>
         /// <param name="context">The area registration context.</param>
         /// <param name="containerBuilder">The container builder.</param>
-        /// <param name="configuration">The configuration.</param>
-        public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
-            if (configuration.Storage.ServiceType == StorageServiceType.Auto)
+            if (Configuration.Storage.ServiceType == StorageServiceType.Auto)
             {
                 // TODO: check if Storage module is registered if throw cmsexception.                
                 containerBuilder.RegisterType<WindowsAzureStorageService>().As<IStorageService>().SingleInstance();

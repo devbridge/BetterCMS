@@ -30,68 +30,68 @@ namespace BetterCms.Module.Pages
         /// <summary>
         /// bcms.pages.js java script module descriptor.
         /// </summary>
-        private readonly PagesJavaScriptModuleDescriptor pagesJavaScriptModuleDescriptor;
+        private readonly PagesJsModuleIncludeDescriptor pagesJsModuleIncludeDescriptor;
 
         /// <summary>
         /// bcms.pages.properties.js java script module descriptor.
         /// </summary>
-        private readonly PagePropertiesJavaScriptModuleDescriptor pagePropertiesJavaScriptModuleDescriptor;
+        private readonly PagePropertiesJsModuleIncludeDescriptor pagePropertiesJsModuleIncludeDescriptor;
 
         /// <summary>
         /// bcms.pages.seo.js java script module descriptor.
         /// </summary>
-        private readonly SeoJavaScriptModuleDescriptor seoJavaScriptModuleDescriptor;
+        private readonly SeoJsModuleIncludeDescriptor seoJsModuleIncludeDescriptor;
 
         /// <summary>
         /// bcms.pages.tags.js java script module descriptor.
         /// </summary>
-        private readonly TagsJavaScriptModuleDescriptor tagsJavaScriptModuleDescriptor;
+        private readonly TagsJsModuleIncludeDescriptor tagsJsModuleIncludeDescriptor;
 
         /// <summary>
         /// bcms.pages.content.js java script module descriptor.
         /// </summary>
-        private readonly PagesContentJavaScriptModuleDescriptor pagesContentJavaScriptModuleDescriptor;
+        private readonly PagesContentJsModuleIncludeDescriptor pagesContentJsModuleIncludeDescriptor;
         
         /// <summary>
         /// bcms.pages.redirects.js java script module descriptor.
         /// </summary>
-        private readonly RedirectsJavaScriptModuleDescriptor redirectsJavaScriptModuleDescriptor;
+        private readonly RedirectsJsModuleIncludeDescriptor redirectsJsModuleIncludeDescriptor;
 
         /// <summary>
         /// bcms.pages.widgets.js java script module descriptor.
         /// </summary>
-        private readonly WidgetsJavaScriptModuleDescriptor widgetsJavaScriptModuleDescriptor;
+        private readonly WidgetsJsModuleIncludeDescriptor widgetsJsModuleIncludeDescriptor;
 
         /// <summary>
         /// bcms.pages.templates.js java script module descriptor.
         /// </summary>
-        private readonly TemplatesJavaScriptModuleDescriptor templatesJavaScriptModuleDescriptor;
+        private readonly TemplatesJsModuleIncludeDescriptor templatesJsModuleIncludeDescriptor;
 
         /// <summary>
         /// bcms.pages.history.js java script module descriptor.
         /// </summary>
-        private readonly HistoryJavaScriptModuleDescriptor historyJavaScriptModuleDescriptor;
+        private readonly HistoryJsModuleIncludeDescriptor historyJsModuleIncludeDescriptor;
 
         /// <summary>
         /// bcms.pages.sitemap.js java script module descriptor.
         /// </summary>
-        private readonly SitemapJavaScriptModuleDescriptor sitemapJavaScriptModuleDescriptor;
+        private readonly SitemapJsModuleIncludeDescriptor sitemapJsModuleIncludeDescriptor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PagesModuleDescriptor" /> class.
         /// </summary>
-        public PagesModuleDescriptor()
+        public PagesModuleDescriptor(ICmsConfiguration configuration) : base(configuration)
         {
-            pagesJavaScriptModuleDescriptor = new PagesJavaScriptModuleDescriptor(this);
-            pagePropertiesJavaScriptModuleDescriptor = new PagePropertiesJavaScriptModuleDescriptor(this);
-            seoJavaScriptModuleDescriptor = new SeoJavaScriptModuleDescriptor(this);
-            pagesContentJavaScriptModuleDescriptor = new PagesContentJavaScriptModuleDescriptor(this);
-            widgetsJavaScriptModuleDescriptor = new WidgetsJavaScriptModuleDescriptor(this);
-            tagsJavaScriptModuleDescriptor = new TagsJavaScriptModuleDescriptor(this);
-            redirectsJavaScriptModuleDescriptor = new RedirectsJavaScriptModuleDescriptor(this);
-            templatesJavaScriptModuleDescriptor = new TemplatesJavaScriptModuleDescriptor(this);
-            historyJavaScriptModuleDescriptor = new HistoryJavaScriptModuleDescriptor(this);
-            sitemapJavaScriptModuleDescriptor = new SitemapJavaScriptModuleDescriptor(this);
+            pagesJsModuleIncludeDescriptor = new PagesJsModuleIncludeDescriptor(this);
+            pagePropertiesJsModuleIncludeDescriptor = new PagePropertiesJsModuleIncludeDescriptor(this);
+            seoJsModuleIncludeDescriptor = new SeoJsModuleIncludeDescriptor(this);
+            pagesContentJsModuleIncludeDescriptor = new PagesContentJsModuleIncludeDescriptor(this);
+            widgetsJsModuleIncludeDescriptor = new WidgetsJsModuleIncludeDescriptor(this);
+            tagsJsModuleIncludeDescriptor = new TagsJsModuleIncludeDescriptor(this);
+            redirectsJsModuleIncludeDescriptor = new RedirectsJsModuleIncludeDescriptor(this);
+            templatesJsModuleIncludeDescriptor = new TemplatesJsModuleIncludeDescriptor(this);
+            historyJsModuleIncludeDescriptor = new HistoryJsModuleIncludeDescriptor(this);
+            sitemapJsModuleIncludeDescriptor = new SitemapJsModuleIncludeDescriptor(this);
         }
 
         /// <summary>
@@ -140,9 +140,8 @@ namespace BetterCms.Module.Pages
         /// Registers module types.
         /// </summary>
         /// <param name="context">The area registration context.</param>
-        /// <param name="containerBuilder">The container builder.</param>
-        /// <param name="configuration">The configuration.</param>
-        public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        /// <param name="containerBuilder">The container builder.</param>        
+        public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
             RegisterStylesheetRendererType<PageStylesheetAccessor, PageProperties>(containerBuilder);
 
@@ -164,38 +163,35 @@ namespace BetterCms.Module.Pages
         /// <summary>
         /// Registers the style sheet files.
         /// </summary>
-        /// <param name="containerBuilder">The container builder.</param>
-        /// <param name="configuration">The configuration.</param>
         /// <returns>Enumerator of known module style sheet files.</returns>
-        public override IEnumerable<string> RegisterStyleSheetFiles(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        public override IEnumerable<CssIncludeDescriptor> RegisterCssIncludes()
         {
             return new[]
                 {
-                    "/file/bcms-pages/Content/Css/bcms.page.css",
-                    "/file/bcms-pages/Content/Css/bcms.navigation.css"
+                    new CssIncludeDescriptor(this, "bcms.page.css"),
+                    new CssIncludeDescriptor(this, "bcms.navigation.css")
                 };
         }
 
         /// <summary>
         /// Gets known client side modules in page module.
         /// </summary>
-        /// <param name="configuration">The CMS configuration.</param>
         /// <returns>List of known client side modules in page module.</returns>
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
-        public override IEnumerable<JavaScriptModuleDescriptor> RegisterJavaScriptModules(ICmsConfiguration configuration)
+        public override IEnumerable<JsIncludeDescriptor> RegisterJsIncludes()
         {            
-            return new JavaScriptModuleDescriptor[]
+            return new JsIncludeDescriptor[]
                 {
-                    pagesJavaScriptModuleDescriptor,
-                    pagePropertiesJavaScriptModuleDescriptor,
-                    pagesContentJavaScriptModuleDescriptor,
-                    redirectsJavaScriptModuleDescriptor,
-                    seoJavaScriptModuleDescriptor,
-                    tagsJavaScriptModuleDescriptor,
-                    widgetsJavaScriptModuleDescriptor,
-                    templatesJavaScriptModuleDescriptor,
-                    historyJavaScriptModuleDescriptor,
-                    sitemapJavaScriptModuleDescriptor
+                    pagesJsModuleIncludeDescriptor,
+                    pagePropertiesJsModuleIncludeDescriptor,
+                    pagesContentJsModuleIncludeDescriptor,
+                    redirectsJsModuleIncludeDescriptor,
+                    seoJsModuleIncludeDescriptor,
+                    tagsJsModuleIncludeDescriptor,
+                    widgetsJsModuleIncludeDescriptor,
+                    templatesJsModuleIncludeDescriptor,
+                    historyJsModuleIncludeDescriptor,
+                    sitemapJsModuleIncludeDescriptor
                 };
         }
 
@@ -203,13 +199,12 @@ namespace BetterCms.Module.Pages
         /// Registers the sidebar main projections.
         /// </summary>
         /// <param name="containerBuilder">The container builder.</param>
-        /// <param name="configuration">The configuration.</param>
         /// <returns>Sidebar main action projections.</returns>
-        public override IEnumerable<IPageActionProjection> RegisterSidebarMainProjections(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        public override IEnumerable<IPageActionProjection> RegisterSidebarMainProjections(ContainerBuilder containerBuilder)
         {
             return new IPageActionProjection[]
                 {
-                    new DropDownListProjection(pagesJavaScriptModuleDescriptor, page => "changePublishStatus")
+                    new DropDownListProjection(pagesJsModuleIncludeDescriptor, page => "changePublishStatus")
                         {
                             Items = new Func<IPage, DropDownListProjectionItem>[]
                                 {
@@ -243,7 +238,7 @@ namespace BetterCms.Module.Pages
                                 AccessRole = RootModuleConstants.UserRoles.PublishContent
                         }, 
                     
-                    new ButtonActionProjection(pagePropertiesJavaScriptModuleDescriptor, page => "editPageProperties")
+                    new ButtonActionProjection(pagePropertiesJsModuleIncludeDescriptor, page => "editPageProperties")
                             {
                                 Order = 20,
                                 Title = () => PagesGlobalization.Sidebar_EditPagePropertiesButtonTitle,
@@ -251,7 +246,7 @@ namespace BetterCms.Module.Pages
                                 AccessRole = RootModuleConstants.UserRoles.EditContent
                             },
 
-                    new ButtonActionProjection(seoJavaScriptModuleDescriptor, page => "openEditSeoDialog")
+                    new ButtonActionProjection(seoJsModuleIncludeDescriptor, page => "openEditSeoDialog")
                             {
                                 Order = 30,
                                 Title = () => PagesGlobalization.Sidebar_EditSeoButtonTitle,
@@ -265,14 +260,14 @@ namespace BetterCms.Module.Pages
                         "div",
                         new IPageActionProjection[]
                             {
-                                new ButtonActionProjection(pagesJavaScriptModuleDescriptor, page => "addNewPage")
+                                new ButtonActionProjection(pagesJsModuleIncludeDescriptor, page => "addNewPage")
                                 {
                                     Order = 10,
                                     Title = () => PagesGlobalization.Sidebar_AddNewPageButtonTitle,
                                     CssClass = page => "bcms-sidemenu-btn bcms-btn-add",
                                     AccessRole = RootModuleConstants.UserRoles.EditContent
                                 },
-                                new ButtonActionProjection(pagesJavaScriptModuleDescriptor, page => "clonePage")
+                                new ButtonActionProjection(pagesJsModuleIncludeDescriptor, page => "clonePage")
                                 {
                                     Order = 20,
                                     Title = () => PagesGlobalization.Siderbar_ClonePageButtonTitle,
@@ -285,7 +280,7 @@ namespace BetterCms.Module.Pages
                             CssClass = page => "bcms-buttons-block"
                         },                          
 
-                    new ButtonActionProjection(pagesJavaScriptModuleDescriptor, page => "deleteCurrentPage")
+                    new ButtonActionProjection(pagesJsModuleIncludeDescriptor, page => "deleteCurrentPage")
                         {
                             Order = 900,
                             Title = () => PagesGlobalization.Sidebar_DeletePageButtonTitle,
@@ -299,9 +294,8 @@ namespace BetterCms.Module.Pages
         /// Registers the sidebar side projections.
         /// </summary>
         /// <param name="containerBuilder">The container builder.</param>
-        /// <param name="configuration">The configuration.</param>
         /// <returns>Sidebar action projections.</returns>
-        public override IEnumerable<IPageActionProjection> RegisterSidebarSideProjections(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        public override IEnumerable<IPageActionProjection> RegisterSidebarSideProjections(ContainerBuilder containerBuilder)
         {
             return new IPageActionProjection[]
                 {
@@ -335,13 +329,12 @@ namespace BetterCms.Module.Pages
         /// Registers the site settings projections.
         /// </summary>
         /// <param name="containerBuilder">The container builder.</param>
-        /// <param name="configuration">The configuration.</param>
         /// <returns>Settings action projections.</returns>
-        public override IEnumerable<IPageActionProjection> RegisterSiteSettingsProjections(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        public override IEnumerable<IPageActionProjection> RegisterSiteSettingsProjections(ContainerBuilder containerBuilder)
         {
             return new IPageActionProjection[]
                 {
-                    new LinkActionProjection(pagesJavaScriptModuleDescriptor, page => "loadSiteSettingsPageList")
+                    new LinkActionProjection(pagesJsModuleIncludeDescriptor, page => "loadSiteSettingsPageList")
                         {
                             Order = 1000,
                             Title = () => PagesGlobalization.SiteSettings_PagesMenuItem,
@@ -351,14 +344,14 @@ namespace BetterCms.Module.Pages
                     
                     new SeparatorProjection(1500), 
 
-                    new LinkActionProjection(tagsJavaScriptModuleDescriptor, page => "loadSiteSettingsCategoryList")
+                    new LinkActionProjection(tagsJsModuleIncludeDescriptor, page => "loadSiteSettingsCategoryList")
                         {
                             Order = 2000,
                             Title = () => PagesGlobalization.SiteSettings_CategoriesMenuItem,
                             CssClass = page => "bcms-sidebar-link",
                             AccessRole = RootModuleConstants.UserRoles.EditContent
                         },
-                   new LinkActionProjection(tagsJavaScriptModuleDescriptor, page => "loadSiteSettingsTagList")
+                   new LinkActionProjection(tagsJsModuleIncludeDescriptor, page => "loadSiteSettingsTagList")
                         {
                             Order = 2100,
                             Title = () => PagesGlobalization.SiteSettings_TagsMenuItem,
@@ -368,7 +361,7 @@ namespace BetterCms.Module.Pages
 
                     new SeparatorProjection(2500), 
 
-                    new LinkActionProjection(widgetsJavaScriptModuleDescriptor, page => "loadSiteSettingsWidgetList")
+                    new LinkActionProjection(widgetsJsModuleIncludeDescriptor, page => "loadSiteSettingsWidgetList")
                         {
                             Order = 3000,
                             Title = () => PagesGlobalization.SiteSettings_WidgetsMenuItem,
@@ -376,7 +369,7 @@ namespace BetterCms.Module.Pages
                             AccessRole = RootModuleConstants.UserRoles.Administration
                         },
                         
-                     new LinkActionProjection(templatesJavaScriptModuleDescriptor, page => "loadSiteSettingsTemplateList")
+                     new LinkActionProjection(templatesJsModuleIncludeDescriptor, page => "loadSiteSettingsTemplateList")
                         {
                             Order = 3100,
                             Title = () => PagesGlobalization.SiteSettings_TemplatesMenuItem,
@@ -386,7 +379,7 @@ namespace BetterCms.Module.Pages
 
                     new SeparatorProjection(3500), 
 
-                    new LinkActionProjection(redirectsJavaScriptModuleDescriptor, page => "loadSiteSettingsRedirectList")
+                    new LinkActionProjection(redirectsJsModuleIncludeDescriptor, page => "loadSiteSettingsRedirectList")
                         {
                             Order = 4000,
                             Title = () => PagesGlobalization.SiteSettings_Redirects,
@@ -394,7 +387,7 @@ namespace BetterCms.Module.Pages
                             AccessRole = RootModuleConstants.UserRoles.EditContent
                         },
 
-                    new LinkActionProjection(sitemapJavaScriptModuleDescriptor, page => "loadSiteSettingsSitemap")
+                    new LinkActionProjection(sitemapJsModuleIncludeDescriptor, page => "loadSiteSettingsSitemap")
                         {
                             Order = 4500,
                             Title = () => NavigationGlobalization.SiteSettings_SitemapMenuItem,

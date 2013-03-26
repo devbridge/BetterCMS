@@ -3,7 +3,6 @@ using System.Linq;
 using System.Web.Mvc;
 
 using BetterCms.Core.DataContracts;
-using BetterCms.Core.Environment.Host;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Modules.Registration;
 using BetterCms.Core.Security;
@@ -40,17 +39,17 @@ namespace BetterCms.Module.Root.Controllers
         /// <summary>
         /// The contract for BetterCMS application host.
         /// </summary>
-        private readonly ICmsHost cmsHost;
+        private readonly ICmsConfiguration configuration;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SidebarController" /> class.
         /// </summary>
         /// <param name="modulesRegistration">The modules.</param>
         /// <param name="pageAccessor">The page extensions.</param>
-        /// <param name="cmsHost">The contract for BetterCMS application host.</param>
-        public SidebarController(IModulesRegistration modulesRegistration, IPageAccessor pageAccessor, ICmsHost cmsHost)
+        /// <param name="configuration">The CMS configuration.</param>
+        public SidebarController(IModulesRegistration modulesRegistration, IPageAccessor pageAccessor, ICmsConfiguration configuration)
         {
-            this.cmsHost = cmsHost;
+            this.configuration = configuration;
             this.modulesRegistration = modulesRegistration;
             this.pageAccessor = pageAccessor;
         }
@@ -86,7 +85,7 @@ namespace BetterCms.Module.Root.Controllers
                         Projections = modulesRegistration.GetSidebarBodyProjections().OrderBy(f => f.Order)
                     };
 
-                model.Version = cmsHost.Version;
+                model.Version = configuration.Version;
             }
             catch (CmsException ex)
             {

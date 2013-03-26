@@ -7,12 +7,12 @@
   <Target Name="Minify">
 
     <ItemGroup>      
-      <CssFiles Include="$(ProjectDir)Content\Css\bcms.templates.css" />
+      <CssFiles Include="$(ProjectDir)Content\Styles\bcms.templates.css" />
     </ItemGroup>
 
     <CssCompressorTask
           SourceFiles="@(CssFiles)"
-          OutputFile="$(ProjectDir)Content\Css\bcms.templates.min.css"
+          OutputFile="$(ProjectDir)Content\Styles\bcms.templates.min.css"
        />
 
   </Target>

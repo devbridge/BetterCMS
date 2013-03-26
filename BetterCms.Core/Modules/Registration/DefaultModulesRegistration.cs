@@ -56,7 +56,7 @@ namespace BetterCms.Core.Modules.Registration
         /// <summary>
         /// Thread safe list of known java script modules dictionary.
         /// </summary>
-        private readonly Dictionary<string, JavaScriptModuleDescriptor> knownJavaScriptModules;
+        private readonly Dictionary<string, JsIncludeDescriptor> knownJavaScriptModules;
 
         private readonly List<IUserRole> knownUserRoles;
 
@@ -83,7 +83,7 @@ namespace BetterCms.Core.Modules.Registration
         /// <summary>
         /// Thread safe style sheet files collection.
         /// </summary>
-        private readonly List<string> knownStyleSheetFiles;        
+        private readonly List<CssIncludeDescriptor> knownStyleSheetFiles;        
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultModulesRegistration" /> class.
@@ -100,13 +100,13 @@ namespace BetterCms.Core.Modules.Registration
 
             knownModuleDescriptorTypes = new Dictionary<string, Type>();
             knownModules = new Dictionary<string, ModuleRegistrationContext>();
-            knownJavaScriptModules = new Dictionary<string, JavaScriptModuleDescriptor>();
+            knownJavaScriptModules = new Dictionary<string, JsIncludeDescriptor>();
             knownUserRoles = new List<IUserRole>();
             knownSidebarHeadContentItems = new List<IPageActionProjection>();
             knownSidebarContentItems = new List<IPageActionProjection>();
             knownSidebarBodyContentItems = new List<IPageActionProjection>();
             knownSiteSettingsItems = new List<IPageActionProjection>();
-            knownStyleSheetFiles = new List<string>();            
+            knownStyleSheetFiles = new List<CssIncludeDescriptor>();            
         }
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace BetterCms.Core.Modules.Registration
         /// Gets all known JS modules.
         /// </summary>
         /// <returns>Enumerator of known JS modules.</returns>
-        public IEnumerable<JavaScriptModuleDescriptor> GetJavaScriptModules()
+        public IEnumerable<JsIncludeDescriptor> GetJavaScriptModules()
         {
             return knownJavaScriptModules.Values;
         }
@@ -198,7 +198,7 @@ namespace BetterCms.Core.Modules.Registration
         /// Gets the style sheet files.
         /// </summary>
         /// <returns>Enumerator of known modules style sheet files.</returns>
-        public IEnumerable<string> GetStyleSheetFiles()
+        public IEnumerable<CssIncludeDescriptor> GetStyleSheetFiles()
         {
             return knownStyleSheetFiles;
         }
@@ -242,17 +242,17 @@ namespace BetterCms.Core.Modules.Registration
 
             ModuleRegistrationContext registrationContext = new ModuleRegistrationContext(moduleDescriptor);            
            
-            moduleDescriptor.RegisterModuleTypes(registrationContext, containerBuilder, cmsConfiguration);            
-            moduleDescriptor.RegisterModuleCommands(registrationContext, containerBuilder, cmsConfiguration);
-            moduleDescriptor.RegisterModuleApiContexts(registrationContext, containerBuilder, cmsConfiguration);
-            moduleDescriptor.RegisterModuleControllers(registrationContext, containerBuilder, cmsConfiguration, controllerExtensions);
-            moduleDescriptor.RegisterCustomRoutes(registrationContext, containerBuilder, cmsConfiguration);
+            moduleDescriptor.RegisterModuleTypes(registrationContext, containerBuilder);            
+            moduleDescriptor.RegisterModuleCommands(registrationContext, containerBuilder);
+            moduleDescriptor.RegisterModuleApiContexts(registrationContext, containerBuilder);
+            moduleDescriptor.RegisterModuleControllers(registrationContext, containerBuilder, controllerExtensions);
+            moduleDescriptor.RegisterCustomRoutes(registrationContext, containerBuilder);
 
             ContextScopeProvider.RegisterTypes(containerBuilder);
 
             knownModules.Add(moduleDescriptor.AreaName.ToLowerInvariant(), registrationContext);
             
-            var jsModules = moduleDescriptor.RegisterJavaScriptModules(cmsConfiguration);            
+            var jsModules = moduleDescriptor.RegisterJsIncludes();            
             if (jsModules != null)
             {
                 foreach (var jsModuleDescriptor in jsModules)
@@ -261,22 +261,22 @@ namespace BetterCms.Core.Modules.Registration
                 }
             }
 
-            var userRoles = moduleDescriptor.RegisterUserRoles(containerBuilder, cmsConfiguration);
+            var userRoles = moduleDescriptor.RegisterUserRoles(containerBuilder);
             UpdateConcurrentBagWithEnumerator(knownUserRoles, userRoles);
 
-            var sidebarHeadProjections = moduleDescriptor.RegisterSidebarHeaderProjections(containerBuilder, cmsConfiguration);
+            var sidebarHeadProjections = moduleDescriptor.RegisterSidebarHeaderProjections(containerBuilder);
             UpdateConcurrentBagWithEnumerator(knownSidebarHeadContentItems, sidebarHeadProjections);
 
-            var sidebarSideProjections = moduleDescriptor.RegisterSidebarSideProjections(containerBuilder, cmsConfiguration);
+            var sidebarSideProjections = moduleDescriptor.RegisterSidebarSideProjections(containerBuilder);
             UpdateConcurrentBagWithEnumerator(knownSidebarContentItems, sidebarSideProjections);
 
-            var sidebarBodyProjections = moduleDescriptor.RegisterSidebarMainProjections(containerBuilder, cmsConfiguration);
+            var sidebarBodyProjections = moduleDescriptor.RegisterSidebarMainProjections(containerBuilder);
             UpdateConcurrentBagWithEnumerator(knownSidebarBodyContentItems, sidebarBodyProjections);
 
-            var siteSettingsProjections = moduleDescriptor.RegisterSiteSettingsProjections(containerBuilder, cmsConfiguration);
+            var siteSettingsProjections = moduleDescriptor.RegisterSiteSettingsProjections(containerBuilder);
             UpdateConcurrentBagWithEnumerator(knownSiteSettingsItems, siteSettingsProjections);
 
-            var styleSheetFiles = moduleDescriptor.RegisterStyleSheetFiles(containerBuilder, cmsConfiguration);
+            var styleSheetFiles = moduleDescriptor.RegisterCssIncludes();
             if (styleSheetFiles != null)
             {
                 foreach (var styleSheetFile in styleSheetFiles)

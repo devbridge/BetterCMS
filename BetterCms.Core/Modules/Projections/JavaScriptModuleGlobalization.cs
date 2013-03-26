@@ -28,17 +28,17 @@ namespace BetterCms.Core.Modules.Projections
         /// <summary>
         /// Resources module.
         /// </summary>
-        private readonly JavaScriptModuleDescriptor javaScriptModule;
+        private readonly JsIncludeDescriptor jsModuleInclude;
         
         /// <summary>
         /// Initializes a new instance of the <see cref="JavaScriptModuleGlobalization" /> class.
         /// </summary>
-        /// <param name="javaScriptModule">The java script module.</param>
+        /// <param name="jsModuleInclude">The java script module.</param>
         /// <param name="name">The name.</param>
         /// <param name="resource">A function to retrieve resource in current culture.</param>
-        public JavaScriptModuleGlobalization(JavaScriptModuleDescriptor javaScriptModule, string name, Func<string> resource)
+        public JavaScriptModuleGlobalization(JsIncludeDescriptor jsModuleInclude, string name, Func<string> resource)
         {
-            this.javaScriptModule = javaScriptModule;
+            this.jsModuleInclude = jsModuleInclude;
             this.name = name;
             this.resource = resource;
         }
@@ -62,17 +62,17 @@ namespace BetterCms.Core.Modules.Projections
                 var resourceObject = resource();
                 if (resourceObject != null)
                 {
-                    string globalization = string.Format("{0}.globalization.{1} = '{2}';", javaScriptModule.FriendlyName, name, resourceObject);
+                    string globalization = string.Format("{0}.globalization.{1} = '{2}';", jsModuleInclude.FriendlyName, name, resourceObject);
                     html.ViewContext.Writer.WriteLine(globalization);
                 }
                 else
                 {
-                    Log.WarnFormat("Resource object not found to globalize {0}.{1} from resource {2}.", javaScriptModule, name, resource);
+                    Log.WarnFormat("Resource object not found to globalize {0}.{1} from resource {2}.", jsModuleInclude, name, resource);
                 }
             }
             catch (Exception ex)
             {
-                Log.WarnFormat("Failed to render globalization for {0}.{1} from resource {2}.", ex, javaScriptModule, name, javaScriptModule);
+                Log.WarnFormat("Failed to render globalization for {0}.{1} from resource {2}.", ex, jsModuleInclude, name, jsModuleInclude);
             }
         }        
     }

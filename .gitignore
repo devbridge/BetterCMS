@@ -61,3 +61,8 @@ logs
 /Modules/BetterCms.Module.Users/Content/Css/bcms.users.min.css
 /Modules/BetterCms.Module.Users/Scripts/bcms.users.min.js
 /Modules/BetterCms.Module.Pages/Scripts/bcms.pages.min.js
+/Build/BetterCms.NugetPackage/Resources
+/Modules/BetterCms.Module.MediaManager/Content/Styles/bcms.media.min.css
+/Modules/BetterCms.Module.Pages/Content/Styles/bcms.pages.min.css
+/Modules/BetterCms.Module.Templates/Content/Styles/bcms.templates.min.css
+/Modules/BetterCms.Module.Users/Content/Styles/bcms.users.min.css

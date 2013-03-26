@@ -7,7 +7,7 @@
   <Target Name="Minify">
 
     <ItemGroup>      
-      <CssFiles Include="$(ProjectDir)Content\Css\bcms.users.css" />
+      <CssFiles Include="$(ProjectDir)Content\Styles\bcms.users.css" />
 
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.role.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.user.js" />
@@ -16,7 +16,7 @@
 
     <CssCompressorTask
           SourceFiles="@(CssFiles)"
-          OutputFile="$(ProjectDir)Content\Css\bcms.users.min.css"
+          OutputFile="$(ProjectDir)Content\Styles\bcms.users.min.css"
        />
 
     <JavaScriptCompressorTask
@@ -24,7 +24,7 @@
           OutputFile="$(ProjectDir)Scripts\bcms.users.min.js"
           CompressionType="Standard"
           ObfuscateJavaScript="True"
-          PreserveAllSemicolons="False"
+          PreserveAllSemicolons="True"
           DisableOptimizations="No"
           EncodingType="Default"
           LineBreakPosition="-1"

@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
-namespace BetterCms.Module.Root.Models.Rendering
+using BetterCms.Core.Modules;
+
+namespace BetterCms.Module.Root.ViewModels.Rendering
 {
     public class RenderStyleSheetIncludesViewModel
     {
@@ -9,12 +12,12 @@ namespace BetterCms.Module.Root.Models.Rendering
             StyleSheetFiles = new List<string>();
         }
 
-        public RenderStyleSheetIncludesViewModel(IEnumerable<string> styleSheetFiles)
+        public RenderStyleSheetIncludesViewModel(IEnumerable<CssIncludeDescriptor> styleSheetFiles)
         {
-            StyleSheetFiles = styleSheetFiles;
+            StyleSheetFiles = styleSheetFiles.Select(f => f.Path).ToList();
         }
 
-        public IEnumerable<string> StyleSheetFiles { get; set; }
+        public IEnumerable<string> StyleSheetFiles { get; private set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
@@ -23,9 +26,8 @@ namespace BetterCms.Module.Root.Models.Rendering
         /// A <see cref="System.String" /> that represents this instance.
         /// </returns>
         public override string ToString()
-        {
-            // TODO: cannot add any key from object
-            return string.Empty;
+        {            
+            return string.Join(", ", StyleSheetFiles);
         }
     }
 }

@@ -119,7 +119,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Content\Css\images\" />
+    <Folder Include="Content\Styles\images\" />
     <Folder Include="Controllers\" />
     <Folder Include="Provider\" />
     <Folder Include="Scripts\" />
@@ -139,8 +139,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Content\Css\bcms.templates.css" />
+    <EmbeddedResource Include="Content\Styles\bcms.templates.css" />
     <Content Include="BuildConfiguration.xml" />
+    <EmbeddedResource Include="Content\Styles\bcms.templates.min.css" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>

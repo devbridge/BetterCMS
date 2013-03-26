@@ -7,8 +7,8 @@
   <Target Name="Minify">
 
     <ItemGroup>      
-      <CssFiles Include="$(ProjectDir)Content\Css\bcms.navigation.css" />
-      <CssFiles Include="$(ProjectDir)Content\Css\bcms.page.css" />
+      <CssFiles Include="$(ProjectDir)Content\Styles\bcms.navigation.css" />
+      <CssFiles Include="$(ProjectDir)Content\Styles\bcms.page.css" />
 
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.pages.content.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.pages.history.js" />
@@ -25,16 +25,16 @@
 
     <CssCompressorTask
           SourceFiles="@(CssFiles)"
-          OutputFile="$(ProjectDir)Content\Css\bcms.pages.min.css"
+          OutputFile="$(ProjectDir)Content\Styles\bcms.pages.min.css"
        />
 
     <JavaScriptCompressorTask
           SourceFiles="@(JavaScriptFiles)"
           OutputFile="$(ProjectDir)Scripts\bcms.pages.min.js"
-          CompressionType="None"
-          ObfuscateJavaScript="False"
+          CompressionType="Standard"
+          ObfuscateJavaScript="True"
           PreserveAllSemicolons="True"
-          DisableOptimizations="Yes"
+          DisableOptimizations="No"
           EncodingType="Default"
           LineBreakPosition="-1"
           LoggingType="Info"

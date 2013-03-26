@@ -28,7 +28,7 @@ namespace BetterCms.Core.Modules.Registration
         /// Gets all known JS modules.
         /// </summary>
         /// <returns>Enumerator of known JS modules.</returns>
-        IEnumerable<JavaScriptModuleDescriptor> GetJavaScriptModules();
+        IEnumerable<JsIncludeDescriptor> GetJavaScriptModules();
 
         IEnumerable<IUserRole> GetUserAccessRoles();
 
@@ -81,7 +81,7 @@ namespace BetterCms.Core.Modules.Registration
         /// Gets the style sheet files.
         /// </summary>
         /// <returns>Enumerator of known modules style sheet files.</returns>
-        IEnumerable<string> GetStyleSheetFiles();
+        IEnumerable<CssIncludeDescriptor> GetStyleSheetFiles();
 
         /// <summary>
         /// 

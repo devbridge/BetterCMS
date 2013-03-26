@@ -1,18 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Routing;
-
-using BetterCms.Core.Models;
-using BetterCms.Core.Modules.Projections;
 
 using Common.Logging;
 
 using Microsoft.Web.Mvc;
 
-namespace BetterCms.Core.Modules.JsModule
+namespace BetterCms.Core.Modules.Projections
 {
     public class JavaScriptModuleLinkTo<TController> : IActionProjection where TController : Controller
     {
@@ -22,21 +17,21 @@ namespace BetterCms.Core.Modules.JsModule
 
         private Expression<Action<TController>> urlExpression;
 
-        private JavaScriptModuleDescriptor javaScriptModule;
+        private JsIncludeDescriptor descriptor;
 
         private bool fullUrl;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="JavaScriptModuleLinkTo{TController}" /> class.
+        /// Initializes a new instance of the <see cref="BetterCms.Core.Modules.Projections.JavaScriptModuleLinkTo{TController}" /> class.
         /// </summary>
-        /// <param name="javaScriptModule">The java script module.</param>
+        /// <param name="descriptor">The java script module.</param>
         /// <param name="linkName">Name of the link.</param>
         /// <param name="urlExpression">The URL expression.</param>
         /// <param name="fullUrl">if set to <c>true</c> renders full URL.</param>
-        public JavaScriptModuleLinkTo(JavaScriptModuleDescriptor javaScriptModule, string linkName, Expression<Action<TController>> urlExpression, bool fullUrl = false)
+        public JavaScriptModuleLinkTo(JsIncludeDescriptor descriptor, string linkName, Expression<Action<TController>> urlExpression, bool fullUrl = false)
         {
             this.fullUrl = fullUrl;
-            this.javaScriptModule = javaScriptModule;
+            this.descriptor = descriptor;
             this.urlExpression = urlExpression;
             this.linkName = linkName;
         }
@@ -63,12 +58,12 @@ namespace BetterCms.Core.Modules.JsModule
                         url = string.Concat(requestUrl.Scheme, "://", requestUrl.Host, isCustomPort ? ":" + requestUrl.Port : string.Empty, url);
                     }
                 }
-                string link = string.Format("{0}.links.{1} = '{2}';", javaScriptModule.FriendlyName, linkName, url);
+                string link = string.Format("{0}.links.{1} = '{2}';", descriptor.FriendlyName, linkName, url);
                 html.ViewContext.Writer.WriteLine(link);
             }
             catch (Exception ex)
             {
-                Log.WarnFormat("Failed to render link '{0}' from expression {1} for java script module {2}.", ex, linkName, urlExpression, javaScriptModule);
+                Log.WarnFormat("Failed to render link '{0}' from expression {1} for java script module {2}.", ex, linkName, urlExpression, descriptor);
             }
         }
     }

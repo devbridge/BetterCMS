@@ -1,5 +1,4 @@
 ﻿using BetterCms.Core.Modules;
-using BetterCms.Core.Modules.JsModule;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Controllers;
@@ -9,14 +8,14 @@ namespace BetterCms.Module.Pages.Registration
     /// <summary>
     /// bcms.pages.seo.js module descriptor.
     /// </summary>
-    public class TagsJavaScriptModuleDescriptor : JavaScriptModuleDescriptor
+    public class TagsJsModuleIncludeDescriptor : JsIncludeDescriptor
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="TagsJavaScriptModuleDescriptor" /> class.
+        /// Initializes a new instance of the <see cref="TagsJsModuleIncludeDescriptor" /> class.
         /// </summary>
-        /// <param name="containerModule">The container module.</param>
-        public TagsJavaScriptModuleDescriptor(ModuleDescriptor containerModule)
-            : base(containerModule, "bcms.pages.tags")
+        /// <param name="module">The container module.</param>
+        public TagsJsModuleIncludeDescriptor(ModuleDescriptor module)
+            : base(module, "bcms.pages.tags")
         {
 
             Links = new IActionProjection[]

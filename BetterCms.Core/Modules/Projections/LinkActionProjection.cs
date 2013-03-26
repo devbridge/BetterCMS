@@ -1,7 +1,6 @@
 using System;
 
 using BetterCms.Core.DataContracts;
-using BetterCms.Core.Models;
 
 namespace BetterCms.Core.Modules.Projections
 {
@@ -13,21 +12,21 @@ namespace BetterCms.Core.Modules.Projections
         /// <summary>
         /// Initializes a new instance of the <see cref="LinkActionProjection" /> class.
         /// </summary>
-        /// <param name="parentModule">The parent module.</param>
+        /// <param name="parentModuleInclude">The parent module.</param>
         /// <param name="onClickAction">Name of the action to execute after button click.</param>
-        public LinkActionProjection(JavaScriptModuleDescriptor parentModule, Func<IPage, string> onClickAction)
-            : base("a", parentModule, onClickAction)
+        public LinkActionProjection(JsIncludeDescriptor parentModuleInclude, Func<IPage, string> onClickAction)
+            : base("a", parentModuleInclude, onClickAction)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LinkActionProjection" /> class.
         /// </summary>
-        /// <param name="parentModule">The parent module.</param>
+        /// <param name="parentModuleInclude">The parent module.</param>
         /// <param name="title">Link title.</param>
         /// <param name="onClickAction">Name of the action to execute after button click.</param>
-        public LinkActionProjection(JavaScriptModuleDescriptor parentModule, Func<string> title, Func<IPage, string> onClickAction)
-            : base("a", parentModule, title, onClickAction)
+        public LinkActionProjection(JsIncludeDescriptor parentModuleInclude, Func<string> title, Func<IPage, string> onClickAction)
+            : base("a", parentModuleInclude, title, onClickAction)
         {
         }
 

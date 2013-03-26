@@ -1,4 +1,4 @@
-﻿@model BetterCms.Module.Root.Models.Rendering.RenderStyleSheetIncludesViewModel
+﻿@model BetterCms.Module.Root.ViewModels.Rendering.RenderStyleSheetIncludesViewModel
 @foreach(var file in Model.StyleSheetFiles)
 {
     <link rel="stylesheet" type="text/css" href="@Url.Content(file)" />

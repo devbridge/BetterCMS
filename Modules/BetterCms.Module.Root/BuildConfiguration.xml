@@ -8,7 +8,8 @@
 
     <ItemGroup>      
       <CssFiles Include="$(ProjectDir)Content\Styles\base.css" />
-
+      <CssFiles Include="$(ProjectDir)Content\Styles\bcms.messages.css" />
+      
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.jquery-1.7.2.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.jquery-ui-1.9.0.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.jquery.unobtrusive-ajax.js" />
@@ -32,7 +33,8 @@
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.preview.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.redirect.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.sidemenu.js" />
-      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.siteSettings.js" />      
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.siteSettings.js" />
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.security.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.tabs.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.tooltip.js" />
     </ItemGroup>
@@ -45,10 +47,10 @@
     <JavaScriptCompressorTask
           SourceFiles="@(JavaScriptFiles)"
           OutputFile="$(ProjectDir)Scripts\bcms.root.min.js"
-          CompressionType="None"
-          ObfuscateJavaScript="False"
+          CompressionType="Standard"
+          ObfuscateJavaScript="True"
           PreserveAllSemicolons="True"
-          DisableOptimizations="Yes"
+          DisableOptimizations="No"
           EncodingType="Default"
           LineBreakPosition="-1"
           LoggingType="Info"

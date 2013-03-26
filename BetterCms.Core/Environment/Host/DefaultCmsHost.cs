@@ -31,11 +31,6 @@ namespace BetterCms.Core.Environment.Host
         private static readonly ILog Logger = LogManager.GetCurrentClassLogger();
 
         /// <summary>
-        /// A field to store current CMS version.
-        /// </summary>
-        private volatile Version currentVersion = null;
-
-        /// <summary>
         ///
         /// </summary>
         private readonly IModulesRegistration modulesRegistration;
@@ -46,31 +41,6 @@ namespace BetterCms.Core.Environment.Host
         {
             this.modulesRegistration = modulesRegistration;
             this.migrationRunner = migrationRunner;
-        }
-
-        /// <summary>
-        /// Gets the version.
-        /// </summary>
-        /// <value>
-        /// The version.
-        /// </value>
-        public Version Version
-        {
-            get
-            {
-                if (currentVersion == null)
-                {
-                    lock (this)
-                    {
-                        if (currentVersion == null)
-                        {
-                            currentVersion = Assembly.GetExecutingAssembly().GetName().Version;
-                        }
-                    }
-                }
-
-                return currentVersion;
-            }
         }
 
         /// <summary>

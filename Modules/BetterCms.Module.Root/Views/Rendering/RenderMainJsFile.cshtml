@@ -11,25 +11,20 @@ var console = window.console || {
     error: function() { }
 };
 
-/*
+requirejs.config({
+    enforceDefine: true,
+    
+    @if (Model.IsDebugMode && !Model.UseMinReferences)
+    {
+        <text>urlArgs: 'ver=' + '@Model.Version.ToString()',</text>
+    }
 
-S3: bettercms.s3.amazonaws.com
-S3 CDN: d3hf62uppzvupw.cloudfront.net
+    paths: {     
+         @Model.JavaScriptModules.RenderCommaSeparatedNamePathPairs(Model.UseMinReferences)
+    },    
 
-
-\version\bcms.root\bcms.root.min.js
-\version\bcms.pages.min.js
-\version\bcms.blog.min.js
-*/
-
-@if (!Model.UseMinReferences)
-{
-    @Html.Partial("Partial/RequireJsReleaseConfig", Model)
-}
-else
-{
-    @Html.Partial("Partial/RequireJsDebugConfig", Model)    
-}
+    waitSeconds: 15
+});
 
 requirejs(['bcms.jquery', 'bcms', 'bcms.processor'],
     

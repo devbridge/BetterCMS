@@ -21,10 +21,10 @@
     <JavaScriptCompressorTask
           SourceFiles="@(JavaScriptFiles)"
           OutputFile="$(ProjectDir)Scripts\bcms.blog.min.js"
-          CompressionType="None"
-          ObfuscateJavaScript="False"
+          CompressionType="Standard"
+          ObfuscateJavaScript="True"
           PreserveAllSemicolons="True"
-          DisableOptimizations="Yes"
+          DisableOptimizations="No"
           EncodingType="Default"
           LineBreakPosition="-1"
           LoggingType="Info"
