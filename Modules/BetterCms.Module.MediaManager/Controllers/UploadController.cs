@@ -222,6 +222,7 @@ namespace BetterCms.Module.MediaManager.Controllers
                     case "image/png":
                     case "image/jpg":
                     case "image/jpeg":
+                    case "image/pjpeg": // IE8 fix.
                     case "image/gif":
                         break;
                     default:
