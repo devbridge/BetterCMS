@@ -220,6 +220,7 @@ namespace BetterCms.Module.MediaManager.Controllers
                 switch (fileType)
                 {
                     case "image/png":
+                    case "image/x-png": // IE8 fix.
                     case "image/jpg":
                     case "image/jpeg":
                     case "image/pjpeg": // IE8 fix.
