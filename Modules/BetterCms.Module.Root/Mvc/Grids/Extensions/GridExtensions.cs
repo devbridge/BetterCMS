@@ -72,7 +72,7 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
         {
             return builder
                 .For(f => string.Format(
-                            "<a class=\"bcms-icn-delete bcms-grid-item-delete-button\"{0}>{1}</a>",
+                            "<a class=\"bcms-icn-delete bcms-grid-item-delete-button\"{0}>{1}</a><div style=\"display:none\" class=\"bcms-grid-item-message\"></div>",
                             renderId && f is IEditableGridItem
                                 ? string.Format("data-id=\"{0}\" data-version=\"{1}\"", ((IEditableGridItem)f).Id, ((IEditableGridItem)f).Version)
                                 : string.Empty,
