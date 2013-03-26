@@ -6,7 +6,6 @@ using Autofac.Core;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Dependencies;
 using BetterCms.Core.Exceptions;
-using BetterCms.Core.Models;
 using BetterCms.Core.Modules.Projections;
 
 using NHibernate.Proxy.DynamicProxy;

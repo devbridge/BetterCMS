@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-
-using BetterCms.Module.Root.ViewModels;
-
-namespace BetterCms.Module.Root.Models.Rendering
+﻿namespace BetterCms.Module.Root.ViewModels.Rendering
 {
     /// <summary>
     /// JS module view model.
     /// </summary>
-    public class JavaScriptModuleViewModel
+    public class JavaScriptModuleInclude
     {
         /// <summary>
         /// Gets or sets a value indicating whether this JavaScript module is auto generated.

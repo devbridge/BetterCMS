@@ -160,6 +160,7 @@
     <Compile Include="Exceptions\Api\CmsApiException.cs" />
     <Compile Include="Modules\CssIncludeDescriptor.cs" />
     <Compile Include="Modules\Projections\JavaScriptModuleLink.cs" />
+    <Compile Include="Mvc\Attributes\NoCacheAttribute.cs" />
     <Compile Include="Mvc\Extensions\VirtualPath.cs" />
     <Compile Include="Security\BcmsAuthorizeAttribute.cs" />
     <Compile Include="Security\IUserRole.cs" />

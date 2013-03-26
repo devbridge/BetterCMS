@@ -69,7 +69,7 @@ namespace BetterCms.Module.Root.Mvc
         /// <param name="command">The command.</param>
         /// <param name="request">The request.</param>
         /// <returns>False if exception was caught, and True otherwise.</returns>
-        public static bool ExecuteCommand<TRequest>(this ICommand<TRequest> command, TRequest request)
+        public static bool ExecuteCommand<TRequest>(this ICommandIn<TRequest> command, TRequest request)
         {
             try
             {
@@ -102,6 +102,46 @@ namespace BetterCms.Module.Root.Mvc
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Handles the command.
+        /// </summary>
+        /// <typeparam name="TResponse">The type of the command response.</typeparam>
+        /// <param name="command">The command.</param>
+        /// <returns>Command result or default(TResponse) value if exception occurred.</returns>
+        public static TResponse ExecuteCommand<TResponse>(this ICommandOut<TResponse> command)
+        {
+            try
+            {
+                return command.Execute();                
+            }
+            catch (ValidationException ex)
+            {
+                HandleValidationException(ex, command);
+            }
+            catch (ConcurrentDataException ex)
+            {
+                HandleConcurrentDataException(ex, command);
+            }
+            catch (EntityNotFoundException ex)
+            {
+                HandleEntityNotFoundException(ex, command);
+            }
+            catch (SecurityException ex)
+            {
+                HandleSecurityException(ex, command);
+            }
+            catch (CmsException ex)
+            {
+                HandleCmsException(ex, command);
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex, command);
+            }
+
+            return default(TResponse);
         }
 
         /// <summary>

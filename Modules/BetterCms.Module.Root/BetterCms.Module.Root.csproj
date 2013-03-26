@@ -128,8 +128,11 @@
     <Compile Include="Api\Events\RootEvents.cs" />
     <Compile Include="Api\Events\PageRenderingEventArgs.cs" />
     <Compile Include="Api\RootApiContext.cs" />
+    <Compile Include="Commands\GetMainJsData\GetMainJsDataCommand.cs" />
+    <Compile Include="Commands\GetProcessorJsData\GetProcessorJsDataCommand.cs" />
     <Compile Include="Commands\GetPageToRender\GetPageToRenderRequest.cs" />
     <Compile Include="Commands\GetPageToRender\GetPageToRenderCommand.cs" />
+    <Compile Include="Commands\GetStyleSheetsToRender\GetStyleSheetsToRenderCommand.cs" />
     <Compile Include="Content\Resources\RootGlobalization.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -222,15 +225,18 @@
     <Compile Include="Registration\TabsJsModuleIncludeDescriptor.cs" />
     <Compile Include="RootModuleConstants.cs" />
     <Compile Include="Services\DefaultContentService.cs" />
+    <Compile Include="Services\DefaultRenderingService.cs" />
     <Compile Include="Services\DefaultSecurityService.cs" />
     <Compile Include="Services\IContentService.cs" />
+    <Compile Include="Services\IRenderingService.cs" />
     <Compile Include="ViewModels\Authentication\InfoViewModel.cs" />
     <Compile Include="ViewModels\Cms\CmsRequestViewModel.cs" />
     <Compile Include="ViewModels\Cms\PageRegionViewModel.cs" />
     <Compile Include="ViewModels\Cms\RedirectViewModel.cs" />
     <Compile Include="ViewModels\Cms\RenderPageViewModel.cs" />
     <Compile Include="ViewModels\PageProjectionsViewModel.cs" />
-    <Compile Include="ViewModels\Rendering\JavaScriptModuleViewModel.cs" />
+    <Compile Include="ViewModels\Rendering\RenderProcessorJsViewModel.cs" />
+    <Compile Include="ViewModels\Rendering\JavaScriptModuleInclude.cs" />
     <Compile Include="ViewModels\Rendering\RenderMainJsViewModel.cs" />
     <Compile Include="ViewModels\Rendering\RenderStyleSheetIncludesViewModel.cs" />
     <Compile Include="Models\UserMessages.cs">

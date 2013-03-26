@@ -81,7 +81,7 @@ namespace BetterCms.Core.Modules.Registration
         /// Gets the style sheet files.
         /// </summary>
         /// <returns>Enumerator of known modules style sheet files.</returns>
-        IEnumerable<CssIncludeDescriptor> GetStyleSheetFiles();
+        IEnumerable<CssIncludeDescriptor> GetStyleSheetIncludes();
 
         /// <summary>
         /// 

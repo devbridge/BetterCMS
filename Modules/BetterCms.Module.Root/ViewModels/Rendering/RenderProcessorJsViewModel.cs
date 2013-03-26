@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace BetterCms.Module.Root.ViewModels.Rendering
 {
     /// <summary>
     /// View model for dynamic java script file (main.js) initialization.
     /// </summary>
-    public class RenderMainJsViewModel
+    public class RenderProcessorJsViewModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RenderMainJsViewModel" /> class.
         /// </summary>
-        public RenderMainJsViewModel()
+        public RenderProcessorJsViewModel()
         {
             JavaScriptModules = new List<JavaScriptModuleInclude>();
         }
@@ -25,30 +25,6 @@ namespace BetterCms.Module.Root.ViewModels.Rendering
         public IEnumerable<JavaScriptModuleInclude> JavaScriptModules { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether debug mode is on.
-        /// </summary>
-        /// <value>
-        /// <c>true</c> if debug mode is on; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsDebugMode { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether to use *.min.js references.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if use *.min.js references; otherwise, <c>false</c>.
-        /// </value>
-        public bool UseMinReferences { get; set; }
-
-        /// <summary>
-        /// Gets or sets the CMS version.
-        /// </summary>
-        /// <value>
-        /// The version.
-        /// </value>
-        public Version Version { get; set; }
-
-        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>
@@ -56,7 +32,7 @@ namespace BetterCms.Module.Root.ViewModels.Rendering
         /// </returns>
         public override string ToString()
         {
-            return string.Format("IsDebugMode: {0}", IsDebugMode);
+            return string.Format("JavaScriptModules: {0}", string.Join(", ", JavaScriptModules != null ? JavaScriptModules.Select(f => f.ToString()) : Enumerable.Empty<string>()));
         }
     }
 }

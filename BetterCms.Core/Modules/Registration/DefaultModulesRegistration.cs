@@ -83,7 +83,7 @@ namespace BetterCms.Core.Modules.Registration
         /// <summary>
         /// Thread safe style sheet files collection.
         /// </summary>
-        private readonly List<CssIncludeDescriptor> knownStyleSheetFiles;        
+        private readonly List<CssIncludeDescriptor> knownStyleSheetIncludes;        
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultModulesRegistration" /> class.
@@ -106,7 +106,7 @@ namespace BetterCms.Core.Modules.Registration
             knownSidebarContentItems = new List<IPageActionProjection>();
             knownSidebarBodyContentItems = new List<IPageActionProjection>();
             knownSiteSettingsItems = new List<IPageActionProjection>();
-            knownStyleSheetFiles = new List<CssIncludeDescriptor>();            
+            knownStyleSheetIncludes = new List<CssIncludeDescriptor>();            
         }
 
         /// <summary>
@@ -195,12 +195,12 @@ namespace BetterCms.Core.Modules.Registration
         }
 
         /// <summary>
-        /// Gets the style sheet files.
+        /// Gets known StyleSheet includes.
         /// </summary>
-        /// <returns>Enumerator of known modules style sheet files.</returns>
-        public IEnumerable<CssIncludeDescriptor> GetStyleSheetFiles()
+        /// <returns>Enumerator of known StyleSheet includes.</returns>
+        public IEnumerable<CssIncludeDescriptor> GetStyleSheetIncludes()
         {
-            return knownStyleSheetFiles;
+            return knownStyleSheetIncludes;
         }
 
         /// <summary>
@@ -281,7 +281,7 @@ namespace BetterCms.Core.Modules.Registration
             {
                 foreach (var styleSheetFile in styleSheetFiles)
                 {
-                    knownStyleSheetFiles.Add(styleSheetFile);
+                    knownStyleSheetIncludes.Add(styleSheetFile);
                 }
             }
         }

@@ -18,7 +18,7 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
     /// <summary>
     /// Command to save image properties.
     /// </summary>
-    public class SaveImageDataCommand : CommandBase, ICommand<ImageViewModel>
+    public class SaveImageDataCommand : CommandBase, ICommandIn<ImageViewModel>
     {
         /// <summary>
         /// Gets or sets the media image service.

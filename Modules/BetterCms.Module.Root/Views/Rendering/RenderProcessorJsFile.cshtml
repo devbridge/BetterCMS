@@ -1,10 +1,10 @@
 ﻿@using BetterCms.Module.Root.Mvc.Helpers
-@model IEnumerable<BetterCms.Module.Root.Models.Rendering.JavaScriptModuleViewModel>
+@model BetterCms.Module.Root.ViewModels.Rendering.RenderProcessorJsViewModel
 
 /*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define */
 
-define('bcms.processor', [@Model.RenderCommaSeparatedNames()], function (@Model.RenderCommaSeparatedFriendlyNames()) {
+define('bcms.processor', [@Model.JavaScriptModules.RenderCommaSeparatedNames()], function (@Model.JavaScriptModules.RenderCommaSeparatedFriendlyNames()) {
     'use strict';
     
     var $ = require('bcms.jquery'),
@@ -63,7 +63,7 @@ define('bcms.processor', [@Model.RenderCommaSeparatedNames()], function (@Model.
     }        
     
     function registerExternalModules() {
-        @foreach(var module in Model)
+        @foreach(var module in Model.JavaScriptModules)
         {
             <text>
                 externalModules['@module.Name'] = @module.FriendlyName;
@@ -72,7 +72,7 @@ define('bcms.processor', [@Model.RenderCommaSeparatedNames()], function (@Model.
     }
 
     function initializeLinks() {
-        @foreach(var module in Model)
+        @foreach(var module in Model.JavaScriptModules)
         {
             if (module.Links != null && module.Links.Projections != null && module.Links.Projections.Any())
             {
@@ -97,7 +97,7 @@ define('bcms.processor', [@Model.RenderCommaSeparatedNames()], function (@Model.
     }
     
     function initializeGlobalization() {
-        @foreach(var module in Model)
+        @foreach(var module in Model.JavaScriptModules)
         {
             if (module.Globalization != null && module.Globalization.Projections != null && module.Globalization.Projections.Any())
             {

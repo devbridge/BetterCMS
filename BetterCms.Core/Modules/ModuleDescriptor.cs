@@ -194,7 +194,7 @@ namespace BetterCms.Core.Modules
             {
                 if (minCssPath == null)
                 {
-                    minCssPath = VirtualPath.Combine(CssBasePath, "content", "styles", string.Format("bcms.{0}.min.css"));
+                    minCssPath = VirtualPath.Combine(CssBasePath, string.Format("bcms.{0}.min.css", Name));
                 }
 
                 return minCssPath;
@@ -362,7 +362,8 @@ namespace BetterCms.Core.Modules
             Type[] commandTypes = new[]
                 {
                     typeof(ICommand),
-                    typeof(ICommand<>),
+                    typeof(ICommandIn<>),
+                    typeof(ICommandOut<>),
                     typeof(ICommand<,>)
                 };
 
