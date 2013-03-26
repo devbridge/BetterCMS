@@ -25,9 +25,10 @@
             column.EmptyColumn();
         }
 
-        column.For(m => string.Format("<a class=\"bcms-tables-link bcms-blog-Title\" data-id=\"{0}\" data-url=\"{2}\" target=\"_blank\">{1}</a>", m.Id, m.Title, m.PageUrl))
+        column.For(m => string.Format("<a class=\"bcms-tables-link bcms-blog-Title\" data-id=\"{0}\" data-url=\"{2}\">{1}</a>", m.Id, m.Title, m.PageUrl))
             .Named(BlogGlobalization.SiteSettings_Blogs_TitleColumn)
             .SortColumnName("Title")
+            .Attributes()
             .Encode(false);
 
         column.For(m => m.CreatedOn.ToFormattedDateString())
