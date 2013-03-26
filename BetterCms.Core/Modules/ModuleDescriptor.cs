@@ -9,6 +9,7 @@ using Autofac;
 
 using BetterCms.Api;
 using BetterCms.Core.DataContracts;
+using BetterCms.Core.Exceptions;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Core.Mvc.Attributes;
 using BetterCms.Core.Mvc.Commands;
@@ -123,6 +124,11 @@ namespace BetterCms.Core.Modules
                     }
                     else
                     {
+                        if (Configuration.UseMinifiedResources)
+                        {
+                            throw new CmsException(
+                                "The switch useMinifiedResources=\"true\" in the cms.config can't be used with local CMS resources (resourcesBasePath=\"(local)\").");
+                        }
                         baseModulePath = VirtualPath.Combine("/", "file", AreaName);
                     }
                 }

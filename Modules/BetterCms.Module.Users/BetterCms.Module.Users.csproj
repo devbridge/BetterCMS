@@ -175,8 +175,6 @@
     <EmbeddedResource Include="Scripts\bcms.user.js" />
     <EmbeddedResource Include="Scripts\bcms.role.js" />
     <Content Include="BuildConfiguration.xml" />
-    <EmbeddedResource Include="Scripts\bcms.users.min.js" />
-    <EmbeddedResource Include="Content\Styles\bcms.users.min.css" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>

@@ -139,7 +139,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Content\Styles\bcms.templates.css" />
     <Content Include="BuildConfiguration.xml" />
-    <EmbeddedResource Include="Content\Styles\bcms.templates.min.css" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>

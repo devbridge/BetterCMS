@@ -525,8 +525,6 @@
     <EmbeddedResource Include="Scripts\bcms.content.js" />
     <Content Include="BuildConfiguration.xml" />
     <EmbeddedResource Include="Content\Styles\images\icn-zoom-notcompatible.png" />
-    <EmbeddedResource Include="Scripts\bcms.root.min.js" />
-    <EmbeddedResource Include="Content\Styles\bcms.root.min.css" />
     <EmbeddedResource Include="Scripts\knockout-2.2.1.js" />
     <EmbeddedResource Include="Scripts\knockout-2.2.1.min.js" />
     <EmbeddedResource Include="Scripts\require-2.1.5.js" />

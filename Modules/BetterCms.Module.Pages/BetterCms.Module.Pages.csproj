@@ -361,7 +361,6 @@
     <EmbeddedResource Include="Content\Styles\Images\sprite-base-2.png" />
     <EmbeddedResource Include="Content\Styles\bcms.navigation.css" />
     <Content Include="BuildConfiguration.xml" />
-    <EmbeddedResource Include="Content\Styles\bcms.pages.min.css" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
@@ -380,7 +379,6 @@
     <EmbeddedResource Include="Scripts\bcms.pages.content.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.widgets.js" />
-    <EmbeddedResource Include="Scripts\bcms.pages.min.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>

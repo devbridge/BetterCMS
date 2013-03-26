@@ -180,8 +180,6 @@
     <EmbeddedResource Include="Content\Styles\Images\icn-zoom-notcompatible.png" />
     <EmbeddedResource Include="Scripts\bcms.blog.js" />
     <Content Include="BuildConfiguration.xml" />
-    <EmbeddedResource Include="Scripts\bcms.blog.min.js" />
-    <EmbeddedResource Include="Content\Styles\bcms.blog.min.css" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>

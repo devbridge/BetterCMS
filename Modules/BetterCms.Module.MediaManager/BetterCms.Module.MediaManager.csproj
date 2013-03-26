@@ -227,7 +227,6 @@
     <Content Include="BuildConfiguration.xml" />
     <EmbeddedResource Include="Content\Styles\bcms.media.css" />
     <EmbeddedResource Include="Content\Styles\Images\sprite-media-3.png" />
-    <EmbeddedResource Include="Content\Styles\bcms.media.min.css" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
@@ -242,7 +241,6 @@
     <EmbeddedResource Include="Scripts\bcms.media.upload.js" />
     <EmbeddedResource Include="Scripts\bcms.html5Upload.js" />
     <EmbeddedResource Include="Scripts\bcms.jquery.jcrop.js" />
-    <EmbeddedResource Include="Scripts\bcms.media.min.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
