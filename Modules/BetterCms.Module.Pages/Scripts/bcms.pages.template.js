@@ -235,7 +235,7 @@ define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepi
 
             form.on('submit', function (event) {
                 event.preventDefault();
-                searchTemplates(form);
+                searchTemplates(form, container);
                 return false;
             });
 
