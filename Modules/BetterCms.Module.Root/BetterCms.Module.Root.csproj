@@ -147,6 +147,7 @@
     <Compile Include="Models\Maps\ContentOptionMap.cs" />
     <Compile Include="Models\Maps\RegionMap.cs" />
     <Compile Include="Models\Maps\TagMap.cs" />
+    <Compile Include="Models\Migrations\Migration201303261100.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
     <Compile Include="Models\Migrations\Migration201302211227.cs" />
     <Compile Include="Models\PageContentOption.cs" />
