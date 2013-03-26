@@ -185,7 +185,7 @@ namespace BetterCms.Core.Modules
                         .Keyed<IController>(key)                        
                         .WithMetadata("ControllerType", controllerType)
                         .InstancePerDependency()
-                        .PropertiesAutowired(PropertyWiringFlags.PreserveSetValues);
+                        .PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
 
                     var controllerActions = controllerExtensions.GetControllerActions(controllerType);
 
