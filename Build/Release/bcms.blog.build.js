@@ -7,9 +7,12 @@
 
     var requirejs = require('../release/r.js'),
         config = {
-            baseUrl: '../../Modules/BetterCms.Module.Blog/Scripts/',
-            name: 'bcms.blog',
-            out: '../Release/output/bcms.main-built.js'
+			appDir: '../../',
+            baseUrl: 'Modules',
+            dir: '../../min',
+			modules: [{
+				name : 'main'
+			}]
         };
 	
     requirejs.optimize(config,

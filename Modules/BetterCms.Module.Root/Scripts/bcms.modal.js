@@ -45,7 +45,7 @@ define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', '
             ok: null,
             saveDraft: null,
             saveAndPublish: null,
-            preview: null,
+            preview: null
         },
         
         isGlobalKeyPressEventAttached = false;
@@ -460,7 +460,7 @@ define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', '
     * Binds to a window resize event.
     */
     function addGlobalResizeModalEvent() {
-        $(document).on('resize.bcms.modal', function () {
+        $(window).on('resize.bcms.modal', function () {
             clearTimeout(resizeTimer);
 
             resizeTimer = setTimeout(function () {

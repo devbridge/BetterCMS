@@ -43,7 +43,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="BetterCMS.nuspec.template" />
-    <None Include="package\content\net40\Config\cms.config" />
+    <None Include="package\content\net40\Config\cms.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="package\content\net40\web.config.transform" />
     <None Include="package\tools\install.ps1" />
   </ItemGroup>
@@ -80,21 +82,41 @@
   <ItemGroup>
     <Folder Include="package\content\net40\App_Data\BetterCMS\Modules\" />
     <Folder Include="package\lib\net40\" />
+    <Folder Include="resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>mkdir $(ProjectDir)$(OutDir)package
-xcopy $(ProjectDir)package $(ProjectDir)$(OutDir)package\ /E /Y /Q
+    <PostBuildEvent>mkdir "$(ProjectDir)$(OutDir)package"
+xcopy "$(ProjectDir)package $(ProjectDir)$(OutDir)package\" /E /Y /Q
 
-xcopy $(ProjectDir)$(OutDir)BetterCms.Core.dll $(ProjectDir)$(OutDir)package\lib\net40\ /Y /Q
-xcopy $(ProjectDir)$(OutDir)BetterCms.Configuration.dll $(ProjectDir)$(OutDir)package\lib\net40\ /Y /Q
-xcopy $(ProjectDir)$(OutDir)BetterCms.Module.*.dll $(ProjectDir)$(OutDir)package\content\net40\App_Data\BetterCms\Modules\ /Y /Q
-xcopy $(SolutionDir)README.md $(ProjectDir)$(OutDir)package\readme.txt /Q
-$(ProjectDir)$(OutDir)BetterCms.NugetPackage.exe $(ProjectDir)BetterCMS.nuspec.template $(ProjectDir)$(OutDir)package\BetterCMS.nuspec
-$(SolutionDir).nuget\nuget.exe pack $(ProjectDir)$(OutDir)package\BetterCMS.nuspec -OutputDirectory $(ProjectDir)$(OutDir) -NoPackageAnalysis
+xcopy "$(ProjectDir)$(OutDir)BetterCms.Core.dll" "$(ProjectDir)$(OutDir)package\lib\net40\" /Y /Q
+xcopy "$(ProjectDir)$(OutDir)BetterCms.Configuration.dll" "$(ProjectDir)$(OutDir)package\lib\net40\" /Y /Q
+xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.*.dll" "$(ProjectDir)$(OutDir)package\content\net40\App_Data\BetterCms\Modules\" /Y /Q
+xcopy "$(SolutionDir)README.md" "$(ProjectDir)$(OutDir)package\readme.txt" /Q
+"$(ProjectDir)$(OutDir)BetterCms.NugetPackage.exe" "$(ProjectDir)BetterCMS.nuspec.template" "$(ProjectDir)$(OutDir)package\BetterCMS.nuspec"
+"$(SolutionDir).nuget\nuget.exe" pack "$(ProjectDir)$(OutDir)package\BetterCMS.nuspec" -OutputDirectory "$(ProjectDir)$(OutDir)" -NoPackageAnalysis
 
-rmdir $(ProjectDir)$(OutDir)package /S /Q
-</PostBuildEvent>
+rmdir "$(ProjectDir)$(OutDir)package" /S /Q
+
+rmdir "$(ProjectDir)Resources" /S /Q
+
+xcopy "$(SolutionDir)Modules\BetterCms.Module.Blog\Content\Styles\*.*" "$(ProjectDir)Resources\bcms-blog\Content\Styles\" /Y /Q /S
+xcopy "$(SolutionDir)Modules\BetterCms.Module.Blog\Scripts\*.*" "$(ProjectDir)Resources\bcms-blog\Scripts\" /Y /Q /S
+
+xcopy "$(SolutionDir)Modules\BetterCms.Module.MediaManager\Content\Styles\*.*" "$(ProjectDir)Resources\bcms-media\Content\Styles\" /Y /Q /S
+xcopy "$(SolutionDir)Modules\BetterCms.Module.MediaManager\Scripts\*.*" "$(ProjectDir)Resources\bcms-media\Scripts\" /Y /Q /S
+
+xcopy "$(SolutionDir)Modules\BetterCms.Module.Pages\Content\Styles\*.*" "$(ProjectDir)Resources\bcms-pages\Content\Styles\" /Y /Q /S
+xcopy "$(SolutionDir)Modules\BetterCms.Module.Pages\Scripts\*.*" "$(ProjectDir)Resources\bcms-pages\Scripts\" /Y /Q /S
+
+xcopy "$(SolutionDir)Modules\BetterCms.Module.Root\Content\Styles\*.*" "$(ProjectDir)Resources\bcms-root\Content\Styles\" /Y /Q /S
+xcopy "$(SolutionDir)Modules\BetterCms.Module.Root\Scripts\*.*" "$(ProjectDir)Resources\bcms-root\Scripts\" /Y /Q /S
+
+xcopy "$(SolutionDir)Modules\BetterCms.Module.Templates\Content\Styles\*.*" "$(ProjectDir)Resources\bcms-templates\Content\Styles\" /Y /Q /S
+xcopy "$(SolutionDir)Modules\BetterCms.Module.Templates\Scripts\*.*" "$(ProjectDir)Resources\bcms-templates\Scripts\" /Y /Q /S
+
+xcopy "$(SolutionDir)Modules\BetterCms.Module.Users\Content\Styles\*.*" "$(ProjectDir)Resources\bcms-users\Content\Styles\" /Y /Q /S
+xcopy "$(SolutionDir)Modules\BetterCms.Module.Users\Scripts\*.*" "$(ProjectDir)Resources\bcms-users\Scripts\" /Y /Q /S</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

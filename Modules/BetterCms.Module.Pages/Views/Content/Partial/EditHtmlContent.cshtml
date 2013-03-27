@@ -1,12 +1,10 @@
 ﻿@using System.Reflection
 @using BetterCms.Module.Pages.Content.Resources
-@using BetterCms.Module.Root
-@using BetterCms.Module.Root.Mvc
 @using BetterCms.Module.Root.Mvc.Helpers
 @using BetterCms.Module.Root.Mvc.UI
 
 @model BetterCms.Module.Pages.ViewModels.Content.PageContentViewModel
-@{ var canEdit = (ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent); }
+@{ var canEdit = ViewData.ContainsKey("CanEdit") && (bool)ViewData["CanEdit"]; }
 
 @functions
 {

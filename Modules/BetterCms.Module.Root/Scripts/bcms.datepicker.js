@@ -5,7 +5,7 @@ define('bcms.datepicker', ['bcms.jquery', 'bcms', 'bcms.jquery.validate.unobtrus
 
     var datepicker = {},
         links = {
-            calendarImageUrl: '/file/bcms-root/Content/Styles/images/icn-calendar.png'
+            calendarImageUrl: null
         },
         globalization = {};
 

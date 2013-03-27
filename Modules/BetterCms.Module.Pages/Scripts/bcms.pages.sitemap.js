@@ -20,7 +20,7 @@ define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSet
                 saveSitemapNodeUrl: null,
                 deleteSitemapNodeUrl: null,
                 sitemapEditDialogUrl: null,
-                sitemapAddNewPageDialogUrl: null,
+                sitemapAddNewPageDialogUrl: null
             },
             globalization = {
                 sitemapEditorDialogTitle: null,
@@ -29,7 +29,7 @@ define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSet
                 sitemapDeleteNodeConfirmationMessage: null,
                 sitemapSomeNodesAreInEditingState: null,
                 sitemapNodeSaveButton: null,
-                sitemapNodeOkButton: null,
+                sitemapNodeOkButton: null
             },
             defaultIdValue = '00000000-0000-0000-0000-000000000000',
             DropZoneTypes = {
@@ -72,7 +72,7 @@ define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSet
                     dynamicContent.setContentFromUrl(dialog, links.sitemapEditDialogUrl, {
                         done: function (content) {
                             addNodeController.initialize(content, dialog);
-                        },
+                        }
                     });
                 },
                 onAccept: function (dialog) {
@@ -92,8 +92,8 @@ define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSet
         * Shows add new page to sitemap dialog.
         */
         sitemap.loadAddNewPageDialog = function(data) {
-            if (data && data.Data && data.Data.Data && (data.Data.Data.Title || data.Data.Data.PageTitle) && (data.Data.Data.Url || data.Data.Data.PageUrl)) {
-                var addPageController = new AddNewPageMapController(data.Data.Data.Title || data.Data.Data.PageTitle, data.Data.Data.Url || data.Data.Data.PageUrl);
+            if (data && data.Data && (data.Data.Title || data.Data.PageTitle) && (data.Data.Url || data.Data.PageUrl)) {
+                var addPageController = new AddNewPageMapController(data.Data.Title || data.Data.PageTitle, data.Data.Url || data.Data.PageUrl);
                 modal.open({
                     title: globalization.sitemapAddNewPageDialogTitle,
                     onLoad: function(dialog) {
@@ -514,7 +514,7 @@ define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSet
                 canDragNode: false,
                 canDropNode: false,
                 nodeSaveButtonTitle: globalization.sitemapNodeOkButton,
-                nodeSaveAfterUpdate: false,
+                nodeSaveAfterUpdate: false
             };
 
             self.getSitemap = function () {
@@ -649,7 +649,7 @@ define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSet
                             Url: node.url(),
                             DisplayOrder: node.displayOrder(),
                             IsDeleted: node.isDeleted(),
-                            ChildNodes: self.nodesToJson(node.childNodes()),
+                            ChildNodes: self.nodesToJson(node.childNodes())
                         }
                     );
                 }
@@ -850,7 +850,7 @@ define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSet
                     Title: self.title(),
                     Url: self.url(),
                     DisplayOrder: self.displayOrder(),
-                    ParentId: self.parentNode().id(),
+                    ParentId: self.parentNode().id()
                 };
                 return params;
             };

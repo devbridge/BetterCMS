@@ -85,7 +85,7 @@ define('bcms.pages.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.message
                 $.ajax({
                     type: 'POST',
                     cache: false,
-                    url: url,
+                    url: url
                 })
                     .done(function (result) {
                         onComplete(result);
@@ -209,7 +209,7 @@ define('bcms.pages.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.message
                 $.ajax({
                     type: 'POST',
                     cache: false,
-                    url: url,
+                    url: url
                 })
                     .done(function(result) {
                         onComplete(result);

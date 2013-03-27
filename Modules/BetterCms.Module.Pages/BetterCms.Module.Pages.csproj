@@ -53,13 +53,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac, Version=2.6.3.862, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Autofac.2.6.3.862\lib\NET40\Autofac.dll</HintPath>
+    <Reference Include="Autofac">
+      <HintPath>..\..\packages\Autofac.3.0.0\lib\net40\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="Autofac.Configuration, Version=2.6.3.862, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Autofac.2.6.3.862\lib\NET40\Autofac.Configuration.dll</HintPath>
+    <Reference Include="Autofac.Configuration">
+      <HintPath>..\..\packages\Autofac.3.0.0\lib\net40\Autofac.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="Common.Logging, Version=2.1.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -78,6 +76,10 @@
       <HintPath>..\..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Web.Mvc, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Mvc2Futures.2.0.50217.0\lib\Microsoft.Web.Mvc.dll</HintPath>
@@ -249,12 +251,12 @@
     <Compile Include="Accessors\HtmlContentWidgetAccessor.cs" />
     <Compile Include="Accessors\HtmlContentAccessor.cs" />
     <Compile Include="Accessors\ServerControlWidgetAccessor.cs" />
-    <Compile Include="Registration\HistoryJavaScriptModuleDescriptor.cs" />
-    <Compile Include="Registration\SitemapJavaScriptModuleDescriptor.cs" />
-    <Compile Include="Registration\TemplatesJavaScriptModuleDescriptor.cs" />
-    <Compile Include="Registration\PagesContentJavaScriptModuleDescriptor.cs" />
+    <Compile Include="Registration\HistoryJsModuleIncludeDescriptor.cs" />
+    <Compile Include="Registration\SitemapJsModuleIncludeDescriptor.cs" />
+    <Compile Include="Registration\TemplatesJsModuleIncludeDescriptor.cs" />
+    <Compile Include="Registration\PagesContentJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\PageTagsJavaScriptModuleDescriptor.cs" />
-    <Compile Include="Registration\RedirectsJavaScriptModuleDescriptor.cs" />
+    <Compile Include="Registration\RedirectsJsModuleIncludeDescriptor.cs" />
     <Compile Include="Services\DefaultHistoryService.cs" />
     <Compile Include="Services\DefaultSitemapService.cs" />
     <Compile Include="Services\DefaultTagService.cs" />
@@ -292,9 +294,9 @@
     <Compile Include="ViewModels\Page\AddNewPageViewModel.cs" />
     <Compile Include="ViewModels\Page\ClonePageViewModel.cs" />
     <Compile Include="ViewModels\Page\TemplateViewModel.cs" />
-    <Compile Include="Registration\WidgetsJavaScriptModuleDescriptor.cs" />
-    <Compile Include="Registration\SeoJavaScriptModuleDescriptor.cs" />
-    <Compile Include="Registration\PagePropertiesJavaScriptModuleDescriptor.cs" />
+    <Compile Include="Registration\WidgetsJsModuleIncludeDescriptor.cs" />
+    <Compile Include="Registration\SeoJsModuleIncludeDescriptor.cs" />
+    <Compile Include="Registration\PagePropertiesJsModuleIncludeDescriptor.cs" />
     <Compile Include="Services\DefaultPageService.cs" />
     <Compile Include="ViewModels\Widgets\WidgetCategoryViewModel.cs" />
     <Compile Include="ViewModels\Widgets\WidgetViewModel.cs" />
@@ -303,7 +305,7 @@
     <Compile Include="ViewModels\Page\EditPagePropertiesViewModel.cs" />
     <Compile Include="ViewModels\Page\DeletePageViewModel.cs" />
     <Compile Include="ViewModels\Seo\EditSeoViewModel.cs" />
-    <Compile Include="Registration\PagesJavaScriptModuleDescriptor.cs" />
+    <Compile Include="Registration\PagesJsModuleIncludeDescriptor.cs" />
     <Compile Include="PagesModuleDescriptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\SiteSettings\SiteSettingPageViewModel.cs" />
@@ -323,15 +325,15 @@
       <LastGenOutput>PagesGlobalization.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Content\Css\bcms.page.css" />
-    <EmbeddedResource Include="Content\Css\Images\icn-zoom.png" />
-    <EmbeddedResource Include="Content\Css\Images\loading.gif" />
-    <EmbeddedResource Include="Content\Css\Images\logo.png" />
-    <EmbeddedResource Include="Content\Css\Images\bcms-no-image-1.png" />
-    <EmbeddedResource Include="Content\Css\Images\bcms-no-image-2.png" />
-    <EmbeddedResource Include="Content\Css\Images\bcms-no-image-3.png" />
-    <EmbeddedResource Include="Content\Css\Images\sprite-pages-1.png" />
-    <EmbeddedResource Include="Content\Css\Images\sprite-pages-2.png" />
+    <EmbeddedResource Include="Content\Styles\bcms.page.css" />
+    <EmbeddedResource Include="Content\Styles\Images\icn-zoom.png" />
+    <EmbeddedResource Include="Content\Styles\Images\loading.gif" />
+    <EmbeddedResource Include="Content\Styles\Images\logo.png" />
+    <EmbeddedResource Include="Content\Styles\Images\bcms-no-image-1.png" />
+    <EmbeddedResource Include="Content\Styles\Images\bcms-no-image-2.png" />
+    <EmbeddedResource Include="Content\Styles\Images\bcms-no-image-3.png" />
+    <EmbeddedResource Include="Content\Styles\Images\sprite-pages-1.png" />
+    <EmbeddedResource Include="Content\Styles\Images\sprite-pages-2.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BetterCMS.Configuration\BetterCms.Configuration.csproj">
@@ -356,8 +358,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Content\Css\Images\sprite-base-2.png" />
-    <EmbeddedResource Include="Content\Css\bcms.navigation.css" />
+    <EmbeddedResource Include="Content\Styles\Images\sprite-base-2.png" />
+    <EmbeddedResource Include="Content\Styles\bcms.navigation.css" />
+    <Content Include="BuildConfiguration.xml" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
@@ -558,4 +561,7 @@
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>$(MSBuildBinPath)\msbuild.exe /p:Configuration=$(ConfigurationName) /p:SolutionDir="$(SolutionDir)\" /p:ProjectDir="$(ProjectDir)\" "$(ProjectDir)BuildConfiguration.xml"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

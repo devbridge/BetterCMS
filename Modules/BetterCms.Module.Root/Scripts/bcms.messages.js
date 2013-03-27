@@ -18,7 +18,7 @@ define('bcms.messages', ['bcms.jquery'], function ($) {
             info: '.bcms-info-messages:first',
             warn: '.bcms-warning-messages:first',
             error: '.bcms-error-messages:first',
-            scrollable: '.bcms-scroll-window',
+            scrollable: '.bcms-scroll-window'
         },
 
         links = {},

@@ -6,10 +6,11 @@
     Layout = "RootLayout.cshtml";
 }
 
-<!--[if lt IE 9]>
-     @Html.Partial("~/Areas/bcms-root/Views/Shared/Partial/SupportBrowser.cshtml")
-<![endif]-->
-
+@if (Model.CanManageContent)
+{
+    @Html.Partial("~/Areas/bcms-root/Views/Shared/Partial/SupportBrowser.cshtml")
+    @Html.Partial("~/Areas/bcms-root/Views/Shared/Partial/SupportJavascript.cshtml")
+}
 
 @RenderBody()
 
@@ -28,17 +29,10 @@
     }
 }
 
-@section CmsHeadStyles {
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700' rel='stylesheet' type='text/css' />
-
+@section CmsHeadStyles {   
     @if (Model.CanManageContent)
     {
-        <link rel="stylesheet" type="text/css" href="@Url.Content("~/file/bcms-root/Content/Styles/base.css")" />
-        
-        @*TEMPORARY*@
-        <link href="http://dve9d4b1d190c.cloudfront.net/files/messagescdn.css?v=476ui768823" rel="stylesheet" type="text/css" />
-        @*END OF*@
-        
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700' rel='stylesheet' type='text/css' />
         @Html.Action("RenderStyleSheetIncludes", "Rendering")
     }
 
@@ -55,9 +49,8 @@
             function AddRequireJsScript() {
                 var scriptTag = document.createElement('script');
                 scriptTag.type = 'text/javascript';
-                scriptTag.async = false;
-                //rjs.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + '.js';
-                scriptTag.src = "@Url.Content("~/file/bcms-root/Scripts/require.js")";
+                scriptTag.async = false;                
+                scriptTag.src = "@Model.RequireJsPath";
                 var tag = document.getElementsByTagName('script')[0];
                 tag.parentNode.insertBefore(scriptTag, tag);
             }
@@ -65,30 +58,25 @@
             function AddBetterCmsMainJsScript() {
                 var scriptTag = document.createElement('script');
                 scriptTag.type = 'text/javascript';
-                scriptTag.async = false;
-                //rjs.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + '.js';
-                scriptTag.src = "@Url.Content("~/file/bcms-root/Scripts/bcms.main.js")";
+                scriptTag.async = false;                
+                scriptTag.src = '@Model.MainJsPath';
                 var tag = document.getElementsByTagName('script')[0];
                 tag.parentNode.insertBefore(scriptTag, tag);
             }
 
             (function() {
-                var rjs = window.require;
-                if (!rjs) {
+                var r = window.require;
+                if (!r) {
                     AddRequireJsScript();
-                } else if (rjs.version < '2.0.0') {
-                    var message = "BetterCMS supports RequireJS from 2.0.0 version. Please visit http://requirejs.org/ and do upgrade.";
-                    if (console && console.log) {
-                        console.log(message);
-                    }
-                    alert(message);                    
+                } else if (r.version < '2.0.0') {                    
+                    alert("BetterCMS supports RequireJS from a 2.0.0 version. Please visit http://requirejs.org/ and do upgrade.");                    
                     return;
                 }
                 AddBetterCmsMainJsScript();
             })();
         </script>
         <!--[if lt IE 9]>
-            <script src="@Url.Content("~/file/bcms-root/Scripts/html5shiv.js")"></script>
+            <script src="@Model.Html5ShivJsPath"></script>
         <![endif]-->
     }
 }

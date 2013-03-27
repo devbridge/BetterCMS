@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/MsBuild/2003">
+
+  <UsingTask TaskName="CssCompressorTask" AssemblyFile="$(SolutionDir)Libs\YUICompressor-2.2.1.0\Yahoo.Yui.Compressor.Build.MsBuild.dll" />
+  <UsingTask TaskName="JavaScriptCompressorTask" AssemblyFile="$(SolutionDir)Libs\YUICompressor-2.2.1.0\Yahoo.Yui.Compressor.Build.MsBuild.dll" />
+
+  <Target Name="Minify">
+
+    <ItemGroup>      
+      <CssFiles Include="$(ProjectDir)Content\Styles\bcms.navigation.css" />
+      <CssFiles Include="$(ProjectDir)Content\Styles\bcms.page.css" />
+
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.pages.content.js" />
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.pages.history.js" />
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.pages.js" />
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.pages.properties.js" />
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.pages.redirects.js" />
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.pages.seo.js" />
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.pages.sitemap.js" />
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.pages.tags.js" />
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.pages.template.js" />
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.pages.widgets.js" />
+
+    </ItemGroup>
+
+    <CssCompressorTask
+          SourceFiles="@(CssFiles)"
+          OutputFile="$(ProjectDir)Content\Styles\bcms.pages.min.css"
+       />
+
+    <JavaScriptCompressorTask
+          SourceFiles="@(JavaScriptFiles)"
+          OutputFile="$(ProjectDir)Scripts\bcms.pages.min.js"
+          CompressionType="Standard"
+          ObfuscateJavaScript="True"
+          PreserveAllSemicolons="True"
+          DisableOptimizations="No"
+          EncodingType="Default"
+          LineBreakPosition="-1"
+          LoggingType="Info"
+          ThreadCulture="en-au"
+          IsEvalIgnored="false"
+       />
+
+  </Target>
+</Project>

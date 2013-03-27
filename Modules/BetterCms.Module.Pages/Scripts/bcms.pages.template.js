@@ -19,7 +19,8 @@ define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepi
                 deleteTemplateConfirmMessage: null,
                 deleteRegionConfirmMessage: null,
                 editTemplateRegionTitle: null,
-                previewImageNotFoundMessage: null
+                previewImageNotFoundMessage: null,
+                deletingMessage: null
             },
             selectors = {
                 templatePreviewImageUrl: '#PreviewImageUrl',
@@ -37,9 +38,10 @@ define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepi
                 templateRowEditButtons: '.bcms-grid-item-edit-button',
 
                 templatesRowDeleteButtons: '.bcms-grid-item-delete-button',
+                templatesRowDeleteMessage: '.bcms-grid-item-message',
+                templatesRowDeleteElementsToHide: '.bcms-grid-item-delete-button, .bcms-grid-item-edit-button',
                 templateParentRow: 'tr:first',
                 templateNameCell: '.bcms-template-name',
-                templateRowDeleteButtons: '.bcms-grid-item-delete-button',
                 templateRowTemplate: '#bcms-template-list-row-template',
                 templateRowTemplateFirstRow: 'tr:first',
                 templateTableFirstRow: 'table.bcms-tables > tbody > tr:first',
@@ -162,19 +164,25 @@ define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepi
                 templateName = row.find(selectors.templateNameCell).html(),
                 url = $.format(links.deleteTemplateUrl, templateId, templateVersion),
                 message = $.format(globalization.deleteTemplateConfirmMessage, templateName),
-                onDeleteCompleted = function (json) {
+                messageDiv = row.find(selectors.templatesRowDeleteMessage),
+                elementsToHide = row.find(selectors.templatesRowDeleteElementsToHide),
+                onDeleteCompleted = function(json) {
                     messages.refreshBox(row, json);
-                    try {
-                        if (json.Success && $.isFunction(onDeleteCallback)) {
-                            onDeleteCallback(json);
-                        }
-                    } finally {
-                        confirmDialog.close();
+                    messageDiv.html('');
+                    messageDiv.hide();
+                    elementsToHide.show();
+                    if (json.Success && $.isFunction(onDeleteCallback)) {
+                        onDeleteCallback(json);
                     }
-                },
-                confirmDialog = modal.confirm({
+                };
+            
+                modal.confirm({
                     content: message,
                     onAccept: function () {
+                        elementsToHide.hide();
+                        messageDiv.show();
+                        messageDiv.html(globalization.deletingMessage);
+
                         $.ajax({
                             type: 'POST',
                             url: url,
@@ -188,7 +196,6 @@ define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepi
                         .fail(function (response) {
                             onDeleteCompleted(bcms.parseFailedResponse(response));
                         });
-                        return false;
                     }
                 });
         };
@@ -228,7 +235,7 @@ define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepi
 
             form.on('submit', function (event) {
                 event.preventDefault();
-                searchTemplates(form);
+                searchTemplates(form, container);
                 return false;
             });
 

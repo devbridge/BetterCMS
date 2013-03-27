@@ -281,8 +281,6 @@ define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', '
         
         form.find(selectors.siteSettingsBlogTitleCell).on('click', function (event) {
             bcms.stopEventPropagation(event);
-            var url = $(this).data('url');
-            window.open(url);
         });
 
         form.find(selectors.siteSettingsBlogsSearchButton).on('click', function () {
@@ -454,7 +452,7 @@ define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', '
 
         return AuthorImageViewModel;
         
-    })(media.ImageSelectorViewModel);
+    })(media.ImageSelectorViewModel); 
 
     /**
     * Authors list view model

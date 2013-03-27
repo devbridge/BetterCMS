@@ -11,7 +11,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
     /// <summary>
     /// Saves sitemap data.
     /// </summary>
-    public class SaveSitemapCommand : CommandBase, ICommand<IList<SitemapNodeViewModel>>
+    public class SaveSitemapCommand : CommandBase, ICommandIn<IList<SitemapNodeViewModel>>
     {
         /// <summary>
         /// Gets or sets the sitemap service.

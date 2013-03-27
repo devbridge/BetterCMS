@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 using Autofac;
@@ -25,26 +26,26 @@ namespace BetterCms.Module.MediaManager
         /// <summary>
         /// The media java script module descriptor.
         /// </summary>
-        private readonly MediaManagerJavaScriptModuleDescriptor mediaJavaScriptModuleDescriptor;
+        private readonly MediaManagerJsModuleIncludeDescriptor mediaJsModuleIncludeDescriptor;
 
         /// <summary>
         /// The media upload module descriptor.
         /// </summary>
-        private readonly MediaUploadJavaScriptModuleDescriptor mediaUploadModuleDescriptor;
+        private readonly MediaUploadJsModuleIncludeDescriptor mediaUploadModuleIncludeDescriptor;
 
         /// <summary>
         /// The image editor module descriptor.
         /// </summary>
-        private readonly ImageEditorJavaScriptModuleDescriptor imageEditorModuleDescriptor;
+        private readonly ImageEditorJsModuleIncludeDescriptor imageEditorModuleIncludeDescriptor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MediaManagerModuleDescriptor" /> class.
         /// </summary>
-        public MediaManagerModuleDescriptor()
+        public MediaManagerModuleDescriptor(ICmsConfiguration cmsConfiguration) : base(cmsConfiguration)
         {
-            mediaJavaScriptModuleDescriptor = new MediaManagerJavaScriptModuleDescriptor(this);
-            mediaUploadModuleDescriptor = new MediaUploadJavaScriptModuleDescriptor(this);
-            imageEditorModuleDescriptor = new ImageEditorJavaScriptModuleDescriptor(this);
+            mediaJsModuleIncludeDescriptor = new MediaManagerJsModuleIncludeDescriptor(this);
+            mediaUploadModuleIncludeDescriptor = new MediaUploadJsModuleIncludeDescriptor(this);
+            imageEditorModuleIncludeDescriptor = new ImageEditorJsModuleIncludeDescriptor(this);
         }
 
         /// <summary>
@@ -93,45 +94,41 @@ namespace BetterCms.Module.MediaManager
         /// Registers module types.
         /// </summary>
         /// <param name="context">The area registration context.</param>
-        /// <param name="containerBuilder">The container builder.</param>
-        /// <param name="configuration">The configuration.</param>
-        public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        /// <param name="containerBuilder">The container builder.</param>        
+        public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
+            
             containerBuilder.RegisterType<DefaultMediaFileService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultMediaImageService>().AsImplementedInterfaces().InstancePerLifetimeScope();            
         }
 
         /// <summary>
         /// Registers the style sheet files.
-        /// </summary>
-        /// <param name="containerBuilder">The container builder.</param>
-        /// <param name="configuration">The configuration.</param>
+        /// </summary>        
         /// <returns>Enumerator of known module style sheet files.</returns>
-        public override IEnumerable<string> RegisterStyleSheetFiles(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        public override IEnumerable<CssIncludeDescriptor> RegisterCssIncludes()
         {
             return new[]
                 {
-                    "/file/bcms-media/Content/Css/bcms.media.css"
+                    new CssIncludeDescriptor(this, "bcms.media.css")
                 };
         }
 
         /// <summary>
         /// Gets known client side modules in page module.
-        /// </summary>
-        /// <param name="containerBuilder">The container builder.</param>
-        /// <param name="configuration">The CMS configuration.</param>
+        /// </summary>        
         /// <returns>List of known client side modules in page module.</returns>
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
-        public override IEnumerable<JavaScriptModuleDescriptor> RegisterJavaScriptModules(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
-        {
+        public override IEnumerable<JsIncludeDescriptor> RegisterJsIncludes()
+        {            
             return new[]
                 {
-                    mediaJavaScriptModuleDescriptor,
-                    mediaUploadModuleDescriptor,
-                    imageEditorModuleDescriptor,
-                    new JavaScriptModuleDescriptor(this, "bcms.html5Upload"),
-                    new JavaScriptModuleDescriptor(this, "bcms.jquery.jcrop"),
-                    new JavaScriptModuleDescriptor(this, "bcms.contextMenu")
+                    mediaJsModuleIncludeDescriptor,
+                    mediaUploadModuleIncludeDescriptor,
+                    imageEditorModuleIncludeDescriptor,
+                    new JsIncludeDescriptor(this, "bcms.html5Upload"),
+                    new JsIncludeDescriptor(this, "bcms.jquery.jcrop"),
+                    new JsIncludeDescriptor(this, "bcms.contextMenu")
                 };
         }
 
@@ -139,13 +136,12 @@ namespace BetterCms.Module.MediaManager
         /// Registers the site settings projections.
         /// </summary>
         /// <param name="containerBuilder">The container builder.</param>
-        /// <param name="configuration">The configuration.</param>
         /// <returns>List of page action projections.</returns>
-        public override IEnumerable<IPageActionProjection> RegisterSiteSettingsProjections(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        public override IEnumerable<IPageActionProjection> RegisterSiteSettingsProjections(ContainerBuilder containerBuilder)
         {
             return new IPageActionProjection[]
                 {
-                    new LinkActionProjection(mediaJavaScriptModuleDescriptor, page => "loadSiteSettingsMediaManager")
+                    new LinkActionProjection(mediaJsModuleIncludeDescriptor, page => "loadSiteSettingsMediaManager")
                         {
                             Order = 2400,
                             Title = () => MediaGlobalization.SiteSettings_MediaManagerMenuItem,
@@ -154,7 +150,5 @@ namespace BetterCms.Module.MediaManager
                         }                                      
                 };
         }
-
-        
     }
 }

@@ -13,7 +13,7 @@ define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout'], function ($, bc
         name: 200,
         text: 2000,
         url: 850,
-        uri: 2000,
+        uri: 2000
     };
 
     /**

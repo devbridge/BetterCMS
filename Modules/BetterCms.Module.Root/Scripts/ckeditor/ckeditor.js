@@ -2,7 +2,9 @@
 Copyright (c) 2003-2012, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
-(function () {
+
+define(function() {
+ (function () {
     if (window.CKEDITOR && window.CKEDITOR.dom) return; window.CKEDITOR || (window.CKEDITOR = function () {
         var b = { timestamp: "CAPD", version: "4.0", revision: "769d96134b", rnd: Math.floor(900 * Math.random()) + 100, _: { pending: [] }, status: "unloaded", basePath: function () {
             var a = window.CKEDITOR_BASEPATH || ""; if (!a) for (var b = document.getElementsByTagName("script"), d = 0; d < b.length; d++) { var c = b[d].src.match(/(^|.*[\\\/])ckeditor(?:_basic)?(?:_source)?.js(?:\?.*)?$/i); if (c) { a = c[1]; break } } -1 == a.indexOf(":/") && (a = 0 === a.indexOf("/") ? location.href.match(/^.*?:\/\/[^\/]*/)[0] + a : location.href.match(/^[^\?]*\/(?:)/)[0] +
@@ -2934,4 +2936,6 @@ new i(this.editor))
 }, lock: function () { if (!this.locked) { var a = this.editor.getSnapshot(); this.locked = { update: this.currentImage && a == this.currentImage.contents ? a : null} } }, unlock: function () { if (this.locked) { var a = this.locked.update, c = this.editor.getSnapshot(); this.locked = null; "string" == typeof a && c != a && this.update() } }
 }
     })(); CKEDITOR.config.plugins = 'dialogui,dialog,about,a11yhelp,basicstyles,blockquote,clipboard,panel,floatpanel,menu,contextmenu,resize,button,toolbar,elementspath,list,indent,enterkey,entities,popup,filebrowser,floatingspace,listblock,richcombo,format,htmlwriter,horizontalrule,wysiwygarea,image,fakeobjects,link,magicline,maximize,pastetext,pastefromword,removeformat,sourcearea,specialchar,stylescombo,tab,table,tabletools,undo'; CKEDITOR.config.skin = 'moono'; (function () { var icons = ('about,0,bold,32,italic,64,strike,96,subscript,128,superscript,160,underline,192,blockquote,224,copy-rtl,256,copy,288,cut-rtl,320,cut,352,paste-rtl,384,paste,416,bulletedlist-rtl,448,bulletedlist,480,numberedlist-rtl,512,numberedlist,544,indent-rtl,576,indent,608,outdent-rtl,640,outdent,672,horizontalrule,704,image,736,anchor-rtl,768,anchor,800,link,832,unlink,864,maximize,896,pastetext-rtl,928,pastetext,960,pastefromword-rtl,992,pastefromword,1024,removeformat,1056,source-rtl,1088,source,1120,specialchar,1152,table,1184,redo-rtl,1216,redo,1248,undo-rtl,1280,undo,1312'), path = CKEDITOR.getUrl('plugins/icons.png'), icons = icons.split(','); for (var i = 0; i < icons.length; i++) CKEDITOR.skin.icons[icons[i]] = { path: path, offset: -icons[++i] }; })(); CKEDITOR.lang.languages = { "af": 1, "ar": 1, "eu": 1, "bn": 1, "bs": 1, "bg": 1, "ca": 1, "zh-cn": 1, "zh": 1, "hr": 1, "cs": 1, "da": 1, "nl": 1, "en": 1, "en-au": 1, "en-ca": 1, "en-gb": 1, "eo": 1, "et": 1, "fo": 1, "fi": 1, "fr": 1, "fr-ca": 1, "gl": 1, "ka": 1, "de": 1, "el": 1, "gu": 1, "he": 1, "hi": 1, "hu": 1, "is": 1, "it": 1, "ja": 1, "km": 1, "ko": 1, "ku": 1, "lv": 1, "lt": 1, "mk": 1, "ms": 1, "mn": 1, "no": 1, "nb": 1, "fa": 1, "pl": 1, "pt-br": 1, "pt": 1, "ro": 1, "ru": 1, "sr": 1, "sr-latn": 1, "sk": 1, "sl": 1, "es": 1, "sv": 1, "th": 1, "tr": 1, "ug": 1, "uk": 1, "vi": 1, "cy": 1 };
-} ());
+})();
+    return function() {};
+});

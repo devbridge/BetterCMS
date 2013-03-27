@@ -1,14 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Modules.Registration;
 using BetterCms.Core.Mvc.Attributes;
 using BetterCms.Core.Services;
-
-using BetterCms.Module.Root.Models.Rendering;
+using BetterCms.Module.Root.Commands.GetMainJsData;
+using BetterCms.Module.Root.Commands.GetProcessorJsData;
+using BetterCms.Module.Root.Commands.GetStyleSheetsToRender;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels;
 using BetterCms.Module.Root.ViewModels.Rendering;
@@ -21,7 +24,7 @@ namespace BetterCms.Module.Root.Controllers
     /// Script handling controller.
     /// </summary>
     public class RenderingController : CmsControllerBase
-    {
+    {        
         /// <summary>
         /// Current class logger.
         /// </summary>       
@@ -33,11 +36,18 @@ namespace BetterCms.Module.Root.Controllers
         private readonly IModulesRegistration modulesRegistration;
 
         /// <summary>
+        /// The CMS configuration
+        /// </summary>
+        private readonly ICmsConfiguration cmsConfiguration;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="RenderingController" /> class.
         /// </summary>
         /// <param name="modulesRegistration">A contract to manage modules registry.</param>
-        public RenderingController(IModulesRegistration modulesRegistration)
-        {           
+        /// <param name="cmsConfiguration">The CMS configuration.</param>
+        public RenderingController(IModulesRegistration modulesRegistration, ICmsConfiguration cmsConfiguration)
+        {
+            this.cmsConfiguration = cmsConfiguration;
             this.modulesRegistration = modulesRegistration;
         }
 
@@ -45,17 +55,12 @@ namespace BetterCms.Module.Root.Controllers
         /// Renders bcms.main.js or bcms.main.min.js (entry point of the BetterCMS client side).
         /// </summary>
         /// <returns>main.js or main.min.js file with client side entry point.</returns>
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
-        //[OutputCache(Duration = 120, Location = OutputCacheLocation.ServerAndClient)]
-        [IgnoreAutoRoute]
-        public ActionResult RenderMainJsFile(bool useMinReferences)
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]        
+        [IgnoreAutoRoute, NoCache]        
+        public ActionResult RenderMainJsFile()
         {
-            RenderMainJsViewModel model = new RenderMainJsViewModel();
-            model.JavaScriptModules = RetrieveJsModulesModel();
-            model.UseMinReferences = useMinReferences;
-#if (DEBUG)
-            model.IsDebugMode = true;
-#endif
+            var model = GetCommand<GetMainJsDataCommand>().ExecuteCommand();
+            
             return View(model, "text/javascript");
         }
 
@@ -64,11 +69,11 @@ namespace BetterCms.Module.Root.Controllers
         /// </summary>
         /// <returns>bcms.processor.js file with logic to initialize and manage JS modules.</returns>
         [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1616:ElementReturnValueDocumentationMustHaveText", Justification = "Reviewed. Suppression is OK here.")]
-        [IgnoreAutoRoute]
+        [IgnoreAutoRoute, NoCache]
         public ActionResult RenderProcessorJsFile()
         {
-            IEnumerable<JavaScriptModuleViewModel> model = RetrieveJsModulesModel();
-          
+            var model = GetCommand<GetProcessorJsDataCommand>().ExecuteCommand();
+           
             return View(model, "text/javascript");
         }
 
@@ -78,59 +83,9 @@ namespace BetterCms.Module.Root.Controllers
         /// <returns>List of style sheet includes.</returns>
         public ActionResult RenderStyleSheetIncludes()
         {
-            RenderStyleSheetIncludesViewModel model;
-
-            try
-            {
-                var styleSheetFiles = modulesRegistration.GetStyleSheetFiles();
-                model = new RenderStyleSheetIncludesViewModel(styleSheetFiles);
-            }
-            catch (CmsException ex)
-            {
-                Log.Error("Failed to read style sheet files collection.", ex);
-                model = new RenderStyleSheetIncludesViewModel();
-            }
+            var model = GetCommand<GetStyleSheetsToRenderCommand>().ExecuteCommand();
 
             return PartialView(model);
-        }
-
-        /// <summary>
-        /// Retrieves registered java script modules model.
-        /// </summary>
-        /// <returns>Enumerator of JavaScriptModuleViewModel objects.</returns>
-        private IEnumerable<JavaScriptModuleViewModel> RetrieveJsModulesModel()
-        {
-            IEnumerable<JavaScriptModuleViewModel> model = Enumerable.Empty<JavaScriptModuleViewModel>();
-            try
-            {
-                var javaScriptModules = modulesRegistration.GetJavaScriptModules();                
-
-                if (javaScriptModules != null)
-                {
-                    model = javaScriptModules
-                        .Select(
-                            f => new JavaScriptModuleViewModel
-                                {
-                                    Name = f.Name,
-                                    Path = f.Path,
-                                    FriendlyName = f.FriendlyName,
-                                    Links = new ProjectionsViewModel
-                                        {                                            
-                                            Projections = f.Links.OrderBy(x => x.Order)
-                                        },
-                                    Globalization = new ProjectionsViewModel
-                                        {                                            
-                                            Projections = f.Globalization.OrderBy(x => x.Order)
-                                        }
-                                });
-                }
-            }
-            catch (CmsException ex)
-            {
-                Log.Error("Failed to retrieve java script modules.", ex);
-            }
-
-            return model;
-        }
+        }        
     }
 }

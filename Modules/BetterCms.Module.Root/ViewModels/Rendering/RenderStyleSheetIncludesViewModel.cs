@@ -1,19 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
-namespace BetterCms.Module.Root.Models.Rendering
+namespace BetterCms.Module.Root.ViewModels.Rendering
 {
     public class RenderStyleSheetIncludesViewModel
     {
-        public RenderStyleSheetIncludesViewModel()
-        {
-            StyleSheetFiles = new List<string>();
-        }
-
-        public RenderStyleSheetIncludesViewModel(IEnumerable<string> styleSheetFiles)
-        {
-            StyleSheetFiles = styleSheetFiles;
-        }
-
         public IEnumerable<string> StyleSheetFiles { get; set; }
 
         /// <summary>
@@ -23,9 +14,8 @@ namespace BetterCms.Module.Root.Models.Rendering
         /// A <see cref="System.String" /> that represents this instance.
         /// </returns>
         public override string ToString()
-        {
-            // TODO: cannot add any key from object
-            return string.Empty;
+        {            
+            return string.Join(", ", StyleSheetFiles ?? Enumerable.Empty<string>());
         }
     }
 }

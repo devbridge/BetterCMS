@@ -144,14 +144,14 @@ define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.content
             var info = modal.info({
                 content: globalization.sortingPageContentMessage,
                 disableCancel: true,
-                disableAccept: true,
+                disableAccept: true
             });
 
             var url = links.sortPageContentUrl,
                 alertOnError = function() {
                     modal.alert({
                         title: globalization.sortPageContentFailureMessageTitle,
-                        content: globalization.sortPageContentFailureMessageMessage,
+                        content: globalization.sortPageContentFailureMessageMessage
                     });
                 },
                 dataToSend = JSON.stringify(model.data);
@@ -356,7 +356,7 @@ define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.content
                         title: globalization.insertingWidgetInfoHeader,
                         content: globalization.insertingWidgetInfoMessage,
                         disableCancel: true,
-                        disableAccept: true,
+                        disableAccept: true
                     });
                 },
 
@@ -419,7 +419,7 @@ define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.content
                     contentViewModel.removeEditButton();
                 }
                 
-                if (!security.IsAuthorized(["BcmsDeleteContent"])) {
+                if (!security.IsAuthorized(["BcmsEditContent"])) {
                     contentViewModel.removeDeleteButton();
                 }
             }
@@ -511,7 +511,7 @@ define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.content
                             } else {
                                 modal.alert({
                                     title: globalization.deleteContentFailureMessageTitle,
-                                    content: globalization.deleteContentFailureMessageMessage,
+                                    content: globalization.deleteContentFailureMessageMessage
                                 });
                             }
                         }

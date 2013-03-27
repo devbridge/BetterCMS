@@ -1,7 +1,5 @@
-﻿using System;
-
-using BetterCms.Api;
-using BetterCms.Core.Exceptions;
+﻿using BetterCms.Api;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.Pages.Command.Page.SavePageProperties;
@@ -9,7 +7,6 @@ using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
 using BetterCms.Module.Root.Mvc;
-using BetterCms.Module.Root.Mvc.Helpers;
 
 namespace BetterCms.Module.Pages.Command.Page.CreatePage
 {
@@ -72,7 +69,8 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
                     PageUrl = pageUrl,
                     Title = request.PageTitle,
                     Layout = Repository.First<Root.Models.Layout>(request.TemplateId),
-                    IsPublic = true
+                    IsPublic = true,
+                    Status = PageStatus.Unpublished
                 };
                 
             Repository.Save(page);

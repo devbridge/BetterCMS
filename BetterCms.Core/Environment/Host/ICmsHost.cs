@@ -1,5 +1,4 @@
-﻿using System;
-using System.Web;
+﻿using System.Web;
 
 namespace BetterCms.Core.Environment.Host
 {
@@ -8,14 +7,6 @@ namespace BetterCms.Core.Environment.Host
     /// </summary>
     public interface ICmsHost
     {
-        /// <summary>
-        /// Gets the version.
-        /// </summary>
-        /// <value>
-        /// The version.
-        /// </value>
-        Version Version { get; }
-
         /// <summary>
         /// Called on host application start.
         /// </summary>

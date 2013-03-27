@@ -5,14 +5,11 @@ namespace BetterCms.Configuration
 {
     public class CmsConfigurationSection : ConfigurationSection, ICmsConfiguration
     {
+        private const string VersionAttribute = "version";
+        private const string UseMinifiedResourcesAttribute = "useMinifiedResources";
+        private const string ResourcesBasePathAttribute = "resourcesBasePath";
         private const string LoginUrlAttribute = "loginUrl";
-        private const string ResourcesRootAttribute = "resourcesRoot";
-        private const string ControlerPathAttribute = "controlerPath";
-        private const string LocalresourcesPathAttribute = "localResourcesPath";
-        private const string DevelopmentEnvironmentAttribute = "cmsDevEnv";
-        private const string DefaultImageWidthAttribute = "defaultImageWidth";
         private const string EnforcePermissionsAttribute = "enforcePermissions";
-        private const string PageCheckoutEnabledAttribute = "pageCheckoutEnabled";
         private const string PageNotFoundUrlAttribute = "pageNotFoundUrl";
         private const string SideMenuSectionsNode = "menuSections";
         private const string UrlPatternsNode = "urlPatterns";
@@ -22,9 +19,45 @@ namespace BetterCms.Configuration
         private const string SecurityNode = "security";
         private const string ModuleGalleryNode = "moduleGallery";
         private const string WorkingDirectoryRootPathAttribute = "workingDirectoryRootPath";
-        private const string ArticleUrlPrefixAttribute = "articleUrlPrefix";
-        
+        private const string ArticleUrlPrefixAttribute = "articleUrlPrefix";        
+
+        /// <summary>
+        /// The version backing field.
+        /// </summary>
+        private Version version;
+
         #region Attributes
+
+        /// <summary>
+        /// Gets the Better CMS version.
+        /// </summary>
+        /// <value>
+        /// The Better CMS version.
+        /// </value>
+        [ConfigurationProperty(VersionAttribute, DefaultValue = null, IsRequired = false)]
+        public string Version
+        {
+            get { return Convert.ToString(this[VersionAttribute]); }
+            set { this[VersionAttribute] = value; }
+        }
+
+        Version ICmsConfiguration.Version
+        {
+            get
+            {
+                if (version == null && !string.IsNullOrEmpty(Version))
+                {
+                    System.Version.TryParse(Version, out version);                    
+                }
+
+                if (version == null)
+                {
+                    version = GetType().Assembly.GetName().Version;
+                }
+
+                return version;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the login URL.
@@ -40,45 +73,6 @@ namespace BetterCms.Configuration
         }
 
         /// <summary>
-        /// Gets or sets the resources root.
-        /// </summary>
-        /// <value>
-        /// The resources root.
-        /// </value>
-        [ConfigurationProperty(ResourcesRootAttribute, DefaultValue = "http://dbcms.s3.amazonaws.com/cms/", IsRequired = false)]
-        public string ResourcesRoot
-        {
-            get { return Convert.ToString(this[ResourcesRootAttribute]); }
-            set { this[ResourcesRootAttribute] = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the controller path.
-        /// </summary>
-        /// <value>
-        /// The controller path.
-        /// </value>
-        [ConfigurationProperty(ControlerPathAttribute, DefaultValue = "/cms/", IsRequired = false)]
-        public string ControlerPath
-        {
-            get { return Convert.ToString(this[ControlerPathAttribute]); }
-            set { this[ControlerPathAttribute] = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the local resources path.
-        /// </summary>
-        /// <value>
-        /// The local resources path.
-        /// </value>
-        [ConfigurationProperty(LocalresourcesPathAttribute, DefaultValue = "/cms/local/", IsRequired = false)]
-        public string LocalResourcesPath
-        {
-            get { return Convert.ToString(this[LocalresourcesPathAttribute]); }
-            set { this[LocalresourcesPathAttribute] = value; }
-        }
-
-        /// <summary>
         /// Gets the virtual root path (like "~/App_Data") of BetterCMS working directory. 
         /// </summary>
         /// <value>
@@ -90,31 +84,19 @@ namespace BetterCms.Configuration
             get { return Convert.ToString(this[WorkingDirectoryRootPathAttribute]); }
             set { this[WorkingDirectoryRootPathAttribute] = value; }
         }
-        
-        /// <summary>
-        /// Gets or sets a value indicating whether [CMS developer environment].
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if [CMS dev env]; otherwise, <c>false</c>.
-        /// </value>
-        [ConfigurationProperty(DevelopmentEnvironmentAttribute, DefaultValue = false, IsRequired = false)]
-        public bool CmsDevEnv
+
+        [ConfigurationProperty(UseMinifiedResourcesAttribute, IsRequired = false, DefaultValue = false)]
+        public bool UseMinifiedResources
         {
-            get { return Convert.ToBoolean(this[DevelopmentEnvironmentAttribute]); }
-            set { this[DevelopmentEnvironmentAttribute] = value; }
+            get { return Convert.ToBoolean(this[UseMinifiedResourcesAttribute]); }
+            set { this[UseMinifiedResourcesAttribute] = value; }
         }
 
-        /// <summary>
-        /// Gets or sets the default width of the image.
-        /// </summary>
-        /// <value>
-        /// The default width of the image.
-        /// </value>
-        [ConfigurationProperty(DefaultImageWidthAttribute, DefaultValue = 550, IsRequired = false)]
-        public int DefaultImageWidth
+        [ConfigurationProperty(ResourcesBasePathAttribute, IsRequired = false, DefaultValue = null)]
+        public string ResourcesBasePath
         {
-            get { return Convert.ToInt32(this[DefaultImageWidthAttribute]); }
-            set { this[DefaultImageWidthAttribute] = value; }
+            get { return Convert.ToString(this[ResourcesBasePathAttribute]); }
+            set { this[ResourcesBasePathAttribute] = value; }
         }
 
         /// <summary>
@@ -128,19 +110,6 @@ namespace BetterCms.Configuration
         {
             get { return Convert.ToBoolean(this[EnforcePermissionsAttribute]); }
             set { this[EnforcePermissionsAttribute] = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether page checkout is enabled.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if page checkout enable; otherwise, <c>false</c>.
-        /// </value>
-        [ConfigurationProperty(PageCheckoutEnabledAttribute, DefaultValue = false, IsRequired = false)]
-        public bool PageCheckoutEnabled
-        {
-            get { return Convert.ToBoolean(this[PageCheckoutEnabledAttribute]); }
-            set { this[PageCheckoutEnabledAttribute] = value; }
         }
 
         /// <summary>

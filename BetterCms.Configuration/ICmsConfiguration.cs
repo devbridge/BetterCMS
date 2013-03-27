@@ -1,3 +1,5 @@
+using System;
+
 using BetterCms.Configuration;
 
 namespace BetterCms
@@ -7,6 +9,30 @@ namespace BetterCms
     public interface ICmsConfiguration
     {
         /// <summary>
+        /// Gets the Better CMS version.
+        /// </summary>
+        /// <value>
+        /// The Better CMS version.
+        /// </value>
+        Version Version { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether CMS should use minified resources (*.min.js and *.min.css).
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if CMS should use minified resources; otherwise, <c>false</c>.
+        /// </value>
+        bool UseMinifiedResources { get; }
+
+        /// <summary>
+        /// Gets the CMS resources (*.js and *.css) base path.
+        /// </summary>
+        /// <value>
+        /// The CMS content base path.
+        /// </value>
+        string ResourcesBasePath { get; }
+
+        /// <summary>
         /// Gets or sets the login URL.
         /// </summary>
         /// <value>
@@ -15,52 +41,12 @@ namespace BetterCms
         string LoginUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets the resources root.
-        /// </summary>
-        /// <value>
-        /// The resources root.
-        /// </value>
-        string ResourcesRoot { get; set; }
-
-        /// <summary>
-        /// Gets or sets the controller path.
-        /// </summary>
-        /// <value>
-        /// The controller path.
-        /// </value>
-        string ControlerPath { get; set; }
-
-        /// <summary>
-        /// Gets or sets the local resources path.
-        /// </summary>
-        /// <value>
-        /// The local resources path.
-        /// </value>
-        string LocalResourcesPath { get; set; }
-
-        /// <summary>
         /// Gets the virtual root path (like "~/App_Data") of BetterCMS working directory. 
         /// </summary>
         /// <value>
         /// The virtual root path of BetterCMS working directory.
         /// </value>
-        string WorkingDirectoryRootPath { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether [CMS developer environment].
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if [CMS dev env]; otherwise, <c>false</c>.
-        /// </value>
-        bool CmsDevEnv { get; set; }
-
-        /// <summary>
-        /// Gets or sets the default width of the image.
-        /// </summary>
-        /// <value>
-        /// The default width of the image.
-        /// </value>
-        int DefaultImageWidth { get; set; }
+        string WorkingDirectoryRootPath { get; }
 
         /// <summary>
         /// Gets or sets a value indicating whether enforce permissions.
@@ -103,14 +89,6 @@ namespace BetterCms
         /// Gets the configuration of CMS permissions service.
         /// </summary>
         ICmsSecurityConfiguration Security { get;  }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether page checkout enabled.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if page checkout enabled; otherwise, <c>false</c>.
-        /// </value>
-        bool PageCheckoutEnabled { get; set; }
 
         /// <summary>
         /// Gets or sets the page not found url.

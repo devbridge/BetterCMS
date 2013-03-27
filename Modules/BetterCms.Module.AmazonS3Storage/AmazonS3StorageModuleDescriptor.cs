@@ -12,6 +12,15 @@ namespace BetterCms.Module.AmazonS3Storage
     public class AmazonS3StorageModuleDescriptor : ModuleDescriptor
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="AmazonS3StorageModuleDescriptor" /> class.
+        /// </summary>
+        /// <param name="configuration">The configuration.</param>
+        public AmazonS3StorageModuleDescriptor(ICmsConfiguration configuration)
+            : base(configuration)
+        {
+        }
+
+        /// <summary>
         /// Gets the name.
         /// </summary>
         /// <value>
@@ -39,15 +48,15 @@ namespace BetterCms.Module.AmazonS3Storage
             }
         }
 
+
         /// <summary>
         /// Registers module types.
         /// </summary>
         /// <param name="context">The area registration context.</param>
         /// <param name="containerBuilder">The container builder.</param>
-        /// <param name="configuration">The configuration.</param>
-        public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
-            if (configuration.Storage.ServiceType == StorageServiceType.Auto)
+            if (Configuration.Storage.ServiceType == StorageServiceType.Auto)
             {
                 containerBuilder.RegisterType<AmazonS3StorageService>().As<IStorageService>().SingleInstance();
             }

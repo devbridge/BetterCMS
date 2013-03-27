@@ -12,7 +12,7 @@ define('bcms.grid', ['bcms.jquery', 'bcms'], function ($, bcms) {
             sortColumnHeaders: 'a.bcms-sort-arrow',
             hiddenSortColumnField: '#bcms-grid-sort-column',
             hiddenSortDirectionField: '#bcms-grid-sort-direction',
-            formLoaderContainer: '.bcms-rightcol',
+            formLoaderContainer: '.bcms-rightcol'
         },
         links = {
             

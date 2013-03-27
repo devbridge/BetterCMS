@@ -1,25 +1,16 @@
-﻿
-<script type="text/javascript">
-    window.onload = function () {
-        document.getElementById('browserInfo').style.display = 'block';
-    };
-    function closeMsg(element) {
-        document.getElementById(element).style.display = 'none';
-    }
-</script>
-<div class="msg-message-page" id="browserInfo">
-    <div class="msg-message-block">
-        <div class="msg-message-top">Sorry, looks like you are using an outdated version of <span>Internet Explorer</span></div>
-        <div class="msg-message-lower">
-            <div class="msg-lower-upper">To get better browsing experience and enhanced security</div>
-            please <span>upgrade</span> your browser<span class="msg-message-upgrade"></span>
-            <div class="msg-lower-lower">to one of the following modern browsers:</div>
+﻿<div class="bcms-msg-message-page" id="bcms-browser-info" style="display: none;">
+    <div class="bcms-msg-message-block">
+        <div class="bcms-msg-message-top">Sorry, looks like you are using an outdated version of <span>Internet Explorer</span></div>
+        <div class="bcms-msg-message-lower">
+            <div class="bcms-msg-lower-upper">To get better browsing experience and enhanced security</div>
+            please <span>upgrade</span> your browser<span class="bcms-msg-message-upgrade"></span>
+            <div class="bcms-msg-lower-lower">to one of the following modern browsers:</div>
         </div>
-        <div class="msg-choose-browser">
-            <a href="https://www.google.com/intl/en/chrome/browser/" target="_blank" class="msg-download-chrome">Chrome  </a>
-            <a href="http://www.mozilla.org/en-US/firefox/new/" target="_blank" class="msg-download-ff">Mozilla Firefox</a>
-            <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie" target="_blank" class="msg-download-ie">Internet Explorer</a>
+        <div class="bcms-msg-choose-browser">
+            <a href="https://www.google.com/intl/en/chrome/browser/" target="_blank" class="bcms-msg-download-chrome">Chrome  </a>
+            <a href="http://www.mozilla.org/en-US/firefox/new/" target="_blank" class="bcms-msg-download-ff">Mozilla Firefox</a>
+            <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie" target="_blank" class="bcms-msg-download-ie">Internet Explorer</a>
         </div>
-        <a onclick="closeMsg('browserInfo');" class='msg-message-close' title="Close Info Message">Close Message</a>
+        <a class='bcms-msg-message-close' title="Close Info Message" id="">Close Message</a>
     </div>
 </div>

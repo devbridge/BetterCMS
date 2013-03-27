@@ -27,14 +27,14 @@ namespace BetterCms.Module.Blog
         /// <summary>
         /// The blog java script module descriptor
         /// </summary>
-        private readonly BlogJavaScriptModuleDescriptor blogJavaScriptModuleDescriptor;
+        private readonly BlogJsModuleIncludeDescriptor blogJsModuleIncludeDescriptor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlogModuleDescriptor" /> class.
         /// </summary>
-        public BlogModuleDescriptor()
+        public BlogModuleDescriptor(ICmsConfiguration configuration) : base(configuration)
         {
-            blogJavaScriptModuleDescriptor = new BlogJavaScriptModuleDescriptor(this);
+            blogJsModuleIncludeDescriptor = new BlogJsModuleIncludeDescriptor(this);
         }
 
         /// <summary>
@@ -69,13 +69,12 @@ namespace BetterCms.Module.Blog
         /// Registers the sidebar main projections.
         /// </summary>
         /// <param name="containerBuilder">The container builder.</param>
-        /// <param name="configuration">The configuration.</param>
         /// <returns></returns>
-        public override IEnumerable<IPageActionProjection> RegisterSidebarMainProjections(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        public override IEnumerable<IPageActionProjection> RegisterSidebarMainProjections(ContainerBuilder containerBuilder)
         {
             return new IPageActionProjection[]
                 {
-                    new ButtonActionProjection(blogJavaScriptModuleDescriptor, page => "postNewArticle")
+                    new ButtonActionProjection(blogJsModuleIncludeDescriptor, page => "postNewArticle")
                         {
                             Title = () => BlogGlobalization.Sidebar_AddNewPostButtonTitle,
                             Order = 200,
@@ -87,31 +86,27 @@ namespace BetterCms.Module.Blog
 
         /// <summary>
         /// Registers java script modules.
-        /// </summary>
-        /// <param name="containerBuilder">The container builder.</param>
-        /// <param name="configuration">The CMS configuration.</param>
+        /// </summary>        
         /// <returns>
         /// Enumerator of known JS modules list.
         /// </returns>
-        public override IEnumerable<JavaScriptModuleDescriptor> RegisterJavaScriptModules(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        public override IEnumerable<JsIncludeDescriptor> RegisterJsIncludes()
         {
             return new[]
                 {
-                    blogJavaScriptModuleDescriptor
+                    blogJsModuleIncludeDescriptor
                 };
         }
 
         /// <summary>
         /// Registers the style sheet files.
-        /// </summary>
-        /// <param name="containerBuilder">The container builder.</param>
-        /// <param name="configuration">The configuration.</param>
+        /// </summary>        
         /// <returns>Enumerator of known module style sheet files.</returns>
-        public override IEnumerable<string> RegisterStyleSheetFiles(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        public override IEnumerable<CssIncludeDescriptor> RegisterCssIncludes()
         {
             return new[]
                 {
-                    "/file/bcms-blog/Content/Styles/bcms.blog.css"
+                    new CssIncludeDescriptor(this, "bcms.blog.css")
                 };
         }
 
@@ -119,13 +114,12 @@ namespace BetterCms.Module.Blog
         /// Registers the site settings projections.
         /// </summary>
         /// <param name="containerBuilder">The container builder.</param>
-        /// <param name="configuration">The configuration.</param>
         /// <returns>List of page action projections.</returns>
-        public override IEnumerable<IPageActionProjection> RegisterSiteSettingsProjections(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        public override IEnumerable<IPageActionProjection> RegisterSiteSettingsProjections(ContainerBuilder containerBuilder)
         {
             return new IPageActionProjection[]
                 {
-                    new LinkActionProjection(blogJavaScriptModuleDescriptor, page => "loadSiteSettingsBlogs")
+                    new LinkActionProjection(blogJsModuleIncludeDescriptor, page => "loadSiteSettingsBlogs")
                         {
                             Order = 1200,
                             Title = () => BlogGlobalization.SiteSettings_BlogsMenuItem,
@@ -139,9 +133,8 @@ namespace BetterCms.Module.Blog
         /// Registers module types.
         /// </summary>
         /// <param name="context">The area registration context.</param>
-        /// <param name="containerBuilder">The container builder.</param>
-        /// <param name="configuration">The configuration.</param>
-        public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        /// <param name="containerBuilder">The container builder.</param>        
+        public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
             RegisterContentRendererType<BlogPostContentAccessor, BlogPostContent>(containerBuilder);
             RegisterStylesheetRendererType<PageStylesheetAccessor, BlogPost>(containerBuilder);

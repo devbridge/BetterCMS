@@ -37,19 +37,19 @@ namespace BetterCms.Core.Modules.Projections
         /// <value>
         /// The client side parent module.
         /// </value>
-        private readonly JavaScriptModuleDescriptor parentModule;
+        private readonly JsIncludeDescriptor parentModuleInclude;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DropDownListProjection" /> class.
         /// </summary>
-        /// <param name="parentModule">The parent module (should contain on change action).</param>
+        /// <param name="parentModuleInclude">The parent module (should contain on change action).</param>
         /// <param name="items">A list of select items.</param>
         /// <param name="onChangeAction">Name of the action to execute after select item changed.</param>
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
-        public DropDownListProjection(JavaScriptModuleDescriptor parentModule, IEnumerable<Func<IPage, DropDownListProjectionItem>> items, Func<IPage, string> onChangeAction)
+        public DropDownListProjection(JsIncludeDescriptor parentModuleInclude, IEnumerable<Func<IPage, DropDownListProjectionItem>> items, Func<IPage, string> onChangeAction)
             : base("select")
         {
-            this.parentModule = parentModule;
+            this.parentModuleInclude = parentModuleInclude;
             Items = items;
             OnChangeAction = onChangeAction;
         }
@@ -57,13 +57,13 @@ namespace BetterCms.Core.Modules.Projections
         /// <summary>
         /// Initializes a new instance of the <see cref="DropDownListProjection" /> class.
         /// </summary>
-        /// <param name="parentModule">The parent module (should contain on change action).</param>
+        /// <param name="parentModuleInclude">The parent module (should contain on change action).</param>
         /// <param name="onChangeAction">Name of the action to execute after select item changed.</param>
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
-        public DropDownListProjection(JavaScriptModuleDescriptor parentModule, Func<IPage, string> onChangeAction)
+        public DropDownListProjection(JsIncludeDescriptor parentModuleInclude, Func<IPage, string> onChangeAction)
             : base("select")
         {
-            this.parentModule = parentModule;
+            this.parentModuleInclude = parentModuleInclude;
             OnChangeAction = onChangeAction;
         }
 
@@ -117,7 +117,7 @@ namespace BetterCms.Core.Modules.Projections
                 }
             }
 
-            if (OnChangeAction != null && parentModule != null)
+            if (OnChangeAction != null && parentModuleInclude != null)
             {
                 string cssClass = controlRenderer.Attributes["class"];
                 if (!string.IsNullOrEmpty(cssClass) && !cssClass.Contains(ModuleActionMarkerCssClass))
@@ -130,7 +130,7 @@ namespace BetterCms.Core.Modules.Projections
                 }
 
                 controlRenderer.Attributes["class"] = cssClass;
-                controlRenderer.Attributes.Add(ModuleNameAttribute, parentModule.Name);
+                controlRenderer.Attributes.Add(ModuleNameAttribute, parentModuleInclude.Name);
                 controlRenderer.Attributes.Add(ModuleActionAttribute, OnChangeAction(page));
             }
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
 
+using BetterCms.Configuration;
 using BetterCms.Core.DataAccess.DataContext.Migrations;
 using BetterCms.Core.Environment.Assemblies;
 using BetterCms.Core.Modules;
@@ -26,15 +27,16 @@ namespace BetterCms.Sandbox.DataMigration
 
         static Program()
         {
+             ICmsConfiguration configuration = new CmsConfigurationSection();
              descriptors = 
                     (new ModuleDescriptor[]
                     {
-                        new BlogModuleDescriptor(),
-                        new TemplatesModuleDescriptor(),
-                        new MediaManagerModuleDescriptor(),
-                        new PagesModuleDescriptor(),
-                        new RootModuleDescriptor(),
-                        new UsersModuleDescriptor()
+                        new BlogModuleDescriptor(configuration),
+                        new TemplatesModuleDescriptor(configuration),
+                        new MediaManagerModuleDescriptor(configuration),
+                        new PagesModuleDescriptor(configuration),
+                        new RootModuleDescriptor(configuration),
+                        new UsersModuleDescriptor(configuration)
                     })
                     .ToList();
         }

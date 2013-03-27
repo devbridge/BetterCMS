@@ -1,4 +1,6 @@
-﻿using BetterCms.Core.Modules;
+﻿using System.Collections.Generic;
+
+using BetterCms.Core.Modules;
 
 namespace BetterCms.Module.Templates
 {
@@ -8,6 +10,15 @@ namespace BetterCms.Module.Templates
     public class TemplatesModuleDescriptor : ModuleDescriptor
     {
         internal const string ModuleName = "templates";
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TemplatesModuleDescriptor" /> class.
+        /// </summary>
+        /// <param name="configuration">The configuration.</param>
+        public TemplatesModuleDescriptor(ICmsConfiguration configuration)
+            : base(configuration)
+        {
+        }
 
         /// <summary>
         /// Gets the name of module.
@@ -49,6 +60,11 @@ namespace BetterCms.Module.Templates
             {
                 return int.MaxValue - 100;
             }
+        }
+
+        public override IEnumerable<CssIncludeDescriptor> RegisterCssIncludes()
+        {
+            return new[] { new CssIncludeDescriptor(this, "bcms.templates.css") };
         }
     }
 }

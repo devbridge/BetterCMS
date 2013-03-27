@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Web.Mvc;
@@ -8,6 +9,7 @@ using Autofac;
 
 using BetterCms.Api;
 using BetterCms.Core.DataContracts;
+using BetterCms.Core.Exceptions;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Core.Mvc.Attributes;
 using BetterCms.Core.Mvc.Commands;
@@ -21,6 +23,29 @@ namespace BetterCms.Core.Modules
     /// </summary>
     public abstract class ModuleDescriptor
     {
+        private string areaName;
+
+        private string baseModulePath;
+
+        private string baseJsPath;
+
+        private string baseCssPath;
+
+        private string minJsPath;
+
+        private string minCssPath;
+
+        private AssemblyName assemblyName;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModuleDescriptor" /> class.
+        /// </summary>
+        /// <param name="configuration">The configuration.</param>
+        protected ModuleDescriptor(ICmsConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
         /// <summary>
         /// Gets the order.
         /// </summary>
@@ -41,6 +66,14 @@ namespace BetterCms.Core.Modules
         public abstract string Name { get; }
 
         /// <summary>
+        /// Gets the CMS configuration.
+        /// </summary>
+        /// <value>
+        /// The CMS configuration.
+        /// </value>
+        public virtual ICmsConfiguration Configuration { get; private set; }
+
+        /// <summary>
         /// Gets the description.
         /// </summary>
         /// <value>
@@ -58,23 +91,122 @@ namespace BetterCms.Core.Modules
         {
             get
             {
-                return "bcms-" + Name;
+                if (areaName == null)
+                {
+                    areaName = ("bcms-" + Name).ToLowerInvariant();
+                }
+
+                return areaName;
             }
         }
 
         /// <summary>
-        /// Gets the base script path.
+        /// Gets the base module path. Default value is /file/module-name/.
         /// </summary>
         /// <value>
-        /// The base script path.
+        /// The base module path.
         /// </value>
-        public virtual string BaseScriptPath
+        public virtual string BaseModulePath
         {
             get
             {
-                return string.Format("/file/{0}/scripts/", AreaName).ToLowerInvariant();
+                if (baseModulePath == null)
+                {                    
+                    if (!string.IsNullOrWhiteSpace(Configuration.ResourcesBasePath) && !VirtualPath.IsLocalPath(Configuration.ResourcesBasePath))
+                    {                       
+                        baseModulePath = VirtualPath.Combine(Configuration.ResourcesBasePath, AreaName);
+
+                        const string versionTag = "{bcms.version}";
+                        if (baseModulePath.Contains(versionTag))
+                        {
+                            baseModulePath = baseModulePath.Replace(versionTag, string.Format("{0}.{1}.{2}", Configuration.Version.Major, Configuration.Version.Minor, Configuration.Version.Build));
+                        }
+                    }
+                    else
+                    {
+                        if (Configuration.UseMinifiedResources)
+                        {
+                            throw new CmsException(
+                                "The switch useMinifiedResources=\"true\" in the cms.config can't be used with local CMS resources (resourcesBasePath=\"(local)\").");
+                        }
+                        baseModulePath = VirtualPath.Combine("/", "file", AreaName);
+                    }
+                }
+
+                return baseModulePath;
             }
         }
+
+        /// <summary>
+        /// Gets the JavaScript base path.
+        /// </summary>
+        /// <value>
+        /// The JavaScript base path.
+        /// </value>
+        public virtual string JsBasePath
+        {
+            get
+            {
+                if (baseJsPath == null)
+                {
+                    baseJsPath = VirtualPath.Combine(BaseModulePath, "scripts");
+                }
+
+                return baseJsPath;
+            }
+        }
+
+        public virtual string CssBasePath
+        {
+            get
+            {
+                if (baseCssPath == null)
+                {
+                    baseCssPath = VirtualPath.Combine(BaseModulePath, "content", "styles");
+                }
+
+                return baseCssPath;
+            }
+        }
+
+        /// <summary>
+        /// Gets the path of the module packed and minified JS file.
+        /// </summary>
+        /// <value>
+        /// The path of the module packed and minified JS file.
+        /// </value>
+        public virtual string MinifiedJsPath
+        {
+            get
+            {
+                if (minJsPath == null)
+                {
+                    minJsPath = VirtualPath.Combine(JsBasePath, string.Format("bcms.{0}.min.js", Name));
+                }
+
+                return minJsPath;
+            }
+        }
+
+        /// <summary>
+        /// Gets the path of the module packed and minified CSS file.
+        /// </summary>
+        /// <value>
+        /// The path of the module packed and minified CSS file.
+        /// </value>
+        public virtual string MinifiedCssPath
+        {
+            get
+            {
+                if (minCssPath == null)
+                {
+                    minCssPath = VirtualPath.Combine(CssBasePath, string.Format("bcms.{0}.min.css", Name));
+                }
+
+                return minCssPath;
+            }
+        }
+
         /// <summary>
         /// Gets the name of the assembly.
         /// </summary>
@@ -85,7 +217,12 @@ namespace BetterCms.Core.Modules
         {
             get
             {
-                return GetType().Assembly.GetName();
+                if (assemblyName == null)
+                {
+                    assemblyName = GetType().Assembly.GetName();
+                }
+
+                return assemblyName;
             }
         }
 
@@ -94,8 +231,7 @@ namespace BetterCms.Core.Modules
         /// </summary>
         /// <param name="context">The area registration context.</param>
         /// <param name="containerBuilder">The container builder.</param>
-        /// <param name="configuration">The configuration.</param>
-        public virtual void RegisterCustomRoutes(ModuleRegistrationContext context, ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        public virtual void RegisterCustomRoutes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
         }
 
@@ -104,49 +240,44 @@ namespace BetterCms.Core.Modules
         /// </summary>
         /// <param name="context">The area registration context.</param>
         /// <param name="containerBuilder">The container builder.</param>
-        /// <param name="configuration">The configuration.</param>
-        public virtual void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        public virtual void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {            
         }
 
         /// <summary>
         /// Registers java script modules.
-        /// </summary>
-        /// <param name="containerBuilder">The container builder.</param>
-        /// <param name="configuration">The CMS configuration.</param>
+        /// </summary>        
         /// <returns>Enumerator of known JS modules list.</returns>
-        public virtual IEnumerable<JavaScriptModuleDescriptor> RegisterJavaScriptModules(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
-        {
-            return null;
-        }
-
-        public virtual IEnumerable<IPageActionProjection> RegisterSidebarHeaderProjections(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
-        {
-            return null;
-        }
-
-        public virtual IEnumerable<IPageActionProjection> RegisterSidebarSideProjections(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
-        {
-            return null;
-        }
-
-        public virtual IEnumerable<IPageActionProjection> RegisterSidebarMainProjections(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
-        {
-            return null;
-        }
-
-        public virtual IEnumerable<IPageActionProjection> RegisterSiteSettingsProjections(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        public virtual IEnumerable<JsIncludeDescriptor> RegisterJsIncludes()
         {
             return null;
         }
 
         /// <summary>
         /// Registers the style sheet files.
-        /// </summary>
-        /// <param name="containerBuilder">The container builder.</param>
-        /// <param name="configuration">The configuration.</param>
+        /// </summary>                
         /// <returns>Enumerator of known module style sheet files.</returns>
-        public virtual IEnumerable<string> RegisterStyleSheetFiles(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        public virtual IEnumerable<CssIncludeDescriptor> RegisterCssIncludes()
+        {
+            return null;
+        }
+
+        public virtual IEnumerable<IPageActionProjection> RegisterSidebarHeaderProjections(ContainerBuilder containerBuilder)
+        {
+            return null;
+        }
+
+        public virtual IEnumerable<IPageActionProjection> RegisterSidebarSideProjections(ContainerBuilder containerBuilde)
+        {
+            return null;
+        }
+
+        public virtual IEnumerable<IPageActionProjection> RegisterSidebarMainProjections(ContainerBuilder containerBuilder)
+        {
+            return null;
+        }
+
+        public virtual IEnumerable<IPageActionProjection> RegisterSiteSettingsProjections(ContainerBuilder containerBuilder)
         {
             return null;
         }
@@ -157,7 +288,7 @@ namespace BetterCms.Core.Modules
         /// <param name="containerBuilder">The container builder.</param>
         /// <param name="configuration">The configuration.</param>
         /// <returns>Enumerator of known module permissions.</returns>
-        public virtual IEnumerable<IUserRole> RegisterUserRoles(ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        public virtual IEnumerable<IUserRole> RegisterUserRoles(ContainerBuilder containerBuilder)
         {
             return null;
         }
@@ -169,7 +300,7 @@ namespace BetterCms.Core.Modules
         /// <param name="containerBuilder">The container builder.</param>
         /// <param name="configuration">The configuration.</param>
         /// <param name="controllerExtensions">The controller extensions.</param>
-        internal void RegisterModuleControllers(ModuleRegistrationContext registrationContext, ContainerBuilder containerBuilder, ICmsConfiguration configuration, IControllerExtensions controllerExtensions)
+        internal void RegisterModuleControllers(ModuleRegistrationContext registrationContext, ContainerBuilder containerBuilder, IControllerExtensions controllerExtensions)
         {
             var controllerTypes = controllerExtensions.GetControllerTypes(GetType().Assembly);
 
@@ -185,7 +316,7 @@ namespace BetterCms.Core.Modules
                         .Keyed<IController>(key)                        
                         .WithMetadata("ControllerType", controllerType)
                         .InstancePerDependency()
-                        .PropertiesAutowired(PropertyWiringFlags.PreserveSetValues);
+                        .PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
 
                     var controllerActions = controllerExtensions.GetControllerActions(controllerType);
 
@@ -230,14 +361,15 @@ namespace BetterCms.Core.Modules
         /// <param name="registrationContext">The area registration context.</param>
         /// <param name="containerBuilder">The container builder.</param>
         /// <param name="configuration">The CMS configuration.</param>
-        internal void RegisterModuleCommands(ModuleRegistrationContext registrationContext, ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        internal void RegisterModuleCommands(ModuleRegistrationContext registrationContext, ContainerBuilder containerBuilder)
         {
             Assembly assembly = GetType().Assembly;
 
             Type[] commandTypes = new[]
                 {
                     typeof(ICommand),
-                    typeof(ICommand<>),
+                    typeof(ICommandIn<>),
+                    typeof(ICommandOut<>),
                     typeof(ICommand<,>)
                 };
 
@@ -250,7 +382,7 @@ namespace BetterCms.Core.Modules
                 .InstancePerLifetimeScope();
         }
 
-        internal void RegisterModuleApiContexts(ModuleRegistrationContext registrationContext, ContainerBuilder containerBuilder, ICmsConfiguration configuration)
+        internal void RegisterModuleApiContexts(ModuleRegistrationContext registrationContext, ContainerBuilder containerBuilder)
         {
             Assembly assembly = GetType().Assembly;
             

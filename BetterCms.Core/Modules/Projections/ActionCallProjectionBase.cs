@@ -31,19 +31,19 @@ namespace BetterCms.Core.Modules.Projections
         /// <summary>
         /// A client side parent module.
         /// </summary>
-        private readonly JavaScriptModuleDescriptor parentModule;
+        private readonly JsIncludeDescriptor parentModuleInclude;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ActionCallProjectionBase" /> class.
         /// </summary>
         /// <param name="htmlTag">The HTML tag.</param>
-        /// <param name="parentModule">The parent module.</param>
+        /// <param name="parentModuleInclude">The parent module.</param>
         /// <param name="onClickAction">Name of the action to execute after button click.</param>
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
-        protected ActionCallProjectionBase(string htmlTag, JavaScriptModuleDescriptor parentModule, Func<IPage, string> onClickAction)
+        protected ActionCallProjectionBase(string htmlTag, JsIncludeDescriptor parentModuleInclude, Func<IPage, string> onClickAction)
             : base(htmlTag)
         {
-            this.parentModule = parentModule;
+            this.parentModuleInclude = parentModuleInclude;
             OnClickAction = onClickAction;
         }
 
@@ -51,14 +51,14 @@ namespace BetterCms.Core.Modules.Projections
         /// Initializes a new instance of the <see cref="ActionCallProjectionBase" /> class.
         /// </summary>
         /// <param name="htmlTag">The HTML tag.</param>
-        /// <param name="parentModule">The parent module (should contain on click action).</param>
+        /// <param name="parentModuleInclude">The parent module (should contain on click action).</param>
         /// <param name="title">The button title.</param>
         /// <param name="onClickAction">Name of the action to execute after button click.</param>
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
-        protected ActionCallProjectionBase(string htmlTag, JavaScriptModuleDescriptor parentModule, Func<string> title, Func<IPage, string> onClickAction)
+        protected ActionCallProjectionBase(string htmlTag, JsIncludeDescriptor parentModuleInclude, Func<string> title, Func<IPage, string> onClickAction)
             : base(htmlTag)
         {
-            this.parentModule = parentModule;
+            this.parentModuleInclude = parentModuleInclude;
             Title = title;
             OnClickAction = onClickAction;
         }        
@@ -95,7 +95,7 @@ namespace BetterCms.Core.Modules.Projections
                 controlRenderer.Controls.Add(new LiteralControl(title));
             }
 
-            if (OnClickAction != null && parentModule != null)
+            if (OnClickAction != null && parentModuleInclude != null)
             {
                 string cssClass = controlRenderer.Attributes["class"];
                 if (!string.IsNullOrEmpty(cssClass) && !cssClass.Contains(ModuleActionMarkerCssClass))
@@ -108,7 +108,7 @@ namespace BetterCms.Core.Modules.Projections
                 }
 
                 controlRenderer.Attributes["class"] = cssClass;
-                controlRenderer.Attributes.Add(ModuleNameAttribute, parentModule.Name);
+                controlRenderer.Attributes.Add(ModuleNameAttribute, parentModuleInclude.Name);
                 controlRenderer.Attributes.Add(ModuleActionAttribute, OnClickAction(page));
             }            
         }
