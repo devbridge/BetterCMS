@@ -331,23 +331,23 @@
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy $(SolutionDir)Modules\BetterCms.Module.Blog\bin\BetterCms.Module.Blog.dll $(ProjectDir)App_Data\BetterCms\Modules /Y
-copy $(SolutionDir)Modules\BetterCms.Module.Blog\bin\BetterCms.Module.Blog.pdb $(ProjectDir)App_Data\BetterCms\Modules /Y
+    <PostBuildEvent>copy "$(SolutionDir)Modules\BetterCms.Module.Blog\bin\BetterCms.Module.Blog.dll" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
+copy "$(SolutionDir)Modules\BetterCms.Module.Blog\bin\BetterCms.Module.Blog.pdb" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
 
-copy $(SolutionDir)Modules\BetterCms.Module.Root\bin\BetterCms.Module.Root.dll $(ProjectDir)App_Data\BetterCms\Modules /Y
-copy $(SolutionDir)Modules\BetterCms.Module.Root\bin\BetterCms.Module.Root.pdb $(ProjectDir)App_Data\BetterCms\Modules /Y
+copy "$(SolutionDir)Modules\BetterCms.Module.Root\bin\BetterCms.Module.Root.dll" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
+copy "$(SolutionDir)Modules\BetterCms.Module.Root\bin\BetterCms.Module.Root.pdb" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
 
-copy $(SolutionDir)Modules\BetterCms.Module.Pages\bin\BetterCms.Module.Pages.dll $(ProjectDir)App_Data\BetterCms\Modules /Y
-copy $(SolutionDir)Modules\BetterCms.Module.Pages\bin\BetterCms.Module.Pages.pdb $(ProjectDir)App_Data\BetterCms\Modules /Y
+copy "$(SolutionDir)Modules\BetterCms.Module.Pages\bin\BetterCms.Module.Pages.dll" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
+copy "$(SolutionDir)Modules\BetterCms.Module.Pages\bin\BetterCms.Module.Pages.pdb" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
 
-REM copy $(SolutionDir)Modules\BetterCms.Module.Users\bin\BetterCms.Module.Users.dll $(ProjectDir)App_Data\BetterCms\Modules /Y
-REM copy $(SolutionDir)Modules\BetterCms.Module.Users\bin\BetterCms.Module.Users.pdb $(ProjectDir)App_Data\BetterCms\Modules /Y
+REM copy "$(SolutionDir)Modules\BetterCms.Module.Users\bin\BetterCms.Module.Users.dll" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
+REM copy "$(SolutionDir)Modules\BetterCms.Module.Users\bin\BetterCms.Module.Users.pdb" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
 
-copy $(SolutionDir)Modules\BetterCms.Module.MediaManager\bin\BetterCms.Module.MediaManager.dll $(ProjectDir)App_Data\BetterCms\Modules /Y
-copy $(SolutionDir)Modules\BetterCms.Module.MediaManager\bin\BetterCms.Module.MediaManager.pdb $(ProjectDir)App_Data\BetterCms\Modules /Y
+copy "$(SolutionDir)Modules\BetterCms.Module.MediaManager\bin\BetterCms.Module.MediaManager.dll" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
+copy "$(SolutionDir)Modules\BetterCms.Module.MediaManager\bin\BetterCms.Module.MediaManager.pdb" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
 
-copy $(SolutionDir)Modules\BetterCms.Module.Templates\bin\BetterCms.Module.Templates.dll $(ProjectDir)App_Data\BetterCms\Modules /Y
-copy $(SolutionDir)Modules\BetterCms.Module.Templates\bin\BetterCms.Module.Templates.pdb $(ProjectDir)App_Data\BetterCms\Modules /Y
+copy "$(SolutionDir)Modules\BetterCms.Module.Templates\bin\BetterCms.Module.Templates.dll" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
+copy "$(SolutionDir)Modules\BetterCms.Module.Templates\bin\BetterCms.Module.Templates.pdb" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
 </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
