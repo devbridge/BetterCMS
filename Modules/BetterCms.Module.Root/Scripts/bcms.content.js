@@ -241,7 +241,7 @@ define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
                         'pageId': bcms.pageId,
                         'regionId': regionViewModel.id,
                         'pageContents': pageContents,
-                        'hasChanges': hasChanges,
+                        'hasChanges': hasChanges
                     }
                 };
 

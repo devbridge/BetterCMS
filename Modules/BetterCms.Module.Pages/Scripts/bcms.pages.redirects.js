@@ -16,7 +16,7 @@ define('bcms.pages.redirects', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'b
             pageUrl: 'a.bcms-page-url',
             redirectUrl: 'a.bcms-redirect-url',
             oldPageUrl: 'input.bcms-old-page-url',
-            oldRedirectUrl: 'input.bcms-old-redirect-url',
+            oldRedirectUrl: 'input.bcms-old-redirect-url'
         },
         links = {
             loadSiteSettingsRedirectListUrl: null,

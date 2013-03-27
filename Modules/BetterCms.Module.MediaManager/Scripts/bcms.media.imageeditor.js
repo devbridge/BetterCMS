@@ -87,7 +87,7 @@ define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.sit
                         postError: function () {
                             modal.alert({
                                 title: globalization.imageEditorUpdateFailureMessageTitle,
-                                content: globalization.imageEditorUpdateFailureMessageMessage,
+                                content: globalization.imageEditorUpdateFailureMessageMessage
                             });
                         }
                     });

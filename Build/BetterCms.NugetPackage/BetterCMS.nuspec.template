@@ -13,7 +13,7 @@
     <releaseNotes>It is developer preview version.</releaseNotes>
     <copyright>BetterCMS is licensed under BETTER CMS LICENSE AGREEMENT (http://www.bettercms.com/license.txt).</copyright>
     <dependencies>
-      <dependency id="Autofac" version="2.6.3.862" />
+      <dependency id="Autofac" version="3.0.0" />
       <dependency id="Common.Logging" version="2.1.1.0" />
       <dependency id="Common.Logging.NLog" version="2.0.0" />
       <dependency id="NHibernate" version="[3.3.2.4000]" />

@@ -61,7 +61,7 @@ define('bcms.redirect', ['bcms.jquery', 'bcms', 'bcms.modal'], function ($, bcms
             title: options.title,
             content: options.message,
             disableCancel: true,
-            disableAccept: true,
+            disableAccept: true
         });
     }
 

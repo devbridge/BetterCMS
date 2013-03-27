@@ -23,7 +23,7 @@ define('bcms.pages.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms.s
             categoryNameEditor: 'input.bcms-category-name',
             categoriesListForm: '#bcms-categories-form',
             categoriesSearchButton: '#bcms-categories-search-btn',
-            categoriesSearchField: '.bcms-search-query',
+            categoriesSearchField: '.bcms-search-query'
         },
         links = {
             loadSiteSettingsCategoryListUrl: null,
