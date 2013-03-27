@@ -9,7 +9,9 @@ define('bcms', ['bcms.jquery'], function ($) {
 
     // Selectors used in the module to locate DOM elements:
         selectors = {
-            zIndexLayers: '.bcms-layer'
+            zIndexLayers: '.bcms-layer',
+            browserInfo: '#bcms-browser-info',
+            browserInfoClose: '.bcms-msg-message-close'
         },
 
         events = {
@@ -18,7 +20,7 @@ define('bcms', ['bcms.jquery'], function ($) {
             addPageContent: 'addPageContent',
             sortPageContent: 'sortPageContent',
             createContentOverlay: 'createContentOverlay',
-            pageCreated: 'pageCreated',
+            pageCreated: 'pageCreated'
         },
 
         eventListeners = {},
@@ -258,6 +260,26 @@ define('bcms', ['bcms.jquery'], function ($) {
             $.validator.unobtrusive.parse(form);
         }
     };
+    
+    /**
+    * Initiliazes web page: checks browser version
+    */
+    function globalInit() {
+        // Check browser version
+        if ($.browser.msie && parseInt($.browser.version, 10) <= 7) {
+            var browserInfo = $(selectors.browserInfo);
+
+            browserInfo.find(selectors.browserInfoClose).on('click', function() {
+                browserInfo.hide();
+            });
+            browserInfo.css('display', 'block');
+        }
+    }
+
+    /**
+    * Register initialization
+    */
+    app.registerInit(globalInit);
 
     return app;
 });

@@ -30,7 +30,7 @@ define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bcms.modal',
             fieldHiddenValue: 'input[type="hidden"]:first',
             fieldVisibleValue: '.bcms-grid-item-info:first',
             prependNewRowTo: 'tbody',
-            firstInvalidField: '.input-validation-error:first',
+            firstInvalidField: '.input-validation-error:first'
         },
         links = {
         },

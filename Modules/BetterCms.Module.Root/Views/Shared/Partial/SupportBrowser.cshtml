@@ -1,12 +1,4 @@
-﻿<script type="text/javascript">
-    window.onload = function () {
-        document.getElementById('browserInfo').style.display = 'block';
-    };
-    function bcmsCloseMsg(element) {
-        document.getElementById(element).style.display = 'none';
-    }
-</script>
-<div class="bcms-msg-message-page" id="bcmsBrowserInfo">
+﻿<div class="bcms-msg-message-page" id="bcms-browser-info" style="display: none;">
     <div class="bcms-msg-message-block">
         <div class="bcms-msg-message-top">Sorry, looks like you are using an outdated version of <span>Internet Explorer</span></div>
         <div class="bcms-msg-message-lower">
@@ -19,6 +11,6 @@
             <a href="http://www.mozilla.org/en-US/firefox/new/" target="_blank" class="bcms-msg-download-ff">Mozilla Firefox</a>
             <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie" target="_blank" class="bcms-msg-download-ie">Internet Explorer</a>
         </div>
-        <a onclick="bcmsCloseMsg('bcmsBrowserInfo');" class='bcms-msg-message-close' title="Close Info Message">Close Message</a>
+        <a class='bcms-msg-message-close' title="Close Info Message" id="">Close Message</a>
     </div>
 </div>

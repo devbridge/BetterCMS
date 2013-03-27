@@ -67,7 +67,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             uploadImage: null,
             uploadAudio: null,
             uploadVideo: null,
-            uploadFile: null,
+            uploadFile: null
         },
         keys = {
             folderViewMode: 'bcms.mediaFolderViewMode'
@@ -76,7 +76,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             image: 1,
             video: 2,
             audio: 3,
-            file: 4,
+            file: 4
         },
         contentTypes = {
             file: 1,
@@ -855,7 +855,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                             imagesViewModel = $.extend(imagesViewModel, folderViewModelOptions);
                         }
                         initializeTab(content, imagesViewModel);
-                    },
+                    }
                 });
             },
             onAcceptClick: function () {
@@ -875,7 +875,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 if (selectedItem == null) {
                     modal.info({
                         content: globalization.imageNotSelectedMessageMessage,
-                        disableCancel: true,
+                        disableCancel: true
                     });
                         
                     return false;
@@ -912,7 +912,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             alertOnError = function() {
                 modal.alert({
                     title: globalization.insertImageFailureMessageTitle,
-                    content: globalization.insertImageFailureMessageMessage,
+                    content: globalization.insertImageFailureMessageMessage
                 });
             },
             imageInsert = function(selectedMedia, url, caption, align) {
@@ -997,7 +997,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                         filesViewModel.canInsertMedia(true);
                         filesViewModel.spinContainer = dialog.container.find(selectors.insertContentContainer);
                         initializeTab(content, filesViewModel);
-                    },
+                    }
                 });
             },
             onAcceptClick: function () {
@@ -1016,7 +1016,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 if (selectedItem == null) {
                     modal.info({
                         content: globalization.fileNotSelectedMessageMessage,
-                        disableCancel: true,
+                        disableCancel: true
                     });
 
                     return false;
@@ -1027,7 +1027,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 }
 
                 return true;
-            },
+            }
         });
     };
 

@@ -31,7 +31,7 @@ define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.form
             loadEditPropertiesDialogUrl: null
         },
         globalization = {
-            editPagePropertiesModalTitle: null,
+            editPagePropertiesModalTitle: null
         },
         keys = {
             editPagePropertiesInfoMessageClosed: 'bcms.EditPagePropertiesInfoBoxClosed'

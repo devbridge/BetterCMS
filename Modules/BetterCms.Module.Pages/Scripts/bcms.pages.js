@@ -48,7 +48,7 @@ define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 
                 siteSettingPageCreatedCell: '.bcms-page-created',
                 siteSettingPageModifiedCell: '.bcms-page-modified',
                 siteSettingPageStatusCell: '.bcms-page-ispublished',
-                siteSettingPageHasSeoCell: '.bcms-page-hasseo',
+                siteSettingPageHasSeoCell: '.bcms-page-hasseo'
             },        
             links = {
                 loadEditPropertiesUrl: null,
@@ -372,7 +372,7 @@ define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 
                 $.ajax({
                     type: 'GET',
                     url: $.format(action, encodeURIComponent(text), senderId),
-                    dataType: 'json',
+                    dataType: 'json'
                 })
                     .done(function(result) {
                         onComplete(result);

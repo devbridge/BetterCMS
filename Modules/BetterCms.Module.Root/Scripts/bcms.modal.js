@@ -45,7 +45,7 @@ define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', '
             ok: null,
             saveDraft: null,
             saveAndPublish: null,
-            preview: null,
+            preview: null
         },
         
         isGlobalKeyPressEventAttached = false;

@@ -12,7 +12,7 @@ define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], function ($, bcms
         globalization = {},
         events = {
             insertImage: 'insertImage',
-            insertFile: 'insertFile',
+            insertFile: 'insertFile'
         };
 
     // Assign objects to module

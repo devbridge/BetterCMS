@@ -6,10 +6,11 @@
     Layout = "RootLayout.cshtml";
 }
 
-<!--[if lt IE 8]>
-     @Html.Partial("~/Areas/bcms-root/Views/Shared/Partial/SupportBrowser.cshtml")
-<![endif]-->
-
+@if (Model.CanManageContent)
+{
+    @Html.Partial("~/Areas/bcms-root/Views/Shared/Partial/SupportBrowser.cshtml")
+    @Html.Partial("~/Areas/bcms-root/Views/Shared/Partial/SupportJavascript.cshtml")
+}
 
 @RenderBody()
 
