@@ -181,7 +181,7 @@ namespace BetterCms.Core.Modules
             {
                 if (minJsPath == null)
                 {
-                    minJsPath = VirtualPath.Combine(JsBasePath, string.Format("bcms.{0}.min.js", Name));
+                    minJsPath = VirtualPath.Combine(JsBasePath, string.Format("bcms.{0}.min.js", Name.ToLowerInvariant()));
                 }
 
                 return minJsPath;
@@ -200,7 +200,7 @@ namespace BetterCms.Core.Modules
             {
                 if (minCssPath == null)
                 {
-                    minCssPath = VirtualPath.Combine(CssBasePath, string.Format("bcms.{0}.min.css", Name));
+                    minCssPath = VirtualPath.Combine(CssBasePath, string.Format("bcms.{0}.min.css", Name.ToLowerInvariant()));
                 }
 
                 return minCssPath;
