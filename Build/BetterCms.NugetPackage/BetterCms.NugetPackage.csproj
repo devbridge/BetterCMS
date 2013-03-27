@@ -87,7 +87,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>mkdir "$(ProjectDir)$(OutDir)package"
-xcopy "$(ProjectDir)package $(ProjectDir)$(OutDir)package\" /E /Y /Q
+xcopy "$(ProjectDir)package" "$(ProjectDir)$(OutDir)package\" /E /Y /Q
 
 xcopy "$(ProjectDir)$(OutDir)BetterCms.Core.dll" "$(ProjectDir)$(OutDir)package\lib\net40\" /Y /Q
 xcopy "$(ProjectDir)$(OutDir)BetterCms.Configuration.dll" "$(ProjectDir)$(OutDir)package\lib\net40\" /Y /Q
