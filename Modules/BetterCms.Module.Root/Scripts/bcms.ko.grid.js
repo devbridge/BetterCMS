@@ -33,6 +33,8 @@ define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messag
             self.searchQuery = ko.observable(options.SearchQuery || '');
             self.column = ko.observable(options.Column);
             self.isDescending = ko.observable(options.Direction == sortDirections.descending);
+
+            self.hasFocus = ko.observable(false);
         }
 
         return OptionsViewModel;
@@ -335,6 +337,12 @@ define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messag
                 }
                 return true;
             };
+
+            self.loseFocus = function () {
+                // Set false and then back true, else value will not change
+                self.parent.options().hasFocus(false);
+                self.parent.options().hasFocus(true);
+            };
         };
 
         grid.ItemViewModel.prototype.hasChanges = function () {
@@ -491,6 +499,7 @@ define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messag
             } else {
                 if (!keepActive) {
                     this.isActive(false);
+                    this.loseFocus();
                 }
                 
                 if (removeFromList) {
@@ -518,6 +527,7 @@ define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messag
                     self.id(json.Data.Id);
                 }
                 self.isActive(false);
+                self.loseFocus();
                 
                 for (var i = 0; i < this.registeredFields.length; i++) {
                     var field = this.registeredFields[i];
@@ -535,6 +545,7 @@ define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messag
                 this.restoreOldValues();
             }
             this.isActive(false);
+            this.loseFocus();
         };
 
         grid.ItemViewModel.prototype.getDeleteConfirmationMessage = function () {
