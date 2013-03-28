@@ -21,6 +21,11 @@ namespace BetterCms.Module.Pages.Services
         private IUnitOfWork unitOfWork;
 
         /// <summary>
+        /// The hidden segments array
+        /// </summary>
+        private readonly string[] hiddenSegments = new[] { "bin" };
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="DefaultRedirectService" /> class.
         /// </summary>
         /// <param name="unitOfWork">The unit of work.</param>
@@ -213,6 +218,26 @@ namespace BetterCms.Module.Pages.Services
                 .Select(r => r.RedirectUrl)
                 .SingleOrDefault();
             return redirect;
+        }
+
+        /// <summary>
+        /// Validates the string if it contains hidden segments.
+        /// </summary>
+        /// <returns><c>true</c> if contains hidden segments; otherwise <c>false</c></returns>
+        public bool ValidateUrlForHiddenSegments(string url, out string invalidSegment)
+        {
+            url = url.ToLowerInvariant();
+            foreach (var element in hiddenSegments)
+            {
+                invalidSegment = string.Format("/{0}/", element);
+                if (url.Contains(invalidSegment))
+                {
+                    return false;
+                }
+            }
+
+            invalidSegment = null;
+            return true;
         }
     }
 }

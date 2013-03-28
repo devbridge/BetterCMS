@@ -52,6 +52,22 @@ namespace BetterCms.Module.Pages.Command.Redirect.SaveRedirect
                 var logMessage = string.Format("Invalid redirect url {0}.", request.RedirectUrl);
                 throw new ValidationException(() => message, logMessage);
             }
+
+            // Validate for hidden segments
+            string invalidSegment;
+            if (!redirectService.ValidateUrlForHiddenSegments(request.PageUrl, out invalidSegment))
+            {
+                var message = string.Format(PagesGlobalization.SaveRedirect_PageUrlContainsHiddenSegment_Message, invalidSegment);
+                var logMessage = string.Format("Page Url {0} contains hidden segment {1}.", request.PageUrl, invalidSegment);
+                throw new ValidationException(() => message, logMessage);
+            }
+            if (!redirectService.ValidateUrlForHiddenSegments(request.RedirectUrl, out invalidSegment))
+            {
+                var message = string.Format(PagesGlobalization.SaveRedirect_RedirectUrlContainsHiddenSegment_Message, invalidSegment);
+                var logMessage = string.Format("Redirect Url {0} contains hidden segment {1}.", request.RedirectUrl, invalidSegment);
+                throw new ValidationException(() => message, logMessage);
+            }
+
             redirectService.ValidateRedirectExists(request.PageUrl, request.Id);
             redirectService.ValidateForCircularLoop(request.PageUrl, request.RedirectUrl, request.Id);
 
