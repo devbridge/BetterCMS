@@ -43,7 +43,7 @@ namespace BetterCms.Sandbox.DataMigration
 
         private static void Migrate(bool up)
         {            
-            DefaultMigrationRunner runner = new DefaultMigrationRunner(new DefaultAssemblyLoader());
+            DefaultMigrationRunner runner = new DefaultMigrationRunner(new DefaultAssemblyLoader(), new CmsConfigurationSection());
             runner.Migrate(descriptors, up);
         }
 
