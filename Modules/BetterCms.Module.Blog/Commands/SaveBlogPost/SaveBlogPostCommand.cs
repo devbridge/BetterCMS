@@ -195,6 +195,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                               Id = content != null ? content.Id : Guid.Empty,
                               Name = request.Title,
                               Html = request.Content ?? string.Empty,
+                              EditInSourceMode = request.EditInSourceMode,
                               ActivationDate = request.LiveFromDate,
                               ExpirationDate = TimeHelper.FormatEndDate(request.LiveToDate)
                           };

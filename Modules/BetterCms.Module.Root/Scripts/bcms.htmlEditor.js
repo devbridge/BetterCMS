@@ -62,14 +62,18 @@ define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], function ($, bcms
         }
     };
 
-    htmlEditor.setSourceMode = function (id) {
+    htmlEditor.setSourceMode = function (textareaId) {
+        var id = textareaId ? textareaId : htmlEditor.id;
+
         CKEDITOR.instances[id].on('instanceReady', function () {
             var instance = CKEDITOR.instances[id];
             instance.setMode('source');
         });
     };
     
-    htmlEditor.isSourceMode = function (id) {
+    htmlEditor.isSourceMode = function (textareaId) {
+        var id = textareaId ? textareaId : htmlEditor.id;
+
         var instance = CKEDITOR.instances[id];
         return instance.mode === 'source';
     };
