@@ -56,14 +56,14 @@ namespace BetterCms.Module.Blog.Services
         /// <returns>Url path.</returns>
         private string AddUrlPathSuffixIfNeeded(string url)
         {
-            var urlPrefix = configuration.ArticleUrlPrefix;
-            urlPrefix = urlPrefix.TrimEnd('/');
+            var urlPattern = configuration.ArticleUrlPattern;
+            urlPattern = urlPattern.TrimEnd('/');
 
-            if (urlPrefix == "" || urlPrefix.IndexOf("{0}") == -1)
+            if (urlPattern == "" || urlPattern.IndexOf("{0}", StringComparison.OrdinalIgnoreCase) == -1)
             {
-                urlPrefix = "/{0}";
+                urlPattern = "/{0}";
             }
-            var fullUrl = string.Format(urlPrefix + "/", url);
+            var fullUrl = string.Format(urlPattern + "/", url);
 
             // Check, if such record exists
             var exists = PathExistsInDb(fullUrl);
@@ -71,7 +71,7 @@ namespace BetterCms.Module.Blog.Services
             if (exists)
             {
                 // Load all titles
-                var urlToReplace = string.Format(urlPrefix + "-", url);
+                var urlToReplace = string.Format(urlPattern + "-", url);
                 var urlToSearch = string.Format("{0}%", urlToReplace);
                 Page alias = null;
 
@@ -116,7 +116,7 @@ namespace BetterCms.Module.Blog.Services
                 }
                 else
                 {
-                    fullUrl = string.Format(urlPrefix + "-{1}/", url, maxNr);
+                    fullUrl = string.Format(urlPattern + "-{1}/", url, maxNr);
                 }
 
                 if (recheckInDb)

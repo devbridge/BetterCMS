@@ -133,6 +133,7 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
                         model.ContentId = content.Id;
                         model.LiveFromDate = content.ActivationDate;
                         model.LiveToDate = content.ExpirationDate;
+                        model.EditInSourceMode = content.EditInSourceMode;
                         model.CurrentStatus = content.Status;
                         model.HasPublishedContent = content.Original != null;
                     }

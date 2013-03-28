@@ -47,7 +47,7 @@ namespace BetterCms.Module.Root.Controllers
             catch (Exception ex)
             {
                 Log.ErrorFormat("Failed to logout user {0}.", ex, User.Identity);
-            }
+            }            
 
             return Redirect(FormsAuthentication.DefaultUrl);
         }

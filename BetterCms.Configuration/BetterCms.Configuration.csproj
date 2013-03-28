@@ -123,7 +123,6 @@
     <Compile Include="Configuration\SectionElement.cs" />
     <Compile Include="Configuration\SectionElementCollection.cs" />
     <Compile Include="Configuration\CmsStorageConfigurationElement.cs" />
-    <Compile Include="Configuration\UrlPatternsCollection.cs" />
     <Compile Include="IConfigurationLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -8,18 +8,15 @@ namespace BetterCms.Configuration
         private const string VersionAttribute = "version";
         private const string UseMinifiedResourcesAttribute = "useMinifiedResources";
         private const string ResourcesBasePathAttribute = "resourcesBasePath";
-        private const string LoginUrlAttribute = "loginUrl";
-        private const string EnforcePermissionsAttribute = "enforcePermissions";
-        private const string PageNotFoundUrlAttribute = "pageNotFoundUrl";
-        private const string SideMenuSectionsNode = "menuSections";
-        private const string UrlPatternsNode = "urlPatterns";
+        private const string LoginUrlAttribute = "loginUrl";        
+        private const string PageNotFoundUrlAttribute = "pageNotFoundUrl";        
         private const string DatabaseNode = "database";
         private const string StorageNode = "storage";
         private const string CacheNode = "cache";
         private const string SecurityNode = "security";
         private const string ModuleGalleryNode = "moduleGallery";
         private const string WorkingDirectoryRootPathAttribute = "workingDirectoryRootPath";
-        private const string ArticleUrlPrefixAttribute = "articleUrlPrefix";        
+        private const string ArticleUrlPatternAttribute = "articleUrlPattern";        
 
         /// <summary>
         /// The version backing field.
@@ -41,6 +38,12 @@ namespace BetterCms.Configuration
             set { this[VersionAttribute] = value; }
         }
 
+        /// <summary>
+        /// Gets the Better CMS version.
+        /// </summary>
+        /// <value>
+        /// The Better CMS version.
+        /// </value>
         Version ICmsConfiguration.Version
         {
             get
@@ -85,6 +88,12 @@ namespace BetterCms.Configuration
             set { this[WorkingDirectoryRootPathAttribute] = value; }
         }
 
+        /// <summary>
+        /// Gets a value indicating whether CMS should use minified resources (*.min.js and *.min.css).
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if CMS should use minified resources; otherwise, <c>false</c>.
+        /// </value>
         [ConfigurationProperty(UseMinifiedResourcesAttribute, IsRequired = false, DefaultValue = false)]
         public bool UseMinifiedResources
         {
@@ -92,24 +101,17 @@ namespace BetterCms.Configuration
             set { this[UseMinifiedResourcesAttribute] = value; }
         }
 
+        /// <summary>
+        /// Gets the CMS resources (*.js and *.css) base path.
+        /// </summary>
+        /// <value>
+        /// The CMS content base path.
+        /// </value>
         [ConfigurationProperty(ResourcesBasePathAttribute, IsRequired = false, DefaultValue = null)]
         public string ResourcesBasePath
         {
             get { return Convert.ToString(this[ResourcesBasePathAttribute]); }
             set { this[ResourcesBasePathAttribute] = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether enforce permissions.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if [enforce permissions]; otherwise, <c>false</c>.
-        /// </value>
-        [ConfigurationProperty(EnforcePermissionsAttribute, DefaultValue = false, IsRequired = false)]
-        public bool EnforcePermissions
-        {
-            get { return Convert.ToBoolean(this[EnforcePermissionsAttribute]); }
-            set { this[EnforcePermissionsAttribute] = value; }
         }
 
         /// <summary>
@@ -131,42 +133,16 @@ namespace BetterCms.Configuration
         /// <value>
         /// The article url prefix.
         /// </value>
-        [ConfigurationProperty(ArticleUrlPrefixAttribute, IsRequired = false)]
-        public string ArticleUrlPrefix {
-            get {return Convert.ToString(this[ArticleUrlPrefixAttribute]); }
-            set { this[ArticleUrlPrefixAttribute] = value; }
+        [ConfigurationProperty(ArticleUrlPatternAttribute, IsRequired = false)]
+        public string ArticleUrlPattern {
+            get {return Convert.ToString(this[ArticleUrlPatternAttribute]); }
+            set { this[ArticleUrlPatternAttribute] = value; }
         }
 
         #endregion
 
-        #region Child Nodes
-
-        /// <summary>
-        /// Gets or sets the URL patterns.
-        /// </summary>
-        /// <value>
-        /// The URL patterns.
-        /// </value>
-        [ConfigurationProperty(UrlPatternsNode, IsRequired = false)]
-        public UrlPatternsCollection UrlPatterns
-        {
-            get { return (UrlPatternsCollection)this[UrlPatternsNode]; }
-            set { this[UrlPatternsNode] = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the sections.
-        /// </summary>
-        /// <value>
-        /// The sections.
-        /// </value>
-        [ConfigurationProperty(SideMenuSectionsNode, IsRequired = false)]
-        public SectionElementCollection Sections
-        {
-            get { return (SectionElementCollection)this[SideMenuSectionsNode]; }
-            set { this[SideMenuSectionsNode] = value; }
-        }        
-
+        #region Child Nodes        
+        
         /// <summary>
         /// Gets or sets the configuration of CMS storage service.
         /// </summary>

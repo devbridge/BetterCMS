@@ -49,30 +49,6 @@ namespace BetterCms
         string WorkingDirectoryRootPath { get; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether enforce permissions.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if [enforce permissions]; otherwise, <c>false</c>.
-        /// </value>
-        bool EnforcePermissions { get; set; }
-
-        /// <summary>
-        /// Gets or sets the URL patterns.
-        /// </summary>
-        /// <value>
-        /// The URL patterns.
-        /// </value>
-        UrlPatternsCollection UrlPatterns { get; set; }
-
-        /// <summary>
-        /// Gets or sets the sections.
-        /// </summary>
-        /// <value>
-        /// The sections.
-        /// </value>
-        SectionElementCollection Sections { get; set; }
-
-        /// <summary>
         /// Gets the configuration of CMS storage service.
         /// </summary>
         /// <value>
@@ -104,7 +80,7 @@ namespace BetterCms
         /// <value>
         /// The article url prefix.
         /// </value>
-        string ArticleUrlPrefix { get; set; }
+        string ArticleUrlPattern { get; set; }
 
         /// <summary>
         /// Gets the url of nuget feed for BetterCms modules.

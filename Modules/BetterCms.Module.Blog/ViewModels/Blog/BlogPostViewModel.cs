@@ -71,6 +71,14 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         public virtual string Content { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether blog post content editor must be opened in source mode.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if blog post content editor must be opened in source mode; otherwise, <c>false</c>.
+        /// </value>
+        public bool EditInSourceMode { get; set; }
+
+        /// <summary>
         /// Gets or sets the live from date.
         /// </summary>
         /// <value>
