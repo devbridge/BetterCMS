@@ -170,9 +170,9 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
 
             if (isNew)
             {
-                if (request.BlogUrl != null)
+                if (!string.IsNullOrWhiteSpace(request.BlogUrl))
                 {
-                    blogPost.PageUrl = request.BlogUrl;
+                    blogPost.PageUrl = redirectService.FixUrl(request.BlogUrl);
                     pageService.ValidatePageUrl(blogPost.PageUrl);
                 }
                 else
