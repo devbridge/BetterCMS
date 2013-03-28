@@ -46,33 +46,44 @@
     @if (Model.CanManageContent)
     {
         <script type="text/javascript">
-            function AddRequireJsScript() {
-                var scriptTag = document.createElement('script');
+            function loadBetterCmsScriptAsync(url, callback) {
+                var head = document.getElementsByTagName("head")[0];
+                var scriptTag = document.createElement("script");
                 scriptTag.type = 'text/javascript';
-                scriptTag.async = false;                
-                scriptTag.src = "@Model.RequireJsPath";
-                var tag = document.getElementsByTagName('script')[0];
-                tag.parentNode.insertBefore(scriptTag, tag);
-            }
+                scriptTag.src = url;
+                scriptTag.async = true;
 
-            function AddBetterCmsMainJsScript() {
-                var scriptTag = document.createElement('script');
-                scriptTag.type = 'text/javascript';
-                scriptTag.async = false;                
-                scriptTag.src = '@Model.MainJsPath';
-                var tag = document.getElementsByTagName('script')[0];
-                tag.parentNode.insertBefore(scriptTag, tag);
+                // Attach handlers for all browsers
+                var done = false;
+                scriptTag.onload = scriptTag.onreadystatechange = function() {
+                    if (!done && (!this.readyState || this.readyState == "loaded" || this.readyState == "complete")) {
+                        done = true;
+                        try {
+                            if (callback) {
+                                callback();
+                            }
+                        } finally {
+                            scriptTag.onload = scriptTag.onreadystatechange = null;
+                            head.removeChild(scriptTag);
+                        }
+                    }
+                };
+
+                head.appendChild(scriptTag);
             }
 
             (function() {
                 var r = window.require;
                 if (!r) {
-                    AddRequireJsScript();
-                } else if (r.version < '2.0.0') {                    
-                    alert("BetterCMS supports RequireJS from a 2.0.0 version. Please visit http://requirejs.org/ and do upgrade.");                    
+                    loadBetterCmsScriptAsync('@Model.RequireJsPath', function() {
+                        loadBetterCmsScriptAsync('@Model.MainJsPath');
+                    });
+                } else if (r.version < '2.0.0') {
+                    alert("BetterCMS supports RequireJS from a 2.0.0 version. Please visit http://requirejs.org/ and do upgrade.");
                     return;
+                } else {
+                    loadBetterCmsScriptAsync('@Model.MainJsPath');
                 }
-                AddBetterCmsMainJsScript();
             })();
         </script>
         <!--[if lt IE 9]>
