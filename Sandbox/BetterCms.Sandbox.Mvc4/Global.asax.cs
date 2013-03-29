@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Linq;
-using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using System.Web.Security;
 
 using BetterCms.Api;
 using BetterCms.Core;
@@ -22,7 +19,8 @@ namespace BetterCms.Sandbox.Mvc4
         private static ICmsHost cmsHost;
 
         protected void Application_Start()
-        {     
+        {
+            
             cmsHost = CmsContext.RegisterHost();
 
             AreaRegistration.RegisterAllAreas();
@@ -251,32 +249,22 @@ namespace BetterCms.Sandbox.Mvc4
 
         /// <summary>
         /// Handles the AuthenticateRequest event of the Application control.
-        /// TODO: remove when authentication will be implemented
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
         {
-            var authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
-            if (authCookie != null)
-            {
-                try
-                {
-                    var authTicket = FormsAuthentication.Decrypt(authCookie.Value);
-                    if (authTicket != null)
-                    {
-                        var identity = new GenericIdentity(authTicket.Name, "Forms");
-                        var roles = authTicket.UserData.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Distinct().ToArray();
-                        var principal = new GenericPrincipal(identity, roles);
-                        Context.User = principal;
-                    }
-                }
-                catch
-                {
-                    Session.Clear();
-                    FormsAuthentication.SignOut();
-                }
-            }
+            // [YOUR CODE HERE]
+
+            // Uncomment this code for a quick Better CMS test if you don't have yet implemented users authentication. 
+            // Do not use this code for production!
+            /*
+            var roles = new[] { "BcmsEditContent", "BcmsPublishContent", "BcmsDeleteContent", "BcmsAdministration" };
+            var principal = new GenericPrincipal(new GenericIdentity("TestUser"), roles);
+            HttpContext.Current.User = principal;
+            */
+
+            cmsHost.OnAuthenticateRequest(this);
         }
     }
 }
