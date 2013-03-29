@@ -42,8 +42,10 @@ namespace BetterCms.Sandbox.DataMigration
         }
 
         private static void Migrate(bool up)
-        {            
-            DefaultMigrationRunner runner = new DefaultMigrationRunner(new DefaultAssemblyLoader(), new CmsConfigurationSection());
+        {
+            IConfigurationLoader configurationLoader = new DefaultConfigurationLoader();
+            ICmsConfiguration cmsConfiguration = configurationLoader.LoadCmsConfiguration();
+            DefaultMigrationRunner runner = new DefaultMigrationRunner(new DefaultAssemblyLoader(), cmsConfiguration);
             runner.Migrate(descriptors, up);
         }
 
