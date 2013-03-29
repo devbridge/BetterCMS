@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
-using System.Web;
 
 using BetterCms.Core.Modules.Registration;
 using BetterCms.Core.Services;
+using BetterCms.Core.Web;
 
 namespace BetterCms.Module.Root.Services
 {
@@ -30,11 +30,19 @@ namespace BetterCms.Module.Root.Services
         private readonly IModulesRegistration modulesRegistration;
 
         /// <summary>
+        /// The HTTP context accessor.
+        /// </summary>
+        private readonly IHttpContextAccessor httpContextAccessor;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="DefaultSecurityService" /> class.
         /// </summary>
         /// <param name="configuration">The configuration.</param>
-        public DefaultSecurityService(ICmsConfiguration configuration, IModulesRegistration modulesRegistration)
+        /// <param name="httpContextAccessor">The HTTP context accessor.</param>
+        /// <param name="modulesRegistration">The modules registration.</param>
+        public DefaultSecurityService(ICmsConfiguration configuration, IHttpContextAccessor httpContextAccessor, IModulesRegistration modulesRegistration)
         {
+            this.httpContextAccessor = httpContextAccessor;
             this.configuration = configuration;
             this.modulesRegistration = modulesRegistration;
         }
@@ -68,8 +76,10 @@ namespace BetterCms.Module.Root.Services
         /// </returns>
         public IPrincipal GetCurrentPrincipal()
         {
-            return HttpContext.Current != null
-                ? HttpContext.Current.User
+            var currentHttpContext = httpContextAccessor.GetCurrent();
+
+            return currentHttpContext != null
+                ? currentHttpContext.User
                 : null;
         }
 

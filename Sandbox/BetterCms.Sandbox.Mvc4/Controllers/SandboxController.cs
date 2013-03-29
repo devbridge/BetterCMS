@@ -93,7 +93,7 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
             return Content(message);
         }
 
-        void Core_HostStart(SingleItemEventArgs<Core.Environment.Host.ICmsHost> args)
+        void Core_HostStart(SingleItemEventArgs<HttpApplication> args)
         {
             throw new NotImplementedException();
         }
