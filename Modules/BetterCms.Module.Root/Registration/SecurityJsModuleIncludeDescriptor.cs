@@ -1,5 +1,6 @@
 ﻿using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
+using BetterCms.Module.Root.Controllers;
 
 namespace BetterCms.Module.Root.Registration
 {
@@ -17,6 +18,7 @@ namespace BetterCms.Module.Root.Registration
         {
             Links = new IActionProjection[]
                 {                       
+                    new JavaScriptModuleLinkTo<AuthenticationController>(this, "isAuthorized", c => c.IsAuthorized("{0}"))
                 };
 
             Globalization = new IActionProjection[]
