@@ -35,7 +35,10 @@
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700' rel='stylesheet' type='text/css' />
         @Html.Action("RenderStyleSheetIncludes", "Rendering")
     }
-
+    else
+    {
+        @Html.Action("RenderPublicStyleSheetIncludes", "Rendering")
+    }
     @if (Model.Stylesheets != null)
     {
         @Html.RenderPageCustomCss(Model.Stylesheets)

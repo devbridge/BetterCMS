@@ -64,7 +64,7 @@ namespace BetterCms.Module.Templates
 
         public override IEnumerable<CssIncludeDescriptor> RegisterCssIncludes()
         {
-            return new[] { new CssIncludeDescriptor(this, "bcms.templates.css") };
+            return new[] { new CssIncludeDescriptor(this, "bcms.templates.css", "bcms.templates.min.css", true) };
         }
     }
 }

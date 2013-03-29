@@ -83,7 +83,7 @@ namespace BetterCms.Core.Modules
         public string Path { get; private set; }
 
         /// <summary>
-        /// Gets the path of the minified JS file if it was provided.
+        /// Gets path of the minified JS file if it was provided.
         /// </summary>
         /// <value>
         /// The path of the minified JS file if it was provided.
