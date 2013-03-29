@@ -44,15 +44,22 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
         /// <summary>
         /// Provides assembly and types loading methods.
         /// </summary>
-        private IAssemblyLoader assemblyLoader;
+        private readonly IAssemblyLoader assemblyLoader;
+
+        /// <summary>
+        /// The configuration.
+        /// </summary>
+        private readonly ICmsConfiguration configuration;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultMigrationRunner" /> class.
         /// </summary>
         /// <param name="assemblyLoader">The assembly loader.</param>
-        public DefaultMigrationRunner(IAssemblyLoader assemblyLoader)
+        /// <param name="configuration">The configuration.</param>
+        public DefaultMigrationRunner(IAssemblyLoader assemblyLoader, ICmsConfiguration configuration)
         {
             this.assemblyLoader = assemblyLoader;
+            this.configuration = configuration;
         }
 
         /// <summary>
@@ -152,7 +159,19 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
             IMigrationProcessor processor;
             IDbConnection dbConnection = null;
 
-            var connectionString = ConfigurationManager.ConnectionStrings["BetterCms"].ConnectionString;
+            string connectionString;
+            if (!string.IsNullOrEmpty(configuration.Database.ConnectionString))
+            {
+                connectionString = configuration.Database.ConnectionString;
+            }
+            else if (!string.IsNullOrEmpty(configuration.Database.ConnectionStringName))
+            {
+                connectionString = ConfigurationManager.ConnectionStrings[configuration.Database.ConnectionStringName].ConnectionString;
+            }
+            else
+            {
+                throw new ConfigurationErrorsException("Missing connection string.");
+            }
 
             if (databaseType == DatabaseType.SqlAzure || databaseType == DatabaseType.SqlServer)
             {

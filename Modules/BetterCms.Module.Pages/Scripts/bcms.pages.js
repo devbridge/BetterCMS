@@ -465,18 +465,17 @@ define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 
                 var template = $(selectors.siteSettingsPageRowTemplate),
                     newRow = $(template.html()).find(selectors.siteSettingsPageRowTemplateFirstRow);
 
-                newRow.find(selectors.siteSettingPageTitleCell).html(data.Data.Data.Title);
-                newRow.find(selectors.siteSettingPageCreatedCell).html(data.Data.Data.CreatedOn);
-                newRow.find(selectors.siteSettingPageModifiedCell).html(data.Data.Data.ModifiedOn);
+                newRow.find(selectors.siteSettingPageTitleCell).html(data.Data.Title);
+                newRow.find(selectors.siteSettingPageCreatedCell).html(data.Data.CreatedOn);
+                newRow.find(selectors.siteSettingPageModifiedCell).html(data.Data.ModifiedOn);
 
-                page.siteSettingsPageStatusTemplate(newRow.find(selectors.siteSettingPageStatusCell), data.Data.Data.PageStatus);
-                page.siteSettingsSetBooleanTemplate(newRow.find(selectors.siteSettingPageHasSeoCell), data.Data.Data.HasSEO);
-                messages.refreshBox(selectors.siteSettingsPagesListForm, data.Data);
+                page.siteSettingsPageStatusTemplate(newRow.find(selectors.siteSettingPageStatusCell), data.Data.PageStatus);
+                page.siteSettingsSetBooleanTemplate(newRow.find(selectors.siteSettingPageHasSeoCell), data.Data.HasSEO);
                 
-                newRow.find(selectors.siteSettingPageTitleCell).data('url', data.Data.Data.PageUrl);
-                newRow.find(selectors.siteSettingsPageEditButton).data('id', data.Data.Data.PageId);
-                newRow.find(selectors.siteSettingsPageDeleteButton).data('id', data.Data.Data.PageId);
-                newRow.find(selectors.siteSettingsPageDeleteButton).data('version', data.Data.Data.Version);
+                newRow.find(selectors.siteSettingPageTitleCell).data('url', data.Data.PageUrl);
+                newRow.find(selectors.siteSettingsPageEditButton).data('id', data.Data.PageId);
+                newRow.find(selectors.siteSettingsPageDeleteButton).data('id', data.Data.PageId);
+                newRow.find(selectors.siteSettingsPageDeleteButton).data('version', data.Data.Version);
 
                 newRow.insertBefore($(selectors.siteSettingsPagesTableFirstRow, container));
 

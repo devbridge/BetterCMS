@@ -170,9 +170,9 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
 
             if (isNew)
             {
-                if (request.BlogUrl != null)
+                if (!string.IsNullOrWhiteSpace(request.BlogUrl))
                 {
-                    blogPost.PageUrl = request.BlogUrl;
+                    blogPost.PageUrl = redirectService.FixUrl(request.BlogUrl);
                     pageService.ValidatePageUrl(blogPost.PageUrl);
                 }
                 else
@@ -195,6 +195,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                               Id = content != null ? content.Id : Guid.Empty,
                               Name = request.Title,
                               Html = request.Content ?? string.Empty,
+                              EditInSourceMode = request.EditInSourceMode,
                               ActivationDate = request.LiveFromDate,
                               ExpirationDate = TimeHelper.FormatEndDate(request.LiveToDate)
                           };

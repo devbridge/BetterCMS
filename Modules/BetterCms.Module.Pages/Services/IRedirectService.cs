@@ -20,8 +20,16 @@ namespace BetterCms.Module.Pages.Services
         /// Validates the URL.
         /// </summary>
         /// <param name="url">The URL.</param>
-        /// <returns>true, if url is valid</returns>
+        /// <returns> true, if url is valid </returns>
         bool ValidateUrl(string url);
+
+        /// <summary>
+        /// Validates URL for hidden segments.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <param name="invalidSegment">The invalid segment.</param>
+        /// <returns>true, if url is valid</returns>
+        bool ValidateUrlForHiddenSegments(string url, out string invalidSegment);
 
         /// <summary>
         /// Validates urls: checks if the the circular loop exists.

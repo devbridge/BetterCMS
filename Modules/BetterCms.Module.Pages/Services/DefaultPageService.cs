@@ -27,20 +27,16 @@ namespace BetterCms.Module.Pages.Services
 {
     internal class DefaultPageService : IPageAccessor, IPageService
     {
-        private readonly ICacheService cacheService;
         private readonly IRepository repository;
         private readonly IRedirectService redirectService;
-        private readonly IUnitOfWork unitOfWork;
 
         private IDictionary<string, IPage> temporaryPageCache;
 
-        public DefaultPageService(ICacheService cacheService, IRepository repository, IRedirectService redirectService, IUnitOfWork unitOfWork)
+        public DefaultPageService(IRepository repository, IRedirectService redirectService)
         {
-            this.cacheService = cacheService;
             this.repository = repository;
             this.redirectService = redirectService;
-            this.unitOfWork = unitOfWork;
-            this.temporaryPageCache = new Dictionary<string, IPage>();
+            temporaryPageCache = new Dictionary<string, IPage>();
         }
         
         /// <summary>
@@ -109,15 +105,29 @@ namespace BetterCms.Module.Pages.Services
             }
         }
 
-       public void ValidatePageUrl(string url, Guid? pageId = null)
+        /// <summary>
+        /// Validates the page URL.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <param name="pageId">The page id.</param>
+        /// <exception cref="System.ComponentModel.DataAnnotations.ValidationException"></exception>
+        public void ValidatePageUrl(string url, Guid? pageId = null)
         {
-            // Valdiate url
+            // Validate url
             if (!redirectService.ValidateUrl(url))
             {
                 var logMessage = string.Format("Invalid page url {0}.", url);
                 throw new ValidationException(() => PagesGlobalization.ValidatePageUrlCommand_InvalidUrlPath_Message, logMessage);
             }
-            
+
+            string invalidSegment;
+            if (!redirectService.ValidateUrlForHiddenSegments(url, out invalidSegment))
+            {
+                var logMessage = string.Format("Url {0} contains hidden segment {1}.", url, invalidSegment);
+                var message = string.Format(PagesGlobalization.ValidatePageUrl_UrlContainsHiddenSegments_Message, invalidSegment);
+                throw new ValidationException(() => message, logMessage);
+            }
+
             // Is Url unique
             var query = repository.AsQueryable<PageProperties>(page => page.PageUrl == url);
             if (pageId.HasValue && pageId != default(Guid))
@@ -132,6 +142,13 @@ namespace BetterCms.Module.Pages.Services
             }
         }
 
+        /// <summary>
+        /// Creates the page permalink.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <returns>
+        /// Created permalink
+        /// </returns>
         public string CreatePagePermalink(string url)
         {
             const int maxLength = MaxLength.Url - 5;

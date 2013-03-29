@@ -68,35 +68,35 @@
                     <!-- /ko -->
                     <!--  ko if: !isProcessing() && !isFailed() && !isDeleting() -->
                     <!-- ko if: isImage() -->
-                    <a class="bcms-media-content-link" href="#" data-bind="click: previewImage.bind($data, $root)">@MediaGlobalization.MediaManager_ButtonPreviewImage</a>
+                    <a class="bcms-media-content-link" data-bind="click: previewImage.bind($data, $root)">@MediaGlobalization.MediaManager_ButtonPreviewImage</a>
                     <!-- /ko -->
                     <!-- ko if: isFolder() -->
-                    <a class="bcms-media-content-link" href="#" data-bind="click: openMedia.bind($data, $root)">@RootGlobalization.Button_Open</a>
+                    <a class="bcms-media-content-link" data-bind="click: openMedia.bind($data, $root)">@RootGlobalization.Button_Open</a>
                     <!-- /ko -->
                     @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
                     {
-                        <a class="bcms-media-content-link" href="#" data-bind="click: renameMedia.bind($data, $root)">@RootGlobalization.Button_Rename</a>
+                        <a class="bcms-media-content-link" data-bind="click: renameMedia.bind($data, $root)">@RootGlobalization.Button_Rename</a>
                         <!-- ko if: canBeEdited() -->
-                        <a class="bcms-media-content-link" href="#" data-bind="click: editMedia.bind($data, $root)">@RootGlobalization.Button_Edit</a>
+                        <a class="bcms-media-content-link" data-bind="click: editMedia.bind($data, $root)">@RootGlobalization.Button_Edit</a>
                         <!-- /ko -->
                     }
                     <!-- ko if: canBeDownloaded() -->
-                    <a class="bcms-media-content-link" href="#" data-bind="click: downloadMedia">@MediaGlobalization.MediaManager_ButtonDownload</a>
+                    <a class="bcms-media-content-link" data-bind="click: downloadMedia">@MediaGlobalization.MediaManager_ButtonDownload</a>
                     <!-- /ko -->
                     <!-- ko if: isImage() && $root.canInsertMedia() -->
-                    <a class="bcms-media-content-link" href="#" data-bind="click: insertMedia.bind($data, $root)">@MediaGlobalization.MediaManager_ButtonInsertImage</a>
+                    <a class="bcms-media-content-link" data-bind="click: insertMedia.bind($data, $root)">@MediaGlobalization.MediaManager_ButtonInsertImage</a>
                     <!-- /ko -->
                     <!-- ko if: isImage() && $root.canInsertMediaWithOptions() -->
-                    <a class="bcms-media-content-link" href="#" data-bind="click: insertMediaWithOptions.bind($data, $root)">@MediaGlobalization.MediaManager_ButtonInsertImageWithOptions</a>
+                    <a class="bcms-media-content-link" data-bind="click: insertMediaWithOptions.bind($data, $root)">@MediaGlobalization.MediaManager_ButtonInsertImageWithOptions</a>
                     <!-- /ko -->
                     <!-- ko if: !isFolder() && !isImage() && $root.canInsertMedia() -->
-                    <a class="bcms-media-content-link" href="#" data-bind="click: insertMedia.bind($data, $root)">@MediaGlobalization.MediaManager_ButtonInsertFile</a>
+                    <a class="bcms-media-content-link" data-bind="click: insertMedia.bind($data, $root)">@MediaGlobalization.MediaManager_ButtonInsertFile</a>
                     <!-- /ko -->
                     <!-- /ko -->
                     @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.DeleteContent))
                     {
                         <!--  ko if: !isProcessing() && !isDeleting() -->
-                        <a class="bcms-media-content-link" href="#" data-bind="click: deleteMedia.bind($data, $root)">@RootGlobalization.Button_Delete</a>
+                        <a class="bcms-media-content-link" data-bind="click: deleteMedia.bind($data, $root)">@RootGlobalization.Button_Delete</a>
                         <!-- /ko -->
                     }
                 </div>
