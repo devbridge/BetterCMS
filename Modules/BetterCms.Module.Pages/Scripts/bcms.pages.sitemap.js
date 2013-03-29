@@ -774,7 +774,8 @@ define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSet
             };
             self.deleteSitemapNode = function () {
                 // Show confirmation dialog.
-                var message = $.format(globalization.sitemapDeleteNodeConfirmationMessage, self.title()),
+                var deleting = false,
+                    message = $.format(globalization.sitemapDeleteNodeConfirmationMessage, self.title()),
                     confirmDialog = modal.confirm({
                         content: message,
                         onAccept: function () {
@@ -783,34 +784,37 @@ define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSet
                                 confirmDialog.close();
                                 return false;
                             }
-
-                            var params = self.toJson(),
-                                onDeleteCompleted = function(json) {
-                                    sitemap.showMessage(json);
-                                    try {
-                                        if (json.Success) {
-                                            self.isDeleted(true);
-                                            self.parentNode().childNodes.remove(self);
+                            if (!deleting) {
+                                deleting = true;
+                                var params = self.toJson(),
+                                    onDeleteCompleted = function(json) {
+                                        deleting = false;
+                                        sitemap.showMessage(json);
+                                        try {
+                                            if (json.Success) {
+                                                self.isDeleted(true);
+                                                self.parentNode().childNodes.remove(self);
+                                            }
+                                            sitemap.showLoading(false);
+                                        } finally {
+                                            confirmDialog.close();
                                         }
-                                        sitemap.showLoading(false);
-                                    } finally {
-                                        confirmDialog.close();
-                                    }
-                                };
-                            sitemap.showLoading(true);
-                            $.ajax({
-                                url: links.deleteSitemapNodeUrl,
-                                type: 'POST',
-                                dataType: 'json',
-                                cache: false,
-                                data: params
-                            })
-                                .done(function (json) {
-                                    onDeleteCompleted(json);
+                                    };
+                                sitemap.showLoading(true);
+                                $.ajax({
+                                    url: links.deleteSitemapNodeUrl,
+                                    type: 'POST',
+                                    dataType: 'json',
+                                    cache: false,
+                                    data: params
                                 })
-                                .fail(function (response) {
-                                    onDeleteCompleted(bcms.parseFailedResponse(response));
-                                });
+                                    .done(function (json) {
+                                        onDeleteCompleted(json);
+                                    })
+                                    .fail(function(response) {
+                                        onDeleteCompleted(bcms.parseFailedResponse(response));
+                                    });
+                            }
                             return false;
                         }
                     });

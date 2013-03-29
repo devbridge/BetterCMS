@@ -12,10 +12,12 @@ namespace BetterCms.Core.Modules
         /// </summary>
         /// <param name="containerModule">The container module.</param>
         /// <param name="fileName">Name of the file.</param>
-        public CssIncludeDescriptor(ModuleDescriptor containerModule, string fileName)
+        /// <param name="isPublic">if set to <c>true</c> then this CSS include is public (visible for in the edit/non-edit mode).</param>
+        public CssIncludeDescriptor(ModuleDescriptor containerModule, string fileName, bool isPublic = false)
         {
             ContainerModule = containerModule;            
-            Path = VirtualPath.Combine(containerModule.CssBasePath, fileName);            
+            Path = VirtualPath.Combine(containerModule.CssBasePath, fileName);
+            IsPublic = isPublic;
         }
 
         /// <summary>
@@ -33,6 +35,14 @@ namespace BetterCms.Core.Modules
         /// The js module path.
         /// </value>
         public string Path { get; private set; }
+
+        /// <summary>
+        /// Gets a value indicating whether this CSS include is public.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this CSS include is public (visible for in the edit/non-edit mode); otherwise, <c>false</c>.
+        /// </value>
+        public bool IsPublic { get; private set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

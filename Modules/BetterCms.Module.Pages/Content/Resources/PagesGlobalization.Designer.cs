@@ -2077,11 +2077,29 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid page URL. URL contains hidden segment (&quot;{0}&quot;), which can be blocked by web server..
+        /// </summary>
+        public static string SaveRedirect_PageUrlContainsHiddenSegment_Message {
+            get {
+                return ResourceManager.GetString("SaveRedirect_PageUrlContainsHiddenSegment_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Redirect from URL &quot;{0}&quot; already exists..
         /// </summary>
         public static string SaveRedirect_RedirectExists_Message {
             get {
                 return ResourceManager.GetString("SaveRedirect_RedirectExists_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid redirect URL. URL contains hidden segment (&quot;{0}&quot;), which can be blocked by web server..
+        /// </summary>
+        public static string SaveRedirect_RedirectUrlContainsHiddenSegment_Message {
+            get {
+                return ResourceManager.GetString("SaveRedirect_RedirectUrlContainsHiddenSegment_Message", resourceCulture);
             }
         }
         
@@ -2793,6 +2811,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string TemplatePreviewImageUrl_Tooltip_Description {
             get {
                 return ResourceManager.GetString("TemplatePreviewImageUrl_Tooltip_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid page URL. URL contains hidden segment (&quot;{0}&quot;), which can be blocked by web server..
+        /// </summary>
+        public static string ValidatePageUrl_UrlContainsHiddenSegments_Message {
+            get {
+                return ResourceManager.GetString("ValidatePageUrl_UrlContainsHiddenSegments_Message", resourceCulture);
             }
         }
         

@@ -1083,4 +1083,13 @@
   <data name="RedirectUrl_InvalidMessage" xml:space="preserve">
     <value>Redirect url is invalid. Link must start and end with "/", can contain only following characters: '0-9', 'a-z', '-', '/', '_' and no more than 260 alphanumeric characters between the '/'.</value>
   </data>
+  <data name="SaveRedirect_PageUrlContainsHiddenSegment_Message" xml:space="preserve">
+    <value>Invalid page URL. URL contains hidden segment ("{0}"), which can be blocked by web server.</value>
+  </data>
+  <data name="SaveRedirect_RedirectUrlContainsHiddenSegment_Message" xml:space="preserve">
+    <value>Invalid redirect URL. URL contains hidden segment ("{0}"), which can be blocked by web server.</value>
+  </data>
+  <data name="ValidatePageUrl_UrlContainsHiddenSegments_Message" xml:space="preserve">
+    <value>Invalid page URL. URL contains hidden segment ("{0}"), which can be blocked by web server.</value>
+  </data>
 </root>

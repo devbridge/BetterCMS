@@ -30,7 +30,7 @@ namespace BetterCms.Module.Templates
         {
             get
             {
-                return "Templates";
+                return ModuleName;
             }
         }
 

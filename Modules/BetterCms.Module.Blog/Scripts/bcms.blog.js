@@ -78,13 +78,14 @@ define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', '
     /**
     * Blog post view model
     */
-    function BlogPostViewModel(image, tagsViewModel, id, version) {
+    function BlogPostViewModel(image, tagsViewModel, id, version, editInSourceMode) {
         var self = this;
 
         self.tags = tagsViewModel;
         self.image = ko.observable(new media.ImageSelectorViewModel(image));
         self.id = ko.observable(id);
         self.version = ko.observable(version);
+        self.editInSourceMode = ko.observable(editInSourceMode);
     }
 
     /**
@@ -112,6 +113,9 @@ define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', '
                             blogUrlField.val(null);
                         }
                         htmlEditor.updateEditorContent();
+                        
+                        var editInSourceMode = htmlEditor.isSourceMode(selectors.htmlContentWidgetContentHtmlEditor);
+                        blogViewModel.editInSourceMode(editInSourceMode);
                     },
                     
                      postError: function () {
@@ -163,6 +167,9 @@ define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', '
         dialog.container.find(selectors.datePickers).initializeDatepicker(globalization.datePickerTooltipTitle);
         
         htmlEditor.initializeHtmlEditor(selectors.htmlEditor);
+        if (data.EditInSourceMode) {
+            htmlEditor.setSourceMode();
+        }
         
         if (data.Version == 0) {
             newPost = true;
@@ -172,7 +179,7 @@ define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', '
         
         var tagsViewModel = new tags.TagsListViewModel(tagsList);
 
-        var blogViewModel = new BlogPostViewModel(image, tagsViewModel, data.Id, data.Version);
+        var blogViewModel = new BlogPostViewModel(image, tagsViewModel, data.Id, data.Version, data.EditInSourceMode);
         ko.applyBindings(blogViewModel, dialog.container.find(selectors.firstForm).get(0));
         
         dialog.container.find(selectors.destroyDraftVersionLink).on('click', function () {
