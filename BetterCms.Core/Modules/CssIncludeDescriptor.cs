@@ -19,7 +19,7 @@ namespace BetterCms.Core.Modules
         /// <param name="isPublic">if set to <c>true</c> then this CSS include is public (visible for in the edit/non-edit mode).</param>
         public CssIncludeDescriptor(ModuleDescriptor module, string fileName, string minFileName = null, bool isPublic = false)
         {
-            if (isPublic && !string.IsNullOrEmpty(minFileName))
+            if (isPublic && string.IsNullOrEmpty(minFileName))
             {
                 throw new CmsException("Public CSS includes should describe a minified file version itself.", new ArgumentNullException("minFileName", "Please define the minFileName parameter."));
             }

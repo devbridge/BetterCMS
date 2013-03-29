@@ -1,22 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Web;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Web.Mvc;
 
-using BetterCms.Core.Exceptions;
-using BetterCms.Core.Modules.Registration;
 using BetterCms.Core.Mvc.Attributes;
-using BetterCms.Core.Services;
 using BetterCms.Module.Root.Commands.GetMainJsData;
 using BetterCms.Module.Root.Commands.GetProcessorJsData;
 using BetterCms.Module.Root.Commands.GetStyleSheetsToRender;
 using BetterCms.Module.Root.Mvc;
-using BetterCms.Module.Root.ViewModels;
-using BetterCms.Module.Root.ViewModels.Rendering;
-
-using Common.Logging;
 
 namespace BetterCms.Module.Root.Controllers
 {
