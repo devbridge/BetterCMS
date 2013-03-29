@@ -269,13 +269,6 @@ namespace BetterCms.Sandbox.Mvc4
                         var roles = authTicket.UserData.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Distinct().ToArray();
                         var principal = new GenericPrincipal(identity, roles);
                         Context.User = principal;
-
-                        if (!Roles.Enabled)
-                        {
-                            // These roles are used only for client side GUI features hiding.
-                            // All server side logic is based on IPrincipal.IsInRole()
-                            Context.Cache[string.Format("{0}_Roles", identity.Name)] = roles;
-                        }
                     }
                 }
                 catch

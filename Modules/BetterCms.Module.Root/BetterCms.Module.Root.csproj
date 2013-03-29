@@ -639,9 +639,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Views\Shared\Partial\SupportJavaScript.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\Partial\User.cshtml" />
-  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
