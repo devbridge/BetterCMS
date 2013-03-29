@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 
 using BetterCms.Core.Exceptions;
+using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Registration;
 using BetterCms.Module.Root.ViewModels;
 using BetterCms.Module.Root.ViewModels.Rendering;
@@ -82,16 +83,21 @@ namespace BetterCms.Module.Root.Services
             return model;
         }
 
-        public IEnumerable<string> GetStyleSheetIncludes()
+        public IEnumerable<string> GetStyleSheetIncludes(bool includePrivateCssFiles, bool includePublicCssFiles)
         {
-            var includes = modulesRegistration.GetStyleSheetIncludes();
+            var allIncludes = modulesRegistration.GetStyleSheetIncludes();
+            var includes = allIncludes
+                                .Where(f => f.IsPublic && includePublicCssFiles || !f.IsPublic && includePrivateCssFiles);
 
             if (cmsConfiguration.UseMinifiedResources)
             {
-                return includes.Select(f => f.ContainerModule.MinifiedCssPath).Distinct();
+                return includes.Select(f => string.IsNullOrEmpty(f.MinPath) 
+                                                ? f.ContainerModule.MinifiedCssPath
+                                                : f.MinPath)
+                                .Distinct();
             }
 
-            return includes.Select(f => f.Path);
+            return includes.Select(f => f.Path).Distinct();
         }
     }
 }

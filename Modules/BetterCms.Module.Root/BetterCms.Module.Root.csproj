@@ -133,6 +133,7 @@
     <Compile Include="Commands\GetPageToRender\GetPageToRenderRequest.cs" />
     <Compile Include="Commands\GetPageToRender\GetPageToRenderCommand.cs" />
     <Compile Include="Commands\GetStyleSheetsToRender\GetStyleSheetsToRenderCommand.cs" />
+    <Compile Include="Commands\GetStyleSheetsToRender\GetStyleSheetsToRenderRequest.cs" />
     <Compile Include="Content\Resources\RootGlobalization.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -712,9 +713,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Shared\Partial\SupportJavaScript.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\Partial\User.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\ckeditor\plugins\scayt\LICENSE.md" />

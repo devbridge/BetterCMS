@@ -5,7 +5,7 @@ using BetterCms.Module.Root.ViewModels.Rendering;
 
 namespace BetterCms.Module.Root.Commands.GetStyleSheetsToRender
 {
-    public class GetStyleSheetsToRenderCommand : CommandBase, ICommandOut<RenderStyleSheetIncludesViewModel>
+    public class GetStyleSheetsToRenderCommand : CommandBase, ICommand<GetStyleSheetsToRenderRequest, RenderStyleSheetIncludesViewModel>
     {
         /// <summary>
         /// The rendering service.
@@ -17,10 +17,10 @@ namespace BetterCms.Module.Root.Commands.GetStyleSheetsToRender
             this.renderingService = renderingService;
         }
 
-        public RenderStyleSheetIncludesViewModel Execute()
+        public RenderStyleSheetIncludesViewModel Execute(GetStyleSheetsToRenderRequest request)
         {
             RenderStyleSheetIncludesViewModel model = new RenderStyleSheetIncludesViewModel();
-            model.StyleSheetFiles = renderingService.GetStyleSheetIncludes();
+            model.StyleSheetFiles = renderingService.GetStyleSheetIncludes(request.RenderPrivateCssIncludes, request.RenderPublicCssIncludes);
 
             return model;
         }

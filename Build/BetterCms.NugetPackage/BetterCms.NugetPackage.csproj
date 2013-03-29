@@ -42,11 +42,15 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="BetterCMS.nuspec.template" />
+    <None Include="BetterCMS.nuspec.template">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="package\content\net40\Config\cms.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="package\content\net40\web.config.transform" />
+    <None Include="package\content\net40\web.config.transform">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="package\tools\install.ps1" />
   </ItemGroup>
   <ItemGroup>

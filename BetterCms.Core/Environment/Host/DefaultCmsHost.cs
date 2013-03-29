@@ -1,18 +1,13 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Security.Principal;
 using System.Threading;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Routing;
-using System.Web.Mvc;
 
 using BetterCms.Api;
 using BetterCms.Core.DataAccess.DataContext.Migrations;
-using BetterCms.Core.Environment.Assemblies;
-using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Host;
 using BetterCms.Core.Modules.Registration;
 
@@ -30,13 +25,15 @@ namespace BetterCms.Core.Environment.Host
         /// </summary>
         private static readonly ILog Logger = LogManager.GetCurrentClassLogger();
 
-        /// <summary>
-        ///
-        /// </summary>
         private readonly IModulesRegistration modulesRegistration;
 
         private readonly IMigrationRunner migrationRunner;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DefaultCmsHost" /> class.
+        /// </summary>
+        /// <param name="modulesRegistration">The modules registration.</param>
+        /// <param name="migrationRunner">The migration runner.</param>
         public DefaultCmsHost(IModulesRegistration modulesRegistration, IMigrationRunner migrationRunner)
         {
             this.modulesRegistration = modulesRegistration;
@@ -44,7 +41,7 @@ namespace BetterCms.Core.Environment.Host
         }
 
         /// <summary>
-        /// Called on host application start.
+        /// Called when the host application starts.
         /// </summary>
         /// <param name="application">The host application.</param>
         public void OnApplicationStart(HttpApplication application)
@@ -57,7 +54,7 @@ namespace BetterCms.Core.Environment.Host
                 MigrateDatabase();
                 
                 // Notify.
-                ApiContext.Events.OnHostStart(this);
+                ApiContext.Events.OnHostStart(application);
 
                 Logger.Info("BetterCMS host application started.");
             }
@@ -68,44 +65,63 @@ namespace BetterCms.Core.Environment.Host
         }
 
         /// <summary>
-        /// Called on host application end.
+        /// Called when the host application stops.
         /// </summary>
         /// <param name="application">The host application.</param>
         public void OnApplicationEnd(HttpApplication application)
         {
             Logger.Info("BetterCMS host application stopped.");
+            
+            // Notify.
+            ApiContext.Events.OnHostStop(application);
         }
 
         /// <summary>
-        /// Called on host application error.
+        /// Called when the host application throws unhandled error.
         /// </summary>
         /// <param name="application">The host application.</param>
         public void OnApplicationError(HttpApplication application)
         {
             var error = application.Server.GetLastError();
             Logger.Fatal("Unhandled exception occurred in BetterCMS host application.", error);
-        }
 
+            // Notify.
+            ApiContext.Events.OnHostError(application);
+        }
+        
         /// <summary>
-        /// Called when host ends web request.
+        /// Called when the host application ends a web request.
         /// </summary>
         /// <param name="application">The host application.</param>
         public void OnEndRequest(HttpApplication application)
         {
         }
-
+        
         /// <summary>
-        /// Called when host begins web request.
+        /// Called when the host application begins a web request.
         /// </summary>
         /// <param name="application">The host application.</param>
         public void OnBeginRequest(HttpApplication application)
         {
 #if DEBUG
+            // A quick way to restart an application host.
+            // This is not going to affect production as it is compiled only in the debug mode.
             if (application.Request["restart"] == "1")
             {
                 RestartAndReloadHost(application);
             }
 #endif
+        }
+
+        /// <summary>
+        /// Called when the host application authenticates a web request.
+        /// </summary>
+        /// <param name="application"></param>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public void OnAuthenticateRequest(HttpApplication application)
+        {
+            // Notify.
+            ApiContext.Events.OnHostAuthenticateRequest(application);
         }
 
         /// <summary>
