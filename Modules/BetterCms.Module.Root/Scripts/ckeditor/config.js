@@ -3,21 +3,21 @@
  * For licensing, see LICENSE.html or http://ckeditor.com/license
  */
 
-CKEDITOR.editorConfig = function( config ) {
-	config.extraPlugins = 'cms-imagemanager,cms-filemanager';
+CKEDITOR.editorConfig = function (config) {
+    config.extraPlugins = 'cms-imagemanager,cms-filemanager';
 
-	config.toolbar = [
-		[ 'Undo', 'Redo' ],
-		[ 'Link', 'Unlink' ],
-		[ 'CmsImageManager', 'CmsFileManager', 'Table', 'SpecialChar', 'HorizontalRule' ],
-		[ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', 'RemoveFormat' ],
-		[ 'NumberedList', 'BulletedList', 'Outdent', 'Indent' ],
-		[ 'Styles', 'Format', 'Font', 'FontSize' ],
-	    [ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ],
-		[ 'TextColor', 'BGColor' ],
-		[ 'Source', 'Maximize', 'ShowBlocks' ]
-	];
-	
-	config.removePlugins = 'tabletools';
-	config.disableNativeSpellChecker = false;
+    config.toolbar = [
+		['Undo', 'Redo'],
+		['Link', 'Unlink'],
+		['CmsImageManager', 'CmsFileManager', 'Table', 'SpecialChar', 'HorizontalRule'],
+	    ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+		['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', 'RemoveFormat'],
+        ['TextColor', 'BGColor'],
+		['NumberedList', 'BulletedList', 'Outdent', 'Indent'],
+		['Styles', 'Format', 'Font', 'FontSize'],
+		['Source', 'Maximize', 'ShowBlocks']
+    ];
+
+    config.removePlugins = 'tabletools';
+    config.disableNativeSpellChecker = false;
 };
