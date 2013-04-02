@@ -17,8 +17,9 @@ define('bcms.dynamicContent', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.forms'
         links = {},
 
         globalization = {
-            failedLoadDialogMessage: 'Failed to load dialog. Internal server error. Please try again later.',
-            forbiddenDialogMessage: 'Forbidden: Access is denied.'
+            failedLoadDialogMessage: null,
+            dialogLoadingCancelledMessage: null,
+            forbiddenDialogMessage: null
         };
 
     /**
@@ -101,7 +102,9 @@ define('bcms.dynamicContent', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.forms'
 
             if ($.isFunction(options.fail)) {
                 var errorMessage = globalization.failedLoadDialogMessage;
-                if (error == "Forbidden") {
+                if (error === "" && request.status === 0) {
+                    errorMessage = globalization.dialogLoadingCancelledMessage;
+                } else if (error == "Forbidden") {
                     errorMessage = globalization.forbiddenDialogMessage;
                 }
                 options.fail(dialog, errorMessage, request);

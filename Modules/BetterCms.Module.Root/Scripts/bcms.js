@@ -31,7 +31,12 @@ define('bcms', ['bcms.jquery'], function ($) {
              preview: 1
          },
     
-        errorTrace = !!true;
+         globalization = {
+             sessionHasExpired: null,
+             failedToProcessRequest: null
+         },
+
+         errorTrace = !!true;
 
     /**
     * Exposes reference to events:
@@ -217,8 +222,8 @@ define('bcms', ['bcms.jquery'], function ($) {
         // If response status is success and content type is not JSON
         // assume that it was redirected to login page:
         message = response.status === success && !isJson
-            ? 'Your session has expired. Please login to continue.'
-            : 'Failed to process request. Response status: ' + response.status + ' ' + response.statusText;
+            ? globalization.sessionHasExpired
+            : $.format(globalization.failedToProcessRequest, response.status, response.statusText);
 
         return {
             Success: false,

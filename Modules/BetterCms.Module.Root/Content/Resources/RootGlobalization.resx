@@ -201,6 +201,15 @@
   <data name="ContentStatus_PublishedWithDraft" xml:space="preserve">
     <value>Published (with draft)</value>
   </data>
+  <data name="DynamicContent_DialogForbidden_Message" xml:space="preserve">
+    <value>Forbidden: Access is denied.</value>
+  </data>
+  <data name="DynamicContent_DialogLoadingCancelled_Message" xml:space="preserve">
+    <value>The loading of dialog was cancelled by user.</value>
+  </data>
+  <data name="DynamicContent_FailedLoadDialog_Message" xml:space="preserve">
+    <value>Failed to load dialog. Internal server error. Please try again later.</value>
+  </data>
   <data name="Grid_NoDataAvailable_Message" xml:space="preserve">
     <value>There is no data available.</value>
   </data>
@@ -222,6 +231,9 @@
   <data name="Message_FailedToLoadDialog" xml:space="preserve">
     <value>Failed to load dialog. Please retry.</value>
   </data>
+  <data name="Message_FailedToProcessRequest_Message" xml:space="preserve">
+    <value>Failed to process request. Response status: {0} {1}.</value>
+  </data>
   <data name="Message_FailedToRenderContent" xml:space="preserve">
     <value>Failed To Render Content.</value>
   </data>
@@ -236,6 +248,9 @@
   </data>
   <data name="Message_Saving" xml:space="preserve">
     <value>Saving ...</value>
+  </data>
+  <data name="Message_SessionExpiredLoginToContinue_Message" xml:space="preserve">
+    <value>Your session has expired. Please login to continue.</value>
   </data>
   <data name="Redirect_Message" xml:space="preserve">
     <value>Please wait while page is redirecting.</value>
