@@ -16,7 +16,8 @@ namespace BetterCms.Configuration
         private const string SecurityNode = "security";
         private const string ModuleGalleryNode = "moduleGallery";
         private const string WorkingDirectoryRootPathAttribute = "workingDirectoryRootPath";
-        private const string ArticleUrlPatternAttribute = "articleUrlPattern";        
+        private const string ArticleUrlPatternAttribute = "articleUrlPattern";
+        private const string UrlPatternsNode = "urlPatterns";
 
         /// <summary>
         /// The version backing field.
@@ -137,6 +138,19 @@ namespace BetterCms.Configuration
         public string ArticleUrlPattern {
             get {return Convert.ToString(this[ArticleUrlPatternAttribute]); }
             set { this[ArticleUrlPatternAttribute] = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the URL patterns.
+        /// </summary>
+        /// <value>
+        /// The URL patterns.
+        /// </value>
+        [ConfigurationProperty(UrlPatternsNode, IsRequired = false)]
+        public UrlPatternsCollection UrlPatterns
+        {
+            get { return (UrlPatternsCollection)this[UrlPatternsNode]; }
+            set { this[UrlPatternsNode] = value; }
         }
 
         #endregion

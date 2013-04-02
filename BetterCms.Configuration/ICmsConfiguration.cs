@@ -83,6 +83,12 @@ namespace BetterCms
         string ArticleUrlPattern { get; set; }
 
         /// <summary>
+        /// Gets or sets the URL patterns.
+        /// </summary>
+        /// <value> The URL patterns. </value>
+        UrlPatternsCollection UrlPatterns { get; set; }
+
+        /// <summary>
         /// Gets the url of nuget feed for BetterCms modules.
         /// </summary>
         ICmsModuleGalleryConfiguration ModuleGallery { get; }

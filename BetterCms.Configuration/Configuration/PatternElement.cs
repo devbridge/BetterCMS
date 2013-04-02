@@ -8,6 +8,7 @@ namespace BetterCms.Configuration
         private const string ExpressionAttribute = "expression";
         private const string NegateAttribute = "negate";
         private const string DescriptionAttribute = "description";
+        private const string IgnoreCaseAttribute = "ignoreCase";
 
         /// <summary>
         /// Gets or sets the expression.
@@ -46,6 +47,19 @@ namespace BetterCms.Configuration
         {
             get { return Convert.ToString(this[DescriptionAttribute]); }
             set { this[DescriptionAttribute] = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this <see cref="PatternElement"/> should be checked by ignoring case.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if ignore case; otherwise, <c>false</c>.
+        /// </value>
+        [ConfigurationProperty(IgnoreCaseAttribute, DefaultValue = false, IsRequired = false)]
+        public bool IgnoreCase
+        {
+            get { return Convert.ToBoolean(this[IgnoreCaseAttribute]); }
+            set { this[IgnoreCaseAttribute] = value; }
         }
     }
 }

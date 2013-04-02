@@ -120,12 +120,11 @@ namespace BetterCms.Module.Pages.Services
                 throw new ValidationException(() => PagesGlobalization.ValidatePageUrlCommand_InvalidUrlPath_Message, logMessage);
             }
 
-            string invalidSegment;
-            if (!redirectService.ValidateUrlForHiddenSegments(url, out invalidSegment))
+            string patternsValidationMessage;
+            if (!redirectService.ValidateUrlPatterns(url, out patternsValidationMessage))
             {
-                var logMessage = string.Format("Url {0} contains hidden segment {1}.", url, invalidSegment);
-                var message = string.Format(PagesGlobalization.ValidatePageUrl_UrlContainsHiddenSegments_Message, invalidSegment);
-                throw new ValidationException(() => message, logMessage);
+                var logMessage = string.Format("{0}. URL: {1}.", patternsValidationMessage, url);
+                throw new ValidationException(() => patternsValidationMessage, logMessage);
             }
 
             // Is Url unique
