@@ -9,7 +9,7 @@ CKEDITOR.editorConfig = function (config) {
     config.toolbar = [
 		['Undo', 'Redo'],
 		['Link', 'Unlink'],
-		['CmsImageManager', 'CmsFileManager', 'Table', 'SpecialChar', 'HorizontalRule'],
+		['CmsImageManager', 'CmsFileManager', 'Table', 'SpecialChar', 'HorizontalRule', 'Image'],
 	    ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
 		['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', 'RemoveFormat'],
         ['TextColor', 'BGColor'],
