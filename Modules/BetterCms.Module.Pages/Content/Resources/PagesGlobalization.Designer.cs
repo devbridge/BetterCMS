@@ -907,6 +907,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Redirect URL.
+        /// </summary>
+        public static string DeletePage_RedirectUrl_Name {
+            get {
+                return ResourceManager.GetString("DeletePage_RedirectUrl_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Page successfully deleted. Please wait, you are being redirected to home page..
         /// </summary>
         public static string DeletePage_SuccessMessage_Message {
@@ -1942,6 +1951,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Page URL.
+        /// </summary>
+        public static string PageUrl_PatternValidation_Message_Url {
+            get {
+                return ResourceManager.GetString("PageUrl_PatternValidation_Message_Url", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit page widget options.
         /// </summary>
         public static string PageWidgetOptions_Dialog_Title {
@@ -2077,15 +2095,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid page URL. URL contains hidden segment (&quot;{0}&quot;), which can be blocked by web server..
-        /// </summary>
-        public static string SaveRedirect_PageUrlContainsHiddenSegment_Message {
-            get {
-                return ResourceManager.GetString("SaveRedirect_PageUrlContainsHiddenSegment_Message", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Redirect from URL &quot;{0}&quot; already exists..
         /// </summary>
         public static string SaveRedirect_RedirectExists_Message {
@@ -2095,11 +2104,11 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid redirect URL. URL contains hidden segment (&quot;{0}&quot;), which can be blocked by web server..
+        ///   Looks up a localized string similar to Redirect URL.
         /// </summary>
-        public static string SaveRedirect_RedirectUrlContainsHiddenSegment_Message {
+        public static string SaveRedirect_RedirectUrl_Name {
             get {
-                return ResourceManager.GetString("SaveRedirect_RedirectUrlContainsHiddenSegment_Message", resourceCulture);
+                return ResourceManager.GetString("SaveRedirect_RedirectUrl_Name", resourceCulture);
             }
         }
         
@@ -2811,15 +2820,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string TemplatePreviewImageUrl_Tooltip_Description {
             get {
                 return ResourceManager.GetString("TemplatePreviewImageUrl_Tooltip_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invalid page URL. URL contains hidden segment (&quot;{0}&quot;), which can be blocked by web server..
-        /// </summary>
-        public static string ValidatePageUrl_UrlContainsHiddenSegments_Message {
-            get {
-                return ResourceManager.GetString("ValidatePageUrl_UrlContainsHiddenSegments_Message", resourceCulture);
             }
         }
         

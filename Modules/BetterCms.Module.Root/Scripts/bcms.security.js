@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define */
 
-define('bcms.security', ['bcms.jquery', 'bcms'], function ($, bcms) {
+define('bcms.security', ['bcms.jquery'], function($) {
     'use strict';
 
     var security = {},
@@ -9,8 +9,11 @@ define('bcms.security', ['bcms.jquery', 'bcms'], function ($, bcms) {
         classes = {},
         // Selectors used in the module to locate DOM elements:
         selectors = {},
-        links = {},
-        globalization = {};
+        links = {
+            isAuthorized: null
+        },
+        globalization = {},
+        authorizedFor = [];
 
     // Assign objects to module
     security.classes = classes;
@@ -18,65 +21,44 @@ define('bcms.security', ['bcms.jquery', 'bcms'], function ($, bcms) {
     security.links = links;
     security.globalization = globalization;
 
-    security.IsAuthorized = function (accessRoleArray) {
-        if (bcms.securityProfile && bcms.securityProfile.CurrentUserRoles) {
-            if (accessRoleArray == null || accessRoleArray == {}) {
-                return true;
-            }
-
-            // Check if user is in full access role.
-            if (bcms.securityProfile.FullAccessRoles && bcms.securityProfile.FullAccessRoles != "") {
-                if (anyInArray(roleStringToArray(bcms.securityProfile.FullAccessRoles), bcms.securityProfile.CurrentUserRoles)) {
+    function isUserAuthorized(roles) {
+        try {
+            var url = $.format(links.isAuthorized, roles),
+                response = $.parseJSON($.ajax({
+                    type: 'POST',
+                    url: url,
+                    cache: false,
+                    async: false
+                }).responseText);
+            if (response.Success === false || response.Success === true) {
+                authorizedFor[roles] = response.Success;
+                if (response.Success === true) {
                     return true;
                 }
             }
-            
-            // Check if user is in role.
-            if (bcms.securityProfile.CustomRoles) {
-                // Use role mapping.
-                for (var i in accessRoleArray) {
-                    var customRoles = bcms.securityProfile.CustomRoles[accessRoleArray[i]];
-                    if (customRoles != null && customRoles != "") {
-                        var customRoleArray = roleStringToArray(customRoles);
-                        if (anyInArray(customRoleArray, bcms.securityProfile.CurrentUserRoles)) {
-                            return true;
-                        }
-                    } else {
-                        if ($.inArray(accessRoleArray[i], bcms.securityProfile.CurrentUserRoles) != -1) {
-                            return true;
-                        }
-                    }
-                }
-            } else {
-                // Do not use mapping.
-                if (anyInArray(accessRoleArray, bcms.securityProfile.CurrentUserRoles)) {
-                    return true;
-                }
-            }
-            
-            return false;
+        } catch (e) {
+            console.log('Error occurred while checking if role(s) is authorized.');
         }
 
-        console.log("No security data provided for GUI.");
-        return true; // This means that security data is not provided for GUI - no GUI hiding will be performed.
-    };
+        return false;
+    }
 
-    function anyInArray(sourceArray, lookInArray) {
-        for (var i in sourceArray) {
-            if ($.inArray(sourceArray[i], lookInArray) != -1) {
-                return true;
+    security.IsAuthorized = function (accessRoleArray) {
+        for (var i in accessRoleArray) {
+            var role = accessRoleArray[i];
+            var value = authorizedFor[role];
+            if (value === true || value === false) {
+                if (value === true) {
+                    return true;
+                }
+            } else {
+                if (isUserAuthorized(role)) {
+                    return true;
+                }
             }
         }
         return false;
     };
 
-    function roleStringToArray(roleString) {
-        var roles = roleString.split(',');
-        for (var i in roles) {
-            roles[i] = $.trim(roles[i]);
-        }
-        return roles;
-    };
-    
     return security;
 });

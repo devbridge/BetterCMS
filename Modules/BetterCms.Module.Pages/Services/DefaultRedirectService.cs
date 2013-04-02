@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
+using BetterCms.Configuration;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Module.Pages.Content.Resources;
@@ -19,19 +20,21 @@ namespace BetterCms.Module.Pages.Services
         /// The unit of work
         /// </summary>
         private IUnitOfWork unitOfWork;
-
+        
         /// <summary>
-        /// The hidden segments array
+        /// Configuration service
         /// </summary>
-        private readonly string[] hiddenSegments = new[] { "bin" };
+        private ICmsConfiguration configuration;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultRedirectService" /> class.
         /// </summary>
         /// <param name="unitOfWork">The unit of work.</param>
-        public DefaultRedirectService(IUnitOfWork unitOfWork)
+        /// <param name="configuration">The configuration.</param>
+        public DefaultRedirectService(IUnitOfWork unitOfWork, ICmsConfiguration configuration)
         {
             this.unitOfWork = unitOfWork;
+            this.configuration = configuration;
         }
 
         /// <summary>
@@ -221,22 +224,47 @@ namespace BetterCms.Module.Pages.Services
         }
 
         /// <summary>
-        /// Validates the string if it contains hidden segments.
+        /// Validates the URL patterns.
         /// </summary>
-        /// <returns><c>true</c> if contains hidden segments; otherwise <c>false</c></returns>
-        public bool ValidateUrlForHiddenSegments(string url, out string invalidSegment)
+        /// <param name="url">The URL.</param>
+        /// <param name="message">The message.</param>
+        /// <param name="validatingFieldName">Name of the validating field.</param>
+        /// <returns><c>true</c> if URL is valid</returns>
+        public bool ValidateUrlPatterns(string url, out string message, string validatingFieldName = null)
         {
-            url = url.ToLowerInvariant();
-            foreach (var element in hiddenSegments)
+            message = null;
+
+            foreach (PatternElement pattern in configuration.UrlPatterns)
             {
-                invalidSegment = string.Format("/{0}/", element);
-                if (url.Contains(invalidSegment))
+                var options = RegexOptions.None;
+                if (pattern.IgnoreCase)
                 {
-                    return false;
+                    options = options | RegexOptions.IgnoreCase;
+                }
+                var regex = new Regex(pattern.Expression, options);
+                var matched = regex.IsMatch(url);
+                if (pattern.Negate)
+                {
+                    if (matched)
+                    {
+                        message = (!string.IsNullOrWhiteSpace(validatingFieldName))
+                            ? string.Format(pattern.Description, validatingFieldName)
+                            : string.Format(pattern.Description, PagesGlobalization.PageUrl_PatternValidation_Message_Url);
+                        return false;
+                    }
+                }
+                else
+                {
+                    if (!matched)
+                    {
+                        message = (!string.IsNullOrWhiteSpace(validatingFieldName))
+                            ? string.Format(pattern.Description, validatingFieldName)
+                            : string.Format(pattern.Description, PagesGlobalization.PageUrl_PatternValidation_Message_Url);
+                        return false;
+                    }
                 }
             }
 
-            invalidSegment = null;
             return true;
         }
     }

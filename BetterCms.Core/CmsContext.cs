@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Principal;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -136,7 +137,7 @@ namespace BetterCms.Core
             RegisterStorageService(cmsConfiguration, builder);
 
             return builder;
-        }
+        }       
 
         /// <summary>
         /// Registers the cache service.

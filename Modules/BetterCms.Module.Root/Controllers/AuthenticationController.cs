@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 
 using BetterCms.Core.Security;
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Models.Authentication;
 using BetterCms.Module.Root.Mvc;
 
@@ -50,6 +51,11 @@ namespace BetterCms.Module.Root.Controllers
             }            
 
             return Redirect(FormsAuthentication.DefaultUrl);
+        }
+
+        public ActionResult IsAuthorized(string roles)
+        {
+            return Json(new WireJson { Success = SecurityService.IsAuthorized(roles) });
         }
     }
 }

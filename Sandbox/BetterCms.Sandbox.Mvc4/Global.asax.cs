@@ -22,7 +22,8 @@ namespace BetterCms.Sandbox.Mvc4
         private static ICmsHost cmsHost;
 
         protected void Application_Start()
-        {     
+        {
+            
             cmsHost = CmsContext.RegisterHost();
 
             AreaRegistration.RegisterAllAreas();
@@ -251,7 +252,6 @@ namespace BetterCms.Sandbox.Mvc4
 
         /// <summary>
         /// Handles the AuthenticateRequest event of the Application control.
-        /// TODO: remove when authentication will be implemented
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
@@ -269,13 +269,6 @@ namespace BetterCms.Sandbox.Mvc4
                         var roles = authTicket.UserData.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Distinct().ToArray();
                         var principal = new GenericPrincipal(identity, roles);
                         Context.User = principal;
-
-                        if (!Roles.Enabled)
-                        {
-                            // These roles are used only for client side GUI features hiding.
-                            // All server side logic is based on IPrincipal.IsInRole()
-                            Context.Cache[string.Format("{0}_Roles", identity.Name)] = roles;
-                        }
                     }
                 }
                 catch
@@ -284,6 +277,8 @@ namespace BetterCms.Sandbox.Mvc4
                     FormsAuthentication.SignOut();
                 }
             }
+
+            cmsHost.OnAuthenticateRequest(this);
         }
     }
 }

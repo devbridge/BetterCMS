@@ -1,22 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Web;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Web.Mvc;
 
-using BetterCms.Core.Exceptions;
-using BetterCms.Core.Modules.Registration;
 using BetterCms.Core.Mvc.Attributes;
-using BetterCms.Core.Services;
 using BetterCms.Module.Root.Commands.GetMainJsData;
 using BetterCms.Module.Root.Commands.GetProcessorJsData;
 using BetterCms.Module.Root.Commands.GetStyleSheetsToRender;
 using BetterCms.Module.Root.Mvc;
-using BetterCms.Module.Root.ViewModels;
-using BetterCms.Module.Root.ViewModels.Rendering;
-
-using Common.Logging;
 
 namespace BetterCms.Module.Root.Controllers
 {
@@ -24,33 +13,7 @@ namespace BetterCms.Module.Root.Controllers
     /// Script handling controller.
     /// </summary>
     public class RenderingController : CmsControllerBase
-    {        
-        /// <summary>
-        /// Current class logger.
-        /// </summary>       
-        private static readonly ILog Log = LogManager.GetCurrentClassLogger();
-
-        /// <summary>
-        /// A contract to manage modules registry.
-        /// </summary>
-        private readonly IModulesRegistration modulesRegistration;
-
-        /// <summary>
-        /// The CMS configuration
-        /// </summary>
-        private readonly ICmsConfiguration cmsConfiguration;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RenderingController" /> class.
-        /// </summary>
-        /// <param name="modulesRegistration">A contract to manage modules registry.</param>
-        /// <param name="cmsConfiguration">The CMS configuration.</param>
-        public RenderingController(IModulesRegistration modulesRegistration, ICmsConfiguration cmsConfiguration)
-        {
-            this.cmsConfiguration = cmsConfiguration;
-            this.modulesRegistration = modulesRegistration;
-        }
-
+    {
         /// <summary>
         /// Renders bcms.main.js or bcms.main.min.js (entry point of the BetterCMS client side).
         /// </summary>
@@ -78,14 +41,33 @@ namespace BetterCms.Module.Root.Controllers
         }
 
         /// <summary>
-        /// Renders style sheet includes of registered modules.
+        /// Renders all (private and public) style sheet includes of registered modules.
         /// </summary>
         /// <returns>List of style sheet includes.</returns>
         public ActionResult RenderStyleSheetIncludes()
         {
-            var model = GetCommand<GetStyleSheetsToRenderCommand>().ExecuteCommand();
+            var model = GetCommand<GetStyleSheetsToRenderCommand>().ExecuteCommand(new GetStyleSheetsToRenderRequest
+                                                                                       {
+                                                                                           RenderPrivateCssIncludes = true,
+                                                                                           RenderPublicCssIncludes = true
+                                                                                       });
 
             return PartialView(model);
-        }        
+        }
+
+        /// <summary>
+        /// Renders public style sheet includes of registered modules.
+        /// </summary>
+        /// <returns>List of style sheet includes.</returns>
+        public ActionResult RenderPublicStyleSheetIncludes()
+        {
+            var model = GetCommand<GetStyleSheetsToRenderCommand>().ExecuteCommand(new GetStyleSheetsToRenderRequest
+                                                                                       {
+                                                                                           RenderPrivateCssIncludes = false,
+                                                                                           RenderPublicCssIncludes = true
+                                                                                       });
+
+            return PartialView("RenderStyleSheetIncludes", model);
+        } 
     }
 }

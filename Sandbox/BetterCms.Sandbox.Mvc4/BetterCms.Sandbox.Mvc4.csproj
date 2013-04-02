@@ -263,7 +263,9 @@
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Config\appFabric.dataCacheClient.config" />
+    <Content Include="Config\appFabric.dataCacheClient.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Widgets\04.cshtml" />
     <Content Include="Views\Widgets\01.cshtml" />
     <Content Include="Views\Widgets\02.cshtml" />

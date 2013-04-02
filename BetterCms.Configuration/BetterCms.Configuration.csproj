@@ -110,6 +110,7 @@
     <Compile Include="Configuration\DefaultConfigurationLoader.cs" />
     <Compile Include="Configuration\CmsSecurityConfigurationElement.cs" />
     <Compile Include="Configuration\StorageServiceType.cs" />
+    <Compile Include="Configuration\UrlPatternsCollection.cs" />
     <Compile Include="ICmsCacheConfiguration.cs" />
     <Compile Include="ICmsModuleGalleryConfiguration.cs" />
     <Compile Include="ICmsStorageConfiguration.cs" />

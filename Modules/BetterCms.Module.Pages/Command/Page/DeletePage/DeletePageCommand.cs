@@ -99,12 +99,11 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
                     throw new ValidationException(() => PagesGlobalization.ValidatePageUrlCommand_InvalidUrlPath_Message, logMessage);
                 }
 
-                string invalidSegment;
-                if (!redirectService.ValidateUrlForHiddenSegments(request.RedirectUrl, out invalidSegment))
+                string patternsValidationMessage;
+                if (!redirectService.ValidateUrlPatterns(request.RedirectUrl, out patternsValidationMessage, PagesGlobalization.DeletePage_RedirectUrl_Name))
                 {
-                    var logMessage = string.Format("Redirect uUrl {0} contains hidden segment {1}.", request.RedirectUrl, invalidSegment);
-                    var message = string.Format(PagesGlobalization.ValidatePageUrl_UrlContainsHiddenSegments_Message, invalidSegment);
-                    throw new ValidationException(() => message, logMessage);
+                    var logMessage = string.Format("{0}. URL: {1}.", patternsValidationMessage, request.RedirectUrl);
+                    throw new ValidationException(() => patternsValidationMessage, logMessage);
                 }
 
                 var redirect = redirectService.GetPageRedirect(page.PageUrl);

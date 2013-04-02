@@ -8,6 +8,6 @@ namespace BetterCms.Module.Root.Services
     {
         IEnumerable<JavaScriptModuleInclude> GetJavaScriptIncludes();
 
-        IEnumerable<string> GetStyleSheetIncludes();
+        IEnumerable<string> GetStyleSheetIncludes(bool includePrivateCssFiles, bool includePublicCssFiles);
     }
 }

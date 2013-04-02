@@ -1,4 +1,7 @@
-﻿using BetterCms.Core.Mvc.Extensions;
+﻿using System;
+
+using BetterCms.Core.Exceptions;
+using BetterCms.Core.Mvc.Extensions;
 
 namespace BetterCms.Core.Modules
 {
@@ -10,14 +13,26 @@ namespace BetterCms.Core.Modules
         /// <summary>
         /// Initializes a new instance of the <see cref="CssIncludeDescriptor" /> class.
         /// </summary>
-        /// <param name="containerModule">The container module.</param>
+        /// <param name="module">The container module.</param>
         /// <param name="fileName">Name of the file.</param>
+        /// <param name="minFileName">Name of the minified CSS file version.</param>
         /// <param name="isPublic">if set to <c>true</c> then this CSS include is public (visible for in the edit/non-edit mode).</param>
-        public CssIncludeDescriptor(ModuleDescriptor containerModule, string fileName, bool isPublic = false)
+        public CssIncludeDescriptor(ModuleDescriptor module, string fileName, string minFileName = null, bool isPublic = false)
         {
-            ContainerModule = containerModule;            
-            Path = VirtualPath.Combine(containerModule.CssBasePath, fileName);
+            if (isPublic && string.IsNullOrEmpty(minFileName))
+            {
+                throw new CmsException("Public CSS includes should describe a minified file version itself.", new ArgumentNullException("minFileName", "Please define the minFileName parameter."));
+            }
+
+            ContainerModule = module;                        
             IsPublic = isPublic;
+            Path = VirtualPath.Combine(module.CssBasePath, fileName);
+
+            // If minFileName is not given then CMS will load it from a bcms.[module-name].min.css file.
+            if (!string.IsNullOrEmpty(minFileName))
+            {
+                MinPath = VirtualPath.Combine(module.CssBasePath, minFileName);
+            }
         }
 
         /// <summary>
@@ -35,6 +50,14 @@ namespace BetterCms.Core.Modules
         /// The js module path.
         /// </value>
         public string Path { get; private set; }
+
+        /// <summary>
+        /// Gets path of the minified CSS file if it was provided.
+        /// </summary>
+        /// <value>
+        /// The path of the minified CSS file if it was provided.
+        /// </value>
+        public string MinPath { get; private set; }
 
         /// <summary>
         /// Gets a value indicating whether this CSS include is public.

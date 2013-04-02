@@ -102,6 +102,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Web.WebPages.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
