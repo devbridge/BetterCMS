@@ -20,6 +20,7 @@ define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', '
             scrollWindow: '.bcms-scroll-window',
             previewImage: '.bcms-preview-image-frame img',
             previewImageContainer: '.bcms-preview-image-border',
+            previewFailure: '.bcms-grid-image-holder',
             footer: '.bcms-success-buttons-holder, .bcms-modal-footer',
             desirableStatus: '.bcms-content-desirable-status',
             
@@ -661,7 +662,6 @@ define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', '
         var dialog = modal.open(options);
 
         var img = dialog.container.find(selectors.previewImage);
-        img.attr('src', src);
         img.attr('alt', alt || '');
 
         img.on('load', function () {
@@ -683,6 +683,21 @@ define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', '
             imgContainer.find(selectors.loader).hide();
             img.show();
         });
+
+        img.on('error', function () {
+            var imgDom = img.get(0);
+            
+            // IE && other browsers compatibility fix: checking if image is not loaded
+            if (!imgDom.complete || !imgDom.naturalWidth || !imgDom.naturalHeight) {
+                var imgContainer = dialog.container.find(selectors.previewImageContainer),
+                    previewFailure = imgContainer.find(selectors.previewFailure);
+
+                imgContainer.find(selectors.loader).hide();
+                previewFailure.show();
+            }
+        });
+
+        img.attr('src', src);
 
         return dialog;
     };
