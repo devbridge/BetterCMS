@@ -2515,3 +2515,8 @@ a.ui-state-default:hover {
             text-align: right;
             text-decoration: none;
         }
+
+/*cursor: pointer*/
+.bcms-pointer {
+    cursor: pointer;
+}
