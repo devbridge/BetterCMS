@@ -11,7 +11,7 @@
       var d = c.addCommand(b, a);
       c.ui.addButton('CmsImageManager', {
         label: 'Insert Image',
-        icon: 'image',
+        icon: 'cmsimage',
         command: b
       });
     }

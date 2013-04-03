@@ -953,6 +953,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     * Insert image to html content editor.
     */
     function addImageToEditor(imageUrl, caption, imageAlign, version) {
+        caption = caption || '';
         if (contentEditor != null) {
             var align = "left";
             if (imageAlign == 2) {

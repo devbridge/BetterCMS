@@ -602,7 +602,7 @@ input.bcms-grid-input:focus {
     display: inline-block;
     width: 56px;
     height: 43px;
-    background: url('images/sprite-media-3.png') no-repeat;
+    background: url('images/sprite-media-3.png') no-repeat; /*change bg above*/
     vertical-align: middle;
 }
 
@@ -1291,6 +1291,25 @@ input.bcms-grid-input:focus {
     .bcms-list .bcms-file-box-active a.bcms-icn-delete {
         display: none;
     }
+
+/*additional filegroups*/
+/*.bcms-files-group {
+}
+
+.bcms-images-group {
+}
+
+.bcms-archives-group {
+}
+
+.bcms-office-group {
+}
+
+.bcms-audio-group {
+}
+
+.bcms-video-group {
+}*/
 
 /*additional file types*/
 .bcms-uknown-icn {

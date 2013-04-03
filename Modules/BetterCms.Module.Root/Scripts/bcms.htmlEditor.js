@@ -7,7 +7,9 @@ define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], function ($, bcms
     var htmlEditor = {},
 
         // Selectors used in the module to locate DOM elements:
-        selectors = {},
+        selectors = {
+            imageButtonContainer: '.cke_button:has(.cke_button__image_icon)'
+        },
         links = {},
         globalization = {},
         events = {
@@ -47,6 +49,11 @@ define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], function ($, bcms
         CKEDITOR.instances[id].InsertFileClicked = function (editor) {
             bcms.trigger(htmlEditor.events.insertFile, editor);
         };
+        
+        // Hide native image button container
+        CKEDITOR.instances[id].on('instanceReady', function () {
+            $(selectors.imageButtonContainer).hide();
+        });
     };
 
     htmlEditor.destroyAllHtmlEditorInstances = function () {
