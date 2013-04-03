@@ -37,9 +37,12 @@ namespace BetterCms.Module.Pages.Services
         public void SavePageTags(PageProperties page, IList<string> tags, out IList<Tag> newCreatedTags)
         {
             var trimmedTags = new List<string>();
-            foreach (var tag in tags)
+            if (tags != null)
             {
-                trimmedTags.Add(tag.Trim());
+                foreach (var tag in tags)
+                {
+                    trimmedTags.Add(tag.Trim());
+                }
             }
 
             newCreatedTags = new List<Tag>();
@@ -56,10 +59,7 @@ namespace BetterCms.Module.Pages.Services
             for (int i = pageTags.Count - 1; i >= 0; i--)
             {
                 string tag = null;
-                if (trimmedTags != null)
-                {
-                    tag = trimmedTags.FirstOrDefault(s => s.ToLower() == pageTags[i].Tag.Name.ToLower());
-                }
+                tag = trimmedTags.FirstOrDefault(s => s.ToLower() == pageTags[i].Tag.Name.ToLower());
 
                 if (tag == null)
                 {
@@ -68,46 +68,43 @@ namespace BetterCms.Module.Pages.Services
             }
 
             // Add new tags:
-            if (trimmedTags != null)
+            List<string> tagsInsert = new List<string>();
+            foreach (string tag in trimmedTags)
             {
-                List<string> tagsInsert = new List<string>();
-                foreach (string tag in trimmedTags)
+                PageTag existPageTag = pageTags.FirstOrDefault(pageTag => pageTag.Tag.Name.ToLower() == tag.ToLower());
+                if (existPageTag == null)
                 {
-                    PageTag existPageTag = pageTags.FirstOrDefault(pageTag => pageTag.Tag.Name.ToLower() == tag.ToLower());
-                    if (existPageTag == null)
-                    {
-                        tagsInsert.Add(tag);
-                    }
+                    tagsInsert.Add(tag);
                 }
+            }
 
-                if (tagsInsert.Count > 0)
+            if (tagsInsert.Count > 0)
+            {
+                // Get existing tags:
+                IList<Tag> existingTags = unitOfWork.Session.QueryOver(() => tagAlias)
+                                                            .Where(Restrictions.In(Projections.Property(() => tagAlias.Name), tagsInsert))
+                                                            .List<Tag>();
+
+                foreach (string tag in tagsInsert)
                 {
-                    // Get existing tags:
-                    IList<Tag> existingTags = unitOfWork.Session.QueryOver(() => tagAlias)
-                                                                .Where(Restrictions.In(Projections.Property(() => tagAlias.Name), tagsInsert))
-                                                                .List<Tag>();
+                    PageTag pageTag = new PageTag();
+                    pageTag.Page = page;
 
-                    foreach (string tag in tagsInsert)
+                    Tag existTag = existingTags.FirstOrDefault(t => t.Name.ToLower() == tag.ToLower());
+                    if (existTag != null)
                     {
-                        PageTag pageTag = new PageTag();
-                        pageTag.Page = page;
-
-                        Tag existTag = existingTags.FirstOrDefault(t => t.Name.ToLower() == tag.ToLower());
-                        if (existTag != null)
-                        {
-                            pageTag.Tag = existTag;
-                        }
-                        else
-                        {
-                            Tag newTag = new Tag();
-                            newTag.Name = tag;
-                            unitOfWork.Session.SaveOrUpdate(newTag);
-                            newCreatedTags.Add(newTag);
-                            pageTag.Tag = newTag;
-                        }
-
-                        unitOfWork.Session.SaveOrUpdate(pageTag);
+                        pageTag.Tag = existTag;
                     }
+                    else
+                    {
+                        Tag newTag = new Tag();
+                        newTag.Name = tag;
+                        unitOfWork.Session.SaveOrUpdate(newTag);
+                        newCreatedTags.Add(newTag);
+                        pageTag.Tag = newTag;
+                    }
+
+                    unitOfWork.Session.SaveOrUpdate(pageTag);
                 }
             }
         }
