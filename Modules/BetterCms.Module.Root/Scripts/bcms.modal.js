@@ -659,12 +659,15 @@ define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', '
         options.templateId = 'bcms-image-preview-template';
         options.disableAnimation = true;
 
-        var dialog = modal.open(options);
-
-        var img = dialog.container.find(selectors.previewImage);
+        var dialog = modal.open(options),
+            img = dialog.container.find(selectors.previewImage),
+            imgLoaded = false;
+        
         img.attr('alt', alt || '');
 
         img.on('load', function () {
+            imgLoaded = true;
+
             var imgContainer = dialog.container.find(selectors.previewImageContainer),
                 width = img.width(),
                 visibleWidth = $(window).width() - 150,
@@ -685,10 +688,8 @@ define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', '
         });
 
         img.on('error', function () {
-            var imgDom = img.get(0);
-            
-            // IE && other browsers compatibility fix: checking if image is not loaded
-            if (!imgDom.complete || !imgDom.naturalWidth || !imgDom.naturalHeight) {
+            // IE && other browsers compatibility fix: checking if image is not loaded yet
+            if (!imgLoaded) {
                 var imgContainer = dialog.container.find(selectors.previewImageContainer),
                     previewFailure = imgContainer.find(selectors.previewFailure);
 
