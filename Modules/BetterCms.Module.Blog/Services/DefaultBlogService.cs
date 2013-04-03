@@ -87,7 +87,9 @@ namespace BetterCms.Module.Blog.Services
                 foreach (var path in paths)
                 {
                     int pathNr;
-                    if (int.TryParse(path.Replace(urlToReplace, null).Trim('/'), out pathNr))
+                    var intStr = path.Replace(urlToReplace, null).Split('-')[0].Trim('/');
+
+                    if (int.TryParse(intStr, out pathNr))
                     {
                         if (pathNr > maxNr)
                         {
