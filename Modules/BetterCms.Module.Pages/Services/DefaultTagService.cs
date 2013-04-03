@@ -36,6 +36,12 @@ namespace BetterCms.Module.Pages.Services
         /// <param name="newCreatedTags">The new created tags.</param>
         public void SavePageTags(PageProperties page, IList<string> tags, out IList<Tag> newCreatedTags)
         {
+            var trimmedTags = new List<string>();
+            foreach (var tag in tags)
+            {
+                trimmedTags.Add(tag.Trim());
+            }
+
             newCreatedTags = new List<Tag>();
             
             Tag tagAlias = null;
@@ -50,9 +56,9 @@ namespace BetterCms.Module.Pages.Services
             for (int i = pageTags.Count - 1; i >= 0; i--)
             {
                 string tag = null;
-                if (tags != null)
+                if (trimmedTags != null)
                 {
-                    tag = tags.FirstOrDefault(s => s.ToLower() == pageTags[i].Tag.Name.ToLower());
+                    tag = trimmedTags.FirstOrDefault(s => s.ToLower() == pageTags[i].Tag.Name.ToLower());
                 }
 
                 if (tag == null)
@@ -62,10 +68,10 @@ namespace BetterCms.Module.Pages.Services
             }
 
             // Add new tags:
-            if (tags != null)
+            if (trimmedTags != null)
             {
                 List<string> tagsInsert = new List<string>();
-                foreach (string tag in tags)
+                foreach (string tag in trimmedTags)
                 {
                     PageTag existPageTag = pageTags.FirstOrDefault(pageTag => pageTag.Tag.Name.ToLower() == tag.ToLower());
                     if (existPageTag == null)
