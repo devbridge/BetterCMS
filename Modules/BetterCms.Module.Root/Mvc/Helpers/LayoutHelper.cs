@@ -5,10 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using System.Web.WebPages;
 
+using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Root.ViewModels.Cms;
+using System.Web.Mvc.Html;
 
 namespace BetterCms.Module.Root.Mvc.Helpers
 {
@@ -130,6 +133,17 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// The render style sheets.
+        /// </summary>
+        /// <param name="htmlHelper">The html helper.</param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns>The <see cref="IHtmlString"/>.</returns>
+        public static IHtmlString RenderStyleSheets<T>(this HtmlHelper htmlHelper) where T : ModuleDescriptor
+        {
+            return htmlHelper.Action("RenderModuleStyleSheetIncludes", "Rendering", new { moduleDescriptorType = typeof(T) });
         }
     }
 }
