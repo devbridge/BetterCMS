@@ -218,6 +218,11 @@ define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepic
                             initializeEditServerControlWidgetForm(dialog, availablePreviewOnPageContentId, onSaveCallback);
                         },
 
+                        beforePost: function (form) {
+                            editor.resetAutoGenerateNameId();
+                            editor.setInputNames(form);
+                        },
+
                         postSuccess: onSaveCallback
                     });
                 }
