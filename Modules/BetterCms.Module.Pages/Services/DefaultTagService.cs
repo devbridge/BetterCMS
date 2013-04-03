@@ -6,6 +6,7 @@ using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
 
 using NHibernate.Criterion;
+using NHibernate.SqlCommand;
 
 namespace BetterCms.Module.Pages.Services
 {
@@ -50,10 +51,12 @@ namespace BetterCms.Module.Pages.Services
             Tag tagAlias = null;
 
             // Tags merge:
-            IList<PageTag> pageTags = unitOfWork.Session.QueryOver<PageTag>()
-                                                    .Where(tag => !tag.IsDeleted && tag.Page.Id == page.Id)
-                                                    .Fetch(tag => tag.Tag).Eager
-                                                    .List<PageTag>();
+            IList<PageTag> pageTags = unitOfWork.Session
+                .QueryOver<PageTag>()
+                .Where(t => !t.IsDeleted && t.Page.Id == page.Id)
+                .JoinQueryOver<Tag>(t => t.Tag, JoinType.InnerJoin)
+                .Where(t => !t.IsDeleted)
+                .List<PageTag>();
 
             // Remove deleted tags:
             for (int i = pageTags.Count - 1; i >= 0; i--)
@@ -82,6 +85,7 @@ namespace BetterCms.Module.Pages.Services
             {
                 // Get existing tags:
                 IList<Tag> existingTags = unitOfWork.Session.QueryOver(() => tagAlias)
+                                                            .Where(t => !t.IsDeleted)
                                                             .Where(Restrictions.In(Projections.Property(() => tagAlias.Name), tagsInsert))
                                                             .List<Tag>();
 
@@ -118,12 +122,13 @@ namespace BetterCms.Module.Pages.Services
         /// </returns>
         public IList<string> GetPageTagNames(System.Guid pageId)
         {
-            Root.Models.Tag tagAlias = null;
+            Tag tagAlias = null;
 
             return unitOfWork.Session
                 .QueryOver<PageTag>()
-                .Where(w => w.Page.Id == pageId && !w.IsDeleted)
                 .JoinAlias(f => f.Tag, () => tagAlias)
+                .Where(() => !tagAlias.IsDeleted)
+                .Where(w => w.Page.Id == pageId && !w.IsDeleted)
                 .SelectList(select => select.Select(() => tagAlias.Name))
                 .List<string>();
         }
