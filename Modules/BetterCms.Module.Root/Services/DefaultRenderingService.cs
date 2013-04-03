@@ -83,9 +83,26 @@ namespace BetterCms.Module.Root.Services
             return model;
         }
 
-        public IEnumerable<string> GetStyleSheetIncludes(bool includePrivateCssFiles, bool includePublicCssFiles)
+        public IEnumerable<string> GetStyleSheetIncludes(bool includePrivateCssFiles, bool includePublicCssFiles, Type moduleDescriptorType = null)
         {
-            var allIncludes = modulesRegistration.GetStyleSheetIncludes();
+            var allIncludes = new List<CssIncludeDescriptor>();
+
+            if (moduleDescriptorType != null)
+            {
+                var modules = modulesRegistration.GetModules();
+                foreach (var module in modules)
+                {
+                    if (module.ModuleDescriptor.GetType() == moduleDescriptorType)
+                    {
+                        allIncludes.AddRange(module.ModuleDescriptor.RegisterCssIncludes());
+                    }
+                }
+            }
+            else
+            {
+                allIncludes.AddRange(modulesRegistration.GetStyleSheetIncludes());
+            }
+
             var includes = allIncludes
                                 .Where(f => f.IsPublic && includePublicCssFiles || !f.IsPublic && includePrivateCssFiles);
 

@@ -1,10 +1,13 @@
-﻿@model BetterCms.Core.DataContracts.IPage
+﻿@using BetterCms.Module.Root.Mvc.Helpers
+@using BetterCms.Module.Templates
+@model BetterCms.Core.DataContracts.IPage
 @{
     Layout = "~/Areas/bcms-Root/Views/Shared/BaseLayout.cshtml";
 }
 
 @section Styles {    
     @RenderSection("Styles", false)
+    @(Html.RenderStyleSheets<TemplatesModuleDescriptor>())
 }
 
 @section HeadScripts {
