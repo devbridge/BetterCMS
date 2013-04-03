@@ -26,12 +26,20 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         public Guid Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the entity version.
+        /// Gets or sets the page content version.
         /// </summary>
         /// <value>
-        /// The entity version.
+        /// The page content version.
         /// </value>
         public int Version { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the content version.
+        /// </summary>
+        /// <value>
+        /// The content version.
+        /// </value>
+        public int ContentVersion { get; set; }
 
         /// <summary>
         /// Gets or sets the currrent content status.

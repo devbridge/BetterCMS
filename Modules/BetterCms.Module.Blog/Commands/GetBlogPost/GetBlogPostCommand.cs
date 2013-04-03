@@ -131,6 +131,7 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
                     {
                         model.Content = content.Html;
                         model.ContentId = content.Id;
+                        model.ContentVersion = content.Version;
                         model.LiveFromDate = content.ActivationDate;
                         model.LiveToDate = content.ExpirationDate;
                         model.EditInSourceMode = content.EditInSourceMode;

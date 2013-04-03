@@ -34,13 +34,21 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         public virtual Guid ContentId { get; set; }
 
         /// <summary>
-        /// Gets or sets the entity version.
+        /// Gets or sets the blog post entity version.
         /// </summary>
         /// <value>
-        /// The entity version.
+        /// The blog post entity version.
         /// </value>
         [Required(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_RequiredAttribute_Message")]
         public virtual int Version { get; set; }
+
+        /// <summary>
+        /// Gets or sets the blog post content entity version.
+        /// </summary>
+        /// <value>
+        /// The blog post content entity version.
+        /// </value>
+        public virtual int ContentVersion { get; set; }
 
         /// <summary>
         /// Gets or sets the blog title.

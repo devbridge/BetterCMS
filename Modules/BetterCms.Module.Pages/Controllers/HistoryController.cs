@@ -78,12 +78,20 @@ namespace BetterCms.Module.Pages.Controllers
         /// Destroys the content draft.
         /// </summary>
         /// <param name="id">The id.</param>
-        /// <returns>Json result.</returns>
+        /// <param name="version">The version.</param>
+        /// <returns>
+        /// Json result.
+        /// </returns>
         [HttpPost]
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration)]
-        public ActionResult DestroyContentDraft(string id)
+        public ActionResult DestroyContentDraft(string id, string version)
         {
-            var response = GetCommand<DestroyContentDraftCommand>().ExecuteCommand(id.ToGuidOrDefault());
+            var request = new DestroyContentDraftCommandRequest
+                              {
+                                  Id = id.ToGuidOrDefault(),
+                                  Version = version.ToIntOrDefault()
+                              };
+            var response = GetCommand<DestroyContentDraftCommand>().ExecuteCommand(request);
 
             return WireJson(response != null, response);
         }

@@ -43,6 +43,7 @@ namespace BetterCms.Module.Pages.Command.Content.GetPageHtmlContent
                                                 LiveTo = content.ExpirationDate,
                                                 PageContent = content.Html,
                                                 Version = pageContent.Version,
+                                                ContentVersion = pageContent.Content.Version,
                                                 CustomCss = content.CustomCss,
                                                 CustomJs = content.CustomJs,
                                                 EanbledCustomJs = content.UseCustomJs,
