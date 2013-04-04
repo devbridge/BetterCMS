@@ -3,6 +3,7 @@ using System.Linq;
 
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
+using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root;
@@ -12,19 +13,29 @@ using NHibernate.Linq;
 
 namespace BetterCms.Module.Pages.Command.History.DestroyContentDraft
 {
-    public class DestroyContentDraftCommand : CommandBase, ICommand<Guid, DestroyContentDraftCommandResponse>
+    public class DestroyContentDraftCommand : CommandBase, ICommand<DestroyContentDraftCommandRequest, DestroyContentDraftCommandResponse>
     {
         /// <summary>
         /// Executes the specified request.
         /// </summary>
-        /// <param name="pageContentId">The page content id.</param>
+        /// <param name="request">The request.</param>
         /// <returns></returns>
-        public DestroyContentDraftCommandResponse Execute(Guid pageContentId)
+        /// <exception cref="ConcurrentDataException"></exception>
+        /// <exception cref="CmsException"></exception>
+        public DestroyContentDraftCommandResponse Execute(DestroyContentDraftCommandRequest request)
         {
             var content = Repository
-                .AsQueryable<Root.Models.Content>(p => p.Id == pageContentId)
+                .AsQueryable<Root.Models.Content>(p => p.Id == request.Id)
                 .Fetch(f => f.Original)
-                .First();
+                .FirstOrDefault();
+
+            // Throw concurrent data exception (user needs to reload page):
+            // - content may be null, if looking for already deleted draft
+            // - content may be changed, if looking for 
+            if (content == null || request.Version != content.Version)
+            {
+                throw new ConcurrentDataException(content ?? new Root.Models.Content());
+            }
 
             // If content is published, try to get it's active draft
             if (content.Status == ContentStatus.Published)
@@ -37,7 +48,9 @@ namespace BetterCms.Module.Pages.Command.History.DestroyContentDraft
 
                 if (content == null)
                 {
-                    throw new CmsException(string.Format("Cannot find draft version for content with id = {0}.", pageContentId));
+                    // Throw concurrent data exception (user needs to reload page):
+                    // - content may be null, if looking for already deleted draft
+                    throw new ConcurrentDataException(new Root.Models.Content());
                 }
             }
 

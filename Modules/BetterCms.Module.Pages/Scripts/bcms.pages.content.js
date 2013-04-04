@@ -11,6 +11,7 @@ define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.content
                 sliderContainer: 'bcms-slides-container',
 
                 contentId: '#bcmsContentId',
+                contentVersion: '#bcmsPageContentVersion',
                 pageContentId: '#bcmsPageContentId',
                 contentFormRegionId: '#bcmsContentToRegionId',
                 desirableStatus: '#bcmsContentDesirableStatus',
@@ -240,9 +241,10 @@ define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.content
             
             dialog.container.find(selectors.destroyDraftVersionLink).on('click', function () {
                 var contentId = dialog.container.find(selectors.contentId).val(),
-                    pageContentId = dialog.container.find(selectors.pageContentId).val();
+                    pageContentId = dialog.container.find(selectors.pageContentId).val(),
+                    contentVersion = dialog.container.find(selectors.contentVersion).val();
                 
-                history.destroyDraftVersion(contentId, dialog.container, function () {
+                history.destroyDraftVersion(contentId, contentVersion, dialog.container, function () {
                     dialog.close();
                     pagesContent.editPageContent(pageContentId, function () {
                         redirect.ReloadWithAlert();
@@ -296,16 +298,21 @@ define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.content
                     widgetContainer = self.parents(selectors.widgetContainerBlock),
                     widgetId = widgetContainer.data('id'),
                     widgetVersion = widgetContainer.data('version'),
-                    widgetName = widgetContainer.find(selectors.widgetName).text();
+                    widgetName = widgetContainer.find(selectors.widgetName).text(),
+                    onComplete = function (data) {
+                        messages.refreshBox(widgetContainer, data);
+                        widgetContainer.hideLoading();
+                    };
 
                 widgets.deleteWidget(widgetId, widgetVersion, widgetName,
-                    function(data) {
-                        messages.refreshBox(widgetContainer, data);
-                        pagesContent.updateWidgetCategoryList(dialog);
+                    function() {
+                        widgetContainer.showLoading();
                     },
                     function(data) {
-                        messages.refreshBox(widgetContainer, data);
-                    });
+                        onComplete(data);
+                        pagesContent.updateWidgetCategoryList(dialog);
+                    },
+                    onComplete);
             });
 
             container.find(selectors.widgetEditButtons).on('click', function () {

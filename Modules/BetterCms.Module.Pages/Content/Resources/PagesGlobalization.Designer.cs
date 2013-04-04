@@ -1087,7 +1087,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You can &lt;a href=&apos;#&apos; class=&apos;bcms-messages-draft-destroy&apos;&gt;destroy&lt;/a&gt; draft and edit version that is currently published..
+        ///   Looks up a localized string similar to You can &lt;a class=&apos;bcms-pointer bcms-messages-draft-destroy&apos;&gt;destroy&lt;/a&gt; draft and edit version that is currently published..
         /// </summary>
         public static string EditPageContent_Messages_DraftStatusWarnMessage_Destroy {
             get {

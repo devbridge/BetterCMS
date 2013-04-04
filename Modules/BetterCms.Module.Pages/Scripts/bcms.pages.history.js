@@ -179,13 +179,13 @@ define('bcms.pages.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.message
     /**
     * Destroys draft version of the content
     */
-    history.destroyDraftVersion = function(id, container, onSuccess) {
+    history.destroyDraftVersion = function(id, version, container, onSuccess) {
         modal.confirm({
             content: globalization.contentVersionDestroyDraftConfirmation,
             acceptTitle: globalization.destroyButtonTitle,
             onAccept: function() {
 
-                var url = $.format(links.destroyContentDraftVersionUrl, id),
+                var url = $.format(links.destroyContentDraftVersionUrl, id, version),
                     onComplete = function (json) {
                         container.hideLoading();
 

@@ -124,6 +124,7 @@
     <Compile Include="Api\Events\WidgetEvents.cs" />
     <Compile Include="Api\Events\TagEvents.cs" />
     <Compile Include="Api\Events\RedirectEvents.cs" />
+    <Compile Include="Command\History\DestroyContentDraft\DestroyContentDraftCommandRequest.cs" />
     <Compile Include="DataContracts\Enums\PageLoadableChilds.cs" />
     <Compile Include="Command\Content\DeletePageContent\DeletePageContentCommand.cs" />
     <Compile Include="Command\Content\DeletePageContent\DeletePageContentCommandRequest.cs" />

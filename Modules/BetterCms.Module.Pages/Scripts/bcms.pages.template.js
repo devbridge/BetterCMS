@@ -94,6 +94,11 @@ define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepi
                     dynamicContent.bindDialog(childDialog, links.loadRegisterTemplateDialogUrl, {
                         contentAvailable: initializeEditTemplateForm,
 
+                        beforePost: function (form) {
+                            editor.resetAutoGenerateNameId();
+                            editor.setInputNames(form);
+                        },
+
                         postSuccess: onSaveCallback
                     });
                 }

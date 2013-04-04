@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Web.Mvc;
 
 using BetterCms.Core.Mvc.Attributes;
@@ -49,7 +50,7 @@ namespace BetterCms.Module.Root.Controllers
             var model = GetCommand<GetStyleSheetsToRenderCommand>().ExecuteCommand(new GetStyleSheetsToRenderRequest
                                                                                        {
                                                                                            RenderPrivateCssIncludes = true,
-                                                                                           RenderPublicCssIncludes = true
+                                                                                           RenderPublicCssIncludes = false
                                                                                        });
 
             return PartialView(model);
@@ -67,6 +68,17 @@ namespace BetterCms.Module.Root.Controllers
                                                                                            RenderPublicCssIncludes = true
                                                                                        });
 
+            return PartialView("RenderStyleSheetIncludes", model);
+        } 
+
+        public ActionResult RenderModuleStyleSheetIncludes(Type moduleDescriptorType)
+        {
+            var model = GetCommand<GetStyleSheetsToRenderCommand>().ExecuteCommand(new GetStyleSheetsToRenderRequest
+                                                                                       {
+                                                                                           RenderPrivateCssIncludes = true,
+                                                                                           RenderPublicCssIncludes = true,
+                                                                                           ModuleDescriptorType = moduleDescriptorType
+                                                                                       });
             return PartialView("RenderStyleSheetIncludes", model);
         } 
     }
