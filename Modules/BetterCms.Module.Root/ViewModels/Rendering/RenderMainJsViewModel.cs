@@ -46,7 +46,7 @@ namespace BetterCms.Module.Root.ViewModels.Rendering
         /// <value>
         /// The version.
         /// </value>
-        public Version Version { get; set; }
+        public string Version { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

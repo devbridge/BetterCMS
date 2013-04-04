@@ -298,16 +298,21 @@ define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.content
                     widgetContainer = self.parents(selectors.widgetContainerBlock),
                     widgetId = widgetContainer.data('id'),
                     widgetVersion = widgetContainer.data('version'),
-                    widgetName = widgetContainer.find(selectors.widgetName).text();
+                    widgetName = widgetContainer.find(selectors.widgetName).text(),
+                    onComplete = function (data) {
+                        messages.refreshBox(widgetContainer, data);
+                        widgetContainer.hideLoading();
+                    };
 
                 widgets.deleteWidget(widgetId, widgetVersion, widgetName,
-                    function(data) {
-                        messages.refreshBox(widgetContainer, data);
-                        pagesContent.updateWidgetCategoryList(dialog);
+                    function() {
+                        widgetContainer.showLoading();
                     },
                     function(data) {
-                        messages.refreshBox(widgetContainer, data);
-                    });
+                        onComplete(data);
+                        pagesContent.updateWidgetCategoryList(dialog);
+                    },
+                    onComplete);
             });
 
             container.find(selectors.widgetEditButtons).on('click', function () {

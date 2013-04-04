@@ -353,18 +353,11 @@ define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepic
         /**
         * Deletes widget.
         */
-        widgets.deleteWidget = function (row, onDeleteCallback, onErrorCallback) {
-            var widgetId = row.data('id'),
-                widgetVersion = row.data('version'),
-                widgetName = row.find(selectors.widgetNameCell).html(),
-                url = $.format(links.deleteWidgetUrl, widgetId, widgetVersion),
+        widgets.deleteWidget = function (widgetId, widgetVersion, widgetName, onBeforeDelete, onDeleteCallback, onErrorCallback) {
+            var url = $.format(links.deleteWidgetUrl, widgetId, widgetVersion),
                 message = $.format(globalization.deleteWidgetConfirmMessage, widgetName),
-                messageDiv = row.find(selectors.widgetsRowDeleteMessage),
-                elementsToHide = row.find(selectors.widgetsRowDeleteElementsToHide),
+                
                 onDeleteCompleted = function(json) {
-                    messageDiv.html('');
-                    messageDiv.hide();
-                    elementsToHide.show();
                     if (json.Success && $.isFunction(onDeleteCallback)) {
                         onDeleteCallback(json);
                     } else if (!json.Success && $.isFunction(onErrorCallback)) {
@@ -375,9 +368,7 @@ define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepic
                 modal.confirm({
                     content: message,
                     onAccept: function () {
-                        elementsToHide.hide();
-                        messageDiv.show();
-                        messageDiv.html(globalization.deletingMessage);
+                        onBeforeDelete();
 
                         $.ajax({
                             type: 'POST',
@@ -528,18 +519,34 @@ define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepic
         * Deletes widget from site settings widgets list.
         */
         function deleteSiteSettingsWidget(container, self) {
-            var row = self.parents(selectors.widgetParentRow);
-
-            widgets.deleteWidget(row, function(data) {
+            var row = self.parents(selectors.widgetParentRow),
+                widgetId = row.data('id'),
+                widgetVersion = row.data('version'),
+                widgetName = row.find(selectors.widgetNameCell).html(),
+                messageDiv = row.find(selectors.widgetsRowDeleteMessage),
+                elementsToHide = row.find(selectors.widgetsRowDeleteElementsToHide),
+                onComplete = function(data) {
+                    messageDiv.html('');
+                    messageDiv.hide();
+                    elementsToHide.show();
+                    
                     messages.refreshBox(row, data);
+                };
+
+            widgets.deleteWidget(widgetId, widgetVersion, widgetName,
+                function () {
+                    elementsToHide.hide();
+                    messageDiv.show();
+                    messageDiv.html(globalization.deletingMessage);
+                },
+                function (data) {
+                    onComplete(data);
                     if (data.Success) {
                         row.remove();
                         grid.showHideEmptyRow(container);
                     }
                 },
-                function(data) {
-                    messages.refreshBox(row, data);
-                }
+                onComplete
             );
         };
         
