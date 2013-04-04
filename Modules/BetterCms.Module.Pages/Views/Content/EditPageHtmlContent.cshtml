@@ -23,6 +23,8 @@
             {  
                 @Html.Partial("Partial/EditHtmlContent", Model)
                 @Html.HiddenFor(model => model.Id, new { @id = "bcmsPageContentId"})
+                @Html.HiddenFor(model => model.Version)
+                @Html.HiddenFor(model => model.ContentVersion, new { @id = "bcmsPageContentVersion"})
                 @Html.HiddenFor(model => model.ContentId, new { @id = "bcmsContentId"})
                 @Html.HiddenFor(model => model.PageId)
                 @Html.HiddenFor(model => model.RegionId, new { @id = "bcmsContentToRegionId" })                

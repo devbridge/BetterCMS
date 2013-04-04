@@ -28,7 +28,7 @@ namespace BetterCms.Module.Pages.Commands.SaveTag
         {
             Tag tag;
 
-            var tagName = Repository.FirstOrDefault<Tag>(c => c.Name == tagItem.Name);
+            var tagName = Repository.FirstOrDefault<Tag>(c => c.Name == tagItem.Name.Trim());
             if (tagName != null && tagName.Id != tagItem.Id)
             {
                 var message = string.Format(PagesGlobalization.SaveTag_TagExists_Message, tagItem.Name);
@@ -47,7 +47,7 @@ namespace BetterCms.Module.Pages.Commands.SaveTag
             }
 
             tag.Version = tagItem.Version;
-            tag.Name = tagItem.Name;
+            tag.Name = tagItem.Name.Trim();
 
             Repository.Save(tag);                       
             UnitOfWork.Commit();

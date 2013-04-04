@@ -183,7 +183,7 @@ define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', '
         ko.applyBindings(blogViewModel, dialog.container.find(selectors.firstForm).get(0));
         
         dialog.container.find(selectors.destroyDraftVersionLink).on('click', function () {
-            history.destroyDraftVersion(data.ContentId, dialog.container, function () {
+            history.destroyDraftVersion(data.ContentId, data.ContentVersion, dialog.container, function () {
                 var onSave = postSuccess,
                     onClose = null;
 

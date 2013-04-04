@@ -1631,7 +1631,7 @@ a.bcms-btn-close {
     background-color: #f5f5f5;
     border: 1px solid #c6c6c6;
     box-shadow: 0 0 1px 1px #292929;
-    width: 170px;
+    width: 215px;
     min-height: 170px;
     margin-left: -116px;
 }
@@ -2515,3 +2515,8 @@ a.ui-state-default:hover {
             text-align: right;
             text-decoration: none;
         }
+
+/*cursor: pointer*/
+.bcms-pointer {
+    cursor: pointer;
+}

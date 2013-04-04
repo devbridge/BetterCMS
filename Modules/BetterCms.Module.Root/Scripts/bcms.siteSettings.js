@@ -167,6 +167,8 @@ define('bcms.siteSettings', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.dynamicC
                     done: self.onContentAvailable
                 });
             }
+
+            return true;
         };
 
         self.getLoaderContainer = function () {

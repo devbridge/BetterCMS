@@ -70,7 +70,7 @@
         </div>
         
         @Html.HiddenFor(model => model.Id, new { @id = "bcmsContentId" })
-        @Html.HiddenFor(model => model.Version)
+        @Html.HiddenFor(model => model.Version, new { @id = "bcmsContentVersion" })
         @Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status" })
         @Html.HiddenFor(modal => modal.PreviewOnPageContentId, new { @class = "bcms-preview-page-content-id" })
         @Html.HiddenSubmit()

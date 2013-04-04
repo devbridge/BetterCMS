@@ -56,9 +56,9 @@
         <!-- /ko -->
 
         <div data-bind="foreach: medias()">
-            <div data-bind="click: openMedia.bind($data, $root), event: { contextmenu: contextMenu.show }, css: rowClassNames()">
+            <div data-bind="click: openMedia.bind($data, $root), clickBubble: false, event: { contextmenu: contextMenu.show }, css: rowClassNames()">
                 
-                <div class="bcms-media-context bcms-layer" data-bind="click: stopEvent, attr: { id: contextMenu.domId }">
+                <div class="bcms-media-context bcms-layer" data-bind="click: stopEvent, clickBubble: false, attr: { id: contextMenu.domId }">
                     <a class="bcms-btn-close">@RootGlobalization.Button_Close</a>
                     <!--  ko if: isProcessing() -->
                     @MediaGlobalization.MediaManager_FileStillProcessing_Message
@@ -68,35 +68,35 @@
                     <!-- /ko -->
                     <!--  ko if: !isProcessing() && !isFailed() && !isDeleting() -->
                     <!-- ko if: isImage() -->
-                    <a class="bcms-media-content-link" data-bind="click: previewImage.bind($data, $root)">@MediaGlobalization.MediaManager_ButtonPreviewImage</a>
+                    <a class="bcms-media-content-link" data-bind="click: previewImage.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonPreviewImage</a>
                     <!-- /ko -->
                     <!-- ko if: isFolder() -->
-                    <a class="bcms-media-content-link" data-bind="click: openMedia.bind($data, $root)">@RootGlobalization.Button_Open</a>
+                    <a class="bcms-media-content-link" data-bind="click: openMedia.bind($data, $root), clickBubble: false">@RootGlobalization.Button_Open</a>
                     <!-- /ko -->
                     @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
                     {
-                        <a class="bcms-media-content-link" data-bind="click: renameMedia.bind($data, $root)">@RootGlobalization.Button_Rename</a>
+                        <a class="bcms-media-content-link" data-bind="click: renameMedia.bind($data, $root), clickBubble: false">@RootGlobalization.Button_Rename</a>
                         <!-- ko if: canBeEdited() -->
-                        <a class="bcms-media-content-link" data-bind="click: editMedia.bind($data, $root)">@RootGlobalization.Button_Edit</a>
+                        <a class="bcms-media-content-link" data-bind="click: editMedia.bind($data, $root), clickBubble: false">@RootGlobalization.Button_Edit</a>
                         <!-- /ko -->
                     }
                     <!-- ko if: canBeDownloaded() -->
-                    <a class="bcms-media-content-link" data-bind="click: downloadMedia">@MediaGlobalization.MediaManager_ButtonDownload</a>
+                    <a class="bcms-media-content-link" data-bind="click: downloadMedia, clickBubble: false">@MediaGlobalization.MediaManager_ButtonDownload</a>
                     <!-- /ko -->
                     <!-- ko if: isImage() && $root.canInsertMedia() -->
-                    <a class="bcms-media-content-link" data-bind="click: insertMedia.bind($data, $root)">@MediaGlobalization.MediaManager_ButtonInsertImage</a>
+                    <a class="bcms-media-content-link" data-bind="click: insertMedia.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonInsertImage</a>
                     <!-- /ko -->
                     <!-- ko if: isImage() && $root.canInsertMediaWithOptions() -->
-                    <a class="bcms-media-content-link" data-bind="click: insertMediaWithOptions.bind($data, $root)">@MediaGlobalization.MediaManager_ButtonInsertImageWithOptions</a>
+                    <a class="bcms-media-content-link" data-bind="click: insertMediaWithOptions.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonInsertImageWithOptions</a>
                     <!-- /ko -->
                     <!-- ko if: !isFolder() && !isImage() && $root.canInsertMedia() -->
-                    <a class="bcms-media-content-link" data-bind="click: insertMedia.bind($data, $root)">@MediaGlobalization.MediaManager_ButtonInsertFile</a>
+                    <a class="bcms-media-content-link" data-bind="click: insertMedia.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonInsertFile</a>
                     <!-- /ko -->
                     <!-- /ko -->
                     @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.DeleteContent))
                     {
                         <!--  ko if: !isProcessing() && !isDeleting() -->
-                        <a class="bcms-media-content-link" data-bind="click: deleteMedia.bind($data, $root)">@RootGlobalization.Button_Delete</a>
+                        <a class="bcms-media-content-link" data-bind="click: deleteMedia.bind($data, $root), clickBubble: false">@RootGlobalization.Button_Delete</a>
                         <!-- /ko -->
                     }
                 </div>
@@ -128,7 +128,7 @@
                         @{
                             var attributes = new Dictionary<string, object>
                             {
-                                {"data-bind", "value: name, valueUpdate: 'afterkeydown', enterPress: saveMedia.bind($data, $root), escPress: cancelEditMedia.bind($data, $root), hasfocus: isActive(), event: {blur: blurMediaField.bind($data, $root)}, attr: {id: nameDomId, name: nameDomId}, click: stopEvent "},
+                                {"data-bind", "value: name, valueUpdate: 'afterkeydown', enterPress: saveMedia.bind($data, $root), escPress: cancelEditMedia.bind($data, $root), hasfocus: isActive(), event: {blur: blurMediaField.bind($data, $root)}, attr: {id: nameDomId, name: nameDomId}, click: stopEvent, clickBubble: false "},
                                 {"class", "bcms-grid-input"}
                             };
                             attributes = Html.MergeValidationAttributes(m => m.Name, attributes);
@@ -138,19 +138,19 @@
                         }
                     </div>
                     <div class="bcms-media-inner-controls">
-                        <div class="bcms-btn-small" data-bind="click: saveMedia.bind($data, $root)">@RootGlobalization.Button_Save</div>
-                        <div class="bcms-btn-links-small" data-bind="click: cancelEditMedia.bind($data, $root)">@RootGlobalization.Button_Cancel</div>
+                        <div class="bcms-btn-small" data-bind="click: saveMedia.bind($data, $root), clickBubble: false">@RootGlobalization.Button_Save</div>
+                        <div class="bcms-btn-links-small" data-bind="click: cancelEditMedia.bind($data, $root), clickBubble: false">@RootGlobalization.Button_Cancel</div>
                     </div>
                     @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
                     {
                         <!--  ko if: !isProcessing() && !isFailed() && !isDeleting() -->
-                        <a class="bcms-icn-edit" data-bind="click: editMedia.bind($data, $root)">@RootGlobalization.Button_Edit</a>
+                        <a class="bcms-icn-edit" data-bind="click: editMedia.bind($data, $root), clickBubble: false">@RootGlobalization.Button_Edit</a>
                         <!-- /ko -->
                     }
                     @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.DeleteContent))
                     {
                         <!--  ko if: !isProcessing() && !isDeleting() -->
-                        <a class="bcms-icn-delete" data-bind="click: deleteMedia.bind($data, $root)">@RootGlobalization.Button_Delete</a>
+                        <a class="bcms-icn-delete" data-bind="click: deleteMedia.bind($data, $root), clickBubble: false">@RootGlobalization.Button_Delete</a>
                         <!-- /ko -->
                     }
                 </div>

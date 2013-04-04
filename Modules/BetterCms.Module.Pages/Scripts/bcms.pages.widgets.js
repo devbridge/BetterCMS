@@ -41,6 +41,7 @@ define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepic
                 desirableStatus: '#bcmsWidgetDesirableStatus',
                 destroyDraftVersionLink: '.bcms-messages-draft-destroy',
                 contentId: '#bcmsContentId',
+                contentVersion: '#bcmsContentVersion',
                 
                 messagesContainer: "#bcms-edit-widget-messages",
 
@@ -217,6 +218,11 @@ define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepic
                             initializeEditServerControlWidgetForm(dialog, availablePreviewOnPageContentId, onSaveCallback);
                         },
 
+                        beforePost: function (form) {
+                            editor.resetAutoGenerateNameId();
+                            editor.setInputNames(form);
+                        },
+
                         postSuccess: onSaveCallback
                     });
                 }
@@ -244,9 +250,10 @@ define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepic
             });
             
             dialog.container.find(selectors.destroyDraftVersionLink).on('click', function () {
-                var contentId = dialog.container.find(selectors.contentId).val();
+                var contentId = dialog.container.find(selectors.contentId).val(),
+                    contentVersion = dialog.container.find(selectors.contentVersion).val();
 
-                contentHistory.destroyDraftVersion(contentId, dialog.container, function (publishedId, json) {
+                contentHistory.destroyDraftVersion(contentId, contentVersion, dialog.container, function (publishedId, json) {
                     dialog.close();
 
                     var onCloseCallback = function () {
@@ -308,9 +315,10 @@ define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepic
             });
             
             dialog.container.find(selectors.destroyDraftVersionLink).on('click', function () {
-                var contentId = dialog.container.find(selectors.contentId).val();
+                var contentId = dialog.container.find(selectors.contentId).val(),
+                    contentVersion = dialog.container.find(selectors.contentVersion).val();
 
-                contentHistory.destroyDraftVersion(contentId, dialog.container, function (publishedId, json) {
+                contentHistory.destroyDraftVersion(contentId, contentVersion, dialog.container, function (publishedId, json) {
                     dialog.close();
 
                     var onCloseCallback = function () {

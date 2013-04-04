@@ -6,6 +6,7 @@ using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
 
 using NHibernate.Criterion;
+using NHibernate.SqlCommand;
 
 namespace BetterCms.Module.Pages.Services
 {
@@ -36,24 +37,32 @@ namespace BetterCms.Module.Pages.Services
         /// <param name="newCreatedTags">The new created tags.</param>
         public void SavePageTags(PageProperties page, IList<string> tags, out IList<Tag> newCreatedTags)
         {
+            var trimmedTags = new List<string>();
+            if (tags != null)
+            {
+                foreach (var tag in tags)
+                {
+                    trimmedTags.Add(tag.Trim());
+                }
+            }
+
             newCreatedTags = new List<Tag>();
             
             Tag tagAlias = null;
 
             // Tags merge:
-            IList<PageTag> pageTags = unitOfWork.Session.QueryOver<PageTag>()
-                                                    .Where(tag => !tag.IsDeleted && tag.Page.Id == page.Id)
-                                                    .Fetch(tag => tag.Tag).Eager
-                                                    .List<PageTag>();
+            IList<PageTag> pageTags = unitOfWork.Session
+                .QueryOver<PageTag>()
+                .Where(t => !t.IsDeleted && t.Page.Id == page.Id)
+                .JoinQueryOver<Tag>(t => t.Tag, JoinType.InnerJoin)
+                .Where(t => !t.IsDeleted)
+                .List<PageTag>();
 
             // Remove deleted tags:
             for (int i = pageTags.Count - 1; i >= 0; i--)
             {
                 string tag = null;
-                if (tags != null)
-                {
-                    tag = tags.FirstOrDefault(s => s.ToLower() == pageTags[i].Tag.Name.ToLower());
-                }
+                tag = trimmedTags.FirstOrDefault(s => s.ToLower() == pageTags[i].Tag.Name.ToLower());
 
                 if (tag == null)
                 {
@@ -62,46 +71,44 @@ namespace BetterCms.Module.Pages.Services
             }
 
             // Add new tags:
-            if (tags != null)
+            List<string> tagsInsert = new List<string>();
+            foreach (string tag in trimmedTags)
             {
-                List<string> tagsInsert = new List<string>();
-                foreach (string tag in tags)
+                PageTag existPageTag = pageTags.FirstOrDefault(pageTag => pageTag.Tag.Name.ToLower() == tag.ToLower());
+                if (existPageTag == null)
                 {
-                    PageTag existPageTag = pageTags.FirstOrDefault(pageTag => pageTag.Tag.Name.ToLower() == tag.ToLower());
-                    if (existPageTag == null)
-                    {
-                        tagsInsert.Add(tag);
-                    }
+                    tagsInsert.Add(tag);
                 }
+            }
 
-                if (tagsInsert.Count > 0)
+            if (tagsInsert.Count > 0)
+            {
+                // Get existing tags:
+                IList<Tag> existingTags = unitOfWork.Session.QueryOver(() => tagAlias)
+                                                            .Where(t => !t.IsDeleted)
+                                                            .Where(Restrictions.In(Projections.Property(() => tagAlias.Name), tagsInsert))
+                                                            .List<Tag>();
+
+                foreach (string tag in tagsInsert)
                 {
-                    // Get existing tags:
-                    IList<Tag> existingTags = unitOfWork.Session.QueryOver(() => tagAlias)
-                                                                .Where(Restrictions.In(Projections.Property(() => tagAlias.Name), tagsInsert))
-                                                                .List<Tag>();
+                    PageTag pageTag = new PageTag();
+                    pageTag.Page = page;
 
-                    foreach (string tag in tagsInsert)
+                    Tag existTag = existingTags.FirstOrDefault(t => t.Name.ToLower() == tag.ToLower());
+                    if (existTag != null)
                     {
-                        PageTag pageTag = new PageTag();
-                        pageTag.Page = page;
-
-                        Tag existTag = existingTags.FirstOrDefault(t => t.Name.ToLower() == tag.ToLower());
-                        if (existTag != null)
-                        {
-                            pageTag.Tag = existTag;
-                        }
-                        else
-                        {
-                            Tag newTag = new Tag();
-                            newTag.Name = tag;
-                            unitOfWork.Session.SaveOrUpdate(newTag);
-                            newCreatedTags.Add(newTag);
-                            pageTag.Tag = newTag;
-                        }
-
-                        unitOfWork.Session.SaveOrUpdate(pageTag);
+                        pageTag.Tag = existTag;
                     }
+                    else
+                    {
+                        Tag newTag = new Tag();
+                        newTag.Name = tag;
+                        unitOfWork.Session.SaveOrUpdate(newTag);
+                        newCreatedTags.Add(newTag);
+                        pageTag.Tag = newTag;
+                    }
+
+                    unitOfWork.Session.SaveOrUpdate(pageTag);
                 }
             }
         }
@@ -115,12 +122,13 @@ namespace BetterCms.Module.Pages.Services
         /// </returns>
         public IList<string> GetPageTagNames(System.Guid pageId)
         {
-            Root.Models.Tag tagAlias = null;
+            Tag tagAlias = null;
 
             return unitOfWork.Session
                 .QueryOver<PageTag>()
-                .Where(w => w.Page.Id == pageId && !w.IsDeleted)
                 .JoinAlias(f => f.Tag, () => tagAlias)
+                .Where(() => !tagAlias.IsDeleted)
+                .Where(w => w.Page.Id == pageId && !w.IsDeleted)
                 .SelectList(select => select.Select(() => tagAlias.Name))
                 .List<string>();
         }
