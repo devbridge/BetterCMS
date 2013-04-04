@@ -51,7 +51,7 @@ define('bcms.tabs', ['bcms.jquery', 'bcms'], function ($, bcms) {
                 container = this.container;
 
             container.find(selectors.tabLink).click(function () {
-                var tabId = $(this).attr('name');
+                var tabId = $(this).data('name');
                 instance.selectTab(tabId);
                 return false;
             });
@@ -69,19 +69,19 @@ define('bcms.tabs', ['bcms.jquery', 'bcms'], function ($, bcms) {
             }
 
             this.container.find(selectors.activeTabLink).removeClass(classes.activeTabLink);
-            this.container.find('[name="' + tabId + '"]').addClass(classes.activeTabLink);
+            this.container.find('[data-name="' + tabId + '"]').addClass(classes.activeTabLink);
 
             this.container.find(selectors.tabContent).hide();
             this.container.find(tabId).show();
         },
 
         selectFirstTab: function () {
-            var tabId = this.container.find(selectors.firstTabLink).attr('name');
+            var tabId = this.container.find(selectors.firstTabLink).data('name');
             this.selectTab(tabId);
         },
 
         selectTabOfElement: function (element) {
-            var tabId = $(element).parents(selectors.tabContent).attr('name');
+            var tabId = $(element).parents(selectors.tabContent).attr('id');
             this.selectTab(tabId);
         }
     };
