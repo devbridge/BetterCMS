@@ -1,6 +1,4 @@
-﻿using System;
-
-using BetterCms.Module.Root.ViewModels;
+﻿using BetterCms.Module.Root.ViewModels;
 
 namespace BetterCms.Module.Root.Models.Sidebar
 {
@@ -12,7 +10,7 @@ namespace BetterCms.Module.Root.Models.Sidebar
 
         public PageProjectionsViewModel BodyProjections { get; set; }
 
-        public Version Version { get; set; }
+        public string Version { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

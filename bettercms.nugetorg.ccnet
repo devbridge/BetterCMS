@@ -1,0 +1,131 @@
+﻿<project>
+
+  <parameters>
+    <textParameter>
+      <name>CmsBranch</name>
+      <display>Source code branch</display>
+      <required>true</required>
+      <default>master</default>
+      <minimum>2</minimum>
+    </textParameter>
+
+    <textParameter>
+      <name>CmsVersion</name>
+      <display>3 digits version to apply (ex. 1.0.5) or default 1.0</display>
+      <description>A version to use for the BetterCMS release tagging.</description>
+      <required>true</required>
+      <default>1.0</default>
+      <minimum>5</minimum>
+      <maximum>11</maximum>
+    </textParameter>
+
+    <selectParameter>
+      <name>CmsMilestone</name>
+      <display>Milestone</display>
+      <allowedValues>
+        <value name="None"></value>
+        <value name="Alpha">.Alpha</value>
+        <value name="Beta">.Beta</value>
+        <value name="RC">.RC</value>
+      </allowedValues>
+      <default>None</default>
+    </selectParameter>
+
+    <booleanParameter>
+      <name>CmsBuildType</name>
+      <display>Build Type</display>
+      <true name="Prerelease">-pre</true>
+      <false name="Release"></false>
+      <default>Prerelease</default>
+      <required>true</required>
+    </booleanParameter>
+
+  </parameters>
+
+  <name>BetterCMS (nuget.org)</name>
+  <category>BetterCMS</category>
+  <workingDirectory>$(buildsFolder)\BetterCMS_NUGETORG\Code</workingDirectory>
+  <artifactDirectory>$(buildsFolder)\BetterCMS_NUGETORG\Artifact</artifactDirectory>
+  <webURL>$(ccnetUrl)/server/local/project/BetterCMS%20%28nuget.org%29/ViewProjectReport.aspx</webURL>
+
+  <modificationDelaySeconds>30</modificationDelaySeconds>
+
+  <labeller type="defaultlabeller">
+    <initialBuildLabel>0</initialBuildLabel>
+    <prefix>$[CmsVersion].</prefix>
+    <incrementOnFailure>false</incrementOnFailure>
+    <labelFormat>0</labelFormat>
+  </labeller>
+
+  <cb:define CmsBuildTagName="{{0}}$[CmsMilestone]$[CmsBuildType]" />
+  <cb:define CmsBuildTagMessage="Tagging build with a {{0}}$[CmsMilestone]$[CmsBuildType] version." />
+
+  <sourcecontrol type="git">
+    <repository>git@github.com:devbridge/BetterCMS.git</repository>
+    <branch>$[CmsBranch]</branch>
+    <autoGetSource>true</autoGetSource>
+    <fetchSubmodules>true</fetchSubmodules>
+    <executable>$(gitPath)</executable>
+    <tagOnSuccess>true</tagOnSuccess>
+    <commitBuildModifications>false</commitBuildModifications>
+    <commitUntrackedFiles>false</commitUntrackedFiles>
+    <workingDirectory>$(buildsFolder)\BetterCMS_NUGETORG\Code</workingDirectory>
+    <tagCommitMessage>$(CmsBuildTagMessage)</tagCommitMessage>
+    <tagNameFormat>$(CmsBuildTagName)</tagNameFormat>
+    <timeout>60000</timeout>
+  </sourcecontrol>
+
+  <triggers>
+    <!-- BUILD STARTS MANUALY! -->
+  </triggers>
+
+  <tasks>
+    <exec description="Update assembly info file with build version.">
+      <executable>CCNet.DevBridge.Extension.exe</executable>
+      <buildArgs>UpdateAssemblyInfo $(buildsFolder)\BetterCMS_NUGETORG\Code\SharedAssemblyInfo.cs $[$CCNetLabel] $[$CCNetLabel]$[CmsMilestone]$[CmsBuildType]</buildArgs>
+      <buildTimeoutSeconds>300</buildTimeoutSeconds>
+    </exec>
+
+    <exec description="Build BetterCMS solution.">
+      <executable>$(msbuild4Path)</executable>
+      <buildArgs>$(buildsFolder)\BetterCMS_NUGETORG\Code\BetterCMS.sln /nologo /t:Rebuild /p:Configuration=Release</buildArgs>
+      <buildTimeoutSeconds>300</buildTimeoutSeconds>
+    </exec>
+
+    <exec description="Run BetterCms.Core.Tests tests.">
+      <executable>$(nunitConsole)</executable>
+      <buildArgs>$(buildsFolder)\BetterCMS_NUGETORG\Code\Tests\BetterCms.Core.Tests\bin\Release\BetterCms.Core.Tests.dll /xml:$(buildsFolder)\BetterCMS_NUGETORG\Artifact\BetterCms.Core.Tests-Results.xml</buildArgs>
+    </exec>
+
+    <exec description="Publish BetterCms resources to Amazon S3 CDN enabled cloud.">
+      <executable>$(buildsFolder)\BetterCMS_NUGETORG\Tools\AmazonS3\s3</executable>
+      <buildArgs>put bettercms/$[$CCNetLabel]$[CmsMilestone]$[CmsBuildType]/ $(buildsFolder)\BetterCMS_NUGETORG\Code\Build\BetterCms.NugetPackage\resources\*.* /sub /acl:public-read /cacheControl:public,max-age=31536000 /noGui /toLower</buildArgs>
+      <buildTimeoutSeconds>600</buildTimeoutSeconds>
+      <successExitCodes>0</successExitCodes>
+    </exec>
+
+    <exec description="Publish BetterCMS to NuGet.org">
+      <executable>$(buildsFolder)\BetterCMS_NUGETORG\Code\.nuget\nuget</executable>
+      <buildArgs>push $(buildsFolder)\BetterCMS_NUGETORG\Code\Build\BetterCms.NugetPackage\bin\Release\BetterCMS.$[$CCNetLabel]-pre.nupkg</buildArgs>
+      <buildTimeoutSeconds>300</buildTimeoutSeconds>
+    </exec>
+
+    <exec description="Clean up project.">
+      <executable>$(msbuild4Path)</executable>
+      <buildArgs>$(buildsFolder)\BetterCMS_NUGETORG\Code\BetterCms.sln /nologo /t:Clean</buildArgs>
+      <buildTimeoutSeconds>300</buildTimeoutSeconds>
+    </exec>
+  </tasks>
+
+  <publishers>
+    <merge>
+      <files>
+        <file>$(buildsFolder)\BetterCMS_NUGETORG\Artifact\*-results.xml</file>
+      </files>
+    </merge>
+    <xmllogger />
+    <statistics />
+    <modificationHistory onlyLogWhenChangesFound="true" />
+  </publishers>
+
+</project>
