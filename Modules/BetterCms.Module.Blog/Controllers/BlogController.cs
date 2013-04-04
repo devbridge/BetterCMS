@@ -96,7 +96,7 @@ namespace BetterCms.Module.Blog.Controllers
             var response = GetCommand<SaveBlogPostCommand>().ExecuteCommand(model);
             if (response != null)
             {
-                if (model.DesirableStatus != ContentStatus.Preview)
+                if (model.DesirableStatus != ContentStatus.Preview && model.Id.HasDefaultValue())
                 {
                     Messages.AddSuccess(BlogGlobalization.CreatePost_CreatedSuccessfully_Message);
                 }
