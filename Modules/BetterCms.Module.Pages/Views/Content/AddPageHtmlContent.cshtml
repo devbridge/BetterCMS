@@ -9,8 +9,8 @@
 @model BetterCms.Module.Pages.ViewModels.Content.PageContentViewModel
 
 <div class="bcms-tab-header">
-    <a class="bcms-tab bcms-tab-active" href="#bcms-tab-1">@PagesGlobalization.AddPageContent_RegularContentTab_Title</a>
-    <a class="bcms-tab" href="#bcms-tab-2">@PagesGlobalization.AddPageContent_WidgetTab_Title</a>
+    <a class="bcms-tab bcms-tab-active" data-name="#bcms-tab-1">@PagesGlobalization.AddPageContent_RegularContentTab_Title</a>
+    <a class="bcms-tab" data-name="#bcms-tab-2">@PagesGlobalization.AddPageContent_WidgetTab_Title</a>
 </div>
 @{ ViewBag.CanEdit = (ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent); }
 <div class="bcms-scroll-window">
