@@ -15,7 +15,7 @@ define('bcms.tabs', ['bcms.jquery', 'bcms'], function ($, bcms) {
         selectors = {
             tabContent: '.bcms-tab-single',
             firstTabContent: '.bcms-tab-single:first',
-            tabLink: 'a.bcms-tab',
+            tabLink: '.bcms-tab',
             firstTabLink: 'a.bcms-tab:first',
             activeTabLink: '.bcms-tab-active',
             tabsHeader: '.bcms-tab-header'
@@ -50,8 +50,8 @@ define('bcms.tabs', ['bcms.jquery', 'bcms'], function ($, bcms) {
             var instance = this,
                 container = this.container;
 
-            container.find(selectors.tabLink).on('click', function () {
-                var tabId = $(this).attr('href');
+            container.find(selectors.tabLink).click(function () {
+                var tabId = $(this).attr('name');
                 instance.selectTab(tabId);
                 return false;
             });
@@ -69,19 +69,19 @@ define('bcms.tabs', ['bcms.jquery', 'bcms'], function ($, bcms) {
             }
 
             this.container.find(selectors.activeTabLink).removeClass(classes.activeTabLink);
-            this.container.find('[href="' + tabId + '"]').addClass(classes.activeTabLink);
+            this.container.find('[name="' + tabId + '"]').addClass(classes.activeTabLink);
 
             this.container.find(selectors.tabContent).hide();
             this.container.find(tabId).show();
         },
 
         selectFirstTab: function () {
-            var tabId = this.container.find(selectors.firstTabLink).attr('href');
+            var tabId = this.container.find(selectors.firstTabLink).attr('name');
             this.selectTab(tabId);
         },
 
         selectTabOfElement: function (element) {
-            var tabId = $(element).parents(selectors.tabContent).attr('id');
+            var tabId = $(element).parents(selectors.tabContent).attr('name');
             this.selectTab(tabId);
         }
     };
