@@ -81,8 +81,8 @@
 
   <tasks>
     <exec description="Update assembly info file with build version.">
-      <executable>CCNet.DevBridge.Extension.exe</executable>
-      <buildArgs>UpdateAssemblyInfo $(buildsFolder)\BetterCMS_NUGETORG\Code\SharedAssemblyInfo.cs $[$CCNetLabel] $[$CCNetLabel]$[CmsMilestone]$[CmsBuildType]</buildArgs>
+      <executable>$(ccnetextensionsConsole)</executable>
+      <buildArgs>UpdateAssemblyInfo $(buildsFolder)\BetterCMS_NUGETORG\Code\SharedAssemblyInfo.cs $[$CCNetLabel] $[$CCNetLabel] $[$CCNetLabel]$[CmsMilestone]$[CmsBuildType]</buildArgs>
       <buildTimeoutSeconds>300</buildTimeoutSeconds>
     </exec>
 
@@ -106,7 +106,7 @@
 
     <exec description="Publish BetterCMS to NuGet.org">
       <executable>$(buildsFolder)\BetterCMS_NUGETORG\Code\.nuget\nuget</executable>
-      <buildArgs>push $(buildsFolder)\BetterCMS_NUGETORG\Code\Build\BetterCms.NugetPackage\bin\Release\BetterCMS.$[$CCNetLabel]-pre.nupkg</buildArgs>
+      <buildArgs>push $(buildsFolder)\BetterCMS_NUGETORG\Code\Build\BetterCms.NugetPackage\bin\Release\BetterCMS.$[$CCNetLabel]$[CmsMilestone]$[CmsBuildType].nupkg</buildArgs>
       <buildTimeoutSeconds>300</buildTimeoutSeconds>
     </exec>
 
