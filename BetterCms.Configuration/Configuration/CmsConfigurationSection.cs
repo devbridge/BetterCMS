@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Configuration;
+using System.Diagnostics;
+using System.Reflection;
 
 namespace BetterCms.Configuration
 {
@@ -22,7 +24,7 @@ namespace BetterCms.Configuration
         /// <summary>
         /// The version backing field.
         /// </summary>
-        private Version version;
+        private string version;
 
         #region Attributes
 
@@ -35,32 +37,32 @@ namespace BetterCms.Configuration
         [ConfigurationProperty(VersionAttribute, DefaultValue = null, IsRequired = false)]
         public string Version
         {
-            get { return Convert.ToString(this[VersionAttribute]); }
-            set { this[VersionAttribute] = value; }
-        }
-
-        /// <summary>
-        /// Gets the Better CMS version.
-        /// </summary>
-        /// <value>
-        /// The Better CMS version.
-        /// </value>
-        Version ICmsConfiguration.Version
-        {
             get
             {
-                if (version == null && !string.IsNullOrEmpty(Version))
+                if (string.IsNullOrEmpty(version))
                 {
-                    System.Version.TryParse(Version, out version);                    
+                    if (this[VersionAttribute] != null)
+                    {
+                        version = this[VersionAttribute].ToString();
+                    }
                 }
 
-                if (version == null)
+                if (string.IsNullOrEmpty(version))
                 {
-                    version = GetType().Assembly.GetName().Version;
+                    var assemblyInformationVersion = Attribute.GetCustomAttributes(GetType().Assembly, typeof(AssemblyInformationalVersionAttribute)); 
+                    if (assemblyInformationVersion.Length > 0)
+                    {
+                        version = ((AssemblyInformationalVersionAttribute)assemblyInformationVersion[0]).InformationalVersion;
+                    }
+                    else
+                    {
+                        version = GetType().Assembly.GetName().Version.ToString(4);
+                    }
                 }
 
                 return version;
             }
+            set { this[VersionAttribute] = value; }
         }
 
         /// <summary>
@@ -155,7 +157,7 @@ namespace BetterCms.Configuration
 
         #endregion
 
-        #region Child Nodes        
+        #region Child Nodes
         
         /// <summary>
         /// Gets or sets the configuration of CMS storage service.

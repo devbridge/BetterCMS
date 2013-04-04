@@ -119,7 +119,7 @@ namespace BetterCms.Core.Modules
                         const string versionTag = "{bcms.version}";
                         if (baseModulePath.Contains(versionTag))
                         {
-                            baseModulePath = baseModulePath.Replace(versionTag, string.Format("{0}.{1}.{2}", Configuration.Version.Major, Configuration.Version.Minor, Configuration.Version.Build));
+                            baseModulePath = baseModulePath.Replace(versionTag, Configuration.Version);
                         }
                     }
                     else

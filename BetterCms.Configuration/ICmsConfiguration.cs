@@ -14,7 +14,7 @@ namespace BetterCms
         /// <value>
         /// The Better CMS version.
         /// </value>
-        Version Version { get; }
+        string Version { get; }
 
         /// <summary>
         /// Gets a value indicating whether CMS should use minified resources (*.min.js and *.min.css).

@@ -69,6 +69,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Prerelease", "Prerelease", 
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Release", "Release", "{65E5AB5A-A7E3-428D-A80D-F7D7DC0F9A54}"
+	ProjectSection(SolutionItems) = preProject
+		bettercms.nugetorg.ccnet = bettercms.nugetorg.ccnet
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.NugetPackage", "Build\BetterCms.NugetPackage\BetterCms.NugetPackage.csproj", "{A5D7CC00-D8A7-4177-8432-86B10EEABAE8}"
 	ProjectSection(ProjectDependencies) = postProject

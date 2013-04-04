@@ -1,5 +1,8 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Reflection;
+
+using BetterCms.Core.Environment.Host;
 
 namespace BetterCms.NugetPackage
 {
@@ -17,16 +20,14 @@ namespace BetterCms.NugetPackage
             var nugetTemplateFile = args[0];    // BetterCMS.nuspec.template;
             var nugetFile = args[1];            // BetterCMS.nuspec;
 
-            const string sufix = "-pre";
-            var version = Assembly.GetEntryAssembly().GetName().Version;
-            var textVersion = string.Format("{0}.{1}.{2}{3}", version.Major, version.Minor, version.Build, sufix);
+            var version = GetVersion();
 
             using (StreamReader sr = new StreamReader(nugetTemplateFile))
             {
                 try
                 {
                     var templateFile = sr.ReadToEnd();
-                    templateFile = templateFile.Replace("@BetterCMSVersion@", textVersion);
+                    templateFile = templateFile.Replace("@BetterCMSVersion@", version);
 
                     using (StreamWriter sw = new StreamWriter(nugetFile))
                     {
@@ -45,6 +46,18 @@ namespace BetterCms.NugetPackage
                     sr.Close();
                 }
             }
+        }
+
+        private static string GetVersion()
+        {
+            var cmsCoreAssembly = typeof(ICmsHost).Assembly;
+            var assemblyInformationVersion = Attribute.GetCustomAttributes(cmsCoreAssembly, typeof(AssemblyInformationalVersionAttribute));
+            if (assemblyInformationVersion.Length > 0)
+            {
+                return ((AssemblyInformationalVersionAttribute)assemblyInformationVersion[0]).InformationalVersion;
+            }
+
+            return cmsCoreAssembly.GetName().Version.ToString(4);
         }
     }
 }
