@@ -85,8 +85,8 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
             {
                 drafts = Repository
                     .AsQueryable<Root.Models.Widget>()
-                    .Fetch(c => c.Category)
                     .Where(c => ids.Contains(c.Original.Id) && c.Status == ContentStatus.Draft && !c.IsDeleted)
+                    .Fetch(c => c.Category)
                     .ToList();
             }
             else
