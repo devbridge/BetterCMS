@@ -17,12 +17,12 @@ namespace BetterCms.Module.Pages.ViewModels.SiteSettings
         public Guid Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the compare id.
+        /// Gets or sets the original id.
         /// </summary>
         /// <value>
-        /// The compare id.
+        /// The original id.
         /// </value>
-        public Guid CompareId { get; set; } // Used only for selection.
+        public Guid OriginalId { get; set; }
 
         /// <summary>
         /// Gets or sets the entity version.
@@ -31,6 +31,15 @@ namespace BetterCms.Module.Pages.ViewModels.SiteSettings
         /// The entity version.
         /// </value>
         public int Version { get; set; }
+
+
+        /// <summary>
+        /// Gets or sets the original version.
+        /// </summary>
+        /// <value>
+        /// The original version.
+        /// </value>
+        public int OriginalVersion { get; set; }
 
         /// <summary>
         /// Gets or sets the widget name.

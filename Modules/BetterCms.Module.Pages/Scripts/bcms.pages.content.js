@@ -296,8 +296,8 @@ define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.content
             container.find(selectors.widgetDeleteButtons).on('click', function () {
                 var self = $(this),
                     widgetContainer = self.parents(selectors.widgetContainerBlock),
-                    widgetId = widgetContainer.data('id'),
-                    widgetVersion = widgetContainer.data('version'),
+                    widgetId = widgetContainer.data('originalId'),
+                    widgetVersion = widgetContainer.data('originalVersion'),
                     widgetName = widgetContainer.find(selectors.widgetName).text(),
                     onComplete = function (data) {
                         messages.refreshBox(widgetContainer, data);

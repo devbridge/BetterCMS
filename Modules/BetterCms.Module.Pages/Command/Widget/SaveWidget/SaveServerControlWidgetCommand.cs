@@ -66,9 +66,11 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
             return new SaveWidgetResponse
                        {
                            Id = widget.Id,
+                           OriginalId = widget.Id,
                            CategoryName = widget.Category != null ? widget.Category.Name : null,
                            WidgetName = widget.Name,
                            Version = widget.Version,
+                           OriginalVersion = widget.Version,
                            WidgetType = WidgetType.ServerControl.ToString(),
                            IsPublished = widget.Status == ContentStatus.Published,
                            HasDraft = widget.Status == ContentStatus.Draft || widget.History != null && widget.History.Any(f => f.Status == ContentStatus.Draft),

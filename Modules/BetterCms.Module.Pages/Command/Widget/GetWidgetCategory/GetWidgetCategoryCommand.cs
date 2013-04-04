@@ -170,20 +170,24 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
                              };
             }
 
-            result.Id = widget.Id;
             result.PreviewImageUrl = widget.PreviewUrl;
-            result.Version = widget.Version;
             result.Status = Status(widget, draft);
+            result.OriginalId = widget.Id;
+            result.OriginalVersion = widget.Version;
 
             if (draft != null && !result.Status.Equals(ContentStatus.Published.ToString()))
             {
                 result.Name = draft.Name;
                 result.CategoryId = draft.Category != null ? draft.Category.Id : (Guid?)null;
+                result.Id = draft.Id;
+                result.Version = draft.Version;
             }
             else
             {
                 result.Name = widget.Name;
                 result.CategoryId = widget.Category != null ? widget.Category.Id : (Guid?)null;
+                result.Id = widget.Id;
+                result.Version = widget.Version;
             }
 
             return result;

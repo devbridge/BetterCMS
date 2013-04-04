@@ -520,8 +520,8 @@ define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepic
         */
         function deleteSiteSettingsWidget(container, self) {
             var row = self.parents(selectors.widgetParentRow),
-                widgetId = row.data('id'),
-                widgetVersion = row.data('version'),
+                widgetId = row.data('originalId'),
+                widgetVersion = row.data('originalVersion'),
                 widgetName = row.find(selectors.widgetNameCell).html(),
                 messageDiv = row.find(selectors.widgetsRowDeleteMessage),
                 elementsToHide = row.find(selectors.widgetsRowDeleteElementsToHide),
@@ -555,7 +555,9 @@ define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepic
         */
         function setWidgetFields(row, json) {
             row.data('id', json.Data.Id);
+            row.data('originalId', json.Data.OriginalId);
             row.data('version', json.Data.Version);
+            row.data('originalVersion', json.Data.OriginalVersion);
             row.find(selectors.widgetNameCell).html(json.Data.WidgetName);
             row.find(selectors.widgetCategoryNameCell).html(json.Data.CategoryName);
 

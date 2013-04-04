@@ -19,6 +19,14 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         public virtual Guid Id { get; set; }
 
         /// <summary>
+        /// Gets or sets the original id.
+        /// </summary>
+        /// <value>
+        /// The original id.
+        /// </value>
+        public virtual Guid OriginalId { get; set; }
+
+        /// <summary>
         /// Gets or sets the entity version.
         /// </summary>
         /// <value>
@@ -26,6 +34,14 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// </value>
         [Required(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_RequiredAttribute_Message")]
         public virtual int Version { get; set; }
+
+        /// <summary>
+        /// Gets or sets the original version.
+        /// </summary>
+        /// <value>
+        /// The original version.
+        /// </value>
+        public virtual int OriginalVersion { get; set; }
 
         /// <summary>
         /// Gets or sets the title.
@@ -55,7 +71,7 @@ namespace BetterCms.Module.Pages.ViewModels.Content
 
         public override string ToString()
         {
-            return string.Format("Id: {0}, Version: {1}, Name: {2}", Id, Version, Name);
+            return string.Format("Id: {0}, Version: {1}, Name: {2} Status: {3}", Id, Version, Name, Status);
         }
     }
 }

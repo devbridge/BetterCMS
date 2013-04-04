@@ -18,12 +18,28 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
         public Guid Id { get; set; }
 
         /// <summary>
+        /// Gets or sets the original id.
+        /// </summary>
+        /// <value>
+        /// The original id.
+        /// </value>
+        public Guid OriginalId { get; set; }
+
+        /// <summary>
         /// Gets or sets the version.
         /// </summary>
         /// <value>
         /// The version.
         /// </value>
         public int Version { get; set; }
+
+        /// <summary>
+        /// Gets or sets the original version.
+        /// </summary>
+        /// <value>
+        /// The original version.
+        /// </value>
+        public int OriginalVersion { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the widget.

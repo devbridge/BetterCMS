@@ -34,8 +34,9 @@ namespace BetterCms.Module.Pages.Command.Widget.GetSiteSettingsWidgets
             var modelQuery = query.Select(f => new SiteSettingWidgetItemViewModel
                                   {
                                       Id = f.Id,
-                                      CompareId = f.Status == ContentStatus.Draft && f.Original != null && f.Original.Status == ContentStatus.Published ? f.Original.Id : f.Id,
+                                      OriginalId = f.Status == ContentStatus.Draft && f.Original != null && f.Original.Status == ContentStatus.Published ? f.Original.Id : f.Id,
                                       Version = f.Version,
+                                      OriginalVersion = f.Status == ContentStatus.Draft && f.Original != null && f.Original.Status == ContentStatus.Published ? f.Original.Version : f.Version,
                                       WidgetName = f.Name,
                                       CategoryName = (!f.Category.IsDeleted) ? f.Category.Name : null,
                                       WidgetEntityType = f.GetType(),
@@ -50,7 +51,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetSiteSettingsWidgets
             }
 
             var widgets = modelQuery.ToList()
-                .GroupBy(g => g.CompareId)
+                .GroupBy(g => g.OriginalId)
                 .Select(grp => grp.OrderByDescending(p => p.HasDraft).First())
                 .AsQueryable()
                 .AddSortingAndPaging(gridOptions)

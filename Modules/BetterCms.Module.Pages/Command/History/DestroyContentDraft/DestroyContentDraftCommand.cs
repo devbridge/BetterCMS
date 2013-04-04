@@ -81,7 +81,9 @@ namespace BetterCms.Module.Pages.Command.History.DestroyContentDraft
                        {
                            PublishedId = content.Original.Id,
                            Id = content.Original.Id,
+                           OriginalId = content.Original.Id,
                            Version = content.Original.Version,
+                           OriginalVersion = content.Original.Version,
                            WidgetName = content.Original.Name,
                            IsPublished = true,
                            HasDraft = false,

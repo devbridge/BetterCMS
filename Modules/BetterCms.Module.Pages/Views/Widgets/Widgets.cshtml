@@ -64,8 +64,10 @@
                       return new Dictionary<string, object>
                               {
                                     {"data-id", row.Item.Id},
+                                    {"data-original-id", row.Item.OriginalId},
                                     {"data-type", row.Item.WidgetType},
-                                    {"data-version", row.Item.Version}
+                                    {"data-version", row.Item.Version},
+                                    {"data-original-version", row.Item.OriginalVersion}
                               };
               })
           .RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingWidgetItemViewModel>()))

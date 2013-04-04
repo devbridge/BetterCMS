@@ -44,12 +44,24 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
                 }
             }
 
+            HtmlContentWidget modifiedWidget = widget;
+            if (request.DesirableStatus == ContentStatus.Draft)
+            {
+                var draft = widget.History.FirstOrDefault(h => h is HtmlContentWidget && !h.IsDeleted && h.Status == ContentStatus.Draft) as HtmlContentWidget;
+                if (draft != null)
+                {
+                    modifiedWidget = draft;
+                }
+            }
+
             return new SaveWidgetResponse
                     {
-                        Id = widget.Id,
-                        WidgetName = request.Name, 
-                        CategoryName = widgetContent.Category != null ? widgetContent.Category.Name : null,
-                        Version = widget.Version,
+                        Id = modifiedWidget.Id,
+                        OriginalId = widget.Id,
+                        WidgetName = modifiedWidget.Name,
+                        CategoryName = modifiedWidget.Category != null ? modifiedWidget.Category.Name : null,
+                        Version = modifiedWidget.Version,
+                        OriginalVersion = widget.Version,
                         WidgetType = WidgetType.HtmlContent.ToString(),
                         IsPublished = widget.Status == ContentStatus.Published,
                         HasDraft = widget.Status == ContentStatus.Draft || widget.History != null && widget.History.Any(f => f.Status == ContentStatus.Draft),
