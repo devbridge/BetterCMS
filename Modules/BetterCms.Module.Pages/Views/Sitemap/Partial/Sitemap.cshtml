@@ -103,8 +103,9 @@
                 </div>
             </div>
             <!-- /ko -->
-            <div class="bcms-zone-holder" data-bind="visible: isExpanded() && hasChildNodes(), template: { name: 'bcms-navigation-sitemapnode-template' }"></div>
-
+            <!-- ko if: isExpanded() && hasChildNodes() -->
+            <div class="bcms-zone-holder" data-bind="template: { name: 'bcms-navigation-sitemapnode-template' }"></div>
+            <!-- /ko -->
             <!-- ko if: !isBeingDragged() -->
             <div class="bcms-nodes-dropzone"
                 data-bind="css: { 'bcms-nodes-dropzone-active': activeZone() == 'bottomZone' },
