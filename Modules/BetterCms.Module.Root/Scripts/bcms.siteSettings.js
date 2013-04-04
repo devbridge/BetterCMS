@@ -73,8 +73,6 @@ define('bcms.siteSettings', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.dynamicC
 
             siteSettingsModalWindow.maximizeHeight();
             
-            tabs.initTabPanel(siteSettingsModalWindow.container);
-            
             forms.bindCheckboxes(siteSettingsModalWindow.container);
         }
     };
