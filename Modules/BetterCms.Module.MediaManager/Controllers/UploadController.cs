@@ -90,6 +90,7 @@ namespace BetterCms.Module.MediaManager.Controllers
                     };
 
                 var media = GetCommand<UploadCommand>().ExecuteCommand(request);
+
                 if (media != null)
                 {
                     return new WrappedJsonResult
