@@ -45,7 +45,7 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
             }
 
             HtmlContentWidget modifiedWidget = widget;
-            if (request.DesirableStatus == ContentStatus.Draft)
+            if (request.DesirableStatus == ContentStatus.Draft && widget.History != null)
             {
                 var draft = widget.History.FirstOrDefault(h => h is HtmlContentWidget && !h.IsDeleted && h.Status == ContentStatus.Draft) as HtmlContentWidget;
                 if (draft != null)
