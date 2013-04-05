@@ -61,7 +61,7 @@ define('bcms.siteSettings', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.dynamicC
     /**
     * Sets site settings content.
     */
-    siteSettings.setContent = function (content, contentId) {
+    siteSettings.setContent = function (content, contentId, doNotInitTabs) {
         if (siteSettingsModalWindow && (!contentId || contentId == siteSettings.contentId)) {
             messages.refreshBox(siteSettingsModalWindow.container.find(selectors.modalMessages), {});
 
@@ -72,7 +72,11 @@ define('bcms.siteSettings', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.dynamicC
             }
 
             siteSettingsModalWindow.maximizeHeight();
-            
+
+            if (!doNotInitTabs) {
+                tabs.initTabPanel(siteSettingsModalWindow.container);
+            }
+
             forms.bindCheckboxes(siteSettingsModalWindow.container);
         }
     };
@@ -189,7 +193,7 @@ define('bcms.siteSettings', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.dynamicC
         var tabsViewModel = new siteSettings.TabListViewModel(tabViewModels),
             content = $($(selectors.tabsTemplate).html());
 
-        siteSettings.setContent(content);
+        siteSettings.setContent(content, null, true);
         
         ko.applyBindings(tabsViewModel, siteSettingsModalWindow.container.find(selectors.placeHolder).get(0));
 
