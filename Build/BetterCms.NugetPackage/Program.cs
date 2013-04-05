@@ -55,20 +55,9 @@ namespace BetterCms.NugetPackage
             
             if (assemblyInformationVersion.Length > 0)
             {
-                var informationVersion = ((AssemblyInformationalVersionAttribute)assemblyInformationVersion[0]).InformationalVersion;
-                
-                if (!string.IsNullOrEmpty(informationVersion))
-                {                    
-                    int minusIndex = informationVersion.IndexOf("-", StringComparison.OrdinalIgnoreCase);
-                    if (minusIndex > 0)
-                    {
-                        string digitsVersion = informationVersion.Substring(0, minusIndex);
-                        string sufix = informationVersion.Substring(minusIndex);
-                        
-                        Version version = Version.Parse(digitsVersion);
-                        return string.Format("{0}.{1}.{2}{3}", version.Major, version.Minor, version.Build, sufix);
-                    }                    
-                }
+                var informationVersion = ((AssemblyInformationalVersionAttribute)assemblyInformationVersion[0]);
+
+                return informationVersion.InformationalVersion;                
             }
 
             return cmsCoreAssembly.GetName().Version.ToString(3);
