@@ -2,9 +2,10 @@
 using System.Linq;
 
 using BetterCms.Api;
+
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Models;
 using BetterCms.Core.Mvc.Commands;
+
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
@@ -28,14 +29,14 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
         /// The page service.
         /// </value>
         public IPageService PageService { get; set; }
-
+        
         /// <summary>
-        /// Gets or sets the redirect service.
+        /// Gets or sets the url service.
         /// </summary>
         /// <value>
-        /// The redirect service.
+        /// The url service.
         /// </value>
-        public IRedirectService RedirectService { get; set; }
+        public IUrlService UrlService { get; set; }
 
         /// <summary>
         /// Executes the specified request.
@@ -48,13 +49,15 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
             var pageUrl = request.PageUrl;
             if (pageUrl == null && !string.IsNullOrWhiteSpace(request.PageTitle))
             {
-                pageUrl = request.PageTitle.Transliterate();
+                pageUrl = PageService.CreatePagePermalink(request.PageTitle, null);
             }
+            else
+            {
+                pageUrl = UrlService.FixUrl(pageUrl);
 
-            pageUrl = RedirectService.FixUrl(pageUrl);
-
-            // Validate Url
-            PageService.ValidatePageUrl(pageUrl);
+                // Validate Url
+                PageService.ValidatePageUrl(pageUrl);
+            }
 
             var page = Repository.First<PageProperties>(request.PageId);
 

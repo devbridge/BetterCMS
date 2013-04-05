@@ -30,16 +30,24 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageSeo
         private readonly IRedirectService redirectService;
 
         /// <summary>
+        /// The url service
+        /// </summary>
+        private readonly IUrlService urlService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SavePageSeoCommand" /> class.
         /// </summary>
         /// <param name="redirectService">The redirect service.</param>
         /// <param name="pageService">The page service.</param>
         /// <param name="sitemapService">The sitemap service.</param>
-        public SavePageSeoCommand(IRedirectService redirectService, IPageService pageService, ISitemapService sitemapService)
+        /// <param name="urlService">The URL service.</param>
+        public SavePageSeoCommand(IRedirectService redirectService, IPageService pageService,
+            ISitemapService sitemapService, IUrlService urlService)
         {
             this.pageService = pageService;
             this.sitemapService = sitemapService;
             this.redirectService = redirectService;
+            this.urlService = urlService;
         }
 
         /// <summary>
@@ -59,7 +67,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageSeo
             page.Version = model.Version;
             page.Title = model.PageTitle;
 
-            model.ChangedUrlPath = redirectService.FixUrl(model.ChangedUrlPath);
+            model.ChangedUrlPath = urlService.FixUrl(model.ChangedUrlPath);
 
             if (!string.Equals(model.PageUrlPath, model.ChangedUrlPath, StringComparison.OrdinalIgnoreCase))
             {

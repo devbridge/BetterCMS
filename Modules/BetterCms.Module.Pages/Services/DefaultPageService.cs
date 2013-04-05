@@ -4,14 +4,12 @@ using System.Linq;
 using System.Web;
 
 using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Exceptions.Service;
 using BetterCms.Core.Models;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Core.Services;
-using BetterCms.Core.Services.Caching;
 using BetterCms.Core.Web;
 
 using BetterCms.Module.Pages.Content.Resources;
@@ -29,13 +27,15 @@ namespace BetterCms.Module.Pages.Services
     {
         private readonly IRepository repository;
         private readonly IRedirectService redirectService;
+        private readonly IUrlService urlService;
 
         private IDictionary<string, IPage> temporaryPageCache;
 
-        public DefaultPageService(IRepository repository, IRedirectService redirectService)
+        public DefaultPageService(IRepository repository, IRedirectService redirectService, IUrlService urlService)
         {
             this.repository = repository;
             this.redirectService = redirectService;
+            this.urlService = urlService;
             temporaryPageCache = new Dictionary<string, IPage>();
         }
         
@@ -114,14 +114,14 @@ namespace BetterCms.Module.Pages.Services
         public void ValidatePageUrl(string url, Guid? pageId = null)
         {
             // Validate url
-            if (!redirectService.ValidateUrl(url))
+            if (!urlService.ValidateUrl(url))
             {
                 var logMessage = string.Format("Invalid page url {0}.", url);
                 throw new ValidationException(() => PagesGlobalization.ValidatePageUrlCommand_InvalidUrlPath_Message, logMessage);
             }
 
             string patternsValidationMessage;
-            if (!redirectService.ValidateUrlPatterns(url, out patternsValidationMessage))
+            if (!urlService.ValidateUrlPatterns(url, out patternsValidationMessage))
             {
                 var logMessage = string.Format("{0}. URL: {1}.", patternsValidationMessage, url);
                 throw new ValidationException(() => patternsValidationMessage, logMessage);
@@ -145,23 +145,20 @@ namespace BetterCms.Module.Pages.Services
         /// Creates the page permalink.
         /// </summary>
         /// <param name="url">The URL.</param>
+        /// <param name="parentPageUrl">The parent page URL.</param>
         /// <returns>
         /// Created permalink
         /// </returns>
-        public string CreatePagePermalink(string url)
+        public string CreatePagePermalink(string url, string parentPageUrl)
         {
-            const int maxLength = MaxLength.Url - 5;
+            var prefixPattern = string.IsNullOrWhiteSpace(parentPageUrl)
+                ? "{0}"
+                : string.Concat(parentPageUrl.Trim('/'), "/{0}");
 
-            var slug = url.Transliterate();
-            if (string.IsNullOrWhiteSpace(slug))
-            {
-                slug = "-";
-            }
-            if (slug.Length >= maxLength)
-            {
-                slug = slug.Substring(0, maxLength);
-            }
-            return slug;
+            url = url.Transliterate();
+            url = urlService.AddPageUrlPostfix(url, prefixPattern);
+
+            return url;
         }
 
         /// <summary>

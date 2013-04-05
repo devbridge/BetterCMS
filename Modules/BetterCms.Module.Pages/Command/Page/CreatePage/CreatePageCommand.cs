@@ -16,21 +16,21 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
         /// The page service
         /// </summary>
         private readonly IPageService pageService;
-
+        
         /// <summary>
-        /// The redirect service
+        /// The url service
         /// </summary>
-        private readonly IRedirectService redirectService;
+        private readonly IUrlService urlService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreatePageCommand" /> class.
         /// </summary>
         /// <param name="pageService">The page service.</param>
-        /// <param name="redirectService">The redirect service.</param>
-        public CreatePageCommand(IPageService pageService, IRedirectService redirectService)
+        /// <param name="urlService">The URL service.</param>
+        public CreatePageCommand(IPageService pageService, IUrlService urlService)
         {
             this.pageService = pageService;
-            this.redirectService = redirectService;
+            this.urlService = urlService;
         }
 
         /// <summary>
@@ -45,24 +45,15 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
             var createPageUrl = (pageUrl == null);
             if (createPageUrl && !string.IsNullOrWhiteSpace(request.PageTitle))
             {
-                pageUrl = pageService.CreatePagePermalink(request.PageTitle);
-                //pageUrl = request.PageTitle.Transliterate();
+                pageUrl = pageService.CreatePagePermalink(request.PageTitle, request.ParentPageUrl);
             }
-            pageUrl = redirectService.FixUrl(pageUrl);
-
-            // Add parent page url, if is set
-            if (createPageUrl)
+            else
             {
-                var parentPageUrl = request.ParentPageUrl.Trim('/');
-                if (!string.IsNullOrWhiteSpace(parentPageUrl))
-                {
-                    pageUrl = string.Concat(parentPageUrl, pageUrl);
-                    pageUrl = redirectService.FixUrl(pageUrl);
-                }
-            }
+                pageUrl = urlService.FixUrl(pageUrl);
 
-            // Validate Url
-            pageService.ValidatePageUrl(pageUrl);
+                // Validate Url
+                pageService.ValidatePageUrl(pageUrl);
+            }
 
             var page = new PageProperties
                 {

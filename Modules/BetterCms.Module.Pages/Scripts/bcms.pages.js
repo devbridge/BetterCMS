@@ -101,7 +101,7 @@ define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 
 
         if (autoGenerate) {
             dialog.container.find(titleField).on('keyup', function() {
-                page.changeUrlSlug(dialog, addPrefix, actionUrl, titleField);
+                page.changeUrlSlug(dialog, actionUrl, titleField, addPrefix);
             });
         }
 
@@ -337,7 +337,7 @@ define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 
     /**
     * Changes page slug
     */
-    page.changeUrlSlug = function (dialog, addPrefix, action, titleInput) {
+    page.changeUrlSlug = function (dialog, actionUrl, titleInput, addPrefix) {
         var oldText = $.trim(dialog.container.find(titleInput).val());
         setTimeout(function() {
             var text = $.trim(dialog.container.find(titleInput).val()),
@@ -347,15 +347,6 @@ define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 
                         var slug = json.Url,
                             url = (slug ? slug : '');
 
-                        if (addPrefix) {
-                            url += '/'; 
-                            var prefix = window.location.pathname;
-                            if (prefix.substr(prefix.length - 1, 1) != '/') {
-                                prefix += '/';
-                            }
-                            url = prefix + url;
-                        }
-                        
                         if (url.substr(0, 1) != '/') {
                             url = '/' + url;
                         }
@@ -372,9 +363,11 @@ define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 
                 };
 
             if (text && oldText == text) {
+                var prefix = (addPrefix) ? encodeURIComponent(window.location.pathname) : '';
+
                 $.ajax({
                     type: 'GET',
-                    url: $.format(action, encodeURIComponent(text), senderId),
+                    url: $.format(actionUrl, encodeURIComponent(text), senderId, prefix),
                     dataType: 'json'
                 })
                     .done(function(result) {
