@@ -20,4 +20,6 @@ CKEDITOR.editorConfig = function (config) {
 
     config.removePlugins = 'tabletools';
     config.disableNativeSpellChecker = false;
+    config.allowedContent = true;
+    config.extraAllowedContent = 'div[class]';
 };
