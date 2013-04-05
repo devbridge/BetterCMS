@@ -347,7 +347,7 @@ define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.content
         pagesContent.insertWidget = function (self, dialog) {
             var regionId = dialog.container.find(selectors.contentFormRegionId).val(),
                 widgetContainer = $(self).parents(selectors.widgetContainerBlock),
-                contentId = widgetContainer.data('id'),
+                contentId = widgetContainer.data('originalId'),
                 url = $.format(links.insertContentToPageUrl, bcms.pageId, contentId, regionId);
 
             $.ajax({
