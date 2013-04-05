@@ -373,11 +373,11 @@ namespace BetterCms.Module.MediaManager.Services
             {
                 ResizeImageAndCropToFit(downloadResponse.ResponseStream, memoryStream, size);
 
-                storageService.UploadObject(new UploadRequest { InputStream = memoryStream, Uri = mediaImage.ThumbnailUri });
-
                 mediaImage.ThumbnailWidth = size.Width;
                 mediaImage.ThumbnailHeight = size.Height;
                 mediaImage.ThumbnailSize = memoryStream.Length;
+
+                storageService.UploadObject(new UploadRequest { InputStream = memoryStream, Uri = mediaImage.ThumbnailUri });
             }
         }
 
