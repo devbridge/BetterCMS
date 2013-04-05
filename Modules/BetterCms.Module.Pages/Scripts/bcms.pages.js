@@ -84,7 +84,7 @@ define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 
     page.globalization = globalization;
     page.senderId = 0;
 
-    page.initializePermalinkBox = function (dialog, addPrefix, actionUrl, titleField, autoGenarate) {
+    page.initializePermalinkBox = function (dialog, addPrefix, actionUrl, titleField, autoGenerate) {
         pageUrlManuallyEdited = false;
         
         dialog.container.find(selectors.editPermalink).on('click', function () {
@@ -99,7 +99,7 @@ define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 
             page.saveAddNewPageEditPermalinkBox(dialog);
         });
 
-        if (autoGenarate) {
+        if (autoGenerate) {
             dialog.container.find(titleField).on('keyup', function() {
                 page.changeUrlSlug(dialog, addPrefix, actionUrl, titleField);
             });
@@ -358,6 +358,9 @@ define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 
                         
                         if (url.substr(0, 1) != '/') {
                             url = '/' + url;
+                        }
+                        if (url.substr(url.length-1, 1) != '/') {
+                            url = url + '/';
                         }
 
                         dialog.container.find(selectors.editPermalinkEditField).val(url);
