@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Web;
 
 using Amazon;
 using Amazon.S3;
@@ -43,8 +44,8 @@ namespace BetterCms.Module.AmazonS3Storage
                 {
                     try
                     {
-                        var absolutePath = uri.AbsolutePath;
-                        var key = absolutePath.TrimStart(Convert.ToChar("/"));
+                        var absolutePath = HttpUtility.UrlDecode(uri.AbsolutePath);
+                        var key = absolutePath.TrimStart('/');
                         var request = new GetObjectMetadataRequest();
 
                         request.WithBucketName(bucketName)
@@ -82,7 +83,7 @@ namespace BetterCms.Module.AmazonS3Storage
                 var putRequest = new PutObjectRequest();
                 using (var client = CreateAmazonS3Client())
                 {
-                    var absolutePath = request.Uri.AbsolutePath;
+                    var absolutePath = HttpUtility.UrlDecode(request.Uri.AbsolutePath);
                     var key = absolutePath.TrimStart(Convert.ToChar("/"));
 
                     putRequest.WithBucketName(bucketName)
@@ -146,8 +147,8 @@ namespace BetterCms.Module.AmazonS3Storage
 
             try
             {
-                var sourceKey = sourceUri.AbsolutePath.TrimStart('/');
-                var destinationKey = destinationUri.AbsolutePath.TrimStart('/');
+                var sourceKey = HttpUtility.UrlDecode(sourceUri.AbsolutePath).TrimStart('/');
+                var destinationKey = HttpUtility.UrlDecode(destinationUri.AbsolutePath).TrimStart('/');
 
                 using (var client = CreateAmazonS3Client())
                 {
@@ -175,7 +176,7 @@ namespace BetterCms.Module.AmazonS3Storage
 
             try
             {
-                var sourceKey = uri.AbsolutePath.TrimStart('/');                
+                var sourceKey = HttpUtility.UrlDecode(uri.AbsolutePath).TrimStart('/');                
 
                 using (var client = CreateAmazonS3Client())
                 {
@@ -198,7 +199,7 @@ namespace BetterCms.Module.AmazonS3Storage
 
             try
             {
-                var sourceKey = uri.AbsolutePath.TrimStart('/');
+                var sourceKey = HttpUtility.UrlDecode(uri.AbsolutePath).TrimStart('/');
 
                 using (var client = CreateAmazonS3Client())
                 {

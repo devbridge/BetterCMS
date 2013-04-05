@@ -52,12 +52,15 @@ namespace BetterCms.NugetPackage
         {
             var cmsCoreAssembly = typeof(ICmsHost).Assembly;
             var assemblyInformationVersion = Attribute.GetCustomAttributes(cmsCoreAssembly, typeof(AssemblyInformationalVersionAttribute));
+            
             if (assemblyInformationVersion.Length > 0)
             {
-                return ((AssemblyInformationalVersionAttribute)assemblyInformationVersion[0]).InformationalVersion;
+                var informationVersion = ((AssemblyInformationalVersionAttribute)assemblyInformationVersion[0]);
+
+                return informationVersion.InformationalVersion;                
             }
 
-            return cmsCoreAssembly.GetName().Version.ToString(4);
+            return cmsCoreAssembly.GetName().Version.ToString(3);
         }
     }
 }

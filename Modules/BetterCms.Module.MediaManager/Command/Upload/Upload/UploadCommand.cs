@@ -18,8 +18,7 @@ namespace BetterCms.Module.MediaManager.Command.Upload.Upload
         public IMediaAudioService MediaAudioService { get; set; }
 
         public MediaFile Execute(UploadFileRequest request)
-        {
-            
+        {            
             if (request.Type == MediaType.File || request.Type == MediaType.Audio || request.Type == MediaType.Video)
             {
                 var media = MediaFileService.UploadFile(request.Type, request.RootFolderId, request.FileName, request.FileLength, request.FileStream);
