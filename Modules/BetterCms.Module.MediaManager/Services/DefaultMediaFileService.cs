@@ -168,7 +168,9 @@ namespace BetterCms.Module.MediaManager.Services
                 GetContentRoot(configuration.Storage.PublicContentUrlRoot),
                 Path.Combine(type.ToString().ToLower(), folderName, fileName));
 
-            return new Uri(fullPath).AbsoluteUri;
+            string absoluteUri = new Uri(fullPath).AbsoluteUri;
+
+            return HttpUtility.UrlDecode(absoluteUri);
         }
 
         /// <summary>
