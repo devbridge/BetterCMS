@@ -57,20 +57,9 @@ namespace BetterCms.Module.Root.Controllers
         }
 
         /// <summary>
-        /// Renders public style sheet includes of registered modules.
+        /// Renders the module registered style sheet includes.
         /// </summary>
-        /// <returns>List of style sheet includes.</returns>
-        public ActionResult RenderPublicStyleSheetIncludes()
-        {
-            var model = GetCommand<GetStyleSheetsToRenderCommand>().ExecuteCommand(new GetStyleSheetsToRenderRequest
-                                                                                       {
-                                                                                           RenderPrivateCssIncludes = false,
-                                                                                           RenderPublicCssIncludes = true
-                                                                                       });
-
-            return PartialView("RenderStyleSheetIncludes", model);
-        } 
-
+        /// <param name="moduleDescriptorType">Type of the module descriptor.</param>        
         public ActionResult RenderModuleStyleSheetIncludes(Type moduleDescriptorType)
         {
             var model = GetCommand<GetStyleSheetsToRenderCommand>().ExecuteCommand(new GetStyleSheetsToRenderRequest
