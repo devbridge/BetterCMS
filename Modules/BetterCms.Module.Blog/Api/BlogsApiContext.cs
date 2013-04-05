@@ -75,8 +75,8 @@ namespace BetterCms.Api
 
                 var query = Repository
                     .AsQueryable<BlogPost>()
-                    .Fetch(b => b.Author)
-                    .ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage);
+                    .ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage)
+                    .Fetch(b => b.Author);
 
                 return query.ToList();
             }
@@ -108,7 +108,11 @@ namespace BetterCms.Api
                     order = p => p.Name;
                 }
 
-                return Repository.AsQueryable<Author>().Fetch(a => a.Image).ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage).ToList();
+                return Repository
+                    .AsQueryable<Author>()
+                    .ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage)
+                    .Fetch(a => a.Image)
+                    .ToList();
             }
             catch (Exception inner)
             {
