@@ -139,6 +139,9 @@
     <Compile Include="MediaManager\ModelTests\MapTests\MediaImageMapTest.cs" />
     <Compile Include="MediaManager\ModelTests\MapTests\MediaMapTest.cs" />
     <Compile Include="MediaManager\ServiceTests\DefaultMediaApiServiceIntegrationTests.cs" />
+    <Compile Include="Pages\CommandTests\ContentTests\DeletePageContentCommandTest.cs" />
+    <Compile Include="Pages\CommandTests\ContentTests\GetPageContentOptionsTest.cs" />
+    <Compile Include="Pages\CommandTests\ContentTests\GetPageHtmlContentCommandTest.cs" />
     <Compile Include="Pages\ServicesTests\DefaultWidgetApiServiceTest.cs" />
     <Compile Include="Navigation\ServicesTests\DefaultSitemapApiServiceTest.cs" />
     <Compile Include="Pages\CommandTests\ContentTests\SortPageContentCommandIntegrationTest.cs" />
