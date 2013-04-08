@@ -106,6 +106,51 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sorry, looks like you are using an outdated version of &lt;span&gt;Internet Explorer&lt;/span&gt;.
+        /// </summary>
+        public static string BrowserSupport_Outdated_IE_Message {
+            get {
+                return ResourceManager.GetString("BrowserSupport_Outdated_IE_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close Message.
+        /// </summary>
+        public static string BrowserSupport_UprgradeBrowser_Close_Button {
+            get {
+                return ResourceManager.GetString("BrowserSupport_UprgradeBrowser_Close_Button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To get better browsing experience and enhanced security.
+        /// </summary>
+        public static string BrowserSupport_UprgradeBrowser_Message_FirstLine {
+            get {
+                return ResourceManager.GetString("BrowserSupport_UprgradeBrowser_Message_FirstLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to please &lt;span&gt;upgrade&lt;/span&gt; your browser.
+        /// </summary>
+        public static string BrowserSupport_UprgradeBrowser_Message_SecondLine {
+            get {
+                return ResourceManager.GetString("BrowserSupport_UprgradeBrowser_Message_SecondLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to to one of the following modern browsers:.
+        /// </summary>
+        public static string BrowserSupport_UprgradeBrowser_Message_ThirdLine {
+            get {
+                return ResourceManager.GetString("BrowserSupport_UprgradeBrowser_Message_ThirdLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add New +.
         /// </summary>
         public static string Button_AddNew {
@@ -313,6 +358,24 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sorry, looks like &lt;b&gt;cookies are disabled&lt;/b&gt; in your browser. For full web experience.
+        /// </summary>
+        public static string CookieSupport_MustBeEnabled_Message_FirstLine {
+            get {
+                return ResourceManager.GetString("CookieSupport_MustBeEnabled_Message_FirstLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cookies must be enabled..
+        /// </summary>
+        public static string CookieSupport_MustBeEnabled_Message_SecondLine {
+            get {
+                return ResourceManager.GetString("CookieSupport_MustBeEnabled_Message_SecondLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Forbidden: Access is denied..
         /// </summary>
         public static string DynamicContent_DialogForbidden_Message {
@@ -354,6 +417,24 @@ namespace BetterCms.Module.Root.Content.Resources {
         public static string Info_DefaultTitle {
             get {
                 return ResourceManager.GetString("Info_DefaultTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sorry, looks like &lt;b&gt;JavaScript is disabled&lt;/b&gt; in your browser. For full web experience.
+        /// </summary>
+        public static string JavascriptSupport_MustBeEnabled_Message_FirstLine {
+            get {
+                return ResourceManager.GetString("JavascriptSupport_MustBeEnabled_Message_FirstLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to JavaScript must be enabled.
+        /// </summary>
+        public static string JavascriptSupport_MustBeEnabled_Message_SecondLine {
+            get {
+                return ResourceManager.GetString("JavascriptSupport_MustBeEnabled_Message_SecondLine", resourceCulture);
             }
         }
         

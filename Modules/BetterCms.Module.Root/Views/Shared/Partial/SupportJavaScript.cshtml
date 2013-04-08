@@ -1,8 +1,10 @@
-﻿<noscript>
+﻿@using BetterCms.Module.Root.Content.Resources
+
+<noscript>
     <div class="bcms-msg-top-page">
         <div class="bcms-msg-top-holder">
-            <div class="bcms-msg-top-block">Sorry, looks like <b>JavaScript is disabled</b> in your browser. For full web experience</div>
-            <div class="bcms-msg-top-block">JavaScript must be enabled.</div>
+            <div class="bcms-msg-top-block">@Html.Raw(RootGlobalization.JavascriptSupport_MustBeEnabled_Message_FirstLine)</div>
+            <div class="bcms-msg-top-block">@Html.Raw(RootGlobalization.JavascriptSupport_MustBeEnabled_Message_SecondLine)</div>
             <div class="bcms-msg-js"></div>
         </div>
     </div>
