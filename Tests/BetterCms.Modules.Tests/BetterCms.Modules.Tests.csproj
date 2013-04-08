@@ -153,6 +153,9 @@
     <Compile Include="Pages\ServicesTests\DefaultRedirectApiServiceTest.cs" />
     <Compile Include="Pages\ServicesTests\DefaultContentServiceTest.cs" />
     <Compile Include="Pages\ServicesTests\DefaultTagApiServiceTest.cs" />
+    <Compile Include="Root\CommandTests\GetMainJsDataCommandTest.cs" />
+    <Compile Include="Root\CommandTests\GetProcessorJsDataCommandTest.cs" />
+    <Compile Include="Root\CommandTests\GetStyleSheetsToRenderCommandTest.cs" />
     <Compile Include="SerializationTestBase.cs" />
     <Compile Include="DatabaseTestBase.cs" />
     <Compile Include="Helpers\HttpContextExtensionMethods.cs" />
