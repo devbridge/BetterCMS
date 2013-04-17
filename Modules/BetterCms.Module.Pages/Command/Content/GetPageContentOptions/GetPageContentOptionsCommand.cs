@@ -25,9 +25,9 @@ namespace BetterCms.Module.Pages.Command.Content.GetPageContentOptions
             if (!pageContentId.HasDefaultValue())
             {
                 var pageContent = Repository.AsQueryable<PageContent>()
+                                        .Where(f => f.Id == pageContentId && !f.IsDeleted && !f.Content.IsDeleted)
                                         .Fetch(f => f.Content).ThenFetchMany(f => f.ContentOptions)
                                         .FetchMany(f => f.Options)
-                                        .Where(f => f.Id == pageContentId && !f.IsDeleted && !f.Content.IsDeleted)
                                         .ToList()
                                         .FirstOrDefault();
 

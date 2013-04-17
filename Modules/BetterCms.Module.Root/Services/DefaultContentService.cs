@@ -65,11 +65,11 @@ namespace BetterCms.Module.Root.Services
             
             var originalContent =
                 repository.AsQueryable<Models.Content>()
+                          .Where(f => f.Id == updatedContent.Id && !f.IsDeleted)
                           .Fetch(f => f.Original).ThenFetchMany(f => f.History)
                           .Fetch(f => f.Original).ThenFetchMany(f => f.ContentOptions)
                           .FetchMany(f => f.History)
-                          .FetchMany(f => f.ContentOptions)                          
-                          .Where(f => f.Id == updatedContent.Id && !f.IsDeleted)
+                          .FetchMany(f => f.ContentOptions)            
                           .ToList()
                           .FirstOrDefault();
 

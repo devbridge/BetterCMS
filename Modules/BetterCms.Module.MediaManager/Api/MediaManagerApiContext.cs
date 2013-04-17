@@ -120,8 +120,9 @@ namespace BetterCms.Api
 
                 return Repository
                     .AsQueryable<MediaImage>()
+                    .ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage)
                     .Fetch(m => m.Folder)
-                    .ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage).ToList();
+                    .ToList();
             }
             catch (Exception inner)
             {
@@ -153,9 +154,9 @@ namespace BetterCms.Api
 
                 return Repository
                     .AsQueryable<MediaFile>()
-                    .Fetch(m => m.Folder)
                     .Where(m => m.Type == MediaType.File)
-                    .ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage).ToList();
+                    .ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage)
+                    .Fetch(m => m.Folder).ToList();
             }
             catch (Exception inner)
             {
@@ -188,9 +189,9 @@ namespace BetterCms.Api
 
                 return Repository
                     .AsQueryable<MediaFolder>()
-                    .Fetch(m => m.Folder)
                     .Where(f => f.Type == mediaType)
                     .ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage)
+                    .Fetch(m => m.Folder)
                     .ToList();
             }
             catch (Exception inner)
@@ -215,8 +216,9 @@ namespace BetterCms.Api
             {
                 return Repository
                     .AsQueryable<MediaFile>()
+                    .Where(f => f.Id == id)
                     .Fetch(f => f.Folder)
-                    .FirstOrDefault(f => f.Id == id);
+                    .FirstOrDefault();
             }
             catch (Exception inner)
             {
@@ -240,8 +242,9 @@ namespace BetterCms.Api
             {
                 return Repository
                     .AsQueryable<MediaImage>()
+                    .Where(f => f.Id == id)
                     .Fetch(f => f.Folder)
-                    .FirstOrDefault(f => f.Id == id);
+                    .FirstOrDefault();
             }
             catch (Exception inner)
             {

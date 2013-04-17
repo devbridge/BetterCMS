@@ -35,8 +35,8 @@ namespace BetterCms.Module.Pages.Command.Layout.SaveTemplate
 
             var template = !request.Id.HasDefaultValue()
                                ? Repository.AsQueryable<Root.Models.Layout>()
-                                           .FetchMany(f => f.LayoutRegions)
                                            .Where(f => f.Id == request.Id)
+                                           .FetchMany(f => f.LayoutRegions)
                                            .ToList()
                                            .FirstOrDefault()
                                : new Root.Models.Layout();
