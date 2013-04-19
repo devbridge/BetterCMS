@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using BetterCms.Api;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
@@ -107,7 +108,10 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                                                                         ? "require-2.1.5.min.js" 
                                                                         : "require-2.1.5.js");
             renderPageViewModel.Html5ShivJsPath = VirtualPath.Combine(rootModuleDescriptor.JsBasePath, "html5shiv.js");
-            
+
+            // Notify about retrieved page.
+            RootApiContext.Events.OnPageRetrieved(renderPageViewModel, page);
+
             return new CmsRequestViewModel(renderPageViewModel);
         }
 

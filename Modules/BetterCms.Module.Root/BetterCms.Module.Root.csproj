@@ -125,6 +125,7 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Api\Events\PageRetrievedEventArgs.cs" />
     <Compile Include="Api\Events\RootEvents.cs" />
     <Compile Include="Api\Events\PageRenderingEventArgs.cs" />
     <Compile Include="Api\RootApiContext.cs" />
@@ -185,6 +186,7 @@
     <Compile Include="Mvc\Grids\TableRenderers\EditableHtmlTableGridRenderer.cs" />
     <Compile Include="Mvc\Grids\TableRenderers\HtmlTableGridSingleRowRenderer.cs" />
     <Compile Include="Mvc\Grids\GridOptions\SearchableGridOptions.cs" />
+    <Compile Include="Mvc\Helpers\DynamicDictionary.cs" />
     <Compile Include="Mvc\Helpers\LayoutHelper.cs" />
     <Compile Include="Mvc\Helpers\LayoutRegionWrapper.cs" />
     <Compile Include="Mvc\Helpers\PreviewHelper.cs" />
