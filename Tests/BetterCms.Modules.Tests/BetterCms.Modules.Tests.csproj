@@ -249,6 +249,10 @@
       <Project>{f3e41793-e8ed-4ba8-a1ab-cba1e47b0786}</Project>
       <Name>BetterCms.Module.MediaManager</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.Newsletter\BetterCms.Module.Newsletter.csproj">
+      <Project>{5235602A-EE7C-45A3-8B41-0C8770303650}</Project>
+      <Name>BetterCms.Module.Newsletter</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCms.Module.Pages\BetterCms.Module.Pages.csproj">
       <Project>{fc04d4c2-8688-498f-b546-292c7e3688a9}</Project>
       <Name>BetterCms.Module.Pages</Name>

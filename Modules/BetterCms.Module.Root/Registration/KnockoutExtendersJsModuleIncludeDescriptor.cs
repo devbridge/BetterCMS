@@ -17,6 +17,8 @@ namespace BetterCms.Module.Root.Registration
                 {
                     new JavaScriptModuleGlobalization(this, "maximumLengthMessage", () => RootGlobalization.Validation_MaximumLengthExceeded_Message), 
                     new JavaScriptModuleGlobalization(this, "requiredFieldMessage", () => RootGlobalization.Validation_FieldIsRequired_Message), 
+                    new JavaScriptModuleGlobalization(this, "regularExpressionMessage", () => RootGlobalization.Validation_RegularExpression_Message), 
+                    new JavaScriptModuleGlobalization(this, "invalidEmailMessage", () => RootGlobalization.Validation_Email_Message)
                 };
         }
     }

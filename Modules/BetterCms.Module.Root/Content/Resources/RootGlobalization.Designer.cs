@@ -727,6 +727,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid email address..
+        /// </summary>
+        public static string Validation_Email_Message {
+            get {
+                return ResourceManager.GetString("Validation_Email_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This field is required..
         /// </summary>
         public static string Validation_FieldIsRequired_Message {
@@ -750,6 +759,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         public static string Validation_RangeAttribute_Message {
             get {
                 return ResourceManager.GetString("Validation_RangeAttribute_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The field must match the regular expression..
+        /// </summary>
+        public static string Validation_RegularExpression_Message {
+            get {
+                return ResourceManager.GetString("Validation_RegularExpression_Message", resourceCulture);
             }
         }
         

@@ -14,6 +14,7 @@ define('bcms.siteSettings', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.dynamicC
             placeHolder: '#bcms-site-settings-placeholder',
             firstMenuButton: '#bcms-site-settings-menu .bcms-onclick-action:first',
             loaderContainer: '.bcms-rightcol',
+            mainContainer: '.bcms-rightcol',
             tabsTemplate: '#bcms-site-setting-tab-template',
             tabsTemplateChildDiv: 'div',
             modalMessages: '#bcms-modal-messages'
@@ -102,6 +103,13 @@ define('bcms.siteSettings', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.dynamicC
     */
     siteSettings.getModalDialog = function() {
         return siteSettingsModalWindow;
+    };
+        
+    /**
+    * Returns site settings modal window object.
+    */
+    siteSettings.getMainContainer = function () {
+        return siteSettingsModalWindow.container.find(selectors.mainContainer);
     };
     
     /**

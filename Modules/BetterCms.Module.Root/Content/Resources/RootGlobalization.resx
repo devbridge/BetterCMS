@@ -339,6 +339,9 @@
   <data name="UserRole_PublishContent" xml:space="preserve">
     <value>Publish / Unpublish Content, Restore Content from History</value>
   </data>
+  <data name="Validation_Email_Message" xml:space="preserve">
+    <value>Invalid email address.</value>
+  </data>
   <data name="Validation_FieldIsRequired_Message" xml:space="preserve">
     <value>This field is required.</value>
   </data>
@@ -349,6 +352,9 @@
     <value>Field must be a number with value between {1} and {2}.</value>
   </data>
   <data name="Validation_RegularExpressionAttribute_Message" xml:space="preserve">
+    <value>The field must match the regular expression.</value>
+  </data>
+  <data name="Validation_RegularExpression_Message" xml:space="preserve">
     <value>The field must match the regular expression.</value>
   </data>
   <data name="Validation_RequiredAttribute_Message" xml:space="preserve">
