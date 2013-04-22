@@ -4,6 +4,7 @@ using System.Dynamic;
 
 namespace BetterCms.Module.Root.Mvc.Helpers
 {
+    [Serializable]
     public class DynamicDictionary : DynamicObject
     {
         private readonly Dictionary<string, dynamic> properties = new Dictionary<string, dynamic>(StringComparer.InvariantCultureIgnoreCase);
