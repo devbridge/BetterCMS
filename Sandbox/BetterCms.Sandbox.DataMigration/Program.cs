@@ -10,6 +10,7 @@ using BetterCms.Core.Modules;
 
 using BetterCms.Module.Blog;
 using BetterCms.Module.MediaManager;
+using BetterCms.Module.Newsletter;
 using BetterCms.Module.Pages;
 using BetterCms.Module.Root;
 using BetterCms.Module.Templates;
@@ -36,7 +37,8 @@ namespace BetterCms.Sandbox.DataMigration
                         new MediaManagerModuleDescriptor(configuration),
                         new PagesModuleDescriptor(configuration),
                         new RootModuleDescriptor(configuration),
-                        new UsersModuleDescriptor(configuration)
+                        new UsersModuleDescriptor(configuration),
+                        new NewsletterModuleDescriptor(configuration),
                     })
                     .ToList();
         }

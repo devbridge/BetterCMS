@@ -47,12 +47,8 @@ namespace BetterCms.Module.Pages.Models.Migrations
 
         public override void Down()
         {
-            RemoveDefaultPage();
-            RemovePage404();
-            RemovePage500();
-
             RemovePageTagsTable();
-            
+
             RemoveHtmlContentWidgetsTable();
             RemoveServerControlWidgetsTable();
             RemoveHtmlContentsTable();
@@ -334,41 +330,7 @@ namespace BetterCms.Module.Pages.Models.Migrations
                 "Footer",
                 "<span class=\"copyright\">Better CMS 2012 ©</span>");
         }
-
-        /// <summary>
-        /// Removes the default page.
-        /// </summary>
-        private void RemoveDefaultPage()
-        {
-            RemovePageContent(PagesConstants.ContentIds.PageDefaultHeader);
-            RemovePageContent(PagesConstants.ContentIds.PageDefaultBody);
-            RemovePageContent(PagesConstants.ContentIds.PageDefaultFooter);
-            RemovePage(PagesConstants.PageIds.PageDefault);
-        }
-
-        /// <summary>
-        /// Removes 404 page.
-        /// </summary>
-        private void RemovePage404()
-        {
-            RemovePageContent(PagesConstants.ContentIds.Page404Header);
-            RemovePageContent(PagesConstants.ContentIds.Page404Body);
-            RemovePageContent(PagesConstants.ContentIds.Page404Footer);
-            RemovePage(PagesConstants.PageIds.Page404);
-        }
-
-        /// <summary>
-        /// Removes 500 page.
-        /// </summary>
-        private void RemovePage500()
-        {
-            RemovePageContent(PagesConstants.ContentIds.Page500Header);
-            RemovePageContent(PagesConstants.ContentIds.Page500Body);
-            RemovePageContent(PagesConstants.ContentIds.Page500Footer);
-            RemovePage(PagesConstants.PageIds.Page500);
-        }
-
-
+        
         /// <summary>
         /// Inserts the page.
         /// </summary>
@@ -472,50 +434,6 @@ namespace BetterCms.Module.Pages.Models.Migrations
                     RegionId = regionId,
                     Order = 0                    
                 });
-        }
-
-        /// <summary>
-        /// Removes the page.
-        /// </summary>
-        /// <param name="pageId">The page id.</param>
-        private void RemovePage(Guid pageId)
-        {
-            Delete
-                .FromTable("PageContents")
-                .InSchema(rootModuleSchemaName)
-                .Row(new { PageId = pageId });
-
-            Delete
-                .FromTable("Pages")
-                .InSchema(SchemaName)
-                .Row(new { Id = pageId });
-
-            Delete
-                .FromTable("Pages")
-                .InSchema(rootModuleSchemaName)
-                .Row(new { Id = pageId });
-        }
-
-        /// <summary>
-        /// Removes the content.
-        /// </summary>
-        /// <param name="contentId">The content id.</param>
-        private void RemovePageContent(Guid contentId)
-        {
-            Delete
-                .FromTable("PageContents")
-                .InSchema(rootModuleSchemaName)
-                .Row(new { ContentId = contentId });
-
-            Delete
-                .FromTable("HtmlContents")
-                .InSchema(SchemaName)
-                .Row(new { Id = contentId });
-
-            Delete
-                .FromTable("Contents")
-                .InSchema(rootModuleSchemaName)
-                .Row(new { Id = contentId });
         }
     }
 }
