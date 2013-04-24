@@ -90,7 +90,7 @@
     </Reference>
     <Reference Include="NHibernate, Version=3.3.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\NHibernate.3.3.2.4000\lib\Net35\NHibernate.dll</HintPath>
+      <HintPath>..\..\packages\NHibernate.3.3.3.4000\lib\Net35\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Numerics" />
@@ -261,11 +261,13 @@
     <Compile Include="Services\DefaultHistoryService.cs" />
     <Compile Include="Services\DefaultSitemapService.cs" />
     <Compile Include="Services\DefaultTagService.cs" />
+    <Compile Include="Services\DefaultUrlService.cs" />
     <Compile Include="Services\DefaultWidgetsService.cs" />
     <Compile Include="Services\IHistoryService.cs" />
     <Compile Include="Services\IPageService.cs" />
     <Compile Include="Services\ISitemapService.cs" />
     <Compile Include="Services\ITagService.cs" />
+    <Compile Include="Services\IUrlService.cs" />
     <Compile Include="Services\IWidgetsService.cs" />
     <Compile Include="Services\DefaultCategoryService.cs" />
     <Compile Include="Services\DefaultRedirectService.cs" />

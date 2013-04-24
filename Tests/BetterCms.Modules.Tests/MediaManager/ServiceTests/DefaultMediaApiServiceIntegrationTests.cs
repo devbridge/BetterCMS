@@ -2,7 +2,6 @@
 using System.Linq;
 
 using BetterCms.Api;
-using BetterCms.Core;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 
@@ -89,6 +88,58 @@ namespace BetterCms.Test.Module.MediaManager.ServiceTests
         }
         
         [Test]
+        public void Should_Return_Ordered_Descending_Images_List_Successfully()
+        {
+            RunActionInTransaction(session =>
+            {
+                var medias = CreateFakeMedias(session);
+                var repository = CreateRepository(session);
+                using (var service = new MediaManagerApiContext(Container.BeginLifetimeScope(), repository))
+                {
+                    var folder = medias.First(m => m is MediaFolder && m.Title == "Images1");
+                    var images = service.GetImages(p => p.Folder.Id == folder.Id, itemsPerPage: 1, pageNumber: 2, orderDescending: true, order: p => p.Title);
+                    Assert.IsNotNull(images);
+                    Assert.AreEqual(images.Count, 1);
+                    Assert.AreEqual(images[0].Title, "Image1__1");
+                }
+            });
+        }
+
+        [Test]
+        public void Should_Return_Ordered_Images_List_Successfully()
+        {
+            RunActionInTransaction(session =>
+            {
+                var medias = CreateFakeMedias(session);
+                var repository = CreateRepository(session);
+                using (var service = new MediaManagerApiContext(Container.BeginLifetimeScope(), repository))
+                {
+                    var folder = medias.First(m => m is MediaFolder && m.Title == "Images1");
+                    var images = service.GetImages(p => p.Folder.Id == folder.Id, itemsPerPage: 1, pageNumber: 2, order: p => p.Title);
+                    Assert.IsNotNull(images);
+                    Assert.AreEqual(images.Count, 1);
+                    Assert.AreEqual(images[0].Title, "Image1__2");
+                }
+            });
+        }
+        
+        [Test]
+        public void TEST_Should_Return_Ordered_Images_List_Successfully()
+        {
+            RunActionInTransaction(session =>
+            {
+                CreateFakeMedias(session);
+                var repository = CreateRepository(session);
+                using (var service = new MediaManagerApiContext(Container.BeginLifetimeScope(), repository))
+                {
+                    var images = service.GetImages(order: p => p.Title);
+                    Assert.IsNotNull(images);
+                    Assert.GreaterOrEqual(images.Count, 0);
+                }
+            });
+        }
+        
+        [Test]
         public void Should_Return_Files_List_Successfully()
         {
             RunActionInTransaction(session =>
@@ -141,15 +192,6 @@ namespace BetterCms.Test.Module.MediaManager.ServiceTests
                     Assert.AreEqual(loadedFile.Id, file.Id);
                 }
             });
-
-            /*var medias = CreateFakeMedias();
-            var repository = MockRepository(medias);
-            var service = new DefaultMediaApiService(repository.Object);
-
-            var file = medias.First(m => m.Title == "RootFile1");
-            var loadedFile = service.GetFile(file.Id);
-            Assert.IsNotNull(loadedFile);
-            Assert.AreEqual(loadedFile.Id, file.Id);*/
         }
         
         [Test]
@@ -166,15 +208,6 @@ namespace BetterCms.Test.Module.MediaManager.ServiceTests
                     Assert.AreEqual(loadedImage.Id, image.Id);
                 }
             });
-
-            /*var medias = CreateFakeMedias();
-            var repository = MockRepository(medias);
-            var service = new DefaultMediaApiService(repository.Object);
-
-            var image = medias.First(m => m.Title == "RootImage1");
-            var loadedImage = service.GetImage(image.Id);
-            Assert.IsNotNull(loadedImage);
-            Assert.AreEqual(loadedImage.Id, image.Id);*/
         }
 
         private IRepository CreateRepository(ISession session)

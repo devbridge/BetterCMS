@@ -19,10 +19,10 @@ namespace BetterCms.Module.Root.Api.Events
         }
 
         /// <summary>
-        /// Gets or sets the sitemap node where page is placed.
+        /// Gets or sets the render page view model.
         /// </summary>
         /// <value>
-        /// The sitemap node.
+        /// The render page view model.
         /// </value>
         public RenderPageViewModel RenderPageData { get; set; }
     }

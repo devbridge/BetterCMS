@@ -193,11 +193,11 @@ namespace BetterCms.Api
             {
                 return Repository
                     .AsQueryable<PageContent>()
+                    .Where(p => p.Page.Id == pageId)
+                    .ApplyFilters(filter, p => p.Order)
                     .Fetch(c => c.Content)
                     .Fetch(c => c.Region)
                     .FetchMany(c => c.Options)
-                    .Where(p => p.Page.Id == pageId)
-                    .ApplyFilters(filter, p => p.Order)
                     .ToList();
             }
             catch (Exception inner)
@@ -224,11 +224,11 @@ namespace BetterCms.Api
             {
                 return Repository
                     .AsQueryable<PageContent>()
+                    .Where(p => p.Page.Id == pageId && p.Region.Id == regionId)
+                    .ApplyFilters(filter, p => p.Order)
                     .Fetch(c => c.Content)
                     .Fetch(c => c.Region)
                     .FetchMany(c => c.Options)
-                    .Where(p => p.Page.Id == pageId && p.Region.Id == regionId)
-                    .ApplyFilters(filter, p => p.Order)
                     .ToList();
             }
             catch (Exception inner)
@@ -255,11 +255,11 @@ namespace BetterCms.Api
             {
                 return Repository
                     .AsQueryable<PageContent>()
+                    .Where(p => p.Page.Id == pageId && p.Region.RegionIdentifier == regionIdentifier)
+                    .ApplyFilters(filter, p => p.Order)
                     .Fetch(c => c.Content)
                     .Fetch(c => c.Region)
                     .FetchMany(c => c.Options)
-                    .Where(p => p.Page.Id == pageId && p.Region.RegionIdentifier == regionIdentifier)
-                    .ApplyFilters(filter, p => p.Order)
                     .ToList();
             }
             catch (Exception inner)
@@ -306,9 +306,9 @@ namespace BetterCms.Api
             {
                 return Repository
                     .AsQueryable<PageContent>()
+                    .Where(c => c.Id == id)
                     .Fetch(c => c.Content)
                     .Fetch(c => c.Region)
-                    .Where(c => c.Id == id)
                     .FirstOne();
             }
             catch (Exception inner)
@@ -337,9 +337,9 @@ namespace BetterCms.Api
             {
                 return Repository
                         .AsQueryable<Layout>()
+                        .ApplyFilters(true, filter, order, orderDescending, pageNumber, itemsPerPage)
                         .FetchMany(l => l.LayoutRegions)
                         .ThenFetch(l => l.Region)
-                        .ApplyFilters(true, filter, order, orderDescending, pageNumber, itemsPerPage)
                         .ToList();
 
                 /* TODO: remove or use
@@ -417,9 +417,10 @@ namespace BetterCms.Api
 
                 return Repository
                     .AsQueryable<LayoutRegion>()
-                    .Fetch(lr => lr.Region)
                     .Where(lr => lr.Layout.Id == layoutId)
-                    .ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage).ToList();
+                    .ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage)
+                    .Fetch(lr => lr.Region)
+                    .ToList();
             }
             catch (Exception inner)
             {
@@ -452,10 +453,11 @@ namespace BetterCms.Api
                 }
 
                 var query = Repository
-                    .AsQueryable<PageProperties>();
-
-                query = FetchChilds(query, loadChilds)
+                    .AsQueryable<PageProperties>()
                     .ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage);
+
+                query = FetchChilds(query, loadChilds);
+
                 return query.ToList();
             }
             catch (Exception inner)
@@ -501,9 +503,12 @@ namespace BetterCms.Api
             try
             {
                 var query = Repository
-                    .AsQueryable<PageProperties>();
+                    .AsQueryable<PageProperties>()
+                    .Where(p => p.Id == id);
 
-                return FetchChilds(query, loadChilds).Where(p => p.Id == id).ToList().FirstOne();
+                return FetchChilds(query, loadChilds)
+                    .ToList()
+                    .FirstOne();
             }
             catch (Exception inner)
             {

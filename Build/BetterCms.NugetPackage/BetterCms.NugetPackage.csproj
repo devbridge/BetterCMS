@@ -48,6 +48,7 @@
     <None Include="package\content\net40\Config\cms.config">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="package\content\net40\betterCms.readme.txt" />
     <None Include="package\content\net40\web.config.transform">
       <SubType>Designer</SubType>
     </None>
@@ -92,6 +93,7 @@
   <PropertyGroup>
     <PostBuildEvent>mkdir "$(ProjectDir)$(OutDir)package"
 xcopy "$(ProjectDir)package" "$(ProjectDir)$(OutDir)package\" /E /Y /Q
+copy "$(SolutionDir)license.txt" "$(ProjectDir)$(OutDir)package\content\net40\betterCms.license.txt" /Y
 
 xcopy "$(ProjectDir)$(OutDir)BetterCms.Core.dll" "$(ProjectDir)$(OutDir)package\lib\net40\" /Y /Q
 xcopy "$(ProjectDir)$(OutDir)BetterCms.Configuration.dll" "$(ProjectDir)$(OutDir)package\lib\net40\" /Y /Q

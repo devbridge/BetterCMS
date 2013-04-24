@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 
 using BetterCms.Api;
+
 using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
-using BetterCms.Module.Pages.Api.Events;
+
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
@@ -21,14 +22,14 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
     public class DeletePageCommand : CommandBase, ICommand<DeletePageViewModel, bool>
     {
         /// <summary>
-        /// The page service.
-        /// </summary>
-        private readonly IPageService pageService;
-
-        /// <summary>
         /// The redirect service.
         /// </summary>
         private readonly IRedirectService redirectService;
+
+        /// <summary>
+        /// The url service
+        /// </summary>
+        private readonly IUrlService urlService;
 
         /// <summary>
         /// The sitemap service.
@@ -38,13 +39,15 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
         /// <summary>
         /// Initializes a new instance of the <see cref="DeletePageCommand" /> class.
         /// </summary>
-        /// <param name="pageService">The page service.</param>
         /// <param name="redirectService">The redirect service.</param>
-        public DeletePageCommand(IPageService pageService, IRedirectService redirectService, ISitemapService sitemapService)
+        /// <param name="sitemapService">The sitemap service.</param>
+        /// <param name="urlService">The URL service.</param>
+        public DeletePageCommand(IRedirectService redirectService,
+            ISitemapService sitemapService, IUrlService urlService)
         {
-            this.pageService = pageService;
             this.redirectService = redirectService;
             this.sitemapService = sitemapService;
+            this.urlService = urlService;
         }
 
         /// <summary>
@@ -60,7 +63,7 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
                 throw new ConcurrentDataException(page);
             }
 
-            request.RedirectUrl = redirectService.FixUrl(request.RedirectUrl);
+            request.RedirectUrl = urlService.FixUrl(request.RedirectUrl);
 
             IList<SitemapNode> sitemapNodes = null;
 
@@ -93,14 +96,14 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
                 }
 
                 // Validate url
-                if (!redirectService.ValidateUrl(request.RedirectUrl))
+                if (!urlService.ValidateUrl(request.RedirectUrl))
                 {
                     var logMessage = string.Format("Invalid redirect url {0}.", request.RedirectUrl);
                     throw new ValidationException(() => PagesGlobalization.ValidatePageUrlCommand_InvalidUrlPath_Message, logMessage);
                 }
 
                 string patternsValidationMessage;
-                if (!redirectService.ValidateUrlPatterns(request.RedirectUrl, out patternsValidationMessage, PagesGlobalization.DeletePage_RedirectUrl_Name))
+                if (!urlService.ValidateUrlPatterns(request.RedirectUrl, out patternsValidationMessage, PagesGlobalization.DeletePage_RedirectUrl_Name))
                 {
                     var logMessage = string.Format("{0}. URL: {1}.", patternsValidationMessage, request.RedirectUrl);
                     throw new ValidationException(() => patternsValidationMessage, logMessage);

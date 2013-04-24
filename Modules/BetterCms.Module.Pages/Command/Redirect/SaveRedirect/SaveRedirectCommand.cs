@@ -1,6 +1,5 @@
 ﻿using BetterCms.Api;
 using BetterCms.Core.Exceptions.Mvc;
-using BetterCms.Core.Mvc;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Services;
@@ -17,12 +16,19 @@ namespace BetterCms.Module.Pages.Command.Redirect.SaveRedirect
         private readonly IRedirectService redirectService;
 
         /// <summary>
+        /// The url service
+        /// </summary>
+        private readonly IUrlService urlService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SaveRedirectCommand" /> class.
         /// </summary>
         /// <param name="redirectService">The redirect service.</param>
-        public SaveRedirectCommand(IRedirectService redirectService)
+        /// <param name="urlService">The URL service.</param>
+        public SaveRedirectCommand(IRedirectService redirectService, IUrlService urlService)
         {
             this.redirectService = redirectService;
+            this.urlService = urlService;
         }
 
         /// <summary>
@@ -36,17 +42,17 @@ namespace BetterCms.Module.Pages.Command.Redirect.SaveRedirect
         {
             Models.Redirect redirect;
 
-            request.PageUrl = redirectService.FixUrl(request.PageUrl);
-            request.RedirectUrl = redirectService.FixUrl(request.RedirectUrl);
+            request.PageUrl = urlService.FixUrl(request.PageUrl);
+            request.RedirectUrl = urlService.FixUrl(request.RedirectUrl);
 
             // Validate request
-            if (!redirectService.ValidateUrl(request.PageUrl))
+            if (!urlService.ValidateUrl(request.PageUrl))
             {
                 var message = PagesGlobalization.SaveRedirect_InvalidPageUrl_Message;
                 var logMessage = string.Format("Invalid page url {0}.", request.PageUrl);
                 throw new ValidationException(() => message, logMessage);
             }
-            if (!redirectService.ValidateUrl(request.RedirectUrl))
+            if (!urlService.ValidateUrl(request.RedirectUrl))
             {
                 var message = PagesGlobalization.SaveRedirect_InvalidRedirectUrl_Message;
                 var logMessage = string.Format("Invalid redirect url {0}.", request.RedirectUrl);
@@ -55,12 +61,12 @@ namespace BetterCms.Module.Pages.Command.Redirect.SaveRedirect
 
             // Validate for url patterns
             string patternsValidationMessage;
-            if (!redirectService.ValidateUrlPatterns(request.PageUrl, out patternsValidationMessage))
+            if (!urlService.ValidateUrlPatterns(request.PageUrl, out patternsValidationMessage))
             {
                 var logMessage = string.Format("{0}. URL: {1}.", patternsValidationMessage, request.PageUrl);
                 throw new ValidationException(() => patternsValidationMessage, logMessage);
             }
-            if (!redirectService.ValidateUrlPatterns(request.RedirectUrl, out patternsValidationMessage, PagesGlobalization.SaveRedirect_RedirectUrl_Name))
+            if (!urlService.ValidateUrlPatterns(request.RedirectUrl, out patternsValidationMessage, PagesGlobalization.SaveRedirect_RedirectUrl_Name))
             {
                 var logMessage = string.Format("{0}. URL: {1}.", patternsValidationMessage, request.PageUrl);
                 throw new ValidationException(() => patternsValidationMessage, logMessage);

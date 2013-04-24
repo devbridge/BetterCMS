@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 using BetterCms.Api;
@@ -40,18 +39,26 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         private readonly ISitemapService sitemapService;
 
         /// <summary>
+        /// The url service
+        /// </summary>
+        private readonly IUrlService urlService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SavePagePropertiesCommand" /> class.
         /// </summary>
         /// <param name="pageService">The page service.</param>
         /// <param name="redirectService">The redirect service.</param>
         /// <param name="tagService">The tag service.</param>
         /// <param name="sitemapService">The sitemap service.</param>
-        public SavePagePropertiesCommand(IPageService pageService, IRedirectService redirectService, ITagService tagService, ISitemapService sitemapService)
+        /// <param name="urlService">The URL service.</param>
+        public SavePagePropertiesCommand(IPageService pageService, IRedirectService redirectService, ITagService tagService,
+            ISitemapService sitemapService, IUrlService urlService)
         {
             this.pageService = pageService;
             this.redirectService = redirectService;
             this.tagService = tagService;
             this.sitemapService = sitemapService;
+            this.urlService = urlService;
         }
 
         /// <summary>
@@ -69,9 +76,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             Models.Redirect redirectCreated = null;
             bool initialSeoStatus = page.HasSEO;
 
-            request.PageUrl = redirectService.FixUrl(request.PageUrl);
-
-            pageService.ValidatePageUrl(request.PageUrl, request.Id);
+            request.PageUrl = urlService.FixUrl(request.PageUrl);
 
             if (!string.Equals(page.PageUrl, request.PageUrl, StringComparison.OrdinalIgnoreCase))
             {

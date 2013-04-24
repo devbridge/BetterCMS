@@ -1,0 +1,15 @@
+﻿@{
+    // SubscriberEmail
+    var emailFieldName = ViewBag.BcmsNewsletterSubscribeEmailFieldName;
+    // Subscribe to newsletter
+    var labelTitle = ViewBag.BcmsNewsletterSubscribeLabelTitle;
+    // email...
+    var emailFieldPlaceholder = ViewBag.BcmsNewsletterSubscribeEmailFieldPlaceholder;
+}
+
+<form method="POST" class="bcms-newsletter-subscribe-form bcms-ajax-form">
+    <label class="bcms-newsletter-subscribe-label">@labelTitle</label>
+    <input type="email" id="bcms-newsletter-subscribe-email" name="@emailFieldName" class="bcms-newsletter-subscribe-input required" placeholder="@emailFieldPlaceholder" />
+    &nbsp;
+    <button type="submit" class="bcms-newsletter-subscribe-submit">Submit</button>
+</form>

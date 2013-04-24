@@ -1,7 +1,9 @@
-﻿<div class="bcms-msg-top-page">
+﻿@using BetterCms.Module.Root.Content.Resources
+
+<div class="bcms-msg-top-page">
     <div class="bcms-msg-top-holder">
-        <div class="bcms-msg-top-block">Sorry, looks like <b>cookies are disabled</b> in your browser. For full web experience</div>
-        <div class="bcms-msg-top-block">Cookies must be enabled.</div>
+        <div class="bcms-msg-top-block">@Html.Raw(RootGlobalization.CookieSupport_MustBeEnabled_Message_FirstLine)</div>
+        <div class="bcms-msg-top-block">@Html.Raw(RootGlobalization.CookieSupport_MustBeEnabled_Message_SecondLine)</div>
         <div class="bcms-msg-cookies"></div>
     </div>
 </div>

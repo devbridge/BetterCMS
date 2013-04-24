@@ -357,7 +357,7 @@ namespace BetterCms.Tests.Helpers
             return entity;
         }  
 
-        public PageContentOption CreateNewPageContentOption(PageContent pageContent = null, ContentOption contentOption = null)
+        public PageContentOption CreateNewPageContentOption(PageContent pageContent = null)
         {
             var entity = new PageContentOption();
 

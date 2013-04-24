@@ -18,7 +18,10 @@ namespace BetterCms.Module.Pages.Services
         /// Creates the page permalink.
         /// </summary>
         /// <param name="url">The URL.</param>
-        /// <returns>Created permalink</returns>
-        string CreatePagePermalink(string url);
+        /// <param name="parentPageUrl">The parent page URL.</param>
+        /// <returns>
+        /// Created permalink
+        /// </returns>
+        string CreatePagePermalink(string url, string parentPageUrl);
     }
 }

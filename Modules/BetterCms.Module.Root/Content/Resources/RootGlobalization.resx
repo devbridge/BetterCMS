@@ -132,6 +132,21 @@
   <data name="Boolean_Yes" xml:space="preserve">
     <value>Yes</value>
   </data>
+  <data name="BrowserSupport_Outdated_IE_Message" xml:space="preserve">
+    <value>Sorry, looks like you are using an outdated version of &lt;span&gt;Internet Explorer&lt;/span&gt;</value>
+  </data>
+  <data name="BrowserSupport_UprgradeBrowser_Close_Button" xml:space="preserve">
+    <value>Close Message</value>
+  </data>
+  <data name="BrowserSupport_UprgradeBrowser_Message_FirstLine" xml:space="preserve">
+    <value>To get better browsing experience and enhanced security</value>
+  </data>
+  <data name="BrowserSupport_UprgradeBrowser_Message_SecondLine" xml:space="preserve">
+    <value>please &lt;span&gt;upgrade&lt;/span&gt; your browser</value>
+  </data>
+  <data name="BrowserSupport_UprgradeBrowser_Message_ThirdLine" xml:space="preserve">
+    <value>to one of the following modern browsers:</value>
+  </data>
   <data name="Button_AddNew" xml:space="preserve">
     <value>Add New +</value>
   </data>
@@ -201,6 +216,12 @@
   <data name="ContentStatus_PublishedWithDraft" xml:space="preserve">
     <value>Published (with draft)</value>
   </data>
+  <data name="CookieSupport_MustBeEnabled_Message_FirstLine" xml:space="preserve">
+    <value>Sorry, looks like &lt;b&gt;cookies are disabled&lt;/b&gt; in your browser. For full web experience</value>
+  </data>
+  <data name="CookieSupport_MustBeEnabled_Message_SecondLine" xml:space="preserve">
+    <value>Cookies must be enabled.</value>
+  </data>
   <data name="DynamicContent_DialogForbidden_Message" xml:space="preserve">
     <value>Forbidden: Access is denied.</value>
   </data>
@@ -215,6 +236,12 @@
   </data>
   <data name="Info_DefaultTitle" xml:space="preserve">
     <value>Information</value>
+  </data>
+  <data name="JavascriptSupport_MustBeEnabled_Message_FirstLine" xml:space="preserve">
+    <value>Sorry, looks like &lt;b&gt;JavaScript is disabled&lt;/b&gt; in your browser. For full web experience</value>
+  </data>
+  <data name="JavascriptSupport_MustBeEnabled_Message_SecondLine" xml:space="preserve">
+    <value>JavaScript must be enabled</value>
   </data>
   <data name="Message_AccessForbidden" xml:space="preserve">
     <value>Forbidden: Access is denied.</value>
@@ -312,6 +339,9 @@
   <data name="UserRole_PublishContent" xml:space="preserve">
     <value>Publish / Unpublish Content, Restore Content from History</value>
   </data>
+  <data name="Validation_Email_Message" xml:space="preserve">
+    <value>Invalid email address.</value>
+  </data>
   <data name="Validation_FieldIsRequired_Message" xml:space="preserve">
     <value>This field is required.</value>
   </data>
@@ -322,6 +352,9 @@
     <value>Field must be a number with value between {1} and {2}.</value>
   </data>
   <data name="Validation_RegularExpressionAttribute_Message" xml:space="preserve">
+    <value>The field must match the regular expression.</value>
+  </data>
+  <data name="Validation_RegularExpression_Message" xml:space="preserve">
     <value>The field must match the regular expression.</value>
   </data>
   <data name="Validation_RequiredAttribute_Message" xml:space="preserve">

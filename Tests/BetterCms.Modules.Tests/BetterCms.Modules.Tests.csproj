@@ -93,7 +93,7 @@
     </Reference>
     <Reference Include="NHibernate, Version=3.3.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\NHibernate.3.3.2.4000\lib\Net35\NHibernate.dll</HintPath>
+      <HintPath>..\..\packages\NHibernate.3.3.3.4000\lib\Net35\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate.Logging.CommonLogging">
       <HintPath>..\..\packages\NHibernate.Logging.1.3.1\lib\net35\NHibernate.Logging.CommonLogging.dll</HintPath>
@@ -139,6 +139,11 @@
     <Compile Include="MediaManager\ModelTests\MapTests\MediaImageMapTest.cs" />
     <Compile Include="MediaManager\ModelTests\MapTests\MediaMapTest.cs" />
     <Compile Include="MediaManager\ServiceTests\DefaultMediaApiServiceIntegrationTests.cs" />
+    <Compile Include="Pages\CommandTests\ContentTests\DeletePageContentCommandTest.cs" />
+    <Compile Include="Pages\CommandTests\ContentTests\GetPageContentOptionsTest.cs" />
+    <Compile Include="Pages\CommandTests\ContentTests\GetPageHtmlContentCommandTest.cs" />
+    <Compile Include="Pages\CommandTests\ContentTests\InsertContentToPageCommandTest.cs" />
+    <Compile Include="Pages\CommandTests\ContentTests\SavePageContentOptionsCommandTest.cs" />
     <Compile Include="Pages\ServicesTests\DefaultWidgetApiServiceTest.cs" />
     <Compile Include="Navigation\ServicesTests\DefaultSitemapApiServiceTest.cs" />
     <Compile Include="Pages\CommandTests\ContentTests\SortPageContentCommandIntegrationTest.cs" />
@@ -153,6 +158,9 @@
     <Compile Include="Pages\ServicesTests\DefaultRedirectApiServiceTest.cs" />
     <Compile Include="Pages\ServicesTests\DefaultContentServiceTest.cs" />
     <Compile Include="Pages\ServicesTests\DefaultTagApiServiceTest.cs" />
+    <Compile Include="Root\CommandTests\GetMainJsDataCommandTest.cs" />
+    <Compile Include="Root\CommandTests\GetProcessorJsDataCommandTest.cs" />
+    <Compile Include="Root\CommandTests\GetStyleSheetsToRenderCommandTest.cs" />
     <Compile Include="SerializationTestBase.cs" />
     <Compile Include="DatabaseTestBase.cs" />
     <Compile Include="Helpers\HttpContextExtensionMethods.cs" />
@@ -240,6 +248,10 @@
     <ProjectReference Include="..\..\Modules\BetterCms.Module.MediaManager\BetterCms.Module.MediaManager.csproj">
       <Project>{f3e41793-e8ed-4ba8-a1ab-cba1e47b0786}</Project>
       <Name>BetterCms.Module.MediaManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.Newsletter\BetterCms.Module.Newsletter.csproj">
+      <Project>{5235602A-EE7C-45A3-8B41-0C8770303650}</Project>
+      <Name>BetterCms.Module.Newsletter</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCms.Module.Pages\BetterCms.Module.Pages.csproj">
       <Project>{fc04d4c2-8688-498f-b546-292c7e3688a9}</Project>
