@@ -22,7 +22,7 @@ namespace BetterCms.Module.Newsletter.Command.SaveSubscriber
         /// <returns></returns>
         public SubscriberViewModel Execute(SubscriberViewModel request)
         {
-            var subscriber = SubscriberService.SaveSubscriber(request.Email, request.Id, request.Version);
+            var subscriber = SubscriberService.SaveSubscriber(request.Email, request.Id, request.Version, request.IgnoreUniqueSubscriberException);
 
             return new SubscriberViewModel
             {

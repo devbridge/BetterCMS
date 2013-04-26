@@ -12,8 +12,6 @@ var console = window.console || {
 };
 
 requirejs.config({
-    enforceDefine: true,
-    
     @if (Model.IsDebugMode && !Model.UseMinReferences)
     {
         <text>urlArgs: 'ver=' + '@Model.Version.ToString()',</text>

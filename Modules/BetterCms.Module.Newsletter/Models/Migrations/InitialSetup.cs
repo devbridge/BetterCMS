@@ -14,7 +14,6 @@ namespace BetterCms.Module.Newsletter.Models.Migrations
         private static readonly Guid option1Id = new Guid("84E5C6DB-2801-4294-87AA-8ACA295EB792");
         private static readonly Guid option2Id = new Guid("44C9DAC8-1924-4F9C-9829-68E3A4B0D384");
         private static readonly Guid option3Id = new Guid("CD2DDAE1-F128-4AF2-B141-954D23FCB9AD");
-        private static readonly Guid option4Id = new Guid("06B8ED9F-5F40-4FE6-ACA6-BAD008F02AF9");
 
         private readonly string rootSchemaName = (new Root.Models.Migrations.RootVersionTableMetaData()).SchemaName;
         private readonly string pagesSchemaName = (new Pages.Models.Migrations.PagesVersionTableMetaData()).SchemaName;
@@ -57,8 +56,11 @@ namespace BetterCms.Module.Newsletter.Models.Migrations
                 .IntoTable("Contents").InSchema(rootSchemaName)
                 .Row(new
                          {
-                             Id = widgetId, 
-                             CreatedByUser = "Admin", 
+                             Id = widgetId,
+                             IsDeleted = false,
+                             CreatedOn = DateTime.Now,
+                             ModifiedOn = DateTime.Now,
+                             CreatedByUser = "Admin",
                              ModifiedByUser = "Admin", 
                              Version = 1,
                              Name = "Newsletter Widget",
@@ -99,24 +101,13 @@ namespace BetterCms.Module.Newsletter.Models.Migrations
                 {
                     Id = option1Id,
                     ContentId = widgetId,
+                    IsDeleted = false,
+                    CreatedOn = DateTime.Now,
+                    ModifiedOn = DateTime.Now,
                     CreatedByUser = "Admin",
                     ModifiedByUser = "Admin",
                     Version = 1,
-                    Key = "BcmsNewsletterSubscribeEmailFieldName",
-                    Type = 1,
-                    DefaultValue = "SubscriberEmail"
-                });
-            
-            Insert
-                .IntoTable("ContentOptions").InSchema(rootSchemaName)
-                .Row(new
-                {
-                    Id = option2Id,
-                    ContentId = widgetId,
-                    CreatedByUser = "Admin",
-                    ModifiedByUser = "Admin",
-                    Version = 1,
-                    Key = "BcmsNewsletterSubscribeEmailFieldPlaceholder",
+                    Key = "Email placeholder",
                     Type = 1,
                     DefaultValue = "email..."
                 });
@@ -125,12 +116,15 @@ namespace BetterCms.Module.Newsletter.Models.Migrations
                 .IntoTable("ContentOptions").InSchema(rootSchemaName)
                 .Row(new
                 {
-                    Id = option3Id,
+                    Id = option2Id,
                     ContentId = widgetId,
+                    IsDeleted = false,
+                    CreatedOn = DateTime.Now,
+                    ModifiedOn = DateTime.Now,
                     CreatedByUser = "Admin",
                     ModifiedByUser = "Admin",
                     Version = 1,
-                    Key = "BcmsNewsletterSubscribeLabelTitle",
+                    Key = "Label title",
                     Type = 1,
                     DefaultValue = "Subscribe to newsletter"
                 });
@@ -139,14 +133,17 @@ namespace BetterCms.Module.Newsletter.Models.Migrations
                 .IntoTable("ContentOptions").InSchema(rootSchemaName)
                 .Row(new
                 {
-                    Id = option4Id,
+                    Id = option3Id,
                     ContentId = widgetId,
+                    IsDeleted = false,
+                    CreatedOn = DateTime.Now,
+                    ModifiedOn = DateTime.Now,
                     CreatedByUser = "Admin",
                     ModifiedByUser = "Admin",
                     Version = 1,
-                    Key = "BcmsNewsletterSubscribeFormMethod",
+                    Key = "Submit title",
                     Type = 1,
-                    DefaultValue = "POST"
+                    DefaultValue = "Submit"
                 });
         }
 
@@ -166,11 +163,6 @@ namespace BetterCms.Module.Newsletter.Models.Migrations
                 .Table("ContentOptions").InSchema(rootSchemaName)
                 .Set(new { IsDeleted = 1, DeletedOn = DateTime.Now, DeletedByUser = "Admin" })
                 .Where(new { Id = option3Id, IsDeleted = 0 });
-            
-            Update
-                .Table("ContentOptions").InSchema(rootSchemaName)
-                .Set(new { IsDeleted = 1, DeletedOn = DateTime.Now, DeletedByUser = "Admin" })
-                .Where(new { Id = option4Id, IsDeleted = 0 });
         }
     }
 }

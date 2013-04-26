@@ -1,15 +1,26 @@
-﻿@{
-    // SubscriberEmail
-    var emailFieldName = ViewBag.BcmsNewsletterSubscribeEmailFieldName;
+﻿@using BetterCms.Module.Newsletter.Controllers
+@using Microsoft.Web.Mvc
+
+@model BetterCms.Module.Newsletter.ViewModels.SubscriberViewModel
+
+@{
     // Subscribe to newsletter
-    var labelTitle = ViewBag.BcmsNewsletterSubscribeLabelTitle;
+    var labelTitle = ViewData["Label title"];
+    // Submit
+    var submitTitle = ViewData["Submit title"];
     // email...
-    var emailFieldPlaceholder = ViewBag.BcmsNewsletterSubscribeEmailFieldPlaceholder;
+    var emailPlaceholder = ViewData["Email placeholder"];
 }
 
-<form method="POST" class="bcms-newsletter-subscribe-form bcms-ajax-form">
-    <label class="bcms-newsletter-subscribe-label">@labelTitle</label>
-    <input type="email" id="bcms-newsletter-subscribe-email" name="@emailFieldName" class="bcms-newsletter-subscribe-input required" placeholder="@emailFieldPlaceholder" />
-    &nbsp;
-    <button type="submit" class="bcms-newsletter-subscribe-submit">Submit</button>
-</form>
+@using (Html.BeginForm<SubscriberController>(s => s.Subscribe(null), FormMethod.Post, new { @class = "bcms-newsletter-subscribe-form" }))
+{
+    <label class="bcms-newsletter-subscribe-label" for="Email">@labelTitle</label>
+    @Html.TextBoxFor(m => m.Email, new
+                                       {
+                                           @type = "email",
+                                           @class = "bcms-newsletter-subscribe-input required",
+                                           @placeholder = @emailPlaceholder
+                                       })
+    @Html.ValidationMessageFor(m => m.Email)
+    <button type="submit" class="bcms-newsletter-subscribe-submit">@submitTitle</button>
+}
