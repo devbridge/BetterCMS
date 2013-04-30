@@ -39,5 +39,13 @@ namespace BetterCms.Module.Newsletter.ViewModels
         [StringLength(MaxLength.Email, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
         [RegularExpression(RootModuleConstants.EmailRegularExpression, ErrorMessageResourceType = typeof(NewsletterGlobalization), ErrorMessageResourceName = "EditSubscriber_IvalidEmail_Message")]
         public virtual string Email { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to ignore unique subscriber exception.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if to ignore unique subscriber exception; otherwise, <c>false</c>.
+        /// </value>
+        public bool IgnoreUniqueSubscriberException { get; set; }
     }
 }

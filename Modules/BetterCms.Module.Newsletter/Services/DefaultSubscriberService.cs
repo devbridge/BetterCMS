@@ -40,19 +40,30 @@ namespace BetterCms.Module.Newsletter.Services
         /// <summary>
         /// Saves the newsletter subscriber.
         /// </summary>
-        /// <param name="id">The subscriber id.</param>
         /// <param name="email">The subscriber email.</param>
+        /// <param name="id">The subscriber id.</param>
         /// <param name="version">The version.</param>
+        /// <param name="ignoreUniqueSubscriberException">if set to <c>true</c> ignore unique subscriber exception.</param>
         /// <returns>
         /// Saved entity
         /// </returns>
-        public Subscriber SaveSubscriber(string email, Guid id, int version)
+        public Subscriber SaveSubscriber(string email, Guid id, int version, bool ignoreUniqueSubscriberException = false)
         {
             var isNew = id.HasDefaultValue();
             Subscriber subscriber;
 
             // Validate
-            ValidateSubscriber(id, email);
+            try
+            {
+                ValidateSubscriber(id, email);
+            }
+            catch (UniqueSubscriberException)
+            {
+                if (!ignoreUniqueSubscriberException)
+                {
+                    throw;
+                }
+            }
 
             if (isNew)
             {

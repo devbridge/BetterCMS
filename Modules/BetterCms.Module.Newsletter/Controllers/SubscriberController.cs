@@ -17,13 +17,13 @@ namespace BetterCms.Module.Newsletter.Controllers
     /// <summary>
     /// Newsletter subscribers controller.
     /// </summary>
-    [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
     public class SubscriberController : CmsControllerBase
     {
         /// <summary>
         /// Lists the template for dispaying subscribers list.
         /// </summary>
         /// <returns>Json result.</returns>
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         public ActionResult ListTemplate()
         {
             var view = RenderView("List", null);
@@ -37,6 +37,7 @@ namespace BetterCms.Module.Newsletter.Controllers
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns>Json result.</returns>
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         public ActionResult SubscribersList(SearchableGridOptions request)
         {
             var model = GetCommand<GetSubscriberListCommand>().ExecuteCommand(request);
@@ -49,6 +50,7 @@ namespace BetterCms.Module.Newsletter.Controllers
         /// <param name="model">The model.</param>
         /// <returns>Json result.</returns>
         [HttpPost]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         public ActionResult SaveSubscriber(SubscriberViewModel model)
         {
             var success = false;
@@ -71,12 +73,25 @@ namespace BetterCms.Module.Newsletter.Controllers
         }
 
         /// <summary>
+        /// Saves the newsletter subscriber - public method.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns>Json result.</returns>
+        [HttpPost]
+        public ActionResult Subscribe(SubscriberViewModel model)
+        {
+            model.IgnoreUniqueSubscriberException = true;
+            return SaveSubscriber(model);
+        }
+
+        /// <summary>
         /// Deletes the newsletter subscriber.
         /// </summary>
         /// <param name="id">The id.</param>
         /// <param name="version">The version.</param>
         /// <returns>Json result.</returns>
         [HttpPost]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         public ActionResult DeleteSubscriber(string id, string version)
         {
             var request = new SubscriberViewModel { Id = id.ToGuidOrDefault(), Version = version.ToIntOrDefault() };

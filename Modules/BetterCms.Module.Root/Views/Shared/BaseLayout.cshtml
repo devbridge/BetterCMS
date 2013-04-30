@@ -42,6 +42,8 @@
 }
 
 @section CmsHeadScripts {
+    @RenderSection("CmsHeadScripts", false)
+
     @if (Model.CanManageContent)
     {
         <script type="text/javascript">
@@ -74,9 +76,27 @@
             (function() {
                 var r = window.require;
                 if (!r) {
-                    loadBetterCmsScriptAsync('@Model.RequireJsPath', function() {
-                        loadBetterCmsScriptAsync('@Model.MainJsPath');
-                    });
+                    if (!window.bcmsWaitForWebSiteRequireJs) {
+                        loadBetterCmsScriptAsync('@Model.RequireJsPath', function () {
+                            loadBetterCmsScriptAsync('@Model.MainJsPath');
+                        });
+                    } else {
+                        var max = 150,
+                            i = 0,
+                            isRequiredLoaded = function () {
+                                i++;
+                                
+                                if (window.require) {
+                                    loadBetterCmsScriptAsync('@Model.MainJsPath');
+                                } else {
+                                    if (i < max) {
+                                        setTimeout(isRequiredLoaded, 100);
+                                    }
+                                }
+                            };
+
+                        setTimeout(isRequiredLoaded, 100);
+                    }
                 } else if (r.version < '2.0.0') {
                     alert("BetterCMS supports RequireJS from a 2.0.0 version. Please visit http://requirejs.org/ and do upgrade.");
                     return;
