@@ -39,6 +39,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="BetterCms.Module.Newsletter">
+      <HintPath>..\..\Modules\BetterCms.Module.Newsletter\bin\BetterCms.Module.Newsletter.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
@@ -122,7 +125,10 @@ xcopy "$(SolutionDir)Modules\BetterCms.Module.Templates\Content\Styles\*.*" "$(P
 xcopy "$(SolutionDir)Modules\BetterCms.Module.Templates\Scripts\*.*" "$(ProjectDir)Resources\bcms-templates\Scripts\" /Y /Q /S
 
 xcopy "$(SolutionDir)Modules\BetterCms.Module.Users\Content\Styles\*.*" "$(ProjectDir)Resources\bcms-users\Content\Styles\" /Y /Q /S
-xcopy "$(SolutionDir)Modules\BetterCms.Module.Users\Scripts\*.*" "$(ProjectDir)Resources\bcms-users\Scripts\" /Y /Q /S</PostBuildEvent>
+xcopy "$(SolutionDir)Modules\BetterCms.Module.Users\Scripts\*.*" "$(ProjectDir)Resources\bcms-users\Scripts\" /Y /Q /S
+
+xcopy "$(SolutionDir)Modules\BetterCms.Module.Newsletter\Content\Styles\*.*" "$(ProjectDir)Resources\bcms-newsletter\Content\Styles\" /Y /Q /S
+xcopy "$(SolutionDir)Modules\BetterCms.Module.Newsletter\Scripts\*.*" "$(ProjectDir)Resources\bcms-newsletter\Scripts\" /Y /Q /S</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

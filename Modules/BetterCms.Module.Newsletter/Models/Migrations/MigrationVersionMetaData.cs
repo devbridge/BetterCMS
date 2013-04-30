@@ -3,7 +3,7 @@
 namespace BetterCms.Module.Newsletter.Models.Migrations
 {
     [VersionTableMetaData]
-    public class MediaManagerVersionTableMetaData : IVersionTableMetaData
+    public class NewsletterVersionTableMetaData : IVersionTableMetaData
     {
         public string SchemaName
         {
