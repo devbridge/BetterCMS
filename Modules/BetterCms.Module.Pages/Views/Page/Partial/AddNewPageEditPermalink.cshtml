@@ -15,7 +15,7 @@
 
     <div class="bcms-custom-input-box">
         @Html.TextBoxFor(model => model.PageUrl, new { @id = "bcms-page-permalink-edit", @class = "bcms-editor-field-box", @style = "width: 503px;" })
-        @Html.ValidationMessageFor(f => f.PageUrl)
+        @Html.BcmsValidationMessageFor(f => f.PageUrl)
     </div>
 
     <div class="bcms-btn-small" id="bcms-save-permalink">@RootGlobalization.Button_Ok</div>

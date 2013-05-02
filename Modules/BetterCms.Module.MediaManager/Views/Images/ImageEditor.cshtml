@@ -1,5 +1,4 @@
-﻿@using BetterCms.Core.DataContracts.Enums
-@using BetterCms.Module.MediaManager.Models
+﻿@using BetterCms.Module.MediaManager.Models
 @using Microsoft.Web.Mvc
 @using BetterCms.Module.Root.Mvc.Helpers
 @using BetterCms.Module.Root.Content.Resources
@@ -44,7 +43,7 @@
                     <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_Caption:</div>
                     <div class="bcms-input-box">
                         @Html.TextBoxFor(f => f.Caption, new { @class = "bcms-editor-field-box", @id = "Caption" })
-                        @Html.ValidationMessageFor(f => f.Caption)
+                        @Html.BcmsValidationMessageFor(f => f.Caption)
                     </div>
                 </div>
 
@@ -60,7 +59,7 @@
                                 @id = "bcms-image-title-editor",
                                 @data_bind = "value: title, valueUpdate: 'afterkeydown', enterPress: save, escPress: close"
                             })
-                            @Html.ValidationMessageFor(f => f.Title)
+                            @Html.BcmsValidationMessageFor(f => f.Title)
                         </div>
                         <div class="bcms-btn-small" data-bind="click: save">@RootGlobalization.Button_Ok</div>
                         <div class="bcms-btn-links-small" data-bind="click: close">@RootGlobalization.Button_Cancel</div>
@@ -93,7 +92,7 @@
                                    @id = "image-width",
                                    @data_bind = "value: width, valueUpdate: 'afterkeydown', enterPress: save, escPress: close, event: { change: changeHeight }"
                                })
-                            @Html.ValidationMessageFor(f => f.ImageWidth)
+                            @Html.BcmsValidationMessageFor(f => f.ImageWidth)
                         </div>
                         <span>@MediaGlobalization.ImageEditor_Dialog_ChangeSize_Height:</span>
                         <div class="bcms-custom-input-box" style="width: 75px;">
@@ -103,7 +102,7 @@
                                @id = "image-height",
                                @data_bind = "value: height, valueUpdate: 'afterkeydown', enterPress: save, escPress: close, event: { change: changeWidth }"
                            })
-                            @Html.ValidationMessageFor(f => f.ImageHeight)
+                            @Html.BcmsValidationMessageFor(f => f.ImageHeight)
                         </div>
                         <div class="bcms-btn-small" data-bind="click: save">@RootGlobalization.Button_Ok</div>
                         <div class="bcms-btn-links-small" data-bind="click: close">@RootGlobalization.Button_Cancel</div>

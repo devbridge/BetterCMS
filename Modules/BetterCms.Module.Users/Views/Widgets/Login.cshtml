@@ -1,4 +1,5 @@
-﻿@model BetterCms.Module.Users.ViewModels.LoginViewModel
+﻿@using BetterCms.Module.Root.Mvc.Helpers
+@model BetterCms.Module.Users.ViewModels.LoginViewModel
 @{
     if (Model == null)
     {
@@ -16,11 +17,11 @@
 
             @Html.LabelFor(m => m.UserName, (string)ViewBag.UserNameLabelText)
             @Html.TextBoxFor(m => m.UserName)
-            @Html.ValidationMessageFor(m => m.UserName)
+            @Html.BcmsValidationMessageFor(m => m.UserName)
 
             @Html.LabelFor(m => m.Password, (string)ViewBag.PasswordLabelText)
             @Html.PasswordFor(m => m.Password)
-            @Html.ValidationMessageFor(m => m.Password)
+            @Html.BcmsValidationMessageFor(m => m.Password)
 
             if (ViewBag.ShowFieldRememberMe != null && bool.Parse(ViewBag.ShowFieldRememberMe))
             {

@@ -1,4 +1,5 @@
 ﻿@using BetterCms.Module.Newsletter.Controllers
+@using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
 
 @model BetterCms.Module.Newsletter.ViewModels.SubscriberViewModel
@@ -21,6 +22,6 @@
                                            @class = "bcms-newsletter-subscribe-input required",
                                            @placeholder = @emailPlaceholder
                                        })
-    @Html.ValidationMessageFor(m => m.Email)
+    @Html.BcmsValidationMessageFor(m => m.Email)
     <button type="submit" class="bcms-newsletter-subscribe-submit">@submitTitle</button>
 }

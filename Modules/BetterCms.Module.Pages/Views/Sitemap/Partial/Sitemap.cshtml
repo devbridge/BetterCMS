@@ -68,7 +68,7 @@
                                 @class = "bcms-editor-field-box",
                                 Title = (string)null,
                             })
-                            @Html.ValidationMessageFor(m => m.Title)
+                            @Html.BcmsValidationMessageFor(m => m.Title)
                         </div>
                     </div>
                     <div class="bcms-edit-node-holder">
@@ -80,7 +80,7 @@
                                 @class = "bcms-editor-field-box",
                                 Url = (string)null,
                             })
-                            @Html.ValidationMessageFor(m => m.Url)
+                            @Html.BcmsValidationMessageFor(m => m.Url)
                         </div>
                         <div class="bcms-btn-small" data-bind="click: saveSitemapNodeWithValidation, text: getSitemap().settings.nodeSaveButtonTitle">@RootGlobalization.Button_Ok</div>
                         <div class="bcms-btn-links-small" data-bind="click: cancelEditSitemapNode">@RootGlobalization.Button_Cancel</div>

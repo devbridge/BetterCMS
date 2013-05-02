@@ -11,7 +11,7 @@
 <div class="bcms-edit-urlpath-box" style="display: none;">
     <div class="bcms-custom-input-box" style="width: 503px;">
         @Html.TextBoxFor(f => f.ChangedUrlPath, new { @class = "bcms-editor-field-box" })
-        @Html.ValidationMessageFor(f => f.ChangedUrlPath)
+        @Html.BcmsValidationMessageFor(f => f.ChangedUrlPath)
     </div>
     <div id="bcms-editseo-editurlpath-save" class="bcms-btn-small">@RootGlobalization.Button_Ok</div>
     <div id="bcms-editseo-editurlpath-cancel" class="bcms-btn-links-small">@RootGlobalization.Button_Cancel</div>

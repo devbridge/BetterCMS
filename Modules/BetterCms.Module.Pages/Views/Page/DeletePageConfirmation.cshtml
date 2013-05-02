@@ -22,7 +22,7 @@
                 <div class="bcms-content-titles">@PagesGlobalization.DeletePage_Dialog_RedirectUrl</div>
                 <div class="bcms-input-box">
                     @Html.TextBoxFor(m => m.RedirectUrl, new { @class = "bcms-editor-field-box", @id = "PageTitle" })
-                    @Html.ValidationMessageFor(f => f.RedirectUrl)
+                    @Html.BcmsValidationMessageFor(f => f.RedirectUrl)
                 </div>
             </div>
 
@@ -31,7 +31,7 @@
                 <div class="bcms-content-titles">@PagesGlobalization.DeletePage_Dialog_SecurityWord</div>
                 <div class="bcms-input-box">
                     @Html.TextBoxFor(m => m.SecurityWord, new { @class = "bcms-editor-field-box", @id = "SecurityWord" })
-                    @Html.ValidationMessageFor(f => f.SecurityWord)
+                    @Html.BcmsValidationMessageFor(f => f.SecurityWord)
                 </div>
             </div>
 

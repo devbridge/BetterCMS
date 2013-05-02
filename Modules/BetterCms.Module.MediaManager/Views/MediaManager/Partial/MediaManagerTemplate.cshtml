@@ -134,7 +134,7 @@
                             attributes = Html.MergeValidationAttributes(m => m.Name, attributes);
                             
                             @Html.TextBoxFor(m => m.Name, attributes)
-                            @Html.ValidationMessageFor(m => m.Name, null, new { @data_bind = "attr: {'data-valmsg-for': nameDomId}" })
+                            @Html.BcmsValidationMessageFor(m => m.Name, null, new { @data_bind = "attr: {'data-valmsg-for': nameDomId}" })
                         }
                     </div>
                     <div class="bcms-media-inner-controls">

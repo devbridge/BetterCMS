@@ -22,7 +22,7 @@
                     <div class="bcms-content-titles">@PagesGlobalization.EditSeo_PageTitle</div>
                     <div class="bcms-input-box">
                         @Html.TextBoxFor(f => f.PageTitle, new { @class = "bcms-editor-field-box" })
-                        @Html.ValidationMessageFor(f => f.PageTitle)
+                        @Html.BcmsValidationMessageFor(f => f.PageTitle)
                     </div>
                 </div>
                 @Html.Partial("Partial/EditSeoEditUrlPath", Model)
@@ -31,7 +31,7 @@
                     <div class="bcms-content-titles">@PagesGlobalization.EditSeo_MetaTitle</div>
                     <div class="bcms-input-box">
                         @Html.TextBoxFor(f => f.MetaTitle, new { @class = "bcms-editor-field-box" })
-                        @Html.ValidationMessageFor(f => f.MetaTitle)
+                        @Html.BcmsValidationMessageFor(f => f.MetaTitle)
                     </div>
                 </div>
                 <div class="bcms-input-list-holder">
@@ -39,7 +39,7 @@
                     <div class="bcms-content-titles">@PagesGlobalization.EditSeo_MetaKeywords</div>
                     <div class="bcms-input-box">
                         @Html.TextAreaFor(f => f.MetaKeywords, new { @class = "bcms-editor-field-area" })
-                        @Html.ValidationMessageFor(f => f.MetaKeywords)
+                        @Html.BcmsValidationMessageFor(f => f.MetaKeywords)
                     </div>
                 </div>
                 <div class="bcms-input-list-holder">
@@ -47,7 +47,7 @@
                     <div class="bcms-content-titles">@PagesGlobalization.EditSeo_MetaDescription</div>
                     <div class="bcms-input-box">
                         @Html.TextAreaFor(f => f.MetaDescription, new { @class = "bcms-editor-field-area" })
-                        @Html.ValidationMessageFor(f => f.MetaDescription)
+                        @Html.BcmsValidationMessageFor(f => f.MetaDescription)
                     </div>
                 </div>
                 @Html.HiddenSubmit()
