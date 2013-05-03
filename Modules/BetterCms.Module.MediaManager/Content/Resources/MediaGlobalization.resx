@@ -181,7 +181,7 @@
     <value>Caption</value>
   </data>
   <data name="ImageEditor_Dialog_Caption_Tooltip_Description" xml:space="preserve">
-    <value>Change your image title.</value>
+    <value>Edit the title of this image.</value>
   </data>
   <data name="ImageEditor_Dialog_ChangeSize_Height" xml:space="preserve">
     <value>Height</value>
@@ -199,7 +199,7 @@
     <value>Crop image</value>
   </data>
   <data name="ImageEditor_Dialog_CropImage_Tooltip_Description" xml:space="preserve">
-    <value>Crop image</value>
+    <value>Click and drag to select the portion of the image you would like to use in this post.</value>
   </data>
   <data name="ImageEditor_Dialog_Dimensions" xml:space="preserve">
     <value>Dimensions (pixels)</value>
@@ -355,7 +355,7 @@
     <value>Select Folder where to upload files:</value>
   </data>
   <data name="MultiFileUpload_SelectFolder_Help_Message" xml:space="preserve">
-    <value>Select a folder where your files will be stored.</value>
+    <value>Select the folder where you would like to store your files.</value>
   </data>
   <data name="MultiFileUpload_Success" xml:space="preserve">
     <value>Success! File uploaded.</value>

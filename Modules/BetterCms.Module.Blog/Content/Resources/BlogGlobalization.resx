@@ -154,19 +154,19 @@
     <value>Author</value>
   </data>
   <data name="EditBlockPost_Author_Tooltip_Description" xml:space="preserve">
-    <value>Author</value>
+    <value>Specify the author of this post.</value>
   </data>
   <data name="EditBlockPost_Category_Title" xml:space="preserve">
     <value>Category</value>
   </data>
   <data name="EditBlockPost_Category_Tooltip_Description" xml:space="preserve">
-    <value>Category</value>
+    <value>Assign this post to a category to identify it with similar posts.</value>
   </data>
   <data name="EditBlockPost_Content_Title" xml:space="preserve">
     <value>Full Post</value>
   </data>
   <data name="EditBlockPost_Content_Tooltip_Description" xml:space="preserve">
-    <value>Full Post</value>
+    <value>Type or paste the entire body of the post.</value>
   </data>
   <data name="EditBlockPost_FeaturedImage_Description" xml:space="preserve">
     <value>Image will be displayed as a thumbnail with your post.</value>
@@ -175,16 +175,16 @@
     <value>Featured Image</value>
   </data>
   <data name="EditBlockPost_FeaturedImage_Tooltip_Description" xml:space="preserve">
-    <value>Featured Image</value>
+    <value>Select an image that will accompany your post.</value>
   </data>
   <data name="EditBlockPost_IntroText_Title" xml:space="preserve">
     <value>Intro / Featured Text</value>
   </data>
   <data name="EditBlockPost_IntroText_Tooltip_Description" xml:space="preserve">
-    <value>Intro / Featured Text</value>
+    <value>Type or paste the introductory text of the post.</value>
   </data>
   <data name="EditBlockPost_LiveDates_Tooltip_Description" xml:space="preserve">
-    <value>Live dates</value>
+    <value>Specify the date you would like this post to be visible on your website. If applicable, specify the date this post should expire.</value>
   </data>
   <data name="EditBlockPost_LiveFrom_Title" xml:space="preserve">
     <value>Live From</value>
@@ -202,7 +202,7 @@
     <value>Title of the Post</value>
   </data>
   <data name="EditBlockPost_Title_Tooltip_Description" xml:space="preserve">
-    <value>Title of the Post</value>
+    <value>Edit the title of this post.</value>
   </data>
   <data name="EditPost_Dialog_Title" xml:space="preserve">
     <value>Edit article</value>
@@ -277,7 +277,7 @@
     <value>Change Post URL</value>
   </data>
   <data name="EditBlogPost_Permalink_Tooltip_Description" xml:space="preserve">
-    <value>Edit Post URL</value>
+    <value>Edit the URL visitors will use to navigate to this post.</value>
   </data>
   <data name="EditBlogPost_CreatePermanentRedirectToOldUrl_Title" xml:space="preserve">
     <value>Create permanent redirect entry from old URL to new URL.</value>

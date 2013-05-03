@@ -151,13 +151,13 @@
     <value>1. Create a page title (H1)</value>
   </data>
   <data name="AddNewPage_PageTitle_Tooltip_Description" xml:space="preserve">
-    <value>Create  a page title</value>
+    <value>Create a title for your new page.</value>
   </data>
   <data name="AddNewPage_Permalink" xml:space="preserve">
     <value>2. Change Page URL</value>
   </data>
   <data name="AddNewPage_Permalink_Tooltip_Description" xml:space="preserve">
-    <value>Edit Page URL</value>
+    <value>Create a unique page URL for your new page.</value>
   </data>
   <data name="AddNewPage_SelectTemplateButton_Title" xml:space="preserve">
     <value>Select</value>
@@ -169,7 +169,7 @@
     <value>&lt;b&gt;The layout of this page is based on a template.&lt;/b&gt; Select a template from options below. &#x3;If you need an additional template contact your system administrator to create a custom template.</value>
   </data>
   <data name="AddNewPage_Template_Tooltip_Description" xml:space="preserve">
-    <value>Select a template</value>
+    <value>Select the template you would like to use for your new page.</value>
   </data>
   <data name="AddPageContent_WidgetTab_AddNewButton" xml:space="preserve">
     <value>Add New +</value>
@@ -202,7 +202,7 @@
     <value>Content Name</value>
   </data>
   <data name="AddPageContent_RegularContentTab_ContentName_Tooltip_Description" xml:space="preserve">
-    <value>Content Name</value>
+    <value>Create a title for this content section.</value>
   </data>
   <data name="AddPageContent_RegularContentTab_LiveFrom_Title" xml:space="preserve">
     <value>Live From</value>
@@ -223,7 +223,7 @@
     <value>Widget Category</value>
   </data>
   <data name="HtmlContentWidget_Category_Tooltip_Description" xml:space="preserve">
-    <value>Widget Category</value>
+    <value>Assign your widget to a category to identify it with similar widgets.</value>
   </data>
   <data name="HtmlContentWidget_ContentName_MaxLengthMessage" xml:space="preserve">
     <value>Content name max length exceeded.</value>
@@ -235,7 +235,7 @@
     <value>Content Name</value>
   </data>
   <data name="HtmlContentWidget_ContentName_Tooltip_Description" xml:space="preserve">
-    <value>Content Name</value>
+    <value>Create a HTML based widget with no server side logic.</value>
   </data>
   <data name="ClonePage_Dialog_CloneButton" xml:space="preserve">
     <value>Clone</value>
@@ -250,7 +250,7 @@
     <value>New Page Title</value>
   </data>
   <data name="ClonePage_Dialog_PageTitle_Tooltip_Description" xml:space="preserve">
-    <value>New page title</value>
+    <value>Create a title for your new page.</value>
   </data>
   <data name="ClonePage_Dialog_PageUrl" xml:space="preserve">
     <value>New Page URL</value>
@@ -313,13 +313,13 @@
     <value>Redirect URL (optional)</value>
   </data>
   <data name="DeletePage_Dialog_RedurectUrl_Tooltip_Description" xml:space="preserve">
-    <value>Redirect URL (optional)</value>
+    <value>Specify an alternate page URL where you would like a visitor sent if they navigate to the deleted page.</value>
   </data>
   <data name="DeletePage_Dialog_SecurityWord" xml:space="preserve">
     <value>Type word DELETE to confirm deletion</value>
   </data>
   <data name="DeletePage_Dialog_SecurityWord_Tooltip_Description" xml:space="preserve">
-    <value>Type word DELETE to confirm deletion</value>
+    <value>Are you sure you want to delete this page? Type the word DELETE to confirm.</value>
   </data>
   <data name="DeletePage_Dialog_Title" xml:space="preserve">
     <value>Delete page</value>
@@ -355,19 +355,19 @@
     <value>Page CSS</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_PageCss_Tooltip_Description" xml:space="preserve">
-    <value>Page Css</value>
+    <value>If you are an advanced user, you can use the CSS tool to define the style for this page. This feature will only affect the page you are currently working on.</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_PageUrl_Title" xml:space="preserve">
     <value>Page URL</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_PageUrl_Tooltip_Description" xml:space="preserve">
-    <value>Edit Page URL</value>
+    <value>Edit the URL visitors will use to navigate to this post.</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_Privacy_Title" xml:space="preserve">
     <value>Privacy</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_Privacy_Tooltip_Description" xml:space="preserve">
-    <value>Privacy</value>
+    <value>Edit the privacy settings of this page. Selecting "No Follow" will tell search engines not to follow the links on this page, and "No Index" will tell search engines not to index this page.</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_Privacy_VisibleToEveryone" xml:space="preserve">
     <value>This page is visible to everyone</value>
@@ -391,19 +391,19 @@
     <value>Add Tags</value>
   </data>
   <data name="EditPageProperties_BasicPropertiesTab_AddTags_Tooltip_Description" xml:space="preserve">
-    <value>Add tags</value>
+    <value>Add tags to this page to identify it with related pages.</value>
   </data>
   <data name="EditPageProperties_BasicPropertiesTab_PageImage_Title" xml:space="preserve">
     <value>Featured Image</value>
   </data>
   <data name="EditPageProperties_BasicPropertiesTab_PageImage_Tooltip_Description" xml:space="preserve">
-    <value>Page description</value>
+    <value>Featured Image</value>
   </data>
   <data name="EditPageProperties_BasicPropertiesTab_PageName_Title" xml:space="preserve">
     <value>Page Name</value>
   </data>
   <data name="EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Description" xml:space="preserve">
-    <value>Page title</value>
+    <value>Edit the title of this page. This is the title that will appear on the page.</value>
   </data>
   <data name="EditPageProperties_BasicPropertiesTab_RemoveButton" xml:space="preserve">
     <value>Remove</value>
@@ -415,7 +415,7 @@
     <value>&lt;b&gt;The layout of this page is based on a template.&lt;/b&gt; Select a template from options below. &#x3;If you need an additional template contact your system administrator to create a custom template.</value>
   </data>
   <data name="EditPageProperties_LayoutPropertiesTab_Layout_Tooltip_Description" xml:space="preserve">
-    <value>Layout</value>
+    <value>Change the way content is displayed on this page by selecting a different template.</value>
   </data>
   <data name="EditPageProperties_LayoutPropertiesTab_Title" xml:space="preserve">
     <value>Layout</value>
@@ -460,19 +460,19 @@
     <value>Meta Description</value>
   </data>
   <data name="EditSeo_MetaDescription_Tooltip_Description" xml:space="preserve">
-    <value>Purpose of meta description is ......</value>
+    <value>The Meta description will be displayed on search engine result pages, so it should summarize the content of the page and include your keywords.</value>
   </data>
   <data name="EditSeo_MetaKeywords" xml:space="preserve">
     <value>Meta Keywords</value>
   </data>
   <data name="EditSeo_MetaKeywords_Tooltip_Description" xml:space="preserve">
-    <value>Purpose of meta keywords is ......</value>
+    <value>The Meta keywords should relate to the search phrases you are targeting as a part of your larger SEO strategy.</value>
   </data>
   <data name="EditSeo_MetaTitle" xml:space="preserve">
     <value>Meta Title</value>
   </data>
   <data name="EditSeo_MetaTitle_Tooltip_Description" xml:space="preserve">
-    <value>Purpose of meta title is ......</value>
+    <value>The Meta title should contain your keywords and concisely describe the content of the page.</value>
   </data>
   <data name="EditSeo_PageTitle" xml:space="preserve">
     <value>Page Title</value>
@@ -484,7 +484,7 @@
     <value>Page title is required.</value>
   </data>
   <data name="EditSeo_PageTitle_Tooltip_Description" xml:space="preserve">
-    <value>Page title is for...</value>
+    <value>Edit the page title that will appear on search engine result pages.</value>
   </data>
   <data name="EditSeo_PageUrlPath_InvalidMessage" xml:space="preserve">
     <value>Page URL path is invalid. Link must start and end with "/" and can contain only following characters: '0-9', 'a-z', '-', '/', '_'</value>
@@ -496,7 +496,7 @@
     <value>Page URL</value>
   </data>
   <data name="EditSeo_UrlPath_Tooltip_Description" xml:space="preserve">
-    <value>Edit Page URL</value>
+    <value>Edit the URL visitors will use to navigate to this post.</value>
   </data>
   <data name="EditWidget_BasicPropertiesTab_Title" xml:space="preserve">
     <value>Basic Properties</value>
@@ -718,13 +718,13 @@
     <value>Title</value>
   </data>
   <data name="Widget_Title_Tooltip_Description" xml:space="preserve">
-    <value>Title</value>
+    <value>Register a developer prepared widget with server side logic to be used within Better CMS.</value>
   </data>
   <data name="Widget_Url_Title" xml:space="preserve">
     <value>Widget Path</value>
   </data>
   <data name="Widget_Url_Tooltip_Description" xml:space="preserve">
-    <value>Widget Path</value>
+    <value>Determine and set a path to the widget's file location on the server disk.</value>
   </data>
   <data name="Widget_VirtualPathNotExists_Message" xml:space="preserve">
     <value>View not found by given url ("{0}") for widget "{1}".</value>
@@ -805,7 +805,7 @@
     <value>Preview Image URL</value>
   </data>
   <data name="WidgetPreviewImageUrl_Tooltip_Description" xml:space="preserve">
-    <value>Purpose of Page URL is ......</value>
+    <value>This is what your widget will look like live on your website.</value>
   </data>
   <data name="WidgetPreviewImage_Title" xml:space="preserve">
     <value>Preview</value>
@@ -829,7 +829,7 @@
     <value>Preview Image URL</value>
   </data>
   <data name="TemplatePreviewImageUrl_Tooltip_Description" xml:space="preserve">
-    <value>Preview</value>
+    <value>Paste the URL to the image you would like shown as a preview for this template.</value>
   </data>
   <data name="TemplatePreviewImage_Title" xml:space="preserve">
     <value>Preview</value>
@@ -838,13 +838,13 @@
     <value>Title</value>
   </data>
   <data name="Template_Title_Tooltip_Description" xml:space="preserve">
-    <value>Title</value>
+    <value>Register a developer prepared template with server side logic to be used within Better CMS.</value>
   </data>
   <data name="Template_Url_Title" xml:space="preserve">
     <value>Template Path</value>
   </data>
   <data name="Template_Url_Tooltip_Description" xml:space="preserve">
-    <value>Template Path</value>
+    <value>Determine and set a path to the template's file location on the server disk.</value>
   </data>
   <data name="CreatTemplate_Dialog_Title" xml:space="preserve">
     <value>Register Template</value>
@@ -916,13 +916,13 @@
     <value>Category</value>
   </data>
   <data name="EditPageProperties_BasicPropertiesTab_Category_Tooltip_Description" xml:space="preserve">
-    <value>Category</value>
+    <value>Assign this page to a category to identify it with similar pages.</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_PageJavascript_Title" xml:space="preserve">
     <value>Custom JavaScript</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_PageJavascript_Tooltip_Description" xml:space="preserve">
-    <value>Custom JavaScript</value>
+    <value>Paste custom JavaScript code that will be executed only on this page.</value>
   </data>
   <data name="EditPageProperties_LayoutPropertiesTab_ChooseLayout_Title" xml:space="preserve">
     <value>Choose Page Layout</value>
@@ -1012,7 +1012,7 @@
     <value>New Page URL</value>
   </data>
   <data name="ClonePage_NewUrl_Tooltip_Description" xml:space="preserve">
-    <value>Edit New Page URL</value>
+    <value>Create a URL for your new page.</value>
   </data>
   <data name="SaveWidget_DublicateOptionName_Message" xml:space="preserve">
     <value>Duplicate widget options found.</value>
@@ -1060,7 +1060,7 @@
     <value>Update sitemap</value>
   </data>
   <data name="DeletePage_Dialog_UpdateSitemap_Description" xml:space="preserve">
-    <value>Remove page from sitemap.</value>
+    <value>Removing this page from the sitemap will delete the page and remove it from the navigation elements throughout your website.</value>
   </data>
   <data name="DeletePage_Dialog_UpdateSitemap_RemovePageFromSitemap" xml:space="preserve">
     <value>Remove this page from sitemap.</value>
@@ -1072,7 +1072,7 @@
     <value>Sorting page contents. Please wait.</value>
   </data>
   <data name="TemplateImagePreview_Tooltip_Description" xml:space="preserve">
-    <value>Preview</value>
+    <value>This is what your template will look like live on your website.</value>
   </data>
   <data name="WidgetPreviewImage_Tooltip_Description" xml:space="preserve">
     <value>Purpose of Page URL is ......</value>
