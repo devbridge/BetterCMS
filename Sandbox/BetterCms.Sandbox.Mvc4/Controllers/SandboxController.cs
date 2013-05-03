@@ -45,7 +45,7 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
                 roles = "Owner";
             }
 
-            var authTicket = new FormsAuthenticationTicket(1, "BetterCMS test user", DateTime.Now, DateTime.Now.AddMonths(1), true, roles);
+            var authTicket = new FormsAuthenticationTicket(1, "Better CMS test user", DateTime.Now, DateTime.Now.AddMonths(1), true, roles);
 
             var cookieContents = FormsAuthentication.Encrypt(authTicket);
             var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, cookieContents)

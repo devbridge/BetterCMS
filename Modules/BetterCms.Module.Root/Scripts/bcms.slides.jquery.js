@@ -1,7 +1,7 @@
 define('bcms.slides.jquery', ['bcms.jquery'], function(jquery) {
 
 /*
-* Edited by the DevBridge BetterCMS team.
+* Edited by the DevBridge Better CMS team.
 * Line 57:
 * Code before changes: $('.' + option.next + ', .' + option.prev).fadeOut(0);
 * Code after changes: $('.' + option.next + ', .' + option.prev, elem).fadeOut(0);

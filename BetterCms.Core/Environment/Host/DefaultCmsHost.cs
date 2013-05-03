@@ -16,7 +16,7 @@ using Common.Logging;
 namespace BetterCms.Core.Environment.Host
 {
     /// <summary>
-    /// Default BetterCMS host implementation.
+    /// Default Better CMS host implementation.
     /// </summary>
     public class DefaultCmsHost : ICmsHost
     {
@@ -48,7 +48,7 @@ namespace BetterCms.Core.Environment.Host
         {
             try
             {
-                Logger.Info("BetterCMS host application starting...");
+                Logger.Info("Better CMS host application starting...");
 
                 modulesRegistration.RegisterKnownModuleRoutes(RouteTable.Routes);
                 MigrateDatabase();
@@ -56,11 +56,11 @@ namespace BetterCms.Core.Environment.Host
                 // Notify.
                 ApiContext.Events.OnHostStart(application);
 
-                Logger.Info("BetterCMS host application started.");
+                Logger.Info("Better CMS host application started.");
             }
             catch (Exception ex)
             {
-                Logger.Fatal("Failed to start BetterCMS host application.", ex);
+                Logger.Fatal("Failed to start Better CMS host application.", ex);
             }
         }
 
@@ -70,7 +70,7 @@ namespace BetterCms.Core.Environment.Host
         /// <param name="application">The host application.</param>
         public void OnApplicationEnd(HttpApplication application)
         {
-            Logger.Info("BetterCMS host application stopped.");
+            Logger.Info("Better CMS host application stopped.");
             
             // Notify.
             ApiContext.Events.OnHostStop(application);
@@ -83,7 +83,7 @@ namespace BetterCms.Core.Environment.Host
         public void OnApplicationError(HttpApplication application)
         {
             var error = application.Server.GetLastError();
-            Logger.Fatal("Unhandled exception occurred in BetterCMS host application.", error);
+            Logger.Fatal("Unhandled exception occurred in Better CMS host application.", error);
 
             // Notify.
             ApiContext.Events.OnHostError(application);
@@ -182,7 +182,7 @@ namespace BetterCms.Core.Environment.Host
             }
             catch (Exception ex)
             {
-                Logger.Warn("Failed to touch BetterCMS host application web.config file.", ex);
+                Logger.Warn("Failed to touch Better CMS host application web.config file.", ex);
                 return false;
             }
         }
@@ -208,7 +208,7 @@ namespace BetterCms.Core.Environment.Host
             }
             catch (Exception ex)
             {
-                Logger.Warn("Failed to touch BetterCMS host application \bin folder.", ex);
+                Logger.Warn("Failed to touch Better CMS host application \bin folder.", ex);
                 return false;
             }
         }

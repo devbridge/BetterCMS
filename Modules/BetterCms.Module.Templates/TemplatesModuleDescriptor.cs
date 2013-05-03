@@ -44,7 +44,7 @@ namespace BetterCms.Module.Templates
         {
             get
             {
-                return "Templates module for BetterCMS.";
+                return "Templates module for Better CMS.";
             }
         }
 

@@ -80,13 +80,13 @@ namespace BetterCms.Core
             {
                 if (container == null)
                 {
-                    throw new CmsException("BetterCMS dependencies container is not initialized.");
+                    throw new CmsException("Better CMS dependencies container is not initialized.");
                 }
 
                 cmsHost = container.Resolve<ICmsHost>();                
                 if (cmsHost == null)
                 {
-                    throw new CmsException("BetterCMS host context was not created.");
+                    throw new CmsException("Better CMS host context was not created.");
                 }
             }
 
@@ -240,7 +240,7 @@ namespace BetterCms.Core
             {
                 if (container == null)
                 {
-                    throw new CmsException("BetterCMS dependencies container is not initialized.");
+                    throw new CmsException("Better CMS dependencies container is not initialized.");
                 }
 
                 if (HostingEnvironment.IsHosted)

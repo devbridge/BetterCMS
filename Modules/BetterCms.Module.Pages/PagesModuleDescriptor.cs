@@ -118,7 +118,7 @@ namespace BetterCms.Module.Pages
         {
             get
             {
-                return "Pages module for BetterCMS.";
+                return "Pages module for Better CMS.";
             }
         }
 

@@ -58,7 +58,7 @@ namespace BetterCms.Module.Root
         {
             get
             {
-                return "Root functionality module for BetterCMS.";
+                return "Root functionality module for Better CMS.";
             }
         }
 

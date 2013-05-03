@@ -12,7 +12,7 @@ using Common.Logging;
 namespace BetterCms.Core.Environment.ApplicationStart
 {
     /// <summary>
-    /// Entry point to run BetterCMS preload  logic. 
+    /// Entry point to run Better CMS preload  logic. 
     /// </summary>
     public static class BetterCmsEntrypoint
     {
@@ -38,7 +38,7 @@ namespace BetterCms.Core.Environment.ApplicationStart
             try
             {
                 logger = LogManager.GetCurrentClassLogger();
-                logger.Info("Starting BetterCMS...");
+                logger.Info("Starting Better CMS...");
             }
             catch (Exception ex)
             {
@@ -55,12 +55,12 @@ namespace BetterCms.Core.Environment.ApplicationStart
 
             try
             {
-                logger.Info("Creating BetterCMS context dependencies container...");
+                logger.Info("Creating Better CMS context dependencies container...");
                 ContextScopeProvider.RegisterTypes(CmsContext.InitializeContainer());
             }
             catch (Exception ex)
             {
-                string message = "Failed to create BetterCMS context dependencies container.";
+                string message = "Failed to create Better CMS context dependencies container.";
                 logger.Fatal(message, ex);
 
                 throw new CmsException(message, ex);

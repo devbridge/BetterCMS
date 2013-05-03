@@ -30,7 +30,7 @@ namespace BetterCms.Core.Services
         /// <summary>
         /// Gets the configuration.
         /// </summary>
-        /// <returns>BetterCMS security configuration.</returns>
+        /// <returns>Better CMS security configuration.</returns>
         ICmsSecurityConfiguration GetConfiguration();
 
         /// <summary>

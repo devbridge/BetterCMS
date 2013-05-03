@@ -59,7 +59,7 @@ namespace BetterCms.Module.Newsletter
         {
             get
             {
-                return "A newsletter module for BetterCMS.";
+                return "A newsletter module for Better CMS.";
             }
         }
 
