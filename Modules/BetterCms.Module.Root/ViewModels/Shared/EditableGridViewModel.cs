@@ -15,6 +15,12 @@ namespace BetterCms.Module.Root.ViewModels.Shared
 
         public virtual string TopBlockClass { get; set; }
 
+        public virtual bool CanAddNewItems { get; set; }
+        
+        public virtual bool CanEditItems { get; set; }
+        
+        public virtual bool CanDeleteItems { get; set; }
+
         public virtual IList<EditableGridColumn> Columns { get; set; }
 
         public EditableGridViewModel()
@@ -23,6 +29,10 @@ namespace BetterCms.Module.Root.ViewModels.Shared
             TopBlockClass = RootModuleConstants.EditableGridTopBlockClassName;
             AddNewTitle = RootGlobalization.Button_AddNew;
             Columns = new List<EditableGridColumn>();
+            
+            CanAddNewItems = true;
+            CanEditItems = true;
+            CanDeleteItems = true;
         }
 
         public override string ToString()
