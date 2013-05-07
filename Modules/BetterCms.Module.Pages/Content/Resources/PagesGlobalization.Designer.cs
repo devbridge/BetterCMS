@@ -1303,7 +1303,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Featured Image.
+        ///   Looks up a localized string similar to Image will be displayed as a thumbnail with the page..
         /// </summary>
         public static string EditPageProperties_BasicPropertiesTab_PageImage_Tooltip_Description {
             get {
@@ -2869,7 +2869,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Category.
+        ///   Looks up a localized string similar to Assign your widget to a category to identify it with similar widgets..
         /// </summary>
         public static string Widget_Category_Tooltip_Description {
             get {
@@ -2950,7 +2950,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Purpose of Page URL is .......
+        ///   Looks up a localized string similar to This is what your widget will look like live on your website..
         /// </summary>
         public static string WidgetPreviewImage_Tooltip_Description {
             get {

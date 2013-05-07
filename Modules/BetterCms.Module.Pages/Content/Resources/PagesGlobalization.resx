@@ -397,7 +397,7 @@
     <value>Featured Image</value>
   </data>
   <data name="EditPageProperties_BasicPropertiesTab_PageImage_Tooltip_Description" xml:space="preserve">
-    <value>Featured Image</value>
+    <value>Image will be displayed as a thumbnail with the page.</value>
   </data>
   <data name="EditPageProperties_BasicPropertiesTab_PageName_Title" xml:space="preserve">
     <value>Page Name</value>
@@ -712,7 +712,7 @@
     <value>Category</value>
   </data>
   <data name="Widget_Category_Tooltip_Description" xml:space="preserve">
-    <value>Category</value>
+    <value>Assign your widget to a category to identify it with similar widgets.</value>
   </data>
   <data name="Widget_Title_Title" xml:space="preserve">
     <value>Title</value>
@@ -1075,7 +1075,7 @@
     <value>This is what your template will look like live on your website.</value>
   </data>
   <data name="WidgetPreviewImage_Tooltip_Description" xml:space="preserve">
-    <value>Purpose of Page URL is ......</value>
+    <value>This is what your widget will look like live on your website.</value>
   </data>
   <data name="DeletePage_EnterDelete_Message" xml:space="preserve">
     <value>Type word DELETE to confirm deletion.</value>

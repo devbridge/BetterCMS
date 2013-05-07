@@ -304,7 +304,7 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add Tags.
+        ///   Looks up a localized string similar to Add tags to this post to identify it with related posts..
         /// </summary>
         public static string EditBlockPost_Tags_Tooltip_Description {
             get {
