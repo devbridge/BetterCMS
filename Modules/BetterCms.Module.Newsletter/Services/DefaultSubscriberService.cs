@@ -12,6 +12,8 @@ using BetterCms.Module.Newsletter.Models;
 
 using BetterCms.Module.Root.Mvc;
 
+using Common.Logging;
+
 namespace BetterCms.Module.Newsletter.Services
 {
     public class DefaultSubscriberService : ISubscriberService
@@ -25,6 +27,11 @@ namespace BetterCms.Module.Newsletter.Services
         /// The unit of work
         /// </summary>
         private IUnitOfWork unitOfWork;
+
+        /// <summary>
+        /// The logger
+        /// </summary>
+        private static readonly ILog Logger = LogManager.GetCurrentClassLogger();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultSubscriberService" /> class.
@@ -53,16 +60,19 @@ namespace BetterCms.Module.Newsletter.Services
             Subscriber subscriber;
 
             // Validate
-            try
+            if (!ValidateSubscriber(id, email, out subscriber))
             {
-                ValidateSubscriber(id, email);
-            }
-            catch (UniqueSubscriberException)
-            {
+                var logMessage = string.Format("Subscriber with entered Email {0} already is subscribed.", email);
+
                 if (!ignoreUniqueSubscriberException)
                 {
-                    throw;
+                    var message = string.Format(NewsletterGlobalization.SaveSubscriberCommand_EmailAlreadyExists_Message, email);
+                    throw new UniqueSubscriberException(() => message, logMessage);
                 }
+
+                Logger.Info(logMessage);
+
+                return subscriber;
             }
 
             if (isNew)
@@ -110,7 +120,9 @@ namespace BetterCms.Module.Newsletter.Services
         /// </summary>
         /// <param name="id">The id.</param>
         /// <param name="email">The email.</param>
-        private void ValidateSubscriber(Guid id, string email)
+        /// <param name="subscriber">The subscriber.</param>
+        /// <returns></returns>
+        private bool ValidateSubscriber(Guid id, string email, out Subscriber subscriber)
         {
             var query = repository.AsQueryable<Subscriber>(s => s.Email == email);
             if (!id.HasDefaultValue())
@@ -118,12 +130,8 @@ namespace BetterCms.Module.Newsletter.Services
                 query = query.Where(s => s.Id != id);
             }
 
-            if (query.Select(s => s.Id).Any())
-            {
-                var logMessage = string.Format("Subscriber with entered Email {0} already is subscribed.", email);
-                var message = string.Format(NewsletterGlobalization.SaveSubscriberCommand_EmailAlreadyExists_Message, email);
-                throw new UniqueSubscriberException(() => message, logMessage);
-            }
+            subscriber = query.FirstOrDefault();
+            return subscriber == null;
         }
     }
 }
