@@ -438,9 +438,12 @@ define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messag
                         })
                         .done(function (json) {
                             onDeleteCompleted(json);
+                            self.onAfterItemDeleted(json);
                         })
                         .fail(function (response) {
-                            onDeleteCompleted(bcms.parseFailedResponse(response));
+                            var result = bcms.parseFailedResponse(response);
+                            onDeleteCompleted(result);
+                            self.onAfterItemDeleted(result);
                         });
                         return true;
                     },
@@ -535,6 +538,9 @@ define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messag
                     field.oldValue = field.field() || '';
                 }
             }
+        };
+
+        grid.ItemViewModel.prototype.onAfterItemDeleted = function (json) {
         };
 
         grid.ItemViewModel.prototype.cancelEditItem = function () {
