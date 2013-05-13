@@ -552,6 +552,10 @@ define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messag
             return '';
         };
 
+        grid.ItemViewModel.prototype.getRowId = function () {
+            return '';
+        };
+
         return grid.ItemViewModel;
     })();
 
