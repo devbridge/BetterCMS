@@ -597,8 +597,12 @@ define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 
     */
     function initializeCustomValidation() {
         $.validator.addMethod("jqpageurlvalidation", function(value, element, params) {
-            if (pageUrlManuallyEdited && (!value || value.match(params.pattern) == null)) {
-                return false;
+            if (pageUrlManuallyEdited) {
+                if (!value) {
+                    return false;
+                }
+                var match = new RegExp(params.pattern).exec(value);
+                return (match && (match.index === 0) && (match[0].length === value.length));
             }
 
             return true;
