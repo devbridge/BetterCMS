@@ -508,17 +508,17 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             var self = this;
 
             self.tooltip = item.Tooltip;
-            self.thumbnailUrl = item.ThumbnailUrl;
+            self.thumbnailUrl = ko.observable(item.ThumbnailUrl);
 
             self.getImageUrl = function() {
-                if (!self.thumbnailUrl) {
+                if (!self.thumbnailUrl()) {
                     return null;
                 }
-                return self.thumbnailUrl + '?version=' + self.version();
+                return self.thumbnailUrl();
             };
 
             self.previewImage = function () {
-                var previewUrl = self.publicUrl() + '?version=' + self.version();
+                var previewUrl = self.publicUrl();
                 if (previewUrl) {
                     modal.imagePreview(previewUrl, self.tooltip);
                 }
@@ -548,6 +548,8 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 var self = this;
                 imageEditor.onEditImage(self.id(), function (json) {
                     self.version(json.Version);
+                    self.thumbnailUrl(json.ThumbnailUrl);
+                    self.publicUrl(json.Url);
                     self.name(json.Title);
                     self.oldName = json.Title;
                 });
@@ -961,11 +963,6 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             } else if (imageAlign == 3) {
                 align = "right";
             }
-            if (imageUrl.indexOf('?') < 0) {
-                imageUrl += '?version=' + version;
-            } else {
-                imageUrl += '&version=' + version;
-            }
             var img = "";
             if (imageAlign == 2) {
                 img = '<img src="' + imageUrl + '" alt="' + caption + '"/>';
@@ -1336,24 +1333,6 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.tooltip = ko.observable();
             self.version = ko.observable();
 
-            self.createUrl = function (url) {
-                if (!url) {
-                    return url;
-                }
-
-                if (url.indexOf('?') < 0) {
-                    url = url + '?version=' + self.version();
-                } else {
-                    url = url + '&version=' + self.version();
-                }
-
-                return url;
-            };
-
-            self.versionedThumnailUrl = ko.computed(function () {
-                return self.createUrl(self.thumbnailUrl());
-            });
-
             self.setImage = function (imageData) {
                 self.thumbnailUrl(imageData.ThumbnailUrl);
                 self.url(imageData.ImageUrl);
@@ -1370,7 +1349,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         media.ImageSelectorViewModel.prototype.preview = function (data, event) {
             bcms.stopEventPropagation(event);
 
-            var previewUrl = this.createUrl(this.url()),
+            var previewUrl = this.url(),
                 self = this;
 
             if (previewUrl) {
@@ -1394,7 +1373,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         media.ImageSelectorViewModel.prototype.select = function (data, event) {
             var self = this,
                 onMediaSelect = function (insertedImage) {
-                    self.thumbnailUrl(insertedImage.thumbnailUrl);
+                    self.thumbnailUrl(insertedImage.thumbnailUrl());
                     self.url(insertedImage.publicUrl());
                     self.tooltip(insertedImage.tooltip);
                     self.id(insertedImage.id());

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -8,6 +7,7 @@ using System.Web.Helpers;
 using BetterCms.Api;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Services.Storage;
+using BetterCms.Module.MediaManager.Helpers;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels.Images;
@@ -165,6 +165,14 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
                     }                
                 }
 
+                // Change image file names depending on file version
+                var newVersion = mediaImage.Version + 1;
+                mediaImage.FileUri = ApplyVersionToFileUri(mediaImage.FileUri, mediaImage.OriginalUri, newVersion);
+                mediaImage.PublicUrl = ApplyVersionToFileUrl(mediaImage.PublicUrl, mediaImage.PublicOriginallUrl, newVersion);
+
+                mediaImage.ThumbnailUri = ApplyVersionToFileUri(mediaImage.ThumbnailUri, mediaImage.OriginalUri, newVersion);
+                mediaImage.PublicThumbnailUrl = ApplyVersionToFileUrl(mediaImage.PublicThumbnailUrl, mediaImage.PublicOriginallUrl, newVersion);
+
                 // Upload image to storage
                 bytes = image.GetBytes();
                 var memoryStream = new MemoryStream(bytes);
@@ -183,6 +191,42 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
 
             mediaImage.Width = newWidth;
             mediaImage.Height = newHeight;
+        }
+
+        /// <summary>
+        /// Extracts the name of the real file.
+        /// </summary>
+        /// <param name="fileUri">The file URI.</param>
+        /// <param name="originalFileUri">The original file URI.</param>
+        /// <param name="version">The version.</param>
+        /// <returns>
+        /// File name with new applied version
+        /// </returns>
+        private static Uri ApplyVersionToFileUri(Uri fileUri, Uri originalFileUri, int version)
+        {
+            return new Uri(ApplyVersionToFileUrl(fileUri.OriginalString, originalFileUri.OriginalString, version));
+        }
+
+        /// <summary>
+        /// Applies the version to file URL.
+        /// </summary>
+        /// <param name="fileUrl">The file URL.</param>
+        /// <param name="originalFileUrl">The original file URL.</param>
+        /// <param name="version">The version.</param>
+        /// <returns>
+        /// File name with new applied version
+        /// </returns>
+        private static string ApplyVersionToFileUrl(string fileUrl, string originalFileUrl, int version)
+        {
+            var start = MediaImageHelper.OriginalImageFilePrefix.Length;
+            var origFileName = Path.GetFileNameWithoutExtension(originalFileUrl);
+            origFileName = origFileName.Substring(start, origFileName.Length - start);
+
+            var realOldFileName = Path.GetFileNameWithoutExtension(fileUrl);
+            var realFileNamePath = fileUrl.Substring(0, fileUrl.LastIndexOf(Path.GetFileName(fileUrl)));
+            var realFileName = Path.Combine(realFileNamePath, string.Concat(realOldFileName.Substring(0, realOldFileName.IndexOf(origFileName)), origFileName, Path.GetExtension(fileUrl)));
+
+            return MediaImageHelper.CreateVersionedFileName(realFileName, version);
         }
     }
 }
