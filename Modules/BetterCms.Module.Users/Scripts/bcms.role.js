@@ -121,8 +121,7 @@ define('bcms.role', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', '
     * Open a template edit dialog by the specified tempalte type.
     */
     function editRoleWindow(templateId, onSaveCallback) {
-    role.openEditRoleDialog(templateId, onSaveCallback);
-
+        role.openEditRoleDialog(templateId, onSaveCallback);
     };
 
     role.openEditRoleDialog = function (templateId, onSaveCallback) {

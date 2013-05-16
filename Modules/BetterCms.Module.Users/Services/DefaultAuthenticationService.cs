@@ -2,11 +2,9 @@
 using System.Security.Cryptography;
 using System.Text;
 
-using BetterCms.Core.Exceptions.Mvc;
-
 namespace BetterCms.Module.Users.Services
 {
-    public class DefaultAuthentictionService : IAuthenticationService
+    public class DefaultAuthenticationService : IAuthenticationService
     {
         public string GeneratePasswordSalt()
         {

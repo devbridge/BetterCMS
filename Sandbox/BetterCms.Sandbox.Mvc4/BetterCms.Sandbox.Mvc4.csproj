@@ -349,6 +349,9 @@ copy "$(SolutionDir)Modules\BetterCms.Module.Templates\bin\BetterCms.Module.Temp
 
 copy "$(SolutionDir)Modules\BetterCms.Module.Newsletter\bin\BetterCms.Module.Newsletter.dll" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
 copy "$(SolutionDir)Modules\BetterCms.Module.Newsletter\bin\BetterCms.Module.Newsletter.pdb" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
+
+copy "$(SolutionDir)Modules\BetterCms.Module.Users\bin\BetterCms.Module.Users.dll" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
+copy "$(SolutionDir)Modules\BetterCms.Module.Users\bin\BetterCms.Module.Users.pdb" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
 </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>

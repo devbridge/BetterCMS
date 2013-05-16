@@ -151,7 +151,7 @@
     <Compile Include="Registration\RoleJsModuleIncludeDescriptor.cs" />
     <Compile Include="Provider\RoleProvider.cs" />
     <Compile Include="Registration\UserJsModuleIncludeDescriptor.cs" />
-    <Compile Include="Services\DefaultAuthentictionService.cs" />
+    <Compile Include="Services\DefaultAuthenticationService.cs" />
     <Compile Include="Services\DefaultRoleService.cs" />
     <Compile Include="Services\IAuthenticationService.cs" />
     <Compile Include="Services\IRoleService.cs" />

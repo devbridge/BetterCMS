@@ -13,6 +13,11 @@ namespace BetterCms.Module.Users.Services
         /// <returns>List of user roles lookup values.</returns>
         IEnumerable<LookupKeyValue> GetUserRoles();
 
+        /// <summary>
+        /// Gets the role by id.
+        /// </summary>
+        /// <param name="id">The role id.</param>
+        /// <returns>Role entity</returns>
         Role GetRole(Guid? id);
     }
 }
