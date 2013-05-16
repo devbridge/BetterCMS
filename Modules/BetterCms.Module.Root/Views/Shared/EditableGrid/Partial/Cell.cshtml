@@ -16,7 +16,7 @@
             click: onStopEvent @(Model.AutoFocus ? ", hasfocus: isActive() && hasFocus" : "") " />
             <!-- ko if: !isNew() &&  @(Model.ValueBind).hasError && @(Model.ValueBind).hasError() -->
             <span class="bcms-field-validation-error">
-                <span data-bind="text: @(Model.ValueBind).validationMessage()"></span>
+                <span data-bind="html: @(Model.ValueBind).validationMessage()"></span>
             </span>
             <!-- /ko -->
         <!-- /ko -->
