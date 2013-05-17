@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 using Autofac;
 
 using BetterCms.Core.DataAccess;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Api;
 using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Module.Pages.Api.Events;
@@ -17,6 +18,7 @@ using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
+using BetterCms.Module.Root.Services;
 
 using NHibernate.Linq;
 
@@ -816,16 +818,51 @@ namespace BetterCms.Api
                 throw new CmsApiException(message, inner);
             }
         }
-        
+
         /// <summary>
         /// Creates the HTML content widget.
         /// </summary>
-        /// <returns>Created widget entity</returns>
-        public HtmlContentWidget CreateHtmlContentWidget()
+        /// <param name="name">The name.</param>
+        /// <param name="html">The HTML.</param>
+        /// <param name="categoryId">The category id.</param>
+        /// <param name="css">The CSS.</param>
+        /// <param name="javaScript">The java script.</param>
+        /// <returns>
+        /// Created widget entity
+        /// </returns>
+        /// <exception cref="BetterCms.Core.Exceptions.Api.CmsApiException"></exception>
+        public HtmlContentWidget CreateHtmlContentWidget(string name, string html, Guid? categoryId = null, string css = null, string javaScript = null)
         {
             try
             {
-                return null;
+                UnitOfWork.BeginTransaction();
+
+                var htmlWidget = new HtmlContentWidget
+                                     {
+                                         Name = name,
+                                         Html = html,
+                                         CustomCss = css,
+                                         CustomJs = javaScript,
+                                         UseHtml = !string.IsNullOrWhiteSpace(html),
+                                         UseCustomCss = !string.IsNullOrWhiteSpace(css),
+                                         UseCustomJs = !string.IsNullOrWhiteSpace(javaScript)
+                                     };
+
+                if (categoryId.HasValue && !categoryId.Value.HasDefaultValue())
+                {
+                    htmlWidget.Category = Repository.AsProxy<Category>(categoryId.Value);
+                }
+
+                var service = Resolve<IContentService>();
+                var widgetToSave = (HtmlContentWidget)service.SaveContentWithStatusUpdate(htmlWidget, ContentStatus.Published);
+
+                Repository.Save(widgetToSave);
+                UnitOfWork.Commit();
+
+                // Notify
+                Events.OnWidgetCreated(widgetToSave);
+
+                return widgetToSave;
             }
             catch (Exception inner)
             {
