@@ -94,6 +94,7 @@ define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messag
                         IsNew: true
                     });
                     self.items.unshift(newItem);
+                    self.isSelected = true;
                 }
             };
             
@@ -224,7 +225,6 @@ define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messag
         self.field.subscribe(function () {
             var oldValue = self.field() ? self.field() : '';
             if (!self.parent.isActive() && oldValue != self.oldValue) {
-                // console.log('Changing value of item ' + id + ' from "' + self.oldValue + '" to "' + oldValue + '"');
                 self.oldValue = oldValue;
             }
         });
@@ -272,7 +272,11 @@ define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messag
             self.isNew = ko.observable(item.IsNew || false);
             self.registeredFields = [];
             self.savePressed = false;
-            
+
+            self.hasFocus.subscribe(function(value) {
+                self.isSelected = value;
+            });
+
             self.onOpen = function (data, event) {
                 bcms.stopEventPropagation(event);
                 self.openItem();
@@ -462,6 +466,7 @@ define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messag
 
         grid.ItemViewModel.prototype.saveItem = function () {
             var self = this;
+            self.hasFocus(false);
             self.saving(true);
             removeSaveTimer(self, true);
             
@@ -525,6 +530,7 @@ define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messag
             }
 
             if (json.Success) {
+                self.isSelected = false;
                 if (json.Data) {
                     self.version(json.Data.Version);
                     self.id(json.Data.Id);
@@ -537,6 +543,9 @@ define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messag
 
                     field.oldValue = field.field() || '';
                 }
+            } else {
+                self.hasFocus(true);
+                self.isSelected = true;
             }
         };
 
