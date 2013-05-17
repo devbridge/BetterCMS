@@ -875,16 +875,90 @@ namespace BetterCms.Api
         /// <summary>
         /// Creates the server control widget.
         /// </summary>
-        /// <returns>Created widget entity</returns>
-        public ServerControlWidget CreateServerControlWidget()
+        /// <param name="name">The name.</param>
+        /// <param name="widgetPath">The widget path.</param>
+        /// <param name="categoryId">The category id.</param>
+        /// <param name="previewUrl">The preview URL.</param>
+        /// <returns>
+        /// Created widget entity
+        /// </returns>
+        /// <exception cref="CmsApiValidationException"></exception>
+        /// <exception cref="BetterCms.Core.Exceptions.Api.CmsApiException"></exception>
+        public ServerControlWidget CreateServerControlWidget(string name, string widgetPath, Guid? categoryId = null, string previewUrl = null)
         {
+            if (!HttpHelper.VirtualPathExists(widgetPath))
+            {
+                var message = string.Format("Failed to create server control widget: view by given path {0} doesn't exist.", widgetPath);
+                Logger.Error(message);
+                throw new CmsApiValidationException(message);
+            }
+
             try
             {
-                return null;
+                UnitOfWork.BeginTransaction();
+
+                var serverWidget = new ServerControlWidget
+                                       {
+                                           Name = name,
+                                           Url = widgetPath,
+                                           PreviewUrl = previewUrl
+                                       };
+
+                if (categoryId.HasValue && !categoryId.Value.HasDefaultValue())
+                {
+                    serverWidget.Category = Repository.AsProxy<Category>(categoryId.Value);
+                }
+
+                var service = Resolve<IContentService>();
+                var widgetToSave = (ServerControlWidget)service.SaveContentWithStatusUpdate(serverWidget, ContentStatus.Published);
+
+                Repository.Save(widgetToSave);
+                UnitOfWork.Commit();
+
+                // Notify
+                Events.OnWidgetCreated(widgetToSave);
+
+                return widgetToSave;
             }
             catch (Exception inner)
             {
                 var message = string.Format("Failed to create server control widget.");
+                Logger.Error(message, inner);
+                throw new CmsApiException(message, inner);
+            }
+        }
+
+        /// <summary>
+        /// Creates the content option.
+        /// </summary>
+        /// <param name="contentId">The content id.</param>
+        /// <param name="key">The key.</param>
+        /// <param name="defaultValue">The default value.</param>
+        /// <param name="type">The type.</param>
+        /// <returns>
+        /// Created content option
+        /// </returns>
+        /// <exception cref="BetterCms.Core.Exceptions.Api.CmsApiException"></exception>
+        public ContentOption CreateContentOption(Guid contentId, string key, string defaultValue, OptionType type = OptionType.Text)
+        {
+            try
+            {
+                var option = new ContentOption
+                                 {
+                                     Key = key,
+                                     DefaultValue = defaultValue,
+                                     Type = type,
+                                     Content = Repository.AsProxy<Content>(contentId)
+                                 };
+
+                Repository.Save(option);
+                UnitOfWork.Commit();
+
+                return option;
+            }
+            catch (Exception inner)
+            {
+                var message = string.Format("Failed to create server content option.");
                 Logger.Error(message, inner);
                 throw new CmsApiException(message, inner);
             }
