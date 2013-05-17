@@ -10,6 +10,7 @@ using BetterCms.Core.Exceptions.Api;
 using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Module.Pages.Api.Events;
 using BetterCms.Module.Pages.DataContracts.Enums;
+using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Module.Pages.Services;
@@ -708,7 +709,126 @@ namespace BetterCms.Api
                 throw new CmsApiException(message, inner);
             }
         }
+
+        /// <summary>
+        /// Creates the layout.
+        /// </summary>
+        /// <returns>Created layout entity</returns>
+        public Layout CreateLayout(string layoutPath, string name, string previewUrl = null, IEnumerable<string> regions = null)
+        {
+            if (!HttpHelper.VirtualPathExists(layoutPath))
+            {
+                var message = string.Format("Failed to create layout: layout by given path {0} doesn't exist.", layoutPath);
+                Logger.Error(message);
+                throw new CmsApiValidationException(message);
+            }
+
+            try
+            {
+                UnitOfWork.BeginTransaction();
+
+                var layout = new Layout
+                                 {
+                                     LayoutPath = layoutPath,
+                                     Name = name,
+                                     PreviewUrl = previewUrl
+                                 };
+                
+                // reference or create new regions by identifiers
+                if (regions != null)
+                {
+                    layout.LayoutRegions = new List<LayoutRegion>();
+                    foreach (var regionIdentifier in regions)
+                    {
+                        if (string.IsNullOrWhiteSpace(regionIdentifier))
+                        {
+                            continue;
+                        }
+                        
+                        var region = Repository
+                            .AsQueryable<Region>(r => r.RegionIdentifier == regionIdentifier)
+                            .FirstOrDefault();
+                        if (region == null)
+                        {
+                            region = new Region { RegionIdentifier = regionIdentifier };
+                        }
+
+                        var layoutRegion = new LayoutRegion
+                                               {
+                                                   Layout = layout,
+                                                   Region = region
+                                               };
+                        layout.LayoutRegions.Add(layoutRegion);
+                    }
+                }
+
+                Repository.Save(layout);
+                UnitOfWork.Commit();
+
+                return layout;
+            }
+            catch (Exception inner)
+            {
+                var message = string.Format("Failed to create layout. Path: {0}, Name: {1}, Url: {2}", layoutPath, name, previewUrl);
+                Logger.Error(message, inner);
+                throw new CmsApiException(message, inner);
+            }
+        }
         
+        /// <summary>
+        /// Creates the layout region.
+        /// </summary>
+        /// <returns>Created layout region entity</returns>
+        public LayoutRegion CreateLayoutRegion()
+        {
+            try
+            {
+                return null;
+            }
+            catch (Exception inner)
+            {
+                var message = string.Format("Failed to create layout region.");
+                Logger.Error(message, inner);
+                throw new CmsApiException(message, inner);
+            }
+        }
+        
+        /// <summary>
+        /// Creates the HTML content widget.
+        /// </summary>
+        /// <returns>Created widget entity</returns>
+        public HtmlContentWidget CreateHtmlContentWidget()
+        {
+            try
+            {
+                return null;
+            }
+            catch (Exception inner)
+            {
+                var message = string.Format("Failed to create HTML content widget.");
+                Logger.Error(message, inner);
+                throw new CmsApiException(message, inner);
+            }
+        }
+
+        /// <summary>
+        /// Creates the server control widget.
+        /// </summary>
+        /// <returns>Created widget entity</returns>
+        public ServerControlWidget CreateServerControlWidget()
+        {
+            try
+            {
+                return null;
+            }
+            catch (Exception inner)
+            {
+                var message = string.Format("Failed to create server control widget.");
+                Logger.Error(message, inner);
+                throw new CmsApiException(message, inner);
+            }
+        }
+
         /// <summary>
         /// Fetches the child by given parameters.
         /// </summary>
