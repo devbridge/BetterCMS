@@ -15,6 +15,7 @@ using BetterCms.Module.Pages.Models;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
 using NHibernate.Linq;
@@ -744,14 +745,8 @@ namespace BetterCms.Api
                         {
                             continue;
                         }
-                        
-                        var region = Repository
-                            .AsQueryable<Region>(r => r.RegionIdentifier == regionIdentifier)
-                            .FirstOrDefault();
-                        if (region == null)
-                        {
-                            region = new Region { RegionIdentifier = regionIdentifier };
-                        }
+
+                        var region = LoadOrCreateRegion(regionIdentifier);
 
                         var layoutRegion = new LayoutRegion
                                                {
@@ -774,16 +769,45 @@ namespace BetterCms.Api
                 throw new CmsApiException(message, inner);
             }
         }
-        
+
         /// <summary>
         /// Creates the layout region.
         /// </summary>
-        /// <returns>Created layout region entity</returns>
-        public LayoutRegion CreateLayoutRegion()
+        /// <param name="layoutId">The layout id.</param>
+        /// <param name="regionIdentifier">The region identifier.</param>
+        /// <returns>
+        /// Created layout region entity
+        /// </returns>
+        /// <exception cref="BetterCms.Core.Exceptions.Api.CmsApiException"></exception>
+        public LayoutRegion CreateLayoutRegion(Guid layoutId, string regionIdentifier)
         {
             try
             {
-                return null;
+                var layout = Repository.AsProxy<Layout>(layoutId);
+                var region = LoadOrCreateRegion(regionIdentifier);
+
+                if (!region.Id.HasDefaultValue())
+                {
+                    var exists = Repository.AsQueryable<LayoutRegion>(lr => lr.Region == region && lr.Layout == layout).Any();
+                    if (exists)
+                    {
+                        var message = string.Format("Failed to create layout region: region {0} is already assigned.", regionIdentifier);
+                        var logMessage = string.Format("{0} LayoutId: {1}", message, layoutId);
+                        Logger.Error(logMessage);
+                        throw new CmsApiValidationException(message);
+                    }
+                }
+
+                var layoutRegion = new LayoutRegion { Layout = layout, Region = region };
+                Repository.Save(layoutRegion);
+
+                UnitOfWork.Commit();
+
+                return layoutRegion;
+            }
+            catch (CmsApiValidationException)
+            {
+                throw;
             }
             catch (Exception inner)
             {
@@ -865,6 +889,24 @@ namespace BetterCms.Api
             }
 
             return query;
+        }
+
+        /// <summary>
+        /// Loads the or creates the region.
+        /// </summary>
+        /// <returns>region entity</returns>
+        private Region LoadOrCreateRegion(string regionIdentifier)
+        {
+            var region = Repository
+                            .AsQueryable<Region>(r => r.RegionIdentifier == regionIdentifier)
+                            .FirstOrDefault();
+
+            if (region == null)
+            {
+                region = new Region { RegionIdentifier = regionIdentifier };
+            }
+
+            return region;
         }
     }
 }
