@@ -1063,6 +1063,160 @@ namespace BetterCms.Api
         }
 
         /// <summary>
+        /// Creates the content of the page HTML.
+        /// </summary>
+        /// <param name="pageId">The page id.</param>
+        /// <param name="regionId">The region id.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="html">The HTML.</param>
+        /// <param name="contentStatus">The content status.</param>
+        /// <param name="activationDate">The activation date.</param>
+        /// <param name="expirationDate">The expiration date.</param>
+        /// <param name="customCss">The custom CSS.</param>
+        /// <param name="customJs">The custom js.</param>
+        /// <returns>Page content entity with created HTML content</returns>
+        public PageContent CreatePageHtmlContent(Guid pageId, Guid regionId, string name, string html, ContentStatus contentStatus, DateTime? activationDate = null, DateTime? expirationDate = null, string customCss = null, string customJs = null)
+        {
+            Region region;
+            try
+            {
+                region = Repository.AsProxy<Region>(regionId);
+            }
+            catch (Exception inner)
+            {
+                var message = string.Format("Failed to load region by Id: {0}.", regionId);
+                Logger.Error(message, inner);
+                throw new CmsApiException(message, inner);
+            }
+
+            return CreatePageHtmlContent(pageId, region, name, html, contentStatus, activationDate, expirationDate, customCss, customJs);
+        }
+
+        /// <summary>
+        /// Creates the content of the page HTML.
+        /// </summary>
+        /// <param name="pageId">The page id.</param>
+        /// <param name="regionIdentifier">The region identifier.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="html">The HTML.</param>
+        /// <param name="contentStatus">The content status.</param>
+        /// <param name="activationDate">The activation date.</param>
+        /// <param name="expirationDate">The expiration date.</param>
+        /// <param name="customCss">The custom CSS.</param>
+        /// <param name="customJs">The custom js.</param>
+        /// <returns>Page content entity with created HTML content</returns>
+        public PageContent CreatePageHtmlContent(Guid pageId, string regionIdentifier, string name, string html, ContentStatus contentStatus, DateTime? activationDate = null, DateTime? expirationDate = null, string customCss = null, string customJs = null)
+        {
+            Region region;
+            try
+            {
+                region = Repository.AsQueryable<Region>(r => r.RegionIdentifier == regionIdentifier).FirstOne();
+            }
+            catch (Exception inner)
+            {
+                var message = string.Format("Failed to load region by identifier: {0}.", regionIdentifier);
+                Logger.Error(message, inner);
+                throw new CmsApiException(message, inner);
+            }
+
+            return CreatePageHtmlContent(pageId, region, name, html, contentStatus, activationDate, expirationDate, customCss, customJs);
+        }
+
+        /// <summary>
+        /// Creates the content of the page HTML.
+        /// </summary>
+        /// <param name="pageId">The page id.</param>
+        /// <param name="region">The region.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="html">The HTML.</param>
+        /// <param name="contentStatus">The content status.</param>
+        /// <param name="activationDate">The activation date.</param>
+        /// <param name="expirationDate">The expiration date.</param>
+        /// <param name="customCss">The custom CSS.</param>
+        /// <param name="customJs">The custom js.</param>
+        /// <returns>Page content entity with created HTML content</returns>
+        private PageContent CreatePageHtmlContent(Guid pageId, Region region, string name, string html, ContentStatus contentStatus, DateTime? activationDate = null, DateTime? expirationDate = null, string customCss = null, string customJs = null)
+        {
+            try
+            {
+                UnitOfWork.BeginTransaction();
+
+                var page = Repository.AsProxy<PageProperties>(pageId);
+
+                var contentService = Resolve<IContentService>();
+                var content = new HtmlContent
+                {
+                    Name = name,
+                    ActivationDate = activationDate ?? DateTime.Today,
+                    ExpirationDate = TimeHelper.FormatEndDate(expirationDate),
+                    Html = html ?? string.Empty,
+                    CustomCss = customCss,
+                    UseCustomCss = !string.IsNullOrWhiteSpace(customCss),
+                    CustomJs = customJs,
+                    UseCustomJs = !string.IsNullOrWhiteSpace(customJs)
+                };
+                var contentToSave = contentService.SaveContentWithStatusUpdate(content, contentStatus);
+
+                var pageContent = new PageContent
+                {
+                    Content = contentToSave,
+                    Order = contentService.GetPageContentNextOrderNumber(pageId),
+                    Page = page,
+                    Region = region
+                };
+
+                Repository.Save(pageContent);
+                UnitOfWork.Commit();
+
+                Events.OnPageContentInserted(pageContent);
+
+                return pageContent;
+            }
+            catch (Exception inner)
+            {
+                var message = string.Format("Failed to create page HTML content.");
+                Logger.Error(message, inner);
+                throw new CmsApiException(message, inner);
+            }
+        }
+
+        /// <summary>
+        /// Adds the HTML content widget to page.
+        /// </summary>
+        /// <returns>Created Page Content</returns>
+        public PageContent AddHtmlContentWidgetToPage()
+        {
+            try
+            {
+                return null;
+            }
+            catch (Exception inner)
+            {
+                var message = string.Format("Failed to add HTML widget to page.");
+                Logger.Error(message, inner);
+                throw new CmsApiException(message, inner);
+            }
+        }
+
+        /// <summary>
+        /// Adds the server control widget to page.
+        /// </summary>
+        /// <returns>Created Page Content</returns>
+        public PageContent AddServerControlWidgetToPage()
+        {
+            try
+            {
+                return null;
+            }
+            catch (Exception inner)
+            {
+                var message = string.Format("Failed to add server control widget to page.");
+                Logger.Error(message, inner);
+                throw new CmsApiException(message, inner);
+            }
+        }
+
+        /// <summary>
         /// Fetches the child by given parameters.
         /// </summary>
         /// <param name="query">The query.</param>

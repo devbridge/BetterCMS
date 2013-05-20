@@ -286,6 +286,28 @@ namespace BetterCms.Module.Root.Services
             return null;
         }
 
+        public int GetPageContentNextOrderNumber(Guid pageId)
+        {
+            var page = repository.AsProxy<Page>(pageId);
+            var max = repository
+                .AsQueryable<PageContent>()
+                .Where(f => f.Page == page && !f.IsDeleted)
+                .Select(f => (int?)f.Order)
+                .Max();
+            int order;
+
+            if (max == null)
+            {
+                order = 0;
+            }
+            else
+            {
+                order = max.Value + 1;
+            }
+
+            return order;
+        }
+
         private Models.Content FindEditableContentVersion(Models.Content content)
         {
             Models.Content contentForEdit = null;
