@@ -11,12 +11,12 @@ using BetterCms.Core.Exceptions.Api;
 using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.Pages.Api.Dto;
 using BetterCms.Module.Pages.Api.Events;
 using BetterCms.Module.Pages.DataContracts.Enums;
 using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Core.DataAccess.DataContext;
-using BetterCms.Module.Pages.Models.Api;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
@@ -939,36 +939,39 @@ namespace BetterCms.Api
         }
 
         /// <summary>
-        /// Creates the content option.
+        /// Creates the content options.
         /// </summary>
-        /// <param name="contentId">The content id.</param>
-        /// <param name="key">The key.</param>
-        /// <param name="defaultValue">The default value.</param>
-        /// <param name="type">The type.</param>
-        /// <returns>
-        /// Created content option
-        /// </returns>
-        /// <exception cref="BetterCms.Core.Exceptions.Api.CmsApiException"></exception>
-        public ContentOption CreateContentOption(Guid contentId, string key, string defaultValue, OptionType type = OptionType.Text)
+        /// <param name="request">The request.</param>
+        /// <returns>List with saved content option entities</returns>
+        public IList<ContentOption> CreateContentOptions(CreateContentOptionsRequest request)
         {
             try
             {
-                var option = new ContentOption
-                                 {
-                                     Key = key,
-                                     DefaultValue = defaultValue,
-                                     Type = type,
-                                     Content = Repository.AsProxy<Content>(contentId)
-                                 };
+                UnitOfWork.BeginTransaction();
 
-                Repository.Save(option);
+                var options = new List<ContentOption>();
+                var content = Repository.AsProxy<Content>(request.ContentId);
+                foreach (var requestOption in request.Options)
+                {
+                    var option = new ContentOption
+                    {
+                        Key = requestOption.Key,
+                        DefaultValue = requestOption.DefaultValue,
+                        Type = requestOption.Type,
+                        Content = content
+                    };
+
+                    options.Add(option);
+                    Repository.Save(option);
+                }
+
                 UnitOfWork.Commit();
 
-                return option;
+                return options;
             }
             catch (Exception inner)
             {
-                var message = string.Format("Failed to create server content option.");
+                var message = string.Format("Failed to create server content options.");
                 Logger.Error(message, inner);
                 throw new CmsApiException(message, inner);
             }
@@ -978,7 +981,7 @@ namespace BetterCms.Api
         /// Creates the page.
         /// </summary>
         /// <returns></returns>
-        public PageProperties CreatePage(CreatePageDto pageDto)
+        public PageProperties CreatePage(CreatePageRequest pageDto)
         {
             // Validate layout
             if (pageDto.LayoutId.HasDefaultValue())

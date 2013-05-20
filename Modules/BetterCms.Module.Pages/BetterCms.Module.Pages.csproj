@@ -120,6 +120,9 @@
     </Compile>
     <Compile Include="Accessors\PageStylesheetAccessor.cs" />
     <Compile Include="Accessors\PageJavaScriptAccessor.cs" />
+    <Compile Include="Api\Dto\ContentOptionDto.cs" />
+    <Compile Include="Api\Dto\ContentOptionValueDto.cs" />
+    <Compile Include="Api\Dto\CreateContentOptionsRequest.cs" />
     <Compile Include="Api\Events\CategoryEvents.cs" />
     <Compile Include="Api\Events\WidgetEvents.cs" />
     <Compile Include="Api\Events\TagEvents.cs" />
@@ -221,7 +224,7 @@
     <Compile Include="Helpers\ListModelBindingExtensions.cs" />
     <Compile Include="Helpers\RenderHelper.cs" />
     <Compile Include="Helpers\TimeHelper.cs" />
-    <Compile Include="Models\Api\CreatePageDto.cs" />
+    <Compile Include="Api\Dto\CreatePageRequest.cs" />
     <Compile Include="Models\IServerControlWidget.cs" />
     <Compile Include="Models\Maps\HtmlContentMap.cs" />
     <Compile Include="Models\Maps\SitemapNodeMap.cs" />
