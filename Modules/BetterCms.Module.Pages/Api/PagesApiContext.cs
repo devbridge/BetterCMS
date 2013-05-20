@@ -885,20 +885,18 @@ namespace BetterCms.Api
         /// <summary>
         /// Creates the server control widget.
         /// </summary>
-        /// <param name="name">The name.</param>
-        /// <param name="widgetPath">The widget path.</param>
-        /// <param name="categoryId">The category id.</param>
-        /// <param name="previewUrl">The preview URL.</param>
+        /// <param name="request">The request.</param>
         /// <returns>
         /// Created widget entity
         /// </returns>
         /// <exception cref="CmsApiValidationException"></exception>
+        /// <exception cref="CmsApiException"></exception>
         /// <exception cref="BetterCms.Core.Exceptions.Api.CmsApiException"></exception>
-        public ServerControlWidget CreateServerControlWidget(string name, string widgetPath, Guid? categoryId = null, string previewUrl = null)
+        public ServerControlWidget CreateServerControlWidget(CreateServerControlWidgetRequest request)
         {
-            if (!HttpHelper.VirtualPathExists(widgetPath))
+            if (!HttpHelper.VirtualPathExists(request.WidgetPath))
             {
-                var message = string.Format("Failed to create server control widget: view by given path {0} doesn't exist.", widgetPath);
+                var message = string.Format("Failed to create server control widget: view by given path {0} doesn't exist.", request.WidgetPath);
                 Logger.Error(message);
                 throw new CmsApiValidationException(message);
             }
@@ -909,20 +907,26 @@ namespace BetterCms.Api
 
                 var serverWidget = new ServerControlWidget
                                        {
-                                           Name = name,
-                                           Url = widgetPath,
-                                           PreviewUrl = previewUrl
+                                           Name = request.Name,
+                                           Url = request.WidgetPath,
+                                           PreviewUrl = request.PreviewUrl
                                        };
 
-                if (categoryId.HasValue && !categoryId.Value.HasDefaultValue())
+                if (request.CategoryId.HasValue && !request.CategoryId.Value.HasDefaultValue())
                 {
-                    serverWidget.Category = Repository.AsProxy<Category>(categoryId.Value);
+                    serverWidget.Category = Repository.AsProxy<Category>(request.CategoryId.Value);
                 }
 
                 var service = Resolve<IContentService>();
                 var widgetToSave = (ServerControlWidget)service.SaveContentWithStatusUpdate(serverWidget, ContentStatus.Published);
 
                 Repository.Save(widgetToSave);
+
+                if (request.Options != null && request.Options.Count > 0)
+                {
+                    SaveServerWidgetOptions(widgetToSave, request.Options);
+                }
+
                 UnitOfWork.Commit();
 
                 // Notify
@@ -939,31 +943,18 @@ namespace BetterCms.Api
         }
 
         /// <summary>
-        /// Creates the content options.
+        /// Creates the server widget options.
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns>List with saved content option entities</returns>
-        public IList<ContentOption> CreateContentOptions(CreateContentOptionsRequest request)
+        public IList<ContentOption> CreateServerWidgetOptions(CreateContentOptionsRequest request)
         {
             try
             {
                 UnitOfWork.BeginTransaction();
 
-                var options = new List<ContentOption>();
-                var content = Repository.AsProxy<Content>(request.ContentId);
-                foreach (var requestOption in request.Options)
-                {
-                    var option = new ContentOption
-                    {
-                        Key = requestOption.Key,
-                        DefaultValue = requestOption.DefaultValue,
-                        Type = requestOption.Type,
-                        Content = content
-                    };
-
-                    options.Add(option);
-                    Repository.Save(option);
-                }
+                var widget = Repository.AsProxy<ServerControlWidget>(request.ContentId);
+                var options = SaveServerWidgetOptions(widget, request.Options);
 
                 UnitOfWork.Commit();
 
@@ -975,6 +966,33 @@ namespace BetterCms.Api
                 Logger.Error(message, inner);
                 throw new CmsApiException(message, inner);
             }
+        }
+
+        /// <summary>
+        /// Saves the server widget options.
+        /// </summary>
+        /// <param name="widget">The widget.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <returns> List of saved widget options </returns>
+        private IList<ContentOption> SaveServerWidgetOptions(ServerControlWidget widget, IList<ContentOptionDto> requestOptions)
+        {
+            var options = new List<ContentOption>();
+
+            foreach (var requestOption in requestOptions)
+            {
+                var option = new ContentOption
+                {
+                    Key = requestOption.Key,
+                    DefaultValue = requestOption.DefaultValue,
+                    Type = requestOption.Type,
+                    Content = widget
+                };
+
+                options.Add(option);
+                Repository.Save(option);
+            }
+
+            return options;
         }
 
         /// <summary>

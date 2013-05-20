@@ -123,6 +123,7 @@
     <Compile Include="Api\Dto\ContentOptionDto.cs" />
     <Compile Include="Api\Dto\ContentOptionValueDto.cs" />
     <Compile Include="Api\Dto\CreateContentOptionsRequest.cs" />
+    <Compile Include="Api\Dto\CreateServerControlWidgetRequest.cs" />
     <Compile Include="Api\Events\CategoryEvents.cs" />
     <Compile Include="Api\Events\WidgetEvents.cs" />
     <Compile Include="Api\Events\TagEvents.cs" />
