@@ -20,32 +20,52 @@
     </thead>
     <tbody>
         <!-- ko foreach: items -->
-        <tr data-bind="click: onOpen, css: {'bcms-table-row-active' : isActive()}">
+        <tr data-bind="click: onOpen, css: {'bcms-table-row-active' : isActive()}, attr: {id: getRowId()}">
             <!-- ko if: saving() || deleting() -->
-            <td class="bcms-tables-nohover">&nbsp;</td>
+            @if (Model.CanEditItems)
+            {
+                <td class="bcms-tables-nohover">&nbsp;</td>
                 <!-- ko if: saving() -->
                 <td class="bcms-tables-nohover" colspan="@Model.Columns.Count">@RootGlobalization.Message_Saving</td>
                 <!-- /ko -->
+            }
+            @if (Model.CanEditItems)
+            {
+                <td class="bcms-tables-nohover" style="width: 145px;">&nbsp;</td>
                 <!-- ko if: deleting() -->
                 <td class="bcms-tables-nohover" colspan="@Model.Columns.Count">@RootGlobalization.Message_Deleting</td>
                 <!-- /ko -->
-            <td class="bcms-tables-nohover" style="width: 145px;">&nbsp;</td>
+            }
             <!-- /ko -->
             
             <!-- ko ifnot: saving() || deleting() -->
-            <td><a class="bcms-icn-edit" data-bind="click: onEdit">@RootGlobalization.Button_Edit</a></td>
+            @if (Model.CanEditItems)
+            {
+                <td><a class="bcms-icn-edit" data-bind="click: onEdit">@RootGlobalization.Button_Edit</a></td>
+            }
+            else
+            {
+                <td>&nbsp;</td>
+            }
             @foreach (var column in Model.Columns)
             {
                 @Html.Partial(column.CellView, column)
             }
             <td>
-                <!-- ko ifnot: isActive()-->
-                <a class="bcms-icn-delete" data-bind="click: onDelete">@RootGlobalization.Button_Delete</a>
-                <!-- /ko -->
-                <!-- ko if: isActive() -->
-                <div class="bcms-btn-small" data-bind="click: onSave">@RootGlobalization.Button_Save</div>
-                <div class="bcms-btn-links-small" data-bind="click: onCancelEdit">@RootGlobalization.Button_Cancel</div>
-                <!-- /ko -->
+                @if (Model.CanDeleteItems)
+                {
+                    <!-- ko ifnot: isActive()-->
+                    <a class="bcms-icn-delete" data-bind="click: onDelete">@RootGlobalization.Button_Delete</a>
+                    <!-- /ko -->
+                }
+                @if (Model.CanEditItems)
+                {
+                    <!-- ko if: isActive() -->
+                    <div class="bcms-btn-small" data-bind="click: onSave">@RootGlobalization.Button_Save</div>
+                    <div class="bcms-btn-links-small" data-bind="click: onCancelEdit">@RootGlobalization.Button_Cancel</div>
+                    <!-- /ko -->
+                }
+                
             </td>
             <!-- /ko -->
         </tr>

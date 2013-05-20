@@ -1,0 +1,20 @@
+﻿@using BetterCms.Module.Newsletter.Content.Resources
+@using BetterCms.Module.Root;
+@using BetterCms.Module.Root.Mvc.Grids;
+@using BetterCms.Module.Root.ViewModels.Shared;
+
+@{
+    var gridViewModel = new EditableGridViewModel
+    {
+        TopBlockTitle = NewsletterGlobalization.SiteSettings_NewsletterSubscribers_Title,
+        Columns = new List<EditableGridColumn>
+            {
+                new EditableGridColumn(NewsletterGlobalization.SiteSettings_NewsletterSubscribers_Email_Title, "Email", "email")
+                    {
+                        AutoFocus = true
+                    }
+            }
+    };
+}
+
+@Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel)

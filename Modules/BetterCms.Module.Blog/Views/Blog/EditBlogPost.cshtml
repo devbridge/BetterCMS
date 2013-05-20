@@ -80,7 +80,7 @@
                     <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_Title_Title</div>
                     <div class="bcms-input-box">
                         @Html.TextBoxFor(m => m.Title, GetAttributesObject(canEdit, new { @style = "width: 510px;", @class = "bcms-editor-field-box", @id = "bcms-editor-blog-title" }))
-                        @Html.ValidationMessageFor(m => m.Title)
+                        @Html.BcmsValidationMessageFor(m => m.Title)
                     </div>
                 </div>
 
@@ -91,7 +91,7 @@
                     <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_IntroText_Title</div>
                     <div class="bcms-textarea-box">
                         @Html.TextAreaFor(m => m.IntroText, GetAttributesObject(canEdit, new { @style = "width: 510px; height: 170px;", @class = "bcms-editor-field-area" }))
-                        @Html.ValidationMessageFor(m => m.IntroText)
+                        @Html.BcmsValidationMessageFor(m => m.IntroText)
                     </div>
                 </div>
                 <div class="bcms-input-list-holder">
@@ -109,14 +109,14 @@
                         <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_LiveFrom_Title</div>
                         <div class="bcms-date-input-box">
                             @Html.DateTextBoxFor(model => model.LiveFromDate, Model.LiveFromDate, GetAttributesObject(true, new { @class = "bcms-editor-field-box bcms-datepicker", @style = "width: 127px;" }))
-                            @Html.ValidationMessageFor(m => m.LiveFromDate)
+                            @Html.BcmsValidationMessageFor(m => m.LiveFromDate)
                         </div>
                     </div>
                     <div class="bcms-input-field-holder">
                         <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_LiveTo_Title</div>
                         <div class="bcms-date-input-box">
                             @Html.DateTextBoxFor(model => model.LiveToDate, Model.LiveToDate, GetAttributesObject(true, new { @class = "bcms-editor-field-box bcms-datepicker", @style = "width: 127px;" }))
-                            @Html.ValidationMessageFor(m => m.LiveToDate)
+                            @Html.BcmsValidationMessageFor(m => m.LiveToDate)
                         </div>
                     </div>
                 </div>
@@ -128,7 +128,7 @@
                         <!-- ko if: image().url() -->
                         <a class="bcms-remove-image" data-bind="@(canEdit ? "click: image().remove.bind(image())" : string.Empty)">@RootGlobalization.Button_Remove</a>
                         <a data-bind="click: image().preview.bind(image())">
-                            <img data-bind="attr: { src: image().versionedThumnailUrl(), alt: image().tooltip() }" /></a>
+                            <img data-bind="attr: { src: image().thumbnailUrl(), alt: image().tooltip() }" /></a>
                         <!-- /ko -->
                     </div>
                     <div class="bcms-upload-info">

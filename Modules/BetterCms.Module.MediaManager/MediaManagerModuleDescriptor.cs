@@ -72,7 +72,7 @@ namespace BetterCms.Module.MediaManager
         {
             get
             {
-                return "A media manager module for BetterCMS.";
+                return "A media manager module for Better CMS.";
             }
         }
 

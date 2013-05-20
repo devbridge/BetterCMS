@@ -95,7 +95,7 @@ namespace BetterCms.Module.Root.Services
         /// <summary>
         /// Gets the configuration.
         /// </summary>
-        /// <returns>BetterCMS security configuration.</returns>
+        /// <returns>Better CMS security configuration.</returns>
         public ICmsSecurityConfiguration GetConfiguration()
         {
             return configuration.Security;

@@ -16,7 +16,7 @@
                 <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_PageTitle</div>
                 <div class="bcms-input-box">
                     @Html.TextBoxFor(f => f.PageTitle, new { @class = "bcms-editor-field-box", @id = "PageTitle" })
-                    @Html.ValidationMessageFor(f => f.PageTitle)
+                    @Html.BcmsValidationMessageFor(f => f.PageTitle)
                 </div>
             </div>
             

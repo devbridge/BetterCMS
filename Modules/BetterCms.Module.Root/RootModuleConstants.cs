@@ -31,6 +31,16 @@
         public const string EditableGridTopBlockTemplate = "~/Areas/bcms-root/Views/Shared/EditableGrid/Partial/TopBlock.cshtml";
 
         /// <summary>
+        /// The editable grid top block class name
+        /// </summary>
+        public const string EditableGridTopBlockClassName = "bcms-twocols-title-block";
+
+        /// <summary>
+        /// The email regular expression
+        /// </summary>
+        public const string EmailRegularExpression = @"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$";
+
+        /// <summary>
         /// Module permissions.
         /// </summary>
         public static class UserRoles

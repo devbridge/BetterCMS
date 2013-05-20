@@ -728,7 +728,7 @@ a.bcms-remove-image {
     width: 100%;
     height: 100%;
     background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAFRlDm/AAAAHUlEQVQI12P4//8/AxRDqQcPHjAAMUIQyoFQEAAA0/UuXeg1e3EAAAAASUVORK5CYII=') repeat 0 0;
-    z-index: 0;
+    z-index: 9;
 }
 
 .bcms-region-actions {
@@ -2040,7 +2040,7 @@ a.bcms-sort-arrow-top:hover {
     margin: -15px 0 0;
 }
 
-.bcms-list .bcms-media-input-box input.input-validation-error {
+.bcms-list .bcms-media-input-box input.bcms-input-validation-error {
     background: #fcecec;
     border: 1px solid #e64343;
     box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
@@ -2070,26 +2070,26 @@ a.bcms-sort-arrow-top:hover {
     width: 95px;
 }
 
-.bcms-grid .bcms-media-input-box input.input-validation-error {
+.bcms-grid .bcms-media-input-box input.bcms-input-validation-error {
     background-color: #fcecec;
     border: 1px solid #e64343;
     box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
 }
 
-    .bcms-grid .bcms-media-input-box input.input-validation-error:focus {
+    .bcms-grid .bcms-media-input-box input.bcms-input-validation-error:focus {
         background: #fcecec;
         border: 1px solid #e64343;
         box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
     }
 
 /*table grid validation messages*/
-.bcms-input-box input.input-validation-error {
+.bcms-input-box input.bcms-input-validation-error {
     background: #fcecec;
     border: 1px solid #e64343;
     box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
 }
 
-    .bcms-input-box input.input-validation-error:focus {
+    .bcms-input-box input.bcms-input-validation-error:focus {
         background: #fcecec;
         border: 1px solid #e64343;
         box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
@@ -2110,7 +2110,7 @@ a.bcms-sort-arrow-top:hover {
     position: relative;
 }
 
-    .bcms-date-input-box .field-validation-error {
+    .bcms-date-input-box .bcms-field-validation-error {
         right: 23px;
     }
 
@@ -2118,28 +2118,28 @@ a.bcms-sort-arrow-top:hover {
     position: relative;
 }
 
-    .bcms-textarea-box .field-validation-error {
+    .bcms-textarea-box .bcms-field-validation-error {
         top: 15px;
         background: 0;
     }
 
-.input-validation-error {
+.bcms-input-validation-error {
     background-color: #fcecec;
     border: 1px solid #e64343;
     box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
 }
 
-    .input-validation-error:focus {
+    .bcms-input-validation-error:focus {
         background: #fcecec;
         border: 1px solid #e64343;
         box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
     }
 
-        .input-validation-error:focus ~ .field-validation-error span {
+        .bcms-input-validation-error:focus ~ .bcms-field-validation-error span {
             visibility: visible;
         }
 
-span.field-validation-error {
+span.bcms-field-validation-error {
     position: absolute;
     right: 1px;
     top: 50%;
@@ -2149,7 +2149,7 @@ span.field-validation-error {
     background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAJCAYAAAF8oY2FAAAAZElEQVQY02N45uw8DYi/MsAZ////Z0AQQKH/YA6QYYcsuhxD5D8QO0LpTOyCIAtAElBJO5ClIEYmskoUW2ACMDdgqsRlZgtU5Rcg9kZS4A0VA8m1MCBJZEAlkHEG3G6iFRJrNQAfBNhPNe12LwAAAABJRU5ErkJggg==') no-repeat center center #FCECEC;
 }
 
-    span.field-validation-error > span {
+    span.bcms-field-validation-error > span {
         visibility: hidden;
         position: absolute;
         right: -9px;
@@ -2165,7 +2165,7 @@ span.field-validation-error {
         font-family: 'Open Sans', sans-serif;
     }
 
-        span.field-validation-error > span:after, span.field-validation-error > span:before {
+        span.bcms-field-validation-error > span:after, span.bcms-field-validation-error > span:before {
             top: 100%;
             border: solid transparent;
             content: " ";
@@ -2175,14 +2175,14 @@ span.field-validation-error {
             pointer-events: none;
         }
 
-        span.field-validation-error > span:after {
+        span.bcms-field-validation-error > span:after {
             border-top-color: #FCECEC;
             border-width: 10px;
             right: 7px;
             margin-left: -10px;
         }
 
-        span.field-validation-error > span:before {
+        span.bcms-field-validation-error > span:before {
             border-top-color: #E64343;
             border-width: 11px;
             right: 6px;

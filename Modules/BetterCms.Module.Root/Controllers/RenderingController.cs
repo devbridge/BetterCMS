@@ -16,7 +16,7 @@ namespace BetterCms.Module.Root.Controllers
     public class RenderingController : CmsControllerBase
     {
         /// <summary>
-        /// Renders bcms.main.js or bcms.main.min.js (entry point of the BetterCMS client side).
+        /// Renders bcms.main.js or bcms.main.min.js (entry point of the Better CMS client side).
         /// </summary>
         /// <returns>main.js or main.min.js file with client side entry point.</returns>
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]        

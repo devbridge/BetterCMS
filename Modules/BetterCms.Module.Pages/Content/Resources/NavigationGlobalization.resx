@@ -136,10 +136,10 @@
     <value>Sitemap</value>
   </data>
   <data name="Sitemap_NodeEdit_Title_Tooltip_Message" xml:space="preserve">
-    <value>Enter page title.</value>
+    <value>Edit the title of the page as you would like it displayed in the site map.</value>
   </data>
   <data name="Sitemap_NodeEdit_Url_Tooltip_Message" xml:space="preserve">
-    <value>Enter URL path.</value>
+    <value>Edit the URL visitors will use to navigate to this post.</value>
   </data>
   <data name="Sitemap_NodeDeletedSuccessfully_Message" xml:space="preserve">
     <value>Sitemap node deleted successfully.</value>

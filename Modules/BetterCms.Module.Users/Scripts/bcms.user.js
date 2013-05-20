@@ -115,7 +115,7 @@ define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', '
     function initUserCreatEvents(dialog) {
         var onImageInsert = function(image) {            
             dialog.container.find(selectors.userImageId).val(image.id());
-            dialog.container.find(selectors.userImage).attr('src', image.thumbnailUrl);
+            dialog.container.find(selectors.userImage).attr('src', image.thumbnailUrl());
         };
         dialog.container.find(selectors.userUploadImageButton).on('click', function () {            
             media.openImageInsertDialog(onImageInsert);          

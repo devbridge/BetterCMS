@@ -250,7 +250,7 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change your image title..
+        ///   Looks up a localized string similar to Edit the title of this image..
         /// </summary>
         public static string ImageEditor_Dialog_Caption_Tooltip_Description {
             get {
@@ -304,7 +304,7 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Crop image.
+        ///   Looks up a localized string similar to Click and drag to select the portion of the image you would like to use in this post..
         /// </summary>
         public static string ImageEditor_Dialog_CropImage_Tooltip_Description {
             get {
@@ -808,7 +808,7 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select a folder where your files will be stored..
+        ///   Looks up a localized string similar to Select the folder where you would like to store your files..
         /// </summary>
         public static string MultiFileUpload_SelectFolder_Help_Message {
             get {

@@ -1,0 +1,27 @@
+﻿@using BetterCms.Module.Newsletter.Controllers
+@using BetterCms.Module.Root.Mvc.Helpers
+@using Microsoft.Web.Mvc
+
+@model BetterCms.Module.Newsletter.ViewModels.SubscriberViewModel
+
+@{
+    // Subscribe to newsletter
+    var labelTitle = ViewData["Label title"];
+    // Submit
+    var submitTitle = ViewData["Submit title"];
+    // email...
+    var emailPlaceholder = ViewData["Email placeholder"];
+}
+
+@using (Html.BeginForm<SubscriberController>(s => s.Subscribe(null), FormMethod.Post, new { @class = "bcms-newsletter-subscribe-form" }))
+{
+    <label class="bcms-newsletter-subscribe-label" for="Email">@labelTitle</label>
+    @Html.TextBoxFor(m => m.Email, new
+                                       {
+                                           @type = "email",
+                                           @class = "bcms-newsletter-subscribe-input required",
+                                           @placeholder = @emailPlaceholder
+                                       })
+    @Html.BcmsValidationMessageFor(m => m.Email)
+    <button type="submit" class="bcms-newsletter-subscribe-submit">@submitTitle</button>
+}

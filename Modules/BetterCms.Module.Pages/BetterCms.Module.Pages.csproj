@@ -90,7 +90,7 @@
     </Reference>
     <Reference Include="NHibernate, Version=3.3.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\NHibernate.3.3.2.4000\lib\Net35\NHibernate.dll</HintPath>
+      <HintPath>..\..\packages\NHibernate.3.3.3.4000\lib\Net35\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Numerics" />
@@ -120,6 +120,20 @@
     </Compile>
     <Compile Include="Accessors\PageStylesheetAccessor.cs" />
     <Compile Include="Accessors\PageJavaScriptAccessor.cs" />
+    <Compile Include="Api\Dto\AddWidgetToPageRequest.cs" />
+    <Compile Include="Api\Dto\CreateHtmlContentWidgetRequest.cs" />
+    <Compile Include="Api\Dto\CreateLayoutRegionRequest.cs" />
+    <Compile Include="Api\Dto\CreateLayoutRequest.cs" />
+    <Compile Include="Api\Dto\CreatePageContentRequestBase.cs" />
+    <Compile Include="Api\Dto\CreatePageHtmlContentRequest.cs" />
+    <Compile Include="Api\PagesApiContext.Sitemap.cs" />
+    <Compile Include="Api\PagesApiContext.cs" />
+    <Compile Include="Api\PagesApiContext.Contents.cs" />
+    <Compile Include="Api\PagesApiContext.Layouts.cs" />
+    <Compile Include="Api\Dto\ContentOptionDto.cs" />
+    <Compile Include="Api\Dto\ContentOptionValueDto.cs" />
+    <Compile Include="Api\Dto\CreateContentOptionsRequest.cs" />
+    <Compile Include="Api\Dto\CreateServerControlWidgetRequest.cs" />
     <Compile Include="Api\Events\CategoryEvents.cs" />
     <Compile Include="Api\Events\WidgetEvents.cs" />
     <Compile Include="Api\Events\TagEvents.cs" />
@@ -221,6 +235,7 @@
     <Compile Include="Helpers\ListModelBindingExtensions.cs" />
     <Compile Include="Helpers\RenderHelper.cs" />
     <Compile Include="Helpers\TimeHelper.cs" />
+    <Compile Include="Api\Dto\CreatePageRequest.cs" />
     <Compile Include="Models\IServerControlWidget.cs" />
     <Compile Include="Models\Maps\HtmlContentMap.cs" />
     <Compile Include="Models\Maps\SitemapNodeMap.cs" />
@@ -247,7 +262,7 @@
     <Compile Include="Mvc\Attributes\CustomPageUrlValidationAttribute.cs" />
     <Compile Include="Mvc\Attributes\DateValidationAttribute.cs" />
     <Compile Include="Mvc\Attributes\EndDateValidationAttribute.cs" />
-    <Compile Include="Api\PagesApiContext.cs" />
+    <Compile Include="Api\PagesApiContext.Pages.cs" />
     <Compile Include="PagesConstants.cs" />
     <Compile Include="Accessors\HtmlContentWidgetAccessor.cs" />
     <Compile Include="Accessors\HtmlContentAccessor.cs" />
@@ -261,11 +276,13 @@
     <Compile Include="Services\DefaultHistoryService.cs" />
     <Compile Include="Services\DefaultSitemapService.cs" />
     <Compile Include="Services\DefaultTagService.cs" />
+    <Compile Include="Services\DefaultUrlService.cs" />
     <Compile Include="Services\DefaultWidgetsService.cs" />
     <Compile Include="Services\IHistoryService.cs" />
     <Compile Include="Services\IPageService.cs" />
     <Compile Include="Services\ISitemapService.cs" />
     <Compile Include="Services\ITagService.cs" />
+    <Compile Include="Services\IUrlService.cs" />
     <Compile Include="Services\IWidgetsService.cs" />
     <Compile Include="Services\DefaultCategoryService.cs" />
     <Compile Include="Services\DefaultRedirectService.cs" />

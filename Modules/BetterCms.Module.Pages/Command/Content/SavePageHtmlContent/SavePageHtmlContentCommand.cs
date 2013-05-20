@@ -38,25 +38,15 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
 
             UnitOfWork.BeginTransaction();
 
-            PageContent pageContent = null;            
-
+            PageContent pageContent;            
             if (!request.Id.HasDefaultValue())
             {
                 pageContent = Repository.AsQueryable<PageContent>().Where(f => f.Id == request.Id && !f.IsDeleted).FirstOne();
             }
-
-            if (request.Id.HasDefaultValue())
+            else
             {              
                 pageContent = new PageContent();
-                var max = Repository.AsQueryable<PageContent>().Where(f => f.Page.Id == request.PageId && !f.IsDeleted).Select(f => (int?)f.Order).Max();
-                if (max == null)
-                {
-                    pageContent.Order = 0;
-                }
-                else
-                {
-                    pageContent.Order = max.Value + 1;
-                }
+                pageContent.Order = contentService.GetPageContentNextOrderNumber(request.PageId);
             }
 
             pageContent.Page = Repository.AsProxy<Root.Models.Page>(request.PageId);

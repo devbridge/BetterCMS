@@ -12,7 +12,7 @@
     <textParameter>
       <name>CmsVersion</name>
       <display>3 digits version to apply (ex. 1.0.5) or default 1.0</display>
-      <description>A version to use for the BetterCMS release tagging.</description>
+      <description>A version to use for the Better CMS release tagging.</description>
       <required>true</required>
       <default>1.0</default>
       <minimum>5</minimum>
@@ -86,7 +86,7 @@
       <buildTimeoutSeconds>300</buildTimeoutSeconds>
     </exec>
 
-    <exec description="Build BetterCMS solution.">
+    <exec description="Build Better CMS solution.">
       <executable>$(msbuild4Path)</executable>
       <buildArgs>$(buildsFolder)\BetterCMS_NUGETORG\Code\BetterCMS.sln /nologo /t:Rebuild /p:Configuration=Release</buildArgs>
       <buildTimeoutSeconds>300</buildTimeoutSeconds>
@@ -97,14 +97,14 @@
       <buildArgs>$(buildsFolder)\BetterCMS_NUGETORG\Code\Tests\BetterCms.Core.Tests\bin\Release\BetterCms.Core.Tests.dll /xml:$(buildsFolder)\BetterCMS_NUGETORG\Artifact\BetterCms.Core.Tests-Results.xml</buildArgs>
     </exec>
 
-    <exec description="Publish BetterCms resources to Amazon S3 CDN enabled cloud.">
+    <exec description="Publish Better Cms resources to Amazon S3 CDN enabled cloud.">
       <executable>$(buildsFolder)\BetterCMS_NUGETORG\Tools\AmazonS3\s3</executable>
       <buildArgs>put bettercms/$[$CCNetLabel]$[CmsMilestone]$[CmsBuildType]/ $(buildsFolder)\BetterCMS_NUGETORG\Code\Build\BetterCms.NugetPackage\resources\*.* /sub /acl:public-read /cacheControl:public,max-age=31536000 /noGui /toLower</buildArgs>
       <buildTimeoutSeconds>600</buildTimeoutSeconds>
       <successExitCodes>0</successExitCodes>
     </exec>
 
-    <exec description="Publish BetterCMS to NuGet.org">
+    <exec description="Publish Better CMS to NuGet.org">
       <executable>$(buildsFolder)\BetterCMS_NUGETORG\Code\.nuget\nuget</executable>
       <buildArgs>push $(buildsFolder)\BetterCMS_NUGETORG\Code\Build\BetterCms.NugetPackage\bin\Release\BetterCMS.$[$CCNetLabel]$[CmsMilestone]$[CmsBuildType].nupkg</buildArgs>
       <buildTimeoutSeconds>300</buildTimeoutSeconds>

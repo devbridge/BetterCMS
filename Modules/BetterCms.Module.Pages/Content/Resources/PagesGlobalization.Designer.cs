@@ -115,7 +115,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create  a page title.
+        ///   Looks up a localized string similar to Create a title for your new page..
         /// </summary>
         public static string AddNewPage_PageTitle_Tooltip_Description {
             get {
@@ -133,7 +133,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit Page URL.
+        ///   Looks up a localized string similar to Create a unique page URL for your new page..
         /// </summary>
         public static string AddNewPage_Permalink_Tooltip_Description {
             get {
@@ -169,7 +169,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select a template.
+        ///   Looks up a localized string similar to Select the template you would like to use for your new page..
         /// </summary>
         public static string AddNewPage_Template_Tooltip_Description {
             get {
@@ -250,7 +250,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Content Name.
+        ///   Looks up a localized string similar to Create a title for this content section..
         /// </summary>
         public static string AddPageContent_RegularContentTab_ContentName_Tooltip_Description {
             get {
@@ -394,7 +394,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New page title.
+        ///   Looks up a localized string similar to Create a title for your new page..
         /// </summary>
         public static string ClonePage_Dialog_PageTitle_Tooltip_Description {
             get {
@@ -466,7 +466,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit New Page URL.
+        ///   Looks up a localized string similar to Create a URL for your new page..
         /// </summary>
         public static string ClonePage_NewUrl_Tooltip_Description {
             get {
@@ -835,7 +835,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Redirect URL (optional).
+        ///   Looks up a localized string similar to Specify an alternate page URL where you would like a visitor sent if they navigate to the deleted page..
         /// </summary>
         public static string DeletePage_Dialog_RedurectUrl_Tooltip_Description {
             get {
@@ -853,7 +853,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Type word DELETE to confirm deletion.
+        ///   Looks up a localized string similar to Are you sure you want to delete this page? Type the word DELETE to confirm..
         /// </summary>
         public static string DeletePage_Dialog_SecurityWord_Tooltip_Description {
             get {
@@ -880,7 +880,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remove page from sitemap..
+        ///   Looks up a localized string similar to Removing this page from the sitemap will delete the page and remove it from the navigation elements throughout your website..
         /// </summary>
         public static string DeletePage_Dialog_UpdateSitemap_Description {
             get {
@@ -1132,7 +1132,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page Css.
+        ///   Looks up a localized string similar to If you are an advanced user, you can use the CSS tool to define the style for this page. This feature will only affect the page you are currently working on..
         /// </summary>
         public static string EditPageProperties_AdvancedPropertiesTab_PageCss_Tooltip_Description {
             get {
@@ -1150,7 +1150,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Custom JavaScript.
+        ///   Looks up a localized string similar to Paste custom JavaScript code that will be executed only on this page..
         /// </summary>
         public static string EditPageProperties_AdvancedPropertiesTab_PageJavascript_Tooltip_Description {
             get {
@@ -1168,7 +1168,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit Page URL.
+        ///   Looks up a localized string similar to Edit the URL visitors will use to navigate to this post..
         /// </summary>
         public static string EditPageProperties_AdvancedPropertiesTab_PageUrl_Tooltip_Description {
             get {
@@ -1186,7 +1186,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Privacy.
+        ///   Looks up a localized string similar to Edit the privacy settings of this page. Selecting &quot;No Follow&quot; will tell search engines not to follow the links on this page, and &quot;No Index&quot; will tell search engines not to index this page..
         /// </summary>
         public static string EditPageProperties_AdvancedPropertiesTab_Privacy_Tooltip_Description {
             get {
@@ -1258,7 +1258,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add tags.
+        ///   Looks up a localized string similar to Add tags to this page to identify it with related pages..
         /// </summary>
         public static string EditPageProperties_BasicPropertiesTab_AddTags_Tooltip_Description {
             get {
@@ -1276,7 +1276,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Category.
+        ///   Looks up a localized string similar to Assign this page to a category to identify it with similar pages..
         /// </summary>
         public static string EditPageProperties_BasicPropertiesTab_Category_Tooltip_Description {
             get {
@@ -1303,7 +1303,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page description.
+        ///   Looks up a localized string similar to Image will be displayed as a thumbnail with the page..
         /// </summary>
         public static string EditPageProperties_BasicPropertiesTab_PageImage_Tooltip_Description {
             get {
@@ -1321,7 +1321,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page title.
+        ///   Looks up a localized string similar to Edit the title of this page. This is the title that will appear on the page..
         /// </summary>
         public static string EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Description {
             get {
@@ -1375,7 +1375,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Layout.
+        ///   Looks up a localized string similar to Change the way content is displayed on this page by selecting a different template..
         /// </summary>
         public static string EditPageProperties_LayoutPropertiesTab_Layout_Tooltip_Description {
             get {
@@ -1528,7 +1528,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Purpose of meta description is .......
+        ///   Looks up a localized string similar to The Meta description will be displayed on search engine result pages, so it should summarize the content of the page and include your keywords..
         /// </summary>
         public static string EditSeo_MetaDescription_Tooltip_Description {
             get {
@@ -1546,7 +1546,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Purpose of meta keywords is .......
+        ///   Looks up a localized string similar to The Meta keywords should relate to the search phrases you are targeting as a part of your larger SEO strategy..
         /// </summary>
         public static string EditSeo_MetaKeywords_Tooltip_Description {
             get {
@@ -1573,7 +1573,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Purpose of meta title is .......
+        ///   Looks up a localized string similar to The Meta title should contain your keywords and concisely describe the content of the page..
         /// </summary>
         public static string EditSeo_MetaTitle_Tooltip_Description {
             get {
@@ -1609,7 +1609,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page title is for....
+        ///   Looks up a localized string similar to Edit the page title that will appear on search engine result pages..
         /// </summary>
         public static string EditSeo_PageTitle_Tooltip_Description {
             get {
@@ -1645,7 +1645,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit Page URL.
+        ///   Looks up a localized string similar to Edit the URL visitors will use to navigate to this post..
         /// </summary>
         public static string EditSeo_UrlPath_Tooltip_Description {
             get {
@@ -1780,7 +1780,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Widget Category.
+        ///   Looks up a localized string similar to Assign your widget to a category to identify it with similar widgets..
         /// </summary>
         public static string HtmlContentWidget_Category_Tooltip_Description {
             get {
@@ -1816,7 +1816,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Content Name.
+        ///   Looks up a localized string similar to Create a HTML based widget with no server side logic..
         /// </summary>
         public static string HtmlContentWidget_ContentName_Tooltip_Description {
             get {
@@ -2725,7 +2725,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Title.
+        ///   Looks up a localized string similar to Register a developer prepared template with server side logic to be used within Better CMS..
         /// </summary>
         public static string Template_Title_Tooltip_Description {
             get {
@@ -2743,7 +2743,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Template Path.
+        ///   Looks up a localized string similar to Determine and set a path to the template&apos;s file location on the server disk..
         /// </summary>
         public static string Template_Url_Tooltip_Description {
             get {
@@ -2752,7 +2752,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Preview.
+        ///   Looks up a localized string similar to This is what your template will look like live on your website..
         /// </summary>
         public static string TemplateImagePreview_Tooltip_Description {
             get {
@@ -2815,7 +2815,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Preview.
+        ///   Looks up a localized string similar to Paste the URL to the image you would like shown as a preview for this template..
         /// </summary>
         public static string TemplatePreviewImageUrl_Tooltip_Description {
             get {
@@ -2869,7 +2869,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Category.
+        ///   Looks up a localized string similar to Assign your widget to a category to identify it with similar widgets..
         /// </summary>
         public static string Widget_Category_Tooltip_Description {
             get {
@@ -2887,7 +2887,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Title.
+        ///   Looks up a localized string similar to Register a developer prepared widget with server side logic to be used within Better CMS..
         /// </summary>
         public static string Widget_Title_Tooltip_Description {
             get {
@@ -2905,7 +2905,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Widget Path.
+        ///   Looks up a localized string similar to Determine and set a path to the widget&apos;s file location on the server disk..
         /// </summary>
         public static string Widget_Url_Tooltip_Description {
             get {
@@ -2950,7 +2950,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Purpose of Page URL is .......
+        ///   Looks up a localized string similar to This is what your widget will look like live on your website..
         /// </summary>
         public static string WidgetPreviewImage_Tooltip_Description {
             get {
@@ -2968,7 +2968,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Purpose of Page URL is .......
+        ///   Looks up a localized string similar to This is what your widget will look like live on your website..
         /// </summary>
         public static string WidgetPreviewImageUrl_Tooltip_Description {
             get {

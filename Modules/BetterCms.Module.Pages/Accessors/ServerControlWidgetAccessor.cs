@@ -51,6 +51,8 @@ namespace BetterCms.Module.Pages.Accessors
                         }
                     }
 
+                    viewData["bcmsPageId"] = html.ViewContext.ViewData["pageId"];
+
                     var newViewContext = new ViewContext(html.ViewContext, view, viewData, html.ViewContext.TempData, sw);
                     view.Render(newViewContext, sw);
 

@@ -118,7 +118,7 @@ namespace BetterCms.Module.Pages
         {
             get
             {
-                return "Pages module for BetterCMS.";
+                return "Pages module for Better CMS.";
             }
         }
 
@@ -158,6 +158,7 @@ namespace BetterCms.Module.Pages
             containerBuilder.RegisterType<DefaultTagService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultHistoryService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultSitemapService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultUrlService>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
 
         /// <summary>

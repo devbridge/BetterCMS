@@ -5,8 +5,9 @@ define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout'], function ($, bc
 
     ko.globalization = {
         maximumLengthMessage: null,
-        requiredFieldMessage: null
-    };
+        requiredFieldMessage: null,
+        invalidEmailMessage: null
+    },
 
     ko.maxLength = {
         email: 400,
@@ -152,6 +153,32 @@ define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout'], function ($, bc
         return koValidationExtender(ruleName, target, function (newValue) {
             var hasError = (newValue != null && newValue.length > maxLength),
                 showMessage = hasError ? $.format(message, maxLength) : '';
+            
+            target.validator.setError(ruleName, hasError, showMessage);
+        });
+    };
+
+    /**
+    * Extend knockout: add regular expression validation
+    */
+    ko.extenders.email = function (target, options) {
+        options = $.extend({
+            pattern: '^[a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)+$',
+            message: ko.globalization.invalidEmailMessage
+        }, options);
+        return ko.extenders.regularExpression(target, options);
+    };
+
+    /**
+    * Extend knockout: add regular expression validation
+    */
+    ko.extenders.regularExpression = function (target, options) {
+        var ruleName = 'regularExpression',
+            pattern = options.pattern || '',
+            message = options.message || ko.globalization.regularExpressionMessage;
+        return koValidationExtender(ruleName, target, function (newValue) {
+            var hasError = (newValue != null && pattern && !newValue.match(new RegExp(pattern, "i"))),
+                showMessage = hasError ? $.format(message, pattern) : '';
             
             target.validator.setError(ruleName, hasError, showMessage);
         });

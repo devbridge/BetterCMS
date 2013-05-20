@@ -89,7 +89,7 @@
     </Reference>
     <Reference Include="NHibernate, Version=3.3.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\NHibernate.3.3.2.4000\lib\Net35\NHibernate.dll</HintPath>
+      <HintPath>..\..\packages\NHibernate.3.3.3.4000\lib\Net35\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -125,6 +125,7 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Api\Events\PageRetrievedEventArgs.cs" />
     <Compile Include="Api\Events\RootEvents.cs" />
     <Compile Include="Api\Events\PageRenderingEventArgs.cs" />
     <Compile Include="Api\RootApiContext.cs" />
@@ -185,6 +186,7 @@
     <Compile Include="Mvc\Grids\TableRenderers\EditableHtmlTableGridRenderer.cs" />
     <Compile Include="Mvc\Grids\TableRenderers\HtmlTableGridSingleRowRenderer.cs" />
     <Compile Include="Mvc\Grids\GridOptions\SearchableGridOptions.cs" />
+    <Compile Include="Mvc\Helpers\DynamicDictionary.cs" />
     <Compile Include="Mvc\Helpers\LayoutHelper.cs" />
     <Compile Include="Mvc\Helpers\LayoutRegionWrapper.cs" />
     <Compile Include="Mvc\Helpers\PreviewHelper.cs" />

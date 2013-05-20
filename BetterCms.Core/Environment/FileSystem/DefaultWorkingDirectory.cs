@@ -9,7 +9,7 @@ using Common.Logging;
 namespace BetterCms.Core.Environment.FileSystem
 {
     /// <summary>
-    /// Default BetterCMS working directory managing implementation.
+    /// Default Better CMS working directory managing implementation.
     /// </summary>
     public class DefaultWorkingDirectory : IWorkingDirectory
     {        

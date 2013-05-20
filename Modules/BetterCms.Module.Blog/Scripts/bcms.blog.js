@@ -29,15 +29,8 @@ define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', '
             overlayConfigure: '.bcms-content-configure',
             overlayDelete: '.bcms-content-delete',
             destroyDraftVersionLink: '.bcms-messages-draft-destroy',
-            
             blogTitle: "#bcms-editor-blog-title",
-            editPermalink: '#bcms-page-editpermalink',
-	        editPermalinkBox: '.bcms-edit-urlpath-box',
-	        editPermalinkClose: 'div.bcms-edit-urlpath-box .bcms-tip-close, div.bcms-edit-urlpath-box .bcms-btn-links-small',
-	        editPermalinkSave: '#bcms-save-permalink',
-	        editPermalinkHiddenField: '#bcms-page-permalink',
-	        editPermalinkEditField: '#bcms-page-permalink-edit',
-	        editPermalinkInfoField: '#bcms-page-permalink-info'
+	        editPermalinkEditField: '#bcms-page-permalink-edit'
         },
         links = {
             loadSiteSettingsBlogsUrl: null,

@@ -19,7 +19,7 @@
                 <div class="bcms-content-titles">@PagesGlobalization.ClonePage_Dialog_PageTitle</div>
                 <div class="bcms-input-box">
                     @Html.TextBoxFor(m => m.PageTitle, new { @class = "bcms-editor-field-box" })
-                    @Html.ValidationMessageFor(f => f.PageTitle)
+                    @Html.BcmsValidationMessageFor(f => f.PageTitle)
                 </div>
             </div>
 

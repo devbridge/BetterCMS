@@ -2,15 +2,18 @@
 
 using Autofac;
 
+using BetterCms.Api;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Blog.Accessors;
 using BetterCms.Module.Blog.Content.Resources;
+using BetterCms.Module.Blog.Helpers.Extensions;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.Registration;
 using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Pages.Accessors;
 using BetterCms.Module.Root;
+using BetterCms.Module.Root.Api.Events;
 
 namespace BetterCms.Module.Blog
 {
@@ -35,6 +38,8 @@ namespace BetterCms.Module.Blog
         public BlogModuleDescriptor(ICmsConfiguration configuration) : base(configuration)
         {
             blogJsModuleIncludeDescriptor = new BlogJsModuleIncludeDescriptor(this);
+
+            RootApiContext.Events.PageRetrieved += Events_PageRetrieved;
         }
 
         /// <summary>
@@ -143,6 +148,18 @@ namespace BetterCms.Module.Blog
             containerBuilder.RegisterType<DefaultOptionService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultAuthorService>().AsImplementedInterfaces().InstancePerLifetimeScope(); 
             containerBuilder.RegisterType<DefaultBlogService>().AsImplementedInterfaces().InstancePerLifetimeScope();          
+        }
+
+        /// <summary>
+        /// Occurs, when the page is retrieved.
+        /// </summary>
+        /// <param name="args">The <see cref="PageRetrievedEventArgs" /> instance containing the event data.</param>
+        private void Events_PageRetrieved(PageRetrievedEventArgs args)
+        {
+            if (args != null && args.RenderPageData != null)
+            {
+                args.RenderPageData.ExtendWithBlogData(args.PageData);
+            }
         }
     }
 }

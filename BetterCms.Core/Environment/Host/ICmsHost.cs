@@ -3,7 +3,7 @@
 namespace BetterCms.Core.Environment.Host
 {
     /// <summary>
-    /// Defines the contract for BetterCMS application host.
+    /// Defines the contract for Better CMS application host.
     /// </summary>
     public interface ICmsHost
     {

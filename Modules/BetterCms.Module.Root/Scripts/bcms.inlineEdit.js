@@ -30,7 +30,7 @@ define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bcms.modal',
             fieldHiddenValue: 'input[type="hidden"]:first',
             fieldVisibleValue: '.bcms-grid-item-info:first',
             prependNewRowTo: 'tbody',
-            firstInvalidField: '.input-validation-error:first'
+            firstInvalidField: '.bcms-input-validation-error:first'
         },
         links = {
         },
@@ -567,7 +567,7 @@ define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bcms.modal',
                 var name = $.format(pattern, index);
                 input.attr('name', name);
                 
-                var validator = input.parents(selectors.firstCell).find("span.field-validation-valid, span.field-validation-error");
+                var validator = input.parents(selectors.firstCell).find("span.bcms-field-validation-valid, span.bcms-field-validation-error");
                 validator.data('valmsg-for', name);
                 validator.attr('data-valmsg-for', name);
             }

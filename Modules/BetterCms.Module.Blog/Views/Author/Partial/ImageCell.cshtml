@@ -8,7 +8,7 @@
         <a class="bcms-remove-image" data-bind="click: image().remove.bind(image())">@RootGlobalization.Button_Remove</a>
         <!-- /ko -->
         <!-- ko if: image().url() -->
-        <a data-bind="click: image().preview.bind(image())"><img data-bind="attr: {src: image().versionedThumnailUrl(), alt: image().tooltip() }" /></a>
+        <a data-bind="click: image().preview.bind(image())"><img data-bind="attr: {src: image().thumbnailUrl(), alt: image().tooltip() }" /></a>
         <!-- /ko -->
     </div>
 

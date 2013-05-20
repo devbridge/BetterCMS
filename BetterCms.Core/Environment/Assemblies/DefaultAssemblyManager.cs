@@ -70,7 +70,7 @@ namespace BetterCms.Core.Environment.Assemblies
         {
             if (Log.IsTraceEnabled)
             {
-                Log.Trace("Add uploaded BetterCms modules.");
+                Log.Trace("Add uploaded Better Cms modules.");
             }
 
             var availableModuleFiles = workingDirectory.GetAvailableModules();
@@ -118,7 +118,7 @@ namespace BetterCms.Core.Environment.Assemblies
         {
             if (Log.IsTraceEnabled)
             {
-                Log.Trace("Add referenced BetterCms modules.");
+                Log.Trace("Add referenced Better Cms modules.");
             }
 
             var modules = AppDomain.CurrentDomain.GetAssemblies().Where(f => f.FullName.StartsWith("BetterCms.Module.", StringComparison.OrdinalIgnoreCase)).ToList();
@@ -128,7 +128,8 @@ namespace BetterCms.Core.Environment.Assemblies
 
             foreach (var notLoadedReferencedPath in notLoadedReferencedPaths)
             {
-                if (notLoadedReferencedPath.Contains("BetterCms"))
+                string fileName = Path.GetFileNameWithoutExtension(notLoadedReferencedPath);
+                if (fileName != null && fileName.StartsWith("BetterCms"))
                 {
                     AssemblyName assemblyName = AssemblyName.GetAssemblyName(notLoadedReferencedPath);
                     if (assemblyName.FullName.StartsWith("BetterCms.Module.", StringComparison.OrdinalIgnoreCase))

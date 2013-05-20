@@ -22,7 +22,7 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
     public class SandboxController : Controller
     {
         public ActionResult Content()
-        {                
+        {
             return Content("Hello from the web project controller.");
         }
 
@@ -39,13 +39,13 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
         [AllowAnonymous]
         public ActionResult Login(string roles)
         {
-//            var roles = string.Join(",", Roles.GetRolesForUser(string.Empty));
+            //            var roles = string.Join(",", Roles.GetRolesForUser(string.Empty));
             if (string.IsNullOrEmpty(roles))
             {
                 roles = "Owner";
             }
 
-            var authTicket = new FormsAuthenticationTicket(1, "BetterCMS test user", DateTime.Now, DateTime.Now.AddMonths(1), true, roles);
+            var authTicket = new FormsAuthenticationTicket(1, "Better CMS test user", DateTime.Now, DateTime.Now.AddMonths(1), true, roles);
 
             var cookieContents = FormsAuthentication.Encrypt(authTicket);
             var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, cookieContents)
@@ -70,7 +70,7 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
 
         public ActionResult TestApi()
         {
-            PagesApiContext.Events.PageCreated += EventsOnPageCreated ;
+            PagesApiContext.Events.PageCreated += EventsOnPageCreated;
 
             PagesApiContext.Events.OnPageCreated(new PageProperties());
 
@@ -78,7 +78,7 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
 
             IList<MediaFolder> folders;
             using (var mediaApi = CmsContext.CreateApiContextOf<MediaManagerApiContext>())
-            {                
+            {
                 folders = mediaApi.GetFolders(MediaType.Image);
             }
 
@@ -100,16 +100,16 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
 
         private void EventsOnPageCreated(SingleItemEventArgs<PageProperties> args)
         {
-            
+
         }
 
         public ActionResult TestNavigationApi()
         {
-            
-            var message = new StringBuilder("No sitemap data found!");                     
+
+            var message = new StringBuilder("No sitemap data found!");
 
             return Content(message.ToString());
-        }        
+        }
 
         [AllowAnonymous]
         public ActionResult LoginJson(LoginViewModel login)

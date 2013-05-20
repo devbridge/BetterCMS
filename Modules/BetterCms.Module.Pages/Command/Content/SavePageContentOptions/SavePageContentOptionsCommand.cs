@@ -24,10 +24,10 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageContentOptions
             if (model != null && !model.PageContentId.HasDefaultValue()  && model.WidgetOptions != null)
             {
                 var pageContent = Repository.AsQueryable<PageContent>()
+                              .Where(f => f.Id == model.PageContentId && !f.IsDeleted && !f.Content.IsDeleted)
                               .Fetch(f => f.Content)
                               .ThenFetchMany(f => f.ContentOptions)
                               .FetchMany(f => f.Options)
-                              .Where(f => f.Id == model.PageContentId && !f.IsDeleted && !f.Content.IsDeleted)
                               .ToList()
                               .FirstOrDefault();
 

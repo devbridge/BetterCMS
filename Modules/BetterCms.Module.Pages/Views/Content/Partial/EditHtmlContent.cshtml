@@ -33,21 +33,21 @@
         <div class="bcms-content-titles">@PagesGlobalization.AddPageContent_RegularContentTab_ContentName_Title:</div>
         <div class="bcms-custom-input-box">
             @Html.TextBoxFor(model => model.ContentName, GetAttributesObject(canEdit, new { @class = "bcms-editor-field-box", style = "width: 523px;" }))
-            @Html.ValidationMessageFor(model => model.ContentName)
+            @Html.BcmsValidationMessageFor(model => model.ContentName)
         </div>
     </div>
     <div class="bcms-input-field-holder">
         <div class="bcms-content-titles">@PagesGlobalization.AddPageContent_RegularContentTab_LiveFrom_Title:</div>
         <div class="bcms-date-input-box">
             @Html.DateTextBoxFor(model => model.LiveFrom, Model.LiveFrom, GetAttributesObject(true, new { @class = "bcms-editor-field-box bcms-datepicker", @style = "width: 127px;"  }))
-            @Html.ValidationMessageFor(model => model.LiveFrom)
+            @Html.BcmsValidationMessageFor(model => model.LiveFrom)
         </div>
     </div>
     <div class="bcms-input-field-holder">
         <div class="bcms-content-titles">@PagesGlobalization.AddPageContent_RegularContentTab_LiveTo_Title:</div>
         <div class="bcms-date-input-box">
             @Html.DateTextBoxFor(model => model.LiveTo, Model.LiveTo, GetAttributesObject(true, new { @class = "bcms-editor-field-box bcms-datepicker", @style = "width: 127px;" }))
-            @Html.ValidationMessageFor(model => model.LiveTo)
+            @Html.BcmsValidationMessageFor(model => model.LiveTo)
         </div>
     </div>
 </div>
@@ -62,7 +62,7 @@
 <div class="bcms-input-list-holder @(!canEdit ? "bcms-disabled-content" : string.Empty)" id="bcms-custom-css-container">
     <div class="bcms-content-titles">@PagesGlobalization.HtmlContent_CustomCss_Title</div>
     @Html.TextAreaFor(model => model.CustomCss, GetAttributesObject(canEdit, new { @class = "bcms-editor-field-area", @style = "width:820px;" }))
-    @Html.ValidationMessageFor(model => model.CustomCss)
+    @Html.BcmsValidationMessageFor(model => model.CustomCss)
 </div>
 
 <div class="bcms-edit-check-field @(!canEdit ? "bcms-disabled-content" : string.Empty)">
@@ -72,5 +72,5 @@
 <div class="bcms-input-list-holder @(!canEdit ? "bcms-disabled-content" : string.Empty)" id="bcms-custom-js-container">
     <div class="bcms-content-titles">@PagesGlobalization.HtmlContent_CustomJs_Title</div>
     @Html.TextAreaFor(model => model.CustomJs, GetAttributesObject(canEdit, new { @class = "bcms-editor-field-area", @style = "width:820px;" }))
-    @Html.ValidationMessageFor(model => model.CustomJs)
+    @Html.BcmsValidationMessageFor(model => model.CustomJs)
 </div>

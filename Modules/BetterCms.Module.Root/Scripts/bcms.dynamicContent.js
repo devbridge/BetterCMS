@@ -54,8 +54,12 @@ define('bcms.dynamicContent', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.forms'
                 html += '</div>';
 
                 failedDialog.setContent(html);
-                failedDialog.disableAcceptButton();
-                failedDialog.disableExtraButtons();
+                if (failedDialog.disableAcceptButton) {
+                    failedDialog.disableAcceptButton();
+                }
+                if (failedDialog.disableExtraButtons) {
+                    failedDialog.disableExtraButtons();
+                }
             }
         }, options);
 

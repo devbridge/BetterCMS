@@ -59,7 +59,7 @@ namespace BetterCms.Module.Users
         {
             get
             {
-                return "Users module for BetterCMS.";
+                return "Users module for Better CMS.";
             }
         }
         

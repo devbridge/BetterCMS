@@ -12,8 +12,6 @@ var console = window.console || {
 };
 
 requirejs.config({
-    enforceDefine: true,
-    
     @if (Model.IsDebugMode && !Model.UseMinReferences)
     {
         <text>urlArgs: 'ver=' + '@Model.Version.ToString()',</text>
@@ -30,7 +28,7 @@ requirejs(['bcms.jquery', 'bcms', 'bcms.processor'],
     
     function ($, bcms, processor) {
         'use strict';
-        console.log('BetterCMS entry point.');
+        console.log('Better CMS entry point.');
 
         $(function () {
             bcms.pageId = $('body').data("pageId");

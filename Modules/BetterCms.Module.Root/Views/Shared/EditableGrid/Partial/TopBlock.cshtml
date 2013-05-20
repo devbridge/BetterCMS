@@ -2,8 +2,15 @@
 
 @model BetterCms.Module.Root.ViewModels.Shared.EditableGridViewModel
 
-<div class="bcms-top-block-holder">
-    <div class="bcms-btn-links-main" data-bind="click: addNewItem">@Model.AddNewTitle</div>
+<div class="@Model.TopBlockClass">
+    @if (!string.IsNullOrWhiteSpace(Model.TopBlockTitle))
+    {
+        <div class="bcms-large-titles">@Model.TopBlockTitle</div>
+    }
+    @if (Model.CanAddNewItems)
+    {
+        <div class="bcms-btn-links-main" data-bind="click: addNewItem">@Model.AddNewTitle</div>
+    }
     <div class="bcms-search-block">
         <input data-bind="value: options().searchQuery, valueUpdate: 'afterkeydown', enterPress: searchItems, hasfocus: options().hasFocus" type="text" class="bcms-editor-field-box" placeholder="@RootGlobalization.WaterMark_Search" />
         <div data-bind="click: searchItems" class="bcms-btn-search">@RootGlobalization.Button_Search</div>

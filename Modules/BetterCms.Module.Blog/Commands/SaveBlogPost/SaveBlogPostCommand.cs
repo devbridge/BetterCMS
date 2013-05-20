@@ -60,6 +60,11 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         private readonly IBlogService blogService;
 
         /// <summary>
+        /// The url service.
+        /// </summary>
+        private readonly IUrlService urlService;
+        
+        /// <summary>
         /// The redirect service.
         /// </summary>
         private readonly IRedirectService redirectService;
@@ -73,8 +78,10 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         /// <param name="pageService">The page service.</param>
         /// <param name="blogService">The blog service.</param>
         /// <param name="redirectService">The redirect service.</param>
+        /// <param name="urlService">The URL service.</param>
         public SaveBlogPostCommand(ITagService tagService, IOptionService optionService, IContentService contentService, 
-                                    IPageService pageService, IBlogService blogService, IRedirectService redirectService)
+                                    IPageService pageService, IBlogService blogService, 
+                                    IRedirectService redirectService, IUrlService urlService)
         {
             this.tagService = tagService;
             this.optionService = optionService;
@@ -82,6 +89,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             this.pageService = pageService;
             this.blogService = blogService;
             this.redirectService = redirectService;
+            this.urlService = urlService;
         }
 
         /// <summary>
@@ -130,7 +138,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
 
                 if (userCanEdit && !string.Equals(blogPost.PageUrl, request.BlogUrl, StringComparison.OrdinalIgnoreCase) && request.BlogUrl != null)
                 {
-                    request.BlogUrl = redirectService.FixUrl(request.BlogUrl);
+                    request.BlogUrl = urlService.FixUrl(request.BlogUrl);
                     pageService.ValidatePageUrl(request.BlogUrl, request.Id);
                     if (request.RedirectFromOldUrl)
                     {
@@ -172,7 +180,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             {
                 if (!string.IsNullOrWhiteSpace(request.BlogUrl))
                 {
-                    blogPost.PageUrl = redirectService.FixUrl(request.BlogUrl);
+                    blogPost.PageUrl = urlService.FixUrl(request.BlogUrl);
                     pageService.ValidatePageUrl(blogPost.PageUrl);
                 }
                 else

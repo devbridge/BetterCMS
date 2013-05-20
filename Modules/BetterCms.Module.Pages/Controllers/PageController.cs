@@ -268,12 +268,13 @@ namespace BetterCms.Module.Pages.Controllers
         /// </summary>
         /// <param name="text">The text.</param>
         /// <param name="senderId">The sender id.</param>
+        /// <param name="parentPageUrl">The parent page URL.</param>
         /// <returns>
         /// URL, created from text.
         /// </returns>
-        public ActionResult ConvertStringToSlug(string text, string senderId)
+        public ActionResult ConvertStringToSlug(string text, string senderId, string parentPageUrl)
         {
-            var slug = pageService.CreatePagePermalink(text);
+            var slug = pageService.CreatePagePermalink(text, parentPageUrl);
 
             return Json(new { Text = text, Url = slug, SenderId = senderId }, JsonRequestBehavior.AllowGet);
         }

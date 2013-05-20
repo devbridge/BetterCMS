@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 
-using BetterCms.Configuration;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Module.Pages.Content.Resources;
@@ -20,21 +18,14 @@ namespace BetterCms.Module.Pages.Services
         /// The unit of work
         /// </summary>
         private IUnitOfWork unitOfWork;
-        
-        /// <summary>
-        /// Configuration service
-        /// </summary>
-        private ICmsConfiguration configuration;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultRedirectService" /> class.
         /// </summary>
         /// <param name="unitOfWork">The unit of work.</param>
-        /// <param name="configuration">The configuration.</param>
-        public DefaultRedirectService(IUnitOfWork unitOfWork, ICmsConfiguration configuration)
+        public DefaultRedirectService(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
-            this.configuration = configuration;
         }
 
         /// <summary>
@@ -54,16 +45,6 @@ namespace BetterCms.Module.Pages.Services
 
 
             return redirect;
-        }
-
-        /// <summary>
-        /// Validates the URL.
-        /// </summary>
-        /// <param name="url">The URL.</param>
-        /// <returns>true, if url is valid</returns>
-        public bool ValidateUrl(string url)
-        {
-            return Regex.IsMatch(url, PagesConstants.PageUrlRegularExpression);
         }
 
         /// <summary>
@@ -106,29 +87,6 @@ namespace BetterCms.Module.Pages.Services
                 query = query.Where(r => r.Id != id.Value);
             }
             return query.FirstOrDefault();
-        }
-
-        /// <summary>
-        /// Fixes the URL (adds slashes in front and bottom).
-        /// </summary>
-        /// <param name="url">The URL.</param>
-        /// <returns>
-        /// Fixed url
-        /// </returns>
-        public string FixUrl(string url)
-        {
-            if (!string.IsNullOrWhiteSpace(url))
-            {
-                if (!url.StartsWith("/"))
-                {
-                    url = string.Concat("/", url);
-                }
-                if (!url.EndsWith("/"))
-                {
-                    url = string.Concat(url, "/");
-                }
-            }
-            return url;
         }
 
         /// <summary>
@@ -221,51 +179,6 @@ namespace BetterCms.Module.Pages.Services
                 .Select(r => r.RedirectUrl)
                 .SingleOrDefault();
             return redirect;
-        }
-
-        /// <summary>
-        /// Validates the URL patterns.
-        /// </summary>
-        /// <param name="url">The URL.</param>
-        /// <param name="message">The message.</param>
-        /// <param name="validatingFieldName">Name of the validating field.</param>
-        /// <returns><c>true</c> if URL is valid</returns>
-        public bool ValidateUrlPatterns(string url, out string message, string validatingFieldName = null)
-        {
-            message = null;
-
-            foreach (PatternElement pattern in configuration.UrlPatterns)
-            {
-                var options = RegexOptions.None;
-                if (pattern.IgnoreCase)
-                {
-                    options = options | RegexOptions.IgnoreCase;
-                }
-                var regex = new Regex(pattern.Expression, options);
-                var matched = regex.IsMatch(url);
-                if (pattern.Negate)
-                {
-                    if (matched)
-                    {
-                        message = (!string.IsNullOrWhiteSpace(validatingFieldName))
-                            ? string.Format(pattern.Description, validatingFieldName)
-                            : string.Format(pattern.Description, PagesGlobalization.PageUrl_PatternValidation_Message_Url);
-                        return false;
-                    }
-                }
-                else
-                {
-                    if (!matched)
-                    {
-                        message = (!string.IsNullOrWhiteSpace(validatingFieldName))
-                            ? string.Format(pattern.Description, validatingFieldName)
-                            : string.Format(pattern.Description, PagesGlobalization.PageUrl_PatternValidation_Message_Url);
-                        return false;
-                    }
-                }
-            }
-
-            return true;
         }
     }
 }

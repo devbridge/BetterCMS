@@ -25,7 +25,7 @@
                     <div class="bcms-content-titles">@PagesGlobalization.Widget_Title_Title:</div>
                     <div class="bcms-input-box" style="width: 523px;">
                         @Html.TextBoxFor(model => model.Name, new { @class = "bcms-editor-field-box" })
-                        @Html.ValidationMessageFor(m => m.Name)
+                        @Html.BcmsValidationMessageFor(m => m.Name)
                     </div>
                 </div>
 
@@ -40,7 +40,7 @@
                     <div class="bcms-content-titles">@PagesGlobalization.Widget_Url_Title:</div>
                     <div class="bcms-input-box" style="width: 523px;">
                         @Html.TextBoxFor(model => model.Url, new { @class = "bcms-editor-field-box" })
-                        @Html.ValidationMessageFor(m => m.Url)
+                        @Html.BcmsValidationMessageFor(m => m.Url)
                     </div>
                 </div>
 
@@ -49,7 +49,7 @@
                     <div class="bcms-content-titles">@PagesGlobalization.WidgetPreviewImageUrl_Title:</div>
                     <div class="bcms-input-box" style="width: 523px;">
                         @Html.TextBoxFor(model => model.PreviewImageUrl, new { @class = "bcms-editor-field-box" })
-                        @Html.ValidationMessageFor(m => m.PreviewImageUrl)
+                        @Html.BcmsValidationMessageFor(m => m.PreviewImageUrl)
                     </div>
                 </div>
 

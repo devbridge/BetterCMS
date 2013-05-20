@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using Autofac;
 
 using BetterCms.Core.DataAccess;
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Models;
 
 using NHibernate;
@@ -17,12 +18,15 @@ namespace BetterCms.Api
     {        
         protected IRepository Repository { get; private set; }
 
+        protected IUnitOfWork UnitOfWork { get; private set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DataApiContext" /> class.
         /// </summary>
         /// <param name="lifetimeScope">The lifetime scope.</param>
         /// <param name="repository">The repository.</param>
-        protected DataApiContext(ILifetimeScope lifetimeScope, IRepository repository = null)
+        /// <param name="unitOfWork">The unit of work.</param>
+        protected DataApiContext(ILifetimeScope lifetimeScope, IRepository repository = null, IUnitOfWork unitOfWork = null)
             : base(lifetimeScope)
         {
             if (repository == null)
@@ -32,6 +36,15 @@ namespace BetterCms.Api
             else
             {
                 Repository = repository;
+            }
+
+            if (unitOfWork == null)
+            {
+                UnitOfWork = Resolve<IUnitOfWork>();
+            }
+            else
+            {
+                UnitOfWork = unitOfWork;
             }
         }        
 
@@ -57,6 +70,6 @@ namespace BetterCms.Api
             }
 
             return query;
-        }     
+        }
     }
 }

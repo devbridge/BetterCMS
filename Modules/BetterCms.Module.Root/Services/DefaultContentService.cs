@@ -65,11 +65,11 @@ namespace BetterCms.Module.Root.Services
             
             var originalContent =
                 repository.AsQueryable<Models.Content>()
+                          .Where(f => f.Id == updatedContent.Id && !f.IsDeleted)
                           .Fetch(f => f.Original).ThenFetchMany(f => f.History)
                           .Fetch(f => f.Original).ThenFetchMany(f => f.ContentOptions)
                           .FetchMany(f => f.History)
-                          .FetchMany(f => f.ContentOptions)                          
-                          .Where(f => f.Id == updatedContent.Id && !f.IsDeleted)
+                          .FetchMany(f => f.ContentOptions)            
                           .ToList()
                           .FirstOrDefault();
 
@@ -284,6 +284,28 @@ namespace BetterCms.Module.Root.Services
             }
 
             return null;
+        }
+
+        public int GetPageContentNextOrderNumber(Guid pageId)
+        {
+            var page = repository.AsProxy<Page>(pageId);
+            var max = repository
+                .AsQueryable<PageContent>()
+                .Where(f => f.Page == page && !f.IsDeleted)
+                .Select(f => (int?)f.Order)
+                .Max();
+            int order;
+
+            if (max == null)
+            {
+                order = 0;
+            }
+            else
+            {
+                order = max.Value + 1;
+            }
+
+            return order;
         }
 
         private Models.Content FindEditableContentVersion(Models.Content content)

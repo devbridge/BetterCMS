@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using BetterCms.Api;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
@@ -107,7 +108,10 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                                                                         ? "require-2.1.5.min.js" 
                                                                         : "require-2.1.5.js");
             renderPageViewModel.Html5ShivJsPath = VirtualPath.Combine(rootModuleDescriptor.JsBasePath, "html5shiv.js");
-            
+
+            // Notify about retrieved page.
+            RootApiContext.Events.OnPageRetrieved(renderPageViewModel, page);
+
             return new CmsRequestViewModel(renderPageViewModel);
         }
 
@@ -168,11 +172,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
         private IEnumerable<Page> GetPageFutureQuery(GetPageToRenderRequest request)
         {
-            IQueryable<Page> query = Repository.AsQueryable<Page>()                                               
-                                               .Fetch(f => f.Layout)
-                                               .ThenFetchMany(f => f.LayoutRegions)
-                                               .ThenFetch(f => f.Region)
-                                               .Where(f => !f.IsDeleted);
+            IQueryable<Page> query = Repository.AsQueryable<Page>().Where(f => !f.IsDeleted);
 
             if (request.PageId == null)
             {
@@ -189,20 +189,19 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                 query = query.Where(f => f.Status == PageStatus.Published);
             }
 
+            // Add fetched entities
+            query = query
+                .Fetch(f => f.Layout)
+                .ThenFetchMany(f => f.LayoutRegions)
+                .ThenFetch(f => f.Region);
+
             return query.ToFuture();
         }
 
         private IEnumerable<PageContent> GetPageContentFutureQuery(GetPageToRenderRequest request)
         {
             IQueryable<PageContent> pageContentsQuery =
-                Repository.AsQueryable<PageContent>()                          
-                          .Fetch(f => f.Content).ThenFetchMany(f => f.ContentOptions)
-                          .FetchMany(f => f.Options);
-
-            if (request.CanManageContent || request.PreviewPageContentId != null)
-            {
-                pageContentsQuery = pageContentsQuery.Fetch(f => f.Content).ThenFetchMany(f => f.History);
-            }
+                Repository.AsQueryable<PageContent>();
 
             if (request.PageId == null)
             {
@@ -227,6 +226,16 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             }
 
             pageContentsQuery = pageContentsQuery.Where(f => !f.IsDeleted && !f.Content.IsDeleted && !f.Page.IsDeleted);
+
+            pageContentsQuery = pageContentsQuery
+                .Fetch(f => f.Content)
+                .ThenFetchMany(f => f.ContentOptions)
+                .FetchMany(f => f.Options);
+
+            if (request.CanManageContent || request.PreviewPageContentId != null)
+            {
+                pageContentsQuery = pageContentsQuery.Fetch(f => f.Content).ThenFetchMany(f => f.History);
+            }
 
             return pageContentsQuery.ToFuture();
         }

@@ -36,6 +36,7 @@ namespace BetterCms.Module.MediaManager.Command.Images.GetImage
                     Caption = image.Caption,
                     Title = image.Title,
                     Url = image.PublicUrl,
+                    ThumbnailUrl = image.PublicThumbnailUrl,
                     Version = image.Version.ToString(CultureInfo.InvariantCulture),
                     FileName = image.OriginalFileName,
                     FileExtension = image.OriginalFileExtension,

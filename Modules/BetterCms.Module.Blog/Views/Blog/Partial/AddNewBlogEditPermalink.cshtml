@@ -22,7 +22,7 @@
 
     <div class="bcms-custom-input-box" style="width: 395px;">
         @Html.TextBoxFor(model => model.BlogUrl, new { @id = "bcms-page-permalink-edit", @class = "bcms-editor-field-box" })
-        @Html.ValidationMessageFor(f => f.BlogUrl)
+        @Html.BcmsValidationMessageFor(f => f.BlogUrl)
     </div>
     @if (Model.Id != Guid.Empty)
     {

@@ -219,7 +219,7 @@ define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.sit
                 self.cropCoordY1 = ko.observable(json.CropCoordY1);
                 self.cropCoordY2 = ko.observable(json.CropCoordY2);
                 self.keepAspectRatio = ko.observable(false);
-                self.url = json.OriginalImageUrl + '?version=' + json.Version;
+                self.url = json.OriginalImageUrl;
 
                 // Recalculate image dimensions on image change
                 self.fit.subscribe(function () {

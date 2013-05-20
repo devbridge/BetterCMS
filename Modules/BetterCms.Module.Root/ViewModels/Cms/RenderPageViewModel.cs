@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Modules.Projections;
+using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Projections;
 
 namespace BetterCms.Module.Root.ViewModels.Cms
@@ -20,6 +21,12 @@ namespace BetterCms.Module.Root.ViewModels.Cms
             Title = page.Title;
             PageUrl = page.PageUrl;
             Status = page.Status;
+            CreatedOn = page.CreatedOn;
+            CreatedByUser = page.CreatedByUser;
+            ModifiedOn = page.ModifiedOn;
+            ModifiedByUser = page.ModifiedByUser;
+
+            Bag = new DynamicDictionary();
         }
 
         public RenderPageViewModel()
@@ -30,39 +37,7 @@ namespace BetterCms.Module.Root.ViewModels.Cms
 
         public bool IsDeleted { get; private set; }
 
-        DateTime IEntity.CreatedOn
-        {
-            get
-            {
-                throw new NotSupportedException();
-            }
-        }
-
-        DateTime IEntity.ModifiedOn
-        {
-            get
-            {
-                throw new NotSupportedException();
-            }
-        }
-
         DateTime? IEntity.DeletedOn
-        {
-            get
-            {
-                throw new NotSupportedException();
-            }
-        }
-
-        string IEntity.CreatedByUser
-        {
-            get
-            {
-                throw new NotSupportedException();
-            }
-        }
-
-        string IEntity.ModifiedByUser
         {
             get
             {
@@ -79,6 +54,14 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         }
 
         public int Version { get; private set; }
+        
+        public DateTime CreatedOn { get; private set; }
+        
+        public DateTime ModifiedOn { get; private set; }
+        
+        public string CreatedByUser { get; private set; }
+        
+        public string ModifiedByUser { get; private set; }
 
         public PageStatus Status { get; private set; }
         
@@ -169,6 +152,14 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         /// The path to a html5shiv.js file.
         /// </value>
         public string Html5ShivJsPath { get; set; }
+
+        /// <summary>
+        /// Gets or sets the page.
+        /// </summary>
+        /// <value>
+        /// The page.
+        /// </value>
+        public dynamic Bag { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

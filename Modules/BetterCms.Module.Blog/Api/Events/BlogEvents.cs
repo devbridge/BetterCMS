@@ -25,7 +25,7 @@ namespace BetterCms.Module.Blog.Api.Events
         public event DefaultEventHandler<SingleItemEventArgs<BlogPost>> BlogDeleted;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BlogEvents" /> class.
+        /// Initializes a new instance of the <see cref="BlogsApiEvents" /> class.
         /// </summary>
         public BlogsApiEvents()
         {
