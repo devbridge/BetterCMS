@@ -1077,17 +1077,7 @@ namespace BetterCms.Api
         /// <returns>Page content entity with created HTML content</returns>
         public PageContent CreatePageHtmlContent(Guid pageId, Guid regionId, string name, string html, ContentStatus contentStatus, DateTime? activationDate = null, DateTime? expirationDate = null, string customCss = null, string customJs = null)
         {
-            Region region;
-            try
-            {
-                region = Repository.AsProxy<Region>(regionId);
-            }
-            catch (Exception inner)
-            {
-                var message = string.Format("Failed to load region by Id: {0}.", regionId);
-                Logger.Error(message, inner);
-                throw new CmsApiException(message, inner);
-            }
+            var region = Repository.AsProxy<Region>(regionId);
 
             return CreatePageHtmlContent(pageId, region, name, html, contentStatus, activationDate, expirationDate, customCss, customJs);
         }
@@ -1107,17 +1097,7 @@ namespace BetterCms.Api
         /// <returns>Page content entity with created HTML content</returns>
         public PageContent CreatePageHtmlContent(Guid pageId, string regionIdentifier, string name, string html, ContentStatus contentStatus, DateTime? activationDate = null, DateTime? expirationDate = null, string customCss = null, string customJs = null)
         {
-            Region region;
-            try
-            {
-                region = Repository.AsQueryable<Region>(r => r.RegionIdentifier == regionIdentifier).FirstOne();
-            }
-            catch (Exception inner)
-            {
-                var message = string.Format("Failed to load region by identifier: {0}.", regionIdentifier);
-                Logger.Error(message, inner);
-                throw new CmsApiException(message, inner);
-            }
+            Region region = GetRegionByIdentifier(regionIdentifier);
 
             return CreatePageHtmlContent(pageId, region, name, html, contentStatus, activationDate, expirationDate, customCss, customJs);
         }
@@ -1141,9 +1121,6 @@ namespace BetterCms.Api
             {
                 UnitOfWork.BeginTransaction();
 
-                var page = Repository.AsProxy<PageProperties>(pageId);
-
-                var contentService = Resolve<IContentService>();
                 var content = new HtmlContent
                 {
                     Name = name,
@@ -1155,20 +1132,13 @@ namespace BetterCms.Api
                     CustomJs = customJs,
                     UseCustomJs = !string.IsNullOrWhiteSpace(customJs)
                 };
-                var contentToSave = contentService.SaveContentWithStatusUpdate(content, contentStatus);
 
-                var pageContent = new PageContent
-                {
-                    Content = contentToSave,
-                    Order = contentService.GetPageContentNextOrderNumber(pageId),
-                    Page = page,
-                    Region = region
-                };
+                var contentService = Resolve<IContentService>();
+                var contentToSave = contentService.SaveContentWithStatusUpdate(content, content.Status);
 
-                Repository.Save(pageContent);
+                var pageContent = SavePageContent(pageId, region, contentToSave);
+                
                 UnitOfWork.Commit();
-
-                Events.OnPageContentInserted(pageContent);
 
                 return pageContent;
             }
@@ -1183,12 +1153,48 @@ namespace BetterCms.Api
         /// <summary>
         /// Adds the HTML content widget to page.
         /// </summary>
-        /// <returns>Created Page Content</returns>
-        public PageContent AddHtmlContentWidgetToPage()
+        /// <param name="pageId">The page id.</param>
+        /// <param name="regionId">The region id.</param>
+        /// <param name="contentId">The content id.</param>
+        /// <returns>Created page content entity containing HTML widget entity</returns>
+        public PageContent AddHtmlContentWidgetToPage(Guid pageId, Guid regionId, Guid contentId)
+        {
+            var region = Repository.AsProxy<Region>(regionId);
+            return AddHtmlContentWidgetToPage(pageId, region, contentId);
+        }
+
+        /// <summary>
+        /// Adds the HTML content widget to page.
+        /// </summary>
+        /// <param name="pageId">The page id.</param>
+        /// <param name="regionIdentifier">The region identifier.</param>
+        /// <param name="contentId">The content id.</param>
+        /// <returns>Created page content entity containing HTML widget entity</returns>
+        public PageContent AddHtmlContentWidgetToPage(Guid pageId, string regionIdentifier, Guid contentId)
+        {
+            var region = GetRegionByIdentifier(regionIdentifier);
+            return AddHtmlContentWidgetToPage(pageId, region, contentId);
+        }
+
+        /// <summary>
+        /// Adds the HTML content widget to page.
+        /// </summary>
+        /// <param name="pageId">The page id.</param>
+        /// <param name="region">The region.</param>
+        /// <param name="contentId">The content id.</param>
+        /// <returns>Created page content entity containing HTML widget entity</returns>
+        private PageContent AddHtmlContentWidgetToPage(Guid pageId, Region region, Guid contentId)
         {
             try
             {
-                return null;
+                UnitOfWork.BeginTransaction();
+
+                var content = Repository.AsQueryable<HtmlContentWidget>(w => w.Id == contentId).FirstOne();
+                var pageContent = SavePageContent(pageId, region, content);
+
+                UnitOfWork.Commit();
+
+                return pageContent;
             }
             catch (Exception inner)
             {
@@ -1201,12 +1207,48 @@ namespace BetterCms.Api
         /// <summary>
         /// Adds the server control widget to page.
         /// </summary>
-        /// <returns>Created Page Content</returns>
-        public PageContent AddServerControlWidgetToPage()
+        /// <param name="pageId">The page id.</param>
+        /// <param name="regionId">The region id.</param>
+        /// <param name="contentId">The content id.</param>
+        /// <returns>Created page content entity containing server control widget entity</returns>
+        public PageContent AddServerControlWidgetToPage(Guid pageId, Guid regionId, Guid contentId)
+        {
+            var region = Repository.AsProxy<Region>(regionId);
+            return AddServerControlWidgetToPage(pageId, region, contentId);
+        }
+
+        /// <summary>
+        /// Adds the server control widget to page.
+        /// </summary>
+        /// <param name="pageId">The page id.</param>
+        /// <param name="regionIdentifier">The region identifier.</param>
+        /// <param name="contentId">The content id.</param>
+        /// <returns>Created page content entity containing server control widget entity</returns>
+        public PageContent AddServerControlWidgetToPage(Guid pageId, string regionIdentifier, Guid contentId)
+        {
+            var region = GetRegionByIdentifier(regionIdentifier);
+            return AddServerControlWidgetToPage(pageId, region, contentId);
+        }
+
+        /// <summary>
+        /// Adds the server control widget to page.
+        /// </summary>
+        /// <param name="pageId">The page id.</param>
+        /// <param name="region">The region.</param>
+        /// <param name="contentId">The content id.</param>
+        /// <returns>Created page content entity containing server control widget entity</returns>
+        private PageContent AddServerControlWidgetToPage(Guid pageId, Region region, Guid contentId)
         {
             try
             {
-                return null;
+                UnitOfWork.BeginTransaction();
+
+                var content = Repository.AsQueryable<ServerControlWidget>(w => w.Id == contentId).FirstOne();
+                var pageContent = SavePageContent(pageId, region, content);
+
+                UnitOfWork.Commit();
+
+                return pageContent;
             }
             catch (Exception inner)
             {
@@ -1214,6 +1256,34 @@ namespace BetterCms.Api
                 Logger.Error(message, inner);
                 throw new CmsApiException(message, inner);
             }
+        }
+
+        /// <summary>
+        /// Saves the content of the page.
+        /// </summary>
+        /// <param name="pageId">The page id.</param>
+        /// <param name="region">The region.</param>
+        /// <param name="content">The content.</param>
+        /// <returns>Saved page content entity containing content entity</returns>
+        private PageContent SavePageContent(Guid pageId, Region region, Content content)
+        {
+            var contentService = Resolve<IContentService>();
+            
+            var page = Repository.AsProxy<Page>(pageId);
+
+            var pageContent = new PageContent
+            {
+                Content = content,
+                Order = contentService.GetPageContentNextOrderNumber(pageId),
+                Page = page,
+                Region = region
+            };
+
+            Repository.Save(pageContent);
+
+            Events.OnPageContentInserted(pageContent);
+
+            return pageContent;
         }
 
         /// <summary>
@@ -1297,6 +1367,25 @@ namespace BetterCms.Api
             }
 
             return pageUrl;
+        }
+
+        /// <summary>
+        /// Gets the region by identifier.
+        /// </summary>
+        /// <param name="regionIdentifier">The region identifier.</param>
+        /// <returns></returns>
+        private Region GetRegionByIdentifier(string regionIdentifier)
+        {
+            try
+            {
+                return Repository.AsQueryable<Region>(r => r.RegionIdentifier == regionIdentifier).FirstOne();
+            }
+            catch (Exception inner)
+            {
+                var message = string.Format("Failed to load region by identifier: {0}.", regionIdentifier);
+                Logger.Error(message, inner);
+                throw new CmsApiException(message, inner);
+            }
         }
     }
 }
