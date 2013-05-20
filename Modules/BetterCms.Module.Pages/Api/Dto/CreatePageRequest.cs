@@ -1,10 +1,11 @@
 ﻿using System;
 
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Module.Pages.Models;
 
-namespace BetterCms.Module.Pages.Models.Api
+namespace BetterCms.Module.Pages.Api.Dto
 {
-    public class CreatePageDto
+    public class CreatePageRequest
     {
         public string PageUrl { get; set; }
         
@@ -38,7 +39,7 @@ namespace BetterCms.Module.Pages.Models.Api
         
         public bool UseNoIndex { get; set; }
 
-        public CreatePageDto()
+        public CreatePageRequest()
         {
             Status = PageStatus.Unpublished;
             IsPublic = true;
