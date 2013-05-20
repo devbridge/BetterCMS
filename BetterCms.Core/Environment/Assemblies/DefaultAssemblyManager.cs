@@ -129,7 +129,7 @@ namespace BetterCms.Core.Environment.Assemblies
             foreach (var notLoadedReferencedPath in notLoadedReferencedPaths)
             {
                 string fileName = Path.GetFileNameWithoutExtension(notLoadedReferencedPath);
-                if (fileName != null && fileName.StartsWith("BetterCms"))
+                if (fileName != null && fileName.StartsWith("BetterCms", StringComparison.OrdinalIgnoreCase))
                 {
                     AssemblyName assemblyName = AssemblyName.GetAssemblyName(notLoadedReferencedPath);
                     if (assemblyName.FullName.StartsWith("BetterCms.Module.", StringComparison.OrdinalIgnoreCase))
