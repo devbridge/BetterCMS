@@ -9,11 +9,14 @@ using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Api;
 using BetterCms.Core.Exceptions.DataTier;
+using BetterCms.Core.Exceptions.Mvc;
+using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Api.Events;
 using BetterCms.Module.Pages.DataContracts.Enums;
 using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Module.Pages.Models.Api;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
@@ -620,6 +623,7 @@ namespace BetterCms.Api
                 throw new CmsApiException(message, inner);
             }
         }
+
         /// <summary>
         /// Gets the list with historical content entities.
         /// </summary>
@@ -716,7 +720,13 @@ namespace BetterCms.Api
         /// <summary>
         /// Creates the layout.
         /// </summary>
-        /// <returns>Created layout entity</returns>
+        /// <param name="layoutPath">The layout path.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="previewUrl">The preview URL.</param>
+        /// <param name="regions">The regions.</param>
+        /// <returns>
+        /// Created layout entity
+        /// </returns>
         public Layout CreateLayout(string layoutPath, string name, string previewUrl = null, IEnumerable<string> regions = null)
         {
             if (!HttpHelper.VirtualPathExists(layoutPath))
@@ -965,6 +975,94 @@ namespace BetterCms.Api
         }
 
         /// <summary>
+        /// Creates the page.
+        /// </summary>
+        /// <returns></returns>
+        public PageProperties CreatePage(CreatePageDto pageDto)
+        {
+            // Validate layout
+            if (pageDto.LayoutId.HasDefaultValue())
+            {
+                var message = string.Format("Failed to create page. Layout not specified.");
+                Logger.Error(message);
+                throw new CmsApiValidationException(message);
+            }
+
+            // Validate title
+            if (string.IsNullOrWhiteSpace(pageDto.Title))
+            {
+                var message = string.Format("Failed to create page. Title is not specified.");
+                Logger.Error(message);
+                throw new CmsApiValidationException(message);
+            }
+
+            // Validate status
+            if (pageDto.Status == PageStatus.Preview || pageDto.Status == PageStatus.Draft)
+            {
+                var message = string.Format("Cannot create page in Preview/Draft Status.");
+                Logger.Error(message);
+                throw new CmsApiValidationException(message);
+            }
+            
+            try
+            {
+                var pageUrl = CreateOrFixPageUrl(pageDto.PageUrl, pageDto.Title);
+                
+                var layout = Repository.AsProxy<Layout>(pageDto.LayoutId);
+                
+                MediaImage image;
+                if (pageDto.ImageId != null && !pageDto.ImageId.Value.HasDefaultValue())
+                {
+                    image = Repository.AsProxy<MediaImage>(pageDto.ImageId.Value);
+                }
+                else
+                {
+                    image = null;
+                }
+
+                Category category;
+                if (pageDto.CategoryId != null && !pageDto.CategoryId.Value.HasDefaultValue())
+                {
+                    category = Repository.AsProxy<Category>(pageDto.CategoryId.Value);
+                }
+                else
+                {
+                    category = null;
+                }
+
+                var page = pageDto.ToPageProperties();
+                page.Layout = layout;
+                page.Image = image;
+                page.Category = category;
+                page.PageUrl = pageUrl;
+                if (pageDto.Status == PageStatus.Published)
+                {
+                    page.PublishedOn = DateTime.Now;
+                }
+
+                Repository.Save(page);
+                UnitOfWork.Commit();
+
+                // Notifying, that page is created
+                Events.OnPageCreated(page);
+
+                return page;
+            }
+            catch (ValidationException inner)
+            {
+                var message = string.Format("Failed to create page. Title: {0}, Url: {1}", pageDto.Title, pageDto.PageUrl);
+                Logger.Error(message, inner);
+                throw new CmsApiException(inner.Message, inner);
+            }
+            catch (Exception inner)
+            {
+                var message = string.Format("Failed to create page.");
+                Logger.Error(message, inner);
+                throw new CmsApiException(message, inner);
+            }
+        }
+
+        /// <summary>
         /// Fetches the child by given parameters.
         /// </summary>
         /// <param name="query">The query.</param>
@@ -1018,6 +1116,33 @@ namespace BetterCms.Api
             }
 
             return region;
+        }
+
+        /// <summary>
+        /// Creates the or fix page URL.
+        /// </summary>
+        /// <param name="pageUrl">The page URL.</param>
+        /// <param name="title">The title.</param>
+        /// <returns></returns>
+        private string CreateOrFixPageUrl(string pageUrl, string title)
+        {
+            var pageService = Resolve<IPageService>();
+
+            // Create / fix page url
+            var createPageUrl = (pageUrl == null);
+            if (createPageUrl && !string.IsNullOrWhiteSpace(title))
+            {
+                pageUrl = pageService.CreatePagePermalink(title, null);
+            }
+            else
+            {
+                pageUrl = Resolve<IUrlService>().FixUrl(pageUrl);
+
+                // Validate Url
+                pageService.ValidatePageUrl(pageUrl);
+            }
+
+            return pageUrl;
         }
     }
 }
