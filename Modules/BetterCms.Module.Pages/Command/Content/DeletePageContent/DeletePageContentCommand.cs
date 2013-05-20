@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
@@ -31,7 +32,16 @@ namespace BetterCms.Module.Pages.Command.Content.DeletePageContent
 
             if (pageContent.Content is HtmlContent)
             {
-                Repository.Delete<HtmlContent>(pageContent.Content.Id, request.ContentVersion);
+                var draft = pageContent.Content.History != null ? pageContent.Content.History.FirstOrDefault(c => c.Status == ContentStatus.Draft) : null;
+                if (draft != null)
+                {
+                    Repository.Delete<HtmlContent>(draft.Id, request.ContentVersion);
+                    Repository.Delete<HtmlContent>(pageContent.Content.Id, pageContent.Content.Version);
+                }
+                else
+                {
+                    Repository.Delete<HtmlContent>(pageContent.Content.Id, request.ContentVersion);
+                }
             }
 
             Repository.Delete<PageContent>(pageContent.Id, request.PageContentVersion);
