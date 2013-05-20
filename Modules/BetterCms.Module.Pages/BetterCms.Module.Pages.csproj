@@ -120,6 +120,16 @@
     </Compile>
     <Compile Include="Accessors\PageStylesheetAccessor.cs" />
     <Compile Include="Accessors\PageJavaScriptAccessor.cs" />
+    <Compile Include="Api\Dto\AddWidgetToPageRequest.cs" />
+    <Compile Include="Api\Dto\CreateHtmlContentWidgetRequest.cs" />
+    <Compile Include="Api\Dto\CreateLayoutRegionRequest.cs" />
+    <Compile Include="Api\Dto\CreateLayoutRequest.cs" />
+    <Compile Include="Api\Dto\CreatePageContentRequestBase.cs" />
+    <Compile Include="Api\Dto\CreatePageHtmlContentRequest.cs" />
+    <Compile Include="Api\PagesApiContext.Sitemap.cs" />
+    <Compile Include="Api\PagesApiContext.cs" />
+    <Compile Include="Api\PagesApiContext.Contents.cs" />
+    <Compile Include="Api\PagesApiContext.Layouts.cs" />
     <Compile Include="Api\Dto\ContentOptionDto.cs" />
     <Compile Include="Api\Dto\ContentOptionValueDto.cs" />
     <Compile Include="Api\Dto\CreateContentOptionsRequest.cs" />
@@ -252,7 +262,7 @@
     <Compile Include="Mvc\Attributes\CustomPageUrlValidationAttribute.cs" />
     <Compile Include="Mvc\Attributes\DateValidationAttribute.cs" />
     <Compile Include="Mvc\Attributes\EndDateValidationAttribute.cs" />
-    <Compile Include="Api\PagesApiContext.cs" />
+    <Compile Include="Api\PagesApiContext.Pages.cs" />
     <Compile Include="PagesConstants.cs" />
     <Compile Include="Accessors\HtmlContentWidgetAccessor.cs" />
     <Compile Include="Accessors\HtmlContentAccessor.cs" />

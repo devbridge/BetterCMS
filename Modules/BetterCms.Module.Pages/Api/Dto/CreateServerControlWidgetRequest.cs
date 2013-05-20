@@ -13,12 +13,6 @@ namespace BetterCms.Module.Pages.Api.Dto
 
         public string PreviewUrl { get; set; }
 
-        /// <summary>
-        /// Gets or sets the options.
-        /// </summary>
-        /// <value>
-        /// The options.
-        /// </value>
         public IList<ContentOptionDto> Options { get; set; }
     }
 }
