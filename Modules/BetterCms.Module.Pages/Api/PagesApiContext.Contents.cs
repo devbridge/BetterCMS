@@ -571,6 +571,14 @@ namespace BetterCms.Api
         /// <returns>Loaded region entity or region entity proxy</returns>
         private Region GetRegion(CreatePageContentRequestBase request)
         {
+            if ((!request.RegionId.HasValue || request.RegionId.Value.HasDefaultValue()) 
+                && string.IsNullOrWhiteSpace(request.RegionIdentifier))
+            {
+                var message = "Either region id or region identifier must be set.";
+                Logger.Error(message);
+                throw new CmsApiException(message);
+            }
+
             if (request.RegionId.HasValue)
             {
                 return Repository.AsProxy<Region>(request.RegionId.Value);

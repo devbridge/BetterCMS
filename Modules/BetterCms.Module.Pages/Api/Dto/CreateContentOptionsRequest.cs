@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using BetterCms.Module.Root.Api.Attributes;
+
 namespace BetterCms.Module.Pages.Api.Dto
 {
     public class CreateContentOptionsRequest
@@ -16,6 +18,7 @@ namespace BetterCms.Module.Pages.Api.Dto
         /// <value>
         /// The content id.
         /// </value>
+        [EmptyGuidValidation(ErrorMessage = "Content Id must be set.")]
         public Guid ContentId { get; set; }
 
         /// <summary>

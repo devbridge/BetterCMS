@@ -1,4 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+using BetterCms.Core.Models;
 
 namespace BetterCms.Module.Pages.Api.Dto
 {
@@ -10,6 +13,8 @@ namespace BetterCms.Module.Pages.Api.Dto
         /// <value>
         /// The layout (usually .cshtml) file path.
         /// </value>
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Layout path is required.")]
+        [StringLength(MaxLength.Url, ErrorMessage = "Maximum length of layout path cannot exceed {1} symbols.")]
         public string LayoutPath { get; set; }
 
         /// <summary>
@@ -18,6 +23,8 @@ namespace BetterCms.Module.Pages.Api.Dto
         /// <value>
         /// The layout name.
         /// </value>
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Layout name is required.")]
+        [StringLength(MaxLength.Name, ErrorMessage = "Maximum length of layout name cannot exceed {1} symbols.")]
         public string Name { get; set; }
 
         /// <summary>

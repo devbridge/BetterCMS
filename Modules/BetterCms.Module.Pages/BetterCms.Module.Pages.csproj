@@ -537,9 +537,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Views\Seo\Partial\WarnMessageAboutSitemap.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Api\Attributes\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
