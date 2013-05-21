@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 using BetterCms.Core.Models;
+using BetterCms.Module.Pages.Api.Attributes;
 
 namespace BetterCms.Module.Pages.Api.Dto
 {
@@ -19,13 +20,14 @@ namespace BetterCms.Module.Pages.Api.Dto
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the widget path.
+        /// Gets or sets the widget (usually .cshtml) file path.
         /// </summary>
         /// <value>
-        /// The widget path.
+        /// The widget (usually .cshtml) file path.
         /// </value>
         [Required(AllowEmptyStrings = false, ErrorMessage = "Widget path is required.")]
         [StringLength(MaxLength.Url, ErrorMessage = "Maximum length of widget path cannot exceed {1} symbols.")]
+        [ValidVirtualPathValidation(ErrorMessage = "Widget by given path {0} doesn't exist.")]
         public string WidgetPath { get; set; }
 
         /// <summary>

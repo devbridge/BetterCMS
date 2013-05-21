@@ -301,6 +301,8 @@ namespace BetterCms.Api
         /// <exception cref="BetterCms.Core.Exceptions.Api.CmsApiException"></exception>
         public HtmlContentWidget CreateHtmlContentWidget(CreateHtmlContentWidgetRequest request)
         {
+            ValidateRequest(request);
+
             try
             {
                 UnitOfWork.BeginTransaction();
@@ -352,12 +354,7 @@ namespace BetterCms.Api
         /// <exception cref="BetterCms.Core.Exceptions.Api.CmsApiException"></exception>
         public ServerControlWidget CreateServerControlWidget(CreateServerControlWidgetRequest request)
         {
-            if (!HttpHelper.VirtualPathExists(request.WidgetPath))
-            {
-                var message = string.Format("Failed to create server control widget: view by given path {0} doesn't exist.", request.WidgetPath);
-                Logger.Error(message);
-                throw new CmsApiValidationException(message);
-            }
+            ValidateRequest(request);
 
             try
             {
@@ -413,6 +410,7 @@ namespace BetterCms.Api
         /// <returns>List with saved content option entities</returns>
         public IList<ContentOption> CreateServerWidgetOptions(CreateContentOptionsRequest request)
         {
+            ValidateRequest(request);
             try
             {
                 UnitOfWork.BeginTransaction();
@@ -441,6 +439,8 @@ namespace BetterCms.Api
         /// </returns>
         public PageContent CreatePageHtmlContent(CreatePageHtmlContentRequest request)
         {
+            ValidateRequest(request);
+
             var region = GetRegion(request);
 
             try
@@ -485,6 +485,7 @@ namespace BetterCms.Api
         /// </returns>
         public PageContent AddHtmlContentWidgetToPage(AddWidgetToPageRequest request)
         {
+            ValidateRequest(request);
             var region = GetRegion(request);
 
             try
@@ -515,6 +516,7 @@ namespace BetterCms.Api
         /// </returns>
         public PageContent AddServerControlWidgetToPage(AddWidgetToPageRequest request)
         {
+            ValidateRequest(request);
             var region = GetRegion(request);
 
             try

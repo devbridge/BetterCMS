@@ -120,30 +120,6 @@ namespace BetterCms.Api
         public PageProperties CreatePage(CreatePageRequest pageDto)
         {
             ValidateRequest(pageDto);
-
-            // Validate layout
-            /*if (pageDto.LayoutId.HasDefaultValue())
-            {
-                var message = string.Format("Failed to create page. Layout not specified.");
-                Logger.Error(message);
-                throw new CmsApiValidationException(message);
-            }
-
-            // Validate title
-            if (string.IsNullOrWhiteSpace(pageDto.Title))
-            {
-                var message = string.Format("Failed to create page. Title is not specified.");
-                Logger.Error(message);
-                throw new CmsApiValidationException(message);
-            }
-
-            // Validate status
-            if (pageDto.Status == PageStatus.Preview || pageDto.Status == PageStatus.Draft)
-            {
-                var message = string.Format("Cannot create page in Preview/Draft Status.");
-                Logger.Error(message);
-                throw new CmsApiValidationException(message);
-            }*/
             
             try
             {

@@ -120,6 +120,7 @@
     </Compile>
     <Compile Include="Accessors\PageStylesheetAccessor.cs" />
     <Compile Include="Accessors\PageJavaScriptAccessor.cs" />
+    <Compile Include="Api\Attributes\ValidVirtualPathValidationAttribute.cs" />
     <Compile Include="Api\Dto\AddWidgetToPageRequest.cs" />
     <Compile Include="Api\Dto\CreateHtmlContentWidgetRequest.cs" />
     <Compile Include="Api\Dto\CreateLayoutRegionRequest.cs" />

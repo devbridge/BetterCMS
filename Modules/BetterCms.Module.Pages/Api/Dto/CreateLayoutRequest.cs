@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 
 using BetterCms.Core.Models;
+using BetterCms.Module.Pages.Api.Attributes;
 
 namespace BetterCms.Module.Pages.Api.Dto
 {
@@ -15,6 +16,7 @@ namespace BetterCms.Module.Pages.Api.Dto
         /// </value>
         [Required(AllowEmptyStrings = false, ErrorMessage = "Layout path is required.")]
         [StringLength(MaxLength.Url, ErrorMessage = "Maximum length of layout path cannot exceed {1} symbols.")]
+        [ValidVirtualPathValidation(ErrorMessage = "Layout by given path {0} doesn't exist.")]
         public string LayoutPath { get; set; }
 
         /// <summary>
