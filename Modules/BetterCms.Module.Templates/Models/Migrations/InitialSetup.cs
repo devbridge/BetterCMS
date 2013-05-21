@@ -7,23 +7,44 @@ using FluentMigrator;
 
 namespace BetterCms.Module.Templates.Models.Migrations
 {
+    /// <summary>
+    /// Module initial database structure creation.
+    /// </summary>
     [Migration(201301151842)]
     public class InitialSetup : DefaultMigration
     {
+        /// <summary>
+        /// The regions table name.
+        /// </summary>
         private const string RegionsTableName = "Regions";
 
+        /// <summary>
+        /// The layouts table name.
+        /// </summary>
         private const string LayoutsTableName = "Layouts";
 
+        /// <summary>
+        /// The layout regions table name.
+        /// </summary>
         private const string LayoutRegionsTableName = "LayoutRegions";
 
+        /// <summary>
+        /// The root schema name.
+        /// </summary>
         private readonly string rootSchemaName;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InitialSetup"/> class.
+        /// </summary>
         public InitialSetup()
             : base(TemplatesModuleDescriptor.ModuleName)
         {
             rootSchemaName = (new Root.Models.Migrations.RootVersionTableMetaData()).SchemaName;
         }
 
+        /// <summary>
+        /// Ups this instance.
+        /// </summary>
         public override void Up()
         {
             if (IsFirstTimeMigration())
@@ -40,18 +61,28 @@ namespace BetterCms.Module.Templates.Models.Migrations
             }
         }
 
+        /// <summary>
+        /// Downs this instance.
+        /// </summary>
         public override void Down()
         {
-            UpdateLayoutRegions(true);
-            UpdateLayouts(true);
-            UpdateRegions(true);
+            throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Determines whether it is first time migration.
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if it is first time migration; otherwise, <c>false</c>.
+        /// </returns>
         private bool IsFirstTimeMigration()
         {
             return Schema.Schema(SchemaName).Table(TemplatesVersionTableMetaData.VersionInfoTableName).Exists();
         }
 
+        /// <summary>
+        /// Creates the layouts.
+        /// </summary>
         private void CreateLayouts()
         {
             foreach (var layout in GetLayouts())
@@ -63,6 +94,9 @@ namespace BetterCms.Module.Templates.Models.Migrations
             }
         }
 
+        /// <summary>
+        /// Creates the regions.
+        /// </summary>
         private void CreateRegions()
         {
             foreach (var region in GetRegions())
@@ -74,6 +108,9 @@ namespace BetterCms.Module.Templates.Models.Migrations
             }
         }
 
+        /// <summary>
+        /// Creates the layout regions.
+        /// </summary>
         private void CreateLayoutRegions()
         {
             foreach (var layoutRegion in GetLayoutRegions())
@@ -85,6 +122,10 @@ namespace BetterCms.Module.Templates.Models.Migrations
             }
         }
 
+        /// <summary>
+        /// Updates the layouts.
+        /// </summary>
+        /// <param name="delete">if set to <c>true</c> to mark layout as deleted.</param>
         private void UpdateLayouts(bool delete)
         {
             foreach (var layout in GetLayouts())
@@ -97,6 +138,10 @@ namespace BetterCms.Module.Templates.Models.Migrations
             }
         }
 
+        /// <summary>
+        /// Updates the regions.
+        /// </summary>
+        /// <param name="delete">if set to <c>true</c> to mark region as deleted.</param>
         private void UpdateRegions(bool delete)
         {
             foreach (var region in GetRegions())
@@ -109,6 +154,10 @@ namespace BetterCms.Module.Templates.Models.Migrations
             }
         }
 
+        /// <summary>
+        /// Updates the layout regions.
+        /// </summary>
+        /// <param name="delete">if set to <c>true</c> to mark layout region as deleted.</param>
         private void UpdateLayoutRegions(bool delete)
         {
             if (delete)
@@ -144,7 +193,11 @@ namespace BetterCms.Module.Templates.Models.Migrations
             }
         }
 
-        private List<Layout>  GetLayouts()
+        /// <summary>
+        /// Gets the layouts.
+        /// </summary>
+        /// <returns>Layout list.</returns>
+        private List<Layout> GetLayouts()
         {
             var layouts = new List<Layout>();
 
@@ -172,6 +225,10 @@ namespace BetterCms.Module.Templates.Models.Migrations
             return layouts;
         }
 
+        /// <summary>
+        /// Gets the regions.
+        /// </summary>
+        /// <returns>Region list.</returns>
         private List<Region> GetRegions()
         {
             var regions = new List<Region>();
@@ -209,6 +266,10 @@ namespace BetterCms.Module.Templates.Models.Migrations
             return regions;
         }
 
+        /// <summary>
+        /// Gets the layout regions.
+        /// </summary>
+        /// <returns>Layout region list.</returns>
         private List<LayoutRegion> GetLayoutRegions()
         {
             var layoutRegions = new List<LayoutRegion>();
@@ -232,7 +293,9 @@ namespace BetterCms.Module.Templates.Models.Migrations
         }
     }
 
-    public class Deleted
+    #region Internal Data Classes
+
+    internal class Deleted
     {
         public bool IsDeleted { get; set; }
         public DateTime? DeletedOn { get; set; }
@@ -249,7 +312,7 @@ namespace BetterCms.Module.Templates.Models.Migrations
         }
     }
 
-    public abstract class BaseModel
+    internal abstract class BaseModel
     {
         public Guid Id { get; set; }
         public int Version { get; set; }
@@ -269,21 +332,23 @@ namespace BetterCms.Module.Templates.Models.Migrations
         }
     }
 
-    public class Layout : BaseModel
+    internal class Layout : BaseModel
     {
         public string Name { get; set; }
         public string LayoutPath { get; set; }
     }
 
-    public class Region : BaseModel
+    internal class Region : BaseModel
     {        
         public string RegionIdentifier { get; set; }
     }
-    
-    public class LayoutRegion : BaseModel
+
+    internal class LayoutRegion : BaseModel
     {
         public string Description { get; set; }
         public Guid LayoutId { get; set; }
         public Guid RegionId { get; set; }
     }
+
+    #endregion
 }

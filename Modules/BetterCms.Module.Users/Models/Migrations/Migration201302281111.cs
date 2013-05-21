@@ -2,12 +2,14 @@
 
 using BetterCms.Core.DataAccess.DataContext.Migrations;
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Models;
 
 using FluentMigrator;
 
 namespace BetterCms.Module.Users.Models.Migrations
 {
+    /// <summary>
+    /// Module database structure update.
+    /// </summary>
     [Migration(201302281111)]
     public class Migration201302281111 : DefaultMigration
     {
@@ -19,10 +21,16 @@ namespace BetterCms.Module.Users.Models.Migrations
         private readonly string serverControlWidgetsTableName = "ServerControlWidgets";
         private readonly string contentOptionsTableName = "ContentOptions";
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Migration201302281111"/> class.
+        /// </summary>
         public Migration201302281111() : base(UsersModuleDescriptor.ModuleName)
         {
         }
 
+        /// <summary>
+        /// Ups this instance.
+        /// </summary>
         public override void Up()
         {
             // Add widget.
@@ -64,6 +72,19 @@ namespace BetterCms.Module.Users.Models.Migrations
             AddOption("MainDivCssClass", string.Empty);
         }
 
+        /// <summary>
+        /// Downs this instance.
+        /// </summary>
+        public override void Down()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Adds the option.
+        /// </summary>
+        /// <param name="optionName">Name of the option.</param>
+        /// <param name="defaultValue">The default value.</param>
         private void AddOption(string optionName, string defaultValue)
         {
             var option = new
@@ -82,14 +103,6 @@ namespace BetterCms.Module.Users.Models.Migrations
             };
 
             Insert.IntoTable(contentOptionsTableName).InSchema(rootSchemaName).Row(option);
-        }
-
-        public override void Down()
-        {
-            Update.Table(contentsTableName)
-                  .InSchema(rootSchemaName)
-                  .Set(new { DeletedOn = DateTime.Now, DeletedByUser = "Admin" })
-                  .Where(new { Id = UsersModuleConstants.LoginWidgetId });
         }
     }
 }

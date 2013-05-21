@@ -1,13 +1,21 @@
-﻿using BetterCms.Core.DataAccess.DataContext.Migrations;
+﻿using System;
+
+using BetterCms.Core.DataAccess.DataContext.Migrations;
 using BetterCms.Core.Models;
 
 using FluentMigrator;
 
 namespace BetterCms.Module.Root.Models.Migrations
 {
+    /// <summary>
+    /// module database structure update.
+    /// </summary>
     [Migration(201303261100)]
     public class Migration201303261100 : DefaultMigration
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Migration201303261100"/> class.
+        /// </summary>
         public Migration201303261100()
             : base(RootModuleDescriptor.ModuleName)
         {
@@ -74,19 +82,7 @@ namespace BetterCms.Module.Root.Models.Migrations
         /// </summary>
         public override void Down()
         {
-            // Delete FK
-            Delete
-                .ForeignKey("FK_Cms_RootPages_Cms_PageStatuses")
-                .OnTable("Pages").InSchema(SchemaName);
-
-            // Delete unique constraint
-            Delete
-                .UniqueConstraint("UX_Cms_PageStatuses_Name")
-                .FromTable("PageStatuses").InSchema(SchemaName);
-
-            // Delete table
-            Delete
-                .Table("PageStatuses").InSchema(SchemaName);
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using BetterCms.Core.DataAccess.DataContext.Migrations;
+﻿using System;
+
+using BetterCms.Core.DataAccess.DataContext.Migrations;
 using BetterCms.Core.Models;
 using BetterCms.Module.Pages.Models.Migrations;
 using BetterCms.Module.Root.Models.Migrations;
@@ -7,6 +9,9 @@ using FluentMigrator;
 
 namespace BetterCms.Module.Blog.Models.Migrations
 {
+    /// <summary>
+    /// Module initial database structure creations script.
+    /// </summary>
     [Migration(201301151922)]
     public class InitialSetup : DefaultMigration
     {
@@ -25,6 +30,9 @@ namespace BetterCms.Module.Blog.Models.Migrations
         /// </summary>
         private readonly string mediaManagerSchemaName;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InitialSetup"/> class.
+        /// </summary>
         public InitialSetup()
             : base(BlogModuleDescriptor.ModuleName)
         {
@@ -33,6 +41,9 @@ namespace BetterCms.Module.Blog.Models.Migrations
             mediaManagerSchemaName = (new MediaManager.Models.Migrations.MediaManagerVersionTableMetaData()).SchemaName;
         }
 
+        /// <summary>
+        /// Ups this instance.
+        /// </summary>
         public override void Up()
         {
             CreateAuthorsTable();
@@ -41,14 +52,17 @@ namespace BetterCms.Module.Blog.Models.Migrations
             CreateBlogPostContentsTable();
         }
 
+        /// <summary>
+        /// Downs this instance.
+        /// </summary>
         public override void Down()
         {
-            RemoveBlogPostContentsTable();
-            RemoveOptionsTable();
-            RemoveBlogPostsTable();
-            RemoveAuthorsTable();
+            throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Creates the authors table.
+        /// </summary>
         private void CreateAuthorsTable()
         {
             Create
@@ -65,12 +79,9 @@ namespace BetterCms.Module.Blog.Models.Migrations
                .ToTable("MediaImages").InSchema(mediaManagerSchemaName).PrimaryColumn("Id");
         }
 
-        private void RemoveAuthorsTable()
-        {
-            Delete.ForeignKey("FK_Cms_Authors_ImageId_MediaImages_Id").OnTable("Authors").InSchema(SchemaName);
-            Delete.Table("Authors").InSchema(SchemaName);
-        }
-
+        /// <summary>
+        /// Creates the blog posts table.
+        /// </summary>
         private void CreateBlogPostsTable()
         {
             Create
@@ -90,12 +101,9 @@ namespace BetterCms.Module.Blog.Models.Migrations
                .ToTable("Authors").InSchema(SchemaName).PrimaryColumn("Id");
         }
 
-        private void RemoveBlogPostsTable()
-        {
-            Delete.ForeignKey("FK_Cms_BlogPosts_Cms_PagesPages").OnTable("BlogPosts").InSchema(SchemaName);
-            Delete.Table("BlogPosts").InSchema(SchemaName);
-        }
-
+        /// <summary>
+        /// Creates the options table.
+        /// </summary>
         private void CreateOptionsTable()
         {
             Create
@@ -110,12 +118,9 @@ namespace BetterCms.Module.Blog.Models.Migrations
                 .ToTable("Layouts").InSchema(rootSchemaName).PrimaryColumn("Id");
         }
 
-        private void RemoveOptionsTable()
-        {
-            Delete.ForeignKey("FK_Cms_BlogOptions_Cms_Layouts").OnTable("Options").InSchema(SchemaName);
-            Delete.Table("Options").InSchema(SchemaName);
-        }
-
+        /// <summary>
+        /// Creates the blog post contents table.
+        /// </summary>
         private void CreateBlogPostContentsTable()
         {
             Create
@@ -126,16 +131,6 @@ namespace BetterCms.Module.Blog.Models.Migrations
                  .ForeignKey("FK_Cms_BlogPostContents_Cms_HtmlContents")
                  .FromTable("BlogPostContents").InSchema(SchemaName).ForeignColumn("Id")
                  .ToTable("HtmlContents").InSchema(pagesModuleSchemaName).PrimaryColumn("Id");
-        }
-
-        private void RemoveBlogPostContentsTable()
-        {
-            Delete
-                .ForeignKey("FK_Cms_BlogPostContents_Cms_HtmlContents")
-                .OnTable("BlogPostContents").InSchema(SchemaName);
-
-            Delete
-                .Table("BlogPostContents").InSchema(SchemaName);
         }
     }
 }
