@@ -14,7 +14,7 @@
     Action<ColumnBuilder<SiteSettingRedirectViewModel>> columns;
 }
 
-@using (Html.BeginForm<RedirectController>(f => f.Redirects(null), FormMethod.Post, new { @id = "bcms-redirects-form" }))
+@using (Html.BeginForm<RedirectController>(f => f.Redirects(null), FormMethod.Post, new { @id = "bcms-redirects-form", @class = "bcms-ajax-form" }))
 {
     columns = column =>
     {

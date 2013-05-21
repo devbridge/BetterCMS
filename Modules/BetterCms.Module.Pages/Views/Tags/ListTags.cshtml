@@ -14,7 +14,7 @@
     Action<ColumnBuilder<TagItemViewModel>> columns;
 }
 
-@using (Html.BeginForm<TagsController>(f => f.ListTags(null), FormMethod.Post, new { @id = "bcms-tags-form" }))
+@using (Html.BeginForm<TagsController>(f => f.ListTags(null), FormMethod.Post, new { @id = "bcms-tags-form", @class = "bcms-ajax-form" }))
 {
     columns = column =>
     {

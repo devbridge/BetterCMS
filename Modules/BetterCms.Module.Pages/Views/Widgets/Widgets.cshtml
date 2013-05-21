@@ -38,7 +38,7 @@
     };
 }
 
-@using (Html.BeginForm<WidgetsController>(f => f.Widgets(null), FormMethod.Post, new { @id = "bcms-widgets-form" }))
+@using (Html.BeginForm<WidgetsController>(f => f.Widgets(null), FormMethod.Post, new { @id = "bcms-widgets-form", @class = "bcms-ajax-form" }))
 {
     @Html.HiddenGridOptions(Model.GridOptions)
     

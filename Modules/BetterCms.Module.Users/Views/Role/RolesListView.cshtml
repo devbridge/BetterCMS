@@ -24,7 +24,7 @@
     };
 }
 
-@using (Html.BeginForm<RoleController>(f => f.RolesListView(null), FormMethod.Post, new { @id = "bcms-role-form" }))
+@using (Html.BeginForm<RoleController>(f => f.RolesListView(null), FormMethod.Post, new { @id = "bcms-role-form", @class = "bcms-ajax-form" }))
 {
     @Html.HiddenGridOptions(Model.GridOptions)
 
