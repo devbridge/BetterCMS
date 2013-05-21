@@ -1,4 +1,7 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+
+using BetterCms.Module.Root.Api.Attributes;
 
 namespace BetterCms.Module.Pages.Api.Dto
 {
@@ -10,6 +13,7 @@ namespace BetterCms.Module.Pages.Api.Dto
         /// <value>
         /// The layout id.
         /// </value>
+        [EmptyGuidValidation(ErrorMessage = "Layout Id must be set.")]
         public Guid LayoutId { get; set; }
 
         /// <summary>
@@ -18,6 +22,7 @@ namespace BetterCms.Module.Pages.Api.Dto
         /// <value>
         /// The region identifier.
         /// </value>
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Region Identifier must be set.")]
         public string RegionIdentifier { get; set; }
     }
 }

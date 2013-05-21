@@ -98,6 +98,7 @@
       <HintPath>..\packages\Nuget.Core.2.0.1\lib\net40-Client\NuGet.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Transactions" />
@@ -122,6 +123,8 @@
     <Compile Include="Api\Events\SingleItemEventArgs.cs" />
     <Compile Include="CmsContext.cs" />
     <Compile Include="Api\ApiContext.cs" />
+    <Compile Include="DataAccess\DataContext\Migrations\DefaultVersionChecker.cs" />
+    <Compile Include="DataAccess\DataContext\Migrations\IVersionChecker.cs" />
     <Compile Include="DataAccess\DataContext\QueryableExtensions.cs" />
     <Compile Include="DataAccess\DataContext\QueryOverExtensions.cs" />
     <Compile Include="DataAccess\DataContext\EventListeners\DeleteEventListener.cs" />

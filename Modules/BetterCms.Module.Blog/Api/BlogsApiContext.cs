@@ -7,6 +7,7 @@ using Autofac;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Api;
 using BetterCms.Module.Blog.Api.Events;
 using BetterCms.Module.Blog.Models;
@@ -61,10 +62,13 @@ namespace BetterCms.Api
         /// <param name="orderDescending">if set to <c>true</c> order by descending.</param>
         /// <param name="pageNumber">The page number.</param>
         /// <param name="itemsPerPage">The items per page.</param>
+        /// <param name="includeUnpublished">if set to <c>true</c> include unpublished pages.</param>
+        /// <param name="includePrivate">if set to <c>true</c> include private pages.</param>
         /// <returns>
         /// The list of blog entities
         /// </returns>
-        public IList<BlogPost> GetBlogPosts(Expression<Func<BlogPost, bool>> filter = null, Expression<Func<BlogPost, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
+        /// <exception cref="CmsApiException"></exception>
+        public IList<BlogPost> GetBlogPosts(Expression<Func<BlogPost, bool>> filter = null, Expression<Func<BlogPost, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null, bool includeUnpublished = false, bool includePrivate = false)
         {
             try
             {
@@ -75,8 +79,19 @@ namespace BetterCms.Api
 
                 var query = Repository
                     .AsQueryable<BlogPost>()
-                    .ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage)
-                    .Fetch(b => b.Author);
+                    .ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage);
+
+                if (!includeUnpublished)
+                {
+                    query = query.Where(b => b.Status == PageStatus.Published);
+                }
+
+                if (!includePrivate)
+                {
+                    query = query.Where(b => b.IsPublic);
+                }
+
+                query = query.Fetch(b => b.Author);
 
                 return query.ToList();
             }
@@ -88,6 +103,7 @@ namespace BetterCms.Api
                 throw new CmsApiException(message, inner);
             }
         }
+
         /// <summary>
         /// Gets the list of author entities.
         /// </summary>

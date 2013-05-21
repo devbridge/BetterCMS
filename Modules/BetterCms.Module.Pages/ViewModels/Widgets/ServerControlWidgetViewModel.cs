@@ -2,6 +2,8 @@
 
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;
+using BetterCms.Module.Pages.Content.Resources;
+using BetterCms.Module.Pages.Mvc.Attributes;
 using BetterCms.Module.Root.Content.Resources;
 
 namespace BetterCms.Module.Pages.ViewModels.Widgets
@@ -43,6 +45,7 @@ namespace BetterCms.Module.Pages.ViewModels.Widgets
         /// </value>
         [Required(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_RequiredAttribute_Message")]
         [StringLength(MaxLength.Url, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
+        [ValidVirtualPathValidation(ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "SaveWidget_VirtualPathNotExists_Message")]
         public string Url { get; set; }
 
         /// <summary>

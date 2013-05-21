@@ -1,5 +1,7 @@
 ﻿using System;
 
+using BetterCms.Module.Root.Api.Attributes;
+
 namespace BetterCms.Module.Pages.Api.Dto
 {
     public abstract class CreatePageContentRequestBase
@@ -7,6 +9,7 @@ namespace BetterCms.Module.Pages.Api.Dto
         private string regionIdentifier;
         private Guid? regionId;
 
+        [EmptyGuidValidation(ErrorMessage = "Page Id must be set.")]
         public Guid PageId { get; set; }
 
         public string RegionIdentifier

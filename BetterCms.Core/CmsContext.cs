@@ -130,6 +130,7 @@ namespace BetterCms.Core
             
             builder.RegisterType<PerWebRequestContainerProvider>().InstancePerLifetimeScope();
           
+            builder.RegisterType<DefaultVersionChecker>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<DefaultMigrationRunner>().AsImplementedInterfaces().SingleInstance();
             
             RegisterCacheService(cmsConfiguration, builder);

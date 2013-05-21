@@ -125,6 +125,8 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Api\Attributes\AllowableValuesValidationAttribute.cs" />
+    <Compile Include="Api\Attributes\EmptyGuidValidationAttribute.cs" />
     <Compile Include="Api\Events\PageRetrievedEventArgs.cs" />
     <Compile Include="Api\Events\RootEvents.cs" />
     <Compile Include="Api\Events\PageRenderingEventArgs.cs" />

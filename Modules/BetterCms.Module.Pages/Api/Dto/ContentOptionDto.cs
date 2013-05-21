@@ -1,4 +1,7 @@
-﻿using BetterCms.Core.DataContracts.Enums;
+﻿using System.ComponentModel.DataAnnotations;
+
+using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Core.Models;
 
 namespace BetterCms.Module.Pages.Api.Dto
 {
@@ -18,6 +21,8 @@ namespace BetterCms.Module.Pages.Api.Dto
         /// <value>
         /// The option key.
         /// </value>
+        [Required(ErrorMessage = "Option Key must be set")]
+        [StringLength(MaxLength.Name, ErrorMessage = "Option key length cannot exceed {1} symbols.")]
         public string Key { get; set; }
 
         /// <summary>

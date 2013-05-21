@@ -1,4 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+using BetterCms.Core.Models;
+using BetterCms.Module.Pages.Mvc.Attributes;
 
 namespace BetterCms.Module.Pages.Api.Dto
 {
@@ -10,6 +14,9 @@ namespace BetterCms.Module.Pages.Api.Dto
         /// <value>
         /// The layout (usually .cshtml) file path.
         /// </value>
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Layout path is required.")]
+        [StringLength(MaxLength.Url, ErrorMessage = "Maximum length of layout path cannot exceed {1} symbols.")]
+        [ValidVirtualPathValidation(ErrorMessage = "Layout by given path {0} doesn't exist.")]
         public string LayoutPath { get; set; }
 
         /// <summary>
@@ -18,6 +25,8 @@ namespace BetterCms.Module.Pages.Api.Dto
         /// <value>
         /// The layout name.
         /// </value>
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Layout name is required.")]
+        [StringLength(MaxLength.Name, ErrorMessage = "Maximum length of layout name cannot exceed {1} symbols.")]
         public string Name { get; set; }
 
         /// <summary>
