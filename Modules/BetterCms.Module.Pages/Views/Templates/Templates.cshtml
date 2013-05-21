@@ -25,7 +25,7 @@
     };
 }
 
-@using (Html.BeginForm<TemplatesController>(f => f.Templates(null), FormMethod.Post, new { @id = "bcms-templates-form" }))
+@using (Html.BeginForm<TemplatesController>(f => f.Templates(null), FormMethod.Post, new { @id = "bcms-templates-form", @class = "bcms-ajax-form" }))
 {
     @Html.HiddenGridOptions(Model.GridOptions)
     

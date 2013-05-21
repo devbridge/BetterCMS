@@ -1,4 +1,6 @@
-﻿using BetterCms.Core.DataAccess.DataContext.Migrations;
+﻿using System;
+
+using BetterCms.Core.DataAccess.DataContext.Migrations;
 
 using FluentMigrator;
 
@@ -11,7 +13,7 @@ namespace BetterCms.Module.Pages.Models.Migrations
     public class Migration201303051146 : DefaultMigration
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Migration201303050900"/> class.
+        /// Initializes a new instance of the <see cref="Migration201303051146" /> class.
         /// </summary>
         public Migration201303051146()
             : base(PagesModuleDescriptor.ModuleName)
@@ -38,14 +40,7 @@ namespace BetterCms.Module.Pages.Models.Migrations
         /// </summary>
         public override void Down()
         {
-            Delete
-                .Column("NodeCountInSitemap")
-                .FromTable("Pages").InSchema(SchemaName);
-
-            Create
-                .Column("IsInSitemap")
-                .OnTable("Pages").InSchema(SchemaName)
-                .AsBoolean().NotNullable().WithDefaultValue(false);
+            throw new NotImplementedException();
         }
     }
 }

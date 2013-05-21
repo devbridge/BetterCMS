@@ -7,6 +7,9 @@ using FluentMigrator;
 
 namespace BetterCms.Module.Newsletter.Models.Migrations
 {
+    /// <summary>
+    /// Module initial database structure creation.
+    /// </summary>
     [Migration(201304221200)]
     public class InitialSetup : DefaultMigration
     {
@@ -18,11 +21,17 @@ namespace BetterCms.Module.Newsletter.Models.Migrations
         private readonly string rootSchemaName = (new Root.Models.Migrations.RootVersionTableMetaData()).SchemaName;
         private readonly string pagesSchemaName = (new Pages.Models.Migrations.PagesVersionTableMetaData()).SchemaName;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InitialSetup"/> class.
+        /// </summary>
         public InitialSetup()
             : base(NewsletterModuleDescriptor.ModuleName)
         {
         }
 
+        /// <summary>
+        /// Ups this instance.
+        /// </summary>
         public override void Up()
         {
             CreateSubscribers();
@@ -30,13 +39,17 @@ namespace BetterCms.Module.Newsletter.Models.Migrations
             CreateWidgetOptions();
         }
 
+        /// <summary>
+        /// Downs this instance.
+        /// </summary>
         public override void Down()
         {
-            RemoveSubscribers();
-            DeleteWidget();
-            DeleteWidgetOptions();
+            throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Creates the subscribers.
+        /// </summary>
         private void CreateSubscribers()
         {
             Create
@@ -45,11 +58,9 @@ namespace BetterCms.Module.Newsletter.Models.Migrations
                 .WithColumn("Email").AsString(MaxLength.Email).NotNullable();
         }
 
-        private void RemoveSubscribers()
-        {
-            Delete.Table("Subscribers").InSchema(SchemaName);
-        }
-
+        /// <summary>
+        /// Creates the widget.
+        /// </summary>
         private void CreateWidget()
         {
             Insert
@@ -85,14 +96,9 @@ namespace BetterCms.Module.Newsletter.Models.Migrations
                 });
         }
 
-        private void DeleteWidget()
-        {
-            Update
-                .Table("Contents").InSchema(rootSchemaName)
-                .Set(new {IsDeleted = 1, DeletedOn = DateTime.Now, DeletedByUser = "Admin"})
-                .Where(new {Id = widgetId, IsDeleted = 0});
-        }
-
+        /// <summary>
+        /// Creates the widget options.
+        /// </summary>
         private void CreateWidgetOptions()
         {
             Insert
@@ -145,24 +151,6 @@ namespace BetterCms.Module.Newsletter.Models.Migrations
                     Type = 1,
                     DefaultValue = "Submit"
                 });
-        }
-
-        private void DeleteWidgetOptions()
-        {
-            Update
-                .Table("ContentOptions").InSchema(rootSchemaName)
-                .Set(new {IsDeleted = 1, DeletedOn = DateTime.Now, DeletedByUser = "Admin"})
-                .Where(new {Id = option1Id, IsDeleted = 0});
-
-            Update
-                .Table("ContentOptions").InSchema(rootSchemaName)
-                .Set(new { IsDeleted = 1, DeletedOn = DateTime.Now, DeletedByUser = "Admin" })
-                .Where(new { Id = option2Id, IsDeleted = 0 });
-
-            Update
-                .Table("ContentOptions").InSchema(rootSchemaName)
-                .Set(new { IsDeleted = 1, DeletedOn = DateTime.Now, DeletedByUser = "Admin" })
-                .Where(new { Id = option3Id, IsDeleted = 0 });
         }
     }
 }

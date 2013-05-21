@@ -1,3 +1,5 @@
+using BetterCms.Configuration;
+
 namespace BetterCms
 {
     public interface ICmsDatabaseConfiguration
@@ -7,5 +9,7 @@ namespace BetterCms
         string ConnectionStringName { get; set; }
 
         string SchemaName { get; set; }
+
+        DatabaseType DatabaseType { get; set; }
     }
 }

@@ -1,18 +1,29 @@
-﻿using BetterCms.Core.DataAccess.DataContext.Migrations;
+﻿using System;
+
+using BetterCms.Core.DataAccess.DataContext.Migrations;
 using BetterCms.Core.Models;
 
 using FluentMigrator;
 
 namespace BetterCms.Module.Root.Models.Migrations
 {
+    /// <summary>
+    /// Module initial database structure creation.
+    /// </summary>
     [Migration(201301151829)]
     public class InitialSetup : DefaultMigration
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InitialSetup"/> class.
+        /// </summary>
         public InitialSetup()
             : base(RootModuleDescriptor.ModuleName)
         {
         }
 
+        /// <summary>
+        /// Ups this instance.
+        /// </summary>
         public override void Up()
         {
             CreateModulesTable();
@@ -37,30 +48,17 @@ namespace BetterCms.Module.Root.Models.Migrations
             CreateUsersTable();                     
         }
 
+        /// <summary>
+        /// Downs this instance.
+        /// </summary>
         public override void Down()
-        {                        
-            RemoveUsersTable();
-                                    
-            RemovePageContentOptionsTable();
-            RemovePageContentsTable();
-            RemovePagesTable();
-
-            RemoveWidgetsTable();
-            RemoveContentOptionsTable();
-            RemoveContentOptionsTypesTable();
-            RemoveContentsTable();
-            RemoveContentStatusesTable();
-
-            RemoveLayoutRegionsTable();
-            RemoveLayoutsTable();
-            RemoveRegionsTable();            
-
-            RemoveCategoriesTable();
-            RemoveTagsTable();
-            
-            RemoveModulesTable();
+        {
+            throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Creates the modules table.
+        /// </summary>
         private void CreateModulesTable()
         {
             Create
@@ -77,12 +75,9 @@ namespace BetterCms.Module.Root.Models.Migrations
                 .Columns(new[] { "Name", "DeletedOn" });
         }
 
-        private void RemoveModulesTable()
-        {
-            Delete.UniqueConstraint("UX_Cms_Modules_Name").FromTable("Modules").InSchema(SchemaName);
-            Delete.Table("Modules").InSchema(SchemaName);            
-        }
-
+        /// <summary>
+        /// Creates the layouts table.
+        /// </summary>
         private void CreateLayoutsTable()
         {
             Create
@@ -103,12 +98,9 @@ namespace BetterCms.Module.Root.Models.Migrations
                 .OnTable("Layouts").InSchema(SchemaName).OnColumn("ModuleId");
         }
 
-        private void RemoveLayoutsTable()
-        {
-            Delete.ForeignKey("FK_Cms_Layouts_Cms_Modules").OnTable("Layouts").InSchema(SchemaName);
-            Delete.Table("Layouts").InSchema(SchemaName);
-        }
-
+        /// <summary>
+        /// Creates the regions table.
+        /// </summary>
         private void CreateRegionsTable()
         {
             Create
@@ -122,12 +114,9 @@ namespace BetterCms.Module.Root.Models.Migrations
                 .Columns(new[] { "RegionIdentifier", "DeletedOn" });
         }
 
-        private void RemoveRegionsTable()
-        {
-            Delete.UniqueConstraint("UX_Cms_Regions_RegionIdentifier").FromTable("Regions").InSchema(SchemaName);
-            Delete.Table("Regions").InSchema(SchemaName);
-        }
-
+        /// <summary>
+        /// Creates the layout regions table.
+        /// </summary>
         private void CreateLayoutRegionsTable()
         {
             Create
@@ -153,14 +142,9 @@ namespace BetterCms.Module.Root.Models.Migrations
                 .ToTable("Regions").InSchema(SchemaName).PrimaryColumn("Id");
         }
 
-        private void RemoveLayoutRegionsTable()
-        {
-            Delete.UniqueConstraint("UX_Cms_LayoutRegions_LayoutId_RegionId").FromTable("LayoutRegions").InSchema(SchemaName);
-            Delete.ForeignKey("FK_Cms_LayoutRegions_Cms_Layouts").OnTable("LayoutRegions").InSchema(SchemaName);
-            Delete.ForeignKey("FK_Cms_LayoutRegions_Cms_Regions").OnTable("LayoutRegions").InSchema(SchemaName);
-            Delete.Table("LayoutRegions").InSchema(SchemaName);
-        }
-
+        /// <summary>
+        /// Creates the contents table.
+        /// </summary>
         private void CreateContentsTable()
         {
             Create
@@ -199,16 +183,9 @@ namespace BetterCms.Module.Root.Models.Migrations
                 .ToTable("Contents").InSchema(SchemaName).PrimaryColumn("Id");
         }
 
-        private void RemoveContentsTable()
-        {
-            Delete.ForeignKey("FK_Cms_Contents_Cms_Contents_OriginalId").OnTable("Contents").InSchema(SchemaName);
-            Delete.ForeignKey("FK_Cms_Contents_Cms_ContentStatuses").OnTable("Contents").InSchema(SchemaName);
-            Delete.Index("IX_Cms_Contents_OriginalId").OnTable("Contents").InSchema(SchemaName);
-            Delete.Index("IX_Cms_Contents_Status").OnTable("Contents").InSchema(SchemaName);
-            Delete.Index("IX_Cms_Contents_Name").OnTable("Contents").InSchema(SchemaName);
-            Delete.Table("Contents").InSchema(SchemaName);
-        }
-
+        /// <summary>
+        /// Creates the content options table.
+        /// </summary>
         private void CreateContentOptionsTable()
         {
             Create
@@ -236,14 +213,9 @@ namespace BetterCms.Module.Root.Models.Migrations
                 .Columns(new[] { "ContentId", "Key", "DeletedOn" });
         }
 
-        private void RemoveContentOptionsTable()
-        {
-            Delete.UniqueConstraint("UX_Cms_ContentOptions_ContentId_Key").FromTable("ContentOptions").InSchema(SchemaName);
-            Delete.ForeignKey("FK_Cms_ContentOptions_ContentId_Cms_Contents_Id").OnTable("ContentOptions").InSchema(SchemaName);
-            Delete.ForeignKey("FK_Cms_ContentOptions_Type_Cms_ContentOptionTypes_Id").OnTable("ContentOptions").InSchema(SchemaName);
-            Delete.Table("ContentOptions").InSchema(SchemaName);
-        }
-
+        /// <summary>
+        /// Creates the content options types table.
+        /// </summary>
         private void CreateContentOptionsTypesTable()
         {
             Create
@@ -267,12 +239,9 @@ namespace BetterCms.Module.Root.Models.Migrations
                         });
         }
 
-        private void RemoveContentOptionsTypesTable()
-        {
-            Delete.UniqueConstraint("UX_Cms_ContentOptionTypes_Name").FromTable("ContentOptionTypes").InSchema(SchemaName);
-            Delete.Table("ContentOptionTypes").InSchema(SchemaName);
-        }
-
+        /// <summary>
+        /// Creates the widgets table.
+        /// </summary>
         private void CreateWidgetsTable()
         {
             Create
@@ -292,13 +261,9 @@ namespace BetterCms.Module.Root.Models.Migrations
                 .ToTable("Categories").InSchema(SchemaName).PrimaryColumn("Id");
         }
 
-        private void RemoveWidgetsTable()
-        {
-            Delete.ForeignKey("FK_Cms_Widgets_Id_Category_Id").OnTable("Widgets").InSchema(SchemaName);
-            Delete.ForeignKey("FK_Cms_Widgets_Id_Content_Id").OnTable("Widgets").InSchema(SchemaName);
-            Delete.Table("Widgets").InSchema(SchemaName);
-        }
-
+        /// <summary>
+        /// Creates the users table.
+        /// </summary>
         private void CreateUsersTable()
         {
             Create
@@ -309,11 +274,9 @@ namespace BetterCms.Module.Root.Models.Migrations
                 .WithColumn("DisplayName").AsString(MaxLength.Name).Nullable();
         }
 
-        private void RemoveUsersTable()
-        {
-            Delete.Table("Users").InSchema(SchemaName);
-        }
-
+        /// <summary>
+        /// Creates the tags table.
+        /// </summary>
         private void CreateTagsTable()
         {
             Create
@@ -327,12 +290,9 @@ namespace BetterCms.Module.Root.Models.Migrations
                 .Columns(new[] { "Name", "DeletedOn" });
         }
 
-        private void RemoveTagsTable()
-        {
-            Delete.UniqueConstraint("UX_Cms_Tags_Name").FromTable("Tags").InSchema(SchemaName);
-            Delete.Table("Tags").InSchema(SchemaName);
-        }
-
+        /// <summary>
+        /// Creates the categories table.
+        /// </summary>
         private void CreateCategoriesTable()
         {
             Create
@@ -340,19 +300,15 @@ namespace BetterCms.Module.Root.Models.Migrations
                 .WithCmsBaseColumns()
                 .WithColumn("Name").AsString(MaxLength.Name).NotNullable();
                 
-
             Create
                 .UniqueConstraint("UX_Cms_Categories_Name")
                 .OnTable("Categories").WithSchema(SchemaName)
                 .Columns(new[] { "Name", "DeletedOn" });
         }
 
-        private void RemoveCategoriesTable()
-        {
-            Delete.UniqueConstraint("UX_Cms_Categories_Name").FromTable("Categories").InSchema(SchemaName);
-            Delete.Table("Categories").InSchema(SchemaName);
-        }
-        
+        /// <summary>
+        /// Creates the pages table.
+        /// </summary>
         private void CreatePagesTable()
         {
             Create
@@ -390,15 +346,9 @@ namespace BetterCms.Module.Root.Models.Migrations
                 .ToTable("Layouts").InSchema(SchemaName).PrimaryColumn("Id");
         }
 
-        private void RemovePagesTable()
-        {
-            Delete.Index("IX_Cms_Pages_PageUrl").OnTable("Pages").InSchema(SchemaName);
-            Delete.Index("IX_Cms_Pages_LayoutId").OnTable("Pages").InSchema(SchemaName);
-            Delete.UniqueConstraint("UX_Cms_Pages_PageUrl").FromTable("Pages").InSchema(SchemaName);
-            Delete.ForeignKey("FK_Cms_Pages_Cms_Layouts").OnTable("Pages").InSchema(SchemaName);
-            Delete.Table("Pages").InSchema(SchemaName);
-        }
-
+        /// <summary>
+        /// Creates the page contents table.
+        /// </summary>
         private void CreatePageContentsTable()
         {
             Create
@@ -425,14 +375,9 @@ namespace BetterCms.Module.Root.Models.Migrations
                 .ToTable("Regions").InSchema(SchemaName).PrimaryColumn("Id");            
         }
 
-        private void RemovePageContentsTable()
-        {            
-            Delete.ForeignKey("FK_Cms_PageContents_PageId_Pages_Id").OnTable("PageContents").InSchema(SchemaName);
-            Delete.ForeignKey("FK_Cms_PageContents_ContentId_Contents_Id").OnTable("PageContents").InSchema(SchemaName);
-            Delete.ForeignKey("FK_Cms_PageContents_RegionId_Regions_Id").OnTable("PageContents").InSchema(SchemaName);
-            Delete.Table("PageContents").InSchema(SchemaName);
-        }
-
+        /// <summary>
+        /// Creates the page content options table.
+        /// </summary>
         private void CreatePageContentOptionsTable()
         {
             Create
@@ -460,14 +405,9 @@ namespace BetterCms.Module.Root.Models.Migrations
                 .Columns(new[] { "PageContentId", "Key", "DeletedOn" });
         }
 
-        private void RemovePageContentOptionsTable()
-        {
-            Delete.ForeignKey("FK_Cms_PageContentOptions_PageContentId_Cms_PageContents_Id").OnTable("PageContentOptions").InSchema(SchemaName);
-            Delete.ForeignKey("FK_Cms_PageContentOptions_Type_Cms_ContentOptionTypes_Id").OnTable("PageContentOptions").InSchema(SchemaName);
-            Delete.UniqueConstraint("UX_Cms_PageContentOptions_PageContentId_Key").FromTable("PageContentOptions").InSchema(SchemaName);
-            Delete.Table("PageContentOptions").InSchema(SchemaName);
-        }
-        
+        /// <summary>
+        /// Creates the content statuses table.
+        /// </summary>
         private void CreateContentStatusesTable()
         {
             Create
@@ -505,11 +445,5 @@ namespace BetterCms.Module.Root.Models.Migrations
                     Name = "Archived"
                 });
         }
-
-        private void RemoveContentStatusesTable()
-        {            
-            Delete.UniqueConstraint("UX_Cms_ContentStatuses_Name").FromTable("ContentStatuses").InSchema(SchemaName);
-            Delete.Table("ContentStatuses").InSchema(SchemaName);
-        } 
     }
 }

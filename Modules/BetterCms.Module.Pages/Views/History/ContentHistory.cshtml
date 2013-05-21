@@ -117,7 +117,7 @@
 
     <div class="bcms-history-table-holder">
 
-        @using (Html.BeginForm<HistoryController>(f => f.ContentHistory((GetContentHistoryRequest)null), FormMethod.Post, new { @id = "bcms-pagecontenthistory-form" }))
+        @using (Html.BeginForm<HistoryController>(f => f.ContentHistory((GetContentHistoryRequest)null), FormMethod.Post, new { @id = "bcms-pagecontenthistory-form", @class = "bcms-ajax-form" }))
         {                        
             @Html.HiddenGridOptions(Model.GridOptions)
             @Html.HiddenFor(model => model.ContentId)

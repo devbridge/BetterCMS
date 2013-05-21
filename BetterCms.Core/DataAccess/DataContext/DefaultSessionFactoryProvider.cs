@@ -1,4 +1,6 @@
 ﻿using System;
+
+using BetterCms.Configuration;
 using BetterCms.Core.DataAccess.DataContext.Conventions;
 using BetterCms.Core.DataAccess.DataContext.EventListeners;
 using BetterCms.Core.Exceptions.DataTier;
@@ -10,6 +12,7 @@ using FluentNHibernate.Conventions.Helpers;
 using NHibernate;
 using BetterCms.Core.DataAccess.DataContext.Interceptors;
 
+using NHibernate.Dialect;
 using NHibernate.Event;
 
 namespace BetterCms.Core.DataAccess.DataContext
@@ -71,26 +74,12 @@ namespace BetterCms.Core.DataAccess.DataContext
         }
 
         private ISessionFactory CreateSessionFactory()
-        {         
+        {   
             FluentConfiguration fluentConfiguration = Fluently.Configure();
-            MsSqlConfiguration sqlConfiguration = null;
 
-            if (!string.IsNullOrEmpty(configuration.Database.ConnectionString))
-            {
-                sqlConfiguration = MsSqlConfiguration.MsSql2008.ConnectionString(configuration.Database.ConnectionString); 
-            }
-            else if (!string.IsNullOrEmpty(configuration.Database.ConnectionStringName))
-            {                
-                sqlConfiguration = MsSqlConfiguration.MsSql2008.ConnectionString(f => f.FromConnectionStringWithKey(configuration.Database.ConnectionStringName));
-            }
-
+            IPersistenceConfigurer sqlConfiguration = CreateSqlConfiguration();
             if (sqlConfiguration != null)
             {
-                if (!string.IsNullOrEmpty(configuration.Database.SchemaName))
-                {
-                    sqlConfiguration.DefaultSchema(configuration.Database.SchemaName);
-                }
-
                 fluentConfiguration = fluentConfiguration.Database(sqlConfiguration);
             }
 
@@ -113,6 +102,84 @@ namespace BetterCms.Core.DataAccess.DataContext
             return fluentConfiguration
                         .BuildConfiguration()
                         .BuildSessionFactory();
+        }
+
+        /// <summary>
+        /// Creates the SQL configuration.
+        /// </summary>
+        /// <returns>Created SQL configuration</returns>
+        private IPersistenceConfigurer CreateSqlConfiguration()
+        {
+            IPersistenceConfigurer sqlConfiguration;
+
+            switch (configuration.Database.DatabaseType)
+            {
+                case DatabaseType.MsSql2008:
+                    sqlConfiguration = CreateSqlConfiguration(MsSqlConfiguration.MsSql2008);
+                    break;
+                case DatabaseType.MsSql2005:
+                    sqlConfiguration = CreateSqlConfiguration(MsSqlConfiguration.MsSql2005);
+                    break;
+                case DatabaseType.MsSql2000:
+                    sqlConfiguration = CreateSqlConfiguration(MsSqlConfiguration.MsSql2000);
+                    break;
+                case DatabaseType.Oracle10:
+                    sqlConfiguration = CreateSqlConfiguration(OracleDataClientConfiguration.Oracle10);
+                    break;
+                case DatabaseType.Oracle9:
+                    sqlConfiguration = CreateSqlConfiguration(OracleDataClientConfiguration.Oracle9);
+                    break;
+                case DatabaseType.PostgreSQL81:
+                    sqlConfiguration = CreateSqlConfiguration(PostgreSQLConfiguration.PostgreSQL82);
+                    break;
+                case DatabaseType.PostgreSQL82:
+                    sqlConfiguration = CreateSqlConfiguration(PostgreSQLConfiguration.PostgreSQL81);
+                    break;
+                case DatabaseType.PostgreSQLStandard:
+                    sqlConfiguration = CreateSqlConfiguration(PostgreSQLConfiguration.Standard);
+                    break;
+                default:
+                    throw new NotImplementedException(string.Format("Unknown DatabaseType: {0}", configuration.Database.DatabaseType));
+            }
+
+            return sqlConfiguration;
+        }
+
+        /// <summary>
+        /// Creates the SQL configuration.
+        /// </summary>
+        /// <typeparam name="TThisConfiguration">The type of the configuration.</typeparam>
+        /// <typeparam name="TConnectionString">The type of connection string.</typeparam>
+        /// <param name="provider">The SQL configuration provider.</param>
+        /// <returns>Created SQL configuration</returns>
+        private IPersistenceConfigurer CreateSqlConfiguration<TThisConfiguration, TConnectionString>(PersistenceConfiguration<TThisConfiguration, TConnectionString> provider)
+            where TThisConfiguration : PersistenceConfiguration<TThisConfiguration, TConnectionString>
+            where TConnectionString : ConnectionStringBuilder, new()
+        {
+            PersistenceConfiguration<TThisConfiguration, TConnectionString> sqlConfiguration;
+
+            if (!string.IsNullOrEmpty(configuration.Database.ConnectionString))
+            {
+                sqlConfiguration = provider.ConnectionString(configuration.Database.ConnectionString);
+            }
+            else if (!string.IsNullOrEmpty(configuration.Database.ConnectionStringName))
+            {
+                sqlConfiguration = provider.ConnectionString(f => f.FromConnectionStringWithKey(configuration.Database.ConnectionStringName));
+            }
+            else
+            {
+                sqlConfiguration = null;
+            }
+
+            if (sqlConfiguration != null)
+            {
+                if (!string.IsNullOrEmpty(configuration.Database.SchemaName))
+                {
+                    sqlConfiguration.DefaultSchema(configuration.Database.SchemaName);
+                }
+            }
+
+            return sqlConfiguration;
         }
     }
 }

@@ -1,9 +1,14 @@
-﻿using BetterCms.Core.DataAccess.DataContext.Migrations;
+﻿using System;
+
+using BetterCms.Core.DataAccess.DataContext.Migrations;
 
 using FluentMigrator;
 
 namespace BetterCms.Module.Pages.Models.Migrations
 {
+    /// <summary>
+    /// Module database structure update.
+    /// </summary>
     [Migration(201302050830)]
     public class Migration201302050830 : DefaultMigration
     {
@@ -12,12 +17,18 @@ namespace BetterCms.Module.Pages.Models.Migrations
         /// </summary>
         private readonly string rootModuleSchemaName;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Migration201302050830"/> class.
+        /// </summary>
         public Migration201302050830()
             : base(PagesModuleDescriptor.ModuleName)
         {
             rootModuleSchemaName = (new Root.Models.Migrations.RootVersionTableMetaData()).SchemaName;
         }
 
+        /// <summary>
+        /// Ups this instance.
+        /// </summary>
         public override void Up()
         {
             // Create new column in pages
@@ -32,18 +43,12 @@ namespace BetterCms.Module.Pages.Models.Migrations
                 .FromTable("Pages").InSchema(SchemaName);
         }
 
+        /// <summary>
+        /// Downs this instance.
+        /// </summary>
         public override void Down()
         {
-            // Create new column in page properties
-            Create
-                .Column("IsPublic")
-                .OnTable("Pages").InSchema(SchemaName)
-                .AsBoolean().NotNullable().WithDefaultValue(true);
-
-            // Drop column from pages
-            Delete
-                .Column("IsPublic")
-                .FromTable("Pages").InSchema(rootModuleSchemaName);
+            throw new NotImplementedException();
         }
     }
 }

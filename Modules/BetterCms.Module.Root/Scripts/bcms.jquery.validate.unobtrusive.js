@@ -144,7 +144,7 @@
                 /// If parsing several elements, you should specify false, and manually attach the validation
                 /// to the form when you are finished. The default is false.</param>
                 var $element = $(element),
-                    form = $element.parents("form")[0],
+                    form = $element.parents("form.bcms-ajax-form")[0],
                     valInfo, rules, messages;
 
                 if (!form) {  // Cannot do client-side validation without a form
@@ -193,10 +193,10 @@
                 /// </summary>
                 /// <param name="selector" type="String">Any valid jQuery selector.</param>
                 var $forms = $(selector)
-                    .parents("form")
+                    .parents("form.bcms-ajax-form")
                     .andSelf()
-                    .add($(selector).find("form"))
-                    .filter("form");
+                    .add($(selector).find("form.bcms-ajax-form"))
+                    .filter("form.bcms-ajax-form");
 
                 $(selector).find(":input[data-val=true]").each(function () {
                     $jQval.unobtrusive.parseElement(this, true);

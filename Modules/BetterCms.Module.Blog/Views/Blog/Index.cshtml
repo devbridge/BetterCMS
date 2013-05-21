@@ -59,7 +59,7 @@
     };
 }
 
-@using (Html.BeginForm<BlogController>(f => f.Index(null), FormMethod.Post, new { @id = "bcms-blogs-form" }))
+@using (Html.BeginForm<BlogController>(f => f.Index(null), FormMethod.Post, new { @id = "bcms-blogs-form", @class = "bcms-ajax-form" }))
 {
     @Html.HiddenGridOptions(Model.GridOptions)
 

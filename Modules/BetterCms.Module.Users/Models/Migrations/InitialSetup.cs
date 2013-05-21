@@ -1,36 +1,48 @@
-﻿
+﻿using System;
+
 using BetterCms.Core.DataAccess.DataContext.Migrations;
 using BetterCms.Core.Models;
-using BetterCms.Module.MediaManager.Models.Migrations;
 
 using FluentMigrator;
 
 namespace BetterCms.Module.Users.Models.Migrations
 {
+    /// <summary>
+    /// Module initial database structure creation.
+    /// </summary>
     [Migration(20130181125)]
     public class InitialSetup : DefaultMigration
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InitialSetup"/> class.
+        /// </summary>
         public InitialSetup()
             : base(UsersModuleDescriptor.ModuleName)
         {
         }
 
+        /// <summary>
+        /// Ups this instance.
+        /// </summary>
         public override void Up()
         {          
             CreateUsersTable();
             CreateRolesTable();
             CreatePermissionsTable();
-            CreateRolePremissions();
+            CreateRolePermissions();
         }
 
+        /// <summary>
+        /// Downs this instance.
+        /// </summary>
         public override void Down()
         {
-            RemoveRolePremissions();
-            RemoveRolesTable();
-            RemovePersmissionsTable();
-            RemoveUsersTable();
+            throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Creates the users table.
+        /// </summary>
         private void CreateUsersTable()
         {
             Create.Table("Users").InSchema(SchemaName).WithCmsBaseColumns()
@@ -42,21 +54,17 @@ namespace BetterCms.Module.Users.Models.Migrations
                    .WithColumn("ImageId").AsGuid().Nullable();
         }
 
-        private void RemoveUsersTable()
-        {
-            Delete.Table("Users").InSchema(SchemaName);
-        }
-
+        /// <summary>
+        /// Creates the roles table.
+        /// </summary>
         private void CreateRolesTable()
         {
             Create.Table("Roles").InSchema(SchemaName).WithCmsBaseColumns().WithColumn("Name").AsAnsiString(MaxLength.Name).NotNullable();
         }
 
-        private void RemoveRolesTable()
-        {
-            Delete.Table("Roles").InSchema(SchemaName);
-        }
-
+        /// <summary>
+        /// Creates the permissions table.
+        /// </summary>
         private void CreatePermissionsTable()
         {
             Create
@@ -66,12 +74,10 @@ namespace BetterCms.Module.Users.Models.Migrations
                 .WithColumn("Description").AsAnsiString(MaxLength.Name).NotNullable();            
         }
 
-        private void RemovePersmissionsTable()
-        {
-            Delete.Table("Permissions").InSchema(SchemaName);
-        }
-
-        private void CreateRolePremissions()
+        /// <summary>
+        /// Creates the role permissions.
+        /// </summary>
+        private void CreateRolePermissions()
         {
             Create.Table("RolePermissions").InSchema(SchemaName)
                 .WithCmsBaseColumns()
@@ -92,14 +98,6 @@ namespace BetterCms.Module.Users.Models.Migrations
                 .ForeignKey("FK_Cms_RolePermissions_Cms_Permissions")
                 .FromTable("RolePermissions").InSchema(SchemaName).ForeignColumn("PermissionId")
                 .ToTable("Permissions").InSchema(SchemaName).PrimaryColumn("Id");
-        }
-
-        private void RemoveRolePremissions()
-        {
-            Delete.UniqueConstraint("UX_Cms_RolePermissions_RoleId_PermissionId").FromTable("RolePermissions").InSchema(SchemaName);
-            Delete.ForeignKey("FK_Cms_RolePermissions_Cms_Roles").OnTable("RolePermissions").InSchema(SchemaName);
-            Delete.ForeignKey("FK_Cms_RolePermissions_Cms_Permissions").OnTable("RolePermissions").InSchema(SchemaName);
-            Delete.Table("RolePermissions").InSchema(SchemaName);
         }
     }
 }

@@ -14,7 +14,7 @@
     Action<ColumnBuilder<CategoryItemViewModel>> columns;
 }
 
-@using (Html.BeginForm<CategoryController>(f => f.Categories(null), FormMethod.Post, new { @id = "bcms-categories-form" }))
+@using (Html.BeginForm<CategoryController>(f => f.Categories(null), FormMethod.Post, new { @id = "bcms-categories-form", @class = "bcms-ajax-form" }))
 {
     columns = column =>
     {

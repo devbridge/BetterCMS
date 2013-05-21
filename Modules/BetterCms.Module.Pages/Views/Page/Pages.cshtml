@@ -62,7 +62,7 @@
     };
 }
 
-@using (Html.BeginForm<PageController>(f => f.Pages(null), FormMethod.Post, new { @id = "bcms-pages-form" }))
+@using (Html.BeginForm<PageController>(f => f.Pages(null), FormMethod.Post, new { @id = "bcms-pages-form", @class = "bcms-ajax-form" }))
 {
     @Html.HiddenGridOptions(Model.GridOptions)
 
