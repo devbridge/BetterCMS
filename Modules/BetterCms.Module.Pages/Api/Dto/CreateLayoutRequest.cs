@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 
 using BetterCms.Core.Models;
-using BetterCms.Module.Pages.Api.Attributes;
+using BetterCms.Module.Pages.Mvc.Attributes;
 
 namespace BetterCms.Module.Pages.Api.Dto
 {
