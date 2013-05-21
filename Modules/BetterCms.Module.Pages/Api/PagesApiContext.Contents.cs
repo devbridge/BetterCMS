@@ -23,26 +23,41 @@ namespace BetterCms.Api
 {
     public partial class PagesApiContext
     {
+        private ContentStatus[] publicStatuses = new [] { ContentStatus.Published, ContentStatus.Draft };
+
         /// <summary>
         /// Gets the list of page content entities.
         /// </summary>
         /// <param name="pageId">The page id.</param>
         /// <param name="filter">The filter.</param>
+        /// <param name="includeUnpublished">if set to <c>true</c> include unpublished pages.</param>
         /// <returns>
         /// Page content entities list
         /// </returns>
-        public IList<PageContent> GetPageContents(Guid pageId, Expression<Func<PageContent, bool>> filter = null)
+        public IList<PageContent> GetPageContents(Guid pageId, Expression<Func<PageContent, bool>> filter = null, bool includeUnpublished = false)
         {
             try
             {
-                return Repository
+                var query = Repository
                     .AsQueryable<PageContent>()
-                    .Where(p => p.Page.Id == pageId)
-                    .ApplyFilters(filter, p => p.Order)
+                    .Where(p => p.Page.Id == pageId && publicStatuses.Contains(p.Content.Status))
+                    .ApplyFilters(filter, p => p.Order);
+
+                if (!includeUnpublished)
+                {
+                    query = query.Where(c => c.Content.Status == ContentStatus.Published);
+                }
+
+                query = query
                     .Fetch(c => c.Content)
                     .Fetch(c => c.Region)
-                    .FetchMany(c => c.Options)
-                    .ToList();
+                    .FetchMany(c => c.Options);
+
+                if (!includeUnpublished)
+                {
+                    return RemoveUnpublishedContents(query.ToList());
+                }
+                return query.ToList();
             }
             catch (Exception inner)
             {
@@ -59,21 +74,34 @@ namespace BetterCms.Api
         /// <param name="pageId">The page id.</param>
         /// <param name="regionId">The region id.</param>
         /// <param name="filter">The filter.</param>
+        /// <param name="includeUnpublished">if set to <c>true</c> include unpublished pages.</param>
         /// <returns>
         /// Page content entities list
         /// </returns>
-        public IList<PageContent> GetRegionContents(Guid pageId, Guid regionId, Expression<Func<PageContent, bool>> filter = null)
+        public IList<PageContent> GetRegionContents(Guid pageId, Guid regionId, Expression<Func<PageContent, bool>> filter = null, bool includeUnpublished = false)
         {
             try
             {
-                return Repository
+                var query = Repository
                     .AsQueryable<PageContent>()
-                    .Where(p => p.Page.Id == pageId && p.Region.Id == regionId)
-                    .ApplyFilters(filter, p => p.Order)
+                    .Where(p => p.Page.Id == pageId && p.Region.Id == regionId && publicStatuses.Contains(p.Content.Status))
+                    .ApplyFilters(filter, p => p.Order);
+
+                if (!includeUnpublished)
+                {
+                    query = query.Where(b => b.Content.Status == ContentStatus.Published );
+                }
+
+                query = query
                     .Fetch(c => c.Content)
                     .Fetch(c => c.Region)
-                    .FetchMany(c => c.Options)
-                    .ToList();
+                    .FetchMany(c => c.Options);
+
+                if (!includeUnpublished)
+                {
+                    return RemoveUnpublishedContents(query.ToList());
+                }
+                return query.ToList();
             }
             catch (Exception inner)
             {
@@ -90,21 +118,34 @@ namespace BetterCms.Api
         /// <param name="pageId">The page id.</param>
         /// <param name="regionIdentifier">The region identifier.</param>
         /// <param name="filter">The filter.</param>
+        /// <param name="includeUnpublished">if set to <c>true</c> include unpublished pages.</param>
         /// <returns>
         /// Page content entities list
         /// </returns>
-        public IList<PageContent> GetRegionContents(Guid pageId, string regionIdentifier, Expression<Func<PageContent, bool>> filter = null)
+        public IList<PageContent> GetRegionContents(Guid pageId, string regionIdentifier, Expression<Func<PageContent, bool>> filter = null, bool includeUnpublished = false)
         {
             try
             {
-                return Repository
+                var query = Repository
                     .AsQueryable<PageContent>()
-                    .Where(p => p.Page.Id == pageId && p.Region.RegionIdentifier == regionIdentifier)
-                    .ApplyFilters(filter, p => p.Order)
+                    .Where(p => p.Page.Id == pageId && p.Region.RegionIdentifier == regionIdentifier && publicStatuses.Contains(p.Content.Status))
+                    .ApplyFilters(filter, p => p.Order);
+
+                if (!includeUnpublished)
+                {
+                    query = query.Where(b => b.Content.Status == ContentStatus.Published);
+                }
+
+                query = query
                     .Fetch(c => c.Content)
                     .Fetch(c => c.Region)
-                    .FetchMany(c => c.Options)
-                    .ToList();
+                    .FetchMany(c => c.Options);
+
+                if (!includeUnpublished)
+                {
+                    return RemoveUnpublishedContents(query.ToList());
+                }
+                return query.ToList();
             }
             catch (Exception inner)
             {
@@ -209,7 +250,7 @@ namespace BetterCms.Api
         /// </summary>
         /// <param name="filter">The filter.</param>
         /// <param name="order">The order.</param>
-        /// <param name="orderDescending">if set to <c>true</c> [order descending].</param>
+        /// <param name="orderDescending">if set to <c>true</c> order by descending.</param>
         /// <param name="pageNumber">The page number.</param>
         /// <param name="itemsPerPage">The items per page.</param>
         /// <returns>Widget list.</returns>
@@ -620,6 +661,29 @@ namespace BetterCms.Api
             }
 
             return options;
+        }
+
+        /// <summary>
+        /// Removes the unpublished contents.
+        /// </summary>
+        /// <param name="contents">The contents.</param>
+        private IList<PageContent> RemoveUnpublishedContents(IList<PageContent> contents)
+        {
+            var filteredContents = new List<PageContent>(contents.Count);
+
+            foreach (var content in contents)
+            {
+                var htmlContent = content.Content as HtmlContent;
+                if (htmlContent != null 
+                    && (DateTime.Now < htmlContent.ActivationDate || (htmlContent.ExpirationDate.HasValue && htmlContent.ExpirationDate.Value < DateTime.Now)))
+                {
+                    continue;
+                }
+
+                filteredContents.Add(content);
+            }
+
+            return filteredContents;
         }
     }
 }

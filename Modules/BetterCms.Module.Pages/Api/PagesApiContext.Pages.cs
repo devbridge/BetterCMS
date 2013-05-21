@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -34,11 +33,13 @@ namespace BetterCms.Api
         /// <param name="pageNumber">The page number.</param>
         /// <param name="itemsPerPage">The items per page.</param>
         /// <param name="loadChilds">Flags, which childs to load.</param>
+        /// <param name="includeUnpublished">if set to <c>true</c> include unpublished pages.</param>
+        /// <param name="includePrivate">if set to <c>true</c> include private pages.</param>
         /// <returns>
         /// The list of property entities
         /// </returns>
         /// <exception cref="CmsApiException"></exception>
-        public IList<PageProperties> GetPages(Expression<Func<PageProperties, bool>> filter = null, Expression<Func<PageProperties, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null, PageLoadableChilds loadChilds = PageLoadableChilds.None)
+        public IList<PageProperties> GetPages(Expression<Func<PageProperties, bool>> filter = null, Expression<Func<PageProperties, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null, PageLoadableChilds loadChilds = PageLoadableChilds.None, bool includeUnpublished = false, bool includePrivate = false)
         {
             try
             {
@@ -51,6 +52,16 @@ namespace BetterCms.Api
                     .AsQueryable<PageProperties>()
                     .ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage);
 
+                if (!includeUnpublished)
+                {
+                    query = query.Where(b => b.Status == PageStatus.Published);
+                }
+
+                if (!includePrivate)
+                {
+                    query = query.Where(b => b.IsPublic);
+                }
+
                 query = FetchPageChilds(query, loadChilds);
 
                 return query.ToList();
@@ -62,7 +73,6 @@ namespace BetterCms.Api
                 throw new CmsApiException(message, inner);
             }
         }
-
 
         /// <summary>
         /// Checks if page exists.
