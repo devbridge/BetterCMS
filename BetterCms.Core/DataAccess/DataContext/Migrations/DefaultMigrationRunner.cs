@@ -51,15 +51,18 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
         /// </summary>
         private readonly ICmsConfiguration configuration;
 
+        private readonly IVersionChecker versionChecker;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultMigrationRunner" /> class.
         /// </summary>
         /// <param name="assemblyLoader">The assembly loader.</param>
         /// <param name="configuration">The configuration.</param>
-        public DefaultMigrationRunner(IAssemblyLoader assemblyLoader, ICmsConfiguration configuration)
+        public DefaultMigrationRunner(IAssemblyLoader assemblyLoader, ICmsConfiguration configuration, IVersionChecker versionChecker)
         {
             this.assemblyLoader = assemblyLoader;
             this.configuration = configuration;
+            this.versionChecker = versionChecker;
         }
 
         /// <summary>
@@ -103,17 +106,17 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
                 versions = versions.OrderByDescending(f => f).ToList();
             }
 
-            //using (var transactionScope = new TransactionScope())
-            //{
-                foreach (var version in versions)
+            foreach (var version in versions)
+            {
+                foreach (var moduleWithMigration in moduleWithMigrations)
                 {
-                    foreach (var moduleWithMigration in moduleWithMigrations)
+                    if (!versionChecker.VersionExists(moduleWithMigration.Key.Name, version))
                     {
                         Migrate(moduleWithMigration.Key, moduleWithMigration.Value, up, version);
-                    }                    
-                }
-             //   transactionScope.Complete();
-            //}
+                        versionChecker.AddVersion(moduleWithMigration.Key.Name, version);
+                    }
+                }                    
+            }
         }
 
         /// <summary>
@@ -197,8 +200,6 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
             }
             
             var runner = new MigrationRunner(assembly, migrationContext, processor);
-         //   runner.ValidateVersionOrder();
-        
             if (up)
             {
                 if (version != null)
@@ -207,15 +208,15 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
                 }
                 else
                 {
-                    runner.MigrateUp();
+                    throw new NotSupportedException("Migrations without target version are not supported.");
                 }
             }
             else
-            {               
-                runner.MigrateDown(version ?? 0);                
+            {
+                throw new NotSupportedException("Database down migrations are not supported.");
             }
 
-            // If connection is still opened, close it
+            // If connection is still opened, close it.
             if (dbConnection != null && dbConnection.State != ConnectionState.Closed)
             {
                 dbConnection.Close();

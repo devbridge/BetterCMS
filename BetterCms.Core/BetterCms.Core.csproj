@@ -122,6 +122,8 @@
     <Compile Include="Api\Events\SingleItemEventArgs.cs" />
     <Compile Include="CmsContext.cs" />
     <Compile Include="Api\ApiContext.cs" />
+    <Compile Include="DataAccess\DataContext\Migrations\DefaultVersionChecker.cs" />
+    <Compile Include="DataAccess\DataContext\Migrations\IVersionChecker.cs" />
     <Compile Include="DataAccess\DataContext\QueryableExtensions.cs" />
     <Compile Include="DataAccess\DataContext\QueryOverExtensions.cs" />
     <Compile Include="DataAccess\DataContext\EventListeners\DeleteEventListener.cs" />

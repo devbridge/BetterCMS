@@ -68,3 +68,5 @@ logs
 /Modules/BetterCms.Module.Pages/Content/Styles/bcms.pages.min.css
 /Modules/BetterCms.Module.Templates/Content/Styles/bcms.templates.min.css
 /Modules/BetterCms.Module.Users/Content/Styles/bcms.users.min.css
+
+/Sandbox/BetterCms.Sandbox.Mvc4/App_Data/BetterCMS/versions.info
