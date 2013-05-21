@@ -1,4 +1,6 @@
-﻿using BetterCms.Core.DataAccess.DataContext.Migrations;
+﻿using System;
+
+using BetterCms.Core.DataAccess.DataContext.Migrations;
 
 using FluentMigrator;
 
@@ -33,9 +35,7 @@ namespace BetterCms.Module.Pages.Models.Migrations
         /// </summary>
         public override void Down()
         {
-            Delete
-                .Column("IsInSitemap")
-                .FromTable("Pages").InSchema(SchemaName);
+            throw new NotImplementedException();
         }
     }
 }

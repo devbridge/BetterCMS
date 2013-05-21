@@ -8,6 +8,9 @@ using FluentMigrator;
 
 namespace BetterCms.Module.Pages.Models.Migrations
 {
+    /// <summary>
+    /// Module initial database structure creation.
+    /// </summary>
     [Migration(201301151849)]
     public class InitialSetup : DefaultMigration
     {
@@ -21,6 +24,9 @@ namespace BetterCms.Module.Pages.Models.Migrations
         /// </summary>
         private readonly string mediaManagerSchemaName;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InitialSetup"/> class.
+        /// </summary>
         public InitialSetup()
             : base(PagesModuleDescriptor.ModuleName)
         {
@@ -28,6 +34,9 @@ namespace BetterCms.Module.Pages.Models.Migrations
             mediaManagerSchemaName = (new MediaManager.Models.Migrations.MediaManagerVersionTableMetaData()).SchemaName;
         }
 
+        /// <summary>
+        /// Ups this instance.
+        /// </summary>
         public override void Up()
         {
             CreateRedirectsTable();
@@ -45,19 +54,17 @@ namespace BetterCms.Module.Pages.Models.Migrations
             InsertPage500();
         }
 
+        /// <summary>
+        /// Downs this instance.
+        /// </summary>
         public override void Down()
         {
-            RemovePageTagsTable();
-
-            RemoveHtmlContentWidgetsTable();
-            RemoveServerControlWidgetsTable();
-            RemoveHtmlContentsTable();
-
-            RemovePagesTable();
-
-            RemoveRedirectsTable();
+            throw new NotImplementedException();
         }
-        
+
+        /// <summary>
+        /// Creates the redirects table.
+        /// </summary>
         private void CreateRedirectsTable()
         {
             Create
@@ -68,11 +75,9 @@ namespace BetterCms.Module.Pages.Models.Migrations
                 .WithColumn("RedirectUrl").AsString(MaxLength.Url).NotNullable();                
         }
 
-        private void RemoveRedirectsTable()
-        {
-            Delete.Table("Redirects").InSchema(SchemaName);
-        }
-
+        /// <summary>
+        /// Creates the HTML contents table.
+        /// </summary>
         private void CreateHtmlContentsTable()
         {
             Create
@@ -93,12 +98,9 @@ namespace BetterCms.Module.Pages.Models.Migrations
                 .ToTable("Contents").InSchema(rootModuleSchemaName).PrimaryColumn("Id");
         }
 
-        private void RemoveHtmlContentsTable()
-        {
-            Delete.ForeignKey("FK_Cms_HtmlContents_Id_Contents_Id").OnTable("HtmlContents").InSchema(SchemaName);
-            Delete.Table("HtmlContents").InSchema(SchemaName);
-        }
-
+        /// <summary>
+        /// Creates the server control widgets table.
+        /// </summary>
         private void CreateServerControlWidgetsTable()
         {
             Create
@@ -113,12 +115,9 @@ namespace BetterCms.Module.Pages.Models.Migrations
                 .ToTable("Widgets").InSchema(rootModuleSchemaName).PrimaryColumn("Id");
         }
 
-        private void RemoveServerControlWidgetsTable()
-        {
-            Delete.ForeignKey("FK_Cms_ServerControlWidgets_Id_Widgets_Id").OnTable("ServerControlWidgets").InSchema(SchemaName);
-            Delete.Table("ServerControlWidgets").InSchema(SchemaName);
-        }
-
+        /// <summary>
+        /// Creates the HTML content widgets table.
+        /// </summary>
         private void CreateHtmlContentWidgetsTable()
         {
             Create
@@ -137,13 +136,10 @@ namespace BetterCms.Module.Pages.Models.Migrations
                 .FromTable("HtmlContentWidgets").InSchema(SchemaName).ForeignColumn("Id")
                 .ToTable("Widgets").InSchema(rootModuleSchemaName).PrimaryColumn("Id");
         }
-     
-        private void RemoveHtmlContentWidgetsTable()
-        {
-            Delete.ForeignKey("FK_Cms_HtmlContentWidgets_Id_Widgets_Id").OnTable("HtmlContentWidgets").InSchema(SchemaName);
-            Delete.Table("HtmlContentWidgets").InSchema(SchemaName);
-        }
 
+        /// <summary>
+        /// Creates the pages table.
+        /// </summary>
         private void CreatePagesTable()
         {
             Create
@@ -176,14 +172,9 @@ namespace BetterCms.Module.Pages.Models.Migrations
                 .ToTable("MediaImages").InSchema(mediaManagerSchemaName).PrimaryColumn("Id");
         }
 
-        private void RemovePagesTable()
-        {
-            Delete.ForeignKey("FK_Cms_Pages_ImageId_MediaImages_Id").OnTable("Pages").InSchema(SchemaName);
-            Delete.ForeignKey("FK_Cms_Pages_CategoryId_Categories_Id").OnTable("Pages").InSchema(SchemaName);
-            Delete.ForeignKey("FK_Cms_PagesPages_Cms_RootPages").OnTable("Pages").InSchema(SchemaName);            
-            Delete.Table("Pages").InSchema(SchemaName);
-        }
-
+        /// <summary>
+        /// Creates the page tags table.
+        /// </summary>
         private void CreatePageTagsTable()
         {
             Create
@@ -203,13 +194,6 @@ namespace BetterCms.Module.Pages.Models.Migrations
                 .FromTable("PageTags").InSchema(SchemaName).ForeignColumn("TagId")
                 .ToTable("Tags").InSchema(rootModuleSchemaName).PrimaryColumn("Id");
         }
-
-        private void RemovePageTagsTable()
-        {
-            Delete.ForeignKey("FK_Cms_PageTags_Cms_Pages").OnTable("PageTags").InSchema(SchemaName);
-            Delete.ForeignKey("FK_Cms_PageTags_Cms_Tags").OnTable("PageTags").InSchema(SchemaName);
-            Delete.Table("PageTags").InSchema(SchemaName);
-        }          
 
         /// <summary>
         /// Inserts the default page.

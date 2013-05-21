@@ -1,17 +1,28 @@
-﻿using BetterCms.Core.DataAccess.DataContext.Migrations;
+﻿using System;
+
+using BetterCms.Core.DataAccess.DataContext.Migrations;
 
 using FluentMigrator;
 
 namespace BetterCms.Module.MediaManager.Models.Migrations
 {
+    /// <summary>
+    /// Module database structure update.
+    /// </summary>
     [Migration(201303081430)]
     public class Migration201303081430 : DefaultMigration
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Migration201303081430"/> class.
+        /// </summary>
         public Migration201303081430()
             : base(MediaManagerModuleDescriptor.ModuleName)
         {
         }
 
+        /// <summary>
+        /// Ups this instance.
+        /// </summary>
         public override void Up()
         {
             // Set IsUploaded as nullable
@@ -33,41 +44,12 @@ namespace BetterCms.Module.MediaManager.Models.Migrations
                 .AsBoolean().Nullable();
         }
 
+        /// <summary>
+        /// Downs this instance.
+        /// </summary>
         public override void Down()
         {
-            // Set null values to false
-            Update
-                .Table("MediaFiles").InSchema(SchemaName)
-                .Set(new { IsUploaded = false })
-                .Where(new { IsUploaded = (int?)null });
-
-            Update
-                .Table("MediaImages").InSchema(SchemaName)
-                .Set(new { IsOriginalUploaded = false })
-                .Where(new { IsOriginalUploaded = (int?)null });
-            
-            Update
-                .Table("MediaImages").InSchema(SchemaName)
-                .Set(new { IsThumbnailUploaded = false })
-                .Where(new { IsThumbnailUploaded = (int?)null });
-
-            // Set IsUploaded as not nullable
-            Alter
-                .Column("IsUploaded")
-                .OnTable("MediaFiles").InSchema(SchemaName)
-                .AsBoolean().NotNullable().WithDefaultValue(false);
-
-            // Set IsOriginalUploaded as not nullable
-            Alter
-                .Column("IsOriginalUploaded")
-                .OnTable("MediaImages").InSchema(SchemaName)
-                .AsBoolean().NotNullable().WithDefaultValue(false);
-
-            // Set IsThumbnailUploaded as not nullable
-            Alter
-                .Column("IsThumbnailUploaded")
-                .OnTable("MediaImages").InSchema(SchemaName)
-                .AsBoolean().NotNullable().WithDefaultValue(false);
+            throw new NotImplementedException();
         }
     }
 }

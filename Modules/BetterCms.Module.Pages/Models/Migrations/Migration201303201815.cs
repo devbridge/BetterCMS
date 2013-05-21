@@ -1,4 +1,6 @@
-﻿using BetterCms.Core.DataAccess.DataContext.Migrations;
+﻿using System;
+
+using BetterCms.Core.DataAccess.DataContext.Migrations;
 
 using FluentMigrator;
 
@@ -39,13 +41,7 @@ namespace BetterCms.Module.Pages.Models.Migrations
         /// </summary>
         public override void Down()
         {
-            Delete
-                .Column("EditInSourceMode")
-                .FromTable("HtmlContents").InSchema(SchemaName);
-            
-            Delete
-                .Column("EditInSourceMode")
-                .FromTable("HtmlContentWidgets").InSchema(SchemaName);
+            throw new NotImplementedException();
         }
     }
 }
