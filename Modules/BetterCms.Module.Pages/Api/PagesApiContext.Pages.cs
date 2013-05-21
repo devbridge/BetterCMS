@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -8,8 +9,6 @@ using NHibernate.Linq;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Api;
-using BetterCms.Core.Exceptions.Mvc;
-
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Api.Dto;
 using BetterCms.Module.Pages.DataContracts.Enums;
@@ -17,6 +16,8 @@ using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+
+using ValidationException = BetterCms.Core.Exceptions.Mvc.ValidationException;
 
 // ReSharper disable CheckNamespace
 namespace BetterCms.Api
@@ -118,8 +119,10 @@ namespace BetterCms.Api
         /// <returns></returns>
         public PageProperties CreatePage(CreatePageRequest pageDto)
         {
+            ValidateRequest(pageDto);
+
             // Validate layout
-            if (pageDto.LayoutId.HasDefaultValue())
+            /*if (pageDto.LayoutId.HasDefaultValue())
             {
                 var message = string.Format("Failed to create page. Layout not specified.");
                 Logger.Error(message);
@@ -140,7 +143,7 @@ namespace BetterCms.Api
                 var message = string.Format("Cannot create page in Preview/Draft Status.");
                 Logger.Error(message);
                 throw new CmsApiValidationException(message);
-            }
+            }*/
             
             try
             {
