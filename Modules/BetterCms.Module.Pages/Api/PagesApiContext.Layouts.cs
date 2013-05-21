@@ -138,12 +138,7 @@ namespace BetterCms.Api
         /// </returns>
         public Layout CreateLayout(CreateLayoutRequest request)
         {
-            if (!HttpHelper.VirtualPathExists(request.LayoutPath))
-            {
-                var message = string.Format("Failed to create layout: layout by given path {0} doesn't exist.", request.LayoutPath);
-                Logger.Error(message);
-                throw new CmsApiValidationException(message);
-            }
+            ValidateRequest(request);
 
             try
             {
@@ -200,6 +195,8 @@ namespace BetterCms.Api
         /// </returns>
         public LayoutRegion CreateLayoutRegion(CreateLayoutRegionRequest request)
         {
+            ValidateRequest(request);
+
             try
             {
                 var layout = Repository.AsProxy<Layout>(request.LayoutId);

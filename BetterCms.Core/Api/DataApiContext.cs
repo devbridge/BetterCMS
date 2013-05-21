@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -6,6 +8,7 @@ using Autofac;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.Exceptions.Api;
 using BetterCms.Core.Models;
 
 using NHibernate;
@@ -70,6 +73,24 @@ namespace BetterCms.Api
             }
 
             return query;
+        }
+
+        /// <summary>
+        /// Validates the request.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <exception cref="CmsApiValidationException"></exception>
+        protected void ValidateRequest(object request)
+        {
+            var validationResult = new Collection<ValidationResult>();
+            if (!Validator.TryValidateObject(request, new ValidationContext(request, null, null), validationResult, true))
+            {
+                foreach (var response in validationResult)
+                {
+                    Logger.ErrorFormat("Failed to validate request: {0}", response.ErrorMessage);
+                    throw new CmsApiValidationException(response.ErrorMessage);
+                }
+            }
         }
     }
 }

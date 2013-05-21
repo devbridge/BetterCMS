@@ -120,6 +120,7 @@
     </Compile>
     <Compile Include="Accessors\PageStylesheetAccessor.cs" />
     <Compile Include="Accessors\PageJavaScriptAccessor.cs" />
+    <Compile Include="Mvc\Attributes\ValidVirtualPathValidationAttribute.cs" />
     <Compile Include="Api\Dto\AddWidgetToPageRequest.cs" />
     <Compile Include="Api\Dto\CreateHtmlContentWidgetRequest.cs" />
     <Compile Include="Api\Dto\CreateLayoutRegionRequest.cs" />
@@ -537,6 +538,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Views\Seo\Partial\WarnMessageAboutSitemap.cshtml" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
