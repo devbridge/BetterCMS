@@ -82,9 +82,9 @@
       <Project>{66e7e4df-eeea-4b1e-8663-a1b430eb7375}</Project>
       <Name>BetterCms.Module.Root</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Modules\BetterCms.Module.Templates\BetterCms.Module.Templates.csproj">
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.Installation\BetterCms.Module.Installation.csproj">
       <Project>{17bf5ca2-23b6-4796-8ef1-cddf6d41a4f7}</Project>
-      <Name>BetterCms.Module.Templates</Name>
+      <Name>BetterCms.Module.Installation</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -121,8 +121,8 @@ xcopy "$(SolutionDir)Modules\BetterCms.Module.Pages\Scripts\*.*" "$(ProjectDir)R
 xcopy "$(SolutionDir)Modules\BetterCms.Module.Root\Content\Styles\*.*" "$(ProjectDir)Resources\bcms-root\Content\Styles\" /Y /Q /S
 xcopy "$(SolutionDir)Modules\BetterCms.Module.Root\Scripts\*.*" "$(ProjectDir)Resources\bcms-root\Scripts\" /Y /Q /S
 
-xcopy "$(SolutionDir)Modules\BetterCms.Module.Templates\Content\Styles\*.*" "$(ProjectDir)Resources\bcms-templates\Content\Styles\" /Y /Q /S
-xcopy "$(SolutionDir)Modules\BetterCms.Module.Templates\Scripts\*.*" "$(ProjectDir)Resources\bcms-templates\Scripts\" /Y /Q /S
+xcopy "$(SolutionDir)Modules\BetterCms.Module.Installation\Content\Styles\*.*" "$(ProjectDir)Resources\bcms-installation\Content\Styles\" /Y /Q /S
+xcopy "$(SolutionDir)Modules\BetterCms.Module.Installation\Scripts\*.*" "$(ProjectDir)Resources\bcms-installation\Scripts\" /Y /Q /S
 
 xcopy "$(SolutionDir)Modules\BetterCms.Module.Users\Content\Styles\*.*" "$(ProjectDir)Resources\bcms-users\Content\Styles\" /Y /Q /S
 xcopy "$(SolutionDir)Modules\BetterCms.Module.Users\Scripts\*.*" "$(ProjectDir)Resources\bcms-users\Scripts\" /Y /Q /S

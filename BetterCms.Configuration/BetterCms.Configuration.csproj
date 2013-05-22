@@ -105,6 +105,7 @@
     <Compile Include="Configuration\CmsModuleGalleryConfigurationElement.cs" />
     <Compile Include="Configuration\CmsCacheConfigurationElement.cs" />
     <Compile Include="Configuration\CacheServiceType.cs" />
+    <Compile Include="Configuration\CmsInstallationConfigurationElement.cs" />
     <Compile Include="Configuration\CustomRoleElement.cs" />
     <Compile Include="Configuration\CustomRolesCollection.cs" />
     <Compile Include="Configuration\DatabaseType.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Configuration\CmsSecurityConfigurationElement.cs" />
     <Compile Include="Configuration\StorageServiceType.cs" />
     <Compile Include="Configuration\UrlPatternsCollection.cs" />
+    <Compile Include="ICmsInstallationConfiguration.cs" />
     <Compile Include="ICmsCacheConfiguration.cs" />
     <Compile Include="ICmsModuleGalleryConfiguration.cs" />
     <Compile Include="ICmsStorageConfiguration.cs" />
