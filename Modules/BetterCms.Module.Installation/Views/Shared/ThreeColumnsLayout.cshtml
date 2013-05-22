@@ -1,0 +1,48 @@
+﻿@using BetterCms.Module.Root.Mvc.Helpers
+@using BetterCms.Module.Installation
+@model BetterCms.Core.DataContracts.IPage
+@{
+    Layout = "~/Areas/bcms-Root/Views/Shared/BaseLayout.cshtml";
+}
+
+@* NOTE: Obsolete. Left for compatibility reasons. *@
+
+@section Styles {    
+    @RenderSection("Styles", false)
+    @(Html.RenderStyleSheets<InstallationModuleDescriptor>())
+}
+
+<div class="page">
+
+    <header class="page-header">
+        <div class="page-frame clearfix">
+            @RenderSection("CMSHeader", false)
+        </div>
+    </header>
+
+    <div class="page-block">
+        <div class="page-frame clearfix">
+
+            <section class="three-col-left">
+                @RenderSection("CMSMainContent", false)
+                @RenderBody()
+            </section>
+
+            <section class="three-col-middle">
+                @RenderSection("CMSLeftSide", false)
+            </section>
+
+            <aside class="col-right">
+                @RenderSection("CMSRightSide", false)
+            </aside>
+
+        </div>
+    </div>
+
+</div>
+
+<footer class="page-footer">
+    <div class="page-frame clearfix">
+        @RenderSection("CMSFooter", false)
+    </div>
+</footer>
