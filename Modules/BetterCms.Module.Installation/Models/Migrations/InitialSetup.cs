@@ -9,7 +9,7 @@ namespace BetterCms.Module.Installation.Models.Migrations
     /// <summary>
     /// Module initial database structure creation.
     /// </summary>
-    [Migration(201301151849)]
+    [Migration(201305221458)]
     public class InitialSetup : DefaultMigration
     {
         private const string LayoutsTableName = "Layouts";
