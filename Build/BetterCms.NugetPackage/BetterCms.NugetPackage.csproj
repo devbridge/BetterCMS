@@ -48,6 +48,9 @@
     <None Include="BetterCMS.nuspec.template">
       <SubType>Designer</SubType>
     </None>
+    <None Include="BetterCMS.Module.AmazonS3Storage.nuspec.template">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="package\content\net40\Config\cms.config">
       <SubType>Designer</SubType>
     </None>
@@ -65,6 +68,14 @@
     <ProjectReference Include="..\..\BetterCMS.Core\BetterCms.Core.csproj">
       <Project>{694ca5ca-a0e2-4578-a249-648498b058d7}</Project>
       <Name>BetterCms.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.AmazonS3Storage\BetterCms.Module.AmazonS3Storage.csproj">
+      <Project>{42698e7b-a9b1-4c23-8bb0-fc363a3f8b94}</Project>
+      <Name>BetterCms.Module.AmazonS3Storage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCMS.Module.AppFabricCache\BetterCms.Module.AppFabricCache.csproj">
+      <Project>{573925f2-f15f-4cbe-8f13-7c67da06df0d}</Project>
+      <Name>BetterCms.Module.AppFabricCache</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCMS.Module.Blog\BetterCms.Module.Blog.csproj">
       <Project>{a66a3046-ef60-4c51-ada7-eb055763419b}</Project>
@@ -86,26 +97,58 @@
       <Project>{17bf5ca2-23b6-4796-8ef1-cddf6d41a4f7}</Project>
       <Name>BetterCms.Module.Templates</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.WindowsAzureStorage\BetterCms.Module.WindowsAzureStorage.csproj">
+      <Project>{6e8e91d9-aeb9-432f-9647-68fa2def2ca9}</Project>
+      <Name>BetterCms.Module.WindowsAzureStorage</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="module\content\net40\App_Data\BetterCMS\Modules\" />
     <Folder Include="package\content\net40\App_Data\BetterCMS\Modules\" />
     <Folder Include="package\lib\net40\" />
     <Folder Include="resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>mkdir "$(ProjectDir)$(OutDir)package"
+    <PostBuildEvent>rem ======= Creating main BetterCMS NuGet package
+
+mkdir "$(ProjectDir)$(OutDir)package"
+
 xcopy "$(ProjectDir)package" "$(ProjectDir)$(OutDir)package\" /E /Y /Q
 copy "$(SolutionDir)license.txt" "$(ProjectDir)$(OutDir)package\content\net40\betterCms.license.txt" /Y
 
 xcopy "$(ProjectDir)$(OutDir)BetterCms.Core.dll" "$(ProjectDir)$(OutDir)package\lib\net40\" /Y /Q
 xcopy "$(ProjectDir)$(OutDir)BetterCms.Configuration.dll" "$(ProjectDir)$(OutDir)package\lib\net40\" /Y /Q
-xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.*.dll" "$(ProjectDir)$(OutDir)package\content\net40\App_Data\BetterCms\Modules\" /Y /Q
+xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.Blog.dll" "$(ProjectDir)$(OutDir)package\content\net40\App_Data\BetterCms\Modules\" /Y /Q
+xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.Pages.dll" "$(ProjectDir)$(OutDir)package\content\net40\App_Data\BetterCms\Modules\" /Y /Q
+xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.MediaManager.dll" "$(ProjectDir)$(OutDir)package\content\net40\App_Data\BetterCms\Modules\" /Y /Q
+xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.Templates.dll" "$(ProjectDir)$(OutDir)package\content\net40\App_Data\BetterCms\Modules\" /Y /Q
+xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.Root.dll" "$(ProjectDir)$(OutDir)package\content\net40\App_Data\BetterCms\Modules\" /Y /Q
 xcopy "$(SolutionDir)README.md" "$(ProjectDir)$(OutDir)package\readme.txt" /Q
+
 "$(ProjectDir)$(OutDir)BetterCms.NugetPackage.exe" "$(ProjectDir)BetterCMS.nuspec.template" "$(ProjectDir)$(OutDir)package\BetterCMS.nuspec"
 "$(SolutionDir).nuget\nuget.exe" pack "$(ProjectDir)$(OutDir)package\BetterCMS.nuspec" -OutputDirectory "$(ProjectDir)$(OutDir)\" -NoPackageAnalysis
 
 rmdir "$(ProjectDir)$(OutDir)package" /S /Q
+
+mkdir "$(ProjectDir)$(OutDir)modules"
+
+rem ======= Creating Amazon S3 module package
+
+mkdir "$(ProjectDir)$(OutDir)modules\AmazonS3Storage"
+xcopy "$(ProjectDir)module" "$(ProjectDir)$(OutDir)modules\AmazonS3Storage\" /E /Y /Q
+
+copy "$(SolutionDir)license.txt" "$(ProjectDir)$(OutDir)modules\AmazonS3Storage\content\net40\betterCms.license.txt" /Y
+xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.AmazonS3Storage.dll" "$(ProjectDir)$(OutDir)modules\AmazonS3Storage\content\net40\App_Data\BetterCms\Modules\" /Y /Q
+
+"$(ProjectDir)$(OutDir)BetterCms.NugetPackage.exe" "$(ProjectDir)BetterCMS.Module.AmazonS3Storage.nuspec.template" "$(ProjectDir)$(OutDir)modules\AmazonS3Storage\BetterCMS.Module.AmazonS3Storage.nuspec"
+"$(SolutionDir).nuget\nuget.exe" pack "$(ProjectDir)$(OutDir)modules\AmazonS3Storage\BetterCMS.Module.AmazonS3Storage.nuspec" -OutputDirectory "$(ProjectDir)$(OutDir)\" -NoPackageAnalysis
+
+rmdir "$(ProjectDir)$(OutDir)modules\AmazonS3Storage"
+
+rem ======= Creating resources folder
+
+rmdir "$(ProjectDir)$(OutDir)modules"
 
 rmdir "$(ProjectDir)Resources" /S /Q
 
