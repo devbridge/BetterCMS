@@ -11,6 +11,12 @@
     var submitTitle = ViewData["Submit title"];
     // email...
     var emailPlaceholder = ViewData["Email placeholder"];
+    // Submit is disabled
+    bool submitDisabled = false;
+    if (ViewData["Submit is disabled"] != null)
+    {
+        Boolean.TryParse(ViewData["Submit is disabled"].ToString(), out submitDisabled);
+    }
 }
 
 @using (Html.BeginForm<SubscriberController>(s => s.Subscribe(null), FormMethod.Post, new { @class = "bcms-newsletter-subscribe-form" }))
@@ -23,5 +29,5 @@
                                            @placeholder = @emailPlaceholder
                                        })
     @Html.BcmsValidationMessageFor(m => m.Email)
-    <button type="submit" class="bcms-newsletter-subscribe-submit">@submitTitle</button>
+    <button type="submit" class="bcms-newsletter-subscribe-submit"@(submitDisabled ? " disabled=\"disabled\"" : string.Empty)>@submitTitle</button>
 }
