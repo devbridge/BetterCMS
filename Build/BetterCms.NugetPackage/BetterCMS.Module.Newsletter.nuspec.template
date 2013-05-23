@@ -9,7 +9,7 @@
     <projectUrl>http://www.bettercms.com</projectUrl>
     <iconUrl>http://www.bettercms.com/nuget-logo.png</iconUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
-    <description>A publishing focused and developer friendly .NET Open source CMS.</description>
+    <description>Newsletter module for BetterCMS. Better CMS is publishing focused and developer friendly .NET Open source CMS.</description>
     <copyright>Better CMS is licensed under BETTER CMS LICENSE AGREEMENT (http://www.bettercms.com/license.txt).</copyright>
     <dependencies>
       <dependency id="BetterCMS" version="[@BetterCMSVersion@]" />
