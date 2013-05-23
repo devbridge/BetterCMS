@@ -511,6 +511,33 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Image Title.
+        /// </summary>
+        public static string ImageProperties_Dialog_ImageTitle_Title {
+            get {
+                return ResourceManager.GetString("ImageProperties_Dialog_ImageTitle_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Public URL.
+        /// </summary>
+        public static string ImageProperties_Dialog_PublicUrl {
+            get {
+                return ResourceManager.GetString("ImageProperties_Dialog_PublicUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image Properties.
+        /// </summary>
+        public static string ImageProperties_Dialog_Title {
+            get {
+                return ResourceManager.GetString("ImageProperties_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Grid.
         /// </summary>
         public static string ImagesTab_Grid {
@@ -642,6 +669,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         public static string MediaManager_ButtonDownload {
             get {
                 return ResourceManager.GetString("MediaManager_ButtonDownload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image Properties.
+        /// </summary>
+        public static string MediaManager_ButtonImageProperties {
+            get {
+                return ResourceManager.GetString("MediaManager_ButtonImageProperties", resourceCulture);
             }
         }
         
