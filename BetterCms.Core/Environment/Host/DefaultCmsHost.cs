@@ -221,7 +221,8 @@ namespace BetterCms.Core.Environment.Host
             try
             {
                 var descriptors = modulesRegistration.GetModules().Select(m => m.ModuleDescriptor).ToList();                
-                migrationRunner.Migrate(descriptors, true);
+                migrationRunner.MigrateStructure(descriptors);
+                migrationRunner.MigrateContent(descriptors);
             }
             catch (Exception ex)
             {

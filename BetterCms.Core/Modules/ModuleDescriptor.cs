@@ -2,14 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Transactions;
-using System.Web;
 using System.Web.Mvc;
 
 using Autofac;
 
 using BetterCms.Api;
-using BetterCms.Core.DataAccess.DataContext.Migrations;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Modules.Projections;
@@ -18,8 +15,6 @@ using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Mvc.Extensions;
 using BetterCms.Core.Security;
 
-using Common.Logging;
-
 namespace BetterCms.Core.Modules
 {
     /// <summary>
@@ -27,11 +22,6 @@ namespace BetterCms.Core.Modules
     /// </summary>
     public abstract class ModuleDescriptor
     {
-        /// <summary>
-        /// Current class logger.
-        /// </summary>
-        private static readonly ILog Log = LogManager.GetCurrentClassLogger();
-
         private string areaName;
 
         private string baseModulePath;
@@ -53,59 +43,6 @@ namespace BetterCms.Core.Modules
         protected ModuleDescriptor(ICmsConfiguration configuration)
         {
             Configuration = configuration;
-            ApiContext.Events.HostStart += Core_HostStart;
-        }
-
-        private void Core_HostStart(SingleItemEventArgs<HttpApplication> args)
-        {
-            try
-            {
-                UpdateDataBaseContent();
-            }
-            catch (Exception ex)
-            {
-                Log.Error("Database content update failed.", ex);
-            }
-        }
-
-        /// <summary>
-        /// Updates the data base content.
-        /// </summary>
-        public virtual void UpdateDataBaseContent()
-        {
-            var types = GetType()
-                    .Assembly.GetTypes()
-                    .Where(type => type.GetCustomAttributes(typeof(ContentMigrationAttribute), true).Length > 0)
-                    .ToList();
-
-            var migrations = new List<KeyValuePair<long, ContentDefaultMigration>>();
-
-            foreach (var type in types)
-            {
-                var migrationAttributes = type.GetCustomAttributes(typeof(ContentMigrationAttribute), true);
-                if (migrationAttributes.Length > 0)
-                {
-                    var attribute = migrationAttributes[0] as ContentMigrationAttribute;
-                    if (attribute != null)
-                    {
-                        var migration = Activator.CreateInstance(type) as ContentDefaultMigration;
-                        if (migration == null)
-                        {
-                            throw new NotSupportedException("Content migration object must be derived from ContentDefaultMigration.");
-                        }
-
-                        migrations.Add(new KeyValuePair<long, ContentDefaultMigration>(attribute.Version, migration));
-                    }
-                }
-            }
-
-            foreach (var keyValuePair in migrations.OrderBy(m => m.Key).ToList())
-            {
-                // TODO: if (!IsAlreadyPerformed(keyValuePair.Key))
-                {
-                    keyValuePair.Value.Up(Configuration);
-                }
-            }
         }
 
         /// <summary>

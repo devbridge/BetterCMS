@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Transactions;
 
 using Autofac;
 
-using BetterCms.Api;
-using BetterCms.Core;
-using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Newsletter.Content.Resources;
 using BetterCms.Module.Newsletter.Registration;
 using BetterCms.Module.Newsletter.Services;
-using BetterCms.Module.Pages.Api.Dto;
 using BetterCms.Module.Root;
 
 namespace BetterCms.Module.Newsletter
@@ -109,41 +103,6 @@ namespace BetterCms.Module.Newsletter
                             AccessRole = RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.Administration)
                         }
                 };
-        }
-
-        /// <summary>
-        /// Updates the data base.
-        /// </summary>
-        public override void UpdateDataBaseContent()
-        {
-            using (var pagesApi = CmsContext.CreateApiContextOf<PagesApiContext>())
-            {
-                const string WidgetPath = "~/Areas/bcms-newsletter/Views/Widgets/SubscribeToNewsletter.cshtml";
-                var widgets = pagesApi.GetServerControlWidgets(e => e.Url == WidgetPath);
-                if (widgets.Count > 0)
-                {
-                    return;
-                }
-
-                using (var transactionScope = new TransactionScope())
-                {
-                    pagesApi.CreateServerControlWidget(
-                    new CreateServerControlWidgetRequest()
-                        {
-                            Name = "Newsletter Widget",
-                            WidgetPath = WidgetPath,
-                            Options =
-                                new List<ContentOptionDto>()
-                                    {
-                                        new ContentOptionDto() { Type = OptionType.Text, Key = "Email placeholder", DefaultValue = "email..." },
-                                        new ContentOptionDto() { Type = OptionType.Text, Key = "Label title", DefaultValue = "Subscribe to newsletter" },
-                                        new ContentOptionDto() { Type = OptionType.Text, Key = "Submit title", DefaultValue = "Submit" },
-                                        new ContentOptionDto() { Type = OptionType.Text, Key = "Submit is disabled", DefaultValue = "false" }
-                                    }
-                        });
-                    transactionScope.Complete();
-                }
-            }
         }
     }
 }

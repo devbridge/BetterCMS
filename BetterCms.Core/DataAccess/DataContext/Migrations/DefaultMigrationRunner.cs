@@ -68,7 +68,7 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
         /// <summary>
         /// Runs migrations from the specified assemblies.
         /// </summary>
-        public void Migrate(IList<ModuleDescriptor> moduleDescriptors, bool up)
+        public void MigrateStructure(IList<ModuleDescriptor> moduleDescriptors)
         {
             IList<long> versions = new List<long>();
             IDictionary<ModuleDescriptor, IList<Type>> moduleWithMigrations = new Dictionary<ModuleDescriptor, IList<Type>>();
@@ -96,15 +96,7 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
                 }
             }
 
-            if (up)
-            {
-                versions = versions.OrderBy(f => f).ToList();
-            }
-            else
-            {
-                versions.Add(0);
-                versions = versions.OrderByDescending(f => f).ToList();
-            }
+            versions = versions.OrderBy(f => f).ToList();
 
             foreach (var version in versions)
             {
@@ -112,7 +104,7 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
                 {
                     if (!versionChecker.VersionExists(moduleWithMigration.Key.Name, version))
                     {
-                        Migrate(moduleWithMigration.Key, moduleWithMigration.Value, up, version);
+                        Migrate(moduleWithMigration.Key, moduleWithMigration.Value, version);
                         versionChecker.AddVersion(moduleWithMigration.Key.Name, version);
                     }
                 }                    
@@ -124,7 +116,7 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
         /// </summary>
         /// <param name="moduleDescriptor">The module descriptor.</param>        
         /// <param name="up">if set to <c>true</c> migrates up; otherwise migrates down.</param>
-        private void Migrate(ModuleDescriptor moduleDescriptor, IEnumerable<Type> migrationTypes = null, bool up = true, long? version = null)
+        private void Migrate(ModuleDescriptor moduleDescriptor, IEnumerable<Type> migrationTypes = null, long? version = null)
         {
             var announcer = new TextWriterAnnouncer(
                 s =>
@@ -200,20 +192,14 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
             }
             
             var runner = new MigrationRunner(assembly, migrationContext, processor);
-            if (up)
+
+            if (version != null)
             {
-                if (version != null)
-                {
-                    runner.MigrateUp(version.Value);
-                }
-                else
-                {
-                    throw new NotSupportedException("Migrations without target version are not supported.");
-                }
+                runner.MigrateUp(version.Value);
             }
             else
             {
-                throw new NotSupportedException("Database down migrations are not supported.");
+                throw new NotSupportedException("Migrations without target version are not supported.");
             }
 
             // If connection is still opened, close it.
@@ -221,6 +207,58 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
             {
                 dbConnection.Close();
             }
+        }
+
+        public void MigrateContent(IList<ModuleDescriptor> moduleDescriptors)
+        {
+            var migrations = new List<ContentMigration>();
+
+            foreach (var moduleDescriptor in moduleDescriptors)
+            {
+                var types = moduleDescriptor
+                    .GetType()
+                    .Assembly.GetTypes()
+                    .Where(type => type.GetCustomAttributes(typeof(ContentMigrationAttribute), true).Length > 0).ToList();
+                migrations.AddRange(GetContentMigrations(moduleDescriptor.Name, types));
+            }
+
+            RunContentMigrations(migrations.OrderBy(m => m.MigrationVersion).ToList());
+        }
+
+        private void RunContentMigrations(IEnumerable<ContentMigration> migrations)
+        {
+            foreach (var migration in migrations)
+            {
+                if (migration.Migration.IsUpNeeded(migration.ModuleName, migration.MigrationVersion))
+                {
+                    migration.Migration.Up(configuration);
+                    migration.Migration.UpPerformed(migration.ModuleName, migration.MigrationVersion);
+                }
+            }
+        }
+
+        private IEnumerable<ContentMigration> GetContentMigrations(string moduleName, IEnumerable<Type> types)
+        {
+            var migrations = new List<ContentMigration>();
+            foreach (var type in types)
+            {
+                var migrationAttributes = type.GetCustomAttributes(typeof(ContentMigrationAttribute), true);
+                if (migrationAttributes.Length > 0)
+                {
+                    var attribute = migrationAttributes[0] as ContentMigrationAttribute;
+                    if (attribute != null)
+                    {
+                        var migration = Activator.CreateInstance(type) as IContentMigration;
+                        if (migration == null)
+                        {
+                            throw new NotSupportedException("Content migration object must implement IContentMigration.");
+                        }
+
+                        migrations.Add(new ContentMigration(moduleName, attribute.Version, migration));
+                    }
+                }
+            }
+            return migrations;
         }
     }
 }

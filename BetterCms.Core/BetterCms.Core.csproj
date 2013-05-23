@@ -123,7 +123,8 @@
     <Compile Include="Api\Events\SingleItemEventArgs.cs" />
     <Compile Include="CmsContext.cs" />
     <Compile Include="Api\ApiContext.cs" />
-    <Compile Include="DataAccess\DataContext\Migrations\ContentDefaultMigration.cs" />
+    <Compile Include="DataAccess\DataContext\Migrations\ContentMigration.cs" />
+    <Compile Include="DataAccess\DataContext\Migrations\IContentMigration.cs" />
     <Compile Include="DataAccess\DataContext\Migrations\ContentMigrationAttribute.cs" />
     <Compile Include="DataAccess\DataContext\Migrations\DefaultVersionChecker.cs" />
     <Compile Include="DataAccess\DataContext\Migrations\IVersionChecker.cs" />

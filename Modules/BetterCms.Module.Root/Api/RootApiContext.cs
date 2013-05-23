@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Linq;
 
 using Autofac;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.Exceptions.Api;
 using BetterCms.Module.Root.Api.Events;
+using BetterCms.Module.Root.Models;
 
 // ReSharper disable CheckNamespace
 namespace BetterCms.Api
@@ -50,8 +52,7 @@ namespace BetterCms.Api
         {
             try
             {
-                // TODO
-                return false;
+                return Repository.AsQueryable<ModuleContentVersion>(v => v.ModuleName == moduleName && v.Version == contentVersion).Any();
             }
             catch (Exception ex)
             {
@@ -65,7 +66,10 @@ namespace BetterCms.Api
         {
             try
             {
-                // TODO
+                var version = new ModuleContentVersion { ModuleName = moduleName, ContentVersion = contentVersion, AppliedOn = DateTime.Now };
+                Repository.Save(version);
+
+                UnitOfWork.Commit();
             }
             catch (Exception ex)
             {

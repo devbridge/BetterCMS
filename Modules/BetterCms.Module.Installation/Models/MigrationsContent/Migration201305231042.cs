@@ -8,11 +8,12 @@ using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Pages.Api.Dto;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Models.MigrationsContent;
 
 namespace BetterCms.Module.Installation.Models.MigrationsContent
 {
     [ContentMigration(201305231042)]
-    public class Migration201305231042 : ContentDefaultMigration
+    public class Migration201305231042 : BaseContentMigration
     {
         private static class Urls
         {
