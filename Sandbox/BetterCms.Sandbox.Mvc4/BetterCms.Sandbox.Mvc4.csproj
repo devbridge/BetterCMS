@@ -348,8 +348,8 @@ REM copy "$(SolutionDir)Modules\BetterCms.Module.Users\bin\BetterCms.Module.User
 copy "$(SolutionDir)Modules\BetterCms.Module.MediaManager\bin\BetterCms.Module.MediaManager.dll" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
 copy "$(SolutionDir)Modules\BetterCms.Module.MediaManager\bin\BetterCms.Module.MediaManager.pdb" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
 
-copy "$(SolutionDir)Modules\BetterCms.Module.Templates\bin\BetterCms.Module.Templates.dll" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
-copy "$(SolutionDir)Modules\BetterCms.Module.Templates\bin\BetterCms.Module.Templates.pdb" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
+copy "$(SolutionDir)Modules\BetterCms.Module.Installation\bin\BetterCms.Module.Installation.dll" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
+copy "$(SolutionDir)Modules\BetterCms.Module.Installation\bin\BetterCms.Module.Installation.pdb" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
 
 copy "$(SolutionDir)Modules\BetterCms.Module.Newsletter\bin\BetterCms.Module.Newsletter.dll" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
 copy "$(SolutionDir)Modules\BetterCms.Module.Newsletter\bin\BetterCms.Module.Newsletter.pdb" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
