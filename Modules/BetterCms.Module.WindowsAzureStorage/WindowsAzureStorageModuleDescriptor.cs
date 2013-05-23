@@ -4,7 +4,7 @@ using BetterCms.Configuration;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Services.Storage;
 
-namespace BetterCms.Module.AmazonS3Storage
+namespace BetterCms.Module.WindowsAzureStorage
 {
     /// <summary>
     /// A storage module based on the Windows Azure Storage cloud service.

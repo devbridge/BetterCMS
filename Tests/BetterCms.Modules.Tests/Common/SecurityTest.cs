@@ -10,7 +10,7 @@ using BetterCms.Module.Blog;
 using BetterCms.Module.MediaManager;
 using BetterCms.Module.Pages;
 using BetterCms.Module.Root;
-using BetterCms.Module.Templates;
+using BetterCms.Module.Installation;
 using BetterCms.Module.Users;
 
 using Moq;
@@ -47,7 +47,7 @@ namespace BetterCms.Test.Module.Common
                     typeof(PagesModuleDescriptor),
                     typeof(BlogModuleDescriptor),
                     typeof(MediaManagerModuleDescriptor),
-                    typeof(TemplatesModuleDescriptor),
+                    typeof(InstallationModuleDescriptor),
                     typeof(UsersModuleDescriptor),
                 };
 
