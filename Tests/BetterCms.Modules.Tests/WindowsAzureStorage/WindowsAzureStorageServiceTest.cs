@@ -4,8 +4,7 @@ using System.IO;
 
 using BetterCms.Configuration;
 using BetterCms.Core.Services.Storage;
-using BetterCms.Module.AmazonS3Storage;
-
+using BetterCms.Module.WindowsAzureStorage;
 
 using Moq;
 
