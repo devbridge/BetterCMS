@@ -124,7 +124,7 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
         /// </summary>
         /// <param name="moduleDescriptor">The module descriptor.</param>        
         /// <param name="up">if set to <c>true</c> migrates up; otherwise migrates down.</param>
-        public void Migrate(ModuleDescriptor moduleDescriptor, IEnumerable<Type> migrationTypes = null, bool up = true, long? version = null)
+        private void Migrate(ModuleDescriptor moduleDescriptor, IEnumerable<Type> migrationTypes = null, bool up = true, long? version = null)
         {
             var announcer = new TextWriterAnnouncer(
                 s =>

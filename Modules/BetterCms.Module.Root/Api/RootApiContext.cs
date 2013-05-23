@@ -1,6 +1,9 @@
-﻿using Autofac;
+﻿using System;
+
+using Autofac;
 
 using BetterCms.Core.DataAccess;
+using BetterCms.Core.Exceptions.Api;
 using BetterCms.Module.Root.Api.Events;
 
 // ReSharper disable CheckNamespace
@@ -42,5 +45,35 @@ namespace BetterCms.Api
                 return events;
             }
         }
+
+        public bool IsContentMigrated(string moduleName, long contentVersion)
+        {
+            try
+            {
+                // TODO
+                return false;
+            }
+            catch (Exception ex)
+            {
+                const string message = "Failed to perform version check.";
+                Logger.Error(message, ex);
+                throw new CmsApiException(message, ex);
+            }
+        }
+
+        public void ContentMigrated(string moduleName, long contentVersion)
+        {
+            try
+            {
+                // TODO
+            }
+            catch (Exception ex)
+            {
+                const string message = "Failed to perform version saving.";
+                Logger.Error(message, ex);
+                throw new CmsApiException(message, ex);
+            }
+        }
+
     }
 }
