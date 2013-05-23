@@ -51,6 +51,15 @@
     <None Include="BetterCMS.Module.AmazonS3Storage.nuspec.template">
       <SubType>Designer</SubType>
     </None>
+    <None Include="BetterCMS.Module.AppFabricCache.nuspec.template">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="BetterCMS.Module.Newsletter.nuspec.template">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="BetterCMS.Module.WindowsAzureStorage.nuspec.template">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="package\content\net40\Config\cms.config">
       <SubType>Designer</SubType>
     </None>
@@ -122,7 +131,7 @@ xcopy "$(ProjectDir)$(OutDir)BetterCms.Configuration.dll" "$(ProjectDir)$(OutDir
 xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.Blog.dll" "$(ProjectDir)$(OutDir)package\content\net40\App_Data\BetterCms\Modules\" /Y /Q
 xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.Pages.dll" "$(ProjectDir)$(OutDir)package\content\net40\App_Data\BetterCms\Modules\" /Y /Q
 xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.MediaManager.dll" "$(ProjectDir)$(OutDir)package\content\net40\App_Data\BetterCms\Modules\" /Y /Q
-xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.Templates.dll" "$(ProjectDir)$(OutDir)package\content\net40\App_Data\BetterCms\Modules\" /Y /Q
+xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.Installation.dll" "$(ProjectDir)$(OutDir)package\content\net40\App_Data\BetterCms\Modules\" /Y /Q
 xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.Root.dll" "$(ProjectDir)$(OutDir)package\content\net40\App_Data\BetterCms\Modules\" /Y /Q
 xcopy "$(SolutionDir)README.md" "$(ProjectDir)$(OutDir)package\readme.txt" /Q
 
@@ -144,11 +153,50 @@ xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.AmazonS3Storage.dll" "$(ProjectDir
 "$(ProjectDir)$(OutDir)BetterCms.NugetPackage.exe" "$(ProjectDir)BetterCMS.Module.AmazonS3Storage.nuspec.template" "$(ProjectDir)$(OutDir)modules\AmazonS3Storage\BetterCMS.Module.AmazonS3Storage.nuspec"
 "$(SolutionDir).nuget\nuget.exe" pack "$(ProjectDir)$(OutDir)modules\AmazonS3Storage\BetterCMS.Module.AmazonS3Storage.nuspec" -OutputDirectory "$(ProjectDir)$(OutDir)\" -NoPackageAnalysis
 
-rmdir "$(ProjectDir)$(OutDir)modules\AmazonS3Storage"
+rmdir "$(ProjectDir)$(OutDir)modules\AmazonS3Storage"  /S /Q
+
+rem ======= Creating Newsletter module package
+
+mkdir "$(ProjectDir)$(OutDir)modules\Newsletter"
+xcopy "$(ProjectDir)module" "$(ProjectDir)$(OutDir)modules\Newsletter\" /E /Y /Q
+
+copy "$(SolutionDir)license.txt" "$(ProjectDir)$(OutDir)modules\Newsletter\content\net40\betterCms.license.txt" /Y
+xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.Newsletter.dll" "$(ProjectDir)$(OutDir)modules\Newsletter\content\net40\App_Data\BetterCms\Modules\" /Y /Q
+
+"$(ProjectDir)$(OutDir)BetterCms.NugetPackage.exe" "$(ProjectDir)BetterCMS.Module.Newsletter.nuspec.template" "$(ProjectDir)$(OutDir)modules\Newsletter\BetterCMS.Module.Newsletter.nuspec"
+"$(SolutionDir).nuget\nuget.exe" pack "$(ProjectDir)$(OutDir)modules\Newsletter\BetterCMS.Module.Newsletter.nuspec" -OutputDirectory "$(ProjectDir)$(OutDir)\" -NoPackageAnalysis
+
+rmdir "$(ProjectDir)$(OutDir)modules\Newsletter" /S /Q
+
+rem ======= Creating WindowsAzureStorage module package
+
+mkdir "$(ProjectDir)$(OutDir)modules\WindowsAzureStorage"
+xcopy "$(ProjectDir)module" "$(ProjectDir)$(OutDir)modules\WindowsAzureStorage\" /E /Y /Q
+
+copy "$(SolutionDir)license.txt" "$(ProjectDir)$(OutDir)modules\WindowsAzureStorage\content\net40\betterCms.license.txt" /Y
+xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.WindowsAzureStorage.dll" "$(ProjectDir)$(OutDir)modules\WindowsAzureStorage\content\net40\App_Data\BetterCms\Modules\" /Y /Q
+
+"$(ProjectDir)$(OutDir)BetterCms.NugetPackage.exe" "$(ProjectDir)BetterCMS.Module.WindowsAzureStorage.nuspec.template" "$(ProjectDir)$(OutDir)modules\WindowsAzureStorage\BetterCMS.Module.WindowsAzureStorage.nuspec"
+"$(SolutionDir).nuget\nuget.exe" pack "$(ProjectDir)$(OutDir)modules\WindowsAzureStorage\BetterCMS.Module.WindowsAzureStorage.nuspec" -OutputDirectory "$(ProjectDir)$(OutDir)\" -NoPackageAnalysis
+
+rmdir "$(ProjectDir)$(OutDir)modules\WindowsAzureStorage" /S /Q
+
+rem ======= Creating AppFabricCache module package
+
+mkdir "$(ProjectDir)$(OutDir)modules\AppFabricCache"
+xcopy "$(ProjectDir)module" "$(ProjectDir)$(OutDir)modules\AppFabricCache\" /E /Y /Q
+
+copy "$(SolutionDir)license.txt" "$(ProjectDir)$(OutDir)modules\AppFabricCache\content\net40\betterCms.license.txt" /Y
+xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.AppFabricCache.dll" "$(ProjectDir)$(OutDir)modules\AppFabricCache\content\net40\App_Data\BetterCms\Modules\" /Y /Q
+
+"$(ProjectDir)$(OutDir)BetterCms.NugetPackage.exe" "$(ProjectDir)BetterCMS.Module.AppFabricCache.nuspec.template" "$(ProjectDir)$(OutDir)modules\AppFabricCache\BetterCMS.Module.AppFabricCache.nuspec"
+"$(SolutionDir).nuget\nuget.exe" pack "$(ProjectDir)$(OutDir)modules\AppFabricCache\BetterCMS.Module.AppFabricCache.nuspec" -OutputDirectory "$(ProjectDir)$(OutDir)\" -NoPackageAnalysis
+
+rmdir "$(ProjectDir)$(OutDir)modules\AppFabricCache" /S /Q
 
 rem ======= Creating resources folder
 
-rmdir "$(ProjectDir)$(OutDir)modules"
+rmdir "$(ProjectDir)$(OutDir)modules" /S /Q
 
 rmdir "$(ProjectDir)Resources" /S /Q
 
