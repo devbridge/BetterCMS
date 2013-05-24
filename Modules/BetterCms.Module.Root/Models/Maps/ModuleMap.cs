@@ -4,8 +4,7 @@ namespace BetterCms.Module.Root.Models.Maps
 {
     public class ModuleMap : EntityMapBase<Module>
     {
-        public ModuleMap()
-            : base(RootModuleDescriptor.ModuleName)
+        public ModuleMap() : base(RootModuleDescriptor.ModuleName)
         {
             Table("Modules");
 

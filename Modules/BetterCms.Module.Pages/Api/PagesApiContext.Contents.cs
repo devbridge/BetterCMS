@@ -275,6 +275,64 @@ namespace BetterCms.Api
         }
 
         /// <summary>
+        /// Gets the HTML content widgets.
+        /// </summary>
+        /// <param name="filter">The filter.</param>
+        /// <param name="order">The order.</param>
+        /// <param name="orderDescending">if set to <c>true</c> [order descending].</param>
+        /// <param name="pageNumber">The page number.</param>
+        /// <param name="itemsPerPage">The items per page.</param>
+        /// <returns>HTML content widget list.</returns>
+        /// <exception cref="CmsApiException">Failed to get widgets.</exception>
+        public IList<HtmlContentWidget> GetHtmlContentWidgets(Expression<Func<HtmlContentWidget, bool>> filter = null, Expression<Func<HtmlContentWidget, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
+        {
+            try
+            {
+                if (order == null)
+                {
+                    order = p => p.Name;
+                }
+
+                return Repository.AsQueryable(filter, order, orderDescending, pageNumber, itemsPerPage).ToList();
+            }
+            catch (Exception inner)
+            {
+                var message = string.Format("Failed to get HTML content widgets.");
+                Logger.Error(message, inner);
+                throw new CmsApiException(message, inner);
+            }
+        }
+
+        /// <summary>
+        /// Gets the server control widgets.
+        /// </summary>
+        /// <param name="filter">The filter.</param>
+        /// <param name="order">The order.</param>
+        /// <param name="orderDescending">if set to <c>true</c> [order descending].</param>
+        /// <param name="pageNumber">The page number.</param>
+        /// <param name="itemsPerPage">The items per page.</param>
+        /// <returns>Server control widget list.</returns>
+        /// <exception cref="CmsApiException">Failed to get widgets.</exception>
+        public IList<ServerControlWidget> GetServerControlWidgets(Expression<Func<ServerControlWidget, bool>> filter = null, Expression<Func<ServerControlWidget, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
+        {
+            try
+            {
+                if (order == null)
+                {
+                    order = p => p.Name;
+                }
+
+                return Repository.AsQueryable(filter, order, orderDescending, pageNumber, itemsPerPage).ToList();
+            }
+            catch (Exception inner)
+            {
+                var message = string.Format("Failed to get server control widgets.");
+                Logger.Error(message, inner);
+                throw new CmsApiException(message, inner);
+            }
+        }
+
+        /// <summary>
         /// Gets the page widgets.
         /// </summary>
         /// <param name="pageId">The page id.</param>

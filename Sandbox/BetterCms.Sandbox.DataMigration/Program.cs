@@ -61,7 +61,7 @@ namespace BetterCms.Sandbox.DataMigration
             ICmsConfiguration cmsConfiguration = configurationLoader.LoadCmsConfiguration();
             IVersionChecker versionChecker = new VersionCheckerStub();
             DefaultMigrationRunner runner = new DefaultMigrationRunner(new DefaultAssemblyLoader(), cmsConfiguration, versionChecker);
-            runner.Migrate(descriptors, up);
+            runner.MigrateStructure(descriptors);
         }
 
         private static void Main(string[] args)
