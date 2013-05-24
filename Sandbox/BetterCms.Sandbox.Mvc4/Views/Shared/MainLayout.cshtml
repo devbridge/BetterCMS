@@ -1,0 +1,16 @@
+﻿@{
+    Layout = "~/Areas/bcms-Root/Views/Shared/BaseLayout.cshtml";
+}
+
+TOP
+<br /><br />
+@RenderSection("Header", false)
+<br /><br />
+
+@RenderSection("DynamicLayout", false)
+@RenderBody()
+
+<br /><br />
+@RenderSection("Footer", false)
+<br /><br />
+BOTTOM
