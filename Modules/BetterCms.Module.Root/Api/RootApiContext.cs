@@ -52,7 +52,7 @@ namespace BetterCms.Api
         {
             try
             {
-                return Repository.AsQueryable<ModuleContentVersion>(v => v.ModuleName == moduleName && v.Version == contentVersion).Any();
+                return Repository.AsQueryable<ModuleContentVersion>(v => v.ModuleName == moduleName && v.ContentVersion == contentVersion).Any();
             }
             catch (Exception ex)
             {
