@@ -12,7 +12,6 @@ namespace BetterCms.Module.Root.Models.Maps
 
             Map(x => x.ModuleName).Not.Nullable().Length(MaxLength.Name);
             Map(x => x.ContentVersion).Not.Nullable();
-            Map(x => x.AppliedOn).Not.Nullable();
         }
     }
 }

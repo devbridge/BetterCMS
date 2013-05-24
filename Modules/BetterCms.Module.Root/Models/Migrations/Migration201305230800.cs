@@ -29,11 +29,9 @@ namespace BetterCms.Module.Root.Models.Migrations
             Create
                 .Table("ModulesContentVersions")
                 .InSchema(SchemaName)
-                .WithCmsBaseColumns() // TODO: remove base columns
-                // .WithColumn("Id").AsGuid().PrimaryKey().WithDefault(SystemMethods.NewGuid)
+                .WithCmsBaseColumns()
                 .WithColumn("ModuleName").AsString(MaxLength.Name).NotNullable()
-                .WithColumn("ContentVersion").AsInt64().NotNullable()
-                .WithColumn("AppliedOn").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime);
+                .WithColumn("ContentVersion").AsInt64().NotNullable();
         }
 
         /// <summary>

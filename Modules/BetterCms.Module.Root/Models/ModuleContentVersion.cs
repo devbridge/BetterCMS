@@ -10,7 +10,5 @@ namespace BetterCms.Module.Root.Models
         public virtual string ModuleName { get; set; }
 
         public virtual long ContentVersion { get; set; }
-
-        public virtual DateTime AppliedOn { get; set; }
     }
 }

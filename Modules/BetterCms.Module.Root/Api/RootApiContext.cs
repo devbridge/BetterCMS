@@ -66,7 +66,7 @@ namespace BetterCms.Api
         {
             try
             {
-                var version = new ModuleContentVersion { ModuleName = moduleName, ContentVersion = contentVersion, AppliedOn = DateTime.Now };
+                var version = new ModuleContentVersion { ModuleName = moduleName, ContentVersion = contentVersion };
                 Repository.Save(version);
 
                 UnitOfWork.Commit();
