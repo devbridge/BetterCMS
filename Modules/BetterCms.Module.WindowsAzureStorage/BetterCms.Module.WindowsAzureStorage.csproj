@@ -7,8 +7,8 @@
     <ProjectGuid>{6E8E91D9-AEB9-432F-9647-68FA2DEF2CA9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BetterCms.Module.AmazonS3Storage</RootNamespace>
-    <AssemblyName>BetterCms.Module.AmazonS3Storage</AssemblyName>
+    <RootNamespace>BetterCms.Module.WindowsAzureStorage</RootNamespace>
+    <AssemblyName>BetterCms.Module.WindowsAzureStorage</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>

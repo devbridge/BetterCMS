@@ -1,5 +1,5 @@
 ﻿@using BetterCms.Module.Root.Mvc.Helpers
-@using BetterCms.Module.Templates
+@using BetterCms.Module.Installation
 @model BetterCms.Core.DataContracts.IPage
 @{
     Layout = "~/Areas/bcms-Root/Views/Shared/BaseLayout.cshtml";
@@ -7,29 +7,27 @@
 
 @section Styles {    
     @RenderSection("Styles", false)
-    @(Html.RenderStyleSheets<TemplatesModuleDescriptor>())
+    @(Html.RenderStyleSheets<InstallationModuleDescriptor>())
+}
+
+@section HeadScripts {
+    @RenderSection("HeadScripts", false)
 }
 
 <div class="page">
 
     <header class="page-header">
         <div class="page-frame clearfix">
-            @RenderSection("CMSHeader", false)
+            <div>
+                @RenderSection("CMSHeader", false)
+            </div>
         </div>
     </header>
 
     <div class="page-block">
         <div class="page-frame clearfix">
-
-            <section class="two-col-left">
-                @RenderSection("CMSMainContent", false)
-                @RenderBody()
-            </section>
-
-            <aside class="col-right">
-                @RenderSection("CMSLeftSide", false)
-            </aside>
-
+            @RenderSection("CMSMainContent", false)
+            @RenderBody()
         </div>
     </div>
 

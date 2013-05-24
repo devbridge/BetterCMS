@@ -13,7 +13,7 @@ using BetterCms.Module.MediaManager;
 using BetterCms.Module.Newsletter;
 using BetterCms.Module.Pages;
 using BetterCms.Module.Root;
-using BetterCms.Module.Templates;
+using BetterCms.Module.Installation;
 using BetterCms.Module.Users;
 
 using Common.Logging;
@@ -45,7 +45,7 @@ namespace BetterCms.Sandbox.DataMigration
                     (new ModuleDescriptor[]
                     {
                         new BlogModuleDescriptor(configuration),
-                        new TemplatesModuleDescriptor(configuration),
+                        new InstallationModuleDescriptor(configuration),
                         new MediaManagerModuleDescriptor(configuration),
                         new PagesModuleDescriptor(configuration),
                         new RootModuleDescriptor(configuration),

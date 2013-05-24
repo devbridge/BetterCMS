@@ -523,6 +523,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                     modal.imagePreview(previewUrl, self.tooltip);
                 }
             };
+
+            self.imageProperties = function () {
+                imageEditor.openImagePropertiesDialog(self.id());
+            };
         }
 
         MediaImageViewModel.prototype.isImage = function () {

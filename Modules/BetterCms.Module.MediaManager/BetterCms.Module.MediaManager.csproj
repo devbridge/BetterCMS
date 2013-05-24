@@ -124,6 +124,7 @@
     <Compile Include="Command\Folder\SaveFolderCommand.cs" />
     <Compile Include="Command\Files\DownloadFile\DownloadFileCommand.cs" />
     <Compile Include="Command\Files\DownloadFile\DownloadFileCommandResponse.cs" />
+    <Compile Include="Command\Images\GetImageProperties\GetImagePropertiesCommand.cs" />
     <Compile Include="Command\MediaManager\GetMediaItemsCommandBase.cs" />
     <Compile Include="Command\MediaManager\RenameMedia\RenameMediaCommand.cs" />
     <Compile Include="Command\Upload\CheckFileStatuses\CheckFilesStatusesCommand.cs" />
@@ -276,6 +277,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Images\ImageEditor.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Images\ImageProperties.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

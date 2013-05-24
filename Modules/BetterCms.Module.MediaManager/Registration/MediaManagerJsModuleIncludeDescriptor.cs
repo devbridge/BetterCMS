@@ -63,7 +63,7 @@ namespace BetterCms.Module.MediaManager.Registration
                     new JavaScriptModuleGlobalization(this, "uploadImage", () => MediaGlobalization.ImagesTab_UploadImage),
                     new JavaScriptModuleGlobalization(this, "uploadAudio", () => MediaGlobalization.AudiosTab_UploadAudio),
                     new JavaScriptModuleGlobalization(this, "uploadVideo", () => MediaGlobalization.VideosTab_UploadVideo),
-                    new JavaScriptModuleGlobalization(this, "uploadFile", () => MediaGlobalization.FilesTab_UploadFile),
+                    new JavaScriptModuleGlobalization(this, "uploadFile", () => MediaGlobalization.FilesTab_UploadFile)
                 };
         }
     }

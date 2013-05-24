@@ -27,7 +27,7 @@ namespace BetterCms.Module.MediaManager.Command.Images.GetImage
         /// </summary>
         /// <param name="imageId">The image id.</param>
         /// <returns>The view model.</returns>
-        public ImageViewModel Execute(Guid imageId)
+        public virtual ImageViewModel Execute(Guid imageId)
         {
             var image = Repository.First<MediaImage>(imageId);
             return new ImageViewModel

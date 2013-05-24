@@ -60,7 +60,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.Module.AmazonS3St
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.Module.MediaManager", "Modules\BetterCms.Module.MediaManager\BetterCms.Module.MediaManager.csproj", "{F3E41793-E8ED-4BA8-A1AB-CBA1E47B0786}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.Module.Templates", "Modules\BetterCms.Module.Templates\BetterCms.Module.Templates.csproj", "{17BF5CA2-23B6-4796-8EF1-CDDF6D41A4F7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.Module.Installation", "Modules\BetterCms.Module.Installation\BetterCms.Module.Installation.csproj", "{17BF5CA2-23B6-4796-8EF1-CDDF6D41A4F7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{01B2D036-F6B3-4796-B9C5-A2D3405987BF}"
 EndProject
@@ -71,6 +71,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Release", "Release", "{65E5
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.NugetPackage", "Build\BetterCms.NugetPackage\BetterCms.NugetPackage.csproj", "{A5D7CC00-D8A7-4177-8432-86B10EEABAE8}"
 	ProjectSection(ProjectDependencies) = postProject
+		{5235602A-EE7C-45A3-8B41-0C8770303650} = {5235602A-EE7C-45A3-8B41-0C8770303650}
 		{A66A3046-EF60-4C51-ADA7-EB055763419B} = {A66A3046-EF60-4C51-ADA7-EB055763419B}
 		{C530025B-8AB7-402D-B60C-000C9A5D0446} = {C530025B-8AB7-402D-B60C-000C9A5D0446}
 		{DA2B225E-6AEE-4465-8B08-4D5B1C1CED49} = {DA2B225E-6AEE-4465-8B08-4D5B1C1CED49}

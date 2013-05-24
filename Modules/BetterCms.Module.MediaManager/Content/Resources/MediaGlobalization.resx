@@ -393,4 +393,16 @@
   <data name="MultiFileUpload_Processing_ServerSide" xml:space="preserve">
     <value>Upload completed. File is still processing in the server.</value>
   </data>
+  <data name="ImageProperties_Dialog_Title" xml:space="preserve">
+    <value>Image Properties</value>
+  </data>
+  <data name="MediaManager_ButtonImageProperties" xml:space="preserve">
+    <value>Image Properties</value>
+  </data>
+  <data name="ImageProperties_Dialog_ImageTitle_Title" xml:space="preserve">
+    <value>Image Title</value>
+  </data>
+  <data name="ImageProperties_Dialog_PublicUrl" xml:space="preserve">
+    <value>Public URL</value>
+  </data>
 </root>
