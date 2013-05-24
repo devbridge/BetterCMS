@@ -149,7 +149,8 @@ namespace BetterCms.Module.Pages
 
             RegisterContentRendererType<HtmlContentAccessor, HtmlContent>(containerBuilder);
             RegisterContentRendererType<HtmlContentWidgetAccessor, HtmlContentWidget>(containerBuilder);
-            RegisterContentRendererType<ServerControlWidgetAccessor, ServerControlWidget>(containerBuilder);            
+            RegisterContentRendererType<ServerControlWidgetAccessor, ServerControlWidget>(containerBuilder);
+            RegisterContentRendererType<DynamicLayoutContentAccessor, DynamicLayoutContent>(containerBuilder);            
 
             containerBuilder.RegisterType<DefaultPageService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultRedirectService>().AsImplementedInterfaces().InstancePerLifetimeScope();

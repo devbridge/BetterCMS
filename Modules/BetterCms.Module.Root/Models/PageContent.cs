@@ -17,6 +17,8 @@ namespace BetterCms.Module.Root.Models
 
         public virtual Region Region { get; set; }
 
+        public virtual PageContent Parent { get; set; }
+
         public virtual IList<PageContentOption> Options { get; set; }       
 
         IPage IPageContent.Page

@@ -4,17 +4,14 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
-using System.Web.Compilation;
-using System.Web.Hosting;
 using System.Web.Mvc;
-using System.Web.Routing;
-using System.Web.UI;
 using System.Web.WebPages;
 
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
-using BetterCms.Module.Root.Projections;
+
 using BetterCms.Module.Root.ViewModels.Cms;
+
 using System.Web.Mvc.Html;
 
 namespace BetterCms.Module.Root.Mvc.Helpers
@@ -32,7 +29,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// <param name="model">The model.</param>
         /// <param name="render">if set to <c>true</c> [render].</param>
         /// <returns></returns>
-        public static void RenderSectionContents(this HtmlHelper htmlHelper, WebPageBase webPage, RenderPageViewModel model, bool render = true)
+        public static void RenderSectionContents(this HtmlHelper htmlHelper, WebPageBase webPage, RenderPageViewModel model)
         {
             foreach (var region in model.Regions)
             {
@@ -46,51 +43,8 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                         // Add Html
                         using (new RegionContentWrapper(contentsBuilder, projection, model.CanManageContent))
                         {
-                            if (projection.GetTitle() == "dynamic content" && render)
-                            {
-                                using (var sw = new StringWriter())
-                                {
-                                    var context = htmlHelper.ViewContext.Controller.ControllerContext;
-                                    
-                                    var fakeContent = model.Contents.First(c => c.GetTitle() == "header");
-
-                                    var viewData = new ViewDataDictionary
-                                        {
-                                            Model = new RenderPageViewModel
-                                                {
-                                                    Regions = new List<PageRegionViewModel>
-                                                                  {
-                                                                      new PageRegionViewModel
-                                                                          {
-                                                                              RegionId = fakeContent.RegionId,
-                                                                              RegionIdentifier = "DynamicLayoutSubSection"
-                                                                          }
-                                                                  },
-                                                    Contents = new List<PageContentProjection>
-                                                                   {
-                                                                       fakeContent
-                                                                   },
-                                                    JavaScripts = new List<IJavaScriptAccessor>(),
-                                                    Stylesheets = new List<IStylesheetAccessor>(),
-                                                    CanManageContent = true
-                                                }
-                                        };
-
-                                    var viewResult = ViewEngines.Engines.FindView(context, "~/Views/Shared/EmptyPage.cshtml", "~/Views/Shared/DynamicLayout.cshtml");
-                                    var viewContext = new ViewContext(context, viewResult.View, viewData, new TempDataDictionary(), sw);
-
-                                    viewResult.View.Render(viewContext, sw);
-                                    viewResult.ViewEngine.ReleaseView(htmlHelper.ViewContext.Controller.ControllerContext, viewResult.View);
-
-                                    var aaa = sw.GetStringBuilder().ToString();
-                                    contentsBuilder.Append(aaa);
-                                }
-                            }
-                            else
-                            {
-                                var content = projection.GetHtml(htmlHelper);
-                                contentsBuilder.Append(content);
-                            }
+                            var content = projection.GetHtml(htmlHelper);
+                            contentsBuilder.Append(content);
                         }
                     }
                 }

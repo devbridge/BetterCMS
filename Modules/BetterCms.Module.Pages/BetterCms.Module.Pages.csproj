@@ -118,8 +118,12 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Accessors\DynamicLayoutContentAccessor.cs" />
     <Compile Include="Accessors\PageStylesheetAccessor.cs" />
     <Compile Include="Accessors\PageJavaScriptAccessor.cs" />
+    <Compile Include="Models\DynamicLayoutContent.cs" />
+    <Compile Include="Models\Maps\DynamicLayoutContentMap.cs" />
+    <Compile Include="Models\Migrations\Migration201305240800.cs" />
     <Compile Include="Mvc\Attributes\ValidVirtualPathValidationAttribute.cs" />
     <Compile Include="Api\Dto\AddWidgetToPageRequest.cs" />
     <Compile Include="Api\Dto\CreateHtmlContentWidgetRequest.cs" />

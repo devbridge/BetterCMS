@@ -72,7 +72,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             }
 
             var pageContents = pageContentsQuery.ToList();
-            var contentProjections = pageContents.Distinct().Select(f => CreatePageContentProjection(request, f)).Where(c => c != null).ToList();
+            var contentProjections = GetContentProjections(request, page, pageContents, null);
 
             RenderPageViewModel renderPageViewModel = new RenderPageViewModel(page);
             renderPageViewModel.CanManageContent = request.CanManageContent;
@@ -115,7 +115,22 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             return new CmsRequestViewModel(renderPageViewModel);
         }
 
-        private PageContentProjection CreatePageContentProjection(GetPageToRenderRequest request, PageContent pageContent)
+        private List<PageContentProjection> GetContentProjections(GetPageToRenderRequest request, IPage page, IList<PageContent> allPageContents, Guid? parentId)
+        {
+            var pageContents = allPageContents
+                .Where(pc => (!parentId.HasValue && pc.Parent == null) || (parentId.HasValue && pc.Parent != null && pc.Parent.Id == parentId.Value))
+                .Distinct()
+                .ToList();
+
+            var contentProjections = pageContents
+                .Distinct()
+                .Select(f => CreatePageContentProjection(request, page, f, allPageContents)).Where(c => c != null)
+                .ToList();
+
+            return contentProjections;
+        }
+
+        private PageContentProjection CreatePageContentProjection(GetPageToRenderRequest request, IPage page, PageContent pageContent, IList<PageContent> allPageContents)
         {
             Models.Content contentToProject = null;
             
@@ -167,7 +182,30 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             options.AddRange(pageContent.Options);
             options.AddRange(pageContent.Content.ContentOptions.Where(f => !pageContent.Options.Any(g => g.Key.Trim().Equals(f.Key.Trim(), StringComparison.OrdinalIgnoreCase))));
 
-            return pageContentProjectionFactory.Create(pageContent, contentToProject, options);
+            RenderPageViewModel childViewModel = null;
+            var dynamicContent = pageContent.Content as IDynamicLayoutContent;
+            if (dynamicContent != null)
+            {
+                var childContentProjections = GetContentProjections(request, page, allPageContents, pageContent.Id);
+                if (childContentProjections != null)
+                {
+                    childViewModel = new RenderPageViewModel(page);
+                    childViewModel.CanManageContent = request.CanManageContent;
+                    childViewModel.Contents = childContentProjections;
+                    childViewModel.JavaScripts = childContentProjections.Cast<IJavaScriptAccessor>().ToList();
+                    childViewModel.Stylesheets = childContentProjections.Cast<IStylesheetAccessor>().ToList();
+                    childViewModel.Regions = dynamicContent
+                        .Layout
+                        .Regions
+                        .Select(r => new PageRegionViewModel
+                        {
+                            RegionId = r.Id,
+                            RegionIdentifier = r.RegionIdentifier
+                        }).ToList();
+                }
+            }
+
+            return pageContentProjectionFactory.Create(pageContent, contentToProject, options, childViewModel);
         }
 
         private IEnumerable<Page> GetPageFutureQuery(GetPageToRenderRequest request)

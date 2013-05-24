@@ -139,6 +139,8 @@
     <Compile Include="DataAccess\DataContext\RepositoryExtensions.cs" />
     <Compile Include="DataAccess\DataContext\RestrictionsExtensions.cs" />
     <Compile Include="DataAccess\DataContext\SessionExtensions.cs" />
+    <Compile Include="DataContracts\ILayout.cs" />
+    <Compile Include="DataContracts\IDynamicLayoutContent.cs" />
     <Compile Include="DataContracts\Enums\ContentStatus.cs" />
     <Compile Include="DataContracts\Enums\OptionType.cs" />
     <Compile Include="DataContracts\ICategory.cs" />
