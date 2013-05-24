@@ -13,8 +13,11 @@ using BetterCms.Module.Root.Commands.GetPageToRender;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels.Cms;
 
+using Microsoft.Web.Mvc;
+
 namespace BetterCms.Module.Root.Controllers
 {
+    [ActionLinkArea(RootModuleDescriptor.RootAreaName)]
     public class CmsController : CmsControllerBase
     {
         /// <summary>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
+using System.Web.Mvc;
 using System.Web.Routing;
 
 using Autofac;
@@ -296,7 +297,7 @@ namespace BetterCms.Core.Modules.Registration
             {
                 foreach (var moduleRoute in context.Value.Routes)
                 {
-                    RouteTable.Routes.Add(moduleRoute);
+                    routes.Add(moduleRoute);
                 }
             }
         }

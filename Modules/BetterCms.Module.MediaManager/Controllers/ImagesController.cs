@@ -14,12 +14,15 @@ using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
+using Microsoft.Web.Mvc;
+
 namespace BetterCms.Module.MediaManager.Controllers
 {
     /// <summary>
     /// Handles site settings logic for Pages module.
     /// </summary>
     [BcmsAuthorize]
+    [ActionLinkArea(MediaManagerModuleDescriptor.MediaManagerAreaName)]
     public class ImagesController : CmsControllerBase
     {
         /// <summary>

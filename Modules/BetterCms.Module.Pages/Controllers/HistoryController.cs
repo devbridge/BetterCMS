@@ -8,12 +8,15 @@ using BetterCms.Module.Pages.Command.History.RestoreContentVersion;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Mvc;
 
+using Microsoft.Web.Mvc;
+
 namespace BetterCms.Module.Pages.Controllers
 {
     /// <summary>
     /// Content history management.
     /// </summary>
     [BcmsAuthorize]
+    [ActionLinkArea(PagesModuleDescriptor.PagesAreaName)]
     public class HistoryController : CmsControllerBase
     {
         /// <summary>

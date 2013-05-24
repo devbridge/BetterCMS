@@ -13,12 +13,15 @@ using BetterCms.Module.Root.ViewModels;
 
 using Common.Logging;
 
+using Microsoft.Web.Mvc;
+
 namespace BetterCms.Module.Root.Controllers
 {
     /// <summary>
     /// Side menu controller.
     /// </summary>
     [BcmsAuthorize]
+    [ActionLinkArea(RootModuleDescriptor.RootAreaName)]
     public class SidebarController : CmsControllerBase
     {
         /// <summary>

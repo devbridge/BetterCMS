@@ -14,12 +14,15 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
+using Microsoft.Web.Mvc;
+
 namespace BetterCms.Module.Pages.Controllers
 {
     /// <summary>
     /// Widget management.
     /// </summary>
     [BcmsAuthorize]
+    [ActionLinkArea(PagesModuleDescriptor.PagesAreaName)]
     public class WidgetsController : CmsControllerBase
     {                    
         /// <summary>

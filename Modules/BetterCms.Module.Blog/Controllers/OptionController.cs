@@ -6,12 +6,15 @@ using BetterCms.Module.Blog.Commands.SaveDefaultTemplate;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Mvc;
 
+using Microsoft.Web.Mvc;
+
 namespace BetterCms.Module.Blog.Controllers
 {
     /// <summary>
     /// Manage blogs options.
     /// </summary>
     [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+    [ActionLinkArea(BlogModuleDescriptor.BlogAreaName)]
     public class OptionController : CmsControllerBase
     {
         /// <summary>

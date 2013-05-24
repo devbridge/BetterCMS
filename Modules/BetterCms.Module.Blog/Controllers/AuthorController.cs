@@ -10,12 +10,15 @@ using BetterCms.Module.Root;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
+using Microsoft.Web.Mvc;
+
 namespace BetterCms.Module.Blog.Controllers
 {
     /// <summary>
     /// Blog authors controller.
     /// </summary>
     [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+    [ActionLinkArea(BlogModuleDescriptor.BlogAreaName)]
     public class AuthorController : CmsControllerBase
     {
         /// <summary>

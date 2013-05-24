@@ -21,11 +21,13 @@ namespace BetterCms.Module.Pages
     /// Pages module descriptor.
     /// </summary>
     public class PagesModuleDescriptor : ModuleDescriptor
-    {
+    {        
         /// <summary>
         /// The module name.
         /// </summary>
         internal const string ModuleName = "pages";
+
+        internal const string PagesAreaName = "bcms-pages";
 
         /// <summary>
         /// bcms.pages.js java script module descriptor.
@@ -133,6 +135,20 @@ namespace BetterCms.Module.Pages
             get
             {
                 return int.MaxValue - 300;
+            }
+        }
+
+        /// <summary>
+        /// Gets the name of the module area.
+        /// </summary>
+        /// <value>
+        /// The name of the module area.
+        /// </value>
+        public override string AreaName
+        {
+            get
+            {
+                return PagesAreaName;
             }
         }
 

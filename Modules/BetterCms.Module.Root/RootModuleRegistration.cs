@@ -19,7 +19,15 @@ namespace BetterCms.Module.Root
     /// </summary>
     public class RootModuleDescriptor : ModuleDescriptor
     {
+        /// <summary>
+        /// The module name.
+        /// </summary>
         internal const string ModuleName = "root";
+
+        /// <summary>
+        /// The root area name.
+        /// </summary>
+        internal const string RootAreaName = "bcms-root";
 
         private readonly AuthenticationJsModuleIncludeDescriptor authenticationJsModuleIncludeDescriptor;
 
@@ -59,6 +67,20 @@ namespace BetterCms.Module.Root
             get
             {
                 return "Root functionality module for Better CMS.";
+            }
+        }
+
+        /// <summary>
+        /// Gets the name of the module area.
+        /// </summary>
+        /// <value>
+        /// The name of the module area.
+        /// </value>
+        public override string AreaName
+        {
+            get
+            {
+                return RootAreaName;
             }
         }
 
