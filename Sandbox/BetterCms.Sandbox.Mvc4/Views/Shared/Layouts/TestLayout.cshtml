@@ -1,41 +1,63 @@
-﻿@model BetterCms.Core.Models.IPage
+﻿@using BetterCms.Module.Root.Mvc.Helpers
+@model BetterCms.Core.DataContracts.IPage
 
 @{
     Layout = "~/Areas/bcms-Root/Views/Shared/BaseLayout.cshtml";
 }
+@section DoctypeTag
+{
+    <!DOCTYPE html 555>
+}
 
-@section Styles {
-    <link rel="stylesheet" type="text/css" href="@Url.Content("/file/bcms-templates/Content/Css/bcms.templates.css")" />
+@section HtmlTag
+{
+<!--[if lte IE 7]><html class="ie7"><![endif]-->  
+<!--[if IE 8]><html class="ie8"><![endif]-->  
+<!--[if IE 9]><html class="ie9"><![endif]-->  
+<!--[if !IE]><!--><html><!--<![endif]-->  
+}
+
+@section BodyAttributes
+{
+    hello=3
+}
+@* NOTE: Obsolete. Left for compatibility reasons. *@
+
+@section Styles {    
     @RenderSection("Styles", false)
 }
 
 <div class="page">
+
     <header class="page-header">
-        <div class="page-frame">
+        <div class="page-frame clearfix">
             @RenderSection("CMSHeader", false)
         </div>
     </header>
 
-    <div class="page-container clearfix">
-        <h1>@Model.Title</h1>
-        
-        <aside class="page-left-sidebar-3">
-            @RenderSection("CMSLeftSide", false)
-        </aside>
+    <div class="page-block">
+        <div class="page-frame clearfix">
 
-        <section class="page-content-3">
-            @RenderSection("CMSMainContent", false)
-            @RenderBody()
-        </section>
+            <section class="three-col-left">
+                @RenderSection("CMSMainContent", false)
+                @RenderBody()
+            </section>
 
-        <aside class="page-right-sidebar-3">
-            @RenderSection("CMSRightSide", false)
-        </aside>
+            <section class="three-col-middle">
+                @RenderSection("CMSLeftSide", false)
+            </section>
+
+            <aside class="col-right">
+                @RenderSection("CMSRightSide", false)
+            </aside>
+
+        </div>
     </div>
+
 </div>
 
 <footer class="page-footer">
-    <div class="page-frame">
+    <div class="page-frame clearfix">
         @RenderSection("CMSFooter", false)
     </div>
 </footer>

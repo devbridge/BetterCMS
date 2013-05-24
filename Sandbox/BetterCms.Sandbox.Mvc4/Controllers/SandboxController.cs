@@ -126,5 +126,10 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
 
             return Json(new { Success = true });
         }
+
+        public ActionResult NotFound()
+        {
+            return View("NotFound");
+        }
     }
 }
