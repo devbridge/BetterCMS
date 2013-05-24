@@ -17,12 +17,15 @@ using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
+using Microsoft.Web.Mvc;
+
 namespace BetterCms.Module.Pages.Controllers
 {
     /// <summary>
     /// Controller for content management.
     /// </summary>
     [BcmsAuthorize]
+    [ActionLinkArea(PagesModuleDescriptor.PagesAreaName)]
     public class ContentController : CmsControllerBase
     {
         /// <summary>

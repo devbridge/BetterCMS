@@ -13,12 +13,15 @@ using BetterCms.Module.Root;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
+using Microsoft.Web.Mvc;
+
 namespace BetterCms.Module.Blog.Controllers
 {
     /// <summary>
     /// Blogs management.
     /// </summary>
     [BcmsAuthorize]
+    [ActionLinkArea(BlogModuleDescriptor.BlogAreaName)]
     public class BlogController : CmsControllerBase
     {
         /// <summary>

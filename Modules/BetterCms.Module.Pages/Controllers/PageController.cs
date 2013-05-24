@@ -21,12 +21,15 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
+using Microsoft.Web.Mvc;
+
 namespace BetterCms.Module.Pages.Controllers
 {
     /// <summary>
     /// Controller for CMS pages: create / edit / delete pages.
     /// </summary>
     [BcmsAuthorize]
+    [ActionLinkArea(PagesModuleDescriptor.PagesAreaName)]
     public class PageController : CmsControllerBase
     {
         /// <summary>

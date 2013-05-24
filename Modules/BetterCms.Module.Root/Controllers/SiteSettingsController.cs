@@ -10,12 +10,15 @@ using BetterCms.Module.Root.ViewModels;
 
 using Common.Logging;
 
+using Microsoft.Web.Mvc;
+
 namespace BetterCms.Module.Root.Controllers
 {
     /// <summary>
     /// Site settings menu controller.
     /// </summary>
     [BcmsAuthorize]
+    [ActionLinkArea(RootModuleDescriptor.RootAreaName)]
     public class SiteSettingsController : CmsControllerBase
     {
         /// <summary>

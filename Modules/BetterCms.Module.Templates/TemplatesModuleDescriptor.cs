@@ -1,12 +1,15 @@
 ﻿using System.Collections.Generic;
 
 using BetterCms.Core.Modules;
+using BetterCms.Module.Root;
+
+using Microsoft.Web.Mvc;
 
 namespace BetterCms.Module.Templates
 {
     /// <summary>
     /// Templates module descriptor.
-    /// </summary>
+    /// </summary>   
     public class TemplatesModuleDescriptor : ModuleDescriptor
     {
         internal const string ModuleName = "templates";

@@ -14,12 +14,15 @@ using BetterCms.Module.Users.Content.Resources;
 using BetterCms.Module.Users.ViewModels;
 using BetterCms.Module.Users.ViewModels.User;
 
+using Microsoft.Web.Mvc;
+
 namespace BetterCms.Module.Users.Controllers
 {
     /// <summary>
     /// User management.
     /// </summary>
     [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
+    [ActionLinkArea(UsersModuleDescriptor.UsersAreaName)]
     public class UserController : CmsControllerBase
     {
         /// <summary>

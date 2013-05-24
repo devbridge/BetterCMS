@@ -23,6 +23,8 @@ namespace BetterCms.Module.MediaManager
         /// </summary>
         internal const string ModuleName = "media";
 
+        internal const string MediaManagerAreaName = "bcms-media";
+
         /// <summary>
         /// The media java script module descriptor.
         /// </summary>
@@ -73,6 +75,20 @@ namespace BetterCms.Module.MediaManager
             get
             {
                 return "A media manager module for Better CMS.";
+            }
+        }
+
+        /// <summary>
+        /// Gets the name of the module area.
+        /// </summary>
+        /// <value>
+        /// The name of the module area.
+        /// </value>
+        public override string AreaName
+        {
+            get
+            {
+                return MediaManagerAreaName;
             }
         }
 

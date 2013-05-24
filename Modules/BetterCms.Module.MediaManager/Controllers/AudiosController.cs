@@ -9,12 +9,15 @@ using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
+using Microsoft.Web.Mvc;
+
 namespace BetterCms.Module.MediaManager.Controllers
 {
     /// <summary>
     /// Audio manager.
     /// </summary>
     [BcmsAuthorize]
+    [ActionLinkArea(MediaManagerModuleDescriptor.MediaManagerAreaName)]
     public class AudiosController : CmsControllerBase
     {
         /// <summary>

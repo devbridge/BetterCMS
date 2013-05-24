@@ -5,12 +5,15 @@ using BetterCms.Core.Security;
 using BetterCms.Module.Root.Commands.GetPageToRender;
 using BetterCms.Module.Root.Mvc;
 
+using Microsoft.Web.Mvc;
+
 namespace BetterCms.Module.Root.Controllers
 {
     /// <summary>
     /// Preview controller.
     /// </summary>
     [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+    [ActionLinkArea(RootModuleDescriptor.RootAreaName)]
     public class PreviewController : CmsControllerBase
     {
         /// <summary>

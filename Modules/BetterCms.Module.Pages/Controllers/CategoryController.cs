@@ -11,12 +11,15 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
+using Microsoft.Web.Mvc;
+
 namespace BetterCms.Module.Pages.Controllers
 {
     /// <summary>
     /// Handles categories logic.
     /// </summary>
     [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+    [ActionLinkArea(PagesModuleDescriptor.PagesAreaName)]
     public class CategoryController : CmsControllerBase
     {       
         /// <summary>

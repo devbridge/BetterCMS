@@ -326,32 +326,42 @@ namespace BetterCms.Core.Modules
                     }
                 }
 
-                foreach (var item in allModuleActions)
-                {                 
-                    var controllerName = controllerExtensions.GetControllerName(item.Key);
-                    var controllerActions = item.Value;
+                //foreach (var item in allModuleActions)
+                //{
+                //    var controllerName = controllerExtensions.GetControllerName(item.Key);
+                //    var controllerActions = item.Value;
 
-                    foreach (var actionMethod in controllerActions)
-                    {
-                        var ignoreAutoRouteAttribute = actionMethod.GetCustomAttributes(typeof(IgnoreAutoRouteAttribute), false);
-                        var nonActionAttribute = actionMethod.GetCustomAttributes(typeof(NonActionAttribute), false);
-                        if (ignoreAutoRouteAttribute.Length > 0 || nonActionAttribute.Length > 0)
-                        {
-                            continue;
-                        }
-                        
-                        registrationContext.MapRoute(
-                            string.Format("bcms_{0}_{1}_{2}", AreaName, controllerName, actionMethod.Name),
-                            string.Format("{0}/{1}/{2}", AreaName, controllerName, actionMethod.Name),
+                //    foreach (var actionMethod in controllerActions)
+                //    {
+                //        var ignoreAutoRouteAttribute = actionMethod.GetCustomAttributes(typeof(IgnoreAutoRouteAttribute), false);
+                //        var nonActionAttribute = actionMethod.GetCustomAttributes(typeof(NonActionAttribute), false);
+                //        if (ignoreAutoRouteAttribute.Length > 0 || nonActionAttribute.Length > 0)
+                //        {
+                //            continue;
+                //        }
+
+                //        registrationContext.MapRoute(
+                //            string.Format("bcms_{0}_{1}_{2}", AreaName, controllerName, actionMethod.Name),
+                //            string.Format("{0}/{1}/{2}", AreaName, controllerName, actionMethod.Name),
+                //            new
+                //            {
+                //                area = AreaName,
+                //                controller = controllerName,
+                //                action = actionMethod.Name
+                //            },
+                //            new[] { item.Key.Namespace });
+                //    }
+                //}
+
+                // All internal routes:
+                registrationContext.MapRoute(
+                            string.Format("bcms_{0}_internal_routes", AreaName),
+                            string.Format("{0}/{{controller}}/{{action}}", AreaName),
                             new
                             {
-                                area = AreaName,
-                                controller = controllerName,
-                                action = actionMethod.Name
-                            },
-                            new[] { item.Key.Namespace });                        
-                    }
-                }
+                                area = AreaName
+                            }
+                            );
             }
         }
 
@@ -360,7 +370,6 @@ namespace BetterCms.Core.Modules
         /// </summary>
         /// <param name="registrationContext">The area registration context.</param>
         /// <param name="containerBuilder">The container builder.</param>
-        /// <param name="configuration">The CMS configuration.</param>
         internal void RegisterModuleCommands(ModuleRegistrationContext registrationContext, ContainerBuilder containerBuilder)
         {
             Assembly assembly = GetType().Assembly;

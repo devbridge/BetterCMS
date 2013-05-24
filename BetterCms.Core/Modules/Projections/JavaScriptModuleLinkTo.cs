@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 using Common.Logging;
 
@@ -48,6 +50,8 @@ namespace BetterCms.Core.Modules.Projections
         {
             try
             {
+                RouteValueDictionary routeValuesFromExpression = Microsoft.Web.Mvc.Internal.ExpressionHelper.GetRouteValuesFromExpression(urlExpression);
+
                 string url = HttpUtility.UrlDecode(html.BuildUrlFromExpression(urlExpression));
                 if (fullUrl)
                 {
