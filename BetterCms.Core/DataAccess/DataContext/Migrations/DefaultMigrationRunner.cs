@@ -229,10 +229,14 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
         {
             foreach (var migration in migrations)
             {
-                if (migration.Migration.IsUpNeeded(migration.ModuleName, migration.MigrationVersion))
+                if (!versionChecker.VersionExists(migration.ModuleName, migration.MigrationVersion))
                 {
-                    migration.Migration.Up(configuration);
-                    migration.Migration.UpPerformed(migration.ModuleName, migration.MigrationVersion);
+                    if (migration.Migration.IsUpNeeded(migration.ModuleName, migration.MigrationVersion))
+                    {
+                        migration.Migration.Up(configuration);
+                        migration.Migration.UpPerformed(migration.ModuleName, migration.MigrationVersion);
+                    }
+                    versionChecker.AddVersion(migration.ModuleName, migration.MigrationVersion);
                 }
             }
         }
