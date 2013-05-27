@@ -377,6 +377,7 @@ define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         self.id = regionStart.data('id');
         self.regionStart = regionStart;
         self.regionEnd = regionEnd;
+        self.regionStartId = regionStart.data('startId');
         self.contents = regionContents;
         self.overlay = null;
         self.sortBlock = null;
@@ -419,6 +420,7 @@ define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         self.overlay = null;
 
         self.contentId = contentStart.data('contentId');
+        self.contentStartId = contentStart.data('startId');
         self.pageContentId = contentStart.data('pageContentId');
         self.contentVersion = contentStart.data('contentVersion');
         self.pageContentVersion = contentStart.data('pageContentVersion');
@@ -468,29 +470,55 @@ define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         return self;
     }
 
-    function getRegion(regionStartTag, tags, i) {
+    function getContent(contentStartTag, tags, i) {
+        var tagsCount = tags.length,
+            currentTag,
+            contentStartId = contentStartTag.data('startId'),
+            j,
+            contentViewModel;
+        
+        for (j = i + 1; j < tagsCount; j++) {
+            currentTag = $(tags[j]);
+            
+            if (currentTag.hasClass(classes.contentEnd) && currentTag.data('endId') == contentStartId) {
+                contentViewModel = new ContentViewModel(contentStartTag, currentTag);
+                return contentViewModel;
+            }
+        }
+
+        return null;
+    }
+
+    function getRegion(regionStartTag, tags, i, contentViewModels) {
         var tagsCount = tags.length,
             currentTag,
             regionStartId = regionStartTag.data('startId'),
             j,
-            result;
+            regionResult,
+            contentResult;
         
         for (j = i + 1; j < tagsCount; j++) {
             currentTag = $(tags[j]);
             if (currentTag.hasClass(classes.regionStart)) {
-                result = getRegion(currentTag, tags, j);
+                // Region-Start
+                regionResult = getRegion(currentTag, tags, j, []);
 
-                addRegionToList(result);
-                if (result.i > j) {
-                    j = result.i;
+                addRegionToList(regionResult);
+                if (regionResult.i > j) {
+                    j = regionResult.i;
                 }
 
+            } else if (currentTag.hasClass(classes.contentStart)) {
+                contentResult = getContent(currentTag, tags, j);
+                contentViewModels.push(contentResult);
             } else if (currentTag.hasClass(classes.regionEnd) && currentTag.data('endId') == regionStartId) {
-                result = {
+                // Region-End
+                regionResult = {
                     i: j,
-                    regionViewModel: new RegionViewModel(regionStartTag, currentTag/* TODO: , regionContentViewModels*/)
+                    contentViewModels: contentViewModels,
+                    regionViewModel: new RegionViewModel(regionStartTag, currentTag, contentViewModels)
                 };
-                return result;
+                return regionResult;
             }
         }
 
@@ -499,6 +527,13 @@ define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
 
     function addRegionToList(result) {
         pageViewModel.regions.push(result.regionViewModel);
+
+        $.each(result.contentViewModels, function () {
+            pageViewModel.contents.push(this);
+        });
+
+        console.log('Region: ' + result.regionViewModel.regionStartId + ' ' + result.regionViewModel.id);
+        console.log(result.contentViewModels);
     }
 
     /**
@@ -512,13 +547,14 @@ define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         var tags = $(selectors.regionsAndContents).toArray(),
             tagsCount = tags.length,
             i,
-            tag;
+            tag,
+            result;
 
         for (i = 0; i < tagsCount; i++) {
             tag = $(tags[i]);
             if (tag.hasClass(classes.regionStart)) {
 
-                var result = getRegion(tag, tags, i);
+                result = getRegion(tag, tags, i, []);
                 addRegionToList(result);
 
                 if (result.i > i) {
@@ -528,49 +564,6 @@ define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         }
 
         console.log(pageViewModel.regions);
-
-        /*var tags = $(selectors.regionsAndContents).toArray(),
-            tagsCount = tags.length,
-            regionStart,
-            i;
-        
-        for (i = 0; i < tagsCount; i++) {
-            regionStart = $(tags[i]);
-            if (regionStart.hasClass(classes.regionStart)) {
-
-                var regionContentViewModels = [],
-                    regionStartId = regionStart.data('startId'),
-                    regionEndId,
-                    currentTag,
-                    j,
-                    contentStartFound = false,
-                    contentStart = null;
-
-                for (j = i; j < tagsCount; j++) {
-                    currentTag = $(tags[j]);
-                    regionEndId = currentTag.data('endId');
-
-                    if (currentTag.hasClass(classes.contentStart)) {
-                        contentStart = currentTag;
-                        contentStartFound = true;
-                    } else if (currentTag.hasClass(classes.contentEnd) && contentStartFound) {
-                        contentStartFound = false;
-                        
-                        var contentViewModel = new ContentViewModel(contentStart, currentTag);
-                        regionContentViewModels.push(contentViewModel);
-                    } else if (currentTag.hasClass(classes.regionEnd) && regionStartId == regionEndId) {
-                        var regionViewModel = new RegionViewModel(regionStart, currentTag, regionContentViewModels);
-
-                        pageViewModel.regions.push(regionViewModel);
-                        $.each(regionContentViewModels, function() {
-                            pageViewModel.contents.push(this);
-                        });
-
-                        break;
-                    }
-                }
-            }
-        }*/
         
         $.each(pageViewModel.regions, function () {
             content.highlightRegion(this);
