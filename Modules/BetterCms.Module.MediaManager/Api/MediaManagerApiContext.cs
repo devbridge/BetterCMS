@@ -4,6 +4,7 @@ using System.Linq;
 
 using Autofac;
 
+using BetterCms.Core.Api.DataContracts;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions.Api;
@@ -54,22 +55,20 @@ namespace BetterCms.Api
         /// </summary>
         /// <param name="mediaType">Type of the media.</param>
         /// <param name="folderId">The folder id.</param>
-        /// <param name="filter">The filter.</param>
-        /// <param name="order">The order.</param>
-        /// <param name="orderDescending">if set to <c>true</c> order by descending.</param>
-        /// <param name="pageNumber">The page number.</param>
-        /// <param name="itemsPerPage">The items per page.</param>
+        /// <param name="request">The request.</param>
         /// <returns>
         /// The list of folder media entities
         /// </returns>
-        public IList<Media> GetFolderMedias(MediaType mediaType, Guid? folderId = null, System.Linq.Expressions.Expression<Func<Media, bool>> filter = null, System.Linq.Expressions.Expression<Func<Media, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
+        /// <exception cref="CmsApiException"></exception>
+        public IList<Media> GetFolderMedias(MediaType mediaType, Guid? folderId = null, GetDataRequest<Media> request = null)
         {
             try
             {
-                if (order == null)
+                if (request == null)
                 {
-                    order = p => p.Title;
+                    request = new GetDataRequest<Media>();
                 }
+                request.SetDefaultOrder(m => m.Title);
 
                 var query = Repository
                     .AsQueryable<Media>()
@@ -84,7 +83,7 @@ namespace BetterCms.Api
                     query = query.Where(f => f.Folder == null);
                 }
 
-                query = query.ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage);
+                query = query.ApplyFilters(request);
 
                 return query.ToList();
             }
@@ -101,26 +100,24 @@ namespace BetterCms.Api
         /// <summary>
         /// Gets the list of media image entities.
         /// </summary>
-        /// <param name="filter">The filter.</param>
-        /// <param name="order">The order.</param>
-        /// <param name="orderDescending">if set to <c>true</c> order by descending.</param>
-        /// <param name="pageNumber">The page number.</param>
-        /// <param name="itemsPerPage">The items per page.</param>
+        /// <param name="request">The request.</param>
         /// <returns>
         /// The list of tag entities
         /// </returns>
-        public IList<MediaImage> GetImages(System.Linq.Expressions.Expression<Func<MediaImage, bool>> filter = null, System.Linq.Expressions.Expression<Func<MediaImage, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
+        /// <exception cref="CmsApiException"></exception>
+        public IList<MediaImage> GetImages(GetDataRequest<MediaImage> request = null)
         {
             try
             {
-                if (order == null)
+                if (request == null)
                 {
-                    order = p => p.Title;
+                    request = new GetDataRequest<MediaImage>();
                 }
+                request.SetDefaultOrder(i => i.Title);
 
                 return Repository
                     .AsQueryable<MediaImage>()
-                    .ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage)
+                    .ApplyFilters(request)
                     .Fetch(m => m.Folder)
                     .ToList();
             }
@@ -135,27 +132,25 @@ namespace BetterCms.Api
         /// <summary>
         /// Gets the list of media file entities.
         /// </summary>
-        /// <param name="filter">The filter.</param>
-        /// <param name="order">The order.</param>
-        /// <param name="orderDescending">if set to <c>true</c> order by descending.</param>
-        /// <param name="pageNumber">The page number.</param>
-        /// <param name="itemsPerPage">The items per page.</param>
+        /// <param name="request">The request.</param>
         /// <returns>
         /// The list of media file entities
         /// </returns>
-        public IList<MediaFile> GetFiles(System.Linq.Expressions.Expression<Func<MediaFile, bool>> filter = null, System.Linq.Expressions.Expression<Func<MediaFile, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
+        /// <exception cref="CmsApiException"></exception>
+        public IList<MediaFile> GetFiles(GetDataRequest<MediaFile> request = null)
         {
             try
             {
-                if (order == null)
+                if (request == null)
                 {
-                    order = p => p.Title;
+                    request = new GetDataRequest<MediaFile>();
                 }
+                request.SetDefaultOrder(f => f.Title);
 
                 return Repository
                     .AsQueryable<MediaFile>()
                     .Where(m => m.Type == MediaType.File)
-                    .ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage)
+                    .ApplyFilters(request)
                     .Fetch(m => m.Folder).ToList();
             }
             catch (Exception inner)
@@ -170,27 +165,25 @@ namespace BetterCms.Api
         /// Gets the list of media folder entities.
         /// </summary>
         /// <param name="mediaType">Type of the media.</param>
-        /// <param name="filter">The filter.</param>
-        /// <param name="order">The order.</param>
-        /// <param name="orderDescending">if set to <c>true</c> order by descending.</param>
-        /// <param name="pageNumber">The page number.</param>
-        /// <param name="itemsPerPage">The items per page.</param>
+        /// <param name="request">The request.</param>
         /// <returns>
         /// The list of folder entities
         /// </returns>
-        public IList<MediaFolder> GetFolders(MediaType mediaType, System.Linq.Expressions.Expression<Func<MediaFolder, bool>> filter = null, System.Linq.Expressions.Expression<Func<MediaFolder, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
+        /// <exception cref="CmsApiException"></exception>
+        public IList<MediaFolder> GetFolders(MediaType mediaType, GetDataRequest<MediaFolder> request = null)
         {
             try
             {
-                if (order == null)
+                if (request == null)
                 {
-                    order = p => p.Title;
+                    request = new GetDataRequest<MediaFolder>();
                 }
+                request.SetDefaultOrder(f => f.Title);
 
                 return Repository
                     .AsQueryable<MediaFolder>()
                     .Where(f => f.Type == mediaType)
-                    .ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage)
+                    .ApplyFilters(request)
                     .Fetch(m => m.Folder)
                     .ToList();
             }
@@ -209,7 +202,6 @@ namespace BetterCms.Api
         /// <returns>
         /// File entity
         /// </returns>
-        /// <exception cref="System.NotImplementedException"></exception>
         public MediaFile GetFile(Guid id)
         {
             try
@@ -235,7 +227,6 @@ namespace BetterCms.Api
         /// <returns>
         /// Image entity
         /// </returns>
-        /// <exception cref="System.NotImplementedException"></exception>
         public MediaImage GetImage(Guid id)
         {
             try

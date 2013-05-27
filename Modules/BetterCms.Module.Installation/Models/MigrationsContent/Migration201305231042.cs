@@ -3,9 +3,10 @@ using System.Transactions;
 
 using BetterCms.Api;
 using BetterCms.Core;
+using BetterCms.Core.Api.DataContracts;
 using BetterCms.Core.DataAccess.DataContext.Migrations;
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Module.Pages.Api.Dto;
+using BetterCms.Module.Pages.Api.DataContracts;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Models.MigrationsContent;
@@ -41,9 +42,9 @@ namespace BetterCms.Module.Installation.Models.MigrationsContent
         {
             using (var pagesApi = CmsContext.CreateApiContextOf<PagesApiContext>())
             {
-                var add404 = configuration.Installation.Install404ErrorPage && !pagesApi.GetPages(page => page.PageUrl == Urls.Page404, includeUnpublished: true, includePrivate: true).Any();
-                var add500 = configuration.Installation.Install500ErrorPage && !pagesApi.GetPages(page => page.PageUrl == Urls.Page500, includeUnpublished: true, includePrivate: true).Any();
-                var addDefault = configuration.Installation.InstallDefaultPage && !pagesApi.GetPages(page => page.PageUrl == Urls.DefaultPage, includeUnpublished: true, includePrivate: true).Any();
+                var add404 = configuration.Installation.Install404ErrorPage && !pagesApi.GetPages(new GetDataRequest<PageProperties>(page => page.PageUrl == Urls.Page404), includeUnpublished: true, includePrivate: true).Any();
+                var add500 = configuration.Installation.Install500ErrorPage && !pagesApi.GetPages(new GetDataRequest<PageProperties>(page => page.PageUrl == Urls.Page500), includeUnpublished: true, includePrivate: true).Any();
+                var addDefault = configuration.Installation.InstallDefaultPage && !pagesApi.GetPages(new GetDataRequest<PageProperties>(page => page.PageUrl == Urls.DefaultPage), includeUnpublished: true, includePrivate: true).Any();
 
                 if (!add404 && !add500 && !addDefault)
                 {
@@ -80,7 +81,7 @@ namespace BetterCms.Module.Installation.Models.MigrationsContent
         {
             var name = string.Format("Default Better CMS {0}", title);
 
-            var widgets = pagesApi.GetHtmlContentWidgets(e => e.Name == name);
+            var widgets = pagesApi.GetHtmlContentWidgets(new GetDataRequest<HtmlContentWidget>(e => e.Name == name));
             if (widgets.Count > 0)
             {
                 return widgets[0];
@@ -92,7 +93,7 @@ namespace BetterCms.Module.Installation.Models.MigrationsContent
 
         private static Layout AddLayout(PagesApiContext pagesApi)
         {
-            var layouts = pagesApi.GetLayouts(l => l.LayoutPath == Template.LayoutPath);
+            var layouts = pagesApi.GetLayouts(new GetDataRequest<Layout>(l => l.LayoutPath == Template.LayoutPath));
             if (layouts.Count > 0)
             {
                 return layouts[0];

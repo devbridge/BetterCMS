@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
+using BetterCms.Core.Api.DataContracts;
 using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Models;
 
@@ -130,34 +131,77 @@ namespace BetterCms.Core.DataAccess.DataContext
         /// </summary>
         /// <typeparam name="TEntity">The type of the entity.</typeparam>
         /// <param name="query">The query.</param>
-        /// <param name="hasInnerCollections">if set to <c>true</c> entity will be loadded with inner collections].</param>
-        /// <param name="filter">The filter.</param>
-        /// <param name="order">The order.</param>
-        /// <param name="orderDescending">if set to <c>true</c> order descending.</param>
-        /// <param name="pageNumber">The page number.</param>
-        /// <param name="itemsPerPage">The items per page.</param>
+        /// <param name="request">The request.</param>
         /// <returns>
         /// Query with filters and sorting applied.
         /// </returns>
-        public static IQueryable<TEntity> ApplyFilters<TEntity>(this IQueryable<TEntity> query, bool hasInnerCollections, Expression<Func<TEntity, bool>> filter, Expression<Func<TEntity, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
+        public static IQueryable<TEntity> ApplyFilters<TEntity>(this IQueryable<TEntity> query, GetDataRequest<TEntity> request)
             where TEntity : Entity
         {
-            if (hasInnerCollections && itemsPerPage > 0)
+            if (request != null)
             {
-                // At first, load ids
-                var ids = query
-                    .ApplyFilters(filter, order, orderDescending)
-                    .Select(entity => entity.Id)
-                    .ApplyPaging(pageNumber, itemsPerPage)
-                    .ToList();
-
-                // Then load entities
-                return query
-                    .Where(l => ids.Contains(l.Id))
-                    .ApplyOrder(order, orderDescending);
+                query = query.ApplyFilters((GetFilteredDataRequest<TEntity>)request);
+                query = query.ApplyItemsCount(request.StartItemNumber, request.ItemsCount);
             }
-            
-            return query.ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage);
+
+            return query;
+        }
+
+        /// <summary>
+        /// Returns query with filters and sorting applied.
+        /// </summary>
+        /// <typeparam name="TEntity">The type of the entity.</typeparam>
+        /// <param name="query">The query.</param>
+        /// <param name="request">The request.</param>
+        /// <returns>
+        /// Query with filters and sorting applied.
+        /// </returns>
+        public static IQueryable<TEntity> ApplyFilters<TEntity>(this IQueryable<TEntity> query, GetFilteredDataRequest<TEntity> request)
+            where TEntity : Entity
+        {
+            if (request != null)
+            {
+                if (request.Filter != null)
+                {
+                    query = query.Where(request.Filter);
+                }
+
+                query = query.ApplyOrder(request.Order, request.OrderDescending);
+            }
+
+            return query;
+        }
+
+        /// <summary>
+        /// Returns query with filters and sorting applied.
+        /// </summary>
+        /// <typeparam name="TEntity">The type of the entity.</typeparam>
+        /// <param name="query">The query.</param>
+        /// <param name="hasInnerCollections">if set to <c>true</c> entity will be loadded with inner collections.</param>
+        /// <param name="request">The request.</param>
+        /// <returns>
+        /// Query with filters and sorting applied.
+        /// </returns>
+        public static IQueryable<TEntity> ApplyFilters<TEntity>(this IQueryable<TEntity> query, bool hasInnerCollections, GetDataRequest<TEntity> request)
+            where TEntity : Entity
+        {
+            if (request != null)
+            {
+                if (hasInnerCollections && request.ItemsCount > 0)
+                {
+                    // At first, load ids
+                    var ids =
+                        query.ApplyFilters(request.Filter, request.Order, request.OrderDescending).Select(entity => entity.Id).ApplyItemsCount(
+                            request.StartItemNumber, request.ItemsCount).ToList();
+
+                    // Then load entities
+                    return query.Where(l => ids.Contains(l.Id)).ApplyOrder(request.Order, request.OrderDescending);
+                }
+
+                return query.ApplyFilters(request);
+            }
+
+            return query;
         }
 
         /// <summary>
@@ -167,16 +211,39 @@ namespace BetterCms.Core.DataAccess.DataContext
         /// <param name="query">The query.</param>
         /// <param name="pageNumber">The page number.</param>
         /// <param name="itemsPerPage">The items per page.</param>
-        /// <returns></returns>
+        /// <returns>Query with paging applied.</returns>
         public static IQueryable<TEntity> ApplyPaging<TEntity>(this IQueryable<TEntity> query, int? pageNumber = null, int? itemsPerPage = null)
         {
             if (itemsPerPage > 0)
             {
+
                 if (pageNumber > 1)
                 {
                     query = query.Skip((pageNumber.Value - 1) * itemsPerPage.Value);
                 }
                 query = query.Take(itemsPerPage.Value);
+            }
+
+            return query;
+        }
+
+        /// <summary>
+        /// Applies the paging.
+        /// </summary>
+        /// <typeparam name="TEntity">The type of the entity.</typeparam>
+        /// <param name="query">The query.</param>
+        /// <param name="startItemNumber">The start item number.</param>
+        /// <param name="itemsCount">The items count.</param>
+        /// <returns>Query with paging applied.</returns>
+        public static IQueryable<TEntity> ApplyItemsCount<TEntity>(this IQueryable<TEntity> query, int startItemNumber = 1, int? itemsCount = null)
+        {
+            if (itemsCount > 0)
+            {
+                if (startItemNumber > 1)
+                {
+                    query = query.Skip(startItemNumber - 1);
+                }
+                query = query.Take(itemsCount.Value);
             }
 
             return query;

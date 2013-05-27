@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 
 using Autofac;
 
+using BetterCms.Core.Api.DataContracts;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
@@ -57,29 +57,26 @@ namespace BetterCms.Api
         /// <summary>
         /// Gets the list of blog entities.
         /// </summary>
-        /// <param name="filter">The filter.</param>
-        /// <param name="order">The order.</param>
-        /// <param name="orderDescending">if set to <c>true</c> order by descending.</param>
-        /// <param name="pageNumber">The page number.</param>
-        /// <param name="itemsPerPage">The items per page.</param>
+        /// <param name="request">The request.</param>
         /// <param name="includeUnpublished">if set to <c>true</c> include unpublished pages.</param>
         /// <param name="includePrivate">if set to <c>true</c> include private pages.</param>
         /// <returns>
         /// The list of blog entities
         /// </returns>
         /// <exception cref="CmsApiException"></exception>
-        public IList<BlogPost> GetBlogPosts(Expression<Func<BlogPost, bool>> filter = null, Expression<Func<BlogPost, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null, bool includeUnpublished = false, bool includePrivate = false)
+        public IList<BlogPost> GetBlogPosts(GetDataRequest<BlogPost> request = null, bool includeUnpublished = false, bool includePrivate = false)
         {
             try
             {
-                if (order == null)
+                if (request == null)
                 {
-                    order = p => p.Title;
+                    request = new GetDataRequest<BlogPost>();
                 }
+                request.SetDefaultOrder(b => b.Title);
 
                 var query = Repository
                     .AsQueryable<BlogPost>()
-                    .ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage);
+                    .ApplyFilters(request);
 
                 if (!includeUnpublished)
                 {
@@ -107,26 +104,24 @@ namespace BetterCms.Api
         /// <summary>
         /// Gets the list of author entities.
         /// </summary>
-        /// <param name="filter">The filter.</param>
-        /// <param name="order">The order.</param>
-        /// <param name="orderDescending">if set to <c>true</c> order by descending.</param>
-        /// <param name="pageNumber">The page number.</param>
-        /// <param name="itemsPerPage">The items per page.</param>
+        /// <param name="request">The request.</param>
         /// <returns>
         /// The list of tag entities
         /// </returns>
-        public IList<Author> GetAuthors(Expression<Func<Author, bool>> filter = null, Expression<Func<Author, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
+        /// <exception cref="CmsApiException"></exception>
+        public IList<Author> GetAuthors(GetDataRequest<Author> request = null)
         {
             try
             {
-                if (order == null)
+                if (request == null)
                 {
-                    order = p => p.Name;
+                    request = new GetDataRequest<Author>();
                 }
+                request.SetDefaultOrder(a => a.Name);
 
                 return Repository
                     .AsQueryable<Author>()
-                    .ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage)
+                    .ApplyFilters(request)
                     .Fetch(a => a.Image)
                     .ToList();
             }

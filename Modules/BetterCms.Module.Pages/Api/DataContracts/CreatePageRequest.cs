@@ -7,7 +7,7 @@ using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Mvc.Attributes;
 using BetterCms.Module.Root.Api.Attributes;
 
-namespace BetterCms.Module.Pages.Api.Dto
+namespace BetterCms.Module.Pages.Api.DataContracts
 {
     public class CreatePageRequest
     {

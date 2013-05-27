@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 
-using BetterCms.Module.Pages.Api.Dto;
+using BetterCms.Core.Api.DataContracts;
+using BetterCms.Module.Pages.Api.DataContracts;
 
 using NHibernate.Linq;
 
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions.Api;
 
-using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
@@ -23,37 +22,27 @@ namespace BetterCms.Api
         /// <summary>
         /// Gets the list of layout entities.
         /// </summary>
-        /// <param name="filter">The filter.</param>
-        /// <param name="order">The order.</param>
-        /// <param name="orderDescending">if set to <c>true</c> order by descending.</param>
-        /// <param name="pageNumber">The page number.</param>
-        /// <param name="itemsPerPage">The items per page.</param>
+        /// <param name="request">The request.</param>
         /// <returns>
         /// The list of layout entities
         /// </returns>
-        public IList<Layout> GetLayouts(Expression<Func<Layout, bool>> filter = null, Expression<Func<Layout, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
+        /// <exception cref="CmsApiException"></exception>
+        public IList<Layout> GetLayouts(GetDataRequest<Layout> request = null)
         {
             try
             {
+                if (request == null)
+                {
+                    request = new GetDataRequest<Layout>();
+                }
+                request.SetDefaultOrder(l => l.Name);
+
                 return Repository
                         .AsQueryable<Layout>()
-                        .ApplyFilters(true, filter, order, orderDescending, pageNumber, itemsPerPage)
+                        .ApplyFilters(true, request)
                         .FetchMany(l => l.LayoutRegions)
                         .ThenFetch(l => l.Region)
                         .ToList();
-
-                /* TODO: remove or use
-                 * WORKS GREAT WITHOUT METHODS IN WHERE CLAUSE (SUCH AS Contains)
-                 * LayoutRegion lrAlias = null;
-                Region rAlias = null;
-
-                return unitOfWork.Session
-                    .QueryOver<Layout>()
-                    .JoinAlias(l => l.LayoutRegions, () => lrAlias, JoinType.LeftOuterJoin)
-                    .JoinAlias(l => lrAlias.Region, () => rAlias, JoinType.LeftOuterJoin)
-                    .ApplySubQueryFilters(filter, order, orderDescending, pageNumber, itemsPerPage)
-                    .List();
-                 */
             }
             catch (Exception inner)
             {
@@ -66,24 +55,22 @@ namespace BetterCms.Api
         /// <summary>
         /// Gets the list of region entities.
         /// </summary>
-        /// <param name="filter">The filter.</param>
-        /// <param name="order">The order.</param>
-        /// <param name="orderDescending">if set to <c>true</c> order by descending.</param>
-        /// <param name="pageNumber">The page number.</param>
-        /// <param name="itemsPerPage">The items per page.</param>
+        /// <param name="request">The request.</param>
         /// <returns>
         /// The list of region entities
         /// </returns>
-        public IList<Region> GetRegions(Expression<Func<Region, bool>> filter = null, Expression<Func<Region, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
+        /// <exception cref="CmsApiException"></exception>
+        public IList<Region> GetRegions(GetDataRequest<Region> request = null)
         {
             try
             {
-                if (order == null)
+                if (request == null)
                 {
-                    order = p => p.RegionIdentifier;
+                    request = new GetDataRequest<Region>();
                 }
+                request.SetDefaultOrder(r => r.RegionIdentifier);
 
-                return Repository.AsQueryable(filter, order, orderDescending, pageNumber, itemsPerPage).ToList();
+                return Repository.AsQueryable(request).ToList();
             }
             catch (Exception inner)
             {
@@ -97,27 +84,25 @@ namespace BetterCms.Api
         /// Gets the list of specified layout region entities.
         /// </summary>
         /// <param name="layoutId">The layout id.</param>
-        /// <param name="filter">The filter.</param>
-        /// <param name="order">The order.</param>
-        /// <param name="orderDescending">if set to <c>true</c> order by descending.</param>
-        /// <param name="pageNumber">The page number.</param>
-        /// <param name="itemsPerPage">The items per page.</param>
+        /// <param name="request">The request.</param>
         /// <returns>
         /// The list of specified layout region entities
         /// </returns>
-        public IList<LayoutRegion> GetLayoutRegions(Guid layoutId, Expression<Func<LayoutRegion, bool>> filter = null, Expression<Func<LayoutRegion, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
+        /// <exception cref="CmsApiException"></exception>
+        public IList<LayoutRegion> GetLayoutRegions(Guid layoutId, GetDataRequest<LayoutRegion> request = null)
         {
             try
             {
-                if (order == null)
+                if (request == null)
                 {
-                    order = p => p.Description;
+                    request = new GetDataRequest<LayoutRegion>();
                 }
+                request.SetDefaultOrder(lr => lr.Description);
 
                 return Repository
                     .AsQueryable<LayoutRegion>()
                     .Where(lr => lr.Layout.Id == layoutId)
-                    .ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage)
+                    .ApplyFilters(request)
                     .Fetch(lr => lr.Region)
                     .ToList();
             }

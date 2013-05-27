@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
+
+using BetterCms.Core.Api.DataContracts;
+using BetterCms.Module.Pages.Api.DataContracts;
+using BetterCms.Module.Pages.Api.DataContracts.Models;
 
 using NHibernate.Linq;
 
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Api;
-
-using BetterCms.Module.Pages.Api.Dto;
 using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
@@ -29,19 +30,26 @@ namespace BetterCms.Api
         /// Gets the list of page content entities.
         /// </summary>
         /// <param name="pageId">The page id.</param>
-        /// <param name="filter">The filter.</param>
+        /// <param name="request">The request.</param>
         /// <param name="includeUnpublished">if set to <c>true</c> include unpublished pages.</param>
         /// <returns>
         /// Page content entities list
         /// </returns>
-        public IList<PageContent> GetPageContents(Guid pageId, Expression<Func<PageContent, bool>> filter = null, bool includeUnpublished = false)
+        /// <exception cref="CmsApiException"></exception>
+        public IList<PageContent> GetPageContents(Guid pageId, GetFilteredDataRequest<PageContent> request = null, bool includeUnpublished = false)
         {
             try
             {
+                if (request == null)
+                {
+                    request = new GetFilteredDataRequest<PageContent>();
+                }
+                request.SetDefaultOrder(pc => pc.Order);
+
                 var query = Repository
                     .AsQueryable<PageContent>()
                     .Where(p => p.Page.Id == pageId && publicStatuses.Contains(p.Content.Status))
-                    .ApplyFilters(filter, p => p.Order);
+                    .ApplyFilters(request);
 
                 if (!includeUnpublished)
                 {
@@ -73,23 +81,30 @@ namespace BetterCms.Api
         /// </summary>
         /// <param name="pageId">The page id.</param>
         /// <param name="regionId">The region id.</param>
-        /// <param name="filter">The filter.</param>
+        /// <param name="request">The request.</param>
         /// <param name="includeUnpublished">if set to <c>true</c> include unpublished pages.</param>
         /// <returns>
         /// Page content entities list
         /// </returns>
-        public IList<PageContent> GetRegionContents(Guid pageId, Guid regionId, Expression<Func<PageContent, bool>> filter = null, bool includeUnpublished = false)
+        /// <exception cref="CmsApiException"></exception>
+        public IList<PageContent> GetRegionContents(Guid pageId, Guid regionId, GetFilteredDataRequest<PageContent> request = null, bool includeUnpublished = false)
         {
             try
             {
+                if (request == null)
+                {
+                    request = new GetFilteredDataRequest<PageContent>();
+                }
+                request.SetDefaultOrder(pc => pc.Order);
+
                 var query = Repository
                     .AsQueryable<PageContent>()
                     .Where(p => p.Page.Id == pageId && p.Region.Id == regionId && publicStatuses.Contains(p.Content.Status))
-                    .ApplyFilters(filter, p => p.Order);
+                    .ApplyFilters(request);
 
                 if (!includeUnpublished)
                 {
-                    query = query.Where(b => b.Content.Status == ContentStatus.Published );
+                    query = query.Where(b => b.Content.Status == ContentStatus.Published);
                 }
 
                 query = query
@@ -117,19 +132,26 @@ namespace BetterCms.Api
         /// </summary>
         /// <param name="pageId">The page id.</param>
         /// <param name="regionIdentifier">The region identifier.</param>
-        /// <param name="filter">The filter.</param>
+        /// <param name="request">The request.</param>
         /// <param name="includeUnpublished">if set to <c>true</c> include unpublished pages.</param>
         /// <returns>
         /// Page content entities list
         /// </returns>
-        public IList<PageContent> GetRegionContents(Guid pageId, string regionIdentifier, Expression<Func<PageContent, bool>> filter = null, bool includeUnpublished = false)
+        /// <exception cref="CmsApiException"></exception>
+        public IList<PageContent> GetRegionContents(Guid pageId, string regionIdentifier, GetFilteredDataRequest<PageContent> request = null, bool includeUnpublished = false)
         {
             try
             {
+                if (request == null)
+                {
+                    request = new GetFilteredDataRequest<PageContent>();
+                }
+                request.SetDefaultOrder(pc => pc.Order);
+
                 var query = Repository
                     .AsQueryable<PageContent>()
                     .Where(p => p.Page.Id == pageId && p.Region.RegionIdentifier == regionIdentifier && publicStatuses.Contains(p.Content.Status))
-                    .ApplyFilters(filter, p => p.Order);
+                    .ApplyFilters(request);
 
                 if (!includeUnpublished)
                 {
@@ -248,23 +270,22 @@ namespace BetterCms.Api
         /// <summary>
         /// Gets the widgets.
         /// </summary>
-        /// <param name="filter">The filter.</param>
-        /// <param name="order">The order.</param>
-        /// <param name="orderDescending">if set to <c>true</c> order by descending.</param>
-        /// <param name="pageNumber">The page number.</param>
-        /// <param name="itemsPerPage">The items per page.</param>
-        /// <returns>Widget list.</returns>
+        /// <param name="request">The request.</param>
+        /// <returns>
+        /// Widget list.
+        /// </returns>
         /// <exception cref="CmsApiException">Failed to get widgets.</exception>
-        public IList<Widget> GetWidgets(Expression<Func<Widget, bool>> filter = null, Expression<Func<Widget, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
+        public IList<Widget> GetWidgets(GetDataRequest<Widget> request = null)
         {
             try
             {
-                if (order == null)
+                if (request == null)
                 {
-                    order = p => p.Name;
+                    request = new GetDataRequest<Widget>();
                 }
+                request.SetDefaultOrder(w => w.Name);
 
-                return Repository.AsQueryable(filter, order, orderDescending, pageNumber, itemsPerPage).ToList();
+                return Repository.AsQueryable(request).ToList();
             }
             catch (Exception inner)
             {
@@ -277,23 +298,22 @@ namespace BetterCms.Api
         /// <summary>
         /// Gets the HTML content widgets.
         /// </summary>
-        /// <param name="filter">The filter.</param>
-        /// <param name="order">The order.</param>
-        /// <param name="orderDescending">if set to <c>true</c> [order descending].</param>
-        /// <param name="pageNumber">The page number.</param>
-        /// <param name="itemsPerPage">The items per page.</param>
-        /// <returns>HTML content widget list.</returns>
+        /// <param name="request">The request.</param>
+        /// <returns>
+        /// HTML content widget list.
+        /// </returns>
         /// <exception cref="CmsApiException">Failed to get widgets.</exception>
-        public IList<HtmlContentWidget> GetHtmlContentWidgets(Expression<Func<HtmlContentWidget, bool>> filter = null, Expression<Func<HtmlContentWidget, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
+        public IList<HtmlContentWidget> GetHtmlContentWidgets(GetDataRequest<HtmlContentWidget> request = null)
         {
             try
             {
-                if (order == null)
+                if (request == null)
                 {
-                    order = p => p.Name;
+                    request = new GetDataRequest<HtmlContentWidget>();
                 }
+                request.SetDefaultOrder(p => p.Name);
 
-                return Repository.AsQueryable(filter, order, orderDescending, pageNumber, itemsPerPage).ToList();
+                return Repository.AsQueryable(request).ToList();
             }
             catch (Exception inner)
             {
@@ -306,23 +326,22 @@ namespace BetterCms.Api
         /// <summary>
         /// Gets the server control widgets.
         /// </summary>
-        /// <param name="filter">The filter.</param>
-        /// <param name="order">The order.</param>
-        /// <param name="orderDescending">if set to <c>true</c> [order descending].</param>
-        /// <param name="pageNumber">The page number.</param>
-        /// <param name="itemsPerPage">The items per page.</param>
-        /// <returns>Server control widget list.</returns>
+        /// <param name="request">The request.</param>
+        /// <returns>
+        /// Server control widget list.
+        /// </returns>
         /// <exception cref="CmsApiException">Failed to get widgets.</exception>
-        public IList<ServerControlWidget> GetServerControlWidgets(Expression<Func<ServerControlWidget, bool>> filter = null, Expression<Func<ServerControlWidget, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
+        public IList<ServerControlWidget> GetServerControlWidgets(GetDataRequest<ServerControlWidget> request = null)
         {
             try
             {
-                if (order == null)
+                if (request == null)
                 {
-                    order = p => p.Name;
+                    request = new GetDataRequest<ServerControlWidget>();
                 }
+                request.SetDefaultOrder(s => s.Name);
 
-                return Repository.AsQueryable(filter, order, orderDescending, pageNumber, itemsPerPage).ToList();
+                return Repository.AsQueryable(request).ToList();
             }
             catch (Exception inner)
             {
@@ -336,21 +355,19 @@ namespace BetterCms.Api
         /// Gets the page widgets.
         /// </summary>
         /// <param name="pageId">The page id.</param>
-        /// <param name="filter">The filter.</param>
-        /// <returns>Widget list.</returns>
+        /// <param name="request">The request.</param>
+        /// <returns>
+        /// Widget list.
+        /// </returns>
         /// <exception cref="CmsApiException">Failed to get widgets.</exception>
-        public IList<Widget> GetPageWidgets(Guid pageId, Expression<Func<Widget, bool>> filter = null)
+        public IList<Widget> GetPageWidgets(Guid pageId, GetDataRequest<Widget> request = null)
         {
             try
             {
                 var query = Repository
                     .AsQueryable<Widget>()
-                    .Where(w => w.PageContents != null && w.PageContents.Any(c => c.Page.Id == pageId));
-
-                if (filter != null)
-                {
-                    query = query.Where(filter);
-                }
+                    .Where(w => w.PageContents != null && w.PageContents.Any(c => c.Page.Id == pageId))
+                    .ApplyFilters(request);
 
                 return query.ToList();
             }
@@ -366,19 +383,18 @@ namespace BetterCms.Api
         /// Gets the list with historical content entities.
         /// </summary>
         /// <param name="contentId">The content id.</param>
-        /// <param name="filter">The filter.</param>
-        /// <param name="order">The order.</param>
-        /// <param name="orderDescending">if set to <c>true</c> order by descending.</param>
+        /// <param name="request">The request.</param>
         /// <returns>
         /// Historical content entities
         /// </returns>
-        public IList<Content> GetContentHistory(Guid contentId, Expression<Func<Content, bool>> filter = null, Expression<Func<Content, dynamic>> order = null, bool orderDescending = false)
+        /// <exception cref="CmsApiException"></exception>
+        public IList<Content> GetContentHistory(Guid contentId, GetFilteredDataRequest<Content> request = null)
         {
             try
             {
                 return historyService.GetContentHistory(contentId, new SearchableGridOptions())
                     .AsQueryable()
-                    .ApplyFilters(filter, order, orderDescending)
+                    .ApplyFilters(request)
                     .ToList();
             }
             catch (Exception inner)

@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using BetterCms.Module.Pages.Api.DataContracts.Models;
 using BetterCms.Module.Root.Api.Attributes;
 
-namespace BetterCms.Module.Pages.Api.Dto
+namespace BetterCms.Module.Pages.Api.DataContracts
 {
     public class CreateContentOptionsRequest
     {

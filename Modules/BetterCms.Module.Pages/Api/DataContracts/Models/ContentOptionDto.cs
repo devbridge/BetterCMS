@@ -3,7 +3,7 @@
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;
 
-namespace BetterCms.Module.Pages.Api.Dto
+namespace BetterCms.Module.Pages.Api.DataContracts.Models
 {
     public class ContentOptionDto
     {

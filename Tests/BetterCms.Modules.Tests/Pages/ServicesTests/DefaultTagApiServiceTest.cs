@@ -2,7 +2,9 @@
 using System.Linq;
 
 using BetterCms.Api;
+using BetterCms.Core.Api.DataContracts;
 using BetterCms.Core.DataAccess;
+using BetterCms.Module.Root.Models;
 
 using Moq;
 
@@ -41,7 +43,7 @@ namespace BetterCms.Test.Module.Pages.ServicesTests
 
             using (var service = new PagesApiContext(Container.BeginLifetimeScope(), repositoryMock.Object))
             {
-                var tags = service.GetTags(t => t.Name.Contains("Tag"), null, true);
+                var tags = service.GetTags(new GetDataRequest<Tag>(t => t.Name.Contains("Tag"), null, true));
 
                 Assert.IsNotNull(tags);
                 Assert.AreEqual(tags.Count, 3);
@@ -61,7 +63,7 @@ namespace BetterCms.Test.Module.Pages.ServicesTests
 
             using (var service = new PagesApiContext(Container.BeginLifetimeScope(), repositoryMock.Object))
             {
-                var tags = service.GetTags(t => t.Name.Contains("Tag"), null, true, 2, 1);
+                var tags = service.GetTags(new GetDataRequest<Tag>(2, 1, t => t.Name.Contains("Tag"), null, true));
 
                 Assert.IsNotNull(tags);
                 Assert.AreEqual(tags.Count, 1);

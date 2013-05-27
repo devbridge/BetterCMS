@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
+
+using BetterCms.Core.Api.DataContracts;
+using BetterCms.Module.Pages.Api.DataContracts;
 
 using NHibernate.Linq;
 
@@ -9,7 +11,6 @@ using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Api;
 using BetterCms.Module.MediaManager.Models;
-using BetterCms.Module.Pages.Api.Dto;
 using BetterCms.Module.Pages.DataContracts.Enums;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
@@ -22,16 +23,12 @@ using ValidationException = BetterCms.Core.Exceptions.Mvc.ValidationException;
 namespace BetterCms.Api
 // ReSharper restore CheckNamespace
 {
-    public partial class PagesApiContext : DataApiContext
+    public partial class PagesApiContext
     {
         /// <summary>
         /// Gets the list of page property entities.
         /// </summary>
-        /// <param name="filter">The filter.</param>
-        /// <param name="order">The order.</param>
-        /// <param name="orderDescending">if set to <c>true</c> order by descending.</param>
-        /// <param name="pageNumber">The page number.</param>
-        /// <param name="itemsPerPage">The items per page.</param>
+        /// <param name="request">The request.</param>
         /// <param name="loadChilds">Flags, which childs to load.</param>
         /// <param name="includeUnpublished">if set to <c>true</c> include unpublished pages.</param>
         /// <param name="includePrivate">if set to <c>true</c> include private pages.</param>
@@ -39,18 +36,19 @@ namespace BetterCms.Api
         /// The list of property entities
         /// </returns>
         /// <exception cref="CmsApiException"></exception>
-        public IList<PageProperties> GetPages(Expression<Func<PageProperties, bool>> filter = null, Expression<Func<PageProperties, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null, PageLoadableChilds loadChilds = PageLoadableChilds.None, bool includeUnpublished = false, bool includePrivate = false)
+        public IList<PageProperties> GetPages(GetDataRequest<PageProperties> request = null, PageLoadableChilds loadChilds = PageLoadableChilds.None, bool includeUnpublished = false, bool includePrivate = false)
         {
             try
             {
-                if (order == null)
+                if (request == null)
                 {
-                    order = p => p.Title;
+                    request = new GetDataRequest<PageProperties>();
                 }
+                request.SetDefaultOrder(p => p.Title);
 
                 var query = Repository
                     .AsQueryable<PageProperties>()
-                    .ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage);
+                    .ApplyFilters(true, request);
 
                 if (!includeUnpublished)
                 {

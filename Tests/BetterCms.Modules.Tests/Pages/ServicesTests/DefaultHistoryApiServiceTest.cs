@@ -2,6 +2,7 @@
 using System.Linq;
 
 using BetterCms.Api;
+using BetterCms.Core.Api.DataContracts;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
@@ -49,7 +50,7 @@ namespace BetterCms.Test.Module.Pages.ServicesTests
             var serviceMock = MockHistoryService(contents);
             using (var service = new PagesApiContext(Container.BeginLifetimeScope(), null, null, serviceMock.Object))
             {
-                var history = service.GetContentHistory(Guid.NewGuid(), order: c => c.Name, orderDescending: true);
+                var history = service.GetContentHistory(Guid.NewGuid(), new GetFilteredDataRequest<Content>(order: c => c.Name, orderDescending: true));
 
                 Assert.IsNotNull(history);
                 Assert.AreEqual(history.Count, 4);
@@ -66,7 +67,7 @@ namespace BetterCms.Test.Module.Pages.ServicesTests
 
             using (var service = new PagesApiContext(Container.BeginLifetimeScope(), null, null, serviceMock.Object))
             {
-                var history = service.GetContentHistory(Guid.NewGuid(), c => c.Name == filteredName);
+                var history = service.GetContentHistory(Guid.NewGuid(), new GetFilteredDataRequest<Content>(c => c.Name == filteredName));
 
                 Assert.IsNotNull(history);
                 Assert.AreEqual(history.Count, 1);
