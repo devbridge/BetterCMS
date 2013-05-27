@@ -468,6 +468,39 @@ define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         return self;
     }
 
+    function getRegion(regionStartTag, tags, i) {
+        var tagsCount = tags.length,
+            currentTag,
+            regionStartId = regionStartTag.data('startId'),
+            j,
+            result;
+        
+        for (j = i + 1; j < tagsCount; j++) {
+            currentTag = $(tags[j]);
+            if (currentTag.hasClass(classes.regionStart)) {
+                result = getRegion(currentTag, tags, j);
+
+                addRegionToList(result);
+                if (result.i > j) {
+                    j = result.i;
+                }
+
+            } else if (currentTag.hasClass(classes.regionEnd) && currentTag.data('endId') == regionStartId) {
+                result = {
+                    i: j,
+                    regionViewModel: new RegionViewModel(regionStartTag, currentTag/* TODO: , regionContentViewModels*/)
+                };
+                return result;
+            }
+        }
+
+        return null;
+    }
+
+    function addRegionToList(result) {
+        pageViewModel.regions.push(result.regionViewModel);
+    }
+
     /**
     * Initializes events for regions:
     */
@@ -478,13 +511,36 @@ define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
 
         var tags = $(selectors.regionsAndContents).toArray(),
             tagsCount = tags.length,
+            i,
+            tag;
+
+        for (i = 0; i < tagsCount; i++) {
+            tag = $(tags[i]);
+            if (tag.hasClass(classes.regionStart)) {
+
+                var result = getRegion(tag, tags, i);
+                addRegionToList(result);
+
+                if (result.i > i) {
+                    i = result.i;
+                }
+            }
+        }
+
+        console.log(pageViewModel.regions);
+
+        /*var tags = $(selectors.regionsAndContents).toArray(),
+            tagsCount = tags.length,
             regionStart,
             i;
         
         for (i = 0; i < tagsCount; i++) {
             regionStart = $(tags[i]);
             if (regionStart.hasClass(classes.regionStart)) {
+
                 var regionContentViewModels = [],
+                    regionStartId = regionStart.data('startId'),
+                    regionEndId,
                     currentTag,
                     j,
                     contentStartFound = false,
@@ -492,6 +548,7 @@ define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
 
                 for (j = i; j < tagsCount; j++) {
                     currentTag = $(tags[j]);
+                    regionEndId = currentTag.data('endId');
 
                     if (currentTag.hasClass(classes.contentStart)) {
                         contentStart = currentTag;
@@ -501,7 +558,7 @@ define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
                         
                         var contentViewModel = new ContentViewModel(contentStart, currentTag);
                         regionContentViewModels.push(contentViewModel);
-                    } else if (currentTag.hasClass(classes.regionEnd)) {
+                    } else if (currentTag.hasClass(classes.regionEnd) && regionStartId == regionEndId) {
                         var regionViewModel = new RegionViewModel(regionStart, currentTag, regionContentViewModels);
 
                         pageViewModel.regions.push(regionViewModel);
@@ -509,12 +566,11 @@ define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
                             pageViewModel.contents.push(this);
                         });
 
-                        i = j;
                         break;
                     }
                 }
             }
-        }
+        }*/
         
         $.each(pageViewModel.regions, function () {
             content.highlightRegion(this);

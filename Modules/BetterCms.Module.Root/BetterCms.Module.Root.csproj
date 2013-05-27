@@ -527,7 +527,6 @@
     <EmbeddedResource Include="Scripts\bcms.sidemenu.js" />
     <EmbeddedResource Include="Content\Styles\base.css" />
     <EmbeddedResource Include="Scripts\bcms.security.js" />
-    <EmbeddedResource Include="Scripts\bcms.content.js" />
     <Content Include="BuildConfiguration.xml" />
     <EmbeddedResource Include="Content\Styles\images\icn-zoom-notcompatible.png" />
     <EmbeddedResource Include="Scripts\knockout-2.2.1.js" />

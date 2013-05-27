@@ -183,6 +183,7 @@
     <Content Include="404.html" />
     <Content Include="500.html" />
     <Content Include="favicon.ico" />
+    <EmbeddedResource Include="file\bcms-root\scripts\bcms.content.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -195,7 +196,6 @@
     <Folder Include="file\bcms-media\Content\Css\Images\" />
     <Folder Include="file\bcms-media\scripts\" />
     <Folder Include="file\bcms-pages\scripts\" />
-    <Folder Include="file\bcms-root\scripts\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

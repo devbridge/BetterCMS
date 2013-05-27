@@ -17,6 +17,9 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         private readonly PageRegionViewModel region;
         private readonly bool allowContentManagement;
 
+        private static int staticWrapperId;
+        private readonly int currentWrapperId;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="LayoutRegionWrapper" /> class.
         /// </summary>
@@ -28,6 +31,8 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             this.sb = sb;
             this.region = region;
             this.allowContentManagement = allowContentManagement;
+
+            currentWrapperId = staticWrapperId++;
 
             if (allowContentManagement)
             {
@@ -51,7 +56,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// </summary>
         private void RenderOpeningTags()
         {
-            sb.AppendFormat(@"<div class=""{0}"" data-id=""{1}""></div>", RegionStartClassName, region.RegionId);
+            sb.AppendFormat(@"<div class=""{0}"" data-id=""{1}"" data-start-id=""{2}""></div>", RegionStartClassName, region.RegionId, currentWrapperId);
             sb.AppendLine();
         }
 
@@ -60,7 +65,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// </summary>
         private void RenderClosingTags()
         {
-            sb.AppendFormat(@"<div class=""{0}""></div>", RegionEndClassName).AppendLine();
+            sb.AppendFormat(@"<div class=""{0}"" data-end-id=""{1}""></div>", RegionEndClassName, currentWrapperId).AppendLine();
         }
     }
 }

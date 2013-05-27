@@ -19,6 +19,9 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         private readonly PageContentProjection content;
         private readonly bool allowContentManagement;
 
+        private static int staticWrapperId;
+        private readonly int currentWrapperId;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="RegionContentWrapper" /> class.
         /// </summary>
@@ -30,6 +33,8 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             this.sb = sb;
             this.content = content;
             this.allowContentManagement = allowContentManagement;
+
+            currentWrapperId = staticWrapperId++;
 
             RenderOpeningTags();
         }
@@ -50,7 +55,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             if (allowContentManagement)
             {
                 sb.AppendFormat(
-                    @"<div class=""{0}"" data-page-content-id=""{1}"" data-content-id=""{2}"" data-page-content-version=""{3}"" data-content-version=""{4}"" data-content-type=""{5}"" data-content-title=""{6}"" {7}></div>",
+                    @"<div class=""{0}"" data-page-content-id=""{1}"" data-content-id=""{2}"" data-page-content-version=""{3}"" data-content-version=""{4}"" data-content-type=""{5}"" data-content-title=""{6}"" data-start-id=""{8}"" {7}></div>",
                     ContentStartClassName, // 0
                     content.PageContentId, // 1
                     content.ContentId, // 2
@@ -58,7 +63,9 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                     content.ContentVersion, // 4
                     content.GetContentWrapperType(), // 5
                     content.GetTitle(), // 6
-                    content.PageContentStatus == ContentStatus.Draft ? " data-draft=\"true\"" : null); // 7
+                    content.PageContentStatus == ContentStatus.Draft ? " data-draft=\"true\"" : null, // 7
+                    currentWrapperId
+                );
                 sb.AppendLine();
             }
         }
@@ -70,7 +77,10 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         {
             if (allowContentManagement)
             {
-                sb.AppendFormat(@"<div class=""{0} {1}""></div>", ContentEndClassName, ClearFixClassName).AppendLine();
+                sb.AppendFormat(@"<div class=""{0} {1}"" data-end-id=""{2}""></div>", 
+                    ContentEndClassName, 
+                    ClearFixClassName,
+                    currentWrapperId).AppendLine();
             }
             else
             {
