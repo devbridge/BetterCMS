@@ -63,7 +63,9 @@ namespace BetterCms.Test.Module.Pages.ServicesTests
 
             using (var service = new PagesApiContext(Container.BeginLifetimeScope(), repositoryMock.Object))
             {
-                var tags = service.GetTags(new GetDataRequest<Tag>(2, 1, t => t.Name.Contains("Tag"), null, true));
+                var request = new GetDataRequest<Tag>(t => t.Name.Contains("Tag"), null, true);
+                request.AddPaging(1, 2);
+                var tags = service.GetTags(request);
 
                 Assert.IsNotNull(tags);
                 Assert.AreEqual(tags.Count, 1);
@@ -80,8 +82,8 @@ namespace BetterCms.Test.Module.Pages.ServicesTests
         {
             Mock<IRepository> repositoryMock = new Mock<IRepository>();
             repositoryMock
-                .Setup(f => f.AsQueryable<BetterCms.Module.Root.Models.Tag>())
-                .Returns(new BetterCms.Module.Root.Models.Tag[] { }.AsQueryable());
+                .Setup(f => f.AsQueryable<Tag>())
+                .Returns(new Tag[] { }.AsQueryable());
 
             using (var service = new PagesApiContext(Container.BeginLifetimeScope(), repositoryMock.Object))
             {
@@ -92,23 +94,23 @@ namespace BetterCms.Test.Module.Pages.ServicesTests
             }
         }
 
-        private Mock<IRepository> MockRepository(IEnumerable<BetterCms.Module.Root.Models.Tag> tags)
+        private Mock<IRepository> MockRepository(IEnumerable<Tag> tags)
         {
             Mock<IRepository> repositoryMock = new Mock<IRepository>();
             repositoryMock
-                .Setup(f => f.AsQueryable<BetterCms.Module.Root.Models.Tag>())
+                .Setup(f => f.AsQueryable<Tag>())
                 .Returns(tags.AsQueryable());
 
             return repositoryMock;
         }
 
-        private IEnumerable<BetterCms.Module.Root.Models.Tag> CreateTags()
+        private IEnumerable<Tag> CreateTags()
         {
-            BetterCms.Module.Root.Models.Tag tag1 = TestDataProvider.CreateNewTag();
-            BetterCms.Module.Root.Models.Tag tag2 = TestDataProvider.CreateNewTag();
-            BetterCms.Module.Root.Models.Tag tag3 = TestDataProvider.CreateNewTag();
-            BetterCms.Module.Root.Models.Tag tag4 = TestDataProvider.CreateNewTag();
-            BetterCms.Module.Root.Models.Tag tag5 = TestDataProvider.CreateNewTag();
+            Tag tag1 = TestDataProvider.CreateNewTag();
+            Tag tag2 = TestDataProvider.CreateNewTag();
+            Tag tag3 = TestDataProvider.CreateNewTag();
+            Tag tag4 = TestDataProvider.CreateNewTag();
+            Tag tag5 = TestDataProvider.CreateNewTag();
 
             tag1.Name = "Tag1";
             tag2.Name = "Tag2";

@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using System.Web.UI.WebControls;
 
 using BetterCms.Api;
 using BetterCms.Core;
 using BetterCms.Core.Api.DataContracts;
-using BetterCms.Module.MediaManager.Models;
-using BetterCms.Module.Pages.Api.Events;
+using BetterCms.Module.Blog.Api.DataContracts;
+using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
 using BetterCms.Sandbox.Mvc4.Models;
@@ -77,22 +74,36 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
 
             ApiContext.Events.HostStart += Core_HostStart;*/
 
-            IList<LayoutRegion> results;
-            using (var pagesApi = CmsContext.CreateApiContextOf<PagesApiContext>())
+            var message = string.Empty;
+
+            IList<BlogPost> results;
+            using (var api = CmsContext.CreateApiContextOf<BlogsApiContext>())
             {
                 /*var request = new GetDataRequest<Layout>(3, 2, orderDescending:true, order:t =>t.Name);
                 results = pagesApi.GetLayouts(request);*/
 
-                var request = new GetDataRequest<LayoutRegion>(2, 2, orderDescending: true, order: t => t.Region.RegionIdentifier);
-                results = pagesApi.GetLayoutRegions(new Guid("F68B8A99-E06F-4A8A-9C67-A1C500A2919F"), request);
+                /*var request = new GetDataRequest<LayoutRegion>(orderDescending: true, order: t => t.Region.RegionIdentifier);
+                request.AddPaging(2, 2);*/
+
+                var request = new GetBlogPostsRequest(b => b.Title.ToLower().Contains("ub"));
+                results = api.GetBlogPosts(request);
+
+                request = new GetBlogPostsRequest(order: b => b.Title, orderDescending: true, includePrivate: true, includeUnpublished: true);
+                request.AddPaging(3, 3);
+                results = api.GetBlogPosts(request);
+
+                if (results.Count > 0)
+                {
+                    message = string.Format("{0}<br /> Item titles: {1}", message, string.Join("; ", results.Select(t => t.Title)));
+                }
+
+                request = new GetBlogPostsRequest(order:b => b.Title, orderDescending:true, itemsCount:5, startItemNumber:3, includeUnpublished:true, includePrivate:true);
+                results = api.GetBlogPosts(request);
             }
 
-            var count = results.Count;
-            var message = string.Format("Items count: {0}", count);
-
-            if (count > 0)
+            if (results.Count > 0)
             {
-                message = string.Format("{0}<br /> Item titles: {1}", message, string.Join("; ", results.Select(t => t.Region.RegionIdentifier)));
+                message = string.Format("{0}<br /> Item titles: {1}", message, string.Join("; ", results.Select(t => t.Title)));
             }
 
             return Content(message);

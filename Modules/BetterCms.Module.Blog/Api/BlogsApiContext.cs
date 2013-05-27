@@ -9,6 +9,7 @@ using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Api;
+using BetterCms.Module.Blog.Api.DataContracts;
 using BetterCms.Module.Blog.Api.Events;
 using BetterCms.Module.Blog.Models;
 
@@ -58,32 +59,24 @@ namespace BetterCms.Api
         /// Gets the list of blog entities.
         /// </summary>
         /// <param name="request">The request.</param>
-        /// <param name="includeUnpublished">if set to <c>true</c> include unpublished pages.</param>
-        /// <param name="includePrivate">if set to <c>true</c> include private pages.</param>
         /// <returns>
         /// The list of blog entities
         /// </returns>
         /// <exception cref="CmsApiException"></exception>
-        public IList<BlogPost> GetBlogPosts(GetDataRequest<BlogPost> request = null, bool includeUnpublished = false, bool includePrivate = false)
+        public IList<BlogPost> GetBlogPosts(GetBlogPostsRequest request)
         {
             try
             {
-                if (request == null)
-                {
-                    request = new GetDataRequest<BlogPost>();
-                }
-                request.SetDefaultOrder(b => b.Title);
-
                 var query = Repository
                     .AsQueryable<BlogPost>()
                     .ApplyFilters(request);
 
-                if (!includeUnpublished)
+                if (!request.IncludeUnpublished)
                 {
                     query = query.Where(b => b.Status == PageStatus.Published);
                 }
 
-                if (!includePrivate)
+                if (!request.IncludePrivate)
                 {
                     query = query.Where(b => b.IsPublic);
                 }

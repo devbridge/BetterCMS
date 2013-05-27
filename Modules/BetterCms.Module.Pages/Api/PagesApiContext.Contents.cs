@@ -29,29 +29,21 @@ namespace BetterCms.Api
         /// <summary>
         /// Gets the list of page content entities.
         /// </summary>
-        /// <param name="pageId">The page id.</param>
         /// <param name="request">The request.</param>
-        /// <param name="includeUnpublished">if set to <c>true</c> include unpublished pages.</param>
         /// <returns>
         /// Page content entities list
         /// </returns>
         /// <exception cref="CmsApiException"></exception>
-        public IList<PageContent> GetPageContents(Guid pageId, GetFilteredDataRequest<PageContent> request = null, bool includeUnpublished = false)
+        public IList<PageContent> GetPageContents(GetPageContentsRequest request)
         {
             try
             {
-                if (request == null)
-                {
-                    request = new GetFilteredDataRequest<PageContent>();
-                }
-                request.SetDefaultOrder(pc => pc.Order);
-
                 var query = Repository
                     .AsQueryable<PageContent>()
-                    .Where(p => p.Page.Id == pageId && publicStatuses.Contains(p.Content.Status))
+                    .Where(p => p.Page.Id == request.PageId && publicStatuses.Contains(p.Content.Status))
                     .ApplyFilters(request);
 
-                if (!includeUnpublished)
+                if (!request.IncludeUnpublished)
                 {
                     query = query.Where(c => c.Content.Status == ContentStatus.Published);
                 }
@@ -61,7 +53,7 @@ namespace BetterCms.Api
                     .Fetch(c => c.Region)
                     .FetchMany(c => c.Options);
 
-                if (!includeUnpublished)
+                if (!request.IncludeUnpublished)
                 {
                     return RemoveUnpublishedContents(query.ToList());
                 }
@@ -69,7 +61,7 @@ namespace BetterCms.Api
             }
             catch (Exception inner)
             {
-                var message = string.Format("Failed to get page contents by page id {0}.", pageId);
+                var message = string.Format("Failed to get page contents by page id {0}.", request.PageId);
                 Logger.Error(message, inner);
 
                 throw new CmsApiException(message, inner);
@@ -79,30 +71,31 @@ namespace BetterCms.Api
         /// <summary>
         /// Gets the list of page region contents.
         /// </summary>
-        /// <param name="pageId">The page id.</param>
-        /// <param name="regionId">The region id.</param>
         /// <param name="request">The request.</param>
-        /// <param name="includeUnpublished">if set to <c>true</c> include unpublished pages.</param>
         /// <returns>
         /// Page content entities list
         /// </returns>
         /// <exception cref="CmsApiException"></exception>
-        public IList<PageContent> GetRegionContents(Guid pageId, Guid regionId, GetFilteredDataRequest<PageContent> request = null, bool includeUnpublished = false)
+        public IList<PageContent> GetRegionContents(GetRegionContentsRequest request)
         {
             try
             {
-                if (request == null)
+                var query = Repository.AsQueryable<PageContent>();
+
+                if (request.RegionId.HasValue)
                 {
-                    request = new GetFilteredDataRequest<PageContent>();
+                    query = query
+                        .Where(p => p.Page.Id == request.PageId && p.Region.Id == request.RegionId && publicStatuses.Contains(p.Content.Status));
                 }
-                request.SetDefaultOrder(pc => pc.Order);
+                else
+                {
+                    query = query
+                        .Where(p => p.Page.Id == request.PageId && p.Region.RegionIdentifier == request.RegionIdentifier && publicStatuses.Contains(p.Content.Status));
+                }
 
-                var query = Repository
-                    .AsQueryable<PageContent>()
-                    .Where(p => p.Page.Id == pageId && p.Region.Id == regionId && publicStatuses.Contains(p.Content.Status))
-                    .ApplyFilters(request);
+                query = query.ApplyFilters(request);
 
-                if (!includeUnpublished)
+                if (!request.IncludeUnpublished)
                 {
                     query = query.Where(b => b.Content.Status == ContentStatus.Published);
                 }
@@ -112,7 +105,7 @@ namespace BetterCms.Api
                     .Fetch(c => c.Region)
                     .FetchMany(c => c.Options);
 
-                if (!includeUnpublished)
+                if (!request.IncludeUnpublished)
                 {
                     return RemoveUnpublishedContents(query.ToList());
                 }
@@ -120,58 +113,7 @@ namespace BetterCms.Api
             }
             catch (Exception inner)
             {
-                var message = string.Format("Failed to get page region contents by page id={0} and region id={1}.", pageId, regionId);
-                Logger.Error(message, inner);
-
-                throw new CmsApiException(message, inner);
-            }
-        }
-
-        /// <summary>
-        /// Gets the list of page region contents.
-        /// </summary>
-        /// <param name="pageId">The page id.</param>
-        /// <param name="regionIdentifier">The region identifier.</param>
-        /// <param name="request">The request.</param>
-        /// <param name="includeUnpublished">if set to <c>true</c> include unpublished pages.</param>
-        /// <returns>
-        /// Page content entities list
-        /// </returns>
-        /// <exception cref="CmsApiException"></exception>
-        public IList<PageContent> GetRegionContents(Guid pageId, string regionIdentifier, GetFilteredDataRequest<PageContent> request = null, bool includeUnpublished = false)
-        {
-            try
-            {
-                if (request == null)
-                {
-                    request = new GetFilteredDataRequest<PageContent>();
-                }
-                request.SetDefaultOrder(pc => pc.Order);
-
-                var query = Repository
-                    .AsQueryable<PageContent>()
-                    .Where(p => p.Page.Id == pageId && p.Region.RegionIdentifier == regionIdentifier && publicStatuses.Contains(p.Content.Status))
-                    .ApplyFilters(request);
-
-                if (!includeUnpublished)
-                {
-                    query = query.Where(b => b.Content.Status == ContentStatus.Published);
-                }
-
-                query = query
-                    .Fetch(c => c.Content)
-                    .Fetch(c => c.Region)
-                    .FetchMany(c => c.Options);
-
-                if (!includeUnpublished)
-                {
-                    return RemoveUnpublishedContents(query.ToList());
-                }
-                return query.ToList();
-            }
-            catch (Exception inner)
-            {
-                var message = string.Format("Failed to get page region contents by page id={0} and region identifier={1}.", pageId, regionIdentifier);
+                var message = string.Format("Failed to get page region contents by page id={0} and region id={1}.", request.PageId, request.RegionId);
                 Logger.Error(message, inner);
 
                 throw new CmsApiException(message, inner);

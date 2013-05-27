@@ -50,7 +50,7 @@ namespace BetterCms.Test.Module.Pages.ServicesTests
             var serviceMock = MockHistoryService(contents);
             using (var service = new PagesApiContext(Container.BeginLifetimeScope(), null, null, serviceMock.Object))
             {
-                var history = service.GetContentHistory(Guid.NewGuid(), new GetFilteredDataRequest<Content>(order: c => c.Name, orderDescending: true));
+                var history = service.GetContentHistory(Guid.NewGuid(), new GetDataRequest<Content>(order: c => c.Name, orderDescending: true));
 
                 Assert.IsNotNull(history);
                 Assert.AreEqual(history.Count, 4);
@@ -67,7 +67,7 @@ namespace BetterCms.Test.Module.Pages.ServicesTests
 
             using (var service = new PagesApiContext(Container.BeginLifetimeScope(), null, null, serviceMock.Object))
             {
-                var history = service.GetContentHistory(Guid.NewGuid(), new GetFilteredDataRequest<Content>(c => c.Name == filteredName));
+                var history = service.GetContentHistory(Guid.NewGuid(), new GetDataRequest<Content>(c => c.Name == filteredName));
 
                 Assert.IsNotNull(history);
                 Assert.AreEqual(history.Count, 1);

@@ -146,7 +146,7 @@ namespace BetterCms.Core.DataAccess.DataContext
 
             return query;
         }
-
+        
         /// <summary>
         /// Returns query with filters and sorting applied.
         /// </summary>
