@@ -134,8 +134,8 @@ namespace BetterCms.Module.MediaManager.Models.Migrations
                 .WithColumn("PublicUrl").AsString(MaxLength.Url).NotNullable()
                 .WithColumn("Size").AsInt64().NotNullable()
                 .WithColumn("IsTemporary").AsBoolean().NotNullable().WithDefaultValue(true)
-                .WithColumn("IsUploaded").AsBoolean().NotNullable().WithDefaultValue(0)
-                .WithColumn("IsCanceled").AsBoolean().NotNullable().WithDefaultValue(0);
+                .WithColumn("IsUploaded").AsBoolean().NotNullable().WithDefaultValue(false)
+                .WithColumn("IsCanceled").AsBoolean().NotNullable().WithDefaultValue(false);
 
             Create.ForeignKey("FK_MediaFiles_Id_Medias_Id")
                 .FromTable("MediaFiles").InSchema(SchemaName).ForeignColumn("Id")
@@ -171,13 +171,13 @@ namespace BetterCms.Module.MediaManager.Models.Migrations
                 .WithColumn("OriginalSize").AsInt64().NotNullable()
                 .WithColumn("OriginalUri").AsString(MaxLength.Uri).NotNullable()
                 .WithColumn("PublicOriginallUrl").AsString(MaxLength.Url).NotNullable().WithDefaultValue(string.Empty)
-                .WithColumn("IsOriginalUploaded").AsBoolean().NotNullable().WithDefaultValue(0)
+                .WithColumn("IsOriginalUploaded").AsBoolean().NotNullable().WithDefaultValue(false)
                 .WithColumn("ThumbnailWidth").AsInt32().NotNullable()
                 .WithColumn("ThumbnailHeight").AsInt32().NotNullable()
                 .WithColumn("ThumbnailSize").AsInt64().NotNullable()
                 .WithColumn("ThumbnailUri").AsString(MaxLength.Uri).NotNullable()
                 .WithColumn("PublicThumbnailUrl").AsString(MaxLength.Url).NotNullable().WithDefaultValue(string.Empty)
-                .WithColumn("IsThumbnailUploaded").AsBoolean().NotNullable().WithDefaultValue(0);
+                .WithColumn("IsThumbnailUploaded").AsBoolean().NotNullable().WithDefaultValue(false);
 
             Create.ForeignKey("FK_MediaImages_Id_MediaFiles_Id")
                 .FromTable("MediaImages").InSchema(SchemaName).ForeignColumn("Id")

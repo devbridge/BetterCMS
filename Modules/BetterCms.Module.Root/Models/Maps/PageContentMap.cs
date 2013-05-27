@@ -9,7 +9,7 @@ namespace BetterCms.Module.Root.Models.Maps
         {
             Table("PageContents");
 
-            Map(x => x.Order, "[Order]").Not.Nullable();
+            Map(x => x.Order, "Order").Not.Nullable();
 
             References(x => x.Region).Cascade.SaveUpdate().LazyLoad();
             References(x => x.Content).Cascade.SaveUpdate().LazyLoad();

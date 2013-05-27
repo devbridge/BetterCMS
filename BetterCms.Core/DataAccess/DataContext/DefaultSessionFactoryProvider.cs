@@ -14,6 +14,7 @@ using BetterCms.Core.DataAccess.DataContext.Interceptors;
 
 using NHibernate.Dialect;
 using NHibernate.Event;
+using NHibernate.Tool.hbm2ddl;
 
 namespace BetterCms.Core.DataAccess.DataContext
 {
@@ -98,7 +99,9 @@ namespace BetterCms.Core.DataAccess.DataContext
                 .ExposeConfiguration(c => c.SetListener(ListenerType.SaveUpdate, saveOrUpdateEventListener))
                 .ExposeConfiguration(c => c.SetListener(ListenerType.Save, saveOrUpdateEventListener))
                 .ExposeConfiguration(c => c.SetListener(ListenerType.Update, saveOrUpdateEventListener));
-            
+
+            SchemaMetadataUpdater.QuoteTableAndColumns(fluentConfiguration.BuildConfiguration());
+
             return fluentConfiguration
                         .BuildConfiguration()
                         .BuildSessionFactory();
@@ -130,10 +133,10 @@ namespace BetterCms.Core.DataAccess.DataContext
                     sqlConfiguration = CreateSqlConfiguration(OracleDataClientConfiguration.Oracle9);
                     break;
                 case DatabaseType.PostgreSQL81:
-                    sqlConfiguration = CreateSqlConfiguration(PostgreSQLConfiguration.PostgreSQL82);
+                    sqlConfiguration = CreateSqlConfiguration(PostgreSQLConfiguration.PostgreSQL81);
                     break;
                 case DatabaseType.PostgreSQL82:
-                    sqlConfiguration = CreateSqlConfiguration(PostgreSQLConfiguration.PostgreSQL81);
+                    sqlConfiguration = CreateSqlConfiguration(PostgreSQLConfiguration.PostgreSQL82);
                     break;
                 case DatabaseType.PostgreSQLStandard:
                     sqlConfiguration = CreateSqlConfiguration(PostgreSQLConfiguration.Standard);

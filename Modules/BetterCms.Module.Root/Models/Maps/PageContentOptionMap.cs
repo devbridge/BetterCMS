@@ -8,7 +8,7 @@ namespace BetterCms.Module.Root.Models.Maps
         {
             Table("PageContentOptions");
 
-            Map(x => x.Key, "[Key]").Length(MaxLength.Name).Not.Nullable();
+            Map(x => x.Key, "Key").Length(MaxLength.Name).Not.Nullable();
             Map(x => x.Type).Not.Nullable();
             Map(x => x.Value).Length(MaxLength.Max).Nullable().LazyLoad();         
             

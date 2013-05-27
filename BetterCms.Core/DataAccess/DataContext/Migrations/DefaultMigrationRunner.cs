@@ -26,12 +26,6 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
     public class DefaultMigrationRunner : IMigrationRunner
     {
         /// <summary>
-        /// Database type to run migrations.
-        /// TODO: move it to cms.config
-        /// </summary>
-        private const DatabaseType databaseType = DatabaseType.SqlAzure;
-
-        /// <summary>
         /// Timeout for one migration execution.
         /// </summary>
         private static readonly TimeSpan migrationTimeout = new TimeSpan(0, 1, 0);
@@ -166,6 +160,23 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
             else
             {
                 throw new ConfigurationErrorsException("Missing connection string.");
+            }
+
+            DatabaseType databaseType;
+            switch (configuration.Database.DatabaseType)
+            {
+                case Configuration.DatabaseType.PostgreSQL81:
+                case Configuration.DatabaseType.PostgreSQL82:
+                case Configuration.DatabaseType.PostgreSQLStandard:
+                    databaseType = DatabaseType.PostgreSQL;
+                    break;
+                case Configuration.DatabaseType.Oracle10:
+                case Configuration.DatabaseType.Oracle9:
+                    databaseType = DatabaseType.Oracle;
+                    break;
+                default:
+                    databaseType = DatabaseType.SqlAzure;
+                    break;
             }
 
             if (databaseType == DatabaseType.SqlAzure || databaseType == DatabaseType.SqlServer)
