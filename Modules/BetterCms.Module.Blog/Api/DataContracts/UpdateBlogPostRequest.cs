@@ -16,12 +16,6 @@ namespace BetterCms.Module.Blog.Api.DataContracts
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "PageContent_LiveFrom_RequiredMessage")]
         public DateTime ActivationDate { get; set; }
 
-        /// <summary>
-        /// Gets or sets the date, to which page is in live.
-        /// </summary>
-        /// <value>
-        /// The date, to which page is in live.
-        /// </value>
         [DateValidation(ErrorMessage = "Invalid Expiration Date.")]
         public DateTime? ExpirationDate { get; set; }
     }

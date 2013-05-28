@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Transactions;
 
 using BetterCms.Api;
@@ -28,36 +29,37 @@ namespace BetterCms.Module.Blog.Models.MigrationsContent
                     return;
                 }
 
+                var updateRequests = new List<UpdateBlogPostRequest>();
+
                 using (var pagesApi = CmsContext.CreateApiContextOf<PagesApiContext>())
                 {
-                    using (var transactionScope = new TransactionScope())
+                    foreach (var blog in blogs)
                     {
-                        foreach (var blog in blogs)
+                        var requestToGet = new GetPageContentsRequest(blog.Id, e => e.Content is BlogPostContent, includeUnpublished: true, includeNotActive: true);
+                        var pageContent = pagesApi.GetPageContents(requestToGet).FirstOrDefault();
+                        if (pageContent == null)
                         {
-                            var pageContent = pagesApi.GetPageContents(new GetPageContentsRequest(blog.Id, e => e.Content is BlogPostContent)).FirstOrDefault();
-                            if (pageContent == null)
-                            {
-                                continue;
-                            }
-
-                            var content = pageContent.Content as HtmlContent;
-                            if (content == null)
-                            {
-                                continue;
-                            }
-
-                            var request = new UpdateBlogPostRequest
-                                              {
-                                                  ActivationDate = content.ActivationDate,
-                                                  ExpirationDate = content.ExpirationDate,
-                                                  Id = blog.Id
-                                              };
-                            // TODO: Uncomment and fix dstributed transactions bug
-                            // blogsApi.UpdateBlogPost(request);
+                            continue;
                         }
 
-                        transactionScope.Complete();
+                        var content = pageContent.Content as HtmlContent;
+                        if (content == null)
+                        {
+                            continue;
+                        }
+
+                        updateRequests.Add(new UpdateBlogPostRequest { Id = blog.Id, ActivationDate = content.ActivationDate, ExpirationDate = content.ExpirationDate, });
                     }
+                }
+
+                using (var transactionScope = new TransactionScope())
+                {
+                    foreach (var request in updateRequests)
+                    {
+                        blogsApi.UpdateBlogPost(request);
+                    }
+
+                    transactionScope.Complete();
                 }
             }
         }
