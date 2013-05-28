@@ -81,6 +81,11 @@ namespace BetterCms.Api
                     query = query.Where(b => b.IsPublic);
                 }
 
+                if (!request.IncludeNotActive)
+                {
+                    query = query.Where(b => DateTime.Now < b.ActivationDate || (b.ExpirationDate.HasValue && b.ExpirationDate.Value < DateTime.Now));
+                }
+
                 query = query.Fetch(b => b.Author);
 
                 return query.ToList();

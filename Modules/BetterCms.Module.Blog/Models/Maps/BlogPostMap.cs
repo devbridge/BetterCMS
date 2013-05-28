@@ -9,6 +9,9 @@ namespace BetterCms.Module.Blog.Models.Maps
         {
             Table("BlogPosts");
 
+            Map(x => x.ActivationDate).Not.Nullable();
+            Map(x => x.ExpirationDate).Nullable();
+
             References(x => x.Author).Cascade.SaveUpdate().LazyLoad();
         }
     }

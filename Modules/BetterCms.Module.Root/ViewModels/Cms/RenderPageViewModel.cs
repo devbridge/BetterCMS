@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web.Mvc;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
@@ -27,6 +28,7 @@ namespace BetterCms.Module.Root.ViewModels.Cms
             ModifiedByUser = page.ModifiedByUser;
 
             Bag = new DynamicDictionary();
+            ActionResult = null;
         }
 
         public RenderPageViewModel()
@@ -160,6 +162,14 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         /// The page.
         /// </value>
         public dynamic Bag { get; set; }
+
+        /// <summary>
+        /// Gets or sets the action result.
+        /// </summary>
+        /// <value>
+        /// The action result.
+        /// </value>
+        public ActionResult ActionResult { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
