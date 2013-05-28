@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, browser: true, devel: true */
 /*global define*/
 
-define('bcms.html5Upload', ['bcms.jquery'], function ($) {
+bettercms.define('bcms.html5Upload', ['bcms.jquery'], function ($) {
     'use strict';
 
     var module = {},

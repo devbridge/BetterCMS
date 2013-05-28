@@ -1,4 +1,4 @@
-define('bcms.slides.jquery', ['bcms.jquery'], function(jquery) {
+bettercms.define('bcms.slides.jquery', ['bcms.jquery'], function(jquery) {
 
 /*
 * Edited by the DevBridge Better CMS team.

@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-using BetterCms.Module.Pages.Content.Resources;
-using BetterCms.Module.Pages.Mvc.Attributes;
+using BetterCms.Core.Models;
 using BetterCms.Module.Root.Api.Attributes;
 
 namespace BetterCms.Module.Blog.Api.DataContracts
@@ -12,11 +12,25 @@ namespace BetterCms.Module.Blog.Api.DataContracts
         [EmptyGuidValidation(ErrorMessage = "Blog post Id must be set.")]
         public Guid Id { get; set; }
 
-        [DateValidation(ErrorMessage = "Invalid Activation Date.")]
-        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "PageContent_LiveFrom_RequiredMessage")]
-        public DateTime ActivationDate { get; set; }
+        public virtual int Version { get; set; }
 
-        [DateValidation(ErrorMessage = "Invalid Expiration Date.")]
-        public DateTime? ExpirationDate { get; set; }
+        [Required(ErrorMessage = "Blog post title must be set.")]
+        [StringLength(MaxLength.Name, ErrorMessage = "Blog post title must be the string with a maximum length of {1}.")]
+        public virtual string Title { get; set; }
+
+        [StringLength(MaxLength.Text, ErrorMessage = "Blog post intro text must be the string with a maximum length of {1}.")]
+        public virtual string IntroText { get; set; }
+
+        public DateTime LiveFromDate { get; set; }
+
+        public DateTime? LiveToDate { get; set; }
+
+        public Guid? ImageId { get; set; }
+
+        public Guid? AuthorId { get; set; }
+
+        public Guid? CategoryId { get; set; }
+
+        public IList<string> Tags { get; set; }
     }
 }

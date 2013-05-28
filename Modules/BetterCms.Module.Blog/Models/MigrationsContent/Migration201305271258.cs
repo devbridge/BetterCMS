@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
 
@@ -48,7 +49,20 @@ namespace BetterCms.Module.Blog.Models.MigrationsContent
                             continue;
                         }
 
-                        updateRequests.Add(new UpdateBlogPostRequest { Id = blog.Id, ActivationDate = content.ActivationDate, ExpirationDate = content.ExpirationDate, });
+                        updateRequests.Add(
+                            new UpdateBlogPostRequest
+                                {
+                                    Id = blog.Id,
+                                    Version = blog.Version,
+                                    Title = blog.Title,
+                                    IntroText = blog.Description,
+                                    LiveFromDate = content.ActivationDate,
+                                    LiveToDate = content.ExpirationDate,
+                                    ImageId = blog.Image != null ? (Guid?)blog.Image.Id : null,
+                                    AuthorId = blog.Author != null ? (Guid?)blog.Author.Id : null,
+                                    CategoryId = blog.Category != null ? (Guid?)blog.Category.Id : null,
+                                    Tags = blog.PageTags.Select(t => t.Tag.Name).ToList()
+                                });
                     }
                 }
 

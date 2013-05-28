@@ -7,7 +7,7 @@
 }
 @section DoctypeTag
 {
-    <!DOCTYPE html 555>
+    <!DOCTYPE html>
 }
 
 @section HtmlTag
@@ -89,3 +89,11 @@
         @RenderSection("CMSFooter", false)
     </div>
 </footer>
+
+@section Scripts{
+   <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.js"></script>
+   <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
+   <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"></script>
+   <script type="text/javascript" src="/Scripts/knockout-2.2.1.debug.js"></script>
+   <script type="text/javascript" src="/Scripts/knockout.validation.debug.js"></script>
+}

@@ -4,14 +4,14 @@
 * https://github.com/devbridge/BetterCMS
 */
 
-/*global require, requirejs, window */
+/*global bettercms.require, bettercms.requirejs, bettercms.define, window */
 
 var console = window.console || {
     log: function() { },
     error: function() { }
 };
 
-requirejs.config({
+bettercms.requirejs.config({
     @if (Model.IsDebugMode && !Model.UseMinReferences)
     {
         <text>urlArgs: 'ver=' + '@Model.Version.ToString()',</text>
@@ -24,7 +24,7 @@ requirejs.config({
     waitSeconds: 15
 });
 
-requirejs(['bcms.jquery', 'bcms', 'bcms.processor'],
+bettercms.requirejs(['bcms.jquery', 'bcms', 'bcms.processor'],
     
     function ($, bcms, processor) {
         'use strict';
