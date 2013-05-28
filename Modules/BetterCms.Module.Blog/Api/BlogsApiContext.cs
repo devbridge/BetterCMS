@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using Autofac;
@@ -12,6 +13,9 @@ using BetterCms.Core.Exceptions.Api;
 using BetterCms.Module.Blog.Api.DataContracts;
 using BetterCms.Module.Blog.Api.Events;
 using BetterCms.Module.Blog.Models;
+using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.Pages.Services;
+using BetterCms.Module.Root.Models;
 
 using NHibernate.Linq;
 
@@ -21,6 +25,8 @@ namespace BetterCms.Api
 {
     public class BlogsApiContext : DataApiContext
     {
+        private readonly ITagService tagService;
+
         private static readonly BlogsApiEvents events;
 
         /// <summary>
@@ -36,9 +42,10 @@ namespace BetterCms.Api
         /// </summary>
         /// <param name="lifetimeScope">The lifetime scope.</param>
         /// <param name="repository">The repository.</param>
-        public BlogsApiContext(ILifetimeScope lifetimeScope, IRepository repository = null)
+        public BlogsApiContext(ILifetimeScope lifetimeScope, ITagService tagService, IRepository repository = null)
             : base(lifetimeScope, repository)
         {
+            this.tagService = tagService;
         }
 
         /// <summary>
@@ -146,7 +153,7 @@ namespace BetterCms.Api
         {
             ValidateRequest(request);
             
-            if (request.ExpirationDate.HasValue && request.ExpirationDate < request.ActivationDate)
+            if (request.LiveToDate.HasValue && request.LiveToDate < request.LiveFromDate)
             {
                 var message = string.Format("Expiration date must be greater that activation date.");
                 Logger.Error(message);
@@ -160,13 +167,28 @@ namespace BetterCms.Api
                     .AsQueryable<BlogPost>(b => b.Id == request.Id)
                     .FirstOne();
 
-                blog.ActivationDate = request.ActivationDate;
-                blog.ExpirationDate = request.ExpirationDate;
+                blog.Version = request.Version;
+                blog.Title = request.Title;
+                blog.Description = request.IntroText;
+                blog.ActivationDate = request.LiveFromDate;
+                blog.ExpirationDate = request.LiveToDate;
+                blog.Image = request.ImageId.HasValue ? Repository.AsProxy<MediaImage>(request.ImageId.Value) : null;
+                blog.Author = request.AuthorId.HasValue ? Repository.AsProxy<Author>(request.AuthorId.Value) : null;
+                blog.Category = request.CategoryId.HasValue ? Repository.AsProxy<Category>(request.CategoryId.Value) : null;
+
+                // TODO: should it be allowed to change blog content, url and status?
 
                 Repository.Save(blog);
+
+                IList<Tag> newTags = null;
+                tagService.SavePageTags(blog, request.Tags, out newTags);
+
                 UnitOfWork.Commit();
 
                 Events.OnBlogUpdated(blog);
+
+                // Notify about new created tags.
+                PagesApiContext.Events.OnTagCreated(newTags);
 
                 return blog;
             }
