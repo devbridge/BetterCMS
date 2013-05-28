@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 using Autofac;
@@ -8,6 +7,7 @@ using BetterCms.Core.Api.DataContracts;
 using BetterCms.Core.Api.Extensions;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.Exceptions.Api;
+using BetterCms.Module.MediaManager.Api.DataContracts;
 using BetterCms.Module.MediaManager.Api.Events;
 using BetterCms.Module.MediaManager.Models;
 
@@ -53,45 +53,39 @@ namespace BetterCms.Api
         /// <summary>
         /// Gets the list of folder media entities.
         /// </summary>
-        /// <param name="mediaType">Type of the media.</param>
-        /// <param name="folderId">The folder id.</param>
         /// <param name="request">The request.</param>
         /// <returns>
         /// The list of folder media entities
         /// </returns>
         /// <exception cref="CmsApiException"></exception>
-        public IList<Media> GetFolderMedias(MediaType mediaType, Guid? folderId = null, GetDataRequest<Media> request = null)
+        public DataListResponse<Media> GetFolderMedias(GetFolderMediasRequest request)
         {
             try
             {
-                if (request == null)
-                {
-                    request = new GetDataRequest<Media>();
-                }
-                request.SetDefaultOrder(m => m.Title);
-
                 var query = Repository
                     .AsQueryable<Media>()
-                    .Where(f => f.Type == mediaType);
+                    .Where(f => f.Type == request.MediaType)
+                    .ApplyFilters(request);
 
-                if (folderId.HasValue)
+                if (request.FolderId.HasValue)
                 {
-                    query = query.Where(f => f.Folder != null && f.Folder.Id == folderId.Value);
+                    query = query.Where(f => f.Folder != null && f.Folder.Id == request.FolderId.Value);
                 }
                 else
                 {
                     query = query.Where(f => f.Folder == null);
                 }
 
-                query = query.ApplyFilters(request).AddOrderAndPaging(request);
+                var totalCount = query.ToRowCountFutureValue(request);
+                query = query.AddOrderAndPaging(request);
 
-                return query.ToList();
+                return query.ToDataListResponse(totalCount);
             }
             catch (Exception inner)
             {
                 var message = string.Format("Failed to get folder medias list for media type={0} and folderId={1}.",
-                    mediaType,
-                    folderId.HasValue ? folderId.Value.ToString() : "null");
+                    request.MediaType,
+                    request.FolderId.HasValue ? request.FolderId.Value.ToString() : "null");
                 Logger.Error(message, inner);
                 throw new CmsApiException(message, inner);
             }
@@ -105,22 +99,20 @@ namespace BetterCms.Api
         /// The list of tag entities
         /// </returns>
         /// <exception cref="CmsApiException"></exception>
-        public IList<MediaImage> GetImages(GetDataRequest<MediaImage> request = null)
+        public DataListResponse<MediaImage> GetImages(GetImagesRequest request)
         {
             try
             {
-                if (request == null)
-                {
-                    request = new GetDataRequest<MediaImage>();
-                }
-                request.SetDefaultOrder(i => i.Title);
-
-                return Repository
+                var query = Repository
                     .AsQueryable<MediaImage>()
-                    .ApplyFilters(request)
+                    .ApplyFilters(request);
+
+                var totalCount = query.ToRowCountFutureValue(request);
+                query = query
                     .AddOrderAndPaging(request)
-                    .Fetch(m => m.Folder)
-                    .ToList();
+                    .Fetch(m => m.Folder);
+
+                return query.ToDataListResponse(totalCount);
             }
             catch (Exception inner)
             {
@@ -138,22 +130,21 @@ namespace BetterCms.Api
         /// The list of media file entities
         /// </returns>
         /// <exception cref="CmsApiException"></exception>
-        public IList<MediaFile> GetFiles(GetDataRequest<MediaFile> request = null)
+        public DataListResponse<MediaFile> GetFiles(GetFilesRequest request)
         {
             try
             {
-                if (request == null)
-                {
-                    request = new GetDataRequest<MediaFile>();
-                }
-                request.SetDefaultOrder(f => f.Title);
-
-                return Repository
+                var query = Repository
                     .AsQueryable<MediaFile>()
                     .Where(m => m.Type == MediaType.File)
-                    .ApplyFilters(request)
+                    .ApplyFilters(request);
+
+                var totalCount = query.ToRowCountFutureValue(request);
+                query = query
                     .AddOrderAndPaging(request)
-                    .Fetch(m => m.Folder).ToList();
+                    .Fetch(m => m.Folder);
+
+                return query.ToDataListResponse(totalCount);
             }
             catch (Exception inner)
             {
@@ -166,33 +157,31 @@ namespace BetterCms.Api
         /// <summary>
         /// Gets the list of media folder entities.
         /// </summary>
-        /// <param name="mediaType">Type of the media.</param>
         /// <param name="request">The request.</param>
         /// <returns>
         /// The list of folder entities
         /// </returns>
         /// <exception cref="CmsApiException"></exception>
-        public IList<MediaFolder> GetFolders(MediaType mediaType, GetDataRequest<MediaFolder> request = null)
+        public DataListResponse<MediaFolder> GetFolders(GetFoldersRequest request)
         {
             try
             {
-                if (request == null)
-                {
-                    request = new GetDataRequest<MediaFolder>();
-                }
-                request.SetDefaultOrder(f => f.Title);
-
-                return Repository
+                var query = Repository
                     .AsQueryable<MediaFolder>()
-                    .Where(f => f.Type == mediaType)
-                    .ApplyFilters(request)
+                    .Where(f => f.Type == request.MediaType)
+                    .ApplyFilters(request);
+
+                var totalCount = query.ToRowCountFutureValue(request);
+                query = query
                     .AddOrderAndPaging(request)
-                    .Fetch(m => m.Folder)
-                    .ToList();
+                    .Fetch(m => m.Folder);
+
+                return query.ToDataListResponse(totalCount);
+
             }
             catch (Exception inner)
             {
-                var message = string.Format("Failed to get folders list for media type={0}.", mediaType);
+                var message = string.Format("Failed to get folders list for media type={0}.", request.MediaType);
                 Logger.Error(message, inner);
                 throw new CmsApiException(message, inner);
             }
