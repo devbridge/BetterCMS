@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Web.Mvc;
 
 using Autofac;
 
@@ -175,6 +177,10 @@ namespace BetterCms.Module.Blog
             if (args != null && args.RenderPageData != null)
             {
                 args.RenderPageData.ExtendWithBlogData(args.PageData);
+                if (args.RenderPageData.IsBlogPost() && !args.RenderPageData.IsBlogPostActive() && !args.RenderPageData.CanManageContent)
+                {
+                    args.RenderPageData.ActionResult = new HttpNotFoundResult();
+                }
             }
         }
     }

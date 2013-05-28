@@ -80,7 +80,14 @@ namespace BetterCms.Api
                     query = query.Where(b => b.IsPublic);
                 }
 
+                if (!request.IncludeNotActive)
+                {
+                    query = query.Where(b => DateTime.Now < b.ActivationDate || (b.ExpirationDate.HasValue && b.ExpirationDate.Value < DateTime.Now));
+                }
+
                 var totalCount = query.ToRowCountFutureValue(request);
+
+                query = query.Fetch(b => b.Author);
 
                 query = query
                     .AddOrderAndPaging(request)

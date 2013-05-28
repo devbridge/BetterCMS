@@ -54,9 +54,9 @@ namespace BetterCms.Api
                     .Fetch(c => c.Region)
                     .FetchMany(c => c.Options);
 
-                if (!request.IncludeUnpublished)
+                if (!request.IncludeNotActive)
                 {
-                    return RemoveUnpublishedContents(query.ToList());
+                    return RemoveInactiveContents(query.ToList());
                 }
                 return query.ToList();
             }
@@ -106,9 +106,9 @@ namespace BetterCms.Api
                     .Fetch(c => c.Region)
                     .FetchMany(c => c.Options);
 
-                if (!request.IncludeUnpublished)
+                if (!request.IncludeNotActive)
                 {
-                    return RemoveUnpublishedContents(query.ToList());
+                    return RemoveInactiveContents(query.ToList());
                 }
                 return query.ToList();
             }
@@ -685,7 +685,10 @@ namespace BetterCms.Api
         /// Removes the unpublished contents.
         /// </summary>
         /// <param name="contents">The contents.</param>
-        private IList<PageContent> RemoveUnpublishedContents(IList<PageContent> contents)
+        /// <returns>
+        /// Results with excluded inactive contents
+        /// </returns>
+        private IList<PageContent> RemoveInactiveContents(IList<PageContent> contents)
         {
             var filteredContents = new List<PageContent>(contents.Count);
 
