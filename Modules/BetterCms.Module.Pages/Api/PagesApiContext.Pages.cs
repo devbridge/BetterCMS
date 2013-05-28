@@ -151,6 +151,8 @@ namespace BetterCms.Api
                     category = null;
                 }
 
+                UnitOfWork.BeginTransaction();
+
                 var page = pageDto.ToPageProperties();
                 page.Layout = layout;
                 page.Image = image;
