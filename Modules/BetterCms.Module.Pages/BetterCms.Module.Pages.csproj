@@ -122,6 +122,7 @@
     <Compile Include="Accessors\PageJavaScriptAccessor.cs" />
     <Compile Include="Api\DataContracts\GetPageContentsRequest.cs" />
     <Compile Include="Api\DataContracts\GetRegionContentsRequest.cs" />
+    <Compile Include="Helpers\Extensions\RenderPageViewModelExtensions.cs" />
     <Compile Include="Mvc\Attributes\ValidVirtualPathValidationAttribute.cs" />
     <Compile Include="Api\DataContracts\AddWidgetToPageRequest.cs" />
     <Compile Include="Api\DataContracts\CreateHtmlContentWidgetRequest.cs" />
