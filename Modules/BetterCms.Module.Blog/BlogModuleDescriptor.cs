@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Web.Mvc;
 
 using Autofac;
 
@@ -14,6 +16,7 @@ using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Pages.Accessors;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Api.Events;
+using BetterCms.Module.Root.ViewModels.Cms;
 
 namespace BetterCms.Module.Blog
 {
@@ -175,6 +178,10 @@ namespace BetterCms.Module.Blog
             if (args != null && args.RenderPageData != null)
             {
                 args.RenderPageData.ExtendWithBlogData(args.PageData);
+                if (args.RenderPageData.IsBlogPost() && !args.RenderPageData.IsBlogPostActive() && !args.RenderPageData.CanManageContent)
+                {
+                    args.EventResult = PageRetrievedEventResult.ForcePageNotFound;
+                }
             }
         }
     }

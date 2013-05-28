@@ -235,6 +235,7 @@
     <Compile Include="ViewModels\Authentication\InfoViewModel.cs" />
     <Compile Include="ViewModels\Cms\CmsRequestViewModel.cs" />
     <Compile Include="ViewModels\Cms\PageRegionViewModel.cs" />
+    <Compile Include="DataContracts\Enums\PageRetrievedEventResults.cs" />
     <Compile Include="ViewModels\Cms\RedirectViewModel.cs" />
     <Compile Include="ViewModels\Cms\RenderPageViewModel.cs" />
     <Compile Include="ViewModels\PageProjectionsViewModel.cs" />

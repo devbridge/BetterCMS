@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 
-using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.Api.DataContracts;
+using BetterCms.Core.Api.Extensions;
+
 using BetterCms.Core.Exceptions.Api;
 using BetterCms.Core.Exceptions.DataTier;
+using BetterCms.Module.Pages.Api.DataContracts;
 using BetterCms.Module.Pages.Models;
 
 // ReSharper disable CheckNamespace
 namespace BetterCms.Api
 // ReSharper restore CheckNamespace
 {
-    public partial class PagesApiContext : DataApiContext
+    public partial class PagesApiContext
     {
         /// <summary>
         /// Gets the sitemap tree.
@@ -55,22 +56,16 @@ namespace BetterCms.Api
         /// <summary>
         /// Gets the nodes.
         /// </summary>
-        /// <param name="filter">The filter.</param>
-        /// <param name="order">The order.</param>
-        /// <param name="orderDescending">if set to <c>true</c> [order descending].</param>
-        /// <param name="pageNumber">The page number.</param>
-        /// <param name="itemsPerPage">The items per page.</param>
-        /// <returns>Returns the list with sitemap nodes.</returns>
-        public IList<SitemapNode> GetNodes(Expression<Func<SitemapNode, bool>> filter = null, Expression<Func<SitemapNode, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
+        /// <param name="request">The request.</param>
+        /// <returns>
+        /// Returns the list with sitemap nodes.
+        /// </returns>
+        /// <exception cref="CmsApiException"></exception>
+        public DataListResponse<SitemapNode> GetNodes(GetNodesRequest request = null)
         {
             try
             {
-                if (order == null)
-                {
-                    order = p => p.Title;
-                }
-
-                return Repository.AsQueryable(filter, order, orderDescending, pageNumber, itemsPerPage).ToList();
+                return Repository.ToDataListResponse(request);
             }
             catch (Exception inner)
             {

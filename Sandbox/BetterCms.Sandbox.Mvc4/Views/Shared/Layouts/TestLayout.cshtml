@@ -1,5 +1,6 @@
 ﻿@using BetterCms.Module.Root.Mvc.Helpers
-@model BetterCms.Core.DataContracts.IPage
+@using BetterCms.Module.Pages.Helpers.Extensions
+@model BetterCms.Module.Root.ViewModels.Cms.RenderPageViewModel
 
 @{
     Layout = "~/Areas/bcms-Root/Views/Shared/BaseLayout.cshtml";
@@ -34,6 +35,33 @@
             @RenderSection("CMSHeader", false)
         </div>
     </header>
+    
+    @{
+        var image = Model.GetPageImage();
+        if (image != null)
+        {
+            <p><b>Image:</b></p>
+            <p><img src="@image.PublicUrl" alt="@image.Title"/></p>
+        }
+        
+        var tags = Model.GetPageTags();
+        if (tags != null && tags.Count > 0)
+        {
+            <p><b>Tags:</b></p>
+            <ul>
+                @foreach (var pageTag in tags)
+                {
+                    <li>@pageTag.Tag.Name</li>
+                }
+            </ul>
+        }
+
+        var category = Model.GetPageCategory();
+        if (category != null)
+        {
+            <p><b>Category:</b> @category.Name</p>
+        }
+    }
 
     <div class="page-block">
         <div class="page-frame clearfix">

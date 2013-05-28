@@ -117,9 +117,13 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Api\DataApiContext.cs" />
+    <Compile Include="Api\DataContracts\DataListResponse.cs" />
+    <Compile Include="Api\DataContracts\GetDataRequest.cs" />
+    <Compile Include="Api\DataContracts\GetFilteredDataRequest.cs" />
     <Compile Include="Api\Events\EventBase.cs" />
     <Compile Include="Api\Events\CoreEvents.cs" />
     <Compile Include="Api\Events\SingleItemEventArgs.cs" />
+    <Compile Include="Api\Extensions\ApiQueryableExtensions.cs" />
     <Compile Include="CmsContext.cs" />
     <Compile Include="Api\ApiContext.cs" />
     <Compile Include="DataAccess\DataContext\Migrations\ContentMigration.cs" />
@@ -138,7 +142,7 @@
     <Compile Include="DataAccess\DataContext\Migrations\DefaultMigrationRunner.cs" />
     <Compile Include="DataAccess\DataContext\Migrations\IMigrationRunner.cs" />
     <Compile Include="DataAccess\DataContext\Migrations\MigrationExtensions.cs" />
-    <Compile Include="DataAccess\DataContext\RepositoryExtensions.cs" />
+    <Compile Include="Api\Extensions\ApiRepositoryExtensions.cs" />
     <Compile Include="DataAccess\DataContext\RestrictionsExtensions.cs" />
     <Compile Include="DataAccess\DataContext\SessionExtensions.cs" />
     <Compile Include="DataContracts\Enums\ContentStatus.cs" />

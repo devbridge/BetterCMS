@@ -110,9 +110,14 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             renderPageViewModel.Html5ShivJsPath = VirtualPath.Combine(rootModuleDescriptor.JsBasePath, "html5shiv.js");
 
             // Notify about retrieved page.
-            RootApiContext.Events.OnPageRetrieved(renderPageViewModel, page);
-
-            return new CmsRequestViewModel(renderPageViewModel);
+            var result = RootApiContext.Events.OnPageRetrieved(renderPageViewModel, page);
+            switch (result)
+            {
+                case PageRetrievedEventResult.ForcePageNotFound:
+                    return null;
+                default:
+                    return new CmsRequestViewModel(renderPageViewModel);
+            }
         }
 
         private PageContentProjection CreatePageContentProjection(GetPageToRenderRequest request, PageContent pageContent)
