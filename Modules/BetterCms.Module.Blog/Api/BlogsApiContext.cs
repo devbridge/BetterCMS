@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 using Autofac;
 
 using BetterCms.Core.Api.DataContracts;
+using BetterCms.Core.Api.Extensions;
 using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Api;
 using BetterCms.Module.Blog.Api.DataContracts;
@@ -63,7 +62,7 @@ namespace BetterCms.Api
         /// The list of blog entities
         /// </returns>
         /// <exception cref="CmsApiException"></exception>
-        public IList<BlogPost> GetBlogPosts(GetBlogPostsRequest request)
+        public DataListResponse<BlogPost> GetBlogPosts(GetBlogPostsRequest request)
         {
             try
             {
@@ -81,9 +80,13 @@ namespace BetterCms.Api
                     query = query.Where(b => b.IsPublic);
                 }
 
-                query = query.Fetch(b => b.Author);
+                var totalCount = query.ToRowCountFutureValue(request);
 
-                return query.ToList();
+                query = query
+                    .AddOrderAndPaging(request)
+                    .Fetch(b => b.Author);
+
+                return query.ToDataListResponse(totalCount);
             }
             catch (Exception inner)
             {
@@ -102,21 +105,22 @@ namespace BetterCms.Api
         /// The list of tag entities
         /// </returns>
         /// <exception cref="CmsApiException"></exception>
-        public IList<Author> GetAuthors(GetDataRequest<Author> request = null)
+        public DataListResponse<Author> GetAuthors(GetAuthorsRequest request)
         {
             try
             {
-                if (request == null)
-                {
-                    request = new GetDataRequest<Author>();
-                }
-                request.SetDefaultOrder(a => a.Name);
-
-                return Repository
+                var query = Repository
                     .AsQueryable<Author>()
-                    .ApplyFilters(request)
-                    .Fetch(a => a.Image)
-                    .ToList();
+                    .ApplyFilters(request);
+
+                var totalCount = query.ToRowCountFutureValue(request);
+
+                query = query
+                    .AddOrderAndPaging(request)
+                    .Fetch(a => a.Image);
+
+                return query.ToDataListResponse(totalCount);
+
             }
             catch (Exception inner)
             {

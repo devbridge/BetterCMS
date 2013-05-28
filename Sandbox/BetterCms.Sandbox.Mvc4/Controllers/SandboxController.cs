@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -11,8 +10,8 @@ using BetterCms.Core;
 using BetterCms.Core.Api.DataContracts;
 using BetterCms.Module.Blog.Api.DataContracts;
 using BetterCms.Module.Blog.Models;
+using BetterCms.Module.Pages.Api.DataContracts;
 using BetterCms.Module.Pages.Models;
-using BetterCms.Module.Root.Models;
 using BetterCms.Sandbox.Mvc4.Models;
 
 namespace BetterCms.Sandbox.Mvc4.Controllers
@@ -76,34 +75,58 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
 
             var message = string.Empty;
 
-            IList<BlogPost> results;
+            DataListResponse<BlogPost> results;
             using (var api = CmsContext.CreateApiContextOf<BlogsApiContext>())
             {
-                /*var request = new GetDataRequest<Layout>(3, 2, orderDescending:true, order:t =>t.Name);
-                results = pagesApi.GetLayouts(request);*/
-
-                /*var request = new GetDataRequest<LayoutRegion>(orderDescending: true, order: t => t.Region.RegionIdentifier);
-                request.AddPaging(2, 2);*/
-
-                var request = new GetBlogPostsRequest(b => b.Title.ToLower().Contains("ub"));
-                results = api.GetBlogPosts(request);
-
-                request = new GetBlogPostsRequest(order: b => b.Title, orderDescending: true, includePrivate: true, includeUnpublished: true);
-                request.AddPaging(3, 3);
-                results = api.GetBlogPosts(request);
-
-                if (results.Count > 0)
+                using (var papi = CmsContext.CreateApiContextOf<PagesApiContext>())
                 {
-                    message = string.Format("{0}<br /> Item titles: {1}", message, string.Join("; ", results.Select(t => t.Title)));
+                    var aRequest = new GetLayoutsRequest();
+                    var aresults = papi.GetLayouts(aRequest);
+
+                    if (aresults.Items.Count > 0)
+                    {
+                        message = string.Format("{0}<br />Total count:{2},  Item titles: {1}", message, string.Join("; ", aresults.Items.Select(t => t.Name)), aresults.TotalCount);
+                    }
+
+                    aRequest = new GetLayoutsRequest(a => a.Name.ToLower().Contains("Default"), itemsCount: 2, order: o => o.Name, orderDescending: true);
+                    aresults = papi.GetLayouts(aRequest);
+
+                    if (aresults.Items.Count > 0)
+                    {
+                        message = string.Format("{0}<br />Total count:{2},  Item titles: {1}", message, string.Join("; ", aresults.Items.Select(t => t.Name)), aresults.TotalCount);
+                    }
+
+                    /*var request = new GetDataRequest<Layout>(3, 2, orderDescending:true, order:t =>t.Name);
+                    results = pagesApi.GetLayouts(request);*/
+
+                    /*var request = new GetDataRequest<LayoutRegion>(orderDescending: true, order: t => t.Region.RegionIdentifier);
+                    request.AddPaging(2, 2);*/
+
+                    /*
+                    var request = new GetBlogPostsRequest(b => b.Title.Contains("UB"), includePrivate: true, includeUnpublished: true, itemsCount: 1);
+                    results = api.GetBlogPosts(request);
+
+                    if (results.Items.Count > 0)
+                    {
+                        message = string.Format(
+                            "{0}<br />Total count:{2},  Item titles: {1}", message, string.Join("; ", results.Items.Select(t => t.Title)), results.TotalCount);
+                    }
+
+                    request = new GetBlogPostsRequest(order: b => b.Title, orderDescending: true, includePrivate: true, includeUnpublished: true);
+                    request.AddPaging(3, 3);
+                    results = api.GetBlogPosts(request);
+
+                    if (results.Items.Count > 0)
+                    {
+                        message = string.Format(
+                            "{0}<br />Total count:{2}, Item titles: {1}", message, string.Join("; ", results.Items.Select(t => t.Title)), results.TotalCount);
+                    }
+
+                    request = new GetBlogPostsRequest(
+                        order: b => b.Title, orderDescending: true, itemsCount: 5, startItemNumber: 3, includeUnpublished: true, includePrivate: true);
+                    results = api.GetBlogPosts(request);
+                    */
                 }
-
-                request = new GetBlogPostsRequest(order:b => b.Title, orderDescending:true, itemsCount:5, startItemNumber:3, includeUnpublished:true, includePrivate:true);
-                results = api.GetBlogPosts(request);
-            }
-
-            if (results.Count > 0)
-            {
-                message = string.Format("{0}<br /> Item titles: {1}", message, string.Join("; ", results.Select(t => t.Title)));
             }
 
             return Content(message);

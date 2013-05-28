@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.Api.DataContracts;
+using BetterCms.Core.Api.Extensions;
 using BetterCms.Module.Pages.Api.DataContracts;
 
 using NHibernate.Linq;
@@ -27,22 +28,23 @@ namespace BetterCms.Api
         /// The list of layout entities
         /// </returns>
         /// <exception cref="CmsApiException"></exception>
-        public IList<Layout> GetLayouts(GetDataRequest<Layout> request = null)
+        public DataListResponse<Layout> GetLayouts(GetLayoutsRequest request)
         {
             try
             {
-                if (request == null)
-                {
-                    request = new GetDataRequest<Layout>();
-                }
-                request.SetDefaultOrder(l => l.Name);
-
-                return Repository
+                var result = Repository
                         .AsQueryable<Layout>()
-                        .ApplyFilters(true, request)
+                        .ApplyFiltersWithChildren(request);
+                
+                var query = result.Item1;
+                var totalCount = result.Item2;
+
+                query = query
+                        .AddOrder(request)
                         .FetchMany(l => l.LayoutRegions)
-                        .ThenFetch(l => l.Region)
-                        .ToList();
+                        .ThenFetch(l => l.Region);
+
+                return query.ToDataListResponse(totalCount);
             }
             catch (Exception inner)
             {

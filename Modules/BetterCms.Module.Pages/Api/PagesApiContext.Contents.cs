@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.Api.DataContracts;
+using BetterCms.Core.Api.Extensions;
 using BetterCms.Module.Pages.Api.DataContracts;
 using BetterCms.Module.Pages.Api.DataContracts.Models;
 
@@ -337,6 +338,7 @@ namespace BetterCms.Api
                 return historyService.GetContentHistory(contentId, new SearchableGridOptions())
                     .AsQueryable()
                     .ApplyFilters(request)
+                    .AddOrder(request)
                     .ToList();
             }
             catch (Exception inner)

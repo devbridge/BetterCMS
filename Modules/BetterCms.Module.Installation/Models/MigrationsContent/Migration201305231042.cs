@@ -93,10 +93,10 @@ namespace BetterCms.Module.Installation.Models.MigrationsContent
 
         private static Layout AddLayout(PagesApiContext pagesApi)
         {
-            var layouts = pagesApi.GetLayouts(new GetDataRequest<Layout>(l => l.LayoutPath == Template.LayoutPath));
-            if (layouts.Count > 0)
+            var layouts = pagesApi.GetLayouts(new GetLayoutsRequest(l => l.LayoutPath == Template.LayoutPath));
+            if (layouts.Items.Count > 0)
             {
-                return layouts[0];
+                return layouts.Items[0];
             }
 
             var request = new CreateLayoutRequest()
