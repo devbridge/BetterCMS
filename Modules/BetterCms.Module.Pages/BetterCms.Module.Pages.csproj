@@ -120,7 +120,20 @@
     </Compile>
     <Compile Include="Accessors\PageStylesheetAccessor.cs" />
     <Compile Include="Accessors\PageJavaScriptAccessor.cs" />
+    <Compile Include="Api\DataContracts\GetPageRequest.cs" />
+    <Compile Include="Api\DataContracts\GetPagesRequest.cs" />
+    <Compile Include="Api\DataContracts\GetContentHistoryRequest.cs" />
+    <Compile Include="Api\DataContracts\GetPageWidgetsRequest.cs" />
+    <Compile Include="Api\DataContracts\GetHtmlContentWidgetsRequest.cs" />
+    <Compile Include="Api\DataContracts\GetServerControlWidgetsRequest.cs" />
+    <Compile Include="Api\DataContracts\GetWidgetsRequest.cs" />
+    <Compile Include="Api\DataContracts\GetTagsRequest.cs" />
+    <Compile Include="Api\DataContracts\GetRedirectsRequest.cs" />
+    <Compile Include="Api\DataContracts\GetCategoriesRequest.cs" />
+    <Compile Include="Api\DataContracts\GetLayoutRegionsRequest.cs" />
+    <Compile Include="Api\DataContracts\GetRegionsRequest.cs" />
     <Compile Include="Api\DataContracts\GetLayoutsRequest.cs" />
+    <Compile Include="Api\DataContracts\GetNodesRequest.cs" />
     <Compile Include="Api\DataContracts\GetPageContentsRequest.cs" />
     <Compile Include="Api\DataContracts\GetRegionContentsRequest.cs" />
     <Compile Include="Helpers\Extensions\RenderPageViewModelExtensions.cs" />

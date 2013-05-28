@@ -111,7 +111,7 @@ namespace BetterCms.Api
         /// The list of tag entities
         /// </returns>
         /// <exception cref="CmsApiException"></exception>
-        public DataListResponse<Author> GetAuthors(GetAuthorsRequest request)
+        public DataListResponse<Author> GetAuthors(GetAuthorsRequest request = null)
         {
             try
             {

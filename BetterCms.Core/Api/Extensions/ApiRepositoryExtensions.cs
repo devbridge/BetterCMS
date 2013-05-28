@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-using BetterCms.Core.Api.DataContracts;
+﻿using BetterCms.Core.Api.DataContracts;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.Models;
 
@@ -11,21 +9,6 @@ namespace BetterCms.Core.Api.Extensions
     /// </summary>
     public static class ApiRepositoryExtensions
     {
-        /// <summary>
-        /// Returns query with filters, sorting and paging applied.
-        /// </summary>
-        /// <typeparam name="TEntity">The type of the entity.</typeparam>
-        /// <param name="repository">The repository.</param>
-        /// <param name="request">The request.</param>
-        /// <returns> IQueryable entity </returns>
-        public static IQueryable<TEntity> AsQueryable<TEntity>(this IRepository repository, GetDataRequest<TEntity> request) where TEntity : Entity
-        {
-            return repository
-                .AsQueryable<TEntity>()
-                .ApplyFilters(request)
-                .AddOrderAndPaging(request);
-        }
-
         /// <summary>
         /// Returns data list response with filters, sorting and paging applied.
         /// </summary>

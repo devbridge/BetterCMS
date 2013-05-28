@@ -33,7 +33,7 @@ namespace BetterCms.Test.Module.Navigation.ServicesTests
 
                 var nodes = service.GetNodes();
                 Assert.IsNotNull(nodes);
-                Assert.AreEqual(sitemap.Count(), nodes.Count);
+                Assert.AreEqual(sitemap.Count(), nodes.Items.Count);
             }
         }
 

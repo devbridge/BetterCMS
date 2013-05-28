@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 using BetterCms.Core.Api.DataContracts;
 using BetterCms.Core.Api.Extensions;
-using BetterCms.Core.DataAccess.DataContext;
+
 using BetterCms.Core.Exceptions.Api;
 using BetterCms.Core.Exceptions.DataTier;
+using BetterCms.Module.Pages.Api.DataContracts;
 using BetterCms.Module.Pages.Models;
 
 // ReSharper disable CheckNamespace
@@ -61,17 +61,11 @@ namespace BetterCms.Api
         /// Returns the list with sitemap nodes.
         /// </returns>
         /// <exception cref="CmsApiException"></exception>
-        public IList<SitemapNode> GetNodes(GetDataRequest<SitemapNode> request = null)
+        public DataListResponse<SitemapNode> GetNodes(GetNodesRequest request = null)
         {
             try
             {
-                if (request == null)
-                {
-                    request = new GetDataRequest<SitemapNode>();
-                }
-                request.SetDefaultOrder(s => s.Title);
-
-                return Repository.AsQueryable(request).ToList();
+                return Repository.ToDataListResponse(request);
             }
             catch (Exception inner)
             {

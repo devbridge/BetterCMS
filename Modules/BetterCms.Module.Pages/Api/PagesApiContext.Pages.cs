@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.Api.DataContracts;
@@ -11,6 +10,7 @@ using NHibernate.Linq;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Api;
+
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.DataContracts.Enums;
 using BetterCms.Module.Pages.Models;
@@ -30,41 +30,35 @@ namespace BetterCms.Api
         /// Gets the list of page property entities.
         /// </summary>
         /// <param name="request">The request.</param>
-        /// <param name="loadChilds">Flags, which childs to load.</param>
-        /// <param name="includeUnpublished">if set to <c>true</c> include unpublished pages.</param>
-        /// <param name="includePrivate">if set to <c>true</c> include private pages.</param>
         /// <returns>
         /// The list of property entities
         /// </returns>
         /// <exception cref="CmsApiException"></exception>
-        public IList<PageProperties> GetPages(GetDataRequest<PageProperties> request = null, PageLoadableChilds loadChilds = PageLoadableChilds.None, bool includeUnpublished = false, bool includePrivate = false)
+        public DataListResponse<PageProperties> GetPages(GetPagesRequest request)
         {
             try
             {
-                if (request == null)
-                {
-                    request = new GetDataRequest<PageProperties>();
-                }
-                request.SetDefaultOrder(p => p.Title);
-
                 var query = Repository
-                    .AsQueryable<PageProperties>()
-                    .ApplyFiltersWithChildren(request)
-                    .Item1;
+                    .AsQueryable<PageProperties>();
 
-                if (!includeUnpublished)
+                if (!request.IncludeUnpublished)
                 {
                     query = query.Where(b => b.Status == PageStatus.Published);
                 }
 
-                if (!includePrivate)
+                if (!request.IncludePrivate)
                 {
                     query = query.Where(b => b.IsPublic);
                 }
 
-                query = FetchPageChilds(query, loadChilds);
+                var result = query.ApplyFiltersWithChildren(request);
+                query = result.Item1;
+                var totalCount = result.Item2;
 
-                return query.ToList();
+                query = query.AddOrder(request);
+                query = FetchPageChilds(query, request.LoadChilds);
+
+                return query.ToDataListResponse(totalCount);
             }
             catch (Exception inner)
             {
@@ -98,26 +92,26 @@ namespace BetterCms.Api
         /// <summary>
         /// Gets the page entity.
         /// </summary>
-        /// <param name="id">The id.</param>
-        /// <param name="loadChilds">Flags, which childs to load.</param>
+        /// <param name="request">The request.</param>
         /// <returns>
         /// Page entity
         /// </returns>
-        public PageProperties GetPage(Guid id, PageLoadableChilds loadChilds = PageLoadableChilds.All)
+        /// <exception cref="CmsApiException"></exception>
+        public PageProperties GetPage(GetPageRequest request)
         {
             try
             {
                 var query = Repository
                     .AsQueryable<PageProperties>()
-                    .Where(p => p.Id == id);
+                    .Where(p => p.Id == request.Id);
 
-                return FetchPageChilds(query, loadChilds)
+                return FetchPageChilds(query, request.LoadChilds)
                     .ToList()
                     .FirstOne();
             }
             catch (Exception inner)
             {
-                var message = string.Format("Failed to get page exists by id:{0}", id);
+                var message = string.Format("Failed to get page exists by id:{0}", request.Id);
                 Logger.Error(message, inner);
                 throw new CmsApiException(message, inner);
             }

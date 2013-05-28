@@ -99,7 +99,7 @@ namespace BetterCms.Api
         /// The list of tag entities
         /// </returns>
         /// <exception cref="CmsApiException"></exception>
-        public DataListResponse<MediaImage> GetImages(GetImagesRequest request)
+        public DataListResponse<MediaImage> GetImages(GetImagesRequest request = null)
         {
             try
             {
@@ -130,7 +130,7 @@ namespace BetterCms.Api
         /// The list of media file entities
         /// </returns>
         /// <exception cref="CmsApiException"></exception>
-        public DataListResponse<MediaFile> GetFiles(GetFilesRequest request)
+        public DataListResponse<MediaFile> GetFiles(GetFilesRequest request = null)
         {
             try
             {
