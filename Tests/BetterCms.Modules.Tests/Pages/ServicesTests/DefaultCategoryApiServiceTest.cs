@@ -29,6 +29,7 @@ namespace BetterCms.Test.Module.Pages.ServicesTests
 
                 Assert.IsNotNull(categories);
                 Assert.AreEqual(categories.Items.Count, 2);
+                Assert.AreEqual(categories.TotalCount, 2);
 
                 var category = categories.Items.FirstOrDefault(l => category1.Id == l.Id);
                 Assert.IsNotNull(category);
@@ -50,6 +51,7 @@ namespace BetterCms.Test.Module.Pages.ServicesTests
 
                 Assert.IsNotNull(categories);
                 Assert.IsEmpty(categories.Items);
+                Assert.AreEqual(categories.TotalCount, 0);
             }
         }
     }

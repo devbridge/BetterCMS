@@ -29,6 +29,7 @@ namespace BetterCms.Test.Module.Pages.ServicesTests
 
                 Assert.IsNotNull(redirects);
                 Assert.AreEqual(redirects.Items.Count, 2);
+                Assert.AreEqual(redirects.TotalCount, 2);
 
                 var redirect = redirects.Items.FirstOrDefault(l => redirect1.Id == l.Id);
                 Assert.IsNotNull(redirect);
@@ -51,6 +52,7 @@ namespace BetterCms.Test.Module.Pages.ServicesTests
 
                 Assert.IsNotNull(redirects);
                 Assert.IsEmpty(redirects.Items);
+                Assert.AreEqual(redirects.TotalCount, 0);
             }
         }
     }

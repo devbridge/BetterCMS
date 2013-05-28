@@ -27,6 +27,7 @@ namespace BetterCms.Test.Module.Pages.ServicesTests
 
                 Assert.IsNotNull(tags);
                 Assert.AreEqual(tags.Items.Count, fakeTags.Count);
+                Assert.AreEqual(tags.TotalCount, fakeTags.Count);
 
                 var fakeTag = fakeTags[0];
                 var tag = tags.Items.FirstOrDefault(l => fakeTag.Id == l.Id);
@@ -47,6 +48,7 @@ namespace BetterCms.Test.Module.Pages.ServicesTests
 
                 Assert.IsNotNull(tags);
                 Assert.AreEqual(tags.Items.Count, 3);
+                Assert.AreEqual(tags.TotalCount, 3);
 
                 var fakeTag = fakeTags.First(t => t.Name == "Tag3");
                 var tag = tags.Items[0];
@@ -69,6 +71,7 @@ namespace BetterCms.Test.Module.Pages.ServicesTests
 
                 Assert.IsNotNull(tags);
                 Assert.AreEqual(tags.Items.Count, 1);
+                Assert.AreEqual(tags.TotalCount, 3);
 
                 var fakeTag = fakeTags.First(t => t.Name == "Tag2");
                 var tag = tags.Items[0];
@@ -91,6 +94,7 @@ namespace BetterCms.Test.Module.Pages.ServicesTests
 
                 Assert.IsNotNull(tags);
                 Assert.IsEmpty(tags.Items);
+                Assert.AreEqual(tags.TotalCount, 0);
             }
         }
 
