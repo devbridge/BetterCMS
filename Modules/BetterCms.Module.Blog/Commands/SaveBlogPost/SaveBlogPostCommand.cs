@@ -289,6 +289,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             {
                 case ContentStatus.Published:
                     blogPost.Status = PageStatus.Published;
+                    blogPost.PublishedOn = DateTime.Now;
                     break;
                 case ContentStatus.Draft:
                     blogPost.Status = PageStatus.Unpublished;
