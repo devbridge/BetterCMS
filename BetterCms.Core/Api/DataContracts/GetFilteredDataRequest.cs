@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace BetterCms.Core.Api.DataContracts
 {
-    public class GetFilteredDataRequest<TEntity>
+    public abstract class GetFilteredDataRequest<TEntity>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GetFilteredDataRequest{TEntity}" /> class.

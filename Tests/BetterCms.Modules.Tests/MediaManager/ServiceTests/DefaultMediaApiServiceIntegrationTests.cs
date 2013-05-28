@@ -5,7 +5,7 @@ using BetterCms.Api;
 using BetterCms.Core.Api.DataContracts;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
-
+using BetterCms.Module.MediaManager.Api.DataContracts;
 using BetterCms.Module.MediaManager.Models;
 
 using NHibernate;
@@ -28,12 +28,12 @@ namespace BetterCms.Test.Module.MediaManager.ServiceTests
                 using (var api = new MediaManagerApiContext(Container.BeginLifetimeScope(), repository))
                 {                                                            
                     // Images1 folder has 2 images and 2 folders
-                    var folder = medias.First(m => m is MediaFolder && m.Title == "Images1");
-                    var folderMedias = api.GetFolderMedias(MediaType.Image, folder.Id);
+                    var folder = medias.First( m => m is MediaFolder && m.Title == "Images1");
+                    var folderMedias = api.GetFolderMedias(new GetFolderMediasRequest(MediaType.Image, folder.Id));
                     Assert.IsNotNull(folderMedias);
-                    Assert.AreEqual(folderMedias.Count, 4);
-                    Assert.AreEqual(folderMedias.Count(m => m is MediaImage), 2);
-                    Assert.AreEqual(folderMedias.Count(m => m is MediaFolder), 2);
+                    Assert.AreEqual(folderMedias.Items.Count, 4);
+                    Assert.AreEqual(folderMedias.Items.Count(m => m is MediaImage), 2);
+                    Assert.AreEqual(folderMedias.Items.Count(m => m is MediaFolder), 2);
                 }
             });
         }
@@ -48,11 +48,11 @@ namespace BetterCms.Test.Module.MediaManager.ServiceTests
                 using (var service = new MediaManagerApiContext(Container.BeginLifetimeScope(), repository))
                 {
                     // Root images folder has at least 2 folders and at least 3 files
-                    var request = new GetDataRequest<Media>(itemsCount:5);
+                    var request = new GetFolderMediasRequest(MediaType.Image, itemsCount: 5);
 
-                    var folderMedias = service.GetFolderMedias(MediaType.Image, request: request);
+                    var folderMedias = service.GetFolderMedias(request);
                     Assert.IsNotNull(folderMedias);
-                    Assert.AreEqual(folderMedias.Count, 5);
+                    Assert.AreEqual(folderMedias.Items.Count, 5);
                 }
             });
         }
@@ -67,9 +67,10 @@ namespace BetterCms.Test.Module.MediaManager.ServiceTests
                 using (var service = new MediaManagerApiContext(Container.BeginLifetimeScope(), repository))
                 {
                     // Root files folder has at least 1 folder and 1 file
-                    var folderMedias = service.GetFolderMedias(MediaType.File, request: new GetDataRequest<Media>(itemsCount: 2));
+                    var request = new GetFolderMediasRequest(MediaType.File, itemsCount: 2);
+                    var folderMedias = service.GetFolderMedias(request);
                     Assert.IsNotNull(folderMedias);
-                    Assert.AreEqual(folderMedias.Count, 2);
+                    Assert.AreEqual(folderMedias.Items.Count, 2);
                 }
             });
         }
@@ -83,9 +84,10 @@ namespace BetterCms.Test.Module.MediaManager.ServiceTests
                 var repository = CreateRepository(session);
                 using (var service = new MediaManagerApiContext(Container.BeginLifetimeScope(), repository))
                 {
-                    var images = service.GetImages(new GetDataRequest<MediaImage>(itemsCount: 3));
+                    var request = new GetImagesRequest(itemsCount: 3);
+                    var images = service.GetImages(request);
                     Assert.IsNotNull(images);
-                    Assert.AreEqual(images.Count, 3);
+                    Assert.AreEqual(images.Items.Count, 3);
                 }
             });
         }
@@ -100,13 +102,13 @@ namespace BetterCms.Test.Module.MediaManager.ServiceTests
                 using (var service = new MediaManagerApiContext(Container.BeginLifetimeScope(), repository))
                 {
                     var folder = medias.First(m => m is MediaFolder && m.Title == "Images1");
-                    var request = new GetDataRequest<MediaImage>(p => p.Folder.Id == folder.Id, orderDescending: true, order: p => p.Title);
+                    var request = new GetImagesRequest(p => p.Folder.Id == folder.Id, orderDescending: true, order: p => p.Title);
                     request.AddPaging(1, 2);
 
                     var images = service.GetImages(request);
                     Assert.IsNotNull(images);
-                    Assert.AreEqual(images.Count, 1);
-                    Assert.AreEqual(images[0].Title, "Image1__1");
+                    Assert.AreEqual(images.Items.Count, 1);
+                    Assert.AreEqual(images.Items[0].Title, "Image1__1");
                 }
             });
         }
@@ -121,13 +123,13 @@ namespace BetterCms.Test.Module.MediaManager.ServiceTests
                 using (var service = new MediaManagerApiContext(Container.BeginLifetimeScope(), repository))
                 {
                     var folder = medias.First(m => m is MediaFolder && m.Title == "Images1");
-                    var request = new GetDataRequest<MediaImage>(p => p.Folder.Id == folder.Id, order: p => p.Title);
+                    var request = new GetImagesRequest(p => p.Folder.Id == folder.Id, p => p.Title);
                     request.AddPaging(1, 2);
 
                     var images = service.GetImages(request);
                     Assert.IsNotNull(images);
-                    Assert.AreEqual(images.Count, 1);
-                    Assert.AreEqual(images[0].Title, "Image1__2");
+                    Assert.AreEqual(images.Items.Count, 1);
+                    Assert.AreEqual(images.Items[0].Title, "Image1__2");
                 }
             });
         }
@@ -141,9 +143,10 @@ namespace BetterCms.Test.Module.MediaManager.ServiceTests
                 var repository = CreateRepository(session);
                 using (var service = new MediaManagerApiContext(Container.BeginLifetimeScope(), repository))
                 {
-                    var images = service.GetImages(new GetDataRequest<MediaImage>(null, p => p.Title));
+                    var request = new GetImagesRequest(order: p => p.Title);
+                    var images = service.GetImages(request);
                     Assert.IsNotNull(images);
-                    Assert.GreaterOrEqual(images.Count, 0);
+                    Assert.GreaterOrEqual(images.Items.Count, 0);
                 }
             });
         }
@@ -158,10 +161,11 @@ namespace BetterCms.Test.Module.MediaManager.ServiceTests
 
                 using (var service = new MediaManagerApiContext(Container.BeginLifetimeScope(), repository))
                 {
-                    var files = service.GetFiles(new GetDataRequest<MediaFile>(itemsCount: 3));
+                    var request = new GetFilesRequest(itemsCount: 3);
+                    var files = service.GetFiles(request);
                     Assert.IsNotNull(files);
-                    Assert.GreaterOrEqual(files.Count, 1);
-                    Assert.LessOrEqual(files.Count, 3);
+                    Assert.GreaterOrEqual(files.Items.Count, 1);
+                    Assert.LessOrEqual(files.Items.Count, 3);
                 }
             });
         }
@@ -176,13 +180,15 @@ namespace BetterCms.Test.Module.MediaManager.ServiceTests
 
                 using (var service = new MediaManagerApiContext(Container.BeginLifetimeScope(), repository))
                 {
-                    var imageFolders = service.GetFolders(MediaType.Image, new GetDataRequest<MediaFolder>(itemsCount: 2));
+                    var request = new GetFoldersRequest(MediaType.Image, itemsCount: 2);
+                    var imageFolders = service.GetFolders(request);
                     Assert.IsNotNull(imageFolders);
-                    Assert.LessOrEqual(imageFolders.Count, 2);
+                    Assert.LessOrEqual(imageFolders.Items.Count, 2);
 
-                    var fileFolders = service.GetFolders(MediaType.File, new GetDataRequest<MediaFolder>(itemsCount: 2));
+                    request = new GetFoldersRequest(MediaType.File, itemsCount: 2);
+                    var fileFolders = service.GetFolders(request);
                     Assert.IsNotNull(fileFolders);
-                    Assert.LessOrEqual(fileFolders.Count, 2);
+                    Assert.LessOrEqual(fileFolders.Items.Count, 2);
                 }
             });
         }
