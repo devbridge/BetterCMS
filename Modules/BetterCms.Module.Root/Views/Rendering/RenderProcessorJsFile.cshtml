@@ -4,10 +4,10 @@
 /*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define */
 
-define('bcms.processor', [@Model.JavaScriptModules.RenderCommaSeparatedNames()], function (@Model.JavaScriptModules.RenderCommaSeparatedFriendlyNames()) {
+bettercms.define('bcms.processor', [@Model.JavaScriptModules.RenderCommaSeparatedNames()], function (@Model.JavaScriptModules.RenderCommaSeparatedFriendlyNames()) {
     'use strict';
     
-    var $ = require('bcms.jquery'),
+    var $ = bettercms.require('bcms.jquery'),
 
         processor = {},
 

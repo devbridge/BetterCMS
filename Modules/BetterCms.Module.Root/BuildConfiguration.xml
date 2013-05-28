@@ -57,6 +57,35 @@
           ThreadCulture="en-au"
           IsEvalIgnored="false"
        />
+    
+    <JavaScriptCompressorTask
+             SourceFiles="$(ProjectDir)Scripts\bcms.require-2.1.5.js"
+             OutputFile="$(ProjectDir)Scripts\bcms.require-2.1.5.min.js"
+             CompressionType="Standard"
+             ObfuscateJavaScript="True"
+             PreserveAllSemicolons="True"
+             DisableOptimizations="No"
+             EncodingType="Default"
+             LineBreakPosition="-1"
+             LoggingType="Info"
+             ThreadCulture="en-au"
+             IsEvalIgnored="false"
+       />
 
+    <JavaScriptCompressorTask
+             SourceFiles="$(ProjectDir)Scripts\bcms.knockout-2.2.1.js"
+             OutputFile="$(ProjectDir)Scripts\bcms.knockout-2.2.1.min.js"
+             CompressionType="Standard"
+             ObfuscateJavaScript="True"
+             PreserveAllSemicolons="True"
+             DisableOptimizations="No"
+             EncodingType="Default"
+             LineBreakPosition="-1"
+             LoggingType="Info"
+             ThreadCulture="en-au"
+             IsEvalIgnored="false"
+       />
+    
   </Target>
+  
 </Project>

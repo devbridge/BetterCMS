@@ -1,6 +1,6 @@
 ﻿/*global define, console */
 
-define('bcms', ['bcms.jquery'], function ($) {
+bettercms.define('bcms', ['bcms.jquery'], function ($) {
     'use strict';
 
     var app = {},

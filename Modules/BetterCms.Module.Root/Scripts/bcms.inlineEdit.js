@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcms.grid'], function ($, bcms, messages, modal, grid) {
+bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcms.grid'], function ($, bcms, messages, modal, grid) {
     'use strict';
 
     var editor = {},

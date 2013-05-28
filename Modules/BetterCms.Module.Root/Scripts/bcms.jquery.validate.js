@@ -1,4 +1,4 @@
-define('bcms.jquery.validate', ['bcms.jquery'], function (jquery) {
+bettercms.define('bcms.jquery.validate', ['bcms.jquery'], function (jquery) {
     /**
      * jQuery Validation Plugin 1.8.1
      *

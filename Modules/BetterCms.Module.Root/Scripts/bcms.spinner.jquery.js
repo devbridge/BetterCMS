@@ -1,4 +1,4 @@
-﻿define('bcms.spinner.jquery', ['bcms.jquery'], function(jquery) {
+﻿bettercms.define('bcms.spinner.jquery', ['bcms.jquery'], function(jquery) {
 
 /*global define, console */
 
