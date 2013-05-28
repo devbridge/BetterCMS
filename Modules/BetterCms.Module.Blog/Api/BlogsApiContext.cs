@@ -83,7 +83,7 @@ namespace BetterCms.Api
 
                 if (!request.IncludeNotActive)
                 {
-                    query = query.Where(b => DateTime.Now < b.ActivationDate || (b.ExpirationDate.HasValue && b.ExpirationDate.Value < DateTime.Now));
+                    query = query.Where(b => b.ActivationDate < DateTime.Now && (!b.ExpirationDate.HasValue || DateTime.Now < b.ExpirationDate.Value));
                 }
 
                 var totalCount = query.ToRowCountFutureValue(request);
