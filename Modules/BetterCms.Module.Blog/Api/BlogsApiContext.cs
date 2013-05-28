@@ -155,6 +155,7 @@ namespace BetterCms.Api
 
             try
             {
+                UnitOfWork.BeginTransaction(); 
                 var blog = Repository
                     .AsQueryable<BlogPost>(b => b.Id == request.Id)
                     .FirstOne();
