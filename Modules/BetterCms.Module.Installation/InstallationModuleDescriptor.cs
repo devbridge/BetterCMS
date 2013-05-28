@@ -7,7 +7,6 @@ using BetterCms.Api;
 using BetterCms.Core;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Modules;
-using BetterCms.Module.Pages.Api.Dto;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
 

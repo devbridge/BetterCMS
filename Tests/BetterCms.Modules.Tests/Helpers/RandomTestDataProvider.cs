@@ -127,6 +127,8 @@ namespace BetterCms.Tests.Helpers
             PopulatePageProperties(entity);
 
             entity.Author = CreateNewAuthor();
+            entity.ActivationDate = ProvideRandomDateTime();
+            entity.ExpirationDate = ProvideRandomDateTime();
 
             return entity;
         }

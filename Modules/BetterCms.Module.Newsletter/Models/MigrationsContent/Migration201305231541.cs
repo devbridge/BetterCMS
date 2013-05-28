@@ -2,10 +2,14 @@
 using System.Transactions;
 
 using BetterCms.Api;
+
 using BetterCms.Core;
 using BetterCms.Core.DataAccess.DataContext.Migrations;
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Module.Pages.Api.Dto;
+
+using BetterCms.Module.Pages.Api.DataContracts;
+using BetterCms.Module.Pages.Api.DataContracts.Models;
+
 using BetterCms.Module.Root.Models.MigrationsContent;
 
 namespace BetterCms.Module.Newsletter.Models.MigrationsContent
@@ -18,8 +22,9 @@ namespace BetterCms.Module.Newsletter.Models.MigrationsContent
             using (var pagesApi = CmsContext.CreateApiContextOf<PagesApiContext>())
             {
                 const string WidgetPath = "~/Areas/bcms-newsletter/Views/Widgets/SubscribeToNewsletter.cshtml";
-                var widgets = pagesApi.GetServerControlWidgets(e => e.Url == WidgetPath);
-                if (widgets.Count > 0)
+                var request = new GetServerControlWidgetsRequest(e => e.Url == WidgetPath);
+                var widgets = pagesApi.GetServerControlWidgets(request);
+                if (widgets.Items.Count > 0)
                 {
                     return;
                 }

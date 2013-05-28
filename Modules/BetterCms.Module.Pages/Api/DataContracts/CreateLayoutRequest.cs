@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using BetterCms.Core.Models;
 using BetterCms.Module.Pages.Mvc.Attributes;
 
-namespace BetterCms.Module.Pages.Api.Dto
+namespace BetterCms.Module.Pages.Api.DataContracts
 {
     public class CreateLayoutRequest
     {

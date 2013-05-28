@@ -1,5 +1,17 @@
-﻿<!DOCTYPE html>
-<html>
+﻿@if (IsSectionDefined("DoctypeTag"))
+{
+    @RenderSection("DoctypeTag", false)
+}
+else {
+    @:<!DOCTYPE html>
+}
+
+@if (IsSectionDefined("HtmlTag")) {
+    @RenderSection("HtmlTag", false)
+}
+else {
+    @:<html>
+}
     <head>
         @RenderSection("CmsMetaTitle", false)
         @RenderSection("CmsMeta", false)

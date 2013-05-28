@@ -5,7 +5,7 @@ using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;
 using BetterCms.Module.Root.Api.Attributes;
 
-namespace BetterCms.Module.Pages.Api.Dto
+namespace BetterCms.Module.Pages.Api.DataContracts
 {
     public class CreatePageHtmlContentRequest : CreatePageContentRequestBase
     {

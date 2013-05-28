@@ -1,17 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 
 using Autofac;
 
+using BetterCms.Core.Api.DataContracts;
+using BetterCms.Core.Api.Extensions;
 using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions.Api;
 
+using BetterCms.Module.Pages.Api.DataContracts;
 using BetterCms.Module.Pages.Api.Events;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
+
 using BetterCms.Module.Root.Models;
 
 // ReSharper disable CheckNamespace
@@ -86,24 +86,16 @@ namespace BetterCms.Api
         /// <summary>
         /// Gets the tags.
         /// </summary>
-        /// <param name="filter">The filter.</param>
-        /// <param name="order">The order.</param>
-        /// <param name="orderDescending">if set to <c>true</c> order by descending.</param>
-        /// <param name="pageNumber">The page number.</param>
-        /// <param name="itemsPerPage">The items per page.</param>
+        /// <param name="request">The request.</param>
         /// <returns>
         /// The list of tag entities
         /// </returns>
-        public IList<Tag> GetTags(Expression<Func<Tag, bool>> filter = null, Expression<Func<Tag, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
+        /// <exception cref="CmsApiException"></exception>
+        public DataListResponse<Tag> GetTags(GetTagsRequest request = null)
         {
             try
             {
-                if (order == null)
-                {
-                    order = p => p.Name;
-                }
-
-                return Repository.AsQueryable(filter, order, orderDescending, pageNumber, itemsPerPage).ToList();
+                return Repository.ToDataListResponse(request);
             }
             catch (Exception inner)
             {
@@ -117,24 +109,16 @@ namespace BetterCms.Api
         /// <summary>
         /// Gets the list of redirect entities.
         /// </summary>
-        /// <param name="filter">The filter.</param>
-        /// <param name="order">The order.</param>
-        /// <param name="orderDescending">if set to <c>true</c> order by descending.</param>
-        /// <param name="pageNumber">The page number.</param>
-        /// <param name="itemsPerPage">The items per page.</param>
+        /// <param name="request">The request.</param>
         /// <returns>
         /// The list of redirect entities
         /// </returns>
-        public IList<Redirect> GetRedirects(Expression<Func<Redirect, bool>> filter = null, Expression<Func<Redirect, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
+        /// <exception cref="CmsApiException"></exception>
+        public DataListResponse<Redirect> GetRedirects(GetRedirectsRequest request = null)
         {
             try
             {
-                if (order == null)
-                {
-                    order = p => p.PageUrl;
-                }
-
-                return Repository.AsQueryable(filter, order, orderDescending, pageNumber, itemsPerPage).ToList();
+                return Repository.ToDataListResponse(request);
             }
             catch (Exception inner)
             {
@@ -148,24 +132,16 @@ namespace BetterCms.Api
         /// <summary>
         /// Gets the list of category entities.
         /// </summary>
-        /// <param name="filter">The filter.</param>
-        /// <param name="order">The order.</param>
-        /// <param name="orderDescending">if set to <c>true</c> order by descending.</param>
-        /// <param name="pageNumber">The page number.</param>
-        /// <param name="itemsPerPage">The items per page.</param>
+        /// <param name="request">The request.</param>
         /// <returns>
         /// The list of category entities
         /// </returns>
-        public IList<Category> GetCategories(Expression<Func<Category, bool>> filter = null, Expression<Func<Category, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
+        /// <exception cref="CmsApiException"></exception>
+        public DataListResponse<Category> GetCategories(GetCategoriesRequest request = null)
         {
             try
             {
-                if (order == null)
-                {
-                    order = p => p.Name;
-                }
-
-                return Repository.AsQueryable(filter, order, orderDescending, pageNumber, itemsPerPage).ToList();
+                return Repository.ToDataListResponse(request);
             }
             catch (Exception inner)
             {
