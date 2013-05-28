@@ -58,7 +58,7 @@ namespace BetterCms.Module.Root.Controllers
             {
                 model = GetRequestModel(virtualPath);
 
-                if (!string.IsNullOrWhiteSpace(cmsConfiguration.PageNotFoundUrl) && (model == null || (model.RenderPage != null && model.RenderPage.ActionResult is HttpNotFoundResult)))
+                if (!string.IsNullOrWhiteSpace(cmsConfiguration.PageNotFoundUrl) && model == null)
                 {
                     model = GetRequestModel(HttpUtility.UrlDecode(cmsConfiguration.PageNotFoundUrl));
                     pageNotFound = true;
@@ -83,7 +83,7 @@ namespace BetterCms.Module.Root.Controllers
                         // Notify.
                         RootApiContext.Events.OnPageRendering(model.RenderPage);
 
-                        return model.RenderPage.ActionResult ?? View(model.RenderPage);
+                        return View(model.RenderPage);
                     }
                 }
             }
