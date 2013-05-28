@@ -2,18 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.Api.DataContracts;
-using BetterCms.Core.Api.Extensions;
-using BetterCms.Module.Pages.Api.DataContracts;
-using BetterCms.Module.Pages.Api.DataContracts.Models;
-
 using NHibernate.Linq;
 
+using BetterCms.Core.Api.DataContracts;
+using BetterCms.Core.Api.Extensions;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Api;
+
+using BetterCms.Module.Pages.Api.DataContracts;
+using BetterCms.Module.Pages.Api.DataContracts.Models;
 using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
+
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
@@ -218,17 +219,11 @@ namespace BetterCms.Api
         /// Widget list.
         /// </returns>
         /// <exception cref="CmsApiException">Failed to get widgets.</exception>
-        public IList<Widget> GetWidgets(GetDataRequest<Widget> request = null)
+        public DataListResponse<Widget> GetWidgets(GetWidgetsRequest request = null)
         {
             try
             {
-                if (request == null)
-                {
-                    request = new GetDataRequest<Widget>();
-                }
-                request.SetDefaultOrder(w => w.Name);
-
-                return Repository.AsQueryable(request).ToList();
+                return Repository.ToDataListResponse(request);
             }
             catch (Exception inner)
             {
@@ -246,17 +241,11 @@ namespace BetterCms.Api
         /// HTML content widget list.
         /// </returns>
         /// <exception cref="CmsApiException">Failed to get widgets.</exception>
-        public IList<HtmlContentWidget> GetHtmlContentWidgets(GetDataRequest<HtmlContentWidget> request = null)
+        public DataListResponse<HtmlContentWidget> GetHtmlContentWidgets(GetHtmlContentWidgetsRequest request)
         {
             try
             {
-                if (request == null)
-                {
-                    request = new GetDataRequest<HtmlContentWidget>();
-                }
-                request.SetDefaultOrder(p => p.Name);
-
-                return Repository.AsQueryable(request).ToList();
+                return Repository.ToDataListResponse(request);
             }
             catch (Exception inner)
             {
@@ -274,17 +263,11 @@ namespace BetterCms.Api
         /// Server control widget list.
         /// </returns>
         /// <exception cref="CmsApiException">Failed to get widgets.</exception>
-        public IList<ServerControlWidget> GetServerControlWidgets(GetDataRequest<ServerControlWidget> request = null)
+        public DataListResponse<ServerControlWidget> GetServerControlWidgets(GetServerControlWidgetsRequest request)
         {
             try
             {
-                if (request == null)
-                {
-                    request = new GetDataRequest<ServerControlWidget>();
-                }
-                request.SetDefaultOrder(s => s.Name);
-
-                return Repository.AsQueryable(request).ToList();
+                return Repository.ToDataListResponse(request);
             }
             catch (Exception inner)
             {
@@ -297,22 +280,25 @@ namespace BetterCms.Api
         /// <summary>
         /// Gets the page widgets.
         /// </summary>
-        /// <param name="pageId">The page id.</param>
         /// <param name="request">The request.</param>
         /// <returns>
         /// Widget list.
         /// </returns>
         /// <exception cref="CmsApiException">Failed to get widgets.</exception>
-        public IList<Widget> GetPageWidgets(Guid pageId, GetDataRequest<Widget> request = null)
+        public DataListResponse<Widget> GetPageWidgets(GetPageWidgetsRequest request)
         {
             try
             {
                 var query = Repository
                     .AsQueryable<Widget>()
-                    .Where(w => w.PageContents != null && w.PageContents.Any(c => c.Page.Id == pageId))
+                    .Where(w => w.PageContents != null && w.PageContents.Any(c => c.Page.Id == request.PageId))
                     .ApplyFilters(request);
 
-                return query.ToList();
+                var totalCount = query.ToRowCountFutureValue(request);
+
+                query = query.AddOrderAndPaging(request);
+
+                return query.ToDataListResponse(totalCount);
             }
             catch (Exception inner)
             {
@@ -325,25 +311,24 @@ namespace BetterCms.Api
         /// <summary>
         /// Gets the list with historical content entities.
         /// </summary>
-        /// <param name="contentId">The content id.</param>
         /// <param name="request">The request.</param>
         /// <returns>
         /// Historical content entities
         /// </returns>
         /// <exception cref="CmsApiException"></exception>
-        public IList<Content> GetContentHistory(Guid contentId, GetFilteredDataRequest<Content> request = null)
+        public DataListResponse<Content> GetContentHistory(GetContentHistoryRequest request)
         {
             try
             {
-                return historyService.GetContentHistory(contentId, new SearchableGridOptions())
+                return historyService.GetContentHistory(request.ContentId, new SearchableGridOptions())
                     .AsQueryable()
                     .ApplyFilters(request)
                     .AddOrder(request)
-                    .ToList();
+                    .ToDataListResponse();
             }
             catch (Exception inner)
             {
-                var message = string.Format("Failed to get history for content id={0}.", contentId);
+                var message = string.Format("Failed to get history for content id={0}.", request.ContentId);
                 Logger.Error(message, inner);
                 throw new CmsApiException(message, inner);
             }

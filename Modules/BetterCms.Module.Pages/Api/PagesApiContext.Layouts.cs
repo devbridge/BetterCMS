@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.Api.DataContracts;
-using BetterCms.Core.Api.Extensions;
-using BetterCms.Module.Pages.Api.DataContracts;
-
 using NHibernate.Linq;
 
-using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.Api.DataContracts;
+using BetterCms.Core.Api.Extensions;
 using BetterCms.Core.Exceptions.Api;
 
+using BetterCms.Module.Pages.Api.DataContracts;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
@@ -28,7 +26,7 @@ namespace BetterCms.Api
         /// The list of layout entities
         /// </returns>
         /// <exception cref="CmsApiException"></exception>
-        public DataListResponse<Layout> GetLayouts(GetLayoutsRequest request)
+        public DataListResponse<Layout> GetLayouts(GetLayoutsRequest request = null)
         {
             try
             {
@@ -62,17 +60,11 @@ namespace BetterCms.Api
         /// The list of region entities
         /// </returns>
         /// <exception cref="CmsApiException"></exception>
-        public IList<Region> GetRegions(GetDataRequest<Region> request = null)
+        public DataListResponse<Region> GetRegions(GetRegionsRequest request = null)
         {
             try
             {
-                if (request == null)
-                {
-                    request = new GetDataRequest<Region>();
-                }
-                request.SetDefaultOrder(r => r.RegionIdentifier);
-
-                return Repository.AsQueryable(request).ToList();
+                return Repository.ToDataListResponse(request);
             }
             catch (Exception inner)
             {
@@ -85,32 +77,31 @@ namespace BetterCms.Api
         /// <summary>
         /// Gets the list of specified layout region entities.
         /// </summary>
-        /// <param name="layoutId">The layout id.</param>
         /// <param name="request">The request.</param>
         /// <returns>
         /// The list of specified layout region entities
         /// </returns>
         /// <exception cref="CmsApiException"></exception>
-        public IList<LayoutRegion> GetLayoutRegions(Guid layoutId, GetDataRequest<LayoutRegion> request = null)
+        public DataListResponse<LayoutRegion> GetLayoutRegions(GetLayoutRegionsRequest request)
         {
             try
             {
-                if (request == null)
-                {
-                    request = new GetDataRequest<LayoutRegion>();
-                }
-                request.SetDefaultOrder(lr => lr.Description);
-
-                return Repository
+                var query = Repository
                     .AsQueryable<LayoutRegion>()
-                    .Where(lr => lr.Layout.Id == layoutId)
-                    .ApplyFilters(request)
-                    .Fetch(lr => lr.Region)
-                    .ToList();
+                    .Where(lr => lr.Layout.Id == request.LayoutId)
+                    .ApplyFilters(request);
+
+                var totalCount = query.ToRowCountFutureValue(request);
+
+                query = query
+                   .AddOrderAndPaging(request)
+                   .Fetch(lr => lr.Region);
+
+                return query.ToDataListResponse(totalCount);
             }
             catch (Exception inner)
             {
-                var message = string.Format("Failed to get layout regions list for layout Id={0}.", layoutId);
+                var message = string.Format("Failed to get layout regions list for layout Id={0}.", request.LayoutId);
                 Logger.Error(message, inner);
                 throw new CmsApiException(message, inner);
             }

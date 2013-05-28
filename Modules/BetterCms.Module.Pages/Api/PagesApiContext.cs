@@ -1,18 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 
 using Autofac;
 
 using BetterCms.Core.Api.DataContracts;
 using BetterCms.Core.Api.Extensions;
 using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions.Api;
 
+using BetterCms.Module.Pages.Api.DataContracts;
 using BetterCms.Module.Pages.Api.Events;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
+
 using BetterCms.Module.Root.Models;
 
 // ReSharper disable CheckNamespace
@@ -92,17 +91,11 @@ namespace BetterCms.Api
         /// The list of tag entities
         /// </returns>
         /// <exception cref="CmsApiException"></exception>
-        public IList<Tag> GetTags(GetDataRequest<Tag> request = null)
+        public DataListResponse<Tag> GetTags(GetTagsRequest request = null)
         {
             try
             {
-                if (request == null)
-                {
-                    request = new GetDataRequest<Tag>();
-                }
-                request.SetDefaultOrder(p => p.Name);
-
-                return Repository.AsQueryable(request).ToList();
+                return Repository.ToDataListResponse(request);
             }
             catch (Exception inner)
             {
@@ -121,17 +114,11 @@ namespace BetterCms.Api
         /// The list of redirect entities
         /// </returns>
         /// <exception cref="CmsApiException"></exception>
-        public IList<Redirect> GetRedirects(GetDataRequest<Redirect> request = null)
+        public DataListResponse<Redirect> GetRedirects(GetRedirectsRequest request = null)
         {
             try
             {
-                if (request == null)
-                {
-                    request = new GetDataRequest<Redirect>();
-                }
-                request.SetDefaultOrder(p => p.PageUrl);
-
-                return Repository.AsQueryable(request).ToList();
+                return Repository.ToDataListResponse(request);
             }
             catch (Exception inner)
             {
@@ -150,17 +137,11 @@ namespace BetterCms.Api
         /// The list of category entities
         /// </returns>
         /// <exception cref="CmsApiException"></exception>
-        public IList<Category> GetCategories(GetDataRequest<Category> request = null)
+        public DataListResponse<Category> GetCategories(GetCategoriesRequest request = null)
         {
             try
             {
-                if (request == null)
-                {
-                    request = new GetDataRequest<Category>();
-                }
-                request.SetDefaultOrder(c => c.Name);
-
-                return Repository.AsQueryable(request).ToList();
+                return Repository.ToDataListResponse(request);
             }
             catch (Exception inner)
             {

@@ -80,21 +80,21 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
             {
                 using (var papi = CmsContext.CreateApiContextOf<PagesApiContext>())
                 {
-                    /*var aRequest = new GetLayoutsRequest();
-                    var aresults = papi.GetLayouts(aRequest);
+                    var aRequest = new GetContentHistoryRequest(new Guid("AE04E233-4E88-4A9F-87BC-A1CC00F2C173"));
+                    var aresults = papi.GetContentHistory(aRequest);
 
                     if (aresults.Items.Count > 0)
                     {
                         message = string.Format("{0}<br />Total count:{2},  Item titles: {1}", message, string.Join("; ", aresults.Items.Select(t => t.Name)), aresults.TotalCount);
                     }
 
-                    aRequest = new GetLayoutsRequest(a => a.Name.ToLower().Contains("Default"), itemsCount: 2, order: o => o.Name, orderDescending: true);
-                    aresults = papi.GetLayouts(aRequest);
+                    aRequest = new GetContentHistoryRequest(new Guid("AE04E233-4E88-4A9F-87BC-A1CC00F2C173"), a => a.Name.ToLower().Contains("poop"), o => o.Name, orderDescending: true);
+                    aresults = papi.GetContentHistory(aRequest);
 
                     if (aresults.Items.Count > 0)
                     {
                         message = string.Format("{0}<br />Total count:{2},  Item titles: {1}", message, string.Join("; ", aresults.Items.Select(t => t.Name)), aresults.TotalCount);
-                    }*/
+                    }
 
                     /*var request = new GetDataRequest<Layout>(3, 2, orderDescending:true, order:t =>t.Name);
                     results = pagesApi.GetLayouts(request);*/
@@ -102,7 +102,7 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
                     /*var request = new GetDataRequest<LayoutRegion>(orderDescending: true, order: t => t.Region.RegionIdentifier);
                     request.AddPaging(2, 2);*/
 
-                    var request = new GetBlogPostsRequest(b => b.ExpirationDate.HasValue, includePrivate: true, includeUnpublished: true, itemsCount: 3);
+                    /*var request = new GetBlogPostsRequest(b => b.ExpirationDate.HasValue, includePrivate: true, includeUnpublished: true, itemsCount: 3);
                     results = api.GetBlogPosts(request);
 
                     if (results.Items.Count > 0)
@@ -123,7 +123,7 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
 
                     request = new GetBlogPostsRequest(
                         order: b => b.Title, orderDescending: true, itemsCount: 5, startItemNumber: 3, includeUnpublished: true, includePrivate: true);
-                    results = api.GetBlogPosts(request);
+                    results = api.GetBlogPosts(request);*/
                 }
             }
 

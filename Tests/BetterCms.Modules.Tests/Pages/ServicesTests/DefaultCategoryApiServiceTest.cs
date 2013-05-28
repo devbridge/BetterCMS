@@ -28,9 +28,10 @@ namespace BetterCms.Test.Module.Pages.ServicesTests
                 var categories = api.GetCategories();
 
                 Assert.IsNotNull(categories);
-                Assert.AreEqual(categories.Count, 2);
+                Assert.AreEqual(categories.Items.Count, 2);
+                Assert.AreEqual(categories.TotalCount, 2);
 
-                var category = categories.FirstOrDefault(l => category1.Id == l.Id);
+                var category = categories.Items.FirstOrDefault(l => category1.Id == l.Id);
                 Assert.IsNotNull(category);
                 Assert.AreEqual(category1.Name, category.Name);
             }
@@ -49,7 +50,8 @@ namespace BetterCms.Test.Module.Pages.ServicesTests
                 var categories = service.GetCategories();
 
                 Assert.IsNotNull(categories);
-                Assert.IsEmpty(categories);
+                Assert.IsEmpty(categories.Items);
+                Assert.AreEqual(categories.TotalCount, 0);
             }
         }
     }

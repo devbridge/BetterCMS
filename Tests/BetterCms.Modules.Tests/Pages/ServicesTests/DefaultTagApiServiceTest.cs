@@ -2,8 +2,8 @@
 using System.Linq;
 
 using BetterCms.Api;
-using BetterCms.Core.Api.DataContracts;
 using BetterCms.Core.DataAccess;
+using BetterCms.Module.Pages.Api.DataContracts;
 using BetterCms.Module.Root.Models;
 
 using Moq;
@@ -26,10 +26,11 @@ namespace BetterCms.Test.Module.Pages.ServicesTests
                 var tags = service.GetTags();
 
                 Assert.IsNotNull(tags);
-                Assert.AreEqual(tags.Count, fakeTags.Count);
+                Assert.AreEqual(tags.Items.Count, fakeTags.Count);
+                Assert.AreEqual(tags.TotalCount, fakeTags.Count);
 
                 var fakeTag = fakeTags[0];
-                var tag = tags.FirstOrDefault(l => fakeTag.Id == l.Id);
+                var tag = tags.Items.FirstOrDefault(l => fakeTag.Id == l.Id);
                 Assert.IsNotNull(tag);
                 Assert.AreEqual(fakeTag.Name, tag.Name);
             }
@@ -43,13 +44,14 @@ namespace BetterCms.Test.Module.Pages.ServicesTests
 
             using (var service = new PagesApiContext(Container.BeginLifetimeScope(), repositoryMock.Object))
             {
-                var tags = service.GetTags(new GetDataRequest<Tag>(t => t.Name.Contains("Tag"), null, true));
+                var tags = service.GetTags(new GetTagsRequest(t => t.Name.Contains("Tag"), null, true));
 
                 Assert.IsNotNull(tags);
-                Assert.AreEqual(tags.Count, 3);
+                Assert.AreEqual(tags.Items.Count, 3);
+                Assert.AreEqual(tags.TotalCount, 3);
 
                 var fakeTag = fakeTags.First(t => t.Name == "Tag3");
-                var tag = tags[0];
+                var tag = tags.Items[0];
                 Assert.IsNotNull(tag);
                 Assert.AreEqual(fakeTag.Id, tag.Id);
             }
@@ -63,15 +65,16 @@ namespace BetterCms.Test.Module.Pages.ServicesTests
 
             using (var service = new PagesApiContext(Container.BeginLifetimeScope(), repositoryMock.Object))
             {
-                var request = new GetDataRequest<Tag>(t => t.Name.Contains("Tag"), null, true);
+                var request = new GetTagsRequest(t => t.Name.Contains("Tag"), null, true);
                 request.AddPaging(1, 2);
                 var tags = service.GetTags(request);
 
                 Assert.IsNotNull(tags);
-                Assert.AreEqual(tags.Count, 1);
+                Assert.AreEqual(tags.Items.Count, 1);
+                Assert.AreEqual(tags.TotalCount, 3);
 
                 var fakeTag = fakeTags.First(t => t.Name == "Tag2");
-                var tag = tags[0];
+                var tag = tags.Items[0];
                 Assert.IsNotNull(tag);
                 Assert.AreEqual(fakeTag.Id, tag.Id);
             }
@@ -90,7 +93,8 @@ namespace BetterCms.Test.Module.Pages.ServicesTests
                 var tags = service.GetTags();
 
                 Assert.IsNotNull(tags);
-                Assert.IsEmpty(tags);
+                Assert.IsEmpty(tags.Items);
+                Assert.AreEqual(tags.TotalCount, 0);
             }
         }
 

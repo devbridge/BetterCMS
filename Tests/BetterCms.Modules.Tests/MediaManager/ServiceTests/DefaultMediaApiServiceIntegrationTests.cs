@@ -2,7 +2,6 @@
 using System.Linq;
 
 using BetterCms.Api;
-using BetterCms.Core.Api.DataContracts;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Module.MediaManager.Api.DataContracts;
@@ -108,6 +107,7 @@ namespace BetterCms.Test.Module.MediaManager.ServiceTests
                     var images = service.GetImages(request);
                     Assert.IsNotNull(images);
                     Assert.AreEqual(images.Items.Count, 1);
+                    Assert.AreEqual(images.TotalCount, 2);
                     Assert.AreEqual(images.Items[0].Title, "Image1__1");
                 }
             });
@@ -129,6 +129,7 @@ namespace BetterCms.Test.Module.MediaManager.ServiceTests
                     var images = service.GetImages(request);
                     Assert.IsNotNull(images);
                     Assert.AreEqual(images.Items.Count, 1);
+                    Assert.AreEqual(images.TotalCount, 2);
                     Assert.AreEqual(images.Items[0].Title, "Image1__2");
                 }
             });

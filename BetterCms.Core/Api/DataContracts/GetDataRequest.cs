@@ -5,7 +5,7 @@ using BetterCms.Core.Models;
 
 namespace BetterCms.Core.Api.DataContracts
 {
-    public class GetDataRequest<TEntity> : GetFilteredDataRequest<TEntity> where TEntity : Entity
+    public abstract class GetDataRequest<TEntity> : GetFilteredDataRequest<TEntity> where TEntity : Entity
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GetDataRequest{TEntity}" /> class.

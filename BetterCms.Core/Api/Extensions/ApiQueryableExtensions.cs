@@ -137,7 +137,7 @@ namespace BetterCms.Core.Api.Extensions
         /// <param name="query">The query.</param>
         /// <param name="futureValue">The future value.</param>
         /// <returns></returns>
-        public static DataListResponse<TEntity> ToDataListResponse<TEntity>(this IQueryable<TEntity> query, IFutureValue<int> futureValue)
+        public static DataListResponse<TEntity> ToDataListResponse<TEntity>(this IQueryable<TEntity> query, IFutureValue<int> futureValue = null)
             where TEntity : Entity
         {
             var items = query.ToList();
