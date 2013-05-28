@@ -122,6 +122,7 @@
     <Compile Include="Accessors\BlogPostContentAccessor.cs" />
     <Compile Include="Api\DataContracts\GetAuthorsRequest.cs" />
     <Compile Include="Api\DataContracts\GetBlogPostsRequest.cs" />
+    <Compile Include="Api\DataContracts\UpdateBlogPostRequest.cs" />
     <Compile Include="Api\Events\BlogEvents.cs" />
     <Compile Include="Api\Events\AuthorEvents.cs" />
     <Compile Include="BlogModuleConstants.cs" />

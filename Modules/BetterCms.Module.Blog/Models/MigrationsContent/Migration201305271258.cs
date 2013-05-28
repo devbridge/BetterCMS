@@ -46,8 +46,14 @@ namespace BetterCms.Module.Blog.Models.MigrationsContent
                                 continue;
                             }
 
-                            blog.ActivationDate = content.ActivationDate;
-                            blog.ExpirationDate = content.ExpirationDate;
+                            var request = new UpdateBlogPostRequest
+                                              {
+                                                  ActivationDate = content.ActivationDate,
+                                                  ExpirationDate = content.ExpirationDate,
+                                                  Id = blog.Id
+                                              };
+                            // TODO: Uncomment and fix dstributed transactions bug
+                            // blogsApi.UpdateBlogPost(request);
                         }
 
                         transactionScope.Complete();

@@ -6,6 +6,7 @@ using Autofac;
 using BetterCms.Core.Api.DataContracts;
 using BetterCms.Core.Api.Extensions;
 using BetterCms.Core.DataAccess;
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Api;
 using BetterCms.Module.Blog.Api.DataContracts;
@@ -87,8 +88,6 @@ namespace BetterCms.Api
 
                 var totalCount = query.ToRowCountFutureValue(request);
 
-                query = query.Fetch(b => b.Author);
-
                 query = query
                     .AddOrderAndPaging(request)
                     .Fetch(b => b.Author);
@@ -134,6 +133,46 @@ namespace BetterCms.Api
                 const string message = "Failed to get authors list.";
                 Logger.Error(message, inner);
 
+                throw new CmsApiException(message, inner);
+            }
+        }
+
+        /// <summary>
+        /// Updates the blog post.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
+        public BlogPost UpdateBlogPost(UpdateBlogPostRequest request)
+        {
+            ValidateRequest(request);
+            
+            if (request.ExpirationDate.HasValue && request.ExpirationDate < request.ActivationDate)
+            {
+                var message = string.Format("Expiration date must be greater that activation date.");
+                Logger.Error(message);
+                throw new CmsApiValidationException(message);
+            }
+
+            try
+            {
+                var blog = Repository
+                    .AsQueryable<BlogPost>(b => b.Id == request.Id)
+                    .FirstOne();
+
+                blog.ActivationDate = request.ActivationDate;
+                blog.ExpirationDate = request.ExpirationDate;
+
+                Repository.Save(blog);
+                UnitOfWork.Commit();
+
+                Events.OnBlogUpdated(blog);
+
+                return blog;
+            }
+            catch (Exception inner)
+            {
+                var message = string.Format("Failed to update blog post {0}.", request.Id);
+                Logger.Error(message, inner);
                 throw new CmsApiException(message, inner);
             }
         }
