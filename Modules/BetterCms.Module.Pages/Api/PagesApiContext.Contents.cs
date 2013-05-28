@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.Api.DataContracts;
+using BetterCms.Core.Api.Extensions;
 using BetterCms.Module.Pages.Api.DataContracts;
 using BetterCms.Module.Pages.Api.DataContracts.Models;
 
@@ -53,9 +54,9 @@ namespace BetterCms.Api
                     .Fetch(c => c.Region)
                     .FetchMany(c => c.Options);
 
-                if (!request.IncludeUnpublished)
+                if (!request.IncludeNotActive)
                 {
-                    return RemoveUnpublishedContents(query.ToList());
+                    return RemoveInactiveContents(query.ToList());
                 }
                 return query.ToList();
             }
@@ -105,9 +106,9 @@ namespace BetterCms.Api
                     .Fetch(c => c.Region)
                     .FetchMany(c => c.Options);
 
-                if (!request.IncludeUnpublished)
+                if (!request.IncludeNotActive)
                 {
-                    return RemoveUnpublishedContents(query.ToList());
+                    return RemoveInactiveContents(query.ToList());
                 }
                 return query.ToList();
             }
@@ -337,6 +338,7 @@ namespace BetterCms.Api
                 return historyService.GetContentHistory(contentId, new SearchableGridOptions())
                     .AsQueryable()
                     .ApplyFilters(request)
+                    .AddOrder(request)
                     .ToList();
             }
             catch (Exception inner)
@@ -683,7 +685,10 @@ namespace BetterCms.Api
         /// Removes the unpublished contents.
         /// </summary>
         /// <param name="contents">The contents.</param>
-        private IList<PageContent> RemoveUnpublishedContents(IList<PageContent> contents)
+        /// <returns>
+        /// Results with excluded inactive contents
+        /// </returns>
+        private IList<PageContent> RemoveInactiveContents(IList<PageContent> contents)
         {
             var filteredContents = new List<PageContent>(contents.Count);
 

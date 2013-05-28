@@ -5,8 +5,8 @@ using System.Linq;
 using Autofac;
 
 using BetterCms.Core.Api.DataContracts;
+using BetterCms.Core.Api.Extensions;
 using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions.Api;
 using BetterCms.Module.MediaManager.Api.Events;
 using BetterCms.Module.MediaManager.Models;
@@ -83,7 +83,7 @@ namespace BetterCms.Api
                     query = query.Where(f => f.Folder == null);
                 }
 
-                query = query.ApplyFilters(request);
+                query = query.ApplyFilters(request).AddOrderAndPaging(request);
 
                 return query.ToList();
             }
@@ -118,6 +118,7 @@ namespace BetterCms.Api
                 return Repository
                     .AsQueryable<MediaImage>()
                     .ApplyFilters(request)
+                    .AddOrderAndPaging(request)
                     .Fetch(m => m.Folder)
                     .ToList();
             }
@@ -151,6 +152,7 @@ namespace BetterCms.Api
                     .AsQueryable<MediaFile>()
                     .Where(m => m.Type == MediaType.File)
                     .ApplyFilters(request)
+                    .AddOrderAndPaging(request)
                     .Fetch(m => m.Folder).ToList();
             }
             catch (Exception inner)
@@ -184,6 +186,7 @@ namespace BetterCms.Api
                     .AsQueryable<MediaFolder>()
                     .Where(f => f.Type == mediaType)
                     .ApplyFilters(request)
+                    .AddOrderAndPaging(request)
                     .Fetch(m => m.Folder)
                     .ToList();
             }

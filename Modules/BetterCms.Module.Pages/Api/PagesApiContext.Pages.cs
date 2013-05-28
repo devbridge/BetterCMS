@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.Api.DataContracts;
+using BetterCms.Core.Api.Extensions;
 using BetterCms.Module.Pages.Api.DataContracts;
 
 using NHibernate.Linq;
@@ -48,7 +49,8 @@ namespace BetterCms.Api
 
                 var query = Repository
                     .AsQueryable<PageProperties>()
-                    .ApplyFilters(true, request);
+                    .ApplyFiltersWithChildren(request)
+                    .Item1;
 
                 if (!includeUnpublished)
                 {
