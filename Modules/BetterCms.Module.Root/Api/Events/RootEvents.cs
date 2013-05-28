@@ -36,12 +36,16 @@ namespace BetterCms.Module.Root.Api.Events
         /// </summary>
         /// <param name="renderPageData">The rendering page data.</param>
         /// <param name="pageData">The page data.</param>
-        public void OnPageRetrieved(RenderPageViewModel renderPageData, IPage pageData)
+        public PageRetrievedEventResult OnPageRetrieved(RenderPageViewModel renderPageData, IPage pageData)
         {
             if (PageRetrieved != null)
             {
-                PageRetrieved(new PageRetrievedEventArgs(renderPageData, pageData));
+                var args = new PageRetrievedEventArgs(renderPageData, pageData);
+                PageRetrieved(args);
+                return args.EventResult;
             }
+
+            return PageRetrievedEventResult.None;
         }
     }
 }

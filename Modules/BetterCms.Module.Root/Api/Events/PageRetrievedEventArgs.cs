@@ -36,5 +36,13 @@ namespace BetterCms.Module.Root.Api.Events
         /// The rendering page entity.
         /// </value>
         public IPage PageData { get; set; }
+
+        /// <summary>
+        /// Gets or sets the event result.
+        /// </summary>
+        /// <value>
+        /// The event result.
+        /// </value>
+        public PageRetrievedEventResult EventResult { get; set; }
     }
 }

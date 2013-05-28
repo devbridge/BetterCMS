@@ -16,6 +16,7 @@ using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Pages.Accessors;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Api.Events;
+using BetterCms.Module.Root.ViewModels.Cms;
 
 namespace BetterCms.Module.Blog
 {
@@ -179,7 +180,7 @@ namespace BetterCms.Module.Blog
                 args.RenderPageData.ExtendWithBlogData(args.PageData);
                 if (args.RenderPageData.IsBlogPost() && !args.RenderPageData.IsBlogPostActive() && !args.RenderPageData.CanManageContent)
                 {
-                    args.RenderPageData.ActionResult = new HttpNotFoundResult();
+                    args.EventResult = PageRetrievedEventResult.ForcePageNotFound;
                 }
             }
         }
