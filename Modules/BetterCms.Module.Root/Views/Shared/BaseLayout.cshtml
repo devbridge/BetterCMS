@@ -117,7 +117,26 @@
 @section Scripts {
     @RenderSection("Scripts", false)
 }
-@section DoctypeTag {@RenderSection("DoctypeTag", false)}
-@section HtmlTag {@RenderSection("HtmlTag", false)}
+
+@section DoctypeTag { 
+    @if (IsSectionDefined("DoctypeTag"))
+    {
+        @RenderSection("DoctypeTag", false)
+    }
+    else
+    {
+        @:<!DOCTYPE html>
+    }
+}
+@section HtmlTag { 
+    @if (IsSectionDefined("DoctypeTag"))
+    {
+        @RenderSection("HtmlTag", false)
+    } 
+    else
+    {
+        @:<html>
+    }
+}
 @section BodyAttributes {@RenderSection("BodyAttributes", false)}
 
