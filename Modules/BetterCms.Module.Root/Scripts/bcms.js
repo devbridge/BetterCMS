@@ -247,6 +247,7 @@ bettercms.define('bcms', ['bcms.jquery'], function ($) {
     */
     app.stopEventPropagation = function (event) {
         if (event != null) {
+            event.cancelBubble = true;
             event.returnValue = false;
             if (event.stopPropagation) {
                 event.stopPropagation();
