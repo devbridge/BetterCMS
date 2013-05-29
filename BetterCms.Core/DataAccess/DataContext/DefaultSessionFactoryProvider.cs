@@ -9,6 +9,9 @@ using BetterCms.Core.Services;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using FluentNHibernate.Conventions.Helpers;
+
+using Iesi.Collections.Generic;
+
 using NHibernate;
 using BetterCms.Core.DataAccess.DataContext.Interceptors;
 
@@ -100,11 +103,40 @@ namespace BetterCms.Core.DataAccess.DataContext
                 .ExposeConfiguration(c => c.SetListener(ListenerType.Save, saveOrUpdateEventListener))
                 .ExposeConfiguration(c => c.SetListener(ListenerType.Update, saveOrUpdateEventListener));
 
-            SchemaMetadataUpdater.QuoteTableAndColumns(fluentConfiguration.BuildConfiguration());
+            var config = fluentConfiguration.BuildConfiguration();
+            SchemaMetadataUpdater.QuoteTableAndColumns(config);
+            QuoteAllTablesAndColumns(config);
 
-            return fluentConfiguration
-                        .BuildConfiguration()
-                        .BuildSessionFactory();
+            return config.BuildSessionFactory();
+        }
+        public static void QuoteAllTablesAndColumns(NHibernate.Cfg.Configuration configuration)
+        {
+
+            // TODO: perform only for Postgre.
+            // var dialect = Dialect.GetDialect(configuration.GetDerivedProperties());
+            foreach (var cm in configuration.ClassMappings)
+            {
+                QuoteTable(cm.Table);
+            }
+            foreach (var cm in configuration.CollectionMappings)
+            {
+                QuoteTable(cm.Table);
+            }
+        }
+        private static void QuoteTable(NHibernate.Mapping.Table table)
+        {
+            if (!table.IsQuoted)
+            {
+                table.Name = "`" + table.Name + "`";
+            }
+
+            foreach (var column in table.ColumnIterator)
+            {
+                if (!column.IsQuoted)
+                {
+                    column.Name = "`" + column.Name + "`";
+                }
+            }
         }
 
         /// <summary>
