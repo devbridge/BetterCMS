@@ -193,6 +193,10 @@
     <Content Include="500.html" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\knockout-2.2.1.debug.js" />
+    <Content Include="Scripts\knockout-2.2.1.js" />
+    <Content Include="Scripts\knockout.validation.debug.js" />
+    <Content Include="Scripts\knockout.validation.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -282,6 +286,9 @@
     <Content Include="Views\Widgets\05.cshtml" />
     <Content Include="Views\Shared\Partial\Hello.cshtml" />
     <Content Include="Views\Shared\Partial\TestOptionValues.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Layouts\TestLayout.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

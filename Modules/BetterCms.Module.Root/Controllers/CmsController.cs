@@ -58,7 +58,7 @@ namespace BetterCms.Module.Root.Controllers
             {
                 model = GetRequestModel(virtualPath);
 
-                if (model == null && !string.IsNullOrWhiteSpace(cmsConfiguration.PageNotFoundUrl))
+                if (!string.IsNullOrWhiteSpace(cmsConfiguration.PageNotFoundUrl) && model == null)
                 {
                     model = GetRequestModel(HttpUtility.UrlDecode(cmsConfiguration.PageNotFoundUrl));
                     pageNotFound = true;

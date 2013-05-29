@@ -1,4 +1,4 @@
-﻿namespace BetterCms.Module.Pages.Api.Dto
+﻿namespace BetterCms.Module.Pages.Api.DataContracts.Models
 {
     public class ContentOptionValueDto : ContentOptionDto
     {

@@ -1,6 +1,6 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
-define('bcms.newsletter', ['bcms.jquery', 'bcms', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.ko.extenders', 'bcms.ko.grid'],
+bettercms.define('bcms.newsletter', ['bcms.jquery', 'bcms', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.ko.extenders', 'bcms.ko.grid'],
     function ($, bcms, siteSettings, dynamicContent, ko, kogrid) {
         'use strict';
 

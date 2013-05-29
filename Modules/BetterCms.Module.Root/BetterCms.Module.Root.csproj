@@ -235,6 +235,7 @@
     <Compile Include="ViewModels\Authentication\InfoViewModel.cs" />
     <Compile Include="ViewModels\Cms\CmsRequestViewModel.cs" />
     <Compile Include="ViewModels\Cms\PageRegionViewModel.cs" />
+    <Compile Include="DataContracts\Enums\PageRetrievedEventResults.cs" />
     <Compile Include="ViewModels\Cms\RedirectViewModel.cs" />
     <Compile Include="ViewModels\Cms\RenderPageViewModel.cs" />
     <Compile Include="ViewModels\PageProjectionsViewModel.cs" />
@@ -525,10 +526,8 @@
     <EmbeddedResource Include="Scripts\bcms.content.js" />
     <Content Include="BuildConfiguration.xml" />
     <EmbeddedResource Include="Content\Styles\images\icn-zoom-notcompatible.png" />
-    <EmbeddedResource Include="Scripts\knockout-2.2.1.js" />
-    <EmbeddedResource Include="Scripts\knockout-2.2.1.min.js" />
-    <EmbeddedResource Include="Scripts\require-2.1.5.js" />
-    <EmbeddedResource Include="Scripts\require-2.1.5.min.js" />
+    <EmbeddedResource Include="Scripts\bcms.knockout-2.2.1.js" />
+    <EmbeddedResource Include="Scripts\bcms.require-2.1.5.js" />
     <EmbeddedResource Include="Content\Styles\images\cookies.png" />
     <EmbeddedResource Include="Content\Styles\images\error-back.png" />
     <EmbeddedResource Include="Content\Styles\images\error-bg.png" />

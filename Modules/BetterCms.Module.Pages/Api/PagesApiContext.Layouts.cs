@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-
-using BetterCms.Module.Pages.Api.Dto;
 
 using NHibernate.Linq;
 
-using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.Api.DataContracts;
+using BetterCms.Core.Api.Extensions;
 using BetterCms.Core.Exceptions.Api;
 
-using BetterCms.Module.Pages.Helpers;
+using BetterCms.Module.Pages.Api.DataContracts;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
@@ -23,37 +21,28 @@ namespace BetterCms.Api
         /// <summary>
         /// Gets the list of layout entities.
         /// </summary>
-        /// <param name="filter">The filter.</param>
-        /// <param name="order">The order.</param>
-        /// <param name="orderDescending">if set to <c>true</c> order by descending.</param>
-        /// <param name="pageNumber">The page number.</param>
-        /// <param name="itemsPerPage">The items per page.</param>
+        /// <param name="request">The request.</param>
         /// <returns>
         /// The list of layout entities
         /// </returns>
-        public IList<Layout> GetLayouts(Expression<Func<Layout, bool>> filter = null, Expression<Func<Layout, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
+        /// <exception cref="CmsApiException"></exception>
+        public DataListResponse<Layout> GetLayouts(GetLayoutsRequest request = null)
         {
             try
             {
-                return Repository
+                var result = Repository
                         .AsQueryable<Layout>()
-                        .ApplyFilters(true, filter, order, orderDescending, pageNumber, itemsPerPage)
+                        .ApplyFiltersWithChildren(request);
+                
+                var query = result.Item1;
+                var totalCount = result.Item2;
+
+                query = query
+                        .AddOrder(request)
                         .FetchMany(l => l.LayoutRegions)
-                        .ThenFetch(l => l.Region)
-                        .ToList();
+                        .ThenFetch(l => l.Region);
 
-                /* TODO: remove or use
-                 * WORKS GREAT WITHOUT METHODS IN WHERE CLAUSE (SUCH AS Contains)
-                 * LayoutRegion lrAlias = null;
-                Region rAlias = null;
-
-                return unitOfWork.Session
-                    .QueryOver<Layout>()
-                    .JoinAlias(l => l.LayoutRegions, () => lrAlias, JoinType.LeftOuterJoin)
-                    .JoinAlias(l => lrAlias.Region, () => rAlias, JoinType.LeftOuterJoin)
-                    .ApplySubQueryFilters(filter, order, orderDescending, pageNumber, itemsPerPage)
-                    .List();
-                 */
+                return query.ToDataListResponse(totalCount);
             }
             catch (Exception inner)
             {
@@ -66,24 +55,16 @@ namespace BetterCms.Api
         /// <summary>
         /// Gets the list of region entities.
         /// </summary>
-        /// <param name="filter">The filter.</param>
-        /// <param name="order">The order.</param>
-        /// <param name="orderDescending">if set to <c>true</c> order by descending.</param>
-        /// <param name="pageNumber">The page number.</param>
-        /// <param name="itemsPerPage">The items per page.</param>
+        /// <param name="request">The request.</param>
         /// <returns>
         /// The list of region entities
         /// </returns>
-        public IList<Region> GetRegions(Expression<Func<Region, bool>> filter = null, Expression<Func<Region, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
+        /// <exception cref="CmsApiException"></exception>
+        public DataListResponse<Region> GetRegions(GetRegionsRequest request = null)
         {
             try
             {
-                if (order == null)
-                {
-                    order = p => p.RegionIdentifier;
-                }
-
-                return Repository.AsQueryable(filter, order, orderDescending, pageNumber, itemsPerPage).ToList();
+                return Repository.ToDataListResponse(request);
             }
             catch (Exception inner)
             {
@@ -96,34 +77,31 @@ namespace BetterCms.Api
         /// <summary>
         /// Gets the list of specified layout region entities.
         /// </summary>
-        /// <param name="layoutId">The layout id.</param>
-        /// <param name="filter">The filter.</param>
-        /// <param name="order">The order.</param>
-        /// <param name="orderDescending">if set to <c>true</c> order by descending.</param>
-        /// <param name="pageNumber">The page number.</param>
-        /// <param name="itemsPerPage">The items per page.</param>
+        /// <param name="request">The request.</param>
         /// <returns>
         /// The list of specified layout region entities
         /// </returns>
-        public IList<LayoutRegion> GetLayoutRegions(Guid layoutId, Expression<Func<LayoutRegion, bool>> filter = null, Expression<Func<LayoutRegion, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
+        /// <exception cref="CmsApiException"></exception>
+        public DataListResponse<LayoutRegion> GetLayoutRegions(GetLayoutRegionsRequest request)
         {
             try
             {
-                if (order == null)
-                {
-                    order = p => p.Description;
-                }
-
-                return Repository
+                var query = Repository
                     .AsQueryable<LayoutRegion>()
-                    .Where(lr => lr.Layout.Id == layoutId)
-                    .ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage)
-                    .Fetch(lr => lr.Region)
-                    .ToList();
+                    .Where(lr => lr.Layout.Id == request.LayoutId)
+                    .ApplyFilters(request);
+
+                var totalCount = query.ToRowCountFutureValue(request);
+
+                query = query
+                   .AddOrderAndPaging(request)
+                   .Fetch(lr => lr.Region);
+
+                return query.ToDataListResponse(totalCount);
             }
             catch (Exception inner)
             {
-                var message = string.Format("Failed to get layout regions list for layout Id={0}.", layoutId);
+                var message = string.Format("Failed to get layout regions list for layout Id={0}.", request.LayoutId);
                 Logger.Error(message, inner);
                 throw new CmsApiException(message, inner);
             }
