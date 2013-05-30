@@ -85,5 +85,10 @@ namespace BetterCms.Configuration
             var element = (KeyValueElement)BaseGet(key);
             return element == null ? null : element.Value;
         }
+
+        public void Add(KeyValueElement element)
+        {
+            BaseAdd(element);
+        }
     }
 }

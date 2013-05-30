@@ -44,9 +44,9 @@ namespace BetterCms.Tests.Core.ServiceTests.StorageTests
             var ex4 = Assert.Throws<StorageException>(() => storageService.UploadObject(new UploadRequest { Uri = httpUri }));
 
             Assert.IsTrue(ex1.Message.StartsWith("An Uri scheme") && ex1.Message.Contains("can't be processed with a"));
-            Assert.IsTrue(ex2.Message.StartsWith("An Uri scheme") && ex1.Message.Contains("can't be processed with a"));
-            Assert.IsTrue(ex3.Message.StartsWith("An Uri scheme") && ex1.Message.Contains("can't be processed with a"));
-            Assert.IsTrue(ex4.Message.StartsWith("An Uri scheme") && ex1.Message.Contains("can't be processed with a"));
+            Assert.IsTrue(ex2.Message.StartsWith("An Uri scheme") && ex2.Message.Contains("can't be processed with a"));
+            Assert.IsTrue(ex3.Message.StartsWith("An Uri scheme") && ex3.Message.Contains("can't be processed with a"));
+            Assert.IsTrue(ex4.Message.StartsWith("An Uri scheme") && ex4.Message.Contains("can't be processed with a"));
         }
 
         [Test]

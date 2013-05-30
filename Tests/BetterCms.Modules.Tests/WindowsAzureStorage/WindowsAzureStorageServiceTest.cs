@@ -1,34 +1,21 @@
 ﻿using System;
-using System.Collections.Specialized;
 using System.IO;
 
 using BetterCms.Configuration;
 using BetterCms.Core.Services.Storage;
 using BetterCms.Module.WindowsAzureStorage;
 
-using Moq;
-
 using NUnit.Framework;
 
 namespace BetterCms.Test.Module.WindowsAzureStorage
 {
     [TestFixture]
-    public class WindowsAzureStorageServiceTest
+    public class WindowsAzureStorageServiceTest : StorageTestBase
     {
-        private ICmsConfiguration CreateCmsConfigurationMock()
-        {
-            Mock<ICmsConfiguration> cmsConfigurationMock = new Mock<ICmsConfiguration>();
-            Mock<ICmsStorageConfiguration> storageConfigurationMock = new Mock<ICmsStorageConfiguration>();
-            cmsConfigurationMock.Setup(f => f.Storage).Returns(storageConfigurationMock.Object);
-            storageConfigurationMock.Setup(f => f.ContentRoot).Returns("ftp://test.ftp.com/cms/content");
-            storageConfigurationMock.Setup(f => f.ServiceType).Returns(StorageServiceType.Auto);
-            storageConfigurationMock.Setup(f => f.GetValue(It.Is<string>(s => s == "AzureAccountName"))).Returns("accountName");
-            storageConfigurationMock.Setup(f => f.GetValue(It.Is<string>(s => s == "AzureSecondaryKey"))).Returns("password");
-            storageConfigurationMock.Setup(f => f.GetValue(It.Is<string>(s => s == "AzureUseHttps"))).Returns("true");
-            storageConfigurationMock.Setup(f => f.GetValue(It.Is<string>(s => s == "AzureContainerName"))).Returns("container");
-
-            return cmsConfigurationMock.Object;
-        }
+        private const string AzureAccountName = "AzureAccountName";
+        private const string AzureSecondaryKey = "AzureSecondaryKey";
+        private const string AzureContainerName = "AzureContainerName";
+        private const string AzureUseHttps = "AzureUseHttps";
 
         private void GetUploadRequest(Uri uri, IStorageService azure)
         {
@@ -47,9 +34,8 @@ namespace BetterCms.Test.Module.WindowsAzureStorage
         [Ignore]
         public void Should_Check_If_Object_Exists()
         {
-            ICmsConfiguration config = CreateCmsConfigurationMock();
+            var azureClient = CreateService();
 
-            var azureClient = new WindowsAzureStorageService(config);
             var uri = new Uri("http://bettercms.blob.core.windows.net/temp/47.jpg");
             GetUploadRequest(uri, azureClient);
             bool exits = azureClient.ObjectExists(uri);
@@ -61,10 +47,10 @@ namespace BetterCms.Test.Module.WindowsAzureStorage
         }
 
         [Test]
-        [Ignore]
+        // [Ignore]
         public void Should_Upload_Object()
         {
-            var azureClient = new WindowsAzureStorageService(CreateCmsConfigurationMock());           
+            var azureClient = CreateService();           
            
             var uri = new Uri("http://bettercms.blob.core.windows.net/temp/Koala2.jpg");
 
@@ -78,7 +64,7 @@ namespace BetterCms.Test.Module.WindowsAzureStorage
         [Ignore]
         public void Should_Download_Object()
         {
-            var azureClient = new WindowsAzureStorageService(CreateCmsConfigurationMock());
+            var azureClient = CreateService();
             var uri = new Uri("http://bettercms.blob.core.windows.net/temp/newFile4.jpg");
             GetUploadRequest(uri, azureClient);
             var file = azureClient.DownloadObject(uri);
@@ -90,7 +76,7 @@ namespace BetterCms.Test.Module.WindowsAzureStorage
         [Ignore]
         public void Should_Copy_Object()
         {
-            var azureClient = new WindowsAzureStorageService(CreateCmsConfigurationMock());
+            var azureClient = CreateService();
             var source = new Uri("http://bettercms.blob.core.windows.net/temp/newFile4.jpg");
             GetUploadRequest(source, azureClient);
             var destination = new Uri("http://bettercms.blob.core.windows.net/temp/newFile4 copy.jpg");
@@ -104,8 +90,7 @@ namespace BetterCms.Test.Module.WindowsAzureStorage
         [Ignore]
         public void Should_Remove_Object()
         {
-
-            var azureClient = new WindowsAzureStorageService(CreateCmsConfigurationMock());
+            var azureClient = CreateService();
             var uri = new Uri("http://bettercms.blob.core.windows.net/temp/newFile4copy.jpg");
             GetUploadRequest(uri, azureClient);
             azureClient.RemoveObject(uri);
@@ -118,12 +103,55 @@ namespace BetterCms.Test.Module.WindowsAzureStorage
         {
             var uri = new Uri("http://bettercms.blob.core.windows.net/temp/folder/gifas.gif");
             var uri1 = new Uri("http://bettercms.blob.core.windows.net/temp/folder/gifas1.gif");
-            var azureClient = new WindowsAzureStorageService(CreateCmsConfigurationMock());
+            var azureClient = CreateService();
             GetUploadRequest(uri, azureClient);
             GetUploadRequest(uri1, azureClient);
             azureClient.RemoveFolder(uri);
             Assert.IsFalse(azureClient.ObjectExists(uri));
             Assert.IsFalse(azureClient.ObjectExists(uri1));
+        }
+
+        private WindowsAzureStorageService CreateService()
+        {
+            var configuration = MockConfiguration();
+            return new WindowsAzureStorageService(configuration);
+        }
+
+        protected override ICmsStorageConfiguration GetStorageConfiguration(Configuration.CmsTestConfigurationSection serviceSection)
+        {
+            var accountName = serviceSection.AmazonStorage.GetValue(AzureAccountName);
+            var secretKey = serviceSection.AmazonStorage.GetValue(AzureSecondaryKey);
+
+            if (!string.IsNullOrWhiteSpace(accountName) && !string.IsNullOrWhiteSpace(secretKey))
+            {
+                return serviceSection.AmazonStorage;
+            }
+
+            accountName = Environment.GetEnvironmentVariable("BETTERCMS_AZURE_STORAGE_ACCOUNT_KEY", EnvironmentVariableTarget.User);
+            secretKey = Environment.GetEnvironmentVariable("BETTERCMS_AZURE_STORAGE_SECONDARY_KEY", EnvironmentVariableTarget.User);
+            if (!string.IsNullOrWhiteSpace(accountName) || !string.IsNullOrWhiteSpace(secretKey))
+            {
+                var containerName = Environment.GetEnvironmentVariable("BETTERCMS_AZURE_STORAGE_CONTAINER_NAME", EnvironmentVariableTarget.User);
+                var useHttps = Environment.GetEnvironmentVariable("BETTERCMS_AZURE_STORAGE_USE_HTTPS", EnvironmentVariableTarget.User);
+
+                var configuration = new CmsStorageConfigurationElement
+                {
+                    ContentRoot = Environment.GetEnvironmentVariable("BETTERCMS_AZURE_STORAGE_CONTENT_ROOT", EnvironmentVariableTarget.User),
+                    ServiceType = StorageServiceType.Auto
+                };
+
+                configuration.Add(new KeyValueElement { Key = AzureAccountName, Value = accountName });
+                configuration.Add(new KeyValueElement { Key = AzureSecondaryKey, Value = secretKey });
+                configuration.Add(new KeyValueElement { Key = AzureContainerName, Value = containerName });
+                if (!string.IsNullOrWhiteSpace(useHttps))
+                {
+                    configuration.Add(new KeyValueElement { Key = AzureUseHttps, Value = useHttps });
+                }
+
+                return configuration;
+            }
+
+            return null;
         }
     }
 }
