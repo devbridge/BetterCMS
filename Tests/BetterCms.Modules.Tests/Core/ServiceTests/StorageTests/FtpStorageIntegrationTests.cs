@@ -59,17 +59,17 @@ namespace BetterCms.Test.Module.Core.ServiceTests.StorageTests
                 return serviceSection.FtpStorage;
             }
 
-            userName = Environment.GetEnvironmentVariable("BETTERCMS_FTP_STORAGE_USER_NAME", EnvironmentVariableTarget.User);
-            password = Environment.GetEnvironmentVariable("BETTERCMS_FTP_STORAGE_PASSWORD", EnvironmentVariableTarget.User);
+            userName = Environment.GetEnvironmentVariable("BETTERCMS_FTP_STORAGE_USER_NAME", EnvironmentVariableTarget.Machine);
+            password = Environment.GetEnvironmentVariable("BETTERCMS_FTP_STORAGE_PASSWORD", EnvironmentVariableTarget.Machine);
             if (!string.IsNullOrWhiteSpace(userName) || !string.IsNullOrWhiteSpace(password))
             {
-                var usePassiveMode = Environment.GetEnvironmentVariable("BETTERCMS_FTP_STORAGE_USE_PASSIVE_MODE", EnvironmentVariableTarget.User);
-                var ftpRoot = Environment.GetEnvironmentVariable("BETTERCMS_FTP_STORAGE_FTP_ROOT", EnvironmentVariableTarget.User);
+                var usePassiveMode = Environment.GetEnvironmentVariable("BETTERCMS_FTP_STORAGE_USE_PASSIVE_MODE", EnvironmentVariableTarget.Machine);
+                var ftpRoot = Environment.GetEnvironmentVariable("BETTERCMS_FTP_STORAGE_FTP_ROOT", EnvironmentVariableTarget.Machine);
 
                 var configuration = new CmsStorageConfigurationElement
                 {
-                    ContentRoot = Environment.GetEnvironmentVariable("BETTERCMS_FTP_STORAGE_CONTENT_ROOT", EnvironmentVariableTarget.User),
-                    PublicContentUrlRoot = Environment.GetEnvironmentVariable("BETTERCMS_FTP_STORAGE_CONTENT_ROOT_URL", EnvironmentVariableTarget.User),
+                    ContentRoot = Environment.GetEnvironmentVariable("BETTERCMS_FTP_STORAGE_CONTENT_ROOT", EnvironmentVariableTarget.Machine),
+                    PublicContentUrlRoot = Environment.GetEnvironmentVariable("BETTERCMS_FTP_STORAGE_CONTENT_ROOT_URL", EnvironmentVariableTarget.Machine),
                     ServiceType = StorageServiceType.Ftp
                 };
 

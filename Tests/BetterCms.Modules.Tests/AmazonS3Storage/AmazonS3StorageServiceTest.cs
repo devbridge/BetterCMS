@@ -59,16 +59,16 @@ namespace BetterCms.Test.Module.AmazonS3Storage
                 return serviceSection.AmazonStorage;
             }
 
-            accessKey = Environment.GetEnvironmentVariable("BETTERCMS_AMAZON_STORAGE_ACCESS_KEY", EnvironmentVariableTarget.User);
-            secretKey = Environment.GetEnvironmentVariable("BETTERCMS_AMAZON_STORAGE_SECRET_KEY", EnvironmentVariableTarget.User);
+            accessKey = Environment.GetEnvironmentVariable("BETTERCMS_AMAZON_STORAGE_ACCESS_KEY", EnvironmentVariableTarget.Machine);
+            secretKey = Environment.GetEnvironmentVariable("BETTERCMS_AMAZON_STORAGE_SECRET_KEY", EnvironmentVariableTarget.Machine);
             if (!string.IsNullOrWhiteSpace(accessKey) || !string.IsNullOrWhiteSpace(secretKey))
             {
-                var bucketName = Environment.GetEnvironmentVariable("BETTERCMS_AMAZON_STORAGE_BUCKET_NAME", EnvironmentVariableTarget.User);
+                var bucketName = Environment.GetEnvironmentVariable("BETTERCMS_AMAZON_STORAGE_BUCKET_NAME", EnvironmentVariableTarget.Machine);
 
                 var configuration = new CmsStorageConfigurationElement
                     {
-                        ContentRoot = Environment.GetEnvironmentVariable("BETTERCMS_AMAZON_STORAGE_CONTENT_ROOT", EnvironmentVariableTarget.User),
-                        PublicContentUrlRoot = Environment.GetEnvironmentVariable("BETTERCMS_AMAZON_STORAGE_PUBLIC_CONTENT_ROOT", EnvironmentVariableTarget.User),
+                        ContentRoot = Environment.GetEnvironmentVariable("BETTERCMS_AMAZON_STORAGE_CONTENT_ROOT", EnvironmentVariableTarget.Machine),
+                        PublicContentUrlRoot = Environment.GetEnvironmentVariable("BETTERCMS_AMAZON_STORAGE_PUBLIC_CONTENT_ROOT", EnvironmentVariableTarget.Machine),
                         ServiceType = StorageServiceType.Auto
                     };
 
