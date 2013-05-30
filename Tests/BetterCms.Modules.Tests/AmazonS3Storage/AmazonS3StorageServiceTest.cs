@@ -1,9 +1,6 @@
 using System;
-using System.IO;
-using System.Reflection;
 
 using BetterCms.Configuration;
-using BetterCms.Core.Services.Storage;
 using BetterCms.Module.AmazonS3Storage;
 using BetterCms.Test.Module.Configuration;
 
@@ -24,17 +21,7 @@ namespace BetterCms.Test.Module.AmazonS3Storage
             var configuration = MockConfiguration();
             var amazonStorageService = new AmazonS3StorageService(configuration);
 
-            // Upload
-            var request = CreateUploadRequest(configuration);
-            amazonStorageService.UploadObject(request);
-            request.InputStream.Dispose();
-
-            // Exists
-            var exists = amazonStorageService.ObjectExists(request.Uri);
-            Assert.IsTrue(exists);
-
-            // Remove
-            amazonStorageService.RemoveObject(request.Uri);
+            ShouldUploadObject(configuration, amazonStorageService);
         }
 
         [Test]
@@ -43,21 +30,7 @@ namespace BetterCms.Test.Module.AmazonS3Storage
             var configuration = MockConfiguration();
             var amazonStorageService = new AmazonS3StorageService(configuration);
 
-            // Upload
-            var request = CreateUploadRequest(configuration);
-            var uploadedSize = request.InputStream.Length;
-            amazonStorageService.UploadObject(request);
-            request.InputStream.Dispose();
-
-            // Download
-            var file = amazonStorageService.DownloadObject(request.Uri);
-            Assert.IsNotNull(file);
-            Assert.IsNotNull(file.ResponseStream);
-            Assert.IsTrue(file.ResponseStream.Length > 0);
-            Assert.AreEqual(file.ResponseStream.Length, uploadedSize);
-
-            // Remove
-            amazonStorageService.RemoveObject(request.Uri);
+            ShouldDownloadObject(configuration, amazonStorageService);
         }
 
         [Test]
@@ -66,42 +39,7 @@ namespace BetterCms.Test.Module.AmazonS3Storage
             var configuration = MockConfiguration();
             var amazonStorageService = new AmazonS3StorageService(configuration);
 
-            // Upload
-            var request = CreateUploadRequest(configuration);
-            amazonStorageService.UploadObject(request);
-            request.InputStream.Dispose();
-
-            // Copy
-            string copyUrl = Path.Combine(configuration.Storage.ContentRoot, TestImageCopyFileName);
-            var copyUri = new Uri(copyUrl);
-            amazonStorageService.CopyObject(request.Uri, copyUri);
-
-            // Exists
-            var exists = amazonStorageService.ObjectExists(copyUri);
-            Assert.IsTrue(exists);
-
-            // Remove
-            amazonStorageService.RemoveObject(request.Uri);
-            amazonStorageService.RemoveObject(copyUri);
-        }
-
-        /// <summary>
-        /// Creates the upload request.
-        /// </summary>
-        /// <returns></returns>
-        private UploadRequest CreateUploadRequest(ICmsConfiguration configuration)
-        {
-            string url = Path.Combine(configuration.Storage.ContentRoot, TestImageFileName);
-            var fileUri = new Uri(url);
-            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(TestImagePath);
-
-            var request = new UploadRequest
-            {
-                InputStream = stream,
-                Uri = fileUri
-            };
-
-            return request;
+            ShouldCopyObject(configuration, amazonStorageService);
         }
 
         /// <summary>

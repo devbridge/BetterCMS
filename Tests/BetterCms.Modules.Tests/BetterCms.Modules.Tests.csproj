@@ -136,7 +136,7 @@
     <Compile Include="Common\SerializationTest.cs" />
     <Compile Include="Configuration\CmsTestConfigurationSection.cs" />
     <Compile Include="ControllerTestBase.cs" />
-    <Compile Include="StorageTestBase.cs" />
+    <Compile Include="Core\ServiceTests\StorageTests\FtpStorageIntegrationTests.cs" />
     <Compile Include="MediaManager\ModelTests\MapTests\MediaFileMapTest.cs" />
     <Compile Include="MediaManager\ModelTests\MapTests\MediaFolderMapTest.cs" />
     <Compile Include="MediaManager\ModelTests\MapTests\MediaImageMapTest.cs" />
@@ -208,6 +208,7 @@
     <Compile Include="Root\ModelTests\ViewModelTests\CmsRequestViewModelTest.cs" />
     <Compile Include="Root\ProjectionTests\PageContentProjectionTest.cs" />
     <Compile Include="Pages\ModelTests\MapTests\SitemapNodeMapTest.cs" />
+    <Compile Include="StorageTestBase.cs" />
     <Compile Include="TestBase.cs" />
     <Compile Include="Common\ViewModelToStringTest.cs" />
     <Compile Include="Users\ModelTests\MapTests\PermissionMapTest.cs" />
