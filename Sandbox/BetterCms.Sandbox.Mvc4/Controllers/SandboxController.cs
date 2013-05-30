@@ -80,7 +80,10 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
             {
                 using (var papi = CmsContext.CreateApiContextOf<PagesApiContext>())
                 {
-                    var aRequest = new GetContentHistoryRequest(new Guid("AE04E233-4E88-4A9F-87BC-A1CC00F2C173"));
+                    var request = new GetLayoutsRequest();
+                    var result = papi.GetLayouts(request);
+
+                    /*var aRequest = new GetContentHistoryRequest(new Guid("AE04E233-4E88-4A9F-87BC-A1CC00F2C173"));
                     var aresults = papi.GetContentHistory(aRequest);
 
                     if (aresults.Items.Count > 0)
@@ -94,7 +97,7 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
                     if (aresults.Items.Count > 0)
                     {
                         message = string.Format("{0}<br />Total count:{2},  Item titles: {1}", message, string.Join("; ", aresults.Items.Select(t => t.Name)), aresults.TotalCount);
-                    }
+                    }*/
 
                     /*var request = new GetDataRequest<Layout>(3, 2, orderDescending:true, order:t =>t.Name);
                     results = pagesApi.GetLayouts(request);*/

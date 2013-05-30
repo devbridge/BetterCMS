@@ -137,6 +137,7 @@
     <Compile Include="Configuration\CmsTestConfigurationSection.cs" />
     <Compile Include="ControllerTestBase.cs" />
     <Compile Include="Core\ServiceTests\StorageTests\FtpStorageIntegrationTests.cs" />
+    <Compile Include="Helpers\FakeEagerFetchingProvider.cs" />
     <Compile Include="MediaManager\ModelTests\MapTests\MediaFileMapTest.cs" />
     <Compile Include="MediaManager\ModelTests\MapTests\MediaFolderMapTest.cs" />
     <Compile Include="MediaManager\ModelTests\MapTests\MediaImageMapTest.cs" />

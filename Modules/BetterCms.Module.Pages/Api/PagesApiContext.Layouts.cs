@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using NHibernate.Linq;
+using BetterCms.Core.DataAccess.DataContext.Fetching;
 
 using BetterCms.Core.Api.DataContracts;
 using BetterCms.Core.Api.Extensions;
