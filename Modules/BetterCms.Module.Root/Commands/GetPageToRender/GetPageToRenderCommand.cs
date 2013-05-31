@@ -188,7 +188,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             options.AddRange(pageContent.Content.ContentOptions.Where(f => !pageContent.Options.Any(g => g.Key.Trim().Equals(f.Key.Trim(), StringComparison.OrdinalIgnoreCase))));
 
             RenderPageViewModel childViewModel = null;
-            var dynamicContent = pageContent.Content as IDynamicLayoutContent;
+            var dynamicContent = pageContent.Content as IDynamicContent;
             if (dynamicContent != null)
             {
                 var childContentProjections = GetContentProjections(request, page, allPageContents, pageContent.Id);
@@ -199,14 +199,24 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                     childViewModel.Contents = childContentProjections;
                     childViewModel.JavaScripts = childContentProjections.Cast<IJavaScriptAccessor>().ToList();
                     childViewModel.Stylesheets = childContentProjections.Cast<IStylesheetAccessor>().ToList();
-                    childViewModel.Regions = dynamicContent
-                        .Layout
-                        .Regions
-                        .Select(r => new PageRegionViewModel
-                        {
-                            RegionId = r.Id,
-                            RegionIdentifier = r.RegionIdentifier
-                        }).ToList();
+
+                    var layoutContent = dynamicContent as IDynamicLayoutContent;
+                    if (layoutContent != null)
+                    {
+                        childViewModel.Regions = layoutContent
+                            .Layout
+                            .Regions
+                            .Select(r => new PageRegionViewModel
+                            {
+                                RegionId = r.Id,
+                                RegionIdentifier = r.RegionIdentifier
+                            }).ToList();
+                    }
+                    var htmlDynamicContent = dynamicContent as IDynamicHtmlLayoutContent;
+                    if (htmlDynamicContent != null)
+                    {
+                        childViewModel.Regions = new List<PageRegionViewModel>();
+                    }
                 }
             }
 

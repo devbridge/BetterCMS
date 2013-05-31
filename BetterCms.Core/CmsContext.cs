@@ -27,6 +27,7 @@ using BetterCms.Core.Mvc.Routes;
 using BetterCms.Core.Services.Caching;
 using BetterCms.Core.Services.Storage;
 using BetterCms.Core.Web;
+using BetterCms.Core.Web.DynamicHtmlLayout;
 using BetterCms.Core.Web.EmbeddedResources;
 using BetterCms.Core.Web.ViewEngines;
 
@@ -120,6 +121,7 @@ namespace BetterCms.Core
             builder.RegisterType<DefaultWorkingDirectory>().As<IWorkingDirectory>().SingleInstance();
             builder.RegisterType<DefaultCmsControllerFactory>().SingleInstance();
             builder.RegisterType<DefaultEmbeddedResourcesProvider>().As<IEmbeddedResourcesProvider>().SingleInstance();
+            builder.RegisterType<DefaultDynamicHtmlLayoutProvider>().As<IDynamicHtmlLayoutProvider>().SingleInstance();
             builder.RegisterType<DefaultHttpContextAccessor>().As<IHttpContextAccessor>().SingleInstance();
             builder.RegisterType<DefaultControllerExtensions>().As<IControllerExtensions>().SingleInstance();
             builder.RegisterType<DefaultCommandResolver>().As<ICommandResolver>().InstancePerLifetimeScope();
@@ -248,7 +250,8 @@ namespace BetterCms.Core
 
                 if (HostingEnvironment.IsHosted)
                 {
-                    HostingEnvironment.RegisterVirtualPathProvider(new EmbeddedResourcesVirtualPathProvider(container.Resolve<IEmbeddedResourcesProvider>()));
+                    HostingEnvironment.RegisterVirtualPathProvider(new EmbeddedResourcesVirtualPathProvider(container.Resolve<IEmbeddedResourcesProvider>(), container.Resolve<IDynamicHtmlLayoutProvider>()));
+                    // HostingEnvironment.RegisterVirtualPathProvider(new DynamicHtmlLayoutVirtualPathProvider(container.Resolve<IDynamicHtmlLayoutProvider>()));
                 }
 
                 ControllerBuilder.Current.SetControllerFactory(container.Resolve<DefaultCmsControllerFactory>());

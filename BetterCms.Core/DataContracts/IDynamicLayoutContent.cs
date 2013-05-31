@@ -1,6 +1,6 @@
 ﻿namespace BetterCms.Core.DataContracts
 {
-    public interface IDynamicLayoutContent : IContent
+    public interface IDynamicLayoutContent : IDynamicContent
     {
         ILayout Layout { get; }
     }
