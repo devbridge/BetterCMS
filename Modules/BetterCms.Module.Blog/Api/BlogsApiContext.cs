@@ -8,6 +8,7 @@ using BetterCms.Core.Api.DataContracts;
 using BetterCms.Core.Api.Extensions;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Api;
 using BetterCms.Module.Blog.Api.DataContracts;
@@ -16,8 +17,6 @@ using BetterCms.Module.Blog.Models;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Models;
-
-using NHibernate.Linq;
 
 // ReSharper disable CheckNamespace
 namespace BetterCms.Api
@@ -41,6 +40,7 @@ namespace BetterCms.Api
         /// Initializes a new instance of the <see cref="BlogsApiContext" /> class.
         /// </summary>
         /// <param name="lifetimeScope">The lifetime scope.</param>
+        /// <param name="tagService">The tag service.</param>
         /// <param name="repository">The repository.</param>
         public BlogsApiContext(ILifetimeScope lifetimeScope, ITagService tagService, IRepository repository = null)
             : base(lifetimeScope, repository)

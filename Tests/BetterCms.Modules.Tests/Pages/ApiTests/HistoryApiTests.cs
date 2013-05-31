@@ -2,7 +2,6 @@
 using System.Linq;
 
 using BetterCms.Api;
-using BetterCms.Core.Api.DataContracts;
 using BetterCms.Module.Pages.Api.DataContracts;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Models;
@@ -12,10 +11,10 @@ using Moq;
 
 using NUnit.Framework;
 
-namespace BetterCms.Test.Module.Pages.ServicesTests
+namespace BetterCms.Test.Module.Pages.ApiTests
 {
     [TestFixture]
-    public class DefaultHistoryApiServiceTest : TestBase
+    public class HistoryApiTests : ApiTestBase
     {
         [Test]
         public void Should_Return_History_List_Successfully()

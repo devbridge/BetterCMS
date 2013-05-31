@@ -11,10 +11,10 @@ using NHibernate;
 
 using NUnit.Framework;
 
-namespace BetterCms.Test.Module.MediaManager.ServiceTests
+namespace BetterCms.Test.Module.MediaManager.ApiTests
 {
     [TestFixture]
-    public class DefaultMediaApiServiceIntegrationTests : DatabaseTestBase
+    public class MediaApiTests : DatabaseTestBase
     {
         [Test]
         public void Should_Return_Images_Folder_Medias_List_Successfully()

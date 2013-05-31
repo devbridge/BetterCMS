@@ -12,10 +12,10 @@ using Moq;
 
 using NUnit.Framework;
 
-namespace BetterCms.Test.Module.Pages.ServicesTests
+namespace BetterCms.Test.Module.Pages.ApiTests
 {
     [TestFixture]
-    public class DefaultWidgetApiServiceTest : TestBase
+    public class WidgetApiTests : ApiTestBase
     {
         private Guid pageId = new Guid();
 
@@ -23,7 +23,7 @@ namespace BetterCms.Test.Module.Pages.ServicesTests
         public void Should_Return_History_List_Successfully()
         {
             var widgets = CreateFakeWidgets();
-            var repositoryMock = MockRepository(widgets);
+            var repositoryMock = MockWidgetsRepository(widgets);
 
             using (var service = new PagesApiContext(Container.BeginLifetimeScope(), repositoryMock.Object))
             {
@@ -57,7 +57,7 @@ namespace BetterCms.Test.Module.Pages.ServicesTests
                 };
         }
 
-        private static Mock<IRepository> MockRepository(Widget[] widgets)
+        protected Mock<IRepository> MockWidgetsRepository(Widget[] widgets)
         {
             var mock = new Mock<IRepository>();
 

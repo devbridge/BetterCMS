@@ -7,10 +7,10 @@ using Moq;
 
 using NUnit.Framework;
 
-namespace BetterCms.Test.Module.Pages.ServicesTests
+namespace BetterCms.Test.Module.Pages.ApiTests
 {
     [TestFixture]
-    public class DefaultCategoryApiServiceTest : TestBase
+    public class CategoryApiTests : ApiTestBase
     {
         [Test]
         public void Should_Return_Categorys_List_Successfully()

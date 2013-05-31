@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using NHibernate.Linq;
-
 using BetterCms.Core.Api.DataContracts;
 using BetterCms.Core.Api.Extensions;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Api;
 

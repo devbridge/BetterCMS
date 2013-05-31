@@ -12,6 +12,8 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
 
+using CategoryEntity = BetterCms.Module.Root.Models.Category;
+
 namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
 {
     public class SaveServerControlWidgetCommand : SaveWidgetCommandBase<EditServerControlWidgetViewModel>
@@ -74,7 +76,7 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
 
             if (request.CategoryId.HasValue && !request.CategoryId.Value.HasDefaultValue())
             {
-                widget.Category = Repository.AsProxy<Category>(request.CategoryId.Value);
+                widget.Category = Repository.AsProxy<CategoryEntity>(request.CategoryId.Value);
             }
             else
             {

@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.DataAccess.DataContext.Fetching;
-
 using BetterCms.Core.Api.DataContracts;
 using BetterCms.Core.Api.Extensions;
+using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.Exceptions.Api;
 
 using BetterCms.Module.Pages.Api.DataContracts;

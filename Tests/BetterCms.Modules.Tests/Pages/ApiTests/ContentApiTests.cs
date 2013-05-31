@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Autofac;
+﻿using Autofac;
 
 using BetterCms.Core.Services;
-using BetterCms.Module.Root.Services;
 
 using NUnit.Framework;
 
-namespace BetterCms.Test.Module.Pages.ServicesTests
+namespace BetterCms.Test.Module.Pages.ApiTests
 {
     [TestFixture]
-    public class DefaultContentServiceTest : DatabaseTestBase
+    public class ContentApiTests : ApiTestBase
     {
         [Test]
         public void Should_Create_Preview()

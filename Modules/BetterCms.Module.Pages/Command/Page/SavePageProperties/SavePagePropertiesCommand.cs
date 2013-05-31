@@ -8,8 +8,9 @@ using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
-using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+
+using CategoryEntity = BetterCms.Module.Root.Models.Category;
 
 namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
 {
@@ -99,7 +100,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             }
 
             page.Layout = Repository.AsProxy<Root.Models.Layout>(request.TemplateId);
-            page.Category = request.CategoryId.HasValue ? Repository.AsProxy<Category>(request.CategoryId.Value) : null;
+            page.Category = request.CategoryId.HasValue ? Repository.AsProxy<CategoryEntity>(request.CategoryId.Value) : null;
             page.Title = request.PageName;
             page.CustomCss = request.PageCSS;
             page.CustomJS = request.PageJavascript;

@@ -2,17 +2,12 @@
 
 using BetterCms.Api;
 using BetterCms.Core.Exceptions.Mvc;
-using BetterCms.Core.Mvc;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Content.Resources;
-using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Category;
-using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
-using NHibernate.Linq;
-
-namespace BetterCms.Module.Pages.Commands.SaveCategory
+namespace BetterCms.Module.Pages.Command.Category.SaveCategory
 {
     /// <summary>
     /// A command to save category item.
@@ -28,9 +23,9 @@ namespace BetterCms.Module.Pages.Commands.SaveCategory
         /// </returns>
         public CategoryItemViewModel Execute(CategoryItemViewModel categoryItem)
         {
-            Category category;
+            Root.Models.Category category;
 
-            var categoryName = Repository.FirstOrDefault<Category>(c => c.Name == categoryItem.Name);
+            var categoryName = Repository.FirstOrDefault<Root.Models.Category>(c => c.Name == categoryItem.Name);
             if (categoryName != null && categoryName.Id != categoryItem.Id)
             {
                 var message = string.Format(PagesGlobalization.SaveCategory_CategoryExists_Message, categoryItem.Name);
@@ -41,11 +36,11 @@ namespace BetterCms.Module.Pages.Commands.SaveCategory
 
             if (categoryItem.Id == default(Guid))
             {
-                category = new Category();
+                category = new Root.Models.Category();
             }
             else
             {
-                category = Repository.AsProxy<Category>(categoryItem.Id);                
+                category = Repository.AsProxy<Root.Models.Category>(categoryItem.Id);                
             }                     
 
             category.Version = categoryItem.Version;

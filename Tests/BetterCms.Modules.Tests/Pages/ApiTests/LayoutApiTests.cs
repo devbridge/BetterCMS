@@ -3,19 +3,17 @@ using System.Linq;
 
 using BetterCms.Api;
 using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Module.Pages.Api.DataContracts;
 using BetterCms.Module.Root.Models;
-using BetterCms.Test.Module.Helpers;
 
 using Moq;
 
 using NUnit.Framework;
 
-namespace BetterCms.Test.Module.Pages.ServicesTests
+namespace BetterCms.Test.Module.Pages.ApiTests
 {
     [TestFixture]
-    public class DefaultLayoutApiServiceTest : TestBase
+    public class LayoutApiTests : ApiTestBase
     {
         [Test]
         public void Should_Return_Layouts_List_Successfully()
@@ -98,16 +96,6 @@ namespace BetterCms.Test.Module.Pages.ServicesTests
                 Assert.IsEmpty(layouts.Items);
                 Assert.AreEqual(layouts.TotalCount, 0);
             }
-        }
-
-        private Mock<IRepository> MockRepository(IEnumerable<Layout> layouts)
-        {
-            Mock<IRepository> repositoryMock = new Mock<IRepository>();
-            repositoryMock
-                .Setup(f => f.AsQueryable<Layout>())
-                .Returns(layouts.AsQueryable());
-
-            return repositoryMock;
         }
 
         private IEnumerable<Layout> CreateLayouts()

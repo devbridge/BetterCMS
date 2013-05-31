@@ -10,10 +10,10 @@ using Moq;
 
 using NUnit.Framework;
 
-namespace BetterCms.Test.Module.Pages.ServicesTests
+namespace BetterCms.Test.Module.Pages.ApiTests
 {
     [TestFixture]
-    public class DefaultTagApiServiceTest : TestBase
+    public class TagApiTests : ApiTestBase
     {
         [Test]
         public void Should_Return_Tags_List_Successfully()
@@ -96,16 +96,6 @@ namespace BetterCms.Test.Module.Pages.ServicesTests
                 Assert.IsEmpty(tags.Items);
                 Assert.AreEqual(tags.TotalCount, 0);
             }
-        }
-
-        private Mock<IRepository> MockRepository(IEnumerable<Tag> tags)
-        {
-            Mock<IRepository> repositoryMock = new Mock<IRepository>();
-            repositoryMock
-                .Setup(f => f.AsQueryable<Tag>())
-                .Returns(tags.AsQueryable());
-
-            return repositoryMock;
         }
 
         private IEnumerable<Tag> CreateTags()

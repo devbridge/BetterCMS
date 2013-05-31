@@ -1,11 +1,13 @@
 ﻿using System.Web.Mvc;
 
 using BetterCms.Core.Security;
+
+using BetterCms.Module.Pages.Command.Category.SaveCategory;
 using BetterCms.Module.Pages.Commands.DeleteCategory;
 using BetterCms.Module.Pages.Commands.GetCategoryList;
-using BetterCms.Module.Pages.Commands.SaveCategory;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.ViewModels.Category;
+
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;

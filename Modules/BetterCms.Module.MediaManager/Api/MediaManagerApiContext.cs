@@ -6,12 +6,11 @@ using Autofac;
 using BetterCms.Core.Api.DataContracts;
 using BetterCms.Core.Api.Extensions;
 using BetterCms.Core.DataAccess;
+using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.Exceptions.Api;
 using BetterCms.Module.MediaManager.Api.DataContracts;
 using BetterCms.Module.MediaManager.Api.Events;
 using BetterCms.Module.MediaManager.Models;
-
-using NHibernate.Linq;
 
 // ReSharper disable CheckNamespace
 namespace BetterCms.Api

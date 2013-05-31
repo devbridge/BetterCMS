@@ -2,7 +2,6 @@
 using System.Linq;
 
 using BetterCms.Api;
-using BetterCms.Core.DataAccess;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 
@@ -10,13 +9,13 @@ using Moq;
 
 using NUnit.Framework;
 
-namespace BetterCms.Test.Module.Navigation.ServicesTests
+namespace BetterCms.Test.Module.Pages.ApiTests
 {
     [TestFixture]
-    public class DefaultSitemapApiServiceTest : TestBase
+    public class SitemapApiTests : ApiTestBase
     {
         [Test]
-        public void Should_Return_History_List_Successfully()
+        public void Should_Return_Sitemap_List_Successfully()
         {
             var sitemap = CreateFakeSitemap();
             var repositoryMock = MockRepository(sitemap);
@@ -52,19 +51,6 @@ namespace BetterCms.Test.Module.Navigation.ServicesTests
                 .Returns(sitemap ?? new SitemapNode[0]);
 
             return serviceMock;
-        }
-
-        private static Mock<IRepository> MockRepository(SitemapNode[] sitemap)
-        {
-            var mock = new Mock<IRepository>();
-
-            mock.Setup(r => r.First<SitemapNode>(It.IsAny<Guid>()))
-                .Returns(sitemap[0]);
-
-            mock.Setup(r => r.AsQueryable<SitemapNode>())
-                .Returns(sitemap.AsQueryable());
-
-            return mock;
         }
     }
 }

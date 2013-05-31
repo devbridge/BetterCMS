@@ -1,9 +1,9 @@
 ﻿using NUnit.Framework;
 
-namespace BetterCms.Test.Module.Blog.ServiceTests
+namespace BetterCms.Test.Module.Blog.ApiTests
 {
     [TestFixture]
-    public class DefaultAuthorApiServiceTest : TestBase
+    public class AuthorApiTests : ApiTestBase
     {
         // TODO: MOCK FETCH
         [Test]

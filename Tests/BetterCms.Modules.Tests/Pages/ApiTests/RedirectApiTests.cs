@@ -7,10 +7,10 @@ using Moq;
 
 using NUnit.Framework;
 
-namespace BetterCms.Test.Module.Pages.ServicesTests
+namespace BetterCms.Test.Module.Pages.ApiTests
 {
     [TestFixture]
-    public class DefaultRedirectApiServiceTest : TestBase
+    public class RedirectApiTests : ApiTestBase
     {
         [Test]
         public void Should_Return_Redirects_List_Successfully()
