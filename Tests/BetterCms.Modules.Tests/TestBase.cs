@@ -30,8 +30,6 @@ namespace BetterCms.Test.Module
                                                          typeof(RootModuleDescriptor).Assembly,
                                                          typeof(PagesModuleDescriptor).Assembly
                                                      });
-
-            EagerFetch.FetchingProvider = () => new FakeEagerFetchingProvider();
         }
 
         public ILifetimeScope Container
@@ -64,6 +62,8 @@ namespace BetterCms.Test.Module
             ContainerBuilder updater = CmsContext.InitializeContainer();
            
             updater.RegisterType<StubMappingResolver>().As<IMappingResolver>();
+            updater.RegisterType<FakeEagerFetchingProvider>().As<IFetchingProvider>();
+
             ContextScopeProvider.RegisterTypes(updater);
 
             var container = ContextScopeProvider.CreateChildContainer();

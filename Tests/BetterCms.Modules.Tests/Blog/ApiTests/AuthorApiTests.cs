@@ -1,44 +1,55 @@
-﻿using NUnit.Framework;
+﻿using System.Linq;
+
+using BetterCms.Api;
+using BetterCms.Module.Blog.Api.DataContracts;
+using BetterCms.Module.Blog.Models;
+using BetterCms.Module.Pages.Services;
+
+using Moq;
+
+using NUnit.Framework;
 
 namespace BetterCms.Test.Module.Blog.ApiTests
 {
     [TestFixture]
     public class AuthorApiTests : ApiTestBase
     {
-        // TODO: MOCK FETCH
         [Test]
         public void Should_Return_Authors_List_Successfully()
         {
-            /*BetterCms.Module.Blog.Models.Author author1 = TestDataProvider.CreateNewAuthor();
-            BetterCms.Module.Blog.Models.Author author2 = TestDataProvider.CreateNewAuthor();
+            Author author1 = TestDataProvider.CreateNewAuthor();
+            Author author2 = TestDataProvider.CreateNewAuthor();
 
-            Mock<IRepository> repositoryMock = new Mock<IRepository>();
-            repositoryMock.Setup(f => f.AsQueryable<BetterCms.Module.Blog.Models.Author>()).Returns(new[] { author1, author2 }.AsQueryable());
+            var repositoryMock = MockRepository(new[] { author1, author2 });
+            var tagService = new Mock<ITagService>();
 
-            var service = new DefaultAuthorApiService(repositoryMock.Object);
-            var authors = service.GetAuthors();
+            using (var service = new BlogsApiContext(Container.BeginLifetimeScope(), tagService.Object, repositoryMock.Object))
+            {
+                var authors = service.GetAuthors(new GetAuthorsRequest());
 
-            Assert.IsNotNull(authors);
-            Assert.AreEqual(authors.Count, 2);
+                Assert.IsNotNull(authors);
+                Assert.AreEqual(authors.Items.Count, 2);
 
-            var author = authors.FirstOrDefault(l => author1.Id == l.Id);
-            Assert.IsNotNull(author);
-            Assert.AreEqual(author1.Name, author.Name);
-            Assert.IsNotNull(author.Image);
-            Assert.AreEqual(author1.Image.Caption, author.Image.Caption);*/
+                var author = authors.Items.FirstOrDefault(l => author1.Id == l.Id);
+                Assert.IsNotNull(author);
+                Assert.AreEqual(author.Name, author.Name);
+            }
         }
 
         [Test]
         public void Should_Return_Empty_Authors_List_Successfully()
         {
-            /*Mock<IRepository> repositoryMock = new Mock<IRepository>();
-            repositoryMock.Setup(f => f.AsQueryable<BetterCms.Module.Blog.Models.Author>()).Returns(new BetterCms.Module.Blog.Models.Author[] { }.AsQueryable());
+            var repositoryMock = MockRepository(new Author[] { });
+            var tagService = new Mock<ITagService>();
 
-            var service = new DefaultAuthorApiService(repositoryMock.Object);
-            var authors = service.GetAuthors();
+            using (var service = new BlogsApiContext(Container.BeginLifetimeScope(), tagService.Object, repositoryMock.Object))
+            {
+                var authors = service.GetAuthors(new GetAuthorsRequest());
 
-            Assert.IsNotNull(authors);
-            Assert.IsEmpty(authors);*/
+                Assert.IsNotNull(authors);
+                Assert.IsNotNull(authors.Items);
+                Assert.IsEmpty(authors.Items);
+            }
         }
     }
 }
