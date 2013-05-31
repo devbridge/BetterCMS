@@ -22,12 +22,14 @@
 @using (Html.BeginForm<SubscriberController>(s => s.Subscribe(null), FormMethod.Post, new { @class = "bcms-newsletter-subscribe-form" }))
 {
     <label class="bcms-newsletter-subscribe-label" for="Email">@labelTitle</label>
-    @Html.TextBoxFor(m => m.Email, new
-                                       {
-                                           @type = "email",
-                                           @class = "bcms-newsletter-subscribe-input required",
-                                           @placeholder = @emailPlaceholder
-                                       })
-    @Html.BcmsValidationMessageFor(m => m.Email)
+    <div class="bcms-field-block bcms-newsletter-field-block">
+        @Html.TextBoxFor(m => m.Email, new
+                                           {
+                                               @type = "email",
+                                               @class = "bcms-newsletter-subscribe-input required",
+                                               @placeholder = @emailPlaceholder
+                                           })
+        @Html.BcmsValidationMessageFor(m => m.Email)
+    </div>
     <button type="submit" class="bcms-newsletter-subscribe-submit"@(submitDisabled ? " disabled=\"disabled\"" : string.Empty)>@submitTitle</button>
 }
