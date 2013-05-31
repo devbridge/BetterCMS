@@ -13,8 +13,11 @@ using BetterCms.Module.Root.Commands.GetPageToRender;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels.Cms;
 
+using Microsoft.Web.Mvc;
+
 namespace BetterCms.Module.Root.Controllers
 {
+    [ActionLinkArea(RootModuleDescriptor.RootAreaName)]
     public class CmsController : CmsControllerBase
     {
         /// <summary>
@@ -55,7 +58,7 @@ namespace BetterCms.Module.Root.Controllers
             {
                 model = GetRequestModel(virtualPath);
 
-                if (model == null && !string.IsNullOrWhiteSpace(cmsConfiguration.PageNotFoundUrl))
+                if (!string.IsNullOrWhiteSpace(cmsConfiguration.PageNotFoundUrl) && model == null)
                 {
                     model = GetRequestModel(HttpUtility.UrlDecode(cmsConfiguration.PageNotFoundUrl));
                     pageNotFound = true;

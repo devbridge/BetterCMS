@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define */
 
-define('bcms.sidemenu', ['bcms.jquery', 'bcms', 'bcms.security'], function ($, bcms, security) {
+bettercms.define('bcms.sidemenu', ['bcms.jquery', 'bcms', 'bcms.security'], function ($, bcms, security) {
     'use strict';
 
     var sidemenu = {},

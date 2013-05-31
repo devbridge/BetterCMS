@@ -1,15 +1,19 @@
 ﻿using System.Web.Mvc;
 
 using BetterCms.Core.Security;
+
+using BetterCms.Module.Pages.Command.Category.SaveCategory;
 using BetterCms.Module.Pages.Commands.DeleteCategory;
 using BetterCms.Module.Pages.Commands.GetCategoryList;
-using BetterCms.Module.Pages.Commands.SaveCategory;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.ViewModels.Category;
+
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
+
+using Microsoft.Web.Mvc;
 
 namespace BetterCms.Module.Pages.Controllers
 {
@@ -17,6 +21,7 @@ namespace BetterCms.Module.Pages.Controllers
     /// Handles categories logic.
     /// </summary>
     [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+    [ActionLinkArea(PagesModuleDescriptor.PagesAreaName)]
     public class CategoryController : CmsControllerBase
     {       
         /// <summary>

@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define */
 
-define('bcms.tabs', ['bcms.jquery', 'bcms'], function ($, bcms) {
+bettercms.define('bcms.tabs', ['bcms.jquery', 'bcms'], function ($, bcms) {
     'use strict';
 
     var tabs = {},

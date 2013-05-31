@@ -63,9 +63,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Common.Logging.2.1.1\lib\net40\Common.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="EcmaScript.NET">
-      <HintPath>..\..\packages\EcmaScript.Net.1.0.1.0\lib\net20\EcmaScript.NET.dll</HintPath>
-    </Reference>
     <Reference Include="FluentMigrator, Version=1.0.6.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\FluentMigrator.1.0.6.0\lib\40\FluentMigrator.dll</HintPath>
@@ -92,6 +89,7 @@
       <HintPath>..\..\packages\NHibernate.3.3.3.4000\lib\Net35\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System" />
@@ -114,12 +112,6 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="Yahoo.Yui.Compressor">
-      <HintPath>..\..\packages\YUICompressor.NET.2.2.0.0\lib\NET20\Yahoo.Yui.Compressor.dll</HintPath>
-    </Reference>
-    <Reference Include="Yahoo.Yui.Compressor.Build.MsBuild">
-      <HintPath>..\..\packages\YUICompressor.NET.MSBuild.2.2.1.0\lib\NET20\Yahoo.Yui.Compressor.Build.MsBuild.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\SharedAssemblyInfo.cs">
@@ -154,6 +146,8 @@
     <Compile Include="Models\ContentOption.cs" />
     <Compile Include="Models\ContentBase.cs" />
     <Compile Include="Models\ComboWireJson.cs" />
+    <Compile Include="Models\Maps\ModuleContentVersionMap.cs" />
+    <Compile Include="Models\ModuleContentVersion.cs" />
     <Compile Include="Models\LayoutRegion.cs" />
     <Compile Include="Models\Maps\CategoryMap.cs" />
     <Compile Include="Models\Maps\ContentMap.cs" />
@@ -164,6 +158,8 @@
     <Compile Include="Models\Maps\RegionMap.cs" />
     <Compile Include="Models\Maps\TagMap.cs" />
     <Compile Include="Models\Migrations\Migration201305240930.cs" />
+    <Compile Include="Models\MigrationsContent\BaseContentMigration.cs" />
+    <Compile Include="Models\Migrations\Migration201305230800.cs" />
     <Compile Include="Models\Migrations\Migration201303261100.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
     <Compile Include="Models\Migrations\Migration201302211227.cs" />
@@ -240,6 +236,7 @@
     <Compile Include="ViewModels\Authentication\InfoViewModel.cs" />
     <Compile Include="ViewModels\Cms\CmsRequestViewModel.cs" />
     <Compile Include="ViewModels\Cms\PageRegionViewModel.cs" />
+    <Compile Include="DataContracts\Enums\PageRetrievedEventResults.cs" />
     <Compile Include="ViewModels\Cms\RedirectViewModel.cs" />
     <Compile Include="ViewModels\Cms\RenderPageViewModel.cs" />
     <Compile Include="ViewModels\PageProjectionsViewModel.cs" />
@@ -529,10 +526,8 @@
     <EmbeddedResource Include="Scripts\bcms.security.js" />
     <Content Include="BuildConfiguration.xml" />
     <EmbeddedResource Include="Content\Styles\images\icn-zoom-notcompatible.png" />
-    <EmbeddedResource Include="Scripts\knockout-2.2.1.js" />
-    <EmbeddedResource Include="Scripts\knockout-2.2.1.min.js" />
-    <EmbeddedResource Include="Scripts\require-2.1.5.js" />
-    <EmbeddedResource Include="Scripts\require-2.1.5.min.js" />
+    <EmbeddedResource Include="Scripts\bcms.knockout-2.2.1.js" />
+    <EmbeddedResource Include="Scripts\bcms.require-2.1.5.js" />
     <EmbeddedResource Include="Content\Styles\images\cookies.png" />
     <EmbeddedResource Include="Content\Styles\images\error-back.png" />
     <EmbeddedResource Include="Content\Styles\images\error-bg.png" />

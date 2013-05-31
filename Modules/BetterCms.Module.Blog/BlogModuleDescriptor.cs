@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Web.Mvc;
 
 using Autofac;
 
@@ -14,6 +16,7 @@ using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Pages.Accessors;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Api.Events;
+using BetterCms.Module.Root.ViewModels.Cms;
 
 namespace BetterCms.Module.Blog
 {
@@ -26,6 +29,8 @@ namespace BetterCms.Module.Blog
         /// The module name.
         /// </summary>
         internal const string ModuleName = "blog";
+
+        internal const string BlogAreaName = "bcms-blog";
 
         /// <summary>
         /// The blog java script module descriptor
@@ -67,6 +72,20 @@ namespace BetterCms.Module.Blog
             get
             {
                 return "Blog module for BetterCMS.";
+            }
+        }
+
+        /// <summary>
+        /// Gets the name of the module area.
+        /// </summary>
+        /// <value>
+        /// The name of the module area.
+        /// </value>
+        public override string AreaName
+        {
+            get
+            {
+                return BlogAreaName;
             }
         }
 
@@ -159,6 +178,10 @@ namespace BetterCms.Module.Blog
             if (args != null && args.RenderPageData != null)
             {
                 args.RenderPageData.ExtendWithBlogData(args.PageData);
+                if (args.RenderPageData.IsBlogPost() && !args.RenderPageData.IsBlogPostActive() && !args.RenderPageData.CanManageContent)
+                {
+                    args.EventResult = PageRetrievedEventResult.ForcePageNotFound;
+                }
             }
         }
     }

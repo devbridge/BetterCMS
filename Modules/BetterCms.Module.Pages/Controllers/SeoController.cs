@@ -7,12 +7,15 @@ using BetterCms.Module.Pages.ViewModels.Seo;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Mvc;
 
+using Microsoft.Web.Mvc;
+
 namespace BetterCms.Module.Pages.Controllers
 {
     /// <summary>
     /// Defines logic to handle page SEO information.
     /// </summary>
     [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+    [ActionLinkArea(PagesModuleDescriptor.PagesAreaName)]
     public class SeoController : CmsControllerBase
     {
         /// <summary>

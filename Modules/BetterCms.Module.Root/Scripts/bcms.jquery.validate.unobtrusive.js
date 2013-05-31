@@ -1,4 +1,4 @@
-﻿define('bcms.jquery.validate.unobtrusive', ['bcms.jquery', 'bcms.jquery.unobtrusive'], function (jquery) {
+﻿bettercms.define('bcms.jquery.validate.unobtrusive', ['bcms.jquery', 'bcms.jquery.unobtrusive'], function (jquery) {
 
     /*!
     ** Unobtrusive validation support library for jQuery and jQuery Validate

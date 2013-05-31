@@ -8,10 +8,11 @@ using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Widgets;
-using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
 using NHibernate.Linq;
+
+using CategoryEntity = BetterCms.Module.Root.Models.Category;
 
 namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
 {
@@ -37,7 +38,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
             }
             else
             {
-                var categoriesQuery = Repository.AsQueryable<Category>();
+                var categoriesQuery = Repository.AsQueryable<CategoryEntity>();
 
                 if (request.CategoryId.HasValue)
                 {

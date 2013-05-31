@@ -4,7 +4,6 @@ using System.Linq;
 using System.Linq.Expressions;
 
 using BetterCms.Core.Exceptions.DataTier;
-using BetterCms.Core.Models;
 
 using NHibernate;
 using NHibernate.Linq;
@@ -102,81 +101,22 @@ namespace BetterCms.Core.DataAccess.DataContext
         }
 
         /// <summary>
-        /// Returns query with filters and sorting applied.
+        /// Adds the paging.
         /// </summary>
         /// <typeparam name="TEntity">The type of the entity.</typeparam>
         /// <param name="query">The query.</param>
-        /// <param name="filter">The filter.</param>
-        /// <param name="order">The order.</param>
-        /// <param name="orderDescending">if set to <c>true</c> order descending.</param>
-        /// <param name="pageNumber">The page number.</param>
-        /// <param name="itemsPerPage">The items per page.</param>
-        /// <returns>Query with filters and sorting applied.</returns>
-        public static IQueryable<TEntity> ApplyFilters<TEntity>(this IQueryable<TEntity> query, Expression<Func<TEntity, bool>> filter, Expression<Func<TEntity, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
+        /// <param name="startItemNumber">The start item number.</param>
+        /// <param name="itemsCount">The items count.</param>
+        /// <returns>Query with paging applied.</returns>
+        public static IQueryable<TEntity> AddPaging<TEntity>(this IQueryable<TEntity> query, int startItemNumber = 1, int? itemsCount = null)
         {
-            if (filter != null)
+            if (itemsCount > 0)
             {
-                query = query.Where(filter);
-            }
-
-            query = query.ApplyOrder(order, orderDescending);
-            query = query.ApplyPaging(pageNumber, itemsPerPage);
-
-            return query;
-        }
-
-        /// <summary>
-        /// Returns query with filters and sorting applied.
-        /// </summary>
-        /// <typeparam name="TEntity">The type of the entity.</typeparam>
-        /// <param name="query">The query.</param>
-        /// <param name="hasInnerCollections">if set to <c>true</c> entity will be loadded with inner collections].</param>
-        /// <param name="filter">The filter.</param>
-        /// <param name="order">The order.</param>
-        /// <param name="orderDescending">if set to <c>true</c> order descending.</param>
-        /// <param name="pageNumber">The page number.</param>
-        /// <param name="itemsPerPage">The items per page.</param>
-        /// <returns>
-        /// Query with filters and sorting applied.
-        /// </returns>
-        public static IQueryable<TEntity> ApplyFilters<TEntity>(this IQueryable<TEntity> query, bool hasInnerCollections, Expression<Func<TEntity, bool>> filter, Expression<Func<TEntity, dynamic>> order = null, bool orderDescending = false, int? pageNumber = null, int? itemsPerPage = null)
-            where TEntity : Entity
-        {
-            if (hasInnerCollections && itemsPerPage > 0)
-            {
-                // At first, load ids
-                var ids = query
-                    .ApplyFilters(filter, order, orderDescending)
-                    .Select(entity => entity.Id)
-                    .ApplyPaging(pageNumber, itemsPerPage)
-                    .ToList();
-
-                // Then load entities
-                return query
-                    .Where(l => ids.Contains(l.Id))
-                    .ApplyOrder(order, orderDescending);
-            }
-            
-            return query.ApplyFilters(filter, order, orderDescending, pageNumber, itemsPerPage);
-        }
-
-        /// <summary>
-        /// Applies the paging.
-        /// </summary>
-        /// <typeparam name="TEntity">The type of the entity.</typeparam>
-        /// <param name="query">The query.</param>
-        /// <param name="pageNumber">The page number.</param>
-        /// <param name="itemsPerPage">The items per page.</param>
-        /// <returns></returns>
-        public static IQueryable<TEntity> ApplyPaging<TEntity>(this IQueryable<TEntity> query, int? pageNumber = null, int? itemsPerPage = null)
-        {
-            if (itemsPerPage > 0)
-            {
-                if (pageNumber > 1)
+                if (startItemNumber > 1)
                 {
-                    query = query.Skip((pageNumber.Value - 1) * itemsPerPage.Value);
+                    query = query.Skip(startItemNumber - 1);
                 }
-                query = query.Take(itemsPerPage.Value);
+                query = query.Take(itemsCount.Value);
             }
 
             return query;
@@ -190,7 +130,7 @@ namespace BetterCms.Core.DataAccess.DataContext
         /// <param name="order">The order.</param>
         /// <param name="orderDescending">if set to <c>true</c> order by descending.</param>
         /// <returns>Ordered query</returns>
-        public static IQueryable<TEntity> ApplyOrder<TEntity>(this IQueryable<TEntity> query, Expression<Func<TEntity, dynamic>> order = null, bool orderDescending = false)
+        public static IQueryable<TEntity> AddOrder<TEntity>(this IQueryable<TEntity> query, Expression<Func<TEntity, dynamic>> order = null, bool orderDescending = false)
         {
             if (order != null)
             {

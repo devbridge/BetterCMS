@@ -46,7 +46,7 @@ namespace BetterCms.Core.Services.Storage
 
             try
             {
-                var absolutePath = ResolvePath(uri.LocalPath);
+                var absolutePath = ResolvePath(uri.AbsoluteUri);
                 var serverUri = string.Format("{0}{1}", ftpRoot, absolutePath);
                 var ftpRequest = CreateFtpRequest(serverUri);
                 ftpRequest.Method = WebRequestMethods.Ftp.GetDateTimestamp;
@@ -169,7 +169,7 @@ namespace BetterCms.Core.Services.Storage
         {
             CheckUri(uri);
 
-            var absolutePath = ResolvePath(uri.LocalPath);
+            var absolutePath = ResolvePath(uri.AbsoluteUri);
             var serverUri = string.Format("{0}{1}", ftpRoot, absolutePath);
             FtpWebRequest request = CreateFtpRequest(serverUri);
             request.Method = WebRequestMethods.Ftp.DeleteFile;
@@ -182,7 +182,7 @@ namespace BetterCms.Core.Services.Storage
         {
             CheckUri(uri);
 
-            var absolutePath = ResolvePath(Path.GetDirectoryName(uri.LocalPath));
+            var absolutePath = ResolvePath(Path.GetDirectoryName(uri.AbsoluteUri));
             var serverUri = string.Format("{0}{1}", ftpRoot, absolutePath);
             FtpWebRequest request = CreateFtpRequest(serverUri);
             request.Method = WebRequestMethods.Ftp.RemoveDirectory;

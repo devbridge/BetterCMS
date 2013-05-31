@@ -1,4 +1,4 @@
-define('bcms.jqueryui', ['bcms.jquery'], function(jquery) {
+bettercms.define('bcms.jqueryui', ['bcms.jquery'], function(jquery) {
     
 /*! jQuery UI - v1.9.0 - 2012-10-05
 * http://jqueryui.com

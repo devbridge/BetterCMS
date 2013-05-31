@@ -1,41 +1,99 @@
-﻿@model BetterCms.Core.Models.IPage
+﻿@using BetterCms.Module.Root.Mvc.Helpers
+@using BetterCms.Module.Pages.Helpers.Extensions
+@model BetterCms.Module.Root.ViewModels.Cms.RenderPageViewModel
 
 @{
     Layout = "~/Areas/bcms-Root/Views/Shared/BaseLayout.cshtml";
 }
+@section DoctypeTag
+{
+    <!DOCTYPE html>
+}
 
-@section Styles {
-    <link rel="stylesheet" type="text/css" href="@Url.Content("/file/bcms-templates/Content/Css/bcms.templates.css")" />
+@section HtmlTag
+{
+<!--[if lte IE 7]><html class="ie7"><![endif]-->  
+<!--[if IE 8]><html class="ie8"><![endif]-->  
+<!--[if IE 9]><html class="ie9"><![endif]-->  
+<!--[if !IE]><!--><html><!--<![endif]-->  
+}
+
+@section BodyAttributes
+{
+    hello=3
+}
+@* NOTE: Obsolete. Left for compatibility reasons. *@
+
+@section Styles {    
     @RenderSection("Styles", false)
 }
 
 <div class="page">
+
     <header class="page-header">
-        <div class="page-frame">
+        <div class="page-frame clearfix">
             @RenderSection("CMSHeader", false)
         </div>
     </header>
-
-    <div class="page-container clearfix">
-        <h1>@Model.Title</h1>
+    
+    @{
+        var image = Model.GetPageImage();
+        if (image != null)
+        {
+            <p><b>Image:</b></p>
+            <p><img src="@image.PublicUrl" alt="@image.Title"/></p>
+        }
         
-        <aside class="page-left-sidebar-3">
-            @RenderSection("CMSLeftSide", false)
-        </aside>
+        var tags = Model.GetPageTags();
+        if (tags != null && tags.Count > 0)
+        {
+            <p><b>Tags:</b></p>
+            <ul>
+                @foreach (var pageTag in tags)
+                {
+                    <li>@pageTag.Tag.Name</li>
+                }
+            </ul>
+        }
 
-        <section class="page-content-3">
-            @RenderSection("CMSMainContent", false)
-            @RenderBody()
-        </section>
+        var category = Model.GetPageCategory();
+        if (category != null)
+        {
+            <p><b>Category:</b> @category.Name</p>
+        }
+    }
 
-        <aside class="page-right-sidebar-3">
-            @RenderSection("CMSRightSide", false)
-        </aside>
+    <div class="page-block">
+        <div class="page-frame clearfix">
+
+            <section class="three-col-left">
+                @RenderSection("CMSMainContent", false)
+                @RenderBody()
+            </section>
+
+            <section class="three-col-middle">
+                @RenderSection("CMSLeftSide", false)
+            </section>
+
+            <aside class="col-right">
+                @RenderSection("CMSRightSide", false)
+            </aside>
+
+        </div>
     </div>
+
 </div>
 
 <footer class="page-footer">
-    <div class="page-frame">
+    <div class="page-frame clearfix">
         @RenderSection("CMSFooter", false)
     </div>
 </footer>
+
+@section Scripts{
+   <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.js"></script>
+   <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
+   <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"></script>
+   <script type="text/javascript" src="/Scripts/knockout-2.2.1.debug.js"></script>
+   <script type="text/javascript" src="/Scripts/knockout.validation.debug.js"></script>
+}

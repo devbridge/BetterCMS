@@ -109,6 +109,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Services.Client" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Spatial, Version=5.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\System.Spatial.5.2.0\lib\net40\System.Spatial.dll</HintPath>
@@ -126,38 +127,42 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AmazonS3Storage\AmazonS3StorageServiceTest.cs" />
+    <Compile Include="ApiTestBase.cs" />
     <Compile Include="Blog\ModelTests\MapTests\BlogPostMapTest.cs" />
     <Compile Include="Blog\ModelTests\MapTests\BlogPostContentMapTest.cs" />
     <Compile Include="Blog\ModelTests\MapTests\OptionMapTest.cs" />
-    <Compile Include="Blog\ServiceTests\DefaultBlogPostApiServiceTest.cs" />
-    <Compile Include="Blog\ServiceTests\DefaultAuthorApiServiceTest.cs" />
+    <Compile Include="Blog\ApiTests\BlogPostApiTests.cs" />
+    <Compile Include="Blog\ApiTests\AuthorApiTests.cs" />
     <Compile Include="Common\SecurityTest.cs" />
     <Compile Include="Common\SerializationTest.cs" />
+    <Compile Include="Configuration\CmsTestConfigurationSection.cs" />
     <Compile Include="ControllerTestBase.cs" />
+    <Compile Include="Core\ServiceTests\StorageTests\FtpStorageIntegrationTests.cs" />
+    <Compile Include="Helpers\FakeEagerFetchingProvider.cs" />
     <Compile Include="MediaManager\ModelTests\MapTests\MediaFileMapTest.cs" />
     <Compile Include="MediaManager\ModelTests\MapTests\MediaFolderMapTest.cs" />
     <Compile Include="MediaManager\ModelTests\MapTests\MediaImageMapTest.cs" />
     <Compile Include="MediaManager\ModelTests\MapTests\MediaMapTest.cs" />
-    <Compile Include="MediaManager\ServiceTests\DefaultMediaApiServiceIntegrationTests.cs" />
+    <Compile Include="MediaManager\ApiTests\MediaApiTests.cs" />
     <Compile Include="Pages\CommandTests\ContentTests\DeletePageContentCommandTest.cs" />
     <Compile Include="Pages\CommandTests\ContentTests\GetPageContentOptionsTest.cs" />
     <Compile Include="Pages\CommandTests\ContentTests\GetPageHtmlContentCommandTest.cs" />
     <Compile Include="Pages\CommandTests\ContentTests\InsertContentToPageCommandTest.cs" />
     <Compile Include="Pages\CommandTests\ContentTests\SavePageContentOptionsCommandTest.cs" />
-    <Compile Include="Pages\ServicesTests\DefaultWidgetApiServiceTest.cs" />
-    <Compile Include="Navigation\ServicesTests\DefaultSitemapApiServiceTest.cs" />
+    <Compile Include="Pages\ApiTests\WidgetApiTests.cs" />
+    <Compile Include="Pages\ApiTests\SitemapApiTests.cs" />
     <Compile Include="Pages\CommandTests\ContentTests\SortPageContentCommandIntegrationTest.cs" />
     <Compile Include="Pages\CommandTests\WidgetTests\DeleteWidgetCommandTest.cs" />
     <Compile Include="Pages\CommandTests\WidgetTests\GetSiteSettingsWidgetsIntegrationTest.cs" />
     <Compile Include="Pages\EventTests\PageEventTests.cs" />
     <Compile Include="Pages\HelperTests\StringHelperTests.cs" />
     <Compile Include="Pages\ModelTests\ConcurrencyTests\ConcurrencyTests.cs" />
-    <Compile Include="Pages\ServicesTests\DefaultHistoryApiServiceTest.cs" />
-    <Compile Include="Pages\ServicesTests\DefaultLayoutApiServiceTest.cs" />
-    <Compile Include="Pages\ServicesTests\DefaultCategoryApiServiceTest.cs" />
-    <Compile Include="Pages\ServicesTests\DefaultRedirectApiServiceTest.cs" />
-    <Compile Include="Pages\ServicesTests\DefaultContentServiceTest.cs" />
-    <Compile Include="Pages\ServicesTests\DefaultTagApiServiceTest.cs" />
+    <Compile Include="Pages\ApiTests\HistoryApiTests.cs" />
+    <Compile Include="Pages\ApiTests\LayoutApiTests.cs" />
+    <Compile Include="Pages\ApiTests\CategoryApiTests.cs" />
+    <Compile Include="Pages\ApiTests\RedirectApiTests.cs" />
+    <Compile Include="Pages\ApiTests\ContentApiTests.cs" />
+    <Compile Include="Pages\ApiTests\TagApiTests.cs" />
     <Compile Include="Root\CommandTests\GetMainJsDataCommandTest.cs" />
     <Compile Include="Root\CommandTests\GetProcessorJsDataCommandTest.cs" />
     <Compile Include="Root\CommandTests\GetStyleSheetsToRenderCommandTest.cs" />
@@ -205,6 +210,7 @@
     <Compile Include="Root\ModelTests\ViewModelTests\CmsRequestViewModelTest.cs" />
     <Compile Include="Root\ProjectionTests\PageContentProjectionTest.cs" />
     <Compile Include="Pages\ModelTests\MapTests\SitemapNodeMapTest.cs" />
+    <Compile Include="StorageTestBase.cs" />
     <Compile Include="TestBase.cs" />
     <Compile Include="Common\ViewModelToStringTest.cs" />
     <Compile Include="Users\ModelTests\MapTests\PermissionMapTest.cs" />
@@ -215,6 +221,7 @@
     <Compile Include="Users\ModelTests\MapTests\UsersMapTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Contents\Images\logo.png" />
     <None Include="App.config" />
     <Content Include="Config\cms.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -225,6 +232,9 @@
       <TransformOnBuild>true</TransformOnBuild>
       <SubType>Designer</SubType>
     </Content>
+    <None Include="Config\storage.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Config\nlog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -240,6 +250,10 @@
     <ProjectReference Include="..\..\BetterCMS.Core\BetterCms.Core.csproj">
       <Project>{694CA5CA-A0E2-4578-A249-648498B058D7}</Project>
       <Name>BetterCms.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.AmazonS3Storage\BetterCms.Module.AmazonS3Storage.csproj">
+      <Project>{42698E7B-A9B1-4C23-8BB0-FC363A3F8B94}</Project>
+      <Name>BetterCms.Module.AmazonS3Storage</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCMS.Module.Blog\BetterCms.Module.Blog.csproj">
       <Project>{a66a3046-ef60-4c51-ada7-eb055763419b}</Project>

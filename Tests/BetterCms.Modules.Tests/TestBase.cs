@@ -5,10 +5,12 @@ using Autofac;
 
 using BetterCms.Core;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.Dependencies;
 using BetterCms.Core.Modules.Registration;
 using BetterCms.Module.Pages;
 using BetterCms.Module.Root;
+using BetterCms.Test.Module.Helpers;
 using BetterCms.Tests.Helpers;
 
 namespace BetterCms.Test.Module
@@ -60,6 +62,8 @@ namespace BetterCms.Test.Module
             ContainerBuilder updater = CmsContext.InitializeContainer();
            
             updater.RegisterType<StubMappingResolver>().As<IMappingResolver>();
+            updater.RegisterType<FakeEagerFetchingProvider>().As<IFetchingProvider>();
+
             ContextScopeProvider.RegisterTypes(updater);
 
             var container = ContextScopeProvider.CreateChildContainer();

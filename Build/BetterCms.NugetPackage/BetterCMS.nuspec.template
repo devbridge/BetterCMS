@@ -26,10 +26,9 @@
       <dependency id="Microsoft.AspNet.Razor" version="2.0.20505.0" />
       <dependency id="Microsoft.AspNet.WebPages" version="2.0.20505.0" />
       <dependency id="Microsoft.Net.Http" version="2.0.20505.0" />
-      <dependency id="Microsoft.Web.Infrastructure" version="1.0.0.0" />
-      <dependency id="MicrosoftWebMvc" version="2.0" />
-      <dependency id="Mvc2Futures" version="2.0.50217.0" />
-      <dependency id="MvcContrib" version="2.0.95.0" />
+      <dependency id="Microsoft.Web.Infrastructure" version="1.0.0.0" />      
+      <dependency id="Mvc3Futures" version="3.0.20105.0" />
+      <dependency id="MvcContrib.Mvc3-ci" version="3.0.100.0" />
       <dependency id="Newtonsoft.Json" version="4.5.1" />
       <dependency id="NLog" version="2.0.0.2000" />
       <dependency id="NuGet.Core" version="2.0.1" />

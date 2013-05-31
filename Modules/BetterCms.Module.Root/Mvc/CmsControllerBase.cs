@@ -13,11 +13,13 @@ using BetterCms.Core.Services;
 using BetterCms.Core.Web;
 using BetterCms.Module.Root.Models;
 
+using Microsoft.Web.Mvc;
+
 namespace BetterCms.Module.Root.Mvc
 {    
     /// <summary>
     /// Custom controller base.
-    /// </summary>
+    /// </summary>    
     public abstract class CmsControllerBase : Controller, ICommandContext
     {
         /// <summary>

@@ -11,6 +11,7 @@ using BetterCms.Api;
 using BetterCms.Configuration;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.DataAccess.DataContext.Migrations;
 using BetterCms.Core.Dependencies;
 using BetterCms.Core.Environment.Assemblies;
@@ -122,6 +123,7 @@ namespace BetterCms.Core
             builder.RegisterType<DefaultHttpContextAccessor>().As<IHttpContextAccessor>().SingleInstance();
             builder.RegisterType<DefaultControllerExtensions>().As<IControllerExtensions>().SingleInstance();
             builder.RegisterType<DefaultCommandResolver>().As<ICommandResolver>().InstancePerLifetimeScope();
+            builder.RegisterType<DefaultFetchingProvider>().As<IFetchingProvider>().InstancePerLifetimeScope();
 
             builder.RegisterType<DefaultUnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
             builder.RegisterType<DefaultRepository>().As<IRepository>().InstancePerLifetimeScope();

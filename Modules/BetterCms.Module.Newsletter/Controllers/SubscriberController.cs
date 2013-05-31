@@ -12,11 +12,14 @@ using BetterCms.Module.Root;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
+using Microsoft.Web.Mvc;
+
 namespace BetterCms.Module.Newsletter.Controllers
 {
     /// <summary>
     /// Newsletter subscribers controller.
     /// </summary>
+    [ActionLinkArea(NewsletterModuleDescriptor.NewsletterAreaName)]
     public class SubscriberController : CmsControllerBase
     {
         /// <summary>

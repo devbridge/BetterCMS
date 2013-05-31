@@ -4,16 +4,19 @@ using System.Diagnostics.CodeAnalysis;
 
 using Autofac;
 
+using BetterCms.Api;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Pages.Accessors;
 using BetterCms.Module.Pages.Content.Resources;
+using BetterCms.Module.Pages.Helpers.Extensions;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Registration;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root;
+using BetterCms.Module.Root.Api.Events;
 
 namespace BetterCms.Module.Pages
 {
@@ -21,11 +24,13 @@ namespace BetterCms.Module.Pages
     /// Pages module descriptor.
     /// </summary>
     public class PagesModuleDescriptor : ModuleDescriptor
-    {
+    {        
         /// <summary>
         /// The module name.
         /// </summary>
         internal const string ModuleName = "pages";
+
+        internal const string PagesAreaName = "bcms-pages";
 
         /// <summary>
         /// bcms.pages.js java script module descriptor.
@@ -92,6 +97,8 @@ namespace BetterCms.Module.Pages
             templatesJsModuleIncludeDescriptor = new TemplatesJsModuleIncludeDescriptor(this);
             historyJsModuleIncludeDescriptor = new HistoryJsModuleIncludeDescriptor(this);
             sitemapJsModuleIncludeDescriptor = new SitemapJsModuleIncludeDescriptor(this);
+
+            RootApiContext.Events.PageRetrieved += Events_PageRetrieved;
         }
 
         /// <summary>
@@ -133,6 +140,20 @@ namespace BetterCms.Module.Pages
             get
             {
                 return int.MaxValue - 300;
+            }
+        }
+
+        /// <summary>
+        /// Gets the name of the module area.
+        /// </summary>
+        /// <value>
+        /// The name of the module area.
+        /// </value>
+        public override string AreaName
+        {
+            get
+            {
+                return PagesAreaName;
             }
         }
 
@@ -397,6 +418,18 @@ namespace BetterCms.Module.Pages
                             AccessRole = RootModuleConstants.UserRoles.EditContent
                         }                                      
                 };
-        }       
+        }
+
+        /// <summary>
+        /// Occurs, when the page is retrieved.
+        /// </summary>
+        /// <param name="args">The <see cref="PageRetrievedEventArgs" /> instance containing the event data.</param>
+        private void Events_PageRetrieved(PageRetrievedEventArgs args)
+        {
+            if (args != null && args.RenderPageData != null)
+            {
+                args.RenderPageData.ExtendWithPageData(args.PageData);
+            }
+        }
     }
 }

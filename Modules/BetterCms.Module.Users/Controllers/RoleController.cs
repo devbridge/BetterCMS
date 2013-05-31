@@ -12,12 +12,15 @@ using BetterCms.Module.Users.Commands.Role.GetRoles;
 using BetterCms.Module.Users.Content.Resources;
 using BetterCms.Module.Users.ViewModels.Role;
 
+using Microsoft.Web.Mvc;
+
 namespace BetterCms.Module.Users.Controllers
 {
     /// <summary>
     /// Role management.
     /// </summary>
     [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
+    [ActionLinkArea(UsersModuleDescriptor.UsersAreaName)]
     public class RoleController : CmsControllerBase
     {
         /// <summary>
