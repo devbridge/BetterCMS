@@ -1289,168 +1289,101 @@ input.bcms-grid-input:focus {
         display: none;
     }
 
-/*additional filegroups*/
-/*.bcms-files-group {
-}
-
-.bcms-images-group {
-}
-
-.bcms-archives-group {
-}
-
-.bcms-office-group {
-}
-
-.bcms-audio-group {
-}
-
-.bcms-video-group {
-}*/
-
 /*additional file types*/
 .bcms-uknown-icn {
-    background-position: 0 0;
-}
-
-.bcms-media-click-active .bcms-uknown-icn {
-    background-position: -84px 0;
-}
-
-.bcms-file-box:hover .bcms-uknown-icn {
-    background-position: -84px 0;
-}
-
-.bcms-file-box-active .bcms-uknown-icn {
-    background-position: -84px 0;
-}
-
-.bcms-pdf-icn {
-    background-position: 0 -112px;
-}
-
-.bcms-media-click-active .bcms-pdf-icn {
-    background-position: -84px -112px;
-}
-
-.bcms-file-box:hover .bcms-pdf-icn {
-    background-position: -84px -112px;
-}
-
-.bcms-file-box-active .bcms-pdf-icn {
-    background-position: -84px -112px;
-}
-
-.bcms-word-icn {
-    background-position: 0 -167px;
-}
-
-.bcms-media-click-active .bcms-word-icn {
-    background-position: -84px -167px;
-}
-
-.bcms-file-box:hover .bcms-word-icn {
-    background-position: -84px -167px;
-}
-
-.bcms-file-box-active .bcms-word-icn {
-    background-position: -84px -167px;
-}
-
-.bcms-mp3-icn {
     background-position: 0 -279px;
 }
 
-.bcms-media-click-active .bcms-mp3-icn {
-    background-position: -84px -279px;
+.bcms-media-click-active .bcms-uknown-icn {
+    background-position: -69px -279px;
 }
 
-.bcms-file-box:hover .bcms-mp3-icn {
-    background-position: -84px -279px;
+.bcms-file-box:hover .bcms-uknown-icn {
+    background-position: -69px -279px;
 }
 
-.bcms-file-box-active .bcms-mp3-icn {
-    background-position: -84px -279px;
+.bcms-file-box-active .bcms-uknown-icn {
+    background-position: -69px -279px;
 }
 
-.bcms-mp4-icn {
-    background-position: 0 -334px;
+.bcms-archive-icn {
+    background-position: 0 -224px;
 }
 
-.bcms-media-click-active .bcms-mp4-icn {
-    background-position: -84px -334px;
+.bcms-media-click-active .bcms-archive-icn {
+    background-position: -69px -224px;
 }
 
-.bcms-file-box:hover .bcms-mp4-icn {
-    background-position: -84px -334px;
+.bcms-file-box:hover .bcms-archive-icn {
+    background-position: -69px -224px;
 }
 
-.bcms-file-box-active .bcms-mp4-icn {
-    background-position: -84px -334px;
+.bcms-file-box-active .bcms-archive-icn {
+    background-position: -69px -224px;
 }
 
-.bcms-ppt-icn {
-    background-position: 0 -389px;
+.bcms-video-icn {
+    background-position: 0 -168px;
 }
 
-.bcms-media-click-active .bcms-ppt-icn {
-    background-position: -84px -389px;
+.bcms-media-click-active .bcms-video-icn {
+    background-position: -69px -168px;
 }
 
-.bcms-file-box:hover .bcms-ppt-icn {
-    background-position: -84px -389px;
+.bcms-file-box:hover .bcms-video-icn {
+    background-position: -69px -168px;
 }
 
-.bcms-file-box-active .bcms-ppt-icn {
-    background-position: -84px -389px;
+.bcms-file-box-active .bcms-video-icn {
+    background-position: -69px -168px;
 }
 
-.bcms-xls-icn {
-    background-position: 0 -446px;
+.bcms-audio-icn {
+    background-position: 0 -112px;
 }
 
-.bcms-media-click-active .bcms-xls-icn {
-    background-position: -84px -446px;
+.bcms-media-click-active .bcms-audio-icn {
+    background-position: -69px -112px;
 }
 
-.bcms-file-box:hover .bcms-xls-icn {
-    background-position: -84px -446px;
+.bcms-file-box:hover .bcms-audio-icn {
+    background-position: -69px -112px;
 }
 
-.bcms-file-box-active .bcms-xls-icn {
-    background-position: -84px -446px;
+.bcms-file-box-active .bcms-audio-icn {
+    background-position: -69px -112px;
 }
 
-.bcms-rar-icn {
-    background-position: 0 -501px;
+.bcms-office-icn {
+    background-position: 0 -56px;
 }
 
-.bcms-media-click-active .bcms-rar-icn {
-    background-position: -84px -501px;
+.bcms-media-click-active .bcms-office-icn {
+    background-position: -69px -56px;
 }
 
-.bcms-file-box:hover .bcms-rar-icn {
-    background-position: -84px -501px;
+.bcms-file-box:hover .bcms-office-icn {
+    background-position: -69px -56px;
 }
 
-.bcms-file-box-active .bcms-rar-icn {
-    background-position: -84px -501px;
+.bcms-file-box-active .bcms-office-icn {
+    background-position: -69px -56px;
 }
 
-.bcms-wav-icn {
-    background-position: 0 -556px;
+.bcms-image-icn {
+    background-position: 0 0;
 }
 
-.bcms-media-click-active .bcms-wav-icn {
-    background-position: -84px -556px;
+.bcms-media-click-active .bcms-image-icn {
+    background-position: -69px 0;
 }
 
-.bcms-file-box:hover .bcms-wav-icn {
-    background-position: -84px -556px;
+.bcms-file-box:hover .bcms-image-icn {
+    background-position: -69px 0;
 }
 
-.bcms-file-box-active .bcms-wav-icn {
-    background-position: -84px -556px;
+.bcms-file-box-active .bcms-image-icn {
+    background-position: -69px 0;
 }
 
 /*context menu*/
