@@ -23,6 +23,8 @@ namespace BetterCms.Module.Blog.Models
             var blogPost = (BlogPost)base.CopyDataToDuplicate(duplicate);
 
             blogPost.Author = Author;
+            blogPost.ActivationDate = ActivationDate;
+            blogPost.ExpirationDate = ExpirationDate;
 
             return blogPost;
         }
