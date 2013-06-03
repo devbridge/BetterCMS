@@ -35,18 +35,21 @@ namespace BetterCms.Module.Pages.Accessors
         {
             using (var sw = new StringWriter())
             {
-                childViewModel.Regions.Add(new PageRegionViewModel { RegionId = Guid.NewGuid(), RegionIdentifier = "DDD" });
+                childViewModel.Regions.Add(new PageRegionViewModel { RegionId = new Guid("D5B5CCE3-B0FA-4EB1-B08E-F99ED4C8C979"), RegionIdentifier = "DynamicHtmlSection" });
 
                 var viewData = new ViewDataDictionary
                 {
                     Model = childViewModel
                 };
 
+                DynamicHtmlLayoutContentsContainer.Push(Content.Id, Content.Html);
+
                 // Create view
                 var context = htmlHelper.ViewContext.Controller.ControllerContext;
 
-                //var viewResult = ViewEngines.Engines.FindView(context, DefaultDynamicHtmlLayoutProvider.DynamicHtmlLayoutVirtualPath, null /*"~/Views/Shared/EmptyPage.cshtml", */);
-                var viewResult = ViewEngines.Engines.FindView(context, "~/Views/Shared/EmptyPage.cshtml", DefaultDynamicHtmlLayoutProvider.DynamicHtmlLayoutVirtualPath);
+                var masterVirtualPath = DynamicHtmlLayoutContentsContainer.CreateMasterVirtualPath(Content);
+
+                var viewResult = ViewEngines.Engines.FindView(context, "~/Views/Shared/EmptyPage.cshtml", masterVirtualPath);
                 var viewContext = new ViewContext(context, viewResult.View, viewData, new TempDataDictionary(), sw);
 
                 viewResult.View.Render(viewContext, sw);

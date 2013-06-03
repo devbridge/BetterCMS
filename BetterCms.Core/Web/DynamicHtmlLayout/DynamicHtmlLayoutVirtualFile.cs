@@ -26,7 +26,8 @@ namespace BetterCms.Core.Web.DynamicHtmlLayout
         /// </returns>
         public override Stream Open()
         {
-            byte[] byteArray = Encoding.UTF8.GetBytes("<p>TEST DYNAMIC HTML LAYOUT START: </p> <p>@RenderSection(\"DDD\", false) @RenderBody() &nbsp;</p> <p> TEST DYNAMIC HTML LAYOUT END: </p> ");
+            var html = DynamicHtmlLayoutContentsContainer.Pop(VirtualPath) ?? string.Empty;
+            byte[] byteArray = Encoding.UTF8.GetBytes(html);
             MemoryStream stream = new MemoryStream(byteArray);
 
             return stream;

@@ -250,8 +250,11 @@ namespace BetterCms.Core
 
                 if (HostingEnvironment.IsHosted)
                 {
-                    HostingEnvironment.RegisterVirtualPathProvider(new EmbeddedResourcesVirtualPathProvider(container.Resolve<IEmbeddedResourcesProvider>(), container.Resolve<IDynamicHtmlLayoutProvider>()));
-                    // HostingEnvironment.RegisterVirtualPathProvider(new DynamicHtmlLayoutVirtualPathProvider(container.Resolve<IDynamicHtmlLayoutProvider>()));
+                    var embedderresourceProvider = container.Resolve<IEmbeddedResourcesProvider>();
+                    var dynamicHtmlLayoutProvider = container.Resolve<IDynamicHtmlLayoutProvider>();
+                    var virtualPathProvider = new DefaultVirtualPathProvider(embedderresourceProvider, dynamicHtmlLayoutProvider);
+
+                    HostingEnvironment.RegisterVirtualPathProvider(virtualPathProvider);
                 }
 
                 ControllerBuilder.Current.SetControllerFactory(container.Resolve<DefaultCmsControllerFactory>());

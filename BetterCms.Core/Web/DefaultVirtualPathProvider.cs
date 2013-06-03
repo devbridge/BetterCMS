@@ -5,26 +5,31 @@ using System.Web.Caching;
 using System.Web.Hosting;
 
 using BetterCms.Core.Web.DynamicHtmlLayout;
+using BetterCms.Core.Web.EmbeddedResources;
 
-namespace BetterCms.Core.Web.EmbeddedResources
+namespace BetterCms.Core.Web
 {
     /// <summary>
-    /// Embedded resources virtual path provider.
+    /// Default virtual path provider.
     /// </summary>
-    public class EmbeddedResourcesVirtualPathProvider : VirtualPathProvider
+    public class DefaultVirtualPathProvider : VirtualPathProvider
     {
         /// <summary>
         /// Embedded resources provider contract.
         /// </summary>
         private readonly IEmbeddedResourcesProvider embeddedResourcesProvider;
+
+        /// <summary>
+        /// Dynami html layouts provider contract.
+        /// </summary>
         private readonly IDynamicHtmlLayoutProvider dynamicHtmlLayoutProvider;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EmbeddedResourcesVirtualPathProvider" /> class.
+        /// Initializes a new instance of the <see cref="DefaultVirtualPathProvider" /> class.
         /// </summary>
         /// <param name="embeddedResourcesProvider">The embedded resources provider.</param>
         /// <param name="dynamicHtmlLayoutProvider">The dynamic HTML layout provider.</param>
-        public EmbeddedResourcesVirtualPathProvider(IEmbeddedResourcesProvider embeddedResourcesProvider,
+        public DefaultVirtualPathProvider(IEmbeddedResourcesProvider embeddedResourcesProvider,
             IDynamicHtmlLayoutProvider dynamicHtmlLayoutProvider)
         {
             this.embeddedResourcesProvider = embeddedResourcesProvider;            
@@ -42,12 +47,7 @@ namespace BetterCms.Core.Web.EmbeddedResources
         /// </returns>
         public override CacheDependency GetCacheDependency(string virtualPath, IEnumerable virtualPathDependencies, DateTime utcStart)
         {
-            if (embeddedResourcesProvider.IsEmbeddedResourceVirtualPath(virtualPath))
-            {
-                return null;
-            }
-
-            if (dynamicHtmlLayoutProvider.IsDynamicHtmlLayoutVirtualPath(virtualPath))
+            if (IsCustomVirtualPath(virtualPath))
             {
                 return null;
             }
@@ -80,19 +80,10 @@ namespace BetterCms.Core.Web.EmbeddedResources
         /// </returns>
         public override bool FileExists(string virtualPath)
         {
-            bool isEmbeddedResourceVirtualPath = embeddedResourcesProvider.IsEmbeddedResourceVirtualPath(virtualPath);
-
-            if (isEmbeddedResourceVirtualPath)
-            {
-                return true;
-            }
-
-            bool isDynamicLayoutVirtualPath = dynamicHtmlLayoutProvider.IsDynamicHtmlLayoutVirtualPath(virtualPath);
-
-            if (isDynamicLayoutVirtualPath)
-            {
-                return true;
-            }
+           if (IsCustomVirtualPath(virtualPath))
+           {
+               return true;
+           }
 
             return base.FileExists(virtualPath);
         }
@@ -107,7 +98,6 @@ namespace BetterCms.Core.Web.EmbeddedResources
         public override VirtualFile GetFile(string virtualPath)
         {            
             VirtualFile embeddedResourcesVirtualFile = embeddedResourcesProvider.GetEmbeddedResourceVirtualFile(virtualPath);
-            
             if (embeddedResourcesVirtualFile != null)
             {
                 return embeddedResourcesVirtualFile;
@@ -123,6 +113,19 @@ namespace BetterCms.Core.Web.EmbeddedResources
             }
 
             return base.GetFile(virtualPath);
+        }
+
+        /// <summary>
+        /// Determines whether virtual path is BetterCMS custom virtual path.
+        /// </summary>
+        /// <param name="virtualPath">The virtual path.</param>
+        /// <returns>
+        ///   <c>true</c> if virtual path is BetterCMS custom virtual path; otherwise, <c>false</c>.
+        /// </returns>
+        private bool IsCustomVirtualPath(string virtualPath)
+        {
+            return embeddedResourcesProvider.IsEmbeddedResourceVirtualPath(virtualPath) 
+                || dynamicHtmlLayoutProvider.IsDynamicHtmlLayoutVirtualPath(virtualPath);
         }
     }
 }

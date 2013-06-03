@@ -5,8 +5,6 @@
     /// </summary>
     public class DefaultDynamicHtmlLayoutProvider : IDynamicHtmlLayoutProvider
     {
-        public const string DynamicHtmlLayoutVirtualPath = "BCMS_DYNAMIC_HTML_LAYOUT_VIRTUAL_PATH";
-
         /// <summary>
         /// Checks if virtual path exists as dynamic html layout.
         /// </summary>
@@ -16,7 +14,7 @@
         /// </returns>
         public bool IsDynamicHtmlLayoutVirtualPath(string virtualPath)
         {
-            return virtualPath.Contains(DynamicHtmlLayoutVirtualPath);
+            return virtualPath.Contains(DynamicHtmlLayoutContentsContainer.DynamicHtmlLayoutVirtualPath);
         }
 
         /// <summary>

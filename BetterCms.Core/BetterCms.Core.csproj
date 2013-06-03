@@ -270,8 +270,8 @@
     <Compile Include="Modules\Install\DefaultModuleManager.cs" />
     <Compile Include="Modules\Install\IModuleManager.cs" />
     <Compile Include="Web\DynamicHtmlLayout\DefaultDynamicHtmlLayoutProvider.cs" />
+    <Compile Include="Web\DynamicHtmlLayout\DynamicHtmlLayoutContentsContainer.cs" />
     <Compile Include="Web\DynamicHtmlLayout\DynamicHtmlLayoutVirtualFile.cs" />
-    <Compile Include="Web\DynamicHtmlLayout\DynamicHtmlLayoutVirtualPathProvider.cs" />
     <Compile Include="Web\DynamicHtmlLayout\IDynamicHtmlLayoutProvider.cs" />
     <Compile Include="Web\EmbeddedResources\DefaultEmbeddedResourcesProvider.cs" />
     <Compile Include="Web\EmbeddedResources\EmbeddedResourceDescriptor.cs" />
@@ -280,7 +280,7 @@
     <Compile Include="Web\IHttpContextAccessor.cs" />
     <Compile Include="Web\ViewEngines\EmbeddedResourcesViewEngine.cs" />
     <Compile Include="Web\EmbeddedResources\EmbeddedResourcesVirtualFile.cs" />
-    <Compile Include="Web\EmbeddedResources\EmbeddedResourcesVirtualPathProvider.cs" />
+    <Compile Include="Web\DefaultVirtualPathProvider.cs" />
     <Compile Include="Mvc\Routes\RouteExtensions.cs" />
     <Compile Include="DataAccess\DataContext\DefaultMappingResolver.cs" />
     <Compile Include="DataAccess\DataContext\IMappingResolver.cs" />
