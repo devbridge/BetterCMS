@@ -36,7 +36,8 @@
             @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
             <div class="bcms-btn-search" id="bcms-categories-search-btn">@PagesGlobalization.SiteSettings_Categories_Search</div>
         </div>
-
+        
+        @* TODO: uncomment and implement
         <div class="bcms-pager clearfix">
             <span class="bcms-pager-text">Page:</span>
             <a href="#nolink" class="bcms-pager-no bcms-active-pager">1</a>
@@ -53,6 +54,7 @@
             <a class="bcms-pager-prev">Prev</a>
             <a class="bcms-pager-next">Next</a>
         </div>
+        *@
 
     </div>
     @Html.SiteSettingsMessagesBox()
