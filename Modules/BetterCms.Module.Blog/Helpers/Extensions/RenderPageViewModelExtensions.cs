@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Linq;
 
 using BetterCms.Core.DataContracts;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Module.Blog.Models;
+using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.ViewModels.Cms;
 
@@ -25,8 +28,19 @@ namespace BetterCms.Module.Blog.Helpers.Extensions
                     viewModel.Bag.BlogPostData = new DynamicDictionary();
                 }
 
-                viewModel.Bag.BlogPostData.ActivationDate = blogPost.ActivationDate;
-                viewModel.Bag.BlogPostData.ExpirationDate = blogPost.ExpirationDate;
+                var pageContent =
+                    blogPost.PageContents.FirstOrDefault(
+                        c => c.Region.RegionIdentifier == BlogModuleConstants.BlogPostMainContentRegionIdentifier && c.Content as BlogPostContent != null);
+                if (pageContent != null)
+                {
+                    var content = pageContent.Content as HtmlContent;
+                    if (content != null)
+                    {
+                        viewModel.Bag.BlogPostData.Status = content.Status;
+                        viewModel.Bag.BlogPostData.ActivationDate = content.ActivationDate;
+                        viewModel.Bag.BlogPostData.ExpirationDate = content.ExpirationDate;
+                    }
+                }
 
                 if (blogPost.Author != null)
                 {
@@ -55,7 +69,7 @@ namespace BetterCms.Module.Blog.Helpers.Extensions
                 if (!(DateTime.Now < viewModel.Bag.BlogPostData.ActivationDate
                     || (((DateTime?)viewModel.Bag.BlogPostData.ExpirationDate).HasValue && ((DateTime?)viewModel.Bag.BlogPostData.ExpirationDate).Value < DateTime.Now)))
                 {
-                    return true;
+                    return viewModel.Bag.BlogPostData.Status == ContentStatus.Published;
                 }
                 return false;
             }
