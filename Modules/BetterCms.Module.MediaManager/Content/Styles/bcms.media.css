@@ -624,11 +624,9 @@ input.bcms-grid-input:focus {
 
 .bcms-grid div.bcms-media-click-active {
     background-color: #effcfe;
-    transition: background-color 0.5s ease-out;
-    -webkit-transition: background-color 0.5s ease-out;
 }
 
-.bcms-grid .bcms-media-click-active > .bcms-media-edit-controls {
+.bcms-grid .bcms-media-click-active > div.bcms-media-edit-controls {
     display: block;
     background: rgba(90,187,236,0.6);
 }
