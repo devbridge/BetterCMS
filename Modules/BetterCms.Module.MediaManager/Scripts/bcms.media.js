@@ -806,26 +806,26 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         }
         switch (extension.toLowerCase()) {
             case "pdf":
-                return ' bcms-pdf-icn';
+                return ' bcms-office-icn';
             case "doc":
             case "docx":
-                return ' bcms-word-icn';
+                return ' bcms-office-icn';
             case "xls":
             case "xlsx":
-                return ' bcms-xls-icn';
+                return ' bcms-office-icn';
             case "mp3":
-                return ' bcms-mp3-icn';
+                return ' bcms-audio-icn';
             case "mp4":
-                return ' bcms-mp4-icn';
+                return ' bcms-video-icn';
             case "ppt":
             case "pptx":
-                return ' bcms-ppt-icn';
+                return ' bcms-office-icn';
             case "rar":
-                return ' bcms-rar-icn';
+                return ' bcms-archive-icn';
             case "wav":
-                return ' bcms-wav-icn';
+                return ' bcms-audio-icn';
             case "zip":
-                return ' bcms-zip-icn';
+                return ' bcms-archive-icn';
             default:
                 return ' bcms-uknown-icn';
         }
