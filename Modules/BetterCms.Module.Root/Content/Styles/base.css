@@ -1124,6 +1124,7 @@ a.bcms-error-close {
     position: relative;
     background: #eff9fd;
     border: 1px solid #c6c6c6;
+    box-shadow: 1px 1px 5px 0 rgba(0,0,0,0.4);
 }
 
     .bcms-tooltip-box p {
@@ -2028,6 +2029,7 @@ a.bcms-sort-arrow-top:hover {
     }
 
 .bcms-pager {
+    float:right;
     text-align: right;
 }
 
