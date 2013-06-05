@@ -136,6 +136,7 @@
     <Compile Include="Api\DataContracts\GetNodesRequest.cs" />
     <Compile Include="Api\DataContracts\GetPageContentsRequest.cs" />
     <Compile Include="Api\DataContracts\GetRegionContentsRequest.cs" />
+    <Compile Include="Command\Tag\SearchTags\SearchTagsCommand.cs" />
     <Compile Include="Helpers\Extensions\RenderPageViewModelExtensions.cs" />
     <Compile Include="Models\Migrations\Migration201305281700.cs" />
     <Compile Include="Mvc\Attributes\ValidVirtualPathValidationAttribute.cs" />

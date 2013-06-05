@@ -194,6 +194,7 @@ namespace BetterCms.Module.Root
                     new JsIncludeDescriptor(this, "bcms.jquery.unobtrusive", "bcms.jquery.unobtrusive-ajax"),
                     new JsIncludeDescriptor(this, "bcms.jquery.validate"),
                     new JsIncludeDescriptor(this, "bcms.jquery.validate.unobtrusive"),
+                    new JsIncludeDescriptor(this, "bcms.jquery.autocomplete"),
                     new JsIncludeDescriptor(this, "bcms"), 
                     new KnockoutExtendersJsModuleIncludeDescriptor(this), 
                     new JsIncludeDescriptor(this, "bcms.ko.grid"),                    

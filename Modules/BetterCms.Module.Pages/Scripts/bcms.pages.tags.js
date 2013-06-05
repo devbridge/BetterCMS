@@ -224,7 +224,7 @@ bettercms.define('bcms.pages.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent
     tags.TagsListViewModel = function(tagsList) {
         var self = this;
 
-        self.isExpanded = ko.observable(false);
+        self.isExpanded = ko.observable(true);
         self.tags = ko.observableArray();
         self.newTag = ko.observable().extend({ maxLength: { maxLength: ko.maxLength.name } });
 

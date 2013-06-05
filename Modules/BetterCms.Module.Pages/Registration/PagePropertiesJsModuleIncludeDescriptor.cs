@@ -20,7 +20,8 @@ namespace BetterCms.Module.Pages.Registration
 
             Links = new IActionProjection[]
                 {
-                    new JavaScriptModuleLinkTo<PageController>(this, "loadEditPropertiesDialogUrl", c => c.EditPageProperties("{0}"))
+                    new JavaScriptModuleLinkTo<PageController>(this, "loadEditPropertiesDialogUrl", c => c.EditPageProperties("{0}")),
+                    new JavaScriptModuleLinkTo<TagsController>(this, "tagSuggestionSeviceUrl", c => c.SuggestTags(null)),
                 };
 
             Globalization = new IActionProjection[]

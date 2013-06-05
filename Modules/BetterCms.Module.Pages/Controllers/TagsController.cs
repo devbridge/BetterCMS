@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
 
 using BetterCms.Core.Security;
 using BetterCms.Module.Pages.Command.Tag.GetTagList;
@@ -82,6 +83,13 @@ namespace BetterCms.Module.Pages.Controllers
             }
 
             return Json(new WireJson(success));
+        }
+
+        [HttpPost]
+        public ActionResult SuggestTags(string query)
+        {
+            var suggestedTags = GetCommand<SearchTagsCommand>().ExecuteCommand(query);
+            return Json(new { suggestions = suggestedTags });
         }
     }
 }
