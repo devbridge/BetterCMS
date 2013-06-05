@@ -86,6 +86,15 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             ascending: 0,
             descending: 1
         },
+        fileExtensions = {
+            officeFiles: '|thmx|pdf|txt|doc|dot|docx|dotx|dotm|docm|'
+                + 'xls|xlt|xlm|xlsx|xlsm|xltx|xltm|xlsb|xla|xlam|xll|xlw|'
+                + 'ppt|pptx|pptm|potx|potm|ppam|ppsx|ppsm|sldx|sldm|',
+            archiveFiles: '|rar|zip|7z|tar|gz|bz2|ace|arc|arj|cab|pak|zoo|',
+            audioFiles: '|mp3|waw|aiif|aac|flac|m4a|m4p|ogg|ra|vox|wma|',
+            imageFiles: '|gif|bmp|ico|jpg|jpeg|png|tif|tiff|raw|psd|svg|ai|cdr|',
+            videoFiles: '|mp4|mp2v|mp4v|mpe|mpeg|mpg|mpg2|mts|avi|3gp|mov|wmv|rm|asf|flv|flc|m2t|m2v|m4v|ogv|ogx|swf|vob|xfl|'
+        },
         imagesViewModel = null,
         audiosViewModel = null,
         videosViewModel = null,
@@ -801,34 +810,31 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     * Returns css class for given file extension
     */
     function getFileExtensionCssClassName(extension) {
+        if (!extension) {
+            return ' bcms-uknown-icn';
+        }
+
         if (extension.indexOf('.') === 0) {
             extension = extension.substring(1, extension.length);
         }
-        switch (extension.toLowerCase()) {
-            case "pdf":
-                return ' bcms-office-icn';
-            case "doc":
-            case "docx":
-                return ' bcms-office-icn';
-            case "xls":
-            case "xlsx":
-                return ' bcms-office-icn';
-            case "mp3":
-                return ' bcms-audio-icn';
-            case "mp4":
-                return ' bcms-video-icn';
-            case "ppt":
-            case "pptx":
-                return ' bcms-office-icn';
-            case "rar":
-                return ' bcms-archive-icn';
-            case "wav":
-                return ' bcms-audio-icn';
-            case "zip":
-                return ' bcms-archive-icn';
-            default:
-                return ' bcms-uknown-icn';
+        extension = $.format('|{0}|', extension);
+
+        if (fileExtensions.archiveFiles.indexOf(extension) >= 0) {
+            return ' bcms-archive-icn';
         }
+        if (fileExtensions.audioFiles.indexOf(extension) >= 0) {
+            return ' bcms-audio-icn';
+        }
+        if (fileExtensions.videoFiles.indexOf(extension) >= 0) {
+            return ' bcms-video-icn';
+        }
+        if (fileExtensions.imageFiles.indexOf(extension) >= 0) {
+            return ' bcms-image-icn';
+        }
+        if (fileExtensions.officeFiles.indexOf(extension) >= 0) {
+            return ' bcms-office-icn';
+        }
+        return ' bcms-uknown-icn';
     }
 
     /**
