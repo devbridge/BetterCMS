@@ -109,12 +109,13 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
                 .HeaderAttributes(@style => "width: 145px;", @class => "bcms-tables-nohover");
         }
 
-        public static HtmlString HiddenGridOptions(this HtmlHelper html, GridSortOptions gridOptions)
+        public static HtmlString HiddenGridOptions(this HtmlHelper html, GridOptions.GridOptions gridOptions)
         {
             var column = html.Hidden("Column", gridOptions.Column, new {@id = "bcms-grid-sort-column"});
             var direction = html.Hidden("Direction", gridOptions.Direction, new { @id = "bcms-grid-sort-direction" });
+            var pageNumber = html.Hidden("PageNumber", gridOptions.PageNumber, new { @id = "bcms-grid-page-number" });
 
-            return new HtmlString(string.Concat(column.ToString(), direction.ToString()));
+            return new HtmlString(string.Concat(column.ToString(), direction.ToString(), pageNumber.ToString()));
         }
 
         /// <summary>

@@ -241,6 +241,24 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Next.
+        /// </summary>
+        public static string Button_Paging_Next {
+            get {
+                return ResourceManager.GetString("Button_Paging_Next", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Previous.
+        /// </summary>
+        public static string Button_Paging_Previous {
+            get {
+                return ResourceManager.GetString("Button_Paging_Previous", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Preview.
         /// </summary>
         public static string Button_Preview {
@@ -543,6 +561,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         public static string Message_SessionExpiredLoginToContinue_Message {
             get {
                 return ResourceManager.GetString("Message_SessionExpiredLoginToContinue_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Page.
+        /// </summary>
+        public static string Paging_Page_Title {
+            get {
+                return ResourceManager.GetString("Paging_Page_Title", resourceCulture);
             }
         }
         

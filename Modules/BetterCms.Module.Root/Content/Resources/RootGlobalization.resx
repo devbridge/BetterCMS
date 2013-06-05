@@ -177,6 +177,12 @@
   <data name="Button_Open" xml:space="preserve">
     <value>Open</value>
   </data>
+  <data name="Button_Paging_Next" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="Button_Paging_Previous" xml:space="preserve">
+    <value>Previous</value>
+  </data>
   <data name="Button_Preview" xml:space="preserve">
     <value>Preview</value>
   </data>
@@ -278,6 +284,9 @@
   </data>
   <data name="Message_SessionExpiredLoginToContinue_Message" xml:space="preserve">
     <value>Your session has expired. Please login to continue.</value>
+  </data>
+  <data name="Paging_Page_Title" xml:space="preserve">
+    <value>Page</value>
   </data>
   <data name="Redirect_Message" xml:space="preserve">
     <value>Please wait while page is redirecting.</value>

@@ -9,6 +9,20 @@ namespace BetterCms.Module.Root.Mvc.Grids.GridOptions
     public class GridOptions : GridSortOptions
     {
         /// <summary>
+        /// The default page size
+        /// </summary>
+        public const int DefaultPageSize = 20;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GridOptions" /> class.
+        /// </summary>
+        public GridOptions()
+        {
+            PageNumber = 1;
+            PageSize = DefaultPageSize;
+        }
+
+        /// <summary>
         /// Gets or sets the size of the page.
         /// </summary>
         /// <value>

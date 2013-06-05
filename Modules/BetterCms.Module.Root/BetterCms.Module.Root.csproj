@@ -175,11 +175,13 @@
     <Compile Include="Mvc\CommandBase.cs" />
     <Compile Include="Mvc\CommandHandler.cs" />
     <Compile Include="Mvc\Converters.cs" />
+    <Compile Include="Mvc\Grids\Extensions\PagingExtensions.cs" />
     <Compile Include="Mvc\Grids\Extensions\QueryableExtensions.cs" />
     <Compile Include="Mvc\Grids\Extensions\QueryOverExtensions.cs" />
     <Compile Include="Mvc\Grids\Extensions\GridExtensions.cs" />
     <Compile Include="Mvc\Grids\GridOptions\GridOptions.cs" />
     <Compile Include="Mvc\Grids\IEditableGridItem.cs" />
+    <Compile Include="Mvc\Grids\PagerHelper.cs" />
     <Compile Include="Mvc\Grids\TableRenderers\ScrollableEditableHtmlTableGridRenderer.cs" />
     <Compile Include="Mvc\Grids\TableRenderers\EditableHtmlTableGridRenderer.cs" />
     <Compile Include="Mvc\Grids\TableRenderers\HtmlTableGridSingleRowRenderer.cs" />
@@ -329,7 +331,6 @@
     <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
     <EmbeddedResource Include="Scripts\bcms.authentication.js" />
     <EmbeddedResource Include="Scripts\bcms.datepicker.js" />
-    <EmbeddedResource Include="Scripts\bcms.grid.js" />
     <EmbeddedResource Include="Scripts\bcms.htmlEditor.js" />
     <EmbeddedResource Include="Scripts\bcms.ko.grid.js" />
     <EmbeddedResource Include="Scripts\bcms.messages.js" />
@@ -541,6 +542,7 @@
     <EmbeddedResource Include="Content\Styles\bcms.messages.css" />
     <EmbeddedResource Include="Scripts\bcms.dynamicContent.js" />
     <EmbeddedResource Include="Scripts\bcms.js" />
+    <EmbeddedResource Include="Scripts\bcms.grid.js" />
     <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\es.js" />
     <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\ja.js" />
     <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\km.js" />

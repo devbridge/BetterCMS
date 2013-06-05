@@ -1,10 +1,7 @@
 ﻿using System.Linq;
 
-using BetterCms.Core.Mvc;
 using BetterCms.Core.Mvc.Commands;
-using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Category;
-using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
@@ -13,7 +10,7 @@ using BetterCms.Module.Root.ViewModels.SiteSettings;
 using NHibernate.Criterion;
 using NHibernate.Transform;
 
-namespace BetterCms.Module.Pages.Commands.GetCategoryList
+namespace BetterCms.Module.Pages.Command.Category.GetCategoryList
 {
     /// <summary>
     /// A command to get category list by filter.
@@ -31,7 +28,7 @@ namespace BetterCms.Module.Pages.Commands.GetCategoryList
 
             request.SetDefaultSortingOptions("Name");
 
-            Category alias = null;
+            Root.Models.Category alias = null;
             CategoryItemViewModel modelAlias = null;
 
             var query = UnitOfWork.Session
@@ -52,7 +49,6 @@ namespace BetterCms.Module.Pages.Commands.GetCategoryList
                 .TransformUsing(Transformers.AliasToBean<CategoryItemViewModel>());
 
             var count = query.ToRowCountFutureValue();
-
             var categories = query.AddSortingAndPaging(request).Future<CategoryItemViewModel>();
 
             model = new SearchableGridViewModel<CategoryItemViewModel>(categories.ToList(), request, count.Value);

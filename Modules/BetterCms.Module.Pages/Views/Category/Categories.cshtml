@@ -36,30 +36,10 @@
             @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
             <div class="bcms-btn-search" id="bcms-categories-search-btn">@PagesGlobalization.SiteSettings_Categories_Search</div>
         </div>
-
-        @*TODO: uncomment and implement
-               <div class="bcms-featured-grid clearfix">
-
-                   <div class="bcms-pager clearfix">
-                       <span class="bcms-pager-text">Page:</span>
-                       <a href="#nolink" class="bcms-pager-no bcms-active-pager">1</a>
-                       <span class="bcms-pager-text">...</span>
-                       <a class="bcms-pager-no">7</a>
-                       <a class="bcms-pager-no">8</a>
-                       <a class="bcms-pager-no">9</a>
-                       <a class="bcms-pager-no">10</a>
-                       <a class="bcms-pager-no">11</a>
-                       <a class="bcms-pager-no">12</a>
-                       <span class="bcms-pager-text">...</span>
-                       <a class="bcms-pager-no">13</a>
-                       <a class="bcms-pager-no">31</a>
-                       <a class="bcms-pager-prev">Prev</a>
-                       <a class="bcms-pager-next">Next</a>
-                   </div>
-
-               </div>*@
-
-
+        
+        <div class="bcms-featured-grid clearfix">
+            @Html.AddPaging(Model)
+        </div>
     </div>
     @Html.SiteSettingsMessagesBox()
     @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<CategoryItemViewModel>())
