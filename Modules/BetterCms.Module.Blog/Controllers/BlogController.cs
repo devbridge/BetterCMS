@@ -46,7 +46,9 @@ namespace BetterCms.Module.Blog.Controllers
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.DeleteContent)]
         public ActionResult Index(SearchableGridOptions request)
         {
+            request.SetDefaultPaging();
             var model = GetCommand<GetBlogPostListCommand>().ExecuteCommand(request ?? new SearchableGridOptions());
+
             return View(model);
         }
 
