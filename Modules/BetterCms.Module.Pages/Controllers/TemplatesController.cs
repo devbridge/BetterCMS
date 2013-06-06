@@ -125,6 +125,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// <returns>Rendered templates list.</returns>
         public ActionResult Templates(SearchableGridOptions request)
         {
+            request.SetDefaultPaging();
             var model = GetCommand<GetSiteSettingsTemplatesCommand>().ExecuteCommand(request);
             
             return View(model);

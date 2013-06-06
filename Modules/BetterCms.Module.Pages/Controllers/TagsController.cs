@@ -32,6 +32,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// </returns>
         public ActionResult ListTags(SearchableGridOptions request)
         {
+            request.SetDefaultPaging();
             var model = GetCommand<GetTagListCommand>().ExecuteCommand(request);
             return View(model);
         }

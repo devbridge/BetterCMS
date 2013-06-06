@@ -15,7 +15,7 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
         /// <param name="htmlHelper">The HTML helper.</param>
         /// <param name="model">The model.</param>
         /// <returns>Generated HTML string with paging</returns>
-        public static IHtmlString AddPaging<TModel, TGridItem>(this HtmlHelper<TModel> htmlHelper, SearchableGridViewModel<TGridItem> model)
+        public static IHtmlString RenderPaging<TModel, TGridItem>(this HtmlHelper<TModel> htmlHelper, SearchableGridViewModel<TGridItem> model)
             where TGridItem : IEditableGridItem
         {
             var pages = PagerHelper.RenderPager(model);

@@ -214,10 +214,10 @@ namespace BetterCms.Module.Pages.Controllers
         [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
         public ActionResult Widgets(SearchableGridOptions request)
         {
+            request.SetDefaultPaging();
             var model = GetCommand<GetSiteSettingsWidgetsCommand>().ExecuteCommand(request);
 
             // TODO: add servercontrolwidgetvalidation command and check if server controls exists in the server.
-
             /*if (model.ValidationMessages != null && model.ValidationMessages.Count > 0)
             {
                 Messages.AddWarn(model.ValidationMessages.ToArray());

@@ -56,6 +56,7 @@ namespace BetterCms.Module.Pages.Controllers
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.DeleteContent)]
         public ActionResult Pages(SearchableGridOptions request)
         {
+            request.SetDefaultPaging();
             var model = GetCommand<GetPagesListCommand>().ExecuteCommand(request);
             return View(model);
         }
