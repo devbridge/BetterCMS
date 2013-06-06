@@ -2,10 +2,8 @@
 @using BetterCms.Module.Root.Mvc.Grids.Extensions
 @using BetterCms.Module.Root.Mvc.Grids.TableRenderers
 @using BetterCms.Module.Users.Content.Resources
-@using BetterCms.Module.Users.ViewModels;
 @using BetterCms.Module.Root.Mvc.Helpers
 @using BetterCms.Module.Users.ViewModels.User
-@using Microsoft.Web.Mvc
 @using MvcContrib.UI.Grid
 
 @model BetterCms.Module.Root.ViewModels.SiteSettings.SearchableGridViewModel<UserItemViewModel>
@@ -36,7 +34,10 @@
     <div class="bcms-search-block">
         @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box", @placeholder = RootGlobalization.WaterMark_Search })
         <div class="bcms-btn-search" id="bcms-users-search-btn">@UsersGlobalization.User_Dialog_Search</div>
-    </div>    
+    </div>  
+    <div class="bcms-featured-grid clearfix">
+        @Html.RenderPaging(Model)
+    </div>
 </div>
 
 @Html.SiteSettingsMessagesBox("bcms-users-messages")

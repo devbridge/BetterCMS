@@ -32,8 +32,8 @@ namespace BetterCms.Module.Users.Controllers
         /// <returns>User list view.</returns>
         public ActionResult Index(SearchableGridOptions request)
         {
-            var users = GetCommand<GetUsersCommand>().ExecuteCommand(request);
-            var model = new SearchableGridViewModel<UserItemViewModel>(users, new SearchableGridOptions(), users.Count);
+            request.SetDefaultPaging();
+            var model = GetCommand<GetUsersCommand>().ExecuteCommand(request);
             return View(model);
         }
 
