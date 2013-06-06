@@ -723,6 +723,9 @@
     <EmbeddedResource Include="Scripts\ckeditor\plugins\wsc\LICENSE.md" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\wsc\README.md" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\Paging.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

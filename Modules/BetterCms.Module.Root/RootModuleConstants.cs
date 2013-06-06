@@ -29,6 +29,11 @@
         /// The editable grid top block template.
         /// </summary>
         public const string EditableGridTopBlockTemplate = "~/Areas/bcms-root/Views/Shared/EditableGrid/Partial/TopBlock.cshtml";
+        
+        /// <summary>
+        /// The editable grid paging template.
+        /// </summary>
+        public const string EditableGridPagingTemplate = "~/Areas/bcms-root/Views/Shared/EditableGrid/Partial/Paging.cshtml";
 
         /// <summary>
         /// The editable grid top block class name

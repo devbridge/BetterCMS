@@ -38,6 +38,14 @@ namespace BetterCms.Module.Root.Mvc.Grids.GridOptions
         public int PageNumber { get; set; }
 
         /// <summary>
+        /// Gets or sets the total count.
+        /// </summary>
+        /// <value>
+        /// The total count.
+        /// </value>
+        public int TotalCount { get; set; }
+
+        /// <summary>
         /// Sets the default sorting options, if values are not set.
         /// </summary>
         public void SetDefaultSortingOptions(string sortColumn, bool isDescending = false)
