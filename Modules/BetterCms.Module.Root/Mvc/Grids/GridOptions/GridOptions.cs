@@ -19,7 +19,6 @@ namespace BetterCms.Module.Root.Mvc.Grids.GridOptions
         public GridOptions()
         {
             PageNumber = 1;
-            PageSize = DefaultPageSize;
         }
 
         /// <summary>
@@ -47,6 +46,17 @@ namespace BetterCms.Module.Root.Mvc.Grids.GridOptions
             {
                 Column = sortColumn;
                 Direction = (isDescending) ? SortDirection.Descending : SortDirection.Ascending;
+            }
+        }
+
+        /// <summary>
+        /// Sets the default paging.
+        /// </summary>
+        public void SetDefaultPaging()
+        {
+            if (PageSize <= 0)
+            {
+                PageSize = DefaultPageSize;
             }
         }
     }

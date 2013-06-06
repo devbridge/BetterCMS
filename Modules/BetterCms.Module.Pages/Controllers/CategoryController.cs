@@ -32,6 +32,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// </returns>
         public ActionResult Categories(SearchableGridOptions request)
         {
+            request.SetDefaultPaging();
             var model = GetCommand<GetCategoryListCommand>().ExecuteCommand(request);
 
             return View(model);
