@@ -11,7 +11,7 @@
 @using Microsoft.Web.Mvc
 @using MvcContrib.UI.Grid
 
-@model BetterCms.Module.Root.ViewModels.SiteSettings.SearchableGridViewModel<SiteSettingPageViewModel>
+@model BetterCms.Module.Pages.ViewModels.Filter.PagesGridViewModel<SiteSettingPageViewModel>
 @{
     Action<ColumnBuilder<SiteSettingPageViewModel>> columns = column =>
     {
@@ -78,6 +78,7 @@
         
         <div class="bcms-featured-grid clearfix">
             @Html.RenderPaging(Model)
+            @Html.Partial("~/Areas/bcms-pages/Views/Filter/PagesFilterTemplate.cshtml", Model)
         </div>
 
         @*<div class="bcms-featured-grid clearfix">

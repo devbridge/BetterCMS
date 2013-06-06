@@ -194,7 +194,6 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\bcms-media\Views\Upload\" />
     <Folder Include="file\bcms-blog\scripts\" />
     <Folder Include="file\bcms-media\Content\Css\Images\" />
     <Folder Include="file\bcms-media\scripts\" />

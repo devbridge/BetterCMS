@@ -94,17 +94,20 @@ bettercms.define('bcms.grid', ['bcms.jquery', 'bcms'], function ($, bcms) {
         $.ajax({
             type: 'POST',
             contentType: 'application/x-www-form-urlencoded',
-            dataType: 'html',
             cache: false,
             url: form.attr('action'),
             data: form.serialize(),
             error: function () {
                 $(container).hideLoading();
             },
-            success: function (data) {
+            success: function (data, status, response) {
                 $(container).hideLoading();
                 if ($.isFunction(onSuccess)) {
-                    onSuccess(data);
+                    if (response.getResponseHeader('Content-Type').indexOf('application/json') === 0 && data.Html) {
+                        onSuccess(data.Html, data.Data);
+                    } else {
+                        onSuccess(data, null);
+                    }
                 }
             }
         });

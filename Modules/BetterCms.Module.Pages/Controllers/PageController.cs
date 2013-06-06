@@ -15,6 +15,7 @@ using BetterCms.Module.Pages.Command.Page.SavePagePublishStatus;
 using BetterCms.Module.Pages.Commands.GetTemplates;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Services;
+using BetterCms.Module.Pages.ViewModels.Filter;
 using BetterCms.Module.Pages.ViewModels.Page;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
@@ -54,11 +55,19 @@ namespace BetterCms.Module.Pages.Controllers
         /// Rendered pages list.
         /// </returns>
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.DeleteContent)]
-        public ActionResult Pages(SearchableGridOptions request)
+        public ActionResult Pages(PagesFilter request)
         {
             request.SetDefaultPaging();
             var model = GetCommand<GetPagesListCommand>().ExecuteCommand(request);
-            return View(model);
+            var success = model != null;
+
+            var view = RenderView("Pages", model);
+            var json = new
+            {
+                Tags = request.Tags
+            };
+
+            return ComboWireJson(success, view, json, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
