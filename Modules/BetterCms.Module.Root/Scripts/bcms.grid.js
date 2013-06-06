@@ -63,11 +63,13 @@ bettercms.define('bcms.grid', ['bcms.jquery', 'bcms'], function ($, bcms) {
         });
         
         form.find(selectors.pageNumbers).on('click', function () {
-            var self = $(this);
+            var self = $(this),
+                pageNumber = self.data('pageNumber');
 
-            form.find(selectors.hiddenPageNumberField).val(self.data('pageNumber'));
-
-            submitGridForm(form, onSuccess);
+            if (pageNumber) {
+                form.find(selectors.hiddenPageNumberField).val(pageNumber);
+                submitGridForm(form, onSuccess);
+            }
         });
     };
 

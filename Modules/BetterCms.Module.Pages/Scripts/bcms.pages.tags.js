@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-bettercms.define('bcms.pages.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.inlineEdit', 'bcms.grid', 'bcms.ko.extenders'],
-    function ($, bcms, dynamicContent, siteSettings, editor, grid, ko) {
+bettercms.define('bcms.pages.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.inlineEdit', 'bcms.grid', 'bcms.ko.extenders', 'bcms.jquery.autocomplete'],
+    function ($, bcms, dynamicContent, siteSettings, editor, grid, ko, autocomplete) {
     'use strict';
 
     var tags = {},
@@ -23,15 +23,16 @@ bettercms.define('bcms.pages.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent
             categoryNameEditor: 'input.bcms-category-name',
             categoriesListForm: '#bcms-categories-form',
             categoriesSearchButton: '#bcms-categories-search-btn',
-            categoriesSearchField: '.bcms-search-query'
-        },
+            categoriesSearchField: '.bcms-search-query',
+    },
         links = {
             loadSiteSettingsCategoryListUrl: null,
             loadSiteSettingsTagListUrl: null,
             saveTagUrl: null,
             deleteTagUrl: null,
             saveCategoryUrl: null,
-            deleteCategoryUrl: null
+            deleteCategoryUrl: null,
+            tagSuggestionSeviceUrl: null
         },
         globalization = {
             confirmDeleteTagMessage: 'Delete tag?',
@@ -224,7 +225,7 @@ bettercms.define('bcms.pages.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent
     tags.TagsListViewModel = function(tagsList) {
         var self = this;
 
-        self.isExpanded = ko.observable(false);
+        self.isExpanded = ko.observable(true);
         self.tags = ko.observableArray();
         self.newTag = ko.observable().extend({ maxLength: { maxLength: ko.maxLength.name } });
 
@@ -287,10 +288,25 @@ bettercms.define('bcms.pages.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent
         };
     };
 
+    function addTagAutoCompleteBinding() {
+        ko.bindingHandlers.tagautocomplete = {
+            init: function(element) {
+                var complete = new autocomplete(element, {
+                    serviceUrl: links.tagSuggestionSeviceUrl,
+                    type: 'POST',
+                    onSelect: function (suggestion) {
+                        this.value = '';
+                    }
+                });
+            }
+        };
+    }
+
     /**
     * Initializes tags module.
     */
     tags.init = function () {
+        addTagAutoCompleteBinding();
         console.log('Initializing bcms.pages.tags module.');
     };
     

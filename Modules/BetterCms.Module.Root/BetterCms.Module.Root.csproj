@@ -543,6 +543,7 @@
     <EmbeddedResource Include="Scripts\bcms.dynamicContent.js" />
     <EmbeddedResource Include="Scripts\bcms.js" />
     <EmbeddedResource Include="Scripts\bcms.grid.js" />
+    <EmbeddedResource Include="Scripts\bcms.jquery.autocomplete.js" />
     <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\es.js" />
     <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\ja.js" />
     <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\km.js" />

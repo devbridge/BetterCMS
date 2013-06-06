@@ -24,12 +24,10 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             pagePropertiesActiveTemplateMessage: '.bcms-grid-active-message-text',
             pagePropertiesTemplatePreviewLink: '.bcms-preview-template',
 
-            pagePropertiesForm: 'form:first'
-
+            pagePropertiesForm: 'form:first',
         },
         links = {
-            loadEditPropertiesDialogUrl: null
-        },
+            loadEditPropertiesDialogUrl: null        },
         globalization = {
             editPagePropertiesModalTitle: null
         },
