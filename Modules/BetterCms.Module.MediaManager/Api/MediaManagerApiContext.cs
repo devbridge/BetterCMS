@@ -6,7 +6,6 @@ using Autofac;
 using BetterCms.Core.Api.DataContracts;
 using BetterCms.Core.Api.Extensions;
 using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.Exceptions.Api;
 using BetterCms.Module.MediaManager.Api.DataContracts;
@@ -20,7 +19,7 @@ namespace BetterCms.Api
     /// <summary>
     /// Media Manager API Context.
     /// </summary>
-    public partial class MediaManagerApiContext : DataApiContext
+    public class MediaManagerApiContext : DataApiContext
     {
         private static readonly MediaManagerEvents events;
 

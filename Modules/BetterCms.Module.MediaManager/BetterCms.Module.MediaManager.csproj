@@ -116,7 +116,6 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Api\MediaManagerApiContext.Internal.cs" />
     <Compile Include="Api\DataContracts\GetFoldersRequest.cs" />
     <Compile Include="Api\DataContracts\GetFilesRequest.cs" />
     <Compile Include="Api\DataContracts\GetImagesRequest.cs" />
