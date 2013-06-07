@@ -311,7 +311,7 @@ bettercms.define('bcms.pages.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent
                     complete = new autocomplete(element, {
                         serviceUrl: links.tagSuggestionSeviceUrl,
                         type: 'POST',
-                        autoSelectFirst: true,
+                        autoSelectFirst: onlyExisting,
                         transformResult: function(response) {
                             var result = typeof response === 'string' ? $.parseJSON(response) : response;
                             return {
