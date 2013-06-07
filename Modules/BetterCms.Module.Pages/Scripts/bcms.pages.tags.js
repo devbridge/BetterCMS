@@ -246,30 +246,34 @@ bettercms.define('bcms.pages.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent
 
         self.addTag = function() {
             var newTag = $.trim(self.newTag());
-            if (newTag) {
-                if (!self.newTag.hasError()) {
-                    for (var i = 0; i < self.tags().length; i++) {
-                        var tag = self.tags()[i];
-                        if (tag.name() == newTag) {
-                            tag.isActive(true);
-                            setTimeout(function() {
-                                tag.isActive(false);
-                            }, 4000);
-                            self.clearTag();
-                            return;
-                        }
-                    }
-                    var tagViewModel = new tags.TagViewModel(self, newTag);
-                    self.tags.push(tagViewModel);
-                }
+            if (newTag && !self.alreadyExists(newTag) && !self.newTag.hasError()) {
+                var tagViewModel = new tags.TagViewModel(self, newTag);
+                self.tags.push(tagViewModel);
             }
             self.clearTag();
         };
 
-        self.addExistingTag = function(name, id) {
-            var tagViewModel = new tags.TagViewModel(self, name, id);
-            self.tags.push(tagViewModel);
+        self.addTagWithId = function (name, id) {
+            if (name && id && !self.alreadyExists(name)) {
+                var tagViewModel = new tags.TagViewModel(self, name, id);
+                self.tags.push(tagViewModel);
+            }
             self.clearTag();
+        };
+
+        self.alreadyExists = function (newTag) {
+            for (var i = 0; i < self.tags().length; i++) {
+                var tag = self.tags()[i];
+                if (tag.name() == newTag) {
+                    tag.isActive(true);
+                    setTimeout(function () {
+                        tag.isActive(false);
+                    }, 4000);
+                    self.clearTag();
+                    return true;
+                }
+            }
+            return false;
         };
 
         self.clearTag = function() {
@@ -307,6 +311,7 @@ bettercms.define('bcms.pages.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent
                     complete = new autocomplete(element, {
                         serviceUrl: links.tagSuggestionSeviceUrl,
                         type: 'POST',
+                        autoSelectFirst: true,
                         transformResult: function(response) {
                             var result = typeof response === 'string' ? $.parseJSON(response) : response;
                             return {
@@ -318,7 +323,7 @@ bettercms.define('bcms.pages.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent
                         onSelect: function(suggestion) {
                             tagViewModel.newTag(suggestion.value);
                             if (onlyExisting) {
-                                tagViewModel.addExistingTag(suggestion.value, suggestion.data);
+                                tagViewModel.addTagWithId(suggestion.value, suggestion.data);
                             } else {
                                 tagViewModel.addTag();
                             }
