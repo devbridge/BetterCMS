@@ -17,6 +17,7 @@
                             css: { 'bcms-tag-validation-error': newTag.hasError() },
                             value: newTag,
                             valueUpdate: 'afterkeydown',
+@*                            enterPress: addOnlyExistingTag,*@
                             escPress: clearTag,
                             tagautocomplete: 'onlyExisting'" />
                         <!-- ko if: newTag.hasError()  -->
@@ -35,7 +36,8 @@
                 <div class="bcms-single-tag" data-bind="css: { 'bcms-single-tag-active': isActive() }">
                     <span data-bind="text: name()"></span><a data-bind="click: remove">@RootGlobalization.Button_Remove</a>
                 </div>
-                <input type="hidden" data-bind="attr: { name: getTagInputName($index()), value: id() }" />
+                <input type="hidden" data-bind="attr: { name: getTagInputName($index()) + '.Key', value: id() }" />
+                <input type="hidden" data-bind="attr: { name: getTagInputName($index()) + '.Value', value: name() }" />
             </div>
         </div>
         <div class="clearfix bcms-filter-search">

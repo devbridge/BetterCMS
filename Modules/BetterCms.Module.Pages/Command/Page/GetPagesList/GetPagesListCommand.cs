@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Commands;
@@ -11,6 +12,7 @@ using BetterCms.Module.Root.Mvc.Grids.Extensions;
 
 using NHibernate;
 using NHibernate.Criterion;
+using NHibernate.SqlCommand;
 using NHibernate.Transform;
 
 namespace BetterCms.Module.Pages.Command.Page.GetPagesList
@@ -68,9 +70,13 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
                 query = query.Where(Restrictions.Eq(Projections.Property(() => alias.Category.Id), request.CategoryId.Value));
             }
 
-            if (request.Tags != null && request.Tags.Count > 0)
+            if (request.Tags != null)
             {
-                // TODO
+                foreach (var tagKeyValue in request.Tags)
+                {
+                    var id = tagKeyValue.Key.ToGuidOrDefault();
+                    query = query.WithSubquery.WhereExists(QueryOver.Of<PageTag>().Where(tag => tag.Tag.Id == id && tag.Page.Id == alias.Id).Select(tag => 1));
+                }
             }
 
             IProjection hasSeoProjection = Projections.Conditional(

@@ -231,8 +231,8 @@ bettercms.define('bcms.pages.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent
 
         if (tagsList) {
             for (var i = 0; i < tagsList.length; i ++) {
-                if (tagsList[i].name && tagsList[i].id) {
-                    self.tags.push(new tags.TagViewModel(self, tagsList[i].name, tagsList[i].id));
+                if (tagsList[i].Value && tagsList[i].Key) {
+                    self.tags.push(new tags.TagViewModel(self, tagsList[i].Value, tagsList[i].Key));
                 } else {
                     self.tags.push(new tags.TagViewModel(self, tagsList[i]));
                 }
