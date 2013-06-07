@@ -7,7 +7,7 @@ namespace BetterCms.Module.Pages.ViewModels.Filter
 {
     public class PagesFilter : SearchableGridOptions
     {
-        public IList<string> Tags { get; set; }
+        public IList<Guid> Tags { get; set; }
         public Guid? CategoryId { get; set; }
     }
 }

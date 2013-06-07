@@ -9,7 +9,7 @@ namespace BetterCms.Module.Pages.ViewModels.Filter
 {
     public class PagesGridViewModel<TModel> : SearchableGridViewModel<TModel> where TModel : IEditableGridItem
     {
-        public IList<string> Tags { get; set; }
+        public IList<Guid> Tags { get; set; }
         public Guid? CategoryId { get; set; }
         public IEnumerable<LookupKeyValue> Categories { get; set; }
 

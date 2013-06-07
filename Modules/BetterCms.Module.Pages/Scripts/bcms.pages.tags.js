@@ -231,7 +231,11 @@ bettercms.define('bcms.pages.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent
 
         if (tagsList) {
             for (var i = 0; i < tagsList.length; i ++) {
-                self.tags.push(new tags.TagViewModel(self, tagsList[i]));
+                if (tagsList[i].name && tagsList[i].id) {
+                    self.tags.push(new tags.TagViewModel(self, tagsList[i].name, tagsList[i].id));
+                } else {
+                    self.tags.push(new tags.TagViewModel(self, tagsList[i]));
+                }
             }
         }
 
@@ -262,6 +266,12 @@ bettercms.define('bcms.pages.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent
             self.clearTag();
         };
 
+        self.addExistingTag = function(name, id) {
+            var tagViewModel = new tags.TagViewModel(self, name, id);
+            self.tags.push(tagViewModel);
+            self.clearTag();
+        };
+
         self.clearTag = function() {
             self.newTag('');
         };
@@ -270,7 +280,7 @@ bettercms.define('bcms.pages.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent
     /**
     * Tag view model
     */
-    tags.TagViewModel = function (parent, tagName) {
+    tags.TagViewModel = function (parent, tagName, tagId) {
         var self = this;
 
         self.parent = parent;
@@ -278,6 +288,7 @@ bettercms.define('bcms.pages.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent
 
         self.isActive = ko.observable(false);
         self.name = ko.observable(tagName);
+        self.id = ko.observable(tagId);
 
         self.remove = function () {
             parent.tags.remove(self);
@@ -290,14 +301,30 @@ bettercms.define('bcms.pages.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent
 
     function addTagAutoCompleteBinding() {
         ko.bindingHandlers.tagautocomplete = {
-            init: function(element) {
-                var complete = new autocomplete(element, {
-                    serviceUrl: links.tagSuggestionSeviceUrl,
-                    type: 'POST',
-                    onSelect: function (suggestion) {
-                        this.value = '';
-                    }
-                });
+            init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+                var tagViewModel = viewModel,
+                    onlyExisting = valueAccessor() == "onlyExisting",
+                    complete = new autocomplete(element, {
+                        serviceUrl: links.tagSuggestionSeviceUrl,
+                        type: 'POST',
+                        transformResult: function(response) {
+                            var result = typeof response === 'string' ? $.parseJSON(response) : response;
+                            return {
+                                suggestions: $.map(result.suggestions, function(dataItem) {
+                                    return { value: dataItem.Value, data: dataItem.Key };
+                                })
+                            };
+                        },
+                        onSelect: function(suggestion) {
+                            tagViewModel.newTag(suggestion.value);
+                            if (onlyExisting) {
+                                tagViewModel.addExistingTag(suggestion.value, suggestion.data);
+                            } else {
+                                tagViewModel.addTag();
+                            }
+                            tagViewModel.clearTag();
+                        }
+                    });
             }
         };
     }
