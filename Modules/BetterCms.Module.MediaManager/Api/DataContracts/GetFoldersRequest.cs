@@ -8,7 +8,7 @@ namespace BetterCms.Module.MediaManager.Api.DataContracts
 {
     public class GetFoldersRequest : GetDataRequest<MediaFolder>
     {
-        public GetFoldersRequest(MediaType mediaType,
+        public GetFoldersRequest(MediaType? mediaType,
             Expression<Func<MediaFolder, bool>> filter = null,
             Expression<Func<MediaFolder, dynamic>> order = null, 
             bool orderDescending = false, 
@@ -21,6 +21,6 @@ namespace BetterCms.Module.MediaManager.Api.DataContracts
             MediaType = mediaType;
         }
 
-        public MediaType MediaType { get; set; }
+        public MediaType? MediaType { get; set; }
     }
 }

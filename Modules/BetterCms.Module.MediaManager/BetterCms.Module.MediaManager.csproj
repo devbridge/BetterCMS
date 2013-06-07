@@ -174,6 +174,8 @@
     <Compile Include="Models\MediaFolder.cs" />
     <Compile Include="Models\Media.cs" />
     <Compile Include="Models\MediaImage.cs" />
+    <Compile Include="Models\MigrationsContent\Migration201306071105.cs" />
+    <Compile Include="Models\Migrations\Migration201306071100.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
     <Compile Include="Models\Migrations\Migration201303081430.cs" />
     <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />
@@ -242,11 +244,11 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Scripts\bcms.contextMenu.js" />
-    <EmbeddedResource Include="Scripts\bcms.media.imageeditor.js" />
-    <EmbeddedResource Include="Scripts\bcms.media.js" />
     <EmbeddedResource Include="Scripts\bcms.media.upload.js" />
     <EmbeddedResource Include="Scripts\bcms.html5Upload.js" />
     <EmbeddedResource Include="Scripts\bcms.jquery.jcrop.js" />
+    <EmbeddedResource Include="Scripts\bcms.media.imageeditor.js" />
+    <EmbeddedResource Include="Scripts\bcms.media.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -268,9 +270,6 @@
     <EmbeddedResource Include="Views\MediaManager\Partial\MediaManagerTab.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\MediaManager\Partial\MediaManagerTemplate.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Views\Files\FileInsert.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -284,6 +283,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Images\ImageProperties.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\MediaManager\Partial\MediaManagerTemplate.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

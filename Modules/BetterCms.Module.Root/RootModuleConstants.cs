@@ -33,7 +33,7 @@
         /// <summary>
         /// The editable grid paging template.
         /// </summary>
-        public const string EditableGridPagingTemplate = "~/Areas/bcms-root/Views/Shared/EditableGrid/Partial/Paging.cshtml";
+        public const string EditableGridPagingTemplate = "~/Areas/bcms-root/Views/Shared/Partial/Paging.cshtml";
 
         /// <summary>
         /// The editable grid top block class name

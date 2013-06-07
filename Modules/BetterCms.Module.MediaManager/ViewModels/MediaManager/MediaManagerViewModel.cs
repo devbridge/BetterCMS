@@ -11,6 +11,7 @@ namespace BetterCms.Module.MediaManager.ViewModels.MediaManager
         public MediaManagerViewModel()
         {
             Column = "Title";
+            SetDefaultPaging();
         }
     }
 }

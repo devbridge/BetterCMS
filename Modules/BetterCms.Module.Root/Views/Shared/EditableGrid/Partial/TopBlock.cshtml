@@ -16,5 +16,10 @@
         <div data-bind="click: searchItems" class="bcms-btn-search">@RootGlobalization.Button_Search</div>
     </div>
     
-    @Html.Partial(Model.PagingView, Model)
+    @if (Model.AddPaging)
+    {
+        <!-- ko with: options().paging -->
+            @Html.Partial(Model.PagingView, Model)
+        <!-- /ko -->
+    }
 </div>

@@ -166,9 +166,12 @@ namespace BetterCms.Api
             try
             {
                 var query = Repository
-                    .AsQueryable<MediaFolder>()
-                    .Where(f => f.Type == request.MediaType)
-                    .ApplyFilters(request);
+                    .AsQueryable<MediaFolder>();
+                if (request.MediaType.HasValue)
+                {
+                    query = query.Where(f => f.Type == request.MediaType.Value);
+                }
+                query = query.ApplyFilters(request);
 
                 var totalCount = query.ToRowCountFutureValue(request);
                 query = query
