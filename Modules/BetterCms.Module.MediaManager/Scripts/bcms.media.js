@@ -114,7 +114,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     /**
     * Media's current folder sort / search / paging option view model
     */
-    function MediaItemsOptionsViewModel(options) {
+    function MediaItemsOptionsViewModel(options, onOpenPage) {
         var self = this;
 
         self.searchQuery = ko.observable(options.GridOptions.SearchQuery);
@@ -122,6 +122,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.column = ko.observable(options.GridOptions.Column);
             self.isDescending = ko.observable(options.GridOptions.Direction == sortDirections.descending);
         }
+        self.paging = new ko.PagingViewModel(options.GridOptions.PageSize, options.GridOptions.PageNumber, options.TotalCount, onOpenPage);
     }
 
     /**
@@ -198,12 +199,13 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         };
 
         self.searchMedia = function () {
-            var params = createFolderParams(self.path().currentFolder().id(), self),
-                onComplete = function (json) {
-                    parseJsonResults(json, self);
-                    $(selectors.searchBox).focus();                    
-                };
-            loadTabData(self, params, onComplete);
+            self.gridOptions().paging.pageNumber(1);
+
+            self.loadMedia();
+        };
+
+        self.onOpenPage = function () {
+            self.loadMedia();
         };
 
         self.sortMedia = function (column) {
@@ -268,6 +270,15 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
         self.domId = function() {
             return 'bcms-site-settings-media-messages-' + self.path().type;
+        };
+
+        self.loadMedia = function() {
+            var params = createFolderParams(self.path().currentFolder().id(), self),
+                onComplete = function(json) {
+                    parseJsonResults(json, self);
+                    $(selectors.searchBox).focus();
+                };
+            loadTabData(self, params, onComplete);
         };
     }
 
@@ -1133,6 +1144,8 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             params.Direction = folderViewModel.gridOptions().isDescending()
                 ? sortDirections.descending
                 : sortDirections.ascending;
+            params.PageSize = folderViewModel.gridOptions().paging.pageSize;
+            params.PageNumber = folderViewModel.gridOptions().paging.pageNumber();
         }
 
         return params;
@@ -1193,7 +1206,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 }
 
                 // Map grid options
-                folderViewModel.gridOptions(new MediaItemsOptionsViewModel(json.Data));
+                folderViewModel.gridOptions(new MediaItemsOptionsViewModel(json.Data, folderViewModel.onOpenPage));
 
                 // Replace unobtrusive validator
                 bcms.updateFormValidator(folderViewModel.container.find(selectors.firstForm));

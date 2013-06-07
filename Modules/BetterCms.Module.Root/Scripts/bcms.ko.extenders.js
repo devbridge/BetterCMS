@@ -206,5 +206,74 @@ bettercms.define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout'], funct
         return target;
     }
 
+    ko.PagingViewModel = (function () {
+        function PagingViewModel(pageSize, pageNumber, totalCount, onOpenPage) {
+            var self = this;
+
+            self.pageSize = 0;
+            self.pageNumber = ko.observable(1);
+            self.totalPages = ko.observable(1);
+            self.pagingUpperBound = null;
+            self.pagingLowerBound = null;
+            self.totalCount = totalCount;
+
+            self.totalPagingLinks = 5;
+            self.activePagePosition = 2;
+
+            if (pageSize > 0) {
+                if (pageNumber <= 0) {
+                    pageNumber = 1;
+                }
+                if (totalCount < 0) {
+                    totalCount = 0;
+                }
+                var totalPages = parseInt(Math.ceil(totalCount / pageSize));
+
+                self.pageSize = pageSize;
+                self.pageNumber(pageNumber);
+                self.totalPages(totalPages);
+                self.totalCount = totalCount;
+
+                // lower bound
+                self.pagingLowerBound = pageNumber - self.activePagePosition;
+                if (self.pagingLowerBound < 1) {
+                    self.pagingLowerBound = 1;
+                }
+
+                // upper bound
+                self.pagingUpperBound = self.pagingLowerBound + self.totalPagingLinks;
+                if (self.pagingUpperBound > totalPages) {
+                    self.pagingUpperBound = totalPages;
+                }
+
+                // lower bound correction
+                if (self.pagingUpperBound - self.pagingLowerBound < self.totalPagingLinks) {
+                    self.pagingLowerBound = self.pagingUpperBound - self.totalPagingLinks;
+                    if (self.pagingLowerBound < 1) {
+                        self.pagingLowerBound = 1;
+                    }
+                }
+            }
+
+            self.pages = ko.computed(function () {
+                var pages = [];
+                for (var i = self.pagingLowerBound; i <= self.pagingUpperBound; i++) {
+                    pages.push(i);
+                }
+                return pages;
+            });
+
+            self.openPage = function (pageNr) {
+                self.pageNumber(pageNr);
+
+                if ($.isFunction(onOpenPage)) {
+                    onOpenPage(pageNr);
+                }
+            };
+        }
+
+        return PagingViewModel;
+    })();
+
     return ko;
 });

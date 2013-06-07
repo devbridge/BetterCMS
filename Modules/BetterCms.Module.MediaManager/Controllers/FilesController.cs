@@ -44,6 +44,7 @@ namespace BetterCms.Module.MediaManager.Controllers
             {
                 options = new MediaManagerViewModel();
             }
+            options.SetDefaultPaging();
 
             var model = GetCommand<GetFilesCommand>().ExecuteCommand(options);
             if (model == null)

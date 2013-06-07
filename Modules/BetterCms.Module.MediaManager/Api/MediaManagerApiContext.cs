@@ -6,6 +6,7 @@ using Autofac;
 using BetterCms.Core.Api.DataContracts;
 using BetterCms.Core.Api.Extensions;
 using BetterCms.Core.DataAccess;
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.Exceptions.Api;
 using BetterCms.Module.MediaManager.Api.DataContracts;
@@ -19,7 +20,7 @@ namespace BetterCms.Api
     /// <summary>
     /// Media Manager API Context.
     /// </summary>
-    public class MediaManagerApiContext : DataApiContext
+    public partial class MediaManagerApiContext : DataApiContext
     {
         private static readonly MediaManagerEvents events;
 
@@ -166,9 +167,12 @@ namespace BetterCms.Api
             try
             {
                 var query = Repository
-                    .AsQueryable<MediaFolder>()
-                    .Where(f => f.Type == request.MediaType)
-                    .ApplyFilters(request);
+                    .AsQueryable<MediaFolder>();
+                if (request.MediaType.HasValue)
+                {
+                    query = query.Where(f => f.Type == request.MediaType.Value);
+                }
+                query = query.ApplyFilters(request);
 
                 var totalCount = query.ToRowCountFutureValue(request);
                 query = query

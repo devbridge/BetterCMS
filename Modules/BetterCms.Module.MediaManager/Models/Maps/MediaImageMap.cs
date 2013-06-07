@@ -11,7 +11,7 @@ namespace BetterCms.Module.MediaManager.Models.Maps
         {
             Table("MediaImages");
 
-            Map(f => f.Caption).Nullable().Length(MaxLength.Text).LazyLoad();
+            Map(f => f.Caption).Nullable().Length(MaxLength.Text);
             Map(f => f.ImageAlign).Nullable();
             Map(f => f.Width).Not.Nullable();
             Map(f => f.Height).Not.Nullable();
@@ -30,7 +30,7 @@ namespace BetterCms.Module.MediaManager.Models.Maps
             Map(f => f.ThumbnailSize).Not.Nullable();
             Map(f => f.ThumbnailUri).Not.Nullable().Length(MaxLength.Uri).LazyLoad();
             Map(f => f.IsThumbnailUploaded).Nullable();
-            Map(f => f.PublicThumbnailUrl).Not.Nullable().Length(MaxLength.Url).LazyLoad();
+            Map(f => f.PublicThumbnailUrl).Not.Nullable().Length(MaxLength.Url);
         }
     }
 }

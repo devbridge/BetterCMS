@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 
-using BetterCms.Core.Models;
-
 namespace BetterCms.Core.Api.DataContracts
 {
-    public class DataListResponse<TEntity> where TEntity : Entity
+    public class DataListResponse<TEntity>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DataListResponse{TEntity}" /> class.

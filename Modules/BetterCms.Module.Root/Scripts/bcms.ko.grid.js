@@ -23,72 +23,17 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
     grid.globalization = globalization;
     grid.selectors = selectors;
 
-    grid.PagingViewModel = (function () {
-        function PagingViewModel(json) {
-            var self = this;
-
-            self.pageSize = 0;
-            self.pageNumber = ko.observable(1);
-            self.totalPages = ko.observable(1);
-            self.pagingUpperBound = null;
-            self.pagingLowerBound = null;
-
-            self.totalPagingLinks = 5;
-            self.activePagePosition = 2;
-
-            if (json && json.PageSize > 0) {
-                var pageSize = json.PageSize,
-                    pageNumber = json.PageNumber > 0 ? json.PageNumber : 1,
-                    totalPages = parseInt(Math.ceil(json.TotalCount / pageSize));
-
-                self.pageSize = pageSize;
-                self.pageNumber(pageNumber);
-                self.totalPages(totalPages);
-                
-                // lower bound
-                self.pagingLowerBound = pageNumber - self.activePagePosition;
-                if (self.pagingLowerBound < 1) {
-                    self.pagingLowerBound = 1;
-                }
-
-                // upper bound
-                self.pagingUpperBound = self.pagingLowerBound + self.totalPagingLinks;
-                if (self.pagingUpperBound > totalPages) {
-                    self.pagingUpperBound = totalPages;
-                }
-                
-                // lower bound correction
-                if (self.pagingUpperBound - self.pagingLowerBound < self.totalPagingLinks) {
-                    self.pagingLowerBound = self.pagingUpperBound - self.totalPagingLinks;
-                    if (self.pagingLowerBound < 1) {
-                        self.pagingLowerBound = 1;
-                    }
-                }
-            }
-
-            self.pages = ko.computed(function () {
-                var pages = [];
-                for (var i = self.pagingLowerBound; i <= self.pagingUpperBound; i++) {
-                    pages.push(i);
-                }
-                return pages;
-            });
-        }
-
-        return PagingViewModel;
-    })();
-
     /**
     * Grid options view model
     */
     grid.OptionsViewModel = (function() {
-        function OptionsViewModel(options) {
+        function OptionsViewModel(options, onOpenPage) {
             var self = this;
 
             self.searchQuery = ko.observable(options.SearchQuery || '');
             self.column = ko.observable(options.Column);
             self.isDescending = ko.observable(options.Direction == sortDirections.descending);
-            self.paging = new grid.PagingViewModel(options);
+            self.paging = new ko.PagingViewModel(options.PageSize, options.PageNumber, options.TotalCount, onOpenPage);
             
             self.hasFocus = ko.observable(false);
         }
@@ -122,8 +67,13 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 if (!newGridOptions) {
                     return;
                 }
-                var options = new grid.OptionsViewModel(newGridOptions);
+                var options = new grid.OptionsViewModel(newGridOptions, self.openPage);
                 self.options(options);
+            };
+
+            self.openPage = function(pageNr) {
+                var params = self.toJson();
+                self.load(params);
             };
 
             self.setItems = function (itemsList) {
@@ -171,13 +121,6 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 }
                 self.options().column(column);
 
-                var params = self.toJson();
-                self.load(params);
-            };
-
-            self.openPage = function(pageNr) {
-                self.options().paging.pageNumber(pageNr);
-                
                 var params = self.toJson();
                 self.load(params);
             };
