@@ -1,18 +1,23 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
+
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
+
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
+using BetterCms.Module.Root.ViewModels.SiteSettings;
+
 using BetterCms.Module.Users.ViewModels.User;
-using NHibernate.Linq;
 
 namespace BetterCms.Module.Users.Commands.User.GetUsersList
 {
-    public class GetUsersCommand : CommandBase, ICommand<SearchableGridOptions, IList<UserItemViewModel>>
+    public class GetUsersCommand : CommandBase, ICommand<SearchableGridOptions, SearchableGridViewModel<UserItemViewModel>>
     {
-        public IList<UserItemViewModel> Execute(SearchableGridOptions gridOptions)
+        public SearchableGridViewModel<UserItemViewModel> Execute(SearchableGridOptions gridOptions)
         {
+            gridOptions.SetDefaultSortingOptions("UserName");
+
            // var role = new List<Models.Role>().Add(new Models.Role(){ Name = "name" });
             var users = Repository.AsQueryable<Models.Users>()
                 .Select(t => new UserItemViewModel()
@@ -21,13 +26,11 @@ namespace BetterCms.Module.Users.Commands.User.GetUsersList
                                      Version = t.Version,
                                      UserName = t.UserName,
                                  });
-            if (gridOptions != null)
-            {
-                gridOptions.SetDefaultSortingOptions("UserName");
-            }
 
+            var count = users.ToRowCountFutureValue();
+            users = users.AddSortingAndPaging(gridOptions);
 
-            return users.AddSortingAndPaging(gridOptions).ToFuture().ToList();
+            return new SearchableGridViewModel<UserItemViewModel>(users.ToList(), gridOptions, count.Value);
         }
     }
 }
