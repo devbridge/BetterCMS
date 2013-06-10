@@ -1195,7 +1195,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This page is visible to everyone.
+        ///   Looks up a localized string similar to This page is visible to everyone (PUBLISHED).
         /// </summary>
         public static string EditPageProperties_AdvancedPropertiesTab_Privacy_VisibleToEveryone {
             get {

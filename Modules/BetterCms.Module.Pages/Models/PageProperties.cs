@@ -44,7 +44,6 @@ namespace BetterCms.Module.Pages.Models
             duplicate.MetaTitle = MetaTitle;
             duplicate.MetaKeywords = MetaKeywords;
             duplicate.MetaDescription = MetaDescription;
-            duplicate.IsPublic = IsPublic;
             duplicate.UseCanonicalUrl = UseCanonicalUrl;
             duplicate.CustomCss = CustomCss;
             duplicate.CustomJS = CustomJS;

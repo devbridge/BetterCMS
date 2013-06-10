@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using BetterCms.Api;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.Models;
@@ -104,7 +105,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             page.Title = request.PageName;
             page.CustomCss = request.PageCSS;
             page.CustomJS = request.PageJavascript;
-            page.IsPublic = request.IsVisibleToEveryone;
+            page.Status = request.IsVisibleToEveryone ? PageStatus.Published : PageStatus.Unpublished;
             page.UseNoFollow = request.UseNoFollow;
             page.UseNoIndex = request.UseNoIndex;
             page.Version = request.Version;

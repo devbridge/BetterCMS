@@ -24,7 +24,7 @@ namespace BetterCms.Module.Blog.Models.MigrationsContent
         {
             using (var blogsApi = CmsContext.CreateApiContextOf<BlogsApiContext>())
             {
-                var blogs = blogsApi.GetBlogPosts(new GetBlogPostsRequest(includePrivate: true, includeUnpublished: true, includeNotActive: true)).Items;
+                var blogs = blogsApi.GetBlogPosts(new GetBlogPostsRequest(includeUnpublished: true, includeNotActive: true)).Items;
                 if (!blogs.Any())
                 {
                     return;

@@ -2,6 +2,7 @@
 using System.Linq;
 
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Models;
@@ -58,7 +59,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                                 PageJavascript = page.CustomJS,
                                 UseNoFollow = page.UseNoFollow,
                                 UseNoIndex = page.UseNoIndex,
-                                IsVisibleToEveryone = page.IsPublic,
+                                IsVisibleToEveryone = page.Status == PageStatus.Published,
                                 IsInSitemap = page.NodeCountInSitemap > 0,
                                 TemplateId = page.Layout.Id,
                                 CategoryId = page.Category.Id,

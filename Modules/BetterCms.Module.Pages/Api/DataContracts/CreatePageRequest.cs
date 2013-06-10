@@ -68,7 +68,6 @@ namespace BetterCms.Module.Pages.Api.DataContracts
                            MetaTitle = MetaTitle,
                            MetaDescription = MetaDescription,
                            MetaKeywords = MetaKeywords,
-                           IsPublic = IsPublic,
                            UseCanonicalUrl = UseCanonicalUrl,
                            UseNoFollow = UseNoFollow,
                            UseNoIndex = UseNoIndex,

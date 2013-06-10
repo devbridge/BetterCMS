@@ -83,11 +83,6 @@ namespace BetterCms.Api
                     query = query.Where(b => b.Status == PageStatus.Published);
                 }
 
-                if (!request.IncludePrivate)
-                {
-                    query = query.Where(b => b.IsPublic);
-                }
-
                 if (!request.IncludeNotActive)
                 {
                     query = query.Where(b => b.ActivationDate < DateTime.Now && (!b.ExpirationDate.HasValue || DateTime.Now < b.ExpirationDate.Value));

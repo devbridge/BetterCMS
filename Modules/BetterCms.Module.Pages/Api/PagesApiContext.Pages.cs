@@ -45,11 +45,6 @@ namespace BetterCms.Api
                     query = query.Where(b => b.Status == PageStatus.Published);
                 }
 
-                if (!request.IncludePrivate)
-                {
-                    query = query.Where(b => b.IsPublic);
-                }
-
                 var result = query.ApplyFiltersWithChildren(request);
                 query = result.Item1;
                 var totalCount = result.Item2;

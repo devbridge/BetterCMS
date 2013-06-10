@@ -25,7 +25,7 @@ namespace BetterCms.Test.Module.Blog.ApiTests
 
             using (var service = new BlogsApiContext(Container.BeginLifetimeScope(), tagService.Object, repositoryMock.Object))
             {
-                var blogPosts = service.GetBlogPosts(new GetBlogPostsRequest(includeUnpublished:true, includePrivate:true, includeNotActive:true));
+                var blogPosts = service.GetBlogPosts(new GetBlogPostsRequest(includeUnpublished:true, includeNotActive:true));
 
                 Assert.IsNotNull(blogPosts);
                 Assert.AreEqual(blogPosts.Items.Count, 2);

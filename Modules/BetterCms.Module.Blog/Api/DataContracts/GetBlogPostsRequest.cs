@@ -25,12 +25,10 @@ namespace BetterCms.Module.Blog.Api.DataContracts
             int? itemsCount = null,
             int startItemNumber = 1,
             bool includeUnpublished = false,
-            bool includePrivate = false,
             bool includeNotActive = false)
             : base(filter, order, orderDescending, itemsCount, startItemNumber)
         {
             IncludeUnpublished = includeUnpublished;
-            IncludePrivate = includePrivate;
             IncludeNotActive = includeNotActive;
 
             SetDefaultOrder(b => b.Title);
@@ -44,14 +42,6 @@ namespace BetterCms.Module.Blog.Api.DataContracts
         /// </value>
         public bool IncludeUnpublished { get; set; }
         
-        /// <summary>
-        /// Gets or sets a value indicating whether to include private pages.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if to include private pages; otherwise, <c>false</c>.
-        /// </value>
-        public bool IncludePrivate { get; set; }
-
         /// <summary>
         /// Gets or sets a value indicating whether to include not active posts.
         /// </summary>

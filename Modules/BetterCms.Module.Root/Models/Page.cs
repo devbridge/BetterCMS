@@ -38,14 +38,6 @@ namespace BetterCms.Module.Root.Models
         public virtual PageStatus Status { get; set; }
 
         /// <summary>
-        /// Gets a value indicating whether this page is available for not authenticated users.
-        /// </summary>
-        /// <value>
-        /// <c>true</c> if this page is available for not authenticated users; otherwise, <c>false</c>.
-        /// </value>
-        public virtual bool IsPublic { get; set; }
-
-        /// <summary>
         /// Gets or sets the page published date.
         /// </summary>
         /// <value>

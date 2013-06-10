@@ -370,7 +370,7 @@
     <value>Edit the privacy settings of this page. Selecting "No Follow" will tell search engines not to follow the links on this page, and "No Index" will tell search engines not to index this page.</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_Privacy_VisibleToEveryone" xml:space="preserve">
-    <value>This page is visible to everyone</value>
+    <value>This page is visible to everyone (PUBLISHED)</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_Title" xml:space="preserve">
     <value>JavaScript &amp; CSS</value>
