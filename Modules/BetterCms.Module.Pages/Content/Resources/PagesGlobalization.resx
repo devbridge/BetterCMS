@@ -1092,4 +1092,22 @@
   <data name="SaveRedirect_RedirectUrl_Name" xml:space="preserve">
     <value>Redirect URL</value>
   </data>
+  <data name="SiteSettings_Pages_FilterByCategory" xml:space="preserve">
+    <value>By Category</value>
+  </data>
+  <data name="SiteSettings_Pages_FilterByTags" xml:space="preserve">
+    <value>By Tags</value>
+  </data>
+  <data name="SiteSettings_Pages_FilterClear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="SiteSettings_Pages_FilterClose" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="SiteSettings_Pages_FilterSearch" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="SiteSettings_Pages_Filter" xml:space="preserve">
+    <value>Filter</value>
+  </data>
 </root>

@@ -11,7 +11,7 @@
 @using Microsoft.Web.Mvc
 @using MvcContrib.UI.Grid
 
-@model BetterCms.Module.Root.ViewModels.SiteSettings.SearchableGridViewModel<SiteSettingBlogPostViewModel>
+@model BetterCms.Module.Blog.ViewModels.Filter.BlogsGridViewModel<SiteSettingBlogPostViewModel>
 @{
     Action<ColumnBuilder<SiteSettingBlogPostViewModel>> columns = column =>
     {
@@ -75,72 +75,8 @@
         
         <div class="bcms-featured-grid clearfix">
             @Html.RenderPaging(Model)
+            @Html.Partial("~/Areas/bcms-blog/Views/Blog/Partial/BlogsFilterTemplate.cshtml", Model)
         </div>
-
-        @* <div class="bcms-featured-grid clearfix">
-            <div class="bcms-pager clearfix">
-                <span class="bcms-pager-text">Page:</span>
-                <a href="#nolink" class="bcms-pager-no bcms-active-pager">1</a>
-                <span class="bcms-pager-text">...</span>
-                <a class="bcms-pager-no">7</a>
-                <a class="bcms-pager-no">8</a>
-                <a class="bcms-pager-no">9</a>
-                <a class="bcms-pager-no">10</a>
-                <a class="bcms-pager-no">11</a>
-                <a class="bcms-pager-no">12</a>
-                <span class="bcms-pager-text">...</span>
-                <a class="bcms-pager-no">13</a>
-                <a class="bcms-pager-no">31</a>
-                <a class="bcms-pager-prev">Prev</a>
-                <a class="bcms-pager-next">Next</a>
-            </div>
-
-            <div class="bcms-grid-filtering">
-                <div class="bcms-btn-links-main">Filter</div>
-            </div>
-
-            <div class="bcms-tags-block">
-                <div class="bcms-tip-close">Close</div>
-                <div class="bcms-featured-tags">
-                    <div class="clearfix">
-                        <div class="bcms-filter-options-1">
-                            <div class="bcms-filter-text">By Tags</div>
-                            <div class="bcms-tags-field-holder">
-                                <input type="text" class="bcms-add-tags-field" style="width: 107px;">
-                            </div>
-                        </div>
-
-                        <div class="bcms-filter-options-2">
-                            <div class="bcms-filter-text">By Category</div>
-                            <select class="bcms-global-select" id="CategoryId" name="CategoryId">
-                                <option>Select category</option>
-                                <option>category</option>
-                                <option>one more category</option>
-                                <option>sample</option>
-                                <option>stuff</option>
-                                <option>testing html</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="bcms-single-tag-holder">
-                        <div class="bcms-single-tag"><span>Tag</span><a>Remove</a></div>
-                        <div class="bcms-single-tag"><span>Tag</span><a>Remove</a></div>
-                        <div class="bcms-single-tag"><span>Tag</span><a>Remove</a></div>
-                        <div class="bcms-single-tag"><span>Tag</span><a>Remove</a></div>
-                        <div class="bcms-single-tag"><span>Tag</span><a>Remove</a></div>
-                        <div class="bcms-single-tag"><span>Tag</span><a>Remove</a></div>
-                    </div>
-                </div>
-                <div class="clearfix bcms-filter-search">
-                    <div class="bcms-btn-small">Search</div>
-                    <div class="bcms-btn-links-small">Clear</div>
-                </div>
-
-            </div>
-
-        </div>*@
-
     </div>
     
     @Html.SiteSettingsMessagesBox()

@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-bettercms.define('bcms.pages.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.pages.tags'],
+bettercms.define('bcms.blog.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.pages.tags'],
     function($, bcms, ko, tags) {
         'use strict';
 
@@ -54,14 +54,14 @@ bettercms.define('bcms.pages.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         };
 
         /**
-        * Initializes page module.
+        * Initializes blog filter module.
         */
         filter.init = function() {
-            console.log('Initializing bcms.pages.filter module.');
+            console.log('Initializing bcms.blog.filter module.');
         };
 
         /**
-        * Register initialization
+        * Register initialization.
         */
         bcms.registerInit(filter.init);
 

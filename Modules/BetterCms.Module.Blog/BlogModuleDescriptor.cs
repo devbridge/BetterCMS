@@ -118,7 +118,8 @@ namespace BetterCms.Module.Blog
         {
             return new[]
                 {
-                    blogJsModuleIncludeDescriptor
+                    blogJsModuleIncludeDescriptor,
+                    new JsIncludeDescriptor(this, "bcms.blog.filter"), 
                 };
         }
 

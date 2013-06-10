@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.grid', 'bcms.pages', 'bcms.ko.extenders', 'bcms.media', 'bcms.pages.tags', 'bcms.ko.grid', 'bcms.messages', 'bcms.redirect', 'bcms.pages.history', 'bcms.preview', 'bcms.security'],
-    function ($, bcms, modal, siteSettings, dynamicContent, datepicker, htmlEditor, grid, pages, ko, media, tags, kogrid, messages, redirect, history, preview, security) {
+bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.grid', 'bcms.pages', 'bcms.ko.extenders', 'bcms.media', 'bcms.pages.tags', 'bcms.ko.grid', 'bcms.messages', 'bcms.redirect', 'bcms.pages.history', 'bcms.preview', 'bcms.security', 'bcms.blog.filter'],
+    function ($, bcms, modal, siteSettings, dynamicContent, datepicker, htmlEditor, grid, pages, ko, media, tags, kogrid, messages, redirect, history, preview, security, filter) {
     'use strict';
 
     var blog = { },
@@ -265,7 +265,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
     /**
     * Initializes site settings blogs list
     */
-    function initializeSiteSettingsBlogsList(container, content) {
+    function initializeSiteSettingsBlogsList(container, content, jsonData) {
         
         var form = container.find(selectors.siteSettingsBlogsListForm);
         grid.bindGridForm(form, function (data) {
@@ -301,6 +301,10 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         });
 
         initializeSiteSettingsBlogsListItems(container);
+
+        filter.bind(container, ((content.Data) ? content.Data : jsonData), function () {
+            searchSiteSettingsBlogs(container, form);
+        });
     }
      
     /**
@@ -341,9 +345,9 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
     * Search site settings blogs
     */
     function searchSiteSettingsBlogs(container, form) {
-        grid.submitGridForm(form, function (data) {
-            container.html(data);
-            initializeSiteSettingsBlogsList(container, data);           
+        grid.submitGridForm(form, function (htmlContent, data) {
+            container.html(htmlContent);
+            initializeSiteSettingsBlogsList(container, htmlContent, data);
             var searchInput = container.find(selectors.siteSettingsBlogsSearchInput);
             grid.focusSearchInput(searchInput);
         });
