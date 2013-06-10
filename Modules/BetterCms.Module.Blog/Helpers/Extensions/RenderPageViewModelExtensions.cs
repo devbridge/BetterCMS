@@ -89,5 +89,25 @@ namespace BetterCms.Module.Blog.Helpers.Extensions
             }
             return null;
         }
+
+        /// <summary>
+        /// Gets the blog post live from date.
+        /// </summary>
+        /// <param name="viewModel">The view model.</param>
+        /// <returns></returns>
+        public static DateTime? GetBlogPostLiveFromDate(this RenderPageViewModel viewModel)
+        {
+            return viewModel.Bag.BlogPostData != null ? viewModel.Bag.BlogPostData.ActivationDate : null;
+        }
+
+        /// <summary>
+        /// Gets the blog post live to date.
+        /// </summary>
+        /// <param name="viewModel">The view model.</param>
+        /// <returns></returns>
+        public static DateTime? GetBlogPostLiveToDate(this RenderPageViewModel viewModel)
+        {
+            return viewModel.Bag.BlogPostData != null ? viewModel.Bag.BlogPostData.ExpirationDate : null;
+        }
     }
 }
