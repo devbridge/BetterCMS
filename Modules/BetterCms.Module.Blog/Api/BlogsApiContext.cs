@@ -15,8 +15,12 @@ using BetterCms.Module.Blog.Api.DataContracts;
 using BetterCms.Module.Blog.Api.Events;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Models;
+
+using NHibernate.Criterion;
+using NHibernate.OData;
 
 // ReSharper disable CheckNamespace
 namespace BetterCms.Api
@@ -60,6 +64,35 @@ namespace BetterCms.Api
             {
                 return events;
             }
+        }
+
+        public IList<BlogPost> GetBlogPostsQueryable(string filter, string[] tags)
+        {
+            var criteria = UnitOfWork
+                .Session
+                .ODataQuery<BlogPost>(filter);
+
+            if (tags != null && tags.Length > 0)
+            {
+                PageTag pageTagAlias = null;
+                BlogPost blogAlias = null;
+
+                DetachedCriteria tagCriteria = DetachedCriteria.For<PageTag>("p");
+                //tagCriteria.createAlias("state", "st");
+                //tagCriteria.Add(Restrictions.Eq("st.abbreviation", abbreviation));
+                tagCriteria.Add(Restrictions.EqProperty("p.Id", "Id"));
+
+                criteria.Add(Subqueries.Exists(tagCriteria.SetProjection(Projections.Property("p.Id"))));
+
+                /*DetachedCriteria dCriteria = DetachedCriteria.For<PageTag>()
+                    .SetProjection(Projections.Property(() => pageTagAlias.Id))
+                    .Add(Restrictions.EqProperty(Projections.Property(() => pageTagAlias.Id), Projections.Property(() => blogAlias.Id)));
+                    //.Add(Restrictions.Eq(Projections.Property(() => pageTagAlias.Tag.Name), tags[0]));
+
+                criteria = criteria.Add(Subqueries.Exists(dCriteria));*/
+            }
+
+            return criteria.List<BlogPost>();
         }
 
         /// <summary>

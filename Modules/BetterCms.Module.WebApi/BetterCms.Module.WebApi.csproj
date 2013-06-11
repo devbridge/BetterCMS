@@ -7,12 +7,12 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{A66A3046-EF60-4C51-ADA7-EB055763419B}</ProjectGuid>
+    <ProjectGuid>{5FF9D100-CF25-4899-8D23-8EB9F0C0E102}</ProjectGuid>
     <ProjectTypeGuids>{E53F8FEA-EAE0-44A6-8774-FFD645390401};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BetterCms.Module.Blog</RootNamespace>
-    <AssemblyName>BetterCms.Module.Blog</AssemblyName>
+    <RootNamespace>BetterCms.Module.WebApi</RootNamespace>
+    <AssemblyName>BetterCms.Module.WebApi</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>false</UseIISExpress>
@@ -63,36 +63,51 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Common.Logging.2.1.1\lib\net40\Common.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="FluentMigrator, Version=1.0.6.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\FluentMigrator.1.0.6.0\lib\40\FluentMigrator.dll</HintPath>
-    </Reference>
-    <Reference Include="FluentNHibernate, Version=1.3.0.733, Culture=neutral, PublicKeyToken=8aa435e3cb308880, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\FluentNHibernate.1.3.0.733\lib\FluentNHibernate.dll</HintPath>
-    </Reference>
-    <Reference Include="Iesi.Collections, Version=1.0.1.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Data.Edm, Version=5.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Microsoft.Data.Edm.5.2.0\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Microsoft.Data.OData.5.2.0\lib\net40\Microsoft.Data.OData.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Web.Mvc, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Mvc2Futures.2.0.50217.0\lib\Microsoft.Web.Mvc.dll</HintPath>
+      <HintPath>..\..\Tests\BetterCMS.Core.Tests\bin\Debug\Microsoft.Web.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="MvcContrib, Version=2.0.95.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Net.Http, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Net.Http.2.0.20710.0\lib\net40\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Client.4.0.30506.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Net.Http.2.0.20710.0\lib\net40\System.Net.Http.WebRequest.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Spatial, Version=5.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\MvcContrib.2.0.95.0\lib\MvcContrib.dll</HintPath>
+      <HintPath>..\..\packages\System.Spatial.5.2.0\lib\net40\System.Spatial.dll</HintPath>
     </Reference>
-    <Reference Include="NHibernate, Version=3.3.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\NHibernate.3.3.3.4000\lib\Net35\NHibernate.dll</HintPath>
-    </Reference>
-    <Reference Include="NHibernate.OData">
-      <HintPath>..\..\packages\NHibernate.OData.0.2.4.0\lib\net35\NHibernate.OData.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Core.4.0.30506.0\lib\net40\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.OData">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.OData.4.0.30506\lib\net40\System.Web.Http.OData.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.30506.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System" />
@@ -103,11 +118,8 @@
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Microsoft ASP.NET\ASP.NET Web Pages\v2.0\Assemblies\System.Web.WebPages.dll</HintPath>
-    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -116,84 +128,14 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
-    <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Accessors\BlogPostContentAccessor.cs" />
-    <Compile Include="Api\DataContracts\GetAuthorsRequest.cs" />
-    <Compile Include="Api\DataContracts\GetBlogPostsRequest.cs" />
-    <Compile Include="Api\DataContracts\UpdateBlogPostRequest.cs" />
-    <Compile Include="Api\Events\BlogEvents.cs" />
-    <Compile Include="Api\Events\AuthorEvents.cs" />
-    <Compile Include="BlogModuleConstants.cs" />
-    <Compile Include="BlogModuleDescriptor.cs" />
-    <Compile Include="Api\BlogsApiContext.cs" />
-    <Compile Include="Commands\DeleteAuthor\DeleteAuthorCommand.cs" />
-    <Compile Include="Commands\GetAuthorList\GetAuthorListCommand.cs" />
-    <Compile Include="Commands\GetBlogPostList\GetBlogPostListCommand.cs" />
-    <Compile Include="Commands\GetBlogPost\GetBlogPostCommand.cs" />
-    <Compile Include="Commands\GetTemplatesList\GetTemplatesCommand.cs" />
-    <Compile Include="Commands\SaveAuthor\SaveAuthorCommand.cs" />
-    <Compile Include="Commands\SaveBlogPost\SaveBlogPostCommand.cs" />
-    <Compile Include="Commands\SaveBlogPost\SaveBlogPostCommandResponse.cs" />
-    <Compile Include="Commands\SaveDefaultTemplate\SaveDefaultTemplateCommand.cs" />
-    <Compile Include="Content\Resources\BlogGlobalization.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>BlogGlobalization.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\AuthorController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
-    <Compile Include="Controllers\OptionController.cs" />
-    <Compile Include="Helpers\Extensions\RenderPageViewModelExtensions.cs" />
-    <Compile Include="Models\Author.cs" />
-    <Compile Include="Models\BlogPost.cs" />
-    <Compile Include="Models\BlogPostContent.cs" />
-    <Compile Include="Models\Maps\AuthorMap.cs" />
-    <Compile Include="Models\Maps\BlogPostContentMap.cs" />
-    <Compile Include="Models\Maps\BlogPostMap.cs" />
-    <Compile Include="Models\Maps\OptionMap.cs" />
-    <Compile Include="Models\MigrationsContent\Migration201305271258.cs" />
-    <Compile Include="Models\Migrations\Migration201305271234.cs" />
-    <Compile Include="Models\Option.cs" />
-    <Compile Include="Models\Migrations\InitialSetup.cs" />
-    <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />
+    <Compile Include="WebApiModuleDescriptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Registration\BlogJsModuleIncludeDescriptor.cs" />
-    <Compile Include="Services\DefaultAuthorService.cs" />
-    <Compile Include="Services\DefaultBlogService.cs" />
-    <Compile Include="Services\DefaultOptionService.cs" />
-    <Compile Include="Services\IAuthorService.cs" />
-    <Compile Include="Services\IBlogService.cs" />
-    <Compile Include="Services\IOptionService.cs" />
-    <Compile Include="ViewModels\Author\AuthorViewModel.cs" />
-    <Compile Include="ViewModels\Blog\BlogPostViewModel.cs" />
-    <Compile Include="ViewModels\Blog\BlogTemplateViewModel.cs" />
-    <Compile Include="ViewModels\Blog\SiteSettingBlogPostViewModel.cs" />
-    <Compile Include="ViewModels\Filter\BlogsFilter.cs" />
-    <Compile Include="ViewModels\Filter\BlogsGridViewModel.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Content\Resources\BlogGlobalization.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>BlogGlobalization.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Content\Styles\bcms.blog.css" />
-    <EmbeddedResource Include="Content\Styles\Images\sprite-blog.png" />
-    <EmbeddedResource Include="Content\Styles\Images\bcms-no-image-1.png" />
-    <EmbeddedResource Include="Content\Styles\Images\bcms-no-image-2.png" />
-    <EmbeddedResource Include="Content\Styles\Images\bcms-no-image-3.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Content\Styles\Images\icn-zoom-notcompatible.png" />
-    <EmbeddedResource Include="Scripts\bcms.blog.js" />
-    <Content Include="BuildConfiguration.xml" />
-    <EmbeddedResource Include="Scripts\bcms.blog.filter.js" />
-    <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BetterCMS.Configuration\BetterCms.Configuration.csproj">
@@ -204,9 +146,9 @@
       <Project>{694ca5ca-a0e2-4578-a249-648498b058d7}</Project>
       <Name>BetterCms.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BetterCms.Module.MediaManager\BetterCms.Module.MediaManager.csproj">
-      <Project>{f3e41793-e8ed-4ba8-a1ab-cba1e47b0786}</Project>
-      <Name>BetterCms.Module.MediaManager</Name>
+    <ProjectReference Include="..\BetterCMS.Module.Blog\BetterCms.Module.Blog.csproj">
+      <Project>{a66a3046-ef60-4c51-ada7-eb055763419b}</Project>
+      <Name>BetterCms.Module.Blog</Name>
     </ProjectReference>
     <ProjectReference Include="..\BetterCms.Module.Pages\BetterCms.Module.Pages.csproj">
       <Project>{fc04d4c2-8688-498f-b546-292c7e3688a9}</Project>
@@ -226,32 +168,9 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Author\Partial\ImageCell.cshtml" />
+    <Content Include="web.config" />
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Option\Templates.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\EditorTemplates\PageStatus.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Web.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Author\Partial\ListTemplate.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Blog\Partial\AddNewBlogEditPermalink.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Blog\EditBlogPost.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Blog\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Blog\Partial\BlogsFilterTemplate.cshtml" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -268,7 +187,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Dev|AnyCPU'">
     <OutputPath>bin\</OutputPath>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DefineConstants>DEBUG</DefineConstants>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
@@ -295,6 +214,7 @@
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" />
   <PropertyGroup>
-    <PostBuildEvent>$(MSBuildBinPath)\msbuild.exe /p:Configuration="$(ConfigurationName)" /p:SolutionDir="$(SolutionDir)\" /p:ProjectDir="$(ProjectDir)\" "$(ProjectDir)BuildConfiguration.xml"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>
