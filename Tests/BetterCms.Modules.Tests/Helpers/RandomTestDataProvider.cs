@@ -529,6 +529,7 @@ namespace BetterCms.Tests.Helpers
             entity.IsUploaded = true;
             entity.IsTemporary = true;
             entity.IsCanceled = true;
+            entity.IsArchived = false;
 
             return entity;
         }

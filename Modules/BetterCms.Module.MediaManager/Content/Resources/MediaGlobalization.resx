@@ -405,4 +405,43 @@
   <data name="ImageProperties_Dialog_PublicUrl" xml:space="preserve">
     <value>Public URL</value>
   </data>
+  <data name="MediaManager_IncludeArchived_Message" xml:space="preserve">
+    <value>Include archived items</value>
+  </data>
+  <data name="ArchiveFile_ConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to pull out file {0} from archive?</value>
+  </data>
+  <data name="ArchiveImage_ConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to send the image {0} to archive?</value>
+  </data>
+  <data name="ArchiveMedia_ArchivedSuccessfully_Message" xml:space="preserve">
+    <value>Media sent to archive successfully.</value>
+  </data>
+  <data name="ArchiveMedia_ConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to send the media {0} to archive?</value>
+  </data>
+  <data name="ArchiveVideo_ConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to pull out video {0} from archive?</value>
+  </data>
+  <data name="MediaManager_ButtonArchive" xml:space="preserve">
+    <value>Archive</value>
+  </data>
+  <data name="MediaManager_ButtonUnarchive" xml:space="preserve">
+    <value>Unarchive</value>
+  </data>
+  <data name="UnarchiveFile_ConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to send the video {0} to archive?</value>
+  </data>
+  <data name="UnarchiveImage_ConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to pull out image {0} from archive?</value>
+  </data>
+  <data name="UnarchiveMedia_ConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to pull out media {0} from archive?</value>
+  </data>
+  <data name="UnarchiveMedia_UnarchivedSuccessfully_Message" xml:space="preserve">
+    <value>Media pulled out from archive successfully.</value>
+  </data>
+  <data name="UnarchiveVideo_ConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to send the video {0} to archive?</value>
+  </data>
 </root>

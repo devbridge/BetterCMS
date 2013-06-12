@@ -129,8 +129,12 @@
     <Compile Include="Command\Files\DownloadFile\DownloadFileCommand.cs" />
     <Compile Include="Command\Files\DownloadFile\DownloadFileCommandResponse.cs" />
     <Compile Include="Command\Images\GetImageProperties\GetImagePropertiesCommand.cs" />
+    <Compile Include="Command\MediaManager\ArchiveMedia\ArchiveMediaCommand.cs" />
+    <Compile Include="Command\MediaManager\ArchiveMedia\ArchiveMediaCommandRequest.cs" />
     <Compile Include="Command\MediaManager\GetMediaItemsCommandBase.cs" />
     <Compile Include="Command\MediaManager\RenameMedia\RenameMediaCommand.cs" />
+    <Compile Include="Command\MediaManager\UnarchiveMedia\UnarchiveMediaCommand.cs" />
+    <Compile Include="Command\MediaManager\UnarchiveMedia\UnarchiveMediaCommandRequest.cs" />
     <Compile Include="Command\Upload\CheckFileStatuses\CheckFilesStatusesCommand.cs" />
     <Compile Include="Command\Upload\ConfirmUpload\ConfirmUploadCommand.cs" />
     <Compile Include="Command\MediaManager\DeleteMedia\DeleteMediaCommand.cs" />
@@ -175,6 +179,7 @@
     <Compile Include="Models\Media.cs" />
     <Compile Include="Models\MediaImage.cs" />
     <Compile Include="Models\MigrationsContent\Migration201306071105.cs" />
+    <Compile Include="Models\Migrations\Migration201306111530.cs" />
     <Compile Include="Models\Migrations\Migration201306071100.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
     <Compile Include="Models\Migrations\Migration201303081430.cs" />
