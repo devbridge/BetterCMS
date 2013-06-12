@@ -40,7 +40,9 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             saveFolderUrl: null,
             renameMediaUrl: null,
             getMediaUrl: null,
-            downloadFileUrl: null
+            downloadFileUrl: null,
+            unarchiveMediaUrl: null,
+            archiveMediaUrl: null
         },
         globalization = {
             deleteImageConfirmMessage: null,
@@ -48,6 +50,15 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             deleteVideoConfirmMessage: null,
             deleteFileConfirmMessage: null,
             deleteFolderConfirmMessage: null,
+
+            archiveMediaConfirmMessage: null,
+            unarchiveMediaConfirmMessage: null,
+            archiveVideoConfirmMessage: null,
+            unarchiveVideoConfirmMessage: null,
+            archiveFileConfirmMessage: null,
+            unarchiveFileConfirmMessage: null,
+            archiveImageConfirmMessage: null,
+            unarchiveImageConfirmMessage: null,
 
             insertImageDialogTitle: null,
             insertImageFailureMessageTitle: null,
@@ -394,6 +405,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.isProcessing = ko.observable(item.IsProcessing || false);
             self.isFailed = ko.observable(item.IsFailed || false);
             self.savePressed = false;
+            self.isArchived = ko.observable(item.IsArchived);
 
             self.isActive = ko.observable(item.IsActive || false);
             self.isSelected = ko.observable(false);
@@ -466,6 +478,24 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
                 return $.trim(classes);
             });
+            
+            self.archiveMedia = function (folderViewModel, data, event) {
+                bcms.stopEventPropagation(event);
+
+                var url = $.format(links.archiveMediaUrl, this.id(), this.version()),
+                    message = $.format(self.getArchiveMediaConfirmationMessage(), this.name());
+
+                archiveUnarchiveMediaItem(true, url, message, folderViewModel, this);
+            };
+
+            self.unarchiveMedia = function (folderViewModel, data, event) {
+                bcms.stopEventPropagation(event);
+
+                var url = $.format(links.unarchiveMediaUrl, this.id(), this.version()),
+                    message = $.format(self.getUnarchiveMediaConfirmationMessage(), this.name());
+
+                archiveUnarchiveMediaItem(false, url, message, folderViewModel, this);
+            };
         }
 
         MediaItemBaseViewModel.prototype.isFolder = function () {
@@ -478,6 +508,14 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
         MediaItemBaseViewModel.prototype.deleteMedia = function (folderViewModel) {
             throw new Error("Delete method is not implemented.");
+        };
+
+        MediaItemBaseViewModel.prototype.getArchiveMediaConfirmationMessage = function () {
+            return globalization.archiveMediaConfirmMessage;
+        };
+
+        MediaItemBaseViewModel.prototype.getUnarchiveMediaConfirmationMessage = function () {
+            return globalization.unarchiveMediaConfirmMessage;
         };
 
         MediaItemBaseViewModel.prototype.openMedia = function (folderViewModel, data, event) {
@@ -588,6 +626,14 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
             deleteMediaItem(url, message, folderViewModel, this);
         };
+        
+        MediaImageViewModel.prototype.getArchiveMediaConfirmationMessage = function () {
+            return globalization.archiveImageConfirmMessage;
+        };
+
+        MediaImageViewModel.prototype.getUnarchiveMediaConfirmationMessage = function () {
+            return globalization.unarchiveImageConfirmMessage;
+        };
 
         MediaImageViewModel.prototype.editMedia = function (folderViewModel, data, event) {
             bcms.stopEventPropagation(event);
@@ -663,6 +709,14 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             deleteMediaItem(url, message, folderViewModel, this);
         };
 
+        MediaVideoViewModel.prototype.getArchiveMediaConfirmationMessage = function () {
+            return globalization.archiveVideoConfirmMessage;
+        };
+
+        MediaVideoViewModel.prototype.getUnarchiveMediaConfirmationMessage = function () {
+            return globalization.unarchiveVideoConfirmMessage;
+        };
+
         return MediaVideoViewModel;
     })(MediaItemBaseViewModel);
 
@@ -688,6 +742,14 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         MediaFileViewModel.prototype.insertMedia = function (folderViewModel, data, event) {
             bcms.stopEventPropagation(event);
             insertFile(this);
+        };
+
+        MediaFileViewModel.prototype.getArchiveMediaConfirmationMessage = function () {
+            return globalization.archiveFileConfirmMessage;
+        };
+
+        MediaFileViewModel.prototype.getUnarchiveMediaConfirmationMessage = function () {
+            return globalization.unarchiveFileConfirmMessage;
         };
 
         return MediaFileViewModel;
@@ -1148,6 +1210,48 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                     })
                     .fail(function (response) {
                         onDeleteCompleted(bcms.parseFailedResponse(response));
+                    });
+                }
+            });
+    };
+
+    /**
+    * Open archive/unarchive confirmation and archive/unarchive media item.
+    */
+    function archiveUnarchiveMediaItem(isArchiving, url, message, folderViewModel, item) {
+        if (item.isDeleting()) {
+            return;
+        }
+
+        var onArchivingCompleted = function (json) {
+                messages.refreshBox(folderViewModel.container, json);
+                if (json.Success) {
+                    item.isArchived(isArchiving);
+                    if (json.Data && json.Data.Version) {
+                        item.version(json.Data.Version);
+                    }
+                    if (isArchiving && !folderViewModel.gridOptions().includeArchived()) {
+                        folderViewModel.medias.remove(item);
+                    }
+                }
+
+                confirmDialog.close();
+            },
+            confirmDialog = modal.confirm({
+                content: message,
+                onAccept: function () {
+                    $.ajax({
+                        type: 'POST',
+                        url: url,
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+                        cache: false
+                    })
+                    .done(function (json) {
+                        onArchivingCompleted(json);
+                    })
+                    .fail(function (response) {
+                        onArchivingCompleted(bcms.parseFailedResponse(response));
                     });
                 }
             });

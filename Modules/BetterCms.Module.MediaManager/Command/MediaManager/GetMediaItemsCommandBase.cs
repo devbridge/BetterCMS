@@ -221,6 +221,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             model.Name = media.Title;
             model.CreatedOn = media.CreatedOn;
             model.Type = media.Type;
+            model.IsArchived = media.IsArchived;
         }
 
         /// <summary>

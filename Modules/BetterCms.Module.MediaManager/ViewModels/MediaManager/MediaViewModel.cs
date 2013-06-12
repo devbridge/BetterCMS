@@ -26,6 +26,8 @@ namespace BetterCms.Module.MediaManager.ViewModels.MediaManager
 
         public virtual string FileExtension { get; set; }
 
+        public virtual bool IsArchived { get; set; }
+
         public MediaViewModel()
         {
             ContentType = MediaContentType.File;

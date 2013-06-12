@@ -129,6 +129,16 @@
                         <a class="bcms-media-content-link" data-bind="click: deleteMedia.bind($data, $root), clickBubble: false">@RootGlobalization.Button_Delete</a>
                         <!-- /ko -->
                     }
+                    @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
+                    {
+                        <!-- ko if: !isFolder() && !isArchived() -->
+                        <a class="bcms-media-content-link" data-bind="click: archiveMedia.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonArchive</a>
+                        <!-- /ko -->
+                        
+                        <!-- ko if: !isFolder() && isArchived() -->
+                        <a class="bcms-media-content-link" data-bind="click: unarchiveMedia.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonUnarchive</a>
+                        <!-- /ko -->
+                    }
                 </div>
 
                 <div class="bcms-media-items-block">
