@@ -405,4 +405,7 @@
   <data name="ImageProperties_Dialog_PublicUrl" xml:space="preserve">
     <value>Public URL</value>
   </data>
+  <data name="MediaManager_IncludeArchived_Message" xml:space="preserve">
+    <value>Include archived items</value>
+  </data>
 </root>

@@ -114,15 +114,37 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     /**
     * Media's current folder sort / search / paging option view model
     */
-    function MediaItemsOptionsViewModel(options, onOpenPage) {
+    function MediaItemsOptionsViewModel(onOpenPage) {
         var self = this;
 
-        self.searchQuery = ko.observable(options.GridOptions.SearchQuery);
-        if (options.GridOptions) {
-            self.column = ko.observable(options.GridOptions.Column);
-            self.isDescending = ko.observable(options.GridOptions.Direction == sortDirections.descending);
+        self.searchQuery = ko.observable();
+        self.includeArchived = ko.observable(false);
+        self.isFilterVisible = ko.observable(false);
+        self.column = ko.observable();
+        self.isDescending = ko.observable(false);
+        if (!self.paging) {
+            self.paging = new ko.PagingViewModel(0, 1, 0, onOpenPage);
         }
-        self.paging = new ko.PagingViewModel(options.GridOptions.PageSize, options.GridOptions.PageNumber, options.TotalCount, onOpenPage);
+
+        self.clearFilter = function() {
+            self.includeArchived(false);
+        };
+
+        self.toggleFilter = function () {
+            self.isFilterVisible(!self.isFilterVisible());
+        };
+
+        self.closeFilter = function () {
+            self.isFilterVisible(false);
+        };
+
+        self.fromJson = function (options) {
+            self.searchQuery(options.GridOptions.SearchQuery);
+            self.column(options.GridOptions.Column);
+            self.isDescending(options.GridOptions.Direction == sortDirections.descending);
+
+            self.paging.setPaging(options.GridOptions.PageSize, options.GridOptions.PageNumber, options.TotalCount);
+        };
     }
 
     /**
@@ -202,6 +224,11 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.gridOptions().paging.pageNumber(1);
 
             self.loadMedia();
+        };
+
+        self.searchWithFilter = function() {
+            self.gridOptions().closeFilter();
+            self.searchMedia();
         };
 
         self.onOpenPage = function () {
@@ -1146,6 +1173,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 : sortDirections.ascending;
             params.PageSize = folderViewModel.gridOptions().paging.pageSize;
             params.PageNumber = folderViewModel.gridOptions().paging.pageNumber();
+            params.IncludeArchivedItems = folderViewModel.gridOptions().includeArchived();
         }
 
         return params;
@@ -1206,7 +1234,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 }
 
                 // Map grid options
-                folderViewModel.gridOptions(new MediaItemsOptionsViewModel(json.Data, folderViewModel.onOpenPage));
+                if (!folderViewModel.gridOptions()) {
+                    folderViewModel.gridOptions(new MediaItemsOptionsViewModel(folderViewModel.onOpenPage));
+                }
+                folderViewModel.gridOptions().fromJson(json.Data);
 
                 // Replace unobtrusive validator
                 bcms.updateFormValidator(folderViewModel.container.find(selectors.firstForm));

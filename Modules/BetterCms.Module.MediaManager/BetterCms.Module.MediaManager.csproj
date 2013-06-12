@@ -175,6 +175,7 @@
     <Compile Include="Models\Media.cs" />
     <Compile Include="Models\MediaImage.cs" />
     <Compile Include="Models\MigrationsContent\Migration201306071105.cs" />
+    <Compile Include="Models\Migrations\Migration201306111530.cs" />
     <Compile Include="Models\Migrations\Migration201306071100.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
     <Compile Include="Models\Migrations\Migration201303081430.cs" />

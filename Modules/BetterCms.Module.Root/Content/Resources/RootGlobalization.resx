@@ -165,6 +165,15 @@
   <data name="Button_Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
+  <data name="Button_Filter" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="Button_Filter_Clear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="Button_Filter_Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
   <data name="Button_History" xml:space="preserve">
     <value>History</value>
   </data>

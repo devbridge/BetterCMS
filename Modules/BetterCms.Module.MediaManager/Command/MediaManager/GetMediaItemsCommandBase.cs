@@ -107,6 +107,11 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
                     && m.Type == MediaType
                     && (m is MediaFolder || m is TEntity && !((TEntity)m).IsTemporary));
 
+            if (!request.IncludeArchivedItems)
+            {
+                query = query.Where(m => !m.IsArchived);
+            }
+
             if (!string.IsNullOrWhiteSpace(request.SearchQuery))
             {
                 var searchQuery = string.Format("%{0}%", request.SearchQuery);

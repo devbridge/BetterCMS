@@ -210,54 +210,19 @@ bettercms.define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout'], funct
         function PagingViewModel(pageSize, pageNumber, totalCount, onOpenPage) {
             var self = this;
 
-            self.pageSize = 0;
-            self.pageNumber = ko.observable(1);
-            self.totalPages = ko.observable(1);
-            self.pagingUpperBound = null;
-            self.pagingLowerBound = null;
-            self.totalCount = totalCount;
-
             self.totalPagingLinks = 5;
             self.activePagePosition = 2;
 
-            if (pageSize > 0) {
-                if (pageNumber <= 0) {
-                    pageNumber = 1;
-                }
-                if (totalCount < 0) {
-                    totalCount = 0;
-                }
-                var totalPages = parseInt(Math.ceil(totalCount / pageSize));
-
-                self.pageSize = pageSize;
-                self.pageNumber(pageNumber);
-                self.totalPages(totalPages);
-                self.totalCount = totalCount;
-
-                // lower bound
-                self.pagingLowerBound = pageNumber - self.activePagePosition;
-                if (self.pagingLowerBound < 1) {
-                    self.pagingLowerBound = 1;
-                }
-
-                // upper bound
-                self.pagingUpperBound = self.pagingLowerBound + self.totalPagingLinks;
-                if (self.pagingUpperBound > totalPages) {
-                    self.pagingUpperBound = totalPages;
-                }
-
-                // lower bound correction
-                if (self.pagingUpperBound - self.pagingLowerBound < self.totalPagingLinks) {
-                    self.pagingLowerBound = self.pagingUpperBound - self.totalPagingLinks;
-                    if (self.pagingLowerBound < 1) {
-                        self.pagingLowerBound = 1;
-                    }
-                }
-            }
+            self.pageSize = 0;
+            self.pageNumber = ko.observable(1);
+            self.totalPages = ko.observable(1);
+            self.pagingUpperBound = ko.observable();
+            self.pagingLowerBound = ko.observable();
+            self.totalCount = 0;
 
             self.pages = ko.computed(function () {
                 var pages = [];
-                for (var i = self.pagingLowerBound; i <= self.pagingUpperBound; i++) {
+                for (var i = self.pagingLowerBound(); i <= self.pagingUpperBound(); i++) {
                     pages.push(i);
                 }
                 return pages;
@@ -270,6 +235,50 @@ bettercms.define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout'], funct
                     onOpenPage(pageNr);
                 }
             };
+
+            self.setPaging = function (newPageSize, newPageNumber, newTotalCount) {
+                self.totalCount = newTotalCount >= 0 ? newTotalCount : 0;
+                
+                if (newPageSize > 0) {
+                    if (newPageNumber <= 0) {
+                        newPageNumber = 1;
+                    }
+                    if (newTotalCount < 0) {
+                        newTotalCount = 0;
+                    }
+                    var totalPages = parseInt(Math.ceil(newTotalCount / newPageSize));
+
+                    self.pageSize = newPageSize;
+                    self.pageNumber(newPageNumber);
+                    self.totalPages(totalPages);
+                    self.totalCount = newTotalCount;
+
+                    // lower bound
+                    var pagingLowerBound = newPageNumber - self.activePagePosition;
+                    if (pagingLowerBound < 1) {
+                        pagingLowerBound = 1;
+                    }
+
+                    // upper bound
+                    var pagingUpperBound = pagingLowerBound + self.totalPagingLinks;
+                    if (pagingUpperBound > totalPages) {
+                        pagingUpperBound = totalPages;
+                    }
+
+                    // lower bound correction
+                    if (pagingUpperBound - pagingLowerBound < self.totalPagingLinks) {
+                        pagingLowerBound = pagingUpperBound - self.totalPagingLinks;
+                        if (pagingLowerBound < 1) {
+                            pagingLowerBound = 1;
+                        }
+                    }
+
+                    self.pagingLowerBound(pagingLowerBound);
+                    self.pagingUpperBound(pagingUpperBound);
+                }
+            };
+            
+            self.setPaging(pageSize, pageNumber, totalCount);
         }
 
         return PagingViewModel;

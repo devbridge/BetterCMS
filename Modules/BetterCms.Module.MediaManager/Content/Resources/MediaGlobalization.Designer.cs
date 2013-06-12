@@ -736,6 +736,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Include archived items.
+        /// </summary>
+        public static string MediaManager_IncludeArchived_Message {
+            get {
+                return ResourceManager.GetString("MediaManager_IncludeArchived_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Folder.
         /// </summary>
         public static string MediaManager_NewFolder {

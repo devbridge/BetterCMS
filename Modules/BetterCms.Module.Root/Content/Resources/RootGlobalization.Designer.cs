@@ -205,6 +205,33 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Filter.
+        /// </summary>
+        public static string Button_Filter {
+            get {
+                return ResourceManager.GetString("Button_Filter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear.
+        /// </summary>
+        public static string Button_Filter_Clear {
+            get {
+                return ResourceManager.GetString("Button_Filter_Clear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string Button_Filter_Search {
+            get {
+                return ResourceManager.GetString("Button_Filter_Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to History.
         /// </summary>
         public static string Button_History {

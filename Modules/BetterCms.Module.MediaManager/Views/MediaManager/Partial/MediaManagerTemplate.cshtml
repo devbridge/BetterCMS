@@ -28,10 +28,35 @@
     <div class="bcms-breadcrumbs-holder">
         <div data-bind="foreach: path().pathFolders()"><a class="bcms-breadcrumbs-root" href="#" data-bind="    text: pathName(), click: openMedia.bind($data, $root)"></a></div>
     </div>
-    
-    <!-- ko with: gridOptions().paging -->
+
+    <div class="bcms-featured-grid clearfix">    
+        <!-- ko with: gridOptions().paging -->
         @Html.Partial(RootModuleConstants.EditableGridPagingTemplate)
-    <!-- /ko -->
+        <!-- /ko -->
+
+        <div>
+            <div class="bcms-grid-filtering">        
+                <div class="bcms-btn-links-main" data-bind="click: gridOptions().toggleFilter">@RootGlobalization.Button_Filter</div>    
+            </div>
+            <div class="bcms-tags-block" style="display: none;" data-bind="visible: gridOptions().isFilterVisible()">
+                <div class="bcms-tip-close" data-bind="click: gridOptions().closeFilter">@RootGlobalization.Button_Close</div>
+                <div class="bcms-featured-tags">
+                    <div class="clearfix">
+                        <div class="bcms-filter-options-1">
+                            <div class="bcms-tags-field-holder">
+                                <input type="checkbox" data-bind="checked: gridOptions().includeArchived" />
+                                @MediaGlobalization.MediaManager_IncludeArchived_Message
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix bcms-filter-search">
+                        <div class="bcms-btn-small" data-bind="click: searchWithFilter">@RootGlobalization.Button_Filter_Search</div>
+                        <div class="bcms-btn-links-small" data-bind="click: gridOptions().clearFilter">@RootGlobalization.Button_Filter_Clear</div>
+                    </div>
+                </div>
+            </div>
+         </div>
+    </div>
 
     @Html.SiteSettingsMessagesBox(null, new Dictionary<string, string> { { "data-bind", "attr: { id: domId() }" } })
 
