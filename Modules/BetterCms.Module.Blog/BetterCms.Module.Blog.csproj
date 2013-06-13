@@ -124,10 +124,10 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Accessors\BlogPostContentAccessor.cs" />
-    <Compile Include="Api\DataContracts\Filters\BlogPostFilter.cs" />
+    <Compile Include="Api\DataFilters\BlogPostFilter.cs" />
     <Compile Include="Api\DataContracts\GetAuthorsRequest.cs" />
     <Compile Include="Api\DataContracts\GetBlogPostsRequest.cs" />
-    <Compile Include="Api\DataContracts\Models\BlogPostModel.cs" />
+    <Compile Include="Api\DataModels\BlogPostModel.cs" />
     <Compile Include="Api\DataContracts\UpdateBlogPostRequest.cs" />
     <Compile Include="Api\Events\BlogEvents.cs" />
     <Compile Include="Api\Events\AuthorEvents.cs" />

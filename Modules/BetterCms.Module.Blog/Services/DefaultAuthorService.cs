@@ -28,6 +28,7 @@ namespace BetterCms.Module.Blog.Services
         /// Initializes a new instance of the <see cref="DefaultAuthorService" /> class.
         /// </summary>
         /// <param name="unitOfWork">The unit of work.</param>
+        /// <param name="repository">The repository.</param>
         public DefaultAuthorService(IUnitOfWork unitOfWork, IRepository repository)
         {
             this.unitOfWork = unitOfWork;

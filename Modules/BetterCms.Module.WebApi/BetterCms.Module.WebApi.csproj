@@ -135,6 +135,8 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Controllers\BlogsController.cs" />
+    <Compile Include="Controllers\AuthorsController.cs" />
+    <Compile Include="Extensions\ODataOptionsExtensions.cs" />
     <Compile Include="WebApiModuleDescriptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

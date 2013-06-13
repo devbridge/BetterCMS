@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 
 using BetterCms.Api;
+using BetterCms.Core.DataAccess;
 using BetterCms.Module.Blog.Api.DataContracts;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.Services;
@@ -22,12 +23,10 @@ namespace BetterCms.Test.Module.Blog.ApiTests
             Author author2 = TestDataProvider.CreateNewAuthor();
 
             var repositoryMock = MockRepository(new[] { author1, author2 });
-            var tagService = new Mock<ITagService>();
-            var authorServiceMock = new Mock<IAuthorService>();
 
-            using (var service = new BlogsApiContext(Container.BeginLifetimeScope(), tagService.Object, authorServiceMock.Object, repositoryMock.Object))
+            using (var api = CreateBlogsApiContext(repositoryMock))
             {
-                var authors = service.GetAuthors(new GetAuthorsRequest());
+                var authors = api.GetAuthors(new GetAuthorsRequest());
 
                 Assert.IsNotNull(authors);
                 Assert.AreEqual(authors.Items.Count, 2);
@@ -42,17 +41,24 @@ namespace BetterCms.Test.Module.Blog.ApiTests
         public void Should_Return_Empty_Authors_List_Successfully()
         {
             var repositoryMock = MockRepository(new Author[] { });
-            var tagService = new Mock<ITagService>();
-            var authorServiceMock = new Mock<IAuthorService>();
 
-            using (var service = new BlogsApiContext(Container.BeginLifetimeScope(), tagService.Object, authorServiceMock.Object, repositoryMock.Object))
+            using (var api = CreateBlogsApiContext(repositoryMock))
             {
-                var authors = service.GetAuthors(new GetAuthorsRequest());
+                var authors = api.GetAuthors(new GetAuthorsRequest());
 
                 Assert.IsNotNull(authors);
                 Assert.IsNotNull(authors.Items);
                 Assert.IsEmpty(authors.Items);
             }
+        }
+
+        private BlogsApiContext CreateBlogsApiContext(Mock<IRepository> repositoryMock)
+        {
+            var tagService = new Mock<ITagService>();
+            var authorServiceMock = new Mock<IAuthorService>();
+            var blogServiceMock = new Mock<IBlogService>();
+
+            return new BlogsApiContext(Container.BeginLifetimeScope(), tagService.Object, blogServiceMock.Object, authorServiceMock.Object, repositoryMock.Object);
         }
     }
 }

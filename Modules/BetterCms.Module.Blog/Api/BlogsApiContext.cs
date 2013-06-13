@@ -11,18 +11,16 @@ using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Api;
+
 using BetterCms.Module.Blog.Api.DataContracts;
+using BetterCms.Module.Blog.Api.DataFilters;
 using BetterCms.Module.Blog.Api.DataModels;
 using BetterCms.Module.Blog.Api.Events;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.Services;
 using BetterCms.Module.MediaManager.Models;
-using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Models;
-
-using NHibernate.Criterion;
-using NHibernate.OData;
 
 // ReSharper disable CheckNamespace
 namespace BetterCms.Api
@@ -30,11 +28,13 @@ namespace BetterCms.Api
 {
     public class BlogsApiContext : DataApiContext
     {
+        private static readonly BlogsApiEvents events;
+
         private readonly ITagService tagService;
 
-        private readonly IAuthorService authorService;
+        private readonly IBlogService blogService;
 
-        private static readonly BlogsApiEvents events;
+        private readonly IAuthorService authorService;
 
         /// <summary>
         /// Initializes the <see cref="BlogsApiContext" /> class.
@@ -49,11 +49,14 @@ namespace BetterCms.Api
         /// </summary>
         /// <param name="lifetimeScope">The lifetime scope.</param>
         /// <param name="tagService">The tag service.</param>
+        /// <param name="blogService">The blog service.</param>
+        /// <param name="authorService">The author service.</param>
         /// <param name="repository">The repository.</param>
-        public BlogsApiContext(ILifetimeScope lifetimeScope, ITagService tagService, IAuthorService authorService, IRepository repository = null)
+        public BlogsApiContext(ILifetimeScope lifetimeScope, ITagService tagService, IBlogService blogService, IAuthorService authorService, IRepository repository = null)
             : base(lifetimeScope, repository)
         {
             this.tagService = tagService;
+            this.blogService = blogService;
             this.authorService = authorService;
         }
 
@@ -69,37 +72,6 @@ namespace BetterCms.Api
             {
                 return events;
             }
-        }
-
-        public IQueryable<BlogPost> GetBlogPostsQueryable()
-        {
-            return Repository.AsQueryable<BlogPost>();
-
-            /*var criteria = UnitOfWork
-                .Session
-                .ODataQuery<BlogPost>();*/
-
-            /*if (tags != null && tags.Length > 0)
-            {
-                PageTag pageTagAlias = null;
-                BlogPost blogAlias = null;
-
-                DetachedCriteria tagCriteria = DetachedCriteria.For<PageTag>("p");
-                //tagCriteria.createAlias("state", "st");
-                //tagCriteria.Add(Restrictions.Eq("st.abbreviation", abbreviation));
-                tagCriteria.Add(Restrictions.EqProperty("p.Id", "Id"));
-
-                criteria.Add(Subqueries.Exists(tagCriteria.SetProjection(Projections.Property("p.Id"))));
-
-//                DetachedCriteria dCriteria = DetachedCriteria.For<PageTag>()
-//                    .SetProjection(Projections.Property(() => pageTagAlias.Id))
-//                    .Add(Restrictions.EqProperty(Projections.Property(() => pageTagAlias.Id), Projections.Property(() => blogAlias.Id)));
-//                    //.Add(Restrictions.Eq(Projections.Property(() => pageTagAlias.Tag.Name), tags[0]));
-//
-//                criteria = criteria.Add(Subqueries.Exists(dCriteria));
-            }
-
-            return criteria.List<BlogPost>();*/
         }
 
         /// <summary>
@@ -236,11 +208,10 @@ namespace BetterCms.Api
             }
         }
 
-
-
         public IQueryable<AuthorModel> GetAuthorsAsQueryable()
         {
-            return authorService.GetAuthorsAsQueryable();
+            var models = authorService.GetAuthorsAsQueryable();
+            return models;
         }
 
         public AuthorCreateResponce CreateAuthor(AuthorCreateRequest request)
@@ -256,6 +227,13 @@ namespace BetterCms.Api
         public AuthorDeleteResponce DeleteAuthor(AuthorDeleteRequest request)
         {
             return authorService.DeleteAuthor(request);
+        }
+
+        public IQueryable<BlogPostModel> GetBlogPostsAsQueryable(BlogPostFilter filter = null)
+        {
+            var models = blogService.GetBlogPostsAsQueryable(filter);
+
+            return models;
         }
     }
 }

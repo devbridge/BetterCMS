@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-using BetterCms.Module.MediaManager.Api.DataModels;
-
 namespace BetterCms.Module.Blog.Api.DataModels
 {
     [DataContract]
-    public class AuthorModel
+    public class BlogPostModel
     {
         [DataMember]
         public Guid Id { get; set; }
@@ -15,9 +13,9 @@ namespace BetterCms.Module.Blog.Api.DataModels
         public int Version { get; set; }
 
         [DataMember]
-        public string Name { get; set; }
+        public string Title { get; set; }
 
         [DataMember]
-        public MediaImage Image { get; set; }
+        public DateTime CreatedOn { get; set; }
     }
 }
