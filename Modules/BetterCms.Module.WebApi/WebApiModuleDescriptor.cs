@@ -1,8 +1,13 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Reflection;
+using System.Web.Http;
+using System.Web.Http.Controllers;
+
+using Autofac;
 
 using BetterCms.Api;
-using BetterCms.Core;
 using BetterCms.Core.Modules;
+using BetterCms.Core.Mvc.Extensions;
 
 namespace BetterCms.Module.WebApi
 {
@@ -22,20 +27,19 @@ namespace BetterCms.Module.WebApi
         internal const string WebApiAreaName = "bcms-api";
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WebApiModuleDescriptor" /> class.
+        /// Controller extensions.
         /// </summary>
-        public WebApiModuleDescriptor(ICmsConfiguration cmsConfiguration)
-            : base(cmsConfiguration)
-        {
-            ApiContext.Events.HostStart += Events_HostStart;
-        }
+        private readonly IControllerExtensions controllerExtensions;
 
         /// <summary>
-        /// Events occurs on host start.
+        /// Initializes a new instance of the <see cref="WebApiModuleDescriptor" /> class.
         /// </summary>
-        /// <param name="args">The args.</param>
-        private void Events_HostStart(SingleItemEventArgs<System.Web.HttpApplication> args)
+        /// <param name="cmsConfiguration">The CMS configuration.</param>
+        /// <param name="controllerExtensions">The controller extensions.</param>
+        public WebApiModuleDescriptor(ICmsConfiguration cmsConfiguration, IControllerExtensions controllerExtensions)
+            : base(cmsConfiguration)
         {
+            this.controllerExtensions = controllerExtensions;
         }
 
         /// <summary>
@@ -80,14 +84,49 @@ namespace BetterCms.Module.WebApi
             }
         }
 
-        public override void RegisterCustomRoutes(ModuleRegistrationContext context, Autofac.ContainerBuilder containerBuilder)
+        /// <summary>
+        /// Registers module types.
+        /// </summary>
+        /// <param name="context">The area registration context.</param>
+        /// <param name="containerBuilder">The container builder.</param>        
+        public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
+        {
+            containerBuilder.RegisterType<BlogsApiContext>().AsSelf().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
+
+            RegisterModuleControllers(containerBuilder);
+        }
+
+        /// <summary>
+        /// Registers module custom routes.
+        /// </summary>
+        /// <param name="context">The area registration context.</param>
+        /// <param name="containerBuilder">The container builder.</param>
+        public override void RegisterCustomRoutes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
             GlobalConfiguration.Configuration.EnableQuerySupport();
+
             GlobalConfiguration.Configuration.Routes.MapHttpRoute(
                 name: "BcmsWebApiRoutes",
                 routeTemplate: "bcms-api/api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional, area = "bcms-api" }
+                defaults: new { id = RouteParameter.Optional, area = AreaName }
             );
+        }
+
+        /// <summary>
+        /// Registers the module controllers.
+        /// </summary>
+        /// <param name="containerBuilder">The container builder.</param>
+        private void RegisterModuleControllers(ContainerBuilder containerBuilder)
+        {
+            var controllerTypes = controllerExtensions.GetControllerTypes<IHttpController>(Assembly.GetExecutingAssembly());
+
+            if (controllerTypes != null)
+            {
+                foreach (Type controllerType in controllerTypes)
+                {
+                    RegisterKeyedType<IHttpController>(containerBuilder, controllerType);
+                }
+            }
         }
     }
 }

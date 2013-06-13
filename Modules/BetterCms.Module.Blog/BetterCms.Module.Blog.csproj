@@ -92,6 +92,7 @@
       <HintPath>..\..\packages\NHibernate.OData.0.2.4.0\lib\net35\NHibernate.OData.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -123,8 +124,10 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Accessors\BlogPostContentAccessor.cs" />
+    <Compile Include="Api\DataContracts\Filters\BlogPostFilter.cs" />
     <Compile Include="Api\DataContracts\GetAuthorsRequest.cs" />
     <Compile Include="Api\DataContracts\GetBlogPostsRequest.cs" />
+    <Compile Include="Api\DataContracts\Models\BlogPostModel.cs" />
     <Compile Include="Api\DataContracts\UpdateBlogPostRequest.cs" />
     <Compile Include="Api\Events\BlogEvents.cs" />
     <Compile Include="Api\Events\AuthorEvents.cs" />

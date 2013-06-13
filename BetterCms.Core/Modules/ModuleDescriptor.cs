@@ -285,11 +285,30 @@ namespace BetterCms.Core.Modules
         /// Registers the permissions.
         /// </summary>
         /// <param name="containerBuilder">The container builder.</param>
-        /// <param name="configuration">The configuration.</param>
-        /// <returns>Enumerator of known module permissions.</returns>
+        /// <returns>
+        /// Enumerator of known module permissions.
+        /// </returns>
         public virtual IEnumerable<IUserRole> RegisterUserRoles(ContainerBuilder containerBuilder)
         {
             return null;
+        }
+
+        /// <summary>
+        /// Registers the type as the keyed type.
+        /// </summary>
+        /// <typeparam name="TType">The parent type.</typeparam>
+        /// <param name="containerBuilder">The container builder.</param>
+        /// <param name="type">The type.</param>
+        protected void RegisterKeyedType<TType>(ContainerBuilder containerBuilder, Type type)
+        {
+            string key = (AreaName + "-" + type.Name).ToUpperInvariant();
+            containerBuilder
+                .RegisterType(type)
+                .AsSelf()
+                .Keyed<TType>(key)
+                .WithMetadata("ControllerType", type)
+                .InstancePerDependency()
+                .PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
         }
 
         /// <summary>
@@ -297,7 +316,6 @@ namespace BetterCms.Core.Modules
         /// </summary>
         /// <param name="registrationContext">The area registration context.</param>
         /// <param name="containerBuilder">The container builder.</param>
-        /// <param name="configuration">The configuration.</param>
         /// <param name="controllerExtensions">The controller extensions.</param>
         internal void RegisterModuleControllers(ModuleRegistrationContext registrationContext, ContainerBuilder containerBuilder, IControllerExtensions controllerExtensions)
         {
@@ -305,24 +323,17 @@ namespace BetterCms.Core.Modules
 
             if (controllerTypes != null)
             {
-                var allModuleActions = new Dictionary<Type, IEnumerable<MethodInfo>>();
+//                var allModuleActions = new Dictionary<Type, IEnumerable<MethodInfo>>();
                 foreach (Type controllerType in controllerTypes)
                 {
-                    string key = (AreaName + "-" + controllerType.Name).ToUpperInvariant();                    
-                    containerBuilder
-                        .RegisterType(controllerType)
-                        .AsSelf()
-                        .Keyed<IController>(key)                        
-                        .WithMetadata("ControllerType", controllerType)
-                        .InstancePerDependency()
-                        .PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
+                    RegisterKeyedType<IController>(containerBuilder, controllerType);
 
-                    var controllerActions = controllerExtensions.GetControllerActions(controllerType);
+//                    var controllerActions = controllerExtensions.GetControllerActions(controllerType);
 
-                    if (controllerActions != null)
-                    {
-                        allModuleActions.Add(controllerType, controllerActions);
-                    }
+//                    if (controllerActions != null)
+//                    {
+//                        allModuleActions.Add(controllerType, controllerActions);
+//                    }
                 }
 
                 //foreach (var item in allModuleActions)

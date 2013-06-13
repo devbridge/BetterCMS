@@ -66,13 +66,15 @@ namespace BetterCms.Api
             }
         }
 
-        public IList<BlogPost> GetBlogPostsQueryable(string filter, string[] tags)
+        public IQueryable<BlogPost> GetBlogPostsQueryable()
         {
-            var criteria = UnitOfWork
-                .Session
-                .ODataQuery<BlogPost>(filter);
+            return Repository.AsQueryable<BlogPost>();
 
-            if (tags != null && tags.Length > 0)
+            /*var criteria = UnitOfWork
+                .Session
+                .ODataQuery<BlogPost>();*/
+
+            /*if (tags != null && tags.Length > 0)
             {
                 PageTag pageTagAlias = null;
                 BlogPost blogAlias = null;
@@ -84,15 +86,15 @@ namespace BetterCms.Api
 
                 criteria.Add(Subqueries.Exists(tagCriteria.SetProjection(Projections.Property("p.Id"))));
 
-                /*DetachedCriteria dCriteria = DetachedCriteria.For<PageTag>()
-                    .SetProjection(Projections.Property(() => pageTagAlias.Id))
-                    .Add(Restrictions.EqProperty(Projections.Property(() => pageTagAlias.Id), Projections.Property(() => blogAlias.Id)));
-                    //.Add(Restrictions.Eq(Projections.Property(() => pageTagAlias.Tag.Name), tags[0]));
-
-                criteria = criteria.Add(Subqueries.Exists(dCriteria));*/
+//                DetachedCriteria dCriteria = DetachedCriteria.For<PageTag>()
+//                    .SetProjection(Projections.Property(() => pageTagAlias.Id))
+//                    .Add(Restrictions.EqProperty(Projections.Property(() => pageTagAlias.Id), Projections.Property(() => blogAlias.Id)));
+//                    //.Add(Restrictions.Eq(Projections.Property(() => pageTagAlias.Tag.Name), tags[0]));
+//
+//                criteria = criteria.Add(Subqueries.Exists(dCriteria));
             }
 
-            return criteria.List<BlogPost>();
+            return criteria.List<BlogPost>();*/
         }
 
         /// <summary>
