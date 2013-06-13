@@ -128,6 +128,7 @@
   <ItemGroup>
     <Compile Include="AmazonS3Storage\AmazonS3StorageServiceTest.cs" />
     <Compile Include="ApiTestBase.cs" />
+    <Compile Include="Blog\CommandTests\GetAuthorListCommandTest.cs" />
     <Compile Include="Blog\ModelTests\MapTests\BlogPostMapTest.cs" />
     <Compile Include="Blog\ModelTests\MapTests\BlogPostContentMapTest.cs" />
     <Compile Include="Blog\ModelTests\MapTests\OptionMapTest.cs" />

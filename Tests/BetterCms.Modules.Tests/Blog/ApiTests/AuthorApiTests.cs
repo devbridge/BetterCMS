@@ -3,6 +3,7 @@
 using BetterCms.Api;
 using BetterCms.Module.Blog.Api.DataContracts;
 using BetterCms.Module.Blog.Models;
+using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Pages.Services;
 
 using Moq;
@@ -22,8 +23,9 @@ namespace BetterCms.Test.Module.Blog.ApiTests
 
             var repositoryMock = MockRepository(new[] { author1, author2 });
             var tagService = new Mock<ITagService>();
+            var authorServiceMock = new Mock<IAuthorService>();
 
-            using (var service = new BlogsApiContext(Container.BeginLifetimeScope(), tagService.Object, repositoryMock.Object))
+            using (var service = new BlogsApiContext(Container.BeginLifetimeScope(), tagService.Object, authorServiceMock.Object, repositoryMock.Object))
             {
                 var authors = service.GetAuthors(new GetAuthorsRequest());
 
@@ -41,8 +43,9 @@ namespace BetterCms.Test.Module.Blog.ApiTests
         {
             var repositoryMock = MockRepository(new Author[] { });
             var tagService = new Mock<ITagService>();
+            var authorServiceMock = new Mock<IAuthorService>();
 
-            using (var service = new BlogsApiContext(Container.BeginLifetimeScope(), tagService.Object, repositoryMock.Object))
+            using (var service = new BlogsApiContext(Container.BeginLifetimeScope(), tagService.Object, authorServiceMock.Object, repositoryMock.Object))
             {
                 var authors = service.GetAuthors(new GetAuthorsRequest());
 

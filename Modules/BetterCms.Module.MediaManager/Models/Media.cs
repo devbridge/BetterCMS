@@ -7,6 +7,8 @@ namespace BetterCms.Module.MediaManager.Models
     public class Media : EquatableEntity<Media>
     {
         public virtual string Title { get; set; }
+
+        public virtual bool IsArchived { get; set; }
         
         public virtual MediaType Type { get; set; }
         

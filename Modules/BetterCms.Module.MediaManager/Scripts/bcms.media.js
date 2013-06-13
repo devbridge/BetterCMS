@@ -40,7 +40,9 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             saveFolderUrl: null,
             renameMediaUrl: null,
             getMediaUrl: null,
-            downloadFileUrl: null
+            downloadFileUrl: null,
+            unarchiveMediaUrl: null,
+            archiveMediaUrl: null
         },
         globalization = {
             deleteImageConfirmMessage: null,
@@ -48,6 +50,15 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             deleteVideoConfirmMessage: null,
             deleteFileConfirmMessage: null,
             deleteFolderConfirmMessage: null,
+
+            archiveMediaConfirmMessage: null,
+            unarchiveMediaConfirmMessage: null,
+            archiveVideoConfirmMessage: null,
+            unarchiveVideoConfirmMessage: null,
+            archiveFileConfirmMessage: null,
+            unarchiveFileConfirmMessage: null,
+            archiveImageConfirmMessage: null,
+            unarchiveImageConfirmMessage: null,
 
             insertImageDialogTitle: null,
             insertImageFailureMessageTitle: null,
@@ -114,15 +125,37 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     /**
     * Media's current folder sort / search / paging option view model
     */
-    function MediaItemsOptionsViewModel(options, onOpenPage) {
+    function MediaItemsOptionsViewModel(onOpenPage) {
         var self = this;
 
-        self.searchQuery = ko.observable(options.GridOptions.SearchQuery);
-        if (options.GridOptions) {
-            self.column = ko.observable(options.GridOptions.Column);
-            self.isDescending = ko.observable(options.GridOptions.Direction == sortDirections.descending);
+        self.searchQuery = ko.observable();
+        self.includeArchived = ko.observable(false);
+        self.isFilterVisible = ko.observable(false);
+        self.column = ko.observable();
+        self.isDescending = ko.observable(false);
+        if (!self.paging) {
+            self.paging = new ko.PagingViewModel(0, 1, 0, onOpenPage);
         }
-        self.paging = new ko.PagingViewModel(options.GridOptions.PageSize, options.GridOptions.PageNumber, options.TotalCount, onOpenPage);
+
+        self.clearFilter = function() {
+            self.includeArchived(false);
+        };
+
+        self.toggleFilter = function () {
+            self.isFilterVisible(!self.isFilterVisible());
+        };
+
+        self.closeFilter = function () {
+            self.isFilterVisible(false);
+        };
+
+        self.fromJson = function (options) {
+            self.searchQuery(options.GridOptions.SearchQuery);
+            self.column(options.GridOptions.Column);
+            self.isDescending(options.GridOptions.Direction == sortDirections.descending);
+
+            self.paging.setPaging(options.GridOptions.PageSize, options.GridOptions.PageNumber, options.TotalCount);
+        };
     }
 
     /**
@@ -202,6 +235,11 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.gridOptions().paging.pageNumber(1);
 
             self.loadMedia();
+        };
+
+        self.searchWithFilter = function() {
+            self.gridOptions().closeFilter();
+            self.searchMedia();
         };
 
         self.onOpenPage = function () {
@@ -367,6 +405,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.isProcessing = ko.observable(item.IsProcessing || false);
             self.isFailed = ko.observable(item.IsFailed || false);
             self.savePressed = false;
+            self.isArchived = ko.observable(item.IsArchived);
 
             self.isActive = ko.observable(item.IsActive || false);
             self.isSelected = ko.observable(false);
@@ -439,6 +478,24 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
                 return $.trim(classes);
             });
+            
+            self.archiveMedia = function (folderViewModel, data, event) {
+                bcms.stopEventPropagation(event);
+
+                var url = $.format(links.archiveMediaUrl, this.id(), this.version()),
+                    message = $.format(self.getArchiveMediaConfirmationMessage(), this.name());
+
+                archiveUnarchiveMediaItem(true, url, message, folderViewModel, this);
+            };
+
+            self.unarchiveMedia = function (folderViewModel, data, event) {
+                bcms.stopEventPropagation(event);
+
+                var url = $.format(links.unarchiveMediaUrl, this.id(), this.version()),
+                    message = $.format(self.getUnarchiveMediaConfirmationMessage(), this.name());
+
+                archiveUnarchiveMediaItem(false, url, message, folderViewModel, this);
+            };
         }
 
         MediaItemBaseViewModel.prototype.isFolder = function () {
@@ -451,6 +508,14 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
         MediaItemBaseViewModel.prototype.deleteMedia = function (folderViewModel) {
             throw new Error("Delete method is not implemented.");
+        };
+
+        MediaItemBaseViewModel.prototype.getArchiveMediaConfirmationMessage = function () {
+            return globalization.archiveMediaConfirmMessage;
+        };
+
+        MediaItemBaseViewModel.prototype.getUnarchiveMediaConfirmationMessage = function () {
+            return globalization.unarchiveMediaConfirmMessage;
         };
 
         MediaItemBaseViewModel.prototype.openMedia = function (folderViewModel, data, event) {
@@ -561,6 +626,14 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
             deleteMediaItem(url, message, folderViewModel, this);
         };
+        
+        MediaImageViewModel.prototype.getArchiveMediaConfirmationMessage = function () {
+            return globalization.archiveImageConfirmMessage;
+        };
+
+        MediaImageViewModel.prototype.getUnarchiveMediaConfirmationMessage = function () {
+            return globalization.unarchiveImageConfirmMessage;
+        };
 
         MediaImageViewModel.prototype.editMedia = function (folderViewModel, data, event) {
             bcms.stopEventPropagation(event);
@@ -636,6 +709,14 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             deleteMediaItem(url, message, folderViewModel, this);
         };
 
+        MediaVideoViewModel.prototype.getArchiveMediaConfirmationMessage = function () {
+            return globalization.archiveVideoConfirmMessage;
+        };
+
+        MediaVideoViewModel.prototype.getUnarchiveMediaConfirmationMessage = function () {
+            return globalization.unarchiveVideoConfirmMessage;
+        };
+
         return MediaVideoViewModel;
     })(MediaItemBaseViewModel);
 
@@ -661,6 +742,14 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         MediaFileViewModel.prototype.insertMedia = function (folderViewModel, data, event) {
             bcms.stopEventPropagation(event);
             insertFile(this);
+        };
+
+        MediaFileViewModel.prototype.getArchiveMediaConfirmationMessage = function () {
+            return globalization.archiveFileConfirmMessage;
+        };
+
+        MediaFileViewModel.prototype.getUnarchiveMediaConfirmationMessage = function () {
+            return globalization.unarchiveFileConfirmMessage;
         };
 
         return MediaFileViewModel;
@@ -1127,6 +1216,48 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     };
 
     /**
+    * Open archive/unarchive confirmation and archive/unarchive media item.
+    */
+    function archiveUnarchiveMediaItem(isArchiving, url, message, folderViewModel, item) {
+        if (item.isDeleting()) {
+            return;
+        }
+
+        var onArchivingCompleted = function (json) {
+                messages.refreshBox(folderViewModel.container, json);
+                if (json.Success) {
+                    item.isArchived(isArchiving);
+                    if (json.Data && json.Data.Version) {
+                        item.version(json.Data.Version);
+                    }
+                    if (isArchiving && !folderViewModel.gridOptions().includeArchived()) {
+                        folderViewModel.medias.remove(item);
+                    }
+                }
+
+                confirmDialog.close();
+            },
+            confirmDialog = modal.confirm({
+                content: message,
+                onAccept: function () {
+                    $.ajax({
+                        type: 'POST',
+                        url: url,
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+                        cache: false
+                    })
+                    .done(function (json) {
+                        onArchivingCompleted(json);
+                    })
+                    .fail(function (response) {
+                        onArchivingCompleted(bcms.parseFailedResponse(response));
+                    });
+                }
+            });
+    };
+
+    /**
     * Creates params for getting folder with filter/search/sort options
     */
     function createFolderParams(folderId, folderViewModel) {
@@ -1146,6 +1277,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 : sortDirections.ascending;
             params.PageSize = folderViewModel.gridOptions().paging.pageSize;
             params.PageNumber = folderViewModel.gridOptions().paging.pageNumber();
+            params.IncludeArchivedItems = folderViewModel.gridOptions().includeArchived();
         }
 
         return params;
@@ -1206,7 +1338,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 }
 
                 // Map grid options
-                folderViewModel.gridOptions(new MediaItemsOptionsViewModel(json.Data, folderViewModel.onOpenPage));
+                if (!folderViewModel.gridOptions()) {
+                    folderViewModel.gridOptions(new MediaItemsOptionsViewModel(folderViewModel.onOpenPage));
+                }
+                folderViewModel.gridOptions().fromJson(json.Data);
 
                 // Replace unobtrusive validator
                 bcms.updateFormValidator(folderViewModel.container.find(selectors.firstForm));

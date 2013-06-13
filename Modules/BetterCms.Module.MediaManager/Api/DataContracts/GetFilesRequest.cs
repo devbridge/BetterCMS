@@ -11,11 +11,16 @@ namespace BetterCms.Module.MediaManager.Api.DataContracts
         public GetFilesRequest(Expression<Func<MediaFile, bool>> filter = null,
             Expression<Func<MediaFile, dynamic>> order = null, 
             bool orderDescending = false, 
-            int? itemsCount = null, 
-            int startItemNumber = 1)
+            int? itemsCount = null,
+            int startItemNumber = 1,
+            bool includeArchived = false)
             : base(filter, order, orderDescending, itemsCount, startItemNumber)
         {
             SetDefaultOrder(m => m.Title);
+
+            IncludeArchivedItems = includeArchived;
         }
+
+        public bool IncludeArchivedItems { get; set; }
     }
 }

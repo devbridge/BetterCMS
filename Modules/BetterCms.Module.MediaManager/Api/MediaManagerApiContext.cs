@@ -66,6 +66,11 @@ namespace BetterCms.Api
                     .Where(f => f.Type == request.MediaType)
                     .ApplyFilters(request);
 
+                if (!request.IncludeArchivedItems)
+                {
+                    query = query.Where(f => !f.IsArchived);
+                }
+
                 if (request.FolderId.HasValue)
                 {
                     query = query.Where(f => f.Folder != null && f.Folder.Id == request.FolderId.Value);
@@ -106,6 +111,11 @@ namespace BetterCms.Api
                     .AsQueryable<MediaImage>()
                     .ApplyFilters(request);
 
+                if (request == null || !request.IncludeArchivedItems)
+                {
+                    query = query.Where(m => !m.IsArchived);
+                }
+
                 var totalCount = query.ToRowCountFutureValue(request);
                 query = query
                     .AddOrderAndPaging(request)
@@ -137,6 +147,11 @@ namespace BetterCms.Api
                     .AsQueryable<MediaFile>()
                     .Where(m => m.Type == MediaType.File)
                     .ApplyFilters(request);
+
+                if (request == null || !request.IncludeArchivedItems)
+                {
+                    query = query.Where(m => !m.IsArchived);
+                }
 
                 var totalCount = query.ToRowCountFutureValue(request);
                 query = query
@@ -170,6 +185,10 @@ namespace BetterCms.Api
                 if (request.MediaType.HasValue)
                 {
                     query = query.Where(f => f.Type == request.MediaType.Value);
+                }
+                if (!request.IncludeArchivedItems)
+                {
+                    query = query.Where(f => !f.IsArchived);
                 }
                 query = query.ApplyFilters(request);
 

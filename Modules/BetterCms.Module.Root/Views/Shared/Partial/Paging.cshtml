@@ -5,9 +5,9 @@
     <div class="bcms-pager clearfix">
         <span class="bcms-pager-text">@RootGlobalization.Paging_Page_Title: </span> 
             
-        <!-- ko if: pagingLowerBound > 1 -->
+        <!-- ko if: pagingLowerBound() > 1 -->
             <a class="bcms-pager-no" data-page-number="1" href="#" data-bind="click: openPage.bind($data, 1)">1 </a>
-            <!-- ko if: pagingLowerBound != 2 -->
+            <!-- ko if: pagingLowerBound() != 2 -->
                 <span class="bcms-pager-text">...</span>
             <!-- /ko-->
         <!-- /ko-->
@@ -19,12 +19,12 @@
             <!-- ko ifnot: $data == $parent.pageNumber() -->
                 <a class="bcms-pager-no" data-bind="css: {'bcms-active-pager': $data == $parent.pageNumber()}, attr: {'data-page-number': $data}, html: $data, click: $parent.openPage.bind($parent, $data)" href="#"></a>
             <!-- /ko -->
-            <!-- ko if: $data != $parent.pageNumber() && $data == $parent.pagingUpperBound && $data <= $parent.totalPages() - 1  -->
+            <!-- ko if: $data != $parent.pageNumber() && $data == $parent.pagingUpperBound() && $data <= $parent.totalPages() - 1  -->
                 <span class="bcms-pager-text">...</span>
             <!-- /ko -->
         <!-- /ko -->
             
-        <!-- ko if: pagingUpperBound < totalPages() -->
+        <!-- ko if: pagingUpperBound() < totalPages() -->
             <a class="bcms-pager-no" data-bind="attr: {'data-page-number': totalPages()}, html: totalPages(), click: openPage.bind($data, totalPages())" href="#"></a>
         <!-- /ko -->
             

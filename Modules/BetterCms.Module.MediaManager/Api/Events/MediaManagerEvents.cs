@@ -40,6 +40,16 @@ namespace BetterCms.Module.MediaManager.Api.Events
         public event DefaultEventHandler<SingleItemEventArgs<MediaFolder>> MediaFolderDeleted;
         
         /// <summary>
+        /// Occurs when a media is archived.
+        /// </summary>
+        public event DefaultEventHandler<SingleItemEventArgs<Media>> MediaArchived;
+        
+        /// <summary>
+        /// Occurs when a media is unarchived.
+        /// </summary>
+        public event DefaultEventHandler<SingleItemEventArgs<Media>> MediaUnarchived;
+        
+        /// <summary>
         /// Called when a blog is created.
         /// </summary>
         public void OnMediaFileUploaded(MediaFile mediaFile)
@@ -87,6 +97,22 @@ namespace BetterCms.Module.MediaManager.Api.Events
             if (MediaFolderDeleted != null)
             {
                 MediaFolderDeleted(new SingleItemEventArgs<MediaFolder>(mediaFolder));
+            }
+        }
+        
+        public void OnMediaArchived(Media media)
+        {
+            if (MediaArchived != null)
+            {
+                MediaArchived(new SingleItemEventArgs<Media>(media));
+            }
+        }
+        
+        public void OnMediaUnarchived(Media media)
+        {
+            if (MediaUnarchived != null)
+            {
+                MediaUnarchived(new SingleItemEventArgs<Media>(media));
             }
         }
     }
