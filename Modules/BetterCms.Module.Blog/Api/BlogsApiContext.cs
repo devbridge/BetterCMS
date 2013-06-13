@@ -229,7 +229,7 @@ namespace BetterCms.Api
             return authorService.DeleteAuthor(request);
         }
 
-        public IQueryable<BlogPostModel> GetBlogPostsAsQueryable(BlogPostFilter filter = null)
+        public IQueryable<BlogPostModel> GetBlogPostsAsQueryable(GetBlogPostRequest filter = null)
         {
             var models = blogService.GetBlogPostsAsQueryable(filter);
 

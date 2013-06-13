@@ -51,7 +51,7 @@ namespace BetterCms.Module.Blog.Services
             return url;
         }
 
-        public IQueryable<BlogPostModel> GetBlogPostsAsQueryable(BlogPostFilter filter = null)
+        public IQueryable<BlogPostModel> GetBlogPostsAsQueryable(GetBlogPostRequest filter = null)
         {
             var models = repository.AsQueryable<Models.BlogPost>();
 

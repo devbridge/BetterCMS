@@ -124,7 +124,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Accessors\BlogPostContentAccessor.cs" />
-    <Compile Include="Api\DataFilters\BlogPostFilter.cs" />
+    <Compile Include="Api\DataFilters\GetBlogPostRequest.cs" />
     <Compile Include="Api\DataContracts\GetAuthorsRequest.cs" />
     <Compile Include="Api\DataContracts\GetBlogPostsRequest.cs" />
     <Compile Include="Api\DataModels\BlogPostModel.cs" />

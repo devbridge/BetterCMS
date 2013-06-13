@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Http;
 using System.Web.Http.OData.Query;
 
 using BetterCms.Api;
 using BetterCms.Core;
+using BetterCms.Core.Api.DataContracts;
 using BetterCms.Module.Blog.Api.DataModels;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.WebApi.Extensions;
@@ -26,13 +26,12 @@ namespace BetterCms.Module.WebApi.Controllers
         /// <returns>
         /// List of blog post service models.
         /// </returns>
-        public IList<AuthorModel> Get(ODataQueryOptions<AuthorModel> options)
+        public DataListResponse<AuthorModel> Get(ODataQueryOptions<AuthorModel> options)
         {
             using (var api = CmsContext.CreateApiContextOf<BlogsApiContext>())
             {
-                var models = api.GetAuthorsAsQueryable();
-                var results = options.ApplyToModels(models);
-                return results.ToList();
+                var results = api.GetAuthorsAsQueryable();
+                return results.ToDataListResponse(options);
             }
         }
 
