@@ -194,6 +194,7 @@
     <Compile Include="Services\IMediaImageService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registration\MediaManagerJsModuleIncludeDescriptor.cs" />
+    <Compile Include="Api\DataModels\MediaImage.cs" />
     <Compile Include="ViewModels\ImageSelectorViewModel.cs" />
     <Compile Include="ViewModels\Images\ImageViewModel.cs" />
     <Compile Include="ViewModels\MediaManager\MediaAudioViewModel.cs" />

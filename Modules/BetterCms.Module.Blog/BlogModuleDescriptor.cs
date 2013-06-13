@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web.Mvc;
+﻿using System.Collections.Generic;
 
 using Autofac;
 
@@ -8,6 +6,7 @@ using BetterCms.Api;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Blog.Accessors;
+using BetterCms.Module.Blog.Api.DataContracts;
 using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.Blog.Helpers.Extensions;
 using BetterCms.Module.Blog.Models;

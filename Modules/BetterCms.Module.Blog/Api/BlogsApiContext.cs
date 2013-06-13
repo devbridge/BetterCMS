@@ -12,8 +12,10 @@ using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Api;
 using BetterCms.Module.Blog.Api.DataContracts;
+using BetterCms.Module.Blog.Api.DataModels;
 using BetterCms.Module.Blog.Api.Events;
 using BetterCms.Module.Blog.Models;
+using BetterCms.Module.Blog.Services;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Models;
@@ -25,6 +27,8 @@ namespace BetterCms.Api
     public class BlogsApiContext : DataApiContext
     {
         private readonly ITagService tagService;
+
+        private readonly IAuthorService authorService;
 
         private static readonly BlogsApiEvents events;
 
@@ -42,10 +46,11 @@ namespace BetterCms.Api
         /// <param name="lifetimeScope">The lifetime scope.</param>
         /// <param name="tagService">The tag service.</param>
         /// <param name="repository">The repository.</param>
-        public BlogsApiContext(ILifetimeScope lifetimeScope, ITagService tagService, IRepository repository = null)
+        public BlogsApiContext(ILifetimeScope lifetimeScope, ITagService tagService, IAuthorService authorService, IRepository repository = null)
             : base(lifetimeScope, repository)
         {
             this.tagService = tagService;
+            this.authorService = authorService;
         }
 
         /// <summary>
@@ -113,6 +118,7 @@ namespace BetterCms.Api
         /// The list of tag entities
         /// </returns>
         /// <exception cref="CmsApiException"></exception>
+        [Obsolete("This method is obsolete; use method insteadGetAuthorsAsQueryable() instead.")]
         public DataListResponse<Author> GetAuthors(GetAuthorsRequest request = null)
         {
             try
@@ -193,6 +199,28 @@ namespace BetterCms.Api
                 Logger.Error(message, inner);
                 throw new CmsApiException(message, inner);
             }
+        }
+
+
+
+        public IQueryable<AuthorModel> GetAuthorsAsQueryable()
+        {
+            return authorService.GetAuthorsAsQueryable();
+        }
+
+        public AuthorCreateResponce CreateAuthor(AuthorCreateRequest request)
+        {
+            return authorService.CreateAuthor(request);
+        }
+
+        public AuthorUpdateResponce UpdateAuthor(AuthorUpdateRequest request)
+        {
+            return authorService.UpdateAuthor(request);
+        }
+
+        public AuthorDeleteResponce DeleteAuthor(AuthorDeleteRequest request)
+        {
+            return authorService.DeleteAuthor(request);
         }
     }
 }

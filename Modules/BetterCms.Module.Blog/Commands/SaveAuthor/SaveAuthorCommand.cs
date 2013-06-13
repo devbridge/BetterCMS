@@ -1,8 +1,9 @@
 ﻿using BetterCms.Api;
+using BetterCms.Core;
 using BetterCms.Core.Mvc.Commands;
-using BetterCms.Module.Blog.Models;
+using BetterCms.Module.Blog.Api.DataContracts;
+using BetterCms.Module.Blog.Api.DataModels;
 using BetterCms.Module.Blog.ViewModels.Author;
-using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Mvc;
 
 namespace BetterCms.Module.Blog.Commands.SaveAuthor
@@ -11,48 +12,38 @@ namespace BetterCms.Module.Blog.Commands.SaveAuthor
     {
         public AuthorViewModel Execute(AuthorViewModel request)
         {
-            var isNew = request.Id.HasDefaultValue();
-            Author author;
-
-            if (isNew)
+            using (var api = CmsContext.CreateApiContextOf<BlogsApiContext>())
             {
-                author = new Author();
-            }
-            else
-            {
-                author = Repository.First<Author>(request.Id);
-            }
+                AuthorModel author;
 
-            author.Name = request.Name;
-            author.Version = request.Version;
+                if (request.Id.HasDefaultValue())
+                {
+                    author = api.CreateAuthor(
+                        new AuthorCreateRequest
+                        {
+                            Name = request.Name,
+                            ImageId = request.Image != null ? request.Image.ImageId : null
+                        }).Author;
+                }
+                else
+                {
+                    author = api.UpdateAuthor(
+                        new AuthorUpdateRequest
+                        {
+                            AuthorId = request.Id,
+                            Version = request.Version,
+                            Name = request.Name,
+                            ImageId = request.Image != null ? request.Image.ImageId : null
+                        }).Author;
+                }
 
-            if (request.Image != null && request.Image.ImageId.HasValue)
-            {
-                author.Image = Repository.AsProxy<MediaImage>(request.Image.ImageId.Value);
+                return new AuthorViewModel
+                {
+                    Id = author.Id,
+                    Version = author.Version,
+                    Name = author.Name
+                };
             }
-            else
-            {
-                author.Image = null;
-            }
-
-            Repository.Save(author);
-            UnitOfWork.Commit();
-
-            if (isNew)
-            {
-                BlogsApiContext.Events.OnAuthorCreated(author);
-            }
-            else
-            {
-                BlogsApiContext.Events.OnAuthorUpdated(author);
-            }
-
-            return new AuthorViewModel
-                       {
-                           Id = author.Id, 
-                           Version = author.Version,
-                           Name = author.Name
-                       };
         }
     }
 }
