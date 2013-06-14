@@ -10,6 +10,7 @@ using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Models;
 using BetterCms.Core.Services;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Mvc.Helpers;
 
 using NHibernate.Linq;
 
@@ -257,7 +258,7 @@ namespace BetterCms.Module.Root.Services
 
             if (pageContent != null)
             {
-                Models.Content content = FindEditableContentVersion(pageContent.Content);
+                Models.Content content = pageContent.Content.FindEditableContentVersion();
 
                 if (content == null)
                 {
@@ -280,7 +281,7 @@ namespace BetterCms.Module.Root.Services
 
             if (content != null)
             {
-                return FindEditableContentVersion(content);
+                return content.FindEditableContentVersion();
             }
 
             return null;
@@ -306,27 +307,6 @@ namespace BetterCms.Module.Root.Services
             }
 
             return order;
-        }
-
-        private Models.Content FindEditableContentVersion(Models.Content content)
-        {
-            Models.Content contentForEdit = null;
-
-            if (content.Status == ContentStatus.Draft)
-            {
-                contentForEdit = content;
-            }
-            else if (content.History != null)
-            {
-                contentForEdit = content.History.FirstOrDefault(f => f.Status == ContentStatus.Draft);
-            }
-
-            if (contentForEdit == null && content.Status == ContentStatus.Published)
-            {
-                contentForEdit = content;
-            }
-
-            return contentForEdit;
         }
 
         private void RemoveContentOptionsIfExists(Models.Content content)

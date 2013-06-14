@@ -174,8 +174,11 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                 blogPost.Author = request.AuthorId.HasValue ? Repository.AsProxy<Author>(request.AuthorId.Value) : null;
                 blogPost.Category = request.CategoryId.HasValue ? Repository.AsProxy<Category>(request.CategoryId.Value) : null;
                 blogPost.Image = (request.Image != null && request.Image.ImageId.HasValue) ? Repository.AsProxy<MediaImage>(request.Image.ImageId.Value) : null;
-                blogPost.ActivationDate = request.LiveFromDate;
-                blogPost.ExpirationDate = TimeHelper.FormatEndDate(request.LiveToDate);
+                if (isNew || request.DesirableStatus == ContentStatus.Published)
+                {
+                    blogPost.ActivationDate = request.LiveFromDate;
+                    blogPost.ExpirationDate = TimeHelper.FormatEndDate(request.LiveToDate);
+                }
             }
 
             if (isNew)

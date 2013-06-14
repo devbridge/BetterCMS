@@ -178,8 +178,11 @@ namespace BetterCms.Api
                 blog.Version = request.Version;
                 blog.Title = request.Title;
                 blog.Description = request.IntroText;
-                blog.ActivationDate = request.LiveFromDate;
-                blog.ExpirationDate = request.LiveToDate;
+
+                // TODO: update only is content is published.
+                // blog.ActivationDate = request.LiveFromDate;
+                // blog.ExpirationDate = request.LiveToDate;
+
                 blog.Image = request.ImageId.HasValue ? Repository.AsProxy<MediaImage>(request.ImageId.Value) : null;
                 blog.Author = request.AuthorId.HasValue ? Repository.AsProxy<Author>(request.AuthorId.Value) : null;
                 blog.Category = request.CategoryId.HasValue ? Repository.AsProxy<Category>(request.CategoryId.Value) : null;

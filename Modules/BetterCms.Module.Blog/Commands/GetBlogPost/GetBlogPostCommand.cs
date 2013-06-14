@@ -79,8 +79,6 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
                                 Version = bp.Version,
                                 Title = bp.Title,
                                 BlogUrl = bp.PageUrl,
-                                LiveFromDate = bp.ActivationDate,
-                                LiveToDate = bp.ExpirationDate,
                                 IntroText = bp.Description,
                                 AuthorId = bp.Author.Id,
                                 CategoryId = bp.Category.Id,
@@ -134,6 +132,8 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
                         model.Content = content.Html;
                         model.ContentId = content.Id;
                         model.ContentVersion = content.Version;
+                        model.LiveFromDate = content.ActivationDate;
+                        model.LiveToDate = content.ExpirationDate;
                         model.EditInSourceMode = content.EditInSourceMode;
                         model.CurrentStatus = content.Status;
                         model.HasPublishedContent = content.Original != null;

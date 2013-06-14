@@ -33,7 +33,11 @@ namespace BetterCms.Module.Blog.Helpers.Extensions
                         c => c.Region.RegionIdentifier == BlogModuleConstants.BlogPostMainContentRegionIdentifier && c.Content as BlogPostContent != null);
                 if (pageContent != null)
                 {
-                    var content = pageContent.Content as HtmlContent;
+                    var content =
+                        (viewModel.CanManageContent
+                             ? pageContent.Content.FindEditableContentVersion()
+                             : pageContent.Content.Status == ContentStatus.Published ? pageContent.Content : null)
+                        as HtmlContent;
                     if (content != null)
                     {
                         viewModel.Bag.BlogPostData.Status = content.Status;
