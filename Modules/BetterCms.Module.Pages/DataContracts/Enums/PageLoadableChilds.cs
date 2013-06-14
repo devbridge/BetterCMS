@@ -39,8 +39,18 @@ namespace BetterCms.Module.Pages.DataContracts.Enums
         Image = 1 << 4,
 
         /// <summary>
+        /// The secondary image.
+        /// </summary>
+        SecondaryImage = 1 << 5,
+
+        /// <summary>
+        /// The featured image.
+        /// </summary>
+        FeaturedImage = 1 << 6,
+
+        /// <summary>
         /// All specified child referenced and collections.
         /// </summary>
-        All = LayoutRegion | Tags | Category | Image
+        All = LayoutRegion | Tags | Category | Image | SecondaryImage | FeaturedImage
     }
 }

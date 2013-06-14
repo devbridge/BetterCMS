@@ -394,7 +394,7 @@
     <value>Add tags to this page to identify it with related pages.</value>
   </data>
   <data name="EditPageProperties_BasicPropertiesTab_PageImage_Title" xml:space="preserve">
-    <value>Featured Image</value>
+    <value>Main Image</value>
   </data>
   <data name="EditPageProperties_BasicPropertiesTab_PageImage_Tooltip_Description" xml:space="preserve">
     <value>Image will be displayed as a thumbnail with the page.</value>
@@ -1109,5 +1109,23 @@
   </data>
   <data name="SiteSettings_Pages_Filter" xml:space="preserve">
     <value>Filter</value>
+  </data>
+  <data name="EditPageProperties_BasicPropertiesTab_PageFeaturedImage_Description" xml:space="preserve">
+    <value>Image will be displayed as a thumbnail with the page.</value>
+  </data>
+  <data name="EditPageProperties_BasicPropertiesTab_PageFeaturedImage_Title" xml:space="preserve">
+    <value>Featured Image</value>
+  </data>
+  <data name="EditPageProperties_BasicPropertiesTab_PageFeaturedImage_Tooltip_Description" xml:space="preserve">
+    <value>Image will be displayed as a thumbnail with the page.</value>
+  </data>
+  <data name="EditPageProperties_BasicPropertiesTab_PageSecondaryImage_Description" xml:space="preserve">
+    <value>Image will be displayed as a thumbnail with the page.</value>
+  </data>
+  <data name="EditPageProperties_BasicPropertiesTab_PageSecondaryImage_Title" xml:space="preserve">
+    <value>Secondary Image</value>
+  </data>
+  <data name="EditPageProperties_BasicPropertiesTab_PageSecondaryImage_Tooltip_Description" xml:space="preserve">
+    <value>Image will be displayed as a thumbnail with the page.</value>
   </data>
 </root>

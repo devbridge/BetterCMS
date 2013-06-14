@@ -71,6 +71,24 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                                                 ImageUrl = page.Image.PublicUrl,
                                                 ThumbnailUrl = page.Image.PublicThumbnailUrl,
                                                 ImageTooltip = page.Image.Caption
+                                            },
+                                SecondaryImage = page.SecondaryImage == null ? null :
+                                    new ImageSelectorViewModel
+                                            {
+                                                ImageId = page.SecondaryImage.Id,
+                                                ImageVersion = page.SecondaryImage.Version,
+                                                ImageUrl = page.SecondaryImage.PublicUrl,
+                                                ThumbnailUrl = page.SecondaryImage.PublicThumbnailUrl,
+                                                ImageTooltip = page.SecondaryImage.Caption
+                                            },
+                                FeaturedImage = page.FeaturedImage == null ? null :
+                                    new ImageSelectorViewModel
+                                            {
+                                                ImageId = page.FeaturedImage.Id,
+                                                ImageVersion = page.FeaturedImage.Version,
+                                                ImageUrl = page.FeaturedImage.PublicUrl,
+                                                ThumbnailUrl = page.FeaturedImage.PublicThumbnailUrl,
+                                                ImageTooltip = page.FeaturedImage.Caption
                                             }
                             })
                 .FirstOne();

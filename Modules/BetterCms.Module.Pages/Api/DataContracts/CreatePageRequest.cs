@@ -26,6 +26,10 @@ namespace BetterCms.Module.Pages.Api.DataContracts
         public Guid LayoutId { get; set; }
 
         public Guid? ImageId { get; set; }
+
+        public Guid? SecondaryImageId { get; set; }
+
+        public Guid? FeaturedImageId { get; set; }
         
         public Guid? CategoryId { get; set; }
 

@@ -110,14 +110,9 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             page.UseNoIndex = request.UseNoIndex;
             page.Version = request.Version;
 
-            if (request.Image != null && request.Image.ImageId.HasValue)
-            {
-                page.Image = Repository.AsProxy<MediaImage>(request.Image.ImageId.Value);
-            }
-            else
-            {
-                page.Image = null;
-            }
+            page.Image = request.Image != null && request.Image.ImageId.HasValue ? Repository.AsProxy<MediaImage>(request.Image.ImageId.Value) : null;
+            page.SecondaryImage = request.SecondaryImage != null && request.SecondaryImage.ImageId.HasValue ? Repository.AsProxy<MediaImage>(request.SecondaryImage.ImageId.Value) : null;
+            page.FeaturedImage = request.FeaturedImage != null && request.FeaturedImage.ImageId.HasValue ? Repository.AsProxy<MediaImage>(request.FeaturedImage.ImageId.Value) : null;
 
             Repository.Save(page);
 
