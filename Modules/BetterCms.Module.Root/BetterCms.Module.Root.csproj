@@ -184,6 +184,7 @@
     <Compile Include="Mvc\Grids\TableRenderers\EditableHtmlTableGridRenderer.cs" />
     <Compile Include="Mvc\Grids\TableRenderers\HtmlTableGridSingleRowRenderer.cs" />
     <Compile Include="Mvc\Grids\GridOptions\SearchableGridOptions.cs" />
+    <Compile Include="Mvc\Helpers\ContentExtensions.cs" />
     <Compile Include="Mvc\Helpers\DynamicDictionary.cs" />
     <Compile Include="Mvc\Helpers\LayoutHelper.cs" />
     <Compile Include="Mvc\Helpers\LayoutRegionWrapper.cs" />
