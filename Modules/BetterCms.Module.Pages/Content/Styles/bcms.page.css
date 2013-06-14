@@ -211,6 +211,14 @@ a.bcms-slider-next {
     overflow: hidden;
 }
 
+.bcms-page-images-holder {
+    width: 875px;
+}
+
+.bcms-page-images-holder .bcms-input-list-holder {
+    display: inline-block;
+}
+
 .bcms-tags-box-holder {
     padding: 10px 0 0 30px;
     margin: 0 0 20px -30px;

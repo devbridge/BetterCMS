@@ -40,7 +40,8 @@
                 </div>
 
                 @Html.Partial("Partial/PagePropertiesEditPermalink")
-
+                
+                <div class="bcms-page-images-holder">
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageImage_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageImage_Title:</div>
@@ -87,6 +88,7 @@
                         <div class="bcms-upload-info-text">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageSecondaryImage_Description</div>
                         <div class="bcms-btn-small" data-bind="click: secondaryImage().select.bind(secondaryImage())">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_SelectImage_ButtonTitle</div>
                     </div>
+                </div>
                 </div>
 
                 <div class="bcms-input-list-holder">

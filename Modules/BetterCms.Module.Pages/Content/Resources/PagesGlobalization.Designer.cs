@@ -1285,7 +1285,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Image will be displayed as a thumbnail with the page..
+        ///   Looks up a localized string similar to Image will be displayed as a featured with the page..
         /// </summary>
         public static string EditPageProperties_BasicPropertiesTab_PageFeaturedImage_Description {
             get {
@@ -1303,7 +1303,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Image will be displayed as a thumbnail with the page..
+        ///   Looks up a localized string similar to Image will be displayed as a featured with the page..
         /// </summary>
         public static string EditPageProperties_BasicPropertiesTab_PageFeaturedImage_Tooltip_Description {
             get {
@@ -1357,7 +1357,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Image will be displayed as a thumbnail with the page..
+        ///   Looks up a localized string similar to Image will be displayed as a secondary image with the page..
         /// </summary>
         public static string EditPageProperties_BasicPropertiesTab_PageSecondaryImage_Description {
             get {
@@ -1375,7 +1375,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Image will be displayed as a thumbnail with the page..
+        ///   Looks up a localized string similar to Image will be displayed as a secondary image with the page..
         /// </summary>
         public static string EditPageProperties_BasicPropertiesTab_PageSecondaryImage_Tooltip_Description {
             get {
