@@ -15,7 +15,7 @@ using NHibernate.Transform;
 
 namespace BetterCms.Module.Blog.Services
 {
-    internal class DefaultAuthorService : IAuthorService
+    public class DefaultAuthorService : IAuthorService
     {
         /// <summary>
         /// The unit of work
@@ -71,7 +71,7 @@ namespace BetterCms.Module.Blog.Services
                                       Image =
                                           author.Image == null
                                               ? null
-                                              : new MediaImage
+                                              : new MediaImageModel
                                                   {
                                                       Id = author.Image.Id,
                                                       Version = author.Image.Version,

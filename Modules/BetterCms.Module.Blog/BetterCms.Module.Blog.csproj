@@ -124,9 +124,8 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Accessors\BlogPostContentAccessor.cs" />
-    <Compile Include="Api\DataFilters\GetBlogPostRequest.cs" />
-    <Compile Include="Api\DataContracts\GetAuthorsRequest.cs" />
     <Compile Include="Api\DataContracts\GetBlogPostsRequest.cs" />
+    <Compile Include="Api\DataContracts\GetAuthorsRequest.cs" />
     <Compile Include="Api\DataModels\BlogPostModel.cs" />
     <Compile Include="Api\DataContracts\UpdateBlogPostRequest.cs" />
     <Compile Include="Api\Events\BlogEvents.cs" />
@@ -261,6 +260,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Blog\Partial\BlogsFilterTemplate.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Api\DataFilters\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -94,6 +94,7 @@
     </Reference>
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -136,6 +137,7 @@
     <Compile Include="Api\DataContracts\GetNodesRequest.cs" />
     <Compile Include="Api\DataContracts\GetPageContentsRequest.cs" />
     <Compile Include="Api\DataContracts\GetRegionContentsRequest.cs" />
+    <Compile Include="Api\DataModels\CategoryModel.cs" />
     <Compile Include="Command\Tag\SearchTags\SearchTagsCommand.cs" />
     <Compile Include="Helpers\Extensions\RenderPageViewModelExtensions.cs" />
     <Compile Include="Models\Migrations\Migration201306140841.cs" />

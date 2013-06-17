@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace BetterCms.Module.MediaManager.Api.DataModels
 {
     [DataContract]
-    public class MediaImage
+    public class MediaImageModel
     {
         [DataMember]
         public Guid Id { get; set; }

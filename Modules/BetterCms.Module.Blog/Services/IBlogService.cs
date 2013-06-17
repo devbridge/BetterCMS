@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-using BetterCms.Module.Blog.Api.DataFilters;
+using BetterCms.Module.Blog.Api.DataContracts;
 using BetterCms.Module.Blog.Api.DataModels;
 
 namespace BetterCms.Module.Blog.Services
@@ -9,6 +9,6 @@ namespace BetterCms.Module.Blog.Services
     {
         string CreateBlogPermalink(string title);
 
-        IQueryable<BlogPostModel> GetBlogPostsAsQueryable(GetBlogPostRequest filter);
+        IQueryable<BlogPostModel> GetBlogPostsAsQueryable(GetBlogPostsRequest filter);
     }
 }

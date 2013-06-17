@@ -33,7 +33,6 @@ namespace BetterCms.Core.Api.Extensions
         /// <param name="request">The request.</param>
         /// <returns></returns>
         public static IFutureValue<int> ToRowCountFutureValue<TEntity>(this IQueryable<TEntity> query, GetDataRequest<TEntity> request)
-            where TEntity : Entity
         {
             var hasPaging = (request == null || request.ItemsCount > 0);
             if (hasPaging)
@@ -53,7 +52,6 @@ namespace BetterCms.Core.Api.Extensions
         /// Query with filters and sorting applied.
         /// </returns>
         public static IQueryable<TEntity> ApplyFilters<TEntity>(this IQueryable<TEntity> query, GetFilteredDataRequest<TEntity> request) 
-            where TEntity : Entity
         {
             if (request != null)
             {
@@ -111,11 +109,13 @@ namespace BetterCms.Core.Api.Extensions
         /// <param name="request">The request.</param>
         /// <returns> Ordered query </returns>
         public static IQueryable<TEntity> AddOrder<TEntity>(this IQueryable<TEntity> query, GetFilteredDataRequest<TEntity> request)
-            where TEntity : Entity
         {
             if (request != null)
             {
-                query = query.AddOrder(request.Order, request.OrderDescending);
+                foreach (var order in request.OrderBy)
+                {
+                    query = query.AddOrder(order.Order, order.OrderByDescending);
+                }
             }
 
             return query;
@@ -129,7 +129,6 @@ namespace BetterCms.Core.Api.Extensions
         /// <param name="request">The request.</param>
         /// <returns> Ordered and paged query </returns>
         public static IQueryable<TEntity> AddOrderAndPaging<TEntity>(this IQueryable<TEntity> query, GetDataRequest<TEntity> request)
-            where TEntity : Entity
         {
             if (request != null)
             {
@@ -143,16 +142,33 @@ namespace BetterCms.Core.Api.Extensions
         /// <summary>
         /// To the data list response.
         /// </summary>
-        /// <typeparam name="TEntity">The type of the entity.</typeparam>
+        /// <typeparam name="TModel">The type of the model.</typeparam>
         /// <param name="query">The query.</param>
         /// <param name="futureValue">The future value.</param>
         /// <returns></returns>
-        public static DataListResponse<TEntity> ToDataListResponse<TEntity>(this IQueryable<TEntity> query, IFutureValue<int> futureValue = null)
+        public static DataListResponse<TModel> ToDataListResponse<TModel>(this IQueryable<TModel> query, IFutureValue<int> futureValue = null)
         {
             var items = query.ToList();
             var totalCount = futureValue != null ? futureValue.Value : items.Count;
 
-            return new DataListResponse<TEntity>(items, totalCount);
+            return new DataListResponse<TModel>(items, totalCount);
+        }
+
+        /// <summary>
+        /// Returns query results in response object with total count.
+        /// </summary>
+        /// <typeparam name="TModel">The type of the model.</typeparam>
+        /// <param name="query">The query.</param>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
+        public static DataListResponse<TModel> ToDataListResponse<TModel>(this IQueryable<TModel> query, GetDataRequest<TModel> request)
+        {
+            query = query.ApplyFilters(request);
+
+            var totalCount = query.ToRowCountFutureValue(request);
+            query = query.AddOrderAndPaging(request);
+
+            return query.ToDataListResponse(totalCount);
         }
 
         /// <summary>
@@ -165,7 +181,6 @@ namespace BetterCms.Core.Api.Extensions
         /// Query with filters and sorting applied.
         /// </returns>
         private static IQueryable<TEntity> ApplyFilters<TEntity>(this IQueryable<TEntity> query, Expression<Func<TEntity, bool>> filter)
-            where TEntity : Entity
         {
             if (filter != null)
             {

@@ -1,25 +1,15 @@
 ﻿using System;
 using System.Linq.Expressions;
 
-using BetterCms.Core.Models;
-
 namespace BetterCms.Core.Api.DataContracts
 {
-    public abstract class GetDataRequest<TEntity> : GetFilteredDataRequest<TEntity> where TEntity : Entity
+    public abstract class GetDataRequest<TModel> : GetFilteredDataRequest<TModel>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GetDataRequest{TEntity}" /> class.
-        /// </summary>
-        /// <param name="filter">The filter.</param>
-        /// <param name="order">The order.</param>
-        /// <param name="orderDescending">if set to <c>true</c> order descending.</param>
-        /// <param name="itemsCount">The items count.</param>
-        /// <param name="startItemNumber">The start item number.</param>
-        public GetDataRequest(Expression<Func<TEntity, bool>> filter = null, 
-            Expression<Func<TEntity, dynamic>> order = null,
+        public GetDataRequest(Expression<Func<TModel, bool>> filter = null,
+            Expression<Func<TModel, dynamic>> order = null,
             bool orderDescending = false,
             int? itemsCount = null,
-            int startItemNumber = 1) 
+            int startItemNumber = 1)
             : base(filter, order, orderDescending)
         {
             StartItemNumber = startItemNumber;
@@ -30,11 +20,6 @@ namespace BetterCms.Core.Api.DataContracts
 
         public int? ItemsCount { get; set; }
 
-        /// <summary>
-        /// Sets the items count.
-        /// </summary>
-        /// <param name="itemsPerPage">The items per page.</param>
-        /// <param name="pageNumber">The page number.</param>
         public void AddPaging(int itemsPerPage, int pageNumber = 1)
         {
             if (itemsPerPage <= 0)

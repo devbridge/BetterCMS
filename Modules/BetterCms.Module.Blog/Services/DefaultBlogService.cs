@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 using BetterCms.Core.DataAccess;
-using BetterCms.Module.Blog.Api.DataFilters;
+using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Module.Blog.Api.DataContracts;
 using BetterCms.Module.Blog.Api.DataModels;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Mvc.Helpers;
@@ -51,7 +53,7 @@ namespace BetterCms.Module.Blog.Services
             return url;
         }
 
-        public IQueryable<BlogPostModel> GetBlogPostsAsQueryable(GetBlogPostRequest filter = null)
+        public IQueryable<BlogPostModel> GetBlogPostsAsQueryable(GetBlogPostsRequest filter = null)
         {
             var models = repository.AsQueryable<Models.BlogPost>();
 
@@ -63,6 +65,16 @@ namespace BetterCms.Module.Blog.Services
                 }
             }
 
+            if (filter == null || !filter.IncludeUnpublished)
+            {
+                models = models.Where(b => b.Status == PageStatus.Published);
+            }
+
+            if (filter == null || !filter.IncludeNotActive)
+            {
+                models = models.Where(b => b.ActivationDate < DateTime.Now && (!b.ExpirationDate.HasValue || DateTime.Now < b.ExpirationDate.Value));
+            }
+
             return models.Select(
                 blog =>
                     new BlogPostModel
@@ -70,7 +82,20 @@ namespace BetterCms.Module.Blog.Services
                         Id = blog.Id,
                         Version = blog.Version,
                         Title = blog.Title,
-                        CreatedOn = blog.CreatedOn
+                        CreatedOn = blog.CreatedOn,
+                        Status = blog.Status,
+                        ActivationDate = blog.ActivationDate,
+                        ExpirationDate = blog.ExpirationDate,
+                        CategoryId = blog.Category.Id,
+                        CategoryName = blog.Category.Name,
+                        AuthorId = blog.Author.Id,
+                        AuthorName = blog.Author.Name,
+                        MainImageId = blog.Image.Id,
+                        MainImagePublicUrl = blog.Image.PublicUrl,
+                        FeaturedImageId = blog.FeaturedImage.Id,
+                        FeaturedImagePublicUrl = blog.FeaturedImage.PublicUrl,
+                        SecondaryImageId = blog.SecondaryImage.Id,
+                        SecondaryImagePublicUrl = blog.SecondaryImage.PublicUrl
                     });
         }
     }

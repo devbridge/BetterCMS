@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 using Autofac;
@@ -9,11 +8,9 @@ using BetterCms.Core.Api.Extensions;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataAccess.DataContext.Fetching;
-using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Api;
 
 using BetterCms.Module.Blog.Api.DataContracts;
-using BetterCms.Module.Blog.Api.DataFilters;
 using BetterCms.Module.Blog.Api.DataModels;
 using BetterCms.Module.Blog.Api.Events;
 using BetterCms.Module.Blog.Models;
@@ -82,7 +79,8 @@ namespace BetterCms.Api
         /// The list of blog entities
         /// </returns>
         /// <exception cref="CmsApiException"></exception>
-        public DataListResponse<BlogPost> GetBlogPosts(GetBlogPostsRequest request)
+        /*[Obsolete]
+        public DataListResponse<BlogPostModel> GetBlogPosts_OLD(GetBlogPostsRequest request)
         {
             try
             {
@@ -115,6 +113,13 @@ namespace BetterCms.Api
 
                 throw new CmsApiException(message, inner);
             }
+        }*/
+
+        public DataListResponse<BlogPostModel> GetBlogPosts(GetBlogPostsRequest request)
+        {
+            return blogService
+                .GetBlogPostsAsQueryable(request)
+                .ToDataListResponse(request);
         }
 
         /// <summary>
@@ -125,7 +130,7 @@ namespace BetterCms.Api
         /// The list of tag entities
         /// </returns>
         /// <exception cref="CmsApiException"></exception>
-        [Obsolete("This method is obsolete; use method insteadGetAuthorsAsQueryable() instead.")]
+        [Obsolete("This method is obsolete; use method GetAuthorsAsQueryable() instead.")]
         public DataListResponse<Author> GetAuthors(GetAuthorsRequest request = null)
         {
             try
@@ -191,15 +196,15 @@ namespace BetterCms.Api
 
                 Repository.Save(blog);
 
-                IList<Tag> newTags = null;
-                tagService.SavePageTags(blog, request.Tags, out newTags);
+                /*IList<Tag> newTags = null;
+                tagService.SavePageTags(blog, request.Tags, out newTags);*/
 
                 UnitOfWork.Commit();
 
                 Events.OnBlogUpdated(blog);
 
                 // Notify about new created tags.
-                PagesApiContext.Events.OnTagCreated(newTags);
+                /*PagesApiContext.Events.OnTagCreated(newTags);*/
 
                 return blog;
             }
@@ -213,7 +218,8 @@ namespace BetterCms.Api
 
         public IQueryable<AuthorModel> GetAuthorsAsQueryable()
         {
-            var models = authorService.GetAuthorsAsQueryable();
+            var guid = Guid.NewGuid();
+            var models = authorService.GetAuthorsAsQueryable().Where(a => a.Image != null && a.Image.Id == guid);
             return models;
         }
 
@@ -232,9 +238,9 @@ namespace BetterCms.Api
             return authorService.DeleteAuthor(request);
         }
 
-        public IQueryable<BlogPostModel> GetBlogPostsAsQueryable(GetBlogPostRequest filter = null)
+        public IQueryable<BlogPostModel> GetBlogPostsAsQueryable(GetBlogPostsRequest request = null)
         {
-            var models = blogService.GetBlogPostsAsQueryable(filter);
+            var models = blogService.GetBlogPostsAsQueryable(request);
 
             return models;
         }

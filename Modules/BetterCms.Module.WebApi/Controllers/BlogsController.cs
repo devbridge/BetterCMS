@@ -5,7 +5,7 @@ using System.Web.Http.OData.Query;
 using BetterCms.Api;
 using BetterCms.Core;
 using BetterCms.Core.Api.DataContracts;
-using BetterCms.Module.Blog.Api.DataFilters;
+using BetterCms.Module.Blog.Api.DataContracts;
 using BetterCms.Module.Blog.Api.DataModels;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.WebApi.Extensions;
@@ -28,7 +28,7 @@ namespace BetterCms.Module.WebApi.Controllers
         /// <returns>
         /// List of blog post service models.
         /// </returns>
-        public DataListResponse<BlogPostModel> Get(ODataQueryOptions<BlogPostModel> options, [FromUri] GetBlogPostRequest filter)
+        public DataListResponse<BlogPostModel> Get(ODataQueryOptions<BlogPostModel> options, [FromUri] GetBlogPostsRequest filter)
         {
             using (var api = CmsContext.CreateApiContextOf<BlogsApiContext>())
             {

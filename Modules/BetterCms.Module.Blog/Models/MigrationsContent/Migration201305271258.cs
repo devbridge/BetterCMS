@@ -58,10 +58,10 @@ namespace BetterCms.Module.Blog.Models.MigrationsContent
                                     IntroText = blog.Description,
                                     LiveFromDate = content.ActivationDate,
                                     LiveToDate = content.ExpirationDate,
-                                    ImageId = blog.Image != null ? (Guid?)blog.Image.Id : null,
-                                    AuthorId = blog.Author != null ? (Guid?)blog.Author.Id : null,
-                                    CategoryId = blog.Category != null ? (Guid?)blog.Category.Id : null,
-                                    Tags = blog.PageTags.Select(t => t.Tag.Name).ToList()
+                                    ImageId = blog.MainImageId,
+                                    AuthorId = blog.AuthorId,
+                                    CategoryId = blog.CategoryId
+                                    /* TODO: remove ???? Tags =blog.PageTags.Select(t => t.Tag.Name).ToList()*/
                                 });
                     }
                 }

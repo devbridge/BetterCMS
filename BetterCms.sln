@@ -90,6 +90,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.Module.Newsletter", "Modules\BetterCms.Module.Newsletter\BetterCms.Module.Newsletter.csproj", "{5235602A-EE7C-45A3-8B41-0C8770303650}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.Module.WebApi", "Modules\BetterCms.Module.WebApi\BetterCms.Module.WebApi.csproj", "{5FF9D100-CF25-4899-8D23-8EB9F0C0E102}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C530025B-8AB7-402D-B60C-000C9A5D0446} = {C530025B-8AB7-402D-B60C-000C9A5D0446}
+		{F3E41793-E8ED-4BA8-A1AB-CBA1E47B0786} = {F3E41793-E8ED-4BA8-A1AB-CBA1E47B0786}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution

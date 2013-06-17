@@ -18,6 +18,6 @@ namespace BetterCms.Module.Blog.Api.DataModels
         public string Name { get; set; }
 
         [DataMember]
-        public MediaImage Image { get; set; }
+        public MediaImageModel Image { get; set; }
     }
 }

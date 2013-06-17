@@ -3,6 +3,7 @@
 using BetterCms.Api;
 using BetterCms.Core.DataAccess;
 using BetterCms.Module.Blog.Api.DataContracts;
+using BetterCms.Module.Blog.Api.DataModels;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Pages.Services;
@@ -22,9 +23,7 @@ namespace BetterCms.Test.Module.Blog.ApiTests
             BlogPost blogPost1 = TestDataProvider.CreateNewBlogPost();
             BlogPost blogPost2 = TestDataProvider.CreateNewBlogPost();
 
-            var repositoryMock = MockRepository(new[] { blogPost1, blogPost2 });
-
-            using (var api = CreateBlogsApiContext(repositoryMock))
+            using (var api = CreateBlogsApiContext(new[] { blogPost1, blogPost2 }))
             {
                 var blogPosts = api.GetBlogPosts(new GetBlogPostsRequest(includeUnpublished: true, includeNotActive: true));
 
@@ -40,9 +39,7 @@ namespace BetterCms.Test.Module.Blog.ApiTests
         [Test]
         public void Should_Return_Empty_BlogPosts_List_Successfully()
         {
-            var repositoryMock = MockRepository(new BlogPost[] { });
-
-            using (var api = CreateBlogsApiContext(repositoryMock))
+            using (var api = CreateBlogsApiContext(new BlogPost[0]))
             {
                 var blogPosts = api.GetBlogPosts(new GetBlogPostsRequest());
 
@@ -52,11 +49,21 @@ namespace BetterCms.Test.Module.Blog.ApiTests
             }
         }
 
-        private BlogsApiContext CreateBlogsApiContext(Mock<IRepository> repositoryMock)
+        private BlogsApiContext CreateBlogsApiContext(BlogPost[] blogs)
         {
+            var repositoryMock = MockRepository(blogs);
             var tagService = new Mock<ITagService>();
             var authorServiceMock = new Mock<IAuthorService>();
             var blogServiceMock = new Mock<IBlogService>();
+
+            blogServiceMock
+                .Setup(f => f.GetBlogPostsAsQueryable(It.IsAny<GetBlogPostsRequest>()))
+                .Returns(blogs.Select(b => new BlogPostModel
+                                               {
+                                                   Id = b.Id,
+                                                   Version = b.Version,
+                                                   Title = b.Title
+                                               }).AsQueryable);
 
             return new BlogsApiContext(Container.BeginLifetimeScope(), tagService.Object, blogServiceMock.Object, authorServiceMock.Object, repositoryMock.Object);
         }

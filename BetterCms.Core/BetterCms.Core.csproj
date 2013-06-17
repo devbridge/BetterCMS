@@ -122,6 +122,7 @@
     <Compile Include="Api\DataContracts\DataListResponse.cs" />
     <Compile Include="Api\DataContracts\GetDataRequest.cs" />
     <Compile Include="Api\DataContracts\GetFilteredDataRequest.cs" />
+    <Compile Include="Api\DataContracts\OrderByModel.cs" />
     <Compile Include="Api\Events\EventBase.cs" />
     <Compile Include="Api\Events\CoreEvents.cs" />
     <Compile Include="Api\Events\SingleItemEventArgs.cs" />
