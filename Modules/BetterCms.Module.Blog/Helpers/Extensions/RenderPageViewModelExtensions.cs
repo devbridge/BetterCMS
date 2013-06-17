@@ -5,7 +5,6 @@ using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Module.Blog.Models;
-using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.ViewModels.Cms;
 
@@ -28,16 +27,10 @@ namespace BetterCms.Module.Blog.Helpers.Extensions
                     viewModel.Bag.BlogPostData = new DynamicDictionary();
                 }
 
-                var pageContent =
-                    blogPost.PageContents.FirstOrDefault(
-                        c => c.Region.RegionIdentifier == BlogModuleConstants.BlogPostMainContentRegionIdentifier && c.Content as BlogPostContent != null);
-                if (pageContent != null)
+                var blogPostProjection = viewModel.Contents.FirstOrDefault(projection => projection.Content.GetType() == typeof(BlogPostContent));
+                if (blogPostProjection != null)
                 {
-                    var content =
-                        (viewModel.CanManageContent
-                             ? pageContent.Content.FindEditableContentVersion()
-                             : pageContent.Content.Status == ContentStatus.Published ? pageContent.Content : null)
-                        as HtmlContent;
+                    var content = blogPostProjection.Content as BlogPostContent;
                     if (content != null)
                     {
                         viewModel.Bag.BlogPostData.Status = content.Status;
