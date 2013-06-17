@@ -95,6 +95,14 @@ namespace BetterCms.Module.Root.Projections
             }
         }
 
+        public virtual IContent Content
+        {
+            get
+            {
+                return content;
+            }
+        }
+
         public string GetContentWrapperType()
         {
             return contentAccessor.GetContentWrapperType();
