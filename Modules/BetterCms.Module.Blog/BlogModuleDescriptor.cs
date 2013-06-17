@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Web.Mvc;
+using System.Linq;
 
 using Autofac;
 
 using BetterCms.Api;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Blog.Accessors;
@@ -175,13 +176,36 @@ namespace BetterCms.Module.Blog
         /// <param name="args">The <see cref="PageRetrievedEventArgs" /> instance containing the event data.</param>
         private void Events_PageRetrieved(PageRetrievedEventArgs args)
         {
-            if (args != null && args.RenderPageData != null)
+            if (args == null || args.RenderPageData == null)
             {
-                args.RenderPageData.ExtendWithBlogData(args.PageData);
-                if (args.RenderPageData.IsBlogPost() && !args.RenderPageData.IsBlogPostActive() && !args.RenderPageData.CanManageContent)
-                {
-                    args.EventResult = PageRetrievedEventResult.ForcePageNotFound;
-                }
+                return;
+            }
+
+            args.RenderPageData.ExtendWithBlogData(args.PageData);
+
+            if (!args.RenderPageData.IsBlogPost())
+            {
+                return; // Default handling.
+            }
+
+            if (args.RenderPageData.CanManageContent)
+            {
+                return; // Default handling.
+            }
+
+            if (args.RenderPageData.Status != PageStatus.Published)
+            {
+                return; // Default handling.
+            }
+
+            if (args.RenderPageData.Contents.Any(projection => projection.PageContentStatus != ContentStatus.Published))
+            {
+                return; // Default handling.
+            }
+
+            if (!args.RenderPageData.IsBlogPostActive())
+            {
+                args.EventResult = PageRetrievedEventResult.ForcePageNotFound;
             }
         }
     }
