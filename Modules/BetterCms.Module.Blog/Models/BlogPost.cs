@@ -9,6 +9,10 @@ namespace BetterCms.Module.Blog.Models
     {
         public virtual Author Author { get; set; }
 
+        public virtual DateTime ActivationDate { get; set; }
+
+        public virtual DateTime? ExpirationDate { get; set; }
+
         public override PageProperties Duplicate()
         {
             return CopyDataToDuplicate(new BlogPost());
@@ -19,6 +23,8 @@ namespace BetterCms.Module.Blog.Models
             var blogPost = (BlogPost)base.CopyDataToDuplicate(duplicate);
 
             blogPost.Author = Author;
+            blogPost.ActivationDate = ActivationDate;
+            blogPost.ExpirationDate = ExpirationDate;
 
             return blogPost;
         }

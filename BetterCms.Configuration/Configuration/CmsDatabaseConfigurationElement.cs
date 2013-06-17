@@ -8,6 +8,7 @@ namespace BetterCms.Configuration
         private const string SchemaNameAttribute = "schemaName";
         private const string ConnectionStringNameAttribute = "connectionStringName";
         private const string ConnectionStringAttribute = "connectionString";
+        private const string DatabaseTypeAttribute = "databaseType";
 
         [ConfigurationProperty(SchemaNameAttribute, DefaultValue = "dbo", IsRequired = false)]
         public string SchemaName
@@ -28,6 +29,13 @@ namespace BetterCms.Configuration
         {
             get { return Convert.ToString(this[ConnectionStringNameAttribute]); }
             set { this[ConnectionStringNameAttribute] = value; }
+        }
+
+        [ConfigurationProperty(DatabaseTypeAttribute, IsRequired = false, DefaultValue = DatabaseType.MsSql2008)]
+        public DatabaseType DatabaseType
+        {
+            get { return (DatabaseType)this[DatabaseTypeAttribute]; }
+            set { this[DatabaseTypeAttribute] = value; }
         }
     }
 }

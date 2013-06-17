@@ -174,6 +174,11 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                 blogPost.Author = request.AuthorId.HasValue ? Repository.AsProxy<Author>(request.AuthorId.Value) : null;
                 blogPost.Category = request.CategoryId.HasValue ? Repository.AsProxy<Category>(request.CategoryId.Value) : null;
                 blogPost.Image = (request.Image != null && request.Image.ImageId.HasValue) ? Repository.AsProxy<MediaImage>(request.Image.ImageId.Value) : null;
+                if (isNew || request.DesirableStatus == ContentStatus.Published)
+                {
+                    blogPost.ActivationDate = request.LiveFromDate;
+                    blogPost.ExpirationDate = TimeHelper.FormatEndDate(request.LiveToDate);
+                }
             }
 
             if (isNew)
@@ -188,7 +193,6 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                     blogPost.PageUrl = blogService.CreateBlogPermalink(request.Title);
                 }               
                
-                blogPost.IsPublic = true;
                 blogPost.Layout = layout;
                 UpdateStatus(blogPost, request.DesirableStatus);
             }
@@ -287,6 +291,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             {
                 case ContentStatus.Published:
                     blogPost.Status = PageStatus.Published;
+                    blogPost.PublishedOn = DateTime.Now;
                     break;
                 case ContentStatus.Draft:
                     blogPost.Status = PageStatus.Unpublished;

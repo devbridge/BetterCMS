@@ -23,6 +23,11 @@ namespace BetterCms.Module.Newsletter
         internal const string ModuleName = "newsletter";
 
         /// <summary>
+        /// The newsletter area name.
+        /// </summary>
+        internal const string NewsletterAreaName = "bcms-newsletter";
+
+        /// <summary>
         /// The newsletter java script module descriptor.
         /// </summary>
         private readonly NewsletterJsModuleIncludeDescriptor newsletterJsModuleIncludeDescriptor;
@@ -30,7 +35,8 @@ namespace BetterCms.Module.Newsletter
         /// <summary>
         /// Initializes a new instance of the <see cref="NewsletterModuleDescriptor" /> class.
         /// </summary>
-        public NewsletterModuleDescriptor(ICmsConfiguration cmsConfiguration) : base(cmsConfiguration)
+        public NewsletterModuleDescriptor(ICmsConfiguration cmsConfiguration)
+            : base(cmsConfiguration)
         {
             newsletterJsModuleIncludeDescriptor = new NewsletterJsModuleIncludeDescriptor(this);
         }
@@ -64,6 +70,20 @@ namespace BetterCms.Module.Newsletter
         }
 
         /// <summary>
+        /// Gets the name of the module area.
+        /// </summary>
+        /// <value>
+        /// The name of the module area.
+        /// </value>
+        public override string AreaName
+        {
+            get
+            {
+                return NewsletterAreaName;
+            }
+        }
+
+        /// <summary>
         /// Registers module types.
         /// </summary>
         /// <param name="context">The area registration context.</param>
@@ -80,11 +100,8 @@ namespace BetterCms.Module.Newsletter
         /// <returns>List of known client side modules in page module.</returns>
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
         public override IEnumerable<JsIncludeDescriptor> RegisterJsIncludes()
-        {            
-            return new[]
-                {
-                    newsletterJsModuleIncludeDescriptor
-                };
+        {
+            return new[] { newsletterJsModuleIncludeDescriptor };
         }
 
         /// <summary>
@@ -96,15 +113,14 @@ namespace BetterCms.Module.Newsletter
         {
             return new IPageActionProjection[]
                 {
-                    new SeparatorProjection(9999), 
-
+                    new SeparatorProjection(9999),
                     new LinkActionProjection(newsletterJsModuleIncludeDescriptor, page => "loadSiteSettingsNewsletterSubscribers")
                         {
                             Order = 9999,
                             Title = () => NewsletterGlobalization.SiteSettings_NewsletterSubscribersMenuItem,
                             CssClass = page => "bcms-sidebar-link",
                             AccessRole = RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.Administration)
-                        }                                      
+                        }
                 };
         }
     }

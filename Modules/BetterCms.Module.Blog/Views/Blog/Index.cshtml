@@ -11,8 +11,7 @@
 @using Microsoft.Web.Mvc
 @using MvcContrib.UI.Grid
 
-@model BetterCms.Module.Root.ViewModels.SiteSettings.SearchableGridViewModel<SiteSettingBlogPostViewModel>
-           
+@model BetterCms.Module.Blog.ViewModels.Filter.BlogsGridViewModel<SiteSettingBlogPostViewModel>
 @{
     Action<ColumnBuilder<SiteSettingBlogPostViewModel>> columns = column =>
     {
@@ -40,7 +39,7 @@
            .Named(BlogGlobalization.SiteSettings_Blogs_ModifiedColumn)
            .SortColumnName("ModifiedOn")
            .Attributes(@class => "bcms-blog-ModifiedOn");
-        
+
         column.For(m => m.ModifiedByUser)
            .Named(BlogGlobalization.SiteSettings_Blogs_ModifiedByColumn)
            .SortColumnName("ModifiedByUser")
@@ -59,7 +58,7 @@
     };
 }
 
-@using (Html.BeginForm<BlogController>(f => f.Index(null), FormMethod.Post, new { @id = "bcms-blogs-form" }))
+@using (Html.BeginForm<BlogController>(f => f.Index(null), FormMethod.Post, new { @id = "bcms-blogs-form", @class = "bcms-ajax-form" }))
 {
     @Html.HiddenGridOptions(Model.GridOptions)
 
@@ -68,9 +67,15 @@
         {
             <div class="bcms-btn-links-main" id="bcms-create-blog-button">@BlogGlobalization.SiteSettings_Blogs_AddNew</div>
         }
+
         <div class="bcms-search-block">
             @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
             <div class="bcms-btn-search" id="bcms-blogs-search-btn">@BlogGlobalization.SiteSettings_Blogs_Search</div>
+        </div>
+        
+        <div class="bcms-featured-grid clearfix">
+            @Html.RenderPaging(Model)
+            @Html.Partial("~/Areas/bcms-blog/Views/Blog/Partial/BlogsFilterTemplate.cshtml", Model)
         </div>
     </div>
     
@@ -80,7 +85,7 @@
 }
 
 <script type="text/html" id="bcms-blogs-list-row-template">
-    @Html.Grid(new List<SiteSettingBlogPostViewModel> {new SiteSettingBlogPostViewModel()}).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingBlogPostViewModel>())
+    @Html.Grid(new List<SiteSettingBlogPostViewModel> { new SiteSettingBlogPostViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingBlogPostViewModel>())
 </script>
 <script type="text/html" id="bcms-pagestatus-published-template">
     @Html.Partial("EditorTemplates/PageStatus", PageStatus.Published)

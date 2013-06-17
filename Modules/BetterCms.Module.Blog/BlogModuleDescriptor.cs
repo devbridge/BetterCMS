@@ -6,6 +6,7 @@ using BetterCms.Api;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Blog.Accessors;
+using BetterCms.Module.Blog.Api.DataContracts;
 using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.Blog.Helpers.Extensions;
 using BetterCms.Module.Blog.Models;
@@ -14,6 +15,7 @@ using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Pages.Accessors;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Api.Events;
+using BetterCms.Module.Root.ViewModels.Cms;
 
 namespace BetterCms.Module.Blog
 {
@@ -26,6 +28,8 @@ namespace BetterCms.Module.Blog
         /// The module name.
         /// </summary>
         internal const string ModuleName = "blog";
+
+        internal const string BlogAreaName = "bcms-blog";
 
         /// <summary>
         /// The blog java script module descriptor
@@ -71,6 +75,20 @@ namespace BetterCms.Module.Blog
         }
 
         /// <summary>
+        /// Gets the name of the module area.
+        /// </summary>
+        /// <value>
+        /// The name of the module area.
+        /// </value>
+        public override string AreaName
+        {
+            get
+            {
+                return BlogAreaName;
+            }
+        }
+
+        /// <summary>
         /// Registers the sidebar main projections.
         /// </summary>
         /// <param name="containerBuilder">The container builder.</param>
@@ -99,7 +117,8 @@ namespace BetterCms.Module.Blog
         {
             return new[]
                 {
-                    blogJsModuleIncludeDescriptor
+                    blogJsModuleIncludeDescriptor,
+                    new JsIncludeDescriptor(this, "bcms.blog.filter"), 
                 };
         }
 
@@ -159,6 +178,10 @@ namespace BetterCms.Module.Blog
             if (args != null && args.RenderPageData != null)
             {
                 args.RenderPageData.ExtendWithBlogData(args.PageData);
+                if (args.RenderPageData.IsBlogPost() && !args.RenderPageData.IsBlogPostActive() && !args.RenderPageData.CanManageContent)
+                {
+                    args.EventResult = PageRetrievedEventResult.ForcePageNotFound;
+                }
             }
         }
     }

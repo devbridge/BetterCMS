@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console, document */
 
-define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', 'bcms.forms'], function ($, bcms, tabs, ko, forms) {
+bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', 'bcms.forms'], function ($, bcms, tabs, ko, forms) {
     'use strict';
 
     var modal = {},
@@ -23,6 +23,8 @@ define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', '
             previewFailure: '.bcms-grid-image-holder',
             footer: '.bcms-success-buttons-holder, .bcms-modal-footer',
             desirableStatus: '.bcms-content-desirable-status',
+            popinfoFrame: '.bcms-popinfo-frame',
+            errorFrame: '.bcms-error-frame',
             
             // selectors for calculation of modal window size
             elemOuter: '.bcms-modal-body',
@@ -626,7 +628,10 @@ define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', '
         options.templateId = 'bcms-modal-alert-template';
         options.disableAnimation = true;
 
-        return modal.open(options);
+        var dialog = modal.open(options);
+        // Hack for IE.
+        dialog.container.find(selectors.errorFrame).get(0).focus();
+        return dialog;
     };
 
     modal.confirm = function (options) {
@@ -638,7 +643,10 @@ define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', '
         options.templateId = 'bcms-modal-confirm-template';
         options.disableAnimation = true;
 
-        return modal.open(options);
+        var dialog = modal.open(options);
+        // Hack for IE.
+        dialog.container.find(selectors.popinfoFrame).get(0).focus();
+        return dialog;
     };
 
     modal.info = function (options) {
@@ -650,7 +658,10 @@ define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', '
         options.disableAnimation = true;
         options.disableCancel = true;
         
-        return modal.open(options);
+        var dialog = modal.open(options);
+        // Hack for IE.
+        dialog.container.find(selectors.popinfoFrame).get(0).focus();
+        return dialog;
     };
 
     modal.imagePreview = function (src, alt, options) {

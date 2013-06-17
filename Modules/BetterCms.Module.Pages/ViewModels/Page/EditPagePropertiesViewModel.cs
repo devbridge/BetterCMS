@@ -157,6 +157,22 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public ImageSelectorViewModel Image { get; set; }
 
         /// <summary>
+        /// Gets or sets the secondary image.
+        /// </summary>
+        /// <value>
+        /// The secondary image.
+        /// </value>
+        public ImageSelectorViewModel SecondaryImage { get; set; }
+
+        /// <summary>
+        /// Gets or sets the featured image.
+        /// </summary>
+        /// <value>
+        /// The featured image.
+        /// </value>
+        public ImageSelectorViewModel FeaturedImage { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="EditPagePropertiesViewModel" /> class.
         /// </summary>
         public EditPagePropertiesViewModel()

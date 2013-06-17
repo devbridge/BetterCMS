@@ -1,20 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using System.Web.UI.WebControls;
 
 using BetterCms.Api;
 using BetterCms.Core;
-using BetterCms.Module.MediaManager.Models;
-using BetterCms.Module.Pages.Api.Events;
+using BetterCms.Core.Api.DataContracts;
+using BetterCms.Module.Blog.Api.DataContracts;
+using BetterCms.Module.Blog.Models;
+using BetterCms.Module.Pages.Api.DataContracts;
 using BetterCms.Module.Pages.Models;
-
 using BetterCms.Sandbox.Mvc4.Models;
 
 namespace BetterCms.Sandbox.Mvc4.Controllers
@@ -22,7 +19,7 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
     public class SandboxController : Controller
     {
         public ActionResult Content()
-        {                
+        {
             return Content("Hello from the web project controller.");
         }
 
@@ -39,7 +36,7 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
         [AllowAnonymous]
         public ActionResult Login(string roles)
         {
-//            var roles = string.Join(",", Roles.GetRolesForUser(string.Empty));
+            //            var roles = string.Join(",", Roles.GetRolesForUser(string.Empty));
             if (string.IsNullOrEmpty(roles))
             {
                 roles = "Owner";
@@ -70,24 +67,67 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
 
         public ActionResult TestApi()
         {
-            PagesApiContext.Events.PageCreated += EventsOnPageCreated ;
+            /*PagesApiContext.Events.PageCreated += EventsOnPageCreated;
 
             PagesApiContext.Events.OnPageCreated(new PageProperties());
 
-            ApiContext.Events.HostStart += Core_HostStart;
+            ApiContext.Events.HostStart += Core_HostStart;*/
 
-            IList<MediaFolder> folders;
-            using (var mediaApi = CmsContext.CreateApiContextOf<MediaManagerApiContext>())
-            {                
-                folders = mediaApi.GetFolders(MediaType.Image);
-            }
+            var message = string.Empty;
 
-            var count = folders.Count;
-            var message = string.Format("Image folders count: {0}", count);
-
-            if (count > 0)
+            DataListResponse<BlogPost> results;
+            using (var api = CmsContext.CreateApiContextOf<BlogsApiContext>())
             {
-                message = string.Format("{0}<br /> Image folders titles: {1}", message, string.Join("; ", folders.Select(t => t.Title)));
+                using (var papi = CmsContext.CreateApiContextOf<PagesApiContext>())
+                {
+                    var request = new GetLayoutsRequest();
+                    var result = papi.GetLayouts(request);
+
+                    /*var aRequest = new GetContentHistoryRequest(new Guid("AE04E233-4E88-4A9F-87BC-A1CC00F2C173"));
+                    var aresults = papi.GetContentHistory(aRequest);
+
+                    if (aresults.Items.Count > 0)
+                    {
+                        message = string.Format("{0}<br />Total count:{2},  Item titles: {1}", message, string.Join("; ", aresults.Items.Select(t => t.Name)), aresults.TotalCount);
+                    }
+
+                    aRequest = new GetContentHistoryRequest(new Guid("AE04E233-4E88-4A9F-87BC-A1CC00F2C173"), a => a.Name.ToLower().Contains("poop"), o => o.Name, orderDescending: true);
+                    aresults = papi.GetContentHistory(aRequest);
+
+                    if (aresults.Items.Count > 0)
+                    {
+                        message = string.Format("{0}<br />Total count:{2},  Item titles: {1}", message, string.Join("; ", aresults.Items.Select(t => t.Name)), aresults.TotalCount);
+                    }*/
+
+                    /*var request = new GetDataRequest<Layout>(3, 2, orderDescending:true, order:t =>t.Name);
+                    results = pagesApi.GetLayouts(request);*/
+
+                    /*var request = new GetDataRequest<LayoutRegion>(orderDescending: true, order: t => t.Region.RegionIdentifier);
+                    request.AddPaging(2, 2);*/
+
+                    /*var request = new GetBlogPostsRequest(b => b.ExpirationDate.HasValue, includePrivate: true, includeUnpublished: true, itemsCount: 3);
+                    results = api.GetBlogPosts(request);
+
+                    if (results.Items.Count > 0)
+                    {
+                        message = string.Format(
+                            "{0}<br />Total count:{2},  Item titles: {1}", message, string.Join("; ", results.Items.Select(t => t.Title)), results.TotalCount);
+                    }
+
+                    request = new GetBlogPostsRequest(order: b => b.Title, orderDescending: true, includePrivate: true, includeUnpublished: true);
+                    request.AddPaging(3, 3);
+                    results = api.GetBlogPosts(request);
+
+                    if (results.Items.Count > 0)
+                    {
+                        message = string.Format(
+                            "{0}<br />Total count:{2}, Item titles: {1}", message, string.Join("; ", results.Items.Select(t => t.Title)), results.TotalCount);
+                    }
+
+                    request = new GetBlogPostsRequest(
+                        order: b => b.Title, orderDescending: true, itemsCount: 5, startItemNumber: 3, includeUnpublished: true, includePrivate: true);
+                    results = api.GetBlogPosts(request);*/
+                }
             }
 
             return Content(message);
@@ -100,16 +140,16 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
 
         private void EventsOnPageCreated(SingleItemEventArgs<PageProperties> args)
         {
-            
+
         }
 
         public ActionResult TestNavigationApi()
         {
-            
-            var message = new StringBuilder("No sitemap data found!");                     
+
+            var message = new StringBuilder("No sitemap data found!");
 
             return Content(message.ToString());
-        }        
+        }
 
         [AllowAnonymous]
         public ActionResult LoginJson(LoginViewModel login)
@@ -125,6 +165,11 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
             Logout();
 
             return Json(new { Success = true });
+        }
+
+        public ActionResult NotFound()
+        {
+            return View("NotFound");
         }
     }
 }

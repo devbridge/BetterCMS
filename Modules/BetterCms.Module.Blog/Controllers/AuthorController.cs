@@ -10,12 +10,15 @@ using BetterCms.Module.Root;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
+using Microsoft.Web.Mvc;
+
 namespace BetterCms.Module.Blog.Controllers
 {
     /// <summary>
     /// Blog authors controller.
     /// </summary>
     [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+    [ActionLinkArea(BlogModuleDescriptor.BlogAreaName)]
     public class AuthorController : CmsControllerBase
     {
         /// <summary>
@@ -25,7 +28,10 @@ namespace BetterCms.Module.Blog.Controllers
         public ActionResult ListTemplate()
         {
             var view = RenderView("Partial/ListTemplate", null);
-            var authors = GetCommand<GetAuthorListCommand>().ExecuteCommand(new SearchableGridOptions());
+            var request = new SearchableGridOptions();
+            request.SetDefaultPaging();
+
+            var authors = GetCommand<GetAuthorListCommand>().ExecuteCommand(request);
 
             return ComboWireJson(authors != null, view, authors, JsonRequestBehavior.AllowGet);
         }
@@ -37,6 +43,7 @@ namespace BetterCms.Module.Blog.Controllers
         /// <returns>Json result.</returns>
         public ActionResult AuthorsList(SearchableGridOptions request)
         {
+            request.SetDefaultPaging();
             var model = GetCommand<GetAuthorListCommand>().ExecuteCommand(request);
             return WireJson(model != null, model);
         }

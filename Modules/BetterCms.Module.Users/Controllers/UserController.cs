@@ -14,12 +14,15 @@ using BetterCms.Module.Users.Content.Resources;
 using BetterCms.Module.Users.ViewModels;
 using BetterCms.Module.Users.ViewModels.User;
 
+using Microsoft.Web.Mvc;
+
 namespace BetterCms.Module.Users.Controllers
 {
     /// <summary>
     /// User management.
     /// </summary>
     [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
+    [ActionLinkArea(UsersModuleDescriptor.UsersAreaName)]
     public class UserController : CmsControllerBase
     {
         /// <summary>
@@ -29,8 +32,8 @@ namespace BetterCms.Module.Users.Controllers
         /// <returns>User list view.</returns>
         public ActionResult Index(SearchableGridOptions request)
         {
-            var users = GetCommand<GetUsersCommand>().ExecuteCommand(request);
-            var model = new SearchableGridViewModel<UserItemViewModel>(users, new SearchableGridOptions(), users.Count);
+            request.SetDefaultPaging();
+            var model = GetCommand<GetUsersCommand>().ExecuteCommand(request);
             return View(model);
         }
 

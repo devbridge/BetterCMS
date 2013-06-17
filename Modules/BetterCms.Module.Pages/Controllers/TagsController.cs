@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
 
 using BetterCms.Core.Security;
 using BetterCms.Module.Pages.Command.Tag.GetTagList;
@@ -11,12 +12,15 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
+using Microsoft.Web.Mvc;
+
 namespace BetterCms.Module.Pages.Controllers
 {
     /// <summary>
     /// Handles site settings logic for Pages module.
     /// </summary>
     [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+    [ActionLinkArea(PagesModuleDescriptor.PagesAreaName)]
     public class TagsController : CmsControllerBase
     {
         /// <summary>
@@ -28,6 +32,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// </returns>
         public ActionResult ListTags(SearchableGridOptions request)
         {
+            request.SetDefaultPaging();
             var model = GetCommand<GetTagListCommand>().ExecuteCommand(request);
             return View(model);
         }
@@ -79,6 +84,13 @@ namespace BetterCms.Module.Pages.Controllers
             }
 
             return Json(new WireJson(success));
+        }
+
+        [HttpPost]
+        public ActionResult SuggestTags(string query)
+        {
+            var suggestedTags = GetCommand<SearchTagsCommand>().ExecuteCommand(query);
+            return Json(new { suggestions = suggestedTags });
         }
     }
 }

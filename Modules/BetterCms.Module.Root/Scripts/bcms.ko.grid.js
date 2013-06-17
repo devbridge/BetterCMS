@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messages', 'bcms.modal'],
+bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messages', 'bcms.modal'],
     function ($, bcms, ko, messages, modal) {
     'use strict';
 
@@ -27,13 +27,14 @@ define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messag
     * Grid options view model
     */
     grid.OptionsViewModel = (function() {
-        function OptionsViewModel(options) {
+        function OptionsViewModel(options, onOpenPage) {
             var self = this;
 
             self.searchQuery = ko.observable(options.SearchQuery || '');
             self.column = ko.observable(options.Column);
             self.isDescending = ko.observable(options.Direction == sortDirections.descending);
-
+            self.paging = new ko.PagingViewModel(options.PageSize, options.PageNumber, options.TotalCount, onOpenPage);
+            
             self.hasFocus = ko.observable(false);
         }
 
@@ -45,7 +46,7 @@ define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messag
     */
     grid.ListViewModel = (function() {
 
-        grid.ListViewModel = function(container, loadUrl, items, gridOptions) {
+        grid.ListViewModel = function (container, loadUrl, items, gridOptions, totalItemsCount) {
             var self = this;
 
             self.loadUrl = loadUrl;
@@ -66,8 +67,13 @@ define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messag
                 if (!newGridOptions) {
                     return;
                 }
-                var options = new grid.OptionsViewModel(newGridOptions);
+                var options = new grid.OptionsViewModel(newGridOptions, self.openPage);
                 self.options(options);
+            };
+
+            self.openPage = function(pageNr) {
+                var params = self.toJson();
+                self.load(params);
             };
 
             self.setItems = function (itemsList) {
@@ -94,10 +100,13 @@ define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messag
                         IsNew: true
                     });
                     self.items.unshift(newItem);
+                    self.isSelected = true;
                 }
             };
             
             self.searchItems = function () {
+                self.options().paging.pageNumber(1);
+
                 var params = self.toJson();
                 self.load(params);
             };
@@ -134,7 +143,9 @@ define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messag
                 var params = {
                     SearchQuery: self.options().searchQuery(),
                     Column: self.options().column(),
-                    Direction: self.options().isDescending() ? sortDirections.descending : sortDirections.ascending
+                    Direction: self.options().isDescending() ? sortDirections.descending : sortDirections.ascending,
+                    PageSize: self.options().paging.pageSize,
+                    PageNumber: self.options().paging.pageNumber()
                 };
 
                 return params;
@@ -198,7 +209,7 @@ define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messag
 
             // Set options
             if (gridOptions) {
-                self.setOptions(gridOptions);
+                self.setOptions(gridOptions, totalItemsCount);
             }
         };
 
@@ -224,7 +235,6 @@ define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messag
         self.field.subscribe(function () {
             var oldValue = self.field() ? self.field() : '';
             if (!self.parent.isActive() && oldValue != self.oldValue) {
-                // console.log('Changing value of item ' + id + ' from "' + self.oldValue + '" to "' + oldValue + '"');
                 self.oldValue = oldValue;
             }
         });
@@ -272,7 +282,11 @@ define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messag
             self.isNew = ko.observable(item.IsNew || false);
             self.registeredFields = [];
             self.savePressed = false;
-            
+
+            self.hasFocus.subscribe(function(value) {
+                self.isSelected = value;
+            });
+
             self.onOpen = function (data, event) {
                 bcms.stopEventPropagation(event);
                 self.openItem();
@@ -462,6 +476,7 @@ define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messag
 
         grid.ItemViewModel.prototype.saveItem = function () {
             var self = this;
+            self.hasFocus(false);
             self.saving(true);
             removeSaveTimer(self, true);
             
@@ -525,6 +540,7 @@ define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messag
             }
 
             if (json.Success) {
+                self.isSelected = false;
                 if (json.Data) {
                     self.version(json.Data.Version);
                     self.id(json.Data.Id);
@@ -537,6 +553,9 @@ define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messag
 
                     field.oldValue = field.field() || '';
                 }
+            } else {
+                self.hasFocus(true);
+                self.isSelected = true;
             }
         };
 

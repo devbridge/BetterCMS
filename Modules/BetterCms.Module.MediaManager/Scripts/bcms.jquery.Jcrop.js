@@ -28,7 +28,7 @@
  *
  * }}}
  */
-define('bcms.jquery.jcrop', ['bcms.jquery'], function (jquery) {
+bettercms.define('bcms.jquery.jcrop', ['bcms.jquery'], function (jquery) {
         
     (function($) {
 

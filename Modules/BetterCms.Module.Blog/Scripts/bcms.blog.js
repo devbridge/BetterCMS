@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.grid', 'bcms.pages', 'bcms.ko.extenders', 'bcms.media', 'bcms.pages.tags', 'bcms.ko.grid', 'bcms.messages', 'bcms.redirect', 'bcms.pages.history', 'bcms.preview', 'bcms.security'],
-    function ($, bcms, modal, siteSettings, dynamicContent, datepicker, htmlEditor, grid, pages, ko, media, tags, kogrid, messages, redirect, history, preview, security) {
+bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.grid', 'bcms.pages', 'bcms.ko.extenders', 'bcms.media', 'bcms.pages.tags', 'bcms.ko.grid', 'bcms.messages', 'bcms.redirect', 'bcms.pages.history', 'bcms.preview', 'bcms.security', 'bcms.blog.filter'],
+    function ($, bcms, modal, siteSettings, dynamicContent, datepicker, htmlEditor, grid, pages, ko, media, tags, kogrid, messages, redirect, history, preview, security, filter) {
     'use strict';
 
     var blog = { },
@@ -29,15 +29,8 @@ define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', '
             overlayConfigure: '.bcms-content-configure',
             overlayDelete: '.bcms-content-delete',
             destroyDraftVersionLink: '.bcms-messages-draft-destroy',
-            
             blogTitle: "#bcms-editor-blog-title",
-            editPermalink: '#bcms-page-editpermalink',
-	        editPermalinkBox: '.bcms-edit-urlpath-box',
-	        editPermalinkClose: 'div.bcms-edit-urlpath-box .bcms-tip-close, div.bcms-edit-urlpath-box .bcms-btn-links-small',
-	        editPermalinkSave: '#bcms-save-permalink',
-	        editPermalinkHiddenField: '#bcms-page-permalink',
-	        editPermalinkEditField: '#bcms-page-permalink-edit',
-	        editPermalinkInfoField: '#bcms-page-permalink-info'
+	        editPermalinkEditField: '#bcms-page-permalink-edit'
         },
         links = {
             loadSiteSettingsBlogsUrl: null,
@@ -272,7 +265,7 @@ define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', '
     /**
     * Initializes site settings blogs list
     */
-    function initializeSiteSettingsBlogsList(container, content) {
+    function initializeSiteSettingsBlogsList(container, content, jsonData) {
         
         var form = container.find(selectors.siteSettingsBlogsListForm);
         grid.bindGridForm(form, function (data) {
@@ -308,6 +301,10 @@ define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', '
         });
 
         initializeSiteSettingsBlogsListItems(container);
+
+        filter.bind(container, ((content.Data) ? content.Data : jsonData), function () {
+            searchSiteSettingsBlogs(container, form);
+        });
     }
      
     /**
@@ -348,9 +345,9 @@ define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', '
     * Search site settings blogs
     */
     function searchSiteSettingsBlogs(container, form) {
-        grid.submitGridForm(form, function (data) {
-            container.html(data);
-            initializeSiteSettingsBlogsList(container, data);           
+        grid.submitGridForm(form, function (htmlContent, data) {
+            container.html(htmlContent);
+            initializeSiteSettingsBlogsList(container, htmlContent, data);
             var searchInput = container.find(selectors.siteSettingsBlogsSearchInput);
             grid.focusSearchInput(searchInput);
         });

@@ -20,6 +20,7 @@ namespace BetterCms.Configuration
         private const string WorkingDirectoryRootPathAttribute = "workingDirectoryRootPath";
         private const string ArticleUrlPatternAttribute = "articleUrlPattern";
         private const string UrlPatternsNode = "urlPatterns";
+        private const string InstallationNode = "installation";
 
         /// <summary>
         /// The version backing field.
@@ -200,6 +201,13 @@ namespace BetterCms.Configuration
             set { this[ModuleGalleryNode] = value; }
         }
 
+        [ConfigurationProperty(InstallationNode, IsRequired = false)]
+        public CmsInstallationConfigurationElement Installation
+        {
+            get { return (CmsInstallationConfigurationElement)this[InstallationNode]; }
+            set { this[InstallationNode] = value; }
+        }
+
         ICmsStorageConfiguration ICmsConfiguration.Storage
         {
             get { return Storage; }
@@ -223,6 +231,11 @@ namespace BetterCms.Configuration
         ICmsModuleGalleryConfiguration ICmsConfiguration.ModuleGallery
         {
             get { return ModuleGallery; }
+        }
+
+        ICmsInstallationConfiguration ICmsConfiguration.Installation
+        {
+            get { return Installation; }
         }
 
         #endregion

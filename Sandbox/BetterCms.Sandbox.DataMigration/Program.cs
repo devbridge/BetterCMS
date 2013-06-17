@@ -13,7 +13,7 @@ using BetterCms.Module.MediaManager;
 using BetterCms.Module.Newsletter;
 using BetterCms.Module.Pages;
 using BetterCms.Module.Root;
-using BetterCms.Module.Templates;
+using BetterCms.Module.Installation;
 using BetterCms.Module.Users;
 
 using Common.Logging;
@@ -22,6 +22,18 @@ namespace BetterCms.Sandbox.DataMigration
 {
     internal class Program
     {
+        class VersionCheckerStub : IVersionChecker
+        {
+            public bool VersionExists(string moduleName, long version)
+            {
+                return false;
+            }
+
+            public void AddVersion(string moduleName, long version)
+            {
+            }
+        }
+
         private static readonly ILog Log = LogManager.GetCurrentClassLogger();
 
         private static List<ModuleDescriptor> descriptors;
@@ -33,7 +45,7 @@ namespace BetterCms.Sandbox.DataMigration
                     (new ModuleDescriptor[]
                     {
                         new BlogModuleDescriptor(configuration),
-                        new TemplatesModuleDescriptor(configuration),
+                        new InstallationModuleDescriptor(configuration),
                         new MediaManagerModuleDescriptor(configuration),
                         new PagesModuleDescriptor(configuration),
                         new RootModuleDescriptor(configuration),
@@ -47,8 +59,9 @@ namespace BetterCms.Sandbox.DataMigration
         {
             IConfigurationLoader configurationLoader = new DefaultConfigurationLoader();
             ICmsConfiguration cmsConfiguration = configurationLoader.LoadCmsConfiguration();
-            DefaultMigrationRunner runner = new DefaultMigrationRunner(new DefaultAssemblyLoader(), cmsConfiguration);
-            runner.Migrate(descriptors, up);
+            IVersionChecker versionChecker = new VersionCheckerStub();
+            DefaultMigrationRunner runner = new DefaultMigrationRunner(new DefaultAssemblyLoader(), cmsConfiguration, versionChecker);
+            runner.MigrateStructure(descriptors);
         }
 
         private static void Main(string[] args)
@@ -60,10 +73,6 @@ namespace BetterCms.Sandbox.DataMigration
                     Console.WriteLine("-- PRESS ANY KEY TO START DATABASE MIGRATIONS --");
                     Console.ReadKey();
                 }
-
-                Console.WriteLine("-- Migrate DOWN --");
-                
-                 Migrate(false);
 
                 Console.WriteLine("-- Migrate  UP --");
 

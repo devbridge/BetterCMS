@@ -94,6 +94,11 @@ namespace BetterCms
         ICmsModuleGalleryConfiguration ModuleGallery { get; }
 
         /// <summary>
+        /// Gets the installation configuration.
+        /// </summary>
+        ICmsInstallationConfiguration Installation { get; }
+
+        /// <summary>
         /// Gets the cache configuration.
         /// </summary>
         ICmsCacheConfiguration Cache { get; }

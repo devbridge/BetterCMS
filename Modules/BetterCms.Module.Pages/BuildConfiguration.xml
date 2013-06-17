@@ -20,6 +20,7 @@
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.pages.tags.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.pages.template.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.pages.widgets.js" />
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.pages.filter.js" />
 
     </ItemGroup>
 

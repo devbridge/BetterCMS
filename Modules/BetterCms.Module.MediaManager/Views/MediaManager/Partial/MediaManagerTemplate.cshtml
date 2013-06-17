@@ -29,6 +29,35 @@
         <div data-bind="foreach: path().pathFolders()"><a class="bcms-breadcrumbs-root" href="#" data-bind="    text: pathName(), click: openMedia.bind($data, $root)"></a></div>
     </div>
 
+    <div class="bcms-featured-grid clearfix">    
+        <!-- ko with: gridOptions().paging -->
+        @Html.Partial(RootModuleConstants.EditableGridPagingTemplate)
+        <!-- /ko -->
+
+        <div>
+            <div class="bcms-grid-filtering">        
+                <div class="bcms-btn-links-main" data-bind="click: gridOptions().toggleFilter">@RootGlobalization.Button_Filter</div>    
+            </div>
+            <div class="bcms-tags-block" style="display: none;" data-bind="visible: gridOptions().isFilterVisible()">
+                <div class="bcms-tip-close" data-bind="click: gridOptions().closeFilter">@RootGlobalization.Button_Close</div>
+                <div class="bcms-featured-tags">
+                    <div class="clearfix">
+                        <div class="bcms-filter-options-1">
+                            <div class="bcms-tags-field-holder">
+                                <input type="checkbox" data-bind="checked: gridOptions().includeArchived" />
+                                @MediaGlobalization.MediaManager_IncludeArchived_Message
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix bcms-filter-search">
+                        <div class="bcms-btn-small" data-bind="click: searchWithFilter">@RootGlobalization.Button_Filter_Search</div>
+                        <div class="bcms-btn-links-small" data-bind="click: gridOptions().clearFilter">@RootGlobalization.Button_Filter_Clear</div>
+                    </div>
+                </div>
+            </div>
+         </div>
+    </div>
+
     @Html.SiteSettingsMessagesBox(null, new Dictionary<string, string> { { "data-bind", "attr: { id: domId() }" } })
 
     <div id="bcms-view-container" data-bind="css: { 'bcms-list': !isGrid(), 'bcms-grid': isGrid() }" class="bcms-list">
@@ -69,6 +98,7 @@
                     <!--  ko if: !isProcessing() && !isFailed() && !isDeleting() -->
                     <!-- ko if: isImage() -->
                     <a class="bcms-media-content-link" data-bind="click: previewImage.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonPreviewImage</a>
+                    <a class="bcms-media-content-link" data-bind="click: imageProperties.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonImageProperties</a>
                     <!-- /ko -->
                     <!-- ko if: isFolder() -->
                     <a class="bcms-media-content-link" data-bind="click: openMedia.bind($data, $root), clickBubble: false">@RootGlobalization.Button_Open</a>
@@ -97,6 +127,16 @@
                     {
                         <!--  ko if: !isProcessing() && !isDeleting() -->
                         <a class="bcms-media-content-link" data-bind="click: deleteMedia.bind($data, $root), clickBubble: false">@RootGlobalization.Button_Delete</a>
+                        <!-- /ko -->
+                    }
+                    @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
+                    {
+                        <!-- ko if: !isFolder() && !isArchived() -->
+                        <a class="bcms-media-content-link" data-bind="click: archiveMedia.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonArchive</a>
+                        <!-- /ko -->
+                        
+                        <!-- ko if: !isFolder() && isArchived() -->
+                        <a class="bcms-media-content-link" data-bind="click: unarchiveMedia.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonUnarchive</a>
                         <!-- /ko -->
                     }
                 </div>

@@ -88,7 +88,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\NHibernate.3.3.3.4000\lib\Net35\NHibernate.dll</HintPath>
     </Reference>
+    <Reference Include="NHibernate.OData">
+      <HintPath>..\..\packages\NHibernate.OData.0.2.4.0\lib\net35\NHibernate.OData.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System" />
@@ -119,6 +124,11 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Accessors\BlogPostContentAccessor.cs" />
+    <Compile Include="Api\DataFilters\GetBlogPostRequest.cs" />
+    <Compile Include="Api\DataContracts\GetAuthorsRequest.cs" />
+    <Compile Include="Api\DataContracts\GetBlogPostsRequest.cs" />
+    <Compile Include="Api\DataModels\BlogPostModel.cs" />
+    <Compile Include="Api\DataContracts\UpdateBlogPostRequest.cs" />
     <Compile Include="Api\Events\BlogEvents.cs" />
     <Compile Include="Api\Events\AuthorEvents.cs" />
     <Compile Include="BlogModuleConstants.cs" />
@@ -149,21 +159,32 @@
     <Compile Include="Models\Maps\BlogPostContentMap.cs" />
     <Compile Include="Models\Maps\BlogPostMap.cs" />
     <Compile Include="Models\Maps\OptionMap.cs" />
+    <Compile Include="Models\MigrationsContent\Migration201305271258.cs" />
+    <Compile Include="Models\Migrations\Migration201305271234.cs" />
     <Compile Include="Models\Option.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
     <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registration\BlogJsModuleIncludeDescriptor.cs" />
+    <Compile Include="Api\DataContracts\AuthorCreateRequest.cs" />
+    <Compile Include="Api\DataContracts\AuthorCreateResponce.cs" />
     <Compile Include="Services\DefaultAuthorService.cs" />
+    <Compile Include="Api\DataContracts\AuthorDeleteRequest.cs" />
+    <Compile Include="Api\DataContracts\AuthorDeleteResponce.cs" />
+    <Compile Include="Api\DataContracts\AuthorUpdateRequest.cs" />
+    <Compile Include="Api\DataContracts\AuthorUpdateResponce.cs" />
     <Compile Include="Services\DefaultBlogService.cs" />
     <Compile Include="Services\DefaultOptionService.cs" />
     <Compile Include="Services\IAuthorService.cs" />
     <Compile Include="Services\IBlogService.cs" />
     <Compile Include="Services\IOptionService.cs" />
+    <Compile Include="Api\DataModels\AuthorModel.cs" />
     <Compile Include="ViewModels\Author\AuthorViewModel.cs" />
     <Compile Include="ViewModels\Blog\BlogPostViewModel.cs" />
     <Compile Include="ViewModels\Blog\BlogTemplateViewModel.cs" />
     <Compile Include="ViewModels\Blog\SiteSettingBlogPostViewModel.cs" />
+    <Compile Include="ViewModels\Filter\BlogsFilter.cs" />
+    <Compile Include="ViewModels\Filter\BlogsGridViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Content\Resources\BlogGlobalization.resx">
@@ -181,6 +202,7 @@
     <EmbeddedResource Include="Content\Styles\Images\icn-zoom-notcompatible.png" />
     <EmbeddedResource Include="Scripts\bcms.blog.js" />
     <Content Include="BuildConfiguration.xml" />
+    <EmbeddedResource Include="Scripts\bcms.blog.filter.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -236,6 +258,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Blog\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Blog\Partial\BlogsFilterTemplate.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -9,12 +9,15 @@ using BetterCms.Module.Root.Mvc;
 
 using Common.Logging;
 
+using Microsoft.Web.Mvc;
+
 namespace BetterCms.Module.Root.Controllers
 {
     /// <summary>
     /// User authentication handling controller.
     /// </summary>
     [BcmsAuthorize]
+    [ActionLinkArea(RootModuleDescriptor.RootAreaName)]
     public class AuthenticationController : CmsControllerBase
     {
         /// <summary>

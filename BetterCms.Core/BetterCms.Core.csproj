@@ -81,13 +81,12 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Web.Mvc, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Web.Mvc, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Mvc2Futures.2.0.50217.0\lib\Microsoft.Web.Mvc.dll</HintPath>
+      <HintPath>..\packages\Mvc3Futures.3.0.20105.0\lib\Microsoft.Web.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="MvcContrib, Version=2.0.95.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MvcContrib.2.0.95.0\lib\MvcContrib.dll</HintPath>
+    <Reference Include="MvcContrib">
+      <HintPath>..\packages\MvcContrib.Mvc3-ci.3.0.100.0\lib\MvcContrib.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate, Version=3.3.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -98,11 +97,14 @@
       <HintPath>..\packages\Nuget.Core.2.0.1\lib\net40-Client\NuGet.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Web.WebPages.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -117,11 +119,25 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Api\DataApiContext.cs" />
+    <Compile Include="Api\DataContracts\DataListResponse.cs" />
+    <Compile Include="Api\DataContracts\GetDataRequest.cs" />
+    <Compile Include="Api\DataContracts\GetFilteredDataRequest.cs" />
     <Compile Include="Api\Events\EventBase.cs" />
     <Compile Include="Api\Events\CoreEvents.cs" />
     <Compile Include="Api\Events\SingleItemEventArgs.cs" />
+    <Compile Include="Api\Extensions\ApiQueryableExtensions.cs" />
     <Compile Include="CmsContext.cs" />
     <Compile Include="Api\ApiContext.cs" />
+    <Compile Include="DataAccess\DataContext\Fetching\EagerFetch.cs" />
+    <Compile Include="DataAccess\DataContext\Fetching\FetchRequest.cs" />
+    <Compile Include="DataAccess\DataContext\Fetching\IFetchingProvider.cs" />
+    <Compile Include="DataAccess\DataContext\Fetching\IFetchRequest.cs" />
+    <Compile Include="DataAccess\DataContext\Fetching\DefaultFetchingProvider.cs" />
+    <Compile Include="DataAccess\DataContext\Migrations\ContentMigration.cs" />
+    <Compile Include="DataAccess\DataContext\Migrations\IContentMigration.cs" />
+    <Compile Include="DataAccess\DataContext\Migrations\ContentMigrationAttribute.cs" />
+    <Compile Include="DataAccess\DataContext\Migrations\DefaultVersionChecker.cs" />
+    <Compile Include="DataAccess\DataContext\Migrations\IVersionChecker.cs" />
     <Compile Include="DataAccess\DataContext\QueryableExtensions.cs" />
     <Compile Include="DataAccess\DataContext\QueryOverExtensions.cs" />
     <Compile Include="DataAccess\DataContext\EventListeners\DeleteEventListener.cs" />
@@ -133,7 +149,7 @@
     <Compile Include="DataAccess\DataContext\Migrations\DefaultMigrationRunner.cs" />
     <Compile Include="DataAccess\DataContext\Migrations\IMigrationRunner.cs" />
     <Compile Include="DataAccess\DataContext\Migrations\MigrationExtensions.cs" />
-    <Compile Include="DataAccess\DataContext\RepositoryExtensions.cs" />
+    <Compile Include="Api\Extensions\ApiRepositoryExtensions.cs" />
     <Compile Include="DataAccess\DataContext\RestrictionsExtensions.cs" />
     <Compile Include="DataAccess\DataContext\SessionExtensions.cs" />
     <Compile Include="DataContracts\Enums\ContentStatus.cs" />
@@ -159,6 +175,7 @@
     <Compile Include="Environment\Assemblies\IAssemblyManager.cs" />
     <Compile Include="DataContracts\Enums\PageStatus.cs" />
     <Compile Include="Exceptions\Api\CmsApiException.cs" />
+    <Compile Include="Exceptions\Api\CmsApiValidationException.cs" />
     <Compile Include="Modules\CssIncludeDescriptor.cs" />
     <Compile Include="Modules\Projections\JavaScriptModuleLink.cs" />
     <Compile Include="Mvc\Attributes\NoCacheAttribute.cs" />

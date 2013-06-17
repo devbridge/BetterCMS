@@ -14,12 +14,15 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
+using Microsoft.Web.Mvc;
+
 namespace BetterCms.Module.Pages.Controllers
 {
     /// <summary>
     /// Template management.
     /// </summary>
     [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
+    [ActionLinkArea(PagesModuleDescriptor.PagesAreaName)]
     public class TemplatesController : CmsControllerBase
     {
         /// <summary>
@@ -122,6 +125,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// <returns>Rendered templates list.</returns>
         public ActionResult Templates(SearchableGridOptions request)
         {
+            request.SetDefaultPaging();
             var model = GetCommand<GetSiteSettingsTemplatesCommand>().ExecuteCommand(request);
             
             return View(model);

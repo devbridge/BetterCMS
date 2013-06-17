@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define */
 
-define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.inlineEdit', 'bcms.dynamicContent', 'bcms.role', 'bcms.media', 'bcms.messages', 'bcms.grid'], 
+bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.inlineEdit', 'bcms.dynamicContent', 'bcms.role', 'bcms.media', 'bcms.messages', 'bcms.grid'], 
     function ($, bcms, modal, siteSettings, editor, dynamicContent, role, media, messages, grid) {
     'use strict';
 
@@ -115,7 +115,7 @@ define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', '
     function initUserCreatEvents(dialog) {
         var onImageInsert = function(image) {            
             dialog.container.find(selectors.userImageId).val(image.id());
-            dialog.container.find(selectors.userImage).attr('src', image.thumbnailUrl);
+            dialog.container.find(selectors.userImage).attr('src', image.thumbnailUrl());
         };
         dialog.container.find(selectors.userUploadImageButton).on('click', function () {            
             media.openImageInsertDialog(onImageInsert);          

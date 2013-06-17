@@ -14,7 +14,7 @@
     Action<ColumnBuilder<SiteSettingRedirectViewModel>> columns;
 }
 
-@using (Html.BeginForm<RedirectController>(f => f.Redirects(null), FormMethod.Post, new { @id = "bcms-redirects-form" }))
+@using (Html.BeginForm<RedirectController>(f => f.Redirects(null), FormMethod.Post, new { @id = "bcms-redirects-form", @class = "bcms-ajax-form" }))
 {
     columns = column =>
     {
@@ -42,6 +42,9 @@
         <div class="bcms-search-block">
             @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
             <div class="bcms-btn-search" id="bcms-redirects-search-btn">@PagesGlobalization.SiteSettings_Redirects_Search</div>
+        </div>
+        <div class="bcms-featured-grid clearfix">
+            @Html.RenderPaging(Model)
         </div>
     </div>
     

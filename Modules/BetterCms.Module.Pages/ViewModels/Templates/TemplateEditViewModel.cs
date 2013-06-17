@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 using BetterCms.Core.Models;
+using BetterCms.Module.Pages.Content.Resources;
+using BetterCms.Module.Pages.Mvc.Attributes;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Mvc.Grids;
 
@@ -53,6 +55,7 @@ namespace BetterCms.Module.Pages.ViewModels.Templates
         /// </value>
         [Required(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_RequiredAttribute_Message")]
         [StringLength(MaxLength.Url, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
+        [ValidVirtualPathValidation(ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "SaveTemplate_VirtualPathNotExists_Message")]
         public string Url { get; set; }
 
         /// <summary>

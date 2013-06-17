@@ -120,6 +120,41 @@
     </Compile>
     <Compile Include="Accessors\PageStylesheetAccessor.cs" />
     <Compile Include="Accessors\PageJavaScriptAccessor.cs" />
+    <Compile Include="Api\DataContracts\GetPageRequest.cs" />
+    <Compile Include="Api\DataContracts\GetPagesRequest.cs" />
+    <Compile Include="Api\DataContracts\GetContentHistoryRequest.cs" />
+    <Compile Include="Api\DataContracts\GetPageWidgetsRequest.cs" />
+    <Compile Include="Api\DataContracts\GetHtmlContentWidgetsRequest.cs" />
+    <Compile Include="Api\DataContracts\GetServerControlWidgetsRequest.cs" />
+    <Compile Include="Api\DataContracts\GetWidgetsRequest.cs" />
+    <Compile Include="Api\DataContracts\GetTagsRequest.cs" />
+    <Compile Include="Api\DataContracts\GetRedirectsRequest.cs" />
+    <Compile Include="Api\DataContracts\GetCategoriesRequest.cs" />
+    <Compile Include="Api\DataContracts\GetLayoutRegionsRequest.cs" />
+    <Compile Include="Api\DataContracts\GetRegionsRequest.cs" />
+    <Compile Include="Api\DataContracts\GetLayoutsRequest.cs" />
+    <Compile Include="Api\DataContracts\GetNodesRequest.cs" />
+    <Compile Include="Api\DataContracts\GetPageContentsRequest.cs" />
+    <Compile Include="Api\DataContracts\GetRegionContentsRequest.cs" />
+    <Compile Include="Command\Tag\SearchTags\SearchTagsCommand.cs" />
+    <Compile Include="Helpers\Extensions\RenderPageViewModelExtensions.cs" />
+    <Compile Include="Models\Migrations\Migration201306140841.cs" />
+    <Compile Include="Models\Migrations\Migration201305281700.cs" />
+    <Compile Include="Mvc\Attributes\ValidVirtualPathValidationAttribute.cs" />
+    <Compile Include="Api\DataContracts\AddWidgetToPageRequest.cs" />
+    <Compile Include="Api\DataContracts\CreateHtmlContentWidgetRequest.cs" />
+    <Compile Include="Api\DataContracts\CreateLayoutRegionRequest.cs" />
+    <Compile Include="Api\DataContracts\CreateLayoutRequest.cs" />
+    <Compile Include="Api\DataContracts\CreatePageContentRequestBase.cs" />
+    <Compile Include="Api\DataContracts\CreatePageHtmlContentRequest.cs" />
+    <Compile Include="Api\PagesApiContext.Sitemap.cs" />
+    <Compile Include="Api\PagesApiContext.cs" />
+    <Compile Include="Api\PagesApiContext.Contents.cs" />
+    <Compile Include="Api\PagesApiContext.Layouts.cs" />
+    <Compile Include="Api\DataContracts\Models\ContentOptionDto.cs" />
+    <Compile Include="Api\DataContracts\Models\ContentOptionValueDto.cs" />
+    <Compile Include="Api\DataContracts\CreateContentOptionsRequest.cs" />
+    <Compile Include="Api\DataContracts\CreateServerControlWidgetRequest.cs" />
     <Compile Include="Api\Events\CategoryEvents.cs" />
     <Compile Include="Api\Events\WidgetEvents.cs" />
     <Compile Include="Api\Events\TagEvents.cs" />
@@ -221,6 +256,7 @@
     <Compile Include="Helpers\ListModelBindingExtensions.cs" />
     <Compile Include="Helpers\RenderHelper.cs" />
     <Compile Include="Helpers\TimeHelper.cs" />
+    <Compile Include="Api\DataContracts\CreatePageRequest.cs" />
     <Compile Include="Models\IServerControlWidget.cs" />
     <Compile Include="Models\Maps\HtmlContentMap.cs" />
     <Compile Include="Models\Maps\SitemapNodeMap.cs" />
@@ -247,7 +283,7 @@
     <Compile Include="Mvc\Attributes\CustomPageUrlValidationAttribute.cs" />
     <Compile Include="Mvc\Attributes\DateValidationAttribute.cs" />
     <Compile Include="Mvc\Attributes\EndDateValidationAttribute.cs" />
-    <Compile Include="Api\PagesApiContext.cs" />
+    <Compile Include="Api\PagesApiContext.Pages.cs" />
     <Compile Include="PagesConstants.cs" />
     <Compile Include="Accessors\HtmlContentWidgetAccessor.cs" />
     <Compile Include="Accessors\HtmlContentAccessor.cs" />
@@ -278,6 +314,8 @@
     <Compile Include="ViewModels\Content\ContentViewModel.cs" />
     <Compile Include="ViewModels\Content\ContentSortViewModel.cs" />
     <Compile Include="ViewModels\Content\PageContentSortViewModel.cs" />
+    <Compile Include="ViewModels\Filter\PagesGridViewModel.cs" />
+    <Compile Include="ViewModels\Filter\PagesFilter.cs" />
     <Compile Include="ViewModels\History\ContentHistoryItem.cs" />
     <Compile Include="ViewModels\History\ContentHistoryViewModel.cs" />
     <Compile Include="ViewModels\Sitemap\PageLinkViewModel.cs" />
@@ -355,10 +393,6 @@
       <Project>{66e7e4df-eeea-4b1e-8663-a1b430eb7375}</Project>
       <Name>BetterCms.Module.Root</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BetterCms.Module.Templates\BetterCms.Module.Templates.csproj">
-      <Project>{17BF5CA2-23B6-4796-8EF1-CDDF6D41A4F7}</Project>
-      <Name>BetterCms.Module.Templates</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Content\Styles\Images\sprite-base-2.png" />
@@ -382,6 +416,7 @@
     <EmbeddedResource Include="Scripts\bcms.pages.content.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.widgets.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.filter.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -521,6 +556,10 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Seo\Partial\WarnMessageAboutSitemap.cshtml" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Filter\PagesFilterTemplate.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.pages.properties', 'bcms.grid', 'bcms.redirect', 'bcms.messages'],
-    function ($, bcms, modal, siteSettings, forms, dynamicContent, pageProperties, grid, redirect, messages) {
+bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.pages.properties', 'bcms.grid', 'bcms.redirect', 'bcms.messages', 'bcms.pages.filter'],
+    function ($, bcms, modal, siteSettings, forms, dynamicContent, pageProperties, grid, redirect, messages, filter) {
     'use strict';
 
         var page = { },            
@@ -392,7 +392,7 @@ define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 
     /**
     * Initializes site settings pages list and list items
     */
-    page.initializeSiteSettingsPagesList = function () {
+    page.initializeSiteSettingsPagesList = function (content, jsonData) {
         var dialog = siteSettings.getModalDialog(),
             container = dialog.container;
 
@@ -413,6 +413,10 @@ define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 
         });
 
         page.initializeSiteSettingsPagesListItems(container);
+
+        filter.bind(container, ((content.Data) ? content.Data : jsonData), function() {
+            page.searchSiteSettingsPages(form, container);
+        });
     };
 
     /**
@@ -444,9 +448,9 @@ define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 
     * Search site settings pages
     */
     page.searchSiteSettingsPages = function(form, container) {
-        grid.submitGridForm(form, function (data) {
-            siteSettings.setContent(data);
-            page.initializeSiteSettingsPagesList(data);
+        grid.submitGridForm(form, function (htmlContent, data) {
+            siteSettings.setContent(htmlContent);
+            page.initializeSiteSettingsPagesList(htmlContent, data);
             var searchInput = container.find(selectors.siteSettingsPagesSearchField);           
             grid.focusSearchInput(searchInput);
         });
@@ -597,8 +601,12 @@ define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 
     */
     function initializeCustomValidation() {
         $.validator.addMethod("jqpageurlvalidation", function(value, element, params) {
-            if (pageUrlManuallyEdited && (!value || value.match(params.pattern) == null)) {
-                return false;
+            if (pageUrlManuallyEdited) {
+                if (!value) {
+                    return false;
+                }
+                var match = new RegExp(params.pattern).exec(value);
+                return (match && (match.index === 0) && (match[0].length === value.length));
             }
 
             return true;

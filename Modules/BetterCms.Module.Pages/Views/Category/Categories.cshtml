@@ -9,12 +9,11 @@
 @using MvcContrib.UI.Grid
 
 @model BetterCms.Module.Root.ViewModels.SiteSettings.SearchableGridViewModel<CategoryItemViewModel>
-
 @{
     Action<ColumnBuilder<CategoryItemViewModel>> columns;
 }
 
-@using (Html.BeginForm<CategoryController>(f => f.Categories(null), FormMethod.Post, new { @id = "bcms-categories-form" }))
+@using (Html.BeginForm<CategoryController>(f => f.Categories(null), FormMethod.Post, new { @id = "bcms-categories-form", @class = "bcms-ajax-form" }))
 {
     columns = column =>
     {
@@ -37,6 +36,10 @@
             @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
             <div class="bcms-btn-search" id="bcms-categories-search-btn">@PagesGlobalization.SiteSettings_Categories_Search</div>
         </div>
+        
+        <div class="bcms-featured-grid clearfix">
+            @Html.RenderPaging(Model)
+        </div>
     </div>
     @Html.SiteSettingsMessagesBox()
     @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<CategoryItemViewModel>())
@@ -44,5 +47,5 @@
 }
 
 <script type="text/html" id="bcms-editable-row-template">
-    @Html.Grid(new List<CategoryItemViewModel> {new CategoryItemViewModel()}).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<CategoryItemViewModel>())
+    @Html.Grid(new List<CategoryItemViewModel> { new CategoryItemViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<CategoryItemViewModel>())
 </script>

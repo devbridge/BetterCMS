@@ -48,6 +48,14 @@ namespace BetterCms.Module.MediaManager.ViewModels.Images
         /// The URL.
         /// </value>
         public string Url { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the thumbnail URL.
+        /// </summary>
+        /// <value>
+        /// The thumbnail  URL.
+        /// </value>
+        public string ThumbnailUrl { get; set; }
 
         /// <summary>
         /// Gets or sets the original image URL.

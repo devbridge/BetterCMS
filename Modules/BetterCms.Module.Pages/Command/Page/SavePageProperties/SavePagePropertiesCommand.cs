@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 
 using BetterCms.Api;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
-using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+
+using CategoryEntity = BetterCms.Module.Root.Models.Category;
 
 namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
 {
@@ -99,23 +101,18 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             }
 
             page.Layout = Repository.AsProxy<Root.Models.Layout>(request.TemplateId);
-            page.Category = request.CategoryId.HasValue ? Repository.AsProxy<Category>(request.CategoryId.Value) : null;
+            page.Category = request.CategoryId.HasValue ? Repository.AsProxy<CategoryEntity>(request.CategoryId.Value) : null;
             page.Title = request.PageName;
             page.CustomCss = request.PageCSS;
             page.CustomJS = request.PageJavascript;
-            page.IsPublic = request.IsVisibleToEveryone;
+            page.Status = request.IsVisibleToEveryone ? PageStatus.Published : PageStatus.Unpublished;
             page.UseNoFollow = request.UseNoFollow;
             page.UseNoIndex = request.UseNoIndex;
             page.Version = request.Version;
 
-            if (request.Image != null && request.Image.ImageId.HasValue)
-            {
-                page.Image = Repository.AsProxy<MediaImage>(request.Image.ImageId.Value);
-            }
-            else
-            {
-                page.Image = null;
-            }
+            page.Image = request.Image != null && request.Image.ImageId.HasValue ? Repository.AsProxy<MediaImage>(request.Image.ImageId.Value) : null;
+            page.SecondaryImage = request.SecondaryImage != null && request.SecondaryImage.ImageId.HasValue ? Repository.AsProxy<MediaImage>(request.SecondaryImage.ImageId.Value) : null;
+            page.FeaturedImage = request.FeaturedImage != null && request.FeaturedImage.ImageId.HasValue ? Repository.AsProxy<MediaImage>(request.FeaturedImage.ImageId.Value) : null;
 
             Repository.Save(page);
 

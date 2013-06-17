@@ -3,6 +3,10 @@
     -ms-text-size-adjust: 100%;
 }
 
+[class*="bcms-"] {
+    font-family: 'Open Sans', sans-serif !important;
+}
+
 .bcms-version-number {
     line-height: 21px;
     margin-right: 10px;
@@ -122,7 +126,6 @@ hr.bcms-sidebar-separator {
     white-space: nowrap;
     height: 34px;
     width: 225px;
-    font-family: 'Open Sans', sans-serif;
     font-size: 12px;
 }
 
@@ -144,7 +147,6 @@ select.bcms-select-published {
     height: 33px;
     line-height: 33px;
     font-size: 12px;
-    font-family: 'Open Sans', sans-serif;
     color: #FFFFFF;
     cursor: pointer;
     overflow: hidden;
@@ -1059,7 +1061,6 @@ div.bcms-modal-close {
     .bcms-error-frame > p {
         font-size: 11px;
         line-height: 19px;
-        font-family: 'Open Sans', sans-serif;
     }
 
 .bcms-popinfo-frame {
@@ -1083,7 +1084,6 @@ div.bcms-modal-close {
         line-height: 19px;
         word-wrap: break-word;
         font-size: 11px;
-        font-family: 'Open Sans', sans-serif;
     }
 
 a.bcms-error-close {
@@ -1124,6 +1124,7 @@ a.bcms-error-close {
     position: relative;
     background: #eff9fd;
     border: 1px solid #c6c6c6;
+    box-shadow: 1px 1px 5px 0 rgba(0,0,0,0.4);
 }
 
     .bcms-tooltip-box p {
@@ -1131,7 +1132,6 @@ a.bcms-error-close {
         padding: 0;
         margin: 0;
         font-size: 11px;
-        font-family: 'Open Sans', sans-serif;
     }
 
 div.bcms-tip-close {
@@ -1473,7 +1473,6 @@ a.bcms-btn-close {
     height: 30px;
     width: 285px;
     line-height: 17px;
-    font-family: 'Open Sans', sans-serif;
     font-size: 12px;
 }
 
@@ -2019,7 +2018,7 @@ a.bcms-sort-arrow-top:hover {
     min-height: 30px;
     line-height: 30px;
     left: -1px;
-    padding: 15px 20px 15px 20px;
+    padding: 15px 20px 5px 20px;
     background-color: #eaeaea;
 }
 
@@ -2028,6 +2027,46 @@ a.bcms-sort-arrow-top:hover {
         padding-bottom: 3px;
         vertical-align: middle;
     }
+
+.bcms-pager {
+    float:right;
+    text-align: right;
+}
+
+.bcms-pager-no {
+    color: #0383df;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.bcms-active-pager {
+    text-shadow: 0 0 1px #0383DF;
+}
+
+.bcms-pager-text {
+    vertical-align: middle;
+}
+
+.bcms-pager-prev, .bcms-pager-next {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    line-height: 15px;
+    cursor: pointer;
+    overflow: hidden;
+    vertical-align: middle;
+    text-indent: 9999px;
+}
+
+.bcms-pager-prev {
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAARCAYAAADkIz3lAAAAb0lEQVQoz7XSuw5AQBSE4X0DlU6ppHAJj0+rEpSUOpUn+BU2sZG92cTUX3NmjhCWAC0wA5ULndzpTahW0AJEOpQDh4LiYJQpaDWhFNgl2oAkDEk48qSw9eU+QMHNq7fYd4n/8KSdz4CHL7gTnv9YXmR2GKHroxZOAAAAAElFTkSuQmCC') no-repeat center #383838;
+    background-size: 40%;
+}
+
+.bcms-pager-next {
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAARCAYAAADkIz3lAAAAbElEQVQoz63SoQ6CUACFYd7gJhvRqAFw8PhaSUyJEG0mnuAz6OYd4XrHOPkrZ/sLNHigK1LDzWdLEiNgjPAlhQ8RfuG8K54ifErhEvMXP3HcDVd+G7YfW6EFbQ7qNqOAew7q/4aBa249dU6Pb+nPGKFxjQIDAAAAAElFTkSuQmCC') no-repeat center #383838;
+    background-size: 40%;
+}
 
 /*forms & input fields validation, error messages*/
 
@@ -2162,7 +2201,6 @@ span.bcms-field-validation-error {
         border: 1px solid #E64343;
         vertical-align: middle;
         font-size: 10px;
-        font-family: 'Open Sans', sans-serif;
     }
 
         span.bcms-field-validation-error > span:after, span.bcms-field-validation-error > span:before {
@@ -2259,23 +2297,23 @@ ul.bcms-info-messages {
 }
 
 /*tag validation errors*/
-.tag-validation-error {
+.bcms-tag-validation-error {
     background-color: #fcecec;
     border: 1px solid #e64343;
     box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
 }
 
-    .tag-validation-error:focus {
+    .bcms-tag-validation-error:focus {
         background: #fcecec;
         border: 1px solid #e64343;
         box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
     }
 
-        .tag-validation-error:focus + .tag-field-validation-error span {
+        .bcms-tag-validation-error:focus + .bcms-tag-field-validation-error span {
             visibility: visible;
         }
 
-span.tag-field-validation-error {
+span.bcms-tag-field-validation-error {
     position: absolute;
     right: 1px;
     top: 50%;
@@ -2285,7 +2323,7 @@ span.tag-field-validation-error {
     background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAJCAYAAAF8oY2FAAAAZElEQVQY02N45uw8DYi/MsAZ////Z0AQQKH/YA6QYYcsuhxD5D8QO0LpTOyCIAtAElBJO5ClIEYmskoUW2ACMDdgqsRlZgtU5Rcg9kZS4A0VA8m1MCBJZEAlkHEG3G6iFRJrNQAfBNhPNe12LwAAAABJRU5ErkJggg==') no-repeat center center #FCECEC;
 }
 
-    span.tag-field-validation-error > span {
+    span.bcms-tag-field-validation-error > span {
         visibility: hidden;
         position: absolute;
         right: -9px;
@@ -2298,10 +2336,9 @@ span.tag-field-validation-error {
         border: 1px solid #E64343;
         vertical-align: middle;
         font-size: 10px;
-        font-family: 'Open Sans', sans-serif;
     }
 
-        span.tag-field-validation-error > span:after, span.tag-field-validation-error > span:before {
+        span.bcms-tag-field-validation-error > span:after, span.bcms-tag-field-validation-error > span:before {
             top: 100%;
             border: solid transparent;
             content: " ";
@@ -2311,14 +2348,14 @@ span.tag-field-validation-error {
             pointer-events: none;
         }
 
-        span.tag-field-validation-error > span:after {
+        span.bcms-tag-field-validation-error > span:after {
             border-top-color: #FCECEC;
             border-width: 10px;
             right: 7px;
             margin-left: -10px;
         }
 
-        span.tag-field-validation-error > span:before {
+        span.bcms-tag-field-validation-error > span:before {
             border-top-color: #E64343;
             border-width: 11px;
             right: 6px;
@@ -2350,7 +2387,7 @@ span.tag-field-validation-error {
 }
 
 .ui-widget {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Open Sans',sans-serif !important;
     font-size: 14px;
 }
 
@@ -2359,7 +2396,6 @@ span.tag-field-validation-error {
     }
 
     .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
-        font-family: 'Open Sans', sans-serif;
         font-size: 14px;
     }
 
@@ -2378,6 +2414,7 @@ span.tag-field-validation-error {
     background: #1894e4;
     color: #ffffff;
     font-weight: bold;
+    font-family: 'Open Sans',sans-serif !important;
     position: relative;
 }
 
@@ -2478,6 +2515,7 @@ a.ui-state-default:hover {
         text-align: center;
         font-size: 14px;
         font-weight: 400;
+        font-family: 'Open Sans',sans-serif !important;
         text-transform: uppercase;
     }
 

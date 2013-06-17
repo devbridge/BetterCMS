@@ -6,6 +6,8 @@ using System.Web.UI;
 
 using BetterCms.Core.Web.EmbeddedResources;
 
+using Microsoft.Web.Mvc;
+
 using MvcContrib.UI.InputBuilder.ViewEngine;
 
 namespace BetterCms.Module.Root.Controllers
@@ -13,6 +15,7 @@ namespace BetterCms.Module.Root.Controllers
     /// <summary>
     /// Embedded resources accessor controller.
     /// </summary>
+    [ActionLinkArea(RootModuleDescriptor.RootAreaName)]
     public class EmbeddedResourcesController : Controller
     {        
         /// <summary>

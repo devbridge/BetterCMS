@@ -10,6 +10,7 @@ using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Models;
 using BetterCms.Core.Services;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Mvc.Helpers;
 
 using NHibernate.Linq;
 
@@ -257,7 +258,7 @@ namespace BetterCms.Module.Root.Services
 
             if (pageContent != null)
             {
-                Models.Content content = FindEditableContentVersion(pageContent.Content);
+                Models.Content content = pageContent.Content.FindEditableContentVersion();
 
                 if (content == null)
                 {
@@ -280,31 +281,32 @@ namespace BetterCms.Module.Root.Services
 
             if (content != null)
             {
-                return FindEditableContentVersion(content);
+                return content.FindEditableContentVersion();
             }
 
             return null;
         }
 
-        private Models.Content FindEditableContentVersion(Models.Content content)
+        public int GetPageContentNextOrderNumber(Guid pageId)
         {
-            Models.Content contentForEdit = null;
+            var page = repository.AsProxy<Page>(pageId);
+            var max = repository
+                .AsQueryable<PageContent>()
+                .Where(f => f.Page == page && !f.IsDeleted)
+                .Select(f => (int?)f.Order)
+                .Max();
+            int order;
 
-            if (content.Status == ContentStatus.Draft)
+            if (max == null)
             {
-                contentForEdit = content;
+                order = 0;
             }
-            else if (content.History != null)
+            else
             {
-                contentForEdit = content.History.FirstOrDefault(f => f.Status == ContentStatus.Draft);
-            }
-
-            if (contentForEdit == null && content.Status == ContentStatus.Published)
-            {
-                contentForEdit = content;
+                order = max.Value + 1;
             }
 
-            return contentForEdit;
+            return order;
         }
 
         private void RemoveContentOptionsIfExists(Models.Content content)

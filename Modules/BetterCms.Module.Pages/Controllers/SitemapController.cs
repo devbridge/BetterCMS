@@ -13,12 +13,15 @@ using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
+using Microsoft.Web.Mvc;
+
 namespace BetterCms.Module.Pages.Controllers
 {
     /// <summary>
     /// Handles sitemap logic.
     /// </summary>
     [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+    [ActionLinkArea(PagesModuleDescriptor.PagesAreaName)]
     public class SitemapController : CmsControllerBase
     {
         /// <summary>

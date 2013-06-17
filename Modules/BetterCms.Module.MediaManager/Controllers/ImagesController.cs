@@ -1,7 +1,9 @@
 ﻿using System.Web.Mvc;
 
 using BetterCms.Core.Security;
+
 using BetterCms.Module.MediaManager.Command.Images.GetImage;
+using BetterCms.Module.MediaManager.Command.Images.GetImageProperties;
 using BetterCms.Module.MediaManager.Command.Images.GetImages;
 using BetterCms.Module.MediaManager.Command.Images.SaveImage;
 using BetterCms.Module.MediaManager.Command.MediaManager.DeleteMedia;
@@ -12,12 +14,15 @@ using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
+using Microsoft.Web.Mvc;
+
 namespace BetterCms.Module.MediaManager.Controllers
 {
     /// <summary>
     /// Handles site settings logic for Pages module.
     /// </summary>
     [BcmsAuthorize]
+    [ActionLinkArea(MediaManagerModuleDescriptor.MediaManagerAreaName)]
     public class ImagesController : CmsControllerBase
     {
         /// <summary>
@@ -37,6 +42,7 @@ namespace BetterCms.Module.MediaManager.Controllers
             {
                 options = new MediaManagerViewModel();
             }
+            options.SetDefaultPaging();
 
             var model = GetCommand<GetImagesCommand>().ExecuteCommand(options);
             if (model == null)
@@ -81,6 +87,19 @@ namespace BetterCms.Module.MediaManager.Controllers
             return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Image properties dialog.
+        /// </summary>
+        /// <param name="imageId">The image id.</param>
+        /// <returns>The view with image properties</returns>
+        [HttpGet]
+        public ActionResult ImageProperties(string imageId)
+        {
+            var model = GetCommand<GetImagePropertiesCommand>().ExecuteCommand(imageId.ToGuidOrDefault());
+            var view = RenderView("ImageProperties", model ?? new ImageViewModel());
+            return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
+        }
+        
         /// <summary>
         /// Image insert editor.
         /// </summary>

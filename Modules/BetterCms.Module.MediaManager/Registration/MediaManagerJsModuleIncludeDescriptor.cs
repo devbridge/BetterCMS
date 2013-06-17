@@ -34,7 +34,9 @@ namespace BetterCms.Module.MediaManager.Registration
                     new JavaScriptModuleLinkTo<FilesController>(this, "downloadFileUrl", c => c.Download("{0}")),
                     new JavaScriptModuleLinkTo<FolderController>(this, "saveFolderUrl", c => c.SaveFolder(null)),
                     new JavaScriptModuleLinkTo<FolderController>(this, "deleteFolderUrl", c => c.DeleteFolder("{0}", "{1}")),
-                    new JavaScriptModuleLinkTo<MediaManagerController>(this, "renameMediaUrl", c => c.RenameMedia(null))
+                    new JavaScriptModuleLinkTo<MediaManagerController>(this, "renameMediaUrl", c => c.RenameMedia(null)),
+                    new JavaScriptModuleLinkTo<MediaManagerController>(this, "archiveMediaUrl", c => c.ArchiveMedia("{0}", "{1}")),
+                    new JavaScriptModuleLinkTo<MediaManagerController>(this, "unarchiveMediaUrl", c => c.UnarchiveMedia("{0}", "{1}")),
                 };
 
             Globalization = new IActionProjection[]
@@ -54,6 +56,15 @@ namespace BetterCms.Module.MediaManager.Registration
                     new JavaScriptModuleGlobalization(this, "deleteVideoConfirmMessage", () => MediaGlobalization.DeleteVideo_Confirmation_Message),
                     new JavaScriptModuleGlobalization(this, "deleteFileConfirmMessage", () => MediaGlobalization.DeleteFile_Confirmation_Message),
                     new JavaScriptModuleGlobalization(this, "deleteFolderConfirmMessage", () => MediaGlobalization.DeleteFolder_ConfirmationMessage),
+                    
+                    new JavaScriptModuleGlobalization(this, "archiveMediaConfirmMessage", () => MediaGlobalization.ArchiveMedia_ConfirmationMessage),
+                    new JavaScriptModuleGlobalization(this, "unarchiveMediaConfirmMessage", () => MediaGlobalization.UnarchiveMedia_ConfirmationMessage),
+                    new JavaScriptModuleGlobalization(this, "archiveImageConfirmMessage", () => MediaGlobalization.ArchiveImage_ConfirmationMessage),
+                    new JavaScriptModuleGlobalization(this, "unarchiveImageConfirmMessage", () => MediaGlobalization.UnarchiveImage_ConfirmationMessage),
+                    new JavaScriptModuleGlobalization(this, "archiveVideoConfirmMessage", () => MediaGlobalization.ArchiveVideo_ConfirmationMessage),
+                    new JavaScriptModuleGlobalization(this, "unarchiveVideoConfirmMessage", () => MediaGlobalization.UnarchiveVideo_ConfirmationMessage),
+                    new JavaScriptModuleGlobalization(this, "archiveFileConfirmMessage", () => MediaGlobalization.ArchiveFile_ConfirmationMessage),
+                    new JavaScriptModuleGlobalization(this, "unarchiveFileConfirmMessage", () => MediaGlobalization.UnarchiveFile_ConfirmationMessage),
 
                     new JavaScriptModuleGlobalization(this, "imagesTabTitle", () => MediaGlobalization.ImagesTab_Title),
                     new JavaScriptModuleGlobalization(this, "audiosTabTitle", () => MediaGlobalization.AudiosTab_Title),
@@ -63,7 +74,7 @@ namespace BetterCms.Module.MediaManager.Registration
                     new JavaScriptModuleGlobalization(this, "uploadImage", () => MediaGlobalization.ImagesTab_UploadImage),
                     new JavaScriptModuleGlobalization(this, "uploadAudio", () => MediaGlobalization.AudiosTab_UploadAudio),
                     new JavaScriptModuleGlobalization(this, "uploadVideo", () => MediaGlobalization.VideosTab_UploadVideo),
-                    new JavaScriptModuleGlobalization(this, "uploadFile", () => MediaGlobalization.FilesTab_UploadFile),
+                    new JavaScriptModuleGlobalization(this, "uploadFile", () => MediaGlobalization.FilesTab_UploadFile)
                 };
         }
     }

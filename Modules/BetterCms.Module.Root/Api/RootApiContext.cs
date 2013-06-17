@@ -1,7 +1,12 @@
-﻿using Autofac;
+﻿using System;
+using System.Linq;
+
+using Autofac;
 
 using BetterCms.Core.DataAccess;
+using BetterCms.Core.Exceptions.Api;
 using BetterCms.Module.Root.Api.Events;
+using BetterCms.Module.Root.Models;
 
 // ReSharper disable CheckNamespace
 namespace BetterCms.Api
@@ -42,5 +47,37 @@ namespace BetterCms.Api
                 return events;
             }
         }
+
+        public bool IsContentMigrated(string moduleName, long contentVersion)
+        {
+            try
+            {
+                return Repository.AsQueryable<ModuleContentVersion>(v => v.ModuleName == moduleName && v.ContentVersion == contentVersion).Any();
+            }
+            catch (Exception ex)
+            {
+                const string message = "Failed to perform version check.";
+                Logger.Error(message, ex);
+                throw new CmsApiException(message, ex);
+            }
+        }
+
+        public void ContentMigrated(string moduleName, long contentVersion)
+        {
+            try
+            {
+                var version = new ModuleContentVersion { ModuleName = moduleName, ContentVersion = contentVersion };
+                Repository.Save(version);
+
+                UnitOfWork.Commit();
+            }
+            catch (Exception ex)
+            {
+                const string message = "Failed to perform version saving.";
+                Logger.Error(message, ex);
+                throw new CmsApiException(message, ex);
+            }
+        }
+
     }
 }

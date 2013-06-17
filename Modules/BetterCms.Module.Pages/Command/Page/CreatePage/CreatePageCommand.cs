@@ -60,7 +60,6 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
                     PageUrl = pageUrl,
                     Title = request.PageTitle,
                     Layout = Repository.First<Root.Models.Layout>(request.TemplateId),
-                    IsPublic = true,
                     Status = PageStatus.Unpublished
                 };
                 

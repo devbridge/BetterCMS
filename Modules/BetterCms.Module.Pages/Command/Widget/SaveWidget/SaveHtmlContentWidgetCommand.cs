@@ -6,9 +6,10 @@ using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Widgets;
 
-using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
+
+using CategoryEntity = BetterCms.Module.Root.Models.Category;
 
 namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
 {
@@ -77,7 +78,7 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
 
             if (request.CategoryId.HasValue && !request.CategoryId.Value.HasDefaultValue())
             {
-                content.Category = Repository.AsProxy<Category>(request.CategoryId.Value);
+                content.Category = Repository.AsProxy<CategoryEntity>(request.CategoryId.Value);
             }
             else
             {

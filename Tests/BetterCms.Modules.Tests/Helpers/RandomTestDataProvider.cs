@@ -127,6 +127,8 @@ namespace BetterCms.Tests.Helpers
             PopulatePageProperties(entity);
 
             entity.Author = CreateNewAuthor();
+            entity.ActivationDate = ProvideRandomDateTime();
+            entity.ExpirationDate = ProvideRandomDateTime();
 
             return entity;
         }
@@ -527,6 +529,7 @@ namespace BetterCms.Tests.Helpers
             entity.IsUploaded = true;
             entity.IsTemporary = true;
             entity.IsCanceled = true;
+            entity.IsArchived = false;
 
             return entity;
         }

@@ -1,18 +1,29 @@
-﻿using BetterCms.Core.DataAccess.DataContext.Migrations;
+﻿using System;
+
+using BetterCms.Core.DataAccess.DataContext.Migrations;
 using BetterCms.Core.Models;
 
 using FluentMigrator;
 
 namespace BetterCms.Module.MediaManager.Models.Migrations
 {
+    /// <summary>
+    /// Module initial database structure creation.
+    /// </summary>
     [Migration(201301151845)]
     public class InitialSetup : DefaultMigration
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InitialSetup"/> class.
+        /// </summary>
         public InitialSetup()
             : base(MediaManagerModuleDescriptor.ModuleName)
         {
         }
 
+        /// <summary>
+        /// Ups this instance.
+        /// </summary>
         public override void Up()
         {
             CreateMediaImageAlignTable();
@@ -23,16 +34,17 @@ namespace BetterCms.Module.MediaManager.Models.Migrations
             CreateMediaImagesTable();
         }
 
+        /// <summary>
+        /// Downs this instance.
+        /// </summary>
         public override void Down()
         {
-            RemoveMediaImagesTable();
-            RemoveMediaFilesTable();
-            RemoveMediaFolderTable();
-            RemoveMediasTable();
-            RemoveMediaTypesTable();
-            RemoveMediaImageAlignTable();
+            throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Creates the media types table.
+        /// </summary>
         private void CreateMediaTypesTable()
         {
             Create
@@ -48,11 +60,9 @@ namespace BetterCms.Module.MediaManager.Models.Migrations
                 .Row(new { Id = 4, Name = "File" });
         }
 
-        private void RemoveMediaTypesTable()
-        {
-            Delete.Table("MediaTypes").InSchema(SchemaName);
-        }
-
+        /// <summary>
+        /// Creates the medias table.
+        /// </summary>
         private void CreateMediasTable()
         {
             Create
@@ -80,15 +90,9 @@ namespace BetterCms.Module.MediaManager.Models.Migrations
                 .OnTable("Medias").InSchema(SchemaName).OnColumn("Type");
         }
 
-        private void RemoveMediasTable()
-        {
-            Delete.Index("IX_Cms_Medias_FolderId").OnTable("Medias").InSchema(SchemaName);
-            Delete.Index("IX_Cms_Medias_Type").OnTable("Medias").InSchema(SchemaName);
-            Delete.Index("IX_Cms_Medias_Title").OnTable("Medias").InSchema(SchemaName);
-            Delete.ForeignKey("FK_Cms_Medias_Type_MediaTypes_Id").OnTable("Medias").InSchema(SchemaName);
-            Delete.Table("Medias").InSchema(SchemaName);
-        }
-
+        /// <summary>
+        /// Creates the media folder table.
+        /// </summary>
         private void CreateMediaFolderTable()
         {
             Create
@@ -116,15 +120,9 @@ namespace BetterCms.Module.MediaManager.Models.Migrations
                 .OnTable("MediaFolders").InSchema(SchemaName).OnColumn("ParentFolderId").Ascending();
         }
 
-        private void RemoveMediaFolderTable()
-        {
-            Delete.ForeignKey("FK_Cms_Medias_FolderId_MediaFolders_Id").OnTable("Medias").InSchema(SchemaName);
-            Delete.Index("IX_Cms_MediaFolders_ParentId").OnTable("MediaFolders").InSchema(SchemaName);
-            Delete.ForeignKey("FK_Cms_MediaFolders_Id_Medias_Id").OnTable("MediaFolders").InSchema(SchemaName);
-            Delete.ForeignKey("FK_Cms_MediaFolders_ParentId_MediaFolders_Id").OnTable("MediaFolders").InSchema(SchemaName);
-            Delete.Table("MediaFolders").InSchema(SchemaName);
-        }
-
+        /// <summary>
+        /// Creates the media files table.
+        /// </summary>
         private void CreateMediaFilesTable()
         {
             Create
@@ -152,13 +150,9 @@ namespace BetterCms.Module.MediaManager.Models.Migrations
                 .OnTable("MediaFiles").InSchema(SchemaName).OnColumn("Size").Ascending();
         }
 
-        private void RemoveMediaFilesTable()
-        {
-            Delete.Index("IX_Cms_MediaFiles_Size").OnTable("MediaFiles").InSchema(SchemaName);
-            Delete.Index("IX_Cms_MediaFiles_OriginalFileName").OnTable("MediaFiles").InSchema(SchemaName);
-            Delete.Table("MediaFiles").InSchema(SchemaName);
-        }
-
+        /// <summary>
+        /// Creates the media images table.
+        /// </summary>
         private void CreateMediaImagesTable()
         {
             Create
@@ -176,13 +170,13 @@ namespace BetterCms.Module.MediaManager.Models.Migrations
                 .WithColumn("OriginalHeight").AsInt32().NotNullable()
                 .WithColumn("OriginalSize").AsInt64().NotNullable()
                 .WithColumn("OriginalUri").AsString(MaxLength.Uri).NotNullable()
-                .WithColumn("PublicOriginallUrl").AsString(MaxLength.Url).NotNullable().WithDefaultValue("")
+                .WithColumn("PublicOriginallUrl").AsString(MaxLength.Url).NotNullable().WithDefaultValue(string.Empty)
                 .WithColumn("IsOriginalUploaded").AsBoolean().NotNullable().WithDefaultValue(0)
                 .WithColumn("ThumbnailWidth").AsInt32().NotNullable()
                 .WithColumn("ThumbnailHeight").AsInt32().NotNullable()
                 .WithColumn("ThumbnailSize").AsInt64().NotNullable()
                 .WithColumn("ThumbnailUri").AsString(MaxLength.Uri).NotNullable()
-                .WithColumn("PublicThumbnailUrl").AsString(MaxLength.Url).NotNullable().WithDefaultValue("")
+                .WithColumn("PublicThumbnailUrl").AsString(MaxLength.Url).NotNullable().WithDefaultValue(string.Empty)
                 .WithColumn("IsThumbnailUploaded").AsBoolean().NotNullable().WithDefaultValue(0);
 
             Create.ForeignKey("FK_MediaImages_Id_MediaFiles_Id")
@@ -194,12 +188,9 @@ namespace BetterCms.Module.MediaManager.Models.Migrations
                 .ToTable("MediaImageAlignTypes").InSchema(SchemaName).PrimaryColumn("Id");
         }
 
-        private void RemoveMediaImagesTable()
-        {
-            Delete.ForeignKey("FK_MediaImages_Id_MediaFiles_Id").OnTable("MediaImages").InSchema(SchemaName);
-            Delete.Table("MediaImages").InSchema(SchemaName);
-        }
-
+        /// <summary>
+        /// Creates the media image align table.
+        /// </summary>
         private void CreateMediaImageAlignTable()
         {
             Create
@@ -212,11 +203,6 @@ namespace BetterCms.Module.MediaManager.Models.Migrations
                 .Row(new { Id = 1, Name = "Left" })
                 .Row(new { Id = 2, Name = "Center" })
                 .Row(new { Id = 3, Name = "Right" });
-        }
-
-        private void RemoveMediaImageAlignTable()
-        {
-            Delete.Table("MediaImageAlignTypes").InSchema(SchemaName);
         }
     }
 }

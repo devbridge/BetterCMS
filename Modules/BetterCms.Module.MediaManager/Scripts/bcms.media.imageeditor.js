@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.jquery.jcrop', 'bcms.ko.extenders'],
+bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.jquery.jcrop', 'bcms.ko.extenders'],
     function($, bcms, modal, siteSettings, forms, dynamicContent, jcrop, ko) {
         'use strict';
 
@@ -16,24 +16,30 @@ define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.sit
                 imageAlignmentControls: ".bcms-alignment-controls",
 
                 imageEditorForm: 'form:first',
+                imagePropertiesContainer: '.bcms-file-manager-inner',
 
                 imageSizeEditBoxWidth: "#image-width",
                 imageSizeEditBoxHeight: "#image-height",
                 
                 imageTitleEditInput: "#bcms-image-title-editor",
 
-                imageToCrop: ".bcms-croped-block img"
+                imageToCrop: ".bcms-croped-block img",
+
+                selectableInputs: 'input.bcms-editor-field-box'
             },
             links = {
                 imageEditorDialogUrl: null,
-                imageEditorInsertDialogUrl: null
+                imageEditorInsertDialogUrl: null,
+                imagePropertiesUrl: null
             },
             globalization = {
                 imageEditorDialogTitle: null,
                 imageEditorInsertDialogTitle: null,
                 imageEditorInsertDialogAcceptButton: null,
                 imageEditorUpdateFailureMessageTitle: null,
-                imageEditorUpdateFailureMessageMessage: null
+                imageEditorUpdateFailureMessageMessage: null,
+                imagePropertiesDialogTitle: null,
+                closeButtonTitle: null
             },
             constants = {
                 maxHeightToFit: 557,
@@ -194,12 +200,13 @@ define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.sit
         var ImageEditorViewModel = (function (_super) {
             bcms.extendsClass(ImageEditorViewModel, _super);
 
-            function ImageEditorViewModel(dialog, json) {
+            function ImageEditorViewModel(dialog, json, enableCrop) {
                 _super.call(this);
 
                 var self = this;
 
                 self.dialog = dialog;
+                self.enableCrop = enableCrop;
 
                 self.widthInput = dialog.container.find(selectors.imageSizeEditBoxWidth);
                 self.heightInput = dialog.container.find(selectors.imageSizeEditBoxHeight);
@@ -219,7 +226,7 @@ define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.sit
                 self.cropCoordY1 = ko.observable(json.CropCoordY1);
                 self.cropCoordY2 = ko.observable(json.CropCoordY2);
                 self.keepAspectRatio = ko.observable(false);
-                self.url = json.OriginalImageUrl + '?version=' + json.Version;
+                self.url = json.OriginalImageUrl;
 
                 // Recalculate image dimensions on image change
                 self.fit.subscribe(function () {
@@ -351,6 +358,10 @@ define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.sit
                 }
 
                 function addCropper() {
+                    if (!self.enableCrop) {
+                        return;
+                    }
+                    
                     destroyJCrop();
                     
                     var cropperOptions = {
@@ -428,7 +439,7 @@ define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.sit
             // Create view models for editor boxes and for form
             var titleEditorViewModel = new TitleEditorViewModel(dialog, data.Title);
             
-            var imageEditorViewModel = new ImageEditorViewModel(dialog, data);
+            var imageEditorViewModel = new ImageEditorViewModel(dialog, data, true);
             
             var viewModel = new ImageEditViewModel(titleEditorViewModel, imageEditorViewModel);
             ko.applyBindings(viewModel, dialog.container.find(selectors.imageEditorForm).get(0));
@@ -462,6 +473,32 @@ define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.sit
                 $('input', item).attr('checked', 'true');
             });
         }
+
+        /**
+        * Opens image properties dialog
+        */
+        imageEditor.openImagePropertiesDialog = function(id) {
+            modal.open({
+                title: globalization.imagePropertiesDialogTitle,
+                disableAccept: true,
+                cancelTitle: globalization.closeButtonTitle,
+                onLoad: function (dialog) {
+                    var url = $.format(links.imagePropertiesUrl, id);
+
+                    dynamicContent.bindDialog(dialog, url, {
+                        contentAvailable: function (contentDialog, content) {
+                            contentDialog.container.find(selectors.selectableInputs).on('click', function () {
+                                this.select();
+                            });
+
+                            var json = content.Data ? content.Data : {};
+                            var viewModel = new ImageEditorViewModel(contentDialog, json, false);
+                            ko.applyBindings(viewModel, dialog.container.find(selectors.imagePropertiesContainer).get(0));
+                        },
+                    });
+                }
+            });
+        };
 
         return imageEditor;
     });

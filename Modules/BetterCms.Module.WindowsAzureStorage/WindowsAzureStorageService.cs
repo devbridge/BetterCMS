@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Net;
 
@@ -10,7 +9,7 @@ using Microsoft.WindowsAzure.Storage.Auth;
 
 using StorageException = BetterCms.Core.Exceptions.Service.StorageException;
 
-namespace BetterCms.Module.AmazonS3Storage
+namespace BetterCms.Module.WindowsAzureStorage
 {
     public class WindowsAzureStorageService : IStorageService
     {

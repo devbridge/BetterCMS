@@ -205,6 +205,33 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Filter.
+        /// </summary>
+        public static string Button_Filter {
+            get {
+                return ResourceManager.GetString("Button_Filter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear.
+        /// </summary>
+        public static string Button_Filter_Clear {
+            get {
+                return ResourceManager.GetString("Button_Filter_Clear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string Button_Filter_Search {
+            get {
+                return ResourceManager.GetString("Button_Filter_Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to History.
         /// </summary>
         public static string Button_History {
@@ -237,6 +264,24 @@ namespace BetterCms.Module.Root.Content.Resources {
         public static string Button_Open {
             get {
                 return ResourceManager.GetString("Button_Open", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Next.
+        /// </summary>
+        public static string Button_Paging_Next {
+            get {
+                return ResourceManager.GetString("Button_Paging_Next", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Previous.
+        /// </summary>
+        public static string Button_Paging_Previous {
+            get {
+                return ResourceManager.GetString("Button_Paging_Previous", resourceCulture);
             }
         }
         
@@ -543,6 +588,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         public static string Message_SessionExpiredLoginToContinue_Message {
             get {
                 return ResourceManager.GetString("Message_SessionExpiredLoginToContinue_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Page.
+        /// </summary>
+        public static string Paging_Page_Title {
+            get {
+                return ResourceManager.GetString("Paging_Page_Title", resourceCulture);
             }
         }
         

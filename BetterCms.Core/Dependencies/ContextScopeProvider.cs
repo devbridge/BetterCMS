@@ -10,7 +10,7 @@ namespace BetterCms.Core.Dependencies
         /// <summary>
         /// The root application container.
         /// </summary>
-        private static readonly IContainer ApplicationContainer;
+        internal static readonly IContainer ApplicationContainer;
 
         /// <summary>
         /// Initializes the <see cref="ContextScopeProvider" /> class.

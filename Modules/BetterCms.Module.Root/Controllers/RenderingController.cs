@@ -8,11 +8,14 @@ using BetterCms.Module.Root.Commands.GetProcessorJsData;
 using BetterCms.Module.Root.Commands.GetStyleSheetsToRender;
 using BetterCms.Module.Root.Mvc;
 
+using Microsoft.Web.Mvc;
+
 namespace BetterCms.Module.Root.Controllers
 {
     /// <summary>
     /// Script handling controller.
     /// </summary>
+    [ActionLinkArea(RootModuleDescriptor.RootAreaName)]
     public class RenderingController : CmsControllerBase
     {
         /// <summary>

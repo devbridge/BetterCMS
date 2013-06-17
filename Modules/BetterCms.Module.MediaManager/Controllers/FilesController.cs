@@ -11,11 +11,14 @@ using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
+using Microsoft.Web.Mvc;
+
 namespace BetterCms.Module.MediaManager.Controllers
 {
     /// <summary>
     /// Handles site settings logic for Media module Files tab.
     /// </summary>
+    [ActionLinkArea(MediaManagerModuleDescriptor.MediaManagerAreaName)]
     public class FilesController : CmsControllerBase
     {
         /// <summary>
@@ -41,6 +44,7 @@ namespace BetterCms.Module.MediaManager.Controllers
             {
                 options = new MediaManagerViewModel();
             }
+            options.SetDefaultPaging();
 
             var model = GetCommand<GetFilesCommand>().ExecuteCommand(options);
             if (model == null)

@@ -15,6 +15,7 @@
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.jquery.unobtrusive-ajax.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.jquery.validate.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.jquery.validate.unobtrusive.js" />
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.jquery.autocomplete.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.slides.jquery.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.spinner.jquery.js" />      
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.authentication.js" />
@@ -57,6 +58,35 @@
           ThreadCulture="en-au"
           IsEvalIgnored="false"
        />
+    
+    <JavaScriptCompressorTask
+             SourceFiles="$(ProjectDir)Scripts\bcms.require-2.1.5.js"
+             OutputFile="$(ProjectDir)Scripts\bcms.require-2.1.5.min.js"
+             CompressionType="Standard"
+             ObfuscateJavaScript="True"
+             PreserveAllSemicolons="True"
+             DisableOptimizations="No"
+             EncodingType="Default"
+             LineBreakPosition="-1"
+             LoggingType="Info"
+             ThreadCulture="en-au"
+             IsEvalIgnored="false"
+       />
 
+    <JavaScriptCompressorTask
+             SourceFiles="$(ProjectDir)Scripts\bcms.knockout-2.2.1.js"
+             OutputFile="$(ProjectDir)Scripts\bcms.knockout-2.2.1.min.js"
+             CompressionType="Standard"
+             ObfuscateJavaScript="True"
+             PreserveAllSemicolons="True"
+             DisableOptimizations="No"
+             EncodingType="Default"
+             LineBreakPosition="-1"
+             LoggingType="Info"
+             ThreadCulture="en-au"
+             IsEvalIgnored="false"
+       />
+    
   </Target>
+  
 </Project>

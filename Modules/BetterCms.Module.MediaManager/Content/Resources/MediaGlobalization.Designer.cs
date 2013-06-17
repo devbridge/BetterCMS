@@ -61,6 +61,51 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to pull out file {0} from archive?.
+        /// </summary>
+        public static string ArchiveFile_ConfirmationMessage {
+            get {
+                return ResourceManager.GetString("ArchiveFile_ConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to send the image {0} to archive?.
+        /// </summary>
+        public static string ArchiveImage_ConfirmationMessage {
+            get {
+                return ResourceManager.GetString("ArchiveImage_ConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Media sent to archive successfully..
+        /// </summary>
+        public static string ArchiveMedia_ArchivedSuccessfully_Message {
+            get {
+                return ResourceManager.GetString("ArchiveMedia_ArchivedSuccessfully_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to send the media {0} to archive?.
+        /// </summary>
+        public static string ArchiveMedia_ConfirmationMessage {
+            get {
+                return ResourceManager.GetString("ArchiveMedia_ConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to pull out video {0} from archive?.
+        /// </summary>
+        public static string ArchiveVideo_ConfirmationMessage {
+            get {
+                return ResourceManager.GetString("ArchiveVideo_ConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Audios.
         /// </summary>
         public static string AudiosTab_Title {
@@ -511,6 +556,33 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Image Title.
+        /// </summary>
+        public static string ImageProperties_Dialog_ImageTitle_Title {
+            get {
+                return ResourceManager.GetString("ImageProperties_Dialog_ImageTitle_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Public URL.
+        /// </summary>
+        public static string ImageProperties_Dialog_PublicUrl {
+            get {
+                return ResourceManager.GetString("ImageProperties_Dialog_PublicUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image Properties.
+        /// </summary>
+        public static string ImageProperties_Dialog_Title {
+            get {
+                return ResourceManager.GetString("ImageProperties_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Grid.
         /// </summary>
         public static string ImagesTab_Grid {
@@ -637,11 +709,29 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Archive.
+        /// </summary>
+        public static string MediaManager_ButtonArchive {
+            get {
+                return ResourceManager.GetString("MediaManager_ButtonArchive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Download.
         /// </summary>
         public static string MediaManager_ButtonDownload {
             get {
                 return ResourceManager.GetString("MediaManager_ButtonDownload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image Properties.
+        /// </summary>
+        public static string MediaManager_ButtonImageProperties {
+            get {
+                return ResourceManager.GetString("MediaManager_ButtonImageProperties", resourceCulture);
             }
         }
         
@@ -682,6 +772,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unarchive.
+        /// </summary>
+        public static string MediaManager_ButtonUnarchive {
+            get {
+                return ResourceManager.GetString("MediaManager_ButtonUnarchive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to process file.
         /// </summary>
         public static string MediaManager_FailedToProcessFile_Message {
@@ -696,6 +795,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         public static string MediaManager_FileStillProcessing_Message {
             get {
                 return ResourceManager.GetString("MediaManager_FileStillProcessing_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Include archived items.
+        /// </summary>
+        public static string MediaManager_IncludeArchived_Message {
+            get {
+                return ResourceManager.GetString("MediaManager_IncludeArchived_Message", resourceCulture);
             }
         }
         
@@ -867,6 +975,51 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         public static string SiteSettings_MediaManagerMenuItem {
             get {
                 return ResourceManager.GetString("SiteSettings_MediaManagerMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to send the video {0} to archive?.
+        /// </summary>
+        public static string UnarchiveFile_ConfirmationMessage {
+            get {
+                return ResourceManager.GetString("UnarchiveFile_ConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to pull out image {0} from archive?.
+        /// </summary>
+        public static string UnarchiveImage_ConfirmationMessage {
+            get {
+                return ResourceManager.GetString("UnarchiveImage_ConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to pull out media {0} from archive?.
+        /// </summary>
+        public static string UnarchiveMedia_ConfirmationMessage {
+            get {
+                return ResourceManager.GetString("UnarchiveMedia_ConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Media pulled out from archive successfully..
+        /// </summary>
+        public static string UnarchiveMedia_UnarchivedSuccessfully_Message {
+            get {
+                return ResourceManager.GetString("UnarchiveMedia_UnarchivedSuccessfully_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to send the video {0} to archive?.
+        /// </summary>
+        public static string UnarchiveVideo_ConfirmationMessage {
+            get {
+                return ResourceManager.GetString("UnarchiveVideo_ConfirmationMessage", resourceCulture);
             }
         }
         

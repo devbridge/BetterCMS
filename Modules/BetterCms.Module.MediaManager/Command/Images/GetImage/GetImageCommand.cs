@@ -27,7 +27,7 @@ namespace BetterCms.Module.MediaManager.Command.Images.GetImage
         /// </summary>
         /// <param name="imageId">The image id.</param>
         /// <returns>The view model.</returns>
-        public ImageViewModel Execute(Guid imageId)
+        public virtual ImageViewModel Execute(Guid imageId)
         {
             var image = Repository.First<MediaImage>(imageId);
             return new ImageViewModel
@@ -36,6 +36,7 @@ namespace BetterCms.Module.MediaManager.Command.Images.GetImage
                     Caption = image.Caption,
                     Title = image.Title,
                     Url = image.PublicUrl,
+                    ThumbnailUrl = image.PublicThumbnailUrl,
                     Version = image.Version.ToString(CultureInfo.InvariantCulture),
                     FileName = image.OriginalFileName,
                     FileExtension = image.OriginalFileExtension,

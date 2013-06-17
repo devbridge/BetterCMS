@@ -5,15 +5,14 @@ using System.Linq;
 using BetterCms.Api;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
-using BetterCms.Core.Exceptions.Mvc;
 
-using BetterCms.Module.Pages.Content.Resources;
-using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Widgets;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
+
+using CategoryEntity = BetterCms.Module.Root.Models.Category;
 
 namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
 {
@@ -29,15 +28,6 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
         /// <exception cref="System.NotImplementedException"></exception>
         public override SaveWidgetResponse Execute(EditServerControlWidgetViewModel request)
         {
-            // Validate.
-            if (!HttpHelper.VirtualPathExists(request.Url))
-            {
-                var message = string.Format(PagesGlobalization.SaveWidget_VirtualPathNotExists_Message, request.Url);
-                var logMessage = string.Format("Widget view doesn't exists. Url: {0}, Id: {1}", request.Url, request.Id);
-
-                throw new ValidationException(() => message, logMessage);
-            }
-
             if (request.DesirableStatus == ContentStatus.Draft)
             {
                 throw new CmsException(string.Format("Server widget does not support Draft state."));
@@ -86,7 +76,7 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
 
             if (request.CategoryId.HasValue && !request.CategoryId.Value.HasDefaultValue())
             {
-                widget.Category = Repository.AsProxy<Category>(request.CategoryId.Value);
+                widget.Category = Repository.AsProxy<CategoryEntity>(request.CategoryId.Value);
             }
             else
             {

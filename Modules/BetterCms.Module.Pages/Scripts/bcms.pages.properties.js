@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bcms.dynamicContent', 'bcms.pages.tags', 'bcms.ko.extenders', 'bcms.media', 'bcms.redirect'],
+bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bcms.dynamicContent', 'bcms.pages.tags', 'bcms.ko.extenders', 'bcms.media', 'bcms.redirect'],
     function ($, bcms, modal, forms, dynamicContent, tags, ko, media, redirect) {
     'use strict';
 
@@ -24,12 +24,10 @@ define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.form
             pagePropertiesActiveTemplateMessage: '.bcms-grid-active-message-text',
             pagePropertiesTemplatePreviewLink: '.bcms-preview-template',
 
-            pagePropertiesForm: 'form:first'
-
+            pagePropertiesForm: 'form:first',
         },
         links = {
-            loadEditPropertiesDialogUrl: null
-        },
+            loadEditPropertiesDialogUrl: null        },
         globalization = {
             editPagePropertiesModalTitle: null
         },
@@ -49,11 +47,13 @@ define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.form
     /**
     * Page view model
     */
-    function PageViewModel(image, tagsViewModel) {
+    function PageViewModel(image, secondaryImage, featuredImage, tagsViewModel) {
         var self = this;
 
         self.tags = tagsViewModel;
         self.image = ko.observable(new media.ImageSelectorViewModel(image));
+        self.secondaryImage = ko.observable(new media.ImageSelectorViewModel(secondaryImage));
+        self.featuredImage = ko.observable(new media.ImageSelectorViewModel(featuredImage));
     }
 
     /**
@@ -61,7 +61,7 @@ define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.form
     */
     page.initEditPagePropertiesDialogEvents = function (dialog, content) {
         var tagsViewModel = new tags.TagsListViewModel(content.Data.Tags),
-            pageViewModel = new PageViewModel(content.Data.Image, tagsViewModel),
+            pageViewModel = new PageViewModel(content.Data.Image, content.Data.SecondaryImage, content.Data.FeaturedImage, tagsViewModel),
             form = dialog.container.find(selectors.pagePropertiesForm);
         ko.applyBindings(pageViewModel, form.get(0));
 

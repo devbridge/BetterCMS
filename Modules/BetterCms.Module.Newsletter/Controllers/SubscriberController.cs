@@ -12,11 +12,14 @@ using BetterCms.Module.Root;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
+using Microsoft.Web.Mvc;
+
 namespace BetterCms.Module.Newsletter.Controllers
 {
     /// <summary>
     /// Newsletter subscribers controller.
     /// </summary>
+    [ActionLinkArea(NewsletterModuleDescriptor.NewsletterAreaName)]
     public class SubscriberController : CmsControllerBase
     {
         /// <summary>
@@ -27,7 +30,10 @@ namespace BetterCms.Module.Newsletter.Controllers
         public ActionResult ListTemplate()
         {
             var view = RenderView("List", null);
-            var subscribers = GetCommand<GetSubscriberListCommand>().ExecuteCommand(new SearchableGridOptions());
+            var request = new SearchableGridOptions();
+            request.SetDefaultPaging();
+
+            var subscribers = GetCommand<GetSubscriberListCommand>().ExecuteCommand(request);
 
             return ComboWireJson(subscribers != null, view, subscribers, JsonRequestBehavior.AllowGet);
         }
@@ -40,6 +46,7 @@ namespace BetterCms.Module.Newsletter.Controllers
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         public ActionResult SubscribersList(SearchableGridOptions request)
         {
+            request.SetDefaultPaging();
             var model = GetCommand<GetSubscriberListCommand>().ExecuteCommand(request);
             return WireJson(model != null, model);
         }

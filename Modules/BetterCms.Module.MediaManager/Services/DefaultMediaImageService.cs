@@ -14,6 +14,7 @@ using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Exceptions.Service;
 using BetterCms.Core.Services.Storage;
 using BetterCms.Module.MediaManager.Content.Resources;
+using BetterCms.Module.MediaManager.Helpers;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Mvc;
 
@@ -30,11 +31,6 @@ namespace BetterCms.Module.MediaManager.Services
         /// The thumbnail size.
         /// </summary>
         private static readonly Size ThumbnailSize = new Size(150, 150);
-
-        /// <summary>
-        /// The original image file prefix.
-        /// </summary>
-        private const string OriginalImageFilePrefix = "o_";
 
         /// <summary>
         /// The thumbnail image file prefix.
@@ -168,6 +164,7 @@ namespace BetterCms.Module.MediaManager.Services
         public MediaImage UploadImage(Guid rootFolderId, string fileName, long fileLength, Stream fileStream)
         {
             string folderName = mediaFileService.CreateRandomFolderName();
+            string versionedFileName = MediaImageHelper.CreateVersionedFileName(fileName, 1);
             Size size;
 
             try
@@ -183,7 +180,7 @@ namespace BetterCms.Module.MediaManager.Services
 
             using (var thumbnailImage = new MemoryStream())
             {
-                ResizeImageAndCropToFit(fileStream, thumbnailImage, ThumbnailSize);
+                CreatePngThumbnail(fileStream, thumbnailImage, ThumbnailSize);
 
                 MediaImage image = new MediaImage();
                 if (!rootFolderId.HasDefaultValue())
@@ -200,8 +197,8 @@ namespace BetterCms.Module.MediaManager.Services
                 image.Width = size.Width;
                 image.Height = size.Height;
                 image.Size = fileLength;
-                image.FileUri = mediaFileService.GetFileUri(MediaType.Image, folderName, fileName);
-                image.PublicUrl = mediaFileService.GetPublicFileUrl(MediaType.Image, folderName, fileName);
+                image.FileUri = mediaFileService.GetFileUri(MediaType.Image, folderName, versionedFileName);
+                image.PublicUrl = mediaFileService.GetPublicFileUrl(MediaType.Image, folderName, versionedFileName);
 
                 image.CropCoordX1 = null;
                 image.CropCoordY1 = null;
@@ -211,15 +208,15 @@ namespace BetterCms.Module.MediaManager.Services
                 image.OriginalWidth = size.Width;
                 image.OriginalHeight = size.Height;
                 image.OriginalSize = fileLength;
-                image.OriginalUri = mediaFileService.GetFileUri(MediaType.Image, folderName, OriginalImageFilePrefix + fileName);
-                image.PublicOriginallUrl = mediaFileService.GetPublicFileUrl(MediaType.Image, folderName, OriginalImageFilePrefix + fileName);
+                image.OriginalUri = mediaFileService.GetFileUri(MediaType.Image, folderName, MediaImageHelper.OriginalImageFilePrefix + fileName);
+                image.PublicOriginallUrl = mediaFileService.GetPublicFileUrl(MediaType.Image, folderName, MediaImageHelper.OriginalImageFilePrefix + fileName);
                     
 
                 image.ThumbnailWidth = ThumbnailSize.Width;
                 image.ThumbnailHeight = ThumbnailSize.Height;
                 image.ThumbnailSize = thumbnailImage.Length;
-                image.ThumbnailUri = mediaFileService.GetFileUri(MediaType.Image, folderName,  ThumbnailImageFilePrefix + Path.GetFileNameWithoutExtension(fileName) + ".png");
-                image.PublicThumbnailUrl = mediaFileService.GetPublicFileUrl(MediaType.Image, folderName, ThumbnailImageFilePrefix + Path.GetFileNameWithoutExtension(fileName) + ".png");
+                image.ThumbnailUri = mediaFileService.GetFileUri(MediaType.Image, folderName, ThumbnailImageFilePrefix + Path.GetFileNameWithoutExtension(versionedFileName) + ".png");
+                image.PublicThumbnailUrl = mediaFileService.GetPublicFileUrl(MediaType.Image, folderName, ThumbnailImageFilePrefix + Path.GetFileNameWithoutExtension(versionedFileName) + ".png");
 
                 image.ImageAlign = null;
                 image.IsTemporary = true;
@@ -289,12 +286,12 @@ namespace BetterCms.Module.MediaManager.Services
         }        
 
         /// <summary>
-        /// Resizes the image and crop to fit.
+        /// Created image thmbnail in PNG format: resizes the image and crops to fit.
         /// </summary>
         /// <param name="sourceStream">The source stream.</param>
         /// <param name="destinationStream">The destination stream.</param>
         /// <param name="size">The size.</param>
-        private void ResizeImageAndCropToFit(Stream sourceStream, Stream destinationStream, Size size)
+        private void CreatePngThumbnail(Stream sourceStream, Stream destinationStream, Size size)
         {
             using (var tempStream = new MemoryStream())
             {
@@ -371,7 +368,7 @@ namespace BetterCms.Module.MediaManager.Services
 
             using (var memoryStream = new MemoryStream())
             {
-                ResizeImageAndCropToFit(downloadResponse.ResponseStream, memoryStream, size);
+                CreatePngThumbnail(downloadResponse.ResponseStream, memoryStream, size);
 
                 mediaImage.ThumbnailWidth = size.Width;
                 mediaImage.ThumbnailHeight = size.Height;

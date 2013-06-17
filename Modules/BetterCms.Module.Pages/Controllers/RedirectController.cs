@@ -11,9 +11,12 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
+using Microsoft.Web.Mvc;
+
 namespace BetterCms.Module.Pages.Controllers
 {
     [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+    [ActionLinkArea(PagesModuleDescriptor.PagesAreaName)]
     public class RedirectController : CmsControllerBase
     {
         /// <summary>
@@ -25,6 +28,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// </returns>
         public ActionResult Redirects(SearchableGridOptions request)
         {
+            request.SetDefaultPaging();
             var model = GetCommand<GetRedirectsListCommand>().ExecuteCommand(request);
             return View(model);
         }

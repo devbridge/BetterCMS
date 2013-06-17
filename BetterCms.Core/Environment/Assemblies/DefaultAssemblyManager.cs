@@ -128,11 +128,15 @@ namespace BetterCms.Core.Environment.Assemblies
 
             foreach (var notLoadedReferencedPath in notLoadedReferencedPaths)
             {
-                AssemblyName assemblyName = AssemblyName.GetAssemblyName(notLoadedReferencedPath);
-                if (assemblyName.FullName.StartsWith("BetterCms.Module.", StringComparison.OrdinalIgnoreCase))
+                string fileName = Path.GetFileNameWithoutExtension(notLoadedReferencedPath);
+                if (fileName != null && fileName.StartsWith("BetterCms", StringComparison.OrdinalIgnoreCase))
                 {
-                    var module = assemblyLoader.Load(assemblyName);
-                    modules.Add(module);
+                    AssemblyName assemblyName = AssemblyName.GetAssemblyName(notLoadedReferencedPath);
+                    if (assemblyName.FullName.StartsWith("BetterCms.Module.", StringComparison.OrdinalIgnoreCase))
+                    {
+                        var module = assemblyLoader.Load(assemblyName);
+                        modules.Add(module);
+                    }
                 }
             }
 

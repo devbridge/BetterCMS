@@ -1,4 +1,4 @@
-﻿define('bcms.jquery.unobtrusive', ['bcms.jquery', 'bcms.jquery.validate'], function (jquery) {
+﻿bettercms.define('bcms.jquery.unobtrusive', ['bcms.jquery', 'bcms.jquery.validate'], function (jquery) {
     /*!
     ** Unobtrusive Ajax support library for jQuery
     ** Copyright (C) Microsoft Corporation. All rights reserved.

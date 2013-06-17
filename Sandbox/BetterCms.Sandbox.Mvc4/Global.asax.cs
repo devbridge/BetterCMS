@@ -23,7 +23,12 @@ namespace BetterCms.Sandbox.Mvc4
 
         protected void Application_Start()
         {
-            
+            RouteTable.Routes.MapRoute(
+                                 name: "Default",
+                                 url: "demo/{controller}/{action}/{id}",
+                                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                             ); 
+
             cmsHost = CmsContext.RegisterHost();
 
             AreaRegistration.RegisterAllAreas();

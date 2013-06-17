@@ -21,6 +21,12 @@ namespace BetterCms.Module.Users
         /// The module name.
         /// </summary>
         internal const string ModuleName = "users";
+
+        /// <summary>
+        /// The users area name.
+        /// </summary>
+        internal const string UsersAreaName = "bcms-users";
+
         /// <summary>
         /// The user java script module descriptor
         /// </summary>
@@ -73,6 +79,20 @@ namespace BetterCms.Module.Users
             get
             {
                 return int.MaxValue - 200;
+            }
+        }
+
+        /// <summary>
+        /// Gets the name of the module area.
+        /// </summary>
+        /// <value>
+        /// The name of the module area.
+        /// </value>
+        public override string AreaName
+        {
+            get
+            {
+                return UsersAreaName;
             }
         }
 
