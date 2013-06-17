@@ -9,6 +9,7 @@ using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Services.Storage;
 using BetterCms.Module.MediaManager.Helpers;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Models.Extensions;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels.Images;
 using BetterCms.Module.Root.Mvc;
@@ -43,6 +44,9 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
         public void Execute(ImageViewModel request)
         {
             var mediaImage = Repository.First<MediaImage>(request.Id.ToGuidOrDefault());
+
+            UnitOfWork.BeginTransaction();
+            Repository.Save(mediaImage.CreateHistoryItem());
 
             mediaImage.Caption = request.Caption;
             mediaImage.Title = request.Title;

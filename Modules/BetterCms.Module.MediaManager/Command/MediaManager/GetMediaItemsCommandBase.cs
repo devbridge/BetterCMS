@@ -73,7 +73,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
 
                 var folder = UnitOfWork.Session
                     .QueryOver(() => folderAlias)
-                    .Where(() => !folderAlias.IsDeleted && folderAlias.Id == request.CurrentFolderId)
+                    .Where(() => !folderAlias.IsDeleted && folderAlias.Original == null && folderAlias.Id == request.CurrentFolderId)
                     .SelectList(select => select
                         .Select(() => folderAlias.Id).WithAlias(() => folderModelAlias.Id)
                         .Select(() => folderAlias.Title).WithAlias(() => folderModelAlias.Name)
@@ -104,6 +104,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             var query = Repository
                 .AsQueryable<Media>()
                 .Where(m => !m.IsDeleted
+                    && m.Original == null
                     && m.Type == MediaType
                     && (m is MediaFolder || m is TEntity && !((TEntity)m).IsTemporary));
 

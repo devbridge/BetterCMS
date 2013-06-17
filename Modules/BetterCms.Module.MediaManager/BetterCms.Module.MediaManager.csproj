@@ -167,6 +167,7 @@
     <Compile Include="Helpers\WrappedJsonResult.cs" />
     <Compile Include="Api\MediaManagerApiContext.cs" />
     <Compile Include="MediaManagerModuleDescriptor.cs" />
+    <Compile Include="Models\Extensions\MediaExtensions.cs" />
     <Compile Include="Models\Extensions\MediaFileExtensions.cs" />
     <Compile Include="Models\MediaImageAlign.cs" />
     <Compile Include="Models\MediaType.cs" />
@@ -180,6 +181,7 @@
     <Compile Include="Models\Media.cs" />
     <Compile Include="Models\MediaImage.cs" />
     <Compile Include="Models\MigrationsContent\Migration201306071105.cs" />
+    <Compile Include="Models\Migrations\Migration201306171041.cs" />
     <Compile Include="Models\Migrations\Migration201306111530.cs" />
     <Compile Include="Models\Migrations\Migration201306071100.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
