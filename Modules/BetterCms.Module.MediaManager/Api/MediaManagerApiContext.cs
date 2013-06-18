@@ -63,7 +63,7 @@ namespace BetterCms.Api
             {
                 var query = Repository
                     .AsQueryable<Media>()
-                    .Where(f => f.Type == request.MediaType)
+                    .Where(f => f.Type == request.MediaType && f.Original == null)
                     .ApplyFilters(request);
 
                 if (!request.IncludeArchivedItems)
@@ -109,6 +109,7 @@ namespace BetterCms.Api
             {
                 var query = Repository
                     .AsQueryable<MediaImage>()
+                    .Where(m => m.Original == null)
                     .ApplyFilters(request);
 
                 if (request == null || !request.IncludeArchivedItems)
@@ -145,7 +146,7 @@ namespace BetterCms.Api
             {
                 var query = Repository
                     .AsQueryable<MediaFile>()
-                    .Where(m => m.Type == MediaType.File)
+                    .Where(m => m.Type == MediaType.File && m.Original == null)
                     .ApplyFilters(request);
 
                 if (request == null || !request.IncludeArchivedItems)
@@ -181,7 +182,8 @@ namespace BetterCms.Api
             try
             {
                 var query = Repository
-                    .AsQueryable<MediaFolder>();
+                    .AsQueryable<MediaFolder>()
+                    .Where(m => m.Original == null);
                 if (request.MediaType.HasValue)
                 {
                     query = query.Where(f => f.Type == request.MediaType.Value);
