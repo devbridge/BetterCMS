@@ -32,8 +32,9 @@ namespace BetterCms.Module.WebApi.Controllers
         {
             using (var api = CmsContext.CreateApiContextOf<BlogsApiContext>())
             {
-                var results = api.GetBlogPostsAsQueryable(filter);
-                return results.ToDataListResponse(options);
+                return api
+                    .GetBlogPostsAsQueryable(filter)
+                    .ToDataListResponse(options);
             }
         }
 

@@ -8,6 +8,10 @@ namespace BetterCms.Module.Blog.Api.DataContracts
 {
     public class GetBlogPostsRequest : GetDataRequest<BlogPostModel>
     {
+        public GetBlogPostsRequest()
+        {
+        }
+
         public GetBlogPostsRequest(Expression<Func<BlogPostModel, bool>> filter = null, 
             Expression<Func<BlogPostModel, dynamic>> order = null, 
             bool orderDescending = false, 

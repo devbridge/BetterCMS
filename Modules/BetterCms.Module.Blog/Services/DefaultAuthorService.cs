@@ -6,7 +6,7 @@ using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Module.Blog.Api.DataContracts;
 using BetterCms.Module.Blog.Api.DataModels;
-using BetterCms.Module.MediaManager.Api.DataModels;
+using BetterCms.Module.Blog.Api.Mappers;
 using BetterCms.Module.Root.Models;
 
 using NHibernate;
@@ -59,7 +59,11 @@ namespace BetterCms.Module.Blog.Services
 
         public IQueryable<AuthorModel> GetAuthorsAsQueryable()
         {
-            return
+            return repository
+                .AsQueryable<Models.Author>()
+                .Select(EntityToServiceModelMapper.ToAuthor);
+
+            /*return
                 repository.AsQueryable<Models.Author>()
                           .Select(
                               author =>
@@ -68,18 +72,9 @@ namespace BetterCms.Module.Blog.Services
                                       Id = author.Id,
                                       Version = author.Version,
                                       Name = author.Name,
-                                      Image =
-                                          author.Image == null
-                                              ? null
-                                              : new MediaImageModel
-                                                  {
-                                                      Id = author.Image.Id,
-                                                      Version = author.Image.Version,
-                                                      Caption = author.Image.Caption,
-                                                      PublicUrl = author.Image.PublicUrl,
-                                                      PublicThumbnailUrl = author.Image.PublicThumbnailUrl
-                                                  }
-                                  });
+                                      ImageId = author.Image.Id,
+                                      ImagePublicUrl = author.Image.PublicUrl
+                                  });*/
         }
 
         public AuthorCreateResponce CreateAuthor(AuthorCreateRequest request)

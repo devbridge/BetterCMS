@@ -3,8 +3,10 @@ using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Core.Exceptions.Api;
 using BetterCms.Module.Blog.Api.DataContracts;
 using BetterCms.Module.Blog.Api.DataModels;
+using BetterCms.Module.Blog.Api.Mappers;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Mvc.Helpers;
 
@@ -53,6 +55,14 @@ namespace BetterCms.Module.Blog.Services
             return url;
         }
 
+        /// <summary>
+        /// Gets the list of blog service models.
+        /// </summary>
+        /// <param name="filter">The filter.</param>
+        /// <returns>
+        /// The list of blog service models
+        /// </returns>
+        /// <exception cref="CmsApiException"></exception>
         public IQueryable<BlogPostModel> GetBlogPostsAsQueryable(GetBlogPostsRequest filter = null)
         {
             var models = repository.AsQueryable<Models.BlogPost>();
@@ -75,14 +85,19 @@ namespace BetterCms.Module.Blog.Services
                 models = models.Where(b => b.ActivationDate < DateTime.Now && (!b.ExpirationDate.HasValue || DateTime.Now < b.ExpirationDate.Value));
             }
 
-            return models.Select(
-                blog =>
+            return models.Select(EntityToServiceModelMapper.ToBlogPostModel);
+                /*blog =>
                     new BlogPostModel
                     {
                         Id = blog.Id,
                         Version = blog.Version,
+                        PageUrl = blog.PageUrl,
                         Title = blog.Title,
+                        IntroText = blog.Description,
                         CreatedOn = blog.CreatedOn,
+                        ModifiedOn = blog.ModifiedOn,
+                        CreatedByUser = blog.CreatedByUser,
+                        ModifiedByUser = blog.ModifiedByUser,
                         Status = blog.Status,
                         ActivationDate = blog.ActivationDate,
                         ExpirationDate = blog.ExpirationDate,
@@ -96,7 +111,7 @@ namespace BetterCms.Module.Blog.Services
                         FeaturedImagePublicUrl = blog.FeaturedImage.PublicUrl,
                         SecondaryImageId = blog.SecondaryImage.Id,
                         SecondaryImagePublicUrl = blog.SecondaryImage.PublicUrl
-                    });
+                    });*/
         }
     }
 }

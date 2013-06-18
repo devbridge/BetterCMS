@@ -72,39 +72,20 @@ namespace BetterCms.Api
         }
 
         /// <summary>
-        /// Gets the list of blog entities.
+        /// Gets the list of blog service models.
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns>
-        /// The list of blog entities
+        /// The list of blog service models
         /// </returns>
         /// <exception cref="CmsApiException"></exception>
-        /*[Obsolete]
-        public DataListResponse<BlogPostModel> GetBlogPosts_OLD(GetBlogPostsRequest request)
+        public DataListResponse<BlogPostModel> GetBlogPosts(GetBlogPostsRequest request)
         {
             try
             {
-                var query = Repository
-                    .AsQueryable<BlogPost>()
-                    .ApplyFilters(request);
-
-                if (!request.IncludeUnpublished)
-                {
-                    query = query.Where(b => b.Status == PageStatus.Published);
-                }
-
-                if (!request.IncludeNotActive)
-                {
-                    query = query.Where(b => b.ActivationDate < DateTime.Now && (!b.ExpirationDate.HasValue || DateTime.Now < b.ExpirationDate.Value));
-                }
-
-                var totalCount = query.ToRowCountFutureValue(request);
-
-                query = query
-                    .AddOrderAndPaging(request)
-                    .Fetch(b => b.Author);
-
-                return query.ToDataListResponse(totalCount);
+                return blogService
+                    .GetBlogPostsAsQueryable(request)
+                    .ToDataListResponse(request);
             }
             catch (Exception inner)
             {
@@ -113,13 +94,6 @@ namespace BetterCms.Api
 
                 throw new CmsApiException(message, inner);
             }
-        }*/
-
-        public DataListResponse<BlogPostModel> GetBlogPosts(GetBlogPostsRequest request)
-        {
-            return blogService
-                .GetBlogPostsAsQueryable(request)
-                .ToDataListResponse(request);
         }
 
         /// <summary>
@@ -218,8 +192,9 @@ namespace BetterCms.Api
 
         public IQueryable<AuthorModel> GetAuthorsAsQueryable()
         {
-            var guid = Guid.NewGuid();
-            var models = authorService.GetAuthorsAsQueryable().Where(a => a.Image != null && a.Image.Id == guid);
+            var models = authorService
+                .GetAuthorsAsQueryable();
+
             return models;
         }
 

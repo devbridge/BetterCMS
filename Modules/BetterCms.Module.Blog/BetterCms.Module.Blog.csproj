@@ -127,6 +127,7 @@
     <Compile Include="Api\DataContracts\UpdateBlogPostRequest.cs" />
     <Compile Include="Api\Events\BlogEvents.cs" />
     <Compile Include="Api\Events\AuthorEvents.cs" />
+    <Compile Include="Api\Mappers\EntityToServiceModelMapper.cs" />
     <Compile Include="BlogModuleConstants.cs" />
     <Compile Include="BlogModuleDescriptor.cs" />
     <Compile Include="Api\BlogsApiContext.cs" />

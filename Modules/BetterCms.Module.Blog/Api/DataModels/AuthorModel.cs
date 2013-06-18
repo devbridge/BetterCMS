@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-using BetterCms.Module.MediaManager.Api.DataModels;
-
 namespace BetterCms.Module.Blog.Api.DataModels
 {
     [DataContract]
@@ -18,6 +16,31 @@ namespace BetterCms.Module.Blog.Api.DataModels
         public string Name { get; set; }
 
         [DataMember]
-        public MediaImageModel Image { get; set; }
+        public DateTime CreatedOn { get; set; }
+
+        [DataMember]
+        public DateTime ModifiedOn { get; set; }
+
+        [DataMember]
+        public string CreatedByUser { get; set; }
+
+        [DataMember]
+        public string ModifiedByUser { get; set; }
+
+        // image fields
+        [DataMember]
+        public Guid? ImageId { get; set; }
+        
+        [DataMember]
+        public int ImageVersion { get; set; }
+        
+        [DataMember]
+        public string ImageCaption { get; set; }
+
+        [DataMember]
+        public string ImagePublicUrl { get; set; }
+        
+        [DataMember]
+        public string ImagePublicThumbnailUrl { get; set; }
     }
 }

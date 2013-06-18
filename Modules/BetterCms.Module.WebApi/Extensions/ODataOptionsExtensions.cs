@@ -21,22 +21,5 @@ namespace BetterCms.Module.WebApi.Extensions
         {
             return options.ApplyTo(models, emptySettings).Cast<TModel>();
         }
-
-        public static DataListResponse<TModel> ToDataListResponse<TModel>(this ODataQueryOptions<TModel> options, IQueryable<TModel> models)
-        {
-            IFutureValue<int> totalCount;
-            if (options.Filter != null)
-            {
-                totalCount = options.Filter.ApplyToModels(models).ToRowCountFutureValue(options.Top.Value);
-            }
-            else
-            {
-                totalCount = models.ToRowCountFutureValue(options.Top.Value);
-            }
-
-            models = options.ApplyToModels(models);
-
-            return models.ToDataListResponse(totalCount);
-        }
     }
 }

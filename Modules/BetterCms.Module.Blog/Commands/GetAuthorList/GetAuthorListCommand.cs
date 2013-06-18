@@ -35,15 +35,15 @@ namespace BetterCms.Module.Blog.Commands.GetAuthorList
                             Version = author.Version,
                             Name = author.Name,
                             Image =
-                                author.Image == null
+                                !author.ImageId.HasValue
                                     ? null
                                     : new ImageSelectorViewModel
                                     {
-                                        ImageId = author.Image.Id,
-                                        ImageVersion = author.Image.Version,
-                                        ImageUrl = author.Image.PublicUrl,
-                                        ThumbnailUrl = author.Image.PublicThumbnailUrl,
-                                        ImageTooltip = author.Image.Caption
+                                        ImageId = author.ImageId,
+                                        ImageVersion = author.ImageVersion,
+                                        ImageUrl = author.ImagePublicUrl,
+                                        ThumbnailUrl = author.ImagePublicThumbnailUrl,
+                                        ImageTooltip = author.ImageCaption
                                     }
                         });
 

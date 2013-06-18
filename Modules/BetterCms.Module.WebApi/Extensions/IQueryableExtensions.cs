@@ -13,13 +13,20 @@ namespace BetterCms.Module.WebApi.Extensions
         public static DataListResponse<TModel> ToDataListResponse<TModel>(this IQueryable<TModel> models, ODataQueryOptions<TModel> options)
         {
             IFutureValue<int> totalCount;
-            if (options.Filter != null)
+            if (options.Top != null && options.Top.Value > 0)
             {
-                totalCount = options.Filter.ApplyToModels(models).ToRowCountFutureValue(options.Top.Value);
+                if (options.Filter != null)
+                {
+                    totalCount = options.Filter.ApplyToModels(models).ToRowCountFutureValue(options.Top.Value);
+                }
+                else
+                {
+                    totalCount = models.ToRowCountFutureValue(options.Top.Value);
+                }
             }
             else
             {
-                totalCount = models.ToRowCountFutureValue(options.Top.Value);
+                totalCount = null;
             }
 
             models = options.ApplyToModels(models);

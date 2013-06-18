@@ -30,7 +30,5 @@ namespace BetterCms.Module.Blog.Api.DataContracts
         public Guid? AuthorId { get; set; }
 
         public Guid? CategoryId { get; set; }
-
-        public IList<string> Tags { get; set; }
     }
 }

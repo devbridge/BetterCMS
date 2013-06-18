@@ -55,13 +55,12 @@ namespace BetterCms.Module.Blog.Models.MigrationsContent
                                     Id = blog.Id,
                                     Version = blog.Version,
                                     Title = blog.Title,
-                                    IntroText = blog.Description,
+                                    IntroText = blog.IntroText,
                                     LiveFromDate = content.ActivationDate,
                                     LiveToDate = content.ExpirationDate,
                                     ImageId = blog.MainImageId,
                                     AuthorId = blog.AuthorId,
                                     CategoryId = blog.CategoryId
-                                    /* TODO: remove ???? Tags =blog.PageTags.Select(t => t.Tag.Name).ToList()*/
                                 });
                     }
                 }

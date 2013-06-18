@@ -15,13 +15,25 @@ namespace BetterCms.Module.Blog.Api.DataModels
         public int Version { get; set; }
 
         [DataMember]
+        public string PageUrl { get; set; }
+        
+        [DataMember]
         public string Title { get; set; }
         
         [DataMember]
-        public string Description { get; set; }
+        public string IntroText { get; set; }
 
         [DataMember]
         public DateTime CreatedOn { get; set; }
+        
+        [DataMember]
+        public DateTime ModifiedOn { get; set; }
+        
+        [DataMember]
+        public string CreatedByUser { get; set; }
+        
+        [DataMember]
+        public string ModifiedByUser { get; set; }
 
         [DataMember]
         public PageStatus Status { get; set; }
