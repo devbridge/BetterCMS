@@ -7,6 +7,7 @@ using BetterCms.Core.Exceptions;
 using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Models.Extensions;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 using BetterCms.Module.MediaManager.ViewModels.Upload;
 using BetterCms.Module.Root.Mvc;
@@ -20,7 +21,7 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
         /// </summary>
         public ConfirmUploadResponse Execute(MultiFileUploadViewModel request)
         {
-            ConfirmUploadResponse response = new ConfirmUploadResponse { SelectedFolderId = request.SelectedFolderId ?? Guid.Empty };
+            ConfirmUploadResponse response = new ConfirmUploadResponse { SelectedFolderId = request.SelectedFolderId ?? Guid.Empty, ReuploadMediaId = request.ReuploadMediaId };
 
             if (request.UploadedFiles != null && request.UploadedFiles.Count > 0)
             {
@@ -36,19 +37,39 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
                     }
                 }
 
+                UnitOfWork.BeginTransaction();
+
                 List<MediaFile> files = new List<MediaFile>();
-                foreach (var fileId in request.UploadedFiles)
+                if (request.ReuploadMediaId.HasDefaultValue())
                 {
+                    foreach (var fileId in request.UploadedFiles)
+                    {
+                        if (!fileId.HasDefaultValue())
+                        {
+                            var file = Repository.FirstOrDefault<MediaFile>(fileId);
+                            if (folder != null && (file.Folder == null || file.Folder.Id != folder.Id))
+                            {
+                                file.Folder = folder;
+                            }
+                            file.IsTemporary = false;
+                            Repository.Save(file);
+                            files.Add(file);
+                        }
+                    }
+                }
+                else
+                {
+                    // Re-upload performed.
+                    var fileId = request.UploadedFiles.FirstOrDefault();
                     if (!fileId.HasDefaultValue())
                     {
+                        var originalMedia = Repository.First<MediaFile>(request.ReuploadMediaId);
+                        Repository.Save(originalMedia.CreateHistoryItem());
+
                         var file = Repository.FirstOrDefault<MediaFile>(fileId);
-                        if (folder != null && (file.Folder == null || file.Folder.Id != folder.Id))
-                        {
-                            file.Folder = folder;
-                        }
-                        file.IsTemporary = false;
-                        Repository.Save(file);
-                        files.Add(file);
+                        file.CopyDataTo(originalMedia);
+                        originalMedia.IsTemporary = false;
+                        files.Add(originalMedia);
                     }
                 }
 

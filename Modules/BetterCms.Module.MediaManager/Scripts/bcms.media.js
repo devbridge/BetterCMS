@@ -231,6 +231,24 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             messages.refreshBox($(selectors.fileListMessageBox + self.path().type), {});
         };
 
+        self.reuploadMedia = function (item) {
+            if (item.isProcessing() || item.isDeleting()) {
+                return;
+            }
+            
+            mediaUpload.openReuploadFilesDialog(item.id(), self.path().currentFolder().id(), self.path().currentFolder().type, function (filesData) {
+                if (filesData && filesData.Data && filesData.Data.Medias && filesData.Data.Medias.length > 0) {
+                    var mediaItem = convertToMediaModel(filesData.Data.Medias[0]);
+                    // TODO: filesData.Data.ReuploadMediaId
+                    var index = $.inArray(item, self.medias);
+                    self.medias.splice(index, 1, mediaItem);
+                    // Replace unobtrusive validator.
+                    bcms.updateFormValidator(self.container.find(selectors.firstForm));
+                }
+            });
+            messages.refreshBox($(selectors.fileListMessageBox + self.path().type), {});
+        };
+
         self.searchMedia = function () {
             self.gridOptions().paging.pageNumber(1);
 
@@ -539,6 +557,14 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             this.isActive(true);
         };
             
+        MediaItemBaseViewModel.prototype.reuploadMedia = function (folderViewModel, data, event) {
+            bcms.stopEventPropagation(event);
+            if (this.isDeleting()) {
+                return;
+            }
+            folderViewModel.reuploadMedia(this);
+        };
+            
         MediaItemBaseViewModel.prototype.openMedia = function (folderViewModel, data, event) {
             bcms.stopEventPropagation(event);
             editOrSelectMedia(folderViewModel, this, data, event);
@@ -798,7 +824,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     })(MediaItemBaseViewModel);
 
     /**
-    * Opens media for seleting or editing
+    * Opens media for selecting or editing.
     */
     function editOrSelectMedia(folderViewModel, item, data, event) {
         if (item.isProcessing() || item.isFailed() || item.isDeleting()) {

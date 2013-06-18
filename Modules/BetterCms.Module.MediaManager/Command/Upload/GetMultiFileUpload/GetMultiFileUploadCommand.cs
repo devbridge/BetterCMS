@@ -16,6 +16,7 @@ namespace BetterCms.Module.MediaManager.Command.Upload.GetMultiFileUpload
             var model = new MultiFileUploadViewModel();
             model.RootFolderId = request.FolderId;
             model.RootFolderType = request.Type;
+            model.ReuploadMediaId = request.ReuploadMediaId;
             model.SelectedFolderId = Guid.Empty;
             model.UploadedFiles = null;
 

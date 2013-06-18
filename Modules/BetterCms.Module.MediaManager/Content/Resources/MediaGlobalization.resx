@@ -444,4 +444,10 @@
   <data name="UnarchiveVideo_ConfirmationMessage" xml:space="preserve">
     <value>Are you sure you want to send the video {0} to archive?</value>
   </data>
+  <data name="Button_Reupload" xml:space="preserve">
+    <value>Re-upload</value>
+  </data>
+  <data name="MultiFileUpload_DragDropBox_Reupload" xml:space="preserve">
+    <value>Drag file here to re-upload</value>
+  </data>
 </root>

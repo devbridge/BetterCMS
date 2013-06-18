@@ -18,5 +18,7 @@ namespace BetterCms.Module.MediaManager.ViewModels.Upload
         public IList<Tuple<Guid, string>> Folders { get; set; }
 
         public IList<Guid> UploadedFiles { get; set; }
+
+        public Guid ReuploadMediaId { get; set; }
     }
 }

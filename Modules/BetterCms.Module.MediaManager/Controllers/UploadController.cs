@@ -37,13 +37,14 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// <returns>File upload html.</returns>
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         [HttpGet]
-        public ActionResult MultiFileUpload(string folderId, string folderType)
+        public ActionResult MultiFileUpload(string folderId, string folderType, string reuploadMediaId)
         {
             var model = GetCommand<GetMultiFileUploadCommand>().ExecuteCommand(
                 new GetMultiFileUploadRequest
                     {
                         FolderId = folderId.ToGuidOrDefault(),
-                        Type = (MediaType)Enum.Parse(typeof(MediaType), folderType)
+                        Type = (MediaType)Enum.Parse(typeof(MediaType), folderType),
+                        ReuploadMediaId = reuploadMediaId.ToGuidOrDefault()
                     });
 
             return View(model);
