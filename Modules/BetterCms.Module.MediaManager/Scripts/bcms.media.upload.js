@@ -1,4 +1,5 @@
-﻿/*jslint unparam: true, white: true, browser: true, devel: true */
+﻿/*j
+nt unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
 bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms.modal', 'bcms.html5Upload', 'bcms.ko.extenders', 'bcms.messages'],
@@ -89,7 +90,7 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
             modal.open({
                 title: globalization.uploadFilesDialogTitle,
                 onLoad: function(dialog) {
-                    var url = $.format(links.loadUploadSingleFileDialogUrl, rootFolderId, rootFolderType);
+                    var url = $.format(links.loadUploadSingleFileDialogUrl, rootFolderId, rootFolderType, reuploadMediaId);
                     dynamicContent.setContentFromUrl(dialog, url, {
                         done: function() {
                             SingleFileUpload(dialog, options);
@@ -119,7 +120,6 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
                         data: formToSubmit.serialize()
                     })
                         .done(function(response) {
-
                             onComplete(response);
                         })
                         .fail(function(response) {
@@ -190,6 +190,14 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
         dialog.container.find(selectors.fileUploadingInput).change(function () {
             var fileName = dialog.container.find(selectors.fileUploadingInput).val();
             if (fileName != null && fileName != "") {
+                // Do not allow multiple file upload on re-upload functionality.
+                if (options.reuploadMediaId && uploadsModel.uploads().length > 0) {
+                    var uploadedFiles = uploadsModel.uploads();
+                    for (var i = 0; i < uploadedFiles.length; i++) {
+                        uploadedFiles[i].activate();
+                    }
+                    return;
+                }
                 // Add fake file model for upload indication.
                 uploadFile.uploadCompleted(false);
                 uploadFile.fileName = fileName;
