@@ -79,11 +79,11 @@ namespace BetterCms.Module.MediaManager.Command.History.GetMediaHistory
                            StatusName = media.Original != null
                                 ? MediaGlobalization.MediaHistory_Status_Archived
                                 : MediaGlobalization.MediaHistory_Status_Active,
-                           CreatedOn = media.CreatedOn,
-                           CreatedByUser = media.CreatedByUser,
+                           PublishedOn = media.PublishedOn,
+                           PublishedByUser = media.ModifiedByUser,
                            ArchivedOn = media.Original != null ? media.ModifiedOn : (DateTime?)null,
                            DisplayedFor = media.Original != null
-                                   ? media.ModifiedOn - media.CreatedOn
+                                   ? media.ModifiedOn - media.PublishedOn
                                    : (TimeSpan?)null,
                            CanCurrentUserRestoreIt = canRestore
                        };

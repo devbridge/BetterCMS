@@ -18,6 +18,8 @@ namespace BetterCms.Module.MediaManager.Models
 
         public virtual Media Original { get; set; }
 
+        public virtual DateTime PublishedOn { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Media" /> class.
         /// </summary>
@@ -58,6 +60,7 @@ namespace BetterCms.Module.MediaManager.Models
             media.Type = Type;
             media.ContentType = ContentType;
             media.Folder = Folder;
+            media.PublishedOn = PublishedOn;
 
             return media;
         }

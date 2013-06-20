@@ -16,6 +16,7 @@ namespace BetterCms.Module.MediaManager.Models.Maps
             Map(x => x.IsArchived).Not.Nullable();
             Map(x => x.Type).Not.Nullable();
             Map(x => x.ContentType).Not.Nullable();
+            Map(x => x.PublishedOn).Nullable();
 
             References(f => f.Folder).Cascade.SaveUpdate().LazyLoad().Nullable();
             References(f => f.Original).Cascade.SaveUpdate().LazyLoad().Nullable();

@@ -110,6 +110,7 @@ namespace BetterCms.Module.MediaManager.Services
             file.FileUri = GetFileUri(type, folderName, fileName);
             file.PublicUrl = GetPublicFileUrl(type, folderName, fileName);
             file.IsTemporary = true;
+            file.PublishedOn = DateTime.Now;
             file.IsCanceled = false;
             file.IsUploaded = null;
 

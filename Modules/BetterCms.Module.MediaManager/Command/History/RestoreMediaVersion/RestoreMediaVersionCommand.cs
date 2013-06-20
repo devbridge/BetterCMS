@@ -27,6 +27,7 @@ namespace BetterCms.Module.MediaManager.Command.History.RestoreMediaVersion
                 Repository.Save(original.CreateHistoryItem());
                 versionToRevert.CopyDataTo(original);
                 original.Original = null;
+                original.PublishedOn = DateTime.Now;
                 Repository.Save(original);
                 UnitOfWork.Commit();
                 return true;

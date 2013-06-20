@@ -52,6 +52,7 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
                                 file.Folder = folder;
                             }
                             file.IsTemporary = false;
+                            file.PublishedOn = DateTime.Now;
                             Repository.Save(file);
                             files.Add(file);
                         }
@@ -69,6 +70,7 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
                         var file = Repository.FirstOrDefault<MediaFile>(fileId);
                         file.CopyDataTo(originalMedia);
                         originalMedia.IsTemporary = false;
+                        originalMedia.PublishedOn = DateTime.Now;
                         files.Add(originalMedia);
                     }
                 }

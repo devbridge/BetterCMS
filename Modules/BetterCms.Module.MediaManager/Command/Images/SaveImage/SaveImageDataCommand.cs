@@ -47,6 +47,7 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
 
             UnitOfWork.BeginTransaction();
             Repository.Save(mediaImage.CreateHistoryItem());
+            mediaImage.PublishedOn = DateTime.Now;
 
             mediaImage.Caption = request.Caption;
             mediaImage.Title = request.Title;

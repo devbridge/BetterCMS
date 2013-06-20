@@ -700,29 +700,29 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Created By.
-        /// </summary>
-        public static string MediaHistory_Column_CreatedByUser {
-            get {
-                return ResourceManager.GetString("MediaHistory_Column_CreatedByUser", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Created On.
-        /// </summary>
-        public static string MediaHistory_Column_CreatedOn {
-            get {
-                return ResourceManager.GetString("MediaHistory_Column_CreatedOn", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Active For.
         /// </summary>
         public static string MediaHistory_Column_DisplayedFor {
             get {
                 return ResourceManager.GetString("MediaHistory_Column_DisplayedFor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Published By.
+        /// </summary>
+        public static string MediaHistory_Column_PublishedByUser {
+            get {
+                return ResourceManager.GetString("MediaHistory_Column_PublishedByUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Published On.
+        /// </summary>
+        public static string MediaHistory_Column_PublishedOn {
+            get {
+                return ResourceManager.GetString("MediaHistory_Column_PublishedOn", resourceCulture);
             }
         }
         

@@ -1,4 +1,6 @@
-﻿using BetterCms.Api;
+﻿using System;
+
+using BetterCms.Api;
 using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.MediaManager.Models;
@@ -20,6 +22,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager.RenameMedia
 
             UnitOfWork.BeginTransaction();
             Repository.Save(media.CreateHistoryItem());
+            media.PublishedOn = DateTime.Now;
 
             media.Version = request.Version;
             media.Title = request.Name;

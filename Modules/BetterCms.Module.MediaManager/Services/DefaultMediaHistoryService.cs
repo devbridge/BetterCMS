@@ -50,15 +50,15 @@ namespace BetterCms.Module.MediaManager.Services
 
             switch (gridOptions.Column)
             {
-                case "CreatedOn":
+                case "PublishedOn":
                     medias = gridOptions.Direction == SortDirection.Ascending
-                        ? medias.OrderBy(media => media.CreatedOn)
-                        : medias.OrderByDescending(media => media.CreatedOn);
+                        ? medias.OrderBy(media => media.PublishedOn)
+                        : medias.OrderByDescending(media => media.PublishedOn);
                     break;
-                case "CreatedByUser":
+                case "PublishedByUser":
                     medias = gridOptions.Direction == SortDirection.Ascending
-                        ? medias.OrderBy(media => media.CreatedByUser)
-                        : medias.OrderByDescending(media => media.CreatedByUser);
+                        ? medias.OrderBy(media => media.ModifiedByUser)
+                        : medias.OrderByDescending(media => media.ModifiedByUser);
                     break;
                 case "ArchivedOn":
                     System.Linq.Expressions.Expression<Func<Media, DateTime?>> archivedOnExpression =
@@ -73,7 +73,7 @@ namespace BetterCms.Module.MediaManager.Services
                     medias = medias.ToList().AsQueryable(); // Note: NHibernate does not support sorting on TimeSpan.
                     System.Linq.Expressions.Expression<Func<Media, TimeSpan?>> displayedForExpression =
                         m => m.Original != null
-                            ? m.ModifiedOn - m.CreatedOn
+                            ? m.ModifiedOn - m.PublishedOn
                             : (TimeSpan?)null;
                     medias = gridOptions.Direction == SortDirection.Ascending
                         ? medias.OrderBy(displayedForExpression)

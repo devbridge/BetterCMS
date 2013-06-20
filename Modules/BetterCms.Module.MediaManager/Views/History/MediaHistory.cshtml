@@ -37,15 +37,15 @@
                .Sortable(false)
                .HeaderAttributes(@style => "width: 40px; padding: 10px;", @class => "bcms-tables-nohover");
 
-        column.For(m => m.CreatedOn.ToFormattedDateString())
-               .Named(MediaGlobalization.MediaHistory_Column_CreatedOn)
-               .SortColumnName("CreatedOn")
+        column.For(m => m.PublishedOn.ToFormattedDateString())
+               .Named(MediaGlobalization.MediaHistory_Column_PublishedOn)
+               .SortColumnName("PublishedOn")
                .HeaderAttributes(@style => "width: 95px;")
                .Attributes(@style => "width: 100px;");
 
-        column.For(m => m.CreatedByUser)
-               .Named(MediaGlobalization.MediaHistory_Column_CreatedByUser)
-               .SortColumnName("CreatedByUser")
+        column.For(m => m.PublishedByUser)
+               .Named(MediaGlobalization.MediaHistory_Column_PublishedByUser)
+               .SortColumnName("PublishedByUser")
                .HeaderAttributes(@style => "width: 200px;")
                .Attributes(@style => "width: 200px;");
 

@@ -39,7 +39,7 @@ namespace BetterCms.Module.MediaManager.ViewModels.History
         /// <value>
         /// The created on.
         /// </value>
-        public DateTime CreatedOn { get; set; }
+        public DateTime PublishedOn { get; set; }
 
         /// <summary>
         /// Gets or sets the created by user.
@@ -47,7 +47,7 @@ namespace BetterCms.Module.MediaManager.ViewModels.History
         /// <value>
         /// The created by user.
         /// </value>
-        public string CreatedByUser { get; set; }
+        public string PublishedByUser { get; set; }
 
         /// <summary>
         /// Gets or sets the archived on.
