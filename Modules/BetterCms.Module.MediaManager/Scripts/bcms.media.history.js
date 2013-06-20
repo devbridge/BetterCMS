@@ -166,7 +166,7 @@ bettercms.define('bcms.media.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
     /**
     * Loads history preview dialog.
     */
-    history.openMediaHistoryDialog = function (mediaId) {
+    history.openMediaHistoryDialog = function (mediaId, onClose) {
         modal.open({
             title: globalization.mediaHistoryDialogTitle,
             disableAccept: true,
@@ -185,7 +185,8 @@ bettercms.define('bcms.media.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         dialog.container.hideLoading();
                     }
                 });
-            }            
+            },
+            onClose: onClose
         });
     };
         

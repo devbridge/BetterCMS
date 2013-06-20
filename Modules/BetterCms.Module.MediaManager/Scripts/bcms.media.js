@@ -608,7 +608,9 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             if (this.isDeleting()) {
                 return;
             }
-            history.openMediaHistoryDialog(this.id());
+            history.openMediaHistoryDialog(this.id(), function() {
+                folderViewModel.searchMedia();
+            });
         };
 
         return MediaItemBaseViewModel;
