@@ -844,6 +844,24 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Active.
+        /// </summary>
+        public static string MediaHistory_Status_Active {
+            get {
+                return ResourceManager.GetString("MediaHistory_Status_Active", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Archived.
+        /// </summary>
+        public static string MediaHistory_Status_Archived {
+            get {
+                return ResourceManager.GetString("MediaHistory_Status_Archived", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File Name.
         /// </summary>
         public static string MediaList_FileNameColumn {

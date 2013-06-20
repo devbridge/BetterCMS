@@ -2,6 +2,7 @@
 using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels.History;
@@ -75,12 +76,14 @@ namespace BetterCms.Module.MediaManager.Command.History.GetMediaHistory
                        {
                            Id = media.Id,
                            Version = media.Version,
-                           StatusName = media.Original != null ? "Archived" : "Active", // TODO: add to resources.
+                           StatusName = media.Original != null
+                                ? MediaGlobalization.MediaHistory_Status_Archived
+                                : MediaGlobalization.MediaHistory_Status_Active,
                            CreatedOn = media.CreatedOn,
                            CreatedByUser = media.CreatedByUser,
                            ArchivedOn = media.Original != null ? media.ModifiedOn : (DateTime?)null,
                            DisplayedFor = media.Original != null
-                                   ? media.CreatedOn - media.ModifiedOn
+                                   ? media.ModifiedOn - media.CreatedOn
                                    : (TimeSpan?)null,
                            CanCurrentUserRestoreIt = canRestore
                        };

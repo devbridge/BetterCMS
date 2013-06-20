@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 
 using BetterCms.Core.DataAccess;
+using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
@@ -69,9 +70,10 @@ namespace BetterCms.Module.MediaManager.Services
                         : medias.OrderByDescending(archivedOnExpression);
                     break;
                 case "DisplayedFor":
+                    medias = medias.ToList().AsQueryable(); // Note: NHibernate does not support sorting on TimeSpan.
                     System.Linq.Expressions.Expression<Func<Media, TimeSpan?>> displayedForExpression =
                         m => m.Original != null
-                            ? m.CreatedOn - m.ModifiedOn
+                            ? m.ModifiedOn - m.CreatedOn
                             : (TimeSpan?)null;
                     medias = gridOptions.Direction == SortDirection.Ascending
                         ? medias.OrderBy(displayedForExpression)
@@ -80,8 +82,8 @@ namespace BetterCms.Module.MediaManager.Services
                 case "StatusName":
                     System.Linq.Expressions.Expression<Func<Media, string>> statusNameExpression =
                         m => m.Original != null
-                            ? "Archived"
-                            : "Active"; // TODO: add to resources.
+                            ? MediaGlobalization.MediaHistory_Status_Archived
+                            : MediaGlobalization.MediaHistory_Status_Active;
                     medias = gridOptions.Direction == SortDirection.Ascending
                         ? medias.OrderBy(statusNameExpression)
                         : medias.OrderByDescending(statusNameExpression);
