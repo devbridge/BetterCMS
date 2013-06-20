@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-bettercms.define('bcms.media', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.messages', 'bcms.media.upload', 'bcms.media.imageeditor', 'bcms.htmlEditor', 'bcms.ko.extenders', 'bcms.contextMenu', 'bcms.security'],
-function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUpload, imageEditor, htmlEditor, ko, menu, security) {
+bettercms.define('bcms.media', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.messages', 'bcms.media.upload', 'bcms.media.imageeditor', 'bcms.htmlEditor', 'bcms.ko.extenders', 'bcms.contextMenu', 'bcms.security', 'bcms.media.history'],
+function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUpload, imageEditor, htmlEditor, ko, menu, security, history) {
     'use strict';
 
     var media = { },
@@ -602,6 +602,14 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 Type: this.type
             };
             return params;
+        };
+
+        MediaItemBaseViewModel.prototype.showHistory = function (folderViewModel, data, event) {
+            bcms.stopEventPropagation(event);
+            if (this.isDeleting()) {
+                return;
+            }
+            history.openMediaHistoryDialog(this.id());
         };
 
         return MediaItemBaseViewModel;

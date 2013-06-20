@@ -450,4 +450,37 @@
   <data name="MultiFileUpload_DragDropBox_Reupload" xml:space="preserve">
     <value>Drag file here to re-upload</value>
   </data>
+  <data name="MediaHistory_Column_ArchivedOn" xml:space="preserve">
+    <value>Archived On</value>
+  </data>
+  <data name="MediaHistory_Column_CreatedByUser" xml:space="preserve">
+    <value>Created By</value>
+  </data>
+  <data name="MediaHistory_Column_CreatedOn" xml:space="preserve">
+    <value>Created On</value>
+  </data>
+  <data name="MediaHistory_Column_DisplayedFor" xml:space="preserve">
+    <value>Active For</value>
+  </data>
+  <data name="MediaHistory_Column_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="MediaHistory_SelectVersionToPreviewMessage" xml:space="preserve">
+    <value>Select version to preview history</value>
+  </data>
+  <data name="MediaHistory_OlderVersions" xml:space="preserve">
+    <value>Older Versions</value>
+  </data>
+  <data name="MediaHistory_DialogTitle" xml:space="preserve">
+    <value>History - Media Versions Preview</value>
+  </data>
+  <data name="MediaHistory_Restore_AcceptButtonTitle" xml:space="preserve">
+    <value>Restore</value>
+  </data>
+  <data name="MediaHistory_Restore_ConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to restore to older version?</value>
+  </data>
+  <data name="Button_ShowHistory" xml:space="preserve">
+    <value>History</value>
+  </data>
 </root>

@@ -106,6 +106,7 @@
                     @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
                     {
                         <a class="bcms-media-content-link" data-bind="click: reuploadMedia.bind($data, $root), clickBubble: false">@MediaGlobalization.Button_Reupload</a>
+                        <a class="bcms-media-content-link" data-bind="click: showHistory.bind($data, $root), clickBubble: false">@MediaGlobalization.Button_ShowHistory</a>
                         <a class="bcms-media-content-link" data-bind="click: renameMedia.bind($data, $root), clickBubble: false">@RootGlobalization.Button_Rename</a>
                         <!-- ko if: canBeEdited() -->
                         <a class="bcms-media-content-link" data-bind="click: editMedia.bind($data, $root), clickBubble: false">@RootGlobalization.Button_Edit</a>

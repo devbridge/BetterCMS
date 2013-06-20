@@ -133,6 +133,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to History.
+        /// </summary>
+        public static string Button_ShowHistory {
+            get {
+                return ResourceManager.GetString("Button_ShowHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Folder created successfully..
         /// </summary>
         public static string CreateFolder_CreatedSuccessfully_Message {
@@ -678,6 +687,96 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         public static string InsertImage_FailureMessage_Title {
             get {
                 return ResourceManager.GetString("InsertImage_FailureMessage_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Archived On.
+        /// </summary>
+        public static string MediaHistory_Column_ArchivedOn {
+            get {
+                return ResourceManager.GetString("MediaHistory_Column_ArchivedOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Created By.
+        /// </summary>
+        public static string MediaHistory_Column_CreatedByUser {
+            get {
+                return ResourceManager.GetString("MediaHistory_Column_CreatedByUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Created On.
+        /// </summary>
+        public static string MediaHistory_Column_CreatedOn {
+            get {
+                return ResourceManager.GetString("MediaHistory_Column_CreatedOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Active For.
+        /// </summary>
+        public static string MediaHistory_Column_DisplayedFor {
+            get {
+                return ResourceManager.GetString("MediaHistory_Column_DisplayedFor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string MediaHistory_Column_Status {
+            get {
+                return ResourceManager.GetString("MediaHistory_Column_Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to History - Media Versions Preview.
+        /// </summary>
+        public static string MediaHistory_DialogTitle {
+            get {
+                return ResourceManager.GetString("MediaHistory_DialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Older Versions.
+        /// </summary>
+        public static string MediaHistory_OlderVersions {
+            get {
+                return ResourceManager.GetString("MediaHistory_OlderVersions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restore.
+        /// </summary>
+        public static string MediaHistory_Restore_AcceptButtonTitle {
+            get {
+                return ResourceManager.GetString("MediaHistory_Restore_AcceptButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to restore to older version?.
+        /// </summary>
+        public static string MediaHistory_Restore_ConfirmationMessage {
+            get {
+                return ResourceManager.GetString("MediaHistory_Restore_ConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select version to preview history.
+        /// </summary>
+        public static string MediaHistory_SelectVersionToPreviewMessage {
+            get {
+                return ResourceManager.GetString("MediaHistory_SelectVersionToPreviewMessage", resourceCulture);
             }
         }
         

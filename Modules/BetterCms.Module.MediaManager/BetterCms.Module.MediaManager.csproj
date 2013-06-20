@@ -129,6 +129,10 @@
     <Compile Include="Command\Folder\SaveFolderCommand.cs" />
     <Compile Include="Command\Files\DownloadFile\DownloadFileCommand.cs" />
     <Compile Include="Command\Files\DownloadFile\DownloadFileCommandResponse.cs" />
+    <Compile Include="Command\History\GetMediaHistory\GetMediaHistoryCommand.cs" />
+    <Compile Include="Command\History\GetMediaHistory\GetMediaHistoryRequest.cs" />
+    <Compile Include="Command\History\GetMediaVersion\GetMediaVersionCommand.cs" />
+    <Compile Include="Command\History\RestoreMediaVersion\RestoreMediaVersionCommand.cs" />
     <Compile Include="Command\Images\GetImageProperties\GetImagePropertiesCommand.cs" />
     <Compile Include="Command\MediaManager\ArchiveMedia\ArchiveMediaCommand.cs" />
     <Compile Include="Command\MediaManager\ArchiveMedia\ArchiveMediaCommandRequest.cs" />
@@ -158,6 +162,7 @@
     </Compile>
     <Compile Include="Controllers\AudiosController.cs" />
     <Compile Include="Controllers\FolderController.cs" />
+    <Compile Include="Controllers\HistoryController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Controllers\ImagesController.cs" />
     <Compile Include="Controllers\VideosController.cs" />
@@ -187,9 +192,12 @@
     <Compile Include="Models\Migrations\InitialSetup.cs" />
     <Compile Include="Models\Migrations\Migration201303081430.cs" />
     <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />
+    <Compile Include="Registration\MediaHistoryJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\ImageEditorJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\MediaUploadJsModuleIncludeDescriptor.cs" />
+    <Compile Include="Services\DefaultMediaHistoryService.cs" />
     <Compile Include="Services\IMediaAudioService.cs" />
+    <Compile Include="Services\IMediaHistoryService.cs" />
     <Compile Include="Services\IMediaVideoService.cs" />
     <Compile Include="Services\DefaultMediaFileService.cs" />
     <Compile Include="Services\IMediaFileService.cs" />
@@ -198,6 +206,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registration\MediaManagerJsModuleIncludeDescriptor.cs" />
     <Compile Include="Api\DataModels\MediaImage.cs" />
+    <Compile Include="ViewModels\History\MediaHistoryItem.cs" />
+    <Compile Include="ViewModels\History\MediaHistoryViewModel.cs" />
+    <Compile Include="ViewModels\History\MediaPreviewViewModel.cs" />
     <Compile Include="ViewModels\ImageSelectorViewModel.cs" />
     <Compile Include="ViewModels\Images\ImageViewModel.cs" />
     <Compile Include="ViewModels\MediaManager\MediaAudioViewModel.cs" />
@@ -258,6 +269,7 @@
     <EmbeddedResource Include="Scripts\bcms.jquery.jcrop.js" />
     <EmbeddedResource Include="Scripts\bcms.media.imageeditor.js" />
     <EmbeddedResource Include="Scripts\bcms.media.js" />
+    <EmbeddedResource Include="Scripts\bcms.media.history.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -295,6 +307,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\MediaManager\Partial\MediaManagerTemplate.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\History\MediaHistory.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\History\MediaVersion.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
