@@ -239,8 +239,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             mediaUpload.openReuploadFilesDialog(item.id(), self.path().currentFolder().id(), self.path().currentFolder().type, function (filesData) {
                 if (filesData && filesData.Data && filesData.Data.Medias && filesData.Data.Medias.length > 0) {
                     var mediaItem = convertToMediaModel(filesData.Data.Medias[0]);
-                    // TODO: filesData.Data.ReuploadMediaId
-                    var index = $.inArray(item, self.medias);
+                    var index = $.inArray(item, self.medias());
                     self.medias.splice(index, 1, mediaItem);
                     // Replace unobtrusive validator.
                     bcms.updateFormValidator(self.container.find(selectors.firstForm));
