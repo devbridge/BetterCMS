@@ -754,6 +754,69 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Caption.
+        /// </summary>
+        public static string MediaHistory_Preview_Properties_Caption {
+            get {
+                return ResourceManager.GetString("MediaHistory_Preview_Properties_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File Size.
+        /// </summary>
+        public static string MediaHistory_Preview_Properties_FileSize {
+            get {
+                return ResourceManager.GetString("MediaHistory_Preview_Properties_FileSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dimensions (pixels).
+        /// </summary>
+        public static string MediaHistory_Preview_Properties_ImageDimensions {
+            get {
+                return ResourceManager.GetString("MediaHistory_Preview_Properties_ImageDimensions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Public Thumbnail Url.
+        /// </summary>
+        public static string MediaHistory_Preview_Properties_PublicThumbnailUrl {
+            get {
+                return ResourceManager.GetString("MediaHistory_Preview_Properties_PublicThumbnailUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Public Url.
+        /// </summary>
+        public static string MediaHistory_Preview_Properties_PublicUrl {
+            get {
+                return ResourceManager.GetString("MediaHistory_Preview_Properties_PublicUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string MediaHistory_Preview_Properties_Title {
+            get {
+                return ResourceManager.GetString("MediaHistory_Preview_Properties_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Properties.
+        /// </summary>
+        public static string MediaHistory_Preview_PropertiesTitle {
+            get {
+                return ResourceManager.GetString("MediaHistory_Preview_PropertiesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Restore.
         /// </summary>
         public static string MediaHistory_Restore_AcceptButtonTitle {

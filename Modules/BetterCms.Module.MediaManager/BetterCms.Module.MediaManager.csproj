@@ -168,10 +168,13 @@
     <Compile Include="Controllers\VideosController.cs" />
     <Compile Include="Controllers\FilesController.cs" />
     <Compile Include="Controllers\MediaManagerController.cs" />
+    <Compile Include="Helpers\MediaPreviewHelper.cs" />
     <Compile Include="Helpers\MediaImageHelper.cs" />
     <Compile Include="Helpers\WrappedJsonResult.cs" />
     <Compile Include="Api\MediaManagerApiContext.cs" />
     <Compile Include="MediaManagerModuleDescriptor.cs" />
+    <Compile Include="Models\Extensions\ListExtensions.cs" />
+    <Compile Include="Models\Extensions\MediaImageExtensions.cs" />
     <Compile Include="Models\Extensions\MediaExtensions.cs" />
     <Compile Include="Models\Extensions\MediaFileExtensions.cs" />
     <Compile Include="Models\MediaImageAlign.cs" />

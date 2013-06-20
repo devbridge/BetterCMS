@@ -1,4 +1,10 @@
-﻿using NHibernate;
+﻿using System.Collections.Generic;
+using System.Text;
+
+using BetterCms.Module.MediaManager.Content.Resources;
+using BetterCms.Module.MediaManager.Helpers;
+
+using NHibernate;
 using NHibernate.Criterion;
 
 namespace BetterCms.Module.MediaManager.Models.Extensions
@@ -121,6 +127,39 @@ namespace BetterCms.Module.MediaManager.Models.Extensions
         private static ICriterion GetIsFailedConditionCriterion(MediaImage alias)
         {
             return Restrictions.Where(() => alias.IsUploaded == false || alias.IsThumbnailUploaded == false || alias.IsOriginalUploaded == false);
+        }
+
+        public static string SizeAsText(this MediaFile image)
+        {
+            string[] sizes = { "bytes", "KB", "MB", "GB" };
+            double fileSize = image.Size;
+            var order = 0;
+            while (fileSize >= 1024 && order + 1 < sizes.Length)
+            {
+                order++;
+                fileSize = fileSize / 1024;
+            }
+
+            return string.Format("{0:0.##} {1}", fileSize, sizes[order]);
+        }
+
+        internal static string GetFilePreviewHtml(this MediaFile media)
+        {
+            var html = new StringBuilder();
+
+            // Wrapping div start.
+            html.Append("<div class=\"bcms-media-history-holder\">");
+
+            var properties = new List<KeyValuePair<string, string>>();
+            properties.Add(MediaGlobalization.MediaHistory_Preview_Properties_Title, media.Title);
+            properties.Add(MediaGlobalization.MediaHistory_Preview_Properties_FileSize, media.SizeAsText());
+            properties.Add(MediaGlobalization.MediaHistory_Preview_Properties_PublicUrl, string.Format("<a href=\"{0}\" target=\"_blank\">{0}</a>", media.PublicUrl));
+            MediaPreviewHelper.RenderProperties(html, "Properties", properties);
+
+            // Wrapping div end.
+            html.Append("</div>");
+
+            return html.ToString();
         }
     }
 }

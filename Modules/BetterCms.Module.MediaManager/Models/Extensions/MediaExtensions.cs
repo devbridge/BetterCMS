@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Text;
 
+using BetterCms.Module.MediaManager.Content.Resources;
+
 namespace BetterCms.Module.MediaManager.Models.Extensions
 {
     public static class MediaExtensions
@@ -17,36 +19,16 @@ namespace BetterCms.Module.MediaManager.Models.Extensions
             var image = media as MediaImage;
             if (image != null)
             {
-                return image.GetPreviewHtml();
+                return image.GetImagePreviewHtml();
             }
 
             var file = media as MediaFile;
             if (file != null)
             {
-                return file.GetPreviewHtml();
+                return file.GetFilePreviewHtml();
             }
 
             return string.Empty;
-        }
-
-        private static string GetPreviewHtml(this MediaImage media)
-        {
-            var html = new StringBuilder();
-
-            html.Append("<img src=\"");
-            html.Append(media.PublicUrl);
-            html.Append("\"/>");
-
-            return html.ToString();
-        }
-
-        private static string GetPreviewHtml(this MediaFile media)
-        {
-            var html = new StringBuilder();
-
-            html.Append("File preview - not implemented!"); // TODO:
-
-            return html.ToString();
         }
     }
 }

@@ -483,4 +483,25 @@
   <data name="Button_ShowHistory" xml:space="preserve">
     <value>History</value>
   </data>
+  <data name="MediaHistory_Preview_PropertiesTitle" xml:space="preserve">
+    <value>Properties</value>
+  </data>
+  <data name="MediaHistory_Preview_Properties_Caption" xml:space="preserve">
+    <value>Caption</value>
+  </data>
+  <data name="MediaHistory_Preview_Properties_FileSize" xml:space="preserve">
+    <value>File Size</value>
+  </data>
+  <data name="MediaHistory_Preview_Properties_ImageDimensions" xml:space="preserve">
+    <value>Dimensions (pixels)</value>
+  </data>
+  <data name="MediaHistory_Preview_Properties_PublicThumbnailUrl" xml:space="preserve">
+    <value>Public Thumbnail Url</value>
+  </data>
+  <data name="MediaHistory_Preview_Properties_PublicUrl" xml:space="preserve">
+    <value>Public Url</value>
+  </data>
+  <data name="MediaHistory_Preview_Properties_Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
 </root>

@@ -3,6 +3,7 @@ using System.Globalization;
 
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Models.Extensions;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels.Images;
 using BetterCms.Module.Root.Mvc;
@@ -40,7 +41,7 @@ namespace BetterCms.Module.MediaManager.Command.Images.GetImage
                     Version = image.Version.ToString(CultureInfo.InvariantCulture),
                     FileName = image.OriginalFileName,
                     FileExtension = image.OriginalFileExtension,
-                    FileSize = MediaFileService.GetFileSizeText(image.Size),
+                    FileSize = image.SizeAsText(),
                     ImageWidth = image.Width,
                     ImageHeight = image.Height,
                     OriginalImageWidth = image.OriginalWidth,
