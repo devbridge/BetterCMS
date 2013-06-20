@@ -16,6 +16,9 @@
     <a class="bcms-icn-preview" data-id="@item.Id">@RootGlobalization.Button_Preview</a>
 }
 
+@helper DownloadLink(MediaHistoryItem item){
+    <a class="bcms-icn-download" data-id="@item.Id" data-version="@item.Version">@MediaGlobalization.MediaManager_ButtonDownload</a>
+}
 @helper RestoreLink(MediaHistoryItem item)
 {
     if (item.CanCurrentUserRestoreIt)
@@ -58,8 +61,8 @@
         column.For(m => m.DisplayedFor.ToFormatedTimeString())
                .Named(MediaGlobalization.MediaHistory_Column_DisplayedFor)
                .SortColumnName("DisplayedFor")
-               .HeaderAttributes(@style => "width: 105px;")
-               .Attributes(@style => "width: 105px;");
+               .HeaderAttributes(@style => "width: 90px;")
+               .Attributes(@style => "width: 90px;");
 
         column.For(m => m.StatusName)
                .Named(MediaGlobalization.MediaHistory_Column_Status)
@@ -68,12 +71,19 @@
                .HeaderAttributes(@style => "width: 90px;")
                .Attributes(@style => "width: 90px;");
 
+        column.For(f => DownloadLink(f))
+               .Encode(false)
+               .Named("&nbsp;")
+               .Sortable(false)
+               .HeaderAttributes(@style => "width: 57px;", @class => "bcms-tables-nohover")
+               .Attributes(@style => "width: 57px;");
+        
         column.For(f => RestoreLink(f))
                .Encode(false)
                .Named("&nbsp;")
                .Sortable(false)
-               .HeaderAttributes(@style => "width: 170px;", @class => "bcms-tables-nohover")
-               .Attributes(@style => "width: 144px;");
+               .HeaderAttributes(@style => "width: 115px;", @class => "bcms-tables-nohover")
+               .Attributes(@style => "width: 89px;");
     };
 }
 

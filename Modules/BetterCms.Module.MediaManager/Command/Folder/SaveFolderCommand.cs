@@ -30,6 +30,7 @@ namespace BetterCms.Module.MediaManager.Command.Folder
             folder.Title = request.Name;
             folder.Folder = null;
             folder.Type = request.Type;
+            folder.PublishedOn = DateTime.Now;
 
             Repository.Save(folder);
             UnitOfWork.Commit();

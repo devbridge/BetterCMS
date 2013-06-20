@@ -13,6 +13,7 @@ bettercms.define('bcms.media.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         
         selectors = {
             gridRestoreLinks: '#bcms-pagecontenthistory-form .bcms-history-cell a.bcms-icn-restore',
+            gridDownloadLinks: '#bcms-pagecontenthistory-form .bcms-history-cell a.bcms-icn-download',
             gridCells: '#bcms-pagecontenthistory-form .bcms-history-cell tbody td',
             gridRowPreviewLink: 'a.bcms-icn-preview:first',
             firstRow: 'tr:first',
@@ -27,7 +28,8 @@ bettercms.define('bcms.media.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         links = {
             loadMediaHistoryDialogUrl: null,
             loadMediaVersionPreviewUrl: null,
-            restoreMediaVersionUrl: null
+            restoreMediaVersionUrl: null,
+            downloadFileUrl: null
         },
         
         globalization = {
@@ -125,6 +127,11 @@ bettercms.define('bcms.media.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             bcms.stopEventPropagation(event);
             
             restoreVersion(container, $(this).data('id'));
+        });
+        
+        container.find(selectors.gridDownloadLinks).on('click', function (event) {
+            bcms.stopEventPropagation(event);
+            window.open($.format(links.downloadFileUrl, $(this).data('id')), '_newtab');
         });
         
         container.find(selectors.gridCells).on('click', function () {
