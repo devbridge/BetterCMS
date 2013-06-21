@@ -38,10 +38,10 @@ namespace BetterCms.Test.Module.Blog.ModelTests.MapTests
             RunEntityMapTestsInTransaction(content);  
         }
         
-        private GetBlogPostsRequest CreateTestRequest()
+        private GetDataRequest<BlogPostData> CreateTestRequest()
         {
             // Creating request
-            var request = new GetBlogPostsRequest(5, 3);
+            var request = new GetDataRequest<BlogPostData>(5, 3);
             request.Filter.Add(BlogPostData.CreatedOn, new DateTime(2013, 06, 01), FilterOperation.Greater);
             request.Filter.Add(BlogPostData.Title, "Africa", FilterOperation.NotEqual);
             // request.Filter.Add(BlogPostData.AuthorName, "Af", FilterOperation.StartsWith);
@@ -69,7 +69,7 @@ namespace BetterCms.Test.Module.Blog.ModelTests.MapTests
             string serialized =  serializer.Serialize(request);
             Console.WriteLine(serialized);
 
-            request = serializer.Deserialize<GetBlogPostsRequest>(serialized);
+            request = serializer.Deserialize<GetDataRequest<BlogPostData>>(serialized);
 
             Assert.IsNotNull(request);
         }
@@ -112,7 +112,7 @@ namespace BetterCms.Test.Module.Blog.ModelTests.MapTests
 
                         Console.WriteLine(json);
 
-                        var request = serializer.Deserialize<GetBlogPostsRequest>(json);
+                        var request = serializer.Deserialize<GetDataRequest<BlogPostData>>(json);
 
                         Console.WriteLine(request.Filter.FilterItems[0].Value);
                         Console.WriteLine(request.Filter.FilterItems[0].Value.GetType());
@@ -220,60 +220,20 @@ namespace BetterCms.Test.Module.Blog.ModelTests.MapTests
         }
     }
 
-    public class RequestPropertyNameExtractor<T>
-        where T : struct, IComparable, IConvertible, IFormattable
-    {
-        public virtual string GetPropertyName(T property)
-        {
-            if (!typeof(T).IsEnum)
-            {
-                throw new InvalidOperationException("Property type must be enum!");
-            }
-
-            return (property as Enum).ToString();
-        }
-    }
-
-    [Serializable]
-    public class GetBlogPostsRequest : GetDataRequest<BlogPostData>
-    {
-        public GetBlogPostsRequest()
-        {
-        }
-
-        public GetBlogPostsRequest(int? itemsCount, int startItemNumber)
-            : base(itemsCount, startItemNumber, new BlogPostPropertyNameExtractor())
-        {
-        }
-    }
-
-    public class BlogPostPropertyNameExtractor : RequestPropertyNameExtractor<BlogPostData>
-    {
-        public override string GetPropertyName(BlogPostData property)
-        {
-            if (property == BlogPostData.AuthorName)
-            {
-                return "Author.Name";
-            }
-            return base.GetPropertyName(property);
-        }
-    }
-
     [Serializable]
     public class GetDataRequest<T>
         where T : struct, IComparable, IConvertible, IFormattable
     {
-        public GetDataRequest(int? itemsCount = null,
-            int startItemNumber = 1,
-            RequestPropertyNameExtractor<T> nameExtractor = null)
+        public GetDataRequest()
+            : this(null)
         {
-            if (nameExtractor == null)
-            {
-                nameExtractor = new RequestPropertyNameExtractor<T>();
-            }
+        }
 
-            Filter = new DataFilter<T>(nameExtractor);
-            Order = new DataOrder<T>(nameExtractor);
+        public GetDataRequest(int? itemsCount,
+            int startItemNumber = 1)
+        {
+            Filter = new DataFilter<T>();
+            Order = new DataOrder<T>();
 
             StartItemNumber = startItemNumber;
             ItemsCount = itemsCount;
@@ -335,25 +295,17 @@ namespace BetterCms.Test.Module.Blog.ModelTests.MapTests
 
         public IList<DataFilter<T>> InnerFilters { get; set; }
 
-        private RequestPropertyNameExtractor<T> nameExtractor;
-
         public DataFilter()
+            : this(FilterConnector.And)
         {
         }
 
-        public DataFilter(RequestPropertyNameExtractor<T> nameExtractor, FilterConnector connector = FilterConnector.And)
-            : this(connector, nameExtractor)
-        {
-        }
-
-        public DataFilter(FilterConnector connector, RequestPropertyNameExtractor<T> nameExtractor = null)
+        public DataFilter(FilterConnector connector)
         {
             if (!typeof(T).IsEnum)
             {
                 throw new InvalidOperationException("Filter data type must be enum!");
             }
-
-            this.nameExtractor = nameExtractor ?? new RequestPropertyNameExtractor<T>();
 
             FilterItems = new List<FilterItem>();
             InnerFilters = new List<DataFilter<T>>();
@@ -362,7 +314,7 @@ namespace BetterCms.Test.Module.Blog.ModelTests.MapTests
 
         public void Add(T field, object value, FilterOperation operation = FilterOperation.Equal)
         {
-            var filterItem = new FilterItem(field, value, operation, nameExtractor);
+            var filterItem = new FilterItem(field, value, operation);
 
             FilterItems.Add(filterItem);
         }
@@ -370,49 +322,18 @@ namespace BetterCms.Test.Module.Blog.ModelTests.MapTests
         [Serializable]
         public class FilterItem
         {
-            private T field;
-            private string fieldName;
-            private readonly RequestPropertyNameExtractor<T> nameExtractor;
-
             public FilterItem()
             {
-                nameExtractor = new RequestPropertyNameExtractor<T>();
             }
 
-            public FilterItem(T field, object value, FilterOperation operation = FilterOperation.Equal, RequestPropertyNameExtractor<T> nameExtractor = null)
+            public FilterItem(T field, object value, FilterOperation operation = FilterOperation.Equal)
             {
-                this.nameExtractor = nameExtractor ?? new RequestPropertyNameExtractor<T>();
-
                 Field = field;
                 Value = value;
                 Operation = operation;
             }
 
-            public string FieldName
-            {
-                get
-                {
-                    return fieldName;
-                }
-            }
-
-            public T Field
-            {
-                get
-                {
-                    return field;
-                }
-                set
-                {
-                    if (!typeof(T).IsEnum)
-                    {
-                        throw new InvalidOperationException("Filter item data type must be enum!");
-                    }
-
-                    field = value;
-                    fieldName = nameExtractor.GetPropertyName(field);
-                }
-            }
+            public T Field { get; set; }
 
             public object Value { get; set; }
 
@@ -423,21 +344,12 @@ namespace BetterCms.Test.Module.Blog.ModelTests.MapTests
     public class DataOrder<T> 
         where T : struct, IComparable, IConvertible, IFormattable
     {
-        private RequestPropertyNameExtractor<T> nameExtractor;
-
         public DataOrder()
-            : this(null)
-        {
-        }
-
-        public DataOrder(RequestPropertyNameExtractor<T> nameExtractor)
         {
             if (!typeof(T).IsEnum)
             {
                 throw new InvalidOperationException("Order data type must be enum!");
             }
-
-            this.nameExtractor = nameExtractor ?? new RequestPropertyNameExtractor<T>();
 
             OrderItems = new List<OrderItem>();
         }
@@ -446,55 +358,25 @@ namespace BetterCms.Test.Module.Blog.ModelTests.MapTests
 
         public void Add(T field, OrderOperation operation = OrderOperation.Asc)
         {
-            var filterItem = new OrderItem(field, operation, nameExtractor);
+            var filterItem = new OrderItem(field, operation);
 
             OrderItems.Add(filterItem);
         }
 
         public class OrderItem
         {
-            private T field;
-            private string fieldName;
-            private RequestPropertyNameExtractor<T> nameExtractor;
-
             public OrderItem()
             {
-                nameExtractor = new RequestPropertyNameExtractor<T>();
+                
             }
 
-            public OrderItem(T field, OrderOperation operation = OrderOperation.Asc, RequestPropertyNameExtractor<T> nameExtractor = null)
+            public OrderItem(T field, OrderOperation operation = OrderOperation.Asc)
             {
-                this.nameExtractor = nameExtractor ?? new RequestPropertyNameExtractor<T>();
-
                 Operation = operation;
                 Field = field;
             }
 
-            public T Field
-            {
-                get
-                {
-                    return field;
-                }
-                set
-                {
-                    if (!typeof(T).IsEnum)
-                    {
-                        throw new InvalidOperationException("Order item data type must be enum!");
-                    }
-
-                    field = value;
-                    fieldName = nameExtractor.GetPropertyName(field);
-                }
-            }
-
-            public string FieldName
-            {
-                get
-                {
-                    return fieldName;
-                }
-            }
+            public T Field { get; set; }
 
             public OrderOperation Operation { get; set; }
 
@@ -557,7 +439,7 @@ namespace BetterCms.Test.Module.Blog.ModelTests.MapTests
         private static ICriterion CreateCriterion<T>(DataFilter<T>.FilterItem filterItem)
             where T : struct, IComparable, IConvertible, IFormattable
         {
-            var propertyName = filterItem.FieldName;
+            var propertyName = (filterItem.Field as Enum).ToString();
 
             switch (filterItem.Operation)
             {
@@ -596,7 +478,7 @@ namespace BetterCms.Test.Module.Blog.ModelTests.MapTests
             {
                 foreach (var orderItem in request.Order.OrderItems)
                 {
-                    var propertyName = orderItem.FieldName;
+                    var propertyName = (orderItem.Field as Enum).ToString();
 
                     criteria.AddOrder(new Order(propertyName, orderItem.OrderByDescending));
                 }
