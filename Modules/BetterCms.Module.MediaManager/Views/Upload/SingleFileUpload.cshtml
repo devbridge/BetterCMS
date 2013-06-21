@@ -20,9 +20,10 @@
         }))
         {
             <div class="bcms-input-list-holder">                
+                @Html.HiddenFor(f => f.ReuploadMediaId)
                 @Html.HiddenFor(f => f.RootFolderId)
                 @Html.HiddenFor(f => f.RootFolderType)
-                @if (Model.RootFolderId.HasDefaultValue())
+                @if (Model.RootFolderId.HasDefaultValue() && Model.ReuploadMediaId.HasDefaultValue())
                 {
                     @Html.Tooltip(MediaGlobalization.MultiFileUpload_SelectFolder_Help_Message)            
                     <div class="bcms-content-titles">@MediaGlobalization.MultiFileUpload_SelectFolder</div>
@@ -43,7 +44,9 @@
         }
         @using (Html.BeginForm<UploadController>(c => c.SaveUploads(null), FormMethod.Post, new { id = "SaveForm", name = "SaveForm", @class = "bcms-ajax-form" }))
         {
+            @Html.HiddenFor(f => f.ReuploadMediaId)
             @Html.HiddenFor(m => m.RootFolderId)
+            @Html.HiddenFor(m => m.RootFolderType)
             if (Model.RootFolderId.HasDefaultValue())
             {
                 @Html.HiddenFor(m => m.SelectedFolderId)
@@ -52,16 +55,18 @@
             {
                 @Html.HiddenFor(m => m.SelectedFolderId, new { @Value = Model.RootFolderId })
             }
-            
-            @Html.HiddenFor(m => m.RootFolderType)
-            <div class="bcms-upload-holder" data-bind="template: { name: 'bcms-file-upload-template' }">
-            </div>
+            <div class="bcms-upload-holder" data-bind="template: { name: 'bcms-file-upload-template' }"></div>
         }
         <iframe id="UploadTarget" name="UploadTarget" style="position: absolute; left: -999em; top: -999em;"></iframe>
         <div id="Images"></div>
         <script type="text/html" id="bcms-file-upload-template">
             <div data-bind="foreach: uploads">
-                <div data-bind="css: { 'bcms-upload-block':true, 'bcms-upload-success':uploadCompleted() && !uploadProcessing() && !uploadFailed(), 'bcms-upload-failed':uploadFailed() }">
+                <div data-bind="css: {
+                        'bcms-upload-block':true,
+                        'bcms-upload-success':uploadCompleted() && !uploadProcessing() && !uploadFailed(),
+                        'bcms-upload-failed':uploadFailed(),
+                        'bcms-single-tag-active':isActive() @* TODO: style is needed. *@
+                    }">
                     <div class="bcms-upload-file-titles" data-bind="text: fileName"></div>
                     <!-- ko if: !uploadFailed() -->
                     @Html.HiddenFor(model => model.UploadedFiles, new { id = (string)null, data_bind = "value:fileId()" })

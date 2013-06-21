@@ -9,5 +9,7 @@ namespace BetterCms.Module.MediaManager.Command.Upload.GetMultiFileUpload
         public Guid FolderId { get; set; }
 
         public MediaType Type { get; set; }
+
+        public Guid ReuploadMediaId { get; set; }
     }
 }

@@ -19,10 +19,10 @@ namespace BetterCms.Module.MediaManager.Registration
         {            
             Links = new IActionProjection[]
                 {    
-                    new JavaScriptModuleLinkTo<UploadController>(this, "loadUploadFilesDialogUrl", f => f.MultiFileUpload("{0}", "{1}")),
+                    new JavaScriptModuleLinkTo<UploadController>(this, "loadUploadFilesDialogUrl", f => f.MultiFileUpload("{0}", "{1}", "{2}")),
                     new JavaScriptModuleLinkTo<UploadController>(this, "uploadFileToServerUrl", f => f.UploadMedia(null)),
                     new JavaScriptModuleLinkTo<UploadController>(this, "undoFileUploadUrl", f => f.RemoveFileUpload("{0}", "{1}", "{2}")),
-                    new JavaScriptModuleLinkTo<UploadController>(this, "loadUploadSingleFileDialogUrl", f => f.SingleFileUpload("{0}", "{1}")),
+                    new JavaScriptModuleLinkTo<UploadController>(this, "loadUploadSingleFileDialogUrl", f => f.SingleFileUpload("{0}", "{1}", "{2}")),
                     new JavaScriptModuleLinkTo<UploadController>(this, "checkUploadedFileStatuses", f => f.CheckFilesStatuses(null))
                 };
 

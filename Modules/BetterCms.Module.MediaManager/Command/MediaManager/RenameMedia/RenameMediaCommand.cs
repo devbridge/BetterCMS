@@ -1,7 +1,10 @@
-﻿using BetterCms.Api;
+﻿using System;
+
+using BetterCms.Api;
 using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Models.Extensions;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 
 using BetterCms.Module.Root.Mvc;
@@ -16,6 +19,10 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager.RenameMedia
         public MediaViewModel Execute(MediaViewModel request)
         {
             Media media = Repository.AsProxy<Media>(request.Id);
+
+            UnitOfWork.BeginTransaction();
+            Repository.Save(media.CreateHistoryItem());
+            media.PublishedOn = DateTime.Now;
 
             media.Version = request.Version;
             media.Title = request.Name;

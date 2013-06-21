@@ -28,7 +28,7 @@ namespace BetterCms.Module.MediaManager.Command.Folder
 
             folder.Version = request.Version;
             folder.Title = request.Name;
-            folder.Folder = null;
+            folder.Folder = request.ParentFolderId != default(Guid) ? Repository.AsProxy<MediaFolder>(request.ParentFolderId) : null;
             folder.Type = request.Type;
 
             Repository.Save(folder);

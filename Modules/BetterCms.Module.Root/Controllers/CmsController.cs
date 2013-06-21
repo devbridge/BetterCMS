@@ -92,7 +92,7 @@ namespace BetterCms.Module.Root.Controllers
                 throw new HttpException(500, "Failed to load a CMS page.", ex);
             }
 
-            return HttpNotFound();
+            throw new HttpException(404, "Page Not Found");
         }
 
         private CmsRequestViewModel GetRequestModel(string virtualPath)
