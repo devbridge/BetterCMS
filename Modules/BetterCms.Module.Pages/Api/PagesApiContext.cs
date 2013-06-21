@@ -95,6 +95,12 @@ namespace BetterCms.Api
         {
             try
             {
+                if (request == null)
+                {
+                    request = new GetTagsRequest();
+                }
+                request.SetDefaultOrder(t => t.Name);
+
                 return Repository.ToDataListResponse(request);
             }
             catch (Exception inner)
@@ -118,6 +124,12 @@ namespace BetterCms.Api
         {
             try
             {
+                if (request == null)
+                {
+                    request = new GetRedirectsRequest();
+                }
+                request.SetDefaultOrder(s => s.PageUrl);
+
                 return Repository.ToDataListResponse(request);
             }
             catch (Exception inner)
@@ -141,6 +153,12 @@ namespace BetterCms.Api
         {
             try
             {
+                if (request == null)
+                {
+                    request = new GetCategoriesRequest();
+                }
+                request.SetDefaultOrder(s => s.Name);
+
                 return Repository.ToDataListResponse(request);
             }
             catch (Exception inner)

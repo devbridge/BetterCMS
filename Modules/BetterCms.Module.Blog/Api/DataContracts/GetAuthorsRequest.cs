@@ -15,7 +15,6 @@ namespace BetterCms.Module.Blog.Api.DataContracts
             int startItemNumber = 1)
             : base(filter, order, orderDescending, itemsCount, startItemNumber)
         {
-            SetDefaultOrder(a => a.Name);
         }
     }
 }

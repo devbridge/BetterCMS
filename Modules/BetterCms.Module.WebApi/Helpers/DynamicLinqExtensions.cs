@@ -9,9 +9,9 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Threading;
 
-namespace System.Linq.Dynamic
+namespace BetterCms.Module.WebApi.Helpers
 {
-    public static class DynamicQueryable
+    public static class DynamicLinqExtensions
     {
         public static IQueryable<T> Where<T>(this IQueryable<T> source, string predicate, params object[] values)
         {

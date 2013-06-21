@@ -13,8 +13,6 @@ namespace BetterCms.Module.Pages.Api.DataContracts
             bool orderDescending = false)
             : base(filter, order, orderDescending)
         {
-            SetDefaultOrder(c => c.CreatedOn);
-
             ContentId = contentId;
         }
 

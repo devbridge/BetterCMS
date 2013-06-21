@@ -2,7 +2,6 @@
 using System.Linq.Expressions;
 
 using BetterCms.Core.Api.DataContracts;
-using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
 
 namespace BetterCms.Module.Pages.Api.DataContracts
@@ -16,7 +15,6 @@ namespace BetterCms.Module.Pages.Api.DataContracts
             int startItemNumber = 1)
             : base(filter, order, orderDescending, itemsCount, startItemNumber)
         {
-            SetDefaultOrder(s => s.RegionIdentifier);
         }
     }
 }

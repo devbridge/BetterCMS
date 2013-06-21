@@ -37,11 +37,10 @@ namespace BetterCms.Core.Api.DataContracts
 
         public void SetDefaultOrder(Expression<Func<TModel, dynamic>> order, bool orderByDescending = false)
         {
-            // TODO: Cannot set default order from constructor anymore: ordering properties can be added later -> need to set default order from service methods
-//            if (OrderBy.Count == 0)
-//            {
-//                AddOrder(order, orderByDescending);
-//            }
+            if (OrderBy.Count == 0)
+            {
+                AddOrder(order, orderByDescending);
+            }
         }
 
         public void AddOrder(Expression<Func<TModel, dynamic>> order, bool orderByDescending = false)

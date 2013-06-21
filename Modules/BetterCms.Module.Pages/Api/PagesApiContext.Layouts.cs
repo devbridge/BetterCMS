@@ -29,6 +29,12 @@ namespace BetterCms.Api
         {
             try
             {
+                if (request == null)
+                {
+                    request = new GetLayoutsRequest();
+                }
+                request.SetDefaultOrder(l => l.Name);
+
                 var result = Repository
                         .AsQueryable<Layout>()
                         .ApplyFiltersWithChildren(request);
@@ -63,6 +69,12 @@ namespace BetterCms.Api
         {
             try
             {
+                if (request == null)
+                {
+                    request = new GetRegionsRequest();
+                }
+                request.SetDefaultOrder(s => s.RegionIdentifier);
+
                 return Repository.ToDataListResponse(request);
             }
             catch (Exception inner)
@@ -85,6 +97,8 @@ namespace BetterCms.Api
         {
             try
             {
+                request.SetDefaultOrder(lr => lr.Description);
+
                 var query = Repository
                     .AsQueryable<LayoutRegion>()
                     .Where(lr => lr.Layout.Id == request.LayoutId)

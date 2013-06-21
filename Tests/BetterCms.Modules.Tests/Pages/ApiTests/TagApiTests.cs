@@ -44,7 +44,7 @@ namespace BetterCms.Test.Module.Pages.ApiTests
 
             using (var service = new PagesApiContext(Container.BeginLifetimeScope(), repositoryMock.Object))
             {
-                var tags = service.GetTags(new GetTagsRequest(t => t.Name.Contains("Tag"), null, true));
+                var tags = service.GetTags(new GetTagsRequest(t => t.Name.Contains("Tag"), t => t.Name, true));
 
                 Assert.IsNotNull(tags);
                 Assert.AreEqual(tags.Items.Count, 3);

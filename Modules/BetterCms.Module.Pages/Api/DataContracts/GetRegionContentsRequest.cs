@@ -21,8 +21,6 @@ namespace BetterCms.Module.Pages.Api.DataContracts
             RegionId = regionId;
             IncludeUnpublished = includeUnpublished;
             IncludeNotActive = includeNotInactive;
-
-            SetDefaultOrder(pc => pc.Order);
         }
 
         public GetRegionContentsRequest(Guid pageId, 
@@ -38,8 +36,6 @@ namespace BetterCms.Module.Pages.Api.DataContracts
             RegionIdentifier = regionIdentifier;
             IncludeUnpublished = includeUnpublished;
             IncludeNotActive = includeNotInactive;
-
-            SetDefaultOrder(pc => pc.Order);
         }
 
         /// <summary>

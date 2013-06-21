@@ -1,0 +1,42 @@
+﻿using System;
+using System.Collections.Generic;
+
+using BetterCms.Module.WebApi.Models.Enums;
+
+namespace BetterCms.Module.WebApi.Models
+{
+    /// <summary>
+    /// Represents container for ordering items list
+    /// </summary>
+    [Serializable]
+    public class DataOrder
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataOrder" /> class.
+        /// </summary>
+        public DataOrder()
+        {
+            OrderItems = new List<OrderItem>();
+        }
+
+        /// <summary>
+        /// Gets or sets the list of order items.
+        /// </summary>
+        /// <value>
+        /// The list of order items.
+        /// </value>
+        public IList<OrderItem> OrderItems { get; set; }
+
+        /// <summary>
+        /// Adds the order item to orderings list.
+        /// </summary>
+        /// <param name="field">The ordering field.</param>
+        /// <param name="direction">The order direction.</param>
+        public void Add(string field, OrderDirection direction = OrderDirection.Asc)
+        {
+            var filterItem = new OrderItem(field, direction);
+
+            OrderItems.Add(filterItem);
+        }
+    }
+}

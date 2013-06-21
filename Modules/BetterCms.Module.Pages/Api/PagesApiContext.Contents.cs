@@ -39,6 +39,8 @@ namespace BetterCms.Api
         {
             try
             {
+                request.SetDefaultOrder(pc => pc.Order);
+
                 var query = Repository
                     .AsQueryable<PageContent>()
                     .Where(p => p.Page.Id == request.PageId && publicStatuses.Contains(p.Content.Status))
@@ -81,6 +83,8 @@ namespace BetterCms.Api
         {
             try
             {
+                request.SetDefaultOrder(pc => pc.Order);
+
                 var query = Repository.AsQueryable<PageContent>();
 
                 if (request.RegionId.HasValue)
@@ -222,6 +226,12 @@ namespace BetterCms.Api
         {
             try
             {
+                if (request == null)
+                {
+                    request = new GetWidgetsRequest();
+                }
+                request.SetDefaultOrder(w => w.Name);
+
                 return Repository.ToDataListResponse(request);
             }
             catch (Exception inner)
@@ -244,6 +254,8 @@ namespace BetterCms.Api
         {
             try
             {
+                request.SetDefaultOrder(s => s.Name);
+
                 return Repository.ToDataListResponse(request);
             }
             catch (Exception inner)
@@ -266,6 +278,8 @@ namespace BetterCms.Api
         {
             try
             {
+                request.SetDefaultOrder(s => s.Name);
+
                 return Repository.ToDataListResponse(request);
             }
             catch (Exception inner)
@@ -288,6 +302,8 @@ namespace BetterCms.Api
         {
             try
             {
+                request.SetDefaultOrder(s => s.Name);
+
                 var query = Repository
                     .AsQueryable<Widget>()
                     .Where(w => w.PageContents != null && w.PageContents.Any(c => c.Page.Id == request.PageId))
@@ -319,6 +335,8 @@ namespace BetterCms.Api
         {
             try
             {
+                request.SetDefaultOrder(c => c.CreatedOn);
+
                 return historyService.GetContentHistory(request.ContentId, new SearchableGridOptions())
                     .AsQueryable()
                     .ApplyFilters(request)

@@ -19,8 +19,6 @@ namespace BetterCms.Module.Pages.Api.DataContracts
             bool includeUnpublished = false)
             : base(filter, order, orderDescending, itemsCount, startItemNumber)
         {
-            SetDefaultOrder(s => s.Title);
-
             LoadChilds = loadChilds;
             IncludeUnpublished = includeUnpublished;
         }

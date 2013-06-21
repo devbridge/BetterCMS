@@ -16,8 +16,6 @@ namespace BetterCms.Module.MediaManager.Api.DataContracts
             bool includeArchived = false)
             : base(filter, order, orderDescending, itemsCount, startItemNumber)
         {
-            SetDefaultOrder(m => m.Title);
-
             IncludeArchivedItems = includeArchived;
         }
 

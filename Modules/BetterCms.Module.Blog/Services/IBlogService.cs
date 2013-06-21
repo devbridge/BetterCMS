@@ -9,6 +9,6 @@ namespace BetterCms.Module.Blog.Services
     {
         string CreateBlogPermalink(string title);
 
-        IQueryable<BlogPostModel> GetBlogPostsAsQueryable(GetBlogPostsRequest filter);
+        IQueryable<BlogPostModel> GetBlogPostsAsQueryable(GetBlogPostsRequest filter = null);
     }
 }

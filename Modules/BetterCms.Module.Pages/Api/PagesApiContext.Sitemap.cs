@@ -65,6 +65,12 @@ namespace BetterCms.Api
         {
             try
             {
+                if (request == null)
+                {
+                    request = new GetNodesRequest();
+                }
+                request.SetDefaultOrder(s => s.Title);
+
                 return Repository.ToDataListResponse(request);
             }
             catch (Exception inner)

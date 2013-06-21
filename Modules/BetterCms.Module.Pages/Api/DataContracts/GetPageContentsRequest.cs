@@ -19,8 +19,6 @@ namespace BetterCms.Module.Pages.Api.DataContracts
             PageId = pageId;
             IncludeUnpublished = includeUnpublished;
             IncludeNotActive = includeNotActive;
-            
-            SetDefaultOrder(pc => pc.Order);
         }
 
         /// <summary>

@@ -146,12 +146,19 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Controllers\BlogsController.cs" />
-    <Compile Include="Controllers\AuthorsController.cs" />
     <Compile Include="Controllers\CmsApiControllerBase.cs" />
     <Compile Include="Controllers\PagesController.cs" />
-    <Compile Include="Extensions\IQueryableExtensions.cs" />
-    <Compile Include="Extensions\ODataOptionsExtensions.cs" />
+    <Compile Include="Helpers\DataOptionsQueryCreator.cs" />
+    <Compile Include="Helpers\DynamicLinqExtensions.cs" />
+    <Compile Include="Models\DataFilter.cs" />
+    <Compile Include="Models\Enums\FilterConnector.cs" />
+    <Compile Include="Models\Enums\FilterOperation.cs" />
+    <Compile Include="Models\Enums\OrderDirection.cs" />
+    <Compile Include="Models\FilterItem.cs" />
+    <Compile Include="Models\DataOptions.cs" />
+    <Compile Include="Helpers\DataOptionsExtensions.cs" />
+    <Compile Include="Models\DataOrder.cs" />
+    <Compile Include="Models\OrderItem.cs" />
     <Compile Include="Models\ModelBase.cs" />
     <Compile Include="Models\Pages\GetPageById\GetPageByIdRequest.cs" />
     <Compile Include="Models\Pages\GetPageById\GetPageByIdResponse.cs" />

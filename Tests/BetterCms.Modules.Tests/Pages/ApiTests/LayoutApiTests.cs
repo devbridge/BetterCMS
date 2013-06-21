@@ -44,7 +44,7 @@ namespace BetterCms.Test.Module.Pages.ApiTests
 
             using (var service = new PagesApiContext(Container.BeginLifetimeScope(), repositoryMock.Object))
             {
-                var layouts = service.GetLayouts(new GetLayoutsRequest(t => t.Name.Contains("Layout"), null, true));
+                var layouts = service.GetLayouts(new GetLayoutsRequest(t => t.Name.Contains("Layout"), t => t.Name, true));
 
                 Assert.IsNotNull(layouts);
                 Assert.AreEqual(layouts.Items.Count, 3);

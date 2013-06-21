@@ -16,8 +16,6 @@ namespace BetterCms.Module.Pages.Api.DataContracts
             int startItemNumber = 1)
             : base(filter, order, orderDescending, itemsCount, startItemNumber)
         {
-            SetDefaultOrder(s => s.Name);
-
             PageId = pageId;
         }
 

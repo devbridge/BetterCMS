@@ -79,10 +79,16 @@ namespace BetterCms.Api
         /// The list of blog service models
         /// </returns>
         /// <exception cref="CmsApiException"></exception>
-        public DataListResponse<BlogPostModel> GetBlogPosts(GetBlogPostsRequest request)
+        public DataListResponse<BlogPostModel> GetBlogPosts(GetBlogPostsRequest request = null)
         {
             try
             {
+                if (request == null)
+                {
+                    request = new GetBlogPostsRequest();
+                }
+                request.SetDefaultOrder(b => b.Title);
+
                 return blogService
                     .GetBlogPostsAsQueryable(request)
                     .ToDataListResponse(request);
@@ -109,6 +115,12 @@ namespace BetterCms.Api
         {
             try
             {
+                if (request == null)
+                {
+                    request = new GetAuthorsRequest();
+                }
+                request.SetDefaultOrder(a => a.Name);
+
                 var query = Repository
                     .AsQueryable<Author>()
                     .ApplyFilters(request);
@@ -158,7 +170,7 @@ namespace BetterCms.Api
                 blog.Title = request.Title;
                 blog.Description = request.IntroText;
 
-                // TODO: update only is content is published.
+                // TODO: update only if content is published.
                 // blog.ActivationDate = request.LiveFromDate;
                 // blog.ExpirationDate = request.LiveToDate;
 
@@ -211,13 +223,6 @@ namespace BetterCms.Api
         public AuthorDeleteResponce DeleteAuthor(AuthorDeleteRequest request)
         {
             return authorService.DeleteAuthor(request);
-        }
-
-        public IQueryable<BlogPostModel> GetBlogPostsAsQueryable(GetBlogPostsRequest request = null)
-        {
-            var models = blogService.GetBlogPostsAsQueryable(request);
-
-            return models;
         }
     }
 }

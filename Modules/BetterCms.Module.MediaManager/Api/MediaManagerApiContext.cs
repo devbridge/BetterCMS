@@ -61,6 +61,8 @@ namespace BetterCms.Api
         {
             try
             {
+                request.SetDefaultOrder(m => m.Title);
+
                 var query = Repository
                     .AsQueryable<Media>()
                     .Where(f => f.Type == request.MediaType)
@@ -107,11 +109,17 @@ namespace BetterCms.Api
         {
             try
             {
+                if (request == null)
+                {
+                    request = new GetImagesRequest();
+                }
+                request.SetDefaultOrder(m => m.Title);
+
                 var query = Repository
                     .AsQueryable<MediaImage>()
                     .ApplyFilters(request);
 
-                if (request == null || !request.IncludeArchivedItems)
+                if (!request.IncludeArchivedItems)
                 {
                     query = query.Where(m => !m.IsArchived);
                 }
@@ -143,12 +151,18 @@ namespace BetterCms.Api
         {
             try
             {
+                if (request == null)
+                {
+                    request = new GetFilesRequest();
+                }
+                request.SetDefaultOrder(m => m.Title);
+
                 var query = Repository
                     .AsQueryable<MediaFile>()
                     .Where(m => m.Type == MediaType.File)
                     .ApplyFilters(request);
 
-                if (request == null || !request.IncludeArchivedItems)
+                if (!request.IncludeArchivedItems)
                 {
                     query = query.Where(m => !m.IsArchived);
                 }
@@ -180,6 +194,8 @@ namespace BetterCms.Api
         {
             try
             {
+                request.SetDefaultOrder(m => m.Title);
+
                 var query = Repository
                     .AsQueryable<MediaFolder>();
                 if (request.MediaType.HasValue)

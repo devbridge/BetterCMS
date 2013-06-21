@@ -149,7 +149,7 @@ namespace BetterCms.Test.Module.Blog.ApiTests
 
                        // get ordered by 2 fields and adding paging
                        var request = new GetBlogPostsRequest(b => b.CategoryId == category.Id, includeNotActive: true, includeUnpublished: true);
-                       request.SetDefaultOrder(b => b.CreatedOn);
+                       request.SetDefaultOrder(b => b.IntroText);
                        request.AddOrder(b => b.Title, true);
                        request.AddPaging(3, 2);
                        var response = api.GetBlogPosts(request);
@@ -157,7 +157,7 @@ namespace BetterCms.Test.Module.Blog.ApiTests
                        Assert.IsNotNull(response);
                        Assert.AreEqual(response.Items.Count, 3);
                        Assert.AreEqual(response.TotalCount, blogs.Count);
-                       Assert.AreEqual(response.Items[0].Title, blogs.OrderBy(b => b.CreatedOn).ThenByDescending(b => b.Title).Skip(request.StartItemNumber - 1).Take(1).First().Title);
+                       Assert.AreEqual(response.Items[0].Title, blogs.OrderBy(b => b.Description).ThenByDescending(b => b.Title).Skip(request.StartItemNumber - 1).Take(1).First().Title);
                    }
                });
         }

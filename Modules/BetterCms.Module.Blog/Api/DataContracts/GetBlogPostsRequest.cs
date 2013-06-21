@@ -25,8 +25,6 @@ namespace BetterCms.Module.Blog.Api.DataContracts
             IncludeUnpublished = includeUnpublished;
             IncludeNotActive = includeNotActive;
             Tags = tags;
-
-            SetDefaultOrder(b => b.Title);
         }
 
         public string[] Tags { get; set; }

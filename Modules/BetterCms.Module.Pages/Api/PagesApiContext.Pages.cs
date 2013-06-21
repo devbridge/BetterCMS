@@ -37,6 +37,8 @@ namespace BetterCms.Api
         {
             try
             {
+                request.SetDefaultOrder(s => s.Title);
+
                 var query = Repository
                     .AsQueryable<PageProperties>();
 
