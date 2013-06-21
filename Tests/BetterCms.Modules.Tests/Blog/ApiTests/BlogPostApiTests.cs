@@ -63,7 +63,7 @@ namespace BetterCms.Test.Module.Blog.ApiTests
                                                    Id = b.Id,
                                                    Version = b.Version,
                                                    Title = b.Title
-                                               }).AsQueryable);
+                                               }).AsQueryable());
 
             return new BlogsApiContext(Container.BeginLifetimeScope(), tagService.Object, blogServiceMock.Object, authorServiceMock.Object, repositoryMock.Object);
         }
