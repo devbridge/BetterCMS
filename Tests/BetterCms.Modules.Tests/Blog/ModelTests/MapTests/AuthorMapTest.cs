@@ -1,14 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Text;
+using System.Web.Script.Serialization;
 
+using Autofac;
+
+using BetterCms.Api;
 using BetterCms.Core.Api.DataContracts;
+using BetterCms.Core.DataAccess;
+using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Module.Blog.Api.DataModels;
 using BetterCms.Module.Blog.Models;
+using BetterCms.Module.Blog.Services;
+using BetterCms.Module.Pages.Services;
 
 using NHibernate;
 using NHibernate.Criterion;
 
 using NUnit.Framework;
+
+using System.Linq.Dynamic;
+
+using DynamicExpression = System.Linq.Dynamic.DynamicExpression;
+using LinqExpression = System.Linq.Expressions.Expression;
 
 namespace BetterCms.Test.Module.Blog.ModelTests.MapTests
 {
@@ -22,34 +38,185 @@ namespace BetterCms.Test.Module.Blog.ModelTests.MapTests
             RunEntityMapTestsInTransaction(content);  
         }
         
+        private GetBlogPostsRequest CreateTestRequest()
+        {
+            // Creating request
+            var request = new GetBlogPostsRequest(5, 3);
+            request.Filter.Add(BlogPostData.CreatedOn, new DateTime(2013, 06, 01), FilterOperation.Greater);
+            request.Filter.Add(BlogPostData.Title, "Africa", FilterOperation.NotEqual);
+            // request.Filter.Add(BlogPostData.AuthorName, "Af", FilterOperation.StartsWith);
+
+            var subFilter = new DataFilter<BlogPostData>(FilterConnector.Or);
+            subFilter.Add(BlogPostData.Title, "It", FilterOperation.StartsWith);
+            subFilter.Add(BlogPostData.Title, "Af", FilterOperation.StartsWith);
+            subFilter.Add(BlogPostData.Title, "na", FilterOperation.EndsWith);
+            subFilter.Add(BlogPostData.Title, "Spain");
+
+            request.Filter.InnerFilters.Add(subFilter);
+
+            request.Order.Add(BlogPostData.CreatedOn);
+            request.Order.Add(BlogPostData.Title, OrderOperation.Desc);
+
+            return request;
+        }
+
         [Test]
-        public void QOver_2()
+        public void SerializeRequest()
+        {
+            var request = CreateTestRequest();
+            var serializer = new JavaScriptSerializer();
+            
+            string serialized =  serializer.Serialize(request);
+            Console.WriteLine(serialized);
+
+            request = serializer.Deserialize<GetBlogPostsRequest>(serialized);
+
+            Assert.IsNotNull(request);
+        }
+        
+        [Test]
+        public void DeserializeRequest()
+        {
+            RunActionInTransaction(
+                session =>
+                    {
+                        var sb = new StringBuilder();
+                        sb.AppendLine("{");
+                        sb.AppendLine("    \"Filter\": {");
+                        sb.AppendLine("        \"FilterItems\": [");
+                        sb.AppendLine("            { \"Field\": \"CreatedOn\", \"Value\": \"\\/Date(1224043200000)\\/\", \"Operation\": \"Greater\" }");
+                        sb.AppendLine("            , { \"Field\": \"Title\", \"Value\": \"Africa\", \"Operation\": \"Equal\" }");
+                        sb.AppendLine("        ],");
+                        sb.AppendLine("        \"InnerFilters\": [");
+                        sb.AppendLine("            {");
+                        sb.AppendLine("                \"Connector\": \"Or\",");
+                        sb.AppendLine("                \"FilterItems\": [");
+                        sb.AppendLine("                    { \"Field\": \"Title\", \"Value\": \"It\", \"Operation\": \"StartsWith\" }");
+                        sb.AppendLine("                    , { \"Field\": \"Title\", \"Value\": \"na\", \"Operation\": \"EndsWith\" }");
+                        sb.AppendLine("                ]");
+                        sb.AppendLine("            }");
+                        sb.AppendLine("       ]");
+                        sb.AppendLine("    },");
+                        sb.AppendLine("   \"Order\": {");
+                        sb.AppendLine("        \"OrderItems\": [");
+                        sb.AppendLine("            { \"Field\": \"CreatedOn\" }");
+                        sb.AppendLine("            , { \"Field\": \"Title\", \"Operation\": \"Desc\" }");
+                        sb.AppendLine("        ]");
+                        sb.AppendLine("    },");
+                        sb.AppendLine("    \"StartItemNumber\": 3,");
+                        sb.AppendLine("    \"ItemsCount\": 5");
+                        sb.AppendLine("}");
+
+                        var serializer = new JavaScriptSerializer();
+                        var json = sb.ToString();
+
+                        Console.WriteLine(json);
+
+                        var request = serializer.Deserialize<GetBlogPostsRequest>(json);
+
+                        Console.WriteLine(request.Filter.FilterItems[0].Value);
+                        Console.WriteLine(request.Filter.FilterItems[0].Value.GetType());
+                    });
+        }
+
+        [Test]
+        public void DynamicLINQTest1()
         {
             RunActionInTransaction(session =>
             {
-                // Creating request
-                var request = new GetBlogPostsRequest(5, 3);
-                request.Filter.Add(BlogPostData.CreatedOn, new DateTime(2013, 06, 01), FilterOperation.Greater);
-                request.Filter.Add(BlogPostData.Title, "Africa", FilterOperation.NotEqual);
-                //request.Filter.Add(BlogPostData.AuthorName, "Af", FilterOperation.StartsWith);
+                var unitOfWork = new DefaultUnitOfWork(session);
+                var repository = new DefaultRepository(unitOfWork);
 
-                var subFilter = new DataFilter<BlogPostData>(FilterConnector.Or);
-                subFilter.Add(BlogPostData.Title, "It", FilterOperation.StartsWith);
-                subFilter.Add(BlogPostData.Title, "Af", FilterOperation.StartsWith);
-                subFilter.Add(BlogPostData.Title, "na", FilterOperation.EndsWith);
-                subFilter.Add(BlogPostData.Title, "Spain");
+                var results = repository
+                    .AsQueryable<BlogPost>()
+                    .Where("CreatedOn > @0 and Title != @1 and (Title.StartsWith(@2) or Title.StartsWith(@3) or Title.EndsWith(@4))", 
+                        new DateTime(2013, 06, 01), 
+                        "Africa", 
+                        "Af", 
+                        "It", 
+                        "na")
+                    .Where(b => b.Version == 1)
+                    .OrderBy("CreatedOn desc, Title")
+                    .Skip(2)
+                    .Take(3)
+                    .ToList();
 
-                request.Filter.InnerFilters.Add(subFilter);
-
-                request.Order.Add(BlogPostData.CreatedOn);
-                request.Order.Add(BlogPostData.Title, OrderOperation.Desc);
-
-                // Construct query
-                var criteria = session.CreateCriteria<BlogPost>();
-
-                var result = criteria.ToDataListResponse<BlogPost, BlogPostData>(request);
-                var result2 = result;
+                Console.WriteLine("Count: {0}", results.Count);
+                Console.WriteLine(results);
             });
+        }
+
+        [Test]
+        public void TestLambdaWhereClause()
+        {
+            var whereClause = "CreatedOn > @0 and Title != @1 and (Title.StartsWith(@2) or Title.StartsWith(@3) or Title.EndsWith(@4))";
+
+            RunActionInTransaction(
+                session =>
+                    {
+                        var unitOfWork = new DefaultUnitOfWork(session);
+                        var repository = new DefaultRepository(unitOfWork);
+
+                        var values = new object[] { new DateTime(2013, 06, 01), "Africa", "Af", "It", "na" };
+                        var filter = DynamicExpression.ParseLambda<BlogPostModel, bool>(whereClause, values);
+
+                        var request = new BetterCms.Module.Blog.Api.DataContracts.GetBlogPostsRequest(filter);
+
+                        var blogService = new DefaultBlogService(Container.Resolve<ICmsConfiguration>(), Container.Resolve<IUrlService>(), repository);
+                        using (var api = new BlogsApiContext(Container.BeginLifetimeScope(), null, blogService, null, repository))
+                        {
+                            var results = api.GetBlogPosts(request);
+
+                            Assert.NotNull(results);
+                            Assert.AreEqual(results.TotalCount, 10);
+                            Assert.AreEqual(results.Items.Any(b => b.Title == "Italy"), true);
+                            Assert.AreEqual(results.Items.Any(b => b.Title == "Argentina"), true);
+                            Assert.AreEqual(results.Items.Any(b => b.Title.StartsWith("Af")), true);
+                            
+                            Assert.AreEqual(results.Items.Any(b => b.Title == "Africa"), false);
+                            Assert.AreEqual(results.Items.Any(b => b.Title == "Spain"), false);
+                            Assert.AreEqual(results.Items.Any(b => b.Title == "Latvia"), false);
+                        }
+                    });
+        }
+        
+        [Test]
+        public void TestLambdaOrderClause()
+        {
+            var orderByClause = "AuthorName, CreatedOn desc, Title";
+
+            RunActionInTransaction(
+                session =>
+                {
+                    var unitOfWork = new DefaultUnitOfWork(session);
+                    var repository = new DefaultRepository(unitOfWork);
+
+                    var request = new BetterCms.Module.Blog.Api.DataContracts.GetBlogPostsRequest(itemsCount:5);
+
+                    var parameters = new[] { LinqExpression.Parameter(typeof(BlogPostModel), "") };
+                    ExpressionParser parser = new ExpressionParser(parameters, orderByClause, new object[0]);
+                    var orderings = parser.ParseOrdering();
+                    foreach (var order in orderings)
+                    {
+                        var expression = order.Selector;
+                        var conversion = LinqExpression.Convert(expression, typeof(object));
+
+                        var lambda = System.Linq.Expressions.Expression.Lambda<Func<BlogPostModel, object>>(conversion, parameters);
+                        request.AddOrder(lambda, !order.Ascending);
+                    }
+
+                    var blogService = new DefaultBlogService(Container.Resolve<ICmsConfiguration>(), Container.Resolve<IUrlService>(), repository);
+                    using (var api = new BlogsApiContext(Container.BeginLifetimeScope(), null, blogService, null, repository))
+                    {
+                        var results = api.GetBlogPosts(request);
+
+                        Assert.NotNull(results);
+                        Assert.AreEqual(results.Items.Count, 5);
+                        Assert.AreEqual(results.Items.Any(b => b.Title == "Yemen"), true);
+                        Assert.AreEqual(results.Items.Any(b => b.Title == "Zambia"), true);
+                        Assert.AreEqual(results.Items.Any(b => b.Title == "Africa"), false);
+                    }
+                });
         }
     }
 
@@ -67,9 +234,14 @@ namespace BetterCms.Test.Module.Blog.ModelTests.MapTests
         }
     }
 
+    [Serializable]
     public class GetBlogPostsRequest : GetDataRequest<BlogPostData>
     {
-        public GetBlogPostsRequest(int? itemsCount = null, int startItemNumber = 1)
+        public GetBlogPostsRequest()
+        {
+        }
+
+        public GetBlogPostsRequest(int? itemsCount, int startItemNumber)
             : base(itemsCount, startItemNumber, new BlogPostPropertyNameExtractor())
         {
         }
@@ -87,6 +259,7 @@ namespace BetterCms.Test.Module.Blog.ModelTests.MapTests
         }
     }
 
+    [Serializable]
     public class GetDataRequest<T>
         where T : struct, IComparable, IConvertible, IFormattable
     {
@@ -126,49 +299,54 @@ namespace BetterCms.Test.Module.Blog.ModelTests.MapTests
 
     public enum OrderOperation
     {
-        Asc = 1,
-        Desc = 2
+        Asc,
+        Desc
     }
 
     public enum FilterOperation
     {
-        Equal = 1,
-        NotEqual = 2,
+        Equal,
+        NotEqual,
         
-        Less = 10,
-        LessOrEqual = 11,
-        Greater = 12,
-        GreaterOrEqual = 13,
+        Less,
+        LessOrEqual,
+        Greater,
+        GreaterOrEqual,
 
-        Contains = 20,
-        NotContains = 21,
-        StartsWith = 22,
-        EndsWith = 23
+        Contains,
+        NotContains,
+        StartsWith,
+        EndsWith
     }
 
     public enum FilterConnector
     {
-        And = 1,
-        Or = 2
+        And,
+        Or
     }
 
-    public class DataFilter<T> 
+    [Serializable]
+    public class DataFilter<T>
         where T : struct, IComparable, IConvertible, IFormattable
     {
         public FilterConnector Connector { get; set; }
 
-        public IList<FilterItem> FilterItems { get; protected set; }
+        public IList<FilterItem> FilterItems { get; set; }
 
-        public IList<DataFilter<T>> InnerFilters { get; protected set; }
+        public IList<DataFilter<T>> InnerFilters { get; set; }
 
         private RequestPropertyNameExtractor<T> nameExtractor;
+
+        public DataFilter()
+        {
+        }
 
         public DataFilter(RequestPropertyNameExtractor<T> nameExtractor, FilterConnector connector = FilterConnector.And)
             : this(connector, nameExtractor)
         {
         }
 
-        public DataFilter(FilterConnector connector = FilterConnector.And, RequestPropertyNameExtractor<T> nameExtractor = null)
+        public DataFilter(FilterConnector connector, RequestPropertyNameExtractor<T> nameExtractor = null)
         {
             if (!typeof(T).IsEnum)
             {
@@ -189,23 +367,24 @@ namespace BetterCms.Test.Module.Blog.ModelTests.MapTests
             FilterItems.Add(filterItem);
         }
 
+        [Serializable]
         public class FilterItem
         {
             private T field;
             private string fieldName;
             private readonly RequestPropertyNameExtractor<T> nameExtractor;
 
+            public FilterItem()
+            {
+                nameExtractor = new RequestPropertyNameExtractor<T>();
+            }
+
             public FilterItem(T field, object value, FilterOperation operation = FilterOperation.Equal, RequestPropertyNameExtractor<T> nameExtractor = null)
             {
-                if (!typeof(T).IsEnum)
-                {
-                    throw new InvalidOperationException("Filter item data type must be enum!");
-                }
-
                 this.nameExtractor = nameExtractor ?? new RequestPropertyNameExtractor<T>();
 
-                Value = value;
                 Field = field;
+                Value = value;
                 Operation = operation;
             }
 
@@ -225,6 +404,11 @@ namespace BetterCms.Test.Module.Blog.ModelTests.MapTests
                 }
                 set
                 {
+                    if (!typeof(T).IsEnum)
+                    {
+                        throw new InvalidOperationException("Filter item data type must be enum!");
+                    }
+
                     field = value;
                     fieldName = nameExtractor.GetPropertyName(field);
                 }
@@ -241,7 +425,12 @@ namespace BetterCms.Test.Module.Blog.ModelTests.MapTests
     {
         private RequestPropertyNameExtractor<T> nameExtractor;
 
-        public DataOrder(RequestPropertyNameExtractor<T> nameExtractor = null)
+        public DataOrder()
+            : this(null)
+        {
+        }
+
+        public DataOrder(RequestPropertyNameExtractor<T> nameExtractor)
         {
             if (!typeof(T).IsEnum)
             {
@@ -253,7 +442,7 @@ namespace BetterCms.Test.Module.Blog.ModelTests.MapTests
             OrderItems = new List<OrderItem>();
         }
 
-        public IList<OrderItem> OrderItems { get; protected set; }
+        public IList<OrderItem> OrderItems { get; set; }
 
         public void Add(T field, OrderOperation operation = OrderOperation.Asc)
         {
@@ -268,13 +457,13 @@ namespace BetterCms.Test.Module.Blog.ModelTests.MapTests
             private string fieldName;
             private RequestPropertyNameExtractor<T> nameExtractor;
 
+            public OrderItem()
+            {
+                nameExtractor = new RequestPropertyNameExtractor<T>();
+            }
+
             public OrderItem(T field, OrderOperation operation = OrderOperation.Asc, RequestPropertyNameExtractor<T> nameExtractor = null)
             {
-                if (!typeof(T).IsEnum)
-                {
-                    throw new InvalidOperationException("Order item data type must be enum!");
-                }
-
                 this.nameExtractor = nameExtractor ?? new RequestPropertyNameExtractor<T>();
 
                 Operation = operation;
@@ -289,6 +478,11 @@ namespace BetterCms.Test.Module.Blog.ModelTests.MapTests
                 }
                 set
                 {
+                    if (!typeof(T).IsEnum)
+                    {
+                        throw new InvalidOperationException("Order item data type must be enum!");
+                    }
+
                     field = value;
                     fieldName = nameExtractor.GetPropertyName(field);
                 }
