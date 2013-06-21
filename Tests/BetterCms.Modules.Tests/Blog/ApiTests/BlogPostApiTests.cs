@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 
 using BetterCms.Api;
-using BetterCms.Core.DataAccess;
 using BetterCms.Module.Blog.Api.DataContracts;
 using BetterCms.Module.Blog.Api.DataModels;
 using BetterCms.Module.Blog.Models;

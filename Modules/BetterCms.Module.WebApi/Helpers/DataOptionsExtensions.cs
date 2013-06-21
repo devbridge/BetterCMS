@@ -62,7 +62,7 @@ namespace BetterCms.Module.WebApi.Helpers
         /// <param name="creator">The query creator.</param>
         public static void ApplyOrder<TModel>(this DataOptions options, GetDataRequest<TModel> request, DataOptionsQueryCreator creator = null)
         {
-            if (options != null && options.Order != null && options.Order.OrderItems != null)
+            if (options != null && options.Order != null && options.Order.OrderItems != null && options.Order.OrderItems.Count > 0)
             {
                 if (creator == null)
                 {

@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Web;
-
-using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Module.Root.Models;
 
 namespace BetterCms.Module.WebApi.Models.Pages
 {
@@ -57,6 +51,12 @@ namespace BetterCms.Module.WebApi.Models.Pages
         [DataMember(Order = 50, Name = "layoutId")]
         public Guid LayoutId { get; set; }
 
+        /// <summary>
+        /// Gets or sets the category id.
+        /// </summary>
+        /// <value>
+        /// The category id.
+        /// </value>
         [DataMember(Order = 60, Name = "categoryId")]
         public Guid? CategoryId { get; set; }
     }

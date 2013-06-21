@@ -158,6 +158,7 @@
     <Compile Include="Models\DataOptions.cs" />
     <Compile Include="Helpers\DataOptionsExtensions.cs" />
     <Compile Include="Models\DataOrder.cs" />
+    <Compile Include="Models\ListResponseBase.cs" />
     <Compile Include="Models\OrderItem.cs" />
     <Compile Include="Models\ModelBase.cs" />
     <Compile Include="Models\Pages\GetPageById\GetPageByIdRequest.cs" />

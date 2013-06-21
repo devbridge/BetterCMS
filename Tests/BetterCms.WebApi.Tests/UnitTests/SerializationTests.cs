@@ -39,7 +39,7 @@ namespace BetterCms.WebApi.Tests.UnitTests
             sb.AppendLine("    \"Filter\": {");
             sb.AppendLine("        \"FilterItems\": [");
             sb.AppendLine("            { \"Field\": \"CreatedOn\", \"Value\": \"\\/Date(1224043200000)\\/\", \"Operation\": \"Greater\" }");
-            sb.AppendLine("            , { \"Field\": \"Title\", \"Value\": \"Africa\", \"Operation\": \"Equal\" }");
+            sb.AppendLine("            , { \"Field\": \"Title\", \"Value\": \"Africa\", \"Operation\": \"NotEqual\" }");
             sb.AppendLine("        ],");
             sb.AppendLine("        \"InnerFilters\": [");
             sb.AppendLine("            {");
@@ -54,7 +54,7 @@ namespace BetterCms.WebApi.Tests.UnitTests
             sb.AppendLine("   \"Order\": {");
             sb.AppendLine("        \"OrderItems\": [");
             sb.AppendLine("            { \"Field\": \"CreatedOn\" }");
-            sb.AppendLine("            , { \"Field\": \"Title\", \"Operation\": \"Desc\" }");
+            sb.AppendLine("            , { \"Field\": \"Title\", \"Direction\": \"Desc\" }");
             sb.AppendLine("        ]");
             sb.AppendLine("    },");
             sb.AppendLine("    \"StartItemNumber\": 3,");
