@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-bettercms.define('bcms.media', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.messages', 'bcms.media.upload', 'bcms.media.imageeditor', 'bcms.htmlEditor', 'bcms.ko.extenders', 'bcms.contextMenu', 'bcms.security'],
-function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUpload, imageEditor, htmlEditor, ko, menu, security) {
+bettercms.define('bcms.media', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.messages', 'bcms.media.upload', 'bcms.media.imageeditor', 'bcms.htmlEditor', 'bcms.ko.extenders', 'bcms.contextMenu', 'bcms.security', 'bcms.media.history'],
+function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUpload, imageEditor, htmlEditor, ko, menu, security, history) {
     'use strict';
 
     var media = { },
@@ -216,7 +216,8 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
                 var newFolder = new MediaFolderViewModel({
                     IsActive: true,
-                    Type: self.path().currentFolder().type
+                    Type: self.path().currentFolder().type,
+                    ParentFolderId: self.path().currentFolder().id()
                 });
 
                 self.medias.unshift(newFolder);
@@ -228,6 +229,23 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
         self.uploadMedia = function () {
             mediaUpload.openUploadFilesDialog(self.path().currentFolder().id(), self.path().currentFolder().type, onUploadFiles);
+            messages.refreshBox($(selectors.fileListMessageBox + self.path().type), {});
+        };
+
+        self.reuploadMedia = function (item) {
+            if (item.isProcessing() || item.isDeleting()) {
+                return;
+            }
+            
+            mediaUpload.openReuploadFilesDialog(item.id(), self.path().currentFolder().id(), self.path().currentFolder().type, function (filesData) {
+                if (filesData && filesData.Data && filesData.Data.Medias && filesData.Data.Medias.length > 0) {
+                    var mediaItem = convertToMediaModel(filesData.Data.Medias[0]);
+                    var index = $.inArray(item, self.medias());
+                    self.medias.splice(index, 1, mediaItem);
+                    // Replace unobtrusive validator.
+                    bcms.updateFormValidator(self.container.find(selectors.firstForm));
+                }
+            });
             messages.refreshBox($(selectors.fileListMessageBox + self.path().type), {});
         };
 
@@ -306,6 +324,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             changeFolder(null, self);
         };
 
+        self.openParent = function () {
+            changeFolder(self.path().currentFolder().parentFolderId(), self);
+        };
+
         self.domId = function() {
             return 'bcms-site-settings-media-messages-' + self.path().type;
         };
@@ -331,16 +353,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         self.type = type;
 
         self.pathFolders = ko.computed(function () {
-            var range = self.folders(),
-                maxFoldersCount = 4,
-                i;
-            if (range.length > maxFoldersCount) {
-                for (i = 0; i < range.length; i++) {
-                    if (i <= maxFoldersCount) {
-                        range.remove(range[i]);
-                    }
-                }
-            }
+            var range = self.folders();
             if (range.length > 0) {
                 switch (self.type) {
                     case mediaTypes.image:
@@ -518,11 +531,6 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             return globalization.unarchiveMediaConfirmMessage;
         };
 
-        MediaItemBaseViewModel.prototype.openMedia = function (folderViewModel, data, event) {
-            bcms.stopEventPropagation(event);
-            editOrSelectMedia(folderViewModel, this, data, event);
-        };
-
         MediaItemBaseViewModel.prototype.editMedia = function (folderViewModel, data, event) {
             bcms.stopEventPropagation(event);
             if (this.isDeleting()) {
@@ -537,6 +545,14 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 return;
             }
             this.isActive(true);
+        };
+            
+        MediaItemBaseViewModel.prototype.reuploadMedia = function (folderViewModel, data, event) {
+            bcms.stopEventPropagation(event);
+            if (this.isDeleting()) {
+                return;
+            }
+            folderViewModel.reuploadMedia(this);
         };
             
         MediaItemBaseViewModel.prototype.openMedia = function (folderViewModel, data, event) {
@@ -576,6 +592,16 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 Type: this.type
             };
             return params;
+        };
+
+        MediaItemBaseViewModel.prototype.showHistory = function (folderViewModel, data, event) {
+            bcms.stopEventPropagation(event);
+            if (this.isDeleting()) {
+                return;
+            }
+            history.openMediaHistoryDialog(this.id(), function() {
+                folderViewModel.searchMedia();
+            });
         };
 
         return MediaItemBaseViewModel;
@@ -770,6 +796,8 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.pathName = ko.computed(function () {
                 return self.name() + '/';
             });
+
+            self.parentFolderId = ko.observable(item.ParentFolderId);
         }
 
         MediaFolderViewModel.prototype.isFolder = function () {
@@ -794,11 +822,22 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             changeFolder(this.id(), folderViewModel);
         };
 
+        MediaFolderViewModel.prototype.toJson = function () {
+            var params = {
+                Id: this.id(),
+                Name: this.name(),
+                Version: this.version(),
+                Type: this.type,
+                ParentFolderId: this.parentFolderId()
+            };
+            return params;
+        };
+
         return MediaFolderViewModel;
     })(MediaItemBaseViewModel);
 
     /**
-    * Opens media for seleting or editing
+    * Opens media for selecting or editing.
     */
     function editOrSelectMedia(folderViewModel, item, data, event) {
         if (item.isProcessing() || item.isFailed() || item.isDeleting()) {
