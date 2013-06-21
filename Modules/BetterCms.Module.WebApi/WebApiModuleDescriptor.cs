@@ -106,8 +106,14 @@ namespace BetterCms.Module.WebApi
             GlobalConfiguration.Configuration.EnableQuerySupport();
 
             GlobalConfiguration.Configuration.Routes.MapHttpRoute(
-                name: "BcmsWebApiRoutes",
-                routeTemplate: "bcms-api/api/{controller}/{id}",
+                name: "BcmsWebApiRoutesREST",
+                routeTemplate: "bcms-api/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional, area = AreaName }
+            );
+
+            GlobalConfiguration.Configuration.Routes.MapHttpRoute(
+                name: "BcmsWebApiRoutesRPC",
+                routeTemplate: "bcms-api/api/{controller}/{action}/{id}",
                 defaults: new { id = RouteParameter.Optional, area = AreaName }
             );
         }
