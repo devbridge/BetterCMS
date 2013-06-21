@@ -26,6 +26,7 @@ namespace BetterCms.Module.MediaManager.Models
         public Media()
         {
             ContentType = MediaContentType.File;
+            PublishedOn = DateTime.Now;
         }
 
         /// <summary>

@@ -23,11 +23,11 @@ namespace BetterCms.Module.MediaManager.Command.Upload.GetMultiFileUpload
             var foldersQuery = Repository.AsQueryable<MediaFolder>().Where(f => f.Type == request.Type);
             if (request.FolderId == Guid.Empty)
             {
-                foldersQuery = foldersQuery.Where(f => f.ParentFolder == null);
+                foldersQuery = foldersQuery.Where(f => f.Folder == null);
             }
             else
             {
-                foldersQuery = foldersQuery.Where(f => f.ParentFolder.Id == request.FolderId);
+                foldersQuery = foldersQuery.Where(f => f.Folder.Id == request.FolderId);
             }
 
             model.Folders = foldersQuery

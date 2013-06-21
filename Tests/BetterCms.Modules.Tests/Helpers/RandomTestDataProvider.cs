@@ -500,11 +500,11 @@ namespace BetterCms.Tests.Helpers
 
             if (createParentFolder)
             {
-                entity.ParentFolder = CreateNewMediaFolder(false);
+                entity.Folder = CreateNewMediaFolder(false);
             }
             else
             {
-                entity.ParentFolder = null;
+                entity.Folder = null;
             }
 
             entity.Type = type;

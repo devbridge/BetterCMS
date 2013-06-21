@@ -216,7 +216,8 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
                 var newFolder = new MediaFolderViewModel({
                     IsActive: true,
-                    Type: self.path().currentFolder().type
+                    Type: self.path().currentFolder().type,
+                    ParentFolderId: self.path().currentFolder().id()
                 });
 
                 self.medias.unshift(newFolder);
@@ -323,6 +324,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             changeFolder(null, self);
         };
 
+        self.openParent = function () {
+            changeFolder(self.path().currentFolder().parentFolderId(), self);
+        };
+
         self.domId = function() {
             return 'bcms-site-settings-media-messages-' + self.path().type;
         };
@@ -348,16 +353,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         self.type = type;
 
         self.pathFolders = ko.computed(function () {
-            var range = self.folders(),
-                maxFoldersCount = 4,
-                i;
-            if (range.length > maxFoldersCount) {
-                for (i = 0; i < range.length; i++) {
-                    if (i <= maxFoldersCount) {
-                        range.remove(range[i]);
-                    }
-                }
-            }
+            var range = self.folders();
             if (range.length > 0) {
                 switch (self.type) {
                     case mediaTypes.image:
@@ -533,11 +529,6 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
         MediaItemBaseViewModel.prototype.getUnarchiveMediaConfirmationMessage = function () {
             return globalization.unarchiveMediaConfirmMessage;
-        };
-
-        MediaItemBaseViewModel.prototype.openMedia = function (folderViewModel, data, event) {
-            bcms.stopEventPropagation(event);
-            editOrSelectMedia(folderViewModel, this, data, event);
         };
 
         MediaItemBaseViewModel.prototype.editMedia = function (folderViewModel, data, event) {
@@ -805,6 +796,8 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.pathName = ko.computed(function () {
                 return self.name() + '/';
             });
+
+            self.parentFolderId = ko.observable(item.ParentFolderId);
         }
 
         MediaFolderViewModel.prototype.isFolder = function () {
@@ -827,6 +820,17 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             }
 
             changeFolder(this.id(), folderViewModel);
+        };
+
+        MediaFolderViewModel.prototype.toJson = function () {
+            var params = {
+                Id: this.id(),
+                Name: this.name(),
+                Version: this.version(),
+                Type: this.type,
+                ParentFolderId: this.parentFolderId()
+            };
+            return params;
         };
 
         return MediaFolderViewModel;

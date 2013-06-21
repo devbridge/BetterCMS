@@ -68,25 +68,29 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
 
             if (!request.CurrentFolderId.HasDefaultValue())
             {
-                MediaFolder folderAlias = null;
-                MediaFolderViewModel folderModelAlias = null;
-
-                var folder = UnitOfWork.Session
-                    .QueryOver(() => folderAlias)
-                    .Where(() => !folderAlias.IsDeleted && folderAlias.Original == null && folderAlias.Id == request.CurrentFolderId)
-                    .SelectList(select => select
-                        .Select(() => folderAlias.Id).WithAlias(() => folderModelAlias.Id)
-                        .Select(() => folderAlias.Title).WithAlias(() => folderModelAlias.Name)
-                        .Select(() => folderAlias.Version).WithAlias(() => folderModelAlias.Version)
-                        .Select(() => folderAlias.Type).WithAlias(() => folderModelAlias.Type))
-                    .TransformUsing(Transformers.AliasToBean<MediaFolderViewModel>())
-                    .First<MediaFolderViewModel, MediaFolder>();
-
-                model.CurrentFolder = folder ?? new MediaFolderViewModel();
-
-                if (folder != null)
+                var mediaFolder = Repository.FirstOrDefault<MediaFolder>(e => e.Id == request.CurrentFolderId && e.Original == null);
+                model.CurrentFolder = mediaFolder != null
+                    ? new MediaFolderViewModel
+                        {
+                            Id = mediaFolder.Id,
+                            Name = mediaFolder.Title,
+                            Version = mediaFolder.Version,
+                            Type = mediaFolder.Type,
+                            ParentFolderId = mediaFolder.Folder != null ? mediaFolder.Folder.Id : Guid.Empty
+                        }
+                    : new MediaFolderViewModel();
+                while (mediaFolder != null)
                 {
-                    folders.Add(new MediaFolderViewModel { Id = folder.Id, Name = folder.Name, Type = folder.Type });
+                    folders.Insert(
+                        1,
+                        new MediaFolderViewModel
+                            {
+                                Id = mediaFolder.Id,
+                                Name = mediaFolder.Title,
+                                Type = mediaFolder.Type,
+                                ParentFolderId = mediaFolder.Folder != null ? mediaFolder.Folder.Id : Guid.Empty
+                            });
+                    mediaFolder = mediaFolder.Folder;
                 }
             }
 

@@ -190,6 +190,7 @@
     <Compile Include="Models\MediaImage.cs" />
     <Compile Include="Models\MigrationsContent\Migration201306201216.cs" />
     <Compile Include="Models\MigrationsContent\Migration201306071105.cs" />
+    <Compile Include="Models\Migrations\Migration201306211140.cs" />
     <Compile Include="Models\Migrations\Migration201306201215.cs" />
     <Compile Include="Models\Migrations\Migration201306171041.cs" />
     <Compile Include="Models\Migrations\Migration201306111530.cs" />
