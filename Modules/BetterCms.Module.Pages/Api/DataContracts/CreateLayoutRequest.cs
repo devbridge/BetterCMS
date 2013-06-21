@@ -14,7 +14,7 @@ namespace BetterCms.Module.Pages.Api.DataContracts
         /// <value>
         /// The layout (usually .cshtml) file path.
         /// </value>
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Layout path is required.")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Layout path is required.")]        
         [StringLength(MaxLength.Url, ErrorMessage = "Maximum length of layout path cannot exceed {1} symbols.")]
         [ValidVirtualPathValidation(ErrorMessage = "Layout by given path {0} doesn't exist.")]
         public string LayoutPath { get; set; }

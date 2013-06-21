@@ -148,8 +148,25 @@
     </Compile>
     <Compile Include="Controllers\BlogsController.cs" />
     <Compile Include="Controllers\AuthorsController.cs" />
+    <Compile Include="Controllers\CmsApiControllerBase.cs" />
+    <Compile Include="Controllers\PagesController.cs" />
     <Compile Include="Extensions\IQueryableExtensions.cs" />
     <Compile Include="Extensions\ODataOptionsExtensions.cs" />
+    <Compile Include="Models\ModelBase.cs" />
+    <Compile Include="Models\Pages\GetPageById\GetPageByIdRequest.cs" />
+    <Compile Include="Models\Pages\GetPageById\GetPageByIdResponse.cs" />
+    <Compile Include="Models\Pages\GetPagePropertiesById\GetPagePropertiesByIdRequest.cs" />
+    <Compile Include="Models\Pages\GetPagePropertiesById\GetPagePropertiesByIdResponse.cs" />
+    <Compile Include="Models\Pages\PagePropertiesModel.cs" />
+    <Compile Include="Models\Pages\PageModel.cs" />
+    <Compile Include="Models\ResponseBase.cs" />
+    <Compile Include="Models\Pages\GetPages\GetPagesResponse.cs" />
+    <Compile Include="Models\Pages\GetPages\GetPagesRequest.cs" />
+    <Compile Include="Models\RequestBase.cs" />
+    <Compile Include="Models\Root\CategoryModel.cs" />
+    <Compile Include="Models\Root\LayoutModel.cs" />
+    <Compile Include="Models\Root\ModuleModel.cs" />
+    <Compile Include="Models\Root\TagModel.cs" />
     <Compile Include="WebApiModuleDescriptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -186,7 +203,19 @@
   <ItemGroup>
     <Content Include="web.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Models\Blog\" />
+    <Folder Include="Models\MediaManager\" />
+    <Folder Include="Models\Pages\CreatePage\" />
+    <Folder Include="Models\Pages\DeletePageById\" />
+    <Folder Include="Models\Pages\UpdatePage\" />
+    <Folder Include="Models\Root\GetCategories\" />
+    <Folder Include="Models\Root\GetCategoryById\" />
+    <Folder Include="Models\Root\GetCategoryByName\" />
+    <Folder Include="Models\Root\GetTagById\" />
+    <Folder Include="Models\Root\GetTagByName\" />
+    <Folder Include="Models\Root\GetTags\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
