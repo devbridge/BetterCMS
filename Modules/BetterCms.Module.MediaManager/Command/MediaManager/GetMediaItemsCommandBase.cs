@@ -121,6 +121,20 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             {
                 var searchQuery = string.Format("%{0}%", request.SearchQuery);
                 query = query.Where(m => m.Title.Contains(searchQuery));
+
+
+                var result = new List<Media>();
+                var mediaList = query.ToList();
+
+                foreach (var media in mediaList)
+                {
+                    if (IsChild(media, request.CurrentFolderId))
+                    {
+                        result.Add(media);
+                    }
+                }
+
+                return ToResponse(request, result.AsQueryable());
             }
 
             if (!request.CurrentFolderId.HasDefaultValue())
@@ -132,11 +146,36 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
                 query = query.Where(m => m.Folder == null);
             }
 
+            return ToResponse(request, query);
+        }
+
+        private static bool IsChild(Media media, Guid currentFolderId)
+        {
+            if (currentFolderId.HasDefaultValue())
+            {
+                return true;
+            }
+
+            if (media == null)
+            {
+                return false;
+            }
+
+            if (media.Folder != null && media.Folder.Id == currentFolderId)
+            {
+                return true;
+            }
+
+            return IsChild(media.Folder, currentFolderId);
+        }
+
+        private DataListResponse<MediaViewModel> ToResponse(MediaManagerViewModel request, IQueryable<Media> query)
+        {
             var count = query.ToRowCountFutureValue();
             query = AddOrder(query, request).AddPaging(request);
 
             var items = query.Select(SelectItem).ToList();
-            
+
             return new DataListResponse<MediaViewModel>(items, count.Value);
         }
 
