@@ -889,6 +889,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to (root).
+        /// </summary>
+        public static string MediaList_RootFolderName {
+            get {
+                return ResourceManager.GetString("MediaList_RootFolderName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add New Folder.
         /// </summary>
         public static string MediaManager_AddNewFolder {

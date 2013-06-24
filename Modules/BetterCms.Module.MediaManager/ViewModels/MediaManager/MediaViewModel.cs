@@ -28,6 +28,10 @@ namespace BetterCms.Module.MediaManager.ViewModels.MediaManager
 
         public virtual bool IsArchived { get; set; }
 
+        public virtual Guid? ParentFolderId { get; set; }
+
+        public virtual string ParentFolderName { get; set; }
+
         public MediaViewModel()
         {
             ContentType = MediaContentType.File;

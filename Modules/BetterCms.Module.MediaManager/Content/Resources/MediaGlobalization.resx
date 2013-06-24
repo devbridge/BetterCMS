@@ -510,4 +510,7 @@
   <data name="MediaHistory_Status_Archived" xml:space="preserve">
     <value>Archived</value>
   </data>
+  <data name="MediaList_RootFolderName" xml:space="preserve">
+    <value>(root)</value>
+  </data>
 </root>

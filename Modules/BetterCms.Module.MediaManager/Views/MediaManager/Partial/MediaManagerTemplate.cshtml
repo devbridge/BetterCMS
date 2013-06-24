@@ -160,6 +160,9 @@
                         <!--  ko if: isDeleting() -->
                         <br /><span class="bcms-failed-file">@RootGlobalization.Message_Deleting</span>
                         <!-- /ko -->
+                        <!-- ko if: showParentLink($root, $data) -->
+                        <br/><span class="bcms-parent-folder">in folder: <a data-bind="click: openParent.bind($data, $root), clickBubble: false, text: parentFolderName()"></a></span>
+                        <!-- /ko -->
                     </div>
                 </div>
                 <div class="bcms-media-edit-controls">

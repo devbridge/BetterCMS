@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using BetterCms.Core.Api.DataContracts;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
-
+using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 using BetterCms.Module.Root.Mvc;
@@ -266,6 +266,8 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             model.CreatedOn = media.CreatedOn;
             model.Type = media.Type;
             model.IsArchived = media.IsArchived;
+            model.ParentFolderId = media.Folder != null ? media.Folder.Id : Guid.Empty;
+            model.ParentFolderName = media.Folder != null ? media.Folder.Title : MediaGlobalization.MediaList_RootFolderName;
         }
 
         /// <summary>

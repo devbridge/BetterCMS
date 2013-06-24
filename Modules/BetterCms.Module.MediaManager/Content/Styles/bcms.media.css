@@ -611,6 +611,11 @@ input.bcms-grid-input:focus {
     color: #0383df;
 }
 
+.bcms-media-name .bcms-parent-folder {
+    color: #808080;
+    font-size: 10px;
+}
+
 .bcms-list div.bcms-media-click-active {
     background-color: #effcfe;
     transition: background-color 0.5s ease-out;
