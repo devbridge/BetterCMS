@@ -134,10 +134,10 @@
 
                     @if (canEdit)
                     {
-                        <!-- ko if: !isFailed() && !isFolder() && !isArchived() -->
+                        <!-- ko if: !isFailed() && !isArchived() -->
                         <a class="bcms-media-content-link" data-bind="click: archiveMedia.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonArchive</a>
                         <!-- /ko -->
-                        <!-- ko if: !isFailed() && !isFolder() && isArchived() -->
+                        <!-- ko if: !isFailed() && isArchived() -->
                         <a class="bcms-media-content-link" data-bind="click: unarchiveMedia.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonUnarchive</a>
                         <!-- /ko -->
                     }

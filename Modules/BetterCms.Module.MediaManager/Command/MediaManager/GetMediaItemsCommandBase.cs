@@ -128,7 +128,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
 
                 foreach (var media in mediaList)
                 {
-                    if (IsChild(media, request.CurrentFolderId))
+                    if (IsChild(media, request.CurrentFolderId, request.IncludeArchivedItems))
                     {
                         result.Add(media);
                     }
@@ -149,7 +149,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             return ToResponse(request, query);
         }
 
-        private static bool IsChild(Media media, Guid currentFolderId)
+        private static bool IsChild(Media media, Guid currentFolderId, bool includeArchivedItems)
         {
             if (media == null)
             {
@@ -157,6 +157,11 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             }
 
             if (media.IsDeleted || (media.Folder != null && media.Folder.IsDeleted))
+            {
+                return false;
+            }
+
+            if (!includeArchivedItems && (media.IsArchived || (media.Folder != null && media.Folder.IsArchived)))
             {
                 return false;
             }
@@ -171,7 +176,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
                 return true;
             }
 
-            return IsChild(media.Folder, currentFolderId);
+            return IsChild(media.Folder, currentFolderId, includeArchivedItems);
         }
 
         private DataListResponse<MediaViewModel> ToResponse(MediaManagerViewModel request, IQueryable<Media> query)
