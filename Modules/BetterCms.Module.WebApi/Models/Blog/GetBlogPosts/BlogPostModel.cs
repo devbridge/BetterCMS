@@ -1,11 +1,9 @@
 ﻿using System.Runtime.Serialization;
 
-using BetterCms.Module.WebApi.Models.Pages;
-
-namespace BetterCms.Module.WebApi.Models.Blog
+namespace BetterCms.Module.WebApi.Models.Blog.GetBlogPosts
 {
     [DataContract]
-    public class BlogPostModel : PageModel
+    public class BlogPostModel : ModelBase
     {
         /// <summary>
         /// Gets or sets the blog post author id.
