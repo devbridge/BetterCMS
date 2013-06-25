@@ -1,12 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-using BetterCms.Module.WebApi.Models.MediaManager;
-
 namespace BetterCms.Module.WebApi.Models.Blog.GetBlogPostPropertiesById
 {
     [DataContract]
-    public class GetBlogPostPropertiesByIdResponse : ResponseBase<BlogPostPropertiesModel>
+    public class GetBlogPostPropertiesByIdResponse : ResponseBase<BlogPostModel>
     {
         /// <summary>
         /// Gets or sets the layout.

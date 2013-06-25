@@ -3,7 +3,7 @@
 namespace BetterCms.Module.WebApi.Models.MediaManager.GetMediaContentById
 {
     [DataContract]
-    public class GetMediaContentByIdRequest
+    public class GetMediaContentByIdRequest : RequestBase
     {
         //
         // TODO
