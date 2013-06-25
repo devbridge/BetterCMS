@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace BetterCms.Module.WebApi.Models.Root
+namespace BetterCms.Module.WebApi.Models.Pages.GetRedirects
 {
     [DataContract]
     public class RedirectModel : ModelBase

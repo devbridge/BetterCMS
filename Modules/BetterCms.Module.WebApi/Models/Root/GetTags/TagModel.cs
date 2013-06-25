@@ -1,15 +1,15 @@
 ﻿using System.Runtime.Serialization;
 
-namespace BetterCms.Module.WebApi.Models.Root
+namespace BetterCms.Module.WebApi.Models.Root.GetTags
 {
     [DataContract]
-    public class CategoryModel : ModelBase
+    public class TagModel : ModelBase
     {
         /// <summary>
-        /// Gets or sets the category name.
+        /// Gets or sets the tag name.
         /// </summary>
         /// <value>
-        /// The category name.
+        /// The tag name.
         /// </value>
         [DataMember(Order = 10, Name = "name")]
         public string Name { get; set; }

@@ -1,7 +1,6 @@
-﻿using System;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
-namespace BetterCms.Module.WebApi.Models.Root
+namespace BetterCms.Module.WebApi.Models.Pages.GetPagePropertiesById
 {
     [DataContract]
     public class LayoutModel : ModelBase

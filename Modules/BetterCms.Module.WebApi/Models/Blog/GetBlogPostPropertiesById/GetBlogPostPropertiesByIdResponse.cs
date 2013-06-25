@@ -2,7 +2,6 @@
 using System.Runtime.Serialization;
 
 using BetterCms.Module.WebApi.Models.MediaManager;
-using BetterCms.Module.WebApi.Models.Root;
 
 namespace BetterCms.Module.WebApi.Models.Blog.GetBlogPostPropertiesById
 {
