@@ -9,6 +9,7 @@ using NUnit.Framework;
 
 namespace BetterCms.WebApi.Tests.UnitTests
 {
+    [TestFixture]
     public class SerializationTests
     {
         [Test]
@@ -72,7 +73,7 @@ namespace BetterCms.WebApi.Tests.UnitTests
             Assert.AreEqual(options.Filter.FilterItems.Count, 2);
             Assert.AreEqual(options.Filter.FilterItems[1].Field, "Title");
             Assert.AreEqual(options.Filter.FilterItems[1].Value, "Africa");
-            Assert.AreEqual(options.Filter.FilterItems[1].Operation, FilterOperation.Equal);
+            Assert.AreEqual(options.Filter.FilterItems[1].Operation, FilterOperation.NotEqual);
 
             Assert.AreEqual(options.Filter.InnerFilters.Count, 1);
             Assert.AreEqual(options.Filter.InnerFilters[0].Connector, FilterConnector.Or);

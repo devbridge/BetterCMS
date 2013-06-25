@@ -238,7 +238,7 @@ namespace BetterCms.Module.WebApi.Helpers
                 {
                     var subQuery = CreateQueryJunction(innerFilter);
                     AppendFilterConnector(sb, filter.Connector);
-                    sb.Append(subQuery);
+                    sb.Append("(").Append(subQuery).Append(")");
                 }
             }
 
