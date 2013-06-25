@@ -151,17 +151,22 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
 
         private static bool IsChild(Media media, Guid currentFolderId)
         {
-            if (currentFolderId.HasDefaultValue())
-            {
-                return true;
-            }
-
             if (media == null)
             {
                 return false;
             }
 
-            if (media.Folder != null && media.Folder.Id == currentFolderId)
+            if (media.IsDeleted || (media.Folder != null && media.Folder.IsDeleted))
+            {
+                return false;
+            }
+
+            if (currentFolderId.HasDefaultValue())
+            {
+                return true;
+            }
+
+            if (media.Folder != null && !media.Folder.IsDeleted && media.Folder.Id == currentFolderId)
             {
                 return true;
             }
