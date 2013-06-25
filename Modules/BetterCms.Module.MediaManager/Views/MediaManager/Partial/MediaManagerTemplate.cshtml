@@ -97,8 +97,6 @@
                     <!-- /ko -->
 
                     <!--  ko if: !isProcessing() && !isDeleting() -->
-                    
-                    
 
                     <!-- ko if: !isFailed() && !isFolder() && !isImage() && $root.canInsertMedia() -->
                     <a class="bcms-media-content-link" data-bind="click: insertMedia.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonInsertFile</a>
@@ -126,7 +124,9 @@
                         <a class="bcms-media-content-link" data-bind="click: editMedia.bind($data, $root), clickBubble: false">@RootGlobalization.Button_Edit</a>
                         <!-- /ko -->
                     }
-                    @* TODO: add field for public URL. *@
+                    <!-- ko if: !isFailed() && !isFolder() && publicUrl() -->
+                    <input class="bcms-editor-field-box" type="text" readonly="readonly" data-bind="value: publicUrl(), click: selectThis.bind($data, $root, $element)" />
+                    <!-- /ko -->
 
                     <!-- ko if: !isFailed() && (isFolder() || isImage() || canBeEdited()) -->
                     <div class="bcms-settings-separator"></div>
@@ -172,8 +172,6 @@
                     <!-- ko if: !isFailed() && isImage() -->
                     <a class="bcms-media-content-link" data-bind="click: imageProperties.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonImageProperties</a>
                     <!-- /ko -->
-                    
-                    
 
                     <!-- /ko -->
                 </div>

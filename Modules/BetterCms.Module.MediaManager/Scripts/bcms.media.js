@@ -522,6 +522,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.openParent = function (mediaItemsViewModel, data) {
                 changeFolder(self.parentFolderId(), mediaItemsViewModel);
             };
+
+            self.selectThis = function (mediaItemsViewModel, element) {
+                $(element).select();
+            };
         }
 
         MediaItemBaseViewModel.prototype.isFolder = function () {
