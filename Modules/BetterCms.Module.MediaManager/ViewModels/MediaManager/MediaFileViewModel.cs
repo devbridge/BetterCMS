@@ -9,6 +9,8 @@ namespace BetterCms.Module.MediaManager.ViewModels.MediaManager
     {
         public virtual long Size { get; set; }
 
+        public virtual string FileExtension { get; set; }
+
         public virtual string PublicUrl { get; set; }
 
         public virtual bool IsProcessing { get; set; }
