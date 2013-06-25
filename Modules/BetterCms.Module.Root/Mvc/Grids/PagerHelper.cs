@@ -25,15 +25,10 @@ namespace BetterCms.Module.Root.Mvc.Grids
             var pagination = model.Items;
             var builder = new StringBuilder();
 
-            if (pagination.TotalPages <= 1 && pagination.FirstItem <= model.Items.TotalItems)
-            {
-                return string.Empty;
-            }
-
             builder.AppendFormat("<div class='{0} clearfix'>", PagerDivClassName);
 
             // total pages
-            var totalPages = pagination.TotalPages;
+            var totalPages = pagination.TotalPages > 0 ? pagination.TotalPages : 1;
             var pageNumber = pagination.PageNumber;
 
             // lower bound
