@@ -28,8 +28,8 @@ namespace BetterCms.Module.WebApi.Models
             Filter = new DataFilter();
             Order = new DataOrder();
 
-            StartItemNumber = startItemNumber;
-            ItemsCount = itemsCount;
+            Skip = startItemNumber;
+            Take = itemsCount;
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace BetterCms.Module.WebApi.Models
         /// <value>
         /// The starting item number.
         /// </value>
-        public int StartItemNumber { get; set; }
+        public int Skip { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum count of returning items.
@@ -62,6 +62,6 @@ namespace BetterCms.Module.WebApi.Models
         /// <value>
         /// The maximum count of returning items.
         /// </value>
-        public int? ItemsCount { get; set; }
+        public int? Take { get; set; }
     }
 }

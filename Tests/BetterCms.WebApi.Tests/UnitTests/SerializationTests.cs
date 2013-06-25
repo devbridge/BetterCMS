@@ -25,8 +25,8 @@ namespace BetterCms.WebApi.Tests.UnitTests
 
             Assert.IsNotNull(options);
             Assert.IsNotNull(deserialized);
-            Assert.AreEqual(options.ItemsCount, deserialized.ItemsCount);
-            Assert.AreEqual(options.StartItemNumber, deserialized.StartItemNumber);
+            Assert.AreEqual(options.Take, deserialized.Take);
+            Assert.AreEqual(options.Skip, deserialized.Skip);
 
             AreFiltersEqual(options.Filter, deserialized.Filter);
             AreOrdersEqual(options.Order, deserialized.Order);
@@ -44,7 +44,7 @@ namespace BetterCms.WebApi.Tests.UnitTests
             sb.AppendLine("        ],");
             sb.AppendLine("        \"InnerFilters\": [");
             sb.AppendLine("            {");
-            sb.AppendLine("                \"Connector\": \"Or\",");
+            sb.AppendLine("                \"Connector\": \"or\",");
             sb.AppendLine("                \"FilterItems\": [");
             sb.AppendLine("                    { \"Field\": \"Title\", \"Value\": \"It\", \"Operation\": \"StartsWith\" }");
             sb.AppendLine("                    , { \"Field\": \"Title\", \"Value\": \"na\", \"Operation\": \"EndsWith\" }");
@@ -55,11 +55,11 @@ namespace BetterCms.WebApi.Tests.UnitTests
             sb.AppendLine("   \"Order\": {");
             sb.AppendLine("        \"OrderItems\": [");
             sb.AppendLine("            { \"Field\": \"CreatedOn\" }");
-            sb.AppendLine("            , { \"Field\": \"Title\", \"Direction\": \"Desc\" }");
+            sb.AppendLine("            , { \"Field\": \"Title\", \"Direction\": \"desc\" }");
             sb.AppendLine("        ]");
             sb.AppendLine("    },");
-            sb.AppendLine("    \"StartItemNumber\": 3,");
-            sb.AppendLine("    \"ItemsCount\": 5");
+            sb.AppendLine("    \"skip\": 3,");
+            sb.AppendLine("    \"take\": 5");
             sb.AppendLine("}");
 
             var serializer = new JavaScriptSerializer();
@@ -82,6 +82,9 @@ namespace BetterCms.WebApi.Tests.UnitTests
             Assert.AreEqual(options.Filter.InnerFilters[0].FilterItems[0].Field, "Title");
             Assert.AreEqual(options.Filter.InnerFilters[0].FilterItems[0].Value, "It");
             Assert.AreEqual(options.Filter.InnerFilters[0].FilterItems[0].Operation, FilterOperation.StartsWith);
+            
+            Assert.AreEqual(options.Take, 5);
+            Assert.AreEqual(options.Skip, 3);
         }
 
         private DataOptions CreateTestDataOptions()

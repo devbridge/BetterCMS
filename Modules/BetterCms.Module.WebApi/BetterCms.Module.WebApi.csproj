@@ -158,6 +158,7 @@
     <Compile Include="Models\DataOptions.cs" />
     <Compile Include="Helpers\DataOptionsExtensions.cs" />
     <Compile Include="Models\DataOrder.cs" />
+    <Compile Include="Models\ListRequestBase.cs" />
     <Compile Include="Models\ListResponseBase.cs" />
     <Compile Include="Models\OrderItem.cs" />
     <Compile Include="Models\ModelBase.cs" />
@@ -172,8 +173,33 @@
     <Compile Include="Models\Pages\GetPages\GetPagesRequest.cs" />
     <Compile Include="Models\RequestBase.cs" />
     <Compile Include="Models\Root\CategoryModel.cs" />
+    <Compile Include="Models\Root\GetCategories\GetCategoriesRequest.cs" />
+    <Compile Include="Models\Root\GetCategories\GetCategoriesResponse.cs" />
+    <Compile Include="Models\Root\GetCategoryById\GetCategoryByIdRequest.cs" />
+    <Compile Include="Models\Root\GetCategoryById\GetCategoryByIdResponse.cs" />
+    <Compile Include="Models\Root\GetCategoryByName\GetCategoryByNameRequest.cs" />
+    <Compile Include="Models\Root\GetCategoryByName\GetCategoryByNameResponse.cs" />
+    <Compile Include="Models\Root\GetLayoutById\GetLayoutByIdRequest.cs" />
+    <Compile Include="Models\Root\GetLayoutById\GetLayoutByIdResponse.cs" />
+    <Compile Include="Models\Root\GetLayoutRegions\GetLayoutRegionsRequest.cs" />
+    <Compile Include="Models\Root\GetLayoutRegions\GetLayoutRegionsResponse.cs" />
+    <Compile Include="Models\Root\GetLayouts\GetLayoutsRequest.cs" />
+    <Compile Include="Models\Root\GetLayouts\GetLayoutsResponse.cs" />
+    <Compile Include="Models\Root\GetModuleByName\GetModuleByNameRequest.cs" />
+    <Compile Include="Models\Root\GetModuleByName\GetModuleByNameResponse.cs" />
+    <Compile Include="Models\Root\GetModules\GetModulesRequest.cs" />
+    <Compile Include="Models\Root\GetModules\GetModulesResponse.cs" />
+    <Compile Include="Models\Root\GetTagById\GetTagByIdRequest.cs" />
+    <Compile Include="Models\Root\GetTagById\GetTagByIdResponse.cs" />
+    <Compile Include="Models\Root\GetTagByName\GetTagByNameRequest.cs" />
+    <Compile Include="Models\Root\GetTagByName\GetTagByNameResponse.cs" />
+    <Compile Include="Models\Root\GetTags\GetTagsRequest.cs" />
+    <Compile Include="Models\Root\GetTags\GetTagsResponse.cs" />
+    <Compile Include="Models\Root\GetVersion\GetVersionRequest.cs" />
+    <Compile Include="Models\Root\GetVersion\GetVersionResponse.cs" />
     <Compile Include="Models\Root\LayoutModel.cs" />
     <Compile Include="Models\Root\ModuleModel.cs" />
+    <Compile Include="Models\Root\RegionModel.cs" />
     <Compile Include="Models\Root\TagModel.cs" />
     <Compile Include="WebApiModuleDescriptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -217,12 +243,6 @@
     <Folder Include="Models\Pages\CreatePage\" />
     <Folder Include="Models\Pages\DeletePageById\" />
     <Folder Include="Models\Pages\UpdatePage\" />
-    <Folder Include="Models\Root\GetCategories\" />
-    <Folder Include="Models\Root\GetCategoryById\" />
-    <Folder Include="Models\Root\GetCategoryByName\" />
-    <Folder Include="Models\Root\GetTagById\" />
-    <Folder Include="Models\Root\GetTagByName\" />
-    <Folder Include="Models\Root\GetTags\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

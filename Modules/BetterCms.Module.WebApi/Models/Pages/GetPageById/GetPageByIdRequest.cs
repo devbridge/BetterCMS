@@ -1,7 +1,17 @@
-﻿namespace BetterCms.Module.WebApi.Models.Pages.GetPageById
+﻿using System.Runtime.Serialization;
+
+namespace BetterCms.Module.WebApi.Models.Pages.GetPageById
 {
+    [DataContract]
     public class GetPageByIdRequest : RequestBase
     {
-        public string PageId { get; set; }
+        /// <summary>
+        /// Gets or sets the page id.
+        /// </summary>
+        /// <value>
+        /// The page id.
+        /// </value>
+        [DataMember(Order = 10, Name = "pageId")]
+        public System.Guid PageId { get; set; }
     }
 }

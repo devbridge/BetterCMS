@@ -93,13 +93,13 @@ namespace BetterCms.Module.WebApi.Helpers
         /// <param name="request">The request.</param>
         public static void ApplyPaging<TModel>(this DataOptions options, GetDataRequest<TModel> request)
         {
-            if (options != null && options.ItemsCount > 0)
+            if (options != null && options.Take > 0)
             {
-                if (options.StartItemNumber > 1)
+                if (options.Skip > 1)
                 {
-                    request.StartItemNumber = options.StartItemNumber;
+                    request.StartItemNumber = options.Skip;
                 }
-                request.ItemsCount = options.ItemsCount;
+                request.ItemsCount = options.Take;
             }
         }
     }
