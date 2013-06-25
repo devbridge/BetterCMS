@@ -173,7 +173,19 @@
     <Compile Include="Models\DataOrder.cs" />
     <Compile Include="Models\ListRequestBase.cs" />
     <Compile Include="Models\ListResponseBase.cs" />
+    <Compile Include="Models\MediaManager\FolderWithMediasModel.cs" />
+    <Compile Include="Models\MediaManager\FileModel.cs" />
+    <Compile Include="Models\MediaManager\FindMedia\FindMediaRequest.cs" />
+    <Compile Include="Models\MediaManager\FindMedia\FindMediaResponse.cs" />
+    <Compile Include="Models\MediaManager\FolderModel.cs" />
+    <Compile Include="Models\MediaManager\GetMediaById\GetMediaByIdRequest.cs" />
+    <Compile Include="Models\MediaManager\GetMediaById\GetMediaByIdResponse.cs" />
+    <Compile Include="Models\MediaManager\GetMediaContentById\GetMediaContentByIdRequest.cs" />
+    <Compile Include="Models\MediaManager\GetMediaContentById\GetMediaContentByIdResponse.cs" />
+    <Compile Include="Models\MediaManager\GetMediaTree\GetMediaTreeRequest.cs" />
+    <Compile Include="Models\MediaManager\GetMediaTree\GetMediaTreeResponse.cs" />
     <Compile Include="Models\MediaManager\ImageModel.cs" />
+    <Compile Include="Models\MediaManager\MediaModelBase.cs" />
     <Compile Include="Models\OrderItem.cs" />
     <Compile Include="Models\ModelBase.cs" />
     <Compile Include="Models\Pages\GetPageById\GetPageByIdRequest.cs" />
@@ -187,8 +199,8 @@
     <Compile Include="Models\Pages\GetPages\GetPagesRequest.cs" />
     <Compile Include="Models\RequestBase.cs" />
     <Compile Include="Models\Root\CategoryModel.cs" />
-    <Compile Include="Models\Root\GetRedirects\GetRedirectsRequest.cs" />
-    <Compile Include="Models\Root\GetRedirects\GetRedirectsResponse.cs" />
+    <Compile Include="Models\Pages\GetRedirects\GetRedirectsRequest.cs" />
+    <Compile Include="Models\Pages\GetRedirects\GetRedirectsResponse.cs" />
     <Compile Include="Models\Root\GetCategories\GetCategoriesRequest.cs" />
     <Compile Include="Models\Root\GetCategories\GetCategoriesResponse.cs" />
     <Compile Include="Models\Root\GetCategoryById\GetCategoryByIdRequest.cs" />
@@ -228,6 +240,10 @@
     <ProjectReference Include="..\BetterCMS.Module.Blog\BetterCms.Module.Blog.csproj">
       <Project>{a66a3046-ef60-4c51-ada7-eb055763419b}</Project>
       <Name>BetterCms.Module.Blog</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BetterCms.Module.MediaManager\BetterCms.Module.MediaManager.csproj">
+      <Project>{f3e41793-e8ed-4ba8-a1ab-cba1e47b0786}</Project>
+      <Name>BetterCms.Module.MediaManager</Name>
     </ProjectReference>
     <ProjectReference Include="..\BetterCms.Module.Pages\BetterCms.Module.Pages.csproj">
       <Project>{fc04d4c2-8688-498f-b546-292c7e3688a9}</Project>
