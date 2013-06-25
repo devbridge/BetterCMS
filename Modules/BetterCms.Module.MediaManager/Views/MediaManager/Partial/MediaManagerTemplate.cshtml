@@ -3,8 +3,10 @@
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc
 @using BetterCms.Module.Root.Mvc.Helpers
-
 @model BetterCms.Module.MediaManager.ViewModels.MediaManager.MediaViewModel
+@{
+    var canEdit = (ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent);
+}
 <script type="text/html" id="bcms-media-list-template">
     <div class="bcms-top-block-holder">
         <div class="bcms-media-controls-holder">
@@ -53,7 +55,7 @@
                     </div>
                 </div>
             </div>
-         </div>
+        </div>
     </div>
 
     @Html.SiteSettingsMessagesBox(null, new Dictionary<string, string> { { "data-bind", "attr: { id: domId() }" } })
@@ -93,54 +95,87 @@
                     <!--  ko if: isDeleting() -->
                     @RootGlobalization.Message_Deleting
                     <!-- /ko -->
-                    <!--  ko if: !isProcessing() && !isFailed() && !isDeleting() -->
-                    <!-- ko if: isImage() -->
-                    <a class="bcms-media-content-link" data-bind="click: previewImage.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonPreviewImage</a>
-                    <a class="bcms-media-content-link" data-bind="click: imageProperties.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonImageProperties</a>
+
+                    <!--  ko if: !isProcessing() && !isDeleting() -->
+                    
+                    
+
+                    <!-- ko if: !isFailed() && !isFolder() && !isImage() && $root.canInsertMedia() -->
+                    <a class="bcms-media-content-link" data-bind="click: insertMedia.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonInsertFile</a>
                     <!-- /ko -->
-                    <!-- ko if: isFolder() -->
+                    <!-- ko if: !isFailed() && isImage() && $root.canInsertMedia() -->
+                    <a class="bcms-media-content-link" data-bind="click: insertMedia.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonInsertImage</a>
+                    <!-- /ko -->
+                    <!-- ko if: !isFailed() && isImage() && $root.canInsertMediaWithOptions() -->
+                    <a class="bcms-media-content-link" data-bind="click: insertMediaWithOptions.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonInsertImageWithOptions</a>
+                    <!-- /ko -->
+
+                    <!-- ko if: !isFailed() && ($root.canInsertMedia() || $root.canInsertMediaWithOptions()) -->
+                    <div class="bcms-settings-separator"></div>
+                    <!-- /ko -->
+
+                    <!-- ko if: !isFailed() && isFolder() -->
                     <a class="bcms-media-content-link" data-bind="click: openMedia.bind($data, $root), clickBubble: false">@RootGlobalization.Button_Open</a>
                     <!-- /ko -->
-                    @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
+                    <!-- ko if: !isFailed() && isImage() -->
+                    <a class="bcms-media-content-link" data-bind="click: previewImage.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonPreviewImage</a>
+                    <!-- /ko -->
+                    @if (canEdit)
                     {
-                        <!-- ko if: !isFolder() && !isArchived() -->
-                        <a class="bcms-media-content-link" data-bind="click: reuploadMedia.bind($data, $root), clickBubble: false">@MediaGlobalization.Button_Reupload</a>
-                        <a class="bcms-media-content-link" data-bind="click: showHistory.bind($data, $root), clickBubble: false">@MediaGlobalization.Button_ShowHistory</a>
-                        <!-- /ko -->
-                        <a class="bcms-media-content-link" data-bind="click: renameMedia.bind($data, $root), clickBubble: false">@RootGlobalization.Button_Rename</a>
-                        <!-- ko if: canBeEdited() -->
+                        <!-- ko if: !isFailed() && canBeEdited() -->
                         <a class="bcms-media-content-link" data-bind="click: editMedia.bind($data, $root), clickBubble: false">@RootGlobalization.Button_Edit</a>
                         <!-- /ko -->
                     }
-                    <!-- ko if: canBeDownloaded() -->
-                    <a class="bcms-media-content-link" data-bind="click: downloadMedia, clickBubble: false">@MediaGlobalization.MediaManager_ButtonDownload</a>
+                    @* TODO: add field for public URL. *@
+
+                    <!-- ko if: !isFailed() && (isFolder() || isImage() || canBeEdited()) -->
+                    <div class="bcms-settings-separator"></div>
                     <!-- /ko -->
-                    <!-- ko if: isImage() && $root.canInsertMedia() -->
-                    <a class="bcms-media-content-link" data-bind="click: insertMedia.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonInsertImage</a>
-                    <!-- /ko -->
-                    <!-- ko if: isImage() && $root.canInsertMediaWithOptions() -->
-                    <a class="bcms-media-content-link" data-bind="click: insertMediaWithOptions.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonInsertImageWithOptions</a>
-                    <!-- /ko -->
-                    <!-- ko if: !isFolder() && !isImage() && $root.canInsertMedia() -->
-                    <a class="bcms-media-content-link" data-bind="click: insertMedia.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonInsertFile</a>
-                    <!-- /ko -->
-                    <!-- /ko -->
-                    @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.DeleteContent))
+
+                    @if (canEdit)
                     {
-                        <!--  ko if: !isProcessing() && !isDeleting() -->
-                        <a class="bcms-media-content-link" data-bind="click: deleteMedia.bind($data, $root), clickBubble: false">@RootGlobalization.Button_Delete</a>
-                        <!-- /ko -->
-                    }
-                    @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
-                    {
-                        <!-- ko if: !isFolder() && !isArchived() -->
+                        <!-- ko if: !isFailed() && !isFolder() && !isArchived() -->
                         <a class="bcms-media-content-link" data-bind="click: archiveMedia.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonArchive</a>
                         <!-- /ko -->
-                        
-                        <!-- ko if: !isFolder() && isArchived() -->
+                        <!-- ko if: !isFailed() && !isFolder() && isArchived() -->
                         <a class="bcms-media-content-link" data-bind="click: unarchiveMedia.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonUnarchive</a>
                         <!-- /ko -->
                     }
+                    @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.DeleteContent))
+                    {
+                        <a class="bcms-media-content-link" data-bind="click: deleteMedia.bind($data, $root), clickBubble: false">@RootGlobalization.Button_Delete</a>
+                    }
+                    @if (canEdit)
+                    {
+                        <a class="bcms-media-content-link" data-bind="click: renameMedia.bind($data, $root), clickBubble: false">@RootGlobalization.Button_Rename</a>
+                    }
+                    <!-- ko if: !isFailed() && canBeDownloaded() -->
+                    <a class="bcms-media-content-link" data-bind="click: downloadMedia, clickBubble: false">@MediaGlobalization.MediaManager_ButtonDownload</a>
+                    <!-- /ko -->
+                    @if (canEdit)
+                    {
+                        <!-- ko if: !isFolder() && !isArchived() -->
+                        <a class="bcms-media-content-link" data-bind="click: reuploadMedia.bind($data, $root), clickBubble: false">@MediaGlobalization.Button_Reupload</a>
+                        <!-- /ko -->
+                    }
+
+                    <!-- ko if: (!isFolder() && !isArchived() && @(canEdit ? "true" : "false")) || (!isFailed() && isImage()) -->
+                    <div class="bcms-settings-separator"></div>
+                    <!-- /ko -->
+
+                    @if (canEdit)
+                    {
+                        <!-- ko if: !isFolder() && !isArchived() -->
+                        <a class="bcms-media-content-link" data-bind="click: showHistory.bind($data, $root), clickBubble: false">@MediaGlobalization.Button_ShowHistory</a>
+                        <!-- /ko -->
+                    }
+                    <!-- ko if: !isFailed() && isImage() -->
+                    <a class="bcms-media-content-link" data-bind="click: imageProperties.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonImageProperties</a>
+                    <!-- /ko -->
+                    
+                    
+
+                    <!-- /ko -->
                 </div>
 
                 <div class="bcms-media-items-block">

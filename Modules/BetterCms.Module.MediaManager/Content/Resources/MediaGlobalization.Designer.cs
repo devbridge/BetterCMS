@@ -925,7 +925,7 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Image Properties.
+        ///   Looks up a localized string similar to Properties.
         /// </summary>
         public static string MediaManager_ButtonImageProperties {
             get {
@@ -961,7 +961,7 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Preview image.
+        ///   Looks up a localized string similar to Preview.
         /// </summary>
         public static string MediaManager_ButtonPreviewImage {
             get {
