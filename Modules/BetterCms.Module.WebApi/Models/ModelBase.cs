@@ -31,6 +31,6 @@ namespace BetterCms.Module.WebApi.Models
         /// The version.
         /// </value>
         [DataMember(Order = 10001, Name = "version")]
-        int Version { get; set; }
+        public int Version { get; set; }
     }
 }

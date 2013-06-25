@@ -52,12 +52,14 @@ namespace BetterCms.Module.WebApi.Controllers
                                         Items = pages.Items.Select(page
                                             => new PageModel
                                                 {
+                                                    Id = page.Id,
                                                     PageUrl = page.PageUrl,
                                                     Title = page.Title,
                                                     IsPublished = page.Status == PageStatus.Published,
                                                     PublishedOn = page.PublishedOn,
                                                     LayoutId = page.Layout.Id,
-                                                    CategoryId = page.Category != null ? page.Category.Id : (System.Guid?)null
+                                                    CategoryId = page.Category != null ? page.Category.Id : (System.Guid?)null,
+                                                    Version = page.Version
                                                 })
                                                 .ToArray()
                                     };

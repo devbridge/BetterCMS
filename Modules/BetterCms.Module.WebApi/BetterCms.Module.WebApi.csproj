@@ -150,6 +150,19 @@
     <Compile Include="Controllers\PagesController.cs" />
     <Compile Include="Helpers\DataOptionsQueryCreator.cs" />
     <Compile Include="Helpers\DynamicLinqExtensions.cs" />
+    <Compile Include="Models\Blog\AuthorModel.cs" />
+    <Compile Include="Models\Blog\BlogPostModel.cs" />
+    <Compile Include="Models\Blog\BlogPostPropertiesModel.cs" />
+    <Compile Include="Models\Blog\GetAuthorById\GetAuthorByIdRequest.cs" />
+    <Compile Include="Models\Blog\GetAuthorById\GetAuthorByIdResponse.cs" />
+    <Compile Include="Models\Blog\GetAuthors\GetAuthorsRequest.cs" />
+    <Compile Include="Models\Blog\GetAuthors\GetAuthorsResponse.cs" />
+    <Compile Include="Models\Blog\GetBlogPostById\GetBlogPostByIdRequest.cs" />
+    <Compile Include="Models\Blog\GetBlogPostById\GetBlogPostByIdResponse.cs" />
+    <Compile Include="Models\Blog\GetBlogPostPropertiesById\GetBlogPostPropertiesByIdRequest.cs" />
+    <Compile Include="Models\Blog\GetBlogPostPropertiesById\GetBlogPostPropertiesByIdResponse.cs" />
+    <Compile Include="Models\Blog\GetBlogPosts\GetBlogPostsRequest.cs" />
+    <Compile Include="Models\Blog\GetBlogPosts\GetBlogPostsResponse.cs" />
     <Compile Include="Models\DataFilter.cs" />
     <Compile Include="Models\Enums\FilterConnector.cs" />
     <Compile Include="Models\Enums\FilterOperation.cs" />
@@ -160,6 +173,7 @@
     <Compile Include="Models\DataOrder.cs" />
     <Compile Include="Models\ListRequestBase.cs" />
     <Compile Include="Models\ListResponseBase.cs" />
+    <Compile Include="Models\MediaManager\ImageModel.cs" />
     <Compile Include="Models\OrderItem.cs" />
     <Compile Include="Models\ModelBase.cs" />
     <Compile Include="Models\Pages\GetPageById\GetPageByIdRequest.cs" />
@@ -173,6 +187,8 @@
     <Compile Include="Models\Pages\GetPages\GetPagesRequest.cs" />
     <Compile Include="Models\RequestBase.cs" />
     <Compile Include="Models\Root\CategoryModel.cs" />
+    <Compile Include="Models\Root\GetRedirects\GetRedirectsRequest.cs" />
+    <Compile Include="Models\Root\GetRedirects\GetRedirectsResponse.cs" />
     <Compile Include="Models\Root\GetCategories\GetCategoriesRequest.cs" />
     <Compile Include="Models\Root\GetCategories\GetCategoriesResponse.cs" />
     <Compile Include="Models\Root\GetCategoryById\GetCategoryByIdRequest.cs" />
@@ -185,10 +201,6 @@
     <Compile Include="Models\Root\GetLayoutRegions\GetLayoutRegionsResponse.cs" />
     <Compile Include="Models\Root\GetLayouts\GetLayoutsRequest.cs" />
     <Compile Include="Models\Root\GetLayouts\GetLayoutsResponse.cs" />
-    <Compile Include="Models\Root\GetModuleByName\GetModuleByNameRequest.cs" />
-    <Compile Include="Models\Root\GetModuleByName\GetModuleByNameResponse.cs" />
-    <Compile Include="Models\Root\GetModules\GetModulesRequest.cs" />
-    <Compile Include="Models\Root\GetModules\GetModulesResponse.cs" />
     <Compile Include="Models\Root\GetTagById\GetTagByIdRequest.cs" />
     <Compile Include="Models\Root\GetTagById\GetTagByIdResponse.cs" />
     <Compile Include="Models\Root\GetTagByName\GetTagByNameRequest.cs" />
@@ -198,7 +210,7 @@
     <Compile Include="Models\Root\GetVersion\GetVersionRequest.cs" />
     <Compile Include="Models\Root\GetVersion\GetVersionResponse.cs" />
     <Compile Include="Models\Root\LayoutModel.cs" />
-    <Compile Include="Models\Root\ModuleModel.cs" />
+    <Compile Include="Models\Root\RedirectModel.cs" />
     <Compile Include="Models\Root\RegionModel.cs" />
     <Compile Include="Models\Root\TagModel.cs" />
     <Compile Include="WebApiModuleDescriptor.cs" />
@@ -238,8 +250,6 @@
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\Blog\" />
-    <Folder Include="Models\MediaManager\" />
     <Folder Include="Models\Pages\CreatePage\" />
     <Folder Include="Models\Pages\DeletePageById\" />
     <Folder Include="Models\Pages\UpdatePage\" />

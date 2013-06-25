@@ -31,24 +31,6 @@ namespace BetterCms.Module.WebApi.Models.Root
         /// The preview URL.
         /// </value>
         [DataMember(Order = 30, Name = "previewUrl")]
-        public string PreviewUrl { get; set; }
-
-        /// <summary>
-        /// Gets or sets the module id.
-        /// </summary>
-        /// <value>
-        /// The module id.
-        /// </value>
-        [DataMember(Order = 40, Name = "moduleId")]
-        public Guid ModuleId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name of the module.
-        /// </summary>
-        /// <value>
-        /// The name of the module.
-        /// </value>
-        [DataMember(Order = 50, Name = "moduleName")]
-        public string ModuleName { get; set; }        
+        public string PreviewUrl { get; set; }     
     }
 }
