@@ -108,6 +108,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             page.Status = request.IsVisibleToEveryone ? PageStatus.Published : PageStatus.Unpublished;
             page.UseNoFollow = request.UseNoFollow;
             page.UseNoIndex = request.UseNoIndex;
+            page.IsArchived = request.IsArchived;
             page.Version = request.Version;
 
             page.Image = request.Image != null && request.Image.ImageId.HasValue ? Repository.AsProxy<MediaImage>(request.Image.ImageId.Value) : null;

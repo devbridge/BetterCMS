@@ -189,6 +189,14 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public bool IsInSitemap { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether this instance is archived.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is archived; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsArchived { get; set; }
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>

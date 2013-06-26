@@ -210,6 +210,8 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             return self.isRootFolder() && self.medias().length == 0;
         };
 
+        self.showMediaParentFolderLink = ko.observable(false);
+
         self.addNewFolder = function () {
             if (!self.rowAdded) {
                 self.rowAdded = true;
@@ -424,6 +426,9 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.isSelected = ko.observable(false);
             self.isDeleting = ko.observable(false);
 
+            self.parentFolderId = ko.observable(item.ParentFolderId);
+            self.parentFolderName = ko.observable(item.ParentFolderName);
+
             self.contextMenu = new MediaItemContextMenuViewModel();
 
             self.isFile = function () {
@@ -508,6 +513,18 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                     message = $.format(self.getUnarchiveMediaConfirmationMessage(), this.name());
 
                 archiveUnarchiveMediaItem(false, url, message, folderViewModel, this);
+            };
+
+            self.showParentLink = function (mediaItemsViewModel, data) {
+                return mediaItemsViewModel.showMediaParentFolderLink();
+            };
+
+            self.openParent = function (mediaItemsViewModel, data) {
+                changeFolder(self.parentFolderId(), mediaItemsViewModel);
+            };
+
+            self.selectThis = function (mediaItemsViewModel, element) {
+                $(element).select();
             };
         }
 
@@ -796,8 +813,6 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.pathName = ko.computed(function () {
                 return self.name() + '/';
             });
-
-            self.parentFolderId = ko.observable(item.ParentFolderId);
         }
 
         MediaFolderViewModel.prototype.isFolder = function () {
@@ -1381,6 +1396,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                     folderViewModel.gridOptions(new MediaItemsOptionsViewModel(folderViewModel.onOpenPage));
                 }
                 folderViewModel.gridOptions().fromJson(json.Data);
+                folderViewModel.showMediaParentFolderLink(folderViewModel.gridOptions().searchQuery());
 
                 // Replace unobtrusive validator
                 bcms.updateFormValidator(folderViewModel.container.find(selectors.firstForm));

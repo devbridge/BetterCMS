@@ -61,6 +61,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                                 UseNoIndex = page.UseNoIndex,
                                 IsVisibleToEveryone = page.Status == PageStatus.Published,
                                 IsInSitemap = page.NodeCountInSitemap > 0,
+                                IsArchived = page.IsArchived,
                                 TemplateId = page.Layout.Id,
                                 CategoryId = page.Category.Id,
                                 Image = page.Image == null ? null :

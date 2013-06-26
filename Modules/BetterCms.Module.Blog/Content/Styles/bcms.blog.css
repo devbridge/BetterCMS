@@ -137,6 +137,23 @@ div.bcms-btn-blog-add {
     margin: 0 0 0 20px;
 }
 
+.bcms-blog-right .bcms-upload-info {
+    display: inline-block;
+    width: 140px;
+    padding-left: 20px;
+    vertical-align: top;
+}
+
+.bcms-blog-right .bcms-upload-info-text {
+    height: 86px;
+    font-size: 12px;
+    overflow: hidden;
+}
+
+.bcms-blog-right .bcms-btn-small {
+    margin-top: 10px;
+}
+
 .bcms-create-author-holder .bcms-tooltip-mark {
     top: 4px;
     left: -15px;

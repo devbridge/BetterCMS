@@ -319,7 +319,7 @@
     <value>Insert Image With Options</value>
   </data>
   <data name="MediaManager_ButtonPreviewImage" xml:space="preserve">
-    <value>Preview image</value>
+    <value>Preview</value>
   </data>
   <data name="MediaManager_NewFolder" xml:space="preserve">
     <value>New Folder</value>
@@ -397,7 +397,7 @@
     <value>Image Properties</value>
   </data>
   <data name="MediaManager_ButtonImageProperties" xml:space="preserve">
-    <value>Image Properties</value>
+    <value>Properties</value>
   </data>
   <data name="ImageProperties_Dialog_ImageTitle_Title" xml:space="preserve">
     <value>Image Title</value>
@@ -509,5 +509,11 @@
   </data>
   <data name="MediaHistory_Status_Archived" xml:space="preserve">
     <value>Archived</value>
+  </data>
+  <data name="MediaList_RootFolderName" xml:space="preserve">
+    <value>(root)</value>
+  </data>
+  <data name="MediaManager_MultipleFilesWarning_Message" xml:space="preserve">
+    <value>You can select only one file to re-upload.</value>
   </data>
 </root>

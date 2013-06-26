@@ -43,11 +43,11 @@
             <div class="bcms-file-alignment">
                 <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_AligmentTitle:</div>
                 <div class="bcms-alignment-controls">
-                    <div class="bcms-align-left@(Model.ImageAlign == MediaImageAlign.Left ? "-active" : string.Empty)">
-                        <input type="radio" id="alignleft" name="ImageAlign" value="@((int)MediaImageAlign.Left)" @(Model.ImageAlign == MediaImageAlign.Left ? "checked" : string.Empty)>
-                    </div>
                     <div class="bcms-align-center@(Model.ImageAlign == MediaImageAlign.Center ? "-active" : string.Empty)">
                         <input type="radio" id="aligncenter" name="ImageAlign" value="@((int)MediaImageAlign.Center)" @(Model.ImageAlign == MediaImageAlign.Center ? "checked" : string.Empty)>
+                    </div>
+                    <div class="bcms-align-left@(Model.ImageAlign == MediaImageAlign.Left ? "-active" : string.Empty)">
+                        <input type="radio" id="alignleft" name="ImageAlign" value="@((int)MediaImageAlign.Left)" @(Model.ImageAlign == MediaImageAlign.Left ? "checked" : string.Empty)>
                     </div>
                     <div class="bcms-align-right@(Model.ImageAlign == MediaImageAlign.Right ? "-active" : string.Empty)">
                         <input type="radio" id="alignright" name="ImageAlign" value="@((int)MediaImageAlign.Right)" @(Model.ImageAlign == MediaImageAlign.Right ? "checked" : string.Empty)>

@@ -6,7 +6,7 @@
         <div class="bcms-leftcol">
             <div id="bcms-site-settings-menu" class="bcms-leftcol-inner">
                 <!---<div class="bcms-links-block">  !-->              
-                <hr class="bcms-settings-separator">    
+                <div class="bcms-settings-separator"></div>
                 @{
                     var lastItemIsHr = true;
                     foreach (var menuItem in Model.MenuItems.Projections)
@@ -15,7 +15,7 @@
                         {
                             if (!lastItemIsHr)
                             {
-                                <hr class="bcms-settings-separator" />
+                                <div class="bcms-settings-separator"></div>
                                 lastItemIsHr = true;
                             }
                         }
@@ -29,7 +29,7 @@
                     }
                     if (!lastItemIsHr)
                     {
-                        <hr class="bcms-settings-separator" />
+                        <div class="bcms-settings-separator"></div>
                     }
                 }
             </div>

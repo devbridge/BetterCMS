@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using BetterCms.Core.Api.DataContracts;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
-
+using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 using BetterCms.Module.Root.Mvc;
@@ -121,6 +121,20 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             {
                 var searchQuery = string.Format("%{0}%", request.SearchQuery);
                 query = query.Where(m => m.Title.Contains(searchQuery));
+
+
+                var result = new List<Media>();
+                var mediaList = query.ToList();
+
+                foreach (var media in mediaList)
+                {
+                    if (IsChild(media, request.CurrentFolderId, request.IncludeArchivedItems))
+                    {
+                        result.Add(media);
+                    }
+                }
+
+                return ToResponse(request, result.AsQueryable());
             }
 
             if (!request.CurrentFolderId.HasDefaultValue())
@@ -132,11 +146,46 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
                 query = query.Where(m => m.Folder == null);
             }
 
+            return ToResponse(request, query);
+        }
+
+        private static bool IsChild(Media media, Guid currentFolderId, bool includeArchivedItems)
+        {
+            if (media == null)
+            {
+                return false;
+            }
+
+            if (media.IsDeleted || (media.Folder != null && media.Folder.IsDeleted))
+            {
+                return false;
+            }
+
+            if (!includeArchivedItems && (media.IsArchived || (media.Folder != null && media.Folder.IsArchived)))
+            {
+                return false;
+            }
+
+            if (currentFolderId.HasDefaultValue())
+            {
+                return true;
+            }
+
+            if (media.Folder != null && !media.Folder.IsDeleted && media.Folder.Id == currentFolderId)
+            {
+                return true;
+            }
+
+            return IsChild(media.Folder, currentFolderId, includeArchivedItems);
+        }
+
+        private DataListResponse<MediaViewModel> ToResponse(MediaManagerViewModel request, IQueryable<Media> query)
+        {
             var count = query.ToRowCountFutureValue();
             query = AddOrder(query, request).AddPaging(request);
 
             var items = query.Select(SelectItem).ToList();
-            
+
             return new DataListResponse<MediaViewModel>(items, count.Value);
         }
 
@@ -227,6 +276,8 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             model.CreatedOn = media.CreatedOn;
             model.Type = media.Type;
             model.IsArchived = media.IsArchived;
+            model.ParentFolderId = media.Folder != null ? media.Folder.Id : Guid.Empty;
+            model.ParentFolderName = media.Folder != null ? media.Folder.Title : MediaGlobalization.MediaList_RootFolderName;
         }
 
         /// <summary>

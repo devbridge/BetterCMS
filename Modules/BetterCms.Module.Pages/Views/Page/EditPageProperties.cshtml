@@ -40,55 +40,46 @@
                 </div>
 
                 @Html.Partial("Partial/PagePropertiesEditPermalink")
-                
+
                 <div class="bcms-page-images-holder">
-                <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageImage_Tooltip_Description)
-                    <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageImage_Title:</div>
-                    <div class="bcms-uploaded-image">
-                        <!-- ko if: image().url() -->
-                        <a class="bcms-remove-image" data-bind="click: image().remove.bind(image())">@RootGlobalization.Button_Remove</a>
-                        <a data-bind="click: image().preview.bind(image())">
-                            <img data-bind="attr: {src: image().thumbnailUrl(), alt: image().tooltip() }" /></a>
-                        <!-- /ko -->
-                    </div>
-                    <div class="bcms-upload-info">
-                        <div class="bcms-upload-info-text">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageImage_Description</div>
+                    <div class="bcms-input-list-holder">
+                        @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageImage_Tooltip_Description)
+                        <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageImage_Title:</div>
+                        <div class="bcms-uploaded-image">
+                            <!-- ko if: image().url() -->
+                            <a class="bcms-remove-image" data-bind="click: image().remove.bind(image())">@RootGlobalization.Button_Remove</a>
+                            <a data-bind="click: image().preview.bind(image())">
+                                <img data-bind="attr: { src: image().thumbnailUrl(), alt: image().tooltip() }" /></a>
+                            <!-- /ko -->
+                        </div>
                         <div class="bcms-btn-small" data-bind="click: image().select.bind(image())">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_SelectImage_ButtonTitle</div>
                     </div>
-                </div>
 
-                <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageFeaturedImage_Tooltip_Description)
-                    <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageFeaturedImage_Title:</div>
-                    <div class="bcms-uploaded-image">
-                        <!-- ko if: featuredImage().url() -->
-                        <a class="bcms-remove-image" data-bind="click: featuredImage().remove.bind(featuredImage())">@RootGlobalization.Button_Remove</a>
-                        <a data-bind="click: featuredImage().preview.bind(featuredImage())">
-                            <img data-bind="attr: { src: featuredImage().thumbnailUrl(), alt: featuredImage().tooltip() }" /></a>
-                        <!-- /ko -->
-                    </div>
-                    <div class="bcms-upload-info">
-                        <div class="bcms-upload-info-text">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageFeaturedImage_Description</div>
+                    <div class="bcms-input-list-holder">
+                        @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageFeaturedImage_Tooltip_Description)
+                        <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageFeaturedImage_Title:</div>
+                        <div class="bcms-uploaded-image">
+                            <!-- ko if: featuredImage().url() -->
+                            <a class="bcms-remove-image" data-bind="click: featuredImage().remove.bind(featuredImage())">@RootGlobalization.Button_Remove</a>
+                            <a data-bind="click: featuredImage().preview.bind(featuredImage())">
+                                <img data-bind="attr: { src: featuredImage().thumbnailUrl(), alt: featuredImage().tooltip() }" /></a>
+                            <!-- /ko -->
+                        </div>
                         <div class="bcms-btn-small" data-bind="click: featuredImage().select.bind(featuredImage())">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_SelectImage_ButtonTitle</div>
                     </div>
-                </div>
 
-                <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageSecondaryImage_Tooltip_Description)
-                    <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageSecondaryImage_Title:</div>
-                    <div class="bcms-uploaded-image">
-                        <!-- ko if: secondaryImage().url() -->
-                        <a class="bcms-remove-image" data-bind="click: secondaryImage().remove.bind(secondaryImage())">@RootGlobalization.Button_Remove</a>
-                        <a data-bind="click: secondaryImage().preview.bind(secondaryImage())">
-                            <img data-bind="attr: { src: secondaryImage().thumbnailUrl(), alt: secondaryImage().tooltip() }" /></a>
-                        <!-- /ko -->
-                    </div>
-                    <div class="bcms-upload-info">
-                        <div class="bcms-upload-info-text">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageSecondaryImage_Description</div>
+                    <div class="bcms-input-list-holder">
+                        @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageSecondaryImage_Tooltip_Description)
+                        <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageSecondaryImage_Title:</div>
+                        <div class="bcms-uploaded-image">
+                            <!-- ko if: secondaryImage().url() -->
+                            <a class="bcms-remove-image" data-bind="click: secondaryImage().remove.bind(secondaryImage())">@RootGlobalization.Button_Remove</a>
+                            <a data-bind="click: secondaryImage().preview.bind(secondaryImage())">
+                                <img data-bind="attr: { src: secondaryImage().thumbnailUrl(), alt: secondaryImage().tooltip() }" /></a>
+                            <!-- /ko -->
+                        </div>
                         <div class="bcms-btn-small" data-bind="click: secondaryImage().select.bind(secondaryImage())">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_SelectImage_ButtonTitle</div>
                     </div>
-                </div>
                 </div>
 
                 <div class="bcms-input-list-holder">
@@ -115,6 +106,10 @@
                     <div class="bcms-checkbox-holder">
                         @Html.CheckBoxFor(model => model.UseNoIndex)
                         <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseNoIndex</div>
+                    </div>
+                    <div class="bcms-checkbox-holder">
+                        @Html.CheckBoxFor(model => model.IsArchived)
+                        <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_IsArchived</div>
                     </div>
                 </div>
                 @Html.HiddenFor(model => model.TemplateId, new { @id = "TemplateId" })

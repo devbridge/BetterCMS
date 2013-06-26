@@ -889,6 +889,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to (root).
+        /// </summary>
+        public static string MediaList_RootFolderName {
+            get {
+                return ResourceManager.GetString("MediaList_RootFolderName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add New Folder.
         /// </summary>
         public static string MediaManager_AddNewFolder {
@@ -916,7 +925,7 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Image Properties.
+        ///   Looks up a localized string similar to Properties.
         /// </summary>
         public static string MediaManager_ButtonImageProperties {
             get {
@@ -952,7 +961,7 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Preview image.
+        ///   Looks up a localized string similar to Preview.
         /// </summary>
         public static string MediaManager_ButtonPreviewImage {
             get {
@@ -993,6 +1002,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         public static string MediaManager_IncludeArchived_Message {
             get {
                 return ResourceManager.GetString("MediaManager_IncludeArchived_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can select only one file to re-upload..
+        /// </summary>
+        public static string MediaManager_MultipleFilesWarning_Message {
+            get {
+                return ResourceManager.GetString("MediaManager_MultipleFilesWarning_Message", resourceCulture);
             }
         }
         

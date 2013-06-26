@@ -16,15 +16,19 @@ namespace BetterCms.Module.Pages.Api.DataContracts
             int? itemsCount = null, 
             int startItemNumber = 1,
             PageLoadableChilds loadChilds = PageLoadableChilds.None, 
-            bool includeUnpublished = false)
+            bool includeUnpublished = false,
+            bool includeArchived = false)
             : base(filter, order, orderDescending, itemsCount, startItemNumber)
         {
             LoadChilds = loadChilds;
             IncludeUnpublished = includeUnpublished;
+            IncludeArchivedItems = includeArchived;
         }
 
         public PageLoadableChilds LoadChilds { get; set; }
 
         public bool IncludeUnpublished { get; set; }
+
+        public bool IncludeArchivedItems { get; set; }
     }
 }
