@@ -33,12 +33,21 @@ namespace BetterCms.Module.WebApi.Models.MediaManager.GetVideos
         public bool IncludeFolders { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether to include archived medias.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if to include archived medias; otherwise, <c>false</c>.
+        /// </value>
+        [DataMember(Order = 30, Name = "includeArchived")]
+        public bool IncludeArchived { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether media is archived.
         /// </summary>
         /// <value>
         /// <c>true</c> if media is archived; otherwise, <c>false</c>.
         /// </value>
-        [DataMember(Order = 30, Name = "isArchived")]
+        [DataMember(Order = 40, Name = "isArchived")]
         public bool IsArchived { get; set; }
     }
 }

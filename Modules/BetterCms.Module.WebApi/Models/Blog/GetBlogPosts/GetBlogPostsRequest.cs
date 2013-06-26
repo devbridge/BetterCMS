@@ -35,12 +35,21 @@ namespace BetterCms.Module.WebApi.Models.Blog.GetBlogPosts
         public bool IncludeNotActive { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether to include archived blog posts.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if to include archived blog posts; otherwise, <c>false</c>.
+        /// </value>
+        [DataMember(Order = 30, Name = "includeArchived")]
+        public bool IncludeArchived { get; set; }
+
+        /// <summary>
         /// Gets or sets the tags.
         /// </summary>
         /// <value>
         /// The tags.
         /// </value>
-        [DataMember(Order = 30, Name = "blogPostTags")]
+        [DataMember(Order = 40, Name = "blogPostTags")]
         public List<string> BlogPostTags { get; set; }
 
         /// <summary>
@@ -49,7 +58,7 @@ namespace BetterCms.Module.WebApi.Models.Blog.GetBlogPosts
         /// <value>
         /// The tags filter connector.
         /// </value>
-        [DataMember(Order = 40, Name = "tagsConnector")]
+        [DataMember(Order = 50, Name = "tagsConnector")]
         public FilterConnector TagsConnector { get; set; }
     }
 }
