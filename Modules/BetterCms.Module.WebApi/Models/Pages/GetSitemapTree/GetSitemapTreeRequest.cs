@@ -3,8 +3,15 @@
 namespace BetterCms.Module.WebApi.Models.Pages.GetSitemapTree
 {
     [DataContract]
-    public class GetSitemapTreeRequest : ListRequestBase
+    public class GetSitemapTreeRequest : RequestBase
     {
-        // TODO
+        /// <summary>
+        /// Gets or sets the node id.
+        /// </summary>
+        /// <value>
+        /// The node id.
+        /// </value>
+        [DataMember(Order = 10, Name = "nodeId")]
+        public System.Guid? NodeId { get; set; }
     }
 }

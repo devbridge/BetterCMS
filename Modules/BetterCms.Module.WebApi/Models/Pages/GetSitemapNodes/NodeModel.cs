@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace BetterCms.Module.WebApi.Models.Pages.GetSitemapNodeById
+namespace BetterCms.Module.WebApi.Models.Pages.GetSitemapNodes
 {
     [DataContract]
     public class NodeModel : ModelBase

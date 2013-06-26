@@ -3,7 +3,7 @@
 namespace BetterCms.Module.WebApi.Models.Pages.GetSitemapTree
 {
     [DataContract]
-    public class GetSitemapTreeResponse : ListResponseBase<NodeModel>
+    public class GetSitemapTreeResponse : ResponseBase<System.Collections.Generic.List<NodeModel>>
     {
     }
 }
