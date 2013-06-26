@@ -32,14 +32,14 @@ asyncTest("should get pages", function () {
             data: {
                 filter: {
                     connector: 'and',
-                    filterItems: [
+                    where: [
                         { field: 'CreatedOn', value: '\/Date(1224043200000)\/', operation: 'Greater' },
                         { field: 'Title', value: 'Africa', operation: 'NotEqual' }
                     ],
-                    innerFilterItems: [
+                    inner: [
                         {
                             connector: 'or',
-                            filterItems: [
+                            where: [
                                 { field: 'Title', value: 'It', operation: 'StartsWith' },
                                 { field: 'Title', value: 'Af', operation: 'StartsWith' },
                                 { field: 'Title', value: 'na', operation: 'EndsWith' }
@@ -48,13 +48,13 @@ asyncTest("should get pages", function () {
                     ]
                 },
                 order: {
-                    orderItems: [
+                    by: [
                         { field: 'CreatedOn' },
                         { field: 'Title', direction: 'desc' }
                     ],
                 },
-                startItemNumber: 3,
-                itemsCount: 5
+                skip: 3,
+                take: 5
             },
             type: 'GET',
             cache: false,
