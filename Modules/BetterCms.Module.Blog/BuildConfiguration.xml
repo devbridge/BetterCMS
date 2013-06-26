@@ -10,6 +10,7 @@
       <CssFiles Include="$(ProjectDir)Content\Styles\bcms.blog.css" />
 
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.blog.js" />
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.blog.filter.js" />
 
     </ItemGroup>
 
