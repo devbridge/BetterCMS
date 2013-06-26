@@ -300,4 +300,7 @@
   <data name="SiteSettings_Blogs_Filter" xml:space="preserve">
     <value>Filter</value>
   </data>
+  <data name="SiteSettings_Blogs_FilterIncludeArchived" xml:space="preserve">
+    <value>Include archived items</value>
+  </data>
 </root>

@@ -12,6 +12,7 @@ namespace BetterCms.Module.Blog.ViewModels.Filter
         public IEnumerable<LookupKeyValue> Tags { get; set; }
         public Guid? CategoryId { get; set; }
         public IEnumerable<LookupKeyValue> Categories { get; set; }
+        public bool IncludeArchived { get; set; }
 
         public BlogsGridViewModel(IEnumerable<TModel> items, BlogsFilter filter, int totalCount, IEnumerable<LookupKeyValue> categories)
             : base(items, filter, totalCount)
@@ -19,6 +20,7 @@ namespace BetterCms.Module.Blog.ViewModels.Filter
             Tags = filter.Tags;
             CategoryId = filter.CategoryId;
             Categories = categories;
+            IncludeArchived = filter.IncludeArchived;
         }
     }
 }
