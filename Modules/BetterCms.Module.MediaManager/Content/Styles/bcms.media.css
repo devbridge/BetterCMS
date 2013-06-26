@@ -417,8 +417,7 @@ div.bcms-upload-success {
 /*breadcrumbs*/
 .bcms-breadcrumbs-holder {
     height: 20px;
-    margin: -15px 0 10px;
-    padding-left: 30px;
+    margin-top: 5px;
     line-height: 15px;
     font-size: 14px;
     font-weight: 700;
@@ -611,10 +610,10 @@ input.bcms-grid-input:focus {
     color: #0383df;
 }
 
-.bcms-media-name .bcms-parent-folder {
-    color: #808080;
-    font-size: 10px;
-}
+    .bcms-media-name .bcms-parent-folder {
+        color: #808080;
+        font-size: 10px;
+    }
 
 .bcms-list div.bcms-media-click-active {
     background-color: #effcfe;

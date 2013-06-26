@@ -9,34 +9,34 @@
 }
 <script type="text/html" id="bcms-media-list-template">
     <div class="bcms-top-block-holder">
-        <div class="bcms-media-controls-holder">
-            <a id="bcms-list-view" class="bcms-select-list" data-bind="click: switchViewStyle, css: { 'bcms-select-active': !isGrid() }"></a>
-            <a id="bcms-grid-view" class="bcms-select-grid" data-bind="click: switchViewStyle, css: { 'bcms-select-active': isGrid() }"></a>
-            @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
-            {
-                <div class="bcms-vertical-separator"></div>
-                <a class="bcms-media-new-folder" data-bind="click: addNewFolder">@MediaGlobalization.MediaManager_NewFolder</a>
-                <a class="bcms-media-new-file" data-bind="click: uploadMedia, text: uploadButtonTitle()"></a>
-            }
+        <div class="clearfix">
+            <div class="bcms-media-controls-holder">
+                <a id="bcms-list-view" class="bcms-select-list" data-bind="click: switchViewStyle, css: { 'bcms-select-active': !isGrid() }"></a>
+                <a id="bcms-grid-view" class="bcms-select-grid" data-bind="click: switchViewStyle, css: { 'bcms-select-active': isGrid() }"></a>
+                @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
+                {
+                    <div class="bcms-vertical-separator"></div>
+                    <a class="bcms-media-new-folder" data-bind="click: addNewFolder">@MediaGlobalization.MediaManager_NewFolder</a>
+                    <a class="bcms-media-new-file" data-bind="click: uploadMedia, text: uploadButtonTitle()"></a>
+                }
+            </div>
+            <div class="bcms-search-block">
+                <input id="bcms-search-input" name="MediaSearch" data-bind="value: gridOptions().searchQuery, valueUpdate: 'afterkeydown', enterPress: searchMedia" class="bcms-editor-field-box" type="text" placeholder="@RootGlobalization.WaterMark_Search" />
+                <div class="bcms-btn-search" data-bind="click: searchMedia">@RootGlobalization.Button_Search</div>
+            </div>
         </div>
-        <div class="bcms-search-block">
-            <input id="bcms-search-input" name="MediaSearch" data-bind="value: gridOptions().searchQuery, valueUpdate: 'afterkeydown', enterPress: searchMedia" class="bcms-editor-field-box" type="text" placeholder="@RootGlobalization.WaterMark_Search" />
-            <div class="bcms-btn-search" data-bind="click: searchMedia">@RootGlobalization.Button_Search</div>
+
+        <div class="bcms-breadcrumbs-holder">
+            <div data-bind="foreach: path().pathFolders()"><a class="bcms-breadcrumbs-root" href="#" data-bind="    text: pathName(), click: openMedia.bind($data, $root)"></a></div>
         </div>
-    </div>
 
-    <div class="bcms-breadcrumbs-holder">
-        <div data-bind="foreach: path().pathFolders()"><a class="bcms-breadcrumbs-root" href="#" data-bind="    text: pathName(), click: openMedia.bind($data, $root)"></a></div>
-    </div>
+        <div class="bcms-featured-grid clearfix">
+            <!-- ko with: gridOptions().paging -->
+            @Html.Partial(RootModuleConstants.EditableGridPagingTemplate)
+            <!-- /ko -->
 
-    <div class="bcms-featured-grid clearfix">    
-        <!-- ko with: gridOptions().paging -->
-        @Html.Partial(RootModuleConstants.EditableGridPagingTemplate)
-        <!-- /ko -->
-
-        <div>
-            <div class="bcms-grid-filtering">        
-                <div class="bcms-btn-links-main" data-bind="click: gridOptions().toggleFilter">@RootGlobalization.Button_Filter</div>    
+            <div class="bcms-grid-filtering">
+                <div class="bcms-btn-links-main" data-bind="click: gridOptions().toggleFilter">@RootGlobalization.Button_Filter</div>
             </div>
             <div class="bcms-tags-block" style="display: none;" data-bind="visible: gridOptions().isFilterVisible()">
                 <div class="bcms-tip-close" data-bind="click: gridOptions().closeFilter">@RootGlobalization.Button_Close</div>
@@ -49,15 +49,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="clearfix bcms-filter-search">
-                        <div class="bcms-btn-small" data-bind="click: searchWithFilter">@RootGlobalization.Button_Filter_Search</div>
-                        <div class="bcms-btn-links-small" data-bind="click: gridOptions().clearFilter">@RootGlobalization.Button_Filter_Clear</div>
-                    </div>
+                </div>
+                <div class="bcms-filter-search clearfix">
+                    <div class="bcms-btn-small" data-bind="click: searchWithFilter">@RootGlobalization.Button_Filter_Search</div>
+                    <div class="bcms-btn-links-small" data-bind="click: gridOptions().clearFilter">@RootGlobalization.Button_Filter_Clear</div>
                 </div>
             </div>
         </div>
     </div>
-
     @Html.SiteSettingsMessagesBox(null, new Dictionary<string, string> { { "data-bind", "attr: { id: domId() }" } })
 
     <div id="bcms-view-container" data-bind="css: { 'bcms-list': !isGrid(), 'bcms-grid': isGrid() }" class="bcms-list">
@@ -86,7 +85,7 @@
 
         <div data-bind="foreach: medias()">
             <div data-bind="click: openMedia.bind($data, $root), clickBubble: false, event: { contextmenu: contextMenu.show }, css: rowClassNames()">
-                
+
                 <div class="bcms-media-context bcms-layer" data-bind="click: stopEvent, clickBubble: false, attr: { id: contextMenu.domId }">
                     <a class="bcms-btn-close">@RootGlobalization.Button_Close</a>
                     <!--  ko if: isProcessing() -->
@@ -183,18 +182,23 @@
                         <!-- /ko -->
                     </div>
                     <div class="bcms-media-name">
-                        <!-- ko text: name() --><!-- /ko -->
+                        <!-- ko text: name() -->
+                        <!-- /ko -->
                         <!--  ko if: isProcessing() -->
-                        <br /><span class="bcms-processing-file">@MediaGlobalization.MediaManager_FileStillProcessing_Message</span>
+                        <br />
+                        <span class="bcms-processing-file">@MediaGlobalization.MediaManager_FileStillProcessing_Message</span>
                         <!-- /ko -->
                         <!--  ko if: isFailed() -->
-                        <br /><span class="bcms-failed-file">@MediaGlobalization.MediaManager_FailedToProcessFile_Message</span>
+                        <br />
+                        <span class="bcms-failed-file">@MediaGlobalization.MediaManager_FailedToProcessFile_Message</span>
                         <!-- /ko -->
                         <!--  ko if: isDeleting() -->
-                        <br /><span class="bcms-failed-file">@RootGlobalization.Message_Deleting</span>
+                        <br />
+                        <span class="bcms-failed-file">@RootGlobalization.Message_Deleting</span>
                         <!-- /ko -->
                         <!-- ko if: showParentLink($root, $data) -->
-                        <br/><span class="bcms-parent-folder">in folder: <a data-bind="click: openParent.bind($data, $root), clickBubble: false, text: parentFolderName()"></a></span>
+                        <br />
+                        <span class="bcms-parent-folder">in folder: <a data-bind="click: openParent.bind($data, $root), clickBubble: false, text: parentFolderName()"></a></span>
                         <!-- /ko -->
                     </div>
                 </div>
