@@ -7,6 +7,15 @@ namespace BetterCms.Module.WebApi.Models.Blog.GetBlogPostPropertiesById
     public class GetBlogPostPropertiesByIdResponse : ResponseBase<BlogPostModel>
     {
         /// <summary>
+        /// Gets or sets the blog post HTML contents.
+        /// </summary>
+        /// <value>
+        /// The blog post HTML content.
+        /// </value>
+        [DataMember(Order = 10, Name = "htmlContent")]
+        public string HtmlContent { get; set; }
+
+        /// <summary>
         /// Gets or sets the layout.
         /// </summary>
         /// <value>
@@ -67,6 +76,15 @@ namespace BetterCms.Module.WebApi.Models.Blog.GetBlogPostPropertiesById
         /// The secondary image.
         /// </value>
         [DataMember(Order = 80, Name = "secondaryImage")]
-        public ImageModel SecondaryImage { get; set; }   
+        public ImageModel SecondaryImage { get; set; }
+
+        /// <summary>
+        /// Gets or sets the meta data.
+        /// </summary>
+        /// <value>
+        /// The meta data.
+        /// </value>
+        [DataMember(Order = 90, Name = "metaData")]
+        public MetadataModel MetaData { get; set; }   
     }
 }

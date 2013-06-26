@@ -12,8 +12,17 @@ namespace BetterCms.Module.WebApi.Models.Blog.GetBlogPostPropertiesById
         /// <value>
         /// The blog post id.
         /// </value>
-        [DataMember(Order = 510, Name = "blogPostId", IsRequired = true)]
+        [DataMember(Order = 10, Name = "blogPostId", IsRequired = true)]
         public Guid BlogPostId { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to fetch HTML content.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if to fetch HTML content; otherwise, <c>false</c>.
+        /// </value>
+        [DataMember(Order = 20, Name = "fetchHtmlContent")]
+        public bool FetchHtmlContent { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to fetch tags.
@@ -21,7 +30,7 @@ namespace BetterCms.Module.WebApi.Models.Blog.GetBlogPostPropertiesById
         /// <value>
         ///   <c>true</c> if to fetch tags; otherwise, <c>false</c>.
         /// </value>
-        [DataMember(Order = 520, Name = "fetchTags")]
+        [DataMember(Order = 30, Name = "fetchTags")]
         public bool FetchTags { get; set; }
 
         /// <summary>
@@ -30,17 +39,8 @@ namespace BetterCms.Module.WebApi.Models.Blog.GetBlogPostPropertiesById
         /// <value>
         ///   <c>true</c> if to fetch category; otherwise, <c>false</c>.
         /// </value>
-        [DataMember(Order = 530, Name = "fetchCategory")]
+        [DataMember(Order = 40, Name = "fetchCategory")]
         public bool FetchCategory { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether to fetch metadata.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if to fetch metadata; otherwise, <c>false</c>.
-        /// </value>
-        [DataMember(Order = 540, Name = "fetchMetadata")]
-        public bool FetchMetadata { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to fetch layout.
@@ -48,7 +48,7 @@ namespace BetterCms.Module.WebApi.Models.Blog.GetBlogPostPropertiesById
         /// <value>
         ///   <c>true</c> if to fetch layout; otherwise, <c>false</c>.
         /// </value>
-        [DataMember(Order = 550, Name = "fetchLayout")]
+        [DataMember(Order = 50, Name = "fetchLayout")]
         public bool FetchLayout { get; set; }
 
         /// <summary>
@@ -57,16 +57,25 @@ namespace BetterCms.Module.WebApi.Models.Blog.GetBlogPostPropertiesById
         /// <value>
         ///   <c>true</c> if to fetch author; otherwise, <c>false</c>.
         /// </value>
-        [DataMember(Order = 560, Name = "fetchAuthor")]
+        [DataMember(Order = 60, Name = "fetchAuthor")]
         public bool FetchAuthor { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to fetch images.
+        /// Gets or sets a value indicating whether to fetch image.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if to fetch images; otherwise, <c>false</c>.
+        ///   <c>true</c> if to fetch image; otherwise, <c>false</c>.
         /// </value>
-        [DataMember(Order = 570, Name = "fetchImages")]
+        [DataMember(Order = 70, Name = "fetchImages")]
         public bool FetchImages { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to fetch meta data.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if to fetch meta data; otherwise, <c>false</c>.
+        /// </value>
+        [DataMember(Order = 80, Name = "fetchMetaData")]
+        public bool FetchMetaData { get; set; }
     }
 }
