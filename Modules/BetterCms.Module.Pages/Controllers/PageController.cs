@@ -64,7 +64,8 @@ namespace BetterCms.Module.Pages.Controllers
             var view = RenderView("Pages", model);
             var json = new
             {
-                Tags = request.Tags
+                Tags = request.Tags,
+                IncludeArchived = request.IncludeArchived
             };
 
             return ComboWireJson(success, view, json, JsonRequestBehavior.AllowGet);

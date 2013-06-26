@@ -493,6 +493,15 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Include archived items.
+        /// </summary>
+        public static string SiteSettings_Blogs_FilterIncludeArchived {
+            get {
+                return ResourceManager.GetString("SiteSettings_Blogs_FilterIncludeArchived", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
         public static string SiteSettings_Blogs_FilterSearch {

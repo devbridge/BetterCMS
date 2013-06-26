@@ -35,6 +35,7 @@ namespace BetterCms.Module.Pages.Models
         public virtual MediaImage Image { get; set; }
         public virtual MediaImage SecondaryImage { get; set; }
         public virtual MediaImage FeaturedImage { get; set; }
+        public virtual bool IsArchived { get; set; }
 
         public virtual PageProperties Duplicate()
         {
@@ -57,6 +58,7 @@ namespace BetterCms.Module.Pages.Models
             duplicate.SecondaryImage = SecondaryImage;
             duplicate.FeaturedImage = FeaturedImage;
             duplicate.Category = Category;
+            duplicate.IsArchived = IsArchived;
 
             return duplicate;
         }

@@ -9,9 +9,9 @@
     </div>
     <div class="bcms-tags-block" style="display: none;" data-bind="visible: isVisible()">
         <div class="bcms-tip-close" data-bind="click: closeFilter">@PagesGlobalization.SiteSettings_Pages_FilterClose</div>
-        <div class="bcms-featured-tags" data-bind="with: tags">
+        <div class="bcms-featured-tags">
             <div class="clearfix">
-                <div class="bcms-filter-options-1">
+                <div class="bcms-filter-options-1" data-bind="with: tags">
                     <div class="bcms-filter-text">@PagesGlobalization.SiteSettings_Pages_FilterByTags</div>
                     <div class="bcms-tags-field-holder">
                         <input type="text" class="bcms-add-tags-field" style="width: 107px;" data-bind="
@@ -31,8 +31,14 @@
                     <div class="bcms-filter-text">@PagesGlobalization.SiteSettings_Pages_FilterByCategory</div>
                     @Html.DropDownListFor(model => model.CategoryId, Model.Categories.ToSelectList(Model.CategoryId), string.Empty, new { id ="bcms-filter-category-selection", @class = "bcms-global-select" })
                 </div>
+                <div class="bcms-filter-options-1">
+                    <div class="bcms-tags-field-holder">
+                        @Html.CheckBoxFor(model => model.IncludeArchived, new { data_bind="checked: includeArchived" })
+                        @PagesGlobalization.SiteSettings_Pages_FilterIncludeArchived
+                    </div>
+                </div>
             </div>
-            <div class="bcms-single-tag-holder" data-bind="foreach: tags()">
+            <div class="bcms-single-tag-holder" data-bind="foreach: tags.tags()">
                 <div class="bcms-single-tag" data-bind="css: { 'bcms-single-tag-active': isActive() }">
                     <span data-bind="text: name()"></span><a data-bind="click: remove">@RootGlobalization.Button_Remove</a>
                 </div>
