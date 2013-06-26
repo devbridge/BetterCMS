@@ -17,8 +17,9 @@ namespace BetterCms.Module.Blog.Api.DataContracts
         /// <param name="itemsCount">The items count.</param>
         /// <param name="startItemNumber">The start item number.</param>
         /// <param name="includeUnpublished">if set to <c>true</c> include unpublished.</param>
-        /// <param name="includePrivate">if set to <c>true</c> include private.</param>
         /// <param name="includeNotActive">if set to <c>true</c> include not active.</param>
+        /// <param name="includeArchived">if set to <c>true</c> include archived.</param>
+        /// <param name="tags">The tags.</param>
         public GetBlogPostsRequest(
             Expression<Func<BlogPost, bool>> filter = null,
             Expression<Func<BlogPost, dynamic>> order = null,
@@ -27,14 +28,13 @@ namespace BetterCms.Module.Blog.Api.DataContracts
             int startItemNumber = 1,
             bool includeUnpublished = false,
             bool includeNotActive = false,
-            bool includeArchived = false)
+            bool includeArchived = false,
+            string[] tags = null)
             : base(filter, order, orderDescending, itemsCount, startItemNumber)
         {
             IncludeUnpublished = includeUnpublished;
             IncludeNotActive = includeNotActive;
             IncludeArchivedItems = includeArchived;
-
-            SetDefaultOrder(b => b.Title);
         }
 
         /// <summary>

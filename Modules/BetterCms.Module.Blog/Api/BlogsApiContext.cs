@@ -84,6 +84,8 @@ namespace BetterCms.Api
         {
             try
             {
+                request.SetDefaultOrder(b => b.Title);
+
                 var query = Repository
                     .AsQueryable<BlogPost>()
                     .ApplyFilters(request);

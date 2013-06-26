@@ -45,7 +45,7 @@ namespace BetterCms.Test.Module.Blog.ApiTests
                     var blogs = CreateFakeBlogs(session);
 
                     // get all items by category id
-                    var request = new GetBlogPostsRequest(b => b.CategoryId == category.Id, includeNotActive: true, includeUnpublished: true);
+                    var request = new GetBlogPostsRequest(b => b.Category.Id == category.Id, includeNotActive: true, includeUnpublished: true);
                     var response = api.GetBlogPosts(request);
 
                     Assert.IsNotNull(response);
@@ -65,7 +65,7 @@ namespace BetterCms.Test.Module.Blog.ApiTests
                             var blogs = CreateFakeBlogs(session);
 
                             // get all items by category name
-                            var request = new GetBlogPostsRequest(b => b.CategoryName == category.Name, includeNotActive: true, includeUnpublished: true);
+                            var request = new GetBlogPostsRequest(b => b.Category.Name == category.Name, includeNotActive: true, includeUnpublished: true);
                             var response = api.GetBlogPosts(request);
 
                             Assert.IsNotNull(response);
@@ -85,7 +85,7 @@ namespace BetterCms.Test.Module.Blog.ApiTests
                        var blogs = CreateFakeBlogs(session);
 
                        // get filtered by name
-                       var request = new GetBlogPostsRequest(b => b.CategoryId == category.Id && b.Title.StartsWith("L"), includeNotActive: true, includeUnpublished: true);
+                       var request = new GetBlogPostsRequest(b => b.Category.Id == category.Id && b.Title.StartsWith("L"), includeNotActive: true, includeUnpublished: true);
                        var response = api.GetBlogPosts(request);
 
                        Assert.IsNotNull(response);
@@ -105,7 +105,7 @@ namespace BetterCms.Test.Module.Blog.ApiTests
                        var blogs = CreateFakeBlogs(session);
 
                        // get ordered and pages
-                       var request = new GetBlogPostsRequest(b => b.CategoryId == category.Id, b => b.Title, true, includeNotActive: true, includeUnpublished: true);
+                       var request = new GetBlogPostsRequest(b => b.Category.Id == category.Id, b => b.Title, true, includeNotActive: true, includeUnpublished: true);
                        var response = api.GetBlogPosts(request);
 
                        Assert.IsNotNull(response);
@@ -126,7 +126,7 @@ namespace BetterCms.Test.Module.Blog.ApiTests
                        var blogs = CreateFakeBlogs(session);
 
                        // get ordered and skipped paged
-                       var request = new GetBlogPostsRequest(b => b.CategoryId == category.Id, b => b.Title, startItemNumber: 3, itemsCount: 5, includeNotActive: true, includeUnpublished: true);
+                       var request = new GetBlogPostsRequest(b => b.Category.Id == category.Id, b => b.Title, startItemNumber: 3, itemsCount: 5, includeNotActive: true, includeUnpublished: true);
                        var response = api.GetBlogPosts(request);
 
                        Assert.IsNotNull(response);
@@ -148,8 +148,8 @@ namespace BetterCms.Test.Module.Blog.ApiTests
                        var blogs = CreateFakeBlogs(session);
 
                        // get ordered by 2 fields and adding paging
-                       var request = new GetBlogPostsRequest(b => b.CategoryId == category.Id, includeNotActive: true, includeUnpublished: true);
-                       request.SetDefaultOrder(b => b.IntroText);
+                       var request = new GetBlogPostsRequest(b => b.Category.Id == category.Id, includeNotActive: true, includeUnpublished: true);
+                       request.SetDefaultOrder(b => b.Description);
                        request.AddOrder(b => b.Title, true);
                        request.AddPaging(3, 2);
                        var response = api.GetBlogPosts(request);

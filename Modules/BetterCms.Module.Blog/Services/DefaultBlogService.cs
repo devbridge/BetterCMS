@@ -67,14 +67,6 @@ namespace BetterCms.Module.Blog.Services
         {
             var models = repository.AsQueryable<Models.BlogPost>();
 
-            if (filter != null && filter.Tags != null)
-            {
-                foreach (var tag in filter.Tags)
-                {
-                    models = models.Where(b => b.PageTags.Any(pt => pt.Tag.Name == tag));
-                }
-            }
-
             if (filter == null || !filter.IncludeUnpublished)
             {
                 models = models.Where(b => b.Status == PageStatus.Published);
@@ -83,6 +75,11 @@ namespace BetterCms.Module.Blog.Services
             if (filter == null || !filter.IncludeNotActive)
             {
                 models = models.Where(b => b.ActivationDate < DateTime.Now && (!b.ExpirationDate.HasValue || DateTime.Now < b.ExpirationDate.Value));
+            }
+            
+            if (filter == null || !filter.IncludeArchivedItems)
+            {
+                models = models.Where(b => !b.IsArchived);
             }
 
             return models.Select(EntityToServiceModelMapper.ToBlogPostModel);

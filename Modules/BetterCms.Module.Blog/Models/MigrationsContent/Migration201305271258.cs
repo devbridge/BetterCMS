@@ -55,12 +55,12 @@ namespace BetterCms.Module.Blog.Models.MigrationsContent
                                     Id = blog.Id,
                                     Version = blog.Version,
                                     Title = blog.Title,
-                                    IntroText = blog.IntroText,
+                                    IntroText = blog.Description,
                                     LiveFromDate = content.ActivationDate,
                                     LiveToDate = content.ExpirationDate,
-                                    ImageId = blog.MainImageId,
-                                    AuthorId = blog.AuthorId,
-                                    CategoryId = blog.CategoryId
+                                    ImageId = blog.Image != null ? (Guid?)blog.Image.Id : null,
+                                    AuthorId = blog.Author != null ? (Guid?)blog.Author.Id : null,
+                                    CategoryId = blog.Category != null ? (Guid?)blog.Category.Id : null
                                 });
                     }
                 }
