@@ -190,6 +190,10 @@
     <Compile Include="Models\MediaManager\GetImages\GetImagesRequest.cs" />
     <Compile Include="Models\MediaManager\GetImages\GetImagesResponse.cs" />
     <Compile Include="Models\MediaManager\GetImages\MediaModel.cs" />
+    <Compile Include="Models\MediaManager\GetMediaTree\GetMediaTreeRequest.cs" />
+    <Compile Include="Models\MediaManager\GetMediaTree\GetMediaTreeResponse.cs" />
+    <Compile Include="Models\MediaManager\GetMediaTree\MediaTreeContainer.cs" />
+    <Compile Include="Models\MediaManager\GetMediaTree\MediaModel.cs" />
     <Compile Include="Models\MediaManager\GetVideoById\GetVideoByIdRequest.cs" />
     <Compile Include="Models\MediaManager\GetVideoById\GetVideoByIdResponse.cs" />
     <Compile Include="Models\MediaManager\GetVideoById\MediaModel.cs" />
@@ -233,6 +237,9 @@
     <Compile Include="Models\Pages\GetSitemapNodeById\GetSitemapNodeByIdRequest.cs" />
     <Compile Include="Models\Pages\GetSitemapNodeById\GetSitemapNodeByIdResponse.cs" />
     <Compile Include="Models\Pages\GetSitemapNodeById\NodeModel.cs" />
+    <Compile Include="Models\Pages\GetSitemapNodes\GetSitemapNodesRequest.cs" />
+    <Compile Include="Models\Pages\GetSitemapNodes\GetSitemapNodesResponse.cs" />
+    <Compile Include="Models\Pages\GetSitemapNodes\NodeModel.cs" />
     <Compile Include="Models\Pages\GetSitemapTree\GetSitemapTreeRequest.cs" />
     <Compile Include="Models\Pages\GetSitemapTree\GetSitemapTreeResponse.cs" />
     <Compile Include="Models\Pages\GetSitemapTree\NodeModel.cs" />
