@@ -51,5 +51,50 @@ namespace BetterCms.Module.WebApi.Models.MediaManager.GetFileById
         /// </value>
         [DataMember(Order = 60, Name = "isArchived")]
         public bool IsArchived { get; set; }
+
+        /// <summary>
+        /// Gets or sets the folder id.
+        /// </summary>
+        /// <value>
+        /// The folder id.
+        /// </value>
+        [DataMember(Order = 70, Name = "folderId")]
+        public System.Guid? FolderId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the folder.
+        /// </summary>
+        /// <value>
+        /// The name of the folder.
+        /// </value>
+        [DataMember(Order = 80, Name = "folderName")]
+        public string FolderName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the date, when media was published on.
+        /// </summary>
+        /// <value>
+        /// The published on.
+        /// </value>
+        [DataMember(Order = 90, Name = "publishedOn")]
+        public System.DateTime PublishedOn { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the original file.
+        /// </summary>
+        /// <value>
+        /// The name of the original file.
+        /// </value>
+        [DataMember(Order = 100, Name = "originalFileName")]
+        public virtual string OriginalFileName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the original file extension.
+        /// </summary>
+        /// <value>
+        /// The original file extension.
+        /// </value>
+        [DataMember(Order = 110, Name = "originalFileExtension")]
+        public virtual string OriginalFileExtension { get; set; }
     }
 }

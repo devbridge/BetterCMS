@@ -17,12 +17,21 @@ namespace BetterCms.Module.WebApi.Models.MediaManager.GetImages
         public string Title { get; set; }
 
         /// <summary>
+        /// Gets or sets the image caption.
+        /// </summary>
+        /// <value>
+        /// The image caption.
+        /// </value>
+        [DataMember(Order = 20, Name = "caption")]
+        public string Caption { get; set; }
+
+        /// <summary>
         /// Gets or sets the type of the media content.
         /// </summary>
         /// <value>
         /// The type of the media content.
         /// </value>
-        [DataMember(Order = 20, Name = "mediaContentType")]
+        [DataMember(Order = 30, Name = "mediaContentType")]
         public MediaContentType MediaContentType { get; set; }
 
         /// <summary>
@@ -31,7 +40,7 @@ namespace BetterCms.Module.WebApi.Models.MediaManager.GetImages
         /// <value>
         /// The file extension.
         /// </value>
-        [DataMember(Order = 30, Name = "fileExtension")]
+        [DataMember(Order = 40, Name = "fileExtension")]
         public string FileExtension { get; set; }
 
         /// <summary>
@@ -40,7 +49,7 @@ namespace BetterCms.Module.WebApi.Models.MediaManager.GetImages
         /// <value>
         /// The size of the file.
         /// </value>
-        [DataMember(Order = 40, Name = "fileSize")]
+        [DataMember(Order = 50, Name = "fileSize")]
         public long FileSize { get; set; }
 
         /// <summary>
@@ -49,7 +58,7 @@ namespace BetterCms.Module.WebApi.Models.MediaManager.GetImages
         /// <value>
         /// The URL.
         /// </value>
-        [DataMember(Order = 50, Name = "imageUrl")]
+        [DataMember(Order = 60, Name = "imageUrl")]
         public string ImageUrl { get; set; }
 
         /// <summary>
@@ -58,17 +67,8 @@ namespace BetterCms.Module.WebApi.Models.MediaManager.GetImages
         /// <value>
         /// The thumbnail URL.
         /// </value>
-        [DataMember(Order = 60, Name = "thumbnailUrl")]
+        [DataMember(Order = 70, Name = "thumbnailUrl")]
         public string ThumbnailUrl { get; set; }
-
-        /// <summary>
-        /// Gets or sets the image caption.
-        /// </summary>
-        /// <value>
-        /// The image caption.
-        /// </value>
-        [DataMember(Order = 70, Name = "caption")]
-        public string Caption { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether media is archived.
