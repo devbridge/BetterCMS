@@ -2464,6 +2464,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Include archived items.
+        /// </summary>
+        public static string SiteSettings_Pages_FilterIncludeArchived {
+            get {
+                return ResourceManager.GetString("SiteSettings_Pages_FilterIncludeArchived", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
         public static string SiteSettings_Pages_FilterSearch {

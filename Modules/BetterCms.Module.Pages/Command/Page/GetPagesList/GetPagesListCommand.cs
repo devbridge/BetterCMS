@@ -54,6 +54,11 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
                 .QueryOver(() => alias)
                 .Where(() => !alias.IsDeleted && alias.Status != PageStatus.Preview);
 
+            if (!request.IncludeArchived)
+            {
+                query = query.Where(() => !alias.IsArchived);
+            }
+
             if (!string.IsNullOrWhiteSpace(request.SearchQuery))
             {
                 var searchQuery = string.Format("%{0}%", request.SearchQuery);

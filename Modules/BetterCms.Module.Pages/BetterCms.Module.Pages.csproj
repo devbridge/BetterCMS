@@ -138,6 +138,7 @@
     <Compile Include="Api\DataContracts\GetRegionContentsRequest.cs" />
     <Compile Include="Command\Tag\SearchTags\SearchTagsCommand.cs" />
     <Compile Include="Helpers\Extensions\RenderPageViewModelExtensions.cs" />
+    <Compile Include="Models\Migrations\Migration201306260946.cs" />
     <Compile Include="Models\Migrations\Migration201306140841.cs" />
     <Compile Include="Models\Migrations\Migration201305281700.cs" />
     <Compile Include="Mvc\Attributes\ValidVirtualPathValidationAttribute.cs" />

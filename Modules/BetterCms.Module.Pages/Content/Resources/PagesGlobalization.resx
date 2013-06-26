@@ -1128,4 +1128,7 @@
   <data name="EditPageProperties_BasicPropertiesTab_PageSecondaryImage_Tooltip_Description" xml:space="preserve">
     <value>Image will be displayed as a secondary image with the page.</value>
   </data>
+  <data name="SiteSettings_Pages_FilterIncludeArchived" xml:space="preserve">
+    <value>Include archived items</value>
+  </data>
 </root>

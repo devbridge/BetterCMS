@@ -24,6 +24,7 @@ bettercms.define('bcms.pages.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
             
             self.isVisible = ko.observable(false);
             self.tags = tagsViewModel;
+            self.includeArchived = ko.observable(false);
 
             // Actions.
             self.toggleFilter = function() {
@@ -39,6 +40,7 @@ bettercms.define('bcms.pages.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
             };
             self.clearFilter = function () {
                 self.tags.tags([]);
+                self.includeArchived(false);
                 if ($.isFunction(onClearClick)) {
                     onClearClick();
                 }
@@ -50,6 +52,7 @@ bettercms.define('bcms.pages.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                 filterViewModel = new FilterViewModel(tagsViewModel, onSearchClick, function() {
                     container.find(selectors.filterCategory).get(0).selectedIndex = 0;
                 });
+            filterViewModel.includeArchived(jsonData.IncludeArchived ? true : false);
             ko.applyBindings(filterViewModel, container.find(selectors.filterTemplate).get(0));
         };
 
