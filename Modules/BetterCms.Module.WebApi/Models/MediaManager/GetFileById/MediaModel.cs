@@ -1,7 +1,5 @@
 ﻿using System.Runtime.Serialization;
 
-using BetterCms.Module.MediaManager.Models;
-
 namespace BetterCms.Module.WebApi.Models.MediaManager.GetFileById
 {
     [DataContract]

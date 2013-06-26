@@ -16,66 +16,66 @@ namespace BetterCms.Module.WebApi.Models.Blog.GetBlogPostPropertiesById
         public Guid BlogPostId { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to fetch HTML content.
+        /// Gets or sets a value indicating whether to include HTML content.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if to fetch HTML content; otherwise, <c>false</c>.
+        ///   <c>true</c> if to include HTML content; otherwise, <c>false</c>.
         /// </value>
-        [DataMember(Order = 20, Name = "fetchHtmlContent")]
-        public bool FetchHtmlContent { get; set; }
+        [DataMember(Order = 20, Name = "includeHtmlContent")]
+        public bool IncludeHtmlContent { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to fetch tags.
+        /// Gets or sets a value indicating whether to include tags.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if to fetch tags; otherwise, <c>false</c>.
+        ///   <c>true</c> if to include tags; otherwise, <c>false</c>.
         /// </value>
-        [DataMember(Order = 30, Name = "fetchTags")]
-        public bool FetchTags { get; set; }
+        [DataMember(Order = 30, Name = "includeTags")]
+        public bool IncludeTags { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to fetch category.
+        /// Gets or sets a value indicating whether to include category.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if to fetch category; otherwise, <c>false</c>.
+        ///   <c>true</c> if to include category; otherwise, <c>false</c>.
         /// </value>
-        [DataMember(Order = 40, Name = "fetchCategory")]
-        public bool FetchCategory { get; set; }
+        [DataMember(Order = 40, Name = "includeCategory")]
+        public bool IncludeCategory { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to fetch layout.
+        /// Gets or sets a value indicating whether to include layout.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if to fetch layout; otherwise, <c>false</c>.
+        ///   <c>true</c> if to include layout; otherwise, <c>false</c>.
         /// </value>
-        [DataMember(Order = 50, Name = "fetchLayout")]
-        public bool FetchLayout { get; set; }
+        [DataMember(Order = 50, Name = "includeLayout")]
+        public bool IncludeLayout { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to fetch author.
+        /// Gets or sets a value indicating whether to include author.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if to fetch author; otherwise, <c>false</c>.
+        ///   <c>true</c> if to include author; otherwise, <c>false</c>.
         /// </value>
-        [DataMember(Order = 60, Name = "fetchAuthor")]
-        public bool FetchAuthor { get; set; }
+        [DataMember(Order = 60, Name = "includeAuthor")]
+        public bool IncludeAuthor { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to fetch image.
+        /// Gets or sets a value indicating whether to include image.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if to fetch image; otherwise, <c>false</c>.
+        ///   <c>true</c> if to include image; otherwise, <c>false</c>.
         /// </value>
-        [DataMember(Order = 70, Name = "fetchImages")]
-        public bool FetchImages { get; set; }
+        [DataMember(Order = 70, Name = "includeImages")]
+        public bool IncludeImages { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to fetch meta data.
+        /// Gets or sets a value indicating whether to include meta data.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if to fetch meta data; otherwise, <c>false</c>.
+        ///   <c>true</c> if to include meta data; otherwise, <c>false</c>.
         /// </value>
-        [DataMember(Order = 80, Name = "fetchMetaData")]
-        public bool FetchMetaData { get; set; }
+        [DataMember(Order = 80, Name = "includeMetaData")]
+        public bool IncludeMetaData { get; set; }
     }
 }

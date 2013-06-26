@@ -184,9 +184,11 @@
     <Compile Include="Models\MediaManager\GetFileById\GetFileByIdRequest.cs" />
     <Compile Include="Models\MediaManager\GetFileById\GetFileByIdResponse.cs" />
     <Compile Include="Models\MediaManager\GetFileById\MediaModel.cs" />
+    <Compile Include="Models\MediaManager\GetFileById\TagModel.cs" />
     <Compile Include="Models\MediaManager\GetFiles\MediaModel.cs" />
     <Compile Include="Models\MediaManager\GetFiles\GetFilesRequest.cs" />
     <Compile Include="Models\MediaManager\GetFiles\GetFilesResponse.cs" />
+    <Compile Include="Models\MediaManager\GetImageById\TagModel.cs" />
     <Compile Include="Models\MediaManager\GetImages\GetImagesRequest.cs" />
     <Compile Include="Models\MediaManager\GetImages\GetImagesResponse.cs" />
     <Compile Include="Models\MediaManager\GetImages\MediaModel.cs" />
@@ -202,6 +204,7 @@
     <Compile Include="Models\MediaManager\GetImageById\MediaModel.cs" />
     <Compile Include="Models\MediaManager\GetMediaContentById\GetMediaContentByIdRequest.cs" />
     <Compile Include="Models\MediaManager\GetMediaContentById\GetMediaContentByIdResponse.cs" />
+    <Compile Include="Models\MediaManager\GetVideoById\TagModel.cs" />
     <Compile Include="Models\MediaManager\GetVideos\GetVideosRequest.cs" />
     <Compile Include="Models\MediaManager\GetVideos\GetVideosResponse.cs" />
     <Compile Include="Models\MediaManager\GetVideos\MediaModel.cs" />
@@ -212,6 +215,7 @@
     <Compile Include="Models\Pages\GetHtmlContentWidgetById\WidgetModel.cs" />
     <Compile Include="Models\Pages\GetPageById\GetPageByIdRequest.cs" />
     <Compile Include="Models\Pages\GetPageById\GetPageByIdResponse.cs" />
+    <Compile Include="Models\Pages\GetPageById\PageModel.cs" />
     <Compile Include="Models\Pages\GetPageContentById\ContentModel.cs" />
     <Compile Include="Models\Pages\GetPageContentById\GetPageContentByIdRequest.cs" />
     <Compile Include="Models\Pages\GetPageContentById\GetPageContentByIdResponse.cs" />
@@ -249,8 +253,8 @@
     <Compile Include="Models\Pages\PageExists\PageExistsRequest.cs" />
     <Compile Include="Models\Pages\PageExists\PageExistsResponse.cs" />
     <Compile Include="Models\Pages\PageExists\PageModel.cs" />
-    <Compile Include="Models\Pages\PagePropertiesModel.cs" />
-    <Compile Include="Models\Pages\PageModel.cs" />
+    <Compile Include="Models\Pages\GetPagePropertiesById\PageModel.cs" />
+    <Compile Include="Models\Pages\GetPages\PageModel.cs" />
     <Compile Include="Models\ResponseBase.cs" />
     <Compile Include="Models\Pages\GetPages\GetPagesResponse.cs" />
     <Compile Include="Models\Pages\GetPages\GetPagesRequest.cs" />

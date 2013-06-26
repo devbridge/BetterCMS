@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace BetterCms.Module.WebApi.Models.Pages.GetPagePropertiesById
 {
     [DataContract]
-    public class GetPagePropertiesByIdResponse : ResponseBase<PagePropertiesModel>
+    public class GetPagePropertiesByIdResponse : ResponseBase<PageModel>
     {
         [DataMember(Order = 20, Name = "layout")]
         public LayoutModel Layout { get; set; }

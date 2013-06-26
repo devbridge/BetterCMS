@@ -1,5 +1,7 @@
 ﻿using System.Runtime.Serialization;
 
+using BetterCms.Module.WebApi.Models.Enums;
+
 namespace BetterCms.Module.WebApi.Models.MediaManager.GetVideos
 {
     [DataContract]
@@ -12,6 +14,8 @@ namespace BetterCms.Module.WebApi.Models.MediaManager.GetVideos
         {
             IncludeFolders = true;
             IncludeVideos = true;
+
+            TagsConnector = FilterConnector.And;
         }
 
         /// <summary>
@@ -49,5 +53,23 @@ namespace BetterCms.Module.WebApi.Models.MediaManager.GetVideos
         /// </value>
         [DataMember(Order = 40, Name = "isArchived")]
         public bool IsArchived { get; set; }
+
+        /// <summary>
+        /// Gets or sets the video tags for filtering.
+        /// </summary>
+        /// <value>
+        /// The video tags for filtering.
+        /// </value>
+        [DataMember(Order = 50, Name = "videoTags")]
+        public System.Collections.Generic.List<string> VideoTags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tags filter connector.
+        /// </summary>
+        /// <value>
+        /// The tags filter connector.
+        /// </value>
+        [DataMember(Order = 60, Name = "tagsConnector")]
+        public FilterConnector TagsConnector { get; set; }
     }
 }

@@ -5,9 +5,7 @@ using BetterCms.Api;
 using BetterCms.Core;
 using BetterCms.Core.Api.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.WebApi.Helpers;
-using BetterCms.Module.WebApi.Models.Pages;
 using BetterCms.Module.WebApi.Models.Pages.GetPageById;
 using BetterCms.Module.WebApi.Models.Pages.GetPages;
 
@@ -23,17 +21,18 @@ namespace BetterCms.Module.WebApi.Controllers
     [ActionLinkArea(WebApiModuleDescriptor.WebApiAreaName)]
     public class PagesController : ApiController
     {                
-        /*public GetPageByIdResponse GetPageById([FromUri]GetPageByIdRequest request)
+        public GetPageByIdResponse GetPageById([FromUri]GetPageByIdRequest request)
         {
             GetPageByIdResponse response = new GetPageByIdResponse();
 
             response.Status = "ok";
-            response.Data = new PageModel {
-                                              Id = request.PageId.ToGuidOrDefault()
+            response.Data = new Models.Pages.GetPageById.PageModel
+            {
+                                              Id = request.PageId
                                           };
 
             return response;
-        }*/
+        }
 
         public GetPagesResponse GetPages([FromUri]GetPagesRequest request)
         {
@@ -46,11 +45,11 @@ namespace BetterCms.Module.WebApi.Controllers
 
                 var pages = api.GetPages(serviceRequest);
 
-                response.Data = new DataListResponse<PageModel>
+                response.Data = new DataListResponse<Models.Pages.GetPages.PageModel>
                                     {
                                         TotalCount = pages.TotalCount,
                                         Items = pages.Items.Select(page
-                                            => new PageModel
+                                            => new Models.Pages.GetPages.PageModel
                                                 {
                                                     Id = page.Id,
                                                     PageUrl = page.PageUrl,

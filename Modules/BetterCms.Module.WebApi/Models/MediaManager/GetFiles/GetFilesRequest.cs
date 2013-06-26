@@ -1,5 +1,7 @@
 ﻿using System.Runtime.Serialization;
 
+using BetterCms.Module.WebApi.Models.Enums;
+
 namespace BetterCms.Module.WebApi.Models.MediaManager.GetFiles
 {
     [DataContract]
@@ -12,6 +14,8 @@ namespace BetterCms.Module.WebApi.Models.MediaManager.GetFiles
         {
             IncludeFolders = true;
             IncludeFiles = true;
+
+            TagsConnector = FilterConnector.And;
         }
 
         /// <summary>
@@ -49,5 +53,23 @@ namespace BetterCms.Module.WebApi.Models.MediaManager.GetFiles
         /// </value>
         [DataMember(Order = 40, Name = "folderId")]
         public System.Guid? FolderId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the file tags for filtering.
+        /// </summary>
+        /// <value>
+        /// The file tags for filtering.
+        /// </value>
+        [DataMember(Order = 50, Name = "fileTags")]
+        public System.Collections.Generic.List<string> FileTags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tags filter connector.
+        /// </summary>
+        /// <value>
+        /// The tags filter connector.
+        /// </value>
+        [DataMember(Order = 60, Name = "tagsConnector")]
+        public FilterConnector TagsConnector { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace BetterCms.Module.WebApi.Models.Pages
+namespace BetterCms.Module.WebApi.Models.Pages.GetPages
 {
     [DataContract]
     public class PageModel : ModelBase
