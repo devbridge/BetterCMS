@@ -8,6 +8,7 @@ using BetterCms.Core.Api.Extensions;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataAccess.DataContext.Fetching;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Api;
 
 using BetterCms.Module.Blog.Api.DataContracts;
@@ -72,26 +73,43 @@ namespace BetterCms.Api
         }
 
         /// <summary>
-        /// Gets the list of blog service models.
+        /// Gets the list of blog entities.
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns>
-        /// The list of blog service models
+        /// The list of blog entities
         /// </returns>
         /// <exception cref="CmsApiException"></exception>
-        public DataListResponse<BlogPostModel> GetBlogPosts(GetBlogPostsRequest request = null)
+        public DataListResponse<BlogPost> GetBlogPosts(GetBlogPostsRequest request)
         {
             try
             {
-                if (request == null)
-                {
-                    request = new GetBlogPostsRequest();
-                }
-                request.SetDefaultOrder(b => b.Title);
+                var query = Repository
+                    .AsQueryable<BlogPost>()
+                    .ApplyFilters(request);
 
-                return blogService
-                    .GetBlogPostsAsQueryable(request)
-                    .ToDataListResponse(request);
+                if (!request.IncludeUnpublished)
+                {
+                    query = query.Where(b => b.Status == PageStatus.Published);
+                }
+
+                if (!request.IncludeArchivedItems)
+                {
+                    query = query.Where(b => !b.IsArchived);
+                }
+
+                if (!request.IncludeNotActive)
+                {
+                    query = query.Where(b => b.ActivationDate < DateTime.Now && (!b.ExpirationDate.HasValue || DateTime.Now < b.ExpirationDate.Value));
+                }
+
+                var totalCount = query.ToRowCountFutureValue(request);
+
+                query = query
+                    .AddOrderAndPaging(request)
+                    .Fetch(b => b.Author);
+
+                return query.ToDataListResponse(totalCount);
             }
             catch (Exception inner)
             {
@@ -110,7 +128,6 @@ namespace BetterCms.Api
         /// The list of tag entities
         /// </returns>
         /// <exception cref="CmsApiException"></exception>
-        [Obsolete("This method is obsolete; use method GetAuthorsAsQueryable() instead.")]
         public DataListResponse<Author> GetAuthors(GetAuthorsRequest request = null)
         {
             try
