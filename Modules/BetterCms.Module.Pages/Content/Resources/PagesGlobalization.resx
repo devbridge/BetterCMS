@@ -1131,4 +1131,7 @@
   <data name="SiteSettings_Pages_FilterIncludeArchived" xml:space="preserve">
     <value>Include archived items</value>
   </data>
+  <data name="EditPageProperties_AdvancedPropertiesTab_IsArchived" xml:space="preserve">
+    <value>Archived</value>
+  </data>
 </root>

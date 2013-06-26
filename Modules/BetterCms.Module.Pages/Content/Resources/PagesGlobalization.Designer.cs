@@ -1123,6 +1123,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Archived.
+        /// </summary>
+        public static string EditPageProperties_AdvancedPropertiesTab_IsArchived {
+            get {
+                return ResourceManager.GetString("EditPageProperties_AdvancedPropertiesTab_IsArchived", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Page CSS.
         /// </summary>
         public static string EditPageProperties_AdvancedPropertiesTab_PageCss_Title {
