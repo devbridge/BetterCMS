@@ -166,6 +166,7 @@
     <Compile Include="Models\Blog\GetBlogPostPropertiesById\GetBlogPostPropertiesByIdResponse.cs" />
     <Compile Include="Models\Blog\GetBlogPostPropertiesById\ImageModel.cs" />
     <Compile Include="Models\Blog\GetBlogPostPropertiesById\LayoutModel.cs" />
+    <Compile Include="Models\Blog\GetBlogPostPropertiesById\MetadataModel.cs" />
     <Compile Include="Models\Blog\GetBlogPostPropertiesById\TagModel.cs" />
     <Compile Include="Models\Blog\GetBlogPosts\BlogPostModel.cs" />
     <Compile Include="Models\Blog\GetBlogPosts\GetBlogPostsRequest.cs" />
@@ -202,13 +203,45 @@
     <Compile Include="Models\MediaManager\GetVideos\MediaModel.cs" />
     <Compile Include="Models\OrderItem.cs" />
     <Compile Include="Models\ModelBase.cs" />
+    <Compile Include="Models\Pages\GetHtmlContentWidgetById\GetHtmlContentWidgetByIdRequest.cs" />
+    <Compile Include="Models\Pages\GetHtmlContentWidgetById\GetHtmlContentWidgetByIdResponse.cs" />
+    <Compile Include="Models\Pages\GetHtmlContentWidgetById\WidgetModel.cs" />
     <Compile Include="Models\Pages\GetPageById\GetPageByIdRequest.cs" />
     <Compile Include="Models\Pages\GetPageById\GetPageByIdResponse.cs" />
+    <Compile Include="Models\Pages\GetPageContentById\ContentModel.cs" />
+    <Compile Include="Models\Pages\GetPageContentById\GetPageContentByIdRequest.cs" />
+    <Compile Include="Models\Pages\GetPageContentById\GetPageContentByIdResponse.cs" />
+    <Compile Include="Models\Pages\GetPageContentHistoryByPageContentId\GetPageContentHistoryByPageContentIdRequest.cs" />
+    <Compile Include="Models\Pages\GetPageContentHistoryByPageContentId\GetPageContentHistoryByPageContentIdResponse.cs" />
+    <Compile Include="Models\Pages\GetPageContentHistoryByPageContentId\HistoryModel.cs" />
+    <Compile Include="Models\Pages\GetPageContents\ContentModel.cs" />
+    <Compile Include="Models\Pages\GetPageContents\GetPageContentsRequest.cs" />
+    <Compile Include="Models\Pages\GetPageContents\GetPageContentsResponse.cs" />
     <Compile Include="Models\Pages\GetPagePropertiesById\CategoryModel.cs" />
     <Compile Include="Models\Pages\GetPagePropertiesById\GetPagePropertiesByIdRequest.cs" />
     <Compile Include="Models\Pages\GetPagePropertiesById\GetPagePropertiesByIdResponse.cs" />
     <Compile Include="Models\Pages\GetPagePropertiesById\LayoutModel.cs" />
     <Compile Include="Models\Pages\GetPagePropertiesById\TagModel.cs" />
+    <Compile Include="Models\Pages\GetRedirectById\GetRedirectByIdRequest.cs" />
+    <Compile Include="Models\Pages\GetRedirectById\GetRedirectByIdResponse.cs" />
+    <Compile Include="Models\Pages\GetRedirectById\RedirectModel.cs" />
+    <Compile Include="Models\Pages\GetRenderedPageHtmlByPageId\GetRenderedPageHtmlByPageIdRequest.cs" />
+    <Compile Include="Models\Pages\GetRenderedPageHtmlByPageId\GetRenderedPageHtmlByPageIdResponse.cs" />
+    <Compile Include="Models\Pages\GetServerControlWidgetById\GetServerControlWidgetByIdRequest.cs" />
+    <Compile Include="Models\Pages\GetServerControlWidgetById\GetServerControlWidgetByIdResponse.cs" />
+    <Compile Include="Models\Pages\GetServerControlWidgetById\WidgetModel.cs" />
+    <Compile Include="Models\Pages\GetSitemapNodeById\GetSitemapNodeByIdRequest.cs" />
+    <Compile Include="Models\Pages\GetSitemapNodeById\GetSitemapNodeByIdResponse.cs" />
+    <Compile Include="Models\Pages\GetSitemapNodeById\NodeModel.cs" />
+    <Compile Include="Models\Pages\GetSitemapTree\GetSitemapTreeRequest.cs" />
+    <Compile Include="Models\Pages\GetSitemapTree\GetSitemapTreeResponse.cs" />
+    <Compile Include="Models\Pages\GetSitemapTree\NodeModel.cs" />
+    <Compile Include="Models\Pages\GetWidgets\GetWidgetsRequest.cs" />
+    <Compile Include="Models\Pages\GetWidgets\GetWidgetsResponse.cs" />
+    <Compile Include="Models\Pages\GetWidgets\WidgetModel.cs" />
+    <Compile Include="Models\Pages\PageExists\PageExistsRequest.cs" />
+    <Compile Include="Models\Pages\PageExists\PageExistsResponse.cs" />
+    <Compile Include="Models\Pages\PageExists\PageModel.cs" />
     <Compile Include="Models\Pages\PagePropertiesModel.cs" />
     <Compile Include="Models\Pages\PageModel.cs" />
     <Compile Include="Models\ResponseBase.cs" />
@@ -287,11 +320,7 @@
   <ItemGroup>
     <Content Include="web.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\Pages\CreatePage\" />
-    <Folder Include="Models\Pages\DeletePageById\" />
-    <Folder Include="Models\Pages\UpdatePage\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
