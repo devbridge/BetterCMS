@@ -35,7 +35,8 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
 
         globalization = {
             uploadFilesDialogTitle: null,
-            failedToProcessFile: null
+            failedToProcessFile: null,
+            multipleFilesWarningMessageOnReupload: null
         };
 
     /**
@@ -142,6 +143,7 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
 
     function SingleFileUpload(dialog, options) {
         var context = dialog.container.find(selectors.fileUploadingContext).get(0),
+            messageBox = messages.box({ container: dialog.container }),
             uploadsModel = options.uploads,
             fakeData = {
                 fileName: "Uploading",
@@ -192,6 +194,7 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
             if (fileName != null && fileName != "") {
                 // Do not allow multiple file upload on re-upload functionality.
                 if (options.reuploadMediaId && uploadsModel.uploads().length > 0) {
+                    messageBox.addWarningMessage(globalization.multipleFilesWarningMessageOnReupload);
                     var uploadedFiles = uploadsModel.uploads();
                     for (var i = 0; i < uploadedFiles.length; i++) {
                         uploadedFiles[i].activate();
@@ -438,6 +441,7 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
     function initUploadFilesDialogEvents(dialog, options) {
         var uploadsModel = options.uploads,
             dragZone = dialog.container.find(selectors.dragZone),
+            messageBox = messages.box({ container: dialog.container }),
             cancelEvent = function (e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -472,6 +476,7 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
                 maxSimultaneousUploads: 4,
                 onFileAdded: function (file) {
                     if (options.reuploadMediaId && uploadsModel.uploads().length > 0) {
+                        messageBox.addWarningMessage(globalization.multipleFilesWarningMessageOnReupload);
                         var uploadedFiles = uploadsModel.uploads();
                         for (var i = 0; i < uploadedFiles.length; i++) {
                             uploadedFiles[i].activate();

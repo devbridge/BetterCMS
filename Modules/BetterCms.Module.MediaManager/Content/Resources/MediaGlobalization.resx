@@ -513,4 +513,7 @@
   <data name="MediaList_RootFolderName" xml:space="preserve">
     <value>(root)</value>
   </data>
+  <data name="MediaManager_MultipleFilesWarning_Message" xml:space="preserve">
+    <value>You can select only one file to re-upload.</value>
+  </data>
 </root>

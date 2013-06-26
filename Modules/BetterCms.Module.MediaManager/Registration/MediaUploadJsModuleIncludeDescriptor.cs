@@ -29,7 +29,8 @@ namespace BetterCms.Module.MediaManager.Registration
             Globalization = new IActionProjection[]
                 {
                     new JavaScriptModuleGlobalization(this, "uploadFilesDialogTitle", () => MediaGlobalization.MultiFileUpload_DialogTitle),
-                    new JavaScriptModuleGlobalization(this, "failedToProcessFile", () => MediaGlobalization.MediaManager_FailedToProcessFile_Message)
+                    new JavaScriptModuleGlobalization(this, "failedToProcessFile", () => MediaGlobalization.MediaManager_FailedToProcessFile_Message),
+                    new JavaScriptModuleGlobalization(this, "multipleFilesWarningMessageOnReupload", () => MediaGlobalization.MediaManager_MultipleFilesWarning_Message),
                 };
         }
     }

@@ -1006,6 +1006,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You can select only one file to re-upload..
+        /// </summary>
+        public static string MediaManager_MultipleFilesWarning_Message {
+            get {
+                return ResourceManager.GetString("MediaManager_MultipleFilesWarning_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Folder.
         /// </summary>
         public static string MediaManager_NewFolder {
