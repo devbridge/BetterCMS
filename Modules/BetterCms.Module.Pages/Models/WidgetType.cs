@@ -2,7 +2,7 @@
 {
     public enum WidgetType
     {
-        ServerControl,
-        HtmlContent
+        ServerControl = 1,
+        HtmlContent = 2
     }
 }
