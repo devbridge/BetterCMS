@@ -194,30 +194,19 @@ a.bcms-slider-next {
         background: #f5f5f5;
     }
 
-.bcms-upload-info {
-    display: inline-block;
-    width: 140px;
-    padding-left: 20px;
-    vertical-align: top;
-}
-
-    .bcms-upload-info .bcms-btn-small {
-        margin-top: 10px;
-    }
-
-.bcms-upload-info-text {
-    height: 86px;
-    font-size: 12px;
-    overflow: hidden;
-}
-
 .bcms-page-images-holder {
     width: 875px;
 }
 
-.bcms-page-images-holder .bcms-input-list-holder {
-    display: inline-block;
-}
+    .bcms-page-images-holder .bcms-input-list-holder {
+        display: inline-block;
+        margin-right: 50px;
+    }
+
+    .bcms-page-images-holder .bcms-btn-small {
+        display: block;
+        text-align: center;
+    }
 
 .bcms-tags-box-holder {
     padding: 10px 0 0 30px;
