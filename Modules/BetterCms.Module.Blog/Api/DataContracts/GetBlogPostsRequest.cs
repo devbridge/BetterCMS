@@ -25,11 +25,13 @@ namespace BetterCms.Module.Blog.Api.DataContracts
             int? itemsCount = null,
             int startItemNumber = 1,
             bool includeUnpublished = false,
-            bool includeNotActive = false)
+            bool includeNotActive = false,
+            bool includeArchived = false)
             : base(filter, order, orderDescending, itemsCount, startItemNumber)
         {
             IncludeUnpublished = includeUnpublished;
             IncludeNotActive = includeNotActive;
+            IncludeArchivedItems = includeArchived;
 
             SetDefaultOrder(b => b.Title);
         }
@@ -49,5 +51,13 @@ namespace BetterCms.Module.Blog.Api.DataContracts
         ///   <c>true</c> if to include not active posts; otherwise, <c>false</c>.
         /// </value>
         public bool IncludeNotActive { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether include archived items.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if include archived items; otherwise, <c>false</c>.
+        /// </value>
+        public bool IncludeArchivedItems { get; set; }
     }
 }
