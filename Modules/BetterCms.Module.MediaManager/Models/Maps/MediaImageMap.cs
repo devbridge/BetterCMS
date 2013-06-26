@@ -11,7 +11,7 @@ namespace BetterCms.Module.MediaManager.Models.Maps
         {
             Table("MediaImages");
 
-            Map(f => f.Caption).Nullable().Length(MaxLength.Text).LazyLoad();
+            Map(f => f.Caption).Nullable().Length(MaxLength.Text);
             Map(f => f.ImageAlign).Nullable();
             Map(f => f.Width).Not.Nullable();
             Map(f => f.Height).Not.Nullable();
@@ -22,15 +22,15 @@ namespace BetterCms.Module.MediaManager.Models.Maps
             Map(f => f.OriginalWidth).Not.Nullable();
             Map(f => f.OriginalHeight).Not.Nullable();
             Map(f => f.OriginalSize).Not.Nullable();
-            Map(f => f.OriginalUri).Not.Nullable().Length(MaxLength.Uri).LazyLoad();
+            Map(f => f.OriginalUri).Not.Nullable();
             Map(f => f.IsOriginalUploaded).Nullable();
-            Map(f => f.PublicOriginallUrl).Not.Nullable().Length(MaxLength.Url).LazyLoad();
+            Map(f => f.PublicOriginallUrl).Not.Nullable();
             Map(f => f.ThumbnailWidth).Not.Nullable();
             Map(f => f.ThumbnailHeight).Not.Nullable();
             Map(f => f.ThumbnailSize).Not.Nullable();
-            Map(f => f.ThumbnailUri).Not.Nullable().Length(MaxLength.Uri).LazyLoad();
+            Map(f => f.ThumbnailUri).Not.Nullable();
             Map(f => f.IsThumbnailUploaded).Nullable();
-            Map(f => f.PublicThumbnailUrl).Not.Nullable().Length(MaxLength.Url).LazyLoad();
+            Map(f => f.PublicThumbnailUrl);
         }
     }
 }

@@ -11,8 +11,7 @@
 @using Microsoft.Web.Mvc
 @using MvcContrib.UI.Grid
 
-@model BetterCms.Module.Root.ViewModels.SiteSettings.SearchableGridViewModel<SiteSettingPageViewModel>
-           
+@model BetterCms.Module.Pages.ViewModels.Filter.PagesGridViewModel<SiteSettingPageViewModel>
 @{
     Action<ColumnBuilder<SiteSettingPageViewModel>> columns = column =>
     {
@@ -76,6 +75,11 @@
             @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
             <div class="bcms-btn-search" id="bcms-pages-search-btn">@PagesGlobalization.SiteSettings_Pages_Search</div>
         </div>
+        
+        <div class="bcms-featured-grid clearfix">
+            @Html.RenderPaging(Model)
+            @Html.Partial("~/Areas/bcms-pages/Views/Filter/PagesFilterTemplate.cshtml", Model)
+        </div>
     </div>
     @Html.SiteSettingsMessagesBox()
 
@@ -83,7 +87,7 @@
 }
 
 <script type="text/html" id="bcms-pages-list-row-template">
-    @Html.Grid(new List<SiteSettingPageViewModel> {new SiteSettingPageViewModel()}).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingPageViewModel>())
+    @Html.Grid(new List<SiteSettingPageViewModel> { new SiteSettingPageViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingPageViewModel>())
 </script>
 <script type="text/html" id="bcms-boolean-true-template">
     @Html.Partial("EditorTemplates/SEOStatus", true)

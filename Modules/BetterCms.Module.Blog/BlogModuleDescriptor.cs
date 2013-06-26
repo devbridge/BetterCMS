@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 using Autofac;
@@ -9,6 +8,7 @@ using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Blog.Accessors;
+using BetterCms.Module.Blog.Api.DataContracts;
 using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.Blog.Helpers.Extensions;
 using BetterCms.Module.Blog.Models;
@@ -119,7 +119,8 @@ namespace BetterCms.Module.Blog
         {
             return new[]
                 {
-                    blogJsModuleIncludeDescriptor
+                    blogJsModuleIncludeDescriptor,
+                    new JsIncludeDescriptor(this, "bcms.blog.filter"), 
                 };
         }
 

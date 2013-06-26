@@ -12,7 +12,9 @@ bettercms.define('bcms.grid', ['bcms.jquery', 'bcms'], function ($, bcms) {
             sortColumnHeaders: 'a.bcms-sort-arrow',
             hiddenSortColumnField: '#bcms-grid-sort-column',
             hiddenSortDirectionField: '#bcms-grid-sort-direction',
-            formLoaderContainer: '.bcms-rightcol'
+            hiddenPageNumberField: '#bcms-grid-page-number',
+            formLoaderContainer: '.bcms-rightcol',
+            pageNumbers: '.bcms-pager-no, .bcms-pager-prev, .bcms-pager-next'
         },
         links = {
             
@@ -57,7 +59,17 @@ bettercms.define('bcms.grid', ['bcms.jquery', 'bcms'], function ($, bcms) {
             form.find(selectors.hiddenSortColumnField).val(self.data('column'));
             form.find(selectors.hiddenSortDirectionField).val(self.data('direction'));
 
-            grid.submitGridForm(form, onSuccess);
+            submitGridForm(form, onSuccess);
+        });
+        
+        form.find(selectors.pageNumbers).on('click', function () {
+            var self = $(this),
+                pageNumber = self.data('pageNumber');
+
+            if (pageNumber) {
+                form.find(selectors.hiddenPageNumberField).val(pageNumber);
+                submitGridForm(form, onSuccess);
+            }
         });
     };
 
@@ -65,6 +77,15 @@ bettercms.define('bcms.grid', ['bcms.jquery', 'bcms'], function ($, bcms) {
     * Submits site settings list form
     */
     grid.submitGridForm = function (form, onSuccess) {
+        form.find(selectors.hiddenPageNumberField).val(1);
+
+        return submitGridForm(form, onSuccess);
+    };
+    
+    /**
+    * Submits site settings list form
+    */
+    function submitGridForm(form, onSuccess) {
         var container = form.parents(selectors.formLoaderContainer);
         if (container.length == 0) {
             container = form;
@@ -73,21 +94,24 @@ bettercms.define('bcms.grid', ['bcms.jquery', 'bcms'], function ($, bcms) {
         $.ajax({
             type: 'POST',
             contentType: 'application/x-www-form-urlencoded',
-            dataType: 'html',
             cache: false,
             url: form.attr('action'),
             data: form.serialize(),
-            error: function() {
+            error: function () {
                 $(container).hideLoading();
             },
-            success: function (data) {
+            success: function (data, status, response) {
                 $(container).hideLoading();
                 if ($.isFunction(onSuccess)) {
-                    onSuccess(data);
+                    if (response.getResponseHeader('Content-Type').indexOf('application/json') === 0 && data.Html) {
+                        onSuccess(data.Html, data.Data);
+                    } else {
+                        onSuccess(data, null);
+                    }
                 }
             }
         });
-    };
+    }
 
     /**
     * Focuses search input and puts cursor to end of input

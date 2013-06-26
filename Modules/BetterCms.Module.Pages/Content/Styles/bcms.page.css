@@ -194,22 +194,19 @@ a.bcms-slider-next {
         background: #f5f5f5;
     }
 
-.bcms-upload-info {
-    display: inline-block;
-    width: 140px;
-    padding-left: 20px;
-    vertical-align: top;
+.bcms-page-images-holder {
+    width: 875px;
 }
 
-    .bcms-upload-info .bcms-btn-small {
-        margin-top: 10px;
+    .bcms-page-images-holder .bcms-input-list-holder {
+        display: inline-block;
+        margin-right: 50px;
     }
 
-.bcms-upload-info-text {
-    height: 86px;
-    font-size: 12px;
-    overflow: hidden;
-}
+    .bcms-page-images-holder .bcms-btn-small {
+        display: block;
+        text-align: center;
+    }
 
 .bcms-tags-box-holder {
     padding: 10px 0 0 30px;
@@ -271,7 +268,7 @@ a.bcms-slider-next {
 
 /* Site settings page */
 /*sidebar*/
-hr.bcms-settings-separator {
+.bcms-settings-separator {
     padding: 0;
     margin: 0;
     border-style: solid none solid none;
@@ -299,13 +296,17 @@ hr.bcms-settings-separator {
 
 /*content*/
 .bcms-top-block-holder {
-    padding: 20px 20px 20px 30px;
-    height: 30px;
+    padding: 15px 20px 5px 20px;
+    min-height: 40px;
 }
 
     .bcms-top-block-holder .bcms-large-titles {
         float: left;
         padding-top: 5px;
+    }
+
+    .bcms-top-block-holder .bcms-btn-links-main {
+        margin-left: -10px;
     }
 
 .bcms-preview-module-image {
@@ -322,6 +323,118 @@ hr.bcms-settings-separator {
         width: 100%;
         background: #f5f5f5;
     }
+
+.bcms-featured-grid {
+    position: relative;
+    z-index: 5;
+}
+
+.bcms-top-block-holder .bcms-featured-grid {
+    padding-top: 7px;
+    padding-left: 10px;
+}
+
+.bcms-grid-filtering {
+    position: relative;
+    float: left;
+    margin-left: -10px;
+}
+
+    .bcms-grid-filtering .bcms-btn-links-main {
+        height: 25px;
+        line-height: 25px;
+        font-size: 13px;
+    }
+
+.bcms-tags-block {
+    position: absolute;
+    top: 35px;
+    left: 0;
+    width: 100%;
+    padding: 20px 20px 40px;
+    background: #eff9fd;
+    border: 1px solid #c6c6c6;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-shadow: 1px 1px 5px 0 rgba(0,0,0,0.4);
+}
+
+    .bcms-tags-block:after, .bcms-tags-block:before {
+        bottom: 100%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+    }
+
+    .bcms-tags-block:after {
+        border-color: rgba(239, 249, 253, 0);
+        border-bottom-color: #eff9fd;
+        border-width: 10px;
+        left: 30px;
+        margin-left: -10px;
+    }
+
+    .bcms-tags-block:before {
+        border-color: rgba(198, 198, 198, 0);
+        border-bottom-color: #c6c6c6;
+        border-width: 11px;
+        left: 30px;
+        margin-left: -11px;
+    }
+
+.bcms-filter-text {
+    float: left;
+    color: #000;
+    line-height: 20px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.bcms-filter-options-1 {
+    position: relative;
+    float: left;
+    height: 30px;
+    padding-right: 125px;
+    margin-right: 40px;
+}
+
+.bcms-filter-options-2 {
+    position: relative;
+    float: left;
+    height: 30px;
+    padding-right: 210px;
+}
+
+    .bcms-filter-options-2 .bcms-global-select {
+        width: 200px;
+        height: 26px;
+        padding-top: 2px;
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+
+.bcms-tags-block .bcms-btn-search {
+    position: absolute;
+    top: 100%;
+    right: -1px;
+    margin-top: -29px;
+}
+
+.bcms-featured-tags .bcms-tags-field-holder {
+    right: 0;
+}
+
+.bcms-filter-search {
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    width: 100%;
+    text-align: right;
+}
 
 /*history page*/
 .bcms-history-preview-holder {

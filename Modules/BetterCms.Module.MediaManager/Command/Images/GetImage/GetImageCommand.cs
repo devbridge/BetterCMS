@@ -3,6 +3,7 @@ using System.Globalization;
 
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Models.Extensions;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels.Images;
 using BetterCms.Module.Root.Mvc;
@@ -40,12 +41,12 @@ namespace BetterCms.Module.MediaManager.Command.Images.GetImage
                     Version = image.Version.ToString(CultureInfo.InvariantCulture),
                     FileName = image.OriginalFileName,
                     FileExtension = image.OriginalFileExtension,
-                    FileSize = MediaFileService.GetFileSizeText(image.Size),
+                    FileSize = image.SizeAsText(),
                     ImageWidth = image.Width,
                     ImageHeight = image.Height,
                     OriginalImageWidth = image.OriginalWidth,
                     OriginalImageHeight = image.OriginalHeight,
-                    ImageAlign = image.ImageAlign.HasValue ? image.ImageAlign.Value : MediaImageAlign.Left,
+                    ImageAlign = image.ImageAlign.HasValue ? image.ImageAlign.Value : MediaImageAlign.Center,
                     CropCoordX1 = image.CropCoordX1.HasValue ? image.CropCoordX1.Value : 0,
                     CropCoordY1 = image.CropCoordY1.HasValue ? image.CropCoordY1.Value : 0,
                     CropCoordX2 = image.CropCoordX2.HasValue ? image.CropCoordX2.Value : image.OriginalWidth,

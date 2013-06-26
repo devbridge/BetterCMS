@@ -20,5 +20,26 @@ namespace BetterCms.Module.MediaManager.Models
         public virtual bool? IsUploaded { get; set; }
 
         public virtual bool IsCanceled { get; set; }
+
+        public override Media Clone()
+        {
+            return CopyDataTo(new MediaFile());
+        }
+
+        public override Media CopyDataTo(Media media)
+        {
+            var copy = (MediaFile)base.CopyDataTo(media);
+
+            copy.OriginalFileName = OriginalFileName;
+            copy.OriginalFileExtension = OriginalFileExtension;
+            copy.FileUri = FileUri;
+            copy.PublicUrl = PublicUrl;
+            copy.Size = Size;
+            copy.IsTemporary = IsTemporary;
+            copy.IsUploaded = IsUploaded;
+            copy.IsCanceled = IsCanceled;
+
+            return copy;
+        }
     }
 }

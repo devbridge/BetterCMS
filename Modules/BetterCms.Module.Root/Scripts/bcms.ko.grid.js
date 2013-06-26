@@ -27,13 +27,14 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
     * Grid options view model
     */
     grid.OptionsViewModel = (function() {
-        function OptionsViewModel(options) {
+        function OptionsViewModel(options, onOpenPage) {
             var self = this;
 
             self.searchQuery = ko.observable(options.SearchQuery || '');
             self.column = ko.observable(options.Column);
             self.isDescending = ko.observable(options.Direction == sortDirections.descending);
-
+            self.paging = new ko.PagingViewModel(options.PageSize, options.PageNumber, options.TotalCount, onOpenPage);
+            
             self.hasFocus = ko.observable(false);
         }
 
@@ -45,7 +46,7 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
     */
     grid.ListViewModel = (function() {
 
-        grid.ListViewModel = function(container, loadUrl, items, gridOptions) {
+        grid.ListViewModel = function (container, loadUrl, items, gridOptions, totalItemsCount) {
             var self = this;
 
             self.loadUrl = loadUrl;
@@ -66,8 +67,13 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 if (!newGridOptions) {
                     return;
                 }
-                var options = new grid.OptionsViewModel(newGridOptions);
+                var options = new grid.OptionsViewModel(newGridOptions, self.openPage);
                 self.options(options);
+            };
+
+            self.openPage = function(pageNr) {
+                var params = self.toJson();
+                self.load(params);
             };
 
             self.setItems = function (itemsList) {
@@ -99,6 +105,8 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             };
             
             self.searchItems = function () {
+                self.options().paging.pageNumber(1);
+
                 var params = self.toJson();
                 self.load(params);
             };
@@ -135,7 +143,9 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 var params = {
                     SearchQuery: self.options().searchQuery(),
                     Column: self.options().column(),
-                    Direction: self.options().isDescending() ? sortDirections.descending : sortDirections.ascending
+                    Direction: self.options().isDescending() ? sortDirections.descending : sortDirections.ascending,
+                    PageSize: self.options().paging.pageSize,
+                    PageNumber: self.options().paging.pageNumber()
                 };
 
                 return params;
@@ -199,7 +209,7 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
 
             // Set options
             if (gridOptions) {
-                self.setOptions(gridOptions);
+                self.setOptions(gridOptions, totalItemsCount);
             }
         };
 

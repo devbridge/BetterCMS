@@ -27,6 +27,8 @@ namespace BetterCms.Module.Pages.Helpers.Extensions
                 }
 
                 viewModel.Bag.PageData.Image = pageData.Image;
+                viewModel.Bag.PageData.SecondaryImage = pageData.SecondaryImage;
+                viewModel.Bag.PageData.FeaturedImage = pageData.FeaturedImage;
                 viewModel.Bag.PageData.PageTags = pageData.PageTags;
                 viewModel.Bag.PageData.Category = pageData.Category;
             }
@@ -37,6 +39,24 @@ namespace BetterCms.Module.Pages.Helpers.Extensions
             if (viewModel.Bag.PageData != null)
             {
                 return viewModel.Bag.PageData.Image as MediaImage;
+            }
+            return null;
+        }
+
+        public static MediaImage GetPageSecondaryImage(this RenderPageViewModel viewModel)
+        {
+            if (viewModel.Bag.PageData != null)
+            {
+                return viewModel.Bag.PageData.SecondaryImage as MediaImage;
+            }
+            return null;
+        }
+
+        public static MediaImage GetPageFeaturedImage(this RenderPageViewModel viewModel)
+        {
+            if (viewModel.Bag.PageData != null)
+            {
+                return viewModel.Bag.PageData.FeaturedImage as MediaImage;
             }
             return null;
         }

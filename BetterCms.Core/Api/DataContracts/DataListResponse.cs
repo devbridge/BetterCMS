@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-
-using BetterCms.Core.Models;
+using System.Runtime.Serialization;
 
 namespace BetterCms.Core.Api.DataContracts
 {
-    public class DataListResponse<TEntity> where TEntity : Entity
+    [DataContract]
+    public class DataListResponse<TEntity>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DataListResponse{TEntity}" /> class.
@@ -30,6 +30,7 @@ namespace BetterCms.Core.Api.DataContracts
         /// <value>
         /// The list of items.
         /// </value>
+        [DataMember]
         public IList<TEntity> Items { get; set; }
 
         /// <summary>
@@ -38,6 +39,7 @@ namespace BetterCms.Core.Api.DataContracts
         /// <value>
         /// The total count.
         /// </value>
+        [DataMember]
         public int TotalCount { get; set; }
     }
 }

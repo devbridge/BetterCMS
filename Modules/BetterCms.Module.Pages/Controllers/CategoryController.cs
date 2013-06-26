@@ -1,10 +1,9 @@
 ﻿using System.Web.Mvc;
 
 using BetterCms.Core.Security;
-
+using BetterCms.Module.Pages.Command.Category.GetCategoryList;
 using BetterCms.Module.Pages.Command.Category.SaveCategory;
 using BetterCms.Module.Pages.Commands.DeleteCategory;
-using BetterCms.Module.Pages.Commands.GetCategoryList;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.ViewModels.Category;
 
@@ -33,6 +32,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// </returns>
         public ActionResult Categories(SearchableGridOptions request)
         {
+            request.SetDefaultPaging();
             var model = GetCommand<GetCategoryListCommand>().ExecuteCommand(request);
 
             return View(model);

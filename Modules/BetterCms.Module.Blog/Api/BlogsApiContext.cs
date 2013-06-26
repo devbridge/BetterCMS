@@ -11,9 +11,13 @@ using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Api;
+
 using BetterCms.Module.Blog.Api.DataContracts;
+using BetterCms.Module.Blog.Api.DataFilters;
+using BetterCms.Module.Blog.Api.DataModels;
 using BetterCms.Module.Blog.Api.Events;
 using BetterCms.Module.Blog.Models;
+using BetterCms.Module.Blog.Services;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Models;
@@ -24,9 +28,13 @@ namespace BetterCms.Api
 {
     public class BlogsApiContext : DataApiContext
     {
+        private static readonly BlogsApiEvents events;
+
         private readonly ITagService tagService;
 
-        private static readonly BlogsApiEvents events;
+        private readonly IBlogService blogService;
+
+        private readonly IAuthorService authorService;
 
         /// <summary>
         /// Initializes the <see cref="BlogsApiContext" /> class.
@@ -41,11 +49,15 @@ namespace BetterCms.Api
         /// </summary>
         /// <param name="lifetimeScope">The lifetime scope.</param>
         /// <param name="tagService">The tag service.</param>
+        /// <param name="blogService">The blog service.</param>
+        /// <param name="authorService">The author service.</param>
         /// <param name="repository">The repository.</param>
-        public BlogsApiContext(ILifetimeScope lifetimeScope, ITagService tagService, IRepository repository = null)
+        public BlogsApiContext(ILifetimeScope lifetimeScope, ITagService tagService, IBlogService blogService, IAuthorService authorService, IRepository repository = null)
             : base(lifetimeScope, repository)
         {
             this.tagService = tagService;
+            this.blogService = blogService;
+            this.authorService = authorService;
         }
 
         /// <summary>
@@ -83,9 +95,9 @@ namespace BetterCms.Api
                     query = query.Where(b => b.Status == PageStatus.Published);
                 }
 
-                if (!request.IncludePrivate)
+                if (!request.IncludeArchivedItems)
                 {
-                    query = query.Where(b => b.IsPublic);
+                    query = query.Where(b => !b.IsArchived);
                 }
 
                 if (!request.IncludeNotActive)
@@ -118,6 +130,7 @@ namespace BetterCms.Api
         /// The list of tag entities
         /// </returns>
         /// <exception cref="CmsApiException"></exception>
+        [Obsolete("This method is obsolete; use method insteadGetAuthorsAsQueryable() instead.")]
         public DataListResponse<Author> GetAuthors(GetAuthorsRequest request = null)
         {
             try
@@ -201,6 +214,34 @@ namespace BetterCms.Api
                 Logger.Error(message, inner);
                 throw new CmsApiException(message, inner);
             }
+        }
+
+        public IQueryable<AuthorModel> GetAuthorsAsQueryable()
+        {
+            var models = authorService.GetAuthorsAsQueryable();
+            return models;
+        }
+
+        public AuthorCreateResponce CreateAuthor(AuthorCreateRequest request)
+        {
+            return authorService.CreateAuthor(request);
+        }
+
+        public AuthorUpdateResponce UpdateAuthor(AuthorUpdateRequest request)
+        {
+            return authorService.UpdateAuthor(request);
+        }
+
+        public AuthorDeleteResponce DeleteAuthor(AuthorDeleteRequest request)
+        {
+            return authorService.DeleteAuthor(request);
+        }
+
+        public IQueryable<BlogPostModel> GetBlogPostsAsQueryable(GetBlogPostRequest filter = null)
+        {
+            var models = blogService.GetBlogPostsAsQueryable(filter);
+
+            return models;
         }
     }
 }

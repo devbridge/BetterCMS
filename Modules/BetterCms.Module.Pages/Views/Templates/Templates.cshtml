@@ -6,7 +6,6 @@
 @using BetterCms.Module.Root.Mvc.Grids.TableRenderers
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
-@using MvcContrib
 @using MvcContrib.UI.Grid
 
 @model SiteSettingTemplateListViewModel
@@ -35,6 +34,9 @@
         <div class="bcms-search-block">
             @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
             <div class="bcms-btn-search" id="bcms-template-search-btn">@PagesGlobalization.SiteSettings_Template_Search</div>
+        </div>
+        <div class="bcms-featured-grid clearfix">
+            @Html.RenderPaging(Model)
         </div>
     </div>    
     

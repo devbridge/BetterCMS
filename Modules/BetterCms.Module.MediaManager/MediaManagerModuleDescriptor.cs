@@ -31,6 +31,11 @@ namespace BetterCms.Module.MediaManager
         private readonly MediaManagerJsModuleIncludeDescriptor mediaJsModuleIncludeDescriptor;
 
         /// <summary>
+        /// The media history java script module descriptor.
+        /// </summary>
+        private readonly MediaHistoryJsModuleIncludeDescriptor mediaHistoryJsModuleIncludeDescriptor;
+
+        /// <summary>
         /// The media upload module descriptor.
         /// </summary>
         private readonly MediaUploadJsModuleIncludeDescriptor mediaUploadModuleIncludeDescriptor;
@@ -48,6 +53,7 @@ namespace BetterCms.Module.MediaManager
             mediaJsModuleIncludeDescriptor = new MediaManagerJsModuleIncludeDescriptor(this);
             mediaUploadModuleIncludeDescriptor = new MediaUploadJsModuleIncludeDescriptor(this);
             imageEditorModuleIncludeDescriptor = new ImageEditorJsModuleIncludeDescriptor(this);
+            mediaHistoryJsModuleIncludeDescriptor = new MediaHistoryJsModuleIncludeDescriptor(this);
         }
 
         /// <summary>
@@ -116,6 +122,7 @@ namespace BetterCms.Module.MediaManager
             
             containerBuilder.RegisterType<DefaultMediaFileService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultMediaImageService>().AsImplementedInterfaces().InstancePerLifetimeScope();            
+            containerBuilder.RegisterType<DefaultMediaHistoryService>().AsImplementedInterfaces().InstancePerLifetimeScope();            
         }
 
         /// <summary>
@@ -142,6 +149,7 @@ namespace BetterCms.Module.MediaManager
                     mediaJsModuleIncludeDescriptor,
                     mediaUploadModuleIncludeDescriptor,
                     imageEditorModuleIncludeDescriptor,
+                    mediaHistoryJsModuleIncludeDescriptor,
                     new JsIncludeDescriptor(this, "bcms.html5Upload"),
                     new JsIncludeDescriptor(this, "bcms.jquery.jcrop"),
                     new JsIncludeDescriptor(this, "bcms.contextMenu")

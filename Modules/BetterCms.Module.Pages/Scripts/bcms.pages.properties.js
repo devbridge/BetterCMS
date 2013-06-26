@@ -24,12 +24,10 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             pagePropertiesActiveTemplateMessage: '.bcms-grid-active-message-text',
             pagePropertiesTemplatePreviewLink: '.bcms-preview-template',
 
-            pagePropertiesForm: 'form:first'
-
+            pagePropertiesForm: 'form:first',
         },
         links = {
-            loadEditPropertiesDialogUrl: null
-        },
+            loadEditPropertiesDialogUrl: null        },
         globalization = {
             editPagePropertiesModalTitle: null
         },
@@ -49,11 +47,13 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
     /**
     * Page view model
     */
-    function PageViewModel(image, tagsViewModel) {
+    function PageViewModel(image, secondaryImage, featuredImage, tagsViewModel) {
         var self = this;
 
         self.tags = tagsViewModel;
         self.image = ko.observable(new media.ImageSelectorViewModel(image));
+        self.secondaryImage = ko.observable(new media.ImageSelectorViewModel(secondaryImage));
+        self.featuredImage = ko.observable(new media.ImageSelectorViewModel(featuredImage));
     }
 
     /**
@@ -61,7 +61,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
     */
     page.initEditPagePropertiesDialogEvents = function (dialog, content) {
         var tagsViewModel = new tags.TagsListViewModel(content.Data.Tags),
-            pageViewModel = new PageViewModel(content.Data.Image, tagsViewModel),
+            pageViewModel = new PageViewModel(content.Data.Image, content.Data.SecondaryImage, content.Data.FeaturedImage, tagsViewModel),
             form = dialog.container.find(selectors.pagePropertiesForm);
         ko.applyBindings(pageViewModel, form.get(0));
 

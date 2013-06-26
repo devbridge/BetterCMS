@@ -45,7 +45,6 @@ namespace BetterCms.Module.Pages.Command.Layout.GetSiteSettingsTemplates
             }
 
             var count = query.ToRowCountFutureValue();
-
             var templates = query.AddSortingAndPaging(gridOptions).ToFuture().ToList();
 
             return new SiteSettingTemplateListViewModel(templates, gridOptions, count.Value);

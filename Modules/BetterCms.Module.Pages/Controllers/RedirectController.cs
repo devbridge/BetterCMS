@@ -28,6 +28,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// </returns>
         public ActionResult Redirects(SearchableGridOptions request)
         {
+            request.SetDefaultPaging();
             var model = GetCommand<GetRedirectsListCommand>().ExecuteCommand(request);
             return View(model);
         }

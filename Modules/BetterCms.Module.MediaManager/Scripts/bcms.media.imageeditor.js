@@ -448,6 +448,10 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
             dialog.container.find(selectors.imageAlignmentControls).children().each(function () {
                 setImageAlignment(this, dialog);
             });
+
+            dialog.container.find(selectors.selectableInputs).on('click', function () {
+                this.select();
+            });
         }
 
         /**

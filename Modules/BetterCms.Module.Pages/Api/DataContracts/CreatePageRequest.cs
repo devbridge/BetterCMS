@@ -26,6 +26,10 @@ namespace BetterCms.Module.Pages.Api.DataContracts
         public Guid LayoutId { get; set; }
 
         public Guid? ImageId { get; set; }
+
+        public Guid? SecondaryImageId { get; set; }
+
+        public Guid? FeaturedImageId { get; set; }
         
         public Guid? CategoryId { get; set; }
 
@@ -68,7 +72,6 @@ namespace BetterCms.Module.Pages.Api.DataContracts
                            MetaTitle = MetaTitle,
                            MetaDescription = MetaDescription,
                            MetaKeywords = MetaKeywords,
-                           IsPublic = IsPublic,
                            UseCanonicalUrl = UseCanonicalUrl,
                            UseNoFollow = UseNoFollow,
                            UseNoIndex = UseNoIndex,

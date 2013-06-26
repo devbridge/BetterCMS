@@ -63,8 +63,13 @@ namespace BetterCms.Api
             {
                 var query = Repository
                     .AsQueryable<Media>()
-                    .Where(f => f.Type == request.MediaType)
+                    .Where(f => f.Type == request.MediaType && f.Original == null)
                     .ApplyFilters(request);
+
+                if (!request.IncludeArchivedItems)
+                {
+                    query = query.Where(f => !f.IsArchived);
+                }
 
                 if (request.FolderId.HasValue)
                 {
@@ -104,7 +109,13 @@ namespace BetterCms.Api
             {
                 var query = Repository
                     .AsQueryable<MediaImage>()
+                    .Where(m => m.Original == null)
                     .ApplyFilters(request);
+
+                if (request == null || !request.IncludeArchivedItems)
+                {
+                    query = query.Where(m => !m.IsArchived);
+                }
 
                 var totalCount = query.ToRowCountFutureValue(request);
                 query = query
@@ -135,8 +146,13 @@ namespace BetterCms.Api
             {
                 var query = Repository
                     .AsQueryable<MediaFile>()
-                    .Where(m => m.Type == MediaType.File)
+                    .Where(m => m.Type == MediaType.File && m.Original == null)
                     .ApplyFilters(request);
+
+                if (request == null || !request.IncludeArchivedItems)
+                {
+                    query = query.Where(m => !m.IsArchived);
+                }
 
                 var totalCount = query.ToRowCountFutureValue(request);
                 query = query
@@ -167,8 +183,16 @@ namespace BetterCms.Api
             {
                 var query = Repository
                     .AsQueryable<MediaFolder>()
-                    .Where(f => f.Type == request.MediaType)
-                    .ApplyFilters(request);
+                    .Where(m => m.Original == null);
+                if (request.MediaType.HasValue)
+                {
+                    query = query.Where(f => f.Type == request.MediaType.Value);
+                }
+                if (!request.IncludeArchivedItems)
+                {
+                    query = query.Where(f => !f.IsArchived);
+                }
+                query = query.ApplyFilters(request);
 
                 var totalCount = query.ToRowCountFutureValue(request);
                 query = query

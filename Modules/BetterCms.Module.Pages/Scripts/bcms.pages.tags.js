@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-bettercms.define('bcms.pages.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.inlineEdit', 'bcms.grid', 'bcms.ko.extenders'],
-    function ($, bcms, dynamicContent, siteSettings, editor, grid, ko) {
+bettercms.define('bcms.pages.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.inlineEdit', 'bcms.grid', 'bcms.ko.extenders', 'bcms.jquery.autocomplete'],
+    function ($, bcms, dynamicContent, siteSettings, editor, grid, ko, autocomplete) {
     'use strict';
 
     var tags = {},
@@ -23,15 +23,16 @@ bettercms.define('bcms.pages.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent
             categoryNameEditor: 'input.bcms-category-name',
             categoriesListForm: '#bcms-categories-form',
             categoriesSearchButton: '#bcms-categories-search-btn',
-            categoriesSearchField: '.bcms-search-query'
-        },
+            categoriesSearchField: '.bcms-search-query',
+    },
         links = {
             loadSiteSettingsCategoryListUrl: null,
             loadSiteSettingsTagListUrl: null,
             saveTagUrl: null,
             deleteTagUrl: null,
             saveCategoryUrl: null,
-            deleteCategoryUrl: null
+            deleteCategoryUrl: null,
+            tagSuggestionSeviceUrl: null
         },
         globalization = {
             confirmDeleteTagMessage: 'Delete tag?',
@@ -224,13 +225,17 @@ bettercms.define('bcms.pages.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent
     tags.TagsListViewModel = function(tagsList) {
         var self = this;
 
-        self.isExpanded = ko.observable(false);
+        self.isExpanded = ko.observable(true);
         self.tags = ko.observableArray();
         self.newTag = ko.observable().extend({ maxLength: { maxLength: ko.maxLength.name } });
 
         if (tagsList) {
             for (var i = 0; i < tagsList.length; i ++) {
-                self.tags.push(new tags.TagViewModel(self, tagsList[i]));
+                if (tagsList[i].Value && tagsList[i].Key) {
+                    self.tags.push(new tags.TagViewModel(self, tagsList[i].Value, tagsList[i].Key));
+                } else {
+                    self.tags.push(new tags.TagViewModel(self, tagsList[i]));
+                }
             }
         }
 
@@ -241,24 +246,34 @@ bettercms.define('bcms.pages.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent
 
         self.addTag = function() {
             var newTag = $.trim(self.newTag());
-            if (newTag) {
-                if (!self.newTag.hasError()) {
-                    for (var i = 0; i < self.tags().length; i++) {
-                        var tag = self.tags()[i];
-                        if (tag.name() == newTag) {
-                            tag.isActive(true);
-                            setTimeout(function() {
-                                tag.isActive(false);
-                            }, 4000);
-                            self.clearTag();
-                            return;
-                        }
-                    }
-                    var tagViewModel = new tags.TagViewModel(self, newTag);
-                    self.tags.push(tagViewModel);
-                }
+            if (newTag && !self.alreadyExists(newTag) && !self.newTag.hasError()) {
+                var tagViewModel = new tags.TagViewModel(self, newTag);
+                self.tags.push(tagViewModel);
             }
             self.clearTag();
+        };
+
+        self.addTagWithId = function (name, id) {
+            if (name && id && !self.alreadyExists(name)) {
+                var tagViewModel = new tags.TagViewModel(self, name, id);
+                self.tags.push(tagViewModel);
+            }
+            self.clearTag();
+        };
+
+        self.alreadyExists = function (newTag) {
+            for (var i = 0; i < self.tags().length; i++) {
+                var tag = self.tags()[i];
+                if (tag.name() == newTag) {
+                    tag.isActive(true);
+                    setTimeout(function () {
+                        tag.isActive(false);
+                    }, 4000);
+                    self.clearTag();
+                    return true;
+                }
+            }
+            return false;
         };
 
         self.clearTag = function() {
@@ -269,7 +284,7 @@ bettercms.define('bcms.pages.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent
     /**
     * Tag view model
     */
-    tags.TagViewModel = function (parent, tagName) {
+    tags.TagViewModel = function (parent, tagName, tagId) {
         var self = this;
 
         self.parent = parent;
@@ -277,6 +292,7 @@ bettercms.define('bcms.pages.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent
 
         self.isActive = ko.observable(false);
         self.name = ko.observable(tagName);
+        self.id = ko.observable(tagId);
 
         self.remove = function () {
             parent.tags.remove(self);
@@ -287,10 +303,43 @@ bettercms.define('bcms.pages.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent
         };
     };
 
+    function addTagAutoCompleteBinding() {
+        ko.bindingHandlers.tagautocomplete = {
+            init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+                var tagViewModel = viewModel,
+                    onlyExisting = valueAccessor() == "onlyExisting",
+                    complete = new autocomplete(element, {
+                        serviceUrl: links.tagSuggestionSeviceUrl,
+                        type: 'POST',
+                        appendTo: $(element).parent(),
+                        autoSelectFirst: onlyExisting,
+                        transformResult: function(response) {
+                            var result = typeof response === 'string' ? $.parseJSON(response) : response;
+                            return {
+                                suggestions: $.map(result.suggestions, function(dataItem) {
+                                    return { value: dataItem.Value, data: dataItem.Key };
+                                })
+                            };
+                        },
+                        onSelect: function(suggestion) {
+                            tagViewModel.newTag(suggestion.value);
+                            if (onlyExisting) {
+                                tagViewModel.addTagWithId(suggestion.value, suggestion.data);
+                            } else {
+                                tagViewModel.addTag();
+                            }
+                            tagViewModel.clearTag();
+                        }
+                    });
+            }
+        };
+    }
+
     /**
     * Initializes tags module.
     */
     tags.init = function () {
+        addTagAutoCompleteBinding();
         console.log('Initializing bcms.pages.tags module.');
     };
     

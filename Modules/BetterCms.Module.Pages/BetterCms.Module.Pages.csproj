@@ -80,13 +80,13 @@
       <Private>True</Private>
       <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Web.Mvc, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Web.Mvc, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Mvc2Futures.2.0.50217.0\lib\Microsoft.Web.Mvc.dll</HintPath>
+      <HintPath>..\..\packages\Mvc3Futures.3.0.20105.0\lib\Microsoft.Web.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="MvcContrib, Version=2.0.95.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="MvcContrib, Version=3.0.100.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\MvcContrib.2.0.95.0\lib\MvcContrib.dll</HintPath>
+      <HintPath>..\..\packages\MvcContrib.Mvc3-ci.3.0.100.0\lib\MvcContrib.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate, Version=3.3.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -136,7 +136,10 @@
     <Compile Include="Api\DataContracts\GetNodesRequest.cs" />
     <Compile Include="Api\DataContracts\GetPageContentsRequest.cs" />
     <Compile Include="Api\DataContracts\GetRegionContentsRequest.cs" />
+    <Compile Include="Command\Tag\SearchTags\SearchTagsCommand.cs" />
     <Compile Include="Helpers\Extensions\RenderPageViewModelExtensions.cs" />
+    <Compile Include="Models\Migrations\Migration201306260946.cs" />
+    <Compile Include="Models\Migrations\Migration201306140841.cs" />
     <Compile Include="Models\Migrations\Migration201305281700.cs" />
     <Compile Include="Mvc\Attributes\ValidVirtualPathValidationAttribute.cs" />
     <Compile Include="Api\DataContracts\AddWidgetToPageRequest.cs" />
@@ -312,6 +315,8 @@
     <Compile Include="ViewModels\Content\ContentViewModel.cs" />
     <Compile Include="ViewModels\Content\ContentSortViewModel.cs" />
     <Compile Include="ViewModels\Content\PageContentSortViewModel.cs" />
+    <Compile Include="ViewModels\Filter\PagesGridViewModel.cs" />
+    <Compile Include="ViewModels\Filter\PagesFilter.cs" />
     <Compile Include="ViewModels\History\ContentHistoryItem.cs" />
     <Compile Include="ViewModels\History\ContentHistoryViewModel.cs" />
     <Compile Include="ViewModels\Sitemap\PageLinkViewModel.cs" />
@@ -412,6 +417,7 @@
     <EmbeddedResource Include="Scripts\bcms.pages.content.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.widgets.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.filter.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -553,6 +559,9 @@
     <EmbeddedResource Include="Views\Seo\Partial\WarnMessageAboutSitemap.cshtml" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Filter\PagesFilterTemplate.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

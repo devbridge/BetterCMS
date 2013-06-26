@@ -33,6 +33,9 @@ namespace BetterCms.Module.Pages.Models
         
         public virtual Category Category { get; set; }
         public virtual MediaImage Image { get; set; }
+        public virtual MediaImage SecondaryImage { get; set; }
+        public virtual MediaImage FeaturedImage { get; set; }
+        public virtual bool IsArchived { get; set; }
 
         public virtual PageProperties Duplicate()
         {
@@ -44,7 +47,6 @@ namespace BetterCms.Module.Pages.Models
             duplicate.MetaTitle = MetaTitle;
             duplicate.MetaKeywords = MetaKeywords;
             duplicate.MetaDescription = MetaDescription;
-            duplicate.IsPublic = IsPublic;
             duplicate.UseCanonicalUrl = UseCanonicalUrl;
             duplicate.CustomCss = CustomCss;
             duplicate.CustomJS = CustomJS;
@@ -53,7 +55,10 @@ namespace BetterCms.Module.Pages.Models
             duplicate.UseNoIndex = UseNoIndex;
             duplicate.Layout = Layout;
             duplicate.Image = Image;
+            duplicate.SecondaryImage = SecondaryImage;
+            duplicate.FeaturedImage = FeaturedImage;
             duplicate.Category = Category;
+            duplicate.IsArchived = IsArchived;
 
             return duplicate;
         }

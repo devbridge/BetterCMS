@@ -64,7 +64,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
             // Redirect user to login page, if page is inaccessible for public users
             // and user is not authenticated
-            if (request.PreviewPageContentId == null && !request.IsAuthenticated && !page.IsPublic && !string.IsNullOrWhiteSpace(cmsConfiguration.LoginUrl))
+            if (request.PreviewPageContentId == null && !request.IsAuthenticated && page.Status != PageStatus.Published && !string.IsNullOrWhiteSpace(cmsConfiguration.LoginUrl))
             {
                 // TODO: uncomment redirect to login form, when login form will be im
                 return null;

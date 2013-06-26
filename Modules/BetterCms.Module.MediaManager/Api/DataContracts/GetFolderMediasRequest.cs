@@ -14,17 +14,21 @@ namespace BetterCms.Module.MediaManager.Api.DataContracts
             Expression<Func<Media, dynamic>> order = null, 
             bool orderDescending = false, 
             int? itemsCount = null, 
-            int startItemNumber = 1)
+            int startItemNumber = 1,
+            bool includeArchived = false)
             : base(filter, order, orderDescending, itemsCount, startItemNumber)
         {
             SetDefaultOrder(m => m.Title);
 
             MediaType = mediaType;
             FolderId = folderId;
+            IncludeArchivedItems = includeArchived;
         }
 
         public MediaType MediaType { get; set; }
 
         public Guid? FolderId { get; set; }
+        
+        public bool IncludeArchivedItems { get; set; }
     }
 }

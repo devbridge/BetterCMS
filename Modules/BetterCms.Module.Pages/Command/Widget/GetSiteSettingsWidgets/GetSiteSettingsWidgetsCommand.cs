@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 
 using BetterCms.Core.Mvc.Commands;
@@ -50,12 +51,13 @@ namespace BetterCms.Module.Pages.Command.Widget.GetSiteSettingsWidgets
                 modelQuery = modelQuery.Where(f => f.CategoryName.ToLower().Contains(searchQuery) || f.WidgetName.ToLower().Contains(searchQuery));
             }
 
-            var widgets = modelQuery.ToList()
+            modelQuery = modelQuery.ToList()
                 .GroupBy(g => g.OriginalId)
                 .Select(grp => grp.OrderByDescending(p => p.HasDraft).First())
-                .AsQueryable()
-                .AddSortingAndPaging(gridOptions)
-                .ToList();
+                .AsQueryable();
+
+            var count = modelQuery.ToRowCountFutureValue();
+            var widgets = modelQuery.AddSortingAndPaging(gridOptions).ToList();
 
             widgets.ForEach(
                 item =>
@@ -74,7 +76,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetSiteSettingsWidgets
                         }
                     });
 
-            return new SiteSettingWidgetListViewModel(widgets, gridOptions, widgets.Count);
+            return new SiteSettingWidgetListViewModel(widgets, gridOptions, count.Value);
         }
     }
 }

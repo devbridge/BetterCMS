@@ -319,7 +319,7 @@
     <value>Insert Image With Options</value>
   </data>
   <data name="MediaManager_ButtonPreviewImage" xml:space="preserve">
-    <value>Preview image</value>
+    <value>Preview</value>
   </data>
   <data name="MediaManager_NewFolder" xml:space="preserve">
     <value>New Folder</value>
@@ -397,12 +397,123 @@
     <value>Image Properties</value>
   </data>
   <data name="MediaManager_ButtonImageProperties" xml:space="preserve">
-    <value>Image Properties</value>
+    <value>Properties</value>
   </data>
   <data name="ImageProperties_Dialog_ImageTitle_Title" xml:space="preserve">
     <value>Image Title</value>
   </data>
   <data name="ImageProperties_Dialog_PublicUrl" xml:space="preserve">
     <value>Public URL</value>
+  </data>
+  <data name="MediaManager_IncludeArchived_Message" xml:space="preserve">
+    <value>Include archived items</value>
+  </data>
+  <data name="ArchiveFile_ConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to pull out file {0} from archive?</value>
+  </data>
+  <data name="ArchiveImage_ConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to send the image {0} to archive?</value>
+  </data>
+  <data name="ArchiveMedia_ArchivedSuccessfully_Message" xml:space="preserve">
+    <value>Media sent to archive successfully.</value>
+  </data>
+  <data name="ArchiveMedia_ConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to send the media {0} to archive?</value>
+  </data>
+  <data name="ArchiveVideo_ConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to pull out video {0} from archive?</value>
+  </data>
+  <data name="MediaManager_ButtonArchive" xml:space="preserve">
+    <value>Archive</value>
+  </data>
+  <data name="MediaManager_ButtonUnarchive" xml:space="preserve">
+    <value>Unarchive</value>
+  </data>
+  <data name="UnarchiveFile_ConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to send the video {0} to archive?</value>
+  </data>
+  <data name="UnarchiveImage_ConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to pull out image {0} from archive?</value>
+  </data>
+  <data name="UnarchiveMedia_ConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to pull out media {0} from archive?</value>
+  </data>
+  <data name="UnarchiveMedia_UnarchivedSuccessfully_Message" xml:space="preserve">
+    <value>Media pulled out from archive successfully.</value>
+  </data>
+  <data name="UnarchiveVideo_ConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to send the video {0} to archive?</value>
+  </data>
+  <data name="Button_Reupload" xml:space="preserve">
+    <value>Re-upload</value>
+  </data>
+  <data name="MultiFileUpload_DragDropBox_Reupload" xml:space="preserve">
+    <value>Drag file here to re-upload</value>
+  </data>
+  <data name="MediaHistory_Column_ArchivedOn" xml:space="preserve">
+    <value>Archived On</value>
+  </data>
+  <data name="MediaHistory_Column_PublishedByUser" xml:space="preserve">
+    <value>Published By</value>
+  </data>
+  <data name="MediaHistory_Column_PublishedOn" xml:space="preserve">
+    <value>Published On</value>
+  </data>
+  <data name="MediaHistory_Column_DisplayedFor" xml:space="preserve">
+    <value>Active For</value>
+  </data>
+  <data name="MediaHistory_Column_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="MediaHistory_SelectVersionToPreviewMessage" xml:space="preserve">
+    <value>Select version to preview history</value>
+  </data>
+  <data name="MediaHistory_OlderVersions" xml:space="preserve">
+    <value>Older Versions</value>
+  </data>
+  <data name="MediaHistory_DialogTitle" xml:space="preserve">
+    <value>History - Media Versions Preview</value>
+  </data>
+  <data name="MediaHistory_Restore_AcceptButtonTitle" xml:space="preserve">
+    <value>Restore</value>
+  </data>
+  <data name="MediaHistory_Restore_ConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to restore to older version?</value>
+  </data>
+  <data name="Button_ShowHistory" xml:space="preserve">
+    <value>History</value>
+  </data>
+  <data name="MediaHistory_Preview_PropertiesTitle" xml:space="preserve">
+    <value>Properties</value>
+  </data>
+  <data name="MediaHistory_Preview_Properties_Caption" xml:space="preserve">
+    <value>Caption</value>
+  </data>
+  <data name="MediaHistory_Preview_Properties_FileSize" xml:space="preserve">
+    <value>File Size</value>
+  </data>
+  <data name="MediaHistory_Preview_Properties_ImageDimensions" xml:space="preserve">
+    <value>Dimensions (pixels)</value>
+  </data>
+  <data name="MediaHistory_Preview_Properties_PublicThumbnailUrl" xml:space="preserve">
+    <value>Public Thumbnail Url</value>
+  </data>
+  <data name="MediaHistory_Preview_Properties_PublicUrl" xml:space="preserve">
+    <value>Public Url</value>
+  </data>
+  <data name="MediaHistory_Preview_Properties_Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="MediaHistory_Status_Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="MediaHistory_Status_Archived" xml:space="preserve">
+    <value>Archived</value>
+  </data>
+  <data name="MediaList_RootFolderName" xml:space="preserve">
+    <value>(root)</value>
+  </data>
+  <data name="MediaManager_MultipleFilesWarning_Message" xml:space="preserve">
+    <value>You can select only one file to re-upload.</value>
   </data>
 </root>

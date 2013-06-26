@@ -76,13 +76,13 @@
       <HintPath>..\..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Web.Mvc, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Web.Mvc, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Mvc2Futures.2.0.50217.0\lib\Microsoft.Web.Mvc.dll</HintPath>
+      <HintPath>..\..\packages\Mvc3Futures.3.0.20105.0\lib\Microsoft.Web.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="MvcContrib, Version=2.0.95.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="MvcContrib, Version=3.0.100.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\MvcContrib.2.0.95.0\lib\MvcContrib.dll</HintPath>
+      <HintPath>..\..\packages\MvcContrib.Mvc3-ci.3.0.100.0\lib\MvcContrib.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate, Version=3.3.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -147,6 +147,7 @@
     <Compile Include="Models\ContentBase.cs" />
     <Compile Include="Models\ComboWireJson.cs" />
     <Compile Include="Models\Maps\ModuleContentVersionMap.cs" />
+    <Compile Include="Models\Migrations\Migration201306101421.cs" />
     <Compile Include="Models\ModuleContentVersion.cs" />
     <Compile Include="Models\LayoutRegion.cs" />
     <Compile Include="Models\Maps\CategoryMap.cs" />
@@ -175,11 +176,13 @@
     <Compile Include="Mvc\CommandBase.cs" />
     <Compile Include="Mvc\CommandHandler.cs" />
     <Compile Include="Mvc\Converters.cs" />
+    <Compile Include="Mvc\Grids\Extensions\PagingExtensions.cs" />
     <Compile Include="Mvc\Grids\Extensions\QueryableExtensions.cs" />
     <Compile Include="Mvc\Grids\Extensions\QueryOverExtensions.cs" />
     <Compile Include="Mvc\Grids\Extensions\GridExtensions.cs" />
     <Compile Include="Mvc\Grids\GridOptions\GridOptions.cs" />
     <Compile Include="Mvc\Grids\IEditableGridItem.cs" />
+    <Compile Include="Mvc\Grids\PagerHelper.cs" />
     <Compile Include="Mvc\Grids\TableRenderers\ScrollableEditableHtmlTableGridRenderer.cs" />
     <Compile Include="Mvc\Grids\TableRenderers\EditableHtmlTableGridRenderer.cs" />
     <Compile Include="Mvc\Grids\TableRenderers\HtmlTableGridSingleRowRenderer.cs" />
@@ -330,9 +333,7 @@
     <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
     <EmbeddedResource Include="Scripts\bcms.authentication.js" />
     <EmbeddedResource Include="Scripts\bcms.datepicker.js" />
-    <EmbeddedResource Include="Scripts\bcms.grid.js" />
     <EmbeddedResource Include="Scripts\bcms.htmlEditor.js" />
-    <EmbeddedResource Include="Scripts\bcms.ko.grid.js" />
     <EmbeddedResource Include="Scripts\bcms.messages.js" />
     <EmbeddedResource Include="Scripts\bcms.preview.js" />
     <EmbeddedResource Include="Scripts\bcms.redirect.js" />
@@ -345,7 +346,6 @@
     <EmbeddedResource Include="Scripts\bcms.modal.js" />
     <EmbeddedResource Include="Scripts\bcms.siteSettings.js" />
     <EmbeddedResource Include="Scripts\bcms.forms.js" />
-    <EmbeddedResource Include="Scripts\bcms.ko.extenders.js" />
     <EmbeddedResource Include="Content\Styles\images\bcms-logo.png" />
     <EmbeddedResource Include="Content\Styles\images\bcms-no-image-1.png" />
     <EmbeddedResource Include="Content\Styles\images\bcms-no-image-2.png" />
@@ -542,6 +542,10 @@
     <EmbeddedResource Include="Content\Styles\bcms.messages.css" />
     <EmbeddedResource Include="Scripts\bcms.dynamicContent.js" />
     <EmbeddedResource Include="Scripts\bcms.js" />
+    <EmbeddedResource Include="Scripts\bcms.grid.js" />
+    <EmbeddedResource Include="Scripts\bcms.jquery.autocomplete.js" />
+    <EmbeddedResource Include="Scripts\bcms.ko.extenders.js" />
+    <EmbeddedResource Include="Scripts\bcms.ko.grid.js" />
     <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\es.js" />
     <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\ja.js" />
     <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\km.js" />
@@ -720,6 +724,9 @@
     <Content Include="Scripts\ckeditor\plugins\scayt\README.md" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\wsc\LICENSE.md" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\wsc\README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\Partial\Paging.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -45,9 +45,9 @@ namespace BetterCms.Api
                     query = query.Where(b => b.Status == PageStatus.Published);
                 }
 
-                if (!request.IncludePrivate)
+                if (!request.IncludeArchivedItems)
                 {
-                    query = query.Where(b => b.IsPublic);
+                    query = query.Where(p => !p.IsArchived);
                 }
 
                 var result = query.ApplyFiltersWithChildren(request);
@@ -129,16 +129,10 @@ namespace BetterCms.Api
                 var pageUrl = CreateOrFixPageUrl(pageDto.PageUrl, pageDto.Title);
                 
                 var layout = Repository.AsProxy<Layout>(pageDto.LayoutId);
-                
-                MediaImage image;
-                if (pageDto.ImageId != null && !pageDto.ImageId.Value.HasDefaultValue())
-                {
-                    image = Repository.AsProxy<MediaImage>(pageDto.ImageId.Value);
-                }
-                else
-                {
-                    image = null;
-                }
+
+                var image = pageDto.ImageId != null && !pageDto.ImageId.Value.HasDefaultValue() ? Repository.AsProxy<MediaImage>(pageDto.ImageId.Value) : null;
+                var secondaryImage = pageDto.SecondaryImageId != null && !pageDto.SecondaryImageId.Value.HasDefaultValue() ? Repository.AsProxy<MediaImage>(pageDto.SecondaryImageId.Value) : null;
+                var featuredImage = pageDto.FeaturedImageId != null && !pageDto.FeaturedImageId.Value.HasDefaultValue() ? Repository.AsProxy<MediaImage>(pageDto.FeaturedImageId.Value) : null;
 
                 Category category;
                 if (pageDto.CategoryId != null && !pageDto.CategoryId.Value.HasDefaultValue())
@@ -155,6 +149,8 @@ namespace BetterCms.Api
                 var page = pageDto.ToPageProperties();
                 page.Layout = layout;
                 page.Image = image;
+                page.SecondaryImage = secondaryImage;
+                page.FeaturedImage = featuredImage;
                 page.Category = category;
                 page.PageUrl = pageUrl;
                 if (pageDto.Status == PageStatus.Published)
@@ -212,6 +208,16 @@ namespace BetterCms.Api
             if (loadChilds.HasFlag(PageLoadableChilds.Image))
             {
                 query = query.Fetch(p => p.Image);
+            }
+
+            if (loadChilds.HasFlag(PageLoadableChilds.SecondaryImage))
+            {
+                query = query.Fetch(p => p.SecondaryImage);
+            }
+
+            if (loadChilds.HasFlag(PageLoadableChilds.FeaturedImage))
+            {
+                query = query.Fetch(p => p.FeaturedImage);
             }
 
             if (loadChilds.HasFlag(PageLoadableChilds.Tags))

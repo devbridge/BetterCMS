@@ -157,6 +157,22 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public ImageSelectorViewModel Image { get; set; }
 
         /// <summary>
+        /// Gets or sets the secondary image.
+        /// </summary>
+        /// <value>
+        /// The secondary image.
+        /// </value>
+        public ImageSelectorViewModel SecondaryImage { get; set; }
+
+        /// <summary>
+        /// Gets or sets the featured image.
+        /// </summary>
+        /// <value>
+        /// The featured image.
+        /// </value>
+        public ImageSelectorViewModel FeaturedImage { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="EditPagePropertiesViewModel" /> class.
         /// </summary>
         public EditPagePropertiesViewModel()
@@ -171,6 +187,14 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// <c>true</c> if this instance is in sitemap; otherwise, <c>false</c>.
         /// </value>
         public bool IsInSitemap { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is archived.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is archived; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsArchived { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

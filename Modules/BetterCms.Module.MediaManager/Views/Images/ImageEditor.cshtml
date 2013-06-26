@@ -38,6 +38,13 @@
                 
             <div class="bcms-edit-file-info">
 
+                <div class="bcms-file-info-text">
+                    <div class="bcms-content-titles">@MediaGlobalization.ImageProperties_Dialog_PublicUrl:</div>
+                    <div class="bcms-edit-file-info">
+                        <input class="bcms-editor-field-box" type="text" value="@Model.Url" readonly="readonly" />
+                    </div>
+                </div>
+
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_Caption_Tooltip_Description)
                     <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_Caption:</div>
@@ -115,11 +122,11 @@
             <div class="bcms-file-alignment">
                 <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_AligmentTitle:</div>
                 <div class="bcms-alignment-controls">
-                    <div class="bcms-align-left@(Model.ImageAlign == MediaImageAlign.Left ? "-active" : string.Empty)">
-                        <input type="radio" id="alignleft" name="ImageAlign" value="@((int)MediaImageAlign.Left)" @(Model.ImageAlign == MediaImageAlign.Left ? "checked" : string.Empty)/>
-                    </div>
                     <div class="bcms-align-center@(Model.ImageAlign == MediaImageAlign.Center ? "-active" : string.Empty)">
                         <input type="radio" id="aligncenter" name="ImageAlign" value="@((int)MediaImageAlign.Center)" @(Model.ImageAlign == MediaImageAlign.Center ? "checked" : string.Empty)/>
+                    </div>
+                    <div class="bcms-align-left@(Model.ImageAlign == MediaImageAlign.Left ? "-active" : string.Empty)">
+                        <input type="radio" id="alignleft" name="ImageAlign" value="@((int)MediaImageAlign.Left)" @(Model.ImageAlign == MediaImageAlign.Left ? "checked" : string.Empty)/>
                     </div>
                     <div class="bcms-align-right@(Model.ImageAlign == MediaImageAlign.Right ? "-active" : string.Empty)">
                         <input type="radio" id="alignright" name="ImageAlign" value="@((int)MediaImageAlign.Right)" @(Model.ImageAlign == MediaImageAlign.Right ? "checked" : string.Empty)/>

@@ -34,9 +34,21 @@ namespace BetterCms.Core.Mvc.Extensions
         /// <returns>
         /// <c>true</c> if type is controller type; otherwise, <c>false</c>.
         /// </returns>
-        public bool IsControllerType(Type type)
+        public virtual bool IsControllerType(Type type)
         {
-            return typeof(IController).IsAssignableFrom(type) &&
+            return IsControllerType<IController>(type);
+        }
+
+        /// <summary>
+        /// Determines whether type is controller type.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns>
+        /// <c>true</c> if type is controller type; otherwise, <c>false</c>.
+        /// </returns>
+        public virtual bool IsControllerType<TController>(Type type)
+        {
+            return typeof(TController).IsAssignableFrom(type) &&
                    type != null && type.IsPublic && type.IsClass && !type.IsAbstract &&
                    type.Name.EndsWith("Controller", StringComparison.OrdinalIgnoreCase);
         }
@@ -65,18 +77,32 @@ namespace BetterCms.Core.Mvc.Extensions
         /// <returns>Controller types from assembly.</returns>
         public IEnumerable<Type> GetControllerTypes(Assembly assembly)
         {
+            return GetControllerTypes<IController>(assembly);
+        }
+
+        /// <summary>
+        /// Gets the controller types from given assembly.
+        /// </summary>
+        /// <typeparam name="TController">The type of the controller.</typeparam>
+        /// <param name="assembly">The assembly.</param>
+        /// <returns>
+        /// Controller types from assembly.
+        /// </returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public IEnumerable<Type> GetControllerTypes<TController>(Assembly assembly)
+        {
             var types = assemblyLoader.GetLoadableTypes(assembly);
 
             if (types != null)
             {
                 foreach (var type in types)
                 {
-                    if (IsControllerType(type))
+                    if (IsControllerType<TController>(type))
                     {
                         yield return type;
                     }
                 }
-            }            
+            }
         }
 
         /// <summary>

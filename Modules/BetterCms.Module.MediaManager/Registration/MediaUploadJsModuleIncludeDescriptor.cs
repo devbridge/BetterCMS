@@ -19,17 +19,18 @@ namespace BetterCms.Module.MediaManager.Registration
         {            
             Links = new IActionProjection[]
                 {    
-                    new JavaScriptModuleLinkTo<UploadController>(this, "loadUploadFilesDialogUrl", f => f.MultiFileUpload("{0}", "{1}")),
+                    new JavaScriptModuleLinkTo<UploadController>(this, "loadUploadFilesDialogUrl", f => f.MultiFileUpload("{0}", "{1}", "{2}")),
                     new JavaScriptModuleLinkTo<UploadController>(this, "uploadFileToServerUrl", f => f.UploadMedia(null)),
                     new JavaScriptModuleLinkTo<UploadController>(this, "undoFileUploadUrl", f => f.RemoveFileUpload("{0}", "{1}", "{2}")),
-                    new JavaScriptModuleLinkTo<UploadController>(this, "loadUploadSingleFileDialogUrl", f => f.SingleFileUpload("{0}", "{1}")),
+                    new JavaScriptModuleLinkTo<UploadController>(this, "loadUploadSingleFileDialogUrl", f => f.SingleFileUpload("{0}", "{1}", "{2}")),
                     new JavaScriptModuleLinkTo<UploadController>(this, "checkUploadedFileStatuses", f => f.CheckFilesStatuses(null))
                 };
 
             Globalization = new IActionProjection[]
                 {
                     new JavaScriptModuleGlobalization(this, "uploadFilesDialogTitle", () => MediaGlobalization.MultiFileUpload_DialogTitle),
-                    new JavaScriptModuleGlobalization(this, "failedToProcessFile", () => MediaGlobalization.MediaManager_FailedToProcessFile_Message)
+                    new JavaScriptModuleGlobalization(this, "failedToProcessFile", () => MediaGlobalization.MediaManager_FailedToProcessFile_Message),
+                    new JavaScriptModuleGlobalization(this, "multipleFilesWarningMessageOnReupload", () => MediaGlobalization.MediaManager_MultipleFilesWarning_Message),
                 };
         }
     }

@@ -15,6 +15,16 @@ namespace BetterCms.Core.Api.Extensions
     /// </summary>
     public static class ApiQueryableExtensions
     {
+        public static IFutureValue<int> ToRowCountFutureValue<TEntity>(this IQueryable<TEntity> query, int top)
+        {
+            var hasPaging = (top > 0);
+            if (hasPaging)
+            {
+                return query.ToRowCountFutureValue();
+            }
+            return null;
+        }
+
         /// <summary>
         /// To the row count future value.
         /// </summary>
@@ -138,7 +148,6 @@ namespace BetterCms.Core.Api.Extensions
         /// <param name="futureValue">The future value.</param>
         /// <returns></returns>
         public static DataListResponse<TEntity> ToDataListResponse<TEntity>(this IQueryable<TEntity> query, IFutureValue<int> futureValue = null)
-            where TEntity : Entity
         {
             var items = query.ToList();
             var totalCount = futureValue != null ? futureValue.Value : items.Count;

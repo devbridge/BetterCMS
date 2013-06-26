@@ -1,9 +1,10 @@
-﻿@using BetterCms.Module.Root.Mvc.Helpers
+﻿@using BetterCms.Module.Blog.Helpers.Extensions
+@using BetterCms.Module.Root.Mvc.Helpers
 @using BetterCms.Module.Pages.Helpers.Extensions
 @model BetterCms.Module.Root.ViewModels.Cms.RenderPageViewModel
 
 @{
-    Layout = "~/Areas/bcms-Root/Views/Shared/BaseLayout.cshtml";
+    Layout = "~/Areas/bcms-root/Views/Shared/BaseLayout.cshtml";
 }
 @section DoctypeTag
 {
@@ -61,6 +62,11 @@
         {
             <p><b>Category:</b> @category.Name</p>
         }
+
+        var liveFrom = Model.GetBlogPostLiveFromDate();
+        var liveTo = Model.GetBlogPostLiveToDate();
+        <p><b>Live From:</b> @(liveFrom.HasValue ? liveFrom.ToString() : "(none)")</p>
+        <p><b>Live To:</b> @(liveTo.HasValue ? liveTo.ToString() : "(none)")</p>
     }
 
     <div class="page-block">

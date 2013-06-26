@@ -206,5 +206,84 @@ bettercms.define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout'], funct
         return target;
     }
 
+    ko.PagingViewModel = (function () {
+        function PagingViewModel(pageSize, pageNumber, totalCount, onOpenPage) {
+            var self = this;
+
+            self.totalPagingLinks = 5;
+            self.activePagePosition = 2;
+
+            self.pageSize = 0;
+            self.pageNumber = ko.observable(1);
+            self.totalPages = ko.observable(1);
+            self.pagingUpperBound = ko.observable(1);
+            self.pagingLowerBound = ko.observable(1);
+            self.totalCount = 0;
+
+            self.pages = ko.computed(function () {
+                var pages = [];
+                for (var i = self.pagingLowerBound(); i <= self.pagingUpperBound(); i++) {
+                    pages.push(i);
+                }
+                return pages;
+            });
+
+            self.openPage = function (pageNr) {
+                self.pageNumber(pageNr);
+
+                if ($.isFunction(onOpenPage)) {
+                    onOpenPage(pageNr);
+                }
+            };
+
+            self.setPaging = function (newPageSize, newPageNumber, newTotalCount) {
+                self.totalCount = newTotalCount > 0 ? newTotalCount : 1;
+                
+                if (newPageSize > 0) {
+                    if (newPageNumber <= 0) {
+                        newPageNumber = 1;
+                    }
+                    if (newTotalCount < 0) {
+                        newTotalCount = 0;
+                    }
+                    var totalPages = parseInt(Math.ceil(newTotalCount / newPageSize));
+                    totalPages = totalPages > 0 ? totalPages : 1;
+
+                    self.pageSize = newPageSize;
+                    self.pageNumber(newPageNumber);
+                    self.totalPages(totalPages);
+                    self.totalCount = newTotalCount;
+
+                    // lower bound
+                    var pagingLowerBound = newPageNumber - self.activePagePosition;
+                    if (pagingLowerBound < 1) {
+                        pagingLowerBound = 1;
+                    }
+
+                    // upper bound
+                    var pagingUpperBound = pagingLowerBound + self.totalPagingLinks;
+                    if (pagingUpperBound > totalPages) {
+                        pagingUpperBound = totalPages;
+                    }
+
+                    // lower bound correction
+                    if (pagingUpperBound - pagingLowerBound < self.totalPagingLinks) {
+                        pagingLowerBound = pagingUpperBound - self.totalPagingLinks;
+                        if (pagingLowerBound < 1) {
+                            pagingLowerBound = 1;
+                        }
+                    }
+
+                    self.pagingLowerBound(pagingLowerBound);
+                    self.pagingUpperBound(pagingUpperBound);
+                }
+            };
+            
+            self.setPaging(pageSize, pageNumber, totalCount);
+        }
+
+        return PagingViewModel;
+    })();
+
     return ko;
 });

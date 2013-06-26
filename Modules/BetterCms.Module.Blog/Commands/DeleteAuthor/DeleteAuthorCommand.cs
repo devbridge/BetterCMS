@@ -1,6 +1,7 @@
 ﻿using BetterCms.Api;
+using BetterCms.Core;
 using BetterCms.Core.Mvc.Commands;
-using BetterCms.Module.Blog.Models;
+using BetterCms.Module.Blog.Api.DataContracts;
 using BetterCms.Module.Blog.ViewModels.Author;
 using BetterCms.Module.Root.Mvc;
 
@@ -15,12 +16,10 @@ namespace BetterCms.Module.Blog.Commands.DeleteAuthor
         /// <returns><c>True</c>, if an author is deleted successfully.</returns>
         public bool Execute(AuthorViewModel request)
         {
-            var author = Repository.Delete<Author>(request.Id, request.Version);
-            UnitOfWork.Commit();
-
-            BlogsApiContext.Events.OnAuthorDeleted(author);
-
-            return true;
+            using (var api = CmsContext.CreateApiContextOf<BlogsApiContext>())
+            {
+                return api.DeleteAuthor(new AuthorDeleteRequest { AuthorId = request.Id, Version = request.Version }).Deleted;
+            }
         }
     }
 }
