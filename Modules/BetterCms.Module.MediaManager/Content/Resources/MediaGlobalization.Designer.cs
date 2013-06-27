@@ -241,6 +241,60 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to File size.
+        /// </summary>
+        public static string FileEditor_Dialog_FileSize {
+            get {
+                return ResourceManager.GetString("FileEditor_Dialog_FileSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Public URL for direct access. It is posible to copy it..
+        /// </summary>
+        public static string FileEditor_Dialog_PublicUrl_Tooltip_Description {
+            get {
+                return ResourceManager.GetString("FileEditor_Dialog_PublicUrl_Tooltip_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string FileEditor_Dialog_Title {
+            get {
+                return ResourceManager.GetString("FileEditor_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit the title of this file..
+        /// </summary>
+        public static string FileEditor_Dialog_Title_Tooltip_Description {
+            get {
+                return ResourceManager.GetString("FileEditor_Dialog_Title_Tooltip_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to save file properties..
+        /// </summary>
+        public static string FileEditor_UpdateFailureMessage_Message {
+            get {
+                return ResourceManager.GetString("FileEditor_UpdateFailureMessage_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failure.
+        /// </summary>
+        public static string FileEditor_UpdateFailureMessage_Title {
+            get {
+                return ResourceManager.GetString("FileEditor_UpdateFailureMessage_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Click on file to select it..
         /// </summary>
         public static string FileNotSelected_MessageMessage {
@@ -255,6 +309,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         public static string FileNotSelected_MessageTitle {
             get {
                 return ResourceManager.GetString("FileNotSelected_MessageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Public URL.
+        /// </summary>
+        public static string FileProperties_Dialog_PublicUrl {
+            get {
+                return ResourceManager.GetString("FileProperties_Dialog_PublicUrl", resourceCulture);
             }
         }
         

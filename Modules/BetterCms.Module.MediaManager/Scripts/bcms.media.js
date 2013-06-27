@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-bettercms.define('bcms.media', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.messages', 'bcms.media.upload', 'bcms.media.imageeditor', 'bcms.htmlEditor', 'bcms.ko.extenders', 'bcms.contextMenu', 'bcms.security', 'bcms.media.history'],
-function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUpload, imageEditor, htmlEditor, ko, menu, security, history) {
+bettercms.define('bcms.media', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.messages', 'bcms.media.upload', 'bcms.media.imageeditor', 'bcms.htmlEditor', 'bcms.ko.extenders', 'bcms.contextMenu', 'bcms.security', 'bcms.media.history', 'bcms.media.fileeditor'],
+function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUpload, imageEditor, htmlEditor, ko, menu, security, history, fileEditor) {
     'use strict';
 
     var media = { },
@@ -435,12 +435,8 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 return !self.isFolder();
             };
 
-            self.canBeEdited = function () {
-                return self.isImage();
-            };
-
             self.canBeDownloaded = function () {
-                return self.publicUrl();
+                return !!self.publicUrl();
             };
 
             self.stopEvent = function(data, event) {
@@ -785,6 +781,22 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         MediaFileViewModel.prototype.insertMedia = function (folderViewModel, data, event) {
             bcms.stopEventPropagation(event);
             insertFile(this);
+        };
+
+        MediaFileViewModel.prototype.editMedia = function (folderViewModel, data, event) {
+            bcms.stopEventPropagation(event);
+            if (this.isDeleting()) {
+                return;
+            }
+
+            if (security.IsAuthorized(["BcmsEditContent"])) {
+                var self = this;
+                fileEditor.onEditFile(self.id(), function (json) {
+                    self.version(json.Version);
+                    self.name(json.Title);
+                    self.oldName = json.Title;
+                });
+            }
         };
 
         MediaFileViewModel.prototype.getArchiveMediaConfirmationMessage = function () {

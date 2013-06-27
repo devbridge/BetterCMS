@@ -119,7 +119,7 @@
                     <!-- /ko -->
                     @if (canEdit)
                     {
-                        <!-- ko if: !isFailed() && canBeEdited() -->
+                        <!-- ko if: !isFailed() && !isFolder() -->
                         <a class="bcms-media-content-link" data-bind="click: editMedia.bind($data, $root), clickBubble: false">@RootGlobalization.Button_Edit</a>
                         <!-- /ko -->
                     }
@@ -127,7 +127,7 @@
                     <input class="bcms-editor-field-box" type="text" readonly="readonly" data-bind="value: publicUrl(), click: selectThis.bind($data, $root, $element)" />
                     <!-- /ko -->
 
-                    <!-- ko if: !isFailed() && (isFolder() || isImage() || canBeEdited()) -->
+                    <!-- ko if: !isFailed() && (isFolder() || isImage() || (@(canEdit ? "true" : "false") && !isFolder()) || (!isFolder() && publicUrl())) -->
                     <div class="bcms-settings-separator"></div>
                     <!-- /ko -->
 

@@ -516,4 +516,25 @@
   <data name="MediaManager_MultipleFilesWarning_Message" xml:space="preserve">
     <value>You can select only one file to re-upload.</value>
   </data>
+  <data name="FileEditor_Dialog_Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="FileEditor_UpdateFailureMessage_Message" xml:space="preserve">
+    <value>Failed to save file properties.</value>
+  </data>
+  <data name="FileEditor_UpdateFailureMessage_Title" xml:space="preserve">
+    <value>Failure</value>
+  </data>
+  <data name="FileEditor_Dialog_FileSize" xml:space="preserve">
+    <value>File size</value>
+  </data>
+  <data name="FileEditor_Dialog_Title_Tooltip_Description" xml:space="preserve">
+    <value>Edit the title of this file.</value>
+  </data>
+  <data name="FileProperties_Dialog_PublicUrl" xml:space="preserve">
+    <value>Public URL</value>
+  </data>
+  <data name="FileEditor_Dialog_PublicUrl_Tooltip_Description" xml:space="preserve">
+    <value>Public URL for direct access. It is posible to copy it.</value>
+  </data>
 </root>
