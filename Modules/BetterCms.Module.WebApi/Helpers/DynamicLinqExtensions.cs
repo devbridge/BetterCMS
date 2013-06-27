@@ -9,7 +9,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Threading;
 
-namespace BetterCms.Module.WebApi.Helpers
+namespace BetterCms.Module.Api.Helpers
 {
     public static class DynamicLinqExtensions
     {

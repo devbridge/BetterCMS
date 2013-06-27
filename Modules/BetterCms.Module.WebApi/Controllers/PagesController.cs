@@ -5,20 +5,20 @@ using BetterCms.Api;
 using BetterCms.Core;
 using BetterCms.Core.Api.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Module.WebApi.Helpers;
-using BetterCms.Module.WebApi.Models.Pages.GetPageById;
-using BetterCms.Module.WebApi.Models.Pages.GetPages;
+using BetterCms.Module.Api.Helpers;
+using BetterCms.Module.Api.Operations.Pages.GetPageById;
+using BetterCms.Module.Api.Operations.Pages.GetPages;
 
 using Microsoft.Web.Mvc;
 
-using GetPagesServiceRequest = BetterCms.Module.Pages.Api.DataContracts.GetPagesRequest;
+using PageModel = BetterCms.Module.Api.Operations.Pages.GetPageById.PageModel;
 
-namespace BetterCms.Module.WebApi.Controllers
+namespace BetterCms.Module.Api.Controllers
 {
     /// <summary>
     /// Blogs API controller.
     /// </summary>
-    [ActionLinkArea(WebApiModuleDescriptor.WebApiAreaName)]
+    [ActionLinkArea(ApiModuleDescriptor.WebApiAreaName)]
     public class PagesController : ApiController
     {                
         public GetPageByIdResponse GetPageById([FromUri]GetPageByIdRequest request)
@@ -26,7 +26,7 @@ namespace BetterCms.Module.WebApi.Controllers
             GetPageByIdResponse response = new GetPageByIdResponse();
 
             response.Status = "ok";
-            response.Data = new Models.Pages.GetPageById.PageModel
+            response.Data = new PageModel
             {
                                               Id = request.PageId
                                           };
@@ -40,16 +40,16 @@ namespace BetterCms.Module.WebApi.Controllers
 
             using (var api = CmsContext.CreateApiContextOf<PagesApiContext>())
             {
-                var serviceRequest = new GetPagesServiceRequest();
+                var serviceRequest = new Pages.Api.DataContracts.GetPagesRequest();
                 request.ApplyTo(serviceRequest);
 
                 var pages = api.GetPages(serviceRequest);
 
-                response.Data = new DataListResponse<Models.Pages.GetPages.PageModel>
+                response.Data = new DataListResponse<Operations.Pages.GetPages.PageModel>
                                     {
                                         TotalCount = pages.TotalCount,
                                         Items = pages.Items.Select(page
-                                            => new Models.Pages.GetPages.PageModel
+                                            => new Operations.Pages.GetPages.PageModel
                                                 {
                                                     Id = page.Id,
                                                     PageUrl = page.PageUrl,

@@ -1,0 +1,402 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5FF9D100-CF25-4899-8D23-8EB9F0C0E102}</ProjectGuid>
+    <ProjectTypeGuids>{E53F8FEA-EAE0-44A6-8774-FFD645390401};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BetterCms.Module.Api</RootNamespace>
+    <AssemblyName>BetterCms.Module.Api</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>false</UseIISExpress>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PrecompileBeforePublish>false</PrecompileBeforePublish>
+    <ExcludeGeneratedDebugSymbol>false</ExcludeGeneratedDebugSymbol>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\..\packages\Autofac.3.0.0\lib\net40\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Configuration">
+      <HintPath>..\..\packages\Autofac.3.0.0\lib\net40\Autofac.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging, Version=2.1.2.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Common.Logging.2.1.2\lib\net40\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections, Version=1.0.1.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Mvc, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Mvc3Futures.3.0.20105.0\lib\Microsoft.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="MvcContrib, Version=3.0.100.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\MvcContrib.Mvc3-ci.3.0.100.0\lib\MvcContrib.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate, Version=3.3.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\NHibernate.3.3.3.4000\lib\Net35\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack">
+      <HintPath>..\..\packages\ServiceStack.3.9.54\lib\net35\ServiceStack.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Common">
+      <HintPath>..\..\packages\ServiceStack.Common.3.9.54\lib\net35\ServiceStack.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.FluentValidation.Mvc3">
+      <HintPath>..\..\packages\ServiceStack.Mvc.3.9.54\lib\net40\ServiceStack.FluentValidation.Mvc3.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Interfaces">
+      <HintPath>..\..\packages\ServiceStack.Common.3.9.54\lib\net35\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.OrmLite">
+      <HintPath>..\..\packages\ServiceStack.OrmLite.SqlServer.3.9.54\lib\ServiceStack.OrmLite.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Redis">
+      <HintPath>..\..\packages\ServiceStack.Redis.3.9.54\lib\net35\ServiceStack.Redis.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.ServiceInterface">
+      <HintPath>..\..\packages\ServiceStack.3.9.54\lib\net35\ServiceStack.ServiceInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text">
+      <HintPath>..\..\packages\ServiceStack.Text.3.9.54\lib\net35\ServiceStack.Text.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Core.4.0.30506.0\lib\net40\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="ApiApplicationHost.cs" />
+    <Compile Include="AutofacContainerAdapter.cs" />
+    <Compile Include="Helpers\CmsApiControllerBase.cs" />
+    <Compile Include="Helpers\DataOptionsQueryCreator.cs" />
+    <Compile Include="Helpers\DynamicLinqExtensions.cs" />
+    <Compile Include="Operations\Blog\GetAuthorById\AuthorModel.cs" />
+    <Compile Include="Operations\Blog\GetAuthors\AuthorModel.cs" />
+    <Compile Include="Operations\Blog\GetBlogPostById\BlogPostModel.cs" />
+    <Compile Include="Operations\Blog\GetBlogPostPropertiesById\BlogPostModel.cs" />
+    <Compile Include="Operations\Blog\GetAuthorById\GetAuthorByIdRequest.cs" />
+    <Compile Include="Operations\Blog\GetAuthorById\GetAuthorByIdResponse.cs" />
+    <Compile Include="Operations\Blog\GetAuthors\GetAuthorsRequest.cs" />
+    <Compile Include="Operations\Blog\GetAuthors\GetAuthorsResponse.cs" />
+    <Compile Include="Operations\Blog\GetBlogPostById\GetBlogPostByIdRequest.cs" />
+    <Compile Include="Operations\Blog\GetBlogPostById\GetBlogPostByIdResponse.cs" />
+    <Compile Include="Operations\Blog\GetBlogPostPropertiesById\AuthorModel.cs" />
+    <Compile Include="Operations\Blog\GetBlogPostPropertiesById\CategoryModel.cs" />
+    <Compile Include="Operations\Blog\GetBlogPostPropertiesById\GetBlogPostPropertiesByIdRequest.cs" />
+    <Compile Include="Operations\Blog\GetBlogPostPropertiesById\GetBlogPostPropertiesByIdResponse.cs" />
+    <Compile Include="Operations\Blog\GetBlogPostPropertiesById\ImageModel.cs" />
+    <Compile Include="Operations\Blog\GetBlogPostPropertiesById\LayoutModel.cs" />
+    <Compile Include="Operations\Blog\GetBlogPostPropertiesById\MetadataModel.cs" />
+    <Compile Include="Operations\Blog\GetBlogPostPropertiesById\TagModel.cs" />
+    <Compile Include="Operations\Blog\GetBlogPosts\BlogPostModel.cs" />
+    <Compile Include="Operations\Blog\GetBlogPosts\GetBlogPostsRequest.cs" />
+    <Compile Include="Operations\Blog\GetBlogPosts\GetBlogPostsResponse.cs" />
+    <Compile Include="Operations\DataFilter.cs" />
+    <Compile Include="Operations\Enums\FilterConnector.cs" />
+    <Compile Include="Operations\Enums\FilterOperation.cs" />
+    <Compile Include="Operations\Enums\OrderDirection.cs" />
+    <Compile Include="Operations\FilterItem.cs" />
+    <Compile Include="Operations\DataOptions.cs" />
+    <Compile Include="Helpers\DataOptionsExtensions.cs" />
+    <Compile Include="Operations\DataOrder.cs" />
+    <Compile Include="Operations\ListRequestBase.cs" />
+    <Compile Include="Operations\ListResponseBase.cs" />
+    <Compile Include="Operations\MediaManager\GetFileById\GetFileByIdRequest.cs" />
+    <Compile Include="Operations\MediaManager\GetFileById\GetFileByIdResponse.cs" />
+    <Compile Include="Operations\MediaManager\GetFileById\MediaModel.cs" />
+    <Compile Include="Operations\MediaManager\GetFileById\TagModel.cs" />
+    <Compile Include="Operations\MediaManager\GetFiles\MediaModel.cs" />
+    <Compile Include="Operations\MediaManager\GetFiles\GetFilesRequest.cs" />
+    <Compile Include="Operations\MediaManager\GetFiles\GetFilesResponse.cs" />
+    <Compile Include="Operations\MediaManager\GetImageById\TagModel.cs" />
+    <Compile Include="Operations\MediaManager\GetImages\GetImagesRequest.cs" />
+    <Compile Include="Operations\MediaManager\GetImages\GetImagesResponse.cs" />
+    <Compile Include="Operations\MediaManager\GetImages\MediaModel.cs" />
+    <Compile Include="Operations\MediaManager\GetMediaTree\GetMediaTreeRequest.cs" />
+    <Compile Include="Operations\MediaManager\GetMediaTree\GetMediaTreeResponse.cs" />
+    <Compile Include="Operations\MediaManager\GetMediaTree\MediaTreeContainer.cs" />
+    <Compile Include="Operations\MediaManager\GetMediaTree\MediaModel.cs" />
+    <Compile Include="Operations\MediaManager\GetVideoById\GetVideoByIdRequest.cs" />
+    <Compile Include="Operations\MediaManager\GetVideoById\GetVideoByIdResponse.cs" />
+    <Compile Include="Operations\MediaManager\GetVideoById\MediaModel.cs" />
+    <Compile Include="Operations\MediaManager\GetImageById\GetImageByIdRequest.cs" />
+    <Compile Include="Operations\MediaManager\GetImageById\GetImageByIdResponse.cs" />
+    <Compile Include="Operations\MediaManager\GetImageById\MediaModel.cs" />
+    <Compile Include="Operations\MediaManager\GetMediaContentById\GetMediaContentByIdRequest.cs" />
+    <Compile Include="Operations\MediaManager\GetMediaContentById\GetMediaContentByIdResponse.cs" />
+    <Compile Include="Operations\MediaManager\GetVideoById\TagModel.cs" />
+    <Compile Include="Operations\MediaManager\GetVideos\GetVideosRequest.cs" />
+    <Compile Include="Operations\MediaManager\GetVideos\GetVideosResponse.cs" />
+    <Compile Include="Operations\MediaManager\GetVideos\MediaModel.cs" />
+    <Compile Include="Operations\OperationBase.cs" />
+    <Compile Include="Operations\OrderItem.cs" />
+    <Compile Include="Operations\ModelBase.cs" />
+    <Compile Include="Operations\Pages\GetBlogPostContentById\ContentModel.cs" />
+    <Compile Include="Operations\Pages\GetBlogPostContentById\GetBlogPostContentByIdRequest.cs" />
+    <Compile Include="Operations\Pages\GetBlogPostContentById\GetBlogPostContentByIdResponse.cs" />
+    <Compile Include="Operations\Pages\GetRenderedPageHtmlByPageUrl\GetRenderedPageHtmlByPageUrlRequest.cs" />
+    <Compile Include="Operations\Pages\GetRenderedPageHtmlByPageUrl\GetRenderedPageHtmlByPageUrlResponse.cs" />
+    <Compile Include="Operations\Pages\GetHtmlContentWidgetById\GetHtmlContentWidgetByIdRequest.cs" />
+    <Compile Include="Operations\Pages\GetHtmlContentWidgetById\GetHtmlContentWidgetByIdResponse.cs" />
+    <Compile Include="Operations\Pages\GetHtmlContentWidgetById\WidgetModel.cs" />
+    <Compile Include="Operations\Pages\GetPageById\GetPageByIdRequest.cs" />
+    <Compile Include="Operations\Pages\GetPageById\GetPageByIdResponse.cs" />
+    <Compile Include="Operations\Pages\GetPageById\PageModel.cs" />
+    <Compile Include="Operations\Pages\GetHtmlContentById\ContentModel.cs" />
+    <Compile Include="Operations\Pages\GetHtmlContentById\GetHtmlContentByIdRequest.cs" />
+    <Compile Include="Operations\Pages\GetHtmlContentById\GetHtmlContentByIdResponse.cs" />
+    <Compile Include="Operations\Pages\GetContentHistoryById\GetContentHistoryByIdRequest.cs" />
+    <Compile Include="Operations\Pages\GetContentHistoryById\GetContentHistoryByIdResponse.cs" />
+    <Compile Include="Operations\Pages\GetContentHistoryById\HistoryContentModel.cs" />
+    <Compile Include="Operations\Pages\GetPageContents\PageContentModel.cs" />
+    <Compile Include="Operations\Pages\GetPageContents\GetPageContentsRequest.cs" />
+    <Compile Include="Operations\Pages\GetPageContents\GetPageContentsResponse.cs" />
+    <Compile Include="Operations\Pages\GetPagePropertiesById\CategoryModel.cs" />
+    <Compile Include="Operations\Pages\GetPagePropertiesById\PageContentModel.cs" />
+    <Compile Include="Operations\Pages\GetPagePropertiesById\GetPagePropertiesByIdRequest.cs" />
+    <Compile Include="Operations\Pages\GetPagePropertiesById\GetPagePropertiesByIdResponse.cs" />
+    <Compile Include="Operations\Pages\GetPagePropertiesById\ImageModel.cs" />
+    <Compile Include="Operations\Pages\GetPagePropertiesById\LayoutModel.cs" />
+    <Compile Include="Operations\Pages\GetPagePropertiesById\MetadataModel.cs" />
+    <Compile Include="Operations\Pages\GetPagePropertiesById\TagModel.cs" />
+    <Compile Include="Operations\Pages\GetRedirectById\GetRedirectByIdRequest.cs" />
+    <Compile Include="Operations\Pages\GetRedirectById\GetRedirectByIdResponse.cs" />
+    <Compile Include="Operations\Pages\GetRedirectById\RedirectModel.cs" />
+    <Compile Include="Operations\Pages\GetRenderedPageHtmlByPageId\GetRenderedPageHtmlByPageIdRequest.cs" />
+    <Compile Include="Operations\Pages\GetRenderedPageHtmlByPageId\GetRenderedPageHtmlByPageIdResponse.cs" />
+    <Compile Include="Operations\Pages\GetServerControlWidgetById\GetServerControlWidgetByIdRequest.cs" />
+    <Compile Include="Operations\Pages\GetServerControlWidgetById\GetServerControlWidgetByIdResponse.cs" />
+    <Compile Include="Operations\Pages\GetServerControlWidgetById\WidgetModel.cs" />
+    <Compile Include="Operations\Pages\GetSitemapNodeById\GetSitemapNodeByIdRequest.cs" />
+    <Compile Include="Operations\Pages\GetSitemapNodeById\GetSitemapNodeByIdResponse.cs" />
+    <Compile Include="Operations\Pages\GetSitemapNodeById\NodeModel.cs" />
+    <Compile Include="Operations\Pages\GetSitemapNodes\GetSitemapNodesRequest.cs" />
+    <Compile Include="Operations\Pages\GetSitemapNodes\GetSitemapNodesResponse.cs" />
+    <Compile Include="Operations\Pages\GetSitemapNodes\NodeModel.cs" />
+    <Compile Include="Operations\Pages\GetSitemapTree\GetSitemapTreeRequest.cs" />
+    <Compile Include="Operations\Pages\GetSitemapTree\GetSitemapTreeResponse.cs" />
+    <Compile Include="Operations\Pages\GetSitemapTree\NodeModel.cs" />
+    <Compile Include="Operations\Pages\GetWidgets\GetWidgetsRequest.cs" />
+    <Compile Include="Operations\Pages\GetWidgets\GetWidgetsResponse.cs" />
+    <Compile Include="Operations\Pages\GetWidgets\WidgetModel.cs" />
+    <Compile Include="Operations\Pages\PageExists\PageExistsRequest.cs" />
+    <Compile Include="Operations\Pages\PageExists\PageExistsResponse.cs" />
+    <Compile Include="Operations\Pages\PageExists\PageModel.cs" />
+    <Compile Include="Operations\Pages\GetPagePropertiesById\PageModel.cs" />
+    <Compile Include="Operations\Pages\GetPages\PageModel.cs" />
+    <Compile Include="Operations\ResponseBase.cs" />
+    <Compile Include="Operations\Pages\GetPages\GetPagesResponse.cs" />
+    <Compile Include="Operations\Pages\GetPages\GetPagesRequest.cs" />
+    <Compile Include="Operations\RequestBase.cs" />
+    <Compile Include="Operations\Root\DefaultRootOperationsContext.cs" />
+    <Compile Include="Operations\Root\GetCategories\CategoryModel.cs" />
+    <Compile Include="Operations\Root\GetCategoryById\CategoryModel.cs" />
+    <Compile Include="Operations\Pages\GetRedirects\GetRedirectsRequest.cs" />
+    <Compile Include="Operations\Pages\GetRedirects\GetRedirectsResponse.cs" />
+    <Compile Include="Operations\Root\GetCategories\GetCategoriesRequest.cs" />
+    <Compile Include="Operations\Root\GetCategories\GetCategoriesResponse.cs" />
+    <Compile Include="Operations\Root\GetCategoryById\GetCategoryByIdRequest.cs" />
+    <Compile Include="Operations\Root\GetCategoryById\GetCategoryByIdResponse.cs" />
+    <Compile Include="Operations\Root\GetCategoryByName\CategoryModel.cs" />
+    <Compile Include="Operations\Root\GetCategoryByName\GetCategoryByNameRequest.cs" />
+    <Compile Include="Operations\Root\GetCategoryByName\GetCategoryByNameResponse.cs" />
+    <Compile Include="Operations\Root\GetLayoutById\GetLayoutByIdRequest.cs" />
+    <Compile Include="Operations\Root\GetLayoutById\GetLayoutByIdResponse.cs" />
+    <Compile Include="Operations\Root\GetLayoutRegions\GetLayoutRegionsRequest.cs" />
+    <Compile Include="Operations\Root\GetLayoutRegions\GetLayoutRegionsResponse.cs" />
+    <Compile Include="Operations\Root\GetLayouts\GetLayoutsRequest.cs" />
+    <Compile Include="Operations\Root\GetLayouts\GetLayoutsResponse.cs" />
+    <Compile Include="Operations\Root\GetLayouts\LayoutModel.cs" />
+    <Compile Include="Operations\Root\GetTagById\GetTagByIdRequest.cs" />
+    <Compile Include="Operations\Root\GetTagById\GetTagByIdResponse.cs" />
+    <Compile Include="Operations\Root\GetTagByName\GetTagByNameOperation.cs" />
+    <Compile Include="Operations\Root\GetTagByName\GetTagByNameRequest.cs" />
+    <Compile Include="Operations\Root\GetTagByName\GetTagByNameResponse.cs" />
+    <Compile Include="Operations\Root\GetTagByName\TagModel.cs" />
+    <Compile Include="Operations\Root\Tags\GetTagsOperation.cs" />
+    <Compile Include="Operations\Root\Tags\GetTagsRequest.cs" />
+    <Compile Include="Operations\Root\Tags\GetTagsResponse.cs" />
+    <Compile Include="Operations\Root\Tags\TagModel.cs" />
+    <Compile Include="Operations\Root\Tag\SaveTagResponse.cs" />
+    <Compile Include="Operations\Root\Tag\SaveTagRequest.cs" />
+    <Compile Include="Operations\Root\Tag\TagModel.cs" />
+    <Compile Include="Operations\Root\Tag\GetTagRequest.cs" />
+    <Compile Include="Operations\Root\Tag\GetTagResponse.cs" />
+    <Compile Include="Operations\Root\Version\VersionService.cs" />
+    <Compile Include="Operations\Root\Version\GetVersionRequest.cs" />
+    <Compile Include="Operations\Root\Version\GetVersionResponse.cs" />
+    <Compile Include="Operations\Root\GetLayoutById\LayoutModel.cs" />
+    <Compile Include="Operations\Pages\GetRedirects\RedirectModel.cs" />
+    <Compile Include="Operations\Root\GetLayoutRegions\RegionModel.cs" />
+    <Compile Include="Operations\Root\GetTagById\TagModel.cs" />
+    <Compile Include="Operations\Root\IRootOperationsContext.cs" />
+    <Compile Include="ApiModuleDescriptor.cs" />
+    <Compile Include="Operations\Root\Tag\TagService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebServiceExamples.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\BetterCMS.Configuration\BetterCms.Configuration.csproj">
+      <Project>{DA2B225E-6AEE-4465-8B08-4D5B1C1CED49}</Project>
+      <Name>BetterCms.Configuration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\BetterCMS.Core\BetterCms.Core.csproj">
+      <Project>{694ca5ca-a0e2-4578-a249-648498b058d7}</Project>
+      <Name>BetterCms.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BetterCMS.Module.Blog\BetterCms.Module.Blog.csproj">
+      <Project>{a66a3046-ef60-4c51-ada7-eb055763419b}</Project>
+      <Name>BetterCms.Module.Blog</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BetterCms.Module.MediaManager\BetterCms.Module.MediaManager.csproj">
+      <Project>{f3e41793-e8ed-4ba8-a1ab-cba1e47b0786}</Project>
+      <Name>BetterCms.Module.MediaManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BetterCms.Module.Pages\BetterCms.Module.Pages.csproj">
+      <Project>{fc04d4c2-8688-498f-b546-292c7e3688a9}</Project>
+      <Name>BetterCms.Module.Pages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BetterCms.Module.Root\BetterCms.Module.Root.csproj">
+      <Project>{66e7e4df-eeea-4b1e-8663-a1b430eb7375}</Project>
+      <Name>BetterCms.Module.Root</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\js\ss-validation.js" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Staging|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Dev|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

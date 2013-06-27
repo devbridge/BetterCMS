@@ -1,6 +1,6 @@
-﻿using BetterCms.Module.WebApi.Helpers;
-using BetterCms.Module.WebApi.Models;
-using BetterCms.Module.WebApi.Models.Enums;
+﻿using BetterCms.Module.Api.Helpers;
+using BetterCms.Module.Api.Operations;
+using BetterCms.Module.Api.Operations.Enums;
 
 using NUnit.Framework;
 

@@ -2,9 +2,9 @@
 using System.Linq.Expressions;
 
 using BetterCms.Core.Api.DataContracts;
-using BetterCms.Module.WebApi.Models;
+using BetterCms.Module.Api.Operations;
 
-namespace BetterCms.Module.WebApi.Helpers
+namespace BetterCms.Module.Api.Helpers
 {
     /// <summary>
     /// DataOptions class extensions

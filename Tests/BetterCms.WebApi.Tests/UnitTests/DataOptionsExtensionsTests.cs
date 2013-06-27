@@ -2,8 +2,8 @@
 using System.Linq.Expressions;
 
 using BetterCms.Core.Api.DataContracts;
-using BetterCms.Module.WebApi.Helpers;
-using BetterCms.Module.WebApi.Models;
+using BetterCms.Module.Api.Helpers;
+using BetterCms.Module.Api.Operations;
 
 using NUnit.Framework;
 

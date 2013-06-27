@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using BetterCms.Module.WebApi.Models;
-using BetterCms.Module.WebApi.Models.Enums;
+using BetterCms.Module.Api.Operations;
+using BetterCms.Module.Api.Operations.Enums;
 
-namespace BetterCms.Module.WebApi.Helpers
+namespace BetterCms.Module.Api.Helpers
 {
     /// <summary>
     /// Helper class for creating filtering and ordering queries from DataOptions instance

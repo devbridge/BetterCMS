@@ -8,6 +8,7 @@ namespace BetterCms.WebApi.Tests.App_Start
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+            routes.IgnoreRoute("bcms-api/{*pathInfo}");
 
             routes.MapRoute(
                 name: "Default",

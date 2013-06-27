@@ -1,0 +1,9 @@
+﻿using System.Runtime.Serialization;
+
+namespace BetterCms.Module.Api.Operations.Blog.GetBlogPostById
+{
+    [DataContract]
+    public class GetBlogPostByIdResponse : ResponseBase<BlogPostModel>
+    {
+    }
+}
