@@ -4,7 +4,7 @@
 @using BetterCms.Module.Root.Mvc
 @using BetterCms.Module.Root.Mvc.Helpers
 
-@model BetterCms.Module.Pages.ViewModels.Tags.TagsTemplateViewModel
+@model BetterCms.Module.Root.ViewModels.Tags.TagsTemplateViewModel
 @{ var canEdit = (ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent); }
 <div class="bcms-input-list-holder">
     @Html.Tooltip(Model.TooltipDescription)

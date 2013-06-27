@@ -5,7 +5,7 @@ using BetterCms.Core.Models;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Mvc.Grids;
 
-namespace BetterCms.Module.Pages.ViewModels.Tags
+namespace BetterCms.Module.Root.ViewModels.Tags
 {
     /// <summary>
     /// View model of tag.

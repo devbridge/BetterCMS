@@ -139,7 +139,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             }
 
             // Notify about new tags.
-            PagesApiContext.Events.OnTagCreated(newTags);
+            RootApiContext.Events.OnTagCreated(newTags);
 
             return new SavePageResponse(page);
         }

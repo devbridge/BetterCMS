@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BetterCms.Module.Pages.Commands.DeleteTag
+namespace BetterCms.Module.Root.Commands.Tag.DeleteTag
 {
     /// <summary>
     /// Data contract for DeleteTagCommand.

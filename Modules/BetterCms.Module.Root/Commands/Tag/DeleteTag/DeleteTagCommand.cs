@@ -1,13 +1,8 @@
-﻿using System;
-
-using BetterCms.Api;
-using BetterCms.Core.Mvc;
+﻿using BetterCms.Api;
 using BetterCms.Core.Mvc.Commands;
-using BetterCms.Module.Pages.Models;
-using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
-namespace BetterCms.Module.Pages.Commands.DeleteTag
+namespace BetterCms.Module.Root.Commands.Tag.DeleteTag
 {
     /// <summary>
     /// A command to delete given tag.
@@ -21,11 +16,11 @@ namespace BetterCms.Module.Pages.Commands.DeleteTag
         /// <returns>Executed command result.</returns>
         public bool Execute(DeleteTagCommandRequest request)
         {
-            var tag = Repository.Delete<Tag>(request.TagId, request.Version);
+            var tag = Repository.Delete<Models.Tag>(request.TagId, request.Version);
             UnitOfWork.Commit();
 
             // Notify.
-            PagesApiContext.Events.OnTagDeleted(tag);
+            RootApiContext.Events.OnTagDeleted(tag);
 
             return true;
         }

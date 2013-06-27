@@ -5,7 +5,6 @@ using Autofac;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Core.Security;
-using BetterCms.Module.Pages.Registration;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Controllers;
 using BetterCms.Module.Root.Mvc;
@@ -35,7 +34,7 @@ namespace BetterCms.Module.Root
         private readonly SiteSettingsJsModuleIncludeDescriptor siteSettingsJsModuleIncludeDescriptor;
 
         /// <summary>
-        /// bcms.pages.tags.js java script module descriptor.
+        /// bcms.tags.js java script module descriptor.
         /// </summary>
         private readonly TagsJsModuleIncludeDescriptor tagsJsModuleIncludeDescriptor;
 

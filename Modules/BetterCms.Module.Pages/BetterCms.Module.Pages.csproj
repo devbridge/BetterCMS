@@ -136,6 +136,8 @@
     <Compile Include="Api\DataContracts\GetNodesRequest.cs" />
     <Compile Include="Api\DataContracts\GetPageContentsRequest.cs" />
     <Compile Include="Api\DataContracts\GetRegionContentsRequest.cs" />
+    <Compile Include="Api\Events\CategoryEvents.cs" />
+    <Compile Include="Api\Events\TagEvents.cs" />
     <Compile Include="Helpers\Extensions\RenderPageViewModelExtensions.cs" />
     <Compile Include="Models\Migrations\Migration201306260946.cs" />
     <Compile Include="Models\Migrations\Migration201306140841.cs" />
@@ -155,9 +157,7 @@
     <Compile Include="Api\DataContracts\Models\ContentOptionValueDto.cs" />
     <Compile Include="Api\DataContracts\CreateContentOptionsRequest.cs" />
     <Compile Include="Api\DataContracts\CreateServerControlWidgetRequest.cs" />
-    <Compile Include="Api\Events\CategoryEvents.cs" />
     <Compile Include="Api\Events\WidgetEvents.cs" />
-    <Compile Include="Api\Events\TagEvents.cs" />
     <Compile Include="Api\Events\RedirectEvents.cs" />
     <Compile Include="Command\History\DestroyContentDraft\DestroyContentDraftCommandRequest.cs" />
     <Compile Include="DataContracts\Enums\PageLoadableChilds.cs" />
@@ -297,7 +297,6 @@
     <Compile Include="Services\DefaultRedirectService.cs" />
     <Compile Include="Services\ICategoryService.cs" />
     <Compile Include="Services\IRedirectService.cs" />
-    <Compile Include="ViewModels\Category\CategoryItemViewModel.cs" />
     <Compile Include="ViewModels\Content\ContentOptionViewModel.cs" />
     <Compile Include="ViewModels\Content\ContentViewModel.cs" />
     <Compile Include="ViewModels\Content\ContentSortViewModel.cs" />
@@ -406,9 +405,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Shared\Partial\WarnMessageAboutDraft.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Category\Categories.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Content\AddPageHtmlContent.cshtml" />

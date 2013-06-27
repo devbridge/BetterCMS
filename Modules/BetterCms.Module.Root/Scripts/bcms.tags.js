@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-bettercms.define('bcms.pages.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.inlineEdit', 'bcms.grid', 'bcms.ko.extenders', 'bcms.jquery.autocomplete'],
+bettercms.define('bcms.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.inlineEdit', 'bcms.grid', 'bcms.ko.extenders', 'bcms.jquery.autocomplete'],
     function ($, bcms, dynamicContent, siteSettings, editor, grid, ko, autocomplete) {
     'use strict';
 
@@ -340,7 +340,7 @@ bettercms.define('bcms.pages.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent
     */
     tags.init = function () {
         addTagAutoCompleteBinding();
-        console.log('Initializing bcms.pages.tags module.');
+        console.log('Initializing bcms.tags module.');
     };
     
     /**

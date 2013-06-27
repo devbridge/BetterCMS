@@ -1,14 +1,11 @@
 ﻿using System;
 
 using BetterCms.Core.Exceptions;
-using BetterCms.Core.Mvc;
 using BetterCms.Core.Mvc.Commands;
-using BetterCms.Module.Pages.Models;
-using BetterCms.Module.Pages.ViewModels.Tags;
-using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.ViewModels.Tags;
 
-namespace BetterCms.Module.Pages.Commands.GetTag
+namespace BetterCms.Module.Root.Commands.Tag.GetTag
 {
     /// <summary>
     /// A command to get tag item by id.
@@ -24,7 +21,7 @@ namespace BetterCms.Module.Pages.Commands.GetTag
         {
             try
             {
-                var tag = Repository.FirstOrDefault<Tag>(f => f.Id == tagId);
+                var tag = Repository.FirstOrDefault<Models.Tag>(f => f.Id == tagId);
                 
                 if (tag != null)
                 {

@@ -5,7 +5,7 @@ using BetterCms.Core.Models;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Mvc.Grids;
 
-namespace BetterCms.Module.Pages.ViewModels.Category
+namespace BetterCms.Module.Root.ViewModels.Category
 {
     /// <summary>
     /// View model of category.

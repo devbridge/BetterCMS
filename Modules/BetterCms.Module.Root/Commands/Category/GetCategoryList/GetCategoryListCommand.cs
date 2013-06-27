@@ -1,16 +1,16 @@
 ﻿using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
-using BetterCms.Module.Pages.ViewModels.Category;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
+using BetterCms.Module.Root.ViewModels.Category;
 using BetterCms.Module.Root.ViewModels.SiteSettings;
 
 using NHibernate.Criterion;
 using NHibernate.Transform;
 
-namespace BetterCms.Module.Pages.Command.Category.GetCategoryList
+namespace BetterCms.Module.Root.Commands.Category.GetCategoryList
 {
     /// <summary>
     /// A command to get category list by filter.

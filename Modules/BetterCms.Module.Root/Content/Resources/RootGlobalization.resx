@@ -237,6 +237,18 @@
   <data name="CookieSupport_MustBeEnabled_Message_SecondLine" xml:space="preserve">
     <value>Cookies must be enabled.</value>
   </data>
+  <data name="CreateCategory_CreatedSuccessfully_Message" xml:space="preserve">
+    <value>Category created successfully.</value>
+  </data>
+  <data name="CreateTag_CreatedSuccessfully_Message" xml:space="preserve">
+    <value>Tag created successfully.</value>
+  </data>
+  <data name="DeleteCategory_DeletedSuccessfully_Message" xml:space="preserve">
+    <value>Category deleted successfully.</value>
+  </data>
+  <data name="DeleteTag_DeletedSuccessfully_Message" xml:space="preserve">
+    <value>Tag removed successfully.</value>
+  </data>
   <data name="DynamicContent_DialogForbidden_Message" xml:space="preserve">
     <value>Forbidden: Access is denied.</value>
   </data>
@@ -309,6 +321,12 @@
   <data name="Reload_Title" xml:space="preserve">
     <value>Reloading page</value>
   </data>
+  <data name="SaveCategory_CategoryExists_Message" xml:space="preserve">
+    <value>Category already exists. </value>
+  </data>
+  <data name="SaveTag_TagExists_Message" xml:space="preserve">
+    <value>Tag already exists.</value>
+  </data>
   <data name="Sidebar_DragTitle" xml:space="preserve">
     <value>Drag to adjust sidebar position</value>
   </data>
@@ -345,14 +363,38 @@
   <data name="SiteSettings_CategoriesMenuItem" xml:space="preserve">
     <value>Categories</value>
   </data>
+  <data name="SiteSettings_Categories_AddNewCategory" xml:space="preserve">
+    <value>Add New +</value>
+  </data>
   <data name="SiteSettings_Categories_DeleteCategoryMessage" xml:space="preserve">
     <value>Are you sure you want to delete the {0} category?</value>
+  </data>
+  <data name="SiteSettings_Categories_NameColumn" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="SiteSettings_Categories_Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="SiteSettings_Categories_Title" xml:space="preserve">
+    <value>Categories</value>
   </data>
   <data name="SiteSettings_TagsMenuItem" xml:space="preserve">
     <value>Tags</value>
   </data>
+  <data name="SiteSettings_Tags_AddNewTag" xml:space="preserve">
+    <value>Add New +</value>
+  </data>
   <data name="SiteSettings_Tags_DeleteTagMessage" xml:space="preserve">
     <value>Are you sure you want to delete the {0} tag?</value>
+  </data>
+  <data name="SiteSettings_Tags_Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="SiteSettings_Tags_TagColumn" xml:space="preserve">
+    <value>Tag</value>
+  </data>
+  <data name="SiteSettings_Tags_Title" xml:space="preserve">
+    <value>Tags</value>
   </data>
   <data name="SiteSettings_Title" xml:space="preserve">
     <value>Site Settings</value>

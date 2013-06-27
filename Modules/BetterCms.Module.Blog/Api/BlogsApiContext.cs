@@ -204,7 +204,7 @@ namespace BetterCms.Api
                 Events.OnBlogUpdated(blog);
 
                 // Notify about new created tags.
-                PagesApiContext.Events.OnTagCreated(newTags);
+                RootApiContext.Events.OnTagCreated(newTags);
 
                 return blog;
             }

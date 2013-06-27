@@ -3,11 +3,11 @@
 using BetterCms.Api;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
-using BetterCms.Module.Pages.Content.Resources;
-using BetterCms.Module.Pages.ViewModels.Category;
+using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.ViewModels.Category;
 
-namespace BetterCms.Module.Pages.Command.Category.SaveCategory
+namespace BetterCms.Module.Root.Commands.Category.SaveCategory
 {
     /// <summary>
     /// A command to save category item.
@@ -28,7 +28,7 @@ namespace BetterCms.Module.Pages.Command.Category.SaveCategory
             var categoryName = Repository.FirstOrDefault<Root.Models.Category>(c => c.Name == categoryItem.Name);
             if (categoryName != null && categoryName.Id != categoryItem.Id)
             {
-                var message = string.Format(PagesGlobalization.SaveCategory_CategoryExists_Message, categoryItem.Name);
+                var message = string.Format(RootGlobalization.SaveCategory_CategoryExists_Message, categoryItem.Name);
                 var logMessage = string.Format("Category already exists. Category name: {0}, Id: {1}", categoryItem.Name, categoryItem.Id);
 
                 throw new ValidationException(() => message, logMessage);
@@ -51,11 +51,11 @@ namespace BetterCms.Module.Pages.Command.Category.SaveCategory
 
             if (categoryItem.Id == default(Guid))
             {
-                PagesApiContext.Events.OnCategoryCreated(category);
+                RootApiContext.Events.OnCategoryCreated(category);
             }
             else
             {
-                PagesApiContext.Events.OnCategoryUpdated(category);
+                RootApiContext.Events.OnCategoryUpdated(category);
             }
 
             return new CategoryItemViewModel

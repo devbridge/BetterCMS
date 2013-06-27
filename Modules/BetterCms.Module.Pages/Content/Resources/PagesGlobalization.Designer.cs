@@ -709,15 +709,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Category created successfully..
-        /// </summary>
-        public static string CreateCategory_CreatedSuccessfully_Message {
-            get {
-                return ResourceManager.GetString("CreateCategory_CreatedSuccessfully_Message", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Create Widget.
         /// </summary>
         public static string CreateHtmlContentWidget_Dialog_Title {
@@ -732,15 +723,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string CreateRedirect_CreatedSuccessfully_Message {
             get {
                 return ResourceManager.GetString("CreateRedirect_CreatedSuccessfully_Message", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tag created successfully..
-        /// </summary>
-        public static string CreateTag_CreatedSuccessfully_Message {
-            get {
-                return ResourceManager.GetString("CreateTag_CreatedSuccessfully_Message", resourceCulture);
             }
         }
         
@@ -768,15 +750,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string Date_Picker_Tooltip_Title {
             get {
                 return ResourceManager.GetString("Date_Picker_Tooltip_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Category deleted successfully..
-        /// </summary>
-        public static string DeleteCategory_DeletedSuccessfully_Message {
-            get {
-                return ResourceManager.GetString("DeleteCategory_DeletedSuccessfully_Message", resourceCulture);
             }
         }
         
@@ -1020,15 +993,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string DeleteRegion_Confirmation_Message {
             get {
                 return ResourceManager.GetString("DeleteRegion_Confirmation_Message", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tag removed successfully..
-        /// </summary>
-        public static string DeleteTag_DeletedSuccessfully_Message {
-            get {
-                return ResourceManager.GetString("DeleteTag_DeletedSuccessfully_Message", resourceCulture);
             }
         }
         
@@ -2104,15 +2068,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Category already exists. .
-        /// </summary>
-        public static string SaveCategory_CategoryExists_Message {
-            get {
-                return ResourceManager.GetString("SaveCategory_CategoryExists_Message", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Page created succesfully..
         /// </summary>
         public static string SavePage_CreatedSuccessfully_Message {
@@ -2172,15 +2127,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string SaveRedirect_RedirectUrl_Name {
             get {
                 return ResourceManager.GetString("SaveRedirect_RedirectUrl_Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tag already exists..
-        /// </summary>
-        public static string SaveTag_TagExists_Message {
-            get {
-                return ResourceManager.GetString("SaveTag_TagExists_Message", resourceCulture);
             }
         }
         
@@ -2352,51 +2298,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string Siderbar_ClonePageButtonTitle {
             get {
                 return ResourceManager.GetString("Siderbar_ClonePageButtonTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add New +.
-        /// </summary>
-        public static string SiteSettings_Categories_AddNewCategory {
-            get {
-                return ResourceManager.GetString("SiteSettings_Categories_AddNewCategory", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Category.
-        /// </summary>
-        public static string SiteSettings_Categories_NameColumn {
-            get {
-                return ResourceManager.GetString("SiteSettings_Categories_NameColumn", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Search.
-        /// </summary>
-        public static string SiteSettings_Categories_Search {
-            get {
-                return ResourceManager.GetString("SiteSettings_Categories_Search", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Categories.
-        /// </summary>
-        public static string SiteSettings_Categories_Title {
-            get {
-                return ResourceManager.GetString("SiteSettings_Categories_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Categories.
-        /// </summary>
-        public static string SiteSettings_CategoriesMenuItem {
-            get {
-                return ResourceManager.GetString("SiteSettings_CategoriesMenuItem", resourceCulture);
             }
         }
         
@@ -2599,15 +2500,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add New +.
-        /// </summary>
-        public static string SiteSettings_Tags_AddNewTag {
-            get {
-                return ResourceManager.GetString("SiteSettings_Tags_AddNewTag", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to A tag {0} was saved..
         /// </summary>
         public static string SiteSettings_Tags_NewTagCreatedMessage {
@@ -2617,38 +2509,11 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search.
-        /// </summary>
-        public static string SiteSettings_Tags_Search {
-            get {
-                return ResourceManager.GetString("SiteSettings_Tags_Search", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tag.
-        /// </summary>
-        public static string SiteSettings_Tags_TagColumn {
-            get {
-                return ResourceManager.GetString("SiteSettings_Tags_TagColumn", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to A tag {0} was removed..
         /// </summary>
         public static string SiteSettings_Tags_TagRemovedMessage {
             get {
                 return ResourceManager.GetString("SiteSettings_Tags_TagRemovedMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tags.
-        /// </summary>
-        public static string SiteSettings_Tags_Title {
-            get {
-                return ResourceManager.GetString("SiteSettings_Tags_Title", resourceCulture);
             }
         }
         

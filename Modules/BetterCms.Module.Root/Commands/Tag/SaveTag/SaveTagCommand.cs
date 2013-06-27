@@ -2,15 +2,12 @@
 
 using BetterCms.Api;
 using BetterCms.Core.Exceptions.Mvc;
-using BetterCms.Core.Mvc;
 using BetterCms.Core.Mvc.Commands;
-using BetterCms.Module.Pages.Content.Resources;
-using BetterCms.Module.Pages.Models;
-using BetterCms.Module.Pages.ViewModels.Tags;
-using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.ViewModels.Tags;
 
-namespace BetterCms.Module.Pages.Commands.SaveTag
+namespace BetterCms.Module.Root.Commands.Tag.SaveTag
 {
     /// <summary>
     /// A command to save tag item.
@@ -26,12 +23,12 @@ namespace BetterCms.Module.Pages.Commands.SaveTag
         /// </returns>
         public TagItemViewModel Execute(TagItemViewModel tagItem)
         {
-            Tag tag;
+            Models.Tag tag;
 
-            var tagName = Repository.FirstOrDefault<Tag>(c => c.Name == tagItem.Name.Trim());
+            var tagName = Repository.FirstOrDefault<Models.Tag>(c => c.Name == tagItem.Name.Trim());
             if (tagName != null && tagName.Id != tagItem.Id)
             {
-                var message = string.Format(PagesGlobalization.SaveTag_TagExists_Message, tagItem.Name);
+                var message = string.Format(RootGlobalization.SaveTag_TagExists_Message, tagItem.Name);
                 var logMessage = string.Format("Tag already exists. Tag name: {0}, Id: {1}", tagItem.Name, tagItem.Id);
 
                 throw new ValidationException(() => message, logMessage);
@@ -39,11 +36,11 @@ namespace BetterCms.Module.Pages.Commands.SaveTag
 
             if (tagItem.Id == default(Guid))
             {
-                tag = new Tag();
+                tag = new Models.Tag();
             }
             else
             {
-                tag = Repository.AsProxy<Tag>(tagItem.Id);                
+                tag = Repository.AsProxy<Models.Tag>(tagItem.Id);                
             }
 
             tag.Version = tagItem.Version;
@@ -54,11 +51,11 @@ namespace BetterCms.Module.Pages.Commands.SaveTag
 
             if (tagItem.Id == default(Guid))
             {
-                PagesApiContext.Events.OnTagCreated(tag);
+                RootApiContext.Events.OnTagCreated(tag);
             }
             else
             {
-                PagesApiContext.Events.OnTagUpdated(tag);
+                RootApiContext.Events.OnTagUpdated(tag);
             }
 
             return new TagItemViewModel

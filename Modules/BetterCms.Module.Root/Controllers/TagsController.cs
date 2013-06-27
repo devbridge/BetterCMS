@@ -1,26 +1,25 @@
-﻿using System.Collections.Generic;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 using BetterCms.Core.Security;
-using BetterCms.Module.Pages.Command.Tag.GetTagList;
-using BetterCms.Module.Pages.Commands.DeleteTag;
-using BetterCms.Module.Pages.Commands.SaveTag;
-using BetterCms.Module.Pages.Content.Resources;
-using BetterCms.Module.Pages.ViewModels.Tags;
-using BetterCms.Module.Root;
+using BetterCms.Module.Root.Commands.Tag.DeleteTag;
+using BetterCms.Module.Root.Commands.Tag.GetTagList;
+using BetterCms.Module.Root.Commands.Tag.SaveTag;
+using BetterCms.Module.Root.Commands.Tag.SearchTags;
+using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
+using BetterCms.Module.Root.ViewModels.Tags;
 
 using Microsoft.Web.Mvc;
 
-namespace BetterCms.Module.Pages.Controllers
+namespace BetterCms.Module.Root.Controllers
 {
     /// <summary>
     /// Handles site settings logic for Pages module.
     /// </summary>
     [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
-    [ActionLinkArea(PagesModuleDescriptor.PagesAreaName)]
+    [ActionLinkArea(RootModuleDescriptor.RootAreaName)]
     public class TagsController : CmsControllerBase
     {
         /// <summary>
@@ -52,7 +51,7 @@ namespace BetterCms.Module.Pages.Controllers
                 {
                     if (tag.Id.HasDefaultValue())
                     {
-                        Messages.AddSuccess(PagesGlobalization.CreateTag_CreatedSuccessfully_Message);
+                        Messages.AddSuccess(RootGlobalization.CreateTag_CreatedSuccessfully_Message);
                     }
                     return Json(new WireJson { Success = true, Data = response });
                 }
@@ -80,7 +79,7 @@ namespace BetterCms.Module.Pages.Controllers
 
             if (success)
             {
-                Messages.AddSuccess(PagesGlobalization.DeleteTag_DeletedSuccessfully_Message);
+                Messages.AddSuccess(RootGlobalization.DeleteTag_DeletedSuccessfully_Message);
             }
 
             return Json(new WireJson(success));

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BetterCms.Module.Pages.Commands.DeleteCategory
+namespace BetterCms.Module.Root.Commands.Category.DeleteCategory
 {
     /// <summary>
     /// Data contract for DeleteCategoryCommand.

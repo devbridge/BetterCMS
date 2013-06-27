@@ -1,26 +1,24 @@
 ﻿using System.Web.Mvc;
 
 using BetterCms.Core.Security;
-using BetterCms.Module.Pages.Command.Category.GetCategoryList;
-using BetterCms.Module.Pages.Command.Category.SaveCategory;
-using BetterCms.Module.Pages.Commands.DeleteCategory;
-using BetterCms.Module.Pages.Content.Resources;
-using BetterCms.Module.Pages.ViewModels.Category;
-
-using BetterCms.Module.Root;
+using BetterCms.Module.Root.Commands.Category.DeleteCategory;
+using BetterCms.Module.Root.Commands.Category.GetCategoryList;
+using BetterCms.Module.Root.Commands.Category.SaveCategory;
+using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
+using BetterCms.Module.Root.ViewModels.Category;
 
 using Microsoft.Web.Mvc;
 
-namespace BetterCms.Module.Pages.Controllers
+namespace BetterCms.Module.Root.Controllers
 {
     /// <summary>
     /// Handles categories logic.
     /// </summary>
     [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
-    [ActionLinkArea(PagesModuleDescriptor.PagesAreaName)]
+    [ActionLinkArea(RootModuleDescriptor.RootAreaName)]
     public class CategoryController : CmsControllerBase
     {       
         /// <summary>
@@ -53,7 +51,7 @@ namespace BetterCms.Module.Pages.Controllers
                 {
                     if (category.Id.HasDefaultValue())
                     {
-                        Messages.AddSuccess(PagesGlobalization.CreateCategory_CreatedSuccessfully_Message);
+                        Messages.AddSuccess(RootGlobalization.CreateCategory_CreatedSuccessfully_Message);
                     }
 
                     return Json(new WireJson { Success = true, Data = response });
@@ -82,7 +80,7 @@ namespace BetterCms.Module.Pages.Controllers
 
             if (success)
             {
-                Messages.AddSuccess(PagesGlobalization.DeleteCategory_DeletedSuccessfully_Message);
+                Messages.AddSuccess(RootGlobalization.DeleteCategory_DeletedSuccessfully_Message);
             }
 
             return Json(new WireJson(success));

@@ -421,6 +421,42 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Category created successfully..
+        /// </summary>
+        public static string CreateCategory_CreatedSuccessfully_Message {
+            get {
+                return ResourceManager.GetString("CreateCategory_CreatedSuccessfully_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tag created successfully..
+        /// </summary>
+        public static string CreateTag_CreatedSuccessfully_Message {
+            get {
+                return ResourceManager.GetString("CreateTag_CreatedSuccessfully_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category deleted successfully..
+        /// </summary>
+        public static string DeleteCategory_DeletedSuccessfully_Message {
+            get {
+                return ResourceManager.GetString("DeleteCategory_DeletedSuccessfully_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tag removed successfully..
+        /// </summary>
+        public static string DeleteTag_DeletedSuccessfully_Message {
+            get {
+                return ResourceManager.GetString("DeleteTag_DeletedSuccessfully_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Forbidden: Access is denied..
         /// </summary>
         public static string DynamicContent_DialogForbidden_Message {
@@ -637,6 +673,24 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Category already exists. .
+        /// </summary>
+        public static string SaveCategory_CategoryExists_Message {
+            get {
+                return ResourceManager.GetString("SaveCategory_CategoryExists_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tag already exists..
+        /// </summary>
+        public static string SaveTag_TagExists_Message {
+            get {
+                return ResourceManager.GetString("SaveTag_TagExists_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Drag to adjust sidebar position.
         /// </summary>
         public static string Sidebar_DragTitle {
@@ -736,11 +790,47 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add New +.
+        /// </summary>
+        public static string SiteSettings_Categories_AddNewCategory {
+            get {
+                return ResourceManager.GetString("SiteSettings_Categories_AddNewCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to delete the {0} category?.
         /// </summary>
         public static string SiteSettings_Categories_DeleteCategoryMessage {
             get {
                 return ResourceManager.GetString("SiteSettings_Categories_DeleteCategoryMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category.
+        /// </summary>
+        public static string SiteSettings_Categories_NameColumn {
+            get {
+                return ResourceManager.GetString("SiteSettings_Categories_NameColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string SiteSettings_Categories_Search {
+            get {
+                return ResourceManager.GetString("SiteSettings_Categories_Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Categories.
+        /// </summary>
+        public static string SiteSettings_Categories_Title {
+            get {
+                return ResourceManager.GetString("SiteSettings_Categories_Title", resourceCulture);
             }
         }
         
@@ -754,11 +844,47 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add New +.
+        /// </summary>
+        public static string SiteSettings_Tags_AddNewTag {
+            get {
+                return ResourceManager.GetString("SiteSettings_Tags_AddNewTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to delete the {0} tag?.
         /// </summary>
         public static string SiteSettings_Tags_DeleteTagMessage {
             get {
                 return ResourceManager.GetString("SiteSettings_Tags_DeleteTagMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string SiteSettings_Tags_Search {
+            get {
+                return ResourceManager.GetString("SiteSettings_Tags_Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tag.
+        /// </summary>
+        public static string SiteSettings_Tags_TagColumn {
+            get {
+                return ResourceManager.GetString("SiteSettings_Tags_TagColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tags.
+        /// </summary>
+        public static string SiteSettings_Tags_Title {
+            get {
+                return ResourceManager.GetString("SiteSettings_Tags_Title", resourceCulture);
             }
         }
         

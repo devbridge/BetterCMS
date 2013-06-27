@@ -256,7 +256,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             }
 
             // Notify about new created tags.
-            PagesApiContext.Events.OnTagCreated(newTags);
+            RootApiContext.Events.OnTagCreated(newTags);
 
             // Notify about redirect creation.
             if (redirectCreated != null)

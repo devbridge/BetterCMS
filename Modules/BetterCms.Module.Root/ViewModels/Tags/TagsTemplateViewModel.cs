@@ -1,4 +1,4 @@
-﻿namespace BetterCms.Module.Pages.ViewModels.Tags
+﻿namespace BetterCms.Module.Root.ViewModels.Tags
 {
     public class TagsTemplateViewModel
     {

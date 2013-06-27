@@ -119,9 +119,11 @@
     </Compile>
     <Compile Include="Api\Attributes\AllowableValuesValidationAttribute.cs" />
     <Compile Include="Api\Attributes\EmptyGuidValidationAttribute.cs" />
+    <Compile Include="Api\Events\CategoryEvents.cs" />
     <Compile Include="Api\Events\PageRetrievedEventArgs.cs" />
     <Compile Include="Api\Events\RootEvents.cs" />
     <Compile Include="Api\Events\PageRenderingEventArgs.cs" />
+    <Compile Include="Api\Events\TagEvents.cs" />
     <Compile Include="Api\RootApiContext.cs" />
     <Compile Include="Commands\Category\DeleteCategory\DeleteCategoryCommand.cs" />
     <Compile Include="Commands\Category\DeleteCategory\DeleteCategoryCommandRequest.cs" />
@@ -750,6 +752,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Tags\TagsTemplate.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Category\Categories.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

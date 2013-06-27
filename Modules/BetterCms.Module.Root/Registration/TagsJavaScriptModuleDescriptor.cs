@@ -1,9 +1,9 @@
 ﻿using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
-using BetterCms.Module.Pages.Controllers;
 using BetterCms.Module.Root.Content.Resources;
+using BetterCms.Module.Root.Controllers;
 
-namespace BetterCms.Module.Pages.Registration
+namespace BetterCms.Module.Root.Registration
 {
     /// <summary>
     /// bcms.tags.js module descriptor.
