@@ -25,7 +25,7 @@ namespace BetterCms.Module.WebApi.Models
         /// <value>
         /// The list of filter items.
         /// </value>
-        public IList<FilterItem> FilterItems { get; set; }
+        public IList<FilterItem> Where { get; set; }
 
         /// <summary>
         /// Gets or sets the list of inner filters.
@@ -33,7 +33,7 @@ namespace BetterCms.Module.WebApi.Models
         /// <value>
         /// The list of inner filters.
         /// </value>
-        public IList<DataFilter> InnerFilters { get; set; }
+        public IList<DataFilter> Inner { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DataFilter" /> class.
@@ -50,8 +50,8 @@ namespace BetterCms.Module.WebApi.Models
         /// <param name="connector">The filter connector.</param>
         public DataFilter(FilterConnector connector)
         {
-            FilterItems = new List<FilterItem>();
-            InnerFilters = new List<DataFilter>();
+            Where = new List<FilterItem>();
+            Inner = new List<DataFilter>();
             Connector = connector;
         }
 
@@ -65,7 +65,7 @@ namespace BetterCms.Module.WebApi.Models
         {
             var filterItem = new FilterItem(field, value, operation);
 
-            FilterItems.Add(filterItem);
+            Where.Add(filterItem);
         }
     }
 }

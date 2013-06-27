@@ -100,11 +100,11 @@ namespace BetterCms.Module.WebApi.Helpers
         {
             var sb = new StringBuilder(string.Empty);
 
-            if (dataOptions.Order != null && dataOptions.Order.OrderItems != null && dataOptions.Order.OrderItems.Count > 0)
+            if (dataOptions.Order != null && dataOptions.Order.By != null && dataOptions.Order.By.Count > 0)
             {
-                for (var i = 0; i < dataOptions.Order.OrderItems.Count; i++)
+                for (var i = 0; i < dataOptions.Order.By.Count; i++)
                 {
-                    var item = dataOptions.Order.OrderItems[i];
+                    var item = dataOptions.Order.By[i];
                     if (i > 0)
                     {
                         sb.Append(", ");
@@ -131,8 +131,8 @@ namespace BetterCms.Module.WebApi.Helpers
             filterParameters.Clear();
 
             if (dataOptions.Filter != null &&
-                ((dataOptions.Filter.FilterItems != null && dataOptions.Filter.FilterItems.Count > 0)
-                    || (dataOptions.Filter.InnerFilters != null && dataOptions.Filter.InnerFilters.Count > 0)))
+                ((dataOptions.Filter.Where != null && dataOptions.Filter.Where.Count > 0)
+                    || (dataOptions.Filter.Inner != null && dataOptions.Filter.Inner.Count > 0)))
             {
                 var query = CreateQueryJunction(dataOptions.Filter);
                 sb.Append(query);
@@ -225,16 +225,16 @@ namespace BetterCms.Module.WebApi.Helpers
         {
             var sb = new StringBuilder(string.Empty);
 
-            foreach (var filterItem in filter.FilterItems)
+            foreach (var filterItem in filter.Where)
             {
                 var subQuery = CreateQueryExpression(filterItem, filter.Connector);
                 AppendFilterConnector(sb, filter.Connector);
                 sb.Append(subQuery);
             }
 
-            if (filter.InnerFilters != null && filter.InnerFilters.Any())
+            if (filter.Inner != null && filter.Inner.Any())
             {
-                foreach (var innerFilter in filter.InnerFilters)
+                foreach (var innerFilter in filter.Inner)
                 {
                     var subQuery = CreateQueryJunction(innerFilter);
                     AppendFilterConnector(sb, filter.Connector);

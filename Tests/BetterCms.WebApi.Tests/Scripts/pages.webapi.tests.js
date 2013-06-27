@@ -33,16 +33,16 @@ asyncTest("should get pages", function () {
                 filter: {
                     connector: 'and',
                     where: [
-                        { field: 'CreatedOn', value: '\/Date(1224043200000)\/', operation: 'Greater' },
-                        { field: 'Title', value: 'Africa', operation: 'NotEqual' }
+                        { field: 'CreatedOn', operation: 'Greater', value: '\/Date(1224043200000)\/' },
+                        { field: 'Title', operation: 'NotEqual', value: 'Africa' }
                     ],
                     inner: [
                         {
                             connector: 'or',
                             where: [
-                                { field: 'Title', value: 'It', operation: 'StartsWith' },
-                                { field: 'Title', value: 'Af', operation: 'StartsWith' },
-                                { field: 'Title', value: 'na', operation: 'EndsWith' }
+                                { field: 'Title', operation: 'StartsWith', value: 'It' },
+                                { field: 'Title', operation: 'StartsWith', value: 'Af' },
+                                { field: 'Title', operation: 'EndsWith', value: 'na' }
                             ]
                         }
                     ]

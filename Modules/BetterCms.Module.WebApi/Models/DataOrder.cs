@@ -16,7 +16,7 @@ namespace BetterCms.Module.WebApi.Models
         /// </summary>
         public DataOrder()
         {
-            OrderItems = new List<OrderItem>();
+            By = new List<OrderItem>();
         }
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace BetterCms.Module.WebApi.Models
         /// <value>
         /// The list of order items.
         /// </value>
-        public IList<OrderItem> OrderItems { get; set; }
+        public IList<OrderItem> By { get; set; }
 
         /// <summary>
         /// Adds the order item to orderings list.
@@ -36,7 +36,7 @@ namespace BetterCms.Module.WebApi.Models
         {
             var filterItem = new OrderItem(field, direction);
 
-            OrderItems.Add(filterItem);
+            By.Add(filterItem);
         }
     }
 }

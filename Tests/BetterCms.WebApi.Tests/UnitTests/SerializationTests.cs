@@ -37,25 +37,25 @@ namespace BetterCms.WebApi.Tests.UnitTests
         {
             var sb = new StringBuilder();
             sb.AppendLine("{");
-            sb.AppendLine("    \"Filter\": {");
-            sb.AppendLine("        \"FilterItems\": [");
-            sb.AppendLine("            { \"Field\": \"CreatedOn\", \"Value\": \"\\/Date(1224043200000)\\/\", \"Operation\": \"Greater\" }");
-            sb.AppendLine("            , { \"Field\": \"Title\", \"Value\": \"Africa\", \"Operation\": \"NotEqual\" }");
+            sb.AppendLine("    \"filter\": {");
+            sb.AppendLine("        \"where\": [");
+            sb.AppendLine("            { \"field\": \"CreatedOn\", \"operation\": \"greater\", \"value\": \"\\/Date(1224043200000)\\/\" }");
+            sb.AppendLine("            , { \"field\": \"Title\", \"operation\": \"notEqual\", \"value\": \"Africa\" }");
             sb.AppendLine("        ],");
-            sb.AppendLine("        \"InnerFilters\": [");
+            sb.AppendLine("        \"inner\": [");
             sb.AppendLine("            {");
-            sb.AppendLine("                \"Connector\": \"or\",");
-            sb.AppendLine("                \"FilterItems\": [");
-            sb.AppendLine("                    { \"Field\": \"Title\", \"Value\": \"It\", \"Operation\": \"StartsWith\" }");
-            sb.AppendLine("                    , { \"Field\": \"Title\", \"Value\": \"na\", \"Operation\": \"EndsWith\" }");
+            sb.AppendLine("                \"connector\": \"or\",");
+            sb.AppendLine("                \"where\": [");
+            sb.AppendLine("                    { \"field\": \"Title\", \"operation\": \"startsWith\", \"value\": \"It\" }");
+            sb.AppendLine("                    , { \"field\": \"Title\", \"operation\": \"endsWith\", \"value\": \"na\" }");
             sb.AppendLine("                ]");
             sb.AppendLine("            }");
             sb.AppendLine("       ]");
             sb.AppendLine("    },");
-            sb.AppendLine("   \"Order\": {");
-            sb.AppendLine("        \"OrderItems\": [");
-            sb.AppendLine("            { \"Field\": \"CreatedOn\" }");
-            sb.AppendLine("            , { \"Field\": \"Title\", \"Direction\": \"desc\" }");
+            sb.AppendLine("   \"order\": {");
+            sb.AppendLine("        \"by\": [");
+            sb.AppendLine("            { \"field\": \"CreatedOn\" }");
+            sb.AppendLine("            , { \"field\": \"Title\", \"direction\": \"desc\" }");
             sb.AppendLine("        ]");
             sb.AppendLine("    },");
             sb.AppendLine("    \"skip\": 3,");
@@ -70,18 +70,18 @@ namespace BetterCms.WebApi.Tests.UnitTests
             var options = serializer.Deserialize<DataOptions>(json);
 
             Assert.IsNotNull(options);
-            Assert.AreEqual(options.Filter.FilterItems.Count, 2);
-            Assert.AreEqual(options.Filter.FilterItems[1].Field, "Title");
-            Assert.AreEqual(options.Filter.FilterItems[1].Value, "Africa");
-            Assert.AreEqual(options.Filter.FilterItems[1].Operation, FilterOperation.NotEqual);
+            Assert.AreEqual(options.Filter.Where.Count, 2);
+            Assert.AreEqual(options.Filter.Where[1].Field, "Title");
+            Assert.AreEqual(options.Filter.Where[1].Value, "Africa");
+            Assert.AreEqual(options.Filter.Where[1].Operation, FilterOperation.NotEqual);
 
-            Assert.AreEqual(options.Filter.InnerFilters.Count, 1);
-            Assert.AreEqual(options.Filter.InnerFilters[0].Connector, FilterConnector.Or);
+            Assert.AreEqual(options.Filter.Inner.Count, 1);
+            Assert.AreEqual(options.Filter.Inner[0].Connector, FilterConnector.Or);
 
-            Assert.AreEqual(options.Filter.InnerFilters[0].FilterItems.Count, 2);
-            Assert.AreEqual(options.Filter.InnerFilters[0].FilterItems[0].Field, "Title");
-            Assert.AreEqual(options.Filter.InnerFilters[0].FilterItems[0].Value, "It");
-            Assert.AreEqual(options.Filter.InnerFilters[0].FilterItems[0].Operation, FilterOperation.StartsWith);
+            Assert.AreEqual(options.Filter.Inner[0].Where.Count, 2);
+            Assert.AreEqual(options.Filter.Inner[0].Where[0].Field, "Title");
+            Assert.AreEqual(options.Filter.Inner[0].Where[0].Value, "It");
+            Assert.AreEqual(options.Filter.Inner[0].Where[0].Operation, FilterOperation.StartsWith);
             
             Assert.AreEqual(options.Take, 5);
             Assert.AreEqual(options.Skip, 3);
@@ -99,7 +99,7 @@ namespace BetterCms.WebApi.Tests.UnitTests
             subFilter.Add("Title", "na", FilterOperation.EndsWith);
             subFilter.Add("Title", "Spain");
 
-            options.Filter.InnerFilters.Add(subFilter);
+            options.Filter.Inner.Add(subFilter);
 
             options.Order.Add("CreatedOn");
             options.Order.Add("Title", OrderDirection.Desc);
@@ -111,33 +111,33 @@ namespace BetterCms.WebApi.Tests.UnitTests
         {
             Assert.AreEqual(filter1.Connector, filter2.Connector);
 
-            Assert.AreEqual(filter1.FilterItems.Count, filter2.FilterItems.Count);
-            Assert.AreEqual(filter1.InnerFilters.Count, filter2.InnerFilters.Count);
+            Assert.AreEqual(filter1.Where.Count, filter2.Where.Count);
+            Assert.AreEqual(filter1.Inner.Count, filter2.Inner.Count);
 
-            for (var i = 0; i < filter1.FilterItems.Count; i++)
+            for (var i = 0; i < filter1.Where.Count; i++)
             {
-                var item1 = filter1.FilterItems[i];
-                var item2 = filter1.FilterItems[i];
+                var item1 = filter1.Where[i];
+                var item2 = filter1.Where[i];
 
                 Assert.AreEqual(item1.Field, item2.Field);
                 Assert.AreEqual(item1.Operation, item2.Operation);
                 Assert.AreEqual(item1.Value, item2.Value);
             }
 
-            for (var i = 0; i < filter1.InnerFilters.Count; i++)
+            for (var i = 0; i < filter1.Inner.Count; i++)
             {
-                AreFiltersEqual(filter1.InnerFilters[i], filter2.InnerFilters[i]);
+                AreFiltersEqual(filter1.Inner[i], filter2.Inner[i]);
             }
         }
 
         private void AreOrdersEqual(DataOrder order1, DataOrder order2)
         {
-            Assert.AreEqual(order1.OrderItems.Count, order2.OrderItems.Count);
+            Assert.AreEqual(order1.By.Count, order2.By.Count);
 
-            for (var i = 0; i < order1.OrderItems.Count; i++)
+            for (var i = 0; i < order1.By.Count; i++)
             {
-                var item1 = order1.OrderItems[0];
-                var item2 = order2.OrderItems[0];
+                var item1 = order1.By[0];
+                var item2 = order2.By[0];
 
                 Assert.AreEqual(item1.Field, item2.Field);
                 Assert.AreEqual(item1.Direction, item2.Direction);

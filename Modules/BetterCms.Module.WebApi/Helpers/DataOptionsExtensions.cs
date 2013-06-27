@@ -37,8 +37,8 @@ namespace BetterCms.Module.WebApi.Helpers
         {
             if (options != null
                 && options.Filter != null
-                && ((options.Filter.FilterItems != null && options.Filter.FilterItems.Count > 0)
-                    || (options.Filter.InnerFilters != null && options.Filter.InnerFilters.Count > 0)))
+                && ((options.Filter.Where != null && options.Filter.Where.Count > 0)
+                    || (options.Filter.Inner != null && options.Filter.Inner.Count > 0)))
             {
                 if (creator == null)
                 {
@@ -62,7 +62,7 @@ namespace BetterCms.Module.WebApi.Helpers
         /// <param name="creator">The query creator.</param>
         public static void ApplyOrder<TModel>(this DataOptions options, GetDataRequest<TModel> request, DataOptionsQueryCreator creator = null)
         {
-            if (options != null && options.Order != null && options.Order.OrderItems != null && options.Order.OrderItems.Count > 0)
+            if (options != null && options.Order != null && options.Order.By != null && options.Order.By.Count > 0)
             {
                 if (creator == null)
                 {

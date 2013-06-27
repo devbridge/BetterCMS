@@ -390,8 +390,8 @@ namespace BetterCms.WebApi.Tests.UnitTests
             innerFilter2.Add("ModifiedOn", TestValueDate, FilterOperation.Less);
             innerFilter2.Add("ModifiedOn", TestValueDate);
             
-            dataOptions.Filter.InnerFilters.Add(innerFilter1);
-            dataOptions.Filter.InnerFilters.Add(innerFilter2);
+            dataOptions.Filter.Inner.Add(innerFilter1);
+            dataOptions.Filter.Inner.Add(innerFilter2);
 
             var queryCreator = new DataOptionsQueryCreator(dataOptions);
             var orderQuery = queryCreator.GetOrderQuery();
@@ -433,8 +433,8 @@ namespace BetterCms.WebApi.Tests.UnitTests
             innerFilter2.Add("ModifiedOn", TestValueDate, FilterOperation.Less);
             innerFilter2.Add("ModifiedOn", TestValueDate);
             
-            dataOptions.Filter.InnerFilters.Add(innerFilter1);
-            dataOptions.Filter.InnerFilters.Add(innerFilter2);
+            dataOptions.Filter.Inner.Add(innerFilter1);
+            dataOptions.Filter.Inner.Add(innerFilter2);
 
             dataOptions.Order.Add("CreatedOn", OrderDirection.Desc);
             dataOptions.Order.Add("Title");
