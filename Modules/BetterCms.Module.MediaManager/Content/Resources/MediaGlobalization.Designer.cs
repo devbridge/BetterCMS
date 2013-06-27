@@ -241,6 +241,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add tags to this file to identify it with related files..
+        /// </summary>
+        public static string FileEditor_Dialog_AddTags_Tooltip_Description {
+            get {
+                return ResourceManager.GetString("FileEditor_Dialog_AddTags_Tooltip_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File size.
         /// </summary>
         public static string FileEditor_Dialog_FileSize {

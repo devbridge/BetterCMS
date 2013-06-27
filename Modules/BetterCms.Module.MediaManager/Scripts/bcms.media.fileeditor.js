@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-bettercms.define('bcms.media.fileeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.ko.extenders'],
-    function($, bcms, modal, siteSettings, forms, dynamicContent, ko) {
+bettercms.define('bcms.media.fileeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.ko.extenders', 'bcms.tags'],
+    function($, bcms, modal, siteSettings, forms, dynamicContent, ko, tags) {
         'use strict';
 
         var editor = {},
@@ -77,8 +77,9 @@ bettercms.define('bcms.media.fileeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 
         /**
         * File edit form view model
         */
-        function FileEditViewModel() {
+        function FileEditViewModel(tagsViewModel) {
             var self = this;
+            self.tags = tagsViewModel;
         }
 
         /**
@@ -87,7 +88,8 @@ bettercms.define('bcms.media.fileeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 
         function initFileEditorDialogEvents(dialog, content) {
 
             var data = content.Data ? content.Data : { };
-            var viewModel = new FileEditViewModel();
+            var tagsViewModel = new tags.TagsListViewModel(content.Data.Tags),
+                viewModel = new FileEditViewModel(tagsViewModel);
             ko.applyBindings(viewModel, dialog.container.find(selectors.fileEditorForm).get(0));
 
             dialog.container.find(selectors.selectableInputs).on('click', function () {

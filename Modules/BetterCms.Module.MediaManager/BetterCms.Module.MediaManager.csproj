@@ -179,6 +179,7 @@
     <Compile Include="Models\Extensions\MediaImageExtensions.cs" />
     <Compile Include="Models\Extensions\MediaExtensions.cs" />
     <Compile Include="Models\Extensions\MediaFileExtensions.cs" />
+    <Compile Include="Models\Maps\MediaTagMap.cs" />
     <Compile Include="Models\MediaImageAlign.cs" />
     <Compile Include="Models\MediaType.cs" />
     <Compile Include="Models\Maps\MediaMap.cs" />
@@ -192,6 +193,7 @@
     <Compile Include="Models\MediaImage.cs" />
     <Compile Include="Models\MigrationsContent\Migration201306201216.cs" />
     <Compile Include="Models\MigrationsContent\Migration201306071105.cs" />
+    <Compile Include="Models\Migrations\Migration201306271317.cs" />
     <Compile Include="Models\Migrations\Migration201306211140.cs" />
     <Compile Include="Models\Migrations\Migration201306201215.cs" />
     <Compile Include="Models\Migrations\Migration201306171041.cs" />
@@ -200,11 +202,13 @@
     <Compile Include="Models\Migrations\InitialSetup.cs" />
     <Compile Include="Models\Migrations\Migration201303081430.cs" />
     <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />
+    <Compile Include="Models\MediaTag.cs" />
     <Compile Include="Registration\FileEditorJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\MediaHistoryJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\ImageEditorJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\MediaUploadJsModuleIncludeDescriptor.cs" />
     <Compile Include="Services\DefaultMediaHistoryService.cs" />
+    <Compile Include="Services\DefaultTagService.cs" />
     <Compile Include="Services\IMediaAudioService.cs" />
     <Compile Include="Services\IMediaHistoryService.cs" />
     <Compile Include="Services\IMediaVideoService.cs" />
@@ -215,6 +219,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registration\MediaManagerJsModuleIncludeDescriptor.cs" />
     <Compile Include="Api\DataModels\MediaImage.cs" />
+    <Compile Include="Services\ITagService.cs" />
     <Compile Include="ViewModels\File\FileViewModel.cs" />
     <Compile Include="ViewModels\History\MediaHistoryItem.cs" />
     <Compile Include="ViewModels\History\MediaHistoryViewModel.cs" />

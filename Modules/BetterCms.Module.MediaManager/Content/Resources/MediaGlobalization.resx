@@ -537,4 +537,7 @@
   <data name="FileEditor_Dialog_PublicUrl_Tooltip_Description" xml:space="preserve">
     <value>Public URL for direct access. It is posible to copy it.</value>
   </data>
+  <data name="FileEditor_Dialog_AddTags_Tooltip_Description" xml:space="preserve">
+    <value>Add tags to this file to identify it with related files.</value>
+  </data>
 </root>

@@ -16,12 +16,18 @@ namespace BetterCms.Module.MediaManager.Command.Files.GetFile
     public class GetFileCommand : CommandBase, ICommand<Guid, FileViewModel>
     {
         /// <summary>
-        /// Gets or sets the media file service.
+        /// The tag service
         /// </summary>
-        /// <value>
-        /// The media file service.
-        /// </value>
-        public IMediaFileService MediaFileService { get; set; }
+        private readonly ITagService tagService;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetFileCommand"/> class.
+        /// </summary>
+        /// <param name="tagService">The tag service.</param>
+        public GetFileCommand(ITagService tagService)
+        {
+            this.tagService = tagService;
+        }
 
         /// <summary>
         /// Executes this command.
@@ -40,6 +46,7 @@ namespace BetterCms.Module.MediaManager.Command.Files.GetFile
                     FileName = file.OriginalFileName,
                     FileExtension = file.OriginalFileExtension,
                     FileSize = file.SizeAsText(),
+                    Tags = tagService.GetMediaTagNames(fileId)
                 };
         }
     }

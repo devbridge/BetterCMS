@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 using BetterCms.Core.Models;
 using BetterCms.Module.Root.Content.Resources;
@@ -67,5 +68,13 @@ namespace BetterCms.Module.MediaManager.ViewModels.File
         /// The size of the file.
         /// </value>
         public string FileSize { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tags.
+        /// </summary>
+        /// <value>
+        /// The tags.
+        /// </value>
+        public IList<string> Tags { get; set; }
     }
 }
