@@ -14,7 +14,7 @@ bettercms.define('bcms.media.fileeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 fileFileSize: "#image-file-size",
 
                 fileEditorForm: 'form:first',
-                filePropertiesContainer: '.bcms-file-manager-inner',
+                filePropertiesContainer: '#bcms-file-manager-inner',
                 fileTitleEditInput: "#bcms-image-title-editor",
 
                 selectableInputs: 'input.bcms-editor-field-box'

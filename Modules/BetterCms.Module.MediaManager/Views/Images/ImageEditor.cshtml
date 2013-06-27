@@ -124,10 +124,6 @@
                         <a data-bind="click: restoreOriginalSize">@MediaGlobalization.ImageEditor_Dialog_RestoreOriginalSize_Title</a>
                     </div>
                 </div>
-
-                <div class="bcms-tags-box-holder" data-bind="with: tags">
-                    @Html.Partial("~/Areas/bcms-root/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel)
-                </div>
             </div>
             
             <div class="bcms-file-alignment">
@@ -143,6 +139,10 @@
                         <input type="radio" id="alignright" name="ImageAlign" value="@((int)MediaImageAlign.Right)" @(Model.ImageAlign == MediaImageAlign.Right ? "checked" : string.Empty)/>
                     </div>
                 </div>
+            </div>
+            
+            <div class="bcms-tags-box-holder" data-bind="with: tags">
+                @Html.Partial("~/Areas/bcms-root/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel)
             </div>
             
             @Html.HiddenSubmit()
