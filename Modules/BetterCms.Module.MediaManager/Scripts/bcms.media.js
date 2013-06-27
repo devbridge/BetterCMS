@@ -429,6 +429,16 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.parentFolderId = ko.observable(item.ParentFolderId);
             self.parentFolderName = ko.observable(item.ParentFolderName);
 
+            self.tooltip = item.Tooltip;
+            self.thumbnailUrl = ko.observable(item.ThumbnailUrl);
+
+            self.getImageUrl = function () {
+                if (!self.thumbnailUrl()) {
+                    return null;
+                }
+                return self.thumbnailUrl();
+            };
+
             self.contextMenu = new MediaItemContextMenuViewModel();
 
             self.isFile = function () {
@@ -630,16 +640,6 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             _super.call(this, item);
 
             var self = this;
-
-            self.tooltip = item.Tooltip;
-            self.thumbnailUrl = ko.observable(item.ThumbnailUrl);
-
-            self.getImageUrl = function() {
-                if (!self.thumbnailUrl()) {
-                    return null;
-                }
-                return self.thumbnailUrl();
-            };
 
             self.previewImage = function () {
                 var previewUrl = self.publicUrl();
