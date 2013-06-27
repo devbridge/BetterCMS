@@ -59,5 +59,14 @@ namespace BetterCms.Module.WebApi.Models.Pages.GetPages
         /// </value>
         [DataMember(Order = 60, Name = "categoryId")]
         public Guid? CategoryId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the category name.
+        /// </summary>
+        /// <value>
+        /// The category name.
+        /// </value>
+        [DataMember(Order = 70, Name = "categoryName")]
+        public string CategoryName { get; set; }
     }
 }

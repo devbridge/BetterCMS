@@ -226,9 +226,12 @@
     <Compile Include="Models\Pages\GetPageContents\GetPageContentsRequest.cs" />
     <Compile Include="Models\Pages\GetPageContents\GetPageContentsResponse.cs" />
     <Compile Include="Models\Pages\GetPagePropertiesById\CategoryModel.cs" />
+    <Compile Include="Models\Pages\GetPagePropertiesById\ContentModel.cs" />
     <Compile Include="Models\Pages\GetPagePropertiesById\GetPagePropertiesByIdRequest.cs" />
     <Compile Include="Models\Pages\GetPagePropertiesById\GetPagePropertiesByIdResponse.cs" />
+    <Compile Include="Models\Pages\GetPagePropertiesById\ImageModel.cs" />
     <Compile Include="Models\Pages\GetPagePropertiesById\LayoutModel.cs" />
+    <Compile Include="Models\Pages\GetPagePropertiesById\MetadataModel.cs" />
     <Compile Include="Models\Pages\GetPagePropertiesById\TagModel.cs" />
     <Compile Include="Models\Pages\GetRedirectById\GetRedirectByIdRequest.cs" />
     <Compile Include="Models\Pages\GetRedirectById\GetRedirectByIdResponse.cs" />
