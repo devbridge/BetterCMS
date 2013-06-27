@@ -293,7 +293,6 @@
     <Compile Include="Registration\SitemapJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\TemplatesJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\PagesContentJsModuleIncludeDescriptor.cs" />
-    <Compile Include="Registration\PageTagsJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\RedirectsJsModuleIncludeDescriptor.cs" />
     <Compile Include="Services\DefaultHistoryService.cs" />
     <Compile Include="Services\DefaultSitemapService.cs" />
@@ -325,7 +324,6 @@
     <Compile Include="ViewModels\Sitemap\SitemapNodeViewModel.cs" />
     <Compile Include="ViewModels\SiteSettings\SiteSettingTemplateItemViewModel.cs" />
     <Compile Include="ViewModels\SiteSettings\SiteSettingTemplateListViewModel.cs" />
-    <Compile Include="ViewModels\Tags\TagsTemplateViewModel.cs" />
     <Compile Include="ViewModels\Templates\TemplateEditViewModel.cs" />
     <Compile Include="ViewModels\Templates\TemplateRegionItemViewModel.cs" />
     <Compile Include="ViewModels\Widgets\EditHtmlContentWidgetViewModel.cs" />
@@ -354,7 +352,6 @@
     <Compile Include="ViewModels\SiteSettings\SiteSettingRedirectViewModel.cs" />
     <Compile Include="ViewModels\SiteSettings\SiteSettingWidgetListViewModel.cs" />
     <Compile Include="ViewModels\SiteSettings\SiteSettingWidgetItemViewModel.cs" />
-    <Compile Include="ViewModels\Tags\TagItemViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Content\Resources\NavigationGlobalization.resx">
@@ -410,7 +407,6 @@
     <EmbeddedResource Include="Scripts\bcms.pages.properties.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.redirects.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.seo.js" />
-    <EmbeddedResource Include="Scripts\bcms.pages.tags.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.template.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.history.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.sitemap.js" />
@@ -497,12 +493,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Shared\Layouts\ContentVersionLayout.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Tags\ListTags.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Tags\TagsTemplate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Templates\EditTemplate.cshtml" />
