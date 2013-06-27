@@ -76,6 +76,6 @@ namespace BetterCms.Module.WebApi.Models.Pages.GetPagePropertiesById
         /// The list of page contents.
         /// </value>
         [DataMember(Order = 80, Name = "pageContents")]
-        public IList<ContentModel> PageContents { get; set; }   
+        public IList<PageContentModel> PageContents { get; set; }   
     }
 }

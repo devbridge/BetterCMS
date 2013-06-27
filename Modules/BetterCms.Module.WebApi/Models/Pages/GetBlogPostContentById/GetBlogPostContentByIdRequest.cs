@@ -1,9 +1,9 @@
 ﻿using System.Runtime.Serialization;
 
-namespace BetterCms.Module.WebApi.Models.Pages.GetPageContentById
+namespace BetterCms.Module.WebApi.Models.Pages.GetBlogPostContentById
 {
     [DataContract]
-    public class GetPageContentByIdRequest : RequestBase
+    public class GetBlogPostContentByIdRequest : RequestBase
     {
         /// <summary>
         /// Gets or sets the content id.

@@ -1,9 +1,9 @@
 ﻿using System.Runtime.Serialization;
 
-namespace BetterCms.Module.WebApi.Models.Pages.GetPageContentHistoryByPageContentId
+namespace BetterCms.Module.WebApi.Models.Pages.GetHtmlContentById
 {
     [DataContract]
-    public class GetPageContentHistoryByPageContentIdRequest : ListRequestBase
+    public class GetHtmlContentByIdRequest : RequestBase
     {
         /// <summary>
         /// Gets or sets the content id.
