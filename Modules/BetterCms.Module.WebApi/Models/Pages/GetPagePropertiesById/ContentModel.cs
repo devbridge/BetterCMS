@@ -1,10 +1,9 @@
-﻿using System;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
 namespace BetterCms.Module.WebApi.Models.Pages.GetPagePropertiesById
 {
     [DataContract]
-    public class PageContentModel : ModelBase
+    public class ContentModel : ModelBase
     {
         /// <summary>
         /// Gets or sets the content name.
@@ -22,7 +21,7 @@ namespace BetterCms.Module.WebApi.Models.Pages.GetPagePropertiesById
         /// The region id.
         /// </value>
         [DataMember(Order = 10, Name = "regionId")]
-        public Guid RegionId { get; set; }
+        public System.Guid RegionId { get; set; }
 
         /// <summary>
         /// Gets or sets the region identifier.
