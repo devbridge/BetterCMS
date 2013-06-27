@@ -26,13 +26,17 @@ bettercms.define('bcms.media.fileeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 fileEditorDialogTitle: null,
                 fileEditorUpdateFailureMessageTitle: null,
                 fileEditorUpdateFailureMessageMessage: null,
-            };
+            },
+            media = null;
 
         /**
         * Assign objects to module.
         */
         editor.links = links;
         editor.globalization = globalization;
+        editor.SetMedia = function(mediaModule) {
+            media = mediaModule;
+        };
 
         /**
         * Called when editing is needed.
@@ -77,9 +81,10 @@ bettercms.define('bcms.media.fileeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 
         /**
         * File edit form view model
         */
-        function FileEditViewModel(tagsViewModel) {
+        function FileEditViewModel(tagsViewModel, image) {
             var self = this;
             self.tags = tagsViewModel;
+            self.image = ko.observable(new media.ImageSelectorViewModel(image));
         }
 
         /**
@@ -89,7 +94,7 @@ bettercms.define('bcms.media.fileeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 
 
             var data = content.Data ? content.Data : { };
             var tagsViewModel = new tags.TagsListViewModel(content.Data.Tags),
-                viewModel = new FileEditViewModel(tagsViewModel);
+                viewModel = new FileEditViewModel(tagsViewModel, content.Data.Image);
             ko.applyBindings(viewModel, dialog.container.find(selectors.fileEditorForm).get(0));
 
             dialog.container.find(selectors.selectableInputs).on('click', function () {

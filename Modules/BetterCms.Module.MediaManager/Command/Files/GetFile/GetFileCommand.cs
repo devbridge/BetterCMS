@@ -5,6 +5,7 @@ using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Models.Extensions;
 using BetterCms.Module.MediaManager.Services;
+using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.MediaManager.ViewModels.File;
 using BetterCms.Module.Root.Mvc;
 
@@ -46,7 +47,16 @@ namespace BetterCms.Module.MediaManager.Command.Files.GetFile
                     FileName = file.OriginalFileName,
                     FileExtension = file.OriginalFileExtension,
                     FileSize = file.SizeAsText(),
-                    Tags = tagService.GetMediaTagNames(fileId)
+                    Tags = tagService.GetMediaTagNames(fileId),
+                    Image = file.Image == null ? null :
+                        new ImageSelectorViewModel
+                        {
+                            ImageId = file.Image.Id,
+                            ImageVersion = file.Image.Version,
+                            ImageUrl = file.Image.PublicUrl,
+                            ThumbnailUrl = file.Image.PublicThumbnailUrl,
+                            ImageTooltip = file.Image.Caption
+                        },
                 };
         }
     }

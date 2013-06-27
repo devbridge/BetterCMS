@@ -259,6 +259,33 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select Image.
+        /// </summary>
+        public static string FileEditor_Dialog_Image_SelectButtonTitle {
+            get {
+                return ResourceManager.GetString("FileEditor_Dialog_Image_SelectButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thumbnail image.
+        /// </summary>
+        public static string FileEditor_Dialog_Image_Title {
+            get {
+                return ResourceManager.GetString("FileEditor_Dialog_Image_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image will be displayed as a thumbnail with the file..
+        /// </summary>
+        public static string FileEditor_Dialog_Image_Tooltip_Description {
+            get {
+                return ResourceManager.GetString("FileEditor_Dialog_Image_Tooltip_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Public URL for direct access. It is posible to copy it..
         /// </summary>
         public static string FileEditor_Dialog_PublicUrl_Tooltip_Description {

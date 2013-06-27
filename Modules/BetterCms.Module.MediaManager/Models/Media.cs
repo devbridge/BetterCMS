@@ -20,6 +20,8 @@ namespace BetterCms.Module.MediaManager.Models
 
         public virtual DateTime PublishedOn { get; set; }
 
+        public virtual MediaImage Image { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Media" /> class.
         /// </summary>

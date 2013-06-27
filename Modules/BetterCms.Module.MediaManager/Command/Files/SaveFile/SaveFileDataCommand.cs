@@ -45,6 +45,7 @@ namespace BetterCms.Module.MediaManager.Command.Files.SaveFile
             mediaFile.PublishedOn = DateTime.Now;
             mediaFile.Title = request.Title;
             mediaFile.Version = request.Version.ToIntOrDefault();
+            mediaFile.Image = request.Image != null && request.Image.ImageId.HasValue ? Repository.AsProxy<MediaImage>(request.Image.ImageId.Value) : null;
             Repository.Save(mediaFile);
 
             // Save tags

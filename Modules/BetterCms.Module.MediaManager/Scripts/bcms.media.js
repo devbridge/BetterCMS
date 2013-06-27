@@ -1641,6 +1641,8 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         */
         bcms.on(htmlEditor.events.insertImage, onOpenImageInsertDialog);
         bcms.on(htmlEditor.events.insertFile, onOpenFileInsertDialog);
+
+        fileEditor.SetMedia(media);
     };
 
     /**
