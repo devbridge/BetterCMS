@@ -24,7 +24,7 @@ namespace BetterCms.Module.Blog.Models.MigrationsContent
         {
             using (var blogsApi = CmsContext.CreateApiContextOf<BlogsApiContext>())
             {
-                var blogs = blogsApi.GetBlogPosts(new GetBlogPostsRequest(includeUnpublished: true, includeNotActive: true)).Items;
+                var blogs = blogsApi.GetBlogPosts(new GetBlogPostsRequest(includeUnpublished: true)).Items;
                 if (!blogs.Any())
                 {
                     return;
@@ -36,7 +36,7 @@ namespace BetterCms.Module.Blog.Models.MigrationsContent
                 {
                     foreach (var blog in blogs)
                     {
-                        var requestToGet = new GetPageContentsRequest(blog.Id, e => e.Content is BlogPostContent, includeUnpublished: true, includeNotActive: true);
+                        var requestToGet = new GetPageContentsRequest(blog.Id, e => e.Content is BlogPostContent, includeUnpublished: true);
                         var pageContent = pagesApi.GetPageContents(requestToGet).FirstOrDefault();
                         if (pageContent == null)
                         {

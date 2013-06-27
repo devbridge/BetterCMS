@@ -7,30 +7,30 @@ namespace BetterCms.Module.WebApi.Models.MediaManager.GetMediaTree
     public class MediaTreeContainer
     {
         /// <summary>
-        /// Gets or sets the list of image medias.
+        /// Gets or sets the tree of image medias.
         /// </summary>
         /// <value>
-        /// The image medias.
+        /// The tree of image medias.
         /// </value>
-        [DataMember(Order = 10, Name = "imageMedias")]
-        public IList<MediaModel> ImageMedias { get; set; }
+        [DataMember(Order = 10, Name = "imagesTree")]
+        public IList<MediaModel> ImagesTree { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of video medias.
+        /// Gets or sets the tree of video medias.
         /// </summary>
         /// <value>
-        /// The video medias.
+        /// The tree of video medias.
         /// </value>
-        [DataMember(Order = 10, Name = "videoMedias")]
-        public IList<MediaModel> VideoMedias { get; set; }
+        [DataMember(Order = 10, Name = "videosTree")]
+        public IList<MediaModel> VideosTree { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of file medias.
+        /// Gets or sets the tree of file medias.
         /// </summary>
         /// <value>
-        /// The file medias.
+        /// The tree of file medias.
         /// </value>
-        [DataMember(Order = 10, Name = "fileMedias")]
-        public IList<MediaModel> Files { get; set; }
+        [DataMember(Order = 10, Name = "filesTree")]
+        public IList<MediaModel> FilesTree { get; set; }
     }
 }

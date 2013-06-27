@@ -92,17 +92,13 @@ namespace BetterCms.Api
 
                 if (!request.IncludeUnpublished)
                 {
-                    query = query.Where(b => b.Status == PageStatus.Published);
+                    query = query.Where(b => b.Status == PageStatus.Published
+                        && b.ActivationDate < DateTime.Now && (!b.ExpirationDate.HasValue || DateTime.Now < b.ExpirationDate.Value));
                 }
 
                 if (!request.IncludeArchivedItems)
                 {
                     query = query.Where(b => !b.IsArchived);
-                }
-
-                if (!request.IncludeNotActive)
-                {
-                    query = query.Where(b => b.ActivationDate < DateTime.Now && (!b.ExpirationDate.HasValue || DateTime.Now < b.ExpirationDate.Value));
                 }
 
                 var totalCount = query.ToRowCountFutureValue(request);

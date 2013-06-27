@@ -40,14 +40,5 @@ namespace BetterCms.Module.WebApi.Models.Pages.GetPageContents
         /// </value>
         [DataMember(Order = 40, Name = "includeUnpublished")]
         public bool IncludeUnpublished { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether to include not active contents.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if include not active contents; otherwise, <c>false</c>.
-        /// </value>
-        [DataMember(Order = 50, Name = "includeNotActive")]
-        public bool IncludeNotActive { get; set; }
     }
 }

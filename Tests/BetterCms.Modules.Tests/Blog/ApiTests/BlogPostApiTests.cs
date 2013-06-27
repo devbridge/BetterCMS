@@ -24,7 +24,7 @@ namespace BetterCms.Test.Module.Blog.ApiTests
 
             using (var api = CreateBlogsApiContext(new[] { blogPost1, blogPost2 }))
             {
-                var blogPosts = api.GetBlogPosts(new GetBlogPostsRequest(includeUnpublished: true, includeNotActive: true));
+                var blogPosts = api.GetBlogPosts(new GetBlogPostsRequest(includeUnpublished: true));
 
                 Assert.IsNotNull(blogPosts);
                 Assert.AreEqual(blogPosts.Items.Count, 2);

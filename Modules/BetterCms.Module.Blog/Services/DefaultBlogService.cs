@@ -69,12 +69,8 @@ namespace BetterCms.Module.Blog.Services
 
             if (filter == null || !filter.IncludeUnpublished)
             {
-                models = models.Where(b => b.Status == PageStatus.Published);
-            }
-
-            if (filter == null || !filter.IncludeNotActive)
-            {
-                models = models.Where(b => b.ActivationDate < DateTime.Now && (!b.ExpirationDate.HasValue || DateTime.Now < b.ExpirationDate.Value));
+                models = models.Where(b => b.Status == PageStatus.Published
+                    && b.ActivationDate < DateTime.Now && (!b.ExpirationDate.HasValue || DateTime.Now < b.ExpirationDate.Value));
             }
             
             if (filter == null || !filter.IncludeArchivedItems)

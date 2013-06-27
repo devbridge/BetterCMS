@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
 using BetterCms.Module.WebApi.Models.Enums;
 
@@ -13,7 +12,7 @@ namespace BetterCms.Module.WebApi.Models.Blog.GetBlogPosts
         /// </summary>
         public GetBlogPostsRequest()
         {
-            TagsConnector = FilterConnector.And;
+            FilterByTagsConnector = FilterConnector.And;
         }
 
         /// <summary>
@@ -26,21 +25,12 @@ namespace BetterCms.Module.WebApi.Models.Blog.GetBlogPosts
         public bool IncludeUnpublished { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to include not active blog posts.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if to include not active blog posts; otherwise, <c>false</c>.
-        /// </value>
-        [DataMember(Order = 20, Name = "includeNotActive")]
-        public bool IncludeNotActive { get; set; }
-
-        /// <summary>
         /// Gets or sets a value indicating whether to include archived blog posts.
         /// </summary>
         /// <value>
         ///   <c>true</c> if to include archived blog posts; otherwise, <c>false</c>.
         /// </value>
-        [DataMember(Order = 30, Name = "includeArchived")]
+        [DataMember(Order = 20, Name = "includeArchived")]
         public bool IncludeArchived { get; set; }
 
         /// <summary>
@@ -49,8 +39,8 @@ namespace BetterCms.Module.WebApi.Models.Blog.GetBlogPosts
         /// <value>
         /// The tags.
         /// </value>
-        [DataMember(Order = 40, Name = "blogPostTags")]
-        public List<string> BlogPostTags { get; set; }
+        [DataMember(Order = 50, Name = "filterByTags")]
+        public System.Collections.Generic.List<string> FilterByTags { get; set; }
 
         /// <summary>
         /// Gets or sets the tags filter connector.
@@ -58,7 +48,7 @@ namespace BetterCms.Module.WebApi.Models.Blog.GetBlogPosts
         /// <value>
         /// The tags filter connector.
         /// </value>
-        [DataMember(Order = 50, Name = "tagsConnector")]
-        public FilterConnector TagsConnector { get; set; }
+        [DataMember(Order = 60, Name = "filterByTagsConnector")]
+        public FilterConnector FilterByTagsConnector { get; set; }
     }
 }

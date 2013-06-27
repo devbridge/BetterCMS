@@ -56,7 +56,7 @@ namespace BetterCms.Api
                     .Fetch(c => c.Region)
                     .FetchMany(c => c.Options);
 
-                if (!request.IncludeNotActive)
+                if (!request.IncludeUnpublished)
                 {
                     return RemoveInactiveContents(query.ToList());
                 }
@@ -110,7 +110,7 @@ namespace BetterCms.Api
                     .Fetch(c => c.Region)
                     .FetchMany(c => c.Options);
 
-                if (!request.IncludeNotActive)
+                if (!request.IncludeUnpublished)
                 {
                     return RemoveInactiveContents(query.ToList());
                 }

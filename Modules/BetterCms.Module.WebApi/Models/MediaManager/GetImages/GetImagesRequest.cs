@@ -15,7 +15,7 @@ namespace BetterCms.Module.WebApi.Models.MediaManager.GetImages
             IncludeFolders = true;
             IncludeImages = true;
 
-            TagsConnector = FilterConnector.And;
+            FilterByTagsConnector = FilterConnector.And;
         }
 
         /// <summary>
@@ -60,8 +60,8 @@ namespace BetterCms.Module.WebApi.Models.MediaManager.GetImages
         /// <value>
         /// The image tags for filtering.
         /// </value>
-        [DataMember(Order = 50, Name = "imageTags")]
-        public System.Collections.Generic.List<string> ImageTags { get; set; }
+        [DataMember(Order = 50, Name = "filterByTags")]
+        public System.Collections.Generic.List<string> FilterByTags { get; set; }
 
         /// <summary>
         /// Gets or sets the tags filter connector.
@@ -69,7 +69,7 @@ namespace BetterCms.Module.WebApi.Models.MediaManager.GetImages
         /// <value>
         /// The tags filter connector.
         /// </value>
-        [DataMember(Order = 60, Name = "tagsConnector")]
-        public FilterConnector TagsConnector { get; set; }
+        [DataMember(Order = 60, Name = "filterByTagsConnector")]
+        public FilterConnector FilterByTagsConnector { get; set; }
     }
 }
