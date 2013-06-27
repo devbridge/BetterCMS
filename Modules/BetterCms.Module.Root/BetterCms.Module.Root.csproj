@@ -123,24 +123,36 @@
     <Compile Include="Api\Events\RootEvents.cs" />
     <Compile Include="Api\Events\PageRenderingEventArgs.cs" />
     <Compile Include="Api\RootApiContext.cs" />
+    <Compile Include="Commands\Category\DeleteCategory\DeleteCategoryCommand.cs" />
+    <Compile Include="Commands\Category\DeleteCategory\DeleteCategoryCommandRequest.cs" />
+    <Compile Include="Commands\Category\GetCategoryList\GetCategoryListCommand.cs" />
+    <Compile Include="Commands\Category\SaveCategory\SaveCategoryCommand.cs" />
     <Compile Include="Commands\GetMainJsData\GetMainJsDataCommand.cs" />
     <Compile Include="Commands\GetProcessorJsData\GetProcessorJsDataCommand.cs" />
     <Compile Include="Commands\GetPageToRender\GetPageToRenderRequest.cs" />
     <Compile Include="Commands\GetPageToRender\GetPageToRenderCommand.cs" />
     <Compile Include="Commands\GetStyleSheetsToRender\GetStyleSheetsToRenderCommand.cs" />
     <Compile Include="Commands\GetStyleSheetsToRender\GetStyleSheetsToRenderRequest.cs" />
+    <Compile Include="Commands\Tag\DeleteTag\DeleteTagCommand.cs" />
+    <Compile Include="Commands\Tag\DeleteTag\DeleteTagCommandRequest.cs" />
+    <Compile Include="Commands\Tag\GetTagList\GetTagListCommand.cs" />
+    <Compile Include="Commands\Tag\GetTag\GetTagCommand.cs" />
+    <Compile Include="Commands\Tag\SaveTag\SaveTagCommand.cs" />
+    <Compile Include="Commands\Tag\SearchTags\SearchTagsCommand.cs" />
     <Compile Include="Content\Resources\RootGlobalization.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RootGlobalization.resx</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AuthenticationController.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CmsController.cs" />
     <Compile Include="Controllers\PreviewController.cs" />
     <Compile Include="Controllers\EmbeddedResourcesController.cs" />
     <Compile Include="Controllers\RenderingController.cs" />
     <Compile Include="Controllers\SidebarController.cs" />
     <Compile Include="Controllers\SiteSettingsController.cs" />
+    <Compile Include="Controllers\TagsController.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Content.cs" />
     <Compile Include="Models\ContentOption.cs" />
@@ -238,6 +250,7 @@
     <Compile Include="Services\IContentService.cs" />
     <Compile Include="Services\IRenderingService.cs" />
     <Compile Include="ViewModels\Authentication\InfoViewModel.cs" />
+    <Compile Include="ViewModels\Category\CategoryItemViewModel.cs" />
     <Compile Include="ViewModels\Cms\CmsRequestViewModel.cs" />
     <Compile Include="ViewModels\Cms\PageRegionViewModel.cs" />
     <Compile Include="DataContracts\Enums\PageRetrievedEventResults.cs" />

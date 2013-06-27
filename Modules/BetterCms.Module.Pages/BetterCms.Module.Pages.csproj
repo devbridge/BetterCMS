@@ -136,7 +136,6 @@
     <Compile Include="Api\DataContracts\GetNodesRequest.cs" />
     <Compile Include="Api\DataContracts\GetPageContentsRequest.cs" />
     <Compile Include="Api\DataContracts\GetRegionContentsRequest.cs" />
-    <Compile Include="Command\Tag\SearchTags\SearchTagsCommand.cs" />
     <Compile Include="Helpers\Extensions\RenderPageViewModelExtensions.cs" />
     <Compile Include="Models\Migrations\Migration201306260946.cs" />
     <Compile Include="Models\Migrations\Migration201306140841.cs" />
@@ -193,10 +192,6 @@
     <Compile Include="Command\Widget\GetHtmlContentWidgetForEdit\GetHtmlContentWidgetForEditCommand.cs" />
     <Compile Include="Command\Content\GetPageContentOptions\GetPageContentOptionsCommand.cs" />
     <Compile Include="Command\Widget\GetSiteSettingsWidgets\GetSiteSettingsWidgetsCommand.cs" />
-    <Compile Include="Command\Category\SaveCategory\SaveCategoryCommand.cs" />
-    <Compile Include="Command\Category\GetCategoryList\GetCategoryListCommand.cs" />
-    <Compile Include="Command\Category\DeleteCategory\DeleteCategoryCommand.cs" />
-    <Compile Include="Command\Category\DeleteCategory\DeleteCategoryCommandRequest.cs" />
     <Compile Include="Command\Page\DeletePage\DeletePageCommand.cs" />
     <Compile Include="Command\Redirect\DeleteRedirect\DeleteRedirectCommand.cs" />
     <Compile Include="Command\Widget\GetWidgetCategory\GetWidgetCategoryResponse.cs" />
@@ -210,16 +205,11 @@
     <Compile Include="Command\Page\SavePagePublishStatus\SavePagePublishStatusCommand.cs" />
     <Compile Include="Command\Content\SavePageContentOptions\SavePageContentOptionsCommand.cs" />
     <Compile Include="Command\Redirect\SaveRedirect\SaveRedirectCommand.cs" />
-    <Compile Include="Command\Tag\SaveTag\SaveTagCommand.cs" />
-    <Compile Include="Command\Tag\GetTag\GetTagCommand.cs" />
-    <Compile Include="Command\Tag\DeleteTag\DeleteTagCommandRequest.cs" />
-    <Compile Include="Command\Tag\DeleteTag\DeleteTagCommand.cs" />
     <Compile Include="Command\Page\CreatePage\CreatePageCommand.cs" />
     <Compile Include="Command\Widget\GetWidgetCategory\GetWidgetCategoryCommand.cs" />
     <Compile Include="Command\Widget\GetWidgetCategory\GetWidgetCategoryRequest.cs" />
     <Compile Include="Command\Page\GetPageProperties\GetPagePropertiesCommand.cs" />
     <Compile Include="Command\Page\GetPageSeo\GetPageSeoCommand.cs" />
-    <Compile Include="Command\Tag\GetTagList\GetTagListCommand.cs" />
     <Compile Include="Command\Layout\GetTemplates\GetTemplatesCommand.cs" />
     <Compile Include="Command\Layout\GetTemplates\GetTemplatesRequest.cs" />
     <Compile Include="Command\Content\InsertContent\InsertContentToPageCommand.cs" />
@@ -245,10 +235,8 @@
     <Compile Include="Controllers\SitemapController.cs" />
     <Compile Include="Controllers\TemplatesController.cs" />
     <Compile Include="Controllers\WidgetsController.cs" />
-    <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\RedirectController.cs" />
     <Compile Include="Controllers\PageController.cs" />
-    <Compile Include="Controllers\TagsController.cs" />
     <Compile Include="Controllers\SeoController.cs" />
     <Compile Include="Controllers\ContentController.cs" />
     <Compile Include="Api\Events\PageEvents.cs" />

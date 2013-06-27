@@ -342,6 +342,18 @@
   <data name="Sidebar_SiteSettingsButtonTitle" xml:space="preserve">
     <value>Site settings</value>
   </data>
+  <data name="SiteSettings_CategoriesMenuItem" xml:space="preserve">
+    <value>Categories</value>
+  </data>
+  <data name="SiteSettings_Categories_DeleteCategoryMessage" xml:space="preserve">
+    <value>Are you sure you want to delete the {0} category?</value>
+  </data>
+  <data name="SiteSettings_TagsMenuItem" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="SiteSettings_Tags_DeleteTagMessage" xml:space="preserve">
+    <value>Are you sure you want to delete the {0} tag?</value>
+  </data>
   <data name="SiteSettings_Title" xml:space="preserve">
     <value>Site Settings</value>
   </data>

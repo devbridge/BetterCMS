@@ -2365,15 +2365,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to delete the {0} category?.
-        /// </summary>
-        public static string SiteSettings_Categories_DeleteCategoryMessage {
-            get {
-                return ResourceManager.GetString("SiteSettings_Categories_DeleteCategoryMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Category.
         /// </summary>
         public static string SiteSettings_Categories_NameColumn {
@@ -2613,15 +2604,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string SiteSettings_Tags_AddNewTag {
             get {
                 return ResourceManager.GetString("SiteSettings_Tags_AddNewTag", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to delete the {0} tag?.
-        /// </summary>
-        public static string SiteSettings_Tags_DeleteTagMessage {
-            get {
-                return ResourceManager.GetString("SiteSettings_Tags_DeleteTagMessage", resourceCulture);
             }
         }
         

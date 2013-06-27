@@ -594,9 +594,6 @@
   <data name="SiteSettings_Categories_AddNewCategory" xml:space="preserve">
     <value>Add New +</value>
   </data>
-  <data name="SiteSettings_Categories_DeleteCategoryMessage" xml:space="preserve">
-    <value>Are you sure you want to delete the {0} category?</value>
-  </data>
   <data name="SiteSettings_Categories_NameColumn" xml:space="preserve">
     <value>Category</value>
   </data>
@@ -656,9 +653,6 @@
   </data>
   <data name="SiteSettings_Tags_AddNewTag" xml:space="preserve">
     <value>Add New +</value>
-  </data>
-  <data name="SiteSettings_Tags_DeleteTagMessage" xml:space="preserve">
-    <value>Are you sure you want to delete the {0} tag?</value>
   </data>
   <data name="SiteSettings_Tags_NewTagCreatedMessage" xml:space="preserve">
     <value>A tag {0} was saved.</value>

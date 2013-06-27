@@ -1,12 +1,12 @@
 ﻿using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
-using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Controllers;
+using BetterCms.Module.Root.Content.Resources;
 
 namespace BetterCms.Module.Pages.Registration
 {
     /// <summary>
-    /// bcms.pages.seo.js module descriptor.
+    /// bcms.tags.js module descriptor.
     /// </summary>
     public class TagsJsModuleIncludeDescriptor : JsIncludeDescriptor
     {
@@ -15,7 +15,7 @@ namespace BetterCms.Module.Pages.Registration
         /// </summary>
         /// <param name="module">The container module.</param>
         public TagsJsModuleIncludeDescriptor(ModuleDescriptor module)
-            : base(module, "bcms.pages.tags")
+            : base(module, "bcms.tags")
         {
 
             Links = new IActionProjection[]
@@ -31,8 +31,8 @@ namespace BetterCms.Module.Pages.Registration
 
             Globalization = new IActionProjection[]
                 {      
-                    new JavaScriptModuleGlobalization(this, "confirmDeleteTagMessage", () => PagesGlobalization.SiteSettings_Tags_DeleteTagMessage), 
-                    new JavaScriptModuleGlobalization(this, "confirmDeleteCategoryMessage", () => PagesGlobalization.SiteSettings_Categories_DeleteCategoryMessage), 
+                    new JavaScriptModuleGlobalization(this, "confirmDeleteTagMessage", () => RootGlobalization.SiteSettings_Tags_DeleteTagMessage), 
+                    new JavaScriptModuleGlobalization(this, "confirmDeleteCategoryMessage", () => RootGlobalization.SiteSettings_Categories_DeleteCategoryMessage), 
                 };
         }
     }
