@@ -96,8 +96,6 @@ namespace BetterCms.Module.Api
         public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
             containerBuilder.RegisterType<BlogsApiContext>().AsSelf().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
-
-
         }
 
         /// <summary>
@@ -115,7 +113,7 @@ namespace BetterCms.Module.Api
             using (var container = ContextScopeProvider.CreateChildContainer())
             {
                 var containerProvider = container.Resolve<PerWebRequestContainerProvider>();                
-                new ApiApplicationHost(containerProvider).Init();
+                new ApiApplicationHost(() => containerProvider.CurrentScope).Init();
             }
         }
     }

@@ -79,3 +79,4 @@ logs
 /Modules/BetterCms.Module.Root/Scripts/bcms.knockout-2.2.1.min.js
 
 /Modules/BetterCms.Module.Root/Scripts/bcms.require-2.1.5.min.js
+/Tests/BetterCms.WebApi.Tests/App_Data/BetterCms/versions.info

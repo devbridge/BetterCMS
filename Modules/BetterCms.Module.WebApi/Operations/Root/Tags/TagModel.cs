@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace BetterCms.Module.Api.Operations.Root.GetTags
+namespace BetterCms.Module.Api.Operations.Root.Tags
 {
     [DataContract]
     public class TagModel : ModelBase
@@ -11,7 +11,6 @@ namespace BetterCms.Module.Api.Operations.Root.GetTags
         /// <value>
         /// The tag name.
         /// </value>
-        [DataMember(Order = 10, Name = "name")]
-        public string Name { get; set; }
+        public string Name { get; set; }        
     }
 }

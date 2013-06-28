@@ -5,7 +5,7 @@ using ServiceStack.ServiceHost;
 namespace BetterCms.Module.Api.Operations.Root.Version
 {
     [DataContract]
-    [Route("/current-version", Verbs = "GET")]
+    [Route("/version", Verbs = "GET")]
     public class GetVersionRequest : RequestBase, IReturn<GetVersionResponse>
     {
     }

@@ -1,13 +1,13 @@
-﻿using BetterCms.Module.Api.Operations.Root.Version;
+﻿using BetterCms.Module.Api.Operations.Root.Tags;
+using BetterCms.Module.Api.Operations.Root.Tags.Tag;
+using BetterCms.Module.Api.Operations.Root.Version;
 
 namespace BetterCms.Module.Api.Operations.Root
 {
     public interface IRootOperationsContext
     {
-        GetVersionResponse GetVersion();
+        TagsService Tags { get; }
 
-        GetTags.GetTagsResponse GetTags(GetTags.GetTagsRequest request);
-
-        GetTagByName.GetTagByNameResponse GetTagByName(GetTagByName.GetTagByNameRequest request);
+        TagService Tag { get; }
     }
 }

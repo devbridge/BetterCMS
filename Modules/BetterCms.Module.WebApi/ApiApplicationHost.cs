@@ -1,3 +1,7 @@
+using System;
+
+using Autofac;
+
 using BetterCms.Core.Dependencies;
 
 using ServiceStack.WebHost.Endpoints;
@@ -7,9 +11,9 @@ namespace BetterCms.Module.Api
 	public class ApiApplicationHost
 		: AppHostBase
 	{
-        private readonly PerWebRequestContainerProvider containerProvider;
+        private readonly Func<ILifetimeScope> containerProvider;
 
-        public ApiApplicationHost(PerWebRequestContainerProvider containerProvider)
+        public ApiApplicationHost(Func<ILifetimeScope> containerProvider)
             : base("Better CMS Web API Host", typeof(HelloService).Assembly)
         {
             this.containerProvider = containerProvider;
@@ -24,7 +28,7 @@ namespace BetterCms.Module.Api
 			SetConfig(new EndpointHostConfig {
 			});
 
-            container.Adapter = new AutofacContainerAdapter(() => containerProvider.CurrentScope);
+            container.Adapter = new AutofacContainerAdapter(containerProvider);
 		}
 
 		/* Uncomment to enable ServiceStack Authentication and CustomUserSession

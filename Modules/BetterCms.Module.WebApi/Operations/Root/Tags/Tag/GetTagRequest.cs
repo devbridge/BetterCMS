@@ -2,10 +2,10 @@
 
 using ServiceStack.ServiceHost;
 
-namespace BetterCms.Module.Api.Operations.Root.Tag
+namespace BetterCms.Module.Api.Operations.Root.Tags.Tag
 {
-    [Route("/tag/id/{TagId}", Verbs = "GET")]
-    [Route("/tag/{TagName*}", Verbs = "GET")]
+    [Route("/tags/{TagId}", Verbs = "GET")]
+    [Route("/tags/", Verbs = "GET")]
     public class GetTagRequest : RequestBase, IReturn<GetTagResponse>
     {
         public Guid? TagId { get; set; }

@@ -2,7 +2,7 @@
 
 using ServiceStack.ServiceInterface;
 
-namespace BetterCms.Module.Api.Operations.Root.Tag
+namespace BetterCms.Module.Api.Operations.Root.Tags.Tag
 {
     public class TagService : Service
     {
@@ -25,7 +25,7 @@ namespace BetterCms.Module.Api.Operations.Root.Tag
         {
             return new PostTagResponse
             {
-                Data = true,
+                Data = request.Id,
                 Status = "ok"
             };
         }    

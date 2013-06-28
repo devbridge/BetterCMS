@@ -1,27 +1,25 @@
-﻿using System;
-
-using BetterCms.Module.Api.Operations.Root.GetTagByName;
-using BetterCms.Module.Api.Operations.Root.GetTags;
-using BetterCms.Module.Api.Operations.Root.Version;
+﻿
+using BetterCms.Module.Api.Operations.Root.Tags;
+using BetterCms.Module.Api.Operations.Root.Tags.Tag;
 
 namespace BetterCms.Module.Api.Operations.Root
 {
     public class DefaultRootOperationsContext : IRootOperationsContext
     {
-        
-        public GetVersionResponse GetVersion()
+        public TagsService Tags
         {
-            throw new NotImplementedException();
+            get
+            {
+                throw new System.NotImplementedException();
+            }
         }
 
-        public GetTagsResponse GetTags(GetTagsRequest request)
+        public TagService Tag
         {
-            throw new NotImplementedException();
-        }
-
-        public GetTagByNameResponse GetTagByName(GetTagByNameRequest request)
-        {
-            throw new NotImplementedException();
+            get
+            {
+                throw new System.NotImplementedException();
+            }
         }
     }
 }
