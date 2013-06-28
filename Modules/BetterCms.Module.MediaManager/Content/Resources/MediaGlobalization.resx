@@ -540,6 +540,9 @@
   <data name="FileEditor_Dialog_AddTags_Tooltip_Description" xml:space="preserve">
     <value>Add tags to this file to identify it with related files.</value>
   </data>
+  <data name="SiteSettings_FilterByTags" xml:space="preserve">
+    <value>By Tags</value>
+  </data>
   <data name="FileEditor_Dialog_Image_SelectButtonTitle" xml:space="preserve">
     <value>Select Image</value>
   </data>
