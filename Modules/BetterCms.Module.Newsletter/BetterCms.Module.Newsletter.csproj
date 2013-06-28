@@ -116,7 +116,7 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Api\Events\NewsletterEvents.cs" />
+    <Compile Include="Events\NewsletterEvents.cs" />
     <Compile Include="Command\DeleteSubscriber\DeleteSubscriberCommand.cs" />
     <Compile Include="Command\GetSubscriberList\GetSubscriberListCommand.cs" />
     <Compile Include="Command\SaveSubscriber\SaveSubscriberCommand.cs" />

@@ -9,7 +9,6 @@ using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.Exceptions.Api;
 using BetterCms.Module.MediaManager.Api.DataContracts;
-using BetterCms.Module.MediaManager.Api.Events;
 using BetterCms.Module.MediaManager.Models;
 
 // ReSharper disable CheckNamespace
@@ -21,15 +20,7 @@ namespace BetterCms.Api
     /// </summary>
     public class MediaManagerApiContext : DataApiContext
     {
-        private static readonly MediaManagerEvents events;
-
-        /// <summary>
-        /// Initializes the <see cref="MediaManagerApiContext" /> class.
-        /// </summary>
-        static MediaManagerApiContext()
-        {
-            events = new MediaManagerEvents();
-        }
+        
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MediaManagerApiContext" /> class.
@@ -39,14 +30,6 @@ namespace BetterCms.Api
         public MediaManagerApiContext(ILifetimeScope lifetimeScope, IRepository repository = null)
             : base(lifetimeScope, repository)
         {
-        }
-
-        public new static MediaManagerEvents Events
-        {
-            get
-            {
-                return events;
-            }
         }
 
         /// <summary>

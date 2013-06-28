@@ -3,12 +3,14 @@ using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.ViewModels.Cms;
 
-namespace BetterCms.Module.Pages.Api.Events
+// ReSharper disable CheckNamespace
+namespace BetterCms.Events
+// ReSharper restore CheckNamespace
 {    
     /// <summary>
     /// Attachable page events container
     /// </summary>
-    public partial class PagesApiEvents : EventsBase
+    public partial class PageEvents : EventsBase<PageEvents>
     {        
         /// <summary>
         /// Occurs when page is created.

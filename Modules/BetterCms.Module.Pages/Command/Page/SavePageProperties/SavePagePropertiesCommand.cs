@@ -124,22 +124,22 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             UnitOfWork.Commit();
 
             // Notify about page properties change.
-            PagesApiContext.Events.OnPagePropertiesChanged(page);
+            Events.PageEvents.Instance.OnPagePropertiesChanged(page);
 
             // Notify about redirect creation.
             if (redirectCreated != null)
             {
-                PagesApiContext.Events.OnRedirectCreated(redirectCreated);
+                Events.PageEvents.Instance.OnRedirectCreated(redirectCreated);
             }
 
             // Notify about SEO status change.
             if (initialSeoStatus != page.HasSEO)
             {
-                PagesApiContext.Events.OnPageSeoStatusChanged(page);
+                Events.PageEvents.Instance.OnPageSeoStatusChanged(page);
             }
 
             // Notify about new tags.
-            RootApiContext.Events.OnTagCreated(newTags);
+            Events.RootEvents.Instance.OnTagCreated(newTags);
 
             return new SavePageResponse(page);
         }

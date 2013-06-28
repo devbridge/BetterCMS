@@ -8,6 +8,7 @@ using BetterCms.Core.Modules;
 using BetterCms.Core.Mvc.Extensions;
 using BetterCms.Module.Api.Operations.Root.Layouts.Layout;
 using BetterCms.Module.Api.Operations.Root.Layouts.Layout.Regions;
+using BetterCms.Events;
 
 namespace BetterCms.Module.Api
 {
@@ -40,7 +41,7 @@ namespace BetterCms.Module.Api
             : base(cmsConfiguration)
         {
             this.controllerExtensions = controllerExtensions;
-            ApiContext.Events.HostStart += ApplicationStart;
+            CoreEvents.Instance.HostStart += ApplicationStart;
         }
 
         /// <summary>

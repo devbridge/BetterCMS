@@ -10,7 +10,7 @@ namespace BetterCms.Module.Api
         private readonly IPagesApiOperations pages;
 
         public DefaultApiFasade(IRootApiOperations root, IPagesApiOperations pages)
-        {
+        {            
             this.root = root;
             this.pages = pages;
         }

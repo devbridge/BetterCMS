@@ -121,7 +121,7 @@
     <Compile Include="Api\DataContracts\GetFilesRequest.cs" />
     <Compile Include="Api\DataContracts\GetImagesRequest.cs" />
     <Compile Include="Api\DataContracts\GetFolderMediasRequest.cs" />
-    <Compile Include="Api\Events\MediaManagerEvents.cs" />
+    <Compile Include="Events\MediaManagerEvents.cs" />
     <Compile Include="Command\Audios\GetAudios\GetAudiosCommand.cs" />
     <Compile Include="Command\Files\GetFile\GetFileCommand.cs" />
     <Compile Include="Command\Files\SaveFile\SaveFileDataCommand.cs" />

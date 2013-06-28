@@ -74,7 +74,8 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
 
             UnitOfWork.Commit();
 
-            MediaManagerApiContext.Events.OnMediaFileUpdated(mediaImage);
+            // Notify.
+            Events.MediaManagerEvents.Instance.OnMediaFileUpdated(mediaImage);
         }
 
         /// <summary>

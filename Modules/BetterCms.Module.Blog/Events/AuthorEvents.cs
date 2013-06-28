@@ -1,12 +1,15 @@
 ﻿using BetterCms.Api;
+using BetterCms.Events;
 using BetterCms.Module.Blog.Models;
 
-namespace BetterCms.Module.Blog.Events
+// ReSharper disable CheckNamespace
+namespace BetterCms.Events
+// ReSharper restore CheckNamespace
 {
     /// <summary>
     /// Author events container.
     /// </summary>
-    public partial class BlogsApiEvents : EventsBase
+    public partial class BlogEvents : EventsBase<BlogEvents>
     {
         /// <summary>
         /// Occurs when an author is created.

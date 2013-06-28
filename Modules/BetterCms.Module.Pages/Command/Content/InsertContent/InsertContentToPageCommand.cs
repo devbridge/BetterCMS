@@ -46,7 +46,7 @@ namespace BetterCms.Module.Pages.Command.Content.InsertContent
             UnitOfWork.Commit();
 
             // Notify.
-            PagesApiContext.Events.OnPageContentInserted(pageContent);
+            Events.PageEvents.Instance.OnPageContentInserted(pageContent);
 
             return true;
         }

@@ -1,11 +1,10 @@
 ﻿using System.Web;
 
-using BetterCms.Api;
-using BetterCms.Core.Environment.Host;
-
-namespace BetterCms.Core.Api.Events
+// ReSharper disable CheckNamespace
+namespace BetterCms.Events
+// ReSharper restore CheckNamespace
 {
-    public class CoreEvents : EventsBase
+    public class CoreEvents : EventsBase<CoreEvents>
     {
         /// <summary>
         /// Occurs when a CMS host starts.

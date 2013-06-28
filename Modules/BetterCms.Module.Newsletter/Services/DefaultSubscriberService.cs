@@ -92,11 +92,11 @@ namespace BetterCms.Module.Newsletter.Services
 
             if (isNew)
             {
-                NewsletterApiContext.Events.OnSubscriberCreated(subscriber);
+                Events.NewsletterEvents.Instance.OnSubscriberCreated(subscriber);
             }
             else
             {
-                NewsletterApiContext.Events.OnSubscriberUpdated(subscriber);
+                Events.NewsletterEvents.Instance.OnSubscriberUpdated(subscriber);
             }
 
             return subscriber;

@@ -93,7 +93,7 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
             // Notify.
             if (request.DesirableStatus != ContentStatus.Preview)
             {
-                PagesApiContext.Events.OnPageContentInserted(pageContent);
+                Events.PageEvents.Instance.OnPageContentInserted(pageContent);
             }
 
             return new SavePageHtmlContentResponse {

@@ -36,11 +36,11 @@ namespace BetterCms.Module.MediaManager.Command.Folder
 
             if (request.Id == default(Guid))
             {
-                MediaManagerApiContext.Events.OnMediaFolderCreated(folder);
+                Events.MediaManagerEvents.Instance.OnMediaFolderCreated(folder);
             }
             else
             {
-                MediaManagerApiContext.Events.OnMediaFolderUpdated(folder);
+                Events.MediaManagerEvents.Instance.OnMediaFolderUpdated(folder);
             }
 
             return new MediaFolderViewModel

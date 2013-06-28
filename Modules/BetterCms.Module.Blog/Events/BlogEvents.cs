@@ -1,13 +1,14 @@
-﻿using BetterCms.Api;
-using BetterCms.Module.Blog.Models;
+﻿using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Pages.Models;
 
-namespace BetterCms.Module.Blog.Events
+// ReSharper disable CheckNamespace
+namespace BetterCms.Events
+// ReSharper restore CheckNamespace
 {
     /// <summary>
     /// Attachable blog events container
     /// </summary>
-    public partial class BlogsApiEvents : EventsBase
+    public partial class BlogEvents
     {
         /// <summary>
         /// Occurs when blog post is created.
@@ -25,11 +26,11 @@ namespace BetterCms.Module.Blog.Events
         public event DefaultEventHandler<SingleItemEventArgs<BlogPost>> BlogDeleted;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BlogsApiEvents" /> class.
+        /// Initializes a new instance of the <see cref="BlogEvents" /> class.
         /// </summary>
-        public BlogsApiEvents()
+        public BlogEvents()
         {
-            PagesApiContext.Events.PageDeleted += OnPageDeleted;
+            PageEvents.Instance.PageDeleted += OnPageDeleted;
         }
 
         /// <summary>

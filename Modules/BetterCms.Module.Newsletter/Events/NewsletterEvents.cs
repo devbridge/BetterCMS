@@ -1,12 +1,13 @@
-﻿using BetterCms.Api;
-using BetterCms.Module.Newsletter.Models;
+﻿using BetterCms.Module.Newsletter.Models;
 
-namespace BetterCms.Module.Newsletter.Api.Events
+// ReSharper disable CheckNamespace
+namespace BetterCms.Events
+// ReSharper restore CheckNamespace
 {
     /// <summary>
     /// Attachable newsletter events container
     /// </summary>
-    public class NewsletterEvents : EventsBase
+    public class NewsletterEvents : EventsBase<NewsletterEvents>
     {
         /// <summary>
         /// Occurs when a subscriber is created.

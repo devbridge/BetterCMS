@@ -25,11 +25,11 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager.DeleteMedia
             // Notify.
             if (media is MediaFolder)
             {
-                MediaManagerApiContext.Events.OnMediaFolderDeleted((MediaFolder)media);
+                Events.MediaManagerEvents.Instance.OnMediaFolderDeleted((MediaFolder)media);
             }
             else if (media is MediaFile)
             {
-                MediaManagerApiContext.Events.OnMediaFileDeleted((MediaFile)media);
+                Events.MediaManagerEvents.Instance.OnMediaFileDeleted((MediaFile)media);
             }        
 
             return true;

@@ -26,7 +26,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager.UnarchiveMedia
             Repository.Save(media);
             UnitOfWork.Commit();
 
-            MediaManagerApiContext.Events.OnMediaUnarchived(media);
+            Events.MediaManagerEvents.Instance.OnMediaUnarchived(media);
 
             return new MediaViewModel
             {

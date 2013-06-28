@@ -145,6 +145,7 @@
     <Compile Include="DefaultApiFasade.cs" />
     <Compile Include="ApiApplicationHost.cs" />
     <Compile Include="AutofacContainerAdapter.cs" />
+    <Compile Include="Helpers\QueryableExtensions.cs" />
     <Compile Include="IApiFasade.cs" />
     <Compile Include="Helpers\CmsApiControllerBase.cs" />
     <Compile Include="Helpers\DataOptionsQueryCreator.cs" />

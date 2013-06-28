@@ -391,7 +391,7 @@ namespace BetterCms.Api
                 UnitOfWork.Commit();
 
                 // Notify
-                Events.OnWidgetCreated(widgetToSave);
+                Events.PageEvents.Instance.OnWidgetCreated(widgetToSave);
 
                 return widgetToSave;
             }
@@ -446,7 +446,7 @@ namespace BetterCms.Api
                 UnitOfWork.Commit();
 
                 // Notify
-                Events.OnWidgetCreated(widgetToSave);
+                Events.PageEvents.Instance.OnWidgetCreated(widgetToSave);
 
                 return widgetToSave;
             }
@@ -622,7 +622,7 @@ namespace BetterCms.Api
 
             Repository.Save(pageContent);
 
-            Events.OnPageContentInserted(pageContent);
+            Events.PageEvents.Instance.OnPageContentInserted(pageContent);
 
             return pageContent;
         }
