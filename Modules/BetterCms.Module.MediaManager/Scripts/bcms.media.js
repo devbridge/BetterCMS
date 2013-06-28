@@ -795,6 +795,13 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                     self.version(json.Version);
                     self.name(json.Title);
                     self.oldName = json.Title;
+                    if (json.Image) {
+                        self.tooltip = json.Image.ImageTooltip;
+                        self.thumbnailUrl(json.Image.ThumbnailUrl);
+                    } else {
+                        self.tooltip = null;
+                        self.thumbnailUrl(null);
+                    }
                 });
             }
         };
