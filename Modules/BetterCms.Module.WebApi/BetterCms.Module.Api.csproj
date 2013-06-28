@@ -284,6 +284,13 @@
     <Compile Include="Operations\Root\GetLayouts\GetLayoutsRequest.cs" />
     <Compile Include="Operations\Root\GetLayouts\GetLayoutsResponse.cs" />
     <Compile Include="Operations\Root\GetLayouts\LayoutModel.cs" />
+    <Compile Include="Operations\Root\Layouts\GetLayoutsRequest.cs" />
+    <Compile Include="Operations\Root\Layouts\GetLayoutsResponse.cs" />
+    <Compile Include="Operations\Root\Layouts\LayoutModel.cs" />
+    <Compile Include="Operations\Root\Layouts\LayoutsService.cs" />
+    <Compile Include="Operations\Root\Layouts\Layout\GetLayoutRequest.cs" />
+    <Compile Include="Operations\Root\Layouts\Layout\GetLayoutResponse.cs" />
+    <Compile Include="Operations\Root\Layouts\Layout\LayoutService.cs" />
     <Compile Include="Operations\Root\Tags\TagsService.cs" />
     <Compile Include="Operations\Root\Tags\GetTagsRequest.cs" />
     <Compile Include="Operations\Root\Tags\GetTagsResponse.cs" />

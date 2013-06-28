@@ -16,7 +16,7 @@ namespace BetterCms.Module.Api.Operations.Root.Tags
 
         public GetTagsResponse Get(GetTagsRequest request)
         {            
-            var request2 = new BetterCms.Module.Pages.Api.DataContracts.GetTagsRequest();
+            var request2 = new Module.Pages.Api.DataContracts.GetTagsRequest();
             request.ApplyTo(request2);
 
             using (var api = CmsContext.CreateApiContextOf<PagesApiContext>())
