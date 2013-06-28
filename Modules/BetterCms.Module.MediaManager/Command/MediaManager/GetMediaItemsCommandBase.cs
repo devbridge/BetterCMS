@@ -14,21 +14,11 @@ using BetterCms.Module.Root.Mvc.Grids.Extensions;
 
 using MvcContrib.Sorting;
 
-using NHibernate.Transform;
-
 namespace BetterCms.Module.MediaManager.Command.MediaManager
 {
     public abstract class GetMediaItemsCommandBase<TEntity> : CommandBase, ICommand<MediaManagerViewModel, MediaManagerItemsViewModel>
         where TEntity: MediaFile
     {
-        /// <summary>
-        /// Gets or sets the configuration.
-        /// </summary>
-        /// <value>
-        /// The configuration.
-        /// </value>
-        public ICmsConfiguration Configuration { get; set; }
-
         /// <summary>
         /// Gets the type of the current media items.
         /// </summary>
@@ -117,11 +107,19 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
                 query = query.Where(m => !m.IsArchived);
             }
 
-            if (!string.IsNullOrWhiteSpace(request.SearchQuery))
+            if (request.Tags != null)
+            {
+                foreach (var tagKeyValue in request.Tags)
+                {
+                    var id = tagKeyValue.Key.ToGuidOrDefault();
+                    query = query.Where(m => m.MediaTags.Any(mt => mt.Tag.Id == id));
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(request.SearchQuery) || request.Tags != null)
             {
                 var searchQuery = string.Format("%{0}%", request.SearchQuery);
                 query = query.Where(m => m.Title.Contains(searchQuery));
-
 
                 var result = new List<Media>();
                 var mediaList = query.ToList();

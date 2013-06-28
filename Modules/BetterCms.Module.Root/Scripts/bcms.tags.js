@@ -229,16 +229,6 @@ bettercms.define('bcms.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bc
         self.tags = ko.observableArray();
         self.newTag = ko.observable().extend({ maxLength: { maxLength: ko.maxLength.name } });
 
-        if (tagsList) {
-            for (var i = 0; i < tagsList.length; i ++) {
-                if (tagsList[i].Value && tagsList[i].Key) {
-                    self.tags.push(new tags.TagViewModel(self, tagsList[i].Value, tagsList[i].Key));
-                } else {
-                    self.tags.push(new tags.TagViewModel(self, tagsList[i]));
-                }
-            }
-        }
-
         self.expandCollapse = function () {
             self.isExpanded(!self.isExpanded());
             self.clearTag();
@@ -279,6 +269,25 @@ bettercms.define('bcms.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bc
         self.clearTag = function() {
             self.newTag('');
         };
+
+        self.applyTagList = function (tagList) {
+            self.removeAll();
+            if (tagList) {
+                for (var i = 0; i < tagList.length; i++) {
+                    if (tagList[i].Value && tagList[i].Key) {
+                        self.tags.push(new tags.TagViewModel(self, tagList[i].Value, tagList[i].Key));
+                    } else {
+                        self.tags.push(new tags.TagViewModel(self, tagList[i]));
+                    }
+                }
+            }
+        };
+
+        self.removeAll = function () {
+            self.tags.removeAll();
+        };
+
+        self.applyTagList(tagsList);
     };
     
     /**
