@@ -438,6 +438,16 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.parentFolderId = ko.observable(item.ParentFolderId);
             self.parentFolderName = ko.observable(item.ParentFolderName);
 
+            self.tooltip = item.Tooltip;
+            self.thumbnailUrl = ko.observable(item.ThumbnailUrl);
+
+            self.getImageUrl = function () {
+                if (!self.thumbnailUrl()) {
+                    return null;
+                }
+                return self.thumbnailUrl();
+            };
+
             self.contextMenu = new MediaItemContextMenuViewModel();
 
             self.isFile = function () {
@@ -640,16 +650,6 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
             var self = this;
 
-            self.tooltip = item.Tooltip;
-            self.thumbnailUrl = ko.observable(item.ThumbnailUrl);
-
-            self.getImageUrl = function() {
-                if (!self.thumbnailUrl()) {
-                    return null;
-                }
-                return self.thumbnailUrl();
-            };
-
             self.previewImage = function () {
                 var previewUrl = self.publicUrl();
                 if (previewUrl) {
@@ -804,6 +804,13 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                     self.version(json.Version);
                     self.name(json.Title);
                     self.oldName = json.Title;
+                    if (json.Image) {
+                        self.tooltip = json.Image.ImageTooltip;
+                        self.thumbnailUrl(json.Image.ThumbnailUrl);
+                    } else {
+                        self.tooltip = null;
+                        self.thumbnailUrl(null);
+                    }
                 });
             }
         };
@@ -1662,6 +1669,8 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         */
         bcms.on(htmlEditor.events.insertImage, onOpenImageInsertDialog);
         bcms.on(htmlEditor.events.insertFile, onOpenFileInsertDialog);
+
+        fileEditor.SetMedia(media);
     };
 
     /**

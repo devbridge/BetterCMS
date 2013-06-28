@@ -276,6 +276,8 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             model.IsArchived = media.IsArchived;
             model.ParentFolderId = media.Folder != null ? media.Folder.Id : Guid.Empty;
             model.ParentFolderName = media.Folder != null ? media.Folder.Title : MediaGlobalization.MediaList_RootFolderName;
+            model.Tooltip = media.Image != null ? media.Image.Caption : null;
+            model.ThumbnailUrl = media.Image != null ? media.Image.PublicThumbnailUrl : null;
         }
 
         /// <summary>

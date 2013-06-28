@@ -21,6 +21,7 @@ namespace BetterCms.Module.MediaManager.Models.Maps
             References(f => f.Folder).Cascade.SaveUpdate().LazyLoad().Nullable();
             References(f => f.Original).Cascade.SaveUpdate().LazyLoad().Nullable();
 
+            References(f => f.Image).Cascade.SaveUpdate().LazyLoad();
             HasMany(x => x.MediaTags).KeyColumn("MediaId").Cascade.SaveUpdate().Inverse().LazyLoad().Where("IsDeleted = 0");
         }
     }

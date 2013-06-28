@@ -20,14 +20,7 @@
         {
             @Html.HiddenFor(model => model.Id)
             @Html.HiddenFor(model => model.Version, new { @id = "image-version-field" })
-
-            <div class="bcms-input-list-holder">
-                @Html.Tooltip(MediaGlobalization.FileEditor_Dialog_PublicUrl_Tooltip_Description)
-                <div class="bcms-content-titles">@MediaGlobalization.FileProperties_Dialog_PublicUrl:</div>
-                <div class="bcms-input-box">
-                    <input class="bcms-editor-field-box" type="text" value="@Model.Url" readonly="readonly" />
-                </div>
-            </div>
+            @Html.HiddenFor(model => model.Image.ImageId, new { data_bind = "value: image().id()" })
 
             <div class="bcms-input-list-holder">
                 @Html.Tooltip(MediaGlobalization.FileEditor_Dialog_Title_Tooltip_Description)
@@ -39,13 +32,37 @@
             </div>
 
             <div class="bcms-input-list-holder">
+                @Html.Tooltip(MediaGlobalization.FileEditor_Dialog_PublicUrl_Tooltip_Description)
+                <div class="bcms-content-titles">@MediaGlobalization.FileProperties_Dialog_PublicUrl:</div>
+                <div class="bcms-input-box">
+                    <input class="bcms-editor-field-box" type="text" value="@Model.Url" readonly="readonly" />
+                </div>
+            </div>
+
+            <div class="bcms-input-list-holder">
                 <b>@MediaGlobalization.FileEditor_Dialog_FileSize:</b>
                 <div class="bcms-editing-text" id="image-file-size">@Model.FileSize</div>
             </div>
-            
+
             <div class="bcms-tags-box-holder" data-bind="with: tags">
                 @Html.Partial("~/Areas/bcms-root/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel)
             </div>
+            
+            <div class="bcms-page-images-holder">
+                <div class="bcms-input-list-holder">
+                    @Html.Tooltip(MediaGlobalization.FileEditor_Dialog_Image_Tooltip_Description)
+                    <div class="bcms-content-titles">@MediaGlobalization.FileEditor_Dialog_Image_Title:</div>
+                    <div class="bcms-uploaded-image">
+                        <!-- ko if: image().url() -->
+                        <a class="bcms-remove-image" data-bind="click: image().remove.bind(image())">@RootGlobalization.Button_Remove</a>
+                        <a data-bind="click: image().preview.bind(image())">
+                            <img data-bind="attr: { src: image().thumbnailUrl(), alt: image().tooltip() }" />
+                        </a>
+                        <!-- /ko -->
+                    </div>
+                    <div class="bcms-btn-small" data-bind="click: image().select.bind(image())">@MediaGlobalization.FileEditor_Dialog_Image_SelectButtonTitle</div>
+                </div>
+            </div>      
             
             @Html.HiddenSubmit()
         }

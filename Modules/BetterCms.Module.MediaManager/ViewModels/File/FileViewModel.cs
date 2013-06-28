@@ -12,6 +12,14 @@ namespace BetterCms.Module.MediaManager.ViewModels.File
     public class FileViewModel
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="FileViewModel"/> class.
+        /// </summary>
+        public FileViewModel()
+        {
+            Image = new ImageSelectorViewModel();
+        }
+
+        /// <summary>
         /// Gets or sets the id.
         /// </summary>
         /// <value>
@@ -76,5 +84,13 @@ namespace BetterCms.Module.MediaManager.ViewModels.File
         /// The tags.
         /// </value>
         public IList<string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the image view model.
+        /// </summary>
+        /// <value>
+        /// The image view model.
+        /// </value>
+        public ImageSelectorViewModel Image { get; set; }
     }
 }

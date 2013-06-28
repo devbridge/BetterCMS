@@ -603,6 +603,12 @@ input.bcms-grid-input:focus {
     vertical-align: middle;
 }
 
+.bcms-system-file img {
+    display: block;
+    width: 54px;
+    height: 42px;
+}
+
 .bcms-media-name {
     line-height: 16px;
     font-size: 11px;

@@ -30,6 +30,10 @@ namespace BetterCms.Module.MediaManager.ViewModels.MediaManager
 
         public virtual string ParentFolderName { get; set; }
 
+        public virtual string Tooltip { get; set; }
+
+        public virtual string ThumbnailUrl { get; set; }
+
         public MediaViewModel()
         {
             ContentType = MediaContentType.File;
