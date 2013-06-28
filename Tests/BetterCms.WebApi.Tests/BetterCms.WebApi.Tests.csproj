@@ -181,6 +181,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\Root\layouts.webapi.tests.js" />
     <Content Include="Scripts\Root\tags.webapi.tests.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

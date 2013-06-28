@@ -1,7 +1,7 @@
-﻿var getTagsUrl = 'http://localhost:55132/bcms-api/tags';
+﻿var getLayoutsUrl = 'http://localhost:55132/bcms-api/layouts';
 
-asyncTest("should get tags", function () {
-    $.ajax(getTagsUrl,
+asyncTest("should get layouts", function () {
+    $.ajax(getLayoutsUrl,
         {
             data: {
                 filter: {
