@@ -3,6 +3,7 @@
 @using BetterCms.Module.Pages.ViewModels.Page
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc.Helpers
+@using BetterCms.Module.Root.ViewModels.Tags
 @using Microsoft.Web.Mvc
 
 @model EditPagePropertiesViewModel
@@ -11,7 +12,7 @@
     return;
 }
 @{
-    var tagsTemplateViewModel = new BetterCms.Module.Pages.ViewModels.Tags.TagsTemplateViewModel
+    var tagsTemplateViewModel = new TagsTemplateViewModel
     {
         TooltipDescription = PagesGlobalization.EditPageProperties_BasicPropertiesTab_AddTags_Tooltip_Description
     };
@@ -89,7 +90,7 @@
                 </div>
 
                 <div class="bcms-tags-box-holder" data-bind="with: tags">
-                    @Html.Partial("~/Areas/bcms-pages/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel)
+                    @Html.Partial("~/Areas/bcms-root/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel)
                 </div>
 
                 <div class="bcms-input-list-holder">

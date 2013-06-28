@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.jquery.jcrop', 'bcms.ko.extenders'],
-    function($, bcms, modal, siteSettings, forms, dynamicContent, jcrop, ko) {
+bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.jquery.jcrop', 'bcms.ko.extenders', 'bcms.tags'],
+    function($, bcms, modal, siteSettings, forms, dynamicContent, jcrop, ko, tags) {
         'use strict';
 
         var imageEditor = {},
@@ -422,11 +422,12 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
         /**
         * Image edit form view model
         */
-        function ImageEditViewModel(titleEditorViewModel, imageEditorViewModel) {
+        function ImageEditViewModel(titleEditorViewModel, imageEditorViewModel, tagsViewModel) {
             var self = this;
 
             self.titleEditorViewModel = titleEditorViewModel;
             self.imageEditorViewModel = imageEditorViewModel;
+            self.tags = tagsViewModel;
         }
 
         /**
@@ -440,8 +441,10 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
             var titleEditorViewModel = new TitleEditorViewModel(dialog, data.Title);
             
             var imageEditorViewModel = new ImageEditorViewModel(dialog, data, true);
+
+            var tagsEditorViewModel = new tags.TagsListViewModel(content.Data.Tags);
             
-            var viewModel = new ImageEditViewModel(titleEditorViewModel, imageEditorViewModel);
+            var viewModel = new ImageEditViewModel(titleEditorViewModel, imageEditorViewModel, tagsEditorViewModel);
             ko.applyBindings(viewModel, dialog.container.find(selectors.imageEditorForm).get(0));
 
             // Image alignment

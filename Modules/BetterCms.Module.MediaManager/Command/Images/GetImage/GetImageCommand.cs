@@ -24,6 +24,14 @@ namespace BetterCms.Module.MediaManager.Command.Images.GetImage
         public IMediaFileService MediaFileService { get; set; }
 
         /// <summary>
+        /// The tag service.
+        /// </summary>
+        /// <value>
+        /// The tag service.
+        /// </value>
+        public ITagService TagService { get; set; }
+
+        /// <summary>
         /// Executes this command.
         /// </summary>
         /// <param name="imageId">The image id.</param>
@@ -51,7 +59,8 @@ namespace BetterCms.Module.MediaManager.Command.Images.GetImage
                     CropCoordY1 = image.CropCoordY1.HasValue ? image.CropCoordY1.Value : 0,
                     CropCoordX2 = image.CropCoordX2.HasValue ? image.CropCoordX2.Value : image.OriginalWidth,
                     CropCoordY2 = image.CropCoordY2.HasValue ? image.CropCoordY2.Value : image.OriginalHeight,
-                    OriginalImageUrl = image.PublicOriginallUrl
+                    OriginalImageUrl = image.PublicOriginallUrl,
+                    Tags = TagService.GetMediaTagNames(imageId)
                 };
         }
     }

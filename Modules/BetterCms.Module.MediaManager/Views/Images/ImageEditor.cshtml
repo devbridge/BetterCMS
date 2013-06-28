@@ -1,4 +1,5 @@
 ﻿@using BetterCms.Module.MediaManager.Models
+@using BetterCms.Module.Root.ViewModels.Tags
 @using Microsoft.Web.Mvc
 @using BetterCms.Module.Root.Mvc.Helpers
 @using BetterCms.Module.Root.Content.Resources
@@ -7,6 +8,12 @@
 @using BetterCms.Module.MediaManager.ViewModels.Images
 
 @model ImageViewModel
+@{
+    var tagsTemplateViewModel = new TagsTemplateViewModel
+    {
+        TooltipDescription = MediaGlobalization.FileEditor_Dialog_AddTags_Tooltip_Description
+    };
+}
 <div class="bcms-scroll-window">
     @Html.TabbedContentMessagesBox()
     <div class="bcms-file-manager-inner">
@@ -61,11 +68,11 @@
                         <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_ImageTitle_Title:</div>
                         <div class="bcms-custom-input-box" style="width: 255px;">
                             @Html.TextBoxFor(f => f.Title, new
-                            {
-                                @class = "bcms-editor-field-box",
-                                @id = "bcms-image-title-editor",
-                                @data_bind = "value: title, valueUpdate: 'afterkeydown', enterPress: save, escPress: close"
-                            })
+                       {
+                           @class = "bcms-editor-field-box",
+                           @id = "bcms-image-title-editor",
+                           @data_bind = "value: title, valueUpdate: 'afterkeydown', enterPress: save, escPress: close"
+                       })
                             @Html.BcmsValidationMessageFor(f => f.Title)
                         </div>
                         <div class="bcms-btn-small" data-bind="click: save">@RootGlobalization.Button_Ok</div>
@@ -94,21 +101,21 @@
                         <span>@MediaGlobalization.ImageEditor_Dialog_ChangeSize_Width:</span>
                         <div class="bcms-custom-input-box" style="width: 75px;">
                             @Html.TextBoxFor(f => f.ImageWidth, new
-                               {
-                                   @class = "bcms-editor-field-box",
-                                   @id = "image-width",
-                                   @data_bind = "value: width, valueUpdate: 'afterkeydown', enterPress: save, escPress: close, event: { change: changeHeight }"
-                               })
+                       {
+                           @class = "bcms-editor-field-box",
+                           @id = "image-width",
+                           @data_bind = "value: width, valueUpdate: 'afterkeydown', enterPress: save, escPress: close, event: { change: changeHeight }"
+                       })
                             @Html.BcmsValidationMessageFor(f => f.ImageWidth)
                         </div>
                         <span>@MediaGlobalization.ImageEditor_Dialog_ChangeSize_Height:</span>
                         <div class="bcms-custom-input-box" style="width: 75px;">
                             @Html.TextBoxFor(f => f.ImageHeight, new
-                           {
-                               @class = "bcms-editor-field-box",
-                               @id = "image-height",
-                               @data_bind = "value: height, valueUpdate: 'afterkeydown', enterPress: save, escPress: close, event: { change: changeWidth }"
-                           })
+                       {
+                           @class = "bcms-editor-field-box",
+                           @id = "image-height",
+                           @data_bind = "value: height, valueUpdate: 'afterkeydown', enterPress: save, escPress: close, event: { change: changeWidth }"
+                       })
                             @Html.BcmsValidationMessageFor(f => f.ImageHeight)
                         </div>
                         <div class="bcms-btn-small" data-bind="click: save">@RootGlobalization.Button_Ok</div>
@@ -132,6 +139,10 @@
                         <input type="radio" id="alignright" name="ImageAlign" value="@((int)MediaImageAlign.Right)" @(Model.ImageAlign == MediaImageAlign.Right ? "checked" : string.Empty)/>
                     </div>
                 </div>
+            </div>
+            
+            <div class="bcms-tags-box-holder" data-bind="with: tags">
+                @Html.Partial("~/Areas/bcms-root/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel)
             </div>
             
             @Html.HiddenSubmit()
