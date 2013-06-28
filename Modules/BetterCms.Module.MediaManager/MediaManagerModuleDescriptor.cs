@@ -46,6 +46,11 @@ namespace BetterCms.Module.MediaManager
         private readonly ImageEditorJsModuleIncludeDescriptor imageEditorModuleIncludeDescriptor;
 
         /// <summary>
+        /// The file editor module include descriptor.
+        /// </summary>
+        private readonly FileEditorJsModuleIncludeDescriptor fileEditorModuleIncludeDescriptor;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="MediaManagerModuleDescriptor" /> class.
         /// </summary>
         public MediaManagerModuleDescriptor(ICmsConfiguration cmsConfiguration) : base(cmsConfiguration)
@@ -53,6 +58,7 @@ namespace BetterCms.Module.MediaManager
             mediaJsModuleIncludeDescriptor = new MediaManagerJsModuleIncludeDescriptor(this);
             mediaUploadModuleIncludeDescriptor = new MediaUploadJsModuleIncludeDescriptor(this);
             imageEditorModuleIncludeDescriptor = new ImageEditorJsModuleIncludeDescriptor(this);
+            fileEditorModuleIncludeDescriptor = new FileEditorJsModuleIncludeDescriptor(this);
             mediaHistoryJsModuleIncludeDescriptor = new MediaHistoryJsModuleIncludeDescriptor(this);
         }
 
@@ -123,6 +129,7 @@ namespace BetterCms.Module.MediaManager
             containerBuilder.RegisterType<DefaultMediaFileService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultMediaImageService>().AsImplementedInterfaces().InstancePerLifetimeScope();            
             containerBuilder.RegisterType<DefaultMediaHistoryService>().AsImplementedInterfaces().InstancePerLifetimeScope();            
+            containerBuilder.RegisterType<DefaultTagService>().AsImplementedInterfaces().InstancePerLifetimeScope();            
         }
 
         /// <summary>
@@ -149,6 +156,7 @@ namespace BetterCms.Module.MediaManager
                     mediaJsModuleIncludeDescriptor,
                     mediaUploadModuleIncludeDescriptor,
                     imageEditorModuleIncludeDescriptor,
+                    fileEditorModuleIncludeDescriptor,
                     mediaHistoryJsModuleIncludeDescriptor,
                     new JsIncludeDescriptor(this, "bcms.html5Upload"),
                     new JsIncludeDescriptor(this, "bcms.jquery.jcrop"),

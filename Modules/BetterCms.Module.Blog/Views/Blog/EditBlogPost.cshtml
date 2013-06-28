@@ -8,6 +8,7 @@
 @using BetterCms.Module.Root.Mvc
 @using BetterCms.Module.Root.Mvc.Helpers
 @using BetterCms.Module.Root.Mvc.UI
+@using BetterCms.Module.Root.ViewModels.Tags
 @using Microsoft.Web.Mvc
 
 @model BetterCms.Module.Blog.ViewModels.Blog.BlogPostViewModel
@@ -35,7 +36,7 @@
 }
 @{
     var canEdit = (ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent);
-    var tagsTemplateViewModel = new BetterCms.Module.Pages.ViewModels.Tags.TagsTemplateViewModel
+    var tagsTemplateViewModel = new TagsTemplateViewModel
     {
         TooltipDescription = BlogGlobalization.EditBlockPost_Tags_Tooltip_Description
     };
@@ -150,7 +151,7 @@
                 </div>
 
                 <div class="bcms-blog-tags-holder @(!canEdit ? "bcms-disabled-content" : string.Empty)" data-bind="with: tags">
-                    @Html.Partial("~/Areas/bcms-pages/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel)
+                    @Html.Partial("~/Areas/bcms-root/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel)
                 </div>
             </div>
         </div>

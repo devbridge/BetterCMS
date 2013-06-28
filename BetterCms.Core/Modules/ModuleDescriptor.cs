@@ -294,24 +294,6 @@ namespace BetterCms.Core.Modules
         }
 
         /// <summary>
-        /// Registers the type as the keyed type.
-        /// </summary>
-        /// <typeparam name="TType">The parent type.</typeparam>
-        /// <param name="containerBuilder">The container builder.</param>
-        /// <param name="type">The type.</param>
-        protected void RegisterKeyedControllerType<TType>(ContainerBuilder containerBuilder, Type type) where  TType : IController
-        {
-            string key = (AreaName + "-" + type.Name).ToUpperInvariant();
-            containerBuilder
-                .RegisterType(type)
-                .AsSelf()
-                .Keyed<TType>(key)
-                .WithMetadata("ControllerType", type)
-                .InstancePerDependency()
-                .PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
-        }
-
-        /// <summary>
         /// Registers module controller types.
         /// </summary>
         /// <param name="registrationContext">The area registration context.</param>
@@ -325,7 +307,15 @@ namespace BetterCms.Core.Modules
             {
                 foreach (Type controllerType in controllerTypes)
                 {
-                    RegisterKeyedControllerType<IController>(containerBuilder, controllerType);
+                    string key = (AreaName + "-" + controllerType.Name).ToUpperInvariant();
+
+                    containerBuilder
+                        .RegisterType(controllerType)
+                        .AsSelf()
+                        .Keyed<IController>(key)
+                        .WithMetadata("ControllerType", controllerType)
+                        .InstancePerDependency()
+                        .PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);                    
                     
                     registrationContext.MapRoute(
                         string.Format("bcms_{0}_internal_routes", AreaName),

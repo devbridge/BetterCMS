@@ -294,8 +294,8 @@
     <Compile Include="Operations\Root\Tags\GetTagsRequest.cs" />
     <Compile Include="Operations\Root\Tags\GetTagsResponse.cs" />
     <Compile Include="Operations\Root\Tags\TagModel.cs" />
-    <Compile Include="Operations\Root\Tag\SaveTagResponse.cs" />
-    <Compile Include="Operations\Root\Tag\SaveTagRequest.cs" />
+    <Compile Include="Operations\Root\Tag\PostTagRequest.cs" />
+    <Compile Include="Operations\Root\Tag\PostTagResponse.cs" />
     <Compile Include="Operations\Root\Tag\TagModel.cs" />
     <Compile Include="Operations\Root\Tag\GetTagRequest.cs" />
     <Compile Include="Operations\Root\Tag\GetTagResponse.cs" />

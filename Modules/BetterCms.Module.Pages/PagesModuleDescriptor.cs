@@ -48,11 +48,6 @@ namespace BetterCms.Module.Pages
         private readonly SeoJsModuleIncludeDescriptor seoJsModuleIncludeDescriptor;
 
         /// <summary>
-        /// bcms.pages.tags.js java script module descriptor.
-        /// </summary>
-        private readonly TagsJsModuleIncludeDescriptor tagsJsModuleIncludeDescriptor;
-
-        /// <summary>
         /// bcms.pages.content.js java script module descriptor.
         /// </summary>
         private readonly PagesContentJsModuleIncludeDescriptor pagesContentJsModuleIncludeDescriptor;
@@ -92,7 +87,6 @@ namespace BetterCms.Module.Pages
             seoJsModuleIncludeDescriptor = new SeoJsModuleIncludeDescriptor(this);
             pagesContentJsModuleIncludeDescriptor = new PagesContentJsModuleIncludeDescriptor(this);
             widgetsJsModuleIncludeDescriptor = new WidgetsJsModuleIncludeDescriptor(this);
-            tagsJsModuleIncludeDescriptor = new TagsJsModuleIncludeDescriptor(this);
             redirectsJsModuleIncludeDescriptor = new RedirectsJsModuleIncludeDescriptor(this);
             templatesJsModuleIncludeDescriptor = new TemplatesJsModuleIncludeDescriptor(this);
             historyJsModuleIncludeDescriptor = new HistoryJsModuleIncludeDescriptor(this);
@@ -209,7 +203,6 @@ namespace BetterCms.Module.Pages
                     pagesContentJsModuleIncludeDescriptor,
                     redirectsJsModuleIncludeDescriptor,
                     seoJsModuleIncludeDescriptor,
-                    tagsJsModuleIncludeDescriptor,
                     widgetsJsModuleIncludeDescriptor,
                     templatesJsModuleIncludeDescriptor,
                     historyJsModuleIncludeDescriptor,
@@ -366,21 +359,6 @@ namespace BetterCms.Module.Pages
                         },
                     
                     new SeparatorProjection(1500), 
-
-                    new LinkActionProjection(tagsJsModuleIncludeDescriptor, page => "loadSiteSettingsCategoryList")
-                        {
-                            Order = 2000,
-                            Title = () => PagesGlobalization.SiteSettings_CategoriesMenuItem,
-                            CssClass = page => "bcms-sidebar-link",
-                            AccessRole = RootModuleConstants.UserRoles.EditContent
-                        },
-                   new LinkActionProjection(tagsJsModuleIncludeDescriptor, page => "loadSiteSettingsTagList")
-                        {
-                            Order = 2100,
-                            Title = () => PagesGlobalization.SiteSettings_TagsMenuItem,
-                            CssClass = page => "bcms-sidebar-link",
-                            AccessRole = RootModuleConstants.UserRoles.EditContent
-                        },
 
                     new SeparatorProjection(2500), 
 

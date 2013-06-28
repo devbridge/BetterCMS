@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Api;
@@ -14,51 +15,79 @@ namespace BetterCms.Module.Pages.Api.Events
         /// <summary>
         /// Occurs when a redirect is created.
         /// </summary>
-        public event DefaultEventHandler<SingleItemEventArgs<Tag>> TagCreated;
+        [Obsolete("This event is obsolete; use method RootApiContext.Events.TagCreated instead.")]
+        public event DefaultEventHandler<SingleItemEventArgs<Tag>> TagCreated
+        {
+            add
+            {
+                RootApiContext.Events.TagCreated += value;
+            }
+
+            remove
+            {
+                RootApiContext.Events.TagCreated -= value;
+            }
+        }
 
         /// <summary>
         /// Occurs when a redirect is updated.
         /// </summary>
-        public event DefaultEventHandler<SingleItemEventArgs<Tag>> TagUpdated;
+        [Obsolete("This event is obsolete; use method RootApiContext.Events.TagUpdated instead.")]
+        public event DefaultEventHandler<SingleItemEventArgs<Tag>> TagUpdated
+        {
+            add
+            {
+                RootApiContext.Events.TagUpdated += value;
+            }
+
+            remove
+            {
+                RootApiContext.Events.TagUpdated -= value;
+            }
+        }
 
         /// <summary>
         /// Occurs when a redirect is removed.
         /// </summary>
-        public event DefaultEventHandler<SingleItemEventArgs<Tag>> TagDeleted; 
- 
-        public void OnTagCreated(params Tag[] tags)
+        [Obsolete("This event is obsolete; use method RootApiContext.Events.TagDeleted instead.")]
+        public event DefaultEventHandler<SingleItemEventArgs<Tag>> TagDeleted
         {
-            if (TagCreated != null && tags != null)
+            add
             {
-                foreach (var tag in tags)
-                {
-                    TagCreated(new SingleItemEventArgs<Tag>(tag));
-                }
+                RootApiContext.Events.TagDeleted += value;
+            }
+
+            remove
+            {
+                RootApiContext.Events.TagDeleted -= value;
             }
         }
 
+        [Obsolete("This method is obsolete; use method RootApiContext.Events.OnTagCreated(...) instead.")]
+        public void OnTagCreated(params Tag[] tags)
+        {
+            RootApiContext.Events.OnTagCreated(tags);
+        }
+
+        [Obsolete("This method is obsolete; use method RootApiContext.Events.OnTagCreated(...) instead.")]
         public void OnTagCreated(IEnumerable<Tag> tags)
         {
             if (tags != null)
             {
-                OnTagCreated(tags.ToArray());
+                RootApiContext.Events.OnTagCreated(tags.ToArray());
             }
         }
 
+        [Obsolete("This method is obsolete; use method RootApiContext.Events.OnTagUpdated(...) instead.")]
         public void OnTagUpdated(Tag tag)
         {
-            if (TagUpdated != null)
-            {
-                TagUpdated(new SingleItemEventArgs<Tag>(tag));
-            }
+            RootApiContext.Events.OnTagUpdated(tag);
         }
 
+        [Obsolete("This method is obsolete; use method RootApiContext.Events.OnTagDeleted(...) instead.")]
         public void OnTagDeleted(Tag tag)
         {
-            if (TagDeleted != null)
-            {
-                TagDeleted(new SingleItemEventArgs<Tag>(tag));
-            }        
+            RootApiContext.Events.OnTagDeleted(tag);
         }
     }
 }

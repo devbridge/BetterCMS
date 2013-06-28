@@ -42,12 +42,37 @@
                 <div class="bcms-tip-close" data-bind="click: gridOptions().closeFilter">@RootGlobalization.Button_Close</div>
                 <div class="bcms-featured-tags">
                     <div class="clearfix">
-                        <div class="bcms-filter-options-1">
+                        
+                        <div class="bcms-filter-options-1" data-bind="with: gridOptions().tags">
+                            <div class="bcms-filter-text">@MediaGlobalization.SiteSettings_FilterByTags</div>
+                            <div class="bcms-tags-field-holder">
+                                <input type="text" class="bcms-add-tags-field" style="width: 107px;" data-bind="
+                                    css: { 'bcms-tag-validation-error': newTag.hasError() },
+                                    value: newTag,
+                                    valueUpdate: 'afterkeydown',
+                                    escPress: clearTag,
+                                    tagautocomplete: 'onlyExisting'" />
+                                <!-- ko if: newTag.hasError()  -->
+                                <span class="bcms-tag-field-validation-error">
+                                    <span data-bind="text: newTag.validationMessage()"></span>
+                                </span>
+                                <!-- /ko -->
+                            </div>
+                        </div>
+
+                        <div class="bcms-filter-options-2">
                             <div class="bcms-tags-field-holder">
                                 <input type="checkbox" data-bind="checked: gridOptions().includeArchived" />
                                 @MediaGlobalization.MediaManager_IncludeArchived_Message
                             </div>
                         </div>
+                    </div>
+                    <div class="bcms-single-tag-holder" data-bind="foreach: gridOptions().tags.tags()">
+                        <div class="bcms-single-tag" data-bind="css: { 'bcms-single-tag-active': isActive() }">
+                            <span data-bind="text: name()"></span><a data-bind="click: remove">@RootGlobalization.Button_Remove</a>
+                        </div>
+                        <input type="hidden" data-bind="attr: { name: getTagInputName($index()) + '.Key', value: id() }" />
+                        <input type="hidden" data-bind="attr: { name: getTagInputName($index()) + '.Value', value: name() }" />
                     </div>
                 </div>
                 <div class="bcms-filter-search clearfix">
@@ -119,7 +144,7 @@
                     <!-- /ko -->
                     @if (canEdit)
                     {
-                        <!-- ko if: !isFailed() && canBeEdited() -->
+                        <!-- ko if: !isFailed() && !isFolder() -->
                         <a class="bcms-media-content-link" data-bind="click: editMedia.bind($data, $root), clickBubble: false">@RootGlobalization.Button_Edit</a>
                         <!-- /ko -->
                     }
@@ -127,7 +152,7 @@
                     <input class="bcms-editor-field-box" type="text" readonly="readonly" data-bind="value: publicUrl(), click: selectThis.bind($data, $root, $element)" />
                     <!-- /ko -->
 
-                    <!-- ko if: !isFailed() && (isFolder() || isImage() || canBeEdited()) -->
+                    <!-- ko if: !isFailed() && (isFolder() || isImage() || (@(canEdit ? "true" : "false") && !isFolder()) || (!isFolder() && publicUrl())) -->
                     <div class="bcms-settings-separator"></div>
                     <!-- /ko -->
 
@@ -177,7 +202,7 @@
 
                 <div class="bcms-media-items-block">
                     <div data-bind="css: iconClassNames()">
-                        <!-- ko if: isImage() -->
+                        <!-- ko if: getImageUrl() -->
                         <img data-bind="attr: { alt: tooltip, src: getImageUrl() }" />
                         <!-- /ko -->
                     </div>
