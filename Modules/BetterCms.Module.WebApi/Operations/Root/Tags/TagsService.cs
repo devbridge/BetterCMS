@@ -10,7 +10,7 @@ using ServiceStack.ServiceInterface;
 
 namespace BetterCms.Module.Api.Operations.Root.Tags
 {
-    public class TagsService : Service
+    public class TagsService : Service, ITagsService
     {
         private readonly IRepository repository;
 
@@ -25,7 +25,6 @@ namespace BetterCms.Module.Api.Operations.Root.Tags
 
                 return new GetTagsResponse
                            {
-                               Status = "ok",
                                Data = new DataListResponse<TagModel>(
                                    tags.Items.Select(
                                        f => new TagModel

@@ -11,6 +11,8 @@ using BetterCms.Core;
 using BetterCms.Core.Dependencies;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Mvc.Extensions;
+using BetterCms.Module.Api.Operations.Root.Tags.Tag;
+using BetterCms.Module.Api.Operations.Root.Version;
 
 namespace BetterCms.Module.Api
 {
@@ -96,6 +98,8 @@ namespace BetterCms.Module.Api
         public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
             containerBuilder.RegisterType<BlogsApiContext>().AsSelf().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
+            
+            //api.Root.Version.Get()
         }
 
         /// <summary>

@@ -2,7 +2,7 @@
 
 namespace BetterCms.Module.Api.Operations.Root.Version
 {
-    public class VersionService : Service
+    public class VersionService : Service, IVersionService
     {
         private readonly ICmsConfiguration configuration;
 
@@ -11,10 +11,9 @@ namespace BetterCms.Module.Api.Operations.Root.Version
             this.configuration = configuration;
         }
 
-        public GetVersionResponse Get(GetVersionRequest request)
+        public GetVersionResponse Get(GetVersionRequest request = null)
         {            
             return new GetVersionResponse {
-                                           Status = "ok",
                                            Data = configuration.Version
                                        };
         }

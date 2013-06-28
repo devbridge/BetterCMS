@@ -7,7 +7,7 @@ using ServiceStack.ServiceInterface;
 
 namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout
 {
-    public class LayoutService : Service
+    public class LayoutService : Service, ILayoutService
     {
         public GetLayoutResponse Get(GetLayoutRequest request)
         {
@@ -19,7 +19,6 @@ namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout
                     .First();
                 return new GetLayoutResponse
                 {
-                    Status = "ok",
                     Data = new LayoutModel
                                {
                                    Id = layout.Id,

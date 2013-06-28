@@ -13,7 +13,7 @@ using BetterCms.Core.Exceptions.Api;
 
 using BetterCms.Module.Blog.Api.DataContracts;
 using BetterCms.Module.Blog.Api.DataModels;
-using BetterCms.Module.Blog.Api.Events;
+using BetterCms.Module.Blog.Events;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.Services;
 using BetterCms.Module.MediaManager.Models;

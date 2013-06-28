@@ -9,7 +9,7 @@ using ServiceStack.ServiceInterface;
 
 namespace BetterCms.Module.Api.Operations.Root.Tags.Tag
 {
-    public class TagService : Service
+    public class TagService : Service, ITagService
     {
         public GetTagResponse Get(GetTagRequest request)
         {
@@ -32,7 +32,6 @@ namespace BetterCms.Module.Api.Operations.Root.Tags.Tag
 
                 return new GetTagResponse
                 {
-                    Status = "ok",
                     Data = new TagModel
                     {
                         Id = tag.Id,
@@ -48,15 +47,19 @@ namespace BetterCms.Module.Api.Operations.Root.Tags.Tag
 
         }
 
-        public PostTagResponse Post(PostTagRequest request)
+        public PostTagResponse Put(PostTagRequest request)
         {
             return new PostTagResponse
             {
                 Data = request.Id,
-                Status = "ok"
             };
-        }    
-    
+        }
+
+        PostTagResponse ITagService.Update(PostTagRequest request)
+        {
+            return Put(request);
+        }
+
         // TODO: add delete action
     }
 }

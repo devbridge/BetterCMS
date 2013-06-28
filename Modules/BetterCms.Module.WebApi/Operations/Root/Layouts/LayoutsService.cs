@@ -9,7 +9,7 @@ using ServiceStack.ServiceInterface;
 
 namespace BetterCms.Module.Api.Operations.Root.Layouts
 {
-    public class LayoutsService : Service
+    public class LayoutsService : Service, ILayoutsService
     {
         public GetLayoutsResponse Get(GetLayoutsRequest request)
         {
@@ -22,7 +22,6 @@ namespace BetterCms.Module.Api.Operations.Root.Layouts
 
                 return new GetLayoutsResponse
                 {
-                    Status = "ok",
                     Data = new DataListResponse<LayoutModel>(
                         layouts.Items.Select(
                             f => new LayoutModel

@@ -1,7 +1,7 @@
 ﻿using BetterCms.Api;
 using BetterCms.Module.Blog.Models;
 
-namespace BetterCms.Module.Blog.Api.Events
+namespace BetterCms.Module.Blog.Events
 {
     /// <summary>
     /// Author events container.

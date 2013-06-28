@@ -142,8 +142,10 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="DefaultApiFasade.cs" />
     <Compile Include="ApiApplicationHost.cs" />
     <Compile Include="AutofacContainerAdapter.cs" />
+    <Compile Include="IApiFasade.cs" />
     <Compile Include="Helpers\CmsApiControllerBase.cs" />
     <Compile Include="Helpers\DataOptionsQueryCreator.cs" />
     <Compile Include="Helpers\DynamicLinqExtensions.cs" />
@@ -208,6 +210,7 @@
     <Compile Include="Operations\OperationBase.cs" />
     <Compile Include="Operations\OrderItem.cs" />
     <Compile Include="Operations\ModelBase.cs" />
+    <Compile Include="Operations\Pages\IPagesApiOperations.cs" />
     <Compile Include="Operations\Pages\GetBlogPostContentById\ContentModel.cs" />
     <Compile Include="Operations\Pages\GetBlogPostContentById\GetBlogPostContentByIdRequest.cs" />
     <Compile Include="Operations\Pages\GetBlogPostContentById\GetBlogPostContentByIdResponse.cs" />
@@ -256,16 +259,18 @@
     <Compile Include="Operations\Pages\GetWidgets\GetWidgetsRequest.cs" />
     <Compile Include="Operations\Pages\GetWidgets\GetWidgetsResponse.cs" />
     <Compile Include="Operations\Pages\GetWidgets\WidgetModel.cs" />
+    <Compile Include="Operations\Pages\DefaultPagesApiOperations.cs" />
     <Compile Include="Operations\Pages\PageExists\PageExistsRequest.cs" />
     <Compile Include="Operations\Pages\PageExists\PageExistsResponse.cs" />
-    <Compile Include="Operations\Pages\PageExists\PageModel.cs" />
+    <Compile Include="Operations\Pages\PageExists\PageExistsService.cs" />
+    <Compile Include="Operations\Pages\PageExists\PageExistsModel.cs" />
     <Compile Include="Operations\Pages\GetPagePropertiesById\PageModel.cs" />
     <Compile Include="Operations\Pages\GetPages\PageModel.cs" />
     <Compile Include="Operations\ResponseBase.cs" />
     <Compile Include="Operations\Pages\GetPages\GetPagesResponse.cs" />
     <Compile Include="Operations\Pages\GetPages\GetPagesRequest.cs" />
     <Compile Include="Operations\RequestBase.cs" />
-    <Compile Include="Operations\Root\DefaultRootOperationsContext.cs" />
+    <Compile Include="Operations\Root\DefaultRootApiOperations.cs" />
     <Compile Include="Operations\Root\GetCategories\CategoryModel.cs" />
     <Compile Include="Operations\Root\GetCategoryById\CategoryModel.cs" />
     <Compile Include="Operations\Pages\GetRedirects\GetRedirectsRequest.cs" />
@@ -286,30 +291,34 @@
     <Compile Include="Operations\Root\GetLayouts\LayoutModel.cs" />
     <Compile Include="Operations\Root\Layouts\GetLayoutsRequest.cs" />
     <Compile Include="Operations\Root\Layouts\GetLayoutsResponse.cs" />
+    <Compile Include="Operations\Root\Layouts\ILayoutsService.cs" />
     <Compile Include="Operations\Root\Layouts\LayoutModel.cs" />
     <Compile Include="Operations\Root\Layouts\LayoutsService.cs" />
     <Compile Include="Operations\Root\Layouts\Layout\GetLayoutRequest.cs" />
     <Compile Include="Operations\Root\Layouts\Layout\GetLayoutResponse.cs" />
+    <Compile Include="Operations\Root\Layouts\Layout\ILayoutService.cs" />
     <Compile Include="Operations\Root\Layouts\Layout\LayoutService.cs" />
+    <Compile Include="Operations\Root\Tags\ITagsService.cs" />
     <Compile Include="Operations\Root\Tags\TagsService.cs" />
     <Compile Include="Operations\Root\Tags\GetTagsRequest.cs" />
     <Compile Include="Operations\Root\Tags\GetTagsResponse.cs" />
     <Compile Include="Operations\Root\Tags\TagModel.cs" />
+    <Compile Include="Operations\Root\Tags\Tag\ITagService.cs" />
     <Compile Include="Operations\Root\Tags\Tag\PostTagResponse.cs" />
     <Compile Include="Operations\Root\Tags\Tag\PostTagRequest.cs" />
     <Compile Include="Operations\Root\Tags\Tag\GetTagRequest.cs" />
     <Compile Include="Operations\Root\Tags\Tag\GetTagResponse.cs" />
+    <Compile Include="Operations\Root\Version\IVersionService.cs" />
     <Compile Include="Operations\Root\Version\VersionService.cs" />
     <Compile Include="Operations\Root\Version\GetVersionRequest.cs" />
     <Compile Include="Operations\Root\Version\GetVersionResponse.cs" />
     <Compile Include="Operations\Root\GetLayoutById\LayoutModel.cs" />
     <Compile Include="Operations\Pages\GetRedirects\RedirectModel.cs" />
     <Compile Include="Operations\Root\GetLayoutRegions\RegionModel.cs" />
-    <Compile Include="Operations\Root\IRootOperationsContext.cs" />
+    <Compile Include="Operations\Root\IRootApiOperations.cs" />
     <Compile Include="ApiModuleDescriptor.cs" />
     <Compile Include="Operations\Root\Tags\Tag\TagService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WebServiceExamples.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BetterCMS.Configuration\BetterCms.Configuration.csproj">

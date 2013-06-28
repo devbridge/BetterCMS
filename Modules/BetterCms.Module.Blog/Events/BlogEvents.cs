@@ -2,7 +2,7 @@
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Pages.Models;
 
-namespace BetterCms.Module.Blog.Api.Events
+namespace BetterCms.Module.Blog.Events
 {
     /// <summary>
     /// Attachable blog events container

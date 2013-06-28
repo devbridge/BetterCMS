@@ -1,8 +1,11 @@
 ﻿using System.Runtime.Serialization;
 
+using ServiceStack.ServiceHost;
+
 namespace BetterCms.Module.Api.Operations.Pages.PageExists
 {
     [DataContract]
+    [Route("/page-exists/{PageUrl*}")]
     public class PageExistsRequest : RequestBase
     {
         /// <summary>
@@ -11,7 +14,7 @@ namespace BetterCms.Module.Api.Operations.Pages.PageExists
         /// <value>
         /// The page URL.
         /// </value>
-        [DataMember(Order = 10, Name = "pageUrl")]
-        public System.Guid PageUrl { get; set; }
+        [DataMember]
+        public string PageUrl { get; set; }
     }
 }

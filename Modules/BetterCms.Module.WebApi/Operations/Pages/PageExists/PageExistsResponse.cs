@@ -3,7 +3,7 @@
 namespace BetterCms.Module.Api.Operations.Pages.PageExists
 {
     [DataContract]
-    public class PageExistsResponse : ResponseBase<PageModel>
+    public class PageExistsResponse : ResponseBase<PageExistsModel>
     {
     }
 }
