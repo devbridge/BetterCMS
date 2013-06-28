@@ -42,6 +42,7 @@ namespace BetterCms.Module.MediaManager.Command.Files.GetFile
                 {
                     Id = file.Id.ToString(),
                     Title = file.Title,
+                    Description = file.Description,
                     Url = file.PublicUrl,
                     Version = file.Version.ToString(CultureInfo.InvariantCulture),
                     FileName = file.OriginalFileName,

@@ -139,6 +139,16 @@
                         <input type="radio" id="alignright" name="ImageAlign" value="@((int)MediaImageAlign.Right)" @(Model.ImageAlign == MediaImageAlign.Right ? "checked" : string.Empty)/>
                     </div>
                 </div>
+
+                <div class="bcms-input-list-holder">
+                    @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_Description_Tooltip_Description)
+                    <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_Description:</div>
+                    <div class="bcms-textarea-box">
+                        @Html.TextAreaFor(f => f.Description, new { @class = "bcms-editor-field-area", @id = "Description", @style = "width: 380px;" })
+                        @Html.BcmsValidationMessageFor(f => f.Description)
+                    </div>
+                </div>
+                        
             </div>
             
             <div class="bcms-tags-box-holder" data-bind="with: tags">

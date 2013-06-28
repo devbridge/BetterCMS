@@ -44,6 +44,15 @@
                 <div class="bcms-editing-text" id="image-file-size">@Model.FileSize</div>
             </div>
 
+            <div class="bcms-input-list-holder">
+                @Html.Tooltip(MediaGlobalization.FileEditor_Dialog_Description_Tooltip_Description)
+                <div class="bcms-content-titles">@MediaGlobalization.FileEditor_Dialog_Description:</div>
+                <div class="bcms-textarea-box">
+                    @Html.TextAreaFor(f => f.Description, new { @class = "bcms-editor-field-area", @id = "Description" })
+                    @Html.BcmsValidationMessageFor(f => f.Description)
+                </div>
+            </div>
+            
             <div class="bcms-tags-box-holder" data-bind="with: tags">
                 @Html.Partial("~/Areas/bcms-root/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel)
             </div>

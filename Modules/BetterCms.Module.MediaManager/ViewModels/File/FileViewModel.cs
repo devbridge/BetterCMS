@@ -37,6 +37,9 @@ namespace BetterCms.Module.MediaManager.ViewModels.File
         [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
         public string Title { get; set; }
 
+        [StringLength(MaxLength.Text, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
+        public string Description { get; set; }
+
         /// <summary>
         /// Gets or sets the URL.
         /// </summary>

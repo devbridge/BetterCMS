@@ -60,6 +60,7 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
 
             mediaImage.Caption = request.Caption;
             mediaImage.Title = request.Title;
+            mediaImage.Description = request.Description;
             mediaImage.ImageAlign = request.ImageAlign;
             mediaImage.Version = request.Version.ToIntOrDefault();
 

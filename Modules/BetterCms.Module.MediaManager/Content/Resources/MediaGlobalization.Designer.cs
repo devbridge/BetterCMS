@@ -250,6 +250,24 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string FileEditor_Dialog_Description {
+            get {
+                return ResourceManager.GetString("FileEditor_Dialog_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type or paste the description text of the file..
+        /// </summary>
+        public static string FileEditor_Dialog_Description_Tooltip_Description {
+            get {
+                return ResourceManager.GetString("FileEditor_Dialog_Description_Tooltip_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File size.
         /// </summary>
         public static string FileEditor_Dialog_FileSize {
@@ -471,6 +489,24 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         public static string ImageEditor_Dialog_CropImage_Tooltip_Description {
             get {
                 return ResourceManager.GetString("ImageEditor_Dialog_CropImage_Tooltip_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string ImageEditor_Dialog_Description {
+            get {
+                return ResourceManager.GetString("ImageEditor_Dialog_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type or paste the description text of the image..
+        /// </summary>
+        public static string ImageEditor_Dialog_Description_Tooltip_Description {
+            get {
+                return ResourceManager.GetString("ImageEditor_Dialog_Description_Tooltip_Description", resourceCulture);
             }
         }
         
