@@ -564,4 +564,10 @@
   <data name="ImageEditor_Dialog_Description_Tooltip_Description" xml:space="preserve">
     <value>Type or paste the description text of the image.</value>
   </data>
+  <data name="MediaHistory_Preview_Properties_Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="MediaHistory_Preview_Properties_Thumbnail" xml:space="preserve">
+    <value>Thumbnail</value>
+  </data>
 </root>
