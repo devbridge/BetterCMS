@@ -2,6 +2,7 @@
 
 using BetterCms.Api;
 using BetterCms.Core;
+using BetterCms.Module.Api.Operations.Root.Layouts.Layout.Regions;
 
 using ServiceStack.ServiceInterface;
 
@@ -9,6 +10,13 @@ namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout
 {
     public class LayoutService : Service, ILayoutService
     {
+        private readonly ILayoutRegionService layoutRegionService;
+
+        public LayoutService(ILayoutRegionService layoutRegionService)
+        {
+            this.layoutRegionService = layoutRegionService;
+        }
+
         public GetLayoutResponse Get(GetLayoutRequest request)
         {
             using (var api = CmsContext.CreateApiContextOf<PagesApiContext>())
@@ -34,14 +42,13 @@ namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout
                 };
             }
         }
-//
-//        public PostTagResponse Post(PostTagRequest request)
-//        {
-//            return new PostTagResponse
-//            {
-//                Data = request.Id,
-//                Status = "ok"
-//            };
-//        }   
+
+        ILayoutRegionService ILayoutService.Regions
+        {
+            get
+            {
+                return layoutRegionService;
+            }
+        }
     }
 }

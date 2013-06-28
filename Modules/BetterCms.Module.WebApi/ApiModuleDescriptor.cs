@@ -1,18 +1,13 @@
-﻿using System;
-using System.Reflection;
-using System.Web;
-using System.Web.Http;
-using System.Web.Http.Controllers;
+﻿using System.Web;
 
 using Autofac;
 
 using BetterCms.Api;
-using BetterCms.Core;
 using BetterCms.Core.Dependencies;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Mvc.Extensions;
-using BetterCms.Module.Api.Operations.Root.Tags.Tag;
-using BetterCms.Module.Api.Operations.Root.Version;
+using BetterCms.Module.Api.Operations.Root.Layouts.Layout;
+using BetterCms.Module.Api.Operations.Root.Layouts.Layout.Regions;
 
 namespace BetterCms.Module.Api
 {
@@ -98,8 +93,8 @@ namespace BetterCms.Module.Api
         public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
             containerBuilder.RegisterType<BlogsApiContext>().AsSelf().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
-            
-            //api.Root.Version.Get()
+            containerBuilder.RegisterType<LayoutService>().As<ILayoutService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
+            containerBuilder.RegisterType<LayoutRegionsService>().As<ILayoutRegionService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
         }
 
         /// <summary>

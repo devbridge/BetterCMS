@@ -31,7 +31,6 @@ namespace BetterCms.Module.Api.Operations.Root.Tags
                                                 {
                                                     Id = f.Id,
                                                     Name = f.Name,
-                                                    IsDeleted = f.IsDeleted,
                                                     Version = f.Version
                                                 }).ToList(),
                                    tags.TotalCount)

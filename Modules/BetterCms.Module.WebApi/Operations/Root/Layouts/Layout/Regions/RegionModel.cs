@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace BetterCms.Module.Api.Operations.Root.GetLayoutRegions
+namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout.Regions
 {
     [DataContract]
     public class RegionModel : ModelBase
@@ -11,7 +11,7 @@ namespace BetterCms.Module.Api.Operations.Root.GetLayoutRegions
         /// <value>
         /// The region identifier.
         /// </value>
-        [DataMember(Order = 10, Name = "regionIdentifier")]
+        [DataMember]
         public string RegionIdentifier { get; set; }
     }
 }
