@@ -11,8 +11,17 @@ namespace BetterCms.WebApi.Tests.Controllers
             return View("TestsResults", new TestsRunnerViewModel
                                             {
                                                 Title = "Pages WebAPI Tests",
-                                                TestsJsUrl = Url.Content("~/Scripts/pages.webapi.tests.js")
+                                                TestsJsUrl = Url.Content("~/Scripts/Pages/pages.webapi.tests.js")
                                             });
+        }
+
+        public ActionResult RootTags()
+        {
+            return View("TestsResults", new TestsRunnerViewModel
+            {
+                Title = "Root.Tags WebAPI Tests",
+                TestsJsUrl = Url.Content("~/Scripts/Root/tags.webapi.tests.js")
+            });
         }
     }
 }

@@ -181,6 +181,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\Root\tags.webapi.tests.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -202,7 +203,7 @@
     <Content Include="Views\Tests\TestsResults.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Scripts\pages.webapi.tests.js" />
+    <Content Include="Scripts\Pages\pages.webapi.tests.js" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BetterCMS.Configuration\BetterCms.Configuration.csproj">

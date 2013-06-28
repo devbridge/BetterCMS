@@ -12,7 +12,7 @@ namespace BetterCms.Module.Api.Operations
         /// <value>
         /// The model Id.
         /// </value>
-        [DataMember(Order = 0, Name = "id")]
+        [DataMember]
         public Guid Id { get; set; }
 
         /// <summary>
@@ -21,8 +21,20 @@ namespace BetterCms.Module.Api.Operations
         /// <value>
         /// <c>true</c> if this instance is deleted; otherwise, <c>false</c>.
         /// </value>
-        [DataMember(Order = 10000, Name = "isDeleted")]
+        [DataMember]
         public bool IsDeleted { get; set; }
+
+        [DataMember]
+        public DateTime CreatedOn { get; set; }
+
+        [DataMember]
+        public string CreatedBy { get; set; }
+
+        [DataMember]
+        public DateTime LastModifiedOn { get; set; }
+
+        [DataMember]
+        public string LastModifiedBy { get; set; }
 
         /// <summary>
         /// Gets or sets the version.
@@ -30,7 +42,7 @@ namespace BetterCms.Module.Api.Operations
         /// <value>
         /// The version.
         /// </value>
-        [DataMember(Order = 10001, Name = "version")]
+        [DataMember]
         public int Version { get; set; }
     }
 }

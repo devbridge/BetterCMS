@@ -11,6 +11,7 @@ namespace BetterCms.Module.Api.Operations.Root.Tags
         /// <value>
         /// The tag name.
         /// </value>
+        [DataMember]
         public string Name { get; set; }        
     }
 }
