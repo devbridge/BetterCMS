@@ -137,8 +137,8 @@
     <Compile Include="Api\DataContracts\GetNodesRequest.cs" />
     <Compile Include="Api\DataContracts\GetPageContentsRequest.cs" />
     <Compile Include="Api\DataContracts\GetRegionContentsRequest.cs" />
-    <Compile Include="Api\Events\CategoryEvents.cs" />
-    <Compile Include="Api\Events\TagEvents.cs" />
+    <Compile Include="Events\CategoryEvents.cs" />
+    <Compile Include="Events\TagEvents.cs" />
     <Compile Include="Helpers\Extensions\RenderPageViewModelExtensions.cs" />
     <Compile Include="Models\Migrations\Migration201306260946.cs" />
     <Compile Include="Models\Migrations\Migration201306140841.cs" />
@@ -158,8 +158,8 @@
     <Compile Include="Api\DataContracts\Models\ContentOptionValueDto.cs" />
     <Compile Include="Api\DataContracts\CreateContentOptionsRequest.cs" />
     <Compile Include="Api\DataContracts\CreateServerControlWidgetRequest.cs" />
-    <Compile Include="Api\Events\WidgetEvents.cs" />
-    <Compile Include="Api\Events\RedirectEvents.cs" />
+    <Compile Include="Events\WidgetEvents.cs" />
+    <Compile Include="Events\RedirectEvents.cs" />
     <Compile Include="Command\History\DestroyContentDraft\DestroyContentDraftCommandRequest.cs" />
     <Compile Include="DataContracts\Enums\PageLoadableChilds.cs" />
     <Compile Include="Command\Content\DeletePageContent\DeletePageContentCommand.cs" />
@@ -240,7 +240,7 @@
     <Compile Include="Controllers\PageController.cs" />
     <Compile Include="Controllers\SeoController.cs" />
     <Compile Include="Controllers\ContentController.cs" />
-    <Compile Include="Api\Events\PageEvents.cs" />
+    <Compile Include="Events\PageEvents.cs" />
     <Compile Include="Helpers\CssHelper.cs" />
     <Compile Include="Helpers\HttpHelper.cs" />
     <Compile Include="Helpers\ListModelBindingExtensions.cs" />

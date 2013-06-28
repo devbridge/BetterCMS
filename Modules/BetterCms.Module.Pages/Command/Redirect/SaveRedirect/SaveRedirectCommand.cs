@@ -94,11 +94,11 @@ namespace BetterCms.Module.Pages.Command.Redirect.SaveRedirect
             // Notify.
             if (request.Id.HasDefaultValue())
             {
-                PagesApiContext.Events.OnRedirectCreated(redirect);
+                Events.PageEvents.Instance.OnRedirectCreated(redirect);
             }
             else
             {
-                PagesApiContext.Events.OnRedirectUpdated(redirect);
+                Events.PageEvents.Instance.OnRedirectUpdated(redirect);
             }
 
             return new SiteSettingRedirectViewModel

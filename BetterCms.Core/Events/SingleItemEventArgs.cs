@@ -1,7 +1,7 @@
 ﻿using System;
 
 // ReSharper disable CheckNamespace
-namespace BetterCms.Api
+namespace BetterCms.Events
 // ReSharper restore CheckNamespace
 {   
     public class SingleItemEventArgs<TItem> : EventArgs

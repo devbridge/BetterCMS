@@ -248,20 +248,20 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             // Notify about new or updated blog post.
             if (isNew)
             {
-                BlogsApiContext.Events.OnBlogCreated(blogPost);
+                Events.BlogEvents.Instance.OnBlogCreated(blogPost);
             }
             else
             {
-                BlogsApiContext.Events.OnBlogUpdated(blogPost);
+                Events.BlogEvents.Instance.OnBlogUpdated(blogPost);
             }
 
             // Notify about new created tags.
-            RootApiContext.Events.OnTagCreated(newTags);
+            Events.RootEvents.Instance.OnTagCreated(newTags);
 
             // Notify about redirect creation.
             if (redirectCreated != null)
             {
-                PagesApiContext.Events.OnRedirectCreated(redirectCreated);
+                Events.PageEvents.Instance.OnRedirectCreated(redirectCreated);
             }
 
             return new SaveBlogPostCommandResponse

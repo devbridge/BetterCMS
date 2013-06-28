@@ -87,7 +87,7 @@ namespace BetterCms.Module.Blog.Services
             repository.Save(author);
             unitOfWork.Commit();
 
-            BlogsApiContext.Events.OnAuthorCreated(author);
+            Events.BlogEvents.Instance.OnAuthorCreated(author);
 
             return new AuthorCreateResponce { Author = GetAuthorsAsQueryable().First(model => model.Id == author.Id) };
         }
@@ -103,7 +103,7 @@ namespace BetterCms.Module.Blog.Services
             repository.Save(author);
             unitOfWork.Commit();
 
-            BlogsApiContext.Events.OnAuthorUpdated(author);
+            Events.BlogEvents.Instance.OnAuthorUpdated(author);
 
             return new AuthorUpdateResponce { Author = GetAuthorsAsQueryable().First(model => model.Id == request.AuthorId) };
         }
@@ -113,7 +113,7 @@ namespace BetterCms.Module.Blog.Services
             var author = repository.Delete<Models.Author>(request.AuthorId, request.Version);
             unitOfWork.Commit();
 
-            BlogsApiContext.Events.OnAuthorDeleted(author);
+            Events.BlogEvents.Instance.OnAuthorDeleted(author);
 
             return new AuthorDeleteResponce { Deleted = GetAuthorsAsQueryable().Count(model => model.Id == author.Id) == 0 };
         }

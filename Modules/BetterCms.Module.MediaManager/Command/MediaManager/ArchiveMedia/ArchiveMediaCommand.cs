@@ -26,7 +26,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager.ArchiveMedia
             Repository.Save(media);
             UnitOfWork.Commit();
 
-            MediaManagerApiContext.Events.OnMediaArchived(media);
+            Events.MediaManagerEvents.Instance.OnMediaArchived(media);
 
             return new MediaViewModel
             {

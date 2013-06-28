@@ -56,7 +56,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePagePublishStatus
 
                 if (page.Status != initialStatus)
                 {
-                    PagesApiContext.Events.OnPagePublishStatusChanged(page);
+                    Events.PageEvents.Instance.OnPagePublishStatusChanged(page);
                 }
             }
 

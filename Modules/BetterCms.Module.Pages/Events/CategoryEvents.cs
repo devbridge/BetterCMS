@@ -1,14 +1,15 @@
 ﻿using System;
 
-using BetterCms.Api;
 using BetterCms.Module.Root.Models;
 
-namespace BetterCms.Module.Pages.Api.Events
+// ReSharper disable CheckNamespace
+namespace BetterCms.Events
+// ReSharper restore CheckNamespace
 {    
     /// <summary>
     /// Attachable page events container
     /// </summary>
-    public partial class PagesApiEvents
+    public partial class PageEvents
     {
         /// <summary>
         /// Occurs when a redirect is created.
@@ -18,12 +19,12 @@ namespace BetterCms.Module.Pages.Api.Events
         {
             add
             {
-                RootApiContext.Events.CategoryCreated += value;
+                RootEvents.Instance.CategoryCreated += value;
             }
 
             remove
             {
-                RootApiContext.Events.CategoryCreated -= value;
+                RootEvents.Instance.CategoryCreated -= value;
             }
         }
 
@@ -35,12 +36,12 @@ namespace BetterCms.Module.Pages.Api.Events
         {
             add
             {
-                RootApiContext.Events.CategoryUpdated += value;
+                RootEvents.Instance.CategoryUpdated += value;
             }
 
             remove
             {
-                RootApiContext.Events.CategoryUpdated -= value;
+                RootEvents.Instance.CategoryUpdated -= value;
             }
         }
 
@@ -52,31 +53,31 @@ namespace BetterCms.Module.Pages.Api.Events
         {
             add
             {
-                RootApiContext.Events.CategoryDeleted += value;
+                RootEvents.Instance.CategoryDeleted += value;
             }
 
             remove
             {
-                RootApiContext.Events.CategoryDeleted -= value;
+                RootEvents.Instance.CategoryDeleted -= value;
             }
         }
 
         [Obsolete("This method is obsolete; use method RootApiContext.Events.OnCategoryCreated(...) instead.")]
         public void OnCategoryCreated(Category category)
         {
-            RootApiContext.Events.OnCategoryCreated(category);
+            RootEvents.Instance.OnCategoryCreated(category);
         }
 
         [Obsolete("This method is obsolete; use method RootApiContext.Events.OnCategoryUpdated(...) instead.")]
         public void OnCategoryUpdated(Category category)
         {
-            RootApiContext.Events.OnCategoryUpdated(category);
+            RootEvents.Instance.OnCategoryUpdated(category);
         }
 
         [Obsolete("This method is obsolete; use method RootApiContext.Events.OnCategoryDeleted(...) instead.")]
         public void OnCategoryDeleted(Category category)
         {
-            RootApiContext.Events.OnCategoryDeleted(category);
+            RootEvents.Instance.OnCategoryDeleted(category);
         }
     }
 }

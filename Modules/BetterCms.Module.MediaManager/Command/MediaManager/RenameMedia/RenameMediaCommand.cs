@@ -32,11 +32,11 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager.RenameMedia
 
             if (media is MediaFolder)
             {
-                MediaManagerApiContext.Events.OnMediaFolderUpdated((MediaFolder)media);
+                Events.MediaManagerEvents.Instance.OnMediaFolderUpdated((MediaFolder)media);
             }
             else if (media is MediaFile)
             {
-                MediaManagerApiContext.Events.OnMediaFileUpdated((MediaFile)media);
+                Events.MediaManagerEvents.Instance.OnMediaFileUpdated((MediaFile)media);
             }
 
             return new MediaViewModel

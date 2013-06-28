@@ -51,11 +51,11 @@ namespace BetterCms.Module.Root.Commands.Category.SaveCategory
 
             if (categoryItem.Id == default(Guid))
             {
-                RootApiContext.Events.OnCategoryCreated(category);
+                Events.RootEvents.Instance.OnCategoryCreated(category);
             }
             else
             {
-                RootApiContext.Events.OnCategoryUpdated(category);
+                Events.RootEvents.Instance.OnCategoryUpdated(category);
             }
 
             return new CategoryItemViewModel

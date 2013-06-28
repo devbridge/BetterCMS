@@ -154,7 +154,7 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
             UnitOfWork.Commit();
 
             // Notifying, that page is deleted.
-            PagesApiContext.Events.OnPageDeleted(page);
+            Events.PageEvents.Instance.OnPageDeleted(page);
 
             return true;
         }

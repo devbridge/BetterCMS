@@ -124,9 +124,9 @@
     <Compile Include="Api\DataContracts\GetDataRequest.cs" />
     <Compile Include="Api\DataContracts\GetFilteredDataRequest.cs" />
     <Compile Include="Api\DataContracts\OrderByModel.cs" />
-    <Compile Include="Api\Events\EventBase.cs" />
-    <Compile Include="Api\Events\CoreEvents.cs" />
-    <Compile Include="Api\Events\SingleItemEventArgs.cs" />
+    <Compile Include="Events\EventBase.cs" />
+    <Compile Include="Events\CoreEvents.cs" />
+    <Compile Include="Events\SingleItemEventArgs.cs" />
     <Compile Include="Api\Extensions\ApiQueryableExtensions.cs" />
     <Compile Include="CmsContext.cs" />
     <Compile Include="Api\ApiContext.cs" />

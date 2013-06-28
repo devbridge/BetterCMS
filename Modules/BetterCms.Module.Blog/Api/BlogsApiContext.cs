@@ -13,7 +13,6 @@ using BetterCms.Core.Exceptions.Api;
 
 using BetterCms.Module.Blog.Api.DataContracts;
 using BetterCms.Module.Blog.Api.DataModels;
-using BetterCms.Module.Blog.Events;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.Services;
 using BetterCms.Module.MediaManager.Models;
@@ -26,21 +25,12 @@ namespace BetterCms.Api
 {
     public class BlogsApiContext : DataApiContext
     {
-        private static readonly BlogsApiEvents events;
-
         private readonly ITagService tagService;
 
         private readonly IBlogService blogService;
 
         private readonly IAuthorService authorService;
 
-        /// <summary>
-        /// Initializes the <see cref="BlogsApiContext" /> class.
-        /// </summary>
-        static BlogsApiContext()
-        {
-            events = new BlogsApiEvents();
-        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlogsApiContext" /> class.
@@ -56,20 +46,6 @@ namespace BetterCms.Api
             this.tagService = tagService;
             this.blogService = blogService;
             this.authorService = authorService;
-        }
-
-        /// <summary>
-        /// Gets the events.
-        /// </summary>
-        /// <value>
-        /// The events.
-        /// </value>
-        public new static BlogsApiEvents Events
-        {
-            get
-            {
-                return events;
-            }
         }
 
         /// <summary>
@@ -202,7 +178,8 @@ namespace BetterCms.Api
 
                 UnitOfWork.Commit();
 
-                Events.OnBlogUpdated(blog);
+                // Notify.
+                Events.BlogEvents.Instance.OnBlogUpdated(blog);
 
                 // Notify about new created tags.
                 /*RootApiContext.Events.OnTagCreated(newTags);*/

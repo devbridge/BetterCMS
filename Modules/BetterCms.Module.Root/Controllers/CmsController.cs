@@ -81,7 +81,7 @@ namespace BetterCms.Module.Root.Controllers
                         ViewBag.pageId = model.RenderPage.Id;
 
                         // Notify.
-                        RootApiContext.Events.OnPageRendering(model.RenderPage);
+                        Events.RootEvents.Instance.OnPageRendering(model.RenderPage);
 
                         return View(model.RenderPage);
                     }

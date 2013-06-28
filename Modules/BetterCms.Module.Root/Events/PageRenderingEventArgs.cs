@@ -2,7 +2,9 @@
 
 using BetterCms.Module.Root.ViewModels.Cms;
 
-namespace BetterCms.Module.Root.Api.Events
+// ReSharper disable CheckNamespace
+namespace BetterCms.Events
+// ReSharper restore CheckNamespace
 {
     /// <summary>
     /// Page rendering event arguments.

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
@@ -8,7 +7,7 @@ using System.Web.Security;
 using BetterCms.Api;
 using BetterCms.Core;
 using BetterCms.Core.Api.DataContracts;
-using BetterCms.Module.Blog.Api.DataContracts;
+using BetterCms.Events;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Pages.Api.DataContracts;
 using BetterCms.Module.Pages.Models;

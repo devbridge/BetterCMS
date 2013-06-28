@@ -18,7 +18,7 @@ namespace BetterCms.Module.Pages.Command.Redirect.DeleteRedirect
             var redirect = Repository.Delete<Models.Redirect>(request.Id, request.Version);
             UnitOfWork.Commit();
 
-            PagesApiContext.Events.OnRedirectDeleted(redirect);
+            Events.PageEvents.Instance.OnRedirectDeleted(redirect);
 
             return true;
         }

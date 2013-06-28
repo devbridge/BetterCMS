@@ -1,13 +1,13 @@
-﻿
-using BetterCms.Api;
-using BetterCms.Module.MediaManager.Models;
+﻿using BetterCms.Module.MediaManager.Models;
 
-namespace BetterCms.Module.MediaManager.Api.Events
+// ReSharper disable CheckNamespace
+namespace BetterCms.Events
+// ReSharper restore CheckNamespace
 {
     /// <summary>
     /// Attachable page events container
     /// </summary>
-    public class MediaManagerEvents : EventsBase
+    public class MediaManagerEvents : EventsBase<MediaManagerEvents>
     {
         /// <summary>
         /// Occurs when a media file is uploaded.
@@ -45,7 +45,7 @@ namespace BetterCms.Module.MediaManager.Api.Events
         public event DefaultEventHandler<SingleItemEventArgs<Media>> MediaArchived;
         
         /// <summary>
-        /// Occurs when a media is unarchived.
+        /// Occurs when a media is restored.
         /// </summary>
         public event DefaultEventHandler<SingleItemEventArgs<Media>> MediaUnarchived;
         

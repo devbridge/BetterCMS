@@ -67,7 +67,7 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
             UnitOfWork.Commit();
 
             // Notifying, that page is created
-            PagesApiContext.Events.OnPageCreated(page);
+            Events.PageEvents.Instance.OnPageCreated(page);
 
             return new SavePageResponse(page);
         }

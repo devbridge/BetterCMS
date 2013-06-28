@@ -3,12 +3,14 @@
 using BetterCms.Api;
 using BetterCms.Module.Pages.Models;
 
-namespace BetterCms.Module.Pages.Api.Events
+// ReSharper disable CheckNamespace
+namespace BetterCms.Events
+// ReSharper restore CheckNamespace
 {    
     /// <summary>
     /// Attachable page events container
     /// </summary>
-    public partial class PagesApiEvents
+    public partial class PageEvents
     {
         /// <summary>
         /// Occurs when a redirect is created.

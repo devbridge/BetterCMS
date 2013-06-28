@@ -164,7 +164,7 @@ namespace BetterCms.Api
                 UnitOfWork.Commit();
 
                 // Notifying, that page is created
-                Events.OnPageCreated(page);
+                Events.PageEvents.Instance.OnPageCreated(page);
 
                 return page;
             }

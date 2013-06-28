@@ -18,7 +18,7 @@ namespace BetterCms.Module.Newsletter.Command.DeleteSubscriber
             var subscriber = Repository.Delete<Subscriber>(request.Id, request.Version);
             UnitOfWork.Commit();
 
-            NewsletterApiContext.Events.OnSubscriberDeleted(subscriber);
+            Events.NewsletterEvents.Instance.OnSubscriberDeleted(subscriber);
 
             return true;
         }

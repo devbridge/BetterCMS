@@ -20,7 +20,7 @@ namespace BetterCms.Module.Root.Commands.Tag.DeleteTag
             UnitOfWork.Commit();
 
             // Notify.
-            RootApiContext.Events.OnTagDeleted(tag);
+            Events.RootEvents.Instance.OnTagDeleted(tag);
 
             return true;
         }

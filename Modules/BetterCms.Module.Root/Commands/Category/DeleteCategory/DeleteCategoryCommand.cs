@@ -20,7 +20,7 @@ namespace BetterCms.Module.Root.Commands.Category.DeleteCategory
             UnitOfWork.Commit();
 
             // Notify.
-            RootApiContext.Events.OnCategoryDeleted(category);
+            Events.RootEvents.Instance.OnCategoryDeleted(category);
 
             return true;
         }

@@ -51,11 +51,11 @@ namespace BetterCms.Module.Root.Commands.Tag.SaveTag
 
             if (tagItem.Id == default(Guid))
             {
-                RootApiContext.Events.OnTagCreated(tag);
+                Events.RootEvents.Instance.OnTagCreated(tag);
             }
             else
             {
-                RootApiContext.Events.OnTagUpdated(tag);
+                Events.RootEvents.Instance.OnTagUpdated(tag);
             }
 
             return new TagItemViewModel

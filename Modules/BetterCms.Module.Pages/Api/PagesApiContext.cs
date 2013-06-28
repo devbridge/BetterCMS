@@ -8,7 +8,6 @@ using BetterCms.Core.DataAccess;
 using BetterCms.Core.Exceptions.Api;
 
 using BetterCms.Module.Pages.Api.DataContracts;
-using BetterCms.Module.Pages.Api.Events;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 
@@ -20,8 +19,6 @@ namespace BetterCms.Api
 {
     public partial class PagesApiContext : DataApiContext
     {
-        private static readonly PagesApiEvents events;
-
         /// <summary>
         /// The sitemap service.
         /// </summary>
@@ -31,14 +28,6 @@ namespace BetterCms.Api
         /// The history service.
         /// </summary>
         private readonly IHistoryService historyService;
-
-        /// <summary>
-        /// Initializes the <see cref="PagesApiContext" /> class.
-        /// </summary>
-        static PagesApiContext()
-        {
-            events = new PagesApiEvents();
-        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PagesApiContext" /> class.
@@ -66,20 +55,6 @@ namespace BetterCms.Api
             else
             {
                 this.sitemapService = sitemapService;
-            }
-        }
-
-        /// <summary>
-        /// Gets the events.
-        /// </summary>
-        /// <value>
-        /// The events.
-        /// </value>
-        public new static PagesApiEvents Events
-        {
-            get
-            {
-                return events;
             }
         }
 

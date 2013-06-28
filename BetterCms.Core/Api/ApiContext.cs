@@ -2,7 +2,6 @@
 
 using Autofac;
 
-using BetterCms.Core.Api.Events;
 using BetterCms.Core.Exceptions;
 
 using Common.Logging;
@@ -27,17 +26,6 @@ namespace BetterCms.Api
         /// Marker to check if this API context has parent context scope.
         /// </summary>
         private bool hasParentContextScope;
-
-        private static readonly CoreEvents events;
-
-        /// <summary>
-        /// Initializes the <see cref="ApiContext" /> class.
-        /// </summary>
-        static ApiContext()
-        {
-            events = new CoreEvents();
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ApiContext" /> class.
         /// </summary>
@@ -45,20 +33,6 @@ namespace BetterCms.Api
         protected ApiContext(ILifetimeScope lifetimeScope)
         {
             this.lifetimeScope = lifetimeScope;
-        }
-
-        /// <summary>
-        /// Gets the core.
-        /// </summary>
-        /// <value>
-        /// The core.
-        /// </value>
-        public static CoreEvents Events
-        {
-            get
-            {
-                return events;
-            }
         }
 
         /// <summary>

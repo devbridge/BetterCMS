@@ -2,12 +2,14 @@
 using BetterCms.Core.DataContracts;
 using BetterCms.Module.Root.ViewModels.Cms;
 
-namespace BetterCms.Module.Root.Api.Events
+// ReSharper disable CheckNamespace
+namespace BetterCms.Events
+// ReSharper restore CheckNamespace
 {    
     /// <summary>
     /// Attachable page events container
     /// </summary>
-    public partial class RootApiEvents : EventsBase
+    public partial class RootEvents : EventsBase<RootEvents>
     {                        
         /// <summary>
         /// Occurs when a page is rendering.

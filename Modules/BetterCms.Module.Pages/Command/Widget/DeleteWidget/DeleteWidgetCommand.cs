@@ -38,7 +38,7 @@ namespace BetterCms.Module.Pages.Command.Widget.DeleteWidget
             UnitOfWork.Commit();
 
             // Notify.
-            PagesApiContext.Events.OnWidgetDeleted(widget);
+            Events.PageEvents.Instance.OnWidgetDeleted(widget);
 
             return true;
         }

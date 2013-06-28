@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Api;
 using BetterCms.Module.Root.Models;
 
-namespace BetterCms.Module.Root.Api.Events
+// ReSharper disable CheckNamespace
+namespace BetterCms.Events
+// ReSharper restore CheckNamespace
 {    
     /// <summary>
     /// Attachable page events container
     /// </summary>
-    public partial class RootApiEvents
+    public partial class RootEvents
     {
         /// <summary>
         /// Occurs when a redirect is created.

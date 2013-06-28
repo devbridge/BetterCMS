@@ -5,12 +5,14 @@ using System.Linq;
 using BetterCms.Api;
 using BetterCms.Module.Root.Models;
 
-namespace BetterCms.Module.Pages.Api.Events
+// ReSharper disable CheckNamespace
+namespace BetterCms.Events
+// ReSharper restore CheckNamespace
 {    
     /// <summary>
     /// Attachable page events container
     /// </summary>
-    public partial class PagesApiEvents
+    public partial class PageEvents
     {
         /// <summary>
         /// Occurs when a redirect is created.
@@ -20,12 +22,12 @@ namespace BetterCms.Module.Pages.Api.Events
         {
             add
             {
-                RootApiContext.Events.TagCreated += value;
+                RootEvents.Instance.TagCreated += value;
             }
 
             remove
             {
-                RootApiContext.Events.TagCreated -= value;
+                RootEvents.Instance.TagCreated -= value;
             }
         }
 
@@ -37,12 +39,12 @@ namespace BetterCms.Module.Pages.Api.Events
         {
             add
             {
-                RootApiContext.Events.TagUpdated += value;
+                RootEvents.Instance.TagUpdated += value;
             }
 
             remove
             {
-                RootApiContext.Events.TagUpdated -= value;
+                RootEvents.Instance.TagUpdated -= value;
             }
         }
 
@@ -54,19 +56,19 @@ namespace BetterCms.Module.Pages.Api.Events
         {
             add
             {
-                RootApiContext.Events.TagDeleted += value;
+                RootEvents.Instance.TagDeleted += value;
             }
 
             remove
             {
-                RootApiContext.Events.TagDeleted -= value;
+                RootEvents.Instance.TagDeleted -= value;
             }
         }
 
         [Obsolete("This method is obsolete; use method RootApiContext.Events.OnTagCreated(...) instead.")]
         public void OnTagCreated(params Tag[] tags)
         {
-            RootApiContext.Events.OnTagCreated(tags);
+            RootEvents.Instance.OnTagCreated(tags);
         }
 
         [Obsolete("This method is obsolete; use method RootApiContext.Events.OnTagCreated(...) instead.")]
@@ -74,20 +76,20 @@ namespace BetterCms.Module.Pages.Api.Events
         {
             if (tags != null)
             {
-                RootApiContext.Events.OnTagCreated(tags.ToArray());
+                RootEvents.Instance.OnTagCreated(tags.ToArray());
             }
         }
 
         [Obsolete("This method is obsolete; use method RootApiContext.Events.OnTagUpdated(...) instead.")]
         public void OnTagUpdated(Tag tag)
         {
-            RootApiContext.Events.OnTagUpdated(tag);
+            RootEvents.Instance.OnTagUpdated(tag);
         }
 
         [Obsolete("This method is obsolete; use method RootApiContext.Events.OnTagDeleted(...) instead.")]
         public void OnTagDeleted(Tag tag)
         {
-            RootApiContext.Events.OnTagDeleted(tag);
+            RootEvents.Instance.OnTagDeleted(tag);
         }
     }
 }

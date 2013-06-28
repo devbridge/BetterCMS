@@ -82,7 +82,7 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
 
             UnitOfWork.Commit();
 
-            PagesApiContext.Events.OnPageCloned(newPage);
+            Events.PageEvents.Instance.OnPageCloned(newPage);
 
             return new ClonePageViewModel
                        {

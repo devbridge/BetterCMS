@@ -1,7 +1,6 @@
 ﻿using Autofac;
 
 using BetterCms.Core.DataAccess;
-using BetterCms.Module.Newsletter.Api.Events;
 
 // ReSharper disable CheckNamespace
 namespace BetterCms.Api
@@ -12,16 +11,6 @@ namespace BetterCms.Api
     /// </summary>
     public class NewsletterApiContext : DataApiContext
     {
-        private static readonly NewsletterEvents events;
-
-        /// <summary>
-        /// Initializes the <see cref="NewsletterApiContext" /> class.
-        /// </summary>
-        static NewsletterApiContext()
-        {
-            events = new NewsletterEvents();
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="NewsletterApiContext" /> class.
         /// </summary>
@@ -30,20 +19,6 @@ namespace BetterCms.Api
         public NewsletterApiContext(ILifetimeScope lifetimeScope, IRepository repository = null)
             : base(lifetimeScope, repository)
         {
-        }
-
-        /// <summary>
-        /// Gets the newsletter events.
-        /// </summary>
-        /// <value>
-        /// The newsletter events.
-        /// </value>
-        public new static NewsletterEvents Events
-        {
-            get
-            {
-                return events;
-            }
         }
     }
 }
