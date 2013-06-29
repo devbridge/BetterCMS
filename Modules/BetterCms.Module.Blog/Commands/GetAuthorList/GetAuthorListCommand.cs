@@ -1,9 +1,10 @@
 ﻿using System.Linq;
 
-using BetterCms.Api;
 using BetterCms.Core;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Module.Blog.Models;
+using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Blog.ViewModels.Author;
 using BetterCms.Module.MediaManager.ViewModels;
 
@@ -16,6 +17,13 @@ namespace BetterCms.Module.Blog.Commands.GetAuthorList
 {
     public class GetAuthorListCommand : CommandBase, ICommand<SearchableGridOptions, SearchableGridViewModel<AuthorViewModel>>
     {
+        private IAuthorService authorService;
+
+        public GetAuthorListCommand(IAuthorService authorService)
+        {
+            this.authorService = authorService;
+        }
+
         /// <summary>
         /// Executes the specified request.
         /// </summary>
@@ -23,28 +31,25 @@ namespace BetterCms.Module.Blog.Commands.GetAuthorList
         /// <returns>List with blog post view models</returns>
         public SearchableGridViewModel<AuthorViewModel> Execute(SearchableGridOptions request)
         {
-            using (var api = CmsContext.CreateApiContextOf<BlogsApiContext>())
-            {
-                var query = api.GetAuthorsAsQueryable();
-                var authors =
-                    query.Select(
+                var query = Repository.AsQueryable<Author>();
+                var authors = query.Select(
                         author =>
                         new AuthorViewModel
                         {
                             Id = author.Id,
                             Version = author.Version,
                             Name = author.Name,
-                            Image =
-                                !author.ImageId.HasValue
-                                    ? null
-                                    : new ImageSelectorViewModel
+                            Image = author.Image != null
+                                    ?
+                                    new ImageSelectorViewModel
                                     {
-                                        ImageId = author.ImageId,
-                                        ImageVersion = author.ImageVersion,
-                                        ImageUrl = author.ImagePublicUrl,
-                                        ThumbnailUrl = author.ImagePublicThumbnailUrl,
-                                        ImageTooltip = author.ImageCaption
+                                        ImageId = author.Image.Id,
+                                        ImageVersion = author.Image.Version,
+                                        ImageUrl = author.Image.PublicUrl,
+                                        ThumbnailUrl = author.Image.PublicThumbnailUrl,
+                                        ImageTooltip = author.Image.Caption                                    
                                     }
+                                    : null
                         });
 
                 if (!string.IsNullOrWhiteSpace(request.SearchQuery))
@@ -57,7 +62,6 @@ namespace BetterCms.Module.Blog.Commands.GetAuthorList
                 authors = authors.AddSortingAndPaging(request);
 
                 return new SearchableGridViewModel<AuthorViewModel>(authors.ToList(), request, count.Value);
-            }
         }
     }
 }

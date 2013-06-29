@@ -126,7 +126,6 @@
       <DependentUpon>NewsletterGlobalization.resx</DependentUpon>
     </Compile>
     <Compile Include="Controllers\SubscriberController.cs" />
-    <Compile Include="Api\NewsletterApiContext.cs" />
     <Compile Include="Exceptions\UniqueSubscriberException.cs" />
     <Compile Include="Models\MigrationsContent\Migration201305231541.cs" />
     <Compile Include="NewsletterModuleDescriptor.cs" />

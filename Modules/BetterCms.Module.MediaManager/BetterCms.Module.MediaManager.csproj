@@ -117,10 +117,6 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Api\DataContracts\GetFoldersRequest.cs" />
-    <Compile Include="Api\DataContracts\GetFilesRequest.cs" />
-    <Compile Include="Api\DataContracts\GetImagesRequest.cs" />
-    <Compile Include="Api\DataContracts\GetFolderMediasRequest.cs" />
     <Compile Include="Events\MediaManagerEvents.cs" />
     <Compile Include="Command\Audios\GetAudios\GetAudiosCommand.cs" />
     <Compile Include="Command\Files\GetFile\GetFileCommand.cs" />
@@ -173,7 +169,6 @@
     <Compile Include="Helpers\MediaPreviewHelper.cs" />
     <Compile Include="Helpers\MediaImageHelper.cs" />
     <Compile Include="Helpers\WrappedJsonResult.cs" />
-    <Compile Include="Api\MediaManagerApiContext.cs" />
     <Compile Include="MediaManagerModuleDescriptor.cs" />
     <Compile Include="Models\Extensions\ListExtensions.cs" />
     <Compile Include="Models\Extensions\MediaImageExtensions.cs" />
@@ -219,7 +214,6 @@
     <Compile Include="Services\IMediaImageService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registration\MediaManagerJsModuleIncludeDescriptor.cs" />
-    <Compile Include="Api\DataModels\MediaImageModel.cs" />
     <Compile Include="Services\ITagService.cs" />
     <Compile Include="ViewModels\File\FileViewModel.cs" />
     <Compile Include="ViewModels\History\MediaHistoryItem.cs" />

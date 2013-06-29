@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 
-using BetterCms.Module.Blog.Api.DataContracts;
-using BetterCms.Module.Blog.Api.DataModels;
+using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Root.Models;
 
 namespace BetterCms.Module.Blog.Services
@@ -15,12 +14,10 @@ namespace BetterCms.Module.Blog.Services
         /// <returns>List of author lookup values.</returns>
         IEnumerable<LookupKeyValue> GetAuthors();
 
-        IQueryable<AuthorModel> GetAuthorsAsQueryable();
+        void DeleteAuthor(Guid authorId, int version);
 
-        AuthorCreateResponce CreateAuthor(AuthorCreateRequest request);
+        Author CreateAuthor(string name, Guid? imageId);
 
-        AuthorUpdateResponce UpdateAuthor(AuthorUpdateRequest request);
-
-        AuthorDeleteResponce DeleteAuthor(AuthorDeleteRequest request);
+        Author UpdateAuthor(Guid authorId, int version, string name, Guid? imageId);
     }
 }

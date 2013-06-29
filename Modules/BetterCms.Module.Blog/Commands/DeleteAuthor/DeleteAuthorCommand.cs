@@ -1,7 +1,5 @@
-﻿using BetterCms.Api;
-using BetterCms.Core;
-using BetterCms.Core.Mvc.Commands;
-using BetterCms.Module.Blog.Api.DataContracts;
+﻿using BetterCms.Core.Mvc.Commands;
+using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Blog.ViewModels.Author;
 using BetterCms.Module.Root.Mvc;
 
@@ -9,6 +7,13 @@ namespace BetterCms.Module.Blog.Commands.DeleteAuthor
 {
     public class DeleteAuthorCommand : CommandBase, ICommand<AuthorViewModel, bool>
     {
+        private IAuthorService authorService;
+
+        public DeleteAuthorCommand(IAuthorService authorService)
+        {
+            this.authorService = authorService;
+        }
+
         /// <summary>
         /// Executes the specified request.
         /// </summary>
@@ -16,10 +21,9 @@ namespace BetterCms.Module.Blog.Commands.DeleteAuthor
         /// <returns><c>True</c>, if an author is deleted successfully.</returns>
         public bool Execute(AuthorViewModel request)
         {
-            using (var api = CmsContext.CreateApiContextOf<BlogsApiContext>())
-            {
-                return api.DeleteAuthor(new AuthorDeleteRequest { AuthorId = request.Id, Version = request.Version }).Deleted;
-            }
+            authorService.DeleteAuthor(request.Id, request.Version);
+
+            return true;
         }
     }
 }

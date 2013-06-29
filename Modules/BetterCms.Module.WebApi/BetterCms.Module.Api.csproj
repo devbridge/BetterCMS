@@ -149,6 +149,30 @@
     <Compile Include="Helpers\CmsApiControllerBase.cs" />
     <Compile Include="Helpers\DataOptionsQueryCreator.cs" />
     <Compile Include="Helpers\DynamicLinqExtensions.cs" />
+    <Compile Include="Legacy\Blog.Api\BlogsApiContext.cs" />
+    <Compile Include="Legacy\Blog.Api\DataContracts\AuthorCreateRequest.cs" />
+    <Compile Include="Legacy\Blog.Api\DataContracts\AuthorCreateResponce.cs" />
+    <Compile Include="Legacy\Blog.Api\DataContracts\AuthorDeleteRequest.cs" />
+    <Compile Include="Legacy\Blog.Api\DataContracts\AuthorDeleteResponce.cs" />
+    <Compile Include="Legacy\Blog.Api\DataContracts\AuthorUpdateRequest.cs" />
+    <Compile Include="Legacy\Blog.Api\DataContracts\AuthorUpdateResponce.cs" />
+    <Compile Include="Legacy\Blog.Api\DataContracts\GetAuthorsRequest.cs" />
+    <Compile Include="Legacy\Blog.Api\DataContracts\GetBlogPostsRequest.cs" />
+    <Compile Include="Legacy\Blog.Api\DataContracts\UpdateBlogPostRequest.cs" />
+    <Compile Include="Legacy\Blog.Api\DataModels\AuthorModel.cs" />
+    <Compile Include="Legacy\Blog.Api\DataModels\BlogPostModel.cs" />
+    <Compile Include="Legacy\Blog.Api\DefaultAuthorService.cs" />
+    <Compile Include="Legacy\Blog.Api\DefaultBlogService.cs" />
+    <Compile Include="Legacy\Blog.Api\IAuthorService.cs" />
+    <Compile Include="Legacy\Blog.Api\IBlogService.cs" />
+    <Compile Include="Legacy\Blog.Api\Mappers\EntityToServiceModelMapper.cs" />
+    <Compile Include="Legacy\MediaManager.Api\DataContracts\GetFilesRequest.cs" />
+    <Compile Include="Legacy\MediaManager.Api\DataContracts\GetFolderMediasRequest.cs" />
+    <Compile Include="Legacy\MediaManager.Api\DataContracts\GetFoldersRequest.cs" />
+    <Compile Include="Legacy\MediaManager.Api\DataContracts\GetImagesRequest.cs" />
+    <Compile Include="Legacy\MediaManager.Api\DataModels\MediaImageModel.cs" />
+    <Compile Include="Legacy\MediaManager.Api\MediaManagerApiContext.cs" />
+    <Compile Include="Legacy\Newsletter.Api\NewsletterApiContext.cs" />
     <Compile Include="Operations\Blog\GetAuthorById\AuthorModel.cs" />
     <Compile Include="Operations\Blog\GetAuthors\AuthorModel.cs" />
     <Compile Include="Operations\Blog\GetBlogPostById\BlogPostModel.cs" />
@@ -360,6 +384,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
+    <Folder Include="Legacy\Blog.Api\DataFilters\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,9 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 
+using BetterCms.Api;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
-using BetterCms.Module.Blog.Models;
+using BetterCms.Module.Blog.Api.DataContracts;
+using BetterCms.Module.Blog.Api.DataModels;
+using BetterCms.Module.Blog.Api.Mappers;
 using BetterCms.Module.Root.Models;
 
 using NHibernate;
@@ -54,46 +57,65 @@ namespace BetterCms.Module.Blog.Services
                 .List<LookupKeyValue>();
         }
 
-        public Author CreateAuthor(string name, Guid? imageId)
+        public IQueryable<AuthorModel> GetAuthorsAsQueryable()
         {
-            var author = new Author();
+            return repository
+                .AsQueryable<Models.Author>()
+                .Select(EntityToServiceModelMapper.ToAuthor);
 
-            author.Name = name;
-            author.Image = imageId.HasValue ? repository.AsProxy<MediaManager.Models.MediaImage>(imageId.Value) : null;
+            /*return
+                repository.AsQueryable<Models.Author>()
+                          .Select(
+                              author =>
+                              new AuthorModel
+                                  {
+                                      Id = author.Id,
+                                      Version = author.Version,
+                                      Name = author.Name,
+                                      ImageId = author.Image.Id,
+                                      ImagePublicUrl = author.Image.PublicUrl
+                                  });*/
+        }
+
+        public AuthorCreateResponce CreateAuthor(AuthorCreateRequest request)
+        {
+            var author = new Models.Author();
+
+            author.Name = request.Name;
+            author.Image = request.ImageId.HasValue ? repository.AsProxy<MediaManager.Models.MediaImage>(request.ImageId.Value) : null;
 
             repository.Save(author);
             unitOfWork.Commit();
 
-            // Notify.
             Events.BlogEvents.Instance.OnAuthorCreated(author);
 
-            return author;
+            return new AuthorCreateResponce { Author = GetAuthorsAsQueryable().First(model => model.Id == author.Id) };
         }
 
-        public Author UpdateAuthor(Guid authorId, int version, string name, Guid? imageId)
+        public AuthorUpdateResponce UpdateAuthor(AuthorUpdateRequest request)
         {
-            var author = repository.First<Author>(authorId);
+            var author = repository.First<Models.Author>(request.AuthorId);
 
-            author.Name = name;
-            author.Version = version;
-            author.Image = imageId.HasValue ? repository.AsProxy<MediaManager.Models.MediaImage>(imageId.Value) : null;
+            author.Name = request.Name;
+            author.Version = request.Version;
+            author.Image = request.ImageId.HasValue ? repository.AsProxy<MediaManager.Models.MediaImage>(request.ImageId.Value) : null;
 
             repository.Save(author);
             unitOfWork.Commit();
 
-            // Notify.
             Events.BlogEvents.Instance.OnAuthorUpdated(author);
 
-            return author;
+            return new AuthorUpdateResponce { Author = GetAuthorsAsQueryable().First(model => model.Id == request.AuthorId) };
         }
-        
-        public void DeleteAuthor(Guid authorId, int version)
+
+        public AuthorDeleteResponce DeleteAuthor(AuthorDeleteRequest request)
         {
-            var author = repository.Delete<Models.Author>(authorId, version);
+            var author = repository.Delete<Models.Author>(request.AuthorId, request.Version);
             unitOfWork.Commit();
 
-            // Notify.
             Events.BlogEvents.Instance.OnAuthorDeleted(author);
+
+            return new AuthorDeleteResponce { Deleted = GetAuthorsAsQueryable().Count(model => model.Id == author.Id) == 0 };
         }
     }
 }
