@@ -28,7 +28,6 @@ namespace BetterCms.Module.Api.Operations.Root.Layouts
                             {
                                 Id = f.Id,
                                 Name = f.Name,
-                                IsDeleted = f.IsDeleted,
                                 Version = f.Version,
                                 PreviewUrl = f.PreviewUrl,
                                 LayoutPath = f.LayoutPath

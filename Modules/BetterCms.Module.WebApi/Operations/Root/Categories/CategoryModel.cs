@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace BetterCms.Module.Api.Operations.Root.GetCategories
+namespace BetterCms.Module.Api.Operations.Root.Categories
 {
     [DataContract]
     public class CategoryModel : ModelBase
@@ -11,7 +11,7 @@ namespace BetterCms.Module.Api.Operations.Root.GetCategories
         /// <value>
         /// The category name.
         /// </value>
-        [DataMember(Order = 10, Name = "name")]
-        public string Name { get; set; }
+        [DataMember]
+        public string Name { get; set; }        
     }
 }

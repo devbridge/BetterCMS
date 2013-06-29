@@ -54,7 +54,7 @@ namespace BetterCms.Module.Api.Operations
         /// <value>
         /// The starting item number.
         /// </value>
-        public int Skip { get; set; }
+        public int? Skip { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum count of returning items.

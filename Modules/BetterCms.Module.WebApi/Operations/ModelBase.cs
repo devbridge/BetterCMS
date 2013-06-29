@@ -15,15 +15,6 @@ namespace BetterCms.Module.Api.Operations
         [DataMember]
         public Guid Id { get; set; }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether this instance is deleted.
-        /// </summary>
-        /// <value>
-        /// <c>true</c> if this instance is deleted; otherwise, <c>false</c>.
-        /// </value>
-        [DataMember]
-        public bool IsDeleted { get; set; }
-
         [DataMember]
         public DateTime CreatedOn { get; set; }
 

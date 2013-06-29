@@ -1,8 +1,5 @@
 ﻿using System.Linq;
 
-using BetterCms.Api;
-using BetterCms.Core;
-using BetterCms.Core.Api.DataContracts;
 using BetterCms.Core.DataAccess;
 using BetterCms.Module.Api.Helpers;
 
@@ -14,29 +11,33 @@ namespace BetterCms.Module.Api.Operations.Root.Tags
     {
         private readonly IRepository repository;
 
+        public TagsService(IRepository repository)
+        {
+            this.repository = repository;
+        }
+
         public GetTagsResponse Get(GetTagsRequest request)
-        {            
-            var request2 = new Module.Pages.Api.DataContracts.GetTagsRequest();
-            request.ApplyTo(request2);
+        {
+            request.SetDefaultOrder("Name");
 
-            using (var api = CmsContext.CreateApiContextOf<PagesApiContext>())
-            {
-                var tags = api.GetTags(request2);
+            var listResponse = repository
+                .AsQueryable<Module.Root.Models.Tag>()
+                .Select(tag => new TagModel
+                                   {
+                                       Id = tag.Id,
+                                       Version = tag.Version,
+                                       CreatedBy = tag.CreatedByUser,
+                                       CreatedOn = tag.CreatedOn,
+                                       LastModifiedBy = tag.ModifiedByUser,
+                                       LastModifiedOn = tag.ModifiedOn,
+                                       Name = tag.Name
+                                   })
+                .ToDataListResponse(request);
 
-                return new GetTagsResponse
-                           {
-                               Data = new DataListResponse<TagModel>(
-                                   tags.Items.Select(
-                                       f => new TagModel
-                                                {
-                                                    Id = f.Id,
-                                                    Name = f.Name,
-                                                    IsDeleted = f.IsDeleted,
-                                                    Version = f.Version
-                                                }).ToList(),
-                                   tags.TotalCount)
-                           };
-            }            
+            return new GetTagsResponse
+                       {
+                           Data = listResponse
+                       };
         }
     }
 }
