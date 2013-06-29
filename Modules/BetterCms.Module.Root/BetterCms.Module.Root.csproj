@@ -565,6 +565,11 @@
     <EmbeddedResource Include="Scripts\bcms.ko.extenders.js" />
     <EmbeddedResource Include="Scripts\bcms.ko.grid.js" />
     <EmbeddedResource Include="Scripts\bcms.tags.js" />
+    <Content Include="Content\Styles\base_64\bcms-down.png" />
+    <Content Include="Content\Styles\base_64\bcms-filter-active.png" />
+    <Content Include="Content\Styles\base_64\bcms-filter.png" />
+    <Content Include="Content\Styles\base_64\bcms-pen.png" />
+    <Content Include="Content\Styles\base_64\bcms-up.png" />
     <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\es.js" />
     <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\ja.js" />
     <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\km.js" />
