@@ -6,7 +6,7 @@
 
 @model BlogsGridViewModel<SiteSettingBlogPostViewModel>
 <div id="bcms-filter-template">
-    <div class="bcms-grid-filtering">
+    <div class="bcms-grid-filtering">@*ADD CLASS HERE "bcms-active-filter" WHEN FILTER IS OPENED*@
         <div class="bcms-filterbox" data-bind="click: toggleFilter">
             @BlogGlobalization.SiteSettings_Blogs_Filter
             <div class="bcms-filter-modified">modified</div>
