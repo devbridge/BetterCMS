@@ -6,18 +6,12 @@ using Autofac;
 using BetterCms.Core.Api.DataContracts;
 using BetterCms.Core.Api.Extensions;
 using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Api;
 
 using BetterCms.Module.Blog.Api.DataContracts;
-using BetterCms.Module.Blog.Api.DataModels;
 using BetterCms.Module.Blog.Models;
-using BetterCms.Module.Blog.Services;
-using BetterCms.Module.MediaManager.Models;
-using BetterCms.Module.Pages.Services;
-using BetterCms.Module.Root.Models;
 
 // ReSharper disable CheckNamespace
 namespace BetterCms.Api
@@ -25,27 +19,14 @@ namespace BetterCms.Api
 {
     public class BlogsApiContext : DataApiContext
     {
-        private readonly ITagService tagService;
-
-        private readonly IBlogService blogService;
-
-        private readonly IAuthorService authorService;
-
-
         /// <summary>
         /// Initializes a new instance of the <see cref="BlogsApiContext" /> class.
         /// </summary>
         /// <param name="lifetimeScope">The lifetime scope.</param>
-        /// <param name="tagService">The tag service.</param>
-        /// <param name="blogService">The blog service.</param>
-        /// <param name="authorService">The author service.</param>
         /// <param name="repository">The repository.</param>
-        public BlogsApiContext(ILifetimeScope lifetimeScope, ITagService tagService, IBlogService blogService, IAuthorService authorService, IRepository repository = null)
+        public BlogsApiContext(ILifetimeScope lifetimeScope, IRepository repository = null)
             : base(lifetimeScope, repository)
         {
-            this.tagService = tagService;
-            this.blogService = blogService;
-            this.authorService = authorService;
         }
 
         /// <summary>
@@ -132,89 +113,6 @@ namespace BetterCms.Api
 
                 throw new CmsApiException(message, inner);
             }
-        }
-
-        /// <summary>
-        /// Updates the blog post.
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <returns></returns>
-        public BlogPost UpdateBlogPost(UpdateBlogPostRequest request)
-        {
-            ValidateRequest(request);
-            
-            if (request.LiveToDate.HasValue && request.LiveToDate < request.LiveFromDate)
-            {
-                var message = string.Format("Expiration date must be greater that activation date.");
-                Logger.Error(message);
-                throw new CmsApiValidationException(message);
-            }
-
-            try
-            {
-                UnitOfWork.BeginTransaction(); 
-                var blog = Repository
-                    .AsQueryable<BlogPost>(b => b.Id == request.Id)
-                    .FirstOne();
-
-                blog.Version = request.Version;
-                blog.Title = request.Title;
-                blog.Description = request.IntroText;
-
-                // TODO: update only if content is published.
-                // blog.ActivationDate = request.LiveFromDate;
-                // blog.ExpirationDate = request.LiveToDate;
-
-                blog.Image = request.ImageId.HasValue ? Repository.AsProxy<MediaImage>(request.ImageId.Value) : null;
-                blog.Author = request.AuthorId.HasValue ? Repository.AsProxy<Author>(request.AuthorId.Value) : null;
-                blog.Category = request.CategoryId.HasValue ? Repository.AsProxy<Category>(request.CategoryId.Value) : null;
-
-                // TODO: should it be allowed to change blog content, url and status?
-
-                Repository.Save(blog);
-
-                /*IList<Tag> newTags = null;
-                tagService.SavePageTags(blog, request.Tags, out newTags);*/
-
-                UnitOfWork.Commit();
-
-                // Notify.
-                Events.BlogEvents.Instance.OnBlogUpdated(blog);
-
-                // Notify about new created tags.
-                /*RootApiContext.Events.OnTagCreated(newTags);*/
-
-                return blog;
-            }
-            catch (Exception inner)
-            {
-                var message = string.Format("Failed to update blog post {0}.", request.Id);
-                Logger.Error(message, inner);
-                throw new CmsApiException(message, inner);
-            }
-        }
-
-        public IQueryable<AuthorModel> GetAuthorsAsQueryable()
-        {
-            var models = authorService
-                .GetAuthorsAsQueryable();
-
-            return models;
-        }
-
-        public AuthorCreateResponce CreateAuthor(AuthorCreateRequest request)
-        {
-            return authorService.CreateAuthor(request);
-        }
-
-        public AuthorUpdateResponce UpdateAuthor(AuthorUpdateRequest request)
-        {
-            return authorService.UpdateAuthor(request);
-        }
-
-        public AuthorDeleteResponce DeleteAuthor(AuthorDeleteRequest request)
-        {
-            return authorService.DeleteAuthor(request);
         }
     }
 }

@@ -16,7 +16,7 @@ using BetterCms.Module.Root.Models.MigrationsContent;
 namespace BetterCms.Module.Installation.Models.MigrationsContent
 {
     [ContentMigration(201305231042)]
-    public class Migration201305231042 : BaseContentMigration
+    public class Migration201305231042 : ContentMigrationBase
     {
         private static class Urls
         {

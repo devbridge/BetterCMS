@@ -124,7 +124,6 @@
     <Compile Include="Events\RootEvents.cs" />
     <Compile Include="Events\PageRenderingEventArgs.cs" />
     <Compile Include="Events\TagEvents.cs" />
-    <Compile Include="Api\RootApiContext.cs" />
     <Compile Include="Commands\Category\DeleteCategory\DeleteCategoryCommand.cs" />
     <Compile Include="Commands\Category\DeleteCategory\DeleteCategoryCommandRequest.cs" />
     <Compile Include="Commands\Category\GetCategoryList\GetCategoryListCommand.cs" />
@@ -161,6 +160,7 @@
     <Compile Include="Models\ContentBase.cs" />
     <Compile Include="Models\ComboWireJson.cs" />
     <Compile Include="Models\Maps\ModuleContentVersionMap.cs" />
+    <Compile Include="Models\MigrationsContent\MigratorApiContext.cs" />
     <Compile Include="Models\Migrations\Migration201306101421.cs" />
     <Compile Include="Models\ModuleContentVersion.cs" />
     <Compile Include="Models\LayoutRegion.cs" />
@@ -172,7 +172,7 @@
     <Compile Include="Models\Maps\ContentOptionMap.cs" />
     <Compile Include="Models\Maps\RegionMap.cs" />
     <Compile Include="Models\Maps\TagMap.cs" />
-    <Compile Include="Models\MigrationsContent\BaseContentMigration.cs" />
+    <Compile Include="Models\MigrationsContent\ContentMigrationBase.cs" />
     <Compile Include="Models\Migrations\Migration201305230800.cs" />
     <Compile Include="Models\Migrations\Migration201303261100.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />

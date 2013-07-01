@@ -3,23 +3,17 @@ using System.Linq;
 
 using Autofac;
 
+using BetterCms.Api;
 using BetterCms.Core.DataAccess;
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions.Api;
-using BetterCms.Module.Root.Models;
 
-// ReSharper disable CheckNamespace
-namespace BetterCms.Api
-// ReSharper restore CheckNamespace
+namespace BetterCms.Module.Root.Models.MigrationsContent
 {
-    public class RootApiContext : DataApiContext
+    public class MigratorApiContext : DataApiContext
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RootApiContext" /> class.
-        /// </summary>
-        /// <param name="lifetimeScope">The lifetime scope.</param>
-        /// <param name="repository">The repository.</param>
-        public RootApiContext(ILifetimeScope lifetimeScope, IRepository repository = null)
-            : base(lifetimeScope, repository)
+        public MigratorApiContext(ILifetimeScope lifetimeScope, IRepository repository = null, IUnitOfWork unitOfWork = null)
+            : base(lifetimeScope, repository, unitOfWork)
         {
         }
 
@@ -53,6 +47,5 @@ namespace BetterCms.Api
                 throw new CmsApiException(message, ex);
             }
         }
-
     }
 }

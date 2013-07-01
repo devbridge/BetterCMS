@@ -15,7 +15,7 @@ using BetterCms.Module.Root.Models.MigrationsContent;
 namespace BetterCms.Module.MediaManager.Models.MigrationsContent
 {
     [ContentMigration(201306201216)]
-    public class Migration201306201216 : BaseContentMigration
+    public class Migration201306201216 : ContentMigrationBase
     {
         /// <summary>
         /// Ups the specified configuration.

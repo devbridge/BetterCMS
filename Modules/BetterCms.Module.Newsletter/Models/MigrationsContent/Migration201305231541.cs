@@ -15,7 +15,7 @@ using BetterCms.Module.Root.Models.MigrationsContent;
 namespace BetterCms.Module.Newsletter.Models.MigrationsContent
 {
     [ContentMigration(201305231541)]
-    public class Migration201305231042 : BaseContentMigration
+    public class Migration201305231042 : ContentMigrationBase
     {
         public override void Up(ICmsConfiguration configuration)
         {

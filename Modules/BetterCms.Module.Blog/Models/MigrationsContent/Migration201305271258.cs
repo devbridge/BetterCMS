@@ -1,79 +1,81 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Transactions;
+﻿using System;
+using System.Linq;
 
-//using BetterCms.Api;
-//using BetterCms.Core;
-//using BetterCms.Core.DataAccess.DataContext.Migrations;
-//using BetterCms.Module.Pages.Api.DataContracts;
-//using BetterCms.Module.Pages.Models;
-//using BetterCms.Module.Root.Models.MigrationsContent;
+using Autofac;
 
-//namespace BetterCms.Module.Blog.Models.MigrationsContent
-//{
-//    [ContentMigration(201305271258)]
-//    public class Migration201305271258 : BaseContentMigration
-//    {
-//        /// <summary>
-//        /// Ups the specified configuration.
-//        /// </summary>
-//        /// <param name="configuration">The configuration.</param>
-//        public override void Up(ICmsConfiguration configuration)
-//        {
-//            using (var blogsApi = CmsContext.CreateApiContextOf<BlogsApiContext>())
-//            {
-//                var blogs = blogsApi.GetBlogPosts(new GetBlogPostsRequest(includeUnpublished: true)).Items;
-//                if (!blogs.Any())
-//                {
-//                    return;
-//                }
+using BetterCms.Api;
+using BetterCms.Core;
+using BetterCms.Core.DataAccess;
+using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataAccess.DataContext.Migrations;
+using BetterCms.Core.Exceptions.Api;
+using BetterCms.Module.Root.Models.MigrationsContent;
 
-//                var updateRequests = new List<UpdateBlogPostRequest>();
+using NHibernate.Linq;
 
-//                using (var pagesApi = CmsContext.CreateApiContextOf<PagesApiContext>())
-//                {
-//                    foreach (var blog in blogs)
-//                    {
-//                        var requestToGet = new GetPageContentsRequest(blog.Id, e => e.Content is BlogPostContent, includeUnpublished: true);
-//                        var pageContent = pagesApi.GetPageContents(requestToGet).FirstOrDefault();
-//                        if (pageContent == null)
-//                        {
-//                            continue;
-//                        }
+namespace BetterCms.Module.Blog.Models.MigrationsContent
+{
+    [ContentMigration(201805271258)]
+    public class Migration201305271258 : ContentMigrationBase
+    {
+        public override void Up(ICmsConfiguration configuration)
+        {
+            using (var api = CmsContext.CreateApiContextOf<MigrationApiContext>())
+            {
+                api.UpdateBlogPostDates();
+            }
+        }
 
-//                        var content = pageContent.Content as HtmlContent;
-//                        if (content == null)
-//                        {
-//                            continue;
-//                        }
+        private class MigrationApiContext : DataApiContext
+        {
+            public MigrationApiContext(ILifetimeScope lifetimeScope, IRepository repository = null, IUnitOfWork unitOfWork = null)
+                : base(lifetimeScope, repository, unitOfWork)
+            {
+            }
 
-//                        updateRequests.Add(
-//                            new UpdateBlogPostRequest
-//                                {
-//                                    Id = blog.Id,
-//                                    Version = blog.Version,
-//                                    Title = blog.Title,
-//                                    IntroText = blog.Description,
-//                                    LiveFromDate = content.ActivationDate,
-//                                    LiveToDate = content.ExpirationDate,
-//                                    ImageId = blog.Image != null ? (Guid?)blog.Image.Id : null,
-//                                    AuthorId = blog.Author != null ? (Guid?)blog.Author.Id : null,
-//                                    CategoryId = blog.Category != null ? (Guid?)blog.Category.Id : null
-//                                });
-//                    }
-//                }
+            /// <summary>
+            /// Updates the blog post dates.
+            /// </summary>
+            internal void UpdateBlogPostDates()
+            {
+                try
+                {
+                    UnitOfWork.BeginTransaction();
 
-//                using (var transactionScope = new TransactionScope())
-//                {
-//                    foreach (var request in updateRequests)
-//                    {
-//                        blogsApi.UpdateBlogPost(request);
-//                    }
+                    var blogPostContents = Repository
+                        .AsQueryable<BlogPostContent>()
+                        .FetchMany(bp => bp.PageContents)
+                        .ThenFetch(bp => bp.Page)
+                        .ToList();
 
-//                    transactionScope.Complete();
-//                }
-//            }
-//        }
-//    }
-//}
+                    foreach (var content in blogPostContents)
+                    {
+                        if (content.PageContents != null && content.PageContents.Count > 0)
+                        {
+                            var page = content.PageContents[0].Page as BlogPost;
+                            if (page != null)
+                            {
+                                if (content.ActivationDate != page.ActivationDate
+                                    || content.ExpirationDate != page.ExpirationDate)
+                                {
+                                    page.ActivationDate = content.ActivationDate;
+                                    page.ExpirationDate = content.ExpirationDate;
+
+                                    Repository.Save(page);
+                                }
+                            }
+                        }
+                    }
+
+                    UnitOfWork.Commit();
+                }
+                catch (Exception inner)
+                {
+                    var message = string.Format("Failed to update blog post dates.");
+                    Logger.Error(message, inner);
+                    throw new CmsApiException(message, inner);
+                }
+            }
+        }
+    }
+}

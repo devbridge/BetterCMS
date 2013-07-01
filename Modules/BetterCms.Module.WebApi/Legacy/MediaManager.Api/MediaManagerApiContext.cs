@@ -20,8 +20,6 @@ namespace BetterCms.Api
     /// </summary>
     public class MediaManagerApiContext : DataApiContext
     {
-        
-
         /// <summary>
         /// Initializes a new instance of the <see cref="MediaManagerApiContext" /> class.
         /// </summary>
