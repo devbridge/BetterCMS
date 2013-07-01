@@ -45,12 +45,12 @@ namespace BetterCms.Sandbox.DataMigration
                     (new ModuleDescriptor[]
                     {
                         new BlogModuleDescriptor(configuration),
-//                        new InstallationModuleDescriptor(configuration),
-//                        new MediaManagerModuleDescriptor(configuration),
-//                        new PagesModuleDescriptor(configuration),
-//                        new RootModuleDescriptor(configuration),
-//                        new UsersModuleDescriptor(configuration),
-//                        new NewsletterModuleDescriptor(configuration),
+                        new InstallationModuleDescriptor(configuration),
+                        new MediaManagerModuleDescriptor(configuration),
+                        new PagesModuleDescriptor(configuration),
+                        new RootModuleDescriptor(configuration),
+                        new UsersModuleDescriptor(configuration),
+                        new NewsletterModuleDescriptor(configuration),
                     })
                     .ToList();
         }
@@ -62,7 +62,6 @@ namespace BetterCms.Sandbox.DataMigration
             IVersionChecker versionChecker = new VersionCheckerStub();
             DefaultMigrationRunner runner = new DefaultMigrationRunner(new DefaultAssemblyLoader(), cmsConfiguration, versionChecker);
             runner.MigrateStructure(descriptors);
-            runner.MigrateContent(descriptors);
         }
 
         private static void Main(string[] args)
