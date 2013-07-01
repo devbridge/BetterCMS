@@ -1,9 +1,9 @@
-﻿using System.Runtime.Serialization;
+﻿using ServiceStack.ServiceHost;
 
-namespace BetterCms.Module.Api.Operations.Pages.GetPages
+namespace BetterCms.Module.Api.Operations.Pages.Pages
 {
-    [DataContract]
-    public class GetPagesRequest : ListRequestBase
+    [Route("/pages", Verbs = "GET")]
+    public class GetPagesRequest : ListRequestBase, IReturn<GetPagesResponse>
     {
         /// <summary>
         /// Gets or sets a value indicating whether to include archived pages.
@@ -11,7 +11,6 @@ namespace BetterCms.Module.Api.Operations.Pages.GetPages
         /// <value>
         ///   <c>true</c> if to include archived pages; otherwise, <c>false</c>.
         /// </value>
-        [DataMember(Order = 10, Name = "includeArchived")]
         public bool IncludeArchived { get; set; }
 
         /// <summary>
@@ -20,7 +19,6 @@ namespace BetterCms.Module.Api.Operations.Pages.GetPages
         /// <value>
         ///   <c>true</c> if to include unpublished pages; otherwise, <c>false</c>.
         /// </value>
-        [DataMember(Order = 20, Name = "includeUnpublished")]
         public bool IncludeUnpublished { get; set; }
     }
 }

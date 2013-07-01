@@ -2,9 +2,8 @@
 
 using ServiceStack.ServiceHost;
 
-namespace BetterCms.Module.Api.Operations.Pages.PageExists
+namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Exists
 {
-    [DataContract]
     [Route("/page-exists/{PageUrl*}")]
     public class PageExistsRequest : RequestBase
     {

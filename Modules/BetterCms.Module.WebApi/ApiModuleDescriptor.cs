@@ -6,6 +6,12 @@ using BetterCms.Api;
 using BetterCms.Core.Dependencies;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Mvc.Extensions;
+using BetterCms.Module.Api.Operations.Pages.Pages;
+using BetterCms.Module.Api.Operations.Pages.Pages.Page;
+using BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents;
+using BetterCms.Module.Api.Operations.Pages.Pages.Page.Exists;
+using BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties;
+using BetterCms.Module.Api.Operations.Pages.Pages.Page.RenderedHtml;
 using BetterCms.Module.Api.Operations.Root.Layouts.Layout;
 using BetterCms.Module.Api.Operations.Root.Layouts.Layout.Regions;
 using BetterCms.Events;
@@ -93,9 +99,15 @@ namespace BetterCms.Module.Api
         /// <param name="containerBuilder">The container builder.</param>        
         public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
-            containerBuilder.RegisterType<BlogsApiContext>().AsSelf().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<LayoutService>().As<ILayoutService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<LayoutRegionsService>().As<ILayoutRegionService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
+
+            containerBuilder.RegisterType<PagesService>().As<IPagesService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
+            containerBuilder.RegisterType<PageService>().As<IPageService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
+            containerBuilder.RegisterType<PageExistsService>().As<IPageExistsService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
+            containerBuilder.RegisterType<PageRenderedHtmlService>().As<IPageRenderedHtmlService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
+            containerBuilder.RegisterType<PagePropertiesService>().As<IPagePropertiesService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
+            containerBuilder.RegisterType<PageContentsService>().As<IPageContentsService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
         }
 
         /// <summary>
