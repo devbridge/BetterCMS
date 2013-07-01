@@ -397,9 +397,9 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             container = dialog.container;
 
         var form = dialog.container.find(selectors.siteSettingsPagesListForm);
-        grid.bindGridForm(form, function (data) {
-            siteSettings.setContent(data);
-            page.initializeSiteSettingsPagesList(data);
+        grid.bindGridForm(form, function (content, data) {
+            siteSettings.setContent(content);
+            page.initializeSiteSettingsPagesList(content, data);
         });
 
         form.on('submit', function (event) {

@@ -1348,6 +1348,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to modified.
+        /// </summary>
+        public static string SiteSettings_Media_FilterIsModified {
+            get {
+                return ResourceManager.GetString("SiteSettings_Media_FilterIsModified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Media Manager.
         /// </summary>
         public static string SiteSettings_MediaManagerMenuItem {

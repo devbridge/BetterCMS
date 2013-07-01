@@ -2374,6 +2374,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to modified.
+        /// </summary>
+        public static string SiteSettings_Pages_FilterIsModified {
+            get {
+                return ResourceManager.GetString("SiteSettings_Pages_FilterIsModified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
         public static string SiteSettings_Pages_FilterSearch {

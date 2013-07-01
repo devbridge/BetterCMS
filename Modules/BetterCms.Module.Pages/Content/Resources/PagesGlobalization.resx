@@ -1083,4 +1083,7 @@
   <data name="EditPageProperties_AdvancedPropertiesTab_IsArchived" xml:space="preserve">
     <value>Archived</value>
   </data>
+  <data name="SiteSettings_Pages_FilterIsModified" xml:space="preserve">
+    <value>modified</value>
+  </data>
 </root>

@@ -502,6 +502,15 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to modified.
+        /// </summary>
+        public static string SiteSettings_Blogs_FilterIsModified {
+            get {
+                return ResourceManager.GetString("SiteSettings_Blogs_FilterIsModified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
         public static string SiteSettings_Blogs_FilterSearch {
