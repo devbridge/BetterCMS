@@ -2037,18 +2037,14 @@ a.bcms-sort-arrow-top:hover {
     width: 28px;
     height: 28px;
     line-height: 28px;
+    margin-left: -1px;
     cursor: pointer;
     color: #6d7076;
     font-size: 13px;
     background-color: #f5f5f5;
     border: 1px solid #dcdcdc;
-    border-left: 0;
     text-align: center;
 }
-
-    .bcms-pager-no:first-of-type {
-        border: 1px solid #dcdcdc;
-    }
 
     .bcms-pager-no:hover {
         text-decoration: none;
@@ -2063,10 +2059,6 @@ a.bcms-active-pager {
     background-color: #fff;
 }
 
-    a.bcms-active-pager:first-of-type {
-        border-color: #c6c6c6;
-    }
-
     a.bcms-active-pager:hover {
         text-decoration: none;
     }
@@ -2074,7 +2066,7 @@ a.bcms-active-pager {
 .bcms-pager-text {
     float: left;
     line-height: 30px;
-    padding-right: 10px;
+    padding: 0 6px 0 5px;
     color: #aaaaaa;
     font-size: 13px;
 }
