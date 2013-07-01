@@ -1,9 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 
 using BetterCms.Api;
 using BetterCms.Core;
-using BetterCms.Module.Root.Mvc;
 
 using ServiceStack.ServiceInterface;
 
