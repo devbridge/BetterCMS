@@ -62,5 +62,13 @@ namespace BetterCms.Module.Api.Operations.MediaManager.MediaTree
         ///   <c>true</c> if include the files of files tree; otherwise, <c>false</c>.
         /// </value>
         public bool IncludeFiles { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to include archived medias to response.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if to include archived items to response; otherwise, <c>false</c>.
+        /// </value>
+        public bool IncludeArchived { get; set; }
     }
 }

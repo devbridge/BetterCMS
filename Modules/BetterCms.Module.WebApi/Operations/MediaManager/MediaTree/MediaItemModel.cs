@@ -9,6 +9,15 @@ namespace BetterCms.Module.Api.Operations.MediaManager.MediaTree
     public class MediaItemModel : ModelBase
     {
         /// <summary>
+        /// Gets or sets the parent folder id.
+        /// </summary>
+        /// <value>
+        /// The parent folder id.
+        /// </value>
+        [DataMember]
+        public System.Guid? ParentFolderId { get; set; }
+
+        /// <summary>
         /// Gets or sets the media title.
         /// </summary>
         /// <value>
@@ -33,7 +42,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.MediaTree
         /// The URL.
         /// </value>
         [DataMember]
-        public string url { get; set; }
+        public string Url { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether media is archived.
