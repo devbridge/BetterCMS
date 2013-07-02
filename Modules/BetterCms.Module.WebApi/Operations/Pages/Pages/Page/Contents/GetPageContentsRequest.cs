@@ -2,7 +2,7 @@
 
 namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents
 {
-    [Route("/page/{PageId}/contents")]
+    [Route("/pages/{PageId}/contents")]
     public class GetPageContentsRequest : ListRequestBase, IReturn<GetPageContentsResponse>
     {
         /// <summary>

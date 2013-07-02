@@ -30,7 +30,7 @@ namespace BetterCms.Core.Api.DataContracts
         /// <value>
         /// The list of items.
         /// </value>
-        [DataMember(Order = 10, Name = "items")]
+        [DataMember]
         public IList<TEntity> Items { get; set; }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace BetterCms.Core.Api.DataContracts
         /// <value>
         /// The total count.
         /// </value>
-        [DataMember(Order = 20, Name = "totalCount")]
+        [DataMember]
         public int TotalCount { get; set; }
     }
 }

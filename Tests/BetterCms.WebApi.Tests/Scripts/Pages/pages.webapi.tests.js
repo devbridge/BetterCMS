@@ -1,11 +1,10 @@
-﻿var getpPageByIdUrl = 'http://localhost:55132/bcms-api/pages/getpagebyid';
-var getPagesUrl = 'http://localhost:55132/bcms-api/pages/getpages';
+﻿var getpPageByIdUrl = 'http://localhost:55132/bcms-api/pages/{0}';
+var getPagesUrl = 'http://localhost:55132/bcms-api/pages/';
 var pageId = '3F2504E0-4F89-11D3-9A0C-0305E82C3301';
 
 asyncTest("should get page by id", function () {
-    $.ajax(getpPageByIdUrl,
+    $.ajax(getpPageByIdUrl.replace('{0}', pageId),
         {
-            data: { pageId: pageId },
             type: 'GET',
             cache: false,
             async: false,
@@ -15,7 +14,6 @@ asyncTest("should get page by id", function () {
             success: function(json) {
                 ok(json, 'JSON result received.');
                 equal(json.status.toLowerCase(), 'ok', 'Status ok received.');
-                equal(json.data.id.toLowerCase(), pageId.toLowerCase(), 'The same page id received.');
                 start();
             },
             error: function(jqxhr, textStatus, error) {

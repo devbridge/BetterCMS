@@ -196,8 +196,6 @@
     <Compile Include="Operations\Blog\Authors\AuthorModel.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\BlogPostModel.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\BlogPostPropertiesModel.cs" />
-    <Compile Include="Operations\Blog\GetBlogPostById\GetBlogPostByIdRequest.cs" />
-    <Compile Include="Operations\Blog\GetBlogPostById\GetBlogPostByIdResponse.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\AuthorModel.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\CategoryModel.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\ImageModel.cs" />

@@ -2,7 +2,7 @@
 
 namespace BetterCms.Module.Api.Operations.Blog.Authors.Author
 {
-    [Route("/auhors/{AuthorId}", Verbs = "GET")]
+    [Route("/authors/{AuthorId}", Verbs = "GET")]
     public class GetAuthorRequest : RequestBase, IReturn<GetAuthorResponse>
     {
         /// <summary>

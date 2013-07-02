@@ -5,9 +5,9 @@ using BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost;
 
 namespace BetterCms.Module.Api.Operations.Blog
 {
-    public class DefaultBogApiOperations : IBlogApiOperations
+    public class DefaultBlogApiOperations : IBlogApiOperations
     {
-        public DefaultBogApiOperations(IBlogPostsService blogPosts, IBlogPostService blogPost, IAuthorsService authors, IAuthorService author)
+        public DefaultBlogApiOperations(IBlogPostsService blogPosts, IBlogPostService blogPost, IAuthorsService authors, IAuthorService author)
         {
             BlogPost = blogPost;
             BlogPosts = blogPosts;

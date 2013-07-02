@@ -6,7 +6,8 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
 {
     [Route("/blog-posts", Verbs = "GET")]
     public class GetBlogPostsRequest : ListRequestBase, IReturn<GetBlogPostsResponse>
-    {/// <summary>
+    {
+        /// <summary>
         /// Initializes a new instance of the <see cref="GetBlogPostsRequest" /> class.
         /// </summary>
         public GetBlogPostsRequest()

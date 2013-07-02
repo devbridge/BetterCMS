@@ -11,7 +11,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         /// <value>
         /// The blog post URL.
         /// </value>
-        [DataMember(Order = 10, Name = "blogPostUrl")]
+        [DataMember]
         public string BlogPostUrl { get; set; }
 
         /// <summary>
@@ -20,7 +20,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         /// <value>
         /// The title.
         /// </value>
-        [DataMember(Order = 20, Name = "title")]
+        [DataMember]
         public string Title { get; set; }
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         /// <value>
         /// The intro text.
         /// </value>
-        [DataMember(Order = 25, Name = "introText")]
+        [DataMember]
         public string IntroText { get; set; }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         /// <value>
         /// The page status.
         /// </value>
-        [DataMember(Order = 30, Name = "isPublished")]
+        [DataMember]
         public bool IsPublished { get; set; }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         /// <value>
         /// The page published date.
         /// </value>
-        [DataMember(Order = 40, Name = "publishedOn")]
+        [DataMember]
         public System.DateTime? PublishedOn { get; set; }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         /// <value>
         /// The page layout id.
         /// </value>
-        [DataMember(Order = 50, Name = "layoutId")]
+        [DataMember]
         public System.Guid LayoutId { get; set; }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         /// <value>
         /// The category id.
         /// </value>
-        [DataMember(Order = 60, Name = "categoryId")]
+        [DataMember]
         public System.Guid? CategoryId { get; set; }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         /// <value>
         /// The blog post author id.
         /// </value>
-        [DataMember(Order = 70, Name = "authorId")]
+        [DataMember]
         public System.Guid? AuthorId { get; set; }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         /// <value>
         /// The blog post activation date.
         /// </value>
-        [DataMember(Order = 80, Name = "activationDate")]
+        [DataMember]
         public System.DateTime ActivationDate { get; set; }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         /// <value>
         /// The blog post expiration date.
         /// </value>
-        [DataMember(Order = 90, Name = "expirationDate")]
+        [DataMember]
         public System.DateTime? ExpirationDate { get; set; }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         /// <value>
         /// The main image id.
         /// </value>
-        [DataMember(Order = 100, Name = "mainImageId")]
+        [DataMember]
         public System.Guid? MainImageId { get; set; }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         /// <value>
         /// The featured image id.
         /// </value>
-        [DataMember(Order = 110, Name = "featuredImageId")]
+        [DataMember]
         public System.Guid? FeaturedImageId { get; set; }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         /// <value>
         /// The secondary image id.
         /// </value>
-        [DataMember(Order = 120, Name = "secondaryImageId")]
+        [DataMember]
         public System.Guid? SecondaryImageId { get; set; }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         /// <value>
         ///   <c>true</c> if to use canonical URL; otherwise, <c>false</c>.
         /// </value>
-        [DataMember(Order = 130, Name = "useCanonicalUrl")]
+        [DataMember]
         public bool UseCanonicalUrl { get; set; }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         /// <value>
         ///   <c>true</c> if to use no follow; otherwise, <c>false</c>.
         /// </value>
-        [DataMember(Order = 140, Name = "useNoFollow")]
+        [DataMember]
         public bool UseNoFollow { get; set; }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         /// <value>
         ///   <c>true</c> if to use no index; otherwise, <c>false</c>.
         /// </value>
-        [DataMember(Order = 150, Name = "useNoIndex")]
+        [DataMember]
         public bool UseNoIndex { get; set; }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-using ServiceStack.ServiceHost;
+﻿using ServiceStack.ServiceHost;
 
 namespace BetterCms.Module.Api.Operations.Pages.Redirects.Redirect
 {
@@ -13,7 +11,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Redirects.Redirect
         /// <value>
         /// The redirect id.
         /// </value>
-        [DataMember(Order = 10, Name = "redirectId")]
         public System.Guid RedirectId { get; set; }
     }
 }

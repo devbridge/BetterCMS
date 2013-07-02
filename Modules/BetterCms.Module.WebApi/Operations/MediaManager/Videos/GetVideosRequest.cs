@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-using BetterCms.Module.Api.Operations.Enums;
+﻿using BetterCms.Module.Api.Operations.Enums;
 
 using ServiceStack.ServiceHost;
 
@@ -26,7 +24,6 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Videos
         /// <value>
         /// The folder id.
         /// </value>
-        [DataMember(Order = 10, Name = "folderId")]
         public System.Guid? FolderId { get; set; }
 
         /// <summary>
@@ -35,7 +32,6 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Videos
         /// <value>
         ///   <c>true</c> if to include videos; otherwise, <c>false</c>.
         /// </value>
-        [DataMember(Order = 20, Name = "includeVideos")]
         public bool IncludeVideos { get; set; }
 
         /// <summary>
@@ -44,7 +40,6 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Videos
         /// <value>
         ///   <c>true</c> if to include archived medias; otherwise, <c>false</c>.
         /// </value>
-        [DataMember(Order = 30, Name = "includeArchived")]
         public bool IncludeArchived { get; set; }
 
         /// <summary>
@@ -53,7 +48,6 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Videos
         /// <value>
         ///   <c>true</c> if to include folders; otherwise, <c>false</c>.
         /// </value>
-        [DataMember(Order = 40, Name = "includeFolders")]
         public bool IncludeFolders { get; set; }
 
         /// <summary>
@@ -62,7 +56,6 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Videos
         /// <value>
         /// The video tags for filtering.
         /// </value>
-        [DataMember(Order = 50, Name = "filterByTags")]
         public System.Collections.Generic.List<string> FilterByTags { get; set; }
 
         /// <summary>
@@ -71,7 +64,6 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Videos
         /// <value>
         /// The tags filter connector.
         /// </value>
-        [DataMember(Order = 60, Name = "filterByTagsConnector")]
         public FilterConnector FilterByTagsConnector { get; set; }
     }
 }

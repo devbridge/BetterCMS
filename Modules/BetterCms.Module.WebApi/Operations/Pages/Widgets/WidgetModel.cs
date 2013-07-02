@@ -13,7 +13,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets
         /// <value>
         /// The widget type.
         /// </value>
-        [DataMember(Order = 5, Name = "widgetType")]
+        [DataMember]
         public WidgetType WidgetType { get; set; }
 
         /// <summary>
@@ -22,7 +22,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets
         /// <value>
         /// The widget name.
         /// </value>
-        [DataMember(Order = 10, Name = "name")]
+        [DataMember]
         public string Name { get; set; }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets
         /// <value>
         /// <c>true</c> if widget is published; otherwise, <c>false</c>.
         /// </value>
-        [DataMember(Order = 20, Name = "isPublished")]
+        [DataMember]
         public bool IsPublished { get; set; }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets
         /// <value>
         /// The date widget was published on.
         /// </value>
-        [DataMember(Order = 30, Name = "publishedOn")]
+        [DataMember]
         public System.DateTime? PublishedOn { get; set; }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets
         /// <value>
         /// The widget published user name.
         /// </value>
-        [DataMember(Order = 40, Name = "publishedByUser")]
+        [DataMember]
         public string PublishedByUser { get; set; }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets
         /// <value>
         /// The widget category id.
         /// </value>
-        [DataMember(Order = 50, Name = "categoryId")]
+        [DataMember]
         public System.Guid? CategoryId { get; set; }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets
         /// <value>
         /// The widget category name.
         /// </value>
-        [DataMember(Order = 60, Name = "categoryName")]
+        [DataMember]
         public string CategoryName { get; set; }
     }
 }

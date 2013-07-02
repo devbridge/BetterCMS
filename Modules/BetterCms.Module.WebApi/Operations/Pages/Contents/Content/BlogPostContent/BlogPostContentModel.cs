@@ -11,7 +11,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.BlogPostContent
         /// <value>
         /// The content name.
         /// </value>
-        [DataMember(Order = 10, Name = "name")]
+        [DataMember]
         public string Name { get; set; }
 
         /// <summary>
@@ -20,7 +20,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.BlogPostContent
         /// <value>
         /// The content HTML.
         /// </value>
-        [DataMember(Order = 20, Name = "html")]
+        [DataMember]
         public string Html { get; set; }
     }
 }

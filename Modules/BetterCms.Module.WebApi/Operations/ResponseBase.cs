@@ -7,10 +7,10 @@ namespace BetterCms.Module.Api.Operations
     [DataContract]
     public abstract class ResponseBase<TData> : IHasResponseStatus
     {
-        [DataMember(Order = 1, Name = "data")]
+        [DataMember]
         public TData Data { get; set; }
 
-        [DataMember(Order = 2, Name = "responseStatus")]
+        [DataMember]
         public ResponseStatus ResponseStatus
         {
             get; set;

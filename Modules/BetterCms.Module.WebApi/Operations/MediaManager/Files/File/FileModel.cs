@@ -11,7 +11,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         /// <value>
         /// The media title.
         /// </value>
-        [DataMember(Order = 10, Name = "title")]
+        [DataMember]
         public string Title { get; set; }
 
         /// <summary>
@@ -20,7 +20,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         /// <value>
         /// The file extension.
         /// </value>
-        [DataMember(Order = 30, Name = "fileExtension")]
+        [DataMember]
         public string FileExtension { get; set; }
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         /// <value>
         /// The size of the file.
         /// </value>
-        [DataMember(Order = 40, Name = "fileSize")]
+        [DataMember]
         public long FileSize { get; set; }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         /// <value>
         /// The URL.
         /// </value>
-        [DataMember(Order = 50, Name = "fileUrl")]
+        [DataMember]
         public string FileUrl { get; set; }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         /// <value>
         /// <c>true</c> if media is archived; otherwise, <c>false</c>.
         /// </value>
-        [DataMember(Order = 60, Name = "isArchived")]
+        [DataMember]
         public bool IsArchived { get; set; }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         /// <value>
         /// The folder id.
         /// </value>
-        [DataMember(Order = 70, Name = "folderId")]
+        [DataMember]
         public System.Guid? FolderId { get; set; }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         /// <value>
         /// The name of the folder.
         /// </value>
-        [DataMember(Order = 80, Name = "folderName")]
+        [DataMember]
         public string FolderName { get; set; }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         /// <value>
         /// The published on.
         /// </value>
-        [DataMember(Order = 90, Name = "publishedOn")]
+        [DataMember]
         public System.DateTime PublishedOn { get; set; }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         /// <value>
         /// The name of the original file.
         /// </value>
-        [DataMember(Order = 100, Name = "originalFileName")]
+        [DataMember]
         public virtual string OriginalFileName { get; set; }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         /// <value>
         /// The original file extension.
         /// </value>
-        [DataMember(Order = 110, Name = "originalFileExtension")]
+        [DataMember]
         public virtual string OriginalFileExtension { get; set; }
     }
 }
