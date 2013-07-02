@@ -1,8 +1,6 @@
 ﻿using System.Linq;
 
-using BetterCms.Api;
-using BetterCms.Core;
-using BetterCms.Core.Api.DataContracts;
+using BetterCms.Core.DataAccess;
 using BetterCms.Module.Api.Helpers;
 
 using ServiceStack.ServiceInterface;
@@ -11,30 +9,38 @@ namespace BetterCms.Module.Api.Operations.Root.Layouts
 {
     public class LayoutsService : Service, ILayoutsService
     {
+        private readonly IRepository repository;
+
+        public LayoutsService(IRepository repository)
+        {
+            this.repository = repository;
+        }
+
         public GetLayoutsResponse Get(GetLayoutsRequest request)
         {
-            var request2 = new Module.Pages.Api.DataContracts.GetLayoutsRequest();
-            request.ApplyTo(request2);
+            request.SetDefaultOrder("Name");
 
-            using (var api = CmsContext.CreateApiContextOf<PagesApiContext>())
-            {
-                var layouts = api.GetLayouts(request2);
+            var listResponse = repository
+                .AsQueryable<Module.Root.Models.Layout>()
+                .Select(layout => new LayoutModel
+                    {
+                        Id = layout.Id,
+                        Version = layout.Version,
+                        CreatedBy = layout.CreatedByUser,
+                        CreatedOn = layout.CreatedOn,
+                        LastModifiedBy = layout.ModifiedByUser,
+                        LastModifiedOn = layout.ModifiedOn,
 
-                return new GetLayoutsResponse
-                {
-                    Data = new DataListResponse<LayoutModel>(
-                        layouts.Items.Select(
-                            f => new LayoutModel
-                            {
-                                Id = f.Id,
-                                Name = f.Name,
-                                Version = f.Version,
-                                PreviewUrl = f.PreviewUrl,
-                                LayoutPath = f.LayoutPath
-                            }).ToList(),
-                        layouts.TotalCount)
-                };
-            }
+                        Name = layout.Name,
+                        LayoutPath = layout.LayoutPath,
+                        PreviewUrl = layout.PreviewUrl
+                    })
+                .ToDataListResponse(request);
+
+            return new GetLayoutsResponse
+                       {
+                           Data = listResponse
+                       };
         }
     }
 }

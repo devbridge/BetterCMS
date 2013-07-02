@@ -58,69 +58,6 @@ namespace BetterCms.Api
         }
 
         /// <summary>
-        /// Gets the list of region entities.
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <returns>
-        /// The list of region entities
-        /// </returns>
-        /// <exception cref="CmsApiException"></exception>
-        public DataListResponse<Region> GetRegions(GetRegionsRequest request = null)
-        {
-            try
-            {
-                if (request == null)
-                {
-                    request = new GetRegionsRequest();
-                }
-                request.SetDefaultOrder(s => s.RegionIdentifier);
-
-                return Repository.ToDataListResponse(request);
-            }
-            catch (Exception inner)
-            {
-                const string message = "Failed to get regions list.";
-                Logger.Error(message, inner);
-                throw new CmsApiException(message, inner);
-            }
-        }
-
-        /// <summary>
-        /// Gets the list of specified layout region entities.
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <returns>
-        /// The list of specified layout region entities
-        /// </returns>
-        /// <exception cref="CmsApiException"></exception>
-        public DataListResponse<LayoutRegion> GetLayoutRegions(GetLayoutRegionsRequest request)
-        {
-            try
-            {
-                request.SetDefaultOrder(lr => lr.Description);
-
-                var query = Repository
-                    .AsQueryable<LayoutRegion>()
-                    .Where(lr => lr.Layout.Id == request.LayoutId)
-                    .ApplyFilters(request);
-
-                var totalCount = query.ToRowCountFutureValue(request);
-
-                query = query
-                   .AddOrderAndPaging(request)
-                   .Fetch(lr => lr.Region);
-
-                return query.ToDataListResponse(totalCount);
-            }
-            catch (Exception inner)
-            {
-                var message = string.Format("Failed to get layout regions list for layout Id={0}.", request.LayoutId);
-                Logger.Error(message, inner);
-                throw new CmsApiException(message, inner);
-            }
-        }
-
-        /// <summary>
         /// Creates the layout.
         /// </summary>
         /// <param name="request">The request.</param>

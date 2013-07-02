@@ -3,7 +3,7 @@
 namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout.Regions
 {
     [Route("/layouts/{LayoutId}/regions", Verbs = "GET")]
-    public class GetLayoutRegionsRequest : RequestBase, IReturn<GetLayoutRegionsResponse>
+    public class GetLayoutRegionsRequest : ListRequestBase, IReturn<GetLayoutRegionsResponse>
     {
         /// <summary>
         /// Gets or sets the layout id.

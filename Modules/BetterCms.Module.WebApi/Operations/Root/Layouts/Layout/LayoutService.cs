@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 
-using BetterCms.Api;
-using BetterCms.Core;
+using BetterCms.Core.DataAccess;
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Module.Api.Operations.Root.Layouts.Layout.Regions;
 
 using ServiceStack.ServiceInterface;
@@ -12,35 +12,37 @@ namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout
     {
         private readonly ILayoutRegionService layoutRegionService;
 
-        public LayoutService(ILayoutRegionService layoutRegionService)
+        private readonly IRepository repository;
+
+        public LayoutService(ILayoutRegionService layoutRegionService, IRepository repository)
         {
             this.layoutRegionService = layoutRegionService;
+            this.repository = repository;
         }
 
         public GetLayoutResponse Get(GetLayoutRequest request)
         {
-            using (var api = CmsContext.CreateApiContextOf<PagesApiContext>())
-            {
-                var layout = api
-                    .GetLayouts(new Module.Pages.Api.DataContracts.GetLayoutsRequest(l => l.Id == request.LayoutId))
-                    .Items
-                    .First();
-                return new GetLayoutResponse
-                {
-                    Data = new LayoutModel
-                               {
-                                   Id = layout.Id,
-                                   Version = layout.Version,
-                                   CreatedBy = layout.CreatedByUser,
-                                   CreatedOn = layout.CreatedOn,
-                                   LastModifiedBy = layout.ModifiedByUser,
-                                   LastModifiedOn = layout.ModifiedOn,
-                                   PreviewUrl = layout.PreviewUrl,
-                                   Name = layout.Name,
-                                   LayoutPath = layout.LayoutPath,
-                               }
-                };
-            }
+            var model = repository
+                .AsQueryable<Module.Root.Models.Layout>(layout => layout.Id == request.LayoutId)
+                .Select(layout => new LayoutModel
+                    {
+                        Id = layout.Id,
+                        Version = layout.Version,
+                        CreatedBy = layout.CreatedByUser,
+                        CreatedOn = layout.CreatedOn,
+                        LastModifiedBy = layout.ModifiedByUser,
+                        LastModifiedOn = layout.ModifiedOn,
+
+                        Name = layout.Name,
+                        LayoutPath = layout.LayoutPath,
+                        PreviewUrl = layout.PreviewUrl
+                    })
+                .FirstOne();
+
+            return new GetLayoutResponse
+                       {
+                           Data = model
+                       };
         }
 
         ILayoutRegionService ILayoutService.Regions
