@@ -23,15 +23,16 @@ namespace BetterCms.Module.Api.Operations.Root.Tags
             var listResponse = repository
                 .AsQueryable<Module.Root.Models.Tag>()
                 .Select(tag => new TagModel
-                                   {
-                                       Id = tag.Id,
-                                       Version = tag.Version,
-                                       CreatedBy = tag.CreatedByUser,
-                                       CreatedOn = tag.CreatedOn,
-                                       LastModifiedBy = tag.ModifiedByUser,
-                                       LastModifiedOn = tag.ModifiedOn,
-                                       Name = tag.Name
-                                   })
+                    {
+                        Id = tag.Id,
+                        Version = tag.Version,
+                        CreatedBy = tag.CreatedByUser,
+                        CreatedOn = tag.CreatedOn,
+                        LastModifiedBy = tag.ModifiedByUser,
+                        LastModifiedOn = tag.ModifiedOn,
+
+                        Name = tag.Name
+                    })
                 .ToDataListResponse(request);
 
             return new GetTagsResponse
