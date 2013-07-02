@@ -50,7 +50,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
         /// The size of the file.
         /// </value>
         [DataMember]
-        public long FileSize { get; set; }
+        public long? FileSize { get; set; }
 
         /// <summary>
         /// Gets or sets the URL.

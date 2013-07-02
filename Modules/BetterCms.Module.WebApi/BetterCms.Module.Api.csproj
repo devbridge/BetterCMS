@@ -167,11 +167,6 @@
     <Compile Include="Legacy\Blog.Api\IAuthorService.cs" />
     <Compile Include="Legacy\Blog.Api\IBlogService.cs" />
     <Compile Include="Legacy\Blog.Api\Mappers\EntityToServiceModelMapper.cs" />
-    <Compile Include="Legacy\MediaManager.Api\DataContracts\GetFilesRequest.cs" />
-    <Compile Include="Legacy\MediaManager.Api\DataContracts\GetFolderMediasRequest.cs" />
-    <Compile Include="Legacy\MediaManager.Api\DataContracts\GetFoldersRequest.cs" />
-    <Compile Include="Legacy\MediaManager.Api\DataContracts\GetImagesRequest.cs" />
-    <Compile Include="Legacy\MediaManager.Api\MediaManagerApiContext.cs" />
     <Compile Include="Operations\Blog\Authors\AuthorsService.cs" />
     <Compile Include="Operations\Blog\Authors\Author\AuthorService.cs" />
     <Compile Include="Operations\Blog\Authors\Author\GetAuthorRequest.cs" />
