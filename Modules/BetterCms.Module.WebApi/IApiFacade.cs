@@ -1,4 +1,5 @@
-﻿using BetterCms.Module.Api.Operations.MediaManager;
+﻿using BetterCms.Module.Api.Operations.Blog;
+using BetterCms.Module.Api.Operations.MediaManager;
 using BetterCms.Module.Api.Operations.Pages;
 using BetterCms.Module.Api.Operations.Root;
 
@@ -11,5 +12,7 @@ namespace BetterCms.Module.Api
         IPagesApiOperations Pages { get; }
         
         IMediaManagerApiOperations Media { get; }
+
+        IBlogApiOperations Blog { get; }
     }
 }

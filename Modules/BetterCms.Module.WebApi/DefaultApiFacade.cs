@@ -1,4 +1,5 @@
-﻿using BetterCms.Module.Api.Operations.MediaManager;
+﻿using BetterCms.Module.Api.Operations.Blog;
+using BetterCms.Module.Api.Operations.MediaManager;
 using BetterCms.Module.Api.Operations.Pages;
 using BetterCms.Module.Api.Operations.Root;
 
@@ -12,11 +13,14 @@ namespace BetterCms.Module.Api
         
         private readonly IMediaManagerApiOperations media;
 
-        public DefaultApiFacade(IRootApiOperations root, IPagesApiOperations pages, IMediaManagerApiOperations media)
+        private readonly IBlogApiOperations blog;
+
+        public DefaultApiFacade(IRootApiOperations root, IPagesApiOperations pages, IMediaManagerApiOperations media, IBlogApiOperations blog)
         {            
             this.root = root;
             this.pages = pages;
             this.media = media;
+            this.blog = blog;
         }
 
         public IRootApiOperations Root
@@ -40,6 +44,14 @@ namespace BetterCms.Module.Api
             get
             {
                 return media;
+            }
+        }
+        
+        public IBlogApiOperations Blog
+        {
+            get
+            {
+                return blog;
             }
         }
     }
