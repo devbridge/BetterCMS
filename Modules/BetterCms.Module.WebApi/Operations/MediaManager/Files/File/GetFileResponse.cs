@@ -8,6 +8,6 @@
         /// <value>
         /// The list of file tags.
         /// </value>
-        private System.Collections.Generic.IList<TagModel> Tags { get; set; }
+        public System.Collections.Generic.IList<TagModel> Tags { get; set; }
     }
 }
