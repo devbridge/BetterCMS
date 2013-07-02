@@ -2,5 +2,6 @@
 {
     public interface IPageRenderedHtmlService
     {
+        GetPageRenderedHtmlResponse Get(GetPageRenderedHtmlRequest request);
     }
 }

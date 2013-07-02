@@ -2,5 +2,6 @@
 {
     public interface IPageContentsService
     {
+        GetPageContentsResponse Get(GetPageContentsRequest request);
     }
 }

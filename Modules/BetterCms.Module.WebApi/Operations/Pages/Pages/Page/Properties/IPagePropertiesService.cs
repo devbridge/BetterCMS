@@ -2,5 +2,6 @@
 {
     public interface IPagePropertiesService
     {
+        GetPagePropertiesResponse Get(GetPagePropertiesRequest request);
     }
 }
