@@ -150,7 +150,6 @@
     <Compile Include="Helpers\CmsApiControllerBase.cs" />
     <Compile Include="Helpers\DataOptionsQueryCreator.cs" />
     <Compile Include="Helpers\DynamicLinqExtensions.cs" />
-    <Compile Include="Legacy\Blog.Api\BlogsApiContext.cs" />
     <Compile Include="Legacy\Blog.Api\DataContracts\AuthorCreateRequest.cs" />
     <Compile Include="Legacy\Blog.Api\DataContracts\AuthorCreateResponce.cs" />
     <Compile Include="Legacy\Blog.Api\DataContracts\AuthorDeleteRequest.cs" />
@@ -189,7 +188,6 @@
     <Compile Include="Operations\Blog\BlogPosts\IBlogPostsService.cs" />
     <Compile Include="Operations\Blog\DefaultBogApiOperations.cs" />
     <Compile Include="Operations\Blog\Authors\AuthorModel.cs" />
-    <Compile Include="Operations\Blog\BlogPosts\BlogPost\BlogPostModel.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\BlogPostPropertiesModel.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\AuthorModel.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\CategoryModel.cs" />
