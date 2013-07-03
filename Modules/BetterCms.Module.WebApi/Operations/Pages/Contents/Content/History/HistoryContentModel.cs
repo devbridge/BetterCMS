@@ -23,7 +23,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.History
         /// The original content id.
         /// </value>
         [DataMember]
-        public System.Guid OriginalContentId { get; set; }
+        public System.Guid? OriginalContentId { get; set; }
 
         /// <summary>
         /// Gets or sets the date content published on.

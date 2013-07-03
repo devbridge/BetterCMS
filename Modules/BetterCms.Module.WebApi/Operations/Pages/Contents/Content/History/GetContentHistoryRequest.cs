@@ -3,7 +3,7 @@
 namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.History
 {
     [Route("/contents/{ContentId}/history", Verbs = "GET")]
-    public class GetContentHistoryRequest : ListRequestBase, IReturn<GetContentHistoryResponse>
+    public class GetContentHistoryRequest : RequestBase, IReturn<GetContentHistoryResponse>
     {
         /// <summary>
         /// Gets or sets the content id.
