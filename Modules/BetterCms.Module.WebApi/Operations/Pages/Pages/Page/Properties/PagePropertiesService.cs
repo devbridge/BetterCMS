@@ -3,6 +3,7 @@
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Module.Pages.Models;
 
 using ServiceStack.ServiceInterface;
 
@@ -169,8 +170,11 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         
         private System.Collections.Generic.List<PageContentModel> LoadPageContents(System.Guid blogPostId)
         {
+            var now = System.DateTime.Now;
+
             return repository
                  .AsQueryable<Module.Root.Models.PageContent>(pageContent => pageContent.Page.Id == blogPostId)
+                 .OrderBy(pageContent => pageContent.Order)
                  .Select(pageContent => new PageContentModel
                      {
                          Id = pageContent.Id,
@@ -185,7 +189,12 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                          Name = pageContent.Content.Name,
                          RegionId = pageContent.Region.Id,
                          RegionIdentifier = pageContent.Region.RegionIdentifier,
-                         Order = pageContent.Order
+                         Order = pageContent.Order,
+                         IsPublished = pageContent.Content.Status == ContentStatus.Published
+                            && (!(pageContent.Content is HtmlContent) 
+                                || ((HtmlContent)pageContent.Content).ActivationDate <= now
+                                    && (!((HtmlContent)pageContent.Content).ExpirationDate.HasValue 
+                                        || ((HtmlContent)pageContent.Content).ExpirationDate >= now))
                      }).ToList();
         }
     }

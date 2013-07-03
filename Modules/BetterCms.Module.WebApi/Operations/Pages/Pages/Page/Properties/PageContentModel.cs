@@ -15,6 +15,15 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         public System.Guid ContentId { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether content is published.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if content is published; otherwise, <c>false</c>.
+        /// </value>
+        [DataMember]
+        public bool IsPublished { get; set; }
+
+        /// <summary>
         /// Gets or sets the type of the content.
         /// </summary>
         /// <value>
