@@ -60,12 +60,12 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
         public System.Guid? CategoryId { get; set; }
 
         /// <summary>
-        /// Gets or sets the category name.
+        /// Gets or sets a value indicating whether page is marked as archived.
         /// </summary>
         /// <value>
-        /// The category name.
+        /// <c>true</c> if page is marked as archived; otherwise, <c>false</c>.
         /// </value>
         [DataMember]
-        public string CategoryName { get; set; }
+        public bool IsArchived { get; set; }
     }
 }

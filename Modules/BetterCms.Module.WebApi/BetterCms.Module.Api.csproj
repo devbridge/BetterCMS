@@ -320,7 +320,6 @@
     <Compile Include="Operations\Pages\Pages\PagesService.cs" />
     <Compile Include="Operations\Pages\Pages\Page\GetPageRequest.cs" />
     <Compile Include="Operations\Pages\Pages\Page\GetPageResponse.cs" />
-    <Compile Include="Operations\Pages\Pages\Page\PageModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\GetPagePropertiesRequest.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\GetPagePropertiesResponse.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\PagePropertiesModel.cs" />

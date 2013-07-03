@@ -103,5 +103,14 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
         /// </value>
         [DataMember]
         public System.DateTime? ExpirationDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether blog post is marked as archived.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if blog post is marked as archived; otherwise, <c>false</c>.
+        /// </value>
+        [DataMember]
+        public bool IsArchived { get; set; }
     }
 }

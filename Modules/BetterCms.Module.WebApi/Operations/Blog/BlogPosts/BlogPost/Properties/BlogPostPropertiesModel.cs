@@ -96,6 +96,15 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         public System.DateTime? ExpirationDate { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether blog post is marked as archived.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if blog post is marked as archived; otherwise, <c>false</c>.
+        /// </value>
+        [DataMember]
+        public bool IsArchived { get; set; }
+
+        /// <summary>
         /// Gets or sets the featured main image id.
         /// </summary>
         /// <value>
@@ -121,6 +130,15 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         /// </value>
         [DataMember]
         public System.Guid? SecondaryImageId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the canonical URL.
+        /// </summary>
+        /// <value>
+        /// The canonical URL.
+        /// </value>
+        [DataMember]
+        public string CanonicalUrl { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to use canonical URL.

@@ -1,4 +1,10 @@
-﻿using BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents;
+﻿using System.Linq;
+
+using BetterCms.Core.DataAccess;
+using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataContracts.Enums;
+
+using BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page.Exists;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page.RenderedHtml;
@@ -17,26 +23,54 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
 
         private readonly IPageContentsService pageContentsService;
 
-        public PageService(IPagePropertiesService pagePropertiesService, IPageRenderedHtmlService pageHtmlService,
+        private readonly IRepository repository;
+
+        public PageService(IRepository repository, IPagePropertiesService pagePropertiesService, IPageRenderedHtmlService pageHtmlService,
             IPageExistsService pageExistsService, IPageContentsService pageContentsService)
         {
             this.pageContentsService = pageContentsService;
             this.pagePropertiesService = pagePropertiesService;
             this.pageHtmlService = pageHtmlService;
             this.pageExistsService = pageExistsService;
+            this.repository = repository;
         }
 
         public GetPageResponse Get(GetPageRequest request)
         {
-            // TODO: need implementation
-            return new GetPageResponse
-                       {
-                           Data = new PageModel
-                                      {
-                                          Id = request.PageId,
-                                          PageUrl = request.PageUrl
-                                      }
-                       };
+            // TODO: validate request - one and only one of these can be specified: PageUrl / PageId
+
+            var query = repository.AsQueryable<Module.Pages.Models.PageProperties>();
+            
+            if (request.PageId.HasValue)
+            {
+                query = query.Where(page => page.Id == request.PageId.Value);
+            }
+            else
+            {
+                query = query.Where(page => page.PageUrl == request.PageUrl);
+            }
+
+            var model = query
+                .Select(page => new PageModel
+                    {
+                        Id = page.Id,
+                        Version = page.Version,
+                        CreatedBy = page.CreatedByUser,
+                        CreatedOn = page.CreatedOn,
+                        LastModifiedBy = page.ModifiedByUser,
+                        LastModifiedOn = page.ModifiedOn,
+
+                        PageUrl = page.PageUrl,
+                        Title = page.Title,
+                        IsPublished = page.Status == PageStatus.Published,
+                        PublishedOn = page.PublishedOn,
+                        LayoutId = page.Layout.Id,
+                        CategoryId = page.Category.Id,
+                        IsArchived = page.IsArchived
+                    })
+                .FirstOne();
+
+            return new GetPageResponse { Data = model };
         }
 
         IPagePropertiesService IPageService.Properties

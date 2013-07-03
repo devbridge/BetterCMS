@@ -62,7 +62,8 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
                         AuthorId = blogPost.Author.Id,
                         MainImageId = blogPost.Image.Id,
                         ActivationDate = blogPost.ActivationDate,
-                        ExpirationDate = blogPost.ExpirationDate
+                        ExpirationDate = blogPost.ExpirationDate,
+                        IsArchived = blogPost.IsArchived
                     }).ToDataListResponse(request);
 
             return new GetBlogPostsResponse

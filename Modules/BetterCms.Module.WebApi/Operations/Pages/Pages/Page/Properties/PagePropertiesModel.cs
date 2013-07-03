@@ -69,6 +69,15 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         public System.Guid? CategoryId { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether page is marked as archived.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if page is marked as archived; otherwise, <c>false</c>.
+        /// </value>
+        [DataMember]
+        public bool IsArchived { get; set; }
+
+        /// <summary>
         /// Gets or sets the featured main image id.
         /// </summary>
         /// <value>

@@ -40,7 +40,8 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
                         AuthorId = blogPost.Author.Id,
                         MainImageId = blogPost.Image.Id,
                         ActivationDate = blogPost.ActivationDate,
-                        ExpirationDate = blogPost.ExpirationDate
+                        ExpirationDate = blogPost.ExpirationDate,
+                        IsArchived = blogPost.IsArchived
                     })
                 .FirstOne();
 

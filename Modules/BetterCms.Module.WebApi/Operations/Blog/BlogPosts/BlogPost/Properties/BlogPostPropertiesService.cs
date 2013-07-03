@@ -48,9 +48,11 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
                                 MainImageId = blogPost.Image.Id,
                                 FeaturedImageId = blogPost.FeaturedImage.Id,
                                 SecondaryImageId = blogPost.SecondaryImage.Id,
+                                CanonicalUrl = blogPost.CanonicalUrl,
                                 UseCanonicalUrl = blogPost.UseCanonicalUrl,
                                 UseNoFollow = blogPost.UseNoFollow,
-                                UseNoIndex = blogPost.UseNoIndex
+                                UseNoIndex = blogPost.UseNoIndex,
+                                IsArchived = blogPost.IsArchived
                             },
                         MetaData = request.IncludeMetaData ? new MetadataModel
                             {
@@ -136,7 +138,6 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
                                 Url = blogPost.SecondaryImage.PublicUrl,
                                 ThumbnailUrl = blogPost.SecondaryImage.PublicThumbnailUrl
                             } : null
-
                     })
                 .FirstOne();
 
