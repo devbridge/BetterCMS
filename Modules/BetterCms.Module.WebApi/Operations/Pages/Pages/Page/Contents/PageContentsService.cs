@@ -36,13 +36,9 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents
                 query = query.Where(pageContent => pageContent.Region.RegionIdentifier == request.RegionIdentifier);
             }
 
-            var now = System.DateTime.Now;
             if (!request.IncludeUnpublished)
             {
-                query = query.Where(pageContent => pageContent.Content.Status == ContentStatus.Published
-                    && (!(pageContent.Content is HtmlContent) 
-                        || ((HtmlContent)pageContent.Content).ActivationDate <= now
-                            && (!((HtmlContent)pageContent.Content).ExpirationDate.HasValue || ((HtmlContent)pageContent.Content).ExpirationDate >= now)));
+                query = query.Where(pageContent => pageContent.Content.Status == ContentStatus.Published);
             }
 
             var dataListResult = query.Select(pageContent => new PageContentModel
@@ -61,10 +57,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents
                          RegionIdentifier = pageContent.Region.RegionIdentifier,
                          Order = pageContent.Order,
                          IsPublished = pageContent.Content.Status == ContentStatus.Published
-                            && (!(pageContent.Content is HtmlContent)
-                                || ((HtmlContent)pageContent.Content).ActivationDate <= now
-                                    && (!((HtmlContent)pageContent.Content).ExpirationDate.HasValue
-                                        || ((HtmlContent)pageContent.Content).ExpirationDate >= now))
                      }).ToDataListResponse(request);
 
             return new GetPageContentsResponse { Data = dataListResult };

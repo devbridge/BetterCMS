@@ -32,16 +32,16 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
 
                         Name = widget.Name,
                         IsPublished = widget.Status == ContentStatus.Published,
-                        PublishedOn = widget.PublishedOn,
-                        PublishedByUser = widget.PublishedByUser,
+                        PublishedOn = widget.Status == ContentStatus.Published ? widget.PublishedOn : null,
+                        PublishedByUser = widget.Status == ContentStatus.Published ? widget.PublishedByUser : null,
                         CategoryId = widget.Category.Id,
                         CategoryName = widget.Category.Name,
                         CustomCss = widget.CustomCss,
                         UseCustomCss = widget.UseCustomCss,
                         Html = widget.Html,
                         UseHtml = widget.UseHtml,
-                        CustomJs = widget.CustomJs,
-                        UseCustomJs = widget.UseCustomJs
+                        CustomJavaScript = widget.CustomJs,
+                        UseCustomJavaScript = widget.UseCustomJs
                     })
                 .FirstOne();
 

@@ -32,8 +32,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidg
 
                         Name = widget.Name,
                         IsPublished = widget.Status == ContentStatus.Published,
-                        PublishedOn = widget.PublishedOn,
-                        PublishedByUser = widget.PublishedByUser,
+                        PublishedOn = widget.Status == ContentStatus.Published ? widget.PublishedOn : null,
+                        PublishedByUser = widget.Status == ContentStatus.Published ? widget.PublishedByUser : null,
                         CategoryId = widget.Category.Id,
                         CategoryName = widget.Category.Name,
                         WidgetUrl = widget.Url,

@@ -102,7 +102,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
         /// The custom js.
         /// </value>
         [DataMember]
-        public string CustomJs { get; set; }
+        public string CustomJavaScript { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to use custom JavaScript.
@@ -111,6 +111,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
         ///   <c>true</c> if to use custom JavaScript; otherwise, <c>false</c>.
         /// </value>
         [DataMember]
-        public bool UseCustomJs { get; set; }
+        public bool UseCustomJavaScript { get; set; }
     }
 }

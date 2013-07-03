@@ -129,7 +129,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         /// The page custom JavaScript.
         /// </value>
         [DataMember]
-        public string CustomJS { get; set; }
+        public string CustomJavaScript { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to use canonical URL.

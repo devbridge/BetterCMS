@@ -35,9 +35,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
             
             if (!request.IncludeUnpublished)
             {
-                query = query.Where(b => b.Status == PageStatus.Published 
-                    && b.ActivationDate < System.DateTime.Now 
-                    && (!b.ExpirationDate.HasValue || System.DateTime.Now < b.ExpirationDate.Value));
+                query = query.Where(b => b.Status == PageStatus.Published);
             }
 
             // TODO: filter by tags !!!
