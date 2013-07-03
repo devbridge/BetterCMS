@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
 namespace BetterCms.Module.Api.Operations.Blog.Authors
 {
@@ -22,7 +21,7 @@ namespace BetterCms.Module.Api.Operations.Blog.Authors
         /// The image id.
         /// </value>
         [DataMember]
-        public Guid ImageId { get; set; }
+        public System.Guid? ImageId { get; set; }
 
         /// <summary>
         /// Gets or sets the image URL.

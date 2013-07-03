@@ -43,14 +43,14 @@ namespace BetterCms.Api
             {
                 request.SetDefaultOrder(b => b.Title);
 
-                var query = Repository
-                    .AsQueryable<BlogPost>()
-                    .ApplyFilters(request);
+                var query = Repository.AsQueryable<BlogPost>().ApplyFilters(request);
 
                 if (!request.IncludeUnpublished)
                 {
-                    query = query.Where(b => b.Status == PageStatus.Published
-                        && b.ActivationDate < DateTime.Now && (!b.ExpirationDate.HasValue || DateTime.Now < b.ExpirationDate.Value));
+                    query =
+                        query.Where(
+                            b =>
+                            b.Status == PageStatus.Published && b.ActivationDate < DateTime.Now && (!b.ExpirationDate.HasValue || DateTime.Now < b.ExpirationDate.Value));
                 }
 
                 if (!request.IncludeArchivedItems)
@@ -60,55 +60,13 @@ namespace BetterCms.Api
 
                 var totalCount = query.ToRowCountFutureValue(request);
 
-                query = query
-                    .AddOrderAndPaging(request)
-                    .Fetch(b => b.Author);
+                query = query.AddOrderAndPaging(request).Fetch(b => b.Author);
 
                 return query.ToDataListResponse(totalCount);
             }
             catch (Exception inner)
             {
                 const string message = "Failed to get blog posts list.";
-                Logger.Error(message, inner);
-
-                throw new CmsApiException(message, inner);
-            }
-        }
-
-        /// <summary>
-        /// Gets the list of author entities.
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <returns>
-        /// The list of tag entities
-        /// </returns>
-        /// <exception cref="CmsApiException"></exception>
-        public DataListResponse<Author> GetAuthors(GetAuthorsRequest request = null)
-        {
-            try
-            {
-                if (request == null)
-                {
-                    request = new GetAuthorsRequest();
-                }
-                request.SetDefaultOrder(a => a.Name);
-
-                var query = Repository
-                    .AsQueryable<Author>()
-                    .ApplyFilters(request);
-
-                var totalCount = query.ToRowCountFutureValue(request);
-
-                query = query
-                    .AddOrderAndPaging(request)
-                    .Fetch(a => a.Image);
-
-                return query.ToDataListResponse(totalCount);
-
-            }
-            catch (Exception inner)
-            {
-                const string message = "Failed to get authors list.";
                 Logger.Error(message, inner);
 
                 throw new CmsApiException(message, inner);
