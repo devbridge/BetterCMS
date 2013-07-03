@@ -24,6 +24,15 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidg
         public virtual string WidgetUrl { get; set; }
 
         /// <summary>
+        /// Gets or sets the widget preview URL.
+        /// </summary>
+        /// <value>
+        /// The widget preview URL.
+        /// </value>
+        [DataMember]
+        public virtual string PreviewUrl { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether widget is published.
         /// </summary>
         /// <value>
