@@ -38,7 +38,9 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
                 query = query.Where(b => b.Status == PageStatus.Published);
             }
 
-            // TODO: filter by tags !!!
+            query = query.ApplyTagsFilter(
+                request,
+                tagName => { return b => b.PageTags.Any(tag => tag.Tag.Name == tagName); });
 
             var listResponse = query
                 .Select(blogPost => new BlogPostModel()

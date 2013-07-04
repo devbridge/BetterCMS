@@ -5,7 +5,7 @@ using ServiceStack.ServiceHost;
 namespace BetterCms.Module.Api.Operations.MediaManager.Files
 {
     [Route("/files", Verbs = "GET")]
-    public class GetFilesRequest : ListRequestBase, IReturn<GetFilesResponse>
+    public class GetFilesRequest : ListRequestBase, IReturn<GetFilesResponse>, IFilterByTags
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GetFilesRequest" /> class.

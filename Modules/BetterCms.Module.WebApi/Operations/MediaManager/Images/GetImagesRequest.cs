@@ -5,7 +5,7 @@ using ServiceStack.ServiceHost;
 namespace BetterCms.Module.Api.Operations.MediaManager.Images
 {
     [Route("/images", Verbs = "GET")]
-    public class GetImagesRequest : ListRequestBase, IReturn<GetImagesResponse>
+    public class GetImagesRequest : ListRequestBase, IReturn<GetImagesResponse>, IFilterByTags
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GetImagesRequest" /> class.

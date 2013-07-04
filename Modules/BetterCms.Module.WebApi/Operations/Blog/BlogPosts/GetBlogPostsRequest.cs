@@ -5,7 +5,7 @@ using ServiceStack.ServiceHost;
 namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
 {
     [Route("/blog-posts", Verbs = "GET")]
-    public class GetBlogPostsRequest : ListRequestBase, IReturn<GetBlogPostsResponse>
+    public class GetBlogPostsRequest : ListRequestBase, IReturn<GetBlogPostsResponse>, IFilterByTags
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GetBlogPostsRequest" /> class.

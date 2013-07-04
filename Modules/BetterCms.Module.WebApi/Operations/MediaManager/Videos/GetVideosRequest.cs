@@ -5,7 +5,7 @@ using ServiceStack.ServiceHost;
 namespace BetterCms.Module.Api.Operations.MediaManager.Videos
 {
     [Route("/videos", Verbs = "GET")]
-    public class GetVideosRequest : ListRequestBase, IReturn<GetVideosResponse>
+    public class GetVideosRequest : ListRequestBase, IReturn<GetVideosResponse>, IFilterByTags
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GetVideosRequest" /> class.

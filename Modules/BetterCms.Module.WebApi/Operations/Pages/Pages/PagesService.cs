@@ -34,26 +34,28 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
                 query = query.Where(b => b.Status == PageStatus.Published);
             }
 
-            // TODO: filter by tags !!!
+            query = query.ApplyTagsFilter(
+                request,
+                tagName => { return page => page.PageTags.Any(tag => tag.Tag.Name == tagName); });
 
             var listResponse = query
                 .Select(page => new PageModel
-                {
-                    Id = page.Id,
-                    Version = page.Version,
-                    CreatedBy = page.CreatedByUser,
-                    CreatedOn = page.CreatedOn,
-                    LastModifiedBy = page.ModifiedByUser,
-                    LastModifiedOn = page.ModifiedOn,
+                    {
+                        Id = page.Id,
+                        Version = page.Version,
+                        CreatedBy = page.CreatedByUser,
+                        CreatedOn = page.CreatedOn,
+                        LastModifiedBy = page.ModifiedByUser,
+                        LastModifiedOn = page.ModifiedOn,
 
-                    PageUrl = page.PageUrl,
-                    Title = page.Title,
-                    IsPublished = page.Status == PageStatus.Published,
-                    PublishedOn = page.PublishedOn,
-                    LayoutId = page.Layout.Id,
-                    CategoryId = page.Category.Id,
-                    IsArchived = page.IsArchived
-                }).ToDataListResponse(request);
+                        PageUrl = page.PageUrl,
+                        Title = page.Title,
+                        IsPublished = page.Status == PageStatus.Published,
+                        PublishedOn = page.PublishedOn,
+                        LayoutId = page.Layout.Id,
+                        CategoryId = page.Category.Id,
+                        IsArchived = page.IsArchived
+                    }).ToDataListResponse(request);
 
             return new GetPagesResponse
             {

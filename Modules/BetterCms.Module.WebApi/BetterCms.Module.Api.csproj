@@ -145,6 +145,7 @@
     <Compile Include="DefaultApiFacade.cs" />
     <Compile Include="ApiApplicationHost.cs" />
     <Compile Include="AutofacContainerAdapter.cs" />
+    <Compile Include="Helpers\FilterByTagExtensions.cs" />
     <Compile Include="Helpers\QueryableExtensions.cs" />
     <Compile Include="IApiFacade.cs" />
     <Compile Include="Helpers\CmsApiControllerBase.cs" />
@@ -205,6 +206,7 @@
     <Compile Include="Operations\DataOptions.cs" />
     <Compile Include="Helpers\DataOptionsExtensions.cs" />
     <Compile Include="Operations\DataOrder.cs" />
+    <Compile Include="Operations\IFilterByTags.cs" />
     <Compile Include="Operations\ListRequestBase.cs" />
     <Compile Include="Operations\ListResponseBase.cs" />
     <Compile Include="Operations\MediaManager\DefaultMediaManagerApiOperations.cs" />

@@ -45,7 +45,9 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
                 query = query.Where(media => media is MediaFolder);
             }
 
-            // TODO: filter by tags !!!
+            query = query.ApplyTagsFilter(
+                request,
+                tagName => { return media => media.MediaTags.Any(tag => tag.Tag.Name == tagName); });
 
             var listResponse = query.Select(media =>
                     new MediaModel
