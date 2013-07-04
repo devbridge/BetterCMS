@@ -62,15 +62,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.History
         public string ArchivedByUser { get; set; }
 
         /// <summary>
-        /// Gets or sets the time the content was displayed for.
-        /// </summary>
-        /// <value>
-        /// The time the content was displayed for.
-        /// </value>
-        [DataMember]
-        public System.TimeSpan? DisplayedFor { get; set; }
-
-        /// <summary>
         /// Gets or sets the content history item status.
         /// </summary>
         /// <value>

@@ -51,13 +51,16 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents
                          LastModifiedOn = pageContent.ModifiedOn,
 
                          ContentId = pageContent.Content.Id,
-                         // TODO: ContentType = ???? - implement content type - projection ??????
+                         OriginalContentType = pageContent.Content.GetType(),
                          Name = pageContent.Content.Name,
                          RegionId = pageContent.Region.Id,
                          RegionIdentifier = pageContent.Region.RegionIdentifier,
                          Order = pageContent.Order,
                          IsPublished = pageContent.Content.Status == ContentStatus.Published
                      }).ToDataListResponse(request);
+
+            // Set content types
+            dataListResult.Items.ToList().ForEach(item => item.ContentType = item.OriginalContentType.ToContentTypeString());
 
             return new GetPageContentsResponse { Data = dataListResult };
         }

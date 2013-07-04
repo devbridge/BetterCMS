@@ -3,6 +3,7 @@
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Pages.Models;
 
 using ServiceStack.ServiceInterface;
@@ -170,26 +171,34 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         
         private System.Collections.Generic.List<PageContentModel> LoadPageContents(System.Guid blogPostId)
         {
-            return repository
+            var results = repository
                  .AsQueryable<Module.Root.Models.PageContent>(pageContent => pageContent.Page.Id == blogPostId)
                  .OrderBy(pageContent => pageContent.Order)
-                 .Select(pageContent => new PageContentModel
-                     {
-                         Id = pageContent.Id,
-                         Version = pageContent.Version,
-                         CreatedBy = pageContent.CreatedByUser,
-                         CreatedOn = pageContent.CreatedOn,
-                         LastModifiedBy = pageContent.ModifiedByUser,
-                         LastModifiedOn = pageContent.ModifiedOn,
+                 .Select(pageContent => new
+                    {
+                        Type = pageContent.Content.GetType(),
+                        Model = new PageContentModel
+                            {
+                                Id = pageContent.Id,
+                                Version = pageContent.Version,
+                                CreatedBy = pageContent.CreatedByUser,
+                                CreatedOn = pageContent.CreatedOn,
+                                LastModifiedBy = pageContent.ModifiedByUser,
+                                LastModifiedOn = pageContent.ModifiedOn,
 
-                         ContentId = pageContent.Content.Id,
-                         // TODO: ContentType = ???? - implement content type - projection ??????
-                         Name = pageContent.Content.Name,
-                         RegionId = pageContent.Region.Id,
-                         RegionIdentifier = pageContent.Region.RegionIdentifier,
-                         Order = pageContent.Order,
-                         IsPublished = pageContent.Content.Status == ContentStatus.Published
-                     }).ToList();
+                                ContentId = pageContent.Content.Id,
+                                Name = pageContent.Content.Name,
+                                RegionId = pageContent.Region.Id,
+                                RegionIdentifier = pageContent.Region.RegionIdentifier,
+                                Order = pageContent.Order,
+                                IsPublished = pageContent.Content.Status == ContentStatus.Published
+                            }
+                    }).ToList();
+
+            // Set content types
+            results.ToList().ForEach(item => item.Model.ContentType = item.Type.ToContentTypeString());
+
+            return results.Select(item => item.Model).ToList();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
@@ -19,35 +20,37 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.History
 
         public GetContentHistoryResponse Get(GetContentHistoryRequest request)
         {
-            var dataListResponse = historyService.GetContentHistory(request.ContentId, new SearchableGridOptions())
+            var results = historyService.GetContentHistory(request.ContentId, new SearchableGridOptions())
                 .AsQueryable()
                 .OrderBy(history => history.CreatedOn)
-                .Select(history => new HistoryContentModel
+                .Select(history => new
                     {
-                        Id = history.Id,
-                        Version = history.Version,
-                        CreatedBy = history.CreatedByUser,
-                        CreatedOn = history.CreatedOn,
-                        LastModifiedBy = history.ModifiedByUser,
-                        LastModifiedOn = history.ModifiedOn,
+                        Type = history.GetType(),
+                        Model = new HistoryContentModel
+                            {
+                                Id = history.Id,
+                                Version = history.Version,
+                                CreatedBy = history.CreatedByUser,
+                                CreatedOn = history.CreatedOn,
+                                LastModifiedBy = history.ModifiedByUser,
+                                LastModifiedOn = history.ModifiedOn,
 
-                        // TODO: ContentType = ??? <- need to return content type
-                        OriginalContentId = history.Original != null ? history.Original.Id : (System.Guid?)null,
-                        PublishedOn = history.Status == ContentStatus.Published ? history.PublishedOn : null,
-                        PublishedByUser = history.Status == ContentStatus.Published ? history.PublishedByUser : null,
-                        ArchivedOn = history.Status == ContentStatus.Archived ? history.CreatedOn : (System.DateTime?)null,
-                        ArchivedByUser = history.Status == ContentStatus.Archived ? history.CreatedByUser : null,
-                        // TODO: DisplayedFor result is very interesting! - maybe need to change to long ??
-                        DisplayedFor = history.Status == ContentStatus.Archived && history.PublishedOn != null
-                                ? history.CreatedOn - history.PublishedOn.Value
-                                : (System.TimeSpan?)null,
-                        Status = history.Status
+                                OriginalContentId = history.Original != null ? history.Original.Id : (System.Guid?)null,
+                                PublishedOn = history.Status == ContentStatus.Published ? history.PublishedOn : null,
+                                PublishedByUser = history.Status == ContentStatus.Published ? history.PublishedByUser : null,
+                                ArchivedOn = history.Status == ContentStatus.Archived ? history.CreatedOn : (System.DateTime?)null,
+                                ArchivedByUser = history.Status == ContentStatus.Archived ? history.CreatedByUser : null,
+                                Status = history.Status
+                            }
                     })
                 .ToList();
 
+            // Set content types
+            results.ForEach(item => item.Model.ContentType = item.Type.ToContentTypeString());
+
             return new GetContentHistoryResponse
                        {
-                           Data = dataListResponse
+                           Data = results.Select(item => item.Model).ToList()
                        };
         }
     }

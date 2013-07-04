@@ -4,7 +4,6 @@ using System.IO;
 using System.Web.Mvc;
 
 using BetterCms.Core.DataContracts;
-using BetterCms.Core.Models;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Pages.Models;
 
@@ -13,6 +12,8 @@ namespace BetterCms.Module.Pages.Accessors
     [Serializable]
     public class ServerControlWidgetAccessor : ContentAccessor<ServerControlWidget>
     {
+        public const string ContentWrapperType = "server-widget";
+
         public ServerControlWidgetAccessor(ServerControlWidget content, IList<IOption> options)
             : base(content, options)
         {
@@ -67,7 +68,7 @@ namespace BetterCms.Module.Pages.Accessors
 
         public override string GetContentWrapperType()
         {
-            return "server-widget";
+            return ContentWrapperType;
         }
 
         public override string GetHtml(HtmlHelper html)

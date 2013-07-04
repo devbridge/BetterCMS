@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents
 {
@@ -31,6 +32,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents
         /// </value>
         [DataMember]
         public string ContentType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the type of the content.
+        /// </summary>
+        /// <value>
+        /// The type of the content.
+        /// </value>
+        internal Type OriginalContentType { get; set; }
 
         /// <summary>
         /// Gets or sets the content name.
