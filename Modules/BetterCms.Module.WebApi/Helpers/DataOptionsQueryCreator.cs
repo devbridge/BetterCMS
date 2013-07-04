@@ -11,7 +11,7 @@ namespace BetterCms.Module.Api.Helpers
     /// <summary>
     /// Helper class for creating filtering and ordering queries from DataOptions instance
     /// </summary>
-    public class DataOptionsQueryCreator
+    public class DataOptionsQueryCreator<TModel>
     {
         /// <summary>
         /// Order constants for generating a query 
@@ -49,7 +49,7 @@ namespace BetterCms.Module.Api.Helpers
         private string filterQuery;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DataOptionsQueryCreator" /> class.
+        /// Initializes a new instance of the <see cref="DataOptionsQueryCreator{TModel}" /> class.
         /// </summary>
         /// <param name="dataOptions">The data options.</param>
         public DataOptionsQueryCreator(DataOptions dataOptions)
@@ -105,6 +105,9 @@ namespace BetterCms.Module.Api.Helpers
                 for (var i = 0; i < dataOptions.Order.By.Count; i++)
                 {
                     var item = dataOptions.Order.By[i];
+
+                    ValidateProperty(item.Field);
+
                     if (i > 0)
                     {
                         sb.Append(", ");
@@ -171,8 +174,17 @@ namespace BetterCms.Module.Api.Helpers
             var sb = new StringBuilder();
             var propertyName = filterItem.Field;
 
+            var property = GetAndValidateProperty(propertyName);
+
             var parameterNr = filterParameters.Count;
-            filterParameters.Add(filterItem.Value);
+            if (filterItem.Value is string)
+            {
+                filterParameters.Add(CastParameter(filterItem.Value as string, property));
+            }
+            else
+            {
+                filterParameters.Add(filterItem.Value);
+            }
             AppendFilterConnector(sb, filterConnector);
 
             string query;
@@ -243,6 +255,82 @@ namespace BetterCms.Module.Api.Helpers
             }
 
             return sb.ToString();
+        }
+
+        /// <summary>
+        /// Validates the property.
+        /// </summary>
+        /// <param name="propertyName">Name of the property.</param>
+        private void ValidateProperty(string propertyName)
+        {
+            GetAndValidateProperty(propertyName);
+        }
+
+        /// <summary>
+        /// Gets the and validates property.
+        /// </summary>
+        /// <param name="propertyName">Name of the property.</param>
+        /// <returns>Reflection property info object</returns>
+        /// <exception cref="System.InvalidOperationException">Model has no such property</exception>
+        private System.Reflection.PropertyInfo GetAndValidateProperty(string propertyName)
+        {
+            var modelType = typeof(TModel);
+            var property = modelType.GetProperty(propertyName);
+
+            if (property == null)
+            {
+                // TODO: validation exception ???
+                throw new InvalidOperationException(string.Format("Property {0} doesn't exist in object {1}", propertyName, modelType));
+            }
+
+            return property;
+        }
+
+        /// <summary>
+        /// Casts the parameter to correct property type.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <param name="property">The property.</param>
+        /// <returns>Value, casted to property original type</returns>
+        private object CastParameter(string value, System.Reflection.PropertyInfo property)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return null;
+            }
+
+            if (typeof(Enum).IsAssignableFrom(property.PropertyType))
+            {
+                // TODO: cast to enum ??????
+            }
+
+            if (typeof(int?).IsAssignableFrom(property.PropertyType)
+                || typeof(short?).IsAssignableFrom(property.PropertyType))
+            {
+                return Convert.ToInt32(value);
+            }
+            
+            if (typeof(long?).IsAssignableFrom(property.PropertyType))
+            {
+                return Convert.ToInt64(value);
+            }
+            
+            if (typeof(DateTime?).IsAssignableFrom(property.PropertyType))
+            {
+                return Convert.ToDateTime(value);
+            }
+            
+            if (typeof(Guid?).IsAssignableFrom(property.PropertyType))
+            {
+                return new Guid(value);
+            }
+            
+            if (typeof(bool?).IsAssignableFrom(property.PropertyType))
+            {
+                return Convert.ToBoolean(value);
+            }
+
+            return value;
         }
     }
 }

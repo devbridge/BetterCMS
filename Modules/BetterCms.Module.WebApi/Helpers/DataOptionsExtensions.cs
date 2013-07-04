@@ -21,7 +21,7 @@ namespace BetterCms.Module.Api.Helpers
         /// <param name="request">The request.</param>
         public static void ApplyTo<TModel>(this DataOptions options, GetDataRequest<TModel> request)
         {
-            var creator = new DataOptionsQueryCreator(options);
+            var creator = new DataOptionsQueryCreator<TModel>(options);
 
             options.ApplyFilter(request, creator);
             options.ApplyOrder(request, creator);
@@ -35,7 +35,7 @@ namespace BetterCms.Module.Api.Helpers
         /// <param name="options">The filtering / sorting options.</param>
         /// <param name="request">The request.</param>
         /// <param name="creator">The query creator.</param>
-        public static void ApplyFilter<TModel>(this DataOptions options, GetDataRequest<TModel> request, DataOptionsQueryCreator creator = null)
+        public static void ApplyFilter<TModel>(this DataOptions options, GetDataRequest<TModel> request, DataOptionsQueryCreator<TModel> creator = null)
         {
             if (options != null
                 && options.Filter != null
@@ -44,7 +44,7 @@ namespace BetterCms.Module.Api.Helpers
             {
                 if (creator == null)
                 {
-                    creator = new DataOptionsQueryCreator(options);
+                    creator = new DataOptionsQueryCreator<TModel>(options);
                 }
 
                 var query = creator.GetFilterQuery();
@@ -62,13 +62,13 @@ namespace BetterCms.Module.Api.Helpers
         /// <param name="options">The filtering / sorting options.</param>
         /// <param name="request">The request.</param>
         /// <param name="creator">The query creator.</param>
-        public static void ApplyOrder<TModel>(this DataOptions options, GetDataRequest<TModel> request, DataOptionsQueryCreator creator = null)
+        public static void ApplyOrder<TModel>(this DataOptions options, GetDataRequest<TModel> request, DataOptionsQueryCreator<TModel> creator = null)
         {
             if (options != null && options.Order != null && options.Order.By != null && options.Order.By.Count > 0)
             {
                 if (creator == null)
                 {
-                    creator = new DataOptionsQueryCreator(options);
+                    creator = new DataOptionsQueryCreator<TModel>(options);
                 }
 
                 var query = creator.GetOrderQuery();

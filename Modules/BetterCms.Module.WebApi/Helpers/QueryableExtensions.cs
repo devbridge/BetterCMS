@@ -12,7 +12,7 @@ namespace BetterCms.Module.Api.Helpers
     {
         public static DataListResponse<TModel> ToDataListResponse<TModel>(this IQueryable<TModel> query, DataOptions options)
         {
-            var creator = new DataOptionsQueryCreator(options);
+            var creator = new DataOptionsQueryCreator<TModel>(options);
 
             query = query.ApplyFilter(options, creator);
 
@@ -35,7 +35,7 @@ namespace BetterCms.Module.Api.Helpers
             }
         }
 
-        public static IQueryable<TModel> ApplyFilter<TModel>(this IQueryable<TModel> query, DataOptions options, DataOptionsQueryCreator creator = null)
+        public static IQueryable<TModel> ApplyFilter<TModel>(this IQueryable<TModel> query, DataOptions options, DataOptionsQueryCreator<TModel> creator = null)
         {
             if (options != null
                 && options.Filter != null
@@ -44,22 +44,22 @@ namespace BetterCms.Module.Api.Helpers
             {
                 if (creator == null)
                 {
-                    creator = new DataOptionsQueryCreator(options);
+                    creator = new DataOptionsQueryCreator<TModel>(options);
                 }
 
-                query = query.Where(creator.GetFilterQuery());
+                query = query.Where(creator.GetFilterQuery(), creator.GetFilterParameters());
             }
 
             return query;
         }
 
-        public static IQueryable<TModel> ApplyOrder<TModel>(this IQueryable<TModel> query, DataOptions options, DataOptionsQueryCreator creator = null)
+        public static IQueryable<TModel> ApplyOrder<TModel>(this IQueryable<TModel> query, DataOptions options, DataOptionsQueryCreator<TModel> creator = null)
         {
             if (options != null && options.Order != null && options.Order.By != null && options.Order.By.Count > 0)
             {
                 if (creator == null)
                 {
-                    creator = new DataOptionsQueryCreator(options);
+                    creator = new DataOptionsQueryCreator<TModel>(options);
                 }
 
                 query = query.OrderBy(creator.GetOrderQuery());

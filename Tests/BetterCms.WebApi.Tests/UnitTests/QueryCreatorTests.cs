@@ -1,6 +1,11 @@
-﻿using BetterCms.Module.Api.Helpers;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Operations;
 using BetterCms.Module.Api.Operations.Enums;
+using BetterCms.Module.Pages.Models;
 
 using NUnit.Framework;
 
@@ -18,7 +23,7 @@ namespace BetterCms.WebApi.Tests.UnitTests
             var dataOptions = new DataOptions();
             dataOptions.Order.Add("CreatedOn");
 
-            var queryCreator = new DataOptionsQueryCreator(dataOptions);
+            var queryCreator = new DataOptionsQueryCreator<PageProperties>(dataOptions);
             var orderQuery = queryCreator.GetOrderQuery();
             var filterQuery = queryCreator.GetFilterQuery();
             var filterParameters = queryCreator.GetFilterParameters();
@@ -36,7 +41,7 @@ namespace BetterCms.WebApi.Tests.UnitTests
             var dataOptions = new DataOptions();
             dataOptions.Order.Add("CreatedOn", OrderDirection.Desc);
 
-            var queryCreator = new DataOptionsQueryCreator(dataOptions);
+            var queryCreator = new DataOptionsQueryCreator<PageProperties>(dataOptions);
             var orderQuery = queryCreator.GetOrderQuery();
             var filterQuery = queryCreator.GetFilterQuery();
             var filterParameters = queryCreator.GetFilterParameters();
@@ -56,7 +61,7 @@ namespace BetterCms.WebApi.Tests.UnitTests
             dataOptions.Order.Add("Title");
             dataOptions.Order.Add("Description", OrderDirection.Desc);
 
-            var queryCreator = new DataOptionsQueryCreator(dataOptions);
+            var queryCreator = new DataOptionsQueryCreator<PageProperties>(dataOptions);
             var orderQuery = queryCreator.GetOrderQuery();
             var filterQuery = queryCreator.GetFilterQuery();
             var filterParameters = queryCreator.GetFilterParameters();
@@ -72,16 +77,16 @@ namespace BetterCms.WebApi.Tests.UnitTests
         public void SingleFilterByEqualOptional()
         {
             var dataOptions = new DataOptions();
-            dataOptions.Filter.Add("Created", TestValueDate);
+            dataOptions.Filter.Add("CreatedOn", TestValueDate);
 
-            var queryCreator = new DataOptionsQueryCreator(dataOptions);
+            var queryCreator = new DataOptionsQueryCreator<PageProperties>(dataOptions);
             var orderQuery = queryCreator.GetOrderQuery();
             var filterQuery = queryCreator.GetFilterQuery();
             var filterParameters = queryCreator.GetFilterParameters();
 
             Assert.AreEqual(orderQuery, string.Empty);
 
-            Assert.AreEqual(filterQuery, "Created == @0");
+            Assert.AreEqual(filterQuery, "CreatedOn == @0");
             Assert.IsNotNull(filterParameters);
             Assert.AreEqual(filterParameters.Length, 1);
             Assert.AreEqual(filterParameters[0], TestValueDate);
@@ -91,16 +96,16 @@ namespace BetterCms.WebApi.Tests.UnitTests
         public void SingleFilterByEqual()
         {
             var dataOptions = new DataOptions();
-            dataOptions.Filter.Add("Created", TestValueDate, FilterOperation.Equal);
+            dataOptions.Filter.Add("CreatedOn", TestValueDate, FilterOperation.Equal);
 
-            var queryCreator = new DataOptionsQueryCreator(dataOptions);
+            var queryCreator = new DataOptionsQueryCreator<PageProperties>(dataOptions);
             var orderQuery = queryCreator.GetOrderQuery();
             var filterQuery = queryCreator.GetFilterQuery();
             var filterParameters = queryCreator.GetFilterParameters();
 
             Assert.AreEqual(orderQuery, string.Empty);
 
-            Assert.AreEqual(filterQuery, "Created == @0");
+            Assert.AreEqual(filterQuery, "CreatedOn == @0");
             Assert.IsNotNull(filterParameters);
             Assert.AreEqual(filterParameters.Length, 1);
             Assert.AreEqual(filterParameters[0], TestValueDate);
@@ -110,16 +115,16 @@ namespace BetterCms.WebApi.Tests.UnitTests
         public void SingleFilterByNotEqual()
         {
             var dataOptions = new DataOptions();
-            dataOptions.Filter.Add("Created", TestValueDate, FilterOperation.NotEqual);
+            dataOptions.Filter.Add("CreatedOn", TestValueDate, FilterOperation.NotEqual);
 
-            var queryCreator = new DataOptionsQueryCreator(dataOptions);
+            var queryCreator = new DataOptionsQueryCreator<PageProperties>(dataOptions);
             var orderQuery = queryCreator.GetOrderQuery();
             var filterQuery = queryCreator.GetFilterQuery();
             var filterParameters = queryCreator.GetFilterParameters();
 
             Assert.AreEqual(orderQuery, string.Empty);
 
-            Assert.AreEqual(filterQuery, "Created != @0");
+            Assert.AreEqual(filterQuery, "CreatedOn != @0");
             Assert.IsNotNull(filterParameters);
             Assert.AreEqual(filterParameters.Length, 1);
             Assert.AreEqual(filterParameters[0], TestValueDate);
@@ -129,16 +134,16 @@ namespace BetterCms.WebApi.Tests.UnitTests
         public void SingleFilterByGreater()
         {
             var dataOptions = new DataOptions();
-            dataOptions.Filter.Add("Created", TestValueDate, FilterOperation.Greater);
+            dataOptions.Filter.Add("CreatedOn", TestValueDate, FilterOperation.Greater);
 
-            var queryCreator = new DataOptionsQueryCreator(dataOptions);
+            var queryCreator = new DataOptionsQueryCreator<PageProperties>(dataOptions);
             var orderQuery = queryCreator.GetOrderQuery();
             var filterQuery = queryCreator.GetFilterQuery();
             var filterParameters = queryCreator.GetFilterParameters();
 
             Assert.AreEqual(orderQuery, string.Empty);
 
-            Assert.AreEqual(filterQuery, "Created > @0");
+            Assert.AreEqual(filterQuery, "CreatedOn > @0");
             Assert.IsNotNull(filterParameters);
             Assert.AreEqual(filterParameters.Length, 1);
             Assert.AreEqual(filterParameters[0], TestValueDate);
@@ -148,16 +153,16 @@ namespace BetterCms.WebApi.Tests.UnitTests
         public void SingleFilterByGreaterOrEqual()
         {
             var dataOptions = new DataOptions();
-            dataOptions.Filter.Add("Created", TestValueDate, FilterOperation.GreaterOrEqual);
+            dataOptions.Filter.Add("CreatedOn", TestValueDate, FilterOperation.GreaterOrEqual);
 
-            var queryCreator = new DataOptionsQueryCreator(dataOptions);
+            var queryCreator = new DataOptionsQueryCreator<PageProperties>(dataOptions);
             var orderQuery = queryCreator.GetOrderQuery();
             var filterQuery = queryCreator.GetFilterQuery();
             var filterParameters = queryCreator.GetFilterParameters();
 
             Assert.AreEqual(orderQuery, string.Empty);
 
-            Assert.AreEqual(filterQuery, "Created >= @0");
+            Assert.AreEqual(filterQuery, "CreatedOn >= @0");
             Assert.IsNotNull(filterParameters);
             Assert.AreEqual(filterParameters.Length, 1);
             Assert.AreEqual(filterParameters[0], TestValueDate);
@@ -167,16 +172,16 @@ namespace BetterCms.WebApi.Tests.UnitTests
         public void SingleFilterByLess()
         {
             var dataOptions = new DataOptions();
-            dataOptions.Filter.Add("Created", TestValueDate, FilterOperation.Less);
+            dataOptions.Filter.Add("CreatedOn", TestValueDate, FilterOperation.Less);
 
-            var queryCreator = new DataOptionsQueryCreator(dataOptions);
+            var queryCreator = new DataOptionsQueryCreator<PageProperties>(dataOptions);
             var orderQuery = queryCreator.GetOrderQuery();
             var filterQuery = queryCreator.GetFilterQuery();
             var filterParameters = queryCreator.GetFilterParameters();
 
             Assert.AreEqual(orderQuery, string.Empty);
 
-            Assert.AreEqual(filterQuery, "Created < @0");
+            Assert.AreEqual(filterQuery, "CreatedOn < @0");
             Assert.IsNotNull(filterParameters);
             Assert.AreEqual(filterParameters.Length, 1);
             Assert.AreEqual(filterParameters[0], TestValueDate);
@@ -186,16 +191,16 @@ namespace BetterCms.WebApi.Tests.UnitTests
         public void SingleFilterByLessOrEqual()
         {
             var dataOptions = new DataOptions();
-            dataOptions.Filter.Add("Created", TestValueDate, FilterOperation.LessOrEqual);
+            dataOptions.Filter.Add("CreatedOn", TestValueDate, FilterOperation.LessOrEqual);
 
-            var queryCreator = new DataOptionsQueryCreator(dataOptions);
+            var queryCreator = new DataOptionsQueryCreator<PageProperties>(dataOptions);
             var orderQuery = queryCreator.GetOrderQuery();
             var filterQuery = queryCreator.GetFilterQuery();
             var filterParameters = queryCreator.GetFilterParameters();
 
             Assert.AreEqual(orderQuery, string.Empty);
 
-            Assert.AreEqual(filterQuery, "Created <= @0");
+            Assert.AreEqual(filterQuery, "CreatedOn <= @0");
             Assert.IsNotNull(filterParameters);
             Assert.AreEqual(filterParameters.Length, 1);
             Assert.AreEqual(filterParameters[0], TestValueDate);
@@ -207,7 +212,7 @@ namespace BetterCms.WebApi.Tests.UnitTests
             var dataOptions = new DataOptions();
             dataOptions.Filter.Add("Title", TestValueString, FilterOperation.Contains);
 
-            var queryCreator = new DataOptionsQueryCreator(dataOptions);
+            var queryCreator = new DataOptionsQueryCreator<PageProperties>(dataOptions);
             var orderQuery = queryCreator.GetOrderQuery();
             var filterQuery = queryCreator.GetFilterQuery();
             var filterParameters = queryCreator.GetFilterParameters();
@@ -226,7 +231,7 @@ namespace BetterCms.WebApi.Tests.UnitTests
             var dataOptions = new DataOptions();
             dataOptions.Filter.Add("Title", TestValueString, FilterOperation.NotContains);
 
-            var queryCreator = new DataOptionsQueryCreator(dataOptions);
+            var queryCreator = new DataOptionsQueryCreator<PageProperties>(dataOptions);
             var orderQuery = queryCreator.GetOrderQuery();
             var filterQuery = queryCreator.GetFilterQuery();
             var filterParameters = queryCreator.GetFilterParameters();
@@ -245,7 +250,7 @@ namespace BetterCms.WebApi.Tests.UnitTests
             var dataOptions = new DataOptions();
             dataOptions.Filter.Add("Title", TestValueString, FilterOperation.StartsWith);
 
-            var queryCreator = new DataOptionsQueryCreator(dataOptions);
+            var queryCreator = new DataOptionsQueryCreator<PageProperties>(dataOptions);
             var orderQuery = queryCreator.GetOrderQuery();
             var filterQuery = queryCreator.GetFilterQuery();
             var filterParameters = queryCreator.GetFilterParameters();
@@ -264,7 +269,7 @@ namespace BetterCms.WebApi.Tests.UnitTests
             var dataOptions = new DataOptions();
             dataOptions.Filter.Add("Title", TestValueString, FilterOperation.EndsWith);
 
-            var queryCreator = new DataOptionsQueryCreator(dataOptions);
+            var queryCreator = new DataOptionsQueryCreator<PageProperties>(dataOptions);
             var orderQuery = queryCreator.GetOrderQuery();
             var filterQuery = queryCreator.GetFilterQuery();
             var filterParameters = queryCreator.GetFilterParameters();
@@ -284,7 +289,7 @@ namespace BetterCms.WebApi.Tests.UnitTests
             dataOptions.Filter.Add("Title", "Test1", FilterOperation.NotContains);
             dataOptions.Filter.Add("Title", "Test2", FilterOperation.NotContains);
 
-            var queryCreator = new DataOptionsQueryCreator(dataOptions);
+            var queryCreator = new DataOptionsQueryCreator<PageProperties>(dataOptions);
             var orderQuery = queryCreator.GetOrderQuery();
             var filterQuery = queryCreator.GetFilterQuery();
             var filterParameters = queryCreator.GetFilterParameters();
@@ -308,7 +313,7 @@ namespace BetterCms.WebApi.Tests.UnitTests
             dataOptions.Filter.Add("Title", "Test3", FilterOperation.NotEqual);
             dataOptions.Filter.Add("Title", "Test4", FilterOperation.StartsWith);
 
-            var queryCreator = new DataOptionsQueryCreator(dataOptions);
+            var queryCreator = new DataOptionsQueryCreator<PageProperties>(dataOptions);
             var orderQuery = queryCreator.GetOrderQuery();
             var filterQuery = queryCreator.GetFilterQuery();
             var filterParameters = queryCreator.GetFilterParameters();
@@ -332,7 +337,7 @@ namespace BetterCms.WebApi.Tests.UnitTests
             dataOptions.Filter.Add("Title", "Test1", FilterOperation.NotContains);
             dataOptions.Filter.Add("Title", "Test2", FilterOperation.NotContains);
 
-            var queryCreator = new DataOptionsQueryCreator(dataOptions);
+            var queryCreator = new DataOptionsQueryCreator<PageProperties>(dataOptions);
             var orderQuery = queryCreator.GetOrderQuery();
             var filterQuery = queryCreator.GetFilterQuery();
             var filterParameters = queryCreator.GetFilterParameters();
@@ -356,7 +361,7 @@ namespace BetterCms.WebApi.Tests.UnitTests
             dataOptions.Filter.Add("Title", "Test3", FilterOperation.NotEqual);
             dataOptions.Filter.Add("Title", "Test4", FilterOperation.StartsWith);
 
-            var queryCreator = new DataOptionsQueryCreator(dataOptions);
+            var queryCreator = new DataOptionsQueryCreator<PageProperties>(dataOptions);
             var orderQuery = queryCreator.GetOrderQuery();
             var filterQuery = queryCreator.GetFilterQuery();
             var filterParameters = queryCreator.GetFilterParameters();
@@ -393,7 +398,7 @@ namespace BetterCms.WebApi.Tests.UnitTests
             dataOptions.Filter.Inner.Add(innerFilter1);
             dataOptions.Filter.Inner.Add(innerFilter2);
 
-            var queryCreator = new DataOptionsQueryCreator(dataOptions);
+            var queryCreator = new DataOptionsQueryCreator<PageProperties>(dataOptions);
             var orderQuery = queryCreator.GetOrderQuery();
             var filterQuery = queryCreator.GetFilterQuery();
             var filterParameters = queryCreator.GetFilterParameters();
@@ -440,7 +445,7 @@ namespace BetterCms.WebApi.Tests.UnitTests
             dataOptions.Order.Add("Title");
             dataOptions.Order.Add("Description", OrderDirection.Desc);
 
-            var queryCreator = new DataOptionsQueryCreator(dataOptions);
+            var queryCreator = new DataOptionsQueryCreator<PageProperties>(dataOptions);
             var orderQuery = queryCreator.GetOrderQuery();
             var filterQuery = queryCreator.GetFilterQuery();
             var filterParameters = queryCreator.GetFilterParameters();
@@ -461,5 +466,27 @@ namespace BetterCms.WebApi.Tests.UnitTests
             Assert.AreEqual(filterParameters[6], TestValueDate);
             Assert.AreEqual(filterParameters[7], TestValueDate);
         }
+
+        [Test]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void NotExistingFilterProperty()
+        {
+            var dataOptions = new DataOptions();
+            dataOptions.Filter.Add("NotExistingProperty", null);
+
+            var queryCreator = new DataOptionsQueryCreator<PageProperties>(dataOptions);
+            queryCreator.GetFilterQuery();
+        }
+        
+//        [Test]
+//        [ExpectedException(typeof(InvalidOperationException))]
+//        public void NotExistingOrderProperty()
+//        {
+//            var dataOptions = new DataOptions();
+//            dataOptions.Order.Add("NotExistingProperty");
+//
+//            var queryCreator = new DataOptionsQueryCreator<PageProperties>(dataOptions);
+//            queryCreator.GetFilterQuery();
+//        }
     }
 }
