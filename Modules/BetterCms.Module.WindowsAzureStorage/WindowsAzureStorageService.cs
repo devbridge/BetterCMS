@@ -17,18 +17,21 @@ namespace BetterCms.Module.WindowsAzureStorage
 
         private readonly string containerName;
 
+        // Allow resource to be cached by any cache for 7 days:
+        private const string CacheControl = "public, max-age=604800";
+
         public WindowsAzureStorageService(ICmsConfiguration config)
         {
             try
             {
                 var serviceSection = config.Storage;
                 string accountName = serviceSection.GetValue("AzureAccountName");
-                string secretKey = serviceSection.GetValue("AzureSecondaryKey");                               
+                string secretKey = serviceSection.GetValue("AzureSecondaryKey");
                 bool useHttps = bool.Parse(serviceSection.GetValue("AzureUseHttps"));
 
                 containerName = serviceSection.GetValue("AzureContainerName");
 
-                cloudStorageAccount = new CloudStorageAccount(new StorageCredentials(accountName, secretKey), useHttps);                
+                cloudStorageAccount = new CloudStorageAccount(new StorageCredentials(accountName, secretKey), useHttps);
             }
             catch (Exception e)
             {
@@ -48,7 +51,7 @@ namespace BetterCms.Module.WindowsAzureStorage
                 try
                 {
                     var blob = client.GetBlobReferenceFromServer(uri);
-                    return blob.Exists();                    
+                    return blob.Exists();
                 }
                 catch (Microsoft.WindowsAzure.Storage.StorageException ex)
                 {
@@ -83,7 +86,10 @@ namespace BetterCms.Module.WindowsAzureStorage
                 }
 
                 var blob = container.GetBlockBlobReference(request.Uri.AbsoluteUri);
-             
+
+                blob.Properties.ContentType = MimeTypeUtility.DetermineContentType(request.Uri);
+                blob.Properties.CacheControl = CacheControl;
+
                 if (request.InputStream.Position != 0)
                 {
                     request.InputStream.Position = 0;
@@ -194,7 +200,7 @@ namespace BetterCms.Module.WindowsAzureStorage
             result = result.Substring(index + 1);
 
             return result;
-        }  
+        }
 
         private void CheckUri(Uri uri)
         {
