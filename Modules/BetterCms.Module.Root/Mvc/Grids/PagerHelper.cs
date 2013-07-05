@@ -91,12 +91,12 @@ namespace BetterCms.Module.Root.Mvc.Grids
             // previuos button
             builder.Append(pageNumber == 1
                ? string.Format("<a class=\"{0}\">{1}</a> ", PreviousPageClassName, RootGlobalization.Button_Paging_Previous)
-               : string.Format(@"<a href=""#"" data-page-number=""{0}"" class=""{1}"">{2}</a> ", pageNumber - 1, PreviousPageClassName, RootGlobalization.Button_Paging_Previous));
+               : string.Format(@"<a data-page-number=""{0}"" class=""{1}"">{2}</a> ", pageNumber - 1, PreviousPageClassName, RootGlobalization.Button_Paging_Previous));
 
             // next button
             builder.Append(pageNumber == totalPages || pagination.FirstItem > pagination.TotalItems
                ? string.Format("<a class=\"{0}\">{1}</a> ", NextPageClassName, RootGlobalization.Button_Paging_Next)
-               : string.Format(@"<a href=""#"" data-page-number=""{0}"" class=""{1}"">{2}</a> ", pageNumber + 1, NextPageClassName, RootGlobalization.Button_Paging_Next));
+               : string.Format(@"<a data-page-number=""{0}"" class=""{1}"">{2}</a> ", pageNumber + 1, NextPageClassName, RootGlobalization.Button_Paging_Next));
 
             builder.Append("</div>");
 
@@ -117,7 +117,7 @@ namespace BetterCms.Module.Root.Mvc.Grids
                 className = PageNumberClassName;
             }
 
-            return string.Format(@"<a href=""#"" data-page-number=""{0}"" class=""{1}"">{2}</a>", pageNumber, className, text);
+            return string.Format(@"<a data-page-number=""{0}"" class=""{1}"">{2}</a>", pageNumber, className, text);
         }
     }
 }

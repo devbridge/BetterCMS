@@ -552,4 +552,25 @@
   <data name="FileEditor_Dialog_Image_Tooltip_Description" xml:space="preserve">
     <value>Image will be displayed as a thumbnail with the file.</value>
   </data>
+  <data name="FileEditor_Dialog_Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="FileEditor_Dialog_Description_Tooltip_Description" xml:space="preserve">
+    <value>Type or paste the description text of the file.</value>
+  </data>
+  <data name="ImageEditor_Dialog_Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="ImageEditor_Dialog_Description_Tooltip_Description" xml:space="preserve">
+    <value>Type or paste the description text of the image.</value>
+  </data>
+  <data name="MediaHistory_Preview_Properties_Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="MediaHistory_Preview_Properties_Thumbnail" xml:space="preserve">
+    <value>Thumbnail</value>
+  </data>
+  <data name="SiteSettings_Media_FilterIsModified" xml:space="preserve">
+    <value>modified</value>
+  </data>
 </root>

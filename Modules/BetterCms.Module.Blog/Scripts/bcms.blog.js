@@ -268,9 +268,9 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
     function initializeSiteSettingsBlogsList(container, content, jsonData) {
         
         var form = container.find(selectors.siteSettingsBlogsListForm);
-        grid.bindGridForm(form, function (data) {
-            container.html(data);
-            initializeSiteSettingsBlogsList(container, data);
+        grid.bindGridForm(form, function (html, data) {
+            container.html(html);
+            initializeSiteSettingsBlogsList(container, html, data);
         });
 
         form.on('submit', function (event) {

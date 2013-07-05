@@ -13,6 +13,7 @@ namespace BetterCms.Module.MediaManager.Models.Maps
             Table("Medias");
 
             Map(x => x.Title).Length(MaxLength.Name).Not.Nullable();
+            Map(x => x.Description).Length(MaxLength.Text).Nullable();
             Map(x => x.IsArchived).Not.Nullable();
             Map(x => x.Type).Not.Nullable();
             Map(x => x.ContentType).Not.Nullable();

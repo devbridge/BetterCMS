@@ -565,6 +565,7 @@
     <EmbeddedResource Include="Scripts\bcms.ko.extenders.js" />
     <EmbeddedResource Include="Scripts\bcms.ko.grid.js" />
     <EmbeddedResource Include="Scripts\bcms.tags.js" />
+    <EmbeddedResource Include="Content\Styles\images\bcms-arrows-sprite.png" />
     <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\es.js" />
     <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\ja.js" />
     <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\km.js" />

@@ -26,6 +26,8 @@ namespace BetterCms.Module.MediaManager.Models
 
         public virtual MediaImage Image { get; set; }
 
+        public virtual string Description { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Media" /> class.
         /// </summary>
@@ -63,6 +65,7 @@ namespace BetterCms.Module.MediaManager.Models
         public virtual Media CopyDataTo(Media media)
         {
             media.Title = Title;
+            media.Description = Description;
             media.IsArchived = IsArchived;
             media.Type = Type;
             media.ContentType = ContentType;

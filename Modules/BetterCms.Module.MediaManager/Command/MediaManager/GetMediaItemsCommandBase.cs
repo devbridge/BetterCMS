@@ -119,7 +119,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             if (!string.IsNullOrWhiteSpace(request.SearchQuery) || request.Tags != null)
             {
                 var searchQuery = string.Format("%{0}%", request.SearchQuery);
-                query = query.Where(m => m.Title.Contains(searchQuery));
+                query = query.Where(m => m.Title.Contains(searchQuery) || m.Description.Contains(searchQuery));
 
                 var result = new List<Media>();
                 var mediaList = query.ToList();

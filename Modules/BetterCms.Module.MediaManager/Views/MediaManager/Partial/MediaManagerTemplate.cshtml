@@ -9,6 +9,9 @@
 }
 <script type="text/html" id="bcms-media-list-template">
     <div class="bcms-top-block-holder">
+        <div class="bcms-breadcrumbs-holder">
+            <div data-bind="foreach: path().pathFolders()"><a class="bcms-breadcrumbs-root" href="#" data-bind="    text: pathName(), click: openMedia.bind($data, $root)"></a></div>
+        </div>
         <div class="clearfix">
             <div class="bcms-media-controls-holder">
                 <a id="bcms-list-view" class="bcms-select-list" data-bind="click: switchViewStyle, css: { 'bcms-select-active': !isGrid() }"></a>
@@ -26,32 +29,30 @@
             </div>
         </div>
 
-        <div class="bcms-breadcrumbs-holder">
-            <div data-bind="foreach: path().pathFolders()"><a class="bcms-breadcrumbs-root" href="#" data-bind="    text: pathName(), click: openMedia.bind($data, $root)"></a></div>
-        </div>
-
         <div class="bcms-featured-grid clearfix">
             <!-- ko with: gridOptions().paging -->
             @Html.Partial(RootModuleConstants.EditableGridPagingTemplate)
             <!-- /ko -->
 
-            <div class="bcms-grid-filtering">
-                <div class="bcms-btn-links-main" data-bind="click: gridOptions().toggleFilter">@RootGlobalization.Button_Filter</div>
+            <div class="bcms-grid-filtering" data-bind="css: { 'bcms-active-filter': gridOptions().isFilterVisible() }">
+                <div class="bcms-filterbox" data-bind="click: gridOptions().toggleFilter">
+                    @RootGlobalization.Button_Filter
+                    <div class="bcms-filter-modified" data-bind="style: { display: gridOptions().isEdited() ? 'inline-block' : 'none' }">@MediaGlobalization.SiteSettings_Media_FilterIsModified</div>
+                </div>
             </div>
             <div class="bcms-tags-block" style="display: none;" data-bind="visible: gridOptions().isFilterVisible()">
-                <div class="bcms-tip-close" data-bind="click: gridOptions().closeFilter">@RootGlobalization.Button_Close</div>
                 <div class="bcms-featured-tags">
                     <div class="clearfix">
-                        
-                        <div class="bcms-filter-options-1" data-bind="with: gridOptions().tags">
+
+                        <div class="bcms-filter-options" data-bind="with: gridOptions().tags">
                             <div class="bcms-filter-text">@MediaGlobalization.SiteSettings_FilterByTags</div>
-                            <div class="bcms-tags-field-holder">
-                                <input type="text" class="bcms-add-tags-field" style="width: 107px;" data-bind="
-                                    css: { 'bcms-tag-validation-error': newTag.hasError() },
-                                    value: newTag,
-                                    valueUpdate: 'afterkeydown',
-                                    escPress: clearTag,
-                                    tagautocomplete: 'onlyExisting'" />
+                            <div class="bcms-filter-field-holder">
+                                <input type="text" class="bcms-add-tags-field" data-bind="
+    css: { 'bcms-tag-validation-error': newTag.hasError() },
+    value: newTag,
+    valueUpdate: 'afterkeydown',
+    escPress: clearTag,
+    tagautocomplete: 'onlyExisting'" />
                                 <!-- ko if: newTag.hasError()  -->
                                 <span class="bcms-tag-field-validation-error">
                                     <span data-bind="text: newTag.validationMessage()"></span>
@@ -60,25 +61,29 @@
                             </div>
                         </div>
 
-                        <div class="bcms-filter-options-2">
-                            <div class="bcms-tags-field-holder">
-                                <input type="checkbox" data-bind="checked: gridOptions().includeArchived" />
-                                @MediaGlobalization.MediaManager_IncludeArchived_Message
-                            </div>
-                        </div>
                     </div>
+
                     <div class="bcms-single-tag-holder" data-bind="foreach: gridOptions().tags.tags()">
                         <div class="bcms-single-tag" data-bind="css: { 'bcms-single-tag-active': isActive() }">
-                            <span data-bind="text: name()"></span><a data-bind="click: remove">@RootGlobalization.Button_Remove</a>
+                            <span data-bind="text: name()"></span><a data-bind="    click: remove">@RootGlobalization.Button_Remove</a>
                         </div>
                         <input type="hidden" data-bind="attr: { name: getTagInputName($index()) + '.Key', value: id() }" />
                         <input type="hidden" data-bind="attr: { name: getTagInputName($index()) + '.Value', value: name() }" />
                     </div>
+
                 </div>
-                <div class="bcms-filter-search clearfix">
-                    <div class="bcms-btn-small" data-bind="click: searchWithFilter">@RootGlobalization.Button_Filter_Search</div>
-                    <div class="bcms-btn-links-small" data-bind="click: gridOptions().clearFilter">@RootGlobalization.Button_Filter_Clear</div>
+
+                <div class="clearfix">
+                    <div class="bcms-check-field-holder">
+                        <div class="bcms-check-field"><input type="checkbox" data-bind="checked: gridOptions().includeArchived" /></div>
+                        <div class="bcms-check-label">@MediaGlobalization.MediaManager_IncludeArchived_Message</div>
+                    </div>
+                    <div class="bcms-btn-field-holder">
+                        <div class="bcms-btn-links-small" data-bind="click: gridOptions().clearFilter">@RootGlobalization.Button_Filter_Clear</div>
+                        <div class="bcms-btn-small" data-bind="click: searchWithFilter">@RootGlobalization.Button_Filter_Search</div>
+                    </div>
                 </div>
+
             </div>
         </div>
     </div>

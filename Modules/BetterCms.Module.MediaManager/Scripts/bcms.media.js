@@ -134,7 +134,16 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         self.column = ko.observable();
         self.isDescending = ko.observable(false);
         self.tags = new tags.TagsListViewModel();
-        
+        self.isEdited = ko.computed(function () {
+            if (self.includeArchived()) {
+                return true;
+            }
+            if (self.tags != null && self.tags.tags() != null && self.tags.tags().length > 0) {
+                return true;
+            }
+            return false;
+        });
+
         if (!self.paging) {
             self.paging = new ko.PagingViewModel(0, 1, 0, onOpenPage);
         }
