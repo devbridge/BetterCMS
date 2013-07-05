@@ -172,7 +172,6 @@
     </Compile>
     <Compile Include="Models\TestsRunnerViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UnitTests\DataOptionsExtensionsTests.cs" />
     <Compile Include="UnitTests\DynamicLinqExtensionsTests.cs" />
     <Compile Include="UnitTests\QueryCreatorTests.cs" />
     <Compile Include="UnitTests\SerializationTests.cs" />

@@ -15,16 +15,6 @@ namespace BetterCms.Core.Api.Extensions
     /// </summary>
     public static class ApiQueryableExtensions
     {
-        public static IFutureValue<int> ToRowCountFutureValue<TEntity>(this IQueryable<TEntity> query, int top)
-        {
-            var hasPaging = (top > 0);
-            if (hasPaging)
-            {
-                return query.ToRowCountFutureValue();
-            }
-            return null;
-        }
-
         /// <summary>
         /// To the row count future value.
         /// </summary>

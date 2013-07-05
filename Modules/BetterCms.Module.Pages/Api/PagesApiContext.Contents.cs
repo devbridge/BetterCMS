@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 using BetterCms.Core.Api.DataContracts;
 using BetterCms.Core.Api.Extensions;
 using BetterCms.Core.DataAccess.DataContext;
-using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Api;
 
@@ -16,7 +14,6 @@ using BetterCms.Module.Pages.Models;
 
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
-using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 using BetterCms.Module.Root.Services;
 
 // ReSharper disable CheckNamespace
@@ -25,223 +22,6 @@ namespace BetterCms.Api
 {
     public partial class PagesApiContext
     {
-        private ContentStatus[] publicStatuses = new [] { ContentStatus.Published, ContentStatus.Draft };
-
-        /// <summary>
-        /// Gets the list of page content entities.
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <returns>
-        /// Page content entities list
-        /// </returns>
-        /// <exception cref="CmsApiException"></exception>
-        public IList<PageContent> GetPageContents(GetPageContentsRequest request)
-        {
-            try
-            {
-                request.SetDefaultOrder(pc => pc.Order);
-
-                var query = Repository
-                    .AsQueryable<PageContent>()
-                    .Where(p => p.Page.Id == request.PageId && publicStatuses.Contains(p.Content.Status))
-                    .ApplyFilters(request);
-
-                if (!request.IncludeUnpublished)
-                {
-                    query = query.Where(c => c.Content.Status == ContentStatus.Published);
-                }
-
-                query = query
-                    .Fetch(c => c.Content)
-                    .Fetch(c => c.Region)
-                    .FetchMany(c => c.Options);
-
-                if (!request.IncludeUnpublished)
-                {
-                    return RemoveInactiveContents(query.ToList());
-                }
-                return query.ToList();
-            }
-            catch (Exception inner)
-            {
-                var message = string.Format("Failed to get page contents by page id {0}.", request.PageId);
-                Logger.Error(message, inner);
-
-                throw new CmsApiException(message, inner);
-            }
-        }
-
-        /// <summary>
-        /// Gets the list of page region contents.
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <returns>
-        /// Page content entities list
-        /// </returns>
-        /// <exception cref="CmsApiException"></exception>
-        public IList<PageContent> GetRegionContents(GetRegionContentsRequest request)
-        {
-            try
-            {
-                request.SetDefaultOrder(pc => pc.Order);
-
-                var query = Repository.AsQueryable<PageContent>();
-
-                if (request.RegionId.HasValue)
-                {
-                    query = query
-                        .Where(p => p.Page.Id == request.PageId && p.Region.Id == request.RegionId && publicStatuses.Contains(p.Content.Status));
-                }
-                else
-                {
-                    query = query
-                        .Where(p => p.Page.Id == request.PageId && p.Region.RegionIdentifier == request.RegionIdentifier && publicStatuses.Contains(p.Content.Status));
-                }
-
-                query = query.ApplyFilters(request);
-
-                if (!request.IncludeUnpublished)
-                {
-                    query = query.Where(b => b.Content.Status == ContentStatus.Published);
-                }
-
-                query = query
-                    .Fetch(c => c.Content)
-                    .Fetch(c => c.Region)
-                    .FetchMany(c => c.Options);
-
-                if (!request.IncludeUnpublished)
-                {
-                    return RemoveInactiveContents(query.ToList());
-                }
-                return query.ToList();
-            }
-            catch (Exception inner)
-            {
-                var message = string.Format("Failed to get page region contents by page id={0} and region id={1}.", request.PageId, request.RegionId);
-                Logger.Error(message, inner);
-
-                throw new CmsApiException(message, inner);
-            }
-        }
-
-        /// <summary>
-        /// Gets the content entity.
-        /// </summary>
-        /// <param name="id">The id.</param>
-        /// <returns>
-        /// Content entity
-        /// </returns>
-        public Content GetContent(Guid id)
-        {
-            try
-            {
-                return Repository.First<Content>(id);
-            }
-            catch (Exception inner)
-            {
-                var message = string.Format("Failed to get content by id={0}.", id);
-                Logger.Error(message, inner);
-
-                throw new CmsApiException(message, inner);
-            }
-        }
-
-        /// <summary>
-        /// Gets the content of the page entity.
-        /// </summary>
-        /// <param name="id">The id.</param>
-        /// <returns>
-        /// Page content entity
-        /// </returns>
-        public PageContent GetPageContent(Guid id)
-        {
-            try
-            {
-                return Repository
-                    .AsQueryable<PageContent>()
-                    .Where(c => c.Id == id)
-                    .Fetch(c => c.Content)
-                    .Fetch(c => c.Region)
-                    .FirstOne();
-            }
-            catch (Exception inner)
-            {
-                var message = string.Format("Failed to get page content by id={0}.", id);
-                Logger.Error(message, inner);
-
-                throw new CmsApiException(message, inner);
-            }
-        }
-
-        /// <summary>
-        /// Gets the HTML content widget.
-        /// </summary>
-        /// <param name="id">The id.</param>
-        /// <returns>Html widget.</returns>
-        /// <exception cref="CmsApiException">Failed to get html content widget.</exception>
-        public HtmlContentWidget GetHtmlContentWidget(Guid id)
-        {
-            try
-            {
-                return Repository.First<HtmlContentWidget>(id);
-            }
-            catch (Exception inner)
-            {
-                var message = string.Format("Failed to get html content widget by id={0}.", id);
-                Logger.Error(message, inner);
-                throw new CmsApiException(message, inner);
-            }
-        }
-
-        /// <summary>
-        /// Gets the server control widget.
-        /// </summary>
-        /// <param name="id">The id.</param>
-        /// <returns>Server widget.</returns>
-        /// <exception cref="CmsApiException">Failed to get server control widget.</exception>
-        public ServerControlWidget GetServerControlWidget(Guid id)
-        {
-            try
-            {
-                return Repository.First<ServerControlWidget>(id);
-            }
-            catch (Exception inner)
-            {
-                var message = string.Format("Failed to get server control widget by id={0}.", id);
-                Logger.Error(message, inner);
-                throw new CmsApiException(message, inner);
-            }
-        }
-
-        /// <summary>
-        /// Gets the widgets.
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <returns>
-        /// Widget list.
-        /// </returns>
-        /// <exception cref="CmsApiException">Failed to get widgets.</exception>
-        public DataListResponse<Widget> GetWidgets(GetWidgetsRequest request = null)
-        {
-            try
-            {
-                if (request == null)
-                {
-                    request = new GetWidgetsRequest();
-                }
-                request.SetDefaultOrder(w => w.Name);
-
-                return Repository.ToDataListResponse(request);
-            }
-            catch (Exception inner)
-            {
-                var message = string.Format("Failed to get widgets.");
-                Logger.Error(message, inner);
-                throw new CmsApiException(message, inner);
-            }
-        }
-
         /// <summary>
         /// Gets the HTML content widgets.
         /// </summary>
@@ -285,67 +65,6 @@ namespace BetterCms.Api
             catch (Exception inner)
             {
                 var message = string.Format("Failed to get server control widgets.");
-                Logger.Error(message, inner);
-                throw new CmsApiException(message, inner);
-            }
-        }
-
-        /// <summary>
-        /// Gets the page widgets.
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <returns>
-        /// Widget list.
-        /// </returns>
-        /// <exception cref="CmsApiException">Failed to get widgets.</exception>
-        public DataListResponse<Widget> GetPageWidgets(GetPageWidgetsRequest request)
-        {
-            try
-            {
-                request.SetDefaultOrder(s => s.Name);
-
-                var query = Repository
-                    .AsQueryable<Widget>()
-                    .Where(w => w.PageContents != null && w.PageContents.Any(c => c.Page.Id == request.PageId))
-                    .ApplyFilters(request);
-
-                var totalCount = query.ToRowCountFutureValue(request);
-
-                query = query.AddOrderAndPaging(request);
-
-                return query.ToDataListResponse(totalCount);
-            }
-            catch (Exception inner)
-            {
-                var message = string.Format("Failed to get page widgets.");
-                Logger.Error(message, inner);
-                throw new CmsApiException(message, inner);
-            }
-        }
-
-        /// <summary>
-        /// Gets the list with historical content entities.
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <returns>
-        /// Historical content entities
-        /// </returns>
-        /// <exception cref="CmsApiException"></exception>
-        public DataListResponse<Content> GetContentHistory(GetContentHistoryRequest request)
-        {
-            try
-            {
-                request.SetDefaultOrder(c => c.CreatedOn);
-
-                return historyService.GetContentHistory(request.ContentId, new SearchableGridOptions())
-                    .AsQueryable()
-                    .ApplyFilters(request)
-                    .AddOrder(request)
-                    .ToDataListResponse();
-            }
-            catch (Exception inner)
-            {
-                var message = string.Format("Failed to get history for content id={0}.", request.ContentId);
                 Logger.Error(message, inner);
                 throw new CmsApiException(message, inner);
             }
@@ -681,32 +400,6 @@ namespace BetterCms.Api
             }
 
             return options;
-        }
-
-        /// <summary>
-        /// Removes the unpublished contents.
-        /// </summary>
-        /// <param name="contents">The contents.</param>
-        /// <returns>
-        /// Results with excluded inactive contents
-        /// </returns>
-        private IList<PageContent> RemoveInactiveContents(IList<PageContent> contents)
-        {
-            var filteredContents = new List<PageContent>(contents.Count);
-
-            foreach (var content in contents)
-            {
-                var htmlContent = content.Content as HtmlContent;
-                if (htmlContent != null 
-                    && (DateTime.Now < htmlContent.ActivationDate || (htmlContent.ExpirationDate.HasValue && htmlContent.ExpirationDate.Value < DateTime.Now)))
-                {
-                    continue;
-                }
-
-                filteredContents.Add(content);
-            }
-
-            return filteredContents;
         }
     }
 }

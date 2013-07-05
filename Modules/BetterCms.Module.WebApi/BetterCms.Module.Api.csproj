@@ -149,7 +149,6 @@
     <Compile Include="Helpers\FilterByTagExtensions.cs" />
     <Compile Include="Helpers\QueryableExtensions.cs" />
     <Compile Include="IApiFacade.cs" />
-    <Compile Include="Helpers\CmsApiControllerBase.cs" />
     <Compile Include="Helpers\DataOptionsQueryCreator.cs" />
     <Compile Include="Helpers\DynamicLinqExtensions.cs" />
     <Compile Include="Legacy\Blog.Api\DataContracts\AuthorCreateRequest.cs" />

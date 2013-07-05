@@ -70,55 +70,6 @@ namespace BetterCms.Api
         }
 
         /// <summary>
-        /// Checks if page exists.
-        /// </summary>
-        /// <param name="pageUrl">The page URL.</param>
-        /// <returns>
-        ///   <c>true</c>if page exists; otherwise <c>false</c>
-        /// </returns>
-        public bool PageExists(string pageUrl)
-        {
-            try
-            {
-                return Repository.Any<PageProperties>(p => p.PageUrl == pageUrl);
-            }
-            catch (Exception inner)
-            {
-                var message = string.Format("Failed to check if page exists by url:{0}", pageUrl);
-                Logger.Error(message, inner);
-                throw new CmsApiException(message, inner);
-            }
-        }
-
-        /// <summary>
-        /// Gets the page entity.
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <returns>
-        /// Page entity
-        /// </returns>
-        /// <exception cref="CmsApiException"></exception>
-        public PageProperties GetPage(GetPageRequest request)
-        {
-            try
-            {
-                var query = Repository
-                    .AsQueryable<PageProperties>()
-                    .Where(p => p.Id == request.Id);
-
-                return FetchPageChilds(query, request.LoadChilds)
-                    .ToList()
-                    .FirstOne();
-            }
-            catch (Exception inner)
-            {
-                var message = string.Format("Failed to get page exists by id:{0}", request.Id);
-                Logger.Error(message, inner);
-                throw new CmsApiException(message, inner);
-            }
-        }
-
-        /// <summary>
         /// Creates the page.
         /// </summary>
         /// <returns></returns>
