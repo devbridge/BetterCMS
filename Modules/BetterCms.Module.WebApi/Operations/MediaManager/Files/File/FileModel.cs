@@ -94,5 +94,32 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         /// </value>
         [DataMember]
         public virtual string OriginalFileExtension { get; set; }
+
+        /// <summary>
+        /// Gets or sets the thumbnail URL.
+        /// </summary>
+        /// <value>
+        /// The thumbnail URL.
+        /// </value>
+        [DataMember]
+        public string ThumbnailUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the thumbnail id.
+        /// </summary>
+        /// <value>
+        /// The thumbnail id.
+        /// </value>
+        [DataMember]
+        public System.Guid? ThumbnailId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the thumbnail caption.
+        /// </summary>
+        /// <value>
+        /// The thumbnail caption.
+        /// </value>
+        [DataMember]
+        public string ThumbnailCaption { get; set; }
     }
 }

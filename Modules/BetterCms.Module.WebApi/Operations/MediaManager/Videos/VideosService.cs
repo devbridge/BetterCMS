@@ -62,8 +62,10 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Videos
                             Title = media.Title,
                             MediaContentType = media is MediaFolder ? MediaContentType.Folder : MediaContentType.File,
                             VideoUrl = media is MediaFile ? ((MediaFile)media).PublicUrl : null,
-                            IsArchived = media.IsArchived
-                            // TODO: ThumbnailUrl
+                            IsArchived = media.IsArchived,
+                            ThumbnailCaption = media.Image.Caption,
+                            ThumbnailUrl = media.Image.PublicThumbnailUrl,
+                            ThumbnailId = media.Image.Id
 
                         }).ToDataListResponse(request);
 

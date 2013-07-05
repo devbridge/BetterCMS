@@ -61,8 +61,10 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
                             FileExtension = media is MediaFile ? ((MediaFile)media).OriginalFileExtension : null,
                             FileSize = media is MediaFile ? ((MediaFile)media).Size : (long?)null,
                             FileUrl = media is MediaFile ? ((MediaFile)media).PublicUrl : null,
-                            IsArchived = media.IsArchived
-                            // TODO: need implementation ThumbnailUrl = ????
+                            IsArchived = media.IsArchived,
+                            ThumbnailCaption = media.Image.Caption,
+                            ThumbnailUrl = media.Image.PublicThumbnailUrl,
+                            ThumbnailId = media.Image.Id
 
                         }).ToDataListResponse(request);
 
