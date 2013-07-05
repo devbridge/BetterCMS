@@ -1,15 +1,36 @@
-﻿using ServiceStack.ServiceInterface;
+﻿using BetterCms.Module.Pages.Services;
+
+using ServiceStack.ServiceInterface;
 
 namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.RenderedHtml
 {
     public class PageRenderedHtmlService : Service, IPageRenderedHtmlService
     {
+        private readonly IUrlService urlService;
+
+        public PageRenderedHtmlService(IUrlService urlService)
+        {
+            this.urlService = urlService;
+        }
+
         public GetPageRenderedHtmlResponse Get(GetPageRenderedHtmlRequest request)
         {
-            // TODO: need implementation
+            // TODO: validate request - one and only one of these can be specified: PageUrl / PageId
+            string data = null;
+            if (request.PageId.HasValue)
+            {
+                data = "TODO: implement rendering by page ID: " + request.PageId.Value.ToString();
+            }
+            else
+            {
+                var url = urlService.FixUrl(request.PageUrl);
+
+                data = "TODO: implement rendering by page URL: " + url;
+            }
+
             return new GetPageRenderedHtmlResponse
             {
-                Data = "TODO: IMPLEMENT PAGE HTML RENDERING"
+                Data = data
             };
         }
     }

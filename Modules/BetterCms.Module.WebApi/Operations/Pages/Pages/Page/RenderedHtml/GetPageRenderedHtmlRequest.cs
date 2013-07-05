@@ -12,7 +12,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.RenderedHtml
         /// <value>
         /// The page id.
         /// </value>
-        public System.Guid PageId { get; set; }
+        public System.Guid? PageId { get; set; }
 
         /// <summary>
         /// Gets or sets the page URL.

@@ -4,7 +4,7 @@ using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Api.Helpers;
-using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.Services;
 
 using ServiceStack.ServiceInterface;
 
@@ -14,9 +14,12 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
     {
         private readonly IRepository repository;
 
-        public PagePropertiesService(IRepository repository)
+        private readonly IUrlService urlService;
+
+        public PagePropertiesService(IRepository repository, IUrlService urlService)
         {
             this.repository = repository;
+            this.urlService = urlService;
         }
 
         public GetPagePropertiesResponse Get(GetPagePropertiesRequest request)
@@ -31,7 +34,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
             }
             else
             {
-                query = query.Where(page => page.PageUrl == request.PageUrl);
+                var url = urlService.FixUrl(request.PageUrl);
+                query = query.Where(page => page.PageUrl == url);
             }
 
             var response = query

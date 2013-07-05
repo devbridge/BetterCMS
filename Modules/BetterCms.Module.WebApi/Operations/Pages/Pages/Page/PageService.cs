@@ -8,6 +8,7 @@ using BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page.Exists;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page.RenderedHtml;
+using BetterCms.Module.Pages.Services;
 
 using ServiceStack.ServiceInterface;
 
@@ -25,14 +26,17 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
 
         private readonly IRepository repository;
 
+        private readonly IUrlService urlService;
+
         public PageService(IRepository repository, IPagePropertiesService pagePropertiesService, IPageRenderedHtmlService pageHtmlService,
-            IPageExistsService pageExistsService, IPageContentsService pageContentsService)
+            IPageExistsService pageExistsService, IPageContentsService pageContentsService, IUrlService urlService)
         {
             this.pageContentsService = pageContentsService;
             this.pagePropertiesService = pagePropertiesService;
             this.pageHtmlService = pageHtmlService;
             this.pageExistsService = pageExistsService;
             this.repository = repository;
+            this.urlService = urlService;
         }
 
         public GetPageResponse Get(GetPageRequest request)
@@ -47,7 +51,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
             }
             else
             {
-                query = query.Where(page => page.PageUrl == request.PageUrl);
+                var url = urlService.FixUrl(request.PageUrl);
+                query = query.Where(page => page.PageUrl == url);
             }
 
             var model = query
