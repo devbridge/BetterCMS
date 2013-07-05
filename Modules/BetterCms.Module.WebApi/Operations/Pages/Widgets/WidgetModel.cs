@@ -1,7 +1,5 @@
 ﻿using System.Runtime.Serialization;
 
-using BetterCms.Module.Pages.Models;
-
 namespace BetterCms.Module.Api.Operations.Pages.Widgets
 {
     [DataContract]
@@ -14,7 +12,15 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets
         /// The widget type.
         /// </value>
         [DataMember]
-        public WidgetType WidgetType { get; set; }
+        public string WidgetType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the type of the original widget.
+        /// </summary>
+        /// <value>
+        /// The type of the original widget.
+        /// </value>
+        internal System.Type OriginalWidgetType { get; set; }
 
         /// <summary>
         /// Gets or sets the widget name.

@@ -11,6 +11,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets
         public GetWidgetsRequest()
         {
             IncludeUnpublished = true;
+
+            FieldExceptions.Add("WidgetType");
         }
 
         /// <summary>

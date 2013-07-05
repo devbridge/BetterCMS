@@ -45,9 +45,12 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets
                      PublishedOn = widget.PublishedOn,
                      PublishedByUser = widget.PublishedByUser,
                      CategoryId = widget.Category.Id,
-                     CategoryName = widget.Category.Name
-                     // TODO: WidgetType = ?????, <-- Need to implement widget type (take somehow from widget projection)
+                     CategoryName = widget.Category.Name,
+                     OriginalWidgetType = widget.GetType()
                  }).ToDataListResponse(request);
+
+            // Set content types
+            listResponse.Items.ToList().ForEach(item => item.WidgetType = item.OriginalWidgetType.ToContentTypeString());
 
             return new GetWidgetsResponse
                        {
