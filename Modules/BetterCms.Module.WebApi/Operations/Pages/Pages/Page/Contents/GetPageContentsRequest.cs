@@ -6,6 +6,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents
     public class GetPageContentsRequest : ListRequestBase, IReturn<GetPageContentsResponse>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GetPageContentsRequest" /> class.
+        /// </summary>
+        public GetPageContentsRequest()
+        {
+            FieldExceptions.Add("ContentType");
+        }
+
+        /// <summary>
         /// Gets or sets the page id.
         /// </summary>
         /// <value>

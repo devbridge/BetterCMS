@@ -55,6 +55,7 @@ namespace BetterCms.Module.Api.Helpers
         public DataOptionsQueryCreator(DataOptions dataOptions)
         {
             this.dataOptions = dataOptions;
+
             filterParameters = new List<object>();
         }
 
@@ -105,15 +106,16 @@ namespace BetterCms.Module.Api.Helpers
                 for (var i = 0; i < dataOptions.Order.By.Count; i++)
                 {
                     var item = dataOptions.Order.By[i];
+                    var fieldName = GetPropertyName(item);
 
-                    ValidateProperty(item.Field);
+                    ValidateProperty(fieldName);
 
                     if (i > 0)
                     {
                         sb.Append(", ");
                     }
 
-                    sb.Append(item.Field);
+                    sb.Append(fieldName);
 
                     if (item.OrderByDescending)
                     {
@@ -172,19 +174,13 @@ namespace BetterCms.Module.Api.Helpers
         private string CreateQueryExpression(FilterItem filterItem, FilterConnector filterConnector)
         {
             var sb = new StringBuilder();
-            var propertyName = filterItem.Field;
+            var propertyName = GetPropertyName(filterItem);
 
             var property = GetAndValidateProperty(propertyName);
 
             var parameterNr = filterParameters.Count;
-            if (filterItem.Value is string)
-            {
-                filterParameters.Add(CastParameter(filterItem.Value as string, property));
-            }
-            else
-            {
-                filterParameters.Add(filterItem.Value);
-            }
+            var value = GetValue(filterItem, property);
+            filterParameters.Add(value);
             AppendFilterConnector(sb, filterConnector);
 
             string query;
@@ -275,6 +271,13 @@ namespace BetterCms.Module.Api.Helpers
         private System.Reflection.PropertyInfo GetAndValidateProperty(string propertyName)
         {
             var modelType = typeof(TModel);
+
+            if (dataOptions.FieldExceptions.Contains(propertyName))
+            {
+                // TODO: validation exception ???
+                throw new InvalidOperationException(string.Format("Cannot filter by property {0} in object {1}", propertyName, modelType));
+            }
+
             var property = modelType.GetProperty(propertyName);
 
             if (property == null)
@@ -287,50 +290,118 @@ namespace BetterCms.Module.Api.Helpers
         }
 
         /// <summary>
-        /// Casts the parameter to correct property type.
+        /// Gets the name of the property.
         /// </summary>
-        /// <param name="value">The value.</param>
-        /// <param name="property">The property.</param>
-        /// <returns>Value, casted to property original type</returns>
-        private object CastParameter(string value, System.Reflection.PropertyInfo property)
+        /// <param name="filterItem">The filter item.</param>
+        /// <returns></returns>
+        private string GetPropertyName(FilterItem filterItem)
         {
-            if (string.IsNullOrWhiteSpace(value))
+            if (dataOptions.FieldConvertions.ContainsKey(filterItem.Field))
             {
-                return null;
+                return dataOptions.FieldConvertions[filterItem.Field];
             }
 
-            if (typeof(Enum).IsAssignableFrom(property.PropertyType))
+            return filterItem.Field;
+        }
+
+        /// <summary>
+        /// Gets the name of the property.
+        /// </summary>
+        /// <param name="orderItem">The order item.</param>
+        /// <returns></returns>
+        private string GetPropertyName(OrderItem orderItem)
+        {
+            if (dataOptions.FieldConvertions.ContainsKey(orderItem.Field))
             {
-                // TODO: cast to enum ??????
+                return dataOptions.FieldConvertions[orderItem.Field];
             }
 
-            if (typeof(int?).IsAssignableFrom(property.PropertyType)
-                || typeof(short?).IsAssignableFrom(property.PropertyType))
+            return orderItem.Field;
+        }
+
+        /// <summary>
+        /// Gets the value, converted to property's type.
+        /// </summary>
+        /// <param name="filterItem">The filter item.</param>
+        /// <param name="property">The property.</param>
+        /// <returns>Value, converted to property's type</returns>
+        private object GetValue(FilterItem filterItem, System.Reflection.PropertyInfo property)
+        {
+            // Return value if object is not string (no need casting)
+            if (!(filterItem.Value is string))
+            {
+                return filterItem.Value;
+            }
+
+            // Try to cast to different type of objects
+            var value = filterItem.Value as string;
+            Type type = property.PropertyType;
+
+            if (typeof(string).IsAssignableFrom(type))
+            {
+                return value;
+            }
+
+            if (typeof(Enum).IsAssignableFrom(type))
+            {
+                return ConvertToEnum(type, value);
+            }
+
+            if (typeof(int?).IsAssignableFrom(type)
+                || typeof(short?).IsAssignableFrom(type))
             {
                 return Convert.ToInt32(value);
             }
-            
-            if (typeof(long?).IsAssignableFrom(property.PropertyType))
+
+            if (typeof(long?).IsAssignableFrom(type))
             {
                 return Convert.ToInt64(value);
             }
-            
-            if (typeof(DateTime?).IsAssignableFrom(property.PropertyType))
+
+            if (typeof(DateTime?).IsAssignableFrom(type))
             {
                 return Convert.ToDateTime(value);
             }
-            
-            if (typeof(Guid?).IsAssignableFrom(property.PropertyType))
+
+            if (typeof(Guid?).IsAssignableFrom(type))
             {
                 return new Guid(value);
             }
-            
-            if (typeof(bool?).IsAssignableFrom(property.PropertyType))
+
+            if (typeof(bool?).IsAssignableFrom(type))
             {
                 return Convert.ToBoolean(value);
             }
 
             return value;
+        }
+
+        /// <summary>
+        /// Converts value to enum type.
+        /// </summary>
+        /// <param name="enumType">Type of the enum.</param>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        private object ConvertToEnum(Type enumType, object value)
+        {
+            if (!typeof(Enum).IsAssignableFrom(enumType))
+            {
+                throw new NotSupportedException(string.Format("Failed to convert value {0} to specied enum type {1}.", enumType, value));
+            }
+
+            if (value is string)
+            {
+                var parsedValue = Enum.Parse(enumType, value as string);
+                return parsedValue;
+            }
+
+            if (value is short? || value is int? || value is long?)
+            {
+                var parsedValue = Enum.ToObject(enumType, value);
+                return parsedValue;
+            }
+
+            throw new NotSupportedException(string.Format("Failed to convert value {0} to specied enum type {1}.", enumType, value));
         }
     }
 }
