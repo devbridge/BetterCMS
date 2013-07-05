@@ -177,6 +177,7 @@
     <Compile Include="Operations\Blog\Authors\GetAuthorsResponse.cs" />
     <Compile Include="Operations\Blog\Authors\IAuthorsService.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPostsService.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\BlogPost\BlogPostModel.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\BlogPostService.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\GetBlogPostRequest.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\GetBlogPostResponse.cs" />
@@ -270,6 +271,7 @@
     <Compile Include="Operations\Pages\Contents\Content\IContentService.cs" />
     <Compile Include="Operations\Pages\IPagesApiOperations.cs" />
     <Compile Include="Operations\Pages\Contents\Content\BlogPostContent\BlogPostContentModel.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\PageModel.cs" />
     <Compile Include="Operations\Pages\Redirects\GetRedirectsRequest.cs" />
     <Compile Include="Operations\Pages\Redirects\GetRedirectsResponse.cs" />
     <Compile Include="Operations\Pages\Redirects\IRedirectsService.cs" />

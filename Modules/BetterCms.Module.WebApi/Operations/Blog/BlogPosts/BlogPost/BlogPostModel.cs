@@ -1,18 +1,18 @@
 ﻿using System.Runtime.Serialization;
 
-namespace BetterCms.Module.Api.Operations.Pages.Pages
+namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
 {
     [DataContract]
-    public class PageModel : ModelBase
+    public class BlogPostModel : ModelBase
     {
         /// <summary>
-        /// Gets or sets the page URL.
+        /// Gets or sets the blog post URL.
         /// </summary>
         /// <value>
-        /// The page URL.
+        /// The blog post URL.
         /// </value>
         [DataMember]
-        public string PageUrl { get; set; }
+        public string BlogPostUrl { get; set; }
 
         /// <summary>
         /// Gets or sets the title.
@@ -24,13 +24,13 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
         public string Title { get; set; }
 
         /// <summary>
-        /// Gets or sets the description.
+        /// Gets or sets the intro text.
         /// </summary>
         /// <value>
-        /// The description.
+        /// The intro text.
         /// </value>
         [DataMember]
-        public string Description { get; set; }
+        public string IntroText { get; set; }
 
         /// <summary>
         /// Gets or sets the page status.
@@ -78,6 +78,24 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
         public string CategoryName { get; set; }
 
         /// <summary>
+        /// Gets or sets the blog post author id.
+        /// </summary>
+        /// <value>
+        /// The blog post author id.
+        /// </value>
+        [DataMember]
+        public System.Guid? AuthorId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the author.
+        /// </summary>
+        /// <value>
+        /// The name of the author.
+        /// </value>
+        [DataMember]
+        public string AuthorName { get; set; }
+
+        /// <summary>
         /// Gets or sets the blog posts main image id.
         /// </summary>
         /// <value>
@@ -114,10 +132,28 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
         public string MainImageCaption { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether page is marked as archived.
+        /// Gets or sets the blog post activation date.
         /// </summary>
         /// <value>
-        /// <c>true</c> if page is marked as archived; otherwise, <c>false</c>.
+        /// The blog post activation date.
+        /// </value>
+        [DataMember]
+        public System.DateTime ActivationDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the blog post expiration date.
+        /// </summary>
+        /// <value>
+        /// The blog post expiration date.
+        /// </value>
+        [DataMember]
+        public System.DateTime? ExpirationDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether blog post is marked as archived.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if blog post is marked as archived; otherwise, <c>false</c>.
         /// </value>
         [DataMember]
         public bool IsArchived { get; set; }

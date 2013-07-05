@@ -69,6 +69,15 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
         public System.Guid? CategoryId { get; set; }
 
         /// <summary>
+        /// Gets or sets the name of the category.
+        /// </summary>
+        /// <value>
+        /// The name of the category.
+        /// </value>
+        [DataMember]
+        public string CategoryName { get; set; }
+
+        /// <summary>
         /// Gets or sets the blog post author id.
         /// </summary>
         /// <value>
@@ -78,6 +87,15 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
         public System.Guid? AuthorId { get; set; }
 
         /// <summary>
+        /// Gets or sets the name of the author.
+        /// </summary>
+        /// <value>
+        /// The name of the author.
+        /// </value>
+        [DataMember]
+        public string AuthorName { get; set; }
+
+        /// <summary>
         /// Gets or sets the blog posts main image id.
         /// </summary>
         /// <value>
@@ -85,6 +103,33 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
         /// </value>
         [DataMember]
         public System.Guid? MainImageId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the main image URL.
+        /// </summary>
+        /// <value>
+        /// The main image URL.
+        /// </value>
+        [DataMember]
+        public string MainImageUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the main image thumbnauil URL.
+        /// </summary>
+        /// <value>
+        /// The main image thumbnauil URL.
+        /// </value>
+        [DataMember]
+        public string MainImageThumbnauilUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the main image caption.
+        /// </summary>
+        /// <value>
+        /// The main image caption.
+        /// </value>
+        [DataMember]
+        public string MainImageCaption { get; set; }
 
         /// <summary>
         /// Gets or sets the blog post activation date.

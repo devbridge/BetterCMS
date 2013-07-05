@@ -43,7 +43,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
                 tagName => { return b => b.PageTags.Any(tag => tag.Tag.Name == tagName); });
 
             var listResponse = query
-                .Select(blogPost => new BlogPostModel()
+                .Select(blogPost => new BlogPostModel
                     {
                         Id = blogPost.Id,
                         Version = blogPost.Version,
@@ -59,8 +59,13 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
                         PublishedOn = blogPost.PublishedOn,
                         LayoutId = blogPost.Layout.Id,
                         CategoryId = blogPost.Category.Id,
+                        CategoryName = blogPost.Category.Name,
                         AuthorId = blogPost.Author.Id,
+                        AuthorName = blogPost.Author.Name,
                         MainImageId = blogPost.Image.Id,
+                        MainImageUrl = blogPost.Image.PublicUrl,
+                        MainImageThumbnauilUrl = blogPost.Image.PublicThumbnailUrl,
+                        MainImageCaption = blogPost.Image.Caption,
                         ActivationDate = blogPost.ActivationDate,
                         ExpirationDate = blogPost.ExpirationDate,
                         IsArchived = blogPost.IsArchived

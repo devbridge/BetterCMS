@@ -27,22 +27,19 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
                 .AsQueryable<Media>()
                 .Where(m => m.Original == null && m.Folder.Id == request.FolderId);
 
+            if (!request.IncludeFolders)
+            {
+                query = query.Where(media => media.ContentType != MediaContentType.Folder);
+            }
+            
+            if (!request.IncludeImages)
+            {
+                query = query.Where(media => media.ContentType != MediaContentType.File);
+            }
+
             if (!request.IncludeArchived)
             {
                 query = query.Where(m => !m.IsArchived);
-            }
-
-            if (request.IncludeFolders && request.IncludeImages)
-            {
-                query = query.Where(media => (media is MediaImage || media is MediaFolder));
-            }
-            else if (!request.IncludeFolders)
-            {
-                query = query.Where(media => media is MediaImage);
-            }
-            else
-            {
-                query = query.Where(media => media is MediaFolder);
             }
 
             query = query.ApplyTagsFilter(
@@ -65,7 +62,8 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
                             FileExtension = media is MediaImage ? ((MediaImage)media).OriginalFileExtension : null,
                             FileSize = media is MediaImage ? ((MediaImage)media).Size : (long?)null,
                             ImageUrl = media is MediaImage ? ((MediaImage)media).PublicUrl : null,
-                            ThumbnailUrl = media is MediaImage ? ((MediaImage)media).PublicThumbnailUrl : null
+                            ThumbnailUrl = media is MediaImage ? ((MediaImage)media).PublicThumbnailUrl : null,
+                            IsArchived = media.IsArchived
 
                         }).ToDataListResponse(request);
 

@@ -97,7 +97,7 @@ namespace BetterCms.Module.Api.Helpers
         {
             if (options != null && options.Take > 0)
             {
-                if (options.Skip > 1)
+                if (options.Skip > 0)
                 {
                     request.StartItemNumber = options.Skip.Value;
                 }

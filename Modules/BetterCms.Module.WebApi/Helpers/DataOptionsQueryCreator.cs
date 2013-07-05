@@ -33,11 +33,18 @@ namespace BetterCms.Module.Api.Helpers
             public const string StartsWith = "{0}.StartsWith(@{1})";
             public const string EndsWith = "{0}.EndsWith(@{1})";
             public const string Equal = "{0} == @{1}";
+            public const string EqualNull = "{0} == null";
             public const string NotEqual = "{0} != @{1}";
+            public const string NotEqualNull = "{0} != null";
             public const string Greater = "{0} > @{1}";
             public const string GreaterOrEqual = "{0} >= @{1}";
             public const string Less = "{0} < @{1}";
             public const string LessOrEqual = "{0} <= @{1}";
+        }
+
+        private static class MagicConstants
+        {
+            public const string Null = "$null";
         }
 
         private readonly DataOptions dataOptions;
@@ -106,7 +113,7 @@ namespace BetterCms.Module.Api.Helpers
                 for (var i = 0; i < dataOptions.Order.By.Count; i++)
                 {
                     var item = dataOptions.Order.By[i];
-                    var fieldName = GetPropertyName(item);
+                    var fieldName = item.Field;
 
                     ValidateProperty(fieldName);
 
@@ -174,7 +181,7 @@ namespace BetterCms.Module.Api.Helpers
         private string CreateQueryExpression(FilterItem filterItem, FilterConnector filterConnector)
         {
             var sb = new StringBuilder();
-            var propertyName = GetPropertyName(filterItem);
+            var propertyName = filterItem.Field;
 
             var property = GetAndValidateProperty(propertyName);
 
@@ -199,9 +206,19 @@ namespace BetterCms.Module.Api.Helpers
                     query = string.Format(FilterConstants.EndsWith, propertyName, parameterNr);
                     break;
                 case FilterOperation.Equal:
+                    if (value == null)
+                    {
+                        query = string.Format(FilterConstants.EqualNull, propertyName);
+                        break;
+                    }
                     query = string.Format(FilterConstants.Equal, propertyName, parameterNr);
                     break;
                 case FilterOperation.NotEqual:
+                    if (value == null)
+                    {
+                        query = string.Format(FilterConstants.NotEqualNull, propertyName);
+                        break;
+                    }
                     query = string.Format(FilterConstants.NotEqual, propertyName, parameterNr);
                     break;
                 case FilterOperation.Greater:
@@ -290,36 +307,6 @@ namespace BetterCms.Module.Api.Helpers
         }
 
         /// <summary>
-        /// Gets the name of the property.
-        /// </summary>
-        /// <param name="filterItem">The filter item.</param>
-        /// <returns></returns>
-        private string GetPropertyName(FilterItem filterItem)
-        {
-            if (dataOptions.FieldConvertions.ContainsKey(filterItem.Field))
-            {
-                return dataOptions.FieldConvertions[filterItem.Field];
-            }
-
-            return filterItem.Field;
-        }
-
-        /// <summary>
-        /// Gets the name of the property.
-        /// </summary>
-        /// <param name="orderItem">The order item.</param>
-        /// <returns></returns>
-        private string GetPropertyName(OrderItem orderItem)
-        {
-            if (dataOptions.FieldConvertions.ContainsKey(orderItem.Field))
-            {
-                return dataOptions.FieldConvertions[orderItem.Field];
-            }
-
-            return orderItem.Field;
-        }
-
-        /// <summary>
         /// Gets the value, converted to property's type.
         /// </summary>
         /// <param name="filterItem">The filter item.</param>
@@ -334,7 +321,13 @@ namespace BetterCms.Module.Api.Helpers
             }
 
             // Try to cast to different type of objects
-            var value = filterItem.Value as string;
+            var value = filterItem.Value.ToString();
+            
+            if (value == MagicConstants.Null)
+            {
+                return null;
+            }
+
             Type type = property.PropertyType;
 
             if (typeof(string).IsAssignableFrom(type))
@@ -360,7 +353,7 @@ namespace BetterCms.Module.Api.Helpers
 
             if (typeof(DateTime?).IsAssignableFrom(type))
             {
-                return Convert.ToDateTime(value);
+                return Convert.ToDateTime(GetMagicValue(value));
             }
 
             if (typeof(Guid?).IsAssignableFrom(type))
@@ -402,6 +395,15 @@ namespace BetterCms.Module.Api.Helpers
             }
 
             throw new NotSupportedException(string.Format("Failed to convert value {0} to specied enum type {1}.", enumType, value));
+        }
+
+        private object GetMagicValue(object value)
+        {
+            if (value is string && ((string)value) == "$null")
+            {
+                return null;
+            }
+            return value;
         }
     }
 }

@@ -62,10 +62,16 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
 
                         PageUrl = page.PageUrl,
                         Title = page.Title,
+                        Description = page.Description,
                         IsPublished = page.Status == PageStatus.Published,
                         PublishedOn = page.PublishedOn,
                         LayoutId = page.Layout.Id,
                         CategoryId = page.Category.Id,
+                        CategoryName = page.Category.Name,
+                        MainImageId = page.Image.Id,
+                        MainImageUrl = page.Image.PublicUrl,
+                        MainImageThumbnauilUrl = page.Image.PublicThumbnailUrl,
+                        MainImageCaption = page.Image.Caption,
                         IsArchived = page.IsArchived
                     })
                 .FirstOne();

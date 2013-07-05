@@ -10,11 +10,6 @@ namespace BetterCms.Module.Api.Operations
     public class DataOptions
     {
         /// <summary>
-        /// The field convertions - fields which are transformed to another fields
-        /// </summary>
-        private IDictionary<string, string> fieldConvertions;
-
-        /// <summary>
         /// The field exceptions - fields, that are not available for filtering / sorting
         /// </summary>
         private IList<string> fieldExceptions;
@@ -31,16 +26,15 @@ namespace BetterCms.Module.Api.Operations
         /// <summary>
         /// Initializes a new instance of the <see cref="DataOptions" /> class.
         /// </summary>
-        /// <param name="itemsCount">The maximum count of returning items.</param>
-        /// <param name="startItemNumber">The starting item number.</param>
-        public DataOptions(int? itemsCount,
-            int startItemNumber = 1)
+        /// <param name="take">Items count to retrieve.</param>
+        /// <param name="skip">Items count to skip.</param>
+        public DataOptions(int? take, int skip = 0)
         {
             Filter = new DataFilter();
             Order = new DataOrder();
 
-            Skip = startItemNumber;
-            Take = itemsCount;
+            Skip = skip;
+            Take = take;
         }
 
         /// <summary>
@@ -74,24 +68,6 @@ namespace BetterCms.Module.Api.Operations
         /// The maximum count of returning items.
         /// </value>
         public int? Take { get; set; }
-
-        /// <summary>
-        /// Gets the field convertions - when field name must be converted to another name.
-        /// </summary>
-        /// <value>
-        /// The field convertions.
-        /// </value>
-        public IDictionary<string, string> FieldConvertions
-        {
-            get
-            {
-                if (fieldConvertions == null)
-                {
-                    fieldConvertions = new Dictionary<string, string>();
-                }
-                return fieldConvertions;
-            }
-        }
 
         /// <summary>
         /// Gets the field exceptions - when there is prohibited filtering by field.
