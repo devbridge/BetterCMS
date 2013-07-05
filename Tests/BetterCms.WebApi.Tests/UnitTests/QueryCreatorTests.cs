@@ -89,7 +89,7 @@ namespace BetterCms.WebApi.Tests.UnitTests
             Assert.AreEqual(filterQuery, "CreatedOn == @0");
             Assert.IsNotNull(filterParameters);
             Assert.AreEqual(filterParameters.Length, 1);
-            Assert.AreEqual(filterParameters[0], TestValueDate);
+            Assert.AreEqual(filterParameters[0], Convert.ToDateTime(TestValueDate));
         }
         
         [Test]
@@ -108,7 +108,7 @@ namespace BetterCms.WebApi.Tests.UnitTests
             Assert.AreEqual(filterQuery, "CreatedOn == @0");
             Assert.IsNotNull(filterParameters);
             Assert.AreEqual(filterParameters.Length, 1);
-            Assert.AreEqual(filterParameters[0], TestValueDate);
+            Assert.AreEqual(filterParameters[0], Convert.ToDateTime(TestValueDate));
         }
         
         [Test]
@@ -127,7 +127,7 @@ namespace BetterCms.WebApi.Tests.UnitTests
             Assert.AreEqual(filterQuery, "CreatedOn != @0");
             Assert.IsNotNull(filterParameters);
             Assert.AreEqual(filterParameters.Length, 1);
-            Assert.AreEqual(filterParameters[0], TestValueDate);
+            Assert.AreEqual(filterParameters[0], Convert.ToDateTime(TestValueDate));
         }
         
         [Test]
@@ -146,7 +146,7 @@ namespace BetterCms.WebApi.Tests.UnitTests
             Assert.AreEqual(filterQuery, "CreatedOn > @0");
             Assert.IsNotNull(filterParameters);
             Assert.AreEqual(filterParameters.Length, 1);
-            Assert.AreEqual(filterParameters[0], TestValueDate);
+            Assert.AreEqual(filterParameters[0], Convert.ToDateTime(TestValueDate));
         }
         
         [Test]
@@ -165,7 +165,7 @@ namespace BetterCms.WebApi.Tests.UnitTests
             Assert.AreEqual(filterQuery, "CreatedOn >= @0");
             Assert.IsNotNull(filterParameters);
             Assert.AreEqual(filterParameters.Length, 1);
-            Assert.AreEqual(filterParameters[0], TestValueDate);
+            Assert.AreEqual(filterParameters[0], Convert.ToDateTime(TestValueDate));
         }
         
         [Test]
@@ -184,14 +184,14 @@ namespace BetterCms.WebApi.Tests.UnitTests
             Assert.AreEqual(filterQuery, "CreatedOn < @0");
             Assert.IsNotNull(filterParameters);
             Assert.AreEqual(filterParameters.Length, 1);
-            Assert.AreEqual(filterParameters[0], TestValueDate);
+            Assert.AreEqual(filterParameters[0], Convert.ToDateTime(TestValueDate));
         }
         
         [Test]
         public void SingleFilterByLessOrEqual()
         {
             var dataOptions = new DataOptions();
-            dataOptions.Filter.Add("CreatedOn", TestValueDate, FilterOperation.LessOrEqual);
+            dataOptions.Filter.Add("CreatedOn", Convert.ToDateTime(TestValueDate), FilterOperation.LessOrEqual);
 
             var queryCreator = new DataOptionsQueryCreator<PageProperties>(dataOptions);
             var orderQuery = queryCreator.GetOrderQuery();
@@ -203,7 +203,7 @@ namespace BetterCms.WebApi.Tests.UnitTests
             Assert.AreEqual(filterQuery, "CreatedOn <= @0");
             Assert.IsNotNull(filterParameters);
             Assert.AreEqual(filterParameters.Length, 1);
-            Assert.AreEqual(filterParameters[0], TestValueDate);
+            Assert.AreEqual(filterParameters[0], Convert.ToDateTime(TestValueDate));
         }
         
         [Test]
@@ -412,12 +412,12 @@ namespace BetterCms.WebApi.Tests.UnitTests
             Assert.AreEqual(filterParameters.Length, 8);
             Assert.AreEqual(filterParameters[0], "Test1");
             Assert.AreEqual(filterParameters[1], "Test2");
-            Assert.AreEqual(filterParameters[2], TestValueDate);
-            Assert.AreEqual(filterParameters[3], TestValueDate);
-            Assert.AreEqual(filterParameters[4], TestValueDate);
-            Assert.AreEqual(filterParameters[5], TestValueDate);
-            Assert.AreEqual(filterParameters[6], TestValueDate);
-            Assert.AreEqual(filterParameters[7], TestValueDate);
+            Assert.AreEqual(filterParameters[2], Convert.ToDateTime(TestValueDate));
+            Assert.AreEqual(filterParameters[3], Convert.ToDateTime(TestValueDate));
+            Assert.AreEqual(filterParameters[4], Convert.ToDateTime(TestValueDate));
+            Assert.AreEqual(filterParameters[5], Convert.ToDateTime(TestValueDate));
+            Assert.AreEqual(filterParameters[6], Convert.ToDateTime(TestValueDate));
+            Assert.AreEqual(filterParameters[7], Convert.ToDateTime(TestValueDate));
         }
         
         [Test]
@@ -429,14 +429,14 @@ namespace BetterCms.WebApi.Tests.UnitTests
             dataOptions.Filter.Add("Title", "Test2", FilterOperation.NotContains);
 
             var innerFilter1 = new DataFilter(FilterConnector.Or);
-            innerFilter1.Add("CreatedOn", TestValueDate, FilterOperation.Greater);
-            innerFilter1.Add("CreatedOn", TestValueDate, FilterOperation.Less);
-            innerFilter1.Add("CreatedOn", TestValueDate);
+            innerFilter1.Add("CreatedOn", Convert.ToDateTime(TestValueDate), FilterOperation.Greater);
+            innerFilter1.Add("CreatedOn", Convert.ToDateTime(TestValueDate), FilterOperation.Less);
+            innerFilter1.Add("CreatedOn", Convert.ToDateTime(TestValueDate));
 
             var innerFilter2 = new DataFilter(FilterConnector.Or);
-            innerFilter2.Add("ModifiedOn", TestValueDate, FilterOperation.Greater);
-            innerFilter2.Add("ModifiedOn", TestValueDate, FilterOperation.Less);
-            innerFilter2.Add("ModifiedOn", TestValueDate);
+            innerFilter2.Add("ModifiedOn", Convert.ToDateTime(TestValueDate), FilterOperation.Greater);
+            innerFilter2.Add("ModifiedOn", Convert.ToDateTime(TestValueDate), FilterOperation.Less);
+            innerFilter2.Add("ModifiedOn", Convert.ToDateTime(TestValueDate));
             
             dataOptions.Filter.Inner.Add(innerFilter1);
             dataOptions.Filter.Inner.Add(innerFilter2);
@@ -459,12 +459,12 @@ namespace BetterCms.WebApi.Tests.UnitTests
             Assert.AreEqual(filterParameters.Length, 8);
             Assert.AreEqual(filterParameters[0], "Test1");
             Assert.AreEqual(filterParameters[1], "Test2");
-            Assert.AreEqual(filterParameters[2], TestValueDate);
-            Assert.AreEqual(filterParameters[3], TestValueDate);
-            Assert.AreEqual(filterParameters[4], TestValueDate);
-            Assert.AreEqual(filterParameters[5], TestValueDate);
-            Assert.AreEqual(filterParameters[6], TestValueDate);
-            Assert.AreEqual(filterParameters[7], TestValueDate);
+            Assert.AreEqual(filterParameters[2], Convert.ToDateTime(TestValueDate));
+            Assert.AreEqual(filterParameters[3], Convert.ToDateTime(TestValueDate));
+            Assert.AreEqual(filterParameters[4], Convert.ToDateTime(TestValueDate));
+            Assert.AreEqual(filterParameters[5], Convert.ToDateTime(TestValueDate));
+            Assert.AreEqual(filterParameters[6], Convert.ToDateTime(TestValueDate));
+            Assert.AreEqual(filterParameters[7], Convert.ToDateTime(TestValueDate));
         }
 
         [Test]

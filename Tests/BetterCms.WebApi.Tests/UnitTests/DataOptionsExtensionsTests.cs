@@ -20,7 +20,7 @@ namespace BetterCms.WebApi.Tests.UnitTests
         public void SingleOrderBy()
         {
             var dataOptions = new DataOptions();
-            dataOptions.Order.Add("IsDeleted");
+            dataOptions.Order.Add("CreatedOn");
 
             var request = new TestRequest();
             dataOptions.ApplyOrder(request);
