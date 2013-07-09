@@ -60,7 +60,7 @@ namespace BetterCms.Module.Pages.Accessors
                     var newViewContext = new ViewContext(html.ViewContext, view, viewData, html.ViewContext.TempData, sw);
                     try
                     {
-                        newViewContext.ViewData.Model = new WigetViewModel()
+                        newViewContext.ViewData.Model = new RenderWigetViewModel()
                             {
                                 Page = (IPage)html.ViewData.Model,
                                 Widget = Content
