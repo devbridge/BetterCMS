@@ -350,9 +350,6 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                         if (url.substr(0, 1) != '/') {
                             url = '/' + url;
                         }
-                        if (url.substr(url.length-1, 1) != '/') {
-                            url = url + '/';
-                        }
 
                         dialog.container.find(selectors.editPermalinkEditField).val(url);
                         dialog.container.find(selectors.editPermalinkHiddenField).val(url);

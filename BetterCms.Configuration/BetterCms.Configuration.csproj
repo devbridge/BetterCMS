@@ -112,6 +112,7 @@
     <Compile Include="Configuration\DefaultConfigurationLoader.cs" />
     <Compile Include="Configuration\CmsSecurityConfigurationElement.cs" />
     <Compile Include="Configuration\StorageServiceType.cs" />
+    <Compile Include="Configuration\TrailingSlashBehaviorType.cs" />
     <Compile Include="Configuration\UrlPatternsCollection.cs" />
     <Compile Include="ICmsInstallationConfiguration.cs" />
     <Compile Include="ICmsCacheConfiguration.cs" />

@@ -2,7 +2,7 @@
 using System.Transactions;
 
 using BetterCms.Api;
-
+using BetterCms.Configuration;
 using BetterCms.Core;
 using BetterCms.Core.DataAccess.DataContext.Migrations;
 using BetterCms.Core.DataContracts.Enums;
@@ -44,10 +44,10 @@ namespace BetterCms.Module.Installation.Models.MigrationsContent
         {
             using (var pagesApi = CmsContext.CreateApiContextOf<PagesApiContext>())
             {
-                var request = new GetPagesRequest(page => page.PageUrl == Urls.Page404, includeUnpublished: true, includePrivate: true);
+                var request = new GetPagesRequest(page => page.PageUrl.TrimEnd('/') == Urls.Page404.TrimEnd('/'), includeUnpublished: true, includePrivate: true);
                 var add404 = configuration.Installation.Install404ErrorPage && !pagesApi.GetPages(request).Items.Any();
 
-                request = new GetPagesRequest(page => page.PageUrl == Urls.Page500, includeUnpublished: true, includePrivate: true);
+                request = new GetPagesRequest(page => page.PageUrl.TrimEnd('/') == Urls.Page500.TrimEnd('/'), includeUnpublished: true, includePrivate: true);
                 var add500 = configuration.Installation.Install500ErrorPage && !pagesApi.GetPages(request).Items.Any();
 
                 request = new GetPagesRequest(page => page.PageUrl == Urls.DefaultPage, includeUnpublished: true, includePrivate: true);
@@ -66,12 +66,12 @@ namespace BetterCms.Module.Installation.Models.MigrationsContent
 
                     if (add404)
                     {
-                        Add404ErrorPage(pagesApi, layout, headerWidget, footerWidget);
+                        Add404ErrorPage(configuration, pagesApi, layout, headerWidget, footerWidget);
                     }
 
                     if (add500)
                     {
-                        Add500ErrorPage(pagesApi, layout, headerWidget, footerWidget);
+                        Add500ErrorPage(configuration, pagesApi, layout, headerWidget, footerWidget);
                     }
 
                     if (addDefault)
@@ -116,12 +116,12 @@ namespace BetterCms.Module.Installation.Models.MigrationsContent
             return pagesApi.CreateLayout(request);
         }
 
-        private static void Add404ErrorPage(PagesApiContext pagesApi, Layout layout, HtmlContentWidget header, HtmlContentWidget footer)
+        private static void Add404ErrorPage(ICmsConfiguration configuration, PagesApiContext pagesApi, Layout layout, HtmlContentWidget header, HtmlContentWidget footer)
         {
             var pageRequest = new CreatePageRequest()
             {
                 LayoutId = layout.Id,
-                PageUrl = Urls.Page404,
+                PageUrl = FixUrl(Urls.Page404, configuration),
                 Title = "Page Not Found",
                 Description = "Page Not Found",
                 Status = PageStatus.Published,
@@ -134,12 +134,12 @@ namespace BetterCms.Module.Installation.Models.MigrationsContent
             AddPageContent(pagesApi, page, header, footer, "<p>Oops! The page you are looking for can not be found.</p>");
         }
 
-        private static void Add500ErrorPage(PagesApiContext pagesApi, Layout layout, HtmlContentWidget header, HtmlContentWidget footer)
+        private static void Add500ErrorPage(ICmsConfiguration configuration, PagesApiContext pagesApi, Layout layout, HtmlContentWidget header, HtmlContentWidget footer)
         {
             var pageRequest = new CreatePageRequest()
             {
                 LayoutId = layout.Id,
-                PageUrl = Urls.Page500,
+                PageUrl = FixUrl(Urls.Page500, configuration),
                 Title = "Internal server error",
                 Description = "Internal server error",
                 Status = PageStatus.Published,
@@ -184,6 +184,19 @@ namespace BetterCms.Module.Installation.Models.MigrationsContent
                 ContentStatus = ContentStatus.Published
             };
             pagesApi.CreatePageHtmlContent(contentRequest);
+        }
+
+        private static string FixUrl(string url, ICmsConfiguration configuration)
+        {
+            switch (configuration.UrlMode)
+            {
+                case TrailingSlashBehaviorType.NoTrailingSlash:
+                    return url.TrimEnd('/');
+                case TrailingSlashBehaviorType.TrailingSlash:
+                    return url.EndsWith("/") ? url : string.Concat(url, "/");
+                default:
+                    return url;
+            }
         }
     }
 }
