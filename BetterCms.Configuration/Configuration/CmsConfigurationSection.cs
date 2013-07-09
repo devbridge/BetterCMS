@@ -10,8 +10,9 @@ namespace BetterCms.Configuration
         private const string VersionAttribute = "version";
         private const string UseMinifiedResourcesAttribute = "useMinifiedResources";
         private const string ResourcesBasePathAttribute = "resourcesBasePath";
-        private const string LoginUrlAttribute = "loginUrl";        
-        private const string PageNotFoundUrlAttribute = "pageNotFoundUrl";        
+        private const string LoginUrlAttribute = "loginUrl";
+        private const string PageNotFoundUrlAttribute = "pageNotFoundUrl";
+        private const string UrlModeAttribute = "urlMode";
         private const string DatabaseNode = "database";
         private const string StorageNode = "storage";
         private const string CacheNode = "cache";
@@ -129,6 +130,19 @@ namespace BetterCms.Configuration
         {
             get { return Convert.ToString(this[PageNotFoundUrlAttribute]); }
             set { this[PageNotFoundUrlAttribute] = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the URL mode.
+        /// </summary>
+        /// <value>
+        /// The URL mode.
+        /// </value>
+        [ConfigurationProperty(UrlModeAttribute, IsRequired = false, DefaultValue = TrailingSlashBehaviorType.TrailingSlash)]
+        public TrailingSlashBehaviorType UrlMode
+        {
+            get { return (TrailingSlashBehaviorType)this[UrlModeAttribute]; }
+            set { this[UrlModeAttribute] = value; }
         }
 
         /// <summary>
