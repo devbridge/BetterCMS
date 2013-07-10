@@ -258,6 +258,7 @@
     <Compile Include="DataContracts\Enums\PageRetrievedEventResults.cs" />
     <Compile Include="ViewModels\Cms\RedirectViewModel.cs" />
     <Compile Include="ViewModels\Cms\RenderPageViewModel.cs" />
+    <Compile Include="ViewModels\Cms\RenderWidgetViewModel.cs" />
     <Compile Include="ViewModels\PageProjectionsViewModel.cs" />
     <Compile Include="ViewModels\Rendering\RenderProcessorJsViewModel.cs" />
     <Compile Include="ViewModels\Rendering\JavaScriptModuleInclude.cs" />

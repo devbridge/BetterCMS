@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 
 using BetterCms.Api;
+using BetterCms.Configuration;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Mvc.Attributes;
 using BetterCms.Core.Services;
@@ -98,7 +99,18 @@ namespace BetterCms.Module.Root.Controllers
         private CmsRequestViewModel GetRequestModel(string virtualPath)
         {
             CmsRequestViewModel model;
-            virtualPath = VirtualPathUtility.AppendTrailingSlash(virtualPath);            
+            if (virtualPath.Trim() != "/")
+            {
+                switch (cmsConfiguration.UrlMode)
+                {
+                    case TrailingSlashBehaviorType.TrailingSlash:
+                        virtualPath = VirtualPathUtility.AppendTrailingSlash(virtualPath);
+                        break;
+                    case TrailingSlashBehaviorType.NoTrailingSlash:
+                        virtualPath = VirtualPathUtility.RemoveTrailingSlash(virtualPath);
+                        break;
+                }
+            }
             var principal = SecurityService.GetCurrentPrincipal();
 
             var canManageContent = SecurityService.IsAuthorized(
