@@ -121,7 +121,7 @@
     <value>Add New Content</value>
   </data>
   <data name="PageProperties_PageUrl_InvalidMessage" xml:space="preserve">
-    <value>Page url is invalid. Link must start and end with "/", can contain only following characters: '0-9', 'a-z', '-', '/', '_' and no more than 260 alphanumeric characters between the '/'.</value>
+    <value>Page url is invalid. Link can contain only following characters: '0-9', 'a-z', '-', '/', '_' and no more than 260 alphanumeric characters between the '/'.</value>
   </data>
   <data name="AddNewPageProperties_PagePermalink_MaxLengthMessage" xml:space="preserve">
     <value>Page permalink max length exceeded.</value>
@@ -409,7 +409,7 @@
     <value>Layout</value>
   </data>
   <data name="EditPageProperties_PagePermalink_InvalidMessage" xml:space="preserve">
-    <value>Page permalink is invalid. Link must start and end with "/", can contain only following characters: '0-9', 'a-z', '-', '/', '_' and no more than 260 alphanumeric characters between the '/'.</value>
+    <value>Page permalink is invalid. Link can contain only following characters: '0-9', 'a-z', '-', '/', '_' and no more than 260 alphanumeric characters between the '/'.</value>
   </data>
   <data name="EditPageProperties_PagePermalink_MaxLengthMessage" xml:space="preserve">
     <value>Page URL max length exceeded.</value>
@@ -475,7 +475,7 @@
     <value>Edit the page title that will appear on search engine result pages.</value>
   </data>
   <data name="EditSeo_PageUrlPath_InvalidMessage" xml:space="preserve">
-    <value>Page URL path is invalid. Link must start and end with "/" and can contain only following characters: '0-9', 'a-z', '-', '/', '_'</value>
+    <value>Page URL path is invalid. Link can contain only following characters: '0-9', 'a-z', '-', '/', '_'</value>
   </data>
   <data name="EditSeo_Tooltip_MetaDescription_Title" xml:space="preserve">
     <value>Meta Description</value>
@@ -1030,7 +1030,7 @@
     <value>Type word DELETE to confirm deletion.</value>
   </data>
   <data name="RedirectUrl_InvalidMessage" xml:space="preserve">
-    <value>Redirect url is invalid. Link must start and end with "/", can contain only following characters: '0-9', 'a-z', '-', '/', '_' and no more than 260 alphanumeric characters between the '/'.</value>
+    <value>Redirect url is invalid. Link can contain only following characters: '0-9', 'a-z', '-', '/', '_' and no more than 260 alphanumeric characters between the '/'.</value>
   </data>
   <data name="DeletePage_RedirectUrl_Name" xml:space="preserve">
     <value>Redirect URL</value>

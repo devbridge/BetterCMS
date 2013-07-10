@@ -188,6 +188,11 @@ namespace BetterCms.Module.Installation.Models.MigrationsContent
 
         private static string FixUrl(string url, ICmsConfiguration configuration)
         {
+            if (url.Trim() == "/")
+            {
+                return url;
+            }
+
             switch (configuration.UrlMode)
             {
                 case TrailingSlashBehaviorType.NoTrailingSlash:
