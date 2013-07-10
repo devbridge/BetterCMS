@@ -171,10 +171,16 @@ namespace BetterCms.Module.Pages.Services
         {
             if (!string.IsNullOrWhiteSpace(url))
             {
+                if (url.Trim() == "/")
+                {
+                    return url;
+                }
+
                 if (!url.StartsWith("/"))
                 {
                     url = string.Concat("/", url);
                 }
+
                 switch (configuration.UrlMode)
                 {
                     case TrailingSlashBehaviorType.TrailingSlash:

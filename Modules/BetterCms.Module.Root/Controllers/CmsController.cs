@@ -99,14 +99,17 @@ namespace BetterCms.Module.Root.Controllers
         private CmsRequestViewModel GetRequestModel(string virtualPath)
         {
             CmsRequestViewModel model;
-            switch (cmsConfiguration.UrlMode)
+            if (virtualPath.Trim() != "/")
             {
-                case TrailingSlashBehaviorType.TrailingSlash:
-                    virtualPath = VirtualPathUtility.AppendTrailingSlash(virtualPath);
-                    break;
-                case TrailingSlashBehaviorType.NoTrailingSlash:
-                    virtualPath = VirtualPathUtility.RemoveTrailingSlash(virtualPath);
-                    break;
+                switch (cmsConfiguration.UrlMode)
+                {
+                    case TrailingSlashBehaviorType.TrailingSlash:
+                        virtualPath = VirtualPathUtility.AppendTrailingSlash(virtualPath);
+                        break;
+                    case TrailingSlashBehaviorType.NoTrailingSlash:
+                        virtualPath = VirtualPathUtility.RemoveTrailingSlash(virtualPath);
+                        break;
+                }
             }
             var principal = SecurityService.GetCurrentPrincipal();
 
