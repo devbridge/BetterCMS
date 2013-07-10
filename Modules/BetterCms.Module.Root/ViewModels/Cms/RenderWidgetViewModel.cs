@@ -7,7 +7,7 @@ namespace BetterCms.Module.Root.ViewModels.Cms
     /// <summary>
     /// Render view model for server widgets.
     /// </summary>
-    public class RenderWigetViewModel
+    public class RenderWidgetViewModel
     {
         /// <summary>
         /// Gets or sets the page.

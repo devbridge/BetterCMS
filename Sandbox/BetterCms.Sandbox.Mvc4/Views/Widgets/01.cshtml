@@ -1,4 +1,9 @@
-﻿<div class="cart-summary">
+﻿@model BetterCms.Module.Root.ViewModels.Cms.RenderWidgetViewModel
+
+<h2>Widget Name: @Model.Widget.Name</h2>
+<h3>Current page: @Model.Page.PageUrl</h3>
+
+<div class="cart-summary">
     <div class="cart-summary-title">
         Cart Summary (@DateTime.Now)    
     </div>    
