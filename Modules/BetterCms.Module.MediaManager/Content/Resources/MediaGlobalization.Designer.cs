@@ -313,7 +313,7 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Title.
+        ///   Looks up a localized string similar to File Edit.
         /// </summary>
         public static string FileEditor_Dialog_Title {
             get {

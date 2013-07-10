@@ -517,7 +517,7 @@
     <value>You can select only one file to re-upload.</value>
   </data>
   <data name="FileEditor_Dialog_Title" xml:space="preserve">
-    <value>Title</value>
+    <value>File Edit</value>
   </data>
   <data name="FileEditor_UpdateFailureMessage_Message" xml:space="preserve">
     <value>Failed to save file properties.</value>
