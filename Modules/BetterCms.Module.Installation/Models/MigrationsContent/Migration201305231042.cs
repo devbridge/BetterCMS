@@ -44,10 +44,10 @@ namespace BetterCms.Module.Installation.Models.MigrationsContent
         {
             using (var pagesApi = CmsContext.CreateApiContextOf<PagesApiContext>())
             {
-                var request = new GetPagesRequest(page => page.PageUrl.TrimEnd('/') == Urls.Page404.TrimEnd('/'), includeUnpublished: true);
+                var request = new GetPagesRequest(page => page.PageUrl.TrimEnd('/').ToLowerInvariant() == Urls.Page404.TrimEnd('/').ToLowerInvariant(), includeUnpublished: true);
                 var add404 = configuration.Installation.Install404ErrorPage && !pagesApi.GetPages(request).Items.Any();
 
-                request = new GetPagesRequest(page => page.PageUrl.TrimEnd('/') == Urls.Page500.TrimEnd('/'), includeUnpublished: true);
+                request = new GetPagesRequest(page => page.PageUrl.TrimEnd('/').ToLowerInvariant() == Urls.Page500.TrimEnd('/').ToLowerInvariant(), includeUnpublished: true);
                 var add500 = configuration.Installation.Install500ErrorPage && !pagesApi.GetPages(request).Items.Any();
 
                 request = new GetPagesRequest(page => page.PageUrl == Urls.DefaultPage, includeUnpublished: true);

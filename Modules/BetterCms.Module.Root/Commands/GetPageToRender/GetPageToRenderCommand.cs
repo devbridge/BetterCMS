@@ -181,7 +181,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
             if (request.PageId == null)
             {
-                query = query.Where(f => f.PageUrl.TrimEnd('/').ToLower() == request.PageUrl.TrimEnd('/').ToLowerInvariant());
+                query = query.Where(f => f.PageUrl.TrimEnd('/').ToLowerInvariant() == request.PageUrl.TrimEnd('/').ToLowerInvariant());
             }
             else
             {
@@ -210,7 +210,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
             if (request.PageId == null)
             {
-                pageContentsQuery = pageContentsQuery.Where(f => f.Page.PageUrl.TrimEnd('/').ToLower() == request.PageUrl.TrimEnd('/').ToLowerInvariant());
+                pageContentsQuery = pageContentsQuery.Where(f => f.Page.PageUrl.TrimEnd('/').ToLowerInvariant() == request.PageUrl.TrimEnd('/').ToLowerInvariant());
             }
             else
             {
