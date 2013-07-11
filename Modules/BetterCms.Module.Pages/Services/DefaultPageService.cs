@@ -60,19 +60,19 @@ namespace BetterCms.Module.Pages.Services
         /// </returns>
         public IPage GetPageByVirtualPath(string virtualPath)
         {
-            if (temporaryPageCache.ContainsKey(virtualPath.ToLowerInvariant()))
+            if (temporaryPageCache.ContainsKey(virtualPath.TrimEnd('/').ToLowerInvariant()))
             {
-                return temporaryPageCache[virtualPath.ToLowerInvariant()];
+                return temporaryPageCache[virtualPath.TrimEnd('/').ToLowerInvariant()];
             }
 
             var page = repository
-                .AsQueryable<PageProperties>(p => p.PageUrl == virtualPath)
+                .AsQueryable<PageProperties>(p => p.PageUrl.TrimEnd('/').ToLowerInvariant() == virtualPath.TrimEnd('/').ToLowerInvariant())
                 .Fetch(p => p.Layout)
                 .FirstOrDefault();
 
             if (page != null)
             {
-                temporaryPageCache.Add(virtualPath.ToLowerInvariant(), page);
+                temporaryPageCache.Add(virtualPath.TrimEnd('/').ToLowerInvariant(), page);
             }
 
             return page;
