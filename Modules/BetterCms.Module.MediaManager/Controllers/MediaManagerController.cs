@@ -1,12 +1,16 @@
 ﻿using System.Web.Mvc;
 
-using BetterCms.Core.Security;
+using Autofac;
 
+using BetterCms.Core.Dependencies;
+using BetterCms.Core.Security;
+using BetterCms.Core.Services;
 using BetterCms.Module.MediaManager.Command.Images.GetImages;
 using BetterCms.Module.MediaManager.Command.MediaManager.ArchiveMedia;
 using BetterCms.Module.MediaManager.Command.MediaManager.RenameMedia;
 using BetterCms.Module.MediaManager.Command.MediaManager.UnarchiveMedia;
 using BetterCms.Module.MediaManager.Content.Resources;
+using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 
 using BetterCms.Module.Root;
@@ -35,7 +39,13 @@ namespace BetterCms.Module.MediaManager.Controllers
         {
             var images = GetCommand<GetImagesCommand>().ExecuteCommand(new MediaManagerViewModel());
             var success = images != null;
-            var view = RenderView("Index", new MediaImageViewModel());
+
+            var container = PerWebRequestContainerProvider.GetLifetimeScope(HttpContext);
+            var model = new MediaTabsViewModel
+                {
+                    ShowVideoTab = container != null && container.IsRegistered<IMediaVideoService>()
+                };
+            var view = RenderView("Index", model);
             
             return ComboWireJson(success, view, images, JsonRequestBehavior.AllowGet);
         }

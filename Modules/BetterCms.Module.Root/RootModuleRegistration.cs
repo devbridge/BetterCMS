@@ -31,6 +31,8 @@ namespace BetterCms.Module.Root
 
         private readonly AuthenticationJsModuleIncludeDescriptor authenticationJsModuleIncludeDescriptor;
 
+        private readonly BcmsJsModuleIncludeDescriptor bcmsJsModuleIncludeDescriptor;
+
         private readonly SiteSettingsJsModuleIncludeDescriptor siteSettingsJsModuleIncludeDescriptor;
 
         /// <summary>
@@ -44,6 +46,7 @@ namespace BetterCms.Module.Root
         public RootModuleDescriptor(ICmsConfiguration configuration) : base(configuration)
         {    
             authenticationJsModuleIncludeDescriptor = new AuthenticationJsModuleIncludeDescriptor(this);
+            bcmsJsModuleIncludeDescriptor = new BcmsJsModuleIncludeDescriptor(this);
             siteSettingsJsModuleIncludeDescriptor = new SiteSettingsJsModuleIncludeDescriptor(this);
             tagsJsModuleIncludeDescriptor = new TagsJsModuleIncludeDescriptor(this);
         }
@@ -187,7 +190,7 @@ namespace BetterCms.Module.Root
         {
             return new []
                 {
-                    authenticationJsModuleIncludeDescriptor,                    
+                    authenticationJsModuleIncludeDescriptor,
                     new ContentJsModuleIncludeDescriptor(this),       
                     new DatePickerJsModuleIncludeDescriptor(this), 
                     new DynamicContentJsModuleIncludeDescriptor(this), 
@@ -201,7 +204,8 @@ namespace BetterCms.Module.Root
                     new JsIncludeDescriptor(this, "bcms.jquery.validate"),
                     new JsIncludeDescriptor(this, "bcms.jquery.validate.unobtrusive"),
                     new JsIncludeDescriptor(this, "bcms.jquery.autocomplete"),
-                    new JsIncludeDescriptor(this, "bcms"), 
+                    bcmsJsModuleIncludeDescriptor,
+//                    new JsIncludeDescriptor(this, "bcms"), 
                     new KnockoutExtendersJsModuleIncludeDescriptor(this), 
                     new JsIncludeDescriptor(this, "bcms.ko.grid"),                    
 

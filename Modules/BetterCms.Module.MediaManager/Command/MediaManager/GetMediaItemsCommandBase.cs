@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 using BetterCms.Core.Api.DataContracts;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Module.MediaManager.Command.Extensions;
 using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
@@ -38,7 +39,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
 
             var items = GetAllItemsList(request);
             var model = new MediaManagerItemsViewModel(items.Items, request, items.TotalCount);
-            model.Path = LoadMediaFolder(request);
+            model.Path = this.LoadPath(request, MediaType);
 
             return model;
         }

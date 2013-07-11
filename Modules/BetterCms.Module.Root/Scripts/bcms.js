@@ -30,6 +30,8 @@ bettercms.define('bcms', ['bcms.jquery'], function ($) {
              draft: 2,
              preview: 1
          },
+
+         links = {},
     
          globalization = {
              sessionHasExpired: null,
@@ -38,6 +40,9 @@ bettercms.define('bcms', ['bcms.jquery'], function ($) {
 
          errorTrace = !!true;
 
+    app.links = links;
+    app.globalization = globalization;
+    
     /**
     * Exposes reference to events:
     */

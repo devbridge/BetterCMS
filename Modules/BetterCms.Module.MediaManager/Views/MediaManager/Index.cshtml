@@ -1,27 +1,30 @@
 ﻿@using BetterCms.Module.MediaManager.Content.Resources
-@using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.MediaManager.ViewModels.MediaManager
 @using BetterCms.Module.Root.Mvc.Helpers
-
+@model MediaTabsViewModel
 <div class="bcms-innertab-header">
     <a class="bcms-tab bcms-tab-active" data-name="#bcms-tab-1" id="bcms-tab-images">@MediaGlobalization.ImagesTab_Title</a>
-    @*<a class="bcms-tab" data-name="#bcms-tab-2" id="bcms-tab-videos">@MediaGlobalization.VideosTab_Title</a>
-    <a class="bcms-tab" data-name="#bcms-tab-3" id="bcms-tab-audios">@MediaGlobalization.AudiosTab_Title</a>*@
+    @if (Model.ShowVideoTab)
+    {
+        <a class="bcms-tab" data-name="#bcms-tab-2" id="bcms-tab-videos">@MediaGlobalization.VideosTab_Title</a>
+    }
+    @*<a class="bcms-tab" data-name="#bcms-tab-3" id="bcms-tab-audios">@MediaGlobalization.AudiosTab_Title</a>*@
     <a class="bcms-tab" data-name="#bcms-tab-4" id="bcms-tab-files">@MediaGlobalization.FilesTab_Title</a>
 </div>
-
 @Html.TabbedContentMessagesBox()
-
 <div id="bcms-tab-1" class="bcms-tab-single">
     @Html.Partial("Partial/MediaManagerTab")
 </div>
-@*<div id="bcms-tab-2" class="bcms-tab-single">
-    @Html.Partial("Partial/MediaManagerTab")
-</div>
-<div id="bcms-tab-3" class="bcms-tab-single">
+@if (Model.ShowVideoTab)
+{
+    <div id="bcms-tab-2" class="bcms-tab-single">
+        @Html.Partial("Partial/MediaManagerTab")
+    </div>
+}
+@*<div id="bcms-tab-3" class="bcms-tab-single">
     @Html.Partial("Partial/MediaManagerTab")
 </div>*@
 <div id="bcms-tab-4" class="bcms-tab-single">
     @Html.Partial("Partial/MediaManagerTab")
 </div>
-
-@Html.Partial("Partial/MediaManagerTemplate")
+@Html.Partial("Partial/MediaManagerTemplate", new MediaViewModel())

@@ -123,6 +123,7 @@
     <Compile Include="Api\DataContracts\GetFolderMediasRequest.cs" />
     <Compile Include="Api\Events\MediaManagerEvents.cs" />
     <Compile Include="Command\Audios\GetAudios\GetAudiosCommand.cs" />
+    <Compile Include="Command\Extensions\CommandBaseExtensions.cs" />
     <Compile Include="Command\Files\GetFile\GetFileCommand.cs" />
     <Compile Include="Command\Files\SaveFile\SaveFileDataCommand.cs" />
     <Compile Include="Command\Folder\DeleteFolderCommand.cs" />
@@ -228,6 +229,7 @@
     <Compile Include="ViewModels\History\MediaPreviewViewModel.cs" />
     <Compile Include="ViewModels\ImageSelectorViewModel.cs" />
     <Compile Include="ViewModels\Images\ImageViewModel.cs" />
+    <Compile Include="ViewModels\MediaManager\MediaTabsViewModel.cs" />
     <Compile Include="ViewModels\MediaManager\MediaAudioViewModel.cs" />
     <Compile Include="ViewModels\MediaManager\MediaManagerItemsViewModel.cs" />
     <Compile Include="ViewModels\MediaManager\MediaPathViewModel.cs" />

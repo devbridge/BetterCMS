@@ -4,9 +4,6 @@ using BetterCms.Module.Root.Content.Resources;
 
 namespace BetterCms.Module.Root.Registration
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public class BcmsJsModuleIncludeDescriptor : JsIncludeDescriptor
     {
         public BcmsJsModuleIncludeDescriptor(RootModuleDescriptor module)

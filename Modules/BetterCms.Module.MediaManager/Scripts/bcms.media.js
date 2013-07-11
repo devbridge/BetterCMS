@@ -1399,13 +1399,13 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     /**
     * Parse json result and map data to view model
     */
-    function parseJsonResults(json, folderViewModel) {
+    function parseJsonResults(json, listViewModel) {
         var i;
 
-        messages.refreshBox(folderViewModel.container, json);
+        messages.refreshBox(listViewModel.container, json);
 
         if (json.Success) {
-            folderViewModel.medias.removeAll();
+            listViewModel.medias.removeAll();
 
             if (json.Data) {
                 // Map media path
@@ -1423,7 +1423,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                         }
                     }
 
-                    folderViewModel.path(pathViewModel);
+                    listViewModel.path(pathViewModel);
                 }
 
                 // Map media items
@@ -1433,20 +1433,20 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                             model = convertToMediaModel(item);                            
 
                         if (model != null) {
-                            folderViewModel.medias.push(model);
+                            listViewModel.medias.push(model);
                         }
                     }
                 }
 
                 // Map grid options
-                if (!folderViewModel.gridOptions()) {
-                    folderViewModel.gridOptions(new MediaItemsOptionsViewModel(folderViewModel.onOpenPage));
+                if (!listViewModel.gridOptions()) {
+                    listViewModel.gridOptions(new MediaItemsOptionsViewModel(listViewModel.onOpenPage));
                 }
-                folderViewModel.gridOptions().fromJson(json.Data);
-                folderViewModel.showMediaParentFolderLink(folderViewModel.gridOptions().isFilterSet());
+                listViewModel.gridOptions().fromJson(json.Data);
+                listViewModel.showMediaParentFolderLink(listViewModel.gridOptions().isFilterSet());
 
                 // Replace unobtrusive validator
-                bcms.updateFormValidator(folderViewModel.container.find(selectors.firstForm));
+                bcms.updateFormValidator(listViewModel.container.find(selectors.firstForm));
             }
 
             return true;
@@ -1515,13 +1515,13 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     /**
     * Initializes tab, when data is loaded
     */
-    function initializeTab(json, folderViewModel) {
-        var context = folderViewModel.container.find(selectors.templateDataBind).get(0);
+    function initializeTab(json, listViewModel) {
+        var context = listViewModel.container.find(selectors.templateDataBind).get(0);
 
-        if (parseJsonResults(json, folderViewModel)) {
-            ko.applyBindings(folderViewModel, context);
+        if (parseJsonResults(json, listViewModel)) {
+            ko.applyBindings(listViewModel, context);
 
-            bcms.updateFormValidator(folderViewModel.container.find(selectors.firstForm));
+            bcms.updateFormValidator(listViewModel.container.find(selectors.firstForm));
         }
     }
 

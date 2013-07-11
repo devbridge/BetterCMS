@@ -1,19 +1,34 @@
-﻿using BetterCms.Module.MediaManager.Command.MediaManager;
+﻿using BetterCms.Core.Mvc.Commands;
+using BetterCms.Module.MediaManager.Command.Extensions;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Services;
+using BetterCms.Module.MediaManager.ViewModels.MediaManager;
+using BetterCms.Module.Root.Mvc;
 
 namespace BetterCms.Module.MediaManager.Command.Videos.GetVideos
 {
-    public class GetVideosCommand : GetMediaItemsCommandBase<MediaFile>
+    public class GetVideosCommand : CommandBase, ICommand<MediaManagerViewModel, MediaManagerItemsViewModel>
     {
-        /// <summary>
-        /// Gets the type of the current media items.
-        /// </summary>
-        /// <value>
-        /// The type of the current media items.
-        /// </value>
-        protected override MediaType MediaType
+        private readonly IMediaVideoService mediaVideoService;
+
+        public GetVideosCommand(IMediaVideoService mediaVideoService)
         {
-            get { return MediaType.Video; }
+            this.mediaVideoService = mediaVideoService;
+        }
+
+        public MediaManagerItemsViewModel Execute(MediaManagerViewModel request)
+        {
+            if (mediaVideoService == null)
+            {
+                return null;
+            }
+
+            request.SetDefaultSortingOptions("Title");
+            var items = mediaVideoService.GetItems(request);
+            return new MediaManagerItemsViewModel(items.Items, request, items.TotalCount)
+                {
+                    Path = this.LoadPath(request, MediaType.Video)
+                };
         }
     }
 }
