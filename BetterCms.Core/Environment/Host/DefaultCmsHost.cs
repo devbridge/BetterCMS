@@ -6,7 +6,6 @@ using System.Web;
 using System.Web.Hosting;
 using System.Web.Routing;
 
-using BetterCms.Api;
 using BetterCms.Core.DataAccess.DataContext.Migrations;
 using BetterCms.Core.Exceptions.Host;
 using BetterCms.Core.Modules.Registration;
@@ -222,7 +221,6 @@ namespace BetterCms.Core.Environment.Host
             {
                 var descriptors = modulesRegistration.GetModules().Select(m => m.ModuleDescriptor).ToList();                
                 migrationRunner.MigrateStructure(descriptors);
-                migrationRunner.MigrateContent(descriptors);
             }
             catch (Exception ex)
             {

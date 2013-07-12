@@ -127,13 +127,10 @@
   <ItemGroup>
     <Compile Include="AmazonS3Storage\AmazonS3StorageServiceTest.cs" />
     <Compile Include="ApiTestBase.cs" />
-    <Compile Include="Blog\ApiTests\BlogPostApiIntegrationTests.cs" />
     <Compile Include="Blog\CommandTests\GetAuthorListCommandTest.cs" />
     <Compile Include="Blog\ModelTests\MapTests\BlogPostMapTest.cs" />
     <Compile Include="Blog\ModelTests\MapTests\BlogPostContentMapTest.cs" />
     <Compile Include="Blog\ModelTests\MapTests\OptionMapTest.cs" />
-    <Compile Include="Blog\ApiTests\BlogPostApiTests.cs" />
-    <Compile Include="Blog\ApiTests\AuthorApiTests.cs" />
     <Compile Include="Common\SecurityTest.cs" />
     <Compile Include="Common\SerializationTest.cs" />
     <Compile Include="Configuration\CmsTestConfigurationSection.cs" />
@@ -144,26 +141,17 @@
     <Compile Include="MediaManager\ModelTests\MapTests\MediaFolderMapTest.cs" />
     <Compile Include="MediaManager\ModelTests\MapTests\MediaImageMapTest.cs" />
     <Compile Include="MediaManager\ModelTests\MapTests\MediaMapTest.cs" />
-    <Compile Include="MediaManager\ApiTests\MediaApiTests.cs" />
     <Compile Include="Pages\CommandTests\ContentTests\DeletePageContentCommandTest.cs" />
     <Compile Include="Pages\CommandTests\ContentTests\GetPageContentOptionsTest.cs" />
     <Compile Include="Pages\CommandTests\ContentTests\GetPageHtmlContentCommandTest.cs" />
     <Compile Include="Pages\CommandTests\ContentTests\InsertContentToPageCommandTest.cs" />
     <Compile Include="Pages\CommandTests\ContentTests\SavePageContentOptionsCommandTest.cs" />
-    <Compile Include="Pages\ApiTests\WidgetApiTests.cs" />
-    <Compile Include="Pages\ApiTests\SitemapApiTests.cs" />
     <Compile Include="Pages\CommandTests\ContentTests\SortPageContentCommandIntegrationTest.cs" />
     <Compile Include="Pages\CommandTests\WidgetTests\DeleteWidgetCommandTest.cs" />
     <Compile Include="Pages\CommandTests\WidgetTests\GetSiteSettingsWidgetsIntegrationTest.cs" />
     <Compile Include="Pages\EventTests\PageEventTests.cs" />
     <Compile Include="Pages\HelperTests\StringHelperTests.cs" />
     <Compile Include="Pages\ModelTests\ConcurrencyTests\ConcurrencyTests.cs" />
-    <Compile Include="Pages\ApiTests\HistoryApiTests.cs" />
-    <Compile Include="Pages\ApiTests\LayoutApiTests.cs" />
-    <Compile Include="Pages\ApiTests\CategoryApiTests.cs" />
-    <Compile Include="Pages\ApiTests\RedirectApiTests.cs" />
-    <Compile Include="Pages\ApiTests\ContentApiTests.cs" />
-    <Compile Include="Pages\ApiTests\TagApiTests.cs" />
     <Compile Include="Root\CommandTests\GetMainJsDataCommandTest.cs" />
     <Compile Include="Root\CommandTests\GetProcessorJsDataCommandTest.cs" />
     <Compile Include="Root\CommandTests\GetStyleSheetsToRenderCommandTest.cs" />
@@ -285,12 +273,18 @@
       <Project>{C530025B-8AB7-402D-B60C-000C9A5D0446}</Project>
       <Name>BetterCms.Module.Users</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.WebApi\BetterCms.Module.Api.csproj">
+      <Project>{5ff9d100-cf25-4899-8d23-8eb9f0c0e102}</Project>
+      <Name>BetterCms.Module.Api</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCms.Module.WindowsAzureStorage\BetterCms.Module.WindowsAzureStorage.csproj">
       <Project>{6e8e91d9-aeb9-432f-9647-68fa2def2ca9}</Project>
       <Name>BetterCms.Module.WindowsAzureStorage</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Api\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <PropertyGroup>

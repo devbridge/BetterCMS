@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 
-using BetterCms.Api;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Commands;

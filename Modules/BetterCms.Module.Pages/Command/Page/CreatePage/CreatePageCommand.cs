@@ -1,5 +1,4 @@
-﻿using BetterCms.Api;
-using BetterCms.Core.DataContracts.Enums;
+﻿using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.Pages.Command.Page.SavePageProperties;

@@ -1,5 +1,4 @@
-﻿using BetterCms.Api;
-using BetterCms.Core.Mvc.Commands;
+﻿using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Root.Mvc;
 
 namespace BetterCms.Module.Root.Commands.Tag.DeleteTag

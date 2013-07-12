@@ -1,6 +1,5 @@
 ﻿using System;
 
-using BetterCms.Api;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Root.Content.Resources;

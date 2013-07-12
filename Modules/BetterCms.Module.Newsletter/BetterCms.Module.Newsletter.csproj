@@ -127,7 +127,9 @@
     </Compile>
     <Compile Include="Controllers\SubscriberController.cs" />
     <Compile Include="Exceptions\UniqueSubscriberException.cs" />
-    <Compile Include="Models\MigrationsContent\Migration201305231541.cs" />
+    <Compile Include="Models\Migrations\Migration201305231541.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="NewsletterModuleDescriptor.cs" />
     <Compile Include="Models\Maps\SubscriberMap.cs" />
     <Compile Include="Models\Subscriber.cs" />

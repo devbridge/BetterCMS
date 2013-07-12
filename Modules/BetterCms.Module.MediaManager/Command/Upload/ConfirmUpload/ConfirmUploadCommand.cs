@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Api;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Mvc.Commands;
 

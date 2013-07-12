@@ -1,6 +1,5 @@
 ﻿using System;
 
-using BetterCms.Api;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;

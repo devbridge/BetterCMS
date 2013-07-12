@@ -13,7 +13,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents
         /// The content id.
         /// </value>
         [DataMember]
-        public System.Guid ContentId { get; set; }
+        public Guid ContentId { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether content is published.
@@ -57,7 +57,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents
         /// The region id.
         /// </value>
         [DataMember]
-        public System.Guid RegionId { get; set; }
+        public Guid RegionId { get; set; }
 
         /// <summary>
         /// Gets or sets the region identifier.

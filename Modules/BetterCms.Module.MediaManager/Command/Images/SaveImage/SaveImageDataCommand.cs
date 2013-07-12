@@ -5,7 +5,6 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Web.Helpers;
 
-using BetterCms.Api;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Services.Storage;
 using BetterCms.Module.MediaManager.Helpers;

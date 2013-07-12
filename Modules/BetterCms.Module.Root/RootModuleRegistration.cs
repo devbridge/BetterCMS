@@ -7,7 +7,6 @@ using BetterCms.Core.Modules.Projections;
 using BetterCms.Core.Security;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Controllers;
-using BetterCms.Module.Root.Models.MigrationsContent;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Projections;
 using BetterCms.Module.Root.Registration;
@@ -117,9 +116,7 @@ namespace BetterCms.Module.Root
             containerBuilder.RegisterType<DefaultContentService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultRenderingService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<PageStylesheetProjectionFactory>().AsSelf().InstancePerLifetimeScope();
-            containerBuilder.RegisterType<PageJavaScriptProjectionFactory>().AsSelf().InstancePerLifetimeScope();
-
-            containerBuilder.RegisterType<MigratorApiContext>().AsSelf().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<PageJavaScriptProjectionFactory>().AsSelf().InstancePerLifetimeScope();            
         }
 
         /// <summary>

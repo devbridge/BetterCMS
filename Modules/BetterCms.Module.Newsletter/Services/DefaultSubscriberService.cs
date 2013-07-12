@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Linq;
 
-using BetterCms.Api;
-
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 

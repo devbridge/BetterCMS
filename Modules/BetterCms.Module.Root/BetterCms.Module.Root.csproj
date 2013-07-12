@@ -117,8 +117,6 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Api\Attributes\AllowableValuesValidationAttribute.cs" />
-    <Compile Include="Api\Attributes\EmptyGuidValidationAttribute.cs" />
     <Compile Include="Events\CategoryEvents.cs" />
     <Compile Include="Events\PageRetrievedEventArgs.cs" />
     <Compile Include="Events\RootEvents.cs" />
@@ -160,7 +158,6 @@
     <Compile Include="Models\ContentBase.cs" />
     <Compile Include="Models\ComboWireJson.cs" />
     <Compile Include="Models\Maps\ModuleContentVersionMap.cs" />
-    <Compile Include="Models\MigrationsContent\MigratorApiContext.cs" />
     <Compile Include="Models\Migrations\Migration201306101421.cs" />
     <Compile Include="Models\ModuleContentVersion.cs" />
     <Compile Include="Models\LayoutRegion.cs" />
@@ -172,7 +169,6 @@
     <Compile Include="Models\Maps\ContentOptionMap.cs" />
     <Compile Include="Models\Maps\RegionMap.cs" />
     <Compile Include="Models\Maps\TagMap.cs" />
-    <Compile Include="Models\MigrationsContent\ContentMigrationBase.cs" />
     <Compile Include="Models\Migrations\Migration201305230800.cs" />
     <Compile Include="Models\Migrations\Migration201303261100.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />

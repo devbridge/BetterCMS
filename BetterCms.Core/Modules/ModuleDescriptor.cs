@@ -3,14 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Web.Mvc;
-
 using Autofac;
-
-using BetterCms.Api;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Modules.Projections;
-using BetterCms.Core.Mvc.Attributes;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Mvc.Extensions;
 using BetterCms.Core.Security;
@@ -348,19 +344,6 @@ namespace BetterCms.Core.Modules
             containerBuilder
                 .RegisterAssemblyTypes(assembly)
                 .Where(scan => commandTypes.Any(commandType => IsAssignableToGenericType(scan, commandType)))
-                .AsImplementedInterfaces()
-                .AsSelf()
-                .PropertiesAutowired()
-                .InstancePerLifetimeScope();
-        }
-
-        internal void RegisterModuleApiContexts(ModuleRegistrationContext registrationContext, ContainerBuilder containerBuilder)
-        {
-            Assembly assembly = GetType().Assembly;
-            
-            containerBuilder
-                .RegisterAssemblyTypes(assembly)
-                .AssignableTo(typeof(ApiContext))                
                 .AsImplementedInterfaces()
                 .AsSelf()
                 .PropertiesAutowired()

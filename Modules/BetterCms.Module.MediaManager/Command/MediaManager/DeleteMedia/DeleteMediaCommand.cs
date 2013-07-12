@@ -1,9 +1,6 @@
-﻿using BetterCms.Api;
-using BetterCms.Core.Mvc.Commands;
+﻿using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Mvc;
-
-using NHibernate.Proxy.DynamicProxy;
 
 namespace BetterCms.Module.MediaManager.Command.MediaManager.DeleteMedia
 {

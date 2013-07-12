@@ -4,13 +4,6 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 
-using BetterCms.Api;
-using BetterCms.Core;
-using BetterCms.Core.Api.DataContracts;
-using BetterCms.Events;
-using BetterCms.Module.Blog.Models;
-using BetterCms.Module.Pages.Api.DataContracts;
-using BetterCms.Module.Pages.Models;
 using BetterCms.Sandbox.Mvc4.Models;
 
 namespace BetterCms.Sandbox.Mvc4.Controllers

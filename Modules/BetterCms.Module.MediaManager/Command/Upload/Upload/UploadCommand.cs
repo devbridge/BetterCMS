@@ -1,5 +1,4 @@
-﻿using BetterCms.Api;
-using BetterCms.Core.Exceptions;
+﻿using BetterCms.Core.Exceptions;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;

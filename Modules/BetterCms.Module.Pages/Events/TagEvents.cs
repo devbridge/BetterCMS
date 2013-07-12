@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Api;
 using BetterCms.Module.Root.Models;
 
 // ReSharper disable CheckNamespace

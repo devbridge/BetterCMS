@@ -150,7 +150,7 @@
     <Compile Include="Models\Maps\BlogPostContentMap.cs" />
     <Compile Include="Models\Maps\BlogPostMap.cs" />
     <Compile Include="Models\Maps\OptionMap.cs" />
-    <Compile Include="Models\MigrationsContent\Migration201305271258.cs" />
+    <Compile Include="Models\Migrations\Migration201305271258.cs" />
     <Compile Include="Models\Migrations\Migration201305271234.cs" />
     <Compile Include="Models\Option.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
@@ -187,6 +187,7 @@
     <EmbeddedResource Include="Scripts\bcms.blog.js" />
     <Content Include="BuildConfiguration.xml" />
     <EmbeddedResource Include="Scripts\bcms.blog.filter.js" />
+    <EmbeddedResource Include="Models\Migrations\Migration201305271258.sqlserver.sql" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -246,7 +247,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Views\Blog\Partial\BlogsFilterTemplate.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Models\MigrationsContent\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

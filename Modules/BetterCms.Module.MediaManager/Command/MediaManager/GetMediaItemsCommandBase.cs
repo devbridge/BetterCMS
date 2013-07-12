@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-using BetterCms.Core.Api.DataContracts;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.Content.Resources;
@@ -18,7 +17,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
 {
     public abstract class GetMediaItemsCommandBase<TEntity> : CommandBase, ICommand<MediaManagerViewModel, MediaManagerItemsViewModel>
         where TEntity: MediaFile
-    {
+    {       
         /// <summary>
         /// Gets the type of the current media items.
         /// </summary>
@@ -37,7 +36,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             request.SetDefaultSortingOptions("Title");
 
             var items = GetAllItemsList(request);
-            var model = new MediaManagerItemsViewModel(items.Items, request, items.TotalCount);
+            var model = new MediaManagerItemsViewModel(items.Item1, request, items.Item2);
             model.Path = LoadMediaFolder(request);
 
             return model;
@@ -93,7 +92,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns>Media items list</returns>
-        private DataListResponse<MediaViewModel> GetAllItemsList(MediaManagerViewModel request)
+        private Tuple<IEnumerable<MediaViewModel>, int> GetAllItemsList(MediaManagerViewModel request)
         {
             var query = Repository
                 .AsQueryable<Media>()
@@ -177,14 +176,14 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             return IsChild(media.Folder, currentFolderId, includeArchivedItems);
         }
 
-        private DataListResponse<MediaViewModel> ToResponse(MediaManagerViewModel request, IQueryable<Media> query)
+        private Tuple<IEnumerable<MediaViewModel>, int> ToResponse(MediaManagerViewModel request, IQueryable<Media> query)
         {
             var count = query.ToRowCountFutureValue();
             query = AddOrder(query, request).AddPaging(request);
 
             var items = query.Select(SelectItem).ToList();
 
-            return new DataListResponse<MediaViewModel>(items, count.Value);
+            return new Tuple<IEnumerable<MediaViewModel>, int>(items, count.Value);
         }
 
         /// <summary>

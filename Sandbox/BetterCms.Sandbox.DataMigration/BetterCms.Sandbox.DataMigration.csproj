@@ -79,8 +79,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Sql\001_ImportFakeData.sql" />
-    <Content Include="Sql\002_ClearAllTables.sql" />
     <None Include="App.config" />
     <Content Include="Config\nlog.config">
       <SubType>Designer</SubType>

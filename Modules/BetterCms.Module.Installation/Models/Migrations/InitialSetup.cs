@@ -1,6 +1,4 @@
-﻿using System;
-
-using BetterCms.Core.DataAccess.DataContext.Migrations;
+﻿using BetterCms.Core.DataAccess.DataContext.Migrations;
 
 using FluentMigrator;
 
@@ -29,6 +27,7 @@ namespace BetterCms.Module.Installation.Models.Migrations
         public override void Up()
         {
             // For backward compatibility.
+
             Update.Table(LayoutsTableName)
                   .InSchema(rootSchemaName)
                   .Set(new { LayoutPath = "~/Areas/bcms-installation/Views/Shared/WideLayout.cshtml" })
@@ -43,14 +42,6 @@ namespace BetterCms.Module.Installation.Models.Migrations
                   .InSchema(rootSchemaName)
                   .Set(new { LayoutPath = "~/Areas/bcms-installation/Views/Shared/ThreeColumnsLayout.cshtml" })
                   .Where(new { LayoutPath = "~/Areas/bcms-templates/Views/Shared/ThreeColumnsLayout.cshtml" });
-        }
-
-        /// <summary>
-        /// Downs this instance.
-        /// </summary>
-        public override void Down()
-        {
-            throw new NotImplementedException();
         }
     }
 }

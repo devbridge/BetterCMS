@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using BetterCms.Api;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Mvc.Commands;

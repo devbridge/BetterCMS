@@ -1,5 +1,4 @@
-﻿using BetterCms.Api;
-using BetterCms.Core.DataContracts;
+﻿using BetterCms.Core.DataContracts;
 using BetterCms.Module.Root.ViewModels.Cms;
 
 // ReSharper disable CheckNamespace

@@ -1,5 +1,4 @@
-﻿using BetterCms.Api;
-using BetterCms.Core.Mvc.Commands;
+﻿using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Newsletter.Models;
 using BetterCms.Module.Newsletter.ViewModels;
 using BetterCms.Module.Root.Mvc;

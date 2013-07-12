@@ -1,6 +1,4 @@
-﻿using BetterCms.Api;
-using BetterCms.Core.Mvc;
-using BetterCms.Core.Mvc.Commands;
+﻿using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.ViewModels.SiteSettings;
 using BetterCms.Module.Root.Mvc;
 

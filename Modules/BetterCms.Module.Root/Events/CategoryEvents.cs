@@ -1,5 +1,4 @@
-﻿using BetterCms.Api;
-using BetterCms.Module.Root.Models;
+﻿using BetterCms.Module.Root.Models;
 
 // ReSharper disable CheckNamespace
 namespace BetterCms.Events

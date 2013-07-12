@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using BetterCms.Api;
-
 using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;

@@ -186,9 +186,13 @@
     <Compile Include="Models\MediaFolder.cs" />
     <Compile Include="Models\Media.cs" />
     <Compile Include="Models\MediaImage.cs" />
-    <Compile Include="Models\MigrationsContent\Migration201306201216.cs" />
-    <Compile Include="Models\MigrationsContent\Migration201306071105.cs" />
-    <Compile Include="Models\Migrations\Migration2013062810010.cs" />
+    <Compile Include="Models\Migrations\Migration201306071105.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Migrations\Migration201306201216.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Migrations\Migration201306281001.cs" />
     <Compile Include="Models\Migrations\Migration201306271601.cs" />
     <Compile Include="Models\Migrations\Migration201306271317.cs" />
     <Compile Include="Models\Migrations\Migration201306211140.cs" />
@@ -266,6 +270,8 @@
     <Content Include="BuildConfiguration.xml" />
     <EmbeddedResource Include="Content\Styles\bcms.media.css" />
     <EmbeddedResource Include="Content\Styles\Images\sprite-media-3.png" />
+    <EmbeddedResource Include="Models\Migrations\Migration201306071105.sqlserver.sql" />
+    <EmbeddedResource Include="Models\Migrations\Migration201306201216.sqlserver.sql" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
