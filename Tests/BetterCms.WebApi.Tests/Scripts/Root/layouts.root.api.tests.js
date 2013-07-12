@@ -1,6 +1,6 @@
 ﻿var getLayoutsUrl = 'http://localhost:55132/bcms-api/layouts';
 
-asyncTest("should get layouts", function () {
+asyncTest("Should get a list of layouts", function () {
     $.ajax(getLayoutsUrl,
         {
             data: {

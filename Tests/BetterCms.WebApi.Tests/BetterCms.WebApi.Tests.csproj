@@ -74,29 +74,37 @@
     <Reference Include="nunit.framework">
       <HintPath>..\..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack">
-      <HintPath>..\..\packages\ServiceStack.3.9.54\lib\net35\ServiceStack.dll</HintPath>
+    <Reference Include="ServiceStack, Version=3.9.55.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\ServiceStack.3.9.55\lib\net35\ServiceStack.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.Common">
-      <HintPath>..\..\packages\ServiceStack.Common.3.9.54\lib\net35\ServiceStack.Common.dll</HintPath>
+    <Reference Include="ServiceStack.Common, Version=3.9.55.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\ServiceStack.Common.3.9.55\lib\net35\ServiceStack.Common.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.Interfaces">
-      <HintPath>..\..\packages\ServiceStack.Common.3.9.54\lib\net35\ServiceStack.Interfaces.dll</HintPath>
+    <Reference Include="ServiceStack.Interfaces, Version=3.9.55.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\ServiceStack.Common.3.9.55\lib\net35\ServiceStack.Interfaces.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.OrmLite">
-      <HintPath>..\..\packages\ServiceStack.OrmLite.SqlServer.3.9.54\lib\ServiceStack.OrmLite.dll</HintPath>
+    <Reference Include="ServiceStack.OrmLite, Version=3.9.55.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\ServiceStack.OrmLite.SqlServer.3.9.55\lib\ServiceStack.OrmLite.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.OrmLite.SqlServer">
-      <HintPath>..\..\packages\ServiceStack.OrmLite.SqlServer.3.9.54\lib\ServiceStack.OrmLite.SqlServer.dll</HintPath>
+    <Reference Include="ServiceStack.OrmLite.SqlServer, Version=3.9.55.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\ServiceStack.OrmLite.SqlServer.3.9.55\lib\ServiceStack.OrmLite.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.Redis">
-      <HintPath>..\..\packages\ServiceStack.Redis.3.9.54\lib\net35\ServiceStack.Redis.dll</HintPath>
+    <Reference Include="ServiceStack.Redis, Version=3.9.55.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\ServiceStack.Redis.3.9.55\lib\net35\ServiceStack.Redis.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.ServiceInterface">
-      <HintPath>..\..\packages\ServiceStack.3.9.54\lib\net35\ServiceStack.ServiceInterface.dll</HintPath>
+    <Reference Include="ServiceStack.ServiceInterface, Version=3.9.55.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\ServiceStack.3.9.55\lib\net35\ServiceStack.ServiceInterface.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.Text">
-      <HintPath>..\..\packages\ServiceStack.Text.3.9.54\lib\net35\ServiceStack.Text.dll</HintPath>
+    <Reference Include="ServiceStack.Text, Version=3.9.55.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\ServiceStack.Text.3.9.55\lib\net35\ServiceStack.Text.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -166,14 +174,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\TestsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\TestsRunnerViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTests\DynamicLinqExtensionsTests.cs" />
     <Compile Include="UnitTests\QueryCreatorTests.cs" />
+    <Compile Include="UnitTests\Root\GeneralTest.cs" />
     <Compile Include="UnitTests\SerializationTests.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -181,28 +188,21 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Scripts\Root\categories.webapi.tests.js" />
-    <Content Include="Scripts\Root\layouts.webapi.tests.js" />
-    <Content Include="Scripts\Root\tags.webapi.tests.js" />
+    <Content Include="index.htm" />
+    <Content Include="Scripts\Root\categories.root.api.tests.js" />
+    <Content Include="Scripts\Root\root.api.tests.js" />
+    <Content Include="Scripts\Root\layouts.root.api.tests.js" />
+    <Content Include="Scripts\Root\tags.root.api.tests.js" />
+    <Content Include="Scripts\general.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\BetterCms\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Tests\TestsResults.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\Pages\pages.webapi.tests.js" />

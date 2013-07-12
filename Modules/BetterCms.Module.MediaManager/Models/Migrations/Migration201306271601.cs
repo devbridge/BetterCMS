@@ -28,13 +28,5 @@ namespace BetterCms.Module.MediaManager.Models.Migrations
             Alter.Table("Medias").InSchema(SchemaName)
                 .AddColumn("ImageId").AsGuid().Nullable();
         }
-
-        /// <summary>
-        /// Migrate down.
-        /// </summary>
-        public override void Down()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

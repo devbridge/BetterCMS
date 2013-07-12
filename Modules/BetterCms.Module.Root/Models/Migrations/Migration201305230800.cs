@@ -33,13 +33,5 @@ namespace BetterCms.Module.Root.Models.Migrations
                 .WithColumn("ModuleName").AsString(MaxLength.Name).NotNullable()
                 .WithColumn("ContentVersion").AsInt64().NotNullable();
         }
-
-        /// <summary>
-        /// Migrate down.
-        /// </summary>
-        public override void Down()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

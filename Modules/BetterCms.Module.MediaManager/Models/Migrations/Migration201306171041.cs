@@ -30,13 +30,5 @@ namespace BetterCms.Module.MediaManager.Models.Migrations
                 .OnTable("Medias").InSchema(SchemaName)
                 .AsGuid().Nullable();
         }
-
-        /// <summary>
-        /// Downs this instance.
-        /// </summary>
-        public override void Down()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

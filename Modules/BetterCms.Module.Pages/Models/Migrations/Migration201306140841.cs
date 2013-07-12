@@ -29,13 +29,5 @@ namespace BetterCms.Module.Pages.Models.Migrations
                 .AddColumn("SecondaryImageId").AsGuid().Nullable()
                 .AddColumn("FeaturedImageId").AsGuid().Nullable();
         }
-
-        /// <summary>
-        /// Migrate down.
-        /// </summary>
-        public override void Down()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

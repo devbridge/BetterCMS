@@ -7,14 +7,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
 {
     public interface IPageService
     {
-        GetPageResponse Get(GetPageRequest request);
-
         IPagePropertiesService Properties { get; }
 
         IPageRenderedHtmlService Html { get; }
 
-        PageExistsResponse Exists(PageExistsRequest request);
-
         IPageContentsService Contents { get; }
+
+        GetPageResponse Get(GetPageRequest request);
+
+        PageExistsResponse Exists(PageExistsRequest request);
     }
 }

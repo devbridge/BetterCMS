@@ -20,7 +20,7 @@ namespace BetterCms.Module.Pages.Services
         /// <summary>
         /// Configuration service
         /// </summary>
-        private ICmsConfiguration configuration;
+        private readonly ICmsConfiguration configuration;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultUrlService" /> class.

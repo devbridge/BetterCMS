@@ -151,51 +151,6 @@
     <Compile Include="IApiFacade.cs" />
     <Compile Include="Helpers\DataOptionsQueryCreator.cs" />
     <Compile Include="Helpers\DynamicLinqExtensions.cs" />
-    <Compile Include="Legacy\Api\Core\ApiContext.cs" />
-    <Compile Include="Legacy\Api\Core\DataApiContext.cs" />
-    <Compile Include="Legacy\Api\Core\DataContracts\DataListResponse.cs" />
-    <Compile Include="Legacy\Api\Core\DataContracts\GetDataRequest.cs" />
-    <Compile Include="Legacy\Api\Core\DataContracts\GetFilteredDataRequest.cs" />
-    <Compile Include="Legacy\Api\Core\DataContracts\OrderByModel.cs" />
-    <Compile Include="Legacy\Api\Core\Extensions\ApiQueryableExtensions.cs" />
-    <Compile Include="Legacy\Api\Core\Extensions\ApiRepositoryExtensions.cs" />
-    <Compile Include="Legacy\Api\Attributes\AllowableValuesValidationAttribute.cs" />
-    <Compile Include="Legacy\Api\Attributes\EmptyGuidValidationAttribute.cs" />
-    <Compile Include="Legacy\Pages.Api\DataContracts\AddWidgetToPageRequest.cs" />
-    <Compile Include="Legacy\Pages.Api\DataContracts\CreateContentOptionsRequest.cs" />
-    <Compile Include="Legacy\Pages.Api\DataContracts\CreateHtmlContentWidgetRequest.cs" />
-    <Compile Include="Legacy\Pages.Api\DataContracts\CreateLayoutRegionRequest.cs" />
-    <Compile Include="Legacy\Pages.Api\DataContracts\CreateLayoutRequest.cs" />
-    <Compile Include="Legacy\Pages.Api\DataContracts\CreatePageContentRequestBase.cs" />
-    <Compile Include="Legacy\Pages.Api\DataContracts\CreatePageHtmlContentRequest.cs" />
-    <Compile Include="Legacy\Pages.Api\DataContracts\CreatePageRequest.cs" />
-    <Compile Include="Legacy\Pages.Api\DataContracts\CreateServerControlWidgetRequest.cs" />
-    <Compile Include="Legacy\Pages.Api\DataContracts\GetHtmlContentWidgetsRequest.cs" />
-    <Compile Include="Legacy\Pages.Api\DataContracts\GetLayoutsRequest.cs" />
-    <Compile Include="Legacy\Pages.Api\DataContracts\GetPagesRequest.cs" />
-    <Compile Include="Legacy\Pages.Api\DataContracts\GetServerControlWidgetsRequest.cs" />
-    <Compile Include="Legacy\Pages.Api\DataContracts\Models\ContentOptionDto.cs" />
-    <Compile Include="Legacy\Pages.Api\DataContracts\Models\ContentOptionValueDto.cs" />
-    <Compile Include="Legacy\Pages.Api\PagesApiContext.Contents.cs" />
-    <Compile Include="Legacy\Pages.Api\PagesApiContext.cs" />
-    <Compile Include="Legacy\Pages.Api\PagesApiContext.Layouts.cs" />
-    <Compile Include="Legacy\Pages.Api\PagesApiContext.Pages.cs" />
-    <Compile Include="Legacy\Blog.Api\DataContracts\AuthorCreateRequest.cs" />
-    <Compile Include="Legacy\Blog.Api\DataContracts\AuthorCreateResponce.cs" />
-    <Compile Include="Legacy\Blog.Api\DataContracts\AuthorDeleteRequest.cs" />
-    <Compile Include="Legacy\Blog.Api\DataContracts\AuthorDeleteResponce.cs" />
-    <Compile Include="Legacy\Blog.Api\DataContracts\AuthorUpdateRequest.cs" />
-    <Compile Include="Legacy\Blog.Api\DataContracts\AuthorUpdateResponce.cs" />
-    <Compile Include="Legacy\Blog.Api\DataContracts\GetAuthorsRequest.cs" />
-    <Compile Include="Legacy\Blog.Api\DataContracts\GetBlogPostsRequest.cs" />
-    <Compile Include="Legacy\Blog.Api\DataContracts\UpdateBlogPostRequest.cs" />
-    <Compile Include="Legacy\Blog.Api\DataModels\AuthorModel.cs" />
-    <Compile Include="Legacy\Blog.Api\DataModels\BlogPostModel.cs" />
-    <Compile Include="Legacy\Blog.Api\DefaultAuthorService.cs" />
-    <Compile Include="Legacy\Blog.Api\DefaultBlogService.cs" />
-    <Compile Include="Legacy\Blog.Api\IAuthorService.cs" />
-    <Compile Include="Legacy\Blog.Api\IBlogService.cs" />
-    <Compile Include="Legacy\Blog.Api\Mappers\EntityToServiceModelMapper.cs" />
     <Compile Include="Operations\Blog\Authors\AuthorsService.cs" />
     <Compile Include="Operations\Blog\Authors\Author\AuthorService.cs" />
     <Compile Include="Operations\Blog\Authors\Author\GetAuthorRequest.cs" />
@@ -229,6 +184,9 @@
     <Compile Include="Operations\Blog\BlogPosts\BlogPostModel.cs" />
     <Compile Include="Operations\Blog\IBlogApiOperations.cs" />
     <Compile Include="Operations\DataFilter.cs" />
+    <Compile Include="Operations\DataListResponse.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Operations\Enums\FilterConnector.cs" />
     <Compile Include="Operations\Enums\FilterOperation.cs" />
     <Compile Include="Operations\Enums\OrderDirection.cs" />
@@ -464,7 +422,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
-    <Folder Include="Legacy\Blog.Api\DataFilters\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

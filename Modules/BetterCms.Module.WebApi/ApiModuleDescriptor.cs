@@ -2,7 +2,6 @@
 
 using Autofac;
 
-using BetterCms.Api;
 using BetterCms.Core.Dependencies;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Mvc.Extensions;

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace BetterCms.Core.Api.DataContracts
+namespace BetterCms.Module.Api.Operations
 {
     [DataContract]
     public class DataListResponse<TEntity>

@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 
-using BetterCms.Core.Api.DataContracts;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Module.Api.Operations;
 

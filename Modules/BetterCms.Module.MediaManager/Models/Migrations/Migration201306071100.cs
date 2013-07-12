@@ -31,13 +31,5 @@ namespace BetterCms.Module.MediaManager.Models.Migrations
                 .AsInt32().NotNullable()
                 .WithDefaultValue(1);
         }
-
-        /// <summary>
-        /// Downs this instance.
-        /// </summary>
-        public override void Down()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
