@@ -11,7 +11,7 @@ using BetterCms.Module.Vimeo.Services.Models;
 
 namespace BetterCms.Module.Vimeo.Command.Videos.SaveVideos
 {
-    public class SaveVideosCommand : CommandBase, ICommand<SaveVideosRequest, SaveVideosResponse>
+    internal class SaveVideosCommand : CommandBase, ICommand<SaveVideosRequest, SaveVideosResponse>
     {
         private readonly IVimeoService vimeoService;
 

@@ -1,6 +1,6 @@
 ﻿namespace BetterCms.Module.Vimeo.Services.Models
 {
-    public class Owner
+    internal class Owner
     {
         public string Display_Name { get; set; }
         public string Id { get; set; }

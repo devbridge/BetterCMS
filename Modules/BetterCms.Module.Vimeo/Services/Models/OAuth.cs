@@ -1,6 +1,6 @@
 ﻿namespace BetterCms.Module.Vimeo.Services.Models
 {
-    public class OAuth
+    internal class OAuth
     {
         public string Token { get; set; }
         public string Permission { get; set; }

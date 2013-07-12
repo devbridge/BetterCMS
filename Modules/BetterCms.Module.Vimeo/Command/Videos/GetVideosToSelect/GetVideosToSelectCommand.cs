@@ -10,7 +10,7 @@ using BetterCms.Module.Vimeo.ViewModels.Video;
 
 namespace BetterCms.Module.Vimeo.Command.Videos.GetVideosToSelect
 {
-    public class GetVideosToSelectCommand : CommandBase, ICommand<VideoListSearchViewModel, VideoListViewModel>
+    internal class GetVideosToSelectCommand : CommandBase, ICommand<VideoListSearchViewModel, VideoListViewModel>
     {
         private readonly IVimeoService vimeoService;
 

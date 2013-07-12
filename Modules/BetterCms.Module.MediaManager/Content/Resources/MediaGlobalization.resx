@@ -166,7 +166,7 @@
     <value>Files</value>
   </data>
   <data name="FilesTab_UploadFile" xml:space="preserve">
-    <value>Upload file</value>
+    <value>New File</value>
   </data>
   <data name="FileUpload_Failed_ImageFormatNotSuported" xml:space="preserve">
     <value>Failed! Can upload only gif, jpg, jpeg or png.</value>
@@ -274,7 +274,7 @@
     <value>Images</value>
   </data>
   <data name="ImagesTab_UploadImage" xml:space="preserve">
-    <value>Upload Image</value>
+    <value>New Image</value>
   </data>
   <data name="InsertFile_Dialog_Title" xml:space="preserve">
     <value>Insert File</value>
@@ -379,7 +379,7 @@
     <value>Videos</value>
   </data>
   <data name="VideosTab_UploadVideo" xml:space="preserve">
-    <value>Upload Video</value>
+    <value>New Video</value>
   </data>
   <data name="ImageEditor_Dialog_KeepAspectRatio" xml:space="preserve">
     <value>Keep aspect ratio</value>

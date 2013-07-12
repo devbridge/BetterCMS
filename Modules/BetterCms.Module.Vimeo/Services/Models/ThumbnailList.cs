@@ -1,6 +1,6 @@
 ﻿namespace BetterCms.Module.Vimeo.Services.Models
 {
-    public class ThumbnailList : ListBase
+    internal class ThumbnailList : ListBase
     {
         public Thumbnail[] Thumbnail { get; set; }
     }

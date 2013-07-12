@@ -5,7 +5,7 @@ using System.Web;
 
 namespace BetterCms.Module.Vimeo.Services.OAuth
 {
-    public class VimeoOAuth: OAuthBase
+    internal class VimeoOAuth: OAuthBase
     {
         private string consumerKey = "";
         private string consumerSecret = "";

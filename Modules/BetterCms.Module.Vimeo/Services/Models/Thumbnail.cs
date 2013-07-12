@@ -1,6 +1,6 @@
 ﻿namespace BetterCms.Module.Vimeo.Services.Models
 {
-    public class Thumbnail
+    internal class Thumbnail
     {
         public int Height { get; set; }
         public int Width { get; set; }

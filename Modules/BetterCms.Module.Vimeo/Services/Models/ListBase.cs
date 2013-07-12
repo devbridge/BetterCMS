@@ -1,6 +1,6 @@
 ﻿namespace BetterCms.Module.Vimeo.Services.Models
 {
-    public class ListBase
+    internal class ListBase
     {
         public int On_This_Page { get; set; }
         public int Page { get; set; }

@@ -8,7 +8,7 @@ using System.Web;
 // NOTE: by http://www.robgreen.me/post/Getting-Started-With-The-Vimeo-API-in-C.aspx
 namespace BetterCms.Module.Vimeo.Services.OAuth
 {
-    public class OAuthBase
+    internal class OAuthBase
     {
         /// <summary>
         /// Provides an internal structure to sort the query parameter

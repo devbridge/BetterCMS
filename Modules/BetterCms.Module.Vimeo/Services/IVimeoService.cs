@@ -2,7 +2,7 @@
 
 namespace BetterCms.Module.Vimeo.Services
 {
-    public interface IVimeoService
+    internal interface IVimeoService
     {
         string GetCurrentUserId();
         VideoList GetUserVideos(string userId, int pageNumber, int itemsPerPage);

@@ -1,6 +1,6 @@
 ﻿namespace BetterCms.Module.Vimeo.Services.Models
 {
-    public class User
+    internal class User
     {
         public string Id { get; set; }
         public string UserName { get; set; }

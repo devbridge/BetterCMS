@@ -1,6 +1,6 @@
 ﻿namespace BetterCms.Module.Vimeo.Services.Models
 {
-    public class Video
+    internal class Video
     {
         // Basic
         public string Embed_Privacy { get; set; }
