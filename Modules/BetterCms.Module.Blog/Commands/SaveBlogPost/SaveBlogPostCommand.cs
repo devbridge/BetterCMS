@@ -149,7 +149,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                         }
                     }
 
-                    blogPost.PageUrl = request.BlogUrl;
+                    blogPost.PageUrl = urlService.FixUrl(request.BlogUrl);
                 }
             }
             else
