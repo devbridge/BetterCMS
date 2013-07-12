@@ -93,6 +93,7 @@ namespace BetterCms.Module.Vimeo
         /// <param name="containerBuilder">The container builder.</param>        
         public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
+            containerBuilder.RegisterType<VimeoOAuthService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultVimeoService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<VideoProviderForCmsService>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }

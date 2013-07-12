@@ -15,6 +15,7 @@ namespace BetterCms.Configuration
         private const string UrlModeAttribute = "urlMode";
         private const string DatabaseNode = "database";
         private const string StorageNode = "storage";
+        private const string VideoNode = "video";
         private const string CacheNode = "cache";
         private const string SecurityNode = "security";
         private const string ModuleGalleryNode = "moduleGallery";
@@ -187,6 +188,19 @@ namespace BetterCms.Configuration
             set { this[StorageNode] = value; }
         }
 
+        /// <summary>
+        /// Gets the configuration of CMS video service.
+        /// </summary>
+        /// <value>
+        /// The video configuration.
+        /// </value>
+        [ConfigurationProperty(VideoNode, IsRequired = false)]
+        public CmsVideoConfigurationElement Video
+        {
+            get { return (CmsVideoConfigurationElement)this[VideoNode]; }
+            set { this[VideoNode] = value; }
+        }
+
         [ConfigurationProperty(CacheNode, IsRequired = true)]
         public CmsCacheConfigurationElement Cache
         {
@@ -225,6 +239,11 @@ namespace BetterCms.Configuration
         ICmsStorageConfiguration ICmsConfiguration.Storage
         {
             get { return Storage; }
+        }
+
+        ICmsVideoConfiguration ICmsConfiguration.Video
+        {
+            get { return Video; }
         }
 
         ICmsCacheConfiguration ICmsConfiguration.Cache

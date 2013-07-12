@@ -8,7 +8,6 @@ using BetterCms.Module.Vimeo.Services.Models.CheckAccessToken;
 using BetterCms.Module.Vimeo.Services.Models.GetUserVideos;
 using BetterCms.Module.Vimeo.Services.Models.GetVideo;
 using BetterCms.Module.Vimeo.Services.Models.SearchVideo;
-using BetterCms.Module.Vimeo.Services.OAuth;
 
 using Common.Logging;
 
@@ -24,10 +23,13 @@ namespace BetterCms.Module.Vimeo.Services
 
         private readonly ICacheService cacheService;
 
-        public DefaultVimeoService(ICmsConfiguration cmsConfiguration, ICacheService cacheService)
+        private readonly IOAuthService oAuthService;
+
+        public DefaultVimeoService(ICmsConfiguration cmsConfiguration, ICacheService cacheService, IOAuthService oAuthService)
         {
             this.cmsConfiguration = cmsConfiguration;
             this.cacheService = cacheService;
+            this.oAuthService = oAuthService;
         }
 
         public string GetCurrentUserId()
@@ -92,13 +94,12 @@ namespace BetterCms.Module.Vimeo.Services
             return string.Format("https://vimeo.com/{0}", videoId);
         }
 
-        private static T LoadResults<T>(VimeoRequestBase request) where T : VimeoResponseBase
+        private T LoadResults<T>(VimeoRequestBase request) where T : VimeoResponseBase
         {
             var url = request.GetUrl();
-            var oauth = new VimeoOAuth();
             var client = new System.Net.WebClient();
             client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
-            client.Headers.Add("Authorization", oauth.GetAuthorization(url));
+            client.Headers.Add("Authorization", oAuthService.GetAuthorizationProperty(url));
 
             var result = string.Empty;
             try

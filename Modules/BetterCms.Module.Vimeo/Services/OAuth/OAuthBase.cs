@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 
-// NOTE: by http://www.robgreen.me/post/Getting-Started-With-The-Vimeo-API-in-C.aspx
+// NOTE: source code taken from http://www.robgreen.me/post/Getting-Started-With-The-Vimeo-API-in-C.aspx
 namespace BetterCms.Module.Vimeo.Services.OAuth
 {
     internal class OAuthBase

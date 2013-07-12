@@ -176,6 +176,7 @@
     <Compile Include="DataContracts\Enums\PageStatus.cs" />
     <Compile Include="Exceptions\Api\CmsApiException.cs" />
     <Compile Include="Exceptions\Api\CmsApiValidationException.cs" />
+    <Compile Include="Exceptions\Service\VideoProviderException.cs" />
     <Compile Include="Modules\CssIncludeDescriptor.cs" />
     <Compile Include="Modules\Projections\JavaScriptModuleLink.cs" />
     <Compile Include="Mvc\Attributes\NoCacheAttribute.cs" />

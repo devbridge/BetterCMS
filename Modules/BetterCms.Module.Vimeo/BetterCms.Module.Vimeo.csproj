@@ -129,6 +129,7 @@
     <Compile Include="Models\Maps\VideoMap.cs" />
     <Compile Include="Models\Video.cs" />
     <Compile Include="Registration\VideosJsModuleIncludeDescriptor.cs" />
+    <Compile Include="Services\IOAuthService.cs" />
     <Compile Include="Services\DefaultVimeoService.cs" />
     <Compile Include="Services\IVimeoService.cs" />
     <Compile Include="Services\Models\CheckAccessToken\CheckAccessTokenRequest.cs" />
@@ -151,8 +152,8 @@
     <Compile Include="Services\Models\VimeoResponseBase.cs" />
     <Compile Include="Services\OAuth\OAuthBase.cs" />
     <Compile Include="Services\OAuth\OAuthSignatureType.cs" />
-    <Compile Include="Services\OAuth\VimeoOAuth.cs" />
     <Compile Include="Services\VideoProviderForCmsService.cs" />
+    <Compile Include="Services\VimeoOAuthService.cs" />
     <Compile Include="Services\VimeoSorting.cs" />
     <Compile Include="ViewModels\Video\VideoListSearchViewModel.cs" />
     <Compile Include="ViewModels\Video\VideoListViewModel.cs" />

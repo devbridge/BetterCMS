@@ -57,6 +57,14 @@ namespace BetterCms
         ICmsStorageConfiguration Storage { get; }
 
         /// <summary>
+        /// Gets the configuration of CMS video service.
+        /// </summary>
+        /// <value>
+        /// The video configuration.
+        /// </value>
+        ICmsVideoConfiguration Video { get; }
+
+        /// <summary>
         /// Gets the configuration of CMS database.
         /// </summary>
         ICmsDatabaseConfiguration Database { get; }
