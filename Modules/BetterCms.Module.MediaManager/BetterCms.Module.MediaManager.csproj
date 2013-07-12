@@ -223,6 +223,7 @@
     <Compile Include="Registration\MediaManagerJsModuleIncludeDescriptor.cs" />
     <Compile Include="Api\DataModels\MediaImage.cs" />
     <Compile Include="Services\ITagService.cs" />
+    <Compile Include="ViewModels\Extensions\MediaViewModelExtensions.cs" />
     <Compile Include="ViewModels\File\FileViewModel.cs" />
     <Compile Include="ViewModels\History\MediaHistoryItem.cs" />
     <Compile Include="ViewModels\History\MediaHistoryViewModel.cs" />

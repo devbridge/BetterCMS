@@ -2,6 +2,7 @@
 using System.Text;
 
 using BetterCms.Module.MediaManager.Content.Resources;
+using BetterCms.Module.Root.Mvc;
 
 namespace BetterCms.Module.MediaManager.Models.Extensions
 {
@@ -29,6 +30,36 @@ namespace BetterCms.Module.MediaManager.Models.Extensions
             }
 
             return string.Empty;
+        }
+
+        public static bool IsChild(this Media media, Guid currentFolderId, bool includeArchivedItems)
+        {
+            if (media == null)
+            {
+                return false;
+            }
+
+            if (media.IsDeleted || (media.Folder != null && media.Folder.IsDeleted))
+            {
+                return false;
+            }
+
+            if (!includeArchivedItems && (media.IsArchived || (media.Folder != null && media.Folder.IsArchived)))
+            {
+                return false;
+            }
+
+            if (currentFolderId.HasDefaultValue())
+            {
+                return true;
+            }
+
+            if (media.Folder != null && !media.Folder.IsDeleted && media.Folder.Id == currentFolderId)
+            {
+                return true;
+            }
+
+            return IsChild(media.Folder, currentFolderId, includeArchivedItems);
         }
     }
 }

@@ -9,6 +9,8 @@ using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.Command.Extensions;
 using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Models.Extensions;
+using BetterCms.Module.MediaManager.ViewModels.Extensions;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
@@ -41,51 +43,6 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             var model = new MediaManagerItemsViewModel(items.Items, request, items.TotalCount);
             model.Path = this.LoadPath(request, MediaType);
 
-            return model;
-        }
-
-        /// <summary>
-        /// Loads the media folder.
-        /// </summary>
-        /// <returns>Media folder view model</returns>
-        private MediaPathViewModel LoadMediaFolder(MediaManagerViewModel request)
-        {
-            var emptyFolderViewModel = new MediaFolderViewModel { Id = Guid.Empty, Type = MediaType };
-            var model = new MediaPathViewModel
-                            {
-                                CurrentFolder = emptyFolderViewModel
-                            };
-            var folders = new List<MediaFolderViewModel> { emptyFolderViewModel };
-
-            if (!request.CurrentFolderId.HasDefaultValue())
-            {
-                var mediaFolder = Repository.FirstOrDefault<MediaFolder>(e => e.Id == request.CurrentFolderId && e.Original == null);
-                model.CurrentFolder = mediaFolder != null
-                    ? new MediaFolderViewModel
-                        {
-                            Id = mediaFolder.Id,
-                            Name = mediaFolder.Title,
-                            Version = mediaFolder.Version,
-                            Type = mediaFolder.Type,
-                            ParentFolderId = mediaFolder.Folder != null ? mediaFolder.Folder.Id : Guid.Empty
-                        }
-                    : new MediaFolderViewModel();
-                while (mediaFolder != null)
-                {
-                    folders.Insert(
-                        1,
-                        new MediaFolderViewModel
-                            {
-                                Id = mediaFolder.Id,
-                                Name = mediaFolder.Title,
-                                Type = mediaFolder.Type,
-                                ParentFolderId = mediaFolder.Folder != null ? mediaFolder.Folder.Id : Guid.Empty
-                            });
-                    mediaFolder = mediaFolder.Folder;
-                }
-            }
-
-            model.Folders = folders;
             return model;
         }
 
@@ -127,7 +84,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
 
                 foreach (var media in mediaList)
                 {
-                    if (IsChild(media, request.CurrentFolderId, request.IncludeArchivedItems))
+                    if (media.IsChild(request.CurrentFolderId, request.IncludeArchivedItems))
                     {
                         result.Add(media);
                     }
@@ -146,36 +103,6 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             }
 
             return ToResponse(request, query);
-        }
-
-        private static bool IsChild(Media media, Guid currentFolderId, bool includeArchivedItems)
-        {
-            if (media == null)
-            {
-                return false;
-            }
-
-            if (media.IsDeleted || (media.Folder != null && media.Folder.IsDeleted))
-            {
-                return false;
-            }
-
-            if (!includeArchivedItems && (media.IsArchived || (media.Folder != null && media.Folder.IsArchived)))
-            {
-                return false;
-            }
-
-            if (currentFolderId.HasDefaultValue())
-            {
-                return true;
-            }
-
-            if (media.Folder != null && !media.Folder.IsDeleted && media.Folder.Id == currentFolderId)
-            {
-                return true;
-            }
-
-            return IsChild(media.Folder, currentFolderId, includeArchivedItems);
         }
 
         private DataListResponse<MediaViewModel> ToResponse(MediaManagerViewModel request, IQueryable<Media> query)
@@ -235,9 +162,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
         {
             if (media is MediaFolder)
             {
-                var folder = new MediaFolderViewModel();
-                FillMediaViewModel(folder, media);
-                return folder;
+                return new MediaFolderViewModel().Fill(media);
             }
 
             return ToViewModel(media);
@@ -263,32 +188,13 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
         }
 
         /// <summary>
-        /// Fills the media view model with entity data.
-        /// </summary>
-        /// <param name="model">The model.</param>
-        /// <param name="media">The media.</param>
-        protected void FillMediaViewModel(MediaViewModel model, Media media)
-        {
-            model.Id = media.Id;
-            model.Version = media.Version;
-            model.Name = media.Title;
-            model.CreatedOn = media.CreatedOn;
-            model.Type = media.Type;
-            model.IsArchived = media.IsArchived;
-            model.ParentFolderId = media.Folder != null ? media.Folder.Id : Guid.Empty;
-            model.ParentFolderName = media.Folder != null ? media.Folder.Title : MediaGlobalization.MediaList_RootFolderName;
-            model.Tooltip = media.Image != null ? media.Image.Caption : null;
-            model.ThumbnailUrl = media.Image != null ? media.Image.PublicThumbnailUrl : null;
-        }
-
-        /// <summary>
         /// Fills the media file view model with entity data.
         /// </summary>
         /// <param name="model">The model.</param>
         /// <param name="media">The media.</param>
         protected void FillMediaFileViewModel(MediaFileViewModel model, MediaFile media)
         {
-            FillMediaViewModel(model, media);
+            model.Fill(media);
 
             model.PublicUrl = media.PublicUrl;
             model.FileExtension = media.OriginalFileExtension;

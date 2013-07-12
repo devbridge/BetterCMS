@@ -5,6 +5,6 @@ namespace BetterCms.Module.MediaManager.Services
 {
     public interface IMediaVideoService
     {
-        DataListResponse<MediaVideoViewModel> GetItems(MediaManagerViewModel request);
+        DataListResponse<MediaViewModel> GetItems(MediaManagerViewModel request);
     }
 }
