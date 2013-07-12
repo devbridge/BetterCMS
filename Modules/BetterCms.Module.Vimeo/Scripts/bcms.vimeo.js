@@ -1,10 +1,10 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
-bettercms.define('bcms.vimeo', ['bcms.jquery', 'bcms'],
-    function($, bcms) {
+bettercms.define('bcms.vimeo', ['bcms.jquery', 'bcms', 'bcms.media', 'bcms.vimeo.videos'],
+    function ($, bcms, media, videos) {
         'use strict';
 
-        var vimeo = {},
+        var module = {},
             selectors = {},
             links = {},
             globalization = {};
@@ -12,21 +12,28 @@ bettercms.define('bcms.vimeo', ['bcms.jquery', 'bcms'],
         /**
         * Assign objects to module.
         */
-        vimeo.links = links;
-        vimeo.globalization = globalization;
-        vimeo.selectors = selectors;
+        module.links = links;
+        module.globalization = globalization;
+        module.selectors = selectors;
+
+        function uploadAction(rootFolderId, onSaveCallback, reuploadMediaId) {
+            // TODO: implement choice to upload or select.
+            videos.addUploadedVideo(rootFolderId, onSaveCallback);
+        };
 
         /**
-        * Initializes vimeo module.
+        * Initializes module.
         */
-        vimeo.init = function() {
+        module.init = function () {
             console.log('Initializing bcms.vimeo module.');
+
+            media.videoProviderOptions.uploadMediaAction = uploadAction;
         };
 
         /**
         * Register initialization.
         */
-        bcms.registerInit(vimeo.init);
+        bcms.registerInit(module.init);
 
-        return vimeo;
+        return module;
     });

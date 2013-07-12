@@ -59,5 +59,77 @@ namespace BetterCms.Module.Vimeo.Content.Resources {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add from Vimeo.
+        /// </summary>
+        public static string MediaManager_UploadVideo_Title {
+            get {
+                return ResourceManager.GetString("MediaManager_UploadVideo_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to add videos from Vimeo..
+        /// </summary>
+        public static string SaveVideos_SaveFailed {
+            get {
+                return ResourceManager.GetString("SaveVideos_SaveFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Folder you trying to save video is deleted..
+        /// </summary>
+        public static string SaveVideos_SaveFailed_FolderDeleted {
+            get {
+                return ResourceManager.GetString("SaveVideos_SaveFailed_FolderDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No videos found....
+        /// </summary>
+        public static string VideoSelectionDialog_NoVideosFound_Message {
+            get {
+                return ResourceManager.GetString("VideoSelectionDialog_NoVideosFound_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Insert.
+        /// </summary>
+        public static string VideoSelectionDialog_SaveButtonTitle {
+            get {
+                return ResourceManager.GetString("VideoSelectionDialog_SaveButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Videos on Vimeo.
+        /// </summary>
+        public static string VideoSelectionDialog_Title {
+            get {
+                return ResourceManager.GetString("VideoSelectionDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OK.
+        /// </summary>
+        public static string VideoUploadDialog_SaveButton_Title {
+            get {
+                return ResourceManager.GetString("VideoUploadDialog_SaveButton_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload to Vimeo.
+        /// </summary>
+        public static string VideoUploadDialog_Title {
+            get {
+                return ResourceManager.GetString("VideoUploadDialog_Title", resourceCulture);
+            }
+        }
     }
 }

@@ -381,7 +381,9 @@ copy "$(SolutionDir)Modules\BetterCms.Module.Newsletter\bin\BetterCms.Module.New
 
 copy "$(SolutionDir)Modules\BetterCms.Module.WebApi\bin\BetterCms.Module.WebApi.dll" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
 copy "$(SolutionDir)Modules\BetterCms.Module.WebApi\bin\BetterCms.Module.WebApi.pdb" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
-</PostBuildEvent>
+
+copy "$(SolutionDir)Modules\BetterCms.Module.Vimeo\bin\BetterCms.Module.Vimeo.dll" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
+copy "$(SolutionDir)Modules\BetterCms.Module.Vimeo\bin\BetterCms.Module.Vimeo.pdb" "$(ProjectDir)App_Data\BetterCms\Modules" /Y</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <SlowCheetahTargets Condition=" '$(SlowCheetahTargets)'=='' ">$(SolutionDir)\Libs\SlowCheetah\v1\SlowCheetah.Transforms.targets</SlowCheetahTargets>

@@ -30,11 +30,17 @@ namespace BetterCms.Module.Vimeo
         private readonly VimeoJsModuleIncludeDescriptor vimeoJsModuleIncludeDescriptor;
 
         /// <summary>
+        /// The videos java script module include descriptor.
+        /// </summary>
+        private readonly VideosJsModuleIncludeDescriptor videosJsModuleIncludeDescriptor;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="VimeoModuleDescriptor" /> class.
         /// </summary>
         public VimeoModuleDescriptor(ICmsConfiguration cmsConfiguration)
             : base(cmsConfiguration)
         {
+            videosJsModuleIncludeDescriptor = new VideosJsModuleIncludeDescriptor(this);
             vimeoJsModuleIncludeDescriptor = new VimeoJsModuleIncludeDescriptor(this);
         }
 
@@ -87,7 +93,8 @@ namespace BetterCms.Module.Vimeo
         /// <param name="containerBuilder">The container builder.</param>        
         public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
-            containerBuilder.RegisterType<VimeoVideoService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultVimeoService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<VideoProviderForCmsService>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
 
         /// <summary>
@@ -97,7 +104,11 @@ namespace BetterCms.Module.Vimeo
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
         public override IEnumerable<JsIncludeDescriptor> RegisterJsIncludes()
         {
-            return new[] { vimeoJsModuleIncludeDescriptor };
+            return new JsIncludeDescriptor[]
+                {
+                    videosJsModuleIncludeDescriptor,
+                    vimeoJsModuleIncludeDescriptor
+                };
         }
     }
 }

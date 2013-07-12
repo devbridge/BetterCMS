@@ -116,13 +116,48 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Command\SaveVideos\SaveVideosCommand.cs" />
+    <Compile Include="Command\SaveVideos\SaveVideosRequest.cs" />
+    <Compile Include="Command\SaveVideos\SaveVideosResponse.cs" />
+    <Compile Include="Command\Videos\GetVideosToSelect\GetVideosToSelectCommand.cs" />
     <Compile Include="Content\Resources\VimeoGlobalization.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>VimeoGlobalization.resx</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\VideoController.cs" />
-    <Compile Include="Services\VimeoVideoService.cs" />
+    <Compile Include="Controllers\VideosController.cs" />
+    <Compile Include="Models\Maps\VideoMap.cs" />
+    <Compile Include="Models\Video.cs" />
+    <Compile Include="Registration\VideosJsModuleIncludeDescriptor.cs" />
+    <Compile Include="Services\DefaultVimeoService.cs" />
+    <Compile Include="Services\IVimeoService.cs" />
+    <Compile Include="Services\Models\CheckAccessToken\CheckAccessTokenRequest.cs" />
+    <Compile Include="Services\Models\CheckAccessToken\CheckAccessTokenResponse.cs" />
+    <Compile Include="Services\Models\GetUserVideos\GetUserVideosRequest.cs" />
+    <Compile Include="Services\Models\GetUserVideos\GetUserVideosResponse.cs" />
+    <Compile Include="Services\Models\GetVideo\GetVideoRequest.cs" />
+    <Compile Include="Services\Models\GetVideo\GetVideoResponse.cs" />
+    <Compile Include="Services\Models\ListBase.cs" />
+    <Compile Include="Services\Models\OAuth.cs" />
+    <Compile Include="Services\Models\Owner.cs" />
+    <Compile Include="Services\Models\SearchVideo\SearchVideoRequest.cs" />
+    <Compile Include="Services\Models\SearchVideo\SearchVideoResponse.cs" />
+    <Compile Include="Services\Models\Thumbnail.cs" />
+    <Compile Include="Services\Models\ThumbnailList.cs" />
+    <Compile Include="Services\Models\User.cs" />
+    <Compile Include="Services\Models\Video.cs" />
+    <Compile Include="Services\Models\VideoList.cs" />
+    <Compile Include="Services\Models\VimeoRequestBase.cs" />
+    <Compile Include="Services\Models\VimeoResponseBase.cs" />
+    <Compile Include="Services\OAuth\OAuthBase.cs" />
+    <Compile Include="Services\OAuth\OAuthSignatureType.cs" />
+    <Compile Include="Services\OAuth\VimeoOAuth.cs" />
+    <Compile Include="Services\VideoProviderForCmsService.cs" />
+    <Compile Include="Services\VimeoSorting.cs" />
+    <Compile Include="ViewModels\Video\VideoListSearchViewModel.cs" />
+    <Compile Include="ViewModels\Video\VideoListViewModel.cs" />
+    <Compile Include="ViewModels\Video\VideoViewModel.cs" />
+    <Compile Include="ViewModels\VimeoSearchableGridViewModel.cs" />
     <Compile Include="VimeoModuleDescriptor.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
     <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />
@@ -165,16 +200,17 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Scripts\bcms.vimeo.js" />
+    <EmbeddedResource Include="Scripts\bcms.vimeo.videos.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Command\" />
     <Folder Include="Content\Styles\" />
-    <Folder Include="Models\Maps\" />
-    <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Videos\Search.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

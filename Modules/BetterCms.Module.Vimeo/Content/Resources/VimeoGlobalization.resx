@@ -117,4 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="MediaManager_UploadVideo_Title" xml:space="preserve">
+    <value>Add from Vimeo</value>
+  </data>
+  <data name="SaveVideos_SaveFailed" xml:space="preserve">
+    <value>Failed to add videos from Vimeo.</value>
+  </data>
+  <data name="SaveVideos_SaveFailed_FolderDeleted" xml:space="preserve">
+    <value>Folder you trying to save video is deleted.</value>
+  </data>
+  <data name="VideoSelectionDialog_NoVideosFound_Message" xml:space="preserve">
+    <value>No videos found...</value>
+  </data>
+  <data name="VideoSelectionDialog_SaveButtonTitle" xml:space="preserve">
+    <value>Insert</value>
+  </data>
+  <data name="VideoSelectionDialog_Title" xml:space="preserve">
+    <value>Videos on Vimeo</value>
+  </data>
+  <data name="VideoUploadDialog_SaveButton_Title" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="VideoUploadDialog_Title" xml:space="preserve">
+    <value>Upload to Vimeo</value>
+  </data>
 </root>

@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.vimeo.js" />
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.vimeo.videos.js" />
     </ItemGroup>
 
     <JavaScriptCompressorTask

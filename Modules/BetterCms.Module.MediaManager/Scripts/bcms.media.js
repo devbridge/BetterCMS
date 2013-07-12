@@ -114,13 +114,17 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         contentEditor = null,
         imageInsertDialog = null,
         fileInsertDialog = null,
-        blurTimer = null;
+        blurTimer = null,
+        videoProviderOptions = {
+            uploadMediaAction: null
+        };
 
     /**
     * Assign objects to module.
     */
     media.links = links;
     media.globalization = globalization;
+    media.videoProviderOptions = videoProviderOptions;
 
     /**
     * Media's current folder sort / search / paging option view model
@@ -248,7 +252,11 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         };
 
         self.uploadMedia = function () {
-            mediaUpload.openUploadFilesDialog(self.path().currentFolder().id(), self.path().currentFolder().type, onUploadFiles);
+            if (self.path().currentFolder().type == mediaTypes.video && $.isFunction(videoProviderOptions.uploadMediaAction)) {
+                videoProviderOptions.uploadMediaAction(self.path().currentFolder().id(), onUploadFiles);
+            } else {
+                mediaUpload.openUploadFilesDialog(self.path().currentFolder().id(), self.path().currentFolder().type, onUploadFiles);
+            }
             messages.refreshBox($(selectors.fileListMessageBox + self.path().type), {});
         };
 
