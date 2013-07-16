@@ -88,33 +88,6 @@ namespace BetterCms.Module.Viddler.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No videos found....
-        /// </summary>
-        public static string VideoSelectionDialog_NoVideosFound_Message {
-            get {
-                return ResourceManager.GetString("VideoSelectionDialog_NoVideosFound_Message", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Insert.
-        /// </summary>
-        public static string VideoSelectionDialog_SaveButtonTitle {
-            get {
-                return ResourceManager.GetString("VideoSelectionDialog_SaveButtonTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Videos on Viddler.
-        /// </summary>
-        public static string VideoSelectionDialog_Title {
-            get {
-                return ResourceManager.GetString("VideoSelectionDialog_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to OK.
         /// </summary>
         public static string VideoUploadDialog_SaveButton_Title {

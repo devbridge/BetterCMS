@@ -19,13 +19,14 @@ namespace BetterCms.Module.Viddler.Registration
         {
             Links = new IActionProjection[]
                 {
-                    new JavaScriptModuleLinkTo<VideosController>(this, "saveSelectedVideosUrl", c => c.SaveVideos(null)),
+                    new JavaScriptModuleLinkTo<VideosController>(this, "uploadVideoDialogUrl", c => c.UplaodVideos(null, null)),
+                    new JavaScriptModuleLinkTo<VideosController>(this, "saveUploadedVideosUrl", c => c.SaveVideos(null)),
                 };
 
             Globalization = new IActionProjection[]
                 {
-                    new JavaScriptModuleGlobalization(this, "selectVideoDialogTitle", () => ViddlerGlobalization.VideoSelectionDialog_Title),
-                    new JavaScriptModuleGlobalization(this, "selectVideoDialogSaveButtonTitle", () => ViddlerGlobalization.VideoSelectionDialog_SaveButtonTitle),
+                    new JavaScriptModuleGlobalization(this, "uploadVideoDialogTitle", () => ViddlerGlobalization.VideoUploadDialog_Title),
+                    new JavaScriptModuleGlobalization(this, "uploadVideoDialogSaveButtonTitle", () => ViddlerGlobalization.VideoUploadDialog_SaveButton_Title),
                 };
         }
     }

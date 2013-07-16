@@ -119,6 +119,8 @@
     <Compile Include="Command\SaveVideos\SaveVideosCommand.cs" />
     <Compile Include="Command\SaveVideos\SaveVideosRequest.cs" />
     <Compile Include="Command\SaveVideos\SaveVideosResponse.cs" />
+    <Compile Include="Command\UplaodVideos\GetVideoUploadCommand.cs" />
+    <Compile Include="Command\UplaodVideos\GetVideoUploadRequest.cs" />
     <Compile Include="Content\Resources\ViddlerGlobalization.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -130,7 +132,11 @@
     <Compile Include="Registration\VideosJsModuleIncludeDescriptor.cs" />
     <Compile Include="Services\IViddlerService.cs" />
     <Compile Include="Services\DefaultViddlerService.cs" />
+    <Compile Include="Services\MockupViddlerService.cs" />
+    <Compile Include="Services\Models\Upload.cs" />
+    <Compile Include="Services\Models\Video.cs" />
     <Compile Include="Services\VideoProviderForCmsService.cs" />
+    <Compile Include="ViewModels\UploadVideos\VideoUploadViewModel.cs" />
     <Compile Include="ViewModels\Video\VideoListSearchViewModel.cs" />
     <Compile Include="ViewModels\Video\VideoListViewModel.cs" />
     <Compile Include="ViewModels\Video\VideoViewModel.cs" />
@@ -185,6 +191,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Videos\UplaodVideos.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

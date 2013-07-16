@@ -93,7 +93,11 @@ namespace BetterCms.Module.Viddler
         /// <param name="containerBuilder">The container builder.</param>        
         public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
+#if DEBUG // TODO: REMOVE this when test account will be available.
+            containerBuilder.RegisterType<MockupViddlerService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+#else
             containerBuilder.RegisterType<DefaultViddlerService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+#endif
             containerBuilder.RegisterType<VideoProviderForCmsService>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
 

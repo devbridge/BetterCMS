@@ -7,31 +7,140 @@ bettercms.define('bcms.viddler.videos', ['bcms.jquery', 'bcms', 'bcms.dynamicCon
 
         var module = {},
             selectors = {
-                templateDataBind: '.bcms-data-bind-container',
-                searchBox: '#bcms-search-input',
+                templateDataBind: '.bcms-file-manager-inner',
                 previewVideo: '.bcms-preview-image-frame iframe',
                 previewVideoContainer: '.bcms-preview-image-border',
                 previewFailure: '.bcms-grid-image-holder',
             },
             links = {
-                selectVideoDialogUrl: null,
-                saveSelectedVideosUrl: null,
+                uploadVideoDialogUrl: null,
+                saveUploadedVideosUrl: null,
                 videoPreviewUrl: 'http://viddler.com/embed/{0}',
             },
             globalization = {
-                selectVideoDialogTitle: null,
-                selectVideoDialogSaveButtonTitle: null,
+                uploadVideoDialogTitle: null,
+                uploadVideoDialogSaveButtonTitle: null,
             },
-            keys = {
-                folderViewMode: 'bcms.mediaFolderViewMode'
-            },
-            staticDomId = 1;
+            staticDomId = 0,
+            workerStatus = {
+                Idle: 1,
+                RequestingUploadData: 2,
+                FailedToGetUploadData: 3,
+                UploadingFile: 4,
+                UploadingFileFailed: 5,
+                Done: 6
+            };
 
         /**
         * Assign objects to module.
         */
         module.links = links;
         module.globalization = globalization;
+        
+        // --- Helpers --------------------------------------------------------
+        function getNewDomIdExtension() {
+            return "_" + staticDomId++;
+        }
+
+        ko.bindingHandlers.fileSelectionChanged = {
+            init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+                var options = ko.utils.unwrapObservable(valueAccessor()),
+                    property = ko.utils.unwrapObservable(options.property);
+                if (property) {
+                    $(element).change(function() {
+                        if (element.files.length) {
+                            var $this = $(this),
+                                fileName = $this.val(),
+                                files = $this.files;
+                            viewModel[property](fileName, files);
+                        }
+                    });
+                }
+            },
+        };
+        
+        // --- View Models ----------------------------------------------------
+        function FolderViewModel() {
+            var self = this;
+            self.id = "";
+            self.name = "";
+        }
+
+        function UploadWorkerViewModel() {
+            var self = this;
+            self.fileInputDomId = 'bcms-files-upload-input' + getNewDomIdExtension();
+            self.endpoint = ko.observable();
+            self.token = ko.observable();
+            self.callbackUrl = ko.observable();
+            self.fileName = ko.observable();
+            self.fileSize = ko.observable();
+            self.fileSizeFormated = ko.computed(function () {
+                return formatFileSize(self.fileSize());
+            });
+            self.status = ko.observable(workerStatus.Idle);
+            self.uploadProgress = ko.observable(0);
+            self.failureMessage = ko.observableArray([]);
+            
+            self.showFileSelection = ko.computed(function () {
+                return self.status() == workerStatus.Idle;
+            });
+            self.showProgress = ko.computed(function() {
+                return self.status() != workerStatus.Idle;
+            });
+            self.uploadFailed = ko.computed(function () {
+                return self.status() == workerStatus.FailedToGetUploadData || self.status() == workerStatus.UploadingFileFailed;
+            });
+            self.uploadProcessing = ko.computed(function () {
+                return self.status() == workerStatus.RequestingUploadData || self.status() == workerStatus.UploadingFileFailed;
+            });
+            self.uploadCompleted = ko.computed(function () {
+                return self.status() == workerStatus.Done;
+            });
+            
+            self.onFileSelected = function (fileName, files) {
+                if (files != null && files.length > 0) {
+                    self.fileName(files[0].name);
+                    self.fileSize(files[0].size);
+                } else {
+                    self.fileName(fileName);
+                }
+                if (self.fileName()) {
+                    self.upload();
+                }
+            };
+            self.upload = function() {
+                // Change status
+                self.status(workerStatus.RequestingUploadData);
+
+                // Request upload data // Change status on fail
+                // TODO: implement
+
+                // Upload file // Change status on fail
+                // TODO: implement
+
+                // Change status
+                self.status(workerStatus.Done);
+            };
+            self.onCancelUpload = function() {
+                // TODO: implement
+                // Change status
+            };
+        }
+
+        function UploaderViewModel() {
+            var self = this;
+            self.subFolders = ko.observableArray([]);
+            self.selectedFolder = ko.observableArray([]);
+            self.showFolderSelection = ko.observable(false);
+            self.isReupload = ko.observable(false);
+
+            self.uploadWorkers = ko.observableArray([new UploadWorkerViewModel()]); // TODO
+            self.activeUploads = ko.observableArray([]);
+
+            self.cancelAllActiveUploads = function() {
+                // TODO: implement
+            };
+        }
 
         /**
         * Open dialog to upload video.
@@ -39,12 +148,17 @@ bettercms.define('bcms.viddler.videos', ['bcms.jquery', 'bcms', 'bcms.dynamicCon
         module.uploadVideo = function (folderId, onSaveCallback) {
             var listViewModel;
             modal.open({
-                title: globalization.selectVideoDialogTitle,
-                acceptTitle: globalization.selectVideoDialogSaveButtonTitle,
+                title: globalization.uploadVideoDialogTitle,
+                acceptTitle: globalization.uploadVideoDialogSaveButtonTitle,
                 onLoad: function (dialog) {
-                    dynamicContent.setContentFromUrl(dialog, links.selectVideoDialogUrl, {
+                    dynamicContent.setContentFromUrl(dialog, links.uploadVideoDialogUrl, {
                         done: function (content) {
-                            // TODO
+                            var uploader = new UploaderViewModel();
+                            // TODO: content.Html, content.Data
+                            var context = dialog.container.find(selectors.templateDataBind).get(0);
+                            if (context) {
+                                ko.applyBindings(uploader, context);
+                            }
                         }
                     });
                 },
@@ -80,7 +194,7 @@ bettercms.define('bcms.viddler.videos', ['bcms.jquery', 'bcms', 'bcms.dynamicCon
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
                 cache: false,
-                url: links.saveSelectedVideosUrl,
+                url: links.saveUploadedVideosUrl,
                 data: JSON.stringify(params)
             })
                 .done(function (result) {
@@ -139,6 +253,30 @@ bettercms.define('bcms.viddler.videos', ['bcms.jquery', 'bcms', 'bcms.dynamicCon
             iframe.attr('src', url);
 
             return dialog;
+        }
+
+        function trimTrailingZeros(number) {
+            return number.toFixed(1).replace(/\.0+$/, '');
+        }
+
+        function formatFileSize(sizeInBytes) {
+            var kiloByte = 1024,
+                megaByte = Math.pow(kiloByte, 2),
+                gigaByte = Math.pow(kiloByte, 3);
+
+            if (sizeInBytes < kiloByte) {
+                return sizeInBytes + ' B';
+            }
+
+            if (sizeInBytes < megaByte) {
+                return trimTrailingZeros(sizeInBytes / kiloByte) + ' KB';
+            }
+
+            if (sizeInBytes < gigaByte) {
+                return trimTrailingZeros(sizeInBytes / megaByte) + ' MB';
+            }
+
+            return trimTrailingZeros(sizeInBytes / gigaByte) + ' GB';
         }
 
         /**

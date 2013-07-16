@@ -7,6 +7,7 @@ using System.Net;
 using System.Xml.Linq;
 
 using BetterCms.Core.Exceptions.Service;
+using BetterCms.Module.Viddler.Services.Models;
 
 namespace BetterCms.Module.Viddler.Services
 {
@@ -18,13 +19,13 @@ namespace BetterCms.Module.Viddler.Services
 
         private const string videoUrl = "http://www.viddler.com/v/{0}";
 
+        private const string ResponseFormat = "xml";
+
         private readonly string apiKey = string.Empty;
 
         private readonly string userName = string.Empty;
 
         private readonly string password = string.Empty;
-
-        private const string ResponseFormat = "xml";
 
         public DefaultViddlerService(ICmsConfiguration cmsConfiguration)
         {
@@ -52,16 +53,34 @@ namespace BetterCms.Module.Viddler.Services
             }
         }
 
+        /// <summary>
+        /// Gets the player URL.
+        /// </summary>
+        /// <param name="videoId">The video id.</param>
+        /// <returns>
+        /// URL for using in iFrame.
+        /// </returns>
         public string GetPlayerUrl(string videoId)
         {
             return string.Format(playerUrl, videoId);
         }
 
+        /// <summary>
+        /// Gets the video URL.
+        /// </summary>
+        /// <param name="videoId">The video id.</param>
+        /// <returns>
+        /// URL to access video on the website.
+        /// </returns>
         public string GetVideoUrl(string videoId)
         {
             return string.Format(videoUrl, videoId);
         }
 
+        /// <summary>
+        /// Gets the session id.
+        /// </summary>
+        /// <returns>Session id.</returns>
         public string GetSessionId()
         {
             var queryString = GetQueryString(
@@ -70,29 +89,56 @@ namespace BetterCms.Module.Viddler.Services
             return response["sessionid"].ToString();
         }
 
-        public Dictionary<string, object> GetDataForVideoUpload(string sessionId)
+        /// <summary>
+        /// Gets the upload data.
+        /// </summary>
+        /// <param name="sessionId">The session id.</param>
+        /// <returns>Data for video upload.</returns>
+        /// <exception cref="VideoProviderException">Failed to get video upload data.</exception>
+        public Upload GetUploadData(string sessionId)
         {
             try
             {
                 var queryString = GetQueryString("viddler.videos.prepareUpload", new Dictionary<string, string> { { "key", apiKey }, { "sessionid", sessionId } });
-
-                return RunApiGetCall(apiUrl, queryString, new List<string> { "endpoint", "token" });
+                var values = RunApiGetCall(apiUrl, queryString, new List<string> { "endpoint", "token" });
+                return new Upload
+                {
+                    SessionId = sessionId,
+                    Token = values["token"].ToString(),
+                    Endpoint = values["endpoint"].ToString(),
+                };
             }
             catch (Exception ex)
             {
-                throw new VideoProviderException("Failed to get data for video upload.", ex);
+                throw new VideoProviderException("Failed to get video upload data.", ex);
             }
         }
 
-        public Dictionary<string, object> GetVideoDetails(string videoId)
+        /// <summary>
+        /// Gets the video details.
+        /// </summary>
+        /// <param name="sessionId">The session id.</param>
+        /// <param name="videoId">The video id.</param>
+        /// <returns>Video details.</returns>
+        /// <exception cref="VideoProviderException">Failed to get video details.</exception>
+        public Video GetVideoDetails(string sessionId, string videoId)
         {
             try
             {
-                var sessionId = GetSessionId();
                 var queryString = GetQueryString(
                     "viddler.videos.getDetails", new Dictionary<string, string> { { "key", apiKey }, { "sessionid", sessionId }, { "video_id", videoId } });
-
-                return RunApiGetCall(apiUrl, queryString, new List<string> { "title", "description", "url", "html5_video_source", "tags", "thumbnail_url", "status" });
+                var values = RunApiGetCall(apiUrl, queryString, new List<string> { "title", "description", "url", "thumbnail_url", "length", "view_count", "status" });
+                return new Video
+                {
+                    Id = videoId,
+                    Title = values["title"].ToString(),
+                    Description = values["description"].ToString(),
+                    Url = values["url"].ToString(),
+                    ThumbnailUrl = values["thumbnail_url"].ToString(),
+                    Length = (long)values["length"],
+                    ViewCount = (long)values["view_count"],
+                    IsReady = values["status"].ToString().ToLowerInvariant() == "ready",
+                };
             }
             catch (Exception ex)
             {
@@ -100,11 +146,18 @@ namespace BetterCms.Module.Viddler.Services
             }
         }
 
-        public bool MakeVideoPublic(string videoId, bool makePublic)
+        /// <summary>
+        /// Makes the video public.
+        /// </summary>
+        /// <param name="sessionId">The session id.</param>
+        /// <param name="videoId">The video id.</param>
+        /// <param name="makePublic">if set to <c>true</c> to make public or <c>false</c> to make private.</param>
+        /// <returns><c>true</c> if video is public, <c>false</c> otherwise.</returns>
+        /// <exception cref="VideoProviderException">Failed to change video privacy.</exception>
+        public bool MakeVideoPublic(string sessionId, string videoId, bool makePublic)
         {
             try
             {
-                var sessionId = GetSessionId();
                 var queryString = GetQueryString(
                     "viddler.videos.setDetails",
                     new Dictionary<string, string>
@@ -123,19 +176,26 @@ namespace BetterCms.Module.Viddler.Services
                 {
                     retVal = t[0] == (makePublic ? "public" : "private");
                 }
+
                 return retVal;
             }
             catch (Exception ex)
             {
-                throw new VideoProviderException("Failed to make video public.", ex);
+                throw new VideoProviderException("Failed to change video privacy.", ex);
             }
         }
 
-        public bool RemoveVideo(string videoId)
+        /// <summary>
+        /// Removes the video.
+        /// </summary>
+        /// <param name="sessionId">The session id.</param>
+        /// <param name="videoId">The video id.</param>
+        /// <returns><c>true</c> if successfully removed, <c>false</c> otherwise.</returns>
+        /// <exception cref="VideoProviderException">Failed to remove video.</exception>
+        public bool RemoveVideo(string sessionId, string videoId)
         {
             try
             {
-                var sessionId = GetSessionId();
                 var queryString = GetQueryString(
                     "viddler.videos.delete", new Dictionary<string, string> { { "api_key", apiKey }, { "sessionid", sessionId }, { "video_id", videoId } });
 
@@ -154,6 +214,7 @@ namespace BetterCms.Module.Viddler.Services
                         return true;
                     }
                 }
+
                 throw;
             }
             catch (Exception ex)
@@ -162,6 +223,13 @@ namespace BetterCms.Module.Viddler.Services
             }
         }
 
+        /// <summary>
+        /// Gets the uploading status.
+        /// </summary>
+        /// <param name="sessionId">The session id.</param>
+        /// <param name="token">The token.</param>
+        /// <returns>Percentage video upload status.</returns>
+        /// <exception cref="VideoProviderException">Failed to get video uploading status.</exception>
         public int GetUploadingStatus(string sessionId, string token)
         {
             try
@@ -201,9 +269,9 @@ namespace BetterCms.Module.Viddler.Services
         {
             var result = string.Format("{0}.{1}", method, ResponseFormat);
             var first = true;
-            var seperator = string.Empty;
             foreach (var i in vals)
             {
+                string seperator;
                 if (first)
                 {
                     seperator = "?";
@@ -213,8 +281,10 @@ namespace BetterCms.Module.Viddler.Services
                 {
                     seperator = "&";
                 }
+
                 result += string.Format("{0}{1}={2}", seperator, i.Key, i.Value);
             }
+
             return result;
         }
 
@@ -244,6 +314,7 @@ namespace BetterCms.Module.Viddler.Services
                     }
                 }
             }
+
             return result;
         }
 
