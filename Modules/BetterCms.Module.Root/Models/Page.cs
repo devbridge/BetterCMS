@@ -99,6 +99,17 @@ namespace BetterCms.Module.Root.Models
         /// <value>
         /// The page contents.
         /// </value>
-        public virtual IList<PageContent> PageContents { get; set; }        
+        public virtual IList<PageContent> PageContents { get; set; }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format("{0}, Title={1}", base.ToString(), Title);
+        }
     }
 }

@@ -59,9 +59,9 @@
     <Reference Include="Autofac.Configuration">
       <HintPath>..\..\packages\Autofac.3.0.0\lib\net40\Autofac.Configuration.dll</HintPath>
     </Reference>
-    <Reference Include="Common.Logging, Version=2.1.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+    <Reference Include="Common.Logging, Version=2.1.2.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Common.Logging.2.1.1\lib\net40\Common.Logging.dll</HintPath>
+      <HintPath>..\..\packages\Common.Logging.2.1.2\lib\net40\Common.Logging.dll</HintPath>
     </Reference>
     <Reference Include="FluentMigrator, Version=1.0.6.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -117,14 +117,11 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Api\Attributes\AllowableValuesValidationAttribute.cs" />
-    <Compile Include="Api\Attributes\EmptyGuidValidationAttribute.cs" />
-    <Compile Include="Api\Events\CategoryEvents.cs" />
-    <Compile Include="Api\Events\PageRetrievedEventArgs.cs" />
-    <Compile Include="Api\Events\RootEvents.cs" />
-    <Compile Include="Api\Events\PageRenderingEventArgs.cs" />
-    <Compile Include="Api\Events\TagEvents.cs" />
-    <Compile Include="Api\RootApiContext.cs" />
+    <Compile Include="Events\CategoryEvents.cs" />
+    <Compile Include="Events\PageRetrievedEventArgs.cs" />
+    <Compile Include="Events\RootEvents.cs" />
+    <Compile Include="Events\PageRenderingEventArgs.cs" />
+    <Compile Include="Events\TagEvents.cs" />
     <Compile Include="Commands\Category\DeleteCategory\DeleteCategoryCommand.cs" />
     <Compile Include="Commands\Category\DeleteCategory\DeleteCategoryCommandRequest.cs" />
     <Compile Include="Commands\Category\GetCategoryList\GetCategoryListCommand.cs" />
@@ -172,7 +169,6 @@
     <Compile Include="Models\Maps\ContentOptionMap.cs" />
     <Compile Include="Models\Maps\RegionMap.cs" />
     <Compile Include="Models\Maps\TagMap.cs" />
-    <Compile Include="Models\MigrationsContent\BaseContentMigration.cs" />
     <Compile Include="Models\Migrations\Migration201305230800.cs" />
     <Compile Include="Models\Migrations\Migration201303261100.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />

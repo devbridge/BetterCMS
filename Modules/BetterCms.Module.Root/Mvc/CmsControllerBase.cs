@@ -163,8 +163,7 @@ namespace BetterCms.Module.Root.Mvc
         /// </returns>
         [NonAction]
         public virtual JsonResult Json(WireJson data, JsonRequestBehavior behavior = JsonRequestBehavior.DenyGet)
-        {
-            // TODO: create wirejson result.
+        {            
             List<string> messages = data.Messages != null
                                         ? data.Messages.ToList()
                                         : new List<string>();

@@ -1,6 +1,5 @@
 ﻿using System;
 
-using BetterCms.Api;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Root.Content.Resources;
@@ -51,11 +50,11 @@ namespace BetterCms.Module.Root.Commands.Tag.SaveTag
 
             if (tagItem.Id == default(Guid))
             {
-                RootApiContext.Events.OnTagCreated(tag);
+                Events.RootEvents.Instance.OnTagCreated(tag);
             }
             else
             {
-                RootApiContext.Events.OnTagUpdated(tag);
+                Events.RootEvents.Instance.OnTagUpdated(tag);
             }
 
             return new TagItemViewModel

@@ -1,5 +1,4 @@
-﻿using BetterCms.Api;
-using BetterCms.Core.DataContracts.Enums;
+﻿using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.Pages.Command.Page.SavePageProperties;
@@ -67,7 +66,7 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
             UnitOfWork.Commit();
 
             // Notifying, that page is created
-            PagesApiContext.Events.OnPageCreated(page);
+            Events.PageEvents.Instance.OnPageCreated(page);
 
             return new SavePageResponse(page);
         }

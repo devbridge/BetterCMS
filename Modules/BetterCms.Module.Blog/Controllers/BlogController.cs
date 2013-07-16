@@ -12,7 +12,6 @@ using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.Blog.ViewModels.Filter;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Mvc;
-using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
 using Microsoft.Web.Mvc;
 

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Api;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Mvc.Commands;
 
@@ -82,7 +81,7 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
                 // Notify.
                 foreach (var mediaFile in files)
                 {
-                    MediaManagerApiContext.Events.OnMediaFileUpdated(mediaFile);
+                    Events.MediaManagerEvents.Instance.OnMediaFileUpdated(mediaFile);
                 }
             }
 

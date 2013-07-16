@@ -8,10 +8,10 @@ namespace BetterCms.Core.DataContracts
     public interface IEntity
     {
         /// <summary>
-        /// Gets the id.
+        /// Gets the entity id.
         /// </summary>
         /// <value>
-        /// The id.
+        /// The entity id.
         /// </value>
         Guid Id { get; }
 
@@ -24,7 +24,7 @@ namespace BetterCms.Core.DataContracts
         bool IsDeleted { get; }
 
         /// <summary>
-        /// Gets or sets the created on.
+        /// Gets the created on date.
         /// </summary>
         /// <value>
         /// The created on.
@@ -32,7 +32,7 @@ namespace BetterCms.Core.DataContracts
         DateTime CreatedOn { get; }
 
         /// <summary>
-        /// Gets or sets the modified on.
+        /// Gets the modified on data.
         /// </summary>
         /// <value>
         /// The modified on.
@@ -40,7 +40,7 @@ namespace BetterCms.Core.DataContracts
         DateTime ModifiedOn { get; }
 
         /// <summary>
-        /// Gets or sets the deleted on.
+        /// Gets the deleted on date.
         /// </summary>
         /// <value>
         /// The deleted on.
@@ -48,7 +48,7 @@ namespace BetterCms.Core.DataContracts
         DateTime? DeletedOn { get; }
 
         /// <summary>
-        /// Gets or sets the created by user.
+        /// Gets the created by user.
         /// </summary>
         /// <value>
         /// The created by user.
@@ -56,7 +56,7 @@ namespace BetterCms.Core.DataContracts
         string CreatedByUser { get; }
 
         /// <summary>
-        /// Gets or sets the modified by user.
+        /// Gets the modified by user.
         /// </summary>
         /// <value>
         /// The modified by user.
@@ -64,7 +64,7 @@ namespace BetterCms.Core.DataContracts
         string ModifiedByUser { get; }
 
         /// <summary>
-        /// Gets or sets the deleted by user.
+        /// Gets the deleted by user.
         /// </summary>
         /// <value>
         /// The deleted by user.
@@ -72,7 +72,7 @@ namespace BetterCms.Core.DataContracts
         string DeletedByUser { get; }
 
         /// <summary>
-        /// Gets or sets the version.
+        /// Gets the entity version.
         /// </summary>
         /// <value>
         /// The version.

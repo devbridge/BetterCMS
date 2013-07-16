@@ -1,10 +1,11 @@
-﻿using BetterCms.Core.Api.DataContracts;
+﻿using System;
+using System.Collections.Generic;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 
 namespace BetterCms.Module.MediaManager.Services
 {
     public interface IMediaVideoService
     {
-        DataListResponse<MediaViewModel> GetItems(MediaManagerViewModel request);
+        Tuple<IEnumerable<MediaViewModel>, int> GetItems(MediaManagerViewModel request);
     }
 }

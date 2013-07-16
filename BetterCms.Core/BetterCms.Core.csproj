@@ -56,8 +56,9 @@
     <Reference Include="Autofac.Integration.Mvc">
       <HintPath>..\packages\Autofac.Mvc4.2.6.2.859\lib\NET40\Autofac.Integration.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="Common.Logging">
-      <HintPath>..\packages\Common.Logging.2.1.1\lib\net40\Common.Logging.dll</HintPath>
+    <Reference Include="Common.Logging, Version=2.1.2.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Common.Logging.2.1.2\lib\net40\Common.Logging.dll</HintPath>
     </Reference>
     <Reference Include="FluentMigrator, Version=1.0.6.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -118,24 +119,15 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Api\DataApiContext.cs" />
-    <Compile Include="Api\DataContracts\DataListResponse.cs" />
-    <Compile Include="Api\DataContracts\GetDataRequest.cs" />
-    <Compile Include="Api\DataContracts\GetFilteredDataRequest.cs" />
-    <Compile Include="Api\Events\EventBase.cs" />
-    <Compile Include="Api\Events\CoreEvents.cs" />
-    <Compile Include="Api\Events\SingleItemEventArgs.cs" />
-    <Compile Include="Api\Extensions\ApiQueryableExtensions.cs" />
+    <Compile Include="Events\EventBase.cs" />
+    <Compile Include="Events\CoreEvents.cs" />
+    <Compile Include="Events\SingleItemEventArgs.cs" />
     <Compile Include="CmsContext.cs" />
-    <Compile Include="Api\ApiContext.cs" />
     <Compile Include="DataAccess\DataContext\Fetching\EagerFetch.cs" />
     <Compile Include="DataAccess\DataContext\Fetching\FetchRequest.cs" />
     <Compile Include="DataAccess\DataContext\Fetching\IFetchingProvider.cs" />
     <Compile Include="DataAccess\DataContext\Fetching\IFetchRequest.cs" />
     <Compile Include="DataAccess\DataContext\Fetching\DefaultFetchingProvider.cs" />
-    <Compile Include="DataAccess\DataContext\Migrations\ContentMigration.cs" />
-    <Compile Include="DataAccess\DataContext\Migrations\IContentMigration.cs" />
-    <Compile Include="DataAccess\DataContext\Migrations\ContentMigrationAttribute.cs" />
     <Compile Include="DataAccess\DataContext\Migrations\DefaultVersionChecker.cs" />
     <Compile Include="DataAccess\DataContext\Migrations\IVersionChecker.cs" />
     <Compile Include="DataAccess\DataContext\QueryableExtensions.cs" />
@@ -149,7 +141,6 @@
     <Compile Include="DataAccess\DataContext\Migrations\DefaultMigrationRunner.cs" />
     <Compile Include="DataAccess\DataContext\Migrations\IMigrationRunner.cs" />
     <Compile Include="DataAccess\DataContext\Migrations\MigrationExtensions.cs" />
-    <Compile Include="Api\Extensions\ApiRepositoryExtensions.cs" />
     <Compile Include="DataAccess\DataContext\RestrictionsExtensions.cs" />
     <Compile Include="DataAccess\DataContext\SessionExtensions.cs" />
     <Compile Include="DataContracts\Enums\ContentStatus.cs" />

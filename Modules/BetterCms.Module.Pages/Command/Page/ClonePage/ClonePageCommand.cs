@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Api;
-
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Commands;
 
@@ -11,7 +9,6 @@ using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
-using BetterCms.Module.Root.Mvc.Helpers;
 
 using NHibernate.Linq;
 
@@ -82,7 +79,7 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
 
             UnitOfWork.Commit();
 
-            PagesApiContext.Events.OnPageCloned(newPage);
+            Events.PageEvents.Instance.OnPageCloned(newPage);
 
             return new ClonePageViewModel
                        {

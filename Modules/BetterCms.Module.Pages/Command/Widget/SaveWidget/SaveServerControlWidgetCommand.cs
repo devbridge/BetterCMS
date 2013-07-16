@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Api;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 
@@ -45,11 +44,11 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
             {
                 if (request.Id == default(Guid))
                 {
-                    PagesApiContext.Events.OnWidgetCreated(widget);
+                    Events.PageEvents.Instance.OnWidgetCreated(widget);
                 }
                 else
                 {
-                    PagesApiContext.Events.OnWidgetUpdated(widget);
+                    Events.PageEvents.Instance.OnWidgetUpdated(widget);
                 }
             }
 

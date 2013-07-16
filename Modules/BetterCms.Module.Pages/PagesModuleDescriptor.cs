@@ -4,11 +4,11 @@ using System.Diagnostics.CodeAnalysis;
 
 using Autofac;
 
-using BetterCms.Api;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
+using BetterCms.Events;
 using BetterCms.Module.Pages.Accessors;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Helpers.Extensions;
@@ -16,7 +16,6 @@ using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Registration;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root;
-using BetterCms.Module.Root.Api.Events;
 
 namespace BetterCms.Module.Pages
 {
@@ -92,7 +91,7 @@ namespace BetterCms.Module.Pages
             historyJsModuleIncludeDescriptor = new HistoryJsModuleIncludeDescriptor(this);
             sitemapJsModuleIncludeDescriptor = new SitemapJsModuleIncludeDescriptor(this);
 
-            RootApiContext.Events.PageRetrieved += Events_PageRetrieved;
+            RootEvents.Instance.PageRetrieved += Events_PageRetrieved;
         }
 
         /// <summary>

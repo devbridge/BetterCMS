@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using BetterCms.Api;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Models.Extensions;
@@ -55,7 +54,8 @@ namespace BetterCms.Module.MediaManager.Command.Files.SaveFile
 
             UnitOfWork.Commit();
 
-            MediaManagerApiContext.Events.OnMediaFileUpdated(mediaFile);
+            // Notify.
+            Events.MediaManagerEvents.Instance.OnMediaFileUpdated(mediaFile);
         }
     }
 }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.Api.DataContracts;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Module.MediaManager.Models;
@@ -27,7 +26,7 @@ namespace BetterCms.Module.Vimeo.Services
             this.repository = repository;
         }
 
-        public DataListResponse<MediaViewModel> GetItems(MediaManagerViewModel request)
+        public Tuple<IEnumerable<MediaViewModel>, int> GetItems(MediaManagerViewModel request)
         {
             var query = repository
                 .AsQueryable<Media>()
@@ -80,14 +79,14 @@ namespace BetterCms.Module.Vimeo.Services
 
             return ToResponse(request, query);
         }
-        private DataListResponse<MediaViewModel> ToResponse(MediaManagerViewModel request, IQueryable<Media> query)
+        private Tuple<IEnumerable<MediaViewModel>, int> ToResponse(MediaManagerViewModel request, IQueryable<Media> query)
         {
             var count = query.ToRowCountFutureValue();
             query = AddOrder(query, request).AddPaging(request);
 
             var items = query.Select(SelectItem).ToList();
 
-            return new DataListResponse<MediaViewModel>(items, count.Value);
+            return new Tuple<IEnumerable<MediaViewModel>, int>(items, count.Value);
         }
 
         private IQueryable<Media> AddOrder(IQueryable<Media> query, MediaManagerViewModel request)

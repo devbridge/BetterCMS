@@ -25,7 +25,7 @@ namespace BetterCms.Module.MediaManager.Command.Videos.GetVideos
 
             request.SetDefaultSortingOptions("Title");
             var items = mediaVideoService.GetItems(request);
-            return new MediaManagerItemsViewModel(items.Items, request, items.TotalCount)
+            return new MediaManagerItemsViewModel(items.Item1, request, items.Item2)
                 {
                     Path = this.LoadPath(request, MediaType.Video)
                 };

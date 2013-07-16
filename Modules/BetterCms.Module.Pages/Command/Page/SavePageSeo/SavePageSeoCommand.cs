@@ -1,6 +1,5 @@
 ﻿using System;
 
-using BetterCms.Api;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
@@ -100,13 +99,13 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageSeo
             // Notify about SEO change.
             if (page.HasSEO != initialHasSeo)
             {
-                PagesApiContext.Events.OnPageSeoStatusChanged(page);
+                Events.PageEvents.Instance.OnPageSeoStatusChanged(page);
             }
 
             // Notify about new redirect creation.
             if (newRedirect != null)
             {
-                PagesApiContext.Events.OnRedirectCreated(newRedirect);
+                Events.PageEvents.Instance.OnRedirectCreated(newRedirect);
             }
 
             return new EditSeoViewModel { PageUrlPath = page.PageUrl };

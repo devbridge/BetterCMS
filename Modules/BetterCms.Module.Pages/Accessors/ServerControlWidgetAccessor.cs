@@ -17,6 +17,8 @@ namespace BetterCms.Module.Pages.Accessors
     {
         private static readonly ILog logger = LogManager.GetCurrentClassLogger();
 
+        public const string ContentWrapperType = "server-widget";
+
         public ServerControlWidgetAccessor(ServerControlWidget content, IList<IOption> options)
             : base(content, options)
         {
@@ -88,7 +90,7 @@ namespace BetterCms.Module.Pages.Accessors
 
         public override string GetContentWrapperType()
         {
-            return "server-widget";
+            return ContentWrapperType;
         }
 
         public override string GetHtml(HtmlHelper html)

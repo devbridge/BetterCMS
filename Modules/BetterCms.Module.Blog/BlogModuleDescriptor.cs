@@ -3,12 +3,11 @@ using System.Linq;
 
 using Autofac;
 
-using BetterCms.Api;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
+using BetterCms.Events;
 using BetterCms.Module.Blog.Accessors;
-using BetterCms.Module.Blog.Api.DataContracts;
 using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.Blog.Helpers.Extensions;
 using BetterCms.Module.Blog.Models;
@@ -16,7 +15,6 @@ using BetterCms.Module.Blog.Registration;
 using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Pages.Accessors;
 using BetterCms.Module.Root;
-using BetterCms.Module.Root.Api.Events;
 using BetterCms.Module.Root.ViewModels.Cms;
 
 namespace BetterCms.Module.Blog
@@ -45,7 +43,7 @@ namespace BetterCms.Module.Blog
         {
             blogJsModuleIncludeDescriptor = new BlogJsModuleIncludeDescriptor(this);
 
-            RootApiContext.Events.PageRetrieved += Events_PageRetrieved;
+            Events.RootEvents.Instance.PageRetrieved += Events_PageRetrieved;
         }
 
         /// <summary>

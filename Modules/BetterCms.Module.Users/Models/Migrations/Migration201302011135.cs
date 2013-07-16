@@ -36,13 +36,5 @@ namespace BetterCms.Module.Users.Models.Migrations
             .FromTable("Users").InSchema(SchemaName).ForeignColumn("ImageId")
             .ToTable("MediaFiles").InSchema(mediaModuleSchemaName).PrimaryColumn("Id");
         }
-
-        /// <summary>
-        /// Downs this instance.
-        /// </summary>
-        public override void Down()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
