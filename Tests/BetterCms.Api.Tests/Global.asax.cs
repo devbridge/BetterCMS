@@ -1,12 +1,11 @@
-﻿using System.Web.Http;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Routing;
 
+using BetterCms.Api.Tests.App_Start;
 using BetterCms.Core;
 using BetterCms.Core.Environment.Host;
-using BetterCms.WebApi.Tests.App_Start;
 
-namespace BetterCms.WebApi.Tests
+namespace BetterCms.Api.Tests
 {
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
     // visit http://go.microsoft.com/?LinkId=9394801

@@ -273,10 +273,6 @@
       <Project>{C530025B-8AB7-402D-B60C-000C9A5D0446}</Project>
       <Name>BetterCms.Module.Users</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Modules\BetterCms.Module.WebApi\BetterCms.Module.Api.csproj">
-      <Project>{5ff9d100-cf25-4899-8d23-8eb9f0c0e102}</Project>
-      <Name>BetterCms.Module.Api</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCms.Module.WindowsAzureStorage\BetterCms.Module.WindowsAzureStorage.csproj">
       <Project>{6e8e91d9-aeb9-432f-9647-68fa2def2ca9}</Project>
       <Name>BetterCms.Module.WindowsAzureStorage</Name>

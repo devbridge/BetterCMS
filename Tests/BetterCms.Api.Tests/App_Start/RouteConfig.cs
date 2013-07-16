@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace BetterCms.WebApi.Tests.App_Start
+namespace BetterCms.Api.Tests.App_Start
 {
     public class RouteConfig
     {

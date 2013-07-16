@@ -11,8 +11,8 @@
     <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BetterCms.WebApi.Tests</RootNamespace>
-    <AssemblyName>BetterCms.WebApi.Tests</AssemblyName>
+    <RootNamespace>BetterCms.Api.Tests</RootNamespace>
+    <AssemblyName>BetterCms.Api.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
@@ -216,6 +216,10 @@
       <Project>{694ca5ca-a0e2-4578-a249-648498b058d7}</Project>
       <Name>BetterCms.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.Api\BetterCms.Module.Api.csproj">
+      <Project>{5ff9d100-cf25-4899-8d23-8eb9f0c0e102}</Project>
+      <Name>BetterCms.Module.Api</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCMS.Module.Blog\BetterCms.Module.Blog.csproj">
       <Project>{a66a3046-ef60-4c51-ada7-eb055763419b}</Project>
       <Name>BetterCms.Module.Blog</Name>
@@ -240,15 +244,6 @@
       <Project>{c530025b-8ab7-402d-b60c-000c9a5d0446}</Project>
       <Name>BetterCms.Module.Users</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Modules\BetterCms.Module.WebApi\BetterCms.Module.Api.csproj">
-      <Project>{5ff9d100-cf25-4899-8d23-8eb9f0c0e102}</Project>
-      <Name>BetterCms.Module.Api</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Config\appFabric.dataCacheClient.config">
-      <SubType>Designer</SubType>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Config\cms.config">
@@ -280,9 +275,9 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>58766</DevelopmentServerPort>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>55558</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:55132/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

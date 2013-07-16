@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Operations;
 
 using NUnit.Framework;
+using BetterCms.Module.Api.Helpers;
 
-namespace BetterCms.WebApi.Tests.UnitTests
+namespace BetterCms.Api.Tests.UnitTests
 {
     public class DynamicLinqExtensionsTests
     {

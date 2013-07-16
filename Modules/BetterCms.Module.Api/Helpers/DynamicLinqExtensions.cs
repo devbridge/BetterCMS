@@ -1,5 +1,4 @@
 ﻿// Copyright (C) Microsoft Corporation.  All rights reserved.
-// ATTENTION! Edited by DevBridge developers (BetterCMS team)
 
 using System;
 using System.Collections.Generic;

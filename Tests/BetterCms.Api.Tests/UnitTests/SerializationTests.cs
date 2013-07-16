@@ -7,7 +7,7 @@ using BetterCms.Module.Api.Operations.Enums;
 
 using NUnit.Framework;
 
-namespace BetterCms.WebApi.Tests.UnitTests
+namespace BetterCms.Api.Tests.UnitTests
 {
     [TestFixture]
     public class SerializationTests

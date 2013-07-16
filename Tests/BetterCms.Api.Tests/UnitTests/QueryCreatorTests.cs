@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Operations;
@@ -9,7 +7,7 @@ using BetterCms.Module.Pages.Models;
 
 using NUnit.Framework;
 
-namespace BetterCms.WebApi.Tests.UnitTests
+namespace BetterCms.Api.Tests.UnitTests
 {
     [TestFixture]
     public class QueryCreatorTests
