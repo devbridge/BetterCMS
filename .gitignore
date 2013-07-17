@@ -82,3 +82,5 @@ logs
 /Tests/BetterCms.WebApi.Tests/App_Data/BetterCms/versions.info
 
 /Modules/BetterCms.Module.Vimeo/Scripts/bcms.vimeo.min.js
+
+/Modules/BetterCms.Module.Viddler/Scripts/bcms.viddler.min.js
