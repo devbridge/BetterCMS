@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web;
+using System.Web.Caching;
 using System.Web.Mvc;
 
 using BetterCms.Core.Security;
@@ -55,43 +56,69 @@ namespace BetterCms.Module.Viddler.Controllers
             {
                 UrlHelper u = new UrlHelper(ControllerContext.RequestContext);
                 var url = HttpUtility.UrlDecode(u.Action("VideoUploaded", "Videos", null));
-                model.CallbackUrl = url;
-// TODO: remove if above works correctly.
-//            var requestUrl = HttpContext.Request.Url;
-//            if (requestUrl != null)
-//            {
-//                var isCustomPort = requestUrl.Scheme == Uri.UriSchemeHttp && requestUrl.Port != 80 || requestUrl.Scheme == Uri.UriSchemeHttps && requestUrl.Port != 433;
-//                url = string.Concat(requestUrl.Scheme, "://", requestUrl.Host, isCustomPort ? ":" + requestUrl.Port : string.Empty, url);
-//                model.CallbackUrl = url;
-//            }
+                var requestUrl = HttpContext.Request.Url;
+                if (requestUrl != null)
+                {
+                    var isCustomPort = (requestUrl.Scheme == Uri.UriSchemeHttp && requestUrl.Port != 80)
+                                       || (requestUrl.Scheme == Uri.UriSchemeHttps && requestUrl.Port != 433);
+                    url = string.Concat(requestUrl.Scheme, "://", requestUrl.Host, isCustomPort ? ":" + requestUrl.Port : string.Empty, url);
+                    model.CallbackUrl = url;
+                }
+
+                if (HttpRuntime.Cache[model.Token] != null)
+                {
+                    HttpRuntime.Cache.Remove(model.Token);
+                }
+
+                HttpRuntime.Cache.Add(model.Token, true, null, Cache.NoAbsoluteExpiration, Cache.NoSlidingExpiration, CacheItemPriority.Normal, null);
             }
 
             return ComboWireJson(success, null, model, JsonRequestBehavior.AllowGet);
         }
 
+#if DEBUG
+        // TODO: REMOVE this when test account will be available.
+        Random rnd = new Random();
+        public ActionResult ViddlerUploadMockup(string uploadtoken, string callback, string title, HttpPostedFileWrapper file)
+        {
+            System.Threading.Thread.Sleep(5000);
+            return rnd.Next(1, 7) < 2
+                ? null // Failure imitation.
+                : Redirect(string.Format("{0}?video_id=f6752122&token={1}", callback, uploadtoken));
+        }
+#endif
+
         /// <summary>
         /// Callback from video service provides after successful video upload.
         /// </summary>
         /// <returns>The response.</returns>
-        public WrappedJsonResult VideoUploaded(string video_id)
+        public WrappedJsonResult VideoUploaded(string video_id, string token, string uploadToken)
         {
-            // TODO: implement callback from Viddler.
-            var media = new MediaFile();
-            System.Threading.Thread.Sleep(5000);
-            return new WrappedJsonResult
+            if (HttpRuntime.Cache[token] != null)
             {
-                Data = new
+                HttpRuntime.Cache.Remove(token);
+
+                // TODO: implement callback from Viddler.
+                var media = new MediaFile() { OriginalFileName = "some file name" };
+                return new WrappedJsonResult
                 {
-                    Success = true,
-                    Id = media.Id,
-                    fileName = media.OriginalFileName,
-                    fileSize = media.Size,
-                    Version = media.Version,
-                    Type = MediaType.Video,
-                    IsProcessing = !media.IsUploaded.HasValue,
-                    IsFailed = media.IsUploaded == false,
-                }
-            };
+                    Data = new
+                    {
+                        Success = true,
+                        Id = media.Id,
+                        FileName = media.OriginalFileName,
+                        FileSize = media.Size,
+                        Version = media.Version,
+                        Type = MediaType.Video,
+                        IsProcessing = !media.IsUploaded.HasValue,
+                        IsFailed = media.IsUploaded == false,
+                    },
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+            }
+
+            // Failed.
+            return null;
         }
 
         /// <summary>

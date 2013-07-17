@@ -12,5 +12,7 @@ namespace BetterCms.Module.Viddler.ViewModels.UploadVideos
         public Guid SelectedFolderId { get; set; }
 
         public List<Tuple<Guid, string>> Folders { get; set; }
+
+        public List<Guid> UploadedFiles { get; set; }
     }
 }

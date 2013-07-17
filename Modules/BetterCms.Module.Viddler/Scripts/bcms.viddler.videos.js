@@ -7,32 +7,31 @@ bettercms.define('bcms.viddler.videos', ['bcms.jquery', 'bcms', 'bcms.dynamicCon
 
         var module = {},
             selectors = {
-                templateDataBind: '.bcms-file-manager-inner',
                 previewVideo: '.bcms-preview-image-frame iframe',
                 previewVideoContainer: '.bcms-preview-image-border',
                 previewFailure: '.bcms-grid-image-holder',
+                dragZone: '#bcms-files-dropzone',
+                messageBox: "#bcms-multi-file-upload-messages",
+                fileUploadingContext: '#bcms-media-uploads',
+                fileUploadingMasterForm: '#SaveForm',
+                fileUploadingForm: '#ImgForm',
+                fileUploadingTarget: '#UploadTarget',
+                fileUploadingInput: '#uploadFile',
                 fileUploadingResult: '#jsonResult',
+                folderDropDown: '#SelectedFolderId',
+                uploadButtonLabel: '.bcms-btn-upload-files-text'
             },
             links = {
                 uploadVideoDialogUrl: null,
                 getUploadDataUrl: null,
+                checkUploadedFileStatuses: null,
                 saveUploadedVideosUrl: null,
                 videoPreviewUrl: 'http://viddler.com/embed/{0}',
             },
             globalization = {
                 uploadVideoDialogTitle: null,
                 uploadVideoDialogSaveButtonTitle: null,
-            },
-            staticDomId = 0,
-            workerStatus = {
-                Idle: 1,
-                RequestingUploadData: 2,
-                FailedToGetUploadData: 3,
-                UploadingFile: 4,
-                UploadingFileFailed: 5,
-                Done: 6
-            },
-            defaultIdValue = '00000000-0000-0000-0000-000000000000';
+            };
 
         /**
         * Assign objects to module.
@@ -40,249 +39,394 @@ bettercms.define('bcms.viddler.videos', ['bcms.jquery', 'bcms', 'bcms.dynamicCon
         module.links = links;
         module.globalization = globalization;
         
-        // --- Helpers --------------------------------------------------------
-        function getNewDomIdExtension() {
-            return "_" + staticDomId++;
-        }
-
-        ko.bindingHandlers.fileSelectionChanged = {
-            init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-                var options = ko.utils.unwrapObservable(valueAccessor()),
-                    property = ko.utils.unwrapObservable(options.property);
-                if (property) {
-                    $(element).change(function() {
-                        if (element.files.length) {
-                            var $this = $(this),
-                                fileName = $this.val();
-                            viewModel[property](fileName);
-                        }
-                    });
-                }
-            },
-        };
-        
-        // --- View Models ----------------------------------------------------
-        function FolderViewModel(id, name) {
-            var self = this;
-            self.id = id;
-            self.name = name;
-        }
-
-        function UploadWorkerViewModel(onStartUploadCallback, onFinishUploadCallback) {
+        function UploadsViewModel() {
             var self = this,
-                id = getNewDomIdExtension();
-            self.fileInputDomId = 'bcms-files-upload-input' + id;
-            self.targetFormDomId = 'bcms-files-upload-form' + id;
+
+                undoUpload = function (fileViewModel) {
+                    $.post($.format(links.undoFileUploadUrl, fileViewModel.fileId(), fileViewModel.version(), fileViewModel.type()));
+                },
+
+                abortUpload = function (fileViewModel) {
+                    self.uploads.remove(fileViewModel);
+
+                    if (self.activeUploads.indexOf(fileViewModel) !== -1) {
+                        self.activeUploads.remove(fileViewModel);
+                    }
+
+                    if (fileViewModel.uploadCompleted() === false && fileViewModel.uploadFailed() === false) {
+                        fileViewModel.file.abort();
+                    } else if (fileViewModel.uploadCompleted() === true) {
+                        undoUpload(fileViewModel);
+                    }
+                };
+
             self.endpoint = ko.observable();
             self.token = ko.observable();
             self.callbackUrl = ko.observable();
-            self.fileName = ko.observable();
-            self.status = ko.observable(workerStatus.Idle);
-            self.uploadProgress = ko.observable(0);
-            self.failureMessage = ko.observableArray([]);
-            
-            self.showFileSelection = ko.computed(function () {
-                return self.status() == workerStatus.Idle;
-            });
-            self.showProgress = ko.computed(function() {
-                return self.status() != workerStatus.Idle;
-            });
-            self.uploadFailed = ko.computed(function () {
-                return self.status() == workerStatus.FailedToGetUploadData || self.status() == workerStatus.UploadingFileFailed;
-            });
-            self.uploadProcessing = ko.computed(function () {
-                return self.status() == workerStatus.RequestingUploadData || self.status() == workerStatus.UploadingFile;
-            });
-            self.uploadCompleted = ko.computed(function () {
-                return self.status() == workerStatus.Done;
-            });
-            
-            self.onFileSelected = function (fileName) {
-                self.fileName(fileName);
-                if (fileName) {
-                    self.upload();
-                }
-            };
-            self.upload = function() {
-                var onDone = function () {
-                    if (onFinishUploadCallback && $.isFunction(onFinishUploadCallback)) {
-                        onFinishUploadCallback(self);
-                    }
-                };
-                
-                // Change status
-                self.status(workerStatus.RequestingUploadData);
-                if (onStartUploadCallback && $.isFunction(onStartUploadCallback)) {
-                    onStartUploadCallback(self);
-                }
+            self.uploads = ko.observableArray();
+            self.activeUploads = ko.observableArray();
+            self.filesToAccept = ko.observable('');
 
-                // Request upload data
-                self.requestUploadData(function(uploadData) {
-                    if (uploadData && uploadData.Data && uploadData.Data.Token && uploadData.Data.Endpoint && uploadData.Data.CallbackUrl) {
-                        self.token(uploadData.Data.Token);
-                        self.endpoint(uploadData.Data.Endpoint);
-                        self.callbackUrl(uploadData.Data.CallbackUrl);
-                        self.uploadVideo(function (result) {
-                            if (result.Success) {
-                                // Change status
-                                self.status(workerStatus.Done);
-                                onDone();
-                            } else {
-                                // Upload failed
-                                self.status(workerStatus.UploadingFileFailed);
-                                onDone();
-                            }
-                        });
-                    } else {
-                        // Failed.
-                        self.status(workerStatus.FailedToGetUploadData);
-                        onDone();
-                    }
-                });
+            self.cancelAllActiveUploads = function () {
+                var uploads = self.activeUploads.removeAll();
+                for (var i = 0; i < uploads.length; i++) {
+                    abortUpload(uploads[i]);
+                }
             };
-            self.requestUploadData = function (complete) {
-                var onComplete = function (result) {
-                    if ($.isFunction(complete)) {
-                        complete(result);
+
+            self.removeUpload = function (fileViewModel) {
+                abortUpload(fileViewModel);
+            };
+
+            self.removeAllUploads = function () {
+                var uploads = self.uploads.removeAll();
+                for (var i = 0; i < uploads.length; i++) {
+                    abortUpload(uploads[i]);
+                }
+            };
+
+            self.removeFailedUploads = function () {
+                for (var i = 0; i < self.uploads().length; i++) {
+                    if (self.uploads()[i].uploadFailed()) {
+                        abortUpload(self.uploads()[i]);
                     }
-                };
-                $.ajax({
-                    type: 'POST',
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
-                    cache: false,
-                    url: links.getUploadDataUrl,
-                })
-                    .done(function (result) {
-                        onComplete(result);
+                }
+            };
+
+            // When one of file status is "Processing", checking file status repeatedly
+            self.timeout = 100000;
+            self.firstTimeout = 500;
+            self.timer = null;
+
+            self.startStatusChecking = function (timeout) {
+                if (!self.timer) {
+                    if (!timeout) {
+                        timeout = self.timeout;
+                    }
+                    self.timer = setTimeout(self.checkStatus, timeout);
+                }
+            };
+
+            self.stopStatusChecking = function () {
+                if (self.timer) {
+                    clearTimeout(self.timer);
+                    self.timer = null;
+                }
+            };
+
+            self.checkStatus = function () {
+                var ids = self.getProcessingIds(),
+                    onFail = function () {
+                        console.log('Failed to check uploaded files statuses');
+                        self.startStatusChecking();
+                    },
+                    hasProcessing = false;
+
+                self.timer = null;
+
+                if (ids.length > 0) {
+                    $.ajax({
+                        type: 'POST',
+                        cache: false,
+                        url: links.checkUploadedFileStatuses,
+                        data: JSON.stringify({ ids: ids }),
+                        contentType: 'application/json; charset=utf-8'
                     })
-                    .fail(function (response) {
-                        onComplete(bcms.parseFailedResponse(response));
-                    });
-            };
-            self.uploadVideo = function (complete) {
-                // Get form to submit.
-                var form = $("#" + self.fileInputDomId).parent("form");
-                var resultForm = $("#" + self.targetFormDomId);
-                if (form && resultForm) {
-                    // On file submitted.
-                    resultForm.on('load', function () {
-                        // Check the result.
-                        var result = resultForm.contents().find(selectors.fileUploadingResult).get(0);
-                        if (result == null) {
-                            return;
-                        }
-                        var resultData = $.parseJSON(result.innerHTML);
-                        if ($.isFunction(complete)) {
-                            complete(resultData);
-                        }
-                    });
-                    form.submit();
-                }
-            };
-
-            self.onCancelUpload = function() {
-                // TODO: implement
-                // Change status
-            };
-        }
-
-        function UploaderViewModel() {
-            var self = this;
-            self.rootFolderId = null;
-            self.reuploadMediaId = null;
-            self.subFolders = ko.observableArray([]);
-            self.selectedFolder = ko.observableArray([]);
-            self.showFolderSelection = ko.observable(false);
-            self.isReupload = ko.observable(false);
-            
-            self.uploadWorkers = ko.observableArray([]);
-            self.activeUploads = ko.observableArray([]);
-
-            self.cancelAllActiveUploads = function() {
-                // TODO: implement
-            };
-            self.addNewWorker = function() {
-                self.uploadWorkers.push(new UploadWorkerViewModel(self.onStartUpload, self.onFinishUpload));
-            };
-            self.onUpload = function (worker) {
-                self.addNewWorker();
-                self.activeUploads.push(worker);
-            };
-            self.onFinishUpload = function (worker) {
-                self.activeUploads.remove(worker);
-            };
-            
-            self.addNewWorker();
-        }
-
-        /**
-        * Open dialog to upload video.
-        */
-        module.uploadVideo = function (folderId, onSaveCallback) {
-            var uploader;
-            modal.open({
-                title: globalization.uploadVideoDialogTitle,
-                acceptTitle: globalization.uploadVideoDialogSaveButtonTitle,
-                onLoad: function (dialog) {
-                    dynamicContent.setContentFromUrl(dialog, links.uploadVideoDialogUrl, {
-                        done: function (content) {
-                            if (content && content.Data) {
-                                uploader = new UploaderViewModel();
-                                uploader.rootFolderId = content.Data.RootFolderId;
-                                uploader.reuploadMediaId = content.Data.ReuploadMediaId;
-                                if (content.Data.Folders) {
-                                    for (var i in content.Data.Folders) {
-                                        var folder = content.Data.Folders[i];
-                                        uploader.subFolders.push(new FolderViewModel(folder.Item1, folder.Item2));
+                        .done(function (response) {
+                            if (response.Success) {
+                                if (response.Data && response.Data.length > 0) {
+                                    for (var i = 0; i < response.Data.length; i++) {
+                                        var item = response.Data[i],
+                                            id = item.Id,
+                                            isProcessing = item.IsProcessing === true,
+                                            isFailed = item.IsFailed === true;
+                                        if (id) {
+                                            for (var j = 0; j < self.uploads().length; j++) {
+                                                if (self.uploads()[j].fileId() == id) {
+                                                    if (isFailed) {
+                                                        self.uploads()[j].uploadFailed(true);
+                                                        self.uploads()[j].uploadProcessing(false);
+                                                        self.uploads()[j].failureMessage(globalization.failedToProcessFile);
+                                                    } else if (!isProcessing) {
+                                                        self.uploads()[j].uploadProcessing(false);
+                                                    } else if (isProcessing) {
+                                                        hasProcessing = true;
+                                                    }
+                                                }
+                                            }
+                                        }
                                     }
                                 }
-                                uploader.showFolderSelection(uploader.reuploadMediaId == defaultIdValue);
-                                var context = dialog.container.find(selectors.templateDataBind).get(0);
-                                if (context) {
-                                    ko.applyBindings(uploader, context);
+                                if (hasProcessing) {
+                                    self.startStatusChecking();
                                 }
+                            } else {
+                                onFail();
                             }
-                            // TODO: show error message.
+                        })
+                        .fail(function (response) {
+                            onFail();
+                        });
+                }
+            };
+
+            self.getProcessingIds = function () {
+                var ids = [],
+                    i;
+                for (i = 0; i < self.uploads().length; i++) {
+                    if (self.uploads()[i].uploadProcessing()) {
+                        ids.push(self.uploads()[i].fileId());
+                    }
+                }
+                return ids;
+            };
+        }
+
+        function VideoUpload(dialog, options) {
+            var context = dialog.container.find(selectors.fileUploadingContext).get(0),
+                messageBox = messages.box({ container: dialog.container }),
+                uploadsModel = options.uploads,
+                fakeData = {
+                    fileName: "Uploading",
+                    fileSize: 0,
+                    fileId: null,
+                    version: null,
+                    type: null,
+                    abort: function() { /* File upload canceling is not supported. */
+                    }
+                },
+                uploadFile = new FileViewModel(fakeData),
+                resetUploadForm = function() {
+                    var folderDropDown = dialog.container.find(selectors.folderDropDown);
+                    if (folderDropDown.length > 0) {
+                        var selectedFolderIndex = dialog.container.find(selectors.folderDropDown).get(0).selectedIndex;
+                        dialog.container.find(selectors.fileUploadingForm).get(0).reset();
+                        dialog.container.find(selectors.folderDropDown).get(0).selectedIndex = selectedFolderIndex;
+                    }
+                },
+                uploadAnimationId,
+                animateUpload = function(fileModel) {
+                    uploadAnimationId = setInterval(function() {
+                        if (fileModel.uploadProgress() >= 100) {
+                            fileModel.uploadProgress(0);
+                        } else {
+                            fileModel.uploadProgress(fileModel.uploadProgress() + 20);
+                        }
+                        ;
+                    }, 200);
+                },
+                stopUploadAnimation = function() {
+                    if (uploadAnimationId) {
+                        clearInterval(uploadAnimationId);
+                    }
+                },
+                onDone = function() {
+                    stopUploadAnimation();
+                    uploadsModel.uploads.remove(uploadFile);
+                    uploadsModel.activeUploads.remove(uploadFile);
+                    resetUploadForm();
+                },
+                onFail = function(jsonData) {
+                    onDone();
+                    var failModel = new FileViewModel(uploadFile.file);
+                    failModel.uploadFailed(true);
+                    failModel.failureMessage('');
+                    if (jsonData && jsonData.Messages) {
+                        var failureMessages = '';
+                        for (var i in jsonResult.Messages) {
+                            failureMessages += jsonData.Messages[i] + ' ';
+                        }
+                        failModel.failureMessage(failureMessages);
+                    }
+                    uploadsModel.uploads.push(failModel);
+                };
+
+
+            dialog.container.find(selectors.uploadButtonLabel).on('click', fixUploadButtonForMozilla);
+
+            // On folder changed
+            dialog.container.find(selectors.fileUploadingForm).find(selectors.folderDropDown).on('change', function () {
+                var value = $(this).val(),
+                    hidden = dialog.container.find(selectors.fileUploadingMasterForm).find(selectors.folderDropDown);
+
+                hidden.val(value);
+            });
+
+            // On file selected.
+            dialog.container.find(selectors.fileUploadingInput).change(function () {
+                var fileName = dialog.container.find(selectors.fileUploadingInput).val();
+                if (fileName != null && fileName != "") {
+                    // Do not allow multiple file upload on re-upload functionality.
+                    if (options.reuploadMediaId && uploadsModel.uploads().length > 0) {
+                        messageBox.addWarningMessage(globalization.multipleFilesWarningMessageOnReupload);
+                        var uploadedFiles = uploadsModel.uploads();
+                        for (var i = 0; i < uploadedFiles.length; i++) {
+                            uploadedFiles[i].activate();
+                        }
+                        return;
+                    }
+                    // Add fake file model for upload indication.
+                    uploadFile.uploadCompleted(false);
+                    uploadFile.fileName(fileName);
+                    uploadFile.file.fileName = fileName;
+                    uploadFile.uploadProgress(0);
+                    uploadsModel.activeUploads.push(uploadFile);
+                    uploadsModel.uploads.push(uploadFile);
+                    animateUpload(uploadFile);
+                    
+                    requestUploadData(function(json) {
+                        if (json.Success) {
+                            uploadsModel.endpoint(json.Data.Endpoint);
+                            uploadsModel.token(json.Data.Token);
+                            uploadsModel.callbackUrl(json.Data.CallbackUrl);
+                            // Send file to server.
+                            dialog.container.find($(selectors.fileUploadingForm)).submit();
+                        } else {
+                            onFail();
+                        }
+                    });
+                }
+            });
+
+            // On file submitted.
+            dialog.container.find($(selectors.fileUploadingTarget)).on('load', function () {
+                // Check the result.
+                var result = $(selectors.fileUploadingTarget).contents().find(selectors.fileUploadingResult).get(0);
+                if (result == null) {
+                    onFail();
+                    return;
+                }
+                
+                var jsonResult = $.parseJSON(result.innerHTML);
+                if (jsonResult.Success) {
+                    onDone();
+                    // Add uploaded file model.
+                    var fileModel = new FileViewModel(jsonResult);
+
+                    fileModel.uploadCompleted(true);
+                    fileModel.fileId(jsonResult.Id);
+                    fileModel.fileName(jsonResult.FileName);
+                    fileModel.version(jsonResult.Version);
+                    fileModel.type(jsonResult.Type);
+                    fileModel.uploadProgress(100);
+
+                    if (jsonResult.IsFailed) {
+                        fileModel.uploadFailed(true);
+                        fileModel.failureMessage(globalization.failedToProcessFile);
+                    } else if (jsonResult.IsProcessing) {
+                        fileModel.uploadProcessing(true);
+                        // NOTE: video encoding process is not so short, so there is no need to question for it...
+                        // uploadsModel.startStatusChecking(uploadsModel.firstTimeout);
+                    }
+
+                    uploadsModel.uploads.push(fileModel);
+                    uploadsModel.activeUploads.remove(fileModel);
+                } else {
+                    onFail(jsonResult);
+                }
+            });
+
+            ko.applyBindings(uploadsModel, context);
+        }
+
+        function FileViewModel(file) {
+            var self = this;
+            self.file = file;
+            self.fileId = ko.observable('');
+            self.version = ko.observable(0);
+            self.type = ko.observable(0);
+            self.uploadProgress = ko.observable(0);
+            self.uploadCompleted = ko.observable(false);
+            self.uploadFailed = ko.observable(false);
+            self.uploadProcessing = ko.observable(false);
+            self.failureMessage = ko.observable("");
+            self.uploadSpeedFormatted = ko.observable();
+            self.fileName = ko.observable(file.fileName);
+            self.fileSizeFormated = formatFileSize(file.fileSize);
+            self.isProgressVisible = ko.observable(true);
+            self.isActive = ko.observable(false);
+
+            self.uploadCompleted.subscribe(function (newValue) {
+                if (newValue === true) {
+                    self.uploadProgress(100);
+                }
+            });
+
+            self.activate = function () {
+                self.isActive(true);
+                setTimeout(function () {
+                    self.isActive(false);
+                }, 4000);
+            };
+        }
+
+        module.uploadVideo = function(rootFolderId, onSaveCallback, reuploadMediaId) {
+            var options = {
+                uploads: new UploadsViewModel(),
+                rootFolderId: rootFolderId,
+                reuploadMediaId: reuploadMediaId
+            };
+            options.uploads.filesToAccept('video/*');
+            modal.open({
+                title: globalization.uploadFilesDialogTitle,
+                onLoad: function (dialog) {
+                    var url = $.format(links.uploadVideoDialogUrl, rootFolderId, reuploadMediaId);
+                    dynamicContent.setContentFromUrl(dialog, url, {
+                        done: function () {
+                            VideoUpload(dialog, options);
                         }
                     });
                 },
-                onAccept: function (dialog) {
-                    saveSelectedItems(folderId, uploader, function (json) {
-                        if (onSaveCallback && $.isFunction(onSaveCallback)) {
-                            onSaveCallback(json);
-                        }
-                        dialog.close();
-                    });
+                onAcceptClick: function (dialog) {
+                    var formToSubmit = $(selectors.fileUploadingMasterForm),
+                        onComplete = function (json) {
+                            messages.refreshBox(dialog.container.find(selectors.messageBox), json);
+                            if (json.Success) {
+                                try {
+                                    if (onSaveCallback && $.isFunction(onSaveCallback)) {
+                                        onSaveCallback(json);
+                                    }
+                                } finally {
+                                    options.uploads.stopStatusChecking();
+                                    options.uploads.removeFailedUploads();
+                                    dialog.close();
+                                }
+                            }
+                        };
+                    $.ajax({
+                        type: 'POST',
+                        cache: false,
+                        url: formToSubmit.attr('action'),
+                        data: formToSubmit.serialize()
+                    })
+                        .done(function (response) {
+                            onComplete(response);
+                        })
+                        .fail(function (response) {
+                            onComplete(bcms.parseFailedResponse(response));
+                        });
+
                     return false;
+                },
+                onCloseClick: function () {
+                    options.uploads.removeAllUploads();
+                    options.uploads.stopStatusChecking();
                 }
             });
         };
 
-
-        function saveSelectedItems(folderIdToSaveIn, uploaderViewModel, spinContainer, complete) {
-            return;
-            // TODO implement.
-            var indicatorId = 'medialist',
-                params = {
-                    FolderId: folderIdToSaveIn,
-                    VideoIds: null // TODO: fill with data from uploaderViewModel
-                },
-                onComplete = function(result) {
-                    spinContainer.hideLoading(indicatorId);
-                    if ($.isFunction(complete)) {
-                        complete(result);
-                    }
-                };
-            spinContainer.showLoading(indicatorId);
-
+        function requestUploadData(complete) {
+            var onComplete = function (result) {
+                if ($.isFunction(complete)) {
+                    complete(result);
+                }
+            };
             $.ajax({
                 type: 'POST',
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
                 cache: false,
-                url: links.saveUploadedVideosUrl,
-                data: JSON.stringify(params)
+                url: links.getUploadDataUrl,
             })
                 .done(function (result) {
                     onComplete(result);
@@ -290,6 +434,14 @@ bettercms.define('bcms.viddler.videos', ['bcms.jquery', 'bcms', 'bcms.dynamicCon
                 .fail(function (response) {
                     onComplete(bcms.parseFailedResponse(response));
                 });
+        };
+
+        function fixUploadButtonForMozilla() {
+            if ($.browser.mozilla) {
+                $('#' + $(this).attr('for')).click();
+                return false;
+            }
+            return true;
         }
 
         function videoPreview(url, width, height, options) {

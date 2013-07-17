@@ -1,8 +1,136 @@
-﻿@using BetterCms.Module.MediaManager.Content.Resources
+﻿@using BetterCms.Module.Viddler.Controllers
+@using BetterCms.Module.MediaManager.Content.Resources
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc
 @using BetterCms.Module.Root.Mvc.Helpers
+@using Microsoft.Web.Mvc
 @model BetterCms.Module.Viddler.ViewModels.UploadVideos.VideoUploadViewModel
+<div class="bcms-scroll-window">
+    @Html.TabbedContentMessagesBox("bcms-multi-file-upload-messages")
+    <div class="bcms-file-manager-inner" id="bcms-media-uploads">
+
+        @using (Html.BeginForm<VideosController>(c => c.VideoUploaded(null, null, null), FormMethod.Post, new
+        {
+            enctype = "multipart/form-data",
+            id = "ImgForm",
+            name = "ImgForm",
+            target = "UploadTarget",
+            @class = "bcms-ajax-form",
+            data_bind="attr: { action: endpoint() }"
+        }))
+        {
+            <div class="bcms-input-list-holder">                
+                @Html.HiddenFor(f => f.ReuploadMediaId)
+                @Html.HiddenFor(f => f.RootFolderId)
+                @if (Model.RootFolderId.HasDefaultValue() && Model.ReuploadMediaId.HasDefaultValue())
+                {
+                    @Html.Tooltip(MediaGlobalization.MultiFileUpload_SelectFolder_Help_Message)            
+                    <div class="bcms-content-titles">@MediaGlobalization.MultiFileUpload_SelectFolder</div>
+                    @Html.DropDownListFor(f => f.SelectedFolderId, Model.Folders.Select(o => new SelectListItem { Selected = Model.SelectedFolderId == o.Item1, Text = o.Item2, Value = o.Item1.ToString() }), new { @class = "bcms-global-select" })
+                }
+                else
+                {
+                    @Html.HiddenFor(f => f.SelectedFolderId, new { @Value = Model.RootFolderId })
+                }
+            </div>
+            <div id="bcms-files-dropzone" class="bcms-dropzone">
+                <div class="bcms-dropzone-infotext" data-bind="text: !(activeUploads().length > 0) ? '@MediaGlobalization.SingleFileUpload_DragDropBox    ' : '@MediaGlobalization.MultiFileUpload_Uploading    '"></div>
+                <div class="bcms-btn-upload-files" data-bind="visible: !(activeUploads().length > 0)">
+                    <input type="hidden" name="uploadtoken" data-bind="value: token()" />
+                    <input type="hidden" name="callback" data-bind="value: callbackUrl()" />
+                    <label for="uploadFile" class="bcms-btn-upload-files-text">@MediaGlobalization.MultiFileUpload_UploadButton</label>
+                    <input type="file" name="file" id="uploadFile" style="position: absolute; left: -999em; top: -999em;" />
+                </div>
+            </div>
+        }
+        @using (Html.BeginForm<VideosController>(c => c.SaveVideos(null), FormMethod.Post, new { id = "SaveForm", name = "SaveForm", @class = "bcms-ajax-form" }))
+        {
+            @Html.HiddenFor(f => f.ReuploadMediaId)
+            @Html.HiddenFor(m => m.RootFolderId)
+            if (Model.RootFolderId.HasDefaultValue())
+            {
+                @Html.HiddenFor(m => m.SelectedFolderId)
+            }
+            else
+            {
+                @Html.HiddenFor(m => m.SelectedFolderId, new { @Value = Model.RootFolderId })
+            }
+            <div class="bcms-upload-holder" data-bind="template: { name: 'bcms-file-upload-template' }"></div>
+        }
+        <iframe id="UploadTarget" name="UploadTarget" style="position: absolute; left: -999em; top: -999em;"></iframe>
+        <div id="Images"></div>
+        <script type="text/html" id="bcms-file-upload-template">
+            <div data-bind="foreach: uploads">
+                <div data-bind="css: {
+    'bcms-upload-block':true,
+    'bcms-upload-success':uploadCompleted() && !uploadProcessing() && !uploadFailed(),
+    'bcms-upload-failed':uploadFailed(),
+    'bcms-single-tag-active':isActive() @* TODO: style is needed. *@
+                }">
+                    <div class="bcms-upload-file-titles" data-bind="text: fileName"></div>
+                    <!-- ko if: !uploadFailed() -->
+                    @Html.HiddenFor(model => model.UploadedFiles, new { id = (string)null, data_bind = "value:fileId()" })
+                    <!-- /ko -->
+                    <div class="bcms-upload-bar-holder">
+                        <div class="bcms-progress-bar" data-bind="visible: !uploadCompleted() && !uploadFailed() && !uploadProcessing()">
+                            <div class="bcms-progress" style="width: 0;" data-bind="style: { width: uploadProgress() + '%' }"></div>
+                        </div>
+                        <div class="bcms-upload-description" data-bind="visible: uploadProcessing()">
+                            @MediaGlobalization.MultiFileUpload_Processing_ServerSide
+                        </div>
+                        <div class="bcms-upload-description" data-bind="visible: uploadFailed()">
+                            <span data-bind="visible: !(failureMessage() != null && failureMessage().length > 0)">@MediaGlobalization.MultiFileUpload_Failed</span>
+                            <span data-bind="visible: failureMessage() != null && failureMessage().length > 0, text: failureMessage"></span>
+                        </div>
+                        <div class="bcms-upload-description" data-bind="visible: uploadCompleted() && !uploadProcessing() && !uploadFailed()">
+                            @MediaGlobalization.MultiFileUpload_Success
+                        </div>
+                    </div>
+                    <!-- ko if: uploadCompleted() && !uploadFailed() -->
+                    <div class="bcms-uploaded-info">&nbsp;</div>
+                    <div class="bcms-upload-size-info" data-bind="text: uploadProgress() + '%'"></div>
+                    <div class="bcms-media-delete-holder">
+                        <a class="bcms-icn-delete" data-bind="click: function() { $root.removeUpload($data); }">@RootGlobalization.Button_Remove</a>
+                    </div>                  
+                    <!-- /ko -->
+
+                    <!-- ko if: uploadFailed() -->
+                    <div class="bcms-uploaded-info">&nbsp;</div>
+                    <div class="bcms-upload-size-info">&nbsp;</div>
+                    <div class="bcms-media-delete-holder">
+                        <a class="bcms-icn-delete" data-bind="click: function() { $root.removeUpload($data); }">@RootGlobalization.Button_Remove</a>
+                    </div>                  
+                    <!-- /ko -->
+                </div>
+            </div>
+        </script>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@{ return; }
+
 <div class="bcms-scroll-window">
     @Html.TabbedContentMessagesBox("bcms-multi-file-upload-messages")
     <div class="bcms-file-manager-inner" data-bind="template: { name: 'bcms-video-upload-template' }"></div>
@@ -18,20 +146,18 @@
     <div id="bcms-video-dropzone" class="bcms-dropzone">
         <div class="bcms-dropzone-infotext" data-bind="visible: !isReupload()">@MediaGlobalization.MultiFileUpload_DragDropBox</div>
         <div class="bcms-dropzone-infotext" data-bind="visible: isReupload()">@MediaGlobalization.MultiFileUpload_DragDropBox_Reupload</div>
-        <div class="bcms-btn-upload-files" data-bind="foreach: uploadWorkers">
-            <div data-bind="visible: showFileSelection">
-                <form method="post" action="" data-bind="attr: { action: endpoint(), target: targetFormDomId }" enctype="multipart/form-data" class="bcms-ajax-form">
-                    @* NOTE: input fields order is important! *@
-                    <input type="hidden" name="uploadtoken" data-bind="value: token()" />
-                    <input type="hidden" name="callback" data-bind="value: callbackUrl()" />
-                    <input type="hidden" name="title" data-bind="value: fileName()" />
-                    <label  class="bcms-btn-upload-files-text" data-bind="attr: { 'for': fileInputDomId }">@MediaGlobalization.MultiFileUpload_UploadButton</label>
-                    <input type="file" name="file" accept="video/*" data-bind="attr: { 'id': fileInputDomId }, fileSelectionChanged: { property: 'onFileSelected' }"
-                           style="position: absolute; left: -999em; top: -999em;" @*multiple="multiple"*@ />
-                </form>
-            </div>
-            <iframe data-bind="attr: { id: targetFormDomId, name: targetFormDomId }" style="position: absolute; left: -999em; top: -999em;"></iframe>
+        <div class="bcms-btn-upload-files" data-bind="with: uploadWorker()[0]">
+            <form method="post" target="uploaderResponseForm" data-bind="attr: { action: endpoint() }" enctype="multipart/form-data" class="bcms-ajax-form">
+                @* NOTE: input fields order is important! *@
+                <input type="hidden" name="uploadtoken" data-bind="value: token()" />
+                <input type="hidden" name="callback" data-bind="value: callbackUrl()" />
+                <input type="hidden" name="title" data-bind="value: fileName()" />
+                <label  class="bcms-btn-upload-files-text" data-bind="attr: { 'for': fileInputDomId }">@MediaGlobalization.MultiFileUpload_UploadButton</label>
+                <input type="file" name="file" accept="video/*" data-bind="attr: { 'id': fileInputDomId }, fileSelectionChanged: { property: 'onFileSelected' }"
+                        style="position: absolute; left: -999em; top: -999em;" @*multiple="multiple"*@ />
+            </form>
         </div>
+        <iframe id="uploaderResponseForm" name="uploaderResponseForm" style="position: absolute; left: -999em; top: -999em;"></iframe>
     </div>
     <div class="bcms-upload-holder">
         <div data-bind="visible: activeUploads().length > 0">
