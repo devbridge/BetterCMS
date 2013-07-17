@@ -177,6 +177,11 @@ namespace BetterCms.Core.DataAccess.DataContext
                 {
                     sqlConfiguration.DefaultSchema(configuration.Database.SchemaName);
                 }
+
+                if (!string.IsNullOrEmpty(configuration.Database.ConnectionProvider))
+                {
+                    sqlConfiguration.Provider(configuration.Database.ConnectionProvider);
+                }
             }
 
             return sqlConfiguration;

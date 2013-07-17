@@ -1,6 +1,6 @@
 ﻿module('root.api.test');
 
-asyncTest("Should get a Better CMS current version", function () {
+asyncTest("_0000: Should get a Better CMS current version.", function () {
     $.ajax('/bcms-api/current-version/',
         {
             type: 'GET',
@@ -23,7 +23,7 @@ asyncTest("Should get a Better CMS current version", function () {
         });
 });
 
-asyncTest("Should get a filtered list", function () {
+asyncTest("_0001: Should get a filtered, sorted and paged list.", function () {
     $.ajax('/bcms-api/layouts/',
       {
           data: {
@@ -31,25 +31,26 @@ asyncTest("Should get a filtered list", function () {
                   connector: 'and',
                   where: [
                       { field: 'isDeleted', operation: 'NotEqual', value: 'true' },
-                      { field: 'Name', operation: 'Equal', value: 'qwerty' }
+                      { field: 'name', operation: 'StartsWith', value: '_0001_' }
                   ],
                   inner: [
                       {
                           connector: 'or',
                           where: [
-                              { field: 'Name', operation: 'StartsWith', value: 'a' }
+                              { field: 'Name', operation: 'Contains', value: 'Layout1' },
+                              { field: 'Name', operation: 'NotContains', value: 'NOT_FOUND' }
                           ]
                       }
                   ]
               },
               order: {
                   by: [
-                      { field: 'CreatedOn' },
+                      { field: 'Name' },
                       { field: 'ModifiedOn', direction: 'desc' }
                   ],
               },
-              skip: 0,
-              take: 5
+              skip: 2,
+              take: 2
           },
           type: 'GET',
           cache: false,
@@ -60,6 +61,10 @@ asyncTest("Should get a filtered list", function () {
           success: function (json) {
               ok(json, 'JSON result received.');
               ok(json.data, 'Version received.');
+              ok(json.data.totalCount === 4, '4 items totally found.');
+              ok(json.data.items.length === 2, '2 items returned.');
+              ok(json.data.items[0].name === '_0001_Layout3', '');
+              ok(json.data.items[1].name === '_0001_Layout4', '');
               start();
           },
 

@@ -1,6 +1,8 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
 
+using BetterCms.Api.Tests.Controllers;
+
 namespace BetterCms.Api.Tests.App_Start
 {
     public class RouteConfig
@@ -8,12 +10,21 @@ namespace BetterCms.Api.Tests.App_Start
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
             routes.IgnoreRoute("bcms-api/{*pathInfo}");
 
             routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Tests", action = "PagesWebApiTests", id = UrlParameter.Optional }
+                "ResetData",
+                "test/reset-data",
+                new { controller = "DataMaintenance", action = "RegisterNewDataSet", area = "" }
+            );
+
+            routes.MapRoute(
+                "Login",
+                "test/login",
+                new { controller = "Authentication", action = "Login", area = "" },
+                null,
+                new[] { typeof(AuthenticationController).Namespace }
             );
         }
     }

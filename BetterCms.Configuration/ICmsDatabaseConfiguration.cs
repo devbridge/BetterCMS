@@ -8,6 +8,8 @@ namespace BetterCms
 
         string ConnectionStringName { get; set; }
 
+        string ConnectionProvider { get; set; }
+
         string SchemaName { get; set; }
 
         DatabaseType DatabaseType { get; set; }
