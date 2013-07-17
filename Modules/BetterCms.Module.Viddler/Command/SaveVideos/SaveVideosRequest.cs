@@ -5,7 +5,12 @@ namespace BetterCms.Module.Viddler.Command.Videos.SaveVideos
 {
     public class SaveVideosRequest
     {
-        public Guid FolderId { get; set; }
-        public List<string> VideosIds { get; set; }
+        public Guid RootFolderId { get; set; }
+
+        public Guid ReuploadMediaId { get; set; }
+
+        public Guid? SelectedFolderId { get; set; }
+
+        public IList<Guid> UploadedFiles { get; set; }
     }
 }

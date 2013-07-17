@@ -18,5 +18,6 @@ namespace BetterCms.Module.Viddler.Command.Videos.SaveVideos
 
         public bool FolderIsDeleted { get; set; }
 
+        public Guid ReuploadMediaId { get; set; }
     }
 }

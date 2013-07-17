@@ -19,7 +19,7 @@ namespace BetterCms.Module.Viddler.Registration
         {
             Links = new IActionProjection[]
                 {
-                    new JavaScriptModuleLinkTo<VideosController>(this, "uploadVideoDialogUrl", c => c.UploadVideos(null, null)),
+                    new JavaScriptModuleLinkTo<VideosController>(this, "uploadVideoDialogUrl", c => c.UploadVideos("{0}", "{1}")),
                     new JavaScriptModuleLinkTo<VideosController>(this, "getUploadDataUrl", c => c.GetViddlerDataForUpload()),
                     new JavaScriptModuleLinkTo<VideosController>(this, "saveUploadedVideosUrl", c => c.SaveVideos(null)),
                 };

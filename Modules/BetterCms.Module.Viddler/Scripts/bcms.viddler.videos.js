@@ -360,17 +360,17 @@ bettercms.define('bcms.viddler.videos', ['bcms.jquery', 'bcms', 'bcms.dynamicCon
             };
         }
 
-        module.uploadVideo = function(rootFolderId, onSaveCallback, reuploadMediaId) {
+        module.uploadVideo = function(folderId, onSaveCallback, reuploadMediaId) {
             var options = {
                 uploads: new UploadsViewModel(),
-                rootFolderId: rootFolderId,
+                rootFolderId: folderId,
                 reuploadMediaId: reuploadMediaId
             };
             options.uploads.filesToAccept('video/*');
             modal.open({
                 title: globalization.uploadFilesDialogTitle,
                 onLoad: function (dialog) {
-                    var url = $.format(links.uploadVideoDialogUrl, rootFolderId, reuploadMediaId);
+                    var url = $.format(links.uploadVideoDialogUrl, folderId, reuploadMediaId);
                     dynamicContent.setContentFromUrl(dialog, url, {
                         done: function () {
                             VideoUpload(dialog, options);

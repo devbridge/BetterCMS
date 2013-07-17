@@ -94,31 +94,40 @@ namespace BetterCms.Module.Viddler.Controllers
         /// <returns>The response.</returns>
         public WrappedJsonResult VideoUploaded(string video_id, string token, string uploadToken)
         {
-            if (HttpRuntime.Cache[token] != null)
+            // TODO: check return parameter name from Viddler - token or uploadToken?
+            if (HttpRuntime.Cache[token] == null)
             {
-                HttpRuntime.Cache.Remove(token);
+                return null;
+            }
+            HttpRuntime.Cache.Remove(token);
 
-                // TODO: implement callback from Viddler.
-                var media = new MediaFile() { OriginalFileName = "some file name" };
-                return new WrappedJsonResult
-                {
-                    Data = new
+            var video = GetCommand<SaveVideoCommand>().ExecuteCommand(
+                new SaveVideoRequest
                     {
-                        Success = true,
-                        Id = media.Id,
-                        FileName = media.OriginalFileName,
-                        FileSize = media.Size,
-                        Version = media.Version,
-                        Type = MediaType.Video,
-                        IsProcessing = !media.IsUploaded.HasValue,
-                        IsFailed = media.IsUploaded == false,
-                    },
-                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
-                };
+                        VideoId = video_id
+                    });
+
+            if (video == null)
+            {
+                return null;
             }
 
-            // Failed.
-            return null;
+            return new WrappedJsonResult
+                {
+                    Data =
+                        new
+                            {
+                                Success = true,
+                                Id = video.Id,
+                                FileName = video.Title,
+                                FileSize = video.Size,
+                                Version = video.Version,
+                                Type = MediaType.Video,
+                                IsProcessing = !video.IsUploaded.HasValue,
+                                IsFailed = video.IsUploaded == false,
+                            },
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
         }
 
         /// <summary>

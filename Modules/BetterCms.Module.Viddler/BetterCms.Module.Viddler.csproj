@@ -119,6 +119,8 @@
     <Compile Include="Command\SaveVideos\SaveVideosCommand.cs" />
     <Compile Include="Command\SaveVideos\SaveVideosRequest.cs" />
     <Compile Include="Command\SaveVideos\SaveVideosResponse.cs" />
+    <Compile Include="Command\SaveVideo\SaveVideoCommand.cs" />
+    <Compile Include="Command\SaveVideo\SaveVideoRequest.cs" />
     <Compile Include="Command\UplaodVideos\GetVideoUploadCommand.cs" />
     <Compile Include="Command\UplaodVideos\GetVideoUploadRequest.cs" />
     <Compile Include="Command\ViddlerData\GetViddlerDataForUploadCommand.cs" />

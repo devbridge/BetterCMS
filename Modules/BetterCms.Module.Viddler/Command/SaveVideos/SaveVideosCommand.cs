@@ -4,78 +4,96 @@ using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Models.Extensions;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 using BetterCms.Module.Root.Mvc;
-using BetterCms.Module.Viddler.Services;
+using BetterCms.Module.Viddler.Models;
 
 namespace BetterCms.Module.Viddler.Command.Videos.SaveVideos
 {
     internal class SaveVideosCommand : CommandBase, ICommand<SaveVideosRequest, SaveVideosResponse>
     {
-        private readonly IViddlerService viddlerService;
-
-        public SaveVideosCommand(IViddlerService viddlerService)
-        {
-            this.viddlerService = viddlerService;
-        }
-
         public SaveVideosResponse Execute(SaveVideosRequest request)
         {
-            var response = new SaveVideosResponse() { SelectedFolderId = request.FolderId };
-            MediaFolder folder = null;
-            if (!request.FolderId.HasDefaultValue())
+            var response = new SaveVideosResponse { SelectedFolderId = request.SelectedFolderId ?? Guid.Empty, ReuploadMediaId = request.ReuploadMediaId };
+
+            if (request.UploadedFiles != null && request.UploadedFiles.Count > 0)
             {
-                folder = Repository.AsProxy<MediaFolder>(request.FolderId);
-                if (folder.IsDeleted)
+                MediaFolder folder = null;
+
+                if (request.SelectedFolderId != null && request.SelectedFolderId.Value != Guid.Empty)
                 {
-                    response.FolderIsDeleted = true;
-                    return response;
+                    folder = Repository.AsProxy<MediaFolder>(request.SelectedFolderId.Value);
+                    if (folder.IsDeleted)
+                    {
+                        response.FolderIsDeleted = true;
+                        return response;
+                    }
                 }
-            }
 
-            List<Models.Video> medias = new List<Models.Video>();
-            UnitOfWork.BeginTransaction();
+                UnitOfWork.BeginTransaction();
 
-            // TODO: implement.
-
-            // Title = video.Title,
-            // IsArchived = false,
-            // Type = MediaType.Video,
-            // ContentType = MediaContentType.File,
-            // Folder = folder,
-            // PublishedOn = DateTime.Now,
-            // Description = video.Description,
-            //
-            // OriginalFileName = video.Title,
-            // OriginalFileExtension = null,
-            // FileUri = new Uri(viddlerService.GetPlayerUrl(video.Id)),
-            // PublicUrl = viddlerService.GetVideoUrl(video.Id),
-            // Size = 0,
-            // IsTemporary = false,
-            // IsUploaded = video.Is_Transcoding == 0,
-            // IsCanceled = false,
-            //
-            // VideoId = video.Id,
-            // ThumbnailUrl = video.Thumbnails.GetThumbnailUrl(300, 300),
-
-            UnitOfWork.Commit();
-
-            response.Medias =
-                medias.Select(
-                    file =>
-                    (MediaFileViewModel)
-                    new MediaVideoViewModel
+                var files = new List<Video>();
+                if (request.ReuploadMediaId.HasDefaultValue())
+                {
+                    foreach (var fileId in request.UploadedFiles)
+                    {
+                        if (!fileId.HasDefaultValue())
                         {
-                            Id = file.Id,
-                            Name = file.Title,
-                            Type = file.Type,
-                            Version = file.Version,
-                            ContentType = MediaContentType.File,
-                            PublicUrl = file.PublicUrl,
-                            FileExtension = file.OriginalFileExtension,
-                            IsProcessing = !file.IsUploaded.HasValue,
-                            IsFailed = file.IsUploaded.HasValue && !file.IsUploaded.Value
-                        }).ToList();
+                            var file = Repository.FirstOrDefault<Video>(fileId);
+                            if (folder != null && (file.Folder == null || file.Folder.Id != folder.Id))
+                            {
+                                file.Folder = folder;
+                            }
+                            file.IsTemporary = false;
+                            file.PublishedOn = DateTime.Now;
+                            Repository.Save(file);
+                            files.Add(file);
+                        }
+                    }
+                }
+                else
+                {
+                    // Re-upload performed.
+                    var fileId = request.UploadedFiles.FirstOrDefault();
+                    if (!fileId.HasDefaultValue())
+                    {
+                        var originalMedia = Repository.First<Video>(request.ReuploadMediaId);
+                        Repository.Save(originalMedia.CreateHistoryItem());
+
+                        var file = Repository.FirstOrDefault<Video>(fileId);
+                        file.CopyDataTo(originalMedia);
+                        originalMedia.IsTemporary = false;
+                        originalMedia.PublishedOn = DateTime.Now;
+                        files.Add(originalMedia);
+                    }
+                }
+
+                UnitOfWork.Commit();
+
+                // Notify.
+                foreach (var mediaFile in files)
+                {
+                    Events.MediaManagerEvents.Instance.OnMediaFileUpdated(mediaFile);
+                }
+
+                response.Medias =
+                    files.Select(
+                        file =>
+                        (MediaFileViewModel)
+                        new MediaVideoViewModel
+                            {
+                                Id = file.Id,
+                                Name = file.Title,
+                                Type = file.Type,
+                                Version = file.Version,
+                                ContentType = MediaContentType.File,
+                                PublicUrl = file.PublicUrl,
+                                FileExtension = file.OriginalFileExtension,
+                                IsProcessing = !file.IsUploaded.HasValue,
+                                IsFailed = file.IsUploaded.HasValue && !file.IsUploaded.Value
+                            }).ToList();
+            }
 
             return response;
         }
