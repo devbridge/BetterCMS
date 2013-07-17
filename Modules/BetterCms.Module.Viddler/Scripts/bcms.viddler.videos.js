@@ -11,9 +11,11 @@ bettercms.define('bcms.viddler.videos', ['bcms.jquery', 'bcms', 'bcms.dynamicCon
                 previewVideo: '.bcms-preview-image-frame iframe',
                 previewVideoContainer: '.bcms-preview-image-border',
                 previewFailure: '.bcms-grid-image-holder',
+                fileUploadingResult: '#jsonResult',
             },
             links = {
                 uploadVideoDialogUrl: null,
+                getUploadDataUrl: null,
                 saveUploadedVideosUrl: null,
                 videoPreviewUrl: 'http://viddler.com/embed/{0}',
             },
@@ -29,7 +31,8 @@ bettercms.define('bcms.viddler.videos', ['bcms.jquery', 'bcms', 'bcms.dynamicCon
                 UploadingFile: 4,
                 UploadingFileFailed: 5,
                 Done: 6
-            };
+            },
+            defaultIdValue = '00000000-0000-0000-0000-000000000000';
 
         /**
         * Assign objects to module.
@@ -50,9 +53,8 @@ bettercms.define('bcms.viddler.videos', ['bcms.jquery', 'bcms', 'bcms.dynamicCon
                     $(element).change(function() {
                         if (element.files.length) {
                             var $this = $(this),
-                                fileName = $this.val(),
-                                files = $this.files;
-                            viewModel[property](fileName, files);
+                                fileName = $this.val();
+                            viewModel[property](fileName);
                         }
                     });
                 }
@@ -60,23 +62,21 @@ bettercms.define('bcms.viddler.videos', ['bcms.jquery', 'bcms', 'bcms.dynamicCon
         };
         
         // --- View Models ----------------------------------------------------
-        function FolderViewModel() {
+        function FolderViewModel(id, name) {
             var self = this;
-            self.id = "";
-            self.name = "";
+            self.id = id;
+            self.name = name;
         }
 
-        function UploadWorkerViewModel() {
-            var self = this;
-            self.fileInputDomId = 'bcms-files-upload-input' + getNewDomIdExtension();
+        function UploadWorkerViewModel(onStartUploadCallback, onFinishUploadCallback) {
+            var self = this,
+                id = getNewDomIdExtension();
+            self.fileInputDomId = 'bcms-files-upload-input' + id;
+            self.targetFormDomId = 'bcms-files-upload-form' + id;
             self.endpoint = ko.observable();
             self.token = ko.observable();
             self.callbackUrl = ko.observable();
             self.fileName = ko.observable();
-            self.fileSize = ko.observable();
-            self.fileSizeFormated = ko.computed(function () {
-                return formatFileSize(self.fileSize());
-            });
             self.status = ko.observable(workerStatus.Idle);
             self.uploadProgress = ko.observable(0);
             self.failureMessage = ko.observableArray([]);
@@ -91,36 +91,96 @@ bettercms.define('bcms.viddler.videos', ['bcms.jquery', 'bcms', 'bcms.dynamicCon
                 return self.status() == workerStatus.FailedToGetUploadData || self.status() == workerStatus.UploadingFileFailed;
             });
             self.uploadProcessing = ko.computed(function () {
-                return self.status() == workerStatus.RequestingUploadData || self.status() == workerStatus.UploadingFileFailed;
+                return self.status() == workerStatus.RequestingUploadData || self.status() == workerStatus.UploadingFile;
             });
             self.uploadCompleted = ko.computed(function () {
                 return self.status() == workerStatus.Done;
             });
             
-            self.onFileSelected = function (fileName, files) {
-                if (files != null && files.length > 0) {
-                    self.fileName(files[0].name);
-                    self.fileSize(files[0].size);
-                } else {
-                    self.fileName(fileName);
-                }
-                if (self.fileName()) {
+            self.onFileSelected = function (fileName) {
+                self.fileName(fileName);
+                if (fileName) {
                     self.upload();
                 }
             };
             self.upload = function() {
+                var onDone = function () {
+                    if (onFinishUploadCallback && $.isFunction(onFinishUploadCallback)) {
+                        onFinishUploadCallback(self);
+                    }
+                };
+                
                 // Change status
                 self.status(workerStatus.RequestingUploadData);
+                if (onStartUploadCallback && $.isFunction(onStartUploadCallback)) {
+                    onStartUploadCallback(self);
+                }
 
-                // Request upload data // Change status on fail
-                // TODO: implement
-
-                // Upload file // Change status on fail
-                // TODO: implement
-
-                // Change status
-                self.status(workerStatus.Done);
+                // Request upload data
+                self.requestUploadData(function(uploadData) {
+                    if (uploadData && uploadData.Data && uploadData.Data.Token && uploadData.Data.Endpoint && uploadData.Data.CallbackUrl) {
+                        self.token(uploadData.Data.Token);
+                        self.endpoint(uploadData.Data.Endpoint);
+                        self.callbackUrl(uploadData.Data.CallbackUrl);
+                        self.uploadVideo(function (result) {
+                            if (result.Success) {
+                                // Change status
+                                self.status(workerStatus.Done);
+                                onDone();
+                            } else {
+                                // Upload failed
+                                self.status(workerStatus.UploadingFileFailed);
+                                onDone();
+                            }
+                        });
+                    } else {
+                        // Failed.
+                        self.status(workerStatus.FailedToGetUploadData);
+                        onDone();
+                    }
+                });
             };
+            self.requestUploadData = function (complete) {
+                var onComplete = function (result) {
+                    if ($.isFunction(complete)) {
+                        complete(result);
+                    }
+                };
+                $.ajax({
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    cache: false,
+                    url: links.getUploadDataUrl,
+                })
+                    .done(function (result) {
+                        onComplete(result);
+                    })
+                    .fail(function (response) {
+                        onComplete(bcms.parseFailedResponse(response));
+                    });
+            };
+            self.uploadVideo = function (complete) {
+                // Get form to submit.
+                var form = $("#" + self.fileInputDomId).parent("form");
+                var resultForm = $("#" + self.targetFormDomId);
+                if (form && resultForm) {
+                    // On file submitted.
+                    resultForm.on('load', function () {
+                        // Check the result.
+                        var result = resultForm.contents().find(selectors.fileUploadingResult).get(0);
+                        if (result == null) {
+                            return;
+                        }
+                        var resultData = $.parseJSON(result.innerHTML);
+                        if ($.isFunction(complete)) {
+                            complete(resultData);
+                        }
+                    });
+                    form.submit();
+                }
+            };
+
             self.onCancelUpload = function() {
                 // TODO: implement
                 // Change status
@@ -129,41 +189,66 @@ bettercms.define('bcms.viddler.videos', ['bcms.jquery', 'bcms', 'bcms.dynamicCon
 
         function UploaderViewModel() {
             var self = this;
+            self.rootFolderId = null;
+            self.reuploadMediaId = null;
             self.subFolders = ko.observableArray([]);
             self.selectedFolder = ko.observableArray([]);
             self.showFolderSelection = ko.observable(false);
             self.isReupload = ko.observable(false);
-
-            self.uploadWorkers = ko.observableArray([new UploadWorkerViewModel()]); // TODO
+            
+            self.uploadWorkers = ko.observableArray([]);
             self.activeUploads = ko.observableArray([]);
 
             self.cancelAllActiveUploads = function() {
                 // TODO: implement
             };
+            self.addNewWorker = function() {
+                self.uploadWorkers.push(new UploadWorkerViewModel(self.onStartUpload, self.onFinishUpload));
+            };
+            self.onUpload = function (worker) {
+                self.addNewWorker();
+                self.activeUploads.push(worker);
+            };
+            self.onFinishUpload = function (worker) {
+                self.activeUploads.remove(worker);
+            };
+            
+            self.addNewWorker();
         }
 
         /**
         * Open dialog to upload video.
         */
         module.uploadVideo = function (folderId, onSaveCallback) {
-            var listViewModel;
+            var uploader;
             modal.open({
                 title: globalization.uploadVideoDialogTitle,
                 acceptTitle: globalization.uploadVideoDialogSaveButtonTitle,
                 onLoad: function (dialog) {
                     dynamicContent.setContentFromUrl(dialog, links.uploadVideoDialogUrl, {
                         done: function (content) {
-                            var uploader = new UploaderViewModel();
-                            // TODO: content.Html, content.Data
-                            var context = dialog.container.find(selectors.templateDataBind).get(0);
-                            if (context) {
-                                ko.applyBindings(uploader, context);
+                            if (content && content.Data) {
+                                uploader = new UploaderViewModel();
+                                uploader.rootFolderId = content.Data.RootFolderId;
+                                uploader.reuploadMediaId = content.Data.ReuploadMediaId;
+                                if (content.Data.Folders) {
+                                    for (var i in content.Data.Folders) {
+                                        var folder = content.Data.Folders[i];
+                                        uploader.subFolders.push(new FolderViewModel(folder.Item1, folder.Item2));
+                                    }
+                                }
+                                uploader.showFolderSelection(uploader.reuploadMediaId == defaultIdValue);
+                                var context = dialog.container.find(selectors.templateDataBind).get(0);
+                                if (context) {
+                                    ko.applyBindings(uploader, context);
+                                }
                             }
+                            // TODO: show error message.
                         }
                     });
                 },
                 onAccept: function (dialog) {
-                    saveSelectedItems(folderId, listViewModel, function(json) {
+                    saveSelectedItems(folderId, uploader, function (json) {
                         if (onSaveCallback && $.isFunction(onSaveCallback)) {
                             onSaveCallback(json);
                         }
@@ -175,11 +260,13 @@ bettercms.define('bcms.viddler.videos', ['bcms.jquery', 'bcms', 'bcms.dynamicCon
         };
 
 
-        function saveSelectedItems(folderIdToSaveIn, videoId, spinContainer, complete) {
+        function saveSelectedItems(folderIdToSaveIn, uploaderViewModel, spinContainer, complete) {
+            return;
+            // TODO implement.
             var indicatorId = 'medialist',
                 params = {
                     FolderId: folderIdToSaveIn,
-                    VideoId: videoId
+                    VideoIds: null // TODO: fill with data from uploaderViewModel
                 },
                 onComplete = function(result) {
                     spinContainer.hideLoading(indicatorId);

@@ -31,7 +31,8 @@ namespace BetterCms.Module.Viddler.Services
                 {
                     SessionId = sessionId,
                     Token = "u81989c2a3eef4531b0c94db25b07f0b2b0d9fcda",
-                    Endpoint = "http://www.viddler.com/uploadnode/upload/uploadvideo"
+                    // Endpoint = "http://www.viddler.com/uploadnode/upload/uploadvideo"
+                    Endpoint = "http://bettercms.sandbox.mvc4.local/bcms-viddler/Videos/VideoUploaded?video_id=f6752122"
                 };
         }
 

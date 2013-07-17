@@ -389,7 +389,11 @@ copy "$(SolutionDir)Modules\BetterCms.Module.Installation\bin\BetterCms.Module.I
 copy "$(SolutionDir)Modules\BetterCms.Module.Installation\bin\BetterCms.Module.Installation.pdb" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
 
 copy "$(SolutionDir)Modules\BetterCms.Module.Newsletter\bin\BetterCms.Module.Newsletter.dll" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
-copy "$(SolutionDir)Modules\BetterCms.Module.Newsletter\bin\BetterCms.Module.Newsletter.pdb" "$(ProjectDir)App_Data\BetterCms\Modules" /Y</PostBuildEvent>
+copy "$(SolutionDir)Modules\BetterCms.Module.Newsletter\bin\BetterCms.Module.Newsletter.pdb" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
+
+copy "$(SolutionDir)Modules\BetterCms.Module.Viddler\bin\BetterCms.Module.Viddler.dll" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
+copy "$(SolutionDir)Modules\BetterCms.Module.Viddler\bin\BetterCms.Module.Viddler.pdb" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
+</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <SlowCheetahTargets Condition=" '$(SlowCheetahTargets)'=='' ">$(SolutionDir)\Libs\SlowCheetah\v1\SlowCheetah.Transforms.targets</SlowCheetahTargets>

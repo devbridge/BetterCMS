@@ -121,6 +121,7 @@
     <Compile Include="Command\SaveVideos\SaveVideosResponse.cs" />
     <Compile Include="Command\UplaodVideos\GetVideoUploadCommand.cs" />
     <Compile Include="Command\UplaodVideos\GetVideoUploadRequest.cs" />
+    <Compile Include="Command\ViddlerData\GetViddlerDataForUploadCommand.cs" />
     <Compile Include="Content\Resources\ViddlerGlobalization.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -136,6 +137,7 @@
     <Compile Include="Services\Models\Upload.cs" />
     <Compile Include="Services\Models\Video.cs" />
     <Compile Include="Services\VideoProviderForCmsService.cs" />
+    <Compile Include="ViewModels\UploadVideos\ViddlerUploadViewModel.cs" />
     <Compile Include="ViewModels\UploadVideos\VideoUploadViewModel.cs" />
     <Compile Include="ViewModels\Video\VideoListSearchViewModel.cs" />
     <Compile Include="ViewModels\Video\VideoListViewModel.cs" />
@@ -193,7 +195,7 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Videos\UplaodVideos.cshtml" />
+    <EmbeddedResource Include="Views\Videos\UploadVideos.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
