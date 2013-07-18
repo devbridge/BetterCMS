@@ -20,6 +20,10 @@ bettercms.define('bcms.viddler', ['bcms.jquery', 'bcms', 'bcms.media', 'bcms.vid
             videos.uploadVideo(rootFolderId, onSaveCallback);
         };
 
+        function deleteAction(id, version, title, callback) {
+            videos.deleteVideo(id, version, title, callback);
+        };
+
         /**
         * Initializes module.
         */
@@ -27,6 +31,7 @@ bettercms.define('bcms.viddler', ['bcms.jquery', 'bcms', 'bcms.media', 'bcms.vid
             console.log('Initializing bcms.viddler module.');
 
             media.videoProviderOptions.uploadMediaAction = uploadAction;
+            media.videoProviderOptions.deleteMediaAction = deleteAction;
         };
 
         /**

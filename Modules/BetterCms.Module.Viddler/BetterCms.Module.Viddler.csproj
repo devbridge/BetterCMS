@@ -116,6 +116,7 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Command\DeleteVideo\DeleteVideoCommand.cs" />
     <Compile Include="Command\SaveVideos\SaveVideosCommand.cs" />
     <Compile Include="Command\SaveVideos\SaveVideosRequest.cs" />
     <Compile Include="Command\SaveVideos\SaveVideosResponse.cs" />

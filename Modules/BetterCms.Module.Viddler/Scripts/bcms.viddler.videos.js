@@ -26,11 +26,13 @@ bettercms.define('bcms.viddler.videos', ['bcms.jquery', 'bcms', 'bcms.dynamicCon
                 getUploadDataUrl: null,
                 checkUploadedFileStatuses: null,
                 saveUploadedVideosUrl: null,
+                deleteVideoUrl: null,
                 videoPreviewUrl: 'http://viddler.com/embed/{0}',
             },
             globalization = {
                 uploadVideoDialogTitle: null,
                 uploadVideoDialogSaveButtonTitle: null,
+                deleteVideoConfirmMessage: null,
             };
 
         /**
@@ -413,6 +415,40 @@ bettercms.define('bcms.viddler.videos', ['bcms.jquery', 'bcms', 'bcms.dynamicCon
                     options.uploads.stopStatusChecking();
                 }
             });
+        };
+
+        module.deleteVideo = function (id, version, title, callback) {
+            var url = $.format(links.deleteVideoUrl, id, version),
+                message = $.format(globalization.deleteVideoConfirmMessage, title),
+                onDeleteCompleted = function(json) {
+                    if ($.isFunction(callback)) {
+                        callback(json);
+                    }
+                    confirmDialog.close();
+                },
+                confirmDialog = modal.confirm({
+                    content: message,
+                    onAccept: function() {
+                        $.ajax({
+                            type: 'POST',
+                            url: url,
+                            contentType: 'application/json; charset=utf-8',
+                            dataType: 'json',
+                            cache: false
+                        })
+                            .done(function(json) {
+                                onDeleteCompleted(json);
+                            })
+                            .fail(function(response) {
+                                onDeleteCompleted(bcms.parseFailedResponse(response));
+                            });
+                    },
+                    onClose: function() {
+                        if ($.isFunction(callback)) {
+                            callback();
+                        }
+                    }
+                });
         };
 
         function requestUploadData(complete) {

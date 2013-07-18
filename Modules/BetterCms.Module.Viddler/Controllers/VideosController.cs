@@ -4,10 +4,13 @@ using System.Web.Caching;
 using System.Web.Mvc;
 
 using BetterCms.Core.Security;
+using BetterCms.Module.MediaManager.Command.MediaManager.DeleteMedia;
+using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Helpers;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Viddler.Command.DeleteVideo;
 using BetterCms.Module.Viddler.Command.UplaodVideos;
 using BetterCms.Module.Viddler.Command.ViddlerData;
 using BetterCms.Module.Viddler.Command.Videos.SaveVideos;
@@ -150,6 +153,25 @@ namespace BetterCms.Module.Viddler.Controllers
             }
 
             return Json(new WireJson(result != null, result));
+        }
+
+        public ActionResult DeleteVideo(string id, string version)
+        {
+            var request = new DeleteMediaCommandRequest
+            {
+                Id = id.ToGuidOrDefault(),
+                Version = version.ToIntOrDefault()
+            };
+            if (GetCommand<DeleteVideoCommand>().ExecuteCommand(request))
+            {
+                Messages.AddSuccess(MediaGlobalization.DeleteVideo_DeletedSuccessfully_Message);
+                return Json(new WireJson
+                {
+                    Success = true
+                });
+            }
+
+            return Json(new WireJson { Success = false });
         }
     }
 }

@@ -29,7 +29,7 @@ namespace BetterCms.Module.Viddler.Command.Videos.SaveVideos
                     PublicUrl = viddlerService.GetVideoUrl(data.Id),
                     Size = data.Length,
                     IsTemporary = true,
-                    IsUploaded = data.IsReady,
+                    IsUploaded = data.IsReady ? true : (bool?)null,
                     Title = data.Title,
                     Type = MediaType.Video,
                     ContentType = MediaContentType.File,

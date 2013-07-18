@@ -61,6 +61,15 @@ namespace BetterCms.Module.Viddler.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete the video &quot;{0}&quot;?.
+        /// </summary>
+        public static string DeleteVideo_Confirmation_Message {
+            get {
+                return ResourceManager.GetString("DeleteVideo_Confirmation_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add from Viddler.
         /// </summary>
         public static string MediaManager_UploadVideo_Title {

@@ -116,7 +116,11 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         fileInsertDialog = null,
         blurTimer = null,
         videoProviderOptions = {
-            uploadMediaAction: null
+            uploadMediaAction: null,
+            reuploadMediaAction: null,
+            previewMediaAction: null,
+            editMediaAction: null,
+            deleteMediaAction: null,
         };
 
     /**
@@ -252,8 +256,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         };
 
         self.uploadMedia = function () {
-            if (self.path().currentFolder().type == mediaTypes.video && $.isFunction(videoProviderOptions.uploadMediaAction)) {
-                videoProviderOptions.uploadMediaAction(self.path().currentFolder().id(), onUploadFiles);
+            if (self.path().currentFolder().type == mediaTypes.video) {
+                if ($.isFunction(videoProviderOptions.uploadMediaAction)) {
+                    videoProviderOptions.uploadMediaAction(self.path().currentFolder().id(), onUploadFiles);
+                }
             } else {
                 mediaUpload.openUploadFilesDialog(self.path().currentFolder().id(), self.path().currentFolder().type, onUploadFiles);
             }
@@ -768,10 +774,28 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         MediaVideoViewModel.prototype.deleteMedia = function (folderViewModel, data, event) {
             bcms.stopEventPropagation(event);
 
-            var url = $.format(links.deleteVideoUrl, this.id(), this.version()),
-                message = $.format(globalization.deleteVideoConfirmMessage, this.name());
+            if ($.isFunction(videoProviderOptions.deleteMediaAction)) {
+                var item = this;
+                if (item.isDeleting()) {
+                    return;
+                }
+                item.isDeleting(true);
+                videoProviderOptions.deleteMediaAction(item.id(), item.version(), item.name(), function (json) {
+                    if (json) {
+                        messages.refreshBox(folderViewModel.container, json);
+                        if (json.Success) {
+                            folderViewModel.medias.remove(item);
+                            return;
+                        }
+                    }
+                    item.isDeleting(false);
+                });
+            } else {
+                var url = $.format(links.deleteVideoUrl, this.id(), this.version()),
+                    message = $.format(globalization.deleteVideoConfirmMessage, this.name());
 
-            deleteMediaItem(url, message, folderViewModel, this);
+                deleteMediaItem(url, message, folderViewModel, this);
+            }
         };
 
         MediaVideoViewModel.prototype.getArchiveMediaConfirmationMessage = function () {
