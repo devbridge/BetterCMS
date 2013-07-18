@@ -9,7 +9,7 @@
     @Html.TabbedContentMessagesBox("bcms-multi-file-upload-messages")
     <div class="bcms-file-manager-inner" id="bcms-media-uploads">
 
-        @using (Html.BeginForm<VideosController>(c => c.VideoUploaded(null, null, null), FormMethod.Post, new
+        @using (Html.BeginForm<VideosController>(c => c.VideoUploaded(null, null), FormMethod.Post, new
         {
             enctype = "multipart/form-data",
             id = "ImgForm",

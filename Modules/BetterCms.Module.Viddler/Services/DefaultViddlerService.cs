@@ -135,8 +135,8 @@ namespace BetterCms.Module.Viddler.Services
                     Description = values["description"].ToString(),
                     Url = values["url"].ToString(),
                     ThumbnailUrl = values["thumbnail_url"].ToString(),
-                    Length = (long)values["length"],
-                    ViewCount = (long)values["view_count"],
+                    Length = long.Parse(values["length"].ToString()),
+                    ViewCount = long.Parse(values["view_count"].ToString()),
                     IsReady = values["status"].ToString().ToLowerInvariant() == "ready",
                 };
             }
@@ -165,7 +165,7 @@ namespace BetterCms.Module.Viddler.Services
                             { "key", apiKey },
                             { "sessionid", sessionId },
                             { "video_id", videoId },
-                            { "view_perm", makePublic ? "public" : "private" }
+                            { "view_perm", makePublic ? "embed" : "private" }
                         });
 
                 var response = RunApiPostCall(apiUrl, queryString, new List<string> { "permissions" });
@@ -174,7 +174,7 @@ namespace BetterCms.Module.Viddler.Services
                 var t = response["permissions"] as string[];
                 if (t != null)
                 {
-                    retVal = t[0] == (makePublic ? "public" : "private");
+                    retVal = t[0] == (makePublic ? "embed" : "private");
                 }
 
                 return retVal;

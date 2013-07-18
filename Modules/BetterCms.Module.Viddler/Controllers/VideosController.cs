@@ -65,6 +65,8 @@ namespace BetterCms.Module.Viddler.Controllers
                     model.CallbackUrl = url;
                 }
 
+                model.CallbackUrl = string.Format("{0}?token={1}", model.CallbackUrl, model.Token);
+
                 if (HttpRuntime.Cache[model.Token] != null)
                 {
                     HttpRuntime.Cache.Remove(model.Token);
@@ -84,7 +86,7 @@ namespace BetterCms.Module.Viddler.Controllers
             System.Threading.Thread.Sleep(5000);
             return rnd.Next(1, 7) < 2
                 ? null // Failure imitation.
-                : Redirect(string.Format("{0}?video_id=f6752122&token={1}", callback, uploadtoken));
+                : Redirect(string.Format("{0}?videoid=f6752122&token={1}", callback, uploadtoken));
         }
 #endif
 
@@ -92,9 +94,8 @@ namespace BetterCms.Module.Viddler.Controllers
         /// Callback from video service provides after successful video upload.
         /// </summary>
         /// <returns>The response.</returns>
-        public WrappedJsonResult VideoUploaded(string video_id, string token, string uploadToken)
+        public WrappedJsonResult VideoUploaded(string videoid, string token)
         {
-            // TODO: check return parameter name from Viddler - token or uploadToken?
             if (HttpRuntime.Cache[token] == null)
             {
                 return null;
@@ -104,7 +105,7 @@ namespace BetterCms.Module.Viddler.Controllers
             var video = GetCommand<SaveVideoCommand>().ExecuteCommand(
                 new SaveVideoRequest
                     {
-                        VideoId = video_id
+                        VideoId = videoid
                     });
 
             if (video == null)
