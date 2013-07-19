@@ -194,10 +194,6 @@ namespace BetterCms.Module.Pages.Services
                 {
                     metaData.Add(new MetaDataProjection("keywords", rootPage.MetaKeywords));
                 }
-                if (!string.IsNullOrWhiteSpace(rootPage.MetaTitle))
-                {
-                    metaData.Add(new MetaDataProjection("title", rootPage.MetaTitle));
-                }
             }
 
             var pageProperties = page as Page;

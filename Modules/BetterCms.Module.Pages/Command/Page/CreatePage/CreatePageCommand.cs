@@ -58,6 +58,7 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
                 {
                     PageUrl = pageUrl,
                     Title = request.PageTitle,
+                    MetaTitle = request.PageTitle,
                     Layout = Repository.First<Root.Models.Layout>(request.TemplateId),
                     Status = PageStatus.Unpublished
                 };

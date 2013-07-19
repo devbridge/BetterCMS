@@ -388,10 +388,10 @@
     <value>Image will be displayed as a thumbnail with the page.</value>
   </data>
   <data name="EditPageProperties_BasicPropertiesTab_PageName_Title" xml:space="preserve">
-    <value>Page Name</value>
+    <value>Page Name (H1)</value>
   </data>
   <data name="EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Description" xml:space="preserve">
-    <value>Edit the title of this page. This is the title that will appear on the page.</value>
+    <value>Edit the title of this page. This is the title that will appear on the page (H1).</value>
   </data>
   <data name="EditPageProperties_BasicPropertiesTab_RemoveButton" xml:space="preserve">
     <value>Remove</value>
@@ -460,19 +460,19 @@
     <value>Meta Title</value>
   </data>
   <data name="EditSeo_MetaTitle_Tooltip_Description" xml:space="preserve">
-    <value>The Meta title should contain your keywords and concisely describe the content of the page.</value>
+    <value>Edit the title that will appear on search engine result pages.</value>
   </data>
   <data name="EditSeo_PageTitle" xml:space="preserve">
-    <value>Page Title</value>
+    <value>Page Name (H1)</value>
   </data>
   <data name="EditSeo_PageTitle_MaxLengthMessage" xml:space="preserve">
-    <value>Page title max length exceeded.</value>
+    <value>Page name max length exceeded.</value>
   </data>
   <data name="EditSeo_PageTitle_RequiredMessage" xml:space="preserve">
-    <value>Page title is required.</value>
+    <value>Page name is required.</value>
   </data>
   <data name="EditSeo_PageTitle_Tooltip_Description" xml:space="preserve">
-    <value>Edit the page title that will appear on search engine result pages.</value>
+    <value />
   </data>
   <data name="EditSeo_PageUrlPath_InvalidMessage" xml:space="preserve">
     <value>Page URL path is invalid. Link can contain only following characters: '0-9', 'a-z', '-', '/', '_'</value>
