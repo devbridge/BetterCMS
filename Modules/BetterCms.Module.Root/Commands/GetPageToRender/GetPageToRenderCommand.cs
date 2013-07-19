@@ -12,6 +12,7 @@ using BetterCms.Core.Services;
 
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Projections;
 using BetterCms.Module.Root.ViewModels.Cms;
 
@@ -182,7 +183,8 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
             if (request.PageId == null)
             {
-                query = query.Where(f => f.PageUrl.TrimEnd('/').ToLowerInvariant() == request.PageUrl.TrimEnd('/').ToLowerInvariant());
+                var requestUrl = request.PageUrl.LowerTrimmedUrl();
+                query = query.Where(f => f.PageUrlLowerTrimmed == requestUrl);
             }
             else
             {
@@ -211,7 +213,8 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
             if (request.PageId == null)
             {
-                pageContentsQuery = pageContentsQuery.Where(f => f.Page.PageUrl.TrimEnd('/').ToLowerInvariant() == request.PageUrl.TrimEnd('/').ToLowerInvariant());
+                var requestUrl = request.PageUrl.LowerTrimmedUrl();
+                pageContentsQuery = pageContentsQuery.Where(f => f.Page.PageUrlLowerTrimmed == requestUrl);
             }
             else
             {

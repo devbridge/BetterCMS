@@ -9,6 +9,7 @@ using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Mvc.Helpers;
 
 using NHibernate.Linq;
 
@@ -119,6 +120,7 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
 
             newPage.Title = newPageTitle;
             newPage.PageUrl = newPageUrl;
+            newPage.PageUrlLowerTrimmed = newPageUrl.LowerTrimmedUrl();
             newPage.Status = PageStatus.Unpublished;
 
             Repository.Save(newPage);

@@ -19,6 +19,7 @@ using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Services;
 
 namespace BetterCms.Module.Blog.Commands.SaveBlogPost
@@ -135,7 +136,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                     pageContent = Repository.FirstOrDefault<PageContent>(c => c.Page == blogPost && c.Region == region && !c.IsDeleted && c.Content == content);
                 }
 
-                if (userCanEdit && !string.Equals(blogPost.PageUrl, request.BlogUrl, StringComparison.OrdinalIgnoreCase) && request.BlogUrl != null)
+                if (userCanEdit && !string.Equals(blogPost.PageUrl, request.BlogUrl) && request.BlogUrl != null)
                 {
                     request.BlogUrl = urlService.FixUrl(request.BlogUrl);
                     pageService.ValidatePageUrl(request.BlogUrl, request.Id);
@@ -231,6 +232,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             content = (BlogPostContent)contentService.SaveContentWithStatusUpdate(newContent, request.DesirableStatus);
             pageContent.Content = content;
 
+            blogPost.PageUrlLowerTrimmed = blogPost.PageUrl.LowerTrimmedUrl();
             Repository.Save(blogPost);
             Repository.Save(content);
             Repository.Save(pageContent);

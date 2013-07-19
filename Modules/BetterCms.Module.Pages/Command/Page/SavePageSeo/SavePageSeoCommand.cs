@@ -5,6 +5,7 @@ using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Seo;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Mvc.Helpers;
 
 namespace BetterCms.Module.Pages.Command.Page.SavePageSeo
 {
@@ -68,7 +69,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageSeo
 
             model.ChangedUrlPath = urlService.FixUrl(model.ChangedUrlPath);
 
-            if (!string.Equals(model.PageUrlPath, model.ChangedUrlPath, StringComparison.OrdinalIgnoreCase))
+            if (!string.Equals(model.PageUrlPath, model.ChangedUrlPath))
             {
                 pageService.ValidatePageUrl(model.ChangedUrlPath, model.PageId);
 
@@ -89,6 +90,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageSeo
                 page.PageUrl = model.ChangedUrlPath;
             }
 
+            page.PageUrlLowerTrimmed = page.PageUrl.LowerTrimmedUrl();
             page.MetaTitle = model.MetaTitle;
             page.MetaKeywords = model.MetaKeywords;
             page.MetaDescription = model.MetaDescription;

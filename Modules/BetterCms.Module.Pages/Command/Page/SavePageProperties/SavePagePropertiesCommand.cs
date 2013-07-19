@@ -9,6 +9,7 @@ using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Mvc.Helpers;
 
 using CategoryEntity = BetterCms.Module.Root.Models.Category;
 
@@ -79,7 +80,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
 
             request.PageUrl = urlService.FixUrl(request.PageUrl);
 
-            if (!string.Equals(page.PageUrl, request.PageUrl, StringComparison.OrdinalIgnoreCase))
+            if (!string.Equals(page.PageUrl, request.PageUrl))
             {
                 pageService.ValidatePageUrl(request.PageUrl, request.Id);
                 if (request.RedirectFromOldUrl)
@@ -99,6 +100,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                 page.PageUrl = request.PageUrl;
             }
 
+            page.PageUrlLowerTrimmed = page.PageUrl.LowerTrimmedUrl();
             page.Layout = Repository.AsProxy<Root.Models.Layout>(request.TemplateId);
             page.Category = request.CategoryId.HasValue ? Repository.AsProxy<CategoryEntity>(request.CategoryId.Value) : null;
             page.Title = request.PageName;
