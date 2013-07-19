@@ -21,9 +21,12 @@ namespace BetterCms.Module.Viddler.Services
     {
         private readonly IRepository repository;
 
-        public VideoProviderForCmsService(IRepository repository)
+        private readonly IStatusUpdaterService statusUpdaterService;
+
+        public VideoProviderForCmsService(IRepository repository, IStatusUpdaterService statusUpdaterService)
         {
             this.repository = repository;
+            this.statusUpdaterService = statusUpdaterService;
         }
 
         public Tuple<IEnumerable<MediaViewModel>, int> GetItems(MediaManagerViewModel request)
@@ -87,6 +90,8 @@ namespace BetterCms.Module.Viddler.Services
 
             var items = query.Select(SelectItem).ToList();
 
+            var stillProcessing = items.Where(v => v is MediaVideoViewModel && ((MediaVideoViewModel)v).IsProcessing).Select(v => v.Id).ToList();
+            statusUpdaterService.UpdateStatus(stillProcessing);
             return new Tuple<IEnumerable<MediaViewModel>, int>(items, count.Value);
         }
 

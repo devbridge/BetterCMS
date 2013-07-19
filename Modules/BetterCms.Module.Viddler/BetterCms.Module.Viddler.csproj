@@ -134,6 +134,8 @@
     <Compile Include="Models\Maps\VideoMap.cs" />
     <Compile Include="Models\Video.cs" />
     <Compile Include="Registration\VideosJsModuleIncludeDescriptor.cs" />
+    <Compile Include="Services\DefaultStatusUpdaterService.cs" />
+    <Compile Include="Services\IStatusUpdaterService.cs" />
     <Compile Include="Services\IViddlerService.cs" />
     <Compile Include="Services\DefaultViddlerService.cs" />
     <Compile Include="Services\MockupViddlerService.cs" />
