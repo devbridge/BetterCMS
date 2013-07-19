@@ -391,8 +391,12 @@ copy "$(SolutionDir)Modules\BetterCms.Module.Installation\bin\BetterCms.Module.I
 copy "$(SolutionDir)Modules\BetterCms.Module.Newsletter\bin\BetterCms.Module.Newsletter.dll" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
 copy "$(SolutionDir)Modules\BetterCms.Module.Newsletter\bin\BetterCms.Module.Newsletter.pdb" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
 
-copy "$(SolutionDir)Modules\BetterCms.Module.Viddler\bin\BetterCms.Module.Viddler.dll" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
-copy "$(SolutionDir)Modules\BetterCms.Module.Viddler\bin\BetterCms.Module.Viddler.pdb" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
+REM copy "$(SolutionDir)Modules\BetterCms.Module.Viddler\bin\BetterCms.Module.Viddler.dll" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
+REM copy "$(SolutionDir)Modules\BetterCms.Module.Viddler\bin\BetterCms.Module.Viddler.pdb" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
+
+
+copy "$(SolutionDir)Modules\BetterCms.Module.Vimeo\bin\BetterCms.Module.Vimeo.dll" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
+copy "$(SolutionDir)Modules\BetterCms.Module.Vimeo\bin\BetterCms.Module.Vimeo.pdb" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
 </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
