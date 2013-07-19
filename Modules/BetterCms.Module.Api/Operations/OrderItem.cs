@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Operations.Enums;
 
@@ -7,7 +8,6 @@ namespace BetterCms.Module.Api.Operations
     /// <summary>
     /// Represents class for ordering items
     /// </summary>
-    [Serializable]
     public class OrderItem
     {
         /// <summary>

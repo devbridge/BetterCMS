@@ -40,5 +40,10 @@ namespace BetterCms.Module.Api.Operations.Root.Tags
                            Data = listResponse
                        };
         }
+
+        public GetTagsResponse Post(GetTagsRequest request)
+        {
+            return null;
+        }
     }
 }

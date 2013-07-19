@@ -208,6 +208,7 @@
     <Content Include="Scripts\Root\layouts.root.api.tests.js" />
     <Content Include="Scripts\Root\tags.root.api.tests.js" />
     <Content Include="Scripts\general.js" />
+    <Content Include="Scripts\ServiceStack.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

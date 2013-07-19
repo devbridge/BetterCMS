@@ -1,4 +1,6 @@
-﻿namespace BetterCms.Module.Api.Operations.Enums
+﻿using System.Runtime.Serialization;
+
+namespace BetterCms.Module.Api.Operations.Enums
 {
     /// <summary>
     /// Ordering directions enum
@@ -6,6 +8,7 @@
     public enum OrderDirection
     {
         Asc,
+
         Desc
     }
 }

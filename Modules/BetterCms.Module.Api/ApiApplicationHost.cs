@@ -4,6 +4,7 @@ using Autofac;
 
 using BetterCms.Core.Dependencies;
 
+using ServiceStack.Text;
 using ServiceStack.WebHost.Endpoints;
 
 namespace BetterCms.Module.Api
@@ -21,8 +22,10 @@ namespace BetterCms.Module.Api
 
 		public override void Configure(Funq.Container container)
 		{            
+            RequestBinders.Clear();
 			//Set JSON web services to return idiomatic JSON camelCase properties
 			ServiceStack.Text.JsConfig.EmitCamelCaseNames = true;
+            //ServiceStack.Text.JsConfig.ModelFacto;
 		
 			//Uncomment to change the default ServiceStack configuration
 			SetConfig(new EndpointHostConfig {

@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Operations.Enums;
 
@@ -8,7 +8,6 @@ namespace BetterCms.Module.Api.Operations
     /// <summary>
     /// Represents container for ordering items list
     /// </summary>
-    [Serializable]
     public class DataOrder
     {
         /// <summary>
@@ -25,7 +24,7 @@ namespace BetterCms.Module.Api.Operations
         /// <value>
         /// The list of order items.
         /// </value>
-        public IList<OrderItem> By { get; set; }
+        public List<OrderItem> By { get; set; }
 
         /// <summary>
         /// Adds the order item to orderings list.

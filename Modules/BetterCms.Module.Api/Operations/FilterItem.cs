@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Operations.Enums;
 
@@ -7,7 +7,7 @@ namespace BetterCms.Module.Api.Operations
     /// <summary>
     /// Represents class for filtering items
     /// </summary>
-    [Serializable]
+    [DataContract]
     public class FilterItem
     {
         /// <summary>
@@ -37,6 +37,7 @@ namespace BetterCms.Module.Api.Operations
         /// <value>
         /// The filtering field.
         /// </value>
+        [DataMember]
         public string Field { get; set; }
 
         /// <summary>
@@ -45,6 +46,7 @@ namespace BetterCms.Module.Api.Operations
         /// <value>
         /// The filtering value.
         /// </value>
+        [DataMember]
         public object Value { get; set; }
 
         /// <summary>
@@ -53,6 +55,7 @@ namespace BetterCms.Module.Api.Operations
         /// <value>
         /// The filtering operation.
         /// </value>
+        [DataMember]
         public FilterOperation Operation { get; set; }
     }
 }

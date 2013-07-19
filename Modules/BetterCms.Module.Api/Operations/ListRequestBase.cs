@@ -3,7 +3,7 @@
 namespace BetterCms.Module.Api.Operations
 {
     [DataContract]
-    public abstract class ListRequestBase : DataOptions
+    public class ListRequestBase : DataOptions
     {
     }
 }

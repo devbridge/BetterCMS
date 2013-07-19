@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Operations.Enums;
 
@@ -8,7 +8,7 @@ namespace BetterCms.Module.Api.Operations
     /// <summary>
     /// Represents container for filtering items list
     /// </summary>
-    [Serializable]
+    [DataContract]
     public class DataFilter
     {
         /// <summary>
@@ -17,6 +17,7 @@ namespace BetterCms.Module.Api.Operations
         /// <value>
         /// The filter connector.
         /// </value>
+        [DataMember]
         public FilterConnector Connector { get; set; }
 
         /// <summary>
@@ -25,7 +26,8 @@ namespace BetterCms.Module.Api.Operations
         /// <value>
         /// The list of filter items.
         /// </value>
-        public IList<FilterItem> Where { get; set; }
+        [DataMember]
+        public List<FilterItem> Where { get; set; }
 
         /// <summary>
         /// Gets or sets the list of inner filters.
@@ -33,7 +35,8 @@ namespace BetterCms.Module.Api.Operations
         /// <value>
         /// The list of inner filters.
         /// </value>
-        public IList<DataFilter> Inner { get; set; }
+        [DataMember]
+        public List<DataFilter> Inner { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DataFilter" /> class.
