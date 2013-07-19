@@ -94,11 +94,9 @@ namespace BetterCms.Module.Viddler
         public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
             containerBuilder.RegisterType<DefaultStatusUpdaterService>().AsImplementedInterfaces().InstancePerLifetimeScope();
-//#if DEBUG // TODO: REMOVE this when test account will be available.
-//            containerBuilder.RegisterType<MockupViddlerService>().AsImplementedInterfaces().InstancePerLifetimeScope();
-//#else
+            // NOTE: mock up for testing without real Viddler service.
+            // containerBuilder.RegisterType<MockupViddlerService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultViddlerService>().AsImplementedInterfaces().InstancePerLifetimeScope();
-//#endif
             containerBuilder.RegisterType<VideoProviderForCmsService>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
 
