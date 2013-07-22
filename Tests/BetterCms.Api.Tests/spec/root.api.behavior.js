@@ -36,8 +36,8 @@ describe('Root', function() {
                 filter: {
                     connector: 'and',
                     where: [
-                        { field: 'isDeleted', operation: 'NotEqual', value: 'true' },
-                        { field: 'name', operation: 'StartsWith', value: '_0001_' }
+                        { field: 'Name', operation: 'NotEqual', value: 'NOT_FOUND' },
+                        { field: 'Name', operation: 'StartsWith', value: '_0001_' }
                     ],
                     inner: [
                         {
@@ -52,7 +52,7 @@ describe('Root', function() {
                 order: {
                     by: [
                         { field: 'Name' },
-                        { field: 'ModifiedOn', Direction: 'desc' }
+                        { field: 'LastModifiedOn', Direction: 'desc' }
                     ]
                 },
                 skip: 2,
