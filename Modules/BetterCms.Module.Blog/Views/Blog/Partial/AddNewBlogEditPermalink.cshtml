@@ -30,6 +30,10 @@
             @Html.CheckBoxFor(model => model.RedirectFromOldUrl)
             <div class="bcms-edit-label">@BlogGlobalization.EditBlogPost_CreatePermanentRedirectToOldUrl_Title</div>
         </div>
+        <div class="bcms-edit-check-field">
+            @Html.CheckBoxFor(model => model.UseCanonicalUrl)
+            <div class="bcms-edit-label">@BlogGlobalization.EditBlogPost_UseCanonicalUrl</div>
+        </div>
     }
     <div class="bcms-btn-small" id="bcms-save-permalink">@RootGlobalization.Button_Ok</div>
     <div class="bcms-btn-links-small">@RootGlobalization.Button_Cancel</div>

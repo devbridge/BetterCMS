@@ -109,6 +109,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             page.Status = request.IsVisibleToEveryone ? PageStatus.Published : PageStatus.Unpublished;
             page.UseNoFollow = request.UseNoFollow;
             page.UseNoIndex = request.UseNoIndex;
+            page.UseCanonicalUrl = request.UseCanonicalUrl;
             page.IsArchived = request.IsArchived;
             page.Version = request.Version;
 

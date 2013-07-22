@@ -100,12 +100,28 @@ namespace BetterCms.Module.Pages.ViewModels.Seo
         public string MetaDescription { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether use canonical URL.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if use canonical URL; otherwise, <c>false</c>.
+        /// </value>
+        public bool UseCanonicalUrl { get; set; }
+
+        /// <summary>
         /// Gets or sets the is in sitemap.
         /// </summary>
         /// <value>
         /// The is in sitemap.
         /// </value>
         public bool IsInSitemap { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EditSeoViewModel"/> class.
+        /// </summary>
+        public EditSeoViewModel()
+        {
+            UseCanonicalUrl = true;
+        }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
