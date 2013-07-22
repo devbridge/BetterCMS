@@ -34,6 +34,8 @@ namespace BetterCms.Api.Tests.UnitTests.Root
             {
                 var layouts = client.Get<GetLayoutsResponse>(new GetLayoutsRequest
                                                                                 {
+                                                                                    Take = 5,
+                                                                                    Skip = 2,
                                                                                    Filter = new DataFilter
                                                                                                 {
                                                                                                     Connector = FilterConnector.Or,

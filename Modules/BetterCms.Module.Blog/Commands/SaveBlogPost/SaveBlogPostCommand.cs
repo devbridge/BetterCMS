@@ -190,8 +190,9 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                 else
                 {
                     blogPost.PageUrl = blogService.CreateBlogPermalink(request.Title);
-                }               
-               
+                }
+
+                blogPost.MetaTitle = request.Title;
                 blogPost.Layout = layout;
                 UpdateStatus(blogPost, request.DesirableStatus);
             }

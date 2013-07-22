@@ -3,7 +3,7 @@
 namespace BetterCms.Module.Api.Operations.Root.Version
 {
     [DataContract]
-    public class GetVersionResponse : ResponseBase<string>
+    public class GetVersionResponse : ResponseBase<VersionModel>
     {
     }
 }
