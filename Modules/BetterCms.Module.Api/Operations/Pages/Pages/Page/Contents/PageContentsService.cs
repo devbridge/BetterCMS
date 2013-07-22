@@ -21,21 +21,21 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents
         {
             // TODO add validation for only one of RegionId / RegionIdentifier specified
 
-            request.SetDefaultOrder("Order");
+            request.Data.SetDefaultOrder("Order");
 
             var query = repository
-                 .AsQueryable<Module.Root.Models.PageContent>(pageContent => pageContent.Page.Id == request.PageId);
+                 .AsQueryable<Module.Root.Models.PageContent>(pageContent => pageContent.Page.Id == request.Data.PageId);
 
-            if (request.RegionId.HasValue)
+            if (request.Data.RegionId.HasValue)
             {
-                query = query.Where(pageContent => pageContent.Region.Id == request.RegionId);
+                query = query.Where(pageContent => pageContent.Region.Id == request.Data.RegionId);
             }
-            else if (!string.IsNullOrWhiteSpace(request.RegionIdentifier))
+            else if (!string.IsNullOrWhiteSpace(request.Data.RegionIdentifier))
             {
-                query = query.Where(pageContent => pageContent.Region.RegionIdentifier == request.RegionIdentifier);
+                query = query.Where(pageContent => pageContent.Region.RegionIdentifier == request.Data.RegionIdentifier);
             }
 
-            if (!request.IncludeUnpublished)
+            if (!request.Data.IncludeUnpublished)
             {
                 query = query.Where(pageContent => pageContent.Content.Status == ContentStatus.Published);
             }

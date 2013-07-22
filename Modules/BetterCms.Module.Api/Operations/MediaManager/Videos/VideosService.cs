@@ -24,29 +24,29 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Videos
         {
             // TODO: throw new validation exception if request.IncludeVideos == false && request.IncludeFolders == false
 
-            request.SetDefaultOrder("Title");
+            request.Data.SetDefaultOrder("Title");
 
             var query = repository
                 .AsQueryable<Media>()
-                .Where(m => m.Original == null && m.Folder.Id == request.FolderId);
+                .Where(m => m.Original == null && m.Folder.Id == request.Data.FolderId);
 
-            if (!request.IncludeFolders)
+            if (!request.Data.IncludeFolders)
             {
                 query = query.Where(media => media.ContentType != MediaContentType.Folder);
             }
 
-            if (!request.IncludeVideos)
+            if (!request.Data.IncludeVideos)
             {
                 query = query.Where(media => media.ContentType != MediaContentType.File);
             }
 
-            if (!request.IncludeArchived)
+            if (!request.Data.IncludeArchived)
             {
                 query = query.Where(m => !m.IsArchived);
             }
 
             query = query.ApplyTagsFilter(
-                request,
+                request.Data,
                 tagName => { return media => media.MediaTags.Any(tag => tag.Tag.Name == tagName); });
 
             var listResponse = query.Select(media =>

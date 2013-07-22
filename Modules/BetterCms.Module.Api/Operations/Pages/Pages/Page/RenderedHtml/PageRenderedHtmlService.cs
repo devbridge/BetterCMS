@@ -17,13 +17,13 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.RenderedHtml
         {
             // TODO: validate request - one and only one of these can be specified: PageUrl / PageId
             string data = null;
-            if (request.PageId.HasValue)
+            if (request.Data.PageId.HasValue)
             {
-                data = "TODO: implement rendering by page ID: " + request.PageId.Value.ToString();
+                data = "TODO: implement rendering by page ID: " + request.Data.PageId.Value.ToString();
             }
             else
             {
-                var url = urlService.FixUrl(request.PageUrl);
+                var url = urlService.FixUrl(request.Data.PageUrl);
 
                 data = "TODO: implement rendering by page URL: " + url;
             }

@@ -45,13 +45,13 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
 
             var query = repository.AsQueryable<Module.Pages.Models.PageProperties>();
             
-            if (request.PageId.HasValue)
+            if (request.Data.PageId.HasValue)
             {
-                query = query.Where(page => page.Id == request.PageId.Value);
+                query = query.Where(page => page.Id == request.Data.PageId.Value);
             }
             else
             {
-                var url = urlService.FixUrl(request.PageUrl);
+                var url = urlService.FixUrl(request.Data.PageUrl);
                 query = query.Where(page => page.PageUrl == url);
             }
 

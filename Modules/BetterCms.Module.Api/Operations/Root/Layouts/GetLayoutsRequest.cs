@@ -6,7 +6,7 @@ namespace BetterCms.Module.Api.Operations.Root.Layouts
 {
     [Route("/layouts", Verbs = "GET")]
     [DataContract]    
-    public class GetLayoutsRequest : ListRequestBase, IReturn<GetLayoutsResponse>
+    public class GetLayoutsRequest : RequestBase<DataOptions>, IReturn<GetLayoutsResponse>
     {
     }
 }

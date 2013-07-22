@@ -20,7 +20,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
         public GetHtmlContentResponse Get(GetHtmlContentRequest request)
         {
             var model = repository
-                .AsQueryable<Module.Pages.Models.HtmlContent>(content => content.Id == request.ContentId)
+                .AsQueryable<Module.Pages.Models.HtmlContent>(content => content.Id == request.Data.ContentId)
                 .Select(content => new HtmlContentModel
                     {
                         Id = content.Id,

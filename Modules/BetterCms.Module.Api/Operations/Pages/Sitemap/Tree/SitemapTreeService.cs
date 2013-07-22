@@ -37,7 +37,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
                     })
                 .ToList();
 
-            return new GetSitemapTreeResponse { Data = GetChildren(allNodes, request.NodeId) };
+            return new GetSitemapTreeResponse { Data = GetChildren(allNodes, request.Data.NodeId) };
         }
 
         private List<SitemapTreeNodeModel> GetChildren(List<SitemapTreeNodeModel> allItems, System.Guid? parentId)

@@ -18,7 +18,7 @@ namespace BetterCms.Module.Api.Operations.Root.Tags
 
         public GetTagsResponse Get(GetTagsRequest request)
         {
-            request.SetDefaultOrder("Name");
+            request.Data.SetDefaultOrder("Name");
 
             var listResponse = repository
                 .AsQueryable<Module.Root.Models.Tag>()

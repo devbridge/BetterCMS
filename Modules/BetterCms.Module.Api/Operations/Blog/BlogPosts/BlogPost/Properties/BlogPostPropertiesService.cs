@@ -22,7 +22,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         public GetBlogPostPropertiesResponse Get(GetBlogPostPropertiesRequest request)
         {
             var response = repository
-                .AsQueryable<Module.Blog.Models.BlogPost>(blogPost => blogPost.Id == request.BlogPostId)
+                .AsQueryable<Module.Blog.Models.BlogPost>(blogPost => blogPost.Id == request.Data.BlogPostId)
                 .Select(blogPost =>
                     new GetBlogPostPropertiesResponse
                     {
@@ -54,13 +54,13 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
                                 UseNoIndex = blogPost.UseNoIndex,
                                 IsArchived = blogPost.IsArchived
                             },
-                        MetaData = request.IncludeMetaData ? new MetadataModel
+                        MetaData = request.Data.IncludeMetaData ? new MetadataModel
                             {
                                 MetaTitle = blogPost.MetaTitle,
                                 MetaDescription = blogPost.MetaDescription,
                                 MetaKeywords = blogPost.MetaKeywords
                             } : null,
-                        Author = blogPost.Author != null && request.IncludeAuthor ? new AuthorModel
+                        Author = blogPost.Author != null && request.Data.IncludeAuthor ? new AuthorModel
                             {
                                 Id = blogPost.Author.Id,
                                 Version = blogPost.Author.Version,
@@ -72,7 +72,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
                                 Name = blogPost.Author.Name,
                                 ImageId = blogPost.Author.Image != null ? blogPost.Author.Image.Id : (System.Guid?)null
                             } : null,
-                        Category = blogPost.Category != null && request.IncludeCategory ? new CategoryModel
+                        Category = blogPost.Category != null && request.Data.IncludeCategory ? new CategoryModel
                             {
                                 Id = blogPost.Category.Id,
                                 Version = blogPost.Category.Version,
@@ -83,7 +83,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
                                 
                                 Name = blogPost.Category.Name    
                             } : null,
-                        Layout = request.IncludeLayout ? new LayoutModel
+                        Layout = request.Data.IncludeLayout ? new LayoutModel
                             {
                                 Id = blogPost.Layout.Id,
                                 Version = blogPost.Layout.Version,
@@ -96,7 +96,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
                                 LayoutPath = blogPost.Layout.LayoutPath,
                                 PreviewUrl = blogPost.Layout.PreviewUrl       
                             } : null,
-                        MainImage = blogPost.Image != null && request.IncludeImages ? new ImageModel
+                        MainImage = blogPost.Image != null && request.Data.IncludeImages ? new ImageModel
                             {
                                 Id = blogPost.Image.Id,
                                 Version = blogPost.Image.Version,
@@ -110,7 +110,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
                                 Url = blogPost.Image.PublicUrl,
                                 ThumbnailUrl = blogPost.Image.PublicThumbnailUrl
                             } : null,
-                        FeaturedImage = blogPost.FeaturedImage != null && request.IncludeImages ? new ImageModel
+                        FeaturedImage = blogPost.FeaturedImage != null && request.Data.IncludeImages ? new ImageModel
                             {
                                 Id = blogPost.FeaturedImage.Id,
                                 Version = blogPost.FeaturedImage.Version,
@@ -124,7 +124,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
                                 Url = blogPost.FeaturedImage.PublicUrl,
                                 ThumbnailUrl = blogPost.FeaturedImage.PublicThumbnailUrl
                             } : null,
-                        SecondaryImage = blogPost.SecondaryImage != null && request.IncludeImages ? new ImageModel
+                        SecondaryImage = blogPost.SecondaryImage != null && request.Data.IncludeImages ? new ImageModel
                             {
                                 Id = blogPost.SecondaryImage.Id,
                                 Version = blogPost.SecondaryImage.Version,
@@ -141,14 +141,14 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
                     })
                 .FirstOne();
 
-            if (request.IncludeHtmlContent)
+            if (request.Data.IncludeHtmlContent)
             {
-                response.HtmlContent = LoadHtml(request.BlogPostId);
+                response.HtmlContent = LoadHtml(request.Data.BlogPostId);
             }
 
-            if (request.IncludeTags)
+            if (request.Data.IncludeTags)
             {
-                response.Tags = LoadTags(request.BlogPostId);
+                response.Tags = LoadTags(request.Data.BlogPostId);
             }
 
             return response;

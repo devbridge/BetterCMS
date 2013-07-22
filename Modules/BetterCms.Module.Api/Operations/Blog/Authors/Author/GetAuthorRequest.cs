@@ -2,8 +2,7 @@
 
 namespace BetterCms.Module.Api.Operations.Blog.Authors.Author
 {
-    [Route("/authors/{AuthorId}", Verbs = "GET")]
-    public class GetAuthorRequest : RequestBase, IReturn<GetAuthorResponse>
+    public class GetAuthorModel
     {
         /// <summary>
         /// Gets or sets the author id.
@@ -12,5 +11,10 @@ namespace BetterCms.Module.Api.Operations.Blog.Authors.Author
         /// The author id.
         /// </value>
         public System.Guid AuthorId { get; set; }
+    }
+
+    [Route("/authors/{AuthorId}", Verbs = "GET")]
+    public class GetAuthorRequest : RequestBase<GetAuthorModel>, IReturn<GetAuthorResponse>
+    {
     }
 }

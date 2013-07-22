@@ -1,9 +1,13 @@
 using System;
+using System.Web.Script.Serialization;
 
 using Autofac;
 
 using BetterCms.Core.Dependencies;
+using BetterCms.Module.Api.Filters;
+using BetterCms.Module.Api.Operations;
 
+using ServiceStack.ServiceHost;
 using ServiceStack.Text;
 using ServiceStack.WebHost.Endpoints;
 
@@ -28,8 +32,10 @@ namespace BetterCms.Module.Api
             //ServiceStack.Text.JsConfig.ModelFacto;
 		
 			//Uncomment to change the default ServiceStack configuration
-			SetConfig(new EndpointHostConfig {
-			});
+			SetConfig(new EndpointHostConfig());
+
+            // Add custom request filter
+            RequestFilters.Add(CmsApiRequestFilter.BeforeRequestProcessed);
 
             container.Adapter = new AutofacContainerAdapter(containerProvider);
 		}

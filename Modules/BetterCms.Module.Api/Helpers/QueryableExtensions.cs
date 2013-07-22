@@ -9,6 +9,12 @@ namespace BetterCms.Module.Api.Helpers
 {
     public static class QueryableExtensions
     {
+        public static DataListResponse<TModel> ToDataListResponse<TModel, TRequestModel>(this IQueryable<TModel> query, RequestBase<TRequestModel> request)
+            where TRequestModel : DataOptions, new()
+        {
+            return query.ToDataListResponse(request.Data);
+        }
+
         public static DataListResponse<TModel> ToDataListResponse<TModel>(this IQueryable<TModel> query, DataOptions options)
         {
             var creator = new DataOptionsQueryCreator<TModel>(options);

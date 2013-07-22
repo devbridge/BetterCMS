@@ -6,21 +6,12 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Exists
     public class PageExistsModel
     {
         /// <summary>
-        /// Gets or sets a value indicating whether page exists.
+        /// Gets or sets the page URL.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if page exists; otherwise, <c>false</c>.
+        /// The page URL.
         /// </value>
         [DataMember]
-        public bool Exists { get; set; }
-
-        /// <summary>
-        /// Gets or sets the existing page id .
-        /// </summary>
-        /// <value>
-        /// The existing page id.
-        /// </value>
-        [DataMember]
-        public System.Guid? PageId { get; set; }
+        public string PageUrl { get; set; }
     }
 }

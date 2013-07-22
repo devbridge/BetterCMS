@@ -3,14 +3,18 @@
 namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
 {
     [Route("/blog-posts/{BlogPostId}", Verbs = "GET")]
-    public class GetBlogPostRequest : RequestBase, IReturn<GetBlogPostResponse>
+    public class GetBlogPostRequest : RequestBase<GetBlogPostModel>, IReturn<GetBlogPostResponse>
     {
-        /// <summary>
-        /// Gets or sets the blog post id.
-        /// </summary>
-        /// <value>
-        /// The blog post id.
-        /// </value>
-        public System.Guid BlogPostId { get; set; }
+        public virtual System.Guid BlogPostId
+        {
+            get
+            {
+                return Data.BlogPostId;
+            }
+            set
+            {
+                Data.BlogPostId = value;
+            }
+        }
     }
 }

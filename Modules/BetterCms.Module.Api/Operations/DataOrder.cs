@@ -8,6 +8,7 @@ namespace BetterCms.Module.Api.Operations
     /// <summary>
     /// Represents container for ordering items list
     /// </summary>
+    [DataContract]
     public class DataOrder
     {
         /// <summary>
@@ -24,6 +25,7 @@ namespace BetterCms.Module.Api.Operations
         /// <value>
         /// The list of order items.
         /// </value>
+        [DataMember]
         public List<OrderItem> By { get; set; }
 
         /// <summary>

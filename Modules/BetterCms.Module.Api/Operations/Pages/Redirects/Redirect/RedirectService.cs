@@ -19,7 +19,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Redirects.Redirect
         public GetRedirectResponse Get(GetRedirectRequest request)
         {
             var model = repository
-                .AsQueryable<Module.Pages.Models.Redirect>(redirect => redirect.Id == request.RedirectId)
+                .AsQueryable<Module.Pages.Models.Redirect>(redirect => redirect.Id == request.Data.RedirectId)
                 .Select(redirect => new RedirectModel
                     {
                         Id = redirect.Id,

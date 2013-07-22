@@ -18,7 +18,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Redirects
 
         public GetRedirectsResponse Get(GetRedirectsRequest request)
         {
-            request.SetDefaultOrder("PageUrl");
+            request.Data.SetDefaultOrder("PageUrl");
 
             var listResponse = repository
                 .AsQueryable<Module.Pages.Models.Redirect>()

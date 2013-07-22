@@ -25,7 +25,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Exists
 
         public PageExistsResponse Get(PageExistsRequest request)
         {
-            var url = urlService.FixUrl(request.PageUrl);
+            var url = urlService.FixUrl(request.Data.PageUrl);
 
             var id = repository
                 .AsQueryable<Module.Root.Models.Page>(p => p.PageUrl == url)
@@ -34,7 +34,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Exists
 
             return new PageExistsResponse
                        {
-                           Data = new PageExistsModel
+                           Data = new PageModel
                                       {
                                           Exists = !id.HasDefaultValue(),
                                           PageId = !id.HasDefaultValue() ? id : (System.Guid?)null

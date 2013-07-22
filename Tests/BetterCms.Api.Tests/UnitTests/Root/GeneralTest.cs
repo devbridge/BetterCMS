@@ -32,19 +32,24 @@ namespace BetterCms.Api.Tests.UnitTests.Root
         {
             using (var client = new JsonServiceClient("http://localhost:55558/bcms-api/"))
             {
-                var layouts = client.Get<GetLayoutsResponse>(new GetLayoutsRequest
-                                                                                {
-                                                                                    Take = 5,
-                                                                                    Skip = 2,
-                                                                                   Filter = new DataFilter
-                                                                                                {
-                                                                                                    Connector = FilterConnector.Or,
-                                                                                                    Where = new List<FilterItem>(new[]
-                                                                                                                                     {
-                                                                                                                                         new FilterItem("test", "val", FilterOperation.Greater),
-                                                                                                                                     })
-                                                                                                }
-                                                                                });
+                var layouts =
+                    client.Get<GetLayoutsResponse>(
+                        new GetLayoutsRequest
+                            {
+                                Data = 
+                                    {
+                                        Take = 5,
+                                        Skip = 2,
+                                        Filter =
+                                            new DataFilter
+                                                {
+                                                    Connector = FilterConnector.Or,
+                                                    Where =
+                                                        new List<FilterItem>(
+                                                        new[] { new FilterItem("test", "val", FilterOperation.Greater), })
+                                                }
+                                    }
+                            });
 
                 Assert.IsNotNull(layouts);
                 

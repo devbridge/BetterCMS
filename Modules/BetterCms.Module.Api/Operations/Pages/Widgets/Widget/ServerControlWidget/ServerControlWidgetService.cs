@@ -20,7 +20,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidg
         public GetServerControlWidgetResponse Get(GetServerControlWidgetRequest request)
         {
             var model = repository
-                .AsQueryable<Module.Pages.Models.ServerControlWidget>(widget => widget.Id == request.WidgetId)
+                .AsQueryable<Module.Pages.Models.ServerControlWidget>(widget => widget.Id == request.Data.WidgetId)
                 .Select(widget => new ServerControlWidgetModel()
                     {
                         Id = widget.Id,

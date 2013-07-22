@@ -4,13 +4,12 @@ using ServiceStack.ServiceHost;
 
 namespace BetterCms.Module.Api.Operations.MediaManager.Videos
 {
-    [Route("/videos", Verbs = "GET")]
-    public class GetVideosRequest : ListRequestBase, IReturn<GetVideosResponse>, IFilterByTags
+    public class GetVideosModel : DataOptions, IFilterByTags
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetVideosRequest" /> class.
+        /// Initializes a new instance of the <see cref="GetVideosModel" /> class.
         /// </summary>
-        public GetVideosRequest()
+        public GetVideosModel()
         {
             IncludeFolders = true;
             IncludeVideos = true;
@@ -65,5 +64,10 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Videos
         /// The tags filter connector.
         /// </value>
         public FilterConnector FilterByTagsConnector { get; set; }
+    }
+
+    [Route("/videos", Verbs = "GET")]
+    public class GetVideosRequest : RequestBase<GetVideosModel>, IReturn<GetVideosResponse>
+    {
     }
 }

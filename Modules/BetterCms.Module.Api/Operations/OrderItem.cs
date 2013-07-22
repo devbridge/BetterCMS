@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Operations.Enums;
 
@@ -8,6 +7,7 @@ namespace BetterCms.Module.Api.Operations
     /// <summary>
     /// Represents class for ordering items
     /// </summary>
+    [DataContract]
     public class OrderItem
     {
         /// <summary>
@@ -35,6 +35,7 @@ namespace BetterCms.Module.Api.Operations
         /// <value>
         /// The ordering field.
         /// </value>
+        [DataMember]
         public string Field { get; set; }
 
         /// <summary>
@@ -43,6 +44,7 @@ namespace BetterCms.Module.Api.Operations
         /// <value>
         /// The order direction.
         /// </value>
+        [DataMember]
         public OrderDirection Direction { get; set; }
 
         /// <summary>

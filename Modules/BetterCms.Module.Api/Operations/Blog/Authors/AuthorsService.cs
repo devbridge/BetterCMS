@@ -18,7 +18,7 @@ namespace BetterCms.Module.Api.Operations.Blog.Authors
 
         public GetAuthorsResponse Get(GetAuthorsRequest request)
         {
-            request.SetDefaultOrder("Name");
+            request.Data.SetDefaultOrder("Name");
 
             var listResponse = repository
                 .AsQueryable<Module.Blog.Models.Author>()

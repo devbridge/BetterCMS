@@ -23,7 +23,7 @@ namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout
         public GetLayoutResponse Get(GetLayoutRequest request)
         {
             var model = repository
-                .AsQueryable<Module.Root.Models.Layout>(layout => layout.Id == request.LayoutId)
+                .AsQueryable<Module.Root.Models.Layout>(layout => layout.Id == request.Data.LayoutId)
                 .Select(layout => new LayoutModel
                     {
                         Id = layout.Id,

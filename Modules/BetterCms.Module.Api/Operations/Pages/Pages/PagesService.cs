@@ -19,23 +19,23 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
 
         public GetPagesResponse Get(GetPagesRequest request)
         {
-            request.SetDefaultOrder("Title");
+            request.Data.SetDefaultOrder("Title");
 
             var query = repository
                 .AsQueryable<Module.Pages.Models.PageProperties>();
 
-            if (!request.IncludeArchived)
+            if (!request.Data.IncludeArchived)
             {
                 query = query.Where(b => !b.IsArchived);
             }
 
-            if (!request.IncludeUnpublished)
+            if (!request.Data.IncludeUnpublished)
             {
                 query = query.Where(b => b.Status == PageStatus.Published);
             }
 
             query = query.ApplyTagsFilter(
-                request,
+                request.Data,
                 tagName => { return page => page.PageTags.Any(tag => tag.Tag.Name == tagName); });
 
             var listResponse = query

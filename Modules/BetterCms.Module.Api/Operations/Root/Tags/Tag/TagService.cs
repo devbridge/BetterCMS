@@ -21,14 +21,14 @@ namespace BetterCms.Module.Api.Operations.Root.Tags.Tag
             // TODO: validate TagId or TagName - one must be required
 
             var query = repository.AsQueryable<Module.Root.Models.Tag>();
-            
-            if (request.TagId.HasValue)
+
+            if (request.Data.TagId.HasValue)
             {
-                query = query.Where(tag => tag.Id == request.TagId);
+                query = query.Where(tag => tag.Id == request.Data.TagId);
             }
             else
             {
-                query = query.Where(tag => tag.Name == request.TagName);
+                query = query.Where(tag => tag.Name == request.Data.TagName);
             }
 
             var model = query

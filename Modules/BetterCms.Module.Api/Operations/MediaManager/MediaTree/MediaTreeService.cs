@@ -24,18 +24,18 @@ namespace BetterCms.Module.Api.Operations.MediaManager.MediaTree
                                    Data = new MediaTreeModel()
                                };
 
-            if (request.IncludeFilesTree)
+            if (request.Data.IncludeFilesTree)
             {
-                response.Data.FilesTree = LoadMediaTree<MediaFile>(MediaType.File, request.IncludeArchived, request.IncludeFiles);
+                response.Data.FilesTree = LoadMediaTree<MediaFile>(MediaType.File, request.Data.IncludeArchived, request.Data.IncludeFiles);
             }
-            if (request.IncludeImagesTree)
+            if (request.Data.IncludeImagesTree)
             {
-                response.Data.ImagesTree = LoadMediaTree<MediaImage>(MediaType.Image, request.IncludeArchived, request.IncludeImages);
+                response.Data.ImagesTree = LoadMediaTree<MediaImage>(MediaType.Image, request.Data.IncludeArchived, request.Data.IncludeImages);
             }
-            if (request.IncludeVideosTree)
+            if (request.Data.IncludeVideosTree)
             {
                 // TODO: return MediaVideo type, when it'll be implemented
-                response.Data.VideosTree = LoadMediaTree<MediaFile>(MediaType.Video, request.IncludeImages, request.IncludeArchived);
+                response.Data.VideosTree = LoadMediaTree<MediaFile>(MediaType.Video, request.Data.IncludeImages, request.Data.IncludeArchived);
             }
 
             return response;

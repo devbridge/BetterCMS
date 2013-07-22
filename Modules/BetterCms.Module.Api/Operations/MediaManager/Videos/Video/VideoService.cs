@@ -24,7 +24,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Videos.Video
         public GetVideoResponse Get(GetVideoRequest request)
         {
             var model = repository
-                .AsQueryable<MediaFile>(media => media.Id == request.VideoId && media.Type == MediaType.Video)
+                .AsQueryable<MediaFile>(media => media.Id == request.Data.VideoId && media.Type == MediaType.Video)
                 .Select(media => new VideoModel
                     {
                         Id = media.Id,
@@ -47,10 +47,10 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Videos.Video
                 .FirstOne();
 
             IList<TagModel> tags;
-            if (request.IncludeTags)
+            if (request.Data.IncludeTags)
             {
                 tags =
-                    repository.AsQueryable<MediaTag>(mediaTag => mediaTag.Media.Id == request.VideoId)
+                    repository.AsQueryable<MediaTag>(mediaTag => mediaTag.Media.Id == request.Data.VideoId)
                               .Select(media => new TagModel
                                     {
                                         Id = media.Tag.Id,

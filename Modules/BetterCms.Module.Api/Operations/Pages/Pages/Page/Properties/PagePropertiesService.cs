@@ -28,13 +28,13 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
 
             var query = repository.AsQueryable<Module.Pages.Models.PageProperties>();
 
-            if (request.PageId.HasValue)
+            if (request.Data.PageId.HasValue)
             {
-                query = query.Where(page => page.Id == request.PageId.Value);
+                query = query.Where(page => page.Id == request.Data.PageId.Value);
             }
             else
             {
-                var url = urlService.FixUrl(request.PageUrl);
+                var url = urlService.FixUrl(request.Data.PageUrl);
                 query = query.Where(page => page.PageUrl == url);
             }
 
@@ -68,13 +68,13 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                                 UseNoFollow = page.UseNoFollow,
                                 UseNoIndex = page.UseNoIndex
                             },
-                        MetaData = request.IncludeMetaData ? new MetadataModel
+                        MetaData = request.Data.IncludeMetaData ? new MetadataModel
                             {
                                 MetaTitle = page.MetaTitle,
                                 MetaDescription = page.MetaDescription,
                                 MetaKeywords = page.MetaKeywords
                             } : null,
-                        Category = page.Category != null && request.IncludeCategory ? new CategoryModel
+                        Category = page.Category != null && request.Data.IncludeCategory ? new CategoryModel
                             {
                                 Id = page.Category.Id,
                                 Version = page.Category.Version,
@@ -85,7 +85,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
 
                                 Name = page.Category.Name
                             } : null,
-                        Layout = request.IncludeLayout ? new LayoutModel
+                        Layout = request.Data.IncludeLayout ? new LayoutModel
                             {
                                 Id = page.Layout.Id,
                                 Version = page.Layout.Version,
@@ -98,7 +98,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                                 LayoutPath = page.Layout.LayoutPath,
                                 PreviewUrl = page.Layout.PreviewUrl
                             } : null,
-                        MainImage = page.Image != null && request.IncludeImages ? new ImageModel
+                        MainImage = page.Image != null && request.Data.IncludeImages ? new ImageModel
                             {
                                 Id = page.Image.Id,
                                 Version = page.Image.Version,
@@ -112,7 +112,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                                 Url = page.Image.PublicUrl,
                                 ThumbnailUrl = page.Image.PublicThumbnailUrl
                             } : null,
-                        FeaturedImage = page.FeaturedImage != null && request.IncludeImages ? new ImageModel
+                        FeaturedImage = page.FeaturedImage != null && request.Data.IncludeImages ? new ImageModel
                             {
                                 Id = page.FeaturedImage.Id,
                                 Version = page.FeaturedImage.Version,
@@ -126,7 +126,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                                 Url = page.FeaturedImage.PublicUrl,
                                 ThumbnailUrl = page.FeaturedImage.PublicThumbnailUrl
                             } : null,
-                        SecondaryImage = page.SecondaryImage != null && request.IncludeImages ? new ImageModel
+                        SecondaryImage = page.SecondaryImage != null && request.Data.IncludeImages ? new ImageModel
                             {
                                 Id = page.SecondaryImage.Id,
                                 Version = page.SecondaryImage.Version,
@@ -143,12 +143,12 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                     })
                 .FirstOne();
 
-            if (request.IncludeTags)
+            if (request.Data.IncludeTags)
             {
                 response.Tags = LoadTags(response.Data.Id);
             }
-            
-            if (request.IncludePageContents)
+
+            if (request.Data.IncludePageContents)
             {
                 response.PageContents = LoadPageContents(response.Data.Id);
             }

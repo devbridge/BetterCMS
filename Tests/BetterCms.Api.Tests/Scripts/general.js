@@ -1,25 +1,21 @@
-function jcsvSerialize(obj) {
-    var output = [];
+var api = (function() {
+    'use strict';
 
-    for (var key in obj) {
-        if (obj.hasOwnProperty(key)) {
-            output.push(key + '=' + JSON.stringify(obj[key]) );
-        }
-    }
+    var obj = {};
 
-    return output.join('&');
-};
+    obj.get = function(url, data, onSuccess, onError) {
+        $.ajax(url,
+            {
+                data: "data=" + JSON.stringify(data),
+                type: 'GET',
+                cache: false,
+                async: false,
+                contentType: 'application/json',
+                dataType: 'json',
+                success: onSuccess,
+                error: onError
+            });
+    };
 
-function get(url, data, onSuccess, onError) {
-    $.ajax(url,
-        {
-            data: data != null ? jcsvSerialize(data) : null,
-            type: 'GET',
-            cache: false,
-            async: false,
-            contentType: 'application/json',
-            dataType: 'json',
-            success: onSuccess,
-            error: onError
-        });
-}
+    return obj;
+})();

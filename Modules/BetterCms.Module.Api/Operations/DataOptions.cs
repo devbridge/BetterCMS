@@ -75,7 +75,6 @@ namespace BetterCms.Module.Api.Operations
         /// <value>
         /// The field exceptions.
         /// </value>
-        [DataMember]
-        public List<string> FieldExceptions { get; set; }
+        internal List<string> FieldExceptions { get; set; }
     }
 }

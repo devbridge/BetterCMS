@@ -2,8 +2,7 @@
 
 namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout
 {
-    [Route("/layouts/{LayoutId}", Verbs = "GET")]
-    public class GetLayoutRequest : RequestBase, IReturn<GetLayoutResponse>
+    public class GetLayoutModel
     {
         /// <summary>
         /// Gets or sets the layout id.
@@ -12,5 +11,10 @@ namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout
         /// The layout id.
         /// </value>
         public System.Guid LayoutId { get; set; }
+    }
+
+    [Route("/layouts/{LayoutId}", Verbs = "GET")]
+    public class GetLayoutRequest : RequestBase<GetLayoutModel>, IReturn<GetLayoutResponse>
+    {
     }
 }

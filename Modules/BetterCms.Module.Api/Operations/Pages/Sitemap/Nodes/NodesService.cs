@@ -18,7 +18,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Nodes
 
         public GetSitemapNodesResponse Get(GetSitemapNodesRequest request)
         {
-            request.SetDefaultOrder("Title");
+            request.Data.SetDefaultOrder("Title");
 
             var listResponse = repository
                 .AsQueryable<Module.Pages.Models.SitemapNode>()

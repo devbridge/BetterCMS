@@ -19,13 +19,13 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets
 
         public GetWidgetsResponse Get(GetWidgetsRequest request)
         {
-            request.SetDefaultOrder("Name");
+            request.Data.SetDefaultOrder("Name");
 
             var query = repository
                 .AsQueryable<Module.Root.Models.Widget>()
                 .Where(widget => widget.Original == null);
 
-            if (!request.IncludeUnpublished)
+            if (!request.Data.IncludeUnpublished)
             {
                 query = query.Where(widget => widget.Status == ContentStatus.Published);
             }

@@ -2,8 +2,7 @@
 
 namespace BetterCms.Module.Api.Operations.MediaManager.Videos.Video
 {
-    [Route("/videos/{VideoId}", Verbs = "GET")]
-    public class GetVideoRequest : RequestBase, IReturn<GetVideoResponse>
+    public class GetVideoModel
     {
         /// <summary>
         /// Gets or sets the video id.
@@ -20,5 +19,10 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Videos.Video
         ///   <c>true</c> if to include tags to response; otherwise, <c>false</c>.
         /// </value>
         public bool IncludeTags { get; set; }
+    }
+
+    [Route("/videos/{VideoId}", Verbs = "GET")]
+    public class GetVideoRequest : RequestBase<GetVideoModel>, IReturn<GetVideoResponse>
+    {
     }
 }

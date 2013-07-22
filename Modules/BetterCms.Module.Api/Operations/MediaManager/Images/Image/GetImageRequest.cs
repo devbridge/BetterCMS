@@ -2,8 +2,7 @@
 
 namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
 {
-    [Route("/images/{ImageId}", Verbs = "GET")]
-    public class GetImageRequest : RequestBase, IReturn<GetImageResponse>
+    public class GetImageModel
     {
         /// <summary>
         /// Gets or sets the image id.
@@ -20,5 +19,10 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
         ///   <c>true</c> if to include tags to response; otherwise, <c>false</c>.
         /// </value>
         public bool IncludeTags { get; set; }
+    }
+
+    [Route("/images/{ImageId}", Verbs = "GET")]
+    public class GetImageRequest : RequestBase<GetImageModel>, IReturn<GetImageResponse>
+    {
     }
 }

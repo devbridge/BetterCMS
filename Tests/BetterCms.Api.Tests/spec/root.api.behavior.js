@@ -1,5 +1,5 @@
 ﻿/*jslint vars: true*/
-/*global describe, it, expect, waits, waitsFor, runs, afterEach, spyOn, jcsvSerialize, $ */
+/*global api, describe, it, expect, waits, waitsFor, runs, afterEach, spyOn, jcsvSerialize, $ */
 
 describe('Root', function() {
     'use strict';
@@ -10,7 +10,7 @@ describe('Root', function() {
             ready = false;
 
         runs(function () {
-            get(url, null, function(json) {
+            api.get(url, null, function(json) {
                 result = json;
                 ready = true;
             });
@@ -57,10 +57,10 @@ describe('Root', function() {
                 },
                 skip: 2,
                 take: 2
-            };
+        };
 
         runs(function () {
-            get(url, data, function (json) {
+            api.get(url, data, function (json) {
                 result = json;
                 ready = true;
             });

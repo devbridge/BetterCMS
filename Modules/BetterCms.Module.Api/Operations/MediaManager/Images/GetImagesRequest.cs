@@ -4,13 +4,12 @@ using ServiceStack.ServiceHost;
 
 namespace BetterCms.Module.Api.Operations.MediaManager.Images
 {
-    [Route("/images", Verbs = "GET")]
-    public class GetImagesRequest : ListRequestBase, IReturn<GetImagesResponse>, IFilterByTags
+    public class GetImagesModel : DataOptions, IFilterByTags
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetImagesRequest" /> class.
+        /// Initializes a new instance of the <see cref="GetImagesModel" /> class.
         /// </summary>
-        public GetImagesRequest()
+        public GetImagesModel()
         {
             IncludeFolders = true;
             IncludeImages = true;
@@ -65,5 +64,10 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
         /// The tags filter connector.
         /// </value>
         public FilterConnector FilterByTagsConnector { get; set; }
+    }
+
+    [Route("/images", Verbs = "GET")]
+    public class GetImagesRequest : RequestBase<GetImagesModel>, IReturn<GetImagesResponse>
+    {
     }
 }
