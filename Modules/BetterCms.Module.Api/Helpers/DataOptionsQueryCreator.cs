@@ -42,11 +42,6 @@ namespace BetterCms.Module.Api.Helpers
             public const string LessOrEqual = "{0} <= @{1}";
         }
 
-        private static class MagicConstants
-        {
-            public const string Null = "$null";
-        }
-
         private readonly DataOptions dataOptions;
 
         private readonly IList<object> filterParameters;
@@ -322,11 +317,6 @@ namespace BetterCms.Module.Api.Helpers
 
             // Try to cast to different type of objects
             var value = filterItem.Value.ToString();
-            
-            if (value == MagicConstants.Null)
-            {
-                return null;
-            }
 
             Type type = property.PropertyType;
 
@@ -353,7 +343,7 @@ namespace BetterCms.Module.Api.Helpers
 
             if (typeof(DateTime?).IsAssignableFrom(type))
             {
-                return Convert.ToDateTime(GetMagicValue(value));
+                return Convert.ToDateTime(value);
             }
 
             if (typeof(Guid?).IsAssignableFrom(type))
@@ -395,15 +385,6 @@ namespace BetterCms.Module.Api.Helpers
             }
 
             throw new NotSupportedException(string.Format("Failed to convert value {0} to specied enum type {1}.", enumType, value));
-        }
-
-        private object GetMagicValue(object value)
-        {
-            if (value is string && ((string)value) == "$null")
-            {
-                return null;
-            }
-            return value;
         }
     }
 }
