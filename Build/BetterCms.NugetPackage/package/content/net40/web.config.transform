@@ -3,6 +3,9 @@
     <section name="cms" type="BetterCms.Configuration.CmsConfigurationSection, BetterCms.Configuration" requirePermission="false" />
   </configSections>
   <cms configSource="Config\cms.config" />
+  <appSettings>
+    <add key="aspnet:MaxJsonDeserializerMembers" value="10000" />
+  </appSettings>
   <system.web>
     <globalization uiCulture="auto" />
     <!-- maxRequestLength=200MB, URL max length 2000 -->
