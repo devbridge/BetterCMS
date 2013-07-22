@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿<script language="CS" runat="server"> 
+void Page_Load(object sender, System.EventArgs e)
+{      
+    Response.StatusCode = 404;
+} 
+</script>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>OOPS ERROR OCCURED</title>
