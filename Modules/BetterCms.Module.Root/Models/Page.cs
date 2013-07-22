@@ -22,6 +22,14 @@ namespace BetterCms.Module.Root.Models
         public virtual string PageUrl { get; set; }
 
         /// <summary>
+        /// Gets or sets the lower trimmed page URL.
+        /// </summary>
+        /// <value>
+        /// The lower trimmed page URL.
+        /// </value>
+        public virtual string PageUrlLowerTrimmed { get; set; }
+
+        /// <summary>
         /// Gets or sets the title.
         /// </summary>
         /// <value>

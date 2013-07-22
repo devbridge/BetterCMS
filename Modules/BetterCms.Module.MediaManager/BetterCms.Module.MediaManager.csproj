@@ -131,7 +131,6 @@
     <Compile Include="Command\History\GetMediaHistory\GetMediaHistoryRequest.cs" />
     <Compile Include="Command\History\GetMediaVersion\GetMediaVersionCommand.cs" />
     <Compile Include="Command\History\RestoreMediaVersion\RestoreMediaVersionCommand.cs" />
-    <Compile Include="Command\Images\GetImageProperties\GetImagePropertiesCommand.cs" />
     <Compile Include="Command\MediaManager\ArchiveMedia\ArchiveMediaCommand.cs" />
     <Compile Include="Command\MediaManager\ArchiveMedia\ArchiveMediaCommandRequest.cs" />
     <Compile Include="Command\MediaManager\GetMediaItemsCommandBase.cs" />
@@ -319,9 +318,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Images\ImageEditor.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Images\ImageProperties.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\MediaManager\Partial\MediaManagerTemplate.cshtml" />

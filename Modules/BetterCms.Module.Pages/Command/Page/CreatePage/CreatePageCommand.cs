@@ -6,6 +6,7 @@ using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Mvc.Helpers;
 
 namespace BetterCms.Module.Pages.Command.Page.CreatePage
 {
@@ -57,6 +58,7 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
             var page = new PageProperties
                 {
                     PageUrl = pageUrl,
+                    PageUrlLowerTrimmed = pageUrl.LowerTrimmedUrl(),
                     Title = request.PageTitle,
                     MetaTitle = request.PageTitle,
                     Layout = Repository.First<Root.Models.Layout>(request.TemplateId),

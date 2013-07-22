@@ -16,6 +16,20 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             EnsureLatinSybmols();
         }
 
+        public static string LowerTrimmedUrl(this string url)
+        {
+            url = url.Trim();
+
+            if (url.EndsWith("/") && url != "/")
+            {
+                url = url.TrimEnd('/');
+                url = url.Trim();
+            }
+
+            url = url.ToLowerInvariant();
+            return url;
+        }
+
         public static string Transliterate(this string text, bool allowunicodeCharacters = false)
         {
             if (string.IsNullOrEmpty(text))

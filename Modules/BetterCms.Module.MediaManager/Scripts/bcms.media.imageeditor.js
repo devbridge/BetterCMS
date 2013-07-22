@@ -16,7 +16,6 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 imageAlignmentControls: ".bcms-alignment-controls",
 
                 imageEditorForm: 'form:first',
-                imagePropertiesContainer: '.bcms-file-manager-inner',
 
                 imageSizeEditBoxWidth: "#image-width",
                 imageSizeEditBoxHeight: "#image-height",
@@ -25,12 +24,11 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
 
                 imageToCrop: ".bcms-croped-block img",
 
-                selectableInputs: 'input.bcms-editor-field-box'
+                selectableInputs: 'input.bcms-editor-selectable-field-box'
             },
             links = {
                 imageEditorDialogUrl: null,
-                imageEditorInsertDialogUrl: null,
-                imagePropertiesUrl: null
+                imageEditorInsertDialogUrl: null
             },
             globalization = {
                 imageEditorDialogTitle: null,
@@ -38,7 +36,6 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 imageEditorInsertDialogAcceptButton: null,
                 imageEditorUpdateFailureMessageTitle: null,
                 imageEditorUpdateFailureMessageMessage: null,
-                imagePropertiesDialogTitle: null,
                 closeButtonTitle: null
             },
             constants = {
@@ -480,32 +477,6 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 $('input', item).attr('checked', 'true');
             });
         }
-
-        /**
-        * Opens image properties dialog
-        */
-        imageEditor.openImagePropertiesDialog = function(id) {
-            modal.open({
-                title: globalization.imagePropertiesDialogTitle,
-                disableAccept: true,
-                cancelTitle: globalization.closeButtonTitle,
-                onLoad: function (dialog) {
-                    var url = $.format(links.imagePropertiesUrl, id);
-
-                    dynamicContent.bindDialog(dialog, url, {
-                        contentAvailable: function (contentDialog, content) {
-                            contentDialog.container.find(selectors.selectableInputs).on('click', function () {
-                                this.select();
-                            });
-
-                            var json = content.Data ? content.Data : {};
-                            var viewModel = new ImageEditorViewModel(contentDialog, json, false);
-                            ko.applyBindings(viewModel, dialog.container.find(selectors.imagePropertiesContainer).get(0));
-                        },
-                    });
-                }
-            });
-        };
 
         return imageEditor;
     });
