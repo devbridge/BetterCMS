@@ -133,6 +133,14 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public bool UseNoIndex { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether use canonical URL.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if use canonical URL; otherwise, <c>false</c>.
+        /// </value>
+        public bool UseCanonicalUrl { get; set; }
+
+        /// <summary>
         /// Gets or sets the templates.
         /// </summary>
         /// <value>

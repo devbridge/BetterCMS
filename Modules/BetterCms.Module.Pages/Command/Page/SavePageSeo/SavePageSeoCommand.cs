@@ -94,6 +94,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageSeo
             page.MetaTitle = model.MetaTitle;
             page.MetaKeywords = model.MetaKeywords;
             page.MetaDescription = model.MetaDescription;
+            page.UseCanonicalUrl = model.UseCanonicalUrl;
 
             Repository.Save(page);
             UnitOfWork.Commit();

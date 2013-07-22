@@ -233,6 +233,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             pageContent.Content = content;
 
             blogPost.PageUrlLowerTrimmed = blogPost.PageUrl.LowerTrimmedUrl();
+            blogPost.UseCanonicalUrl = request.UseCanonicalUrl;
             Repository.Save(blogPost);
             Repository.Save(content);
             Repository.Save(pageContent);

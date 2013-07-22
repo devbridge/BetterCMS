@@ -117,12 +117,7 @@ namespace BetterCms.Module.MediaManager.Controllers
                 return File(model.FileStream, model.ContentMimeType, model.FileDownloadName);
             }
 
-            if (!string.IsNullOrWhiteSpace(CmsConfiguration.PageNotFoundUrl))
-            {
-                return Redirect(HttpUtility.UrlDecode(CmsConfiguration.PageNotFoundUrl));
-            }
-
-            return new HttpStatusCodeResult(404);
+            throw new HttpException(404, "Page Not Found");
         }
 
         /// <summary>

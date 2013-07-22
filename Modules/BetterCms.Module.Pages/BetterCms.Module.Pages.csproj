@@ -124,6 +124,7 @@
     <Compile Include="Events\CategoryEvents.cs" />
     <Compile Include="Events\TagEvents.cs" />
     <Compile Include="Helpers\Extensions\RenderPageViewModelExtensions.cs" />
+    <Compile Include="Models\Migrations\Migration201307220940.cs" />
     <Compile Include="Models\Migrations\Migration201306260946.cs" />
     <Compile Include="Models\Migrations\Migration201306140841.cs" />
     <Compile Include="Models\Migrations\Migration201305281700.cs" />
