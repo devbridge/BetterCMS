@@ -1195,6 +1195,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Use canonical URL..
+        /// </summary>
+        public static string EditPageProperties_AdvancedPropertiesTab_UseCanonicalUrl {
+            get {
+                return ResourceManager.GetString("EditPageProperties_AdvancedPropertiesTab_UseCanonicalUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No follow.
         /// </summary>
         public static string EditPageProperties_AdvancedPropertiesTab_UseNoFollow {
@@ -1533,6 +1542,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string EditSeo_EditUrlPath_UpdateSitemap {
             get {
                 return ResourceManager.GetString("EditSeo_EditUrlPath_UpdateSitemap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use canonical URL..
+        /// </summary>
+        public static string EditSeo_EditUrlPath_UseCanonicalUrl {
+            get {
+                return ResourceManager.GetString("EditSeo_EditUrlPath_UseCanonicalUrl", resourceCulture);
             }
         }
         

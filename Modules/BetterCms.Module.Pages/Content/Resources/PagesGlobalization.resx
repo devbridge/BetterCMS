@@ -1086,4 +1086,10 @@
   <data name="SiteSettings_Pages_FilterIsModified" xml:space="preserve">
     <value>modified</value>
   </data>
+  <data name="EditSeo_EditUrlPath_UseCanonicalUrl" xml:space="preserve">
+    <value>Use canonical URL.</value>
+  </data>
+  <data name="EditPageProperties_AdvancedPropertiesTab_UseCanonicalUrl" xml:space="preserve">
+    <value>Use canonical URL.</value>
+  </data>
 </root>
