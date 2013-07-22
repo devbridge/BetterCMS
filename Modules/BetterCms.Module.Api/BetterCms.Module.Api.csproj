@@ -384,6 +384,7 @@
     <Compile Include="Operations\Root\Tags\Tag\GetTagRequest.cs" />
     <Compile Include="Operations\Root\Tags\Tag\GetTagResponse.cs" />
     <Compile Include="Operations\Root\Version\IVersionService.cs" />
+    <Compile Include="Operations\Root\Version\VersionModel.cs" />
     <Compile Include="Operations\Root\Version\VersionService.cs" />
     <Compile Include="Operations\Root\Version\GetVersionRequest.cs" />
     <Compile Include="Operations\Root\Version\GetVersionResponse.cs" />

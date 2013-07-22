@@ -15,7 +15,7 @@ namespace BetterCms.Module.Api.Operations.Root.Layouts
         {
             this.repository = repository;
         }
-
+        
         public GetLayoutsResponse Get(GetLayoutsRequest request)
         {
             request.SetDefaultOrder("Name");

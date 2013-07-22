@@ -12,10 +12,13 @@ namespace BetterCms.Module.Api.Operations.Root.Version
         }
 
         public GetVersionResponse Get(GetVersionRequest request = null)
-        {            
+        {
             return new GetVersionResponse
                        {
-                           Data = configuration.Version
+                           Data = new VersionModel
+                                      {
+                                          Version = configuration.Version
+                                      }
                        };
         }
     }

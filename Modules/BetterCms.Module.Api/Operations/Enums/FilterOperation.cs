@@ -1,4 +1,6 @@
-﻿namespace BetterCms.Module.Api.Operations.Enums
+﻿using System.Runtime.Serialization;
+
+namespace BetterCms.Module.Api.Operations.Enums
 {
     /// <summary>
     /// Filtering operations enum
@@ -6,14 +8,23 @@
     public enum FilterOperation
     {
         Equal,
+
         NotEqual,
+
         Less,
+
         LessOrEqual,
+
         Greater,
+
         GreaterOrEqual,
+
         Contains,
+
         NotContains,
+
         StartsWith,
+
         EndsWith
     }
 }

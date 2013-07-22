@@ -147,12 +147,6 @@
                     <!-- ko if: !isFailed() && isImage() -->
                     <a class="bcms-media-content-link" data-bind="click: previewImage.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonPreviewImage</a>
                     <!-- /ko -->
-                    @if (canEdit)
-                    {
-                        <!-- ko if: !isFailed() && !isFolder() -->
-                        <a class="bcms-media-content-link" data-bind="click: editMedia.bind($data, $root), clickBubble: false">@RootGlobalization.Button_Edit</a>
-                        <!-- /ko -->
-                    }
                     <!-- ko if: !isFailed() && !isFolder() && publicUrl() -->
                     <input class="bcms-editor-field-box" type="text" readonly="readonly" data-bind="value: publicUrl(), click: selectThis.bind($data, $root, $element)" />
                     <!-- /ko -->
@@ -198,10 +192,13 @@
                         <a class="bcms-media-content-link" data-bind="click: showHistory.bind($data, $root), clickBubble: false">@MediaGlobalization.Button_ShowHistory</a>
                         <!-- /ko -->
                     }
-                    <!-- ko if: !isFailed() && isImage() -->
-                    <a class="bcms-media-content-link" data-bind="click: imageProperties.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonImageProperties</a>
-                    <!-- /ko -->
-
+                    @if (canEdit)
+                    {
+                        <!-- ko if: !isFailed() && !isFolder() -->
+                        <a class="bcms-media-content-link" data-bind="click: editMedia.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonProperties</a>
+                        <!-- /ko -->
+                    }
+                    
                     <!-- /ko -->
                 </div>
 

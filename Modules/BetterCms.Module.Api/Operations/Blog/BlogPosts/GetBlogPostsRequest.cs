@@ -1,9 +1,12 @@
-﻿using BetterCms.Module.Api.Operations.Enums;
+﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
+
+using BetterCms.Module.Api.Operations.Enums;
 
 using ServiceStack.ServiceHost;
 
 namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
-{
+{    
     [Route("/blog-posts", Verbs = "GET")]
     public class GetBlogPostsRequest : ListRequestBase, IReturn<GetBlogPostsResponse>, IFilterByTags
     {
@@ -13,6 +16,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
         public GetBlogPostsRequest()
         {
             FilterByTagsConnector = FilterConnector.And;
+            FilterByTags = new List<string>();
         }
 
         /// <summary>
@@ -37,7 +41,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
         /// <value>
         /// The tags.
         /// </value>
-        public System.Collections.Generic.List<string> FilterByTags { get; set; }
+        public List<string> FilterByTags { get; set; }
 
         /// <summary>
         /// Gets or sets the tags filter connector.

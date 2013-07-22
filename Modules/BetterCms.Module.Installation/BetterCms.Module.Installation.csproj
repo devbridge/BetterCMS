@@ -106,9 +106,6 @@
       <DependentUpon>UsersGlobalization.resx</DependentUpon>
     </Compile>
     <Compile Include="Models\Migrations\InitialSetup.cs" />
-    <Compile Include="Models\Migrations\Migration201305231042.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="InstallationModuleDescriptor.cs" />
   </ItemGroup>

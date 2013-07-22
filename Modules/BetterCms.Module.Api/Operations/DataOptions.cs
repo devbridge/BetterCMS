@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace BetterCms.Module.Api.Operations
 {
     /// <summary>
     /// Represents container for data filter, order and paging information
     /// </summary>
-    [Serializable]
+    [DataContract]
     public class DataOptions
     {
-        /// <summary>
-        /// The field exceptions - fields, that are not available for filtering / sorting
-        /// </summary>
-        private IList<string> fieldExceptions;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DataOptions" /> class.
         /// NOTE: required for JavaScript serialization
@@ -32,6 +27,7 @@ namespace BetterCms.Module.Api.Operations
         {
             Filter = new DataFilter();
             Order = new DataOrder();
+            FieldExceptions = new List<string>();
 
             Skip = skip;
             Take = take;
@@ -43,6 +39,7 @@ namespace BetterCms.Module.Api.Operations
         /// <value>
         /// The filter.
         /// </value>
+        [DataMember]
         public DataFilter Filter { get; set; }
 
         /// <summary>
@@ -51,6 +48,7 @@ namespace BetterCms.Module.Api.Operations
         /// <value>
         /// The order.
         /// </value>
+        [DataMember]
         public DataOrder Order { get; set; }
 
         /// <summary>
@@ -59,6 +57,7 @@ namespace BetterCms.Module.Api.Operations
         /// <value>
         /// The starting item number.
         /// </value>
+        [DataMember]
         public int? Skip { get; set; }
 
         /// <summary>
@@ -67,6 +66,7 @@ namespace BetterCms.Module.Api.Operations
         /// <value>
         /// The maximum count of returning items.
         /// </value>
+        [DataMember]
         public int? Take { get; set; }
 
         /// <summary>
@@ -75,16 +75,7 @@ namespace BetterCms.Module.Api.Operations
         /// <value>
         /// The field exceptions.
         /// </value>
-        public IList<string> FieldExceptions
-        {
-            get
-            {
-                if (fieldExceptions == null)
-                {
-                    fieldExceptions = new List<string>();
-                }
-                return fieldExceptions;
-            }
-        }
+        [DataMember]
+        public List<string> FieldExceptions { get; set; }
     }
 }
