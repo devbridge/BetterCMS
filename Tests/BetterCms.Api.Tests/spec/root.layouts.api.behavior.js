@@ -91,4 +91,43 @@ describe('Root: Layouts', function() {
             expect(result.data.previewUrl).toBe('http://www.devbridge.com/Content/styles/images/responsive/logo.png');
         });
     });
+    
+    it('0003: Should get layout regions by layout id', function () {
+        var url = '/bcms-api/layouts/d2f39fbd2c28401a8625a1fe0114e1eb/regions',
+            result,
+            ready = false;
+
+        var data = {
+            order: {
+                by: [
+                    { field: 'RegionIdentifier', direction: 'desc' }
+                ]
+            },
+            // TODO: remove Hack after tests and solution:
+            layoutId: 'd2f39fbd2c28401a8625a1fe0114e1eb'
+        };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefined();
+            expect(result.data).toBeDefined();
+            expect(result.data.items).toBeDefined();
+            expect(result.data.items.length).toBe(3);
+
+            api.expectBasePropertiesAreNotNull(result.data.items[0]);
+            expect(result.data.items[0].regionIdentifier).toBe('CMSMainContent');
+            expect(result.data.items[1].regionIdentifier).toBe('CMSHeader');
+            expect(result.data.items[2].regionIdentifier).toBe('CMSFooter');
+        });
+    });
 });
