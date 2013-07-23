@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Api;
-
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Commands;
 
@@ -82,7 +80,7 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
 
             UnitOfWork.Commit();
 
-            PagesApiContext.Events.OnPageCloned(newPage);
+            Events.PageEvents.Instance.OnPageCloned(newPage);
 
             return new ClonePageViewModel
                        {
@@ -122,6 +120,7 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
 
             newPage.Title = newPageTitle;
             newPage.PageUrl = newPageUrl;
+            newPage.PageUrlLowerTrimmed = newPageUrl.LowerTrimmedUrl();
             newPage.Status = PageStatus.Unpublished;
 
             Repository.Save(newPage);

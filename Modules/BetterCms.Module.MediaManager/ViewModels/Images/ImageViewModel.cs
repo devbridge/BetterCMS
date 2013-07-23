@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 using BetterCms.Core.Models;
 using BetterCms.Module.MediaManager.Content.Resources;
@@ -40,6 +41,15 @@ namespace BetterCms.Module.MediaManager.ViewModels.Images
         [Required(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_RequiredAttribute_Message")]
         [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
         public string Title { get; set; }
+
+        /// <summary>
+        /// Gets or sets the description.
+        /// </summary>
+        /// <value>
+        /// The description.
+        /// </value>
+        [StringLength(MaxLength.Text, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
+        public string Description { get; set; }
 
         /// <summary>
         /// Gets or sets the URL.
@@ -172,5 +182,13 @@ namespace BetterCms.Module.MediaManager.ViewModels.Images
         /// The crop Y coordinate.
         /// </value>
         public int CropCoordY2 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tags.
+        /// </summary>
+        /// <value>
+        /// The tags.
+        /// </value>
+        public IList<string> Tags { get; set; }
     }
 }

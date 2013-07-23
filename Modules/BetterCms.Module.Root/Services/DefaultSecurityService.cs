@@ -166,7 +166,7 @@ namespace BetterCms.Module.Root.Services
         private static IEnumerable<string> ParseRoles(string roles)
         {
             return !string.IsNullOrEmpty(roles)
-                ? roles.Split(RolesSplitter, StringSplitOptions.RemoveEmptyEntries).Distinct().ToArray()
+                ? roles.Split(RolesSplitter, StringSplitOptions.RemoveEmptyEntries).Distinct().Select(role => role.Trim()).ToArray()
                 : new string[] { };
         }
     }

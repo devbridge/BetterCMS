@@ -19,6 +19,10 @@
         @Html.CheckBoxFor(f => f.CreatePermanentRedirect)
         <div class="bcms-edit-label">@PagesGlobalization.EditSeo_EditUrlPath_PermanentRedirect</div>
     </div>
+    <div class="bcms-edit-check-field">
+        @Html.CheckBoxFor(f => f.UseCanonicalUrl)
+        <div class="bcms-edit-label">@PagesGlobalization.EditSeo_EditUrlPath_UseCanonicalUrl</div>
+    </div>
     @if (Model.IsInSitemap)
     {
         <div class="bcms-edit-check-field">

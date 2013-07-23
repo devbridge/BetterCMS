@@ -16,19 +16,19 @@ namespace BetterCms.Module.MediaManager.Command.Images.GetImage
     public class GetImageCommand : CommandBase, ICommand<Guid, ImageViewModel>
     {
         /// <summary>
-        /// Gets or sets the media file service.
+        /// The tag service.
         /// </summary>
         /// <value>
-        /// The media file service.
+        /// The tag service.
         /// </value>
-        public IMediaFileService MediaFileService { get; set; }
+        public ITagService TagService { get; set; }
 
         /// <summary>
         /// Executes this command.
         /// </summary>
         /// <param name="imageId">The image id.</param>
         /// <returns>The view model.</returns>
-        public virtual ImageViewModel Execute(Guid imageId)
+        public ImageViewModel Execute(Guid imageId)
         {
             var image = Repository.First<MediaImage>(imageId);
             return new ImageViewModel
@@ -36,6 +36,7 @@ namespace BetterCms.Module.MediaManager.Command.Images.GetImage
                     Id = image.Id.ToString(),
                     Caption = image.Caption,
                     Title = image.Title,
+                    Description = image.Description,
                     Url = image.PublicUrl,
                     ThumbnailUrl = image.PublicThumbnailUrl,
                     Version = image.Version.ToString(CultureInfo.InvariantCulture),
@@ -51,7 +52,8 @@ namespace BetterCms.Module.MediaManager.Command.Images.GetImage
                     CropCoordY1 = image.CropCoordY1.HasValue ? image.CropCoordY1.Value : 0,
                     CropCoordX2 = image.CropCoordX2.HasValue ? image.CropCoordX2.Value : image.OriginalWidth,
                     CropCoordY2 = image.CropCoordY2.HasValue ? image.CropCoordY2.Value : image.OriginalHeight,
-                    OriginalImageUrl = image.PublicOriginallUrl
+                    OriginalImageUrl = image.PublicOriginallUrl,
+                    Tags = TagService.GetMediaTagNames(imageId)
                 };
         }
     }

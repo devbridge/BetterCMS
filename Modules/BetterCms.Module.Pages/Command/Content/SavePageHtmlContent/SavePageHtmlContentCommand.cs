@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 
-using BetterCms.Api;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Commands;
@@ -93,7 +92,7 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
             // Notify.
             if (request.DesirableStatus != ContentStatus.Preview)
             {
-                PagesApiContext.Events.OnPageContentInserted(pageContent);
+                Events.PageEvents.Instance.OnPageContentInserted(pageContent);
             }
 
             return new SavePageHtmlContentResponse {

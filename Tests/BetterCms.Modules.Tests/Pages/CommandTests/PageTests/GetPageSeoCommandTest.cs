@@ -40,6 +40,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.PageTests
             Assert.AreEqual(page1.MetaTitle, model.MetaTitle);
             Assert.AreEqual(page1.MetaKeywords, model.MetaKeywords);
             Assert.AreEqual(page1.MetaDescription, model.MetaDescription);                 
+            Assert.AreEqual(page1.UseCanonicalUrl, model.UseCanonicalUrl);                 
         }
 
         [Test]

@@ -104,6 +104,7 @@ namespace BetterCms.Tests.Helpers
 
             entity.Title = ProvideRandomString(MaxLength.Name);
             entity.PageUrl = ProvideRandomString(MaxLength.Url);
+            entity.PageUrlLowerTrimmed = ProvideRandomString(MaxLength.Url);
             entity.Status = PageStatus.Published;
             entity.PublishedOn = ProvideRandomDateTime();
             entity.Layout = layout ?? CreateNewLayout();
@@ -159,6 +160,7 @@ namespace BetterCms.Tests.Helpers
 
             entity.Status = ProvideRandomEnumValue<PageStatus>();
             entity.PageUrl = ProvideRandomString(MaxLength.Url);
+            entity.PageUrlLowerTrimmed = ProvideRandomString(MaxLength.Url);
             entity.Title = ProvideRandomString(MaxLength.Name);
             entity.Description = ProvideRandomString(2000);
             entity.CanonicalUrl = ProvideRandomString(MaxLength.Url);

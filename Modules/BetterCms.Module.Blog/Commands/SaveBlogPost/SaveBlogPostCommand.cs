@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Api;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Mvc;
@@ -20,6 +19,7 @@ using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Services;
 
 namespace BetterCms.Module.Blog.Commands.SaveBlogPost
@@ -136,7 +136,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                     pageContent = Repository.FirstOrDefault<PageContent>(c => c.Page == blogPost && c.Region == region && !c.IsDeleted && c.Content == content);
                 }
 
-                if (userCanEdit && !string.Equals(blogPost.PageUrl, request.BlogUrl, StringComparison.OrdinalIgnoreCase) && request.BlogUrl != null)
+                if (userCanEdit && !string.Equals(blogPost.PageUrl, request.BlogUrl) && request.BlogUrl != null)
                 {
                     request.BlogUrl = urlService.FixUrl(request.BlogUrl);
                     pageService.ValidatePageUrl(request.BlogUrl, request.Id);
@@ -150,7 +150,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                         }
                     }
 
-                    blogPost.PageUrl = request.BlogUrl;
+                    blogPost.PageUrl = urlService.FixUrl(request.BlogUrl);
                 }
             }
             else
@@ -191,8 +191,9 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                 else
                 {
                     blogPost.PageUrl = blogService.CreateBlogPermalink(request.Title);
-                }               
-               
+                }
+
+                blogPost.MetaTitle = request.Title;
                 blogPost.Layout = layout;
                 UpdateStatus(blogPost, request.DesirableStatus);
             }
@@ -231,6 +232,8 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             content = (BlogPostContent)contentService.SaveContentWithStatusUpdate(newContent, request.DesirableStatus);
             pageContent.Content = content;
 
+            blogPost.PageUrlLowerTrimmed = blogPost.PageUrl.LowerTrimmedUrl();
+            blogPost.UseCanonicalUrl = request.UseCanonicalUrl;
             Repository.Save(blogPost);
             Repository.Save(content);
             Repository.Save(pageContent);
@@ -248,20 +251,20 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             // Notify about new or updated blog post.
             if (isNew)
             {
-                BlogsApiContext.Events.OnBlogCreated(blogPost);
+                Events.BlogEvents.Instance.OnBlogCreated(blogPost);
             }
             else
             {
-                BlogsApiContext.Events.OnBlogUpdated(blogPost);
+                Events.BlogEvents.Instance.OnBlogUpdated(blogPost);
             }
 
             // Notify about new created tags.
-            PagesApiContext.Events.OnTagCreated(newTags);
+            Events.RootEvents.Instance.OnTagCreated(newTags);
 
             // Notify about redirect creation.
             if (redirectCreated != null)
             {
-                PagesApiContext.Events.OnRedirectCreated(redirectCreated);
+                Events.PageEvents.Instance.OnRedirectCreated(redirectCreated);
             }
 
             return new SaveBlogPostCommandResponse

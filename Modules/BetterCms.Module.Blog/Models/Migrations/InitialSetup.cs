@@ -1,6 +1,4 @@
-﻿using System;
-
-using BetterCms.Core.DataAccess.DataContext.Migrations;
+﻿using BetterCms.Core.DataAccess.DataContext.Migrations;
 using BetterCms.Core.Models;
 using BetterCms.Module.Pages.Models.Migrations;
 using BetterCms.Module.Root.Models.Migrations;
@@ -50,14 +48,6 @@ namespace BetterCms.Module.Blog.Models.Migrations
             CreateBlogPostsTable();
             CreateOptionsTable();
             CreateBlogPostContentsTable();
-        }
-
-        /// <summary>
-        /// Downs this instance.
-        /// </summary>
-        public override void Down()
-        {
-            throw new NotImplementedException();
         }
 
         /// <summary>

@@ -3,14 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Web.Mvc;
-
 using Autofac;
-
-using BetterCms.Api;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Modules.Projections;
-using BetterCms.Core.Mvc.Attributes;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Mvc.Extensions;
 using BetterCms.Core.Security;
@@ -294,24 +290,6 @@ namespace BetterCms.Core.Modules
         }
 
         /// <summary>
-        /// Registers the type as the keyed type.
-        /// </summary>
-        /// <typeparam name="TType">The parent type.</typeparam>
-        /// <param name="containerBuilder">The container builder.</param>
-        /// <param name="type">The type.</param>
-        protected void RegisterKeyedType<TType>(ContainerBuilder containerBuilder, Type type)
-        {
-            string key = (AreaName + "-" + type.Name).ToUpperInvariant();
-            containerBuilder
-                .RegisterType(type)
-                .AsSelf()
-                .Keyed<TType>(key)
-                .WithMetadata("ControllerType", type)
-                .InstancePerDependency()
-                .PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
-        }
-
-        /// <summary>
         /// Registers module controller types.
         /// </summary>
         /// <param name="registrationContext">The area registration context.</param>
@@ -323,55 +301,26 @@ namespace BetterCms.Core.Modules
 
             if (controllerTypes != null)
             {
-//                var allModuleActions = new Dictionary<Type, IEnumerable<MethodInfo>>();
                 foreach (Type controllerType in controllerTypes)
                 {
-                    RegisterKeyedType<IController>(containerBuilder, controllerType);
+                    string key = (AreaName + "-" + controllerType.Name).ToUpperInvariant();
 
-//                    var controllerActions = controllerExtensions.GetControllerActions(controllerType);
-
-//                    if (controllerActions != null)
-//                    {
-//                        allModuleActions.Add(controllerType, controllerActions);
-//                    }
+                    containerBuilder
+                        .RegisterType(controllerType)
+                        .AsSelf()
+                        .Keyed<IController>(key)
+                        .WithMetadata("ControllerType", controllerType)
+                        .InstancePerDependency()
+                        .PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);                                                           
                 }
 
-                //foreach (var item in allModuleActions)
-                //{
-                //    var controllerName = controllerExtensions.GetControllerName(item.Key);
-                //    var controllerActions = item.Value;
-
-                //    foreach (var actionMethod in controllerActions)
-                //    {
-                //        var ignoreAutoRouteAttribute = actionMethod.GetCustomAttributes(typeof(IgnoreAutoRouteAttribute), false);
-                //        var nonActionAttribute = actionMethod.GetCustomAttributes(typeof(NonActionAttribute), false);
-                //        if (ignoreAutoRouteAttribute.Length > 0 || nonActionAttribute.Length > 0)
-                //        {
-                //            continue;
-                //        }
-
-                //        registrationContext.MapRoute(
-                //            string.Format("bcms_{0}_{1}_{2}", AreaName, controllerName, actionMethod.Name),
-                //            string.Format("{0}/{1}/{2}", AreaName, controllerName, actionMethod.Name),
-                //            new
-                //            {
-                //                area = AreaName,
-                //                controller = controllerName,
-                //                action = actionMethod.Name
-                //            },
-                //            new[] { item.Key.Namespace });
-                //    }
-                //}
-
-                // All internal routes:
                 registrationContext.MapRoute(
-                            string.Format("bcms_{0}_internal_routes", AreaName),
-                            string.Format("{0}/{{controller}}/{{action}}", AreaName),
-                            new
-                            {
-                                area = AreaName
-                            }
-                            );
+                        string.Format("bcms_{0}_internal_routes", AreaName),
+                        string.Format("{0}/{{controller}}/{{action}}", AreaName),
+                        new
+                        {
+                            area = AreaName
+                        });
             }
         }
 
@@ -395,19 +344,6 @@ namespace BetterCms.Core.Modules
             containerBuilder
                 .RegisterAssemblyTypes(assembly)
                 .Where(scan => commandTypes.Any(commandType => IsAssignableToGenericType(scan, commandType)))
-                .AsImplementedInterfaces()
-                .AsSelf()
-                .PropertiesAutowired()
-                .InstancePerLifetimeScope();
-        }
-
-        internal void RegisterModuleApiContexts(ModuleRegistrationContext registrationContext, ContainerBuilder containerBuilder)
-        {
-            Assembly assembly = GetType().Assembly;
-            
-            containerBuilder
-                .RegisterAssemblyTypes(assembly)
-                .AssignableTo(typeof(ApiContext))                
                 .AsImplementedInterfaces()
                 .AsSelf()
                 .PropertiesAutowired()

@@ -1,8 +1,4 @@
-﻿using System.Linq;
-
-using BetterCms.Core.DataAccess;
-using BetterCms.Module.Blog.Api.DataFilters;
-using BetterCms.Module.Blog.Api.DataModels;
+﻿using BetterCms.Core.DataAccess;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Mvc.Helpers;
 
@@ -49,29 +45,6 @@ namespace BetterCms.Module.Blog.Services
             url = urlService.AddPageUrlPostfix(url, configuration.ArticleUrlPattern);
 
             return url;
-        }
-
-        public IQueryable<BlogPostModel> GetBlogPostsAsQueryable(GetBlogPostRequest filter = null)
-        {
-            var models = repository.AsQueryable<Models.BlogPost>();
-
-            if (filter != null && filter.Tags != null)
-            {
-                foreach (var tag in filter.Tags)
-                {
-                    models = models.Where(b => b.PageTags.Any(pt => pt.Tag.Name == tag));
-                }
-            }
-
-            return models.Select(
-                blog =>
-                    new BlogPostModel
-                    {
-                        Id = blog.Id,
-                        Version = blog.Version,
-                        Title = blog.Title,
-                        CreatedOn = blog.CreatedOn
-                    });
-        }
+        }       
     }
 }

@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+
 using BetterCms.Core.Models;
 
 namespace BetterCms.Module.MediaManager.Models
@@ -19,6 +21,12 @@ namespace BetterCms.Module.MediaManager.Models
         public virtual Media Original { get; set; }
 
         public virtual DateTime PublishedOn { get; set; }
+
+        public virtual IList<MediaTag> MediaTags { get; set; }
+
+        public virtual MediaImage Image { get; set; }
+
+        public virtual string Description { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Media" /> class.
@@ -57,6 +65,7 @@ namespace BetterCms.Module.MediaManager.Models
         public virtual Media CopyDataTo(Media media)
         {
             media.Title = Title;
+            media.Description = Description;
             media.IsArchived = IsArchived;
             media.Type = Type;
             media.ContentType = ContentType;

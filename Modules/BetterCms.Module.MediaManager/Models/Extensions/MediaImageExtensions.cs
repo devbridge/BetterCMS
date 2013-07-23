@@ -18,6 +18,7 @@ namespace BetterCms.Module.MediaManager.Models.Extensions
             var properties = new List<KeyValuePair<string, string>>();
             properties.Add(MediaGlobalization.MediaHistory_Preview_Properties_Caption, media.Caption);
             properties.Add(MediaGlobalization.MediaHistory_Preview_Properties_Title, media.Title);
+            properties.Add(MediaGlobalization.MediaHistory_Preview_Properties_Description, media.Description);
             properties.Add(MediaGlobalization.MediaHistory_Preview_Properties_FileSize, media.SizeAsText());
             properties.Add(MediaGlobalization.MediaHistory_Preview_Properties_ImageDimensions, string.Format("{0} x {1}", media.Width, media.Height));
             properties.Add(MediaGlobalization.MediaHistory_Preview_Properties_PublicUrl, string.Format("<a href=\"{0}\" target=\"_blank\">{0}</a>", media.PublicUrl));

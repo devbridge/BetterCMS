@@ -59,9 +59,9 @@
     <Reference Include="Autofac.Configuration">
       <HintPath>..\..\packages\Autofac.3.0.0\lib\net40\Autofac.Configuration.dll</HintPath>
     </Reference>
-    <Reference Include="Common.Logging, Version=2.1.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+    <Reference Include="Common.Logging, Version=2.1.2.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Common.Logging.2.1.1\lib\net40\Common.Logging.dll</HintPath>
+      <HintPath>..\..\packages\Common.Logging.2.1.2\lib\net40\Common.Logging.dll</HintPath>
     </Reference>
     <Reference Include="FluentMigrator, Version=1.0.6.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -117,12 +117,10 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Api\DataContracts\GetFoldersRequest.cs" />
-    <Compile Include="Api\DataContracts\GetFilesRequest.cs" />
-    <Compile Include="Api\DataContracts\GetImagesRequest.cs" />
-    <Compile Include="Api\DataContracts\GetFolderMediasRequest.cs" />
-    <Compile Include="Api\Events\MediaManagerEvents.cs" />
+    <Compile Include="Events\MediaManagerEvents.cs" />
     <Compile Include="Command\Audios\GetAudios\GetAudiosCommand.cs" />
+    <Compile Include="Command\Files\GetFile\GetFileCommand.cs" />
+    <Compile Include="Command\Files\SaveFile\SaveFileDataCommand.cs" />
     <Compile Include="Command\Folder\DeleteFolderCommand.cs" />
     <Compile Include="Command\Folder\DeleteFolderCommandRequest.cs" />
     <Compile Include="Command\Files\GetFiles\GetFilesCommand.cs" />
@@ -133,7 +131,6 @@
     <Compile Include="Command\History\GetMediaHistory\GetMediaHistoryRequest.cs" />
     <Compile Include="Command\History\GetMediaVersion\GetMediaVersionCommand.cs" />
     <Compile Include="Command\History\RestoreMediaVersion\RestoreMediaVersionCommand.cs" />
-    <Compile Include="Command\Images\GetImageProperties\GetImagePropertiesCommand.cs" />
     <Compile Include="Command\MediaManager\ArchiveMedia\ArchiveMediaCommand.cs" />
     <Compile Include="Command\MediaManager\ArchiveMedia\ArchiveMediaCommandRequest.cs" />
     <Compile Include="Command\MediaManager\GetMediaItemsCommandBase.cs" />
@@ -171,12 +168,12 @@
     <Compile Include="Helpers\MediaPreviewHelper.cs" />
     <Compile Include="Helpers\MediaImageHelper.cs" />
     <Compile Include="Helpers\WrappedJsonResult.cs" />
-    <Compile Include="Api\MediaManagerApiContext.cs" />
     <Compile Include="MediaManagerModuleDescriptor.cs" />
     <Compile Include="Models\Extensions\ListExtensions.cs" />
     <Compile Include="Models\Extensions\MediaImageExtensions.cs" />
     <Compile Include="Models\Extensions\MediaExtensions.cs" />
     <Compile Include="Models\Extensions\MediaFileExtensions.cs" />
+    <Compile Include="Models\Maps\MediaTagMap.cs" />
     <Compile Include="Models\MediaImageAlign.cs" />
     <Compile Include="Models\MediaType.cs" />
     <Compile Include="Models\Maps\MediaMap.cs" />
@@ -188,8 +185,15 @@
     <Compile Include="Models\MediaFolder.cs" />
     <Compile Include="Models\Media.cs" />
     <Compile Include="Models\MediaImage.cs" />
-    <Compile Include="Models\MigrationsContent\Migration201306201216.cs" />
-    <Compile Include="Models\MigrationsContent\Migration201306071105.cs" />
+    <Compile Include="Models\Migrations\Migration201306071105.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Migrations\Migration201306201216.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Migrations\Migration201306281001.cs" />
+    <Compile Include="Models\Migrations\Migration201306271601.cs" />
+    <Compile Include="Models\Migrations\Migration201306271317.cs" />
     <Compile Include="Models\Migrations\Migration201306211140.cs" />
     <Compile Include="Models\Migrations\Migration201306201215.cs" />
     <Compile Include="Models\Migrations\Migration201306171041.cs" />
@@ -198,10 +202,13 @@
     <Compile Include="Models\Migrations\InitialSetup.cs" />
     <Compile Include="Models\Migrations\Migration201303081430.cs" />
     <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />
+    <Compile Include="Models\MediaTag.cs" />
+    <Compile Include="Registration\FileEditorJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\MediaHistoryJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\ImageEditorJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\MediaUploadJsModuleIncludeDescriptor.cs" />
     <Compile Include="Services\DefaultMediaHistoryService.cs" />
+    <Compile Include="Services\DefaultTagService.cs" />
     <Compile Include="Services\IMediaAudioService.cs" />
     <Compile Include="Services\IMediaHistoryService.cs" />
     <Compile Include="Services\IMediaVideoService.cs" />
@@ -211,7 +218,8 @@
     <Compile Include="Services\IMediaImageService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registration\MediaManagerJsModuleIncludeDescriptor.cs" />
-    <Compile Include="Api\DataModels\MediaImage.cs" />
+    <Compile Include="Services\ITagService.cs" />
+    <Compile Include="ViewModels\File\FileViewModel.cs" />
     <Compile Include="ViewModels\History\MediaHistoryItem.cs" />
     <Compile Include="ViewModels\History\MediaHistoryViewModel.cs" />
     <Compile Include="ViewModels\History\MediaPreviewViewModel.cs" />
@@ -261,6 +269,8 @@
     <Content Include="BuildConfiguration.xml" />
     <EmbeddedResource Include="Content\Styles\bcms.media.css" />
     <EmbeddedResource Include="Content\Styles\Images\sprite-media-3.png" />
+    <EmbeddedResource Include="Models\Migrations\Migration201306071105.sqlserver.sql" />
+    <EmbeddedResource Include="Models\Migrations\Migration201306201216.sqlserver.sql" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
@@ -274,8 +284,9 @@
     <EmbeddedResource Include="Scripts\bcms.html5Upload.js" />
     <EmbeddedResource Include="Scripts\bcms.jquery.jcrop.js" />
     <EmbeddedResource Include="Scripts\bcms.media.imageeditor.js" />
-    <EmbeddedResource Include="Scripts\bcms.media.js" />
     <EmbeddedResource Include="Scripts\bcms.media.history.js" />
+    <EmbeddedResource Include="Scripts\bcms.media.fileeditor.js" />
+    <EmbeddedResource Include="Scripts\bcms.media.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -309,9 +320,6 @@
     <EmbeddedResource Include="Views\Images\ImageEditor.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Images\ImageProperties.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Views\MediaManager\Partial\MediaManagerTemplate.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -319,6 +327,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\History\MediaVersion.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Files\FileEditor.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

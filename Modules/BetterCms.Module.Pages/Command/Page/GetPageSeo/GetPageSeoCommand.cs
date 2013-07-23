@@ -38,6 +38,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageSeo
                             MetaTitle = f.MetaTitle,
                             MetaKeywords = f.MetaKeywords,
                             MetaDescription = f.MetaDescription,
+                            UseCanonicalUrl = f.UseCanonicalUrl,
                             IsInSitemap = f.NodeCountInSitemap > 0,
                             Version = f.Version
                         })
@@ -55,6 +56,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageSeo
                 model.MetaTitle = page.MetaTitle;
                 model.MetaKeywords = page.MetaKeywords;
                 model.MetaDescription = page.MetaDescription;
+                model.UseCanonicalUrl = page.UseCanonicalUrl;
                 model.IsInSitemap = page.IsInSitemap;
                 model.UpdateSitemap = true;
             }

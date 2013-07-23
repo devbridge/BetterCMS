@@ -416,9 +416,10 @@ div.bcms-upload-success {
 
 /*breadcrumbs*/
 .bcms-breadcrumbs-holder {
-    height: 20px;
-    margin-top: 5px;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
     line-height: 15px;
+    border-bottom: 1px solid #E3E3E3;
     font-size: 14px;
     font-weight: 700;
 }
@@ -603,6 +604,12 @@ input.bcms-grid-input:focus {
     background: url('images/sprite-media-3.png') no-repeat; /*change bg above*/
     vertical-align: middle;
 }
+
+    .bcms-system-file img {
+        display: block;
+        width: 54px;
+        height: 42px;
+    }
 
 .bcms-media-name {
     line-height: 16px;

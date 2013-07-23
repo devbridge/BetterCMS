@@ -1,5 +1,4 @@
-﻿using BetterCms.Api;
-using BetterCms.Core.Mvc.Commands;
+﻿using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Mvc;
 
@@ -20,7 +19,7 @@ namespace BetterCms.Module.MediaManager.Command.Folder
             var mediaFolder = Repository.Delete<MediaFolder>(request.FolderId, request.Version);
             UnitOfWork.Commit();
 
-            MediaManagerApiContext.Events.OnMediaFolderDeleted(mediaFolder);
+            Events.MediaManagerEvents.Instance.OnMediaFolderDeleted(mediaFolder);
 
             return true;
         }

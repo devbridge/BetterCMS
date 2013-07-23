@@ -1,5 +1,3 @@
-using System;
-
 using BetterCms.Core.Models;
 
 namespace BetterCms.Module.Root.Models.Maps

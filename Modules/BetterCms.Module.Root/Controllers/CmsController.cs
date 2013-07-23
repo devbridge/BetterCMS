@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Security.Principal;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
-using BetterCms.Api;
-using BetterCms.Core.Exceptions;
+using BetterCms.Configuration;
 using BetterCms.Core.Mvc.Attributes;
-using BetterCms.Core.Services;
 using BetterCms.Core.Services.Caching;
 using BetterCms.Module.Root.Commands.GetPageToRender;
 using BetterCms.Module.Root.Mvc;
@@ -81,7 +78,7 @@ namespace BetterCms.Module.Root.Controllers
                         ViewBag.pageId = model.RenderPage.Id;
 
                         // Notify.
-                        RootApiContext.Events.OnPageRendering(model.RenderPage);
+                        Events.RootEvents.Instance.OnPageRendering(model.RenderPage);
 
                         return View(model.RenderPage);
                     }
@@ -98,7 +95,18 @@ namespace BetterCms.Module.Root.Controllers
         private CmsRequestViewModel GetRequestModel(string virtualPath)
         {
             CmsRequestViewModel model;
-            virtualPath = VirtualPathUtility.AppendTrailingSlash(virtualPath);            
+            if (virtualPath.Trim() != "/")
+            {
+                switch (cmsConfiguration.UrlMode)
+                {
+                    case TrailingSlashBehaviorType.TrailingSlash:
+                        virtualPath = VirtualPathUtility.AppendTrailingSlash(virtualPath);
+                        break;
+                    case TrailingSlashBehaviorType.NoTrailingSlash:
+                        virtualPath = VirtualPathUtility.RemoveTrailingSlash(virtualPath);
+                        break;
+                }
+            }
             var principal = SecurityService.GetCurrentPrincipal();
 
             var canManageContent = SecurityService.IsAuthorized(

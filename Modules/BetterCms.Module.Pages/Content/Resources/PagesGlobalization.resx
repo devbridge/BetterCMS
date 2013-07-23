@@ -121,7 +121,7 @@
     <value>Add New Content</value>
   </data>
   <data name="PageProperties_PageUrl_InvalidMessage" xml:space="preserve">
-    <value>Page url is invalid. Link must start and end with "/", can contain only following characters: '0-9', 'a-z', '-', '/', '_' and no more than 260 alphanumeric characters between the '/'.</value>
+    <value>Page url is invalid. Link can contain only following characters: '0-9', 'a-z', '-', '/', '_' and no more than 260 alphanumeric characters between the '/'.</value>
   </data>
   <data name="AddNewPageProperties_PagePermalink_MaxLengthMessage" xml:space="preserve">
     <value>Page permalink max length exceeded.</value>
@@ -285,20 +285,11 @@
   <data name="CreateHtmlContentWidget_Dialog_Title" xml:space="preserve">
     <value>Create Widget</value>
   </data>
-  <data name="CreateCategory_CreatedSuccessfully_Message" xml:space="preserve">
-    <value>Category created successfully.</value>
-  </data>
   <data name="CreateRedirect_CreatedSuccessfully_Message" xml:space="preserve">
     <value>Redirect created successfully.</value>
   </data>
-  <data name="CreateTag_CreatedSuccessfully_Message" xml:space="preserve">
-    <value>Tag created successfully.</value>
-  </data>
   <data name="CreateWidget_Dialog_Title" xml:space="preserve">
     <value>Create Widget</value>
-  </data>
-  <data name="DeleteCategory_DeletedSuccessfully_Message" xml:space="preserve">
-    <value>Category deleted successfully.</value>
   </data>
   <data name="DeletePage_DeletedSuccessfully_Message" xml:space="preserve">
     <value>Page deleted successfully.</value>
@@ -335,9 +326,6 @@
   </data>
   <data name="DeleteRedirect_DeletedSuccessfully_Message" xml:space="preserve">
     <value>Redirect deleted successfully.</value>
-  </data>
-  <data name="DeleteTag_DeletedSuccessfully_Message" xml:space="preserve">
-    <value>Tag removed successfully.</value>
   </data>
   <data name="DeleteWidget_Confirmation_Message" xml:space="preserve">
     <value>Are you sure you want to delete {0} widget?</value>
@@ -400,10 +388,10 @@
     <value>Image will be displayed as a thumbnail with the page.</value>
   </data>
   <data name="EditPageProperties_BasicPropertiesTab_PageName_Title" xml:space="preserve">
-    <value>Page Name</value>
+    <value>Page Name (H1)</value>
   </data>
   <data name="EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Description" xml:space="preserve">
-    <value>Edit the title of this page. This is the title that will appear on the page.</value>
+    <value>Edit the title of this page. This is the title that will appear on the page (H1).</value>
   </data>
   <data name="EditPageProperties_BasicPropertiesTab_RemoveButton" xml:space="preserve">
     <value>Remove</value>
@@ -421,7 +409,7 @@
     <value>Layout</value>
   </data>
   <data name="EditPageProperties_PagePermalink_InvalidMessage" xml:space="preserve">
-    <value>Page permalink is invalid. Link must start and end with "/", can contain only following characters: '0-9', 'a-z', '-', '/', '_' and no more than 260 alphanumeric characters between the '/'.</value>
+    <value>Page permalink is invalid. Link can contain only following characters: '0-9', 'a-z', '-', '/', '_' and no more than 260 alphanumeric characters between the '/'.</value>
   </data>
   <data name="EditPageProperties_PagePermalink_MaxLengthMessage" xml:space="preserve">
     <value>Page URL max length exceeded.</value>
@@ -472,22 +460,22 @@
     <value>Meta Title</value>
   </data>
   <data name="EditSeo_MetaTitle_Tooltip_Description" xml:space="preserve">
-    <value>The Meta title should contain your keywords and concisely describe the content of the page.</value>
+    <value>Edit the title that will appear on search engine result pages.</value>
   </data>
   <data name="EditSeo_PageTitle" xml:space="preserve">
-    <value>Page Title</value>
+    <value>Page Name (H1)</value>
   </data>
   <data name="EditSeo_PageTitle_MaxLengthMessage" xml:space="preserve">
-    <value>Page title max length exceeded.</value>
+    <value>Page name max length exceeded.</value>
   </data>
   <data name="EditSeo_PageTitle_RequiredMessage" xml:space="preserve">
-    <value>Page title is required.</value>
+    <value>Page name is required.</value>
   </data>
   <data name="EditSeo_PageTitle_Tooltip_Description" xml:space="preserve">
-    <value>Edit the page title that will appear on search engine result pages.</value>
+    <value />
   </data>
   <data name="EditSeo_PageUrlPath_InvalidMessage" xml:space="preserve">
-    <value>Page URL path is invalid. Link must start and end with "/" and can contain only following characters: '0-9', 'a-z', '-', '/', '_'</value>
+    <value>Page URL path is invalid. Link can contain only following characters: '0-9', 'a-z', '-', '/', '_'</value>
   </data>
   <data name="EditSeo_Tooltip_MetaDescription_Title" xml:space="preserve">
     <value>Meta Description</value>
@@ -588,24 +576,6 @@
   <data name="Siderbar_ClonePageButtonTitle" xml:space="preserve">
     <value>Clone page</value>
   </data>
-  <data name="SiteSettings_CategoriesMenuItem" xml:space="preserve">
-    <value>Categories</value>
-  </data>
-  <data name="SiteSettings_Categories_AddNewCategory" xml:space="preserve">
-    <value>Add New +</value>
-  </data>
-  <data name="SiteSettings_Categories_DeleteCategoryMessage" xml:space="preserve">
-    <value>Are you sure you want to delete the {0} category?</value>
-  </data>
-  <data name="SiteSettings_Categories_NameColumn" xml:space="preserve">
-    <value>Category</value>
-  </data>
-  <data name="SiteSettings_Categories_Search" xml:space="preserve">
-    <value>Search</value>
-  </data>
-  <data name="SiteSettings_Categories_Title" xml:space="preserve">
-    <value>Categories</value>
-  </data>
   <data name="SiteSettings_PagesMenuItem" xml:space="preserve">
     <value>Pages</value>
   </data>
@@ -654,26 +624,11 @@
   <data name="SiteSettings_TagsMenuItem" xml:space="preserve">
     <value>Tags</value>
   </data>
-  <data name="SiteSettings_Tags_AddNewTag" xml:space="preserve">
-    <value>Add New +</value>
-  </data>
-  <data name="SiteSettings_Tags_DeleteTagMessage" xml:space="preserve">
-    <value>Are you sure you want to delete the {0} tag?</value>
-  </data>
   <data name="SiteSettings_Tags_NewTagCreatedMessage" xml:space="preserve">
     <value>A tag {0} was saved.</value>
   </data>
-  <data name="SiteSettings_Tags_Search" xml:space="preserve">
-    <value>Search</value>
-  </data>
-  <data name="SiteSettings_Tags_TagColumn" xml:space="preserve">
-    <value>Tag</value>
-  </data>
   <data name="SiteSettings_Tags_TagRemovedMessage" xml:space="preserve">
     <value>A tag {0} was removed.</value>
-  </data>
-  <data name="SiteSettings_Tags_Title" xml:space="preserve">
-    <value>Tags</value>
   </data>
   <data name="SiteSettings_WidgetsMenuItem" xml:space="preserve">
     <value>Widgets</value>
@@ -993,12 +948,6 @@
   <data name="EditWidget_PreviewImageNotFound_Message" xml:space="preserve">
     <value>Preview image not found.</value>
   </data>
-  <data name="SaveCategory_CategoryExists_Message" xml:space="preserve">
-    <value>Category already exists. </value>
-  </data>
-  <data name="SaveTag_TagExists_Message" xml:space="preserve">
-    <value>Tag already exists.</value>
-  </data>
   <data name="ClonePage_EditNewUrl_Title" xml:space="preserve">
     <value>New Page URL</value>
   </data>
@@ -1081,7 +1030,7 @@
     <value>Type word DELETE to confirm deletion.</value>
   </data>
   <data name="RedirectUrl_InvalidMessage" xml:space="preserve">
-    <value>Redirect url is invalid. Link must start and end with "/", can contain only following characters: '0-9', 'a-z', '-', '/', '_' and no more than 260 alphanumeric characters between the '/'.</value>
+    <value>Redirect url is invalid. Link can contain only following characters: '0-9', 'a-z', '-', '/', '_' and no more than 260 alphanumeric characters between the '/'.</value>
   </data>
   <data name="DeletePage_RedirectUrl_Name" xml:space="preserve">
     <value>Redirect URL</value>
@@ -1133,5 +1082,14 @@
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_IsArchived" xml:space="preserve">
     <value>Archived</value>
+  </data>
+  <data name="SiteSettings_Pages_FilterIsModified" xml:space="preserve">
+    <value>modified</value>
+  </data>
+  <data name="EditSeo_EditUrlPath_UseCanonicalUrl" xml:space="preserve">
+    <value>Use canonical URL.</value>
+  </data>
+  <data name="EditPageProperties_AdvancedPropertiesTab_UseCanonicalUrl" xml:space="preserve">
+    <value>Use canonical URL.</value>
   </data>
 </root>

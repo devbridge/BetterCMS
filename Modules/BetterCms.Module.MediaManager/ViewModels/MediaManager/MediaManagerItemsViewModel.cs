@@ -7,7 +7,7 @@ using BetterCms.Module.Root.ViewModels.SiteSettings;
 namespace BetterCms.Module.MediaManager.ViewModels.MediaManager
 {
     [Serializable]
-    public class MediaManagerItemsViewModel :  SearchableGridViewModel<MediaViewModel>
+    public class MediaManagerItemsViewModel : SearchableGridViewModel<MediaViewModel>
     {
         public MediaPathViewModel Path { get; set; }
 

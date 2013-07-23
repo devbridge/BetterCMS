@@ -244,7 +244,7 @@
     <value>Image Information</value>
   </data>
   <data name="ImageEditor_Dialog_Title" xml:space="preserve">
-    <value>Edit Image</value>
+    <value>Image properties</value>
   </data>
   <data name="ImageEditor_InsertDialog_AcceptButton" xml:space="preserve">
     <value>Insert</value>
@@ -393,16 +393,7 @@
   <data name="MultiFileUpload_Processing_ServerSide" xml:space="preserve">
     <value>Upload completed. File is still processing in the server.</value>
   </data>
-  <data name="ImageProperties_Dialog_Title" xml:space="preserve">
-    <value>Image Properties</value>
-  </data>
-  <data name="MediaManager_ButtonImageProperties" xml:space="preserve">
-    <value>Properties</value>
-  </data>
-  <data name="ImageProperties_Dialog_ImageTitle_Title" xml:space="preserve">
-    <value>Image Title</value>
-  </data>
-  <data name="ImageProperties_Dialog_PublicUrl" xml:space="preserve">
+  <data name="ImageEditor_Dialog_PublicUrl" xml:space="preserve">
     <value>Public URL</value>
   </data>
   <data name="MediaManager_IncludeArchived_Message" xml:space="preserve">
@@ -515,5 +506,65 @@
   </data>
   <data name="MediaManager_MultipleFilesWarning_Message" xml:space="preserve">
     <value>You can select only one file to re-upload.</value>
+  </data>
+  <data name="FileEditor_Dialog_Title" xml:space="preserve">
+    <value>File Properties</value>
+  </data>
+  <data name="FileEditor_UpdateFailureMessage_Message" xml:space="preserve">
+    <value>Failed to save file properties.</value>
+  </data>
+  <data name="FileEditor_UpdateFailureMessage_Title" xml:space="preserve">
+    <value>Failure</value>
+  </data>
+  <data name="FileEditor_Dialog_FileSize" xml:space="preserve">
+    <value>File size</value>
+  </data>
+  <data name="FileEditor_Dialog_Title_Tooltip_Description" xml:space="preserve">
+    <value>Edit the title of this file.</value>
+  </data>
+  <data name="FileProperties_Dialog_PublicUrl" xml:space="preserve">
+    <value>Public URL</value>
+  </data>
+  <data name="FileEditor_Dialog_PublicUrl_Tooltip_Description" xml:space="preserve">
+    <value>Public URL for direct access. It is posible to copy it.</value>
+  </data>
+  <data name="FileEditor_Dialog_AddTags_Tooltip_Description" xml:space="preserve">
+    <value>Add tags to this file to identify it with related files.</value>
+  </data>
+  <data name="SiteSettings_FilterByTags" xml:space="preserve">
+    <value>By Tags</value>
+  </data>
+  <data name="FileEditor_Dialog_Image_SelectButtonTitle" xml:space="preserve">
+    <value>Select Image</value>
+  </data>
+  <data name="FileEditor_Dialog_Image_Title" xml:space="preserve">
+    <value>Thumbnail image</value>
+  </data>
+  <data name="FileEditor_Dialog_Image_Tooltip_Description" xml:space="preserve">
+    <value>Image will be displayed as a thumbnail with the file.</value>
+  </data>
+  <data name="FileEditor_Dialog_Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="FileEditor_Dialog_Description_Tooltip_Description" xml:space="preserve">
+    <value>Type or paste the description text of the file.</value>
+  </data>
+  <data name="ImageEditor_Dialog_Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="ImageEditor_Dialog_Description_Tooltip_Description" xml:space="preserve">
+    <value>Type or paste the description text of the image.</value>
+  </data>
+  <data name="MediaHistory_Preview_Properties_Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="MediaHistory_Preview_Properties_Thumbnail" xml:space="preserve">
+    <value>Thumbnail</value>
+  </data>
+  <data name="SiteSettings_Media_FilterIsModified" xml:space="preserve">
+    <value>modified</value>
+  </data>
+  <data name="MediaManager_ButtonProperties" xml:space="preserve">
+    <value>Properties</value>
   </data>
 </root>

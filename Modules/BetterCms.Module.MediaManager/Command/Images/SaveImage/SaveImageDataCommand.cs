@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Web.Helpers;
 
-using BetterCms.Api;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Services.Storage;
 using BetterCms.Module.MediaManager.Helpers;
@@ -38,6 +38,14 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
         public IStorageService StorageService { get; set; }
 
         /// <summary>
+        /// The tag service.
+        /// </summary>
+        /// <value>
+        /// The tag service.
+        /// </value>
+        public ITagService TagService { get; set; }
+
+        /// <summary>
         /// Executes this command.
         /// </summary>
         /// <param name="request">The request.</param>
@@ -51,6 +59,7 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
 
             mediaImage.Caption = request.Caption;
             mediaImage.Title = request.Title;
+            mediaImage.Description = request.Description;
             mediaImage.ImageAlign = request.ImageAlign;
             mediaImage.Version = request.Version.ToIntOrDefault();
 
@@ -58,9 +67,15 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
             ResizeAndCropImage(mediaImage, request);
 
             Repository.Save(mediaImage);
+
+            // Save tags
+            IList<Root.Models.Tag> newTags;
+            TagService.SaveMediaTags(mediaImage, request.Tags, out newTags);
+
             UnitOfWork.Commit();
 
-            MediaManagerApiContext.Events.OnMediaFileUpdated(mediaImage);
+            // Notify.
+            Events.MediaManagerEvents.Instance.OnMediaFileUpdated(mediaImage);
         }
 
         /// <summary>

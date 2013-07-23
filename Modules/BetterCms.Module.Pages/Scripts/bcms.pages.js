@@ -350,9 +350,6 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                         if (url.substr(0, 1) != '/') {
                             url = '/' + url;
                         }
-                        if (url.substr(url.length-1, 1) != '/') {
-                            url = url + '/';
-                        }
 
                         dialog.container.find(selectors.editPermalinkEditField).val(url);
                         dialog.container.find(selectors.editPermalinkHiddenField).val(url);
@@ -397,9 +394,9 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             container = dialog.container;
 
         var form = dialog.container.find(selectors.siteSettingsPagesListForm);
-        grid.bindGridForm(form, function (data) {
-            siteSettings.setContent(data);
-            page.initializeSiteSettingsPagesList(data);
+        grid.bindGridForm(form, function (content, data) {
+            siteSettings.setContent(content);
+            page.initializeSiteSettingsPagesList(content, data);
         });
 
         form.on('submit', function (event) {

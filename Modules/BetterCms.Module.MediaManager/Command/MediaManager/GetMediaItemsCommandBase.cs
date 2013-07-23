@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-using BetterCms.Core.Api.DataContracts;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.Content.Resources;
@@ -14,21 +13,11 @@ using BetterCms.Module.Root.Mvc.Grids.Extensions;
 
 using MvcContrib.Sorting;
 
-using NHibernate.Transform;
-
 namespace BetterCms.Module.MediaManager.Command.MediaManager
 {
     public abstract class GetMediaItemsCommandBase<TEntity> : CommandBase, ICommand<MediaManagerViewModel, MediaManagerItemsViewModel>
         where TEntity: MediaFile
-    {
-        /// <summary>
-        /// Gets or sets the configuration.
-        /// </summary>
-        /// <value>
-        /// The configuration.
-        /// </value>
-        public ICmsConfiguration Configuration { get; set; }
-
+    {       
         /// <summary>
         /// Gets the type of the current media items.
         /// </summary>
@@ -47,7 +36,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             request.SetDefaultSortingOptions("Title");
 
             var items = GetAllItemsList(request);
-            var model = new MediaManagerItemsViewModel(items.Items, request, items.TotalCount);
+            var model = new MediaManagerItemsViewModel(items.Item1, request, items.Item2);
             model.Path = LoadMediaFolder(request);
 
             return model;
@@ -103,7 +92,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns>Media items list</returns>
-        private DataListResponse<MediaViewModel> GetAllItemsList(MediaManagerViewModel request)
+        private Tuple<IEnumerable<MediaViewModel>, int> GetAllItemsList(MediaManagerViewModel request)
         {
             var query = Repository
                 .AsQueryable<Media>()
@@ -117,11 +106,19 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
                 query = query.Where(m => !m.IsArchived);
             }
 
-            if (!string.IsNullOrWhiteSpace(request.SearchQuery))
+            if (request.Tags != null)
+            {
+                foreach (var tagKeyValue in request.Tags)
+                {
+                    var id = tagKeyValue.Key.ToGuidOrDefault();
+                    query = query.Where(m => m.MediaTags.Any(mt => mt.Tag.Id == id));
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(request.SearchQuery) || request.Tags != null)
             {
                 var searchQuery = string.Format("%{0}%", request.SearchQuery);
-                query = query.Where(m => m.Title.Contains(searchQuery));
-
+                query = query.Where(m => m.Title.Contains(searchQuery) || m.Description.Contains(searchQuery));
 
                 var result = new List<Media>();
                 var mediaList = query.ToList();
@@ -179,14 +176,14 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             return IsChild(media.Folder, currentFolderId, includeArchivedItems);
         }
 
-        private DataListResponse<MediaViewModel> ToResponse(MediaManagerViewModel request, IQueryable<Media> query)
+        private Tuple<IEnumerable<MediaViewModel>, int> ToResponse(MediaManagerViewModel request, IQueryable<Media> query)
         {
             var count = query.ToRowCountFutureValue();
             query = AddOrder(query, request).AddPaging(request);
 
             var items = query.Select(SelectItem).ToList();
 
-            return new DataListResponse<MediaViewModel>(items, count.Value);
+            return new Tuple<IEnumerable<MediaViewModel>, int>(items, count.Value);
         }
 
         /// <summary>
@@ -278,6 +275,8 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             model.IsArchived = media.IsArchived;
             model.ParentFolderId = media.Folder != null ? media.Folder.Id : Guid.Empty;
             model.ParentFolderName = media.Folder != null ? media.Folder.Title : MediaGlobalization.MediaList_RootFolderName;
+            model.Tooltip = media.Image != null ? media.Image.Caption : null;
+            model.ThumbnailUrl = media.Image != null ? media.Image.PublicThumbnailUrl : null;
         }
 
         /// <summary>

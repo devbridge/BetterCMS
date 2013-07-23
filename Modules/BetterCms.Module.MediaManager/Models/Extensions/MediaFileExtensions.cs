@@ -152,8 +152,13 @@ namespace BetterCms.Module.MediaManager.Models.Extensions
 
             var properties = new List<KeyValuePair<string, string>>();
             properties.Add(MediaGlobalization.MediaHistory_Preview_Properties_Title, media.Title);
+            properties.Add(MediaGlobalization.MediaHistory_Preview_Properties_Description, media.Description);
             properties.Add(MediaGlobalization.MediaHistory_Preview_Properties_FileSize, media.SizeAsText());
             properties.Add(MediaGlobalization.MediaHistory_Preview_Properties_PublicUrl, string.Format("<a href=\"{0}\" target=\"_blank\">{0}</a>", media.PublicUrl));
+            if (media.Image != null)
+            {
+                properties.Add(MediaGlobalization.MediaHistory_Preview_Properties_Thumbnail, string.Format("<img src=\"{0}\" alt=\"{1}\"/>", media.Image.PublicThumbnailUrl, media.Image.Caption));
+            }
             MediaPreviewHelper.RenderProperties(html, "Properties", properties);
 
             // Wrapping div end.

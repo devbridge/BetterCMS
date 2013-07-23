@@ -23,7 +23,7 @@ namespace BetterCms.Core.Web
 
             if (!string.IsNullOrEmpty(originalUrl))
             {
-                return FixUrl(new Uri(string.Format("http://{0}{1}", host, originalUrl), UriKind.Absolute).AbsolutePath);
+                return new Uri(string.Format("http://{0}{1}", host, originalUrl), UriKind.Absolute).AbsolutePath;
             }
 
             var originalUri = new Uri(string.Format("http://{0}{1}", host, request.RawUrl));
@@ -34,17 +34,7 @@ namespace BetterCms.Core.Web
                 path = path.Substring(0, path.Length - request.PathInfo.Length);
             }
 
-            return FixUrl(path);
-        }
-
-        private string FixUrl(string virtualPath)
-        {
-            if (virtualPath != null && !virtualPath.EndsWith("/"))
-            {
-                virtualPath += "/";
-            }
-
-            return virtualPath;
+            return path;
         }
     }
 }

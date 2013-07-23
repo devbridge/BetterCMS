@@ -73,14 +73,6 @@ namespace BetterCms.Module.Users.Models.Migrations
         }
 
         /// <summary>
-        /// Downs this instance.
-        /// </summary>
-        public override void Down()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// Adds the option.
         /// </summary>
         /// <param name="optionName">Name of the option.</param>

@@ -29,14 +29,6 @@ namespace BetterCms.Module.Pages.Models.Migrations
         }
 
         /// <summary>
-        /// The down.
-        /// </summary>
-        public override void Down()
-        {            
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The create sitemap nodes table.
         /// </summary>
         private void CreateSitemapNodesTable()

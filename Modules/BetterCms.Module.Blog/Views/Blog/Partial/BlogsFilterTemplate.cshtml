@@ -6,22 +6,25 @@
 
 @model BlogsGridViewModel<SiteSettingBlogPostViewModel>
 <div id="bcms-filter-template">
-    <div class="bcms-grid-filtering">
-        <div class="bcms-btn-links-main" data-bind="click: toggleFilter">@BlogGlobalization.SiteSettings_Blogs_Filter</div>
+    <div class="bcms-grid-filtering" data-bind="css: { 'bcms-active-filter': isVisible() }">
+        <div class="bcms-filterbox" data-bind="click: toggleFilter">
+            @BlogGlobalization.SiteSettings_Blogs_Filter
+            <div class="bcms-filter-modified" data-bind="style: { display: isEdited() ? 'inline-block' : 'none' }">@BlogGlobalization.SiteSettings_Blogs_FilterIsModified</div>
+        </div>
     </div>
     <div class="bcms-tags-block" style="display: none;" data-bind="visible: isVisible()">
-        <div class="bcms-tip-close" data-bind="click: closeFilter">@BlogGlobalization.SiteSettings_Blogs_FilterClose</div>
         <div class="bcms-featured-tags">
             <div class="clearfix">
-                <div class="bcms-filter-options-1" data-bind="with: tags">
+
+                <div class="bcms-filter-options" data-bind="with: tags">
                     <div class="bcms-filter-text">@BlogGlobalization.SiteSettings_Blogs_FilterByTags</div>
-                    <div class="bcms-tags-field-holder">
-                        <input type="text" class="bcms-add-tags-field" style="width: 107px;" data-bind="
-                            css: { 'bcms-tag-validation-error': newTag.hasError() },
-                            value: newTag,
-                            valueUpdate: 'afterkeydown',
-                            escPress: clearTag,
-                            tagautocomplete: 'onlyExisting'" />
+                    <div class="bcms-filter-field-holder">
+                        <input type="text" class="bcms-add-tags-field" data-bind="
+    css: { 'bcms-tag-validation-error': newTag.hasError() },
+    value: newTag,
+    valueUpdate: 'afterkeydown',
+    escPress: clearTag,
+    tagautocomplete: 'onlyExisting'" />
                         <!-- ko if: newTag.hasError()  -->
                         <span class="bcms-tag-field-validation-error">
                             <span data-bind="text: newTag.validationMessage()"></span>
@@ -29,28 +32,33 @@
                         <!-- /ko -->
                     </div>
                 </div>
-                <div class="bcms-filter-options-2">
+
+                <div class="bcms-filter-options">
                     <div class="bcms-filter-text">@BlogGlobalization.SiteSettings_Blogs_FilterByCategory</div>
-                    @Html.DropDownListFor(model => model.CategoryId, Model.Categories.ToSelectList(Model.CategoryId), string.Empty, new { id ="bcms-filter-category-selection", @class = "bcms-global-select" })
+                    @Html.DropDownListFor(model => model.CategoryId, Model.Categories.ToSelectList(Model.CategoryId), string.Empty, new { id = "bcms-filter-category-selection", @class = "bcms-global-select" })
                 </div>
-                <div class="bcms-filter-options-1">
-                    <div class="bcms-tags-field-holder">
-                        @Html.CheckBoxFor(model => model.IncludeArchived, new { data_bind="checked: includeArchived" })
-                        @BlogGlobalization.SiteSettings_Blogs_FilterIncludeArchived
-                    </div>
-                </div>
+
             </div>
+
             <div class="bcms-single-tag-holder" data-bind="foreach: tags.tags()">
                 <div class="bcms-single-tag" data-bind="css: { 'bcms-single-tag-active': isActive() }">
-                    <span data-bind="text: name()"></span><a data-bind="click: remove">@RootGlobalization.Button_Remove</a>
+                    <span data-bind="text: name()"></span><a data-bind="    click: remove">@RootGlobalization.Button_Remove</a>
                 </div>
                 <input type="hidden" data-bind="attr: { name: getTagInputName($index()) + '.Key', value: id() }" />
                 <input type="hidden" data-bind="attr: { name: getTagInputName($index()) + '.Value', value: name() }" />
             </div>
+
         </div>
-        <div class="clearfix bcms-filter-search">
-            <div class="bcms-btn-small" data-bind="click: searchWithFilter">@BlogGlobalization.SiteSettings_Blogs_FilterSearch</div>
-            <div class="bcms-btn-links-small" data-bind="click: clearFilter">@BlogGlobalization.SiteSettings_Blogs_FilterClear</div>
+
+        <div class="clearfix">
+            <div class="bcms-check-field-holder">
+                @Html.CheckBoxFor(model => model.IncludeArchived, new { data_bind = "checked: includeArchived" })
+                @BlogGlobalization.SiteSettings_Blogs_FilterIncludeArchived
+            </div>
+            <div class="bcms-btn-field-holder">
+                <div class="bcms-btn-links-small" data-bind="click: clearFilter">@BlogGlobalization.SiteSettings_Blogs_FilterClear</div>
+                <div class="bcms-btn-small" data-bind="click: searchWithFilter">@BlogGlobalization.SiteSettings_Blogs_FilterSearch</div>
+            </div>
         </div>
     </div>
 </div>

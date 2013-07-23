@@ -6,7 +6,6 @@ using System.Web;
 using System.Web.Hosting;
 using System.Web.Routing;
 
-using BetterCms.Api;
 using BetterCms.Core.DataAccess.DataContext.Migrations;
 using BetterCms.Core.Exceptions.Host;
 using BetterCms.Core.Modules.Registration;
@@ -53,8 +52,8 @@ namespace BetterCms.Core.Environment.Host
                 modulesRegistration.RegisterKnownModuleRoutes(RouteTable.Routes);
                 MigrateDatabase();
                 
-                // Notify.
-                ApiContext.Events.OnHostStart(application);
+                // Notify.                                
+                Events.CoreEvents.Instance.OnHostStart(application);
 
                 Logger.Info("Better CMS host application started.");
             }
@@ -73,7 +72,7 @@ namespace BetterCms.Core.Environment.Host
             Logger.Info("Better CMS host application stopped.");
             
             // Notify.
-            ApiContext.Events.OnHostStop(application);
+            Events.CoreEvents.Instance.OnHostStop(application);
         }
 
         /// <summary>
@@ -86,7 +85,7 @@ namespace BetterCms.Core.Environment.Host
             Logger.Fatal("Unhandled exception occurred in Better CMS host application.", error);
 
             // Notify.
-            ApiContext.Events.OnHostError(application);
+            Events.CoreEvents.Instance.OnHostError(application);
         }
         
         /// <summary>
@@ -121,7 +120,7 @@ namespace BetterCms.Core.Environment.Host
         public void OnAuthenticateRequest(HttpApplication application)
         {
             // Notify.
-            ApiContext.Events.OnHostAuthenticateRequest(application);
+            Events.CoreEvents.Instance.OnHostAuthenticateRequest(application);
         }
 
         /// <summary>
@@ -222,7 +221,6 @@ namespace BetterCms.Core.Environment.Host
             {
                 var descriptors = modulesRegistration.GetModules().Select(m => m.ModuleDescriptor).ToList();                
                 migrationRunner.MigrateStructure(descriptors);
-                migrationRunner.MigrateContent(descriptors);
             }
             catch (Exception ex)
             {

@@ -3,9 +3,12 @@ using System.Web.Mvc;
 
 using BetterCms.Core.Security;
 using BetterCms.Module.MediaManager.Command.Files.DownloadFile;
+using BetterCms.Module.MediaManager.Command.Files.GetFile;
 using BetterCms.Module.MediaManager.Command.Files.GetFiles;
+using BetterCms.Module.MediaManager.Command.Files.SaveFile;
 using BetterCms.Module.MediaManager.Command.MediaManager.DeleteMedia;
 using BetterCms.Module.MediaManager.Content.Resources;
+using BetterCms.Module.MediaManager.ViewModels.File;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
@@ -114,12 +117,41 @@ namespace BetterCms.Module.MediaManager.Controllers
                 return File(model.FileStream, model.ContentMimeType, model.FileDownloadName);
             }
 
-            if (!string.IsNullOrWhiteSpace(CmsConfiguration.PageNotFoundUrl))
+            throw new HttpException(404, "Page Not Found");
+        }
+
+        /// <summary>
+        /// Edits the file.
+        /// </summary>
+        /// <param name="fileId">The file id.</param>
+        /// <returns>The view.</returns>
+        [HttpGet]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+        public ActionResult FileEditor(string fileId)
+        {
+            var model = GetCommand<GetFileCommand>().ExecuteCommand(fileId.ToGuidOrDefault());
+            var view = RenderView("FileEditor", model ?? new FileViewModel());
+            return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Edits the file.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns>
+        /// Json response.
+        /// </returns>
+        [HttpPost]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+        public ActionResult FileEditor(FileViewModel model)
+        {
+            if (GetCommand<SaveFileDataCommand>().ExecuteCommand(model))
             {
-                return Redirect(HttpUtility.UrlDecode(CmsConfiguration.PageNotFoundUrl));
+                var result = GetCommand<GetFileCommand>().ExecuteCommand(model.Id.ToGuidOrDefault());
+                return Json(new WireJson { Success = result != null, Data = result });
             }
 
-            return new HttpStatusCodeResult(404);
+            return Json(new WireJson { Success = false });
         }
     }
 }

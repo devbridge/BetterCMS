@@ -55,7 +55,7 @@ namespace BetterCms.Sandbox.DataMigration
                     .ToList();
         }
 
-        private static void Migrate(bool up)
+        private static void Migrate()
         {
             IConfigurationLoader configurationLoader = new DefaultConfigurationLoader();
             ICmsConfiguration cmsConfiguration = configurationLoader.LoadCmsConfiguration();
@@ -76,7 +76,7 @@ namespace BetterCms.Sandbox.DataMigration
 
                 Console.WriteLine("-- Migrate  UP --");
 
-                Migrate(true);
+                Migrate();
                 
                 Console.WriteLine("-- DONE --");
             }

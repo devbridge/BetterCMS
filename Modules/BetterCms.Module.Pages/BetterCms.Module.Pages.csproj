@@ -59,9 +59,9 @@
     <Reference Include="Autofac.Configuration">
       <HintPath>..\..\packages\Autofac.3.0.0\lib\net40\Autofac.Configuration.dll</HintPath>
     </Reference>
-    <Reference Include="Common.Logging, Version=2.1.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+    <Reference Include="Common.Logging, Version=2.1.2.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Common.Logging.2.1.1\lib\net40\Common.Logging.dll</HintPath>
+      <HintPath>..\..\packages\Common.Logging.2.1.2\lib\net40\Common.Logging.dll</HintPath>
     </Reference>
     <Reference Include="FluentMigrator, Version=1.0.6.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -94,6 +94,7 @@
     </Reference>
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -120,46 +121,16 @@
     </Compile>
     <Compile Include="Accessors\PageStylesheetAccessor.cs" />
     <Compile Include="Accessors\PageJavaScriptAccessor.cs" />
-    <Compile Include="Api\DataContracts\GetPageRequest.cs" />
-    <Compile Include="Api\DataContracts\GetPagesRequest.cs" />
-    <Compile Include="Api\DataContracts\GetContentHistoryRequest.cs" />
-    <Compile Include="Api\DataContracts\GetPageWidgetsRequest.cs" />
-    <Compile Include="Api\DataContracts\GetHtmlContentWidgetsRequest.cs" />
-    <Compile Include="Api\DataContracts\GetServerControlWidgetsRequest.cs" />
-    <Compile Include="Api\DataContracts\GetWidgetsRequest.cs" />
-    <Compile Include="Api\DataContracts\GetTagsRequest.cs" />
-    <Compile Include="Api\DataContracts\GetRedirectsRequest.cs" />
-    <Compile Include="Api\DataContracts\GetCategoriesRequest.cs" />
-    <Compile Include="Api\DataContracts\GetLayoutRegionsRequest.cs" />
-    <Compile Include="Api\DataContracts\GetRegionsRequest.cs" />
-    <Compile Include="Api\DataContracts\GetLayoutsRequest.cs" />
-    <Compile Include="Api\DataContracts\GetNodesRequest.cs" />
-    <Compile Include="Api\DataContracts\GetPageContentsRequest.cs" />
-    <Compile Include="Api\DataContracts\GetRegionContentsRequest.cs" />
-    <Compile Include="Command\Tag\SearchTags\SearchTagsCommand.cs" />
+    <Compile Include="Events\CategoryEvents.cs" />
+    <Compile Include="Events\TagEvents.cs" />
     <Compile Include="Helpers\Extensions\RenderPageViewModelExtensions.cs" />
+    <Compile Include="Models\Migrations\Migration201307220940.cs" />
     <Compile Include="Models\Migrations\Migration201306260946.cs" />
     <Compile Include="Models\Migrations\Migration201306140841.cs" />
     <Compile Include="Models\Migrations\Migration201305281700.cs" />
     <Compile Include="Mvc\Attributes\ValidVirtualPathValidationAttribute.cs" />
-    <Compile Include="Api\DataContracts\AddWidgetToPageRequest.cs" />
-    <Compile Include="Api\DataContracts\CreateHtmlContentWidgetRequest.cs" />
-    <Compile Include="Api\DataContracts\CreateLayoutRegionRequest.cs" />
-    <Compile Include="Api\DataContracts\CreateLayoutRequest.cs" />
-    <Compile Include="Api\DataContracts\CreatePageContentRequestBase.cs" />
-    <Compile Include="Api\DataContracts\CreatePageHtmlContentRequest.cs" />
-    <Compile Include="Api\PagesApiContext.Sitemap.cs" />
-    <Compile Include="Api\PagesApiContext.cs" />
-    <Compile Include="Api\PagesApiContext.Contents.cs" />
-    <Compile Include="Api\PagesApiContext.Layouts.cs" />
-    <Compile Include="Api\DataContracts\Models\ContentOptionDto.cs" />
-    <Compile Include="Api\DataContracts\Models\ContentOptionValueDto.cs" />
-    <Compile Include="Api\DataContracts\CreateContentOptionsRequest.cs" />
-    <Compile Include="Api\DataContracts\CreateServerControlWidgetRequest.cs" />
-    <Compile Include="Api\Events\CategoryEvents.cs" />
-    <Compile Include="Api\Events\WidgetEvents.cs" />
-    <Compile Include="Api\Events\TagEvents.cs" />
-    <Compile Include="Api\Events\RedirectEvents.cs" />
+    <Compile Include="Events\WidgetEvents.cs" />
+    <Compile Include="Events\RedirectEvents.cs" />
     <Compile Include="Command\History\DestroyContentDraft\DestroyContentDraftCommandRequest.cs" />
     <Compile Include="DataContracts\Enums\PageLoadableChilds.cs" />
     <Compile Include="Command\Content\DeletePageContent\DeletePageContentCommand.cs" />
@@ -193,10 +164,6 @@
     <Compile Include="Command\Widget\GetHtmlContentWidgetForEdit\GetHtmlContentWidgetForEditCommand.cs" />
     <Compile Include="Command\Content\GetPageContentOptions\GetPageContentOptionsCommand.cs" />
     <Compile Include="Command\Widget\GetSiteSettingsWidgets\GetSiteSettingsWidgetsCommand.cs" />
-    <Compile Include="Command\Category\SaveCategory\SaveCategoryCommand.cs" />
-    <Compile Include="Command\Category\GetCategoryList\GetCategoryListCommand.cs" />
-    <Compile Include="Command\Category\DeleteCategory\DeleteCategoryCommand.cs" />
-    <Compile Include="Command\Category\DeleteCategory\DeleteCategoryCommandRequest.cs" />
     <Compile Include="Command\Page\DeletePage\DeletePageCommand.cs" />
     <Compile Include="Command\Redirect\DeleteRedirect\DeleteRedirectCommand.cs" />
     <Compile Include="Command\Widget\GetWidgetCategory\GetWidgetCategoryResponse.cs" />
@@ -210,16 +177,11 @@
     <Compile Include="Command\Page\SavePagePublishStatus\SavePagePublishStatusCommand.cs" />
     <Compile Include="Command\Content\SavePageContentOptions\SavePageContentOptionsCommand.cs" />
     <Compile Include="Command\Redirect\SaveRedirect\SaveRedirectCommand.cs" />
-    <Compile Include="Command\Tag\SaveTag\SaveTagCommand.cs" />
-    <Compile Include="Command\Tag\GetTag\GetTagCommand.cs" />
-    <Compile Include="Command\Tag\DeleteTag\DeleteTagCommandRequest.cs" />
-    <Compile Include="Command\Tag\DeleteTag\DeleteTagCommand.cs" />
     <Compile Include="Command\Page\CreatePage\CreatePageCommand.cs" />
     <Compile Include="Command\Widget\GetWidgetCategory\GetWidgetCategoryCommand.cs" />
     <Compile Include="Command\Widget\GetWidgetCategory\GetWidgetCategoryRequest.cs" />
     <Compile Include="Command\Page\GetPageProperties\GetPagePropertiesCommand.cs" />
     <Compile Include="Command\Page\GetPageSeo\GetPageSeoCommand.cs" />
-    <Compile Include="Command\Tag\GetTagList\GetTagListCommand.cs" />
     <Compile Include="Command\Layout\GetTemplates\GetTemplatesCommand.cs" />
     <Compile Include="Command\Layout\GetTemplates\GetTemplatesRequest.cs" />
     <Compile Include="Command\Content\InsertContent\InsertContentToPageCommand.cs" />
@@ -245,19 +207,16 @@
     <Compile Include="Controllers\SitemapController.cs" />
     <Compile Include="Controllers\TemplatesController.cs" />
     <Compile Include="Controllers\WidgetsController.cs" />
-    <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\RedirectController.cs" />
     <Compile Include="Controllers\PageController.cs" />
-    <Compile Include="Controllers\TagsController.cs" />
     <Compile Include="Controllers\SeoController.cs" />
     <Compile Include="Controllers\ContentController.cs" />
-    <Compile Include="Api\Events\PageEvents.cs" />
+    <Compile Include="Events\PageEvents.cs" />
     <Compile Include="Helpers\CssHelper.cs" />
     <Compile Include="Helpers\HttpHelper.cs" />
     <Compile Include="Helpers\ListModelBindingExtensions.cs" />
     <Compile Include="Helpers\RenderHelper.cs" />
     <Compile Include="Helpers\TimeHelper.cs" />
-    <Compile Include="Api\DataContracts\CreatePageRequest.cs" />
     <Compile Include="Models\IServerControlWidget.cs" />
     <Compile Include="Models\Maps\HtmlContentMap.cs" />
     <Compile Include="Models\Maps\SitemapNodeMap.cs" />
@@ -284,7 +243,6 @@
     <Compile Include="Mvc\Attributes\CustomPageUrlValidationAttribute.cs" />
     <Compile Include="Mvc\Attributes\DateValidationAttribute.cs" />
     <Compile Include="Mvc\Attributes\EndDateValidationAttribute.cs" />
-    <Compile Include="Api\PagesApiContext.Pages.cs" />
     <Compile Include="PagesConstants.cs" />
     <Compile Include="Accessors\HtmlContentWidgetAccessor.cs" />
     <Compile Include="Accessors\HtmlContentAccessor.cs" />
@@ -293,7 +251,6 @@
     <Compile Include="Registration\SitemapJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\TemplatesJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\PagesContentJsModuleIncludeDescriptor.cs" />
-    <Compile Include="Registration\PageTagsJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\RedirectsJsModuleIncludeDescriptor.cs" />
     <Compile Include="Services\DefaultHistoryService.cs" />
     <Compile Include="Services\DefaultSitemapService.cs" />
@@ -310,7 +267,6 @@
     <Compile Include="Services\DefaultRedirectService.cs" />
     <Compile Include="Services\ICategoryService.cs" />
     <Compile Include="Services\IRedirectService.cs" />
-    <Compile Include="ViewModels\Category\CategoryItemViewModel.cs" />
     <Compile Include="ViewModels\Content\ContentOptionViewModel.cs" />
     <Compile Include="ViewModels\Content\ContentViewModel.cs" />
     <Compile Include="ViewModels\Content\ContentSortViewModel.cs" />
@@ -325,7 +281,6 @@
     <Compile Include="ViewModels\Sitemap\SitemapNodeViewModel.cs" />
     <Compile Include="ViewModels\SiteSettings\SiteSettingTemplateItemViewModel.cs" />
     <Compile Include="ViewModels\SiteSettings\SiteSettingTemplateListViewModel.cs" />
-    <Compile Include="ViewModels\Tags\TagsTemplateViewModel.cs" />
     <Compile Include="ViewModels\Templates\TemplateEditViewModel.cs" />
     <Compile Include="ViewModels\Templates\TemplateRegionItemViewModel.cs" />
     <Compile Include="ViewModels\Widgets\EditHtmlContentWidgetViewModel.cs" />
@@ -354,7 +309,6 @@
     <Compile Include="ViewModels\SiteSettings\SiteSettingRedirectViewModel.cs" />
     <Compile Include="ViewModels\SiteSettings\SiteSettingWidgetListViewModel.cs" />
     <Compile Include="ViewModels\SiteSettings\SiteSettingWidgetItemViewModel.cs" />
-    <Compile Include="ViewModels\Tags\TagItemViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Content\Resources\NavigationGlobalization.resx">
@@ -410,7 +364,6 @@
     <EmbeddedResource Include="Scripts\bcms.pages.properties.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.redirects.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.seo.js" />
-    <EmbeddedResource Include="Scripts\bcms.pages.tags.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.template.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.history.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.sitemap.js" />
@@ -422,9 +375,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Shared\Partial\WarnMessageAboutDraft.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Category\Categories.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Content\AddPageHtmlContent.cshtml" />
@@ -497,12 +447,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Shared\Layouts\ContentVersionLayout.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Tags\ListTags.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Tags\TagsTemplate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Templates\EditTemplate.cshtml" />
