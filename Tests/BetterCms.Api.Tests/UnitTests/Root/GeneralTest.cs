@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
 using BetterCms.Core;
-using BetterCms.Module.Api.Operations;
-using BetterCms.Module.Api.Operations.Enums;
+using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Infrastructure.Enums;
 using BetterCms.Module.Api.Operations.Root.Layouts;
 using BetterCms.Module.Api.Operations.Root.Version;
 

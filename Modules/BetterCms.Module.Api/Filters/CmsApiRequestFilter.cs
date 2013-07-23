@@ -1,4 +1,5 @@
-﻿using BetterCms.Module.Api.Operations;
+﻿using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Operations;
 using ServiceStack.ServiceHost;
 
 namespace BetterCms.Module.Api.Filters

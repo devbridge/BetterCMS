@@ -29,12 +29,12 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
 
             if (!request.Data.IncludeFolders)
             {
-                query = query.Where(media => media.ContentType != MediaContentType.Folder);
+                query = query.Where(media => media.ContentType != Module.MediaManager.Models.MediaContentType.Folder);
             }
 
             if (!request.Data.IncludeImages)
             {
-                query = query.Where(media => media.ContentType != MediaContentType.File);
+                query = query.Where(media => media.ContentType != Module.MediaManager.Models.MediaContentType.File);
             }
 
             if (!request.Data.IncludeArchived)
@@ -58,7 +58,9 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
 
                             Title = media.Title,
                             Caption = media is MediaImage ? ((MediaImage)media).Caption : null,
-                            MediaContentType = media is MediaFolder ? MediaContentType.Folder : MediaContentType.File,
+                            MediaContentType = media is MediaFolder 
+                                                    ? (MediaContentType)((int)MediaContentType.Folder)
+                                                    : (MediaContentType)((int)MediaContentType.File),
                             FileExtension = media is MediaImage ? ((MediaImage)media).OriginalFileExtension : null,
                             FileSize = media is MediaImage ? ((MediaImage)media).Size : (long?)null,
                             ImageUrl = media is MediaImage ? ((MediaImage)media).PublicUrl : null,

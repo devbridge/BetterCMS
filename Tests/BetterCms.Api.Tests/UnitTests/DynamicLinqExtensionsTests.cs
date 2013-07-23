@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations;
 
 using NUnit.Framework;

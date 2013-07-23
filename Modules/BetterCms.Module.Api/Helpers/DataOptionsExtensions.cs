@@ -1,7 +1,8 @@
 ﻿using System.Linq;
 
+using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Infrastructure.Enums;
 using BetterCms.Module.Api.Operations;
-using BetterCms.Module.Api.Operations.Enums;
 
 namespace BetterCms.Module.Api.Helpers
 {

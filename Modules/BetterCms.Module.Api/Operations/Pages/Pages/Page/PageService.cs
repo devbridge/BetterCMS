@@ -12,6 +12,9 @@ using BetterCms.Module.Pages.Services;
 
 using ServiceStack.ServiceInterface;
 
+using IPageService = BetterCms.Module.Api.Operations.Pages.Pages.Page.IPageService;
+using PageModel = BetterCms.Module.Api.Operations.Pages.Pages.Page.PageModel;
+
 namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
 {
     public class PageService : Service, IPageService
