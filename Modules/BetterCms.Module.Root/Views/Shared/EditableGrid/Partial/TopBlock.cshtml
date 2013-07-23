@@ -19,7 +19,9 @@
     @if (Model.AddPaging)
     {
         <!-- ko with: options().paging -->
+        <div class="bcms-featured-grid clearfix">
             @Html.Partial(Model.PagingView, Model)
+        </div>
         <!-- /ko -->
     }
 </div>
