@@ -204,13 +204,14 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="runner.html" />
-    <Content Include="spec\pages.api.behavior.js" />
+    <Content Include="spec\root.layouts.api.behavior.js" />
+    <Content Include="spec\pages.pages.api.behavior.js" />
     <Content Include="spec\lib\jasmine-1.3.1\jasmine-html.js" />
     <Content Include="spec\lib\jasmine-1.3.1\jasmine.css" />
     <Content Include="spec\lib\jasmine-1.3.1\jasmine.js" />
     <Content Include="Scripts\jquery-1.10.0.min.js" />
     <Content Include="Scripts\jquery.mockjax.js" />
-    <Content Include="spec\root.api.behavior.js" />
+    <Content Include="spec\root.general.api.behavior.js" />
     <Content Include="Scripts\general.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
