@@ -165,6 +165,7 @@
     <Compile Include="Helpers\DynamicLinqExtensions.cs" />
     <Compile Include="Operations\Blog\Authors\AuthorsService.cs" />
     <Compile Include="Operations\Blog\Authors\Author\AuthorService.cs" />
+    <Compile Include="Operations\Blog\Authors\Author\GetAuthorModel.cs" />
     <Compile Include="Operations\Blog\Authors\Author\GetAuthorRequest.cs" />
     <Compile Include="Operations\Blog\Authors\Author\GetAuthorResponse.cs" />
     <Compile Include="Operations\Blog\Authors\Author\IAuthorService.cs" />
@@ -213,6 +214,7 @@
     <Compile Include="Operations\ListResponseBase.cs" />
     <Compile Include="Operations\MediaManager\DefaultMediaManagerApiOperations.cs" />
     <Compile Include="Operations\MediaManager\Files\File\GetFileModel.cs" />
+    <Compile Include="Operations\MediaManager\Files\GetFilesModel.cs" />
     <Compile Include="Operations\MediaManager\Files\GetFilesRequest.cs" />
     <Compile Include="Operations\MediaManager\Files\GetFilesResponse.cs" />
     <Compile Include="Operations\MediaManager\Files\IFilesService.cs" />
@@ -224,6 +226,8 @@
     <Compile Include="Operations\MediaManager\Files\File\TagModel.cs" />
     <Compile Include="Operations\MediaManager\Files\File\FileModel.cs" />
     <Compile Include="Operations\MediaManager\Files\File\FileService.cs" />
+    <Compile Include="Operations\MediaManager\Images\GetImagesModel.cs" />
+    <Compile Include="Operations\MediaManager\Images\Image\GetImageModel.cs" />
     <Compile Include="Operations\MediaManager\Images\Image\GetImageRequest.cs" />
     <Compile Include="Operations\MediaManager\Images\Image\GetImageResponse.cs" />
     <Compile Include="Operations\MediaManager\Images\Image\IImageService.cs" />
@@ -247,6 +251,7 @@
     <Compile Include="Operations\MediaManager\Videos\GetVideosResponse.cs" />
     <Compile Include="Operations\MediaManager\Videos\IVideosService.cs" />
     <Compile Include="Operations\MediaManager\Videos\VideosService.cs" />
+    <Compile Include="Operations\MediaManager\Videos\Video\GetVideoModel.cs" />
     <Compile Include="Operations\MediaManager\Videos\Video\GetVideoRequest.cs" />
     <Compile Include="Operations\MediaManager\Videos\Video\GetVideoResponse.cs" />
     <Compile Include="Operations\MediaManager\Videos\Video\IVideoService.cs" />
@@ -384,6 +389,7 @@
     <Compile Include="Operations\Root\Layouts\ILayoutsService.cs" />
     <Compile Include="Operations\Root\Layouts\LayoutModel.cs" />
     <Compile Include="Operations\Root\Layouts\LayoutsService.cs" />
+    <Compile Include="Operations\Root\Layouts\Layout\GetLayoutModel.cs" />
     <Compile Include="Operations\Root\Layouts\Layout\GetLayoutRequest.cs" />
     <Compile Include="Operations\Root\Layouts\Layout\GetLayoutResponse.cs" />
     <Compile Include="Operations\Root\Layouts\Layout\ILayoutService.cs" />

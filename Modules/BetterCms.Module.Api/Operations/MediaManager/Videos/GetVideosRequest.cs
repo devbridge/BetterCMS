@@ -1,9 +1,12 @@
-﻿using BetterCms.Module.Api.Operations.Enums;
+﻿using System.Runtime.Serialization;
+
+using BetterCms.Module.Api.Operations.Enums;
 
 using ServiceStack.ServiceHost;
 
 namespace BetterCms.Module.Api.Operations.MediaManager.Videos
 {
+    [DataContract]
     public class GetVideosModel : DataOptions, IFilterByTags
     {
         /// <summary>
@@ -23,6 +26,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Videos
         /// <value>
         /// The folder id.
         /// </value>
+        [DataMember]
         public System.Guid? FolderId { get; set; }
 
         /// <summary>
@@ -31,6 +35,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Videos
         /// <value>
         ///   <c>true</c> if to include videos; otherwise, <c>false</c>.
         /// </value>
+        [DataMember]
         public bool IncludeVideos { get; set; }
 
         /// <summary>
@@ -39,6 +44,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Videos
         /// <value>
         ///   <c>true</c> if to include archived medias; otherwise, <c>false</c>.
         /// </value>
+        [DataMember]
         public bool IncludeArchived { get; set; }
 
         /// <summary>
@@ -47,6 +53,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Videos
         /// <value>
         ///   <c>true</c> if to include folders; otherwise, <c>false</c>.
         /// </value>
+        [DataMember]
         public bool IncludeFolders { get; set; }
 
         /// <summary>
@@ -55,6 +62,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Videos
         /// <value>
         /// The video tags for filtering.
         /// </value>
+        [DataMember]
         public System.Collections.Generic.List<string> FilterByTags { get; set; }
 
         /// <summary>
@@ -63,10 +71,12 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Videos
         /// <value>
         /// The tags filter connector.
         /// </value>
+        [DataMember]
         public FilterConnector FilterByTagsConnector { get; set; }
     }
 
     [Route("/videos", Verbs = "GET")]
+    [DataContract]
     public class GetVideosRequest : RequestBase<GetVideosModel>, IReturn<GetVideosResponse>
     {
     }

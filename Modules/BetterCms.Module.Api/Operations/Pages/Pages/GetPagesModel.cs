@@ -1,7 +1,10 @@
-﻿using BetterCms.Module.Api.Operations.Enums;
+﻿using System.Runtime.Serialization;
+
+using BetterCms.Module.Api.Operations.Enums;
 
 namespace BetterCms.Module.Api.Operations.Pages.Pages
 {
+    [DataContract]
     public class GetPagesModel : DataOptions, IFilterByTags
     {
         /// <summary>
@@ -18,6 +21,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
         /// <value>
         ///   <c>true</c> if to include archived pages; otherwise, <c>false</c>.
         /// </value>
+        [DataMember]
         public bool IncludeArchived { get; set; }
 
         /// <summary>
@@ -26,6 +30,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
         /// <value>
         ///   <c>true</c> if to include unpublished pages; otherwise, <c>false</c>.
         /// </value>
+        [DataMember]
         public bool IncludeUnpublished { get; set; }
 
         /// <summary>
@@ -34,6 +39,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
         /// <value>
         /// The tags.
         /// </value>
+        [DataMember]
         public System.Collections.Generic.List<string> FilterByTags { get; set; }
 
         /// <summary>
@@ -42,6 +48,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
         /// <value>
         /// The tags filter connector.
         /// </value>
+        [DataMember]
         public FilterConnector FilterByTagsConnector { get; set; }        
     }
 }

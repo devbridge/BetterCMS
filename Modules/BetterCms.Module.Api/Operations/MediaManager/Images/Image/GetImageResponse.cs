@@ -1,5 +1,8 @@
-﻿namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
+﻿using System.Runtime.Serialization;
+
+namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
 {
+    [DataContract]
     public class GetImageResponse : ResponseBase<ImageModel>
     {
         /// <summary>
@@ -8,6 +11,7 @@
         /// <value>
         /// The list of image tags.
         /// </value>
+        [DataMember]
         public System.Collections.Generic.IList<TagModel> Tags { get; set; }
     }
 }

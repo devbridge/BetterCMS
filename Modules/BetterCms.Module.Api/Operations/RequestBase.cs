@@ -10,6 +10,7 @@ namespace BetterCms.Module.Api.Operations
             Data = new TData();
         }
 
+        [DataMember]
         public TData Data { get; set; }
 
         object IRequest.Data

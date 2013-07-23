@@ -1,5 +1,8 @@
-﻿namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
+﻿using System.Runtime.Serialization;
+
+namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
 {
+    [DataContract]
     public class GetFileResponse : ResponseBase<FileModel>
     {
         /// <summary>
@@ -8,6 +11,7 @@
         /// <value>
         /// The list of file tags.
         /// </value>
+        [DataMember]
         public System.Collections.Generic.IList<TagModel> Tags { get; set; }
     }
 }

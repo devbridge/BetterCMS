@@ -1,5 +1,8 @@
-﻿namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout.Regions
+﻿using System.Runtime.Serialization;
+
+namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout.Regions
 {
+    [DataContract]
     public class GetLayoutRegionsModel : DataOptions
     {
         /// <summary>
@@ -8,6 +11,7 @@
         /// <value>
         /// The layout id.
         /// </value>
+        [DataMember]
         public System.Guid LayoutId { get; set; }
     }
 }

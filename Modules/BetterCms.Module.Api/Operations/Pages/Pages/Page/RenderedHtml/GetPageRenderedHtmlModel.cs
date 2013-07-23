@@ -1,5 +1,8 @@
-﻿namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.RenderedHtml
+﻿using System.Runtime.Serialization;
+
+namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.RenderedHtml
 {
+    [DataContract]
     public class GetPageRenderedHtmlModel
     {
         /// <summary>
@@ -8,6 +11,7 @@
         /// <value>
         /// The page id.
         /// </value>
+        [DataMember]
         public System.Guid? PageId { get; set; }
 
         /// <summary>
@@ -16,6 +20,7 @@
         /// <value>
         /// The page URL.
         /// </value>
+        [DataMember]
         public string PageUrl { get; set; }
     }
 }

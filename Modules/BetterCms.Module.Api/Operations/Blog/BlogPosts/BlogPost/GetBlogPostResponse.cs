@@ -1,5 +1,8 @@
-﻿namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
+﻿using System.Runtime.Serialization;
+
+namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
 {
+    [DataContract]
     public class GetBlogPostResponse : ResponseBase<BlogPostModel>
     {
     }
