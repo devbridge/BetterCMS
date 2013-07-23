@@ -10,5 +10,17 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
     [DataContract]
     public class GetBlogPostPropertiesRequest : RequestBase<GetBlogPostPropertiesModel>, IReturn<GetBlogPostPropertiesResponse>
     {
+        [DataMember]
+        public System.Guid BlogPostId
+        {
+            get
+            {
+                return Data.BlogPostId;
+            }
+            set
+            {
+                Data.BlogPostId = value;
+            }
+        }
     }
 }

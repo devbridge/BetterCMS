@@ -11,5 +11,30 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
     [DataContract]
     public class GetCategoryRequest : RequestBase<GetCategoryModel>, IReturn<GetCategoryResponse>
     {
+        [DataMember]
+        public System.Guid? CategoryId
+        {
+            get
+            {
+                return Data.CategoryId;
+            }
+            set
+            {
+                Data.CategoryId = value;
+            }
+        }
+
+        [DataMember]
+        public string CategoryName
+        {
+            get
+            {
+                return Data.CategoryName;
+            }
+            set
+            {
+                Data.CategoryName = value;
+            }
+        }
     }
 }

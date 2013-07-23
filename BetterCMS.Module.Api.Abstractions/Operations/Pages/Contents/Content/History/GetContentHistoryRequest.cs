@@ -10,5 +10,17 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.History
     [DataContract]
     public class GetContentHistoryRequest : RequestBase<GetContentHistoryModel>, IReturn<GetContentHistoryResponse>
     {
+        [DataMember]
+        public System.Guid ContentId
+        {
+            get
+            {
+                return Data.ContentId;
+            }
+            set
+            {
+                Data.ContentId = value;
+            }
+        }
     }
 }

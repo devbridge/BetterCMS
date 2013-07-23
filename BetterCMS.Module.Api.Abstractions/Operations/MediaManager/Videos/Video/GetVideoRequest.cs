@@ -10,5 +10,17 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Videos.Video
     [DataContract]
     public class GetVideoRequest : RequestBase<GetVideoModel>, IReturn<GetVideoResponse>
     {
+        [DataMember]
+        public System.Guid VideoId
+        {
+            get
+            {
+                return Data.VideoId;
+            }
+            set
+            {
+                Data.VideoId = value;
+            }
+        }
     }
 }

@@ -18,7 +18,7 @@ namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout.Regions
 
         public GetLayoutRegionsResponse Get(GetLayoutRegionsRequest request)
         {
-            request.SetDefaultOrder("RegionIdentifier");
+            request.Data.SetDefaultOrder("RegionIdentifier");
 
             var listResponse = repository
                 .AsQueryable<Module.Root.Models.LayoutRegion>(lr => lr.Layout.Id == request.LayoutId)

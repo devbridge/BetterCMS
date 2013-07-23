@@ -10,5 +10,17 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.BlogPostContent
     [DataContract]
     public class GetBlogPostContentRequest : RequestBase<GetBlogPostContentModel>, IReturn<GetBlogPostContentResponse>
     {
+        [DataMember]
+        public System.Guid ContentId
+        {
+            get
+            {
+                return Data.ContentId;
+            }
+            set
+            {
+                Data.ContentId = value;
+            }
+        }
     }
 }

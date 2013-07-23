@@ -23,14 +23,14 @@ namespace BetterCms.Api.Tests.Common
             var requests = allTypes.Where(type => type.IsClass && type.Name.EndsWith("Request")).ToList();
             var responses = allTypes.Where(type => type.IsClass && type.Name.EndsWith("Response")).ToList();
 
-            var anyErrors = HasAnyErrors(models, true);
-            anyErrors = anyErrors || HasAnyErrors(requests, false);
-            anyErrors = anyErrors || HasAnyErrors(responses, true);
+            var anyErrors = HasAnyErrors(models);
+            anyErrors = anyErrors || HasAnyErrors(requests);
+            anyErrors = anyErrors || HasAnyErrors(responses);
 
             Assert.IsFalse(anyErrors, "Some classes or properties has no data contract attributes.");
         }
 
-        private bool HasAnyErrors(IList<Type> types, bool testProperties)
+        private bool HasAnyErrors(IList<Type> types)
         {
             bool anyErrors = false;
 
@@ -43,17 +43,15 @@ namespace BetterCms.Api.Tests.Common
                     anyErrors = true;
                 }
 
-                if (testProperties)
+
+                var properties = type.GetProperties();
+                foreach (var property in properties)
                 {
-                    var properties = type.GetProperties();
-                    foreach (var property in properties)
+                    var propertyAttributes = property.GetCustomAttributes(false);
+                    if (!propertyAttributes.Any(attr => attr.GetType().Name == "DataMemberAttribute"))
                     {
-                        var propertyAttributes = property.GetCustomAttributes(false);
-                        if (!propertyAttributes.Any(attr => attr.GetType().Name == "DataMemberAttribute"))
-                        {
-                            Console.WriteLine("Property {0}.{1} has no DataMemberAttribute", type.Name, property.Name);
-                            anyErrors = true;
-                        }
+                        Console.WriteLine("Property {0}.{1} has no DataMemberAttribute", type.Name, property.Name);
+                        anyErrors = true;
                     }
                 }
             }

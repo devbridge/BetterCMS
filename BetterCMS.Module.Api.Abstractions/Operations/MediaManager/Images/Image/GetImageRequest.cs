@@ -10,5 +10,17 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
     [DataContract]
     public class GetImageRequest : RequestBase<GetImageModel>, IReturn<GetImageResponse>
     {
+        [DataMember]
+        public System.Guid ImageId
+        {
+            get
+            {
+                return Data.ImageId;
+            }
+            set
+            {
+                Data.ImageId = value;
+            }
+        }
     }
 }

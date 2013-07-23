@@ -24,28 +24,6 @@ namespace BetterCms.Module.Api.Filters
                     requestDto.Data = ServiceStack.Text.JsonSerializer.DeserializeFromString(data, requestModelType);                    
                 }
             }
-
-            /*
-            var request = dto as ListRequestBase;
-            if (request != null)
-            {
-                var filterJsv = req.GetParam("filter");
-                var orderJsv = req.GetParam("order");
-
-                if (!string.IsNullOrWhiteSpace(filterJsv) || !string.IsNullOrWhiteSpace(orderJsv))
-                {
-                    if (!string.IsNullOrWhiteSpace(filterJsv))
-                    {
-                        request.Filter = ServiceStack.Text.JsonSerializer.DeserializeFromString<DataFilter>(filterJsv);
-                    }
-
-                    if (!string.IsNullOrWhiteSpace(orderJsv))
-                    {
-                        request.Order = ServiceStack.Text.JsonSerializer.DeserializeFromString<DataOrder>(orderJsv);
-                    }
-                }
-            }
-             * */
         }
     }
 }

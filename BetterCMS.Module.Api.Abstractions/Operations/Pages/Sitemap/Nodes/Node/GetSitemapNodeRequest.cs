@@ -10,5 +10,17 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Nodes.Node
     [DataContract]
     public class GetSitemapNodeRequest : RequestBase<GetSitemapNodeModel>, IReturn<SitemapNodeModel>
     {
+        [DataMember]
+        public System.Guid NodeId
+        {
+            get
+            {
+                return Data.NodeId;
+            }
+            set
+            {
+                Data.NodeId = value;
+            }
+        }
     }
 }
