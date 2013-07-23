@@ -75,12 +75,43 @@ describe('Root', function() {
             expect(result.data).toBeDefined();
             expect(result.data.totalCount).toBe(4);
             expect(result.data.items.length).toBe(2);
-            expect(result.data.items[0].name).toBe('_0001_Layout3');
+
+            // Layout 1
             expect(result.data.items[1].name).toBe('_0001_Layout4');
+            
+            // Layout 0
+            api.expectBasePropertiesAreNotNull(result.data.items[0]);
+            expect(result.data.items[0].name).toBe('_0001_Layout3');
+            expect(result.data.items[0].layoutPath).toBe('~/Views/Shared/TestLayout.cshtml');
+            expect(result.data.items[0].previewUrl).toBe('http://www.devbridge.com/Content/styles/images/responsive/logo.png');
         });
     });
 
-    it('Root_0002: Should get a layout by id', function () {
+    it('0002: Should get a layout by id', function () {
+        var url = '/bcms-api/layouts/d2f39fbd2c28401a8625a1fe0114e1eb',
+            result,
+            ready = false;
 
+        runs(function () {
+            api.get(url, null, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefined();
+            expect(result.data).toBeDefined();
+
+            // Layout
+            api.expectBasePropertiesAreNotNull(result.data);
+            expect(result.data.name).toBe('_0001_Layout3');
+            expect(result.data.layoutPath).toBe('~/Views/Shared/TestLayout.cshtml');
+            expect(result.data.previewUrl).toBe('http://www.devbridge.com/Content/styles/images/responsive/logo.png');
+        });
     });
 });
