@@ -8,7 +8,8 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
     [DataContract]
     public class GetBlogPostRequest : RequestBase<GetBlogPostModel>, IReturn<GetBlogPostResponse>
     {
-        public virtual System.Guid BlogPostId
+        [DataMember]
+        public System.Guid BlogPostId
         {
             get
             {

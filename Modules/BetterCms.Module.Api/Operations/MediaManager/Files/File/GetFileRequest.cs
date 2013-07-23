@@ -8,5 +8,17 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
     [DataContract]
     public class GetFileRequest : RequestBase<GetFileModel>, IReturn<GetFileResponse>
     {
+        [DataMember]
+        public System.Guid FileId
+        {
+            get
+            {
+                return Data.FileId;
+            }
+            set
+            {
+                Data.FileId = value;
+            }
+        }
     }
 }

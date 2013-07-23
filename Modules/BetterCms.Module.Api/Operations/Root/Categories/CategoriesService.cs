@@ -40,10 +40,5 @@ namespace BetterCms.Module.Api.Operations.Root.Categories
                            Data = listResponse
                        };
         }
-
-        public GetCategoriesResponse Post(GetCategoriesRequest request)
-        {
-            return null;
-        }
     }
 }

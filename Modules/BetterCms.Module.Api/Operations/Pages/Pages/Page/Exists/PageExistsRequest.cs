@@ -8,6 +8,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Exists
     [DataContract]
     public class PageExistsRequest : RequestBase<PageExistsModel>, IReturn<PageExistsResponse>
     {
+        [DataMember]
         public string PageUrl
         {
             get

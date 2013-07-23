@@ -8,5 +8,17 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
     [DataContract]
     public class GetHtmlContentWidgetRequest : RequestBase<GetHtmlContentWidgetModel>, IReturn<GetHtmlContentWidgetResponse>
     {
+        [DataMember]
+        public System.Guid WidgetId
+        {
+            get
+            {
+                return Data.WidgetId;
+            }
+            set
+            {
+                Data.WidgetId = value;
+            }
+        }
     }
 }
