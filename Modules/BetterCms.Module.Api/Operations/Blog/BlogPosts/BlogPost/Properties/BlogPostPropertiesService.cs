@@ -166,6 +166,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         {
             return repository
                 .AsQueryable<Module.Pages.Models.PageTag>(pageTag => pageTag.Page.Id == blogPostId)
+                .OrderBy(tag => tag.Tag.Name)
                 .Select(media => new TagModel
                     {
                         Id = media.Tag.Id,
