@@ -205,6 +205,8 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="runner.html" />
+    <Content Include="spec\pages.sitemap.api.behavior.js" />
+    <Content Include="spec\pages.redirects.api.behavior.js" />
     <Content Include="spec\pages.widgets.api.behavior.js" />
     <Content Include="spec\pages.contents.api.behavior.js" />
     <Content Include="spec\root.categories.api.behavior.js" />
