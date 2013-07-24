@@ -13,14 +13,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         [DataMember]
         public System.Guid FileId
         {
-            get
-            {
-                return Data.FileId;
-            }
-            set
-            {
-                Data.FileId = value;
-            }
+            get; set;
         }
     }
 }

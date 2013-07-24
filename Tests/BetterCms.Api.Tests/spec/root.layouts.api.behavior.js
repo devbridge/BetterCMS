@@ -102,9 +102,7 @@ describe('Root: Layouts', function() {
                 by: [
                     { field: 'RegionIdentifier', direction: 'desc' }
                 ]
-            },
-            // TODO: remove Hack after tests and solution:
-            layoutId: 'd2f39fbd2c28401a8625a1fe0114e1eb'
+            }            
         };
 
         runs(function () {

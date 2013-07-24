@@ -21,7 +21,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.History
 
         public GetContentHistoryResponse Get(GetContentHistoryRequest request)
         {
-            var results = historyService.GetContentHistory(request.Data.ContentId, new SearchableGridOptions())
+            var results = historyService.GetContentHistory(request.ContentId, new SearchableGridOptions())
                 .AsQueryable()
                 .OrderBy(history => history.CreatedOn)
                 .Select(history => new

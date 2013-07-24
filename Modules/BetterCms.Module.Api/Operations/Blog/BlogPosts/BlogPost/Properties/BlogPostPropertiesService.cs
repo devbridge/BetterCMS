@@ -22,7 +22,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         public GetBlogPostPropertiesResponse Get(GetBlogPostPropertiesRequest request)
         {
             var response = repository
-                .AsQueryable<Module.Blog.Models.BlogPost>(blogPost => blogPost.Id == request.Data.BlogPostId)
+                .AsQueryable<Module.Blog.Models.BlogPost>(blogPost => blogPost.Id == request.BlogPostId)
                 .Select(blogPost =>
                     new GetBlogPostPropertiesResponse
                     {
@@ -143,12 +143,12 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
 
             if (request.Data.IncludeHtmlContent)
             {
-                response.HtmlContent = LoadHtml(request.Data.BlogPostId);
+                response.HtmlContent = LoadHtml(request.BlogPostId);
             }
 
             if (request.Data.IncludeTags)
             {
-                response.Tags = LoadTags(request.Data.BlogPostId);
+                response.Tags = LoadTags(request.BlogPostId);
             }
 
             return response;

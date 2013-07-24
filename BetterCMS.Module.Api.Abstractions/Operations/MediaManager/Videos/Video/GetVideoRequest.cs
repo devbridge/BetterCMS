@@ -13,14 +13,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Videos.Video
         [DataMember]
         public System.Guid VideoId
         {
-            get
-            {
-                return Data.VideoId;
-            }
-            set
-            {
-                Data.VideoId = value;
-            }
+            get; set;
         }
     }
 }

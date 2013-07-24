@@ -133,8 +133,6 @@ describe('Pages: Pages', function () {
              ready = false;
 
         var data = {
-            // TODO: remove Hack after tests and solution:
-            pageId: constants.testPageId,
             includeTags: true,
             includeLayout: true,
             includeCategory: true,
@@ -168,8 +166,6 @@ describe('Pages: Pages', function () {
               ready = false;
 
         var data = {
-            // TODO: remove Hack after tests and solution:
-            pageUrl: constants.testPageUrl,
             includeTags: true,
             includeLayout: true,
             includeCategory: true,
