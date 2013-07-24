@@ -17,10 +17,7 @@ using BetterCms.Module.Api.Operations.MediaManager.Files.File;
 using BetterCms.Module.Api.Operations.MediaManager.Images;
 using BetterCms.Module.Api.Operations.MediaManager.Images.Image;
 using BetterCms.Module.Api.Operations.MediaManager.MediaTree;
-using BetterCms.Module.Api.Operations.MediaManager.Videos;
-using BetterCms.Module.Api.Operations.MediaManager.Videos.Video;
 using BetterCms.Module.Api.Operations.Pages;
-using BetterCms.Module.Api.Operations.Pages.Contents.Content;
 using BetterCms.Module.Api.Operations.Pages.Contents.Content.BlogPostContent;
 using BetterCms.Module.Api.Operations.Pages.Contents.Content.History;
 using BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent;
@@ -47,6 +44,7 @@ using BetterCms.Events;
 using BetterCms.Module.Api.Operations.Root.Tags;
 using BetterCms.Module.Api.Operations.Root.Tags.Tag;
 using BetterCms.Module.Api.Operations.Root.Version;
+using BetterCms.Module.Root.Services;
 
 using ContentService = BetterCms.Module.Api.Operations.Pages.Contents.Content.ContentService;
 
@@ -143,8 +141,6 @@ namespace BetterCms.Module.Api
             containerBuilder.RegisterType<FileService>().As<IFileService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<ImagesService>().As<IImagesService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<ImageService>().As<IImageService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
-            containerBuilder.RegisterType<VideosService>().As<IVideosService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
-            containerBuilder.RegisterType<VideoService>().As<IVideoService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<MediaTreeService>().As<IMediaTreeService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
 
             containerBuilder.RegisterType<CategoriesService>().As<ICategoriesService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);

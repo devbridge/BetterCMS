@@ -32,11 +32,6 @@ namespace BetterCms.Module.Api.Operations.MediaManager.MediaTree
             {
                 response.Data.ImagesTree = LoadMediaTree<MediaImage>(MediaType.Image, request.Data.IncludeArchived, request.Data.IncludeImages);
             }
-            if (request.Data.IncludeVideosTree)
-            {
-                // TODO: return MediaVideo type, when it'll be implemented
-                response.Data.VideosTree = LoadMediaTree<MediaFile>(MediaType.Video, request.Data.IncludeImages, request.Data.IncludeArchived);
-            }
 
             return response;
         }

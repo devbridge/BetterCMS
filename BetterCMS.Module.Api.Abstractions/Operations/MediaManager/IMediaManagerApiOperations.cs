@@ -3,8 +3,6 @@ using BetterCms.Module.Api.Operations.MediaManager.Files.File;
 using BetterCms.Module.Api.Operations.MediaManager.Images;
 using BetterCms.Module.Api.Operations.MediaManager.Images.Image;
 using BetterCms.Module.Api.Operations.MediaManager.MediaTree;
-using BetterCms.Module.Api.Operations.MediaManager.Videos;
-using BetterCms.Module.Api.Operations.MediaManager.Videos.Video;
 
 namespace BetterCms.Module.Api.Operations.MediaManager
 {
@@ -15,10 +13,6 @@ namespace BetterCms.Module.Api.Operations.MediaManager
         IImagesService Images { get; }
 
         IImageService Image { get; }
-
-        IVideosService Videos { get; }
-
-        IVideoService Video { get; }
 
         IFilesService Files { get; }
 

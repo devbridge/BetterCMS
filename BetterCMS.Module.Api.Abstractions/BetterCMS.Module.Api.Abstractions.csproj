@@ -148,16 +148,6 @@
     <Compile Include="Operations\MediaManager\MediaTree\IMediaTreeService.cs" />
     <Compile Include="Operations\MediaManager\MediaTree\MediaItemModel.cs" />
     <Compile Include="Operations\MediaManager\MediaTree\MediaTreeModel.cs" />
-    <Compile Include="Operations\MediaManager\Videos\GetVideosRequest.cs" />
-    <Compile Include="Operations\MediaManager\Videos\GetVideosResponse.cs" />
-    <Compile Include="Operations\MediaManager\Videos\IVideosService.cs" />
-    <Compile Include="Operations\MediaManager\Videos\MediaModel.cs" />
-    <Compile Include="Operations\MediaManager\Videos\Video\GetVideoModel.cs" />
-    <Compile Include="Operations\MediaManager\Videos\Video\GetVideoRequest.cs" />
-    <Compile Include="Operations\MediaManager\Videos\Video\GetVideoResponse.cs" />
-    <Compile Include="Operations\MediaManager\Videos\Video\IVideoService.cs" />
-    <Compile Include="Operations\MediaManager\Videos\Video\TagModel.cs" />
-    <Compile Include="Operations\MediaManager\Videos\Video\VideoModel.cs" />
     <Compile Include="Operations\Pages\Contents\Content\BlogPostContent\BlogPostContentModel.cs" />
     <Compile Include="Operations\Pages\Contents\Content\BlogPostContent\GetBlogPostContentRequest.cs" />
     <Compile Include="Operations\Pages\Contents\Content\BlogPostContent\GetBlogPostContentResponse.cs" />

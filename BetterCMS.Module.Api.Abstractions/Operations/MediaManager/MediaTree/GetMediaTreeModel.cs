@@ -11,7 +11,6 @@ namespace BetterCms.Module.Api.Operations.MediaManager.MediaTree
         public GetMediaTreeModel()
         {
             IncludeImagesTree = true;
-            IncludeVideosTree = true;
             IncludeFilesTree = true;
         }
 
@@ -32,24 +31,6 @@ namespace BetterCms.Module.Api.Operations.MediaManager.MediaTree
         /// </value>
         [DataMember]
         public bool IncludeImages { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether to include videos tree.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if include videos tree; otherwise, <c>false</c>.
-        /// </value>
-        [DataMember]
-        public bool IncludeVideosTree { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether to include the files of videos tree.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if include the files of videos  tree; otherwise, <c>false</c>.
-        /// </value>
-        [DataMember]
-        public bool IncludeVideos { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to include files tree.
