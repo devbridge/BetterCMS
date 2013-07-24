@@ -46,6 +46,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.MediaTree
         {
             var query = repository
                     .AsQueryable<Media>()
+                    .OrderBy(m => m.Title)
                     .Where(f => f.Type == mediaType && f.Original == null);
 
             if (!includeArchived)
@@ -77,7 +78,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.MediaTree
                                      MediaContentType = media is MediaFolder 
                                                             ? (MediaContentType)((int)MediaContentType.Folder) 
                                                             : (MediaContentType)((int)MediaContentType.File),
-                                     Url = media is MediaFile ? ((MediaFile)media).PublicUrl : null,
+                                     Url = (media is MediaFile || media is MediaImage) ? ((MediaFile)media).PublicUrl : null,
                                      IsArchived = media.IsArchived
                                  }).ToList();
 
