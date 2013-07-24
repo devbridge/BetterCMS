@@ -6,15 +6,6 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
     public class GetBlogPostPropertiesModel
     {
         /// <summary>
-        /// Gets or sets the blog post id.
-        /// </summary>
-        /// <value>
-        /// The blog post id.
-        /// </value>
-        [DataMember]
-        public System.Guid BlogPostId { get; set; }
-
-        /// <summary>
         /// Gets or sets a value indicating whether to include HTML content.
         /// </summary>
         /// <value>

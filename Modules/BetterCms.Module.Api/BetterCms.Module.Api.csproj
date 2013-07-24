@@ -191,7 +191,6 @@
     <Compile Include="Operations\Pages\Pages\Page\Contents\PageContentsService.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Exists\PageExistsService.cs" />
     <Compile Include="Operations\Pages\Pages\PagesService.cs" />
-    <Compile Include="Operations\Pages\Pages\Page\RenderedHtml\PageRenderedHtmlService.cs" />
     <Compile Include="Operations\Pages\Pages\Page\PageService.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\PagePropertiesService.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\HtmlContentWidgetService.cs" />

@@ -20,7 +20,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
         public GetBlogPostResponse Get(GetBlogPostRequest request)
         {
             var model = repository
-                .AsQueryable<Module.Blog.Models.BlogPost>(blogPost => blogPost.Id == request.Data.BlogPostId)
+                .AsQueryable<Module.Blog.Models.BlogPost>(blogPost => blogPost.Id == request.BlogPostId)
                 .Select(blogPost => new BlogPostModel
                     {
                         Id = blogPost.Id,

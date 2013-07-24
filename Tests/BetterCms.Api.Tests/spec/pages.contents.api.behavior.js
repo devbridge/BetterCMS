@@ -81,9 +81,7 @@ describe('Pages: Contents', function () {
                     by: [
                         {field: 'CreatedOn'}
                     ]
-                },
-                // TODO: remove Hack after tests and solution:
-                contentId: '97A1C2CF-DC8A-4D3F-9DD1-A205008C3F36',
+                }
             };
 
         runs(function () {

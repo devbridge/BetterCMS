@@ -29,7 +29,6 @@ using BetterCms.Module.Api.Operations.Pages.Pages.Page;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page.Exists;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties;
-using BetterCms.Module.Api.Operations.Pages.Pages.Page.RenderedHtml;
 using BetterCms.Module.Api.Operations.Pages.Redirects;
 using BetterCms.Module.Api.Operations.Pages.Redirects.Redirect;
 using BetterCms.Module.Api.Operations.Pages.Sitemap.Nodes;
@@ -160,7 +159,6 @@ namespace BetterCms.Module.Api
             containerBuilder.RegisterType<PagesService>().As<IPagesService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<PageService>().As<IPageService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<PageExistsService>().As<IPageExistsService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
-            containerBuilder.RegisterType<PageRenderedHtmlService>().As<IPageRenderedHtmlService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<PagePropertiesService>().As<IPagePropertiesService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<PageContentsService>().As<IPageContentsService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
 

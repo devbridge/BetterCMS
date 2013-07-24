@@ -24,7 +24,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents
             request.Data.SetDefaultOrder("Order");
 
             var query = repository
-                 .AsQueryable<Module.Root.Models.PageContent>(pageContent => pageContent.Page.Id == request.Data.PageId);
+                 .AsQueryable<Module.Root.Models.PageContent>(pageContent => pageContent.Page.Id == request.PageId);
 
             if (request.Data.RegionId.HasValue)
             {

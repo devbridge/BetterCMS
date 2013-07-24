@@ -20,7 +20,7 @@ namespace BetterCms.Module.Api.Operations.Blog.Authors.Author
         {
             var query = repository.AsQueryable<Module.Blog.Models.Author>();
             
-            query = query.Where(author => author.Id == request.Data.AuthorId);
+            query = query.Where(author => author.Id == request.AuthorId);
             
             var model = query
                 .Select(author => new AuthorModel

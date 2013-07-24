@@ -16,7 +16,7 @@ namespace BetterCms.Api.Tests.Common
         [Test]
         public void All_Models_Should_Have_DataContract_Attributes()
         {
-            var assembly = Assembly.GetAssembly(typeof(GetPageModel));
+            var assembly = Assembly.GetAssembly(typeof(GetPageRequest));
             var allTypes = assembly.GetTypes();
 
             var models = allTypes.Where(type => type.IsClass && type.Name.EndsWith("Model")).ToList();

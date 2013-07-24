@@ -21,7 +21,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
         public GetImageResponse Get(GetImageRequest request)
         {
             var model = repository
-                .AsQueryable<MediaImage>(media => media.Id == request.Data.ImageId && media.Type == MediaType.Image)
+                .AsQueryable<MediaImage>(media => media.Id == request.ImageId && media.Type == MediaType.Image)
                 .Select(media => new ImageModel
                                      {
                                          Id = media.Id,
@@ -59,7 +59,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
             if (request.Data.IncludeTags)
             {
                 tags =
-                    repository.AsQueryable<MediaTag>(mediaTag => mediaTag.Media.Id == request.Data.ImageId)
+                    repository.AsQueryable<MediaTag>(mediaTag => mediaTag.Media.Id == request.ImageId)
                               .Select(media => new TagModel
                                       {
                                           Id = media.Tag.Id,

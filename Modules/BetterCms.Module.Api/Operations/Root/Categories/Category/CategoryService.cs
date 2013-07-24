@@ -22,13 +22,13 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
 
             var query = repository.AsQueryable<Module.Root.Models.Category>();
 
-            if (request.Data.CategoryId.HasValue)
+            if (request.CategoryId.HasValue)
             {
-                query = query.Where(category => category.Id == request.Data.CategoryId);
+                query = query.Where(category => category.Id == request.CategoryId);
             }
             else
             {
-                query = query.Where(category => category.Name == request.Data.CategoryName);
+                query = query.Where(category => category.Name == request.CategoryName);
             }
 
             var model = query

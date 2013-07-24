@@ -178,8 +178,6 @@ describe('Blog: Blog Posts', function () {
              ready = false;
 
         var data = {
-            // TODO: remove Hack after tests and solution:
-            blogPostId: constants.testPageId,
             includeTags: true,
             includeLayout: true,
             includeCategory: true,

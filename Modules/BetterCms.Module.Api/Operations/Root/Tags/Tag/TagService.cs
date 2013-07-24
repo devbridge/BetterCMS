@@ -22,13 +22,13 @@ namespace BetterCms.Module.Api.Operations.Root.Tags.Tag
 
             var query = repository.AsQueryable<Module.Root.Models.Tag>();
 
-            if (request.Data.TagId.HasValue)
+            if (request.TagId.HasValue)
             {
-                query = query.Where(tag => tag.Id == request.Data.TagId);
+                query = query.Where(tag => tag.Id == request.TagId);
             }
             else
             {
-                query = query.Where(tag => tag.Name == request.Data.TagName);
+                query = query.Where(tag => tag.Name == request.TagName);
             }
 
             var model = query
