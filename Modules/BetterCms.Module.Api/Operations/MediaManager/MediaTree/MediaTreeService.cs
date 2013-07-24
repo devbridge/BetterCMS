@@ -74,7 +74,9 @@ namespace BetterCms.Module.Api.Operations.MediaManager.MediaTree
 
                                      ParentFolderId = media.Folder.Id,
                                      Title = media.Title,
-                                     MediaContentType = media is MediaFolder ? MediaContentType.Folder : MediaContentType.File,
+                                     MediaContentType = media is MediaFolder 
+                                                            ? (MediaContentType)((int)MediaContentType.Folder) 
+                                                            : (MediaContentType)((int)MediaContentType.File),
                                      Url = media is MediaFile ? ((MediaFile)media).PublicUrl : null,
                                      IsArchived = media.IsArchived
                                  }).ToList();

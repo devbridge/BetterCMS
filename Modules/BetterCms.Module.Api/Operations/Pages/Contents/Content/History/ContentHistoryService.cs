@@ -1,11 +1,12 @@
 ﻿using System.Linq;
 
-using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
 using ServiceStack.ServiceInterface;
+
+using CoreContentStatus = BetterCms.Core.DataContracts.Enums.ContentStatus;
 
 namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.History
 {
@@ -36,11 +37,11 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.History
                                 LastModifiedOn = history.ModifiedOn,
 
                                 OriginalContentId = history.Original != null ? history.Original.Id : (System.Guid?)null,
-                                PublishedOn = history.Status == ContentStatus.Published ? history.PublishedOn : null,
-                                PublishedByUser = history.Status == ContentStatus.Published ? history.PublishedByUser : null,
-                                ArchivedOn = history.Status == ContentStatus.Archived ? history.CreatedOn : (System.DateTime?)null,
-                                ArchivedByUser = history.Status == ContentStatus.Archived ? history.CreatedByUser : null,
-                                Status = history.Status
+                                PublishedOn = history.Status == CoreContentStatus.Published ? history.PublishedOn : null,
+                                PublishedByUser = history.Status == CoreContentStatus.Published ? history.PublishedByUser : null,
+                                ArchivedOn = history.Status == CoreContentStatus.Archived ? history.CreatedOn : (System.DateTime?)null,
+                                ArchivedByUser = history.Status == CoreContentStatus.Archived ? history.CreatedByUser : null,
+                                Status = (ContentStatus)((int)history.Status)
                             }
                     })
                 .ToList();
