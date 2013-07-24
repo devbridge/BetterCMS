@@ -17,9 +17,9 @@
     value: newTag,
     valueUpdate: 'afterkeydown',
     hasfocus: isExpanded(),
+    tagautocomplete: '',
     enterPress: addTag,
-    escPress: clearTag,
-    tagautocomplete: ''" />
+    escPress: clearTag" />
             <!-- ko if: newTag.hasError()  -->
             <span class="bcms-tag-field-validation-error">
                 <span data-bind="text: newTag.validationMessage()"></span>
