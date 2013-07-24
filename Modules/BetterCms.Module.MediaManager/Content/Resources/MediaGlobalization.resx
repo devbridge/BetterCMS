@@ -223,7 +223,7 @@
     <value>Image height is required.</value>
   </data>
   <data name="ImageEditor_Dialog_ImageName_Title" xml:space="preserve">
-    <value>Image</value>
+    <value>Title</value>
   </data>
   <data name="ImageEditor_Dialog_ImageTitle_Title" xml:space="preserve">
     <value>Change Image Name</value>
@@ -352,7 +352,7 @@
     <value>Folder you trying to save uploaded files is deleted.</value>
   </data>
   <data name="MultiFileUpload_SelectFolder" xml:space="preserve">
-    <value>Select Folder where to upload files:</value>
+    <value>Select folder where to upload files</value>
   </data>
   <data name="MultiFileUpload_SelectFolder_Help_Message" xml:space="preserve">
     <value>Select the folder where you would like to store your files.</value>
@@ -490,7 +490,7 @@
     <value>Public Thumbnail Url</value>
   </data>
   <data name="MediaHistory_Preview_Properties_PublicUrl" xml:space="preserve">
-    <value>Public Url</value>
+    <value>Public URL</value>
   </data>
   <data name="MediaHistory_Preview_Properties_Title" xml:space="preserve">
     <value>Title</value>

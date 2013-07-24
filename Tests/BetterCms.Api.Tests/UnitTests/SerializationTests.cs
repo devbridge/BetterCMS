@@ -2,8 +2,8 @@
 using System.Text;
 using System.Web.Script.Serialization;
 
-using BetterCms.Module.Api.Operations;
-using BetterCms.Module.Api.Operations.Enums;
+using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Infrastructure.Enums;
 
 using NUnit.Framework;
 

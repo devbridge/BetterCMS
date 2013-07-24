@@ -1,8 +1,8 @@
 ﻿using System;
 
 using BetterCms.Module.Api.Helpers;
-using BetterCms.Module.Api.Operations;
-using BetterCms.Module.Api.Operations.Enums;
+using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Infrastructure.Enums;
 using BetterCms.Module.Pages.Models;
 
 using NUnit.Framework;

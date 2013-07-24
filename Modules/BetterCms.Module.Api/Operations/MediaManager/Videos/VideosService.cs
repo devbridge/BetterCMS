@@ -32,12 +32,12 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Videos
 
             if (!request.Data.IncludeFolders)
             {
-                query = query.Where(media => media.ContentType != MediaContentType.Folder);
+                query = query.Where(media => media.ContentType != Module.MediaManager.Models.MediaContentType.Folder);
             }
 
             if (!request.Data.IncludeVideos)
             {
-                query = query.Where(media => media.ContentType != MediaContentType.File);
+                query = query.Where(media => media.ContentType != Module.MediaManager.Models.MediaContentType.File);
             }
 
             if (!request.Data.IncludeArchived)
@@ -60,7 +60,9 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Videos
                             LastModifiedOn = media.ModifiedOn,
 
                             Title = media.Title,
-                            MediaContentType = media is MediaFolder ? MediaContentType.Folder : MediaContentType.File,
+                            MediaContentType = media is MediaFolder 
+                                                    ? (MediaContentType)((int)MediaContentType.Folder) 
+                                                    : (MediaContentType)((int)MediaContentType.File),
                             VideoUrl = media is MediaFile ? ((MediaFile)media).PublicUrl : null,
                             IsArchived = media.IsArchived,
                             ThumbnailCaption = media.Image.Caption,

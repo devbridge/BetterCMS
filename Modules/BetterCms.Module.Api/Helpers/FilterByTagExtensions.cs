@@ -2,8 +2,10 @@
 using System.Linq;
 using System.Linq.Expressions;
 
+using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Infrastructure.Enums;
 using BetterCms.Module.Api.Operations;
-using BetterCms.Module.Api.Operations.Enums;
+
 using ServiceStack.OrmLite;
 
 namespace BetterCms.Module.Api.Helpers

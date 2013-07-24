@@ -49,6 +49,8 @@ using BetterCms.Module.Api.Operations.Root.Tags;
 using BetterCms.Module.Api.Operations.Root.Tags.Tag;
 using BetterCms.Module.Api.Operations.Root.Version;
 
+using ContentService = BetterCms.Module.Api.Operations.Pages.Contents.Content.ContentService;
+
 namespace BetterCms.Module.Api
 {
     /// <summary>
