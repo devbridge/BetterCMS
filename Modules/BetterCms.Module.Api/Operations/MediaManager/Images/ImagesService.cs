@@ -25,7 +25,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
 
             var query = repository
                 .AsQueryable<Media>()
-                .Where(m => m.Original == null && m.Folder.Id == request.Data.FolderId);
+                .Where(m => m.Original == null && m.Folder.Id == request.Data.FolderId && m.Type == MediaType.Image);
 
             if (!request.Data.IncludeFolders)
             {

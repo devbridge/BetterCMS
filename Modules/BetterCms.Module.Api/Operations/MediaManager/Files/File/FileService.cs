@@ -52,6 +52,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
             {
                 tags =
                     repository.AsQueryable<MediaTag>(mediaTag => mediaTag.Media.Id == request.FileId)
+                              .OrderBy(mediaTag => mediaTag.Tag.Name)
                               .Select(media => new TagModel
                                     {
                                         Id = media.Tag.Id,

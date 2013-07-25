@@ -17,15 +17,6 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
         public string Title { get; set; }
 
         /// <summary>
-        /// Gets or sets the file caption.
-        /// </summary>
-        /// <value>
-        /// The file caption.
-        /// </value>
-        [DataMember]
-        public string Caption { get; set; }
-
-        /// <summary>
         /// Gets or sets the type of the media content.
         /// </summary>
         /// <value>

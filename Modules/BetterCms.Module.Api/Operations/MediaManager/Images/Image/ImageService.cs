@@ -60,6 +60,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
             {
                 tags =
                     repository.AsQueryable<MediaTag>(mediaTag => mediaTag.Media.Id == request.ImageId)
+                              .OrderBy(mediaTag => mediaTag.Tag.Name)
                               .Select(media => new TagModel
                                       {
                                           Id = media.Tag.Id,
