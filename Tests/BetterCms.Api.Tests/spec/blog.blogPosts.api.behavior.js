@@ -274,6 +274,66 @@ describe('Blog: Blog Posts', function () {
         filterByTags('or', 2, ['IFilterByTags Page 1', 'IFilterByTags Page 3']);
     });
     
+    it('02108: Should get a list with one blog post, filtered by all available columns', function () {
+        var url = '/bcms-api/blog-posts/',
+            result,
+            ready = false;
+
+        var data = {
+            filter: {
+                where: [
+                    { field: 'Id', value: 'c1efcb1107ed4901abb3a206012b0b87' },
+                    { field: 'CreatedOn', value: '2013-07-25 18:08:47.000' },
+                    { field: 'CreatedBy', value: 'Better CMS test user' },
+                    { field: 'LastModifiedOn', value: '2013-07-25 18:13:56.000' },
+                    { field: 'LastModifiedBy', value: 'Better CMS test user' },
+                    { field: 'Version', value: '2' },
+
+                    { field: 'Title', value: '02108' },
+                    { field: 'BlogPostUrl', value: '/articles/02108/' },
+                    { field: 'IntroText', value: '02108 description' },
+                    { field: 'IsPublished', value: true },
+                    { field: 'PublishedOn', value: '2013-07-25 18:13:56.000' },
+                    { field: 'LayoutId', value: '0e991684003a43deb40f0ffeccddc6eb' },
+                    { field: 'CategoryId', value: '4e2095dbbfa4405e808aa206012c2486' },
+                    { field: 'CategoryName', value: '02108' },
+                    { field: 'AuthorId', value: '58ee1671c9714f05b45ca206012c210b' },
+                    { field: 'AuthorName', value: '02108' },
+                    { field: 'MainImageId', value: 'ca4c9fb204554aecadbea206012c58a0' },
+                    { field: 'MainImageUrl', value: 'http://bettercms.sandbox.mvc4.local/uploads/image/b2af6ffd204941a3ae8b59855911293a/1_1.jpg' },
+                    { field: 'MainImageThumbnauilUrl', value: 'http://bettercms.sandbox.mvc4.local/uploads/image/b2af6ffd204941a3ae8b59855911293a/t_1_1.png' },
+                    { field: 'MainImageCaption', value: '02108 caption' },
+                    { field: 'ActivationDate', value: '2013-07-25 00:00:00.000' },
+                    { field: 'ExpirationDate', value: '2032-07-25 23:59:59.000' },
+                    { field: 'IsArchived', value: false }
+                ]
+            }
+        };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
+            expect(result.data.totalCount).toBe(1);
+            expect(result.data.items.length).toBe(1);
+
+            expect(result.data.items[0].id).toBe('c1efcb1107ed4901abb3a206012b0b87');
+
+            // Check if model properties count didn't changed. If so - update filter current test filter and another tests.
+            expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]));
+        });
+    });
+
     function createDataForBlogPostsList(includeArchived, includeUnpublished, take, skip) {
         return {
             filter: {

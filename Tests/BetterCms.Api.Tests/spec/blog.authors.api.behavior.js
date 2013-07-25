@@ -85,4 +85,51 @@ describe('Blog: Authors', function () {
             expect(author.imageCaption).toBe('Image caption for _0000_Author_2');
         });
     });
+    
+    it('02002: Should get a list with one author, filtered by all available columns', function () {
+        var url = '/bcms-api/authors/',
+            result,
+            ready = false;
+
+        var data = {
+            filter: {
+                where: [
+                    { field: 'Id', value: '200f5ee252af47abb5bea20601210dd3' },
+                    { field: 'CreatedOn', value: '2013-07-25 17:32:24.000' },
+                    { field: 'CreatedBy', value: 'Better CMS test user' },
+                    { field: 'LastModifiedOn', value: '2013-07-25 17:32:59.000' },
+                    { field: 'LastModifiedBy', value: 'Better CMS test user' },
+                    { field: 'Version', value: '2' },
+                    { field: 'Name', value: '02002' },
+                    { field: 'ImageId', value: 'a19a6e5d7e4948a5b5e0a206012117bd' },
+                    { field: 'ImageUrl', value: 'http://bettercms.sandbox.mvc4.local/uploads/image/b244cadb494d4121b896f21ac93483ef/1_1.jpg' },
+                    { field: 'ImageThumbnailUrl', value: 'http://bettercms.sandbox.mvc4.local/uploads/image/b244cadb494d4121b896f21ac93483ef/t_1_1.png' },
+                    { field: 'ImageCaption', value: 'Image Caption' }
+                ]
+            }
+        };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
+            expect(result.data.totalCount).toBe(1);
+            expect(result.data.items.length).toBe(1);
+
+            expect(result.data.items[0].id).toBe('200f5ee252af47abb5bea20601210dd3');
+
+            // Check if model properties count didn't changed. If so - update filter current test filter and another tests.
+            expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]));
+        });
+    });
 });

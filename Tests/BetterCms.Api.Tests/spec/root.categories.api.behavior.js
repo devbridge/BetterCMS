@@ -109,8 +109,8 @@ describe('Root: Categories', function() {
 
             expect(result.data.items[0].id).toBe('a60e08c191504dbebd32a20601185796');
 
-            // Check if model count didn't changed. If so - update filter up there and another tests.
-            api.expectPropertiesCountIsCorrect(result.data.items[0], 7);
+            // Check if model properties count didn't changed. If so - update filter current test filter and another tests.
+            expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]));
         });
     });
 });

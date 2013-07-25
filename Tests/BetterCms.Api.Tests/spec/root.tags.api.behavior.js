@@ -109,8 +109,8 @@ describe('Root: Tags', function() {
 
             expect(result.data.items[0].id).toBe('b0dc1aa59fe54d4f9ad9a2060116b0f5');
 
-            // Check if model count didn't changed. If so - update filter up there and another tests.
-            api.expectPropertiesCountIsCorrect(result.data.items[0], 7);
+            // Check if model properties count didn't changed. If so - update filter current test filter and another tests.
+            expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]));
         });
     });
 });

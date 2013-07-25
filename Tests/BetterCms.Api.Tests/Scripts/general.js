@@ -37,12 +37,11 @@ var api = (function() {
         expect(entity.id.length).toBe(32);
     };
 
+    /**
+    * Retrieved count of passed object properties
+    */
     obj.getCountOfProperties = function (object) {
         return Object.keys(object).length;
-    };
-
-    obj.expectPropertiesCountIsCorrect = function (object, count) {
-        expect(obj.getCountOfProperties(object)).toBe(count);
     };
 
     return obj;
