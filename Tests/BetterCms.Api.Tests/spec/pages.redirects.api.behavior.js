@@ -4,7 +4,7 @@
 describe('Pages: Redirects', function () {
     'use strict';
 
-    it('0000: Should get a list of redirects', function () {
+    it('01300: Should get a list of redirects', function () {
         var url = '/bcms-api/redirects/',
             result,
             ready = false;
@@ -33,8 +33,8 @@ describe('Pages: Redirects', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
             expect(result.data.totalCount).toBe(4);
             expect(result.data.items.length).toBe(2);
 
@@ -47,7 +47,7 @@ describe('Pages: Redirects', function () {
         });
     });
     
-    it('0001: Should get a redirect by id', function () {
+    it('01301: Should get a redirect by id', function () {
         var url = '/bcms-api/redirects/72EC32B9-D5A4-4642-9D7A-A205009FE9B6',
             result,
             ready = false;
@@ -64,10 +64,10 @@ describe('Pages: Redirects', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
+            expect(result).not.toBeNull();
 
             var redirect = result.data;
-            expect(redirect).toBeDefined();
+            expect(redirect).not.toBeNull();
             api.expectBasePropertiesAreNotNull(redirect);
             expect(redirect.pageUrl).toBe('/_0000_Redirect_From_3/');
             expect(redirect.redirectUrl).toBe('/_0000_Redirect_To_3/');

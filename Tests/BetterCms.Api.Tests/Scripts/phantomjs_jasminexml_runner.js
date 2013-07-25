@@ -14,6 +14,9 @@ if (phantom.args.length !== 2) {
     page = require("webpage").create();
     fs = require("fs");
 
+    page.settings.localToRemoteUrlAccessEnabled = true;
+    page.settings.ignoreSslErrors = true;
+    
     // Echo the output of the tests to the Standard Output
     page.onConsoleMessage = function (msg, source, linenumber) {
         console.log(msg);

@@ -10,7 +10,7 @@ describe('Pages: Pages', function () {
         testPageUrl: '/0000-page-for-tests/'
     };
 
-    it('0000: Should get pages list', function() {
+    it('01000: Should get pages list', function() {
         var url = '/bcms-api/pages/',
             result,
             ready = false;
@@ -36,8 +36,8 @@ describe('Pages: Pages', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
             expect(result.data.totalCount).toBe(4);
             expect(result.data.items.length).toBe(2);
 
@@ -46,7 +46,7 @@ describe('Pages: Pages', function () {
         });
     });
     
-    it('0001: Should get one page in list', function () {
+    it('01001: Should get one page in list', function () {
         var url = '/bcms-api/pages/',
             result,
             ready = false;
@@ -70,8 +70,8 @@ describe('Pages: Pages', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
             expect(result.data.totalCount).toBe(1);
             expect(result.data.items.length).toBe(1);
 
@@ -79,7 +79,7 @@ describe('Pages: Pages', function () {
         });
     });
 
-    it('0002: Should get page by id', function() {
+    it('01002: Should get page by id', function() {
         var url = '/bcms-api/pages/' + constants.testPageId,
             result,
             ready = false;
@@ -96,14 +96,14 @@ describe('Pages: Pages', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
 
             expectPagePropertiesAreNotNull(result.data);
         });
     });
 
-    it('0003: Should get page by url', function () {
+    it('01003: Should get page by url', function () {
         var url = '/bcms-api/pages/by-url/' + constants.testPageUrl,
             result,
             ready = false;
@@ -120,14 +120,14 @@ describe('Pages: Pages', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
 
             expectPagePropertiesAreNotNull(result.data);
         });
     });
 
-    it('0004: Should get page properties by id', function () {
+    it('01004: Should get page properties by id', function () {
         var url = '/bcms-api/page-properties/' + constants.testPageId,
              result,
              ready = false;
@@ -153,14 +153,14 @@ describe('Pages: Pages', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
 
             expectPagePropertiesPropertiesAreNotNull(result);
         });
     });
 
-    it('0005: Should get page properties by url', function () {
+    it('01005: Should get page properties by url', function () {
         var url = '/bcms-api/page-properties/by-url/' + constants.testPageUrl,
               result,
               ready = false;
@@ -186,14 +186,14 @@ describe('Pages: Pages', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
 
             expectPagePropertiesPropertiesAreNotNull(result);
         });
     });
     
-    it('0006: Page should exist', function () {
+    it('01006: Page should exist', function () {
         var url = '/bcms-api/page-exists/' + constants.testPageUrl,
               result,
               ready = false;
@@ -210,14 +210,14 @@ describe('Pages: Pages', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
             expect(result.data.exists).toBe(true);
             expect(result.data.pageId).toBe(constants.testPageId);
         });
     });
 
-    it('0007: Page should not exist', function () {
+    it('01007: Page should not exist', function () {
         var url = '/bcms-api/page-exists/7E78D59E-6747-46D1-B71D-852F44F99E71/',
               result,
               ready = false;
@@ -234,14 +234,14 @@ describe('Pages: Pages', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
             expect(result.data.exists).toBe(false);
-            expect(result.data.pageId).toBeUndefined();
+            expect(result.data.pageId).toBeNull();
         });
     });
 
-    it('0008: Should get page contents', function () {
+    it('01008: Should get page contents', function () {
         var url = '/bcms-api/pages/' + constants.testPageId + '/contents/',
               result,
               ready = false;
@@ -258,9 +258,9 @@ describe('Pages: Pages', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
-            expect(result.data.items).toBeDefined();
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
+            expect(result.data.items).not.toBeNull();
             
             var contents = result.data.items;
             expect(contents.length).toBe(5);
@@ -279,7 +279,7 @@ describe('Pages: Pages', function () {
                     expect(content.contentType).toBe('html-content');
                     expect(content.regionIdentifier).toBe('CMSMainContent');
                     expect(content.isPublished).toBe(true);
-                    expect(content.regionId).toBeDefined();
+                    expect(content.regionId).not.toBeNull();
 
                     contentsFound++;
                 }
@@ -301,11 +301,11 @@ describe('Pages: Pages', function () {
         });
     });
 
-    it('0009: Should get pages list, filtered by tags, using AND connector', function () {
+    it('01009: Should get pages list, filtered by tags, using AND connector', function () {
         filterByTags('and', 1, ['IFilterByTags Page 1']);
     });
     
-    it('0010: Should get pages list, filtered by tags, using OR connector', function () {
+    it('01010: Should get pages list, filtered by tags, using OR connector', function () {
         filterByTags('or', 2, ['IFilterByTags Page 1', 'IFilterByTags Page 3']);
     });
 
@@ -316,12 +316,12 @@ describe('Pages: Pages', function () {
         expect(page.pageUrl).toBe(constants.testPageUrl);
         expect(page.description).toBe('Test page');
         expect(page.isPublished).toBe(true);
-        expect(page.publishedOn).toBeDefined();
-        expect(page.layoutId).toBeDefined();
-        expect(page.categoryId).toBeDefined();
+        expect(page.publishedOn).not.toBeNull();
+        expect(page.layoutId).not.toBeNull();
+        expect(page.categoryId).not.toBeNull();
         expect(page.categoryName).toBe('Category for _0000_Page_For_Tests');
-        expect(page.mainImageId).toBeDefined();
-        expect(page.mainImageThumbnauilUrl).toBeDefined();
+        expect(page.mainImageId).not.toBeNull();
+        expect(page.mainImageThumbnauilUrl).not.toBeNull();
         expect(page.mainImageCaption).toBe("Image for _0000_Page_For_Tests");
         expect(page.isArchived).toBe(true);
     }
@@ -333,12 +333,12 @@ describe('Pages: Pages', function () {
         expect(page.pageUrl).toBe(constants.testPageUrl);
         expect(page.description).toBe('Test page');
         expect(page.isPublished).toBe(true);
-        expect(page.publishedOn).toBeDefined();
-        expect(page.layoutId).toBeDefined();
-        expect(page.categoryId).toBeDefined();
+        expect(page.publishedOn).not.toBeNull();
+        expect(page.layoutId).not.toBeNull();
+        expect(page.categoryId).not.toBeNull();
         expect(page.categoryName).toBe('Category for _0000_Page_For_Tests');
-        expect(page.mainImageId).toBeDefined();
-        expect(page.mainImageThumbnauilUrl).toBeDefined();
+        expect(page.mainImageId).not.toBeNull();
+        expect(page.mainImageThumbnauilUrl).not.toBeNull();
         expect(page.mainImageCaption).toBe("Image for _0000_Page_For_Tests");
         expect(page.isArchived).toBe(true);
     }
@@ -351,12 +351,12 @@ describe('Pages: Pages', function () {
         expect(page.pageUrl).toBe(constants.testPageUrl);
         expect(page.description).toBe('Test page');
         expect(page.isPublished).toBe(true);
-        expect(page.publishedOn).toBeDefined();
-        expect(page.layoutId).toBeDefined();
-        expect(page.categoryId).toBeDefined();
-        expect(page.mainImageId).toBeDefined();
-        expect(page.featuredImageId).toBeDefined();
-        expect(page.secondaryImageId).toBeDefined();
+        expect(page.publishedOn).not.toBeNull();
+        expect(page.layoutId).not.toBeNull();
+        expect(page.categoryId).not.toBeNull();
+        expect(page.mainImageId).not.toBeNull();
+        expect(page.featuredImageId).not.toBeNull();
+        expect(page.secondaryImageId).not.toBeNull();
         expect(page.canonicalUrl).toBe('canonical-url');
         expect(page.customCss).toBe('test page custom css');
         expect(page.customJavaScript).toBe('console.log("test");');
@@ -367,7 +367,7 @@ describe('Pages: Pages', function () {
         
         // layout
         var layout = response.layout;
-        expect(layout).toBeDefined();
+        expect(layout).not.toBeNull();
         api.expectBasePropertiesAreNotNull(layout);
         expect(layout.name).toBe('_0001_Layout3 for _0000_Page_For_Tests');
         expect(layout.layoutPath).toBe('~/Areas/bcms-installation/Views/Shared/DefaultLayout.cshtml');
@@ -375,13 +375,13 @@ describe('Pages: Pages', function () {
         
         // category
         var category = response.category;
-        expect(category).toBeDefined();
+        expect(category).not.toBeNull();
         api.expectBasePropertiesAreNotNull(category);
         expect(category.name).toBe('Category for _0000_Page_For_Tests');
         
         // tags
         var tags = response.tags;
-        expect(tags).toBeDefined();
+        expect(tags).not.toBeNull();
         expect(tags.length).toBe(2);
         expect(tags[0].name).toBe('tag1');
 
@@ -395,14 +395,14 @@ describe('Pages: Pages', function () {
         
         // meta data
         var metadata = response.metaData;
-        expect(metadata).toBeDefined();
+        expect(metadata).not.toBeNull();
         expect(metadata.metaTitle).toBe('Test meta title');
         expect(metadata.metaKeywords).toBe('Test meta keywords');
         expect(metadata.metaDescription).toBe('Test meta description');
         
         // page contents
         var contents = response.pageContents;
-        expect(contents).toBeDefined();
+        expect(contents).not.toBeNull();
         expect(contents.length).toBe(5);
 
         var contentsFound = 0;
@@ -420,7 +420,7 @@ describe('Pages: Pages', function () {
                 expect(content.contentType).toBe('html-content');
                 expect(content.regionIdentifier).toBe('CMSMainContent');
                 expect(content.isPublished).toBe(true);
-                expect(content.regionId).toBeDefined();
+                expect(content.regionId).not.toBeNull();
                 
                 contentsFound++;
             }
@@ -442,13 +442,13 @@ describe('Pages: Pages', function () {
     }
     
     function expectImagePropertiesAreNotNull(image) {
-        expect(image).toBeDefined();
+        expect(image).not.toBeNull();
         api.expectBasePropertiesAreNotNull(image);
         
         expect(image.title).toBe('Image for _0000_Page_For_Tests');
         expect(image.caption).toBe('Image for _0000_Page_For_Tests');
-        expect(image.url).toBeDefined();
-        expect(image.thumbnailUrl).toBeDefined();
+        expect(image.url).not.toBeNull();
+        expect(image.thumbnailUrl).not.toBeNull();
     }
     
     function filterByTags(connector, expectedCount, expectedTitles) {
@@ -481,8 +481,8 @@ describe('Pages: Pages', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
             expect(result.data.totalCount).toBe(expectedCount);
             expect(result.data.items.length).toBe(expectedCount);
             

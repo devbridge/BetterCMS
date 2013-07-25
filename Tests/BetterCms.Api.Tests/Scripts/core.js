@@ -17,7 +17,7 @@ utils.core = utils.core || {};
  * @param freqMs how frequently to repeat 'check'. Default value is 250 milliseconds
  */
 utils.core.waitfor = function (check, onTestPass, onTimeout, timeoutMs, freqMs) {
-    var timeoutMs = timeoutMs || 3000,      //< Default Timeout is 3s
+    var timeoutMs = timeoutMs || 60000,      //< Default Timeout is 60s
         freqMs = freqMs || 250,             //< Default Freq is 250ms
         start = Date.now(),
         condition = false,

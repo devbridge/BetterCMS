@@ -31,7 +31,8 @@
         <script type="text/javascript" src="/spec/media.tree.api.behavior.js"></script>
         <script type="text/javascript" src="/spec/media.files.api.behavior.js"></script>
         <script type="text/javascript" src="/spec/media.images.api.behavior.js"></script>
-</head>
+        <script type="text/javascript" src="/spec/root.filtering.api.behavior.js"></script>
+    </head>
 <body>
 
     <script type="text/javascript">
@@ -39,10 +40,8 @@
             var jasmineEnv = jasmine.getEnv();
 
             var phantomJSReporter = new jasmine.PhantomJSReporter();
-            // var trivialReporter = new jasmine.TrivialReporter();
             var htmlReporter = new jasmine.HtmlReporter();
 
-            // jasmineEnv.addReporter(trivialReporter);
             jasmineEnv.addReporter(phantomJSReporter);
             jasmineEnv.addReporter(htmlReporter);
             jasmineEnv.specFilter = htmlReporter.specFilter;

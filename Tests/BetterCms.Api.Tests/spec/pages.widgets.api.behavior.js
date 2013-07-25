@@ -4,7 +4,7 @@
 describe('Pages: Widgets', function () {
     'use strict';
 
-    it('0000: Should get a list of widgets', function () {
+    it('01200: Should get a list of widgets', function () {
         var url = '/bcms-api/widgets/',
             result,
             ready = false;
@@ -33,8 +33,8 @@ describe('Pages: Widgets', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
             expect(result.data.totalCount).toBe(4);
             expect(result.data.items.length).toBe(2);
 
@@ -43,7 +43,7 @@ describe('Pages: Widgets', function () {
             expect(htmlWidget.widgetType).toBe('html-widget');
             expect(htmlWidget.name).toBe('_0004_Html_Widget_2');
             expect(htmlWidget.isPublished).toBe(true);
-            expect(htmlWidget.publishedOn).toBeDefined();
+            expect(htmlWidget.publishedOn).not.toBeNull();
             expect(htmlWidget.publishedByUser).toBe('Better CMS test user');
             
             var serverWidget = result.data.items[1];
@@ -51,12 +51,12 @@ describe('Pages: Widgets', function () {
             expect(serverWidget.widgetType).toBe('server-widget');
             expect(serverWidget.name).toBe('_0004_Server_Widget_1');
             expect(serverWidget.isPublished).toBe(true);
-            expect(serverWidget.publishedOn).toBeDefined();
+            expect(serverWidget.publishedOn).not.toBeNull();
             expect(serverWidget.publishedByUser).toBe('Better CMS test user');
         });
     });
     
-    it('0001: Should get an html content widget by id', function () {
+    it('01201: Should get an html content widget by id', function () {
         var url = '/bcms-api/widgets/html-content/fa0cbcfb96454fcfa576a205009119c8',
             result,
             ready = false;
@@ -73,16 +73,16 @@ describe('Pages: Widgets', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
+            expect(result).not.toBeNull();
 
             var widget = result.data;
-            expect(widget).toBeDefined();
+            expect(widget).not.toBeNull();
             api.expectBasePropertiesAreNotNull(widget);
             expect(widget.name).toBe('_0004_Html_Widget_2');
             expect(widget.isPublished).toBe(true);
-            expect(widget.publishedOn).toBeDefined();
+            expect(widget.publishedOn).not.toBeNull();
             expect(widget.publishedByUser).toBe('Better CMS test user');
-            expect(widget.categoryId).toBeDefined();
+            expect(widget.categoryId).not.toBeNull();
             expect(widget.categoryName).toBe('Category for _0004_Html_Widget_2');
             expect(widget.customCss).toBe('custom css');
             expect(widget.useCustomCss).toBe(true);
@@ -93,7 +93,7 @@ describe('Pages: Widgets', function () {
         });
     });
     
-    it('0002: Should get a server control widget by id', function () {
+    it('01202: Should get a server control widget by id', function () {
         var url = '/bcms-api/widgets/server-control/3ac115dfc5f34f148141a205009162cd',
             result,
             ready = false;
@@ -110,18 +110,18 @@ describe('Pages: Widgets', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
+            expect(result).not.toBeNull();
 
             var widget = result.data;
-            expect(widget).toBeDefined();
+            expect(widget).not.toBeNull();
             api.expectBasePropertiesAreNotNull(widget);
             expect(widget.name).toBe('_0004_Server_Widget_1');
             expect(widget.widgetUrl).toBe('~/Views/Widgets/TestWidget.cshtml');
             expect(widget.previewUrl).toBe('http://www.devbridge.com/Content/styles/images/responsive/logo.png');
             expect(widget.isPublished).toBe(true);
-            expect(widget.publishedOn).toBeDefined();
+            expect(widget.publishedOn).not.toBeNull();
             expect(widget.publishedByUser).toBe('Better CMS test user');
-            expect(widget.categoryId).toBeDefined();
+            expect(widget.categoryId).not.toBeNull();
             expect(widget.categoryName).toBe('Category for _0004_Server_Widget_1');
         });
     });

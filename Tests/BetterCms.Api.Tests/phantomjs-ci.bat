@@ -1,1 +1,1 @@
-phantomjs Scripts/phantomjs_jasminexml_runner.js http://localhost:55558/runner.html xml_output_dir/
+phantomjs\phantomjs.exe Scripts\phantomjs_jasminexml_runner.js http://localhost:55558/runner.html "C:\Program Files (x86)\CruiseControl.NET\server\MyFirstProject\Artifacts\"

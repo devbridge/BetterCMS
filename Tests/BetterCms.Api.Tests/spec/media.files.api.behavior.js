@@ -4,7 +4,7 @@
 describe('Media Manager: Files', function () {
     'use strict';
     
-    it('0000: Should get a list of file folders', function () {
+    it('03100: Should get a list of file folders', function () {
         var data = {
             filter: {
                 where: [{ field: 'Title', operation: 'StartsWith', value: '_0000_' }]
@@ -27,7 +27,7 @@ describe('Media Manager: Files', function () {
         runFilesListTests(data, results);
     });
 
-    it('0001: Should get a list of files without folders', function () {
+    it('03101: Should get a list of files without folders', function () {
         var data = {
             filter: {
                 where: [{ field: 'Title', operation: 'StartsWith', value: '_0000_' }]
@@ -50,7 +50,7 @@ describe('Media Manager: Files', function () {
         runFilesListTests(data, results);
     });
 
-    it('0002: Should get a list of not archived files and folders', function () {
+    it('03102: Should get a list of not archived files and folders', function () {
         var data = {
             filter: {
                 where: [{ field: 'Title', operation: 'StartsWith', value: '_0000_' }]
@@ -73,7 +73,7 @@ describe('Media Manager: Files', function () {
         runFilesListTests(data, results);
     });
 
-    it('0003: Should get a list of files and folders (including archived)', function () {
+    it('03103: Should get a list of files and folders (including archived)', function () {
         var data = {
             filter: {
                 where: [{ field: 'Title', operation: 'StartsWith', value: '_0000_' }]
@@ -96,7 +96,7 @@ describe('Media Manager: Files', function () {
         runFilesListTests(data, results);
     });
 
-    it('0004: Should get a list of files and folders (only archived)', function () {
+    it('03104: Should get a list of files and folders (only archived)', function () {
         var data = {
             filter: {
                 where: [
@@ -122,7 +122,7 @@ describe('Media Manager: Files', function () {
         runFilesListTests(data, results);
     });
 
-    it('0005: Should get a list from subfolder with specified file', function () {
+    it('03105: Should get a list from subfolder with specified file', function () {
         var url = '/bcms-api/files/',
             result,
             ready = false,
@@ -145,9 +145,9 @@ describe('Media Manager: Files', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
-            expect(result.data.items).toBeDefined();
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
+            expect(result.data.items).not.toBeNull();
             expect(result.data.totalCount).toBe(1);
             expect(result.data.items.length).toBe(1);
 
@@ -159,13 +159,13 @@ describe('Media Manager: Files', function () {
             expect(file.fileSize).toBe(92217);
             expect(file.fileUrl).toBe('http://bettercms.sandbox.mvc4.local/uploads/file/8f46bc6b4fd74c10aba01bf1f7269b92/__Tapir.png');
             expect(file.thumbnailUrl).toBe('http://bettercms.sandbox.mvc4.local/uploads/image/88247a8341184fc2be8c1761c7b86c02/t_1_1.png');
-            expect(file.thumbnailId).toBeDefined();
+            expect(file.thumbnailId).not.toBeNull();
             expect(file.thumbnailCaption).toBe('Image caption for _0001_File_For_Tests');
             expect(file.isArchived).toBe(false);
         });
     });
 
-    it('0006: Should get a list with specified folder', function () {
+    it('03106: Should get a list with specified folder', function () {
         var url = '/bcms-api/files/',
             result,
             ready = false,
@@ -187,9 +187,9 @@ describe('Media Manager: Files', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
-            expect(result.data.items).toBeDefined();
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
+            expect(result.data.items).not.toBeNull();
             expect(result.data.totalCount).toBe(1);
             expect(result.data.items.length).toBe(1);
 
@@ -197,17 +197,17 @@ describe('Media Manager: Files', function () {
             api.expectBasePropertiesAreNotNull(folder);
             expect(folder.title).toBe('_0001_Files_Folder_For_Tests');
             expect(folder.mediaContentType).toBe('Folder');
-            expect(folder.fileExtension).toBeUndefined();
-            expect(folder.fileSize).toBeUndefined();
-            expect(folder.fileUrl).toBeUndefined();
-            expect(folder.thumbnailUrl).toBeUndefined();
-            expect(folder.thumbnailId).toBeUndefined();
-            expect(folder.thumbnailCaption).toBeUndefined();
+            expect(folder.fileExtension).toBeNull();
+            expect(folder.fileSize).toBeNull();
+            expect(folder.fileUrl).toBeNull();
+            expect(folder.thumbnailUrl).toBeNull();
+            expect(folder.thumbnailId).toBeNull();
+            expect(folder.thumbnailCaption).toBeNull();
             expect(folder.isArchived).toBe(false);
         });
     });
 
-    it('0007: Should get file properties by file id', function () {
+    it('03107: Should get file properties by file id', function () {
         var url = '/bcms-api/files/4ef65c378a9f4a2f90b5a20600816711',
             result,
             ready = false,
@@ -227,12 +227,12 @@ describe('Media Manager: Files', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
 
             // File
             var file = result.data;
-            expect(file).toBeDefined();
+            expect(file).not.toBeNull();
             api.expectBasePropertiesAreNotNull(file);
             expect(file.title).toBe('_0001_File_For_Tests');
             expect(file.description).toBe('File Description');
@@ -240,18 +240,18 @@ describe('Media Manager: Files', function () {
             expect(file.fileSize).toBe(92217);
             expect(file.fileUrl).toBe('http://bettercms.sandbox.mvc4.local/uploads/file/8f46bc6b4fd74c10aba01bf1f7269b92/__Tapir.png');
             expect(file.isArchived).toBe(false);
-            expect(file.folderId).toBeDefined();
+            expect(file.folderId).not.toBeNull();
             expect(file.folderName).toBe('_0001_Files_Folder_For_Tests');
-            expect(file.publishedOn).toBeDefined();
+            expect(file.publishedOn).not.toBeNull();
             expect(file.originalFileName).toBe('__Tapir.png');
             expect(file.originalFileExtension).toBe('.png');
             expect(file.thumbnailUrl).toBe('http://bettercms.sandbox.mvc4.local/uploads/image/88247a8341184fc2be8c1761c7b86c02/t_1_1.png');
-            expect(file.thumbnailId).toBeDefined();
+            expect(file.thumbnailId).not.toBeNull();
             expect(file.thumbnailCaption).toBe('Image caption for _0001_File_For_Tests');
             
             // Tags
             var tags = result.tags;
-            expect(tags).toBeDefined();
+            expect(tags).not.toBeNull();
             expect(tags.length).toBe(2);
 
             api.expectBasePropertiesAreNotNull(tags[0]);
@@ -260,11 +260,11 @@ describe('Media Manager: Files', function () {
         });
     });
 
-    it('0008: Should get files list, filtered by tags, using AND connector', function () {
+    it('03108: Should get files list, filtered by tags, using AND connector', function () {
         filterByTags('and', 1, ['IFilterByTags File 1']);
     });
 
-    it('0009: Should get files list, filtered by tags, using OR connector', function () {
+    it('03109: Should get files list, filtered by tags, using OR connector', function () {
         filterByTags('or', 2, ['IFilterByTags File 1', 'IFilterByTags File 3']);
     });
 
@@ -285,9 +285,9 @@ describe('Media Manager: Files', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
-            expect(result.data.items).toBeDefined();
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
+            expect(result.data.items).not.toBeNull();
             expect(result.data.totalCount).toBe(expectingResults.totalCount);
             expect(result.data.items.length).toBe(1);
             expect(result.data.items[0].title).toBe(expectingResults.title);
@@ -322,8 +322,8 @@ describe('Media Manager: Files', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
             expect(result.data.totalCount).toBe(expectedCount);
             expect(result.data.items.length).toBe(expectedCount);
 

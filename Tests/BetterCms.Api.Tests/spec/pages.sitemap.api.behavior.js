@@ -20,7 +20,7 @@ describe('Pages: Sitemap', function () {
         child2Url: '/root/2/'
     };
 
-    it('0000: Should get full sitemap tree', function () {
+    it('01400: Should get full sitemap tree', function () {
         var url = '/bcms-api/sitemap-tree/',
             result,
             ready = false;
@@ -37,8 +37,8 @@ describe('Pages: Sitemap', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
             expect(result.data.length).toBeGreaterThan(0);
 
             var rootFound = false;
@@ -48,10 +48,10 @@ describe('Pages: Sitemap', function () {
                     rootFound = true;
 
                     api.expectBasePropertiesAreNotNull(rootNode);
-                    expect(rootNode.parentId).toBeUndefined();
+                    expect(rootNode.parentId).toBeNull();
                     expect(rootNode.url).toBe(constants.rootUrl);
-                    expect(rootNode.displayOrder).toBeDefined();
-                    expect(rootNode.childrenNodes).toBeDefined();
+                    expect(rootNode.displayOrder).not.toBeNull();
+                    expect(rootNode.childrenNodes).not.toBeNull();
                     expect(rootNode.childrenNodes.length).toBe(2);
 
                     // /root/1/
@@ -67,7 +67,7 @@ describe('Pages: Sitemap', function () {
         });
     });
     
-    it('0001: Should get sitemap tree, filtered by node', function () {
+    it('01401: Should get sitemap tree, filtered by node', function () {
         var url = '/bcms-api/sitemap-tree/',
             result,
             ready = false,
@@ -87,8 +87,8 @@ describe('Pages: Sitemap', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
             expect(result.data.length).toBe(2);
 
             var child1 = result.data[0];
@@ -102,7 +102,7 @@ describe('Pages: Sitemap', function () {
         });
     });
 
-    it('0002: Should get a list of sitemap nodes', function () {
+    it('01402: Should get a list of sitemap nodes', function () {
         var url = '/bcms-api/sitemap-nodes/',
             result,
             ready = false,
@@ -132,9 +132,9 @@ describe('Pages: Sitemap', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
-            expect(result.data.items).toBeDefined();
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
+            expect(result.data.items).not.toBeNull();
             expect(result.data.totalCount).toBe(3);
             expect(result.data.items.length).toBe(2);
             
@@ -145,11 +145,11 @@ describe('Pages: Sitemap', function () {
             api.expectBasePropertiesAreNotNull(node);
             expect(node.parentId).toBe(constants.child11Id);
             expect(node.url).toBe(constants.child111Url);
-            expect(node.displayOrder).toBeDefined();
+            expect(node.displayOrder).not.toBeNull();
         });
     });
 
-    it('0003: Should get a sitemap node by id', function () {
+    it('01403: Should get a sitemap node by id', function () {
         var url = '/bcms-api/sitemap-nodes/' + constants.child11Id,
             result,
             ready = false;
@@ -166,15 +166,15 @@ describe('Pages: Sitemap', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
+            expect(result).not.toBeNull();
 
             var node = result.data;
-            expect(node).toBeDefined();
+            expect(node).not.toBeNull();
             api.expectBasePropertiesAreNotNull(node);
             expect(node.title).toBe(constants.child11Title);
             expect(node.parentId).toBe(constants.child1Id);
             expect(node.url).toBe(constants.child11Url);
-            expect(node.displayOrder).toBeDefined();
+            expect(node.displayOrder).not.toBeNull();
         });
     });
 
@@ -201,7 +201,7 @@ describe('Pages: Sitemap', function () {
         expect(node.title).toBe(title);
         expect(node.parentId).toBe(parentId);
         expect(node.url).toBe(url);
-        expect(node.childrenNodes).toBeDefined();
+        expect(node.childrenNodes).not.toBeNull();
         expect(node.childrenNodes.length).toBe(childrenCount);
     }
 });
