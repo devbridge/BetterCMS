@@ -145,9 +145,9 @@ describe('Media Manager: Images', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
-            expect(result.data.items).toBeDefined();
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
+            expect(result.data.items).not.toBeNull();
             expect(result.data.totalCount).toBe(1);
             expect(result.data.items.length).toBe(1);
 
@@ -186,21 +186,21 @@ describe('Media Manager: Images', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
-            expect(result.data.items).toBeDefined();
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
+            expect(result.data.items).not.toBeNull();
             expect(result.data.totalCount).toBe(1);
             expect(result.data.items.length).toBe(1);
 
             var folder = result.data.items[0];
             api.expectBasePropertiesAreNotNull(folder);
             expect(folder.title).toBe('_0001_Images_Folder_For_Tests');
-            expect(folder.caption).toBeUndefined();
+            expect(folder.caption).toBeNull();
             expect(folder.mediaContentType).toBe('Folder');
-            expect(folder.fileExtension).toBeUndefined();
-            expect(folder.fileSize).toBeUndefined();
-            expect(folder.imageUrl).toBeUndefined();
-            expect(folder.thumbnailUrl).toBeUndefined();
+            expect(folder.fileExtension).toBeNull();
+            expect(folder.fileSize).toBeNull();
+            expect(folder.imageUrl).toBeNull();
+            expect(folder.thumbnailUrl).toBeNull();
             expect(folder.isArchived).toBe(false);
         });
     });
@@ -225,12 +225,12 @@ describe('Media Manager: Images', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
 
             // Image
             var image = result.data;
-            expect(image).toBeDefined();
+            expect(image).not.toBeNull();
             api.expectBasePropertiesAreNotNull(image);
             expect(image.title).toBe('_0001_Image_For_Tests');
             expect(image.caption).toBe('Image Caption');
@@ -245,9 +245,9 @@ describe('Media Manager: Images', function () {
             expect(image.thumbnailHeight).toBe(150);
             expect(image.thumbnailSize).toBe(15590);
             expect(image.isArchived).toBe(false);
-            expect(image.folderId).toBeDefined();
+            expect(image.folderId).not.toBeNull();
             expect(image.folderName).toBe('_0001_Images_Folder_For_Tests');
-            expect(image.publishedOn).toBeDefined();
+            expect(image.publishedOn).not.toBeNull();
             expect(image.originalFileName).toBe('__Tapir.png');
             expect(image.originalFileExtension).toBe('.png');
             expect(image.originalWidth).toBe(480);
@@ -257,7 +257,7 @@ describe('Media Manager: Images', function () {
 
             // Tags
             var tags = result.tags;
-            expect(tags).toBeDefined();
+            expect(tags).not.toBeNull();
             expect(tags.length).toBe(2);
 
             api.expectBasePropertiesAreNotNull(tags[0]);
@@ -291,9 +291,9 @@ describe('Media Manager: Images', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
-            expect(result.data.items).toBeDefined();
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
+            expect(result.data.items).not.toBeNull();
             expect(result.data.totalCount).toBe(expectingResults.totalCount);
             expect(result.data.items.length).toBe(1);
             expect(result.data.items[0].title).toBe(expectingResults.title);
@@ -328,8 +328,8 @@ describe('Media Manager: Images', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
             expect(result.data.totalCount).toBe(expectedCount);
             expect(result.data.items.length).toBe(expectedCount);
 

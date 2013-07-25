@@ -21,8 +21,8 @@ describe('Root: General', function() {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
             expect(result.data.version).toBe("1.0.0-dev");
         });               
     });

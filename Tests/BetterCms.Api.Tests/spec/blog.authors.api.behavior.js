@@ -33,8 +33,8 @@ describe('Blog: Authors', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
             expect(result.data.totalCount).toBe(4);
             expect(result.data.items.length).toBe(2);
 
@@ -42,16 +42,16 @@ describe('Blog: Authors', function () {
             api.expectBasePropertiesAreNotNull(result.data.items[1]);
             
             expect(result.data.items[0].name).toBe('_0000_Author_2');
-            expect(result.data.items[0].imageId).toBeDefined();
-            expect(result.data.items[0].imageUrl).toBeDefined();
-            expect(result.data.items[0].imageThumbnailUrl).toBeDefined();
+            expect(result.data.items[0].imageId).not.toBeNull();
+            expect(result.data.items[0].imageUrl).not.toBeNull();
+            expect(result.data.items[0].imageThumbnailUrl).not.toBeNull();
             expect(result.data.items[0].imageCaption).toBe('Image caption for _0000_Author_2');
             
             expect(result.data.items[1].name).toBe('_0000_Author_3');
-            expect(result.data.items[1].imageId).toBeUndefined();
-            expect(result.data.items[1].imageUrl).toBeUndefined();
-            expect(result.data.items[1].imageThumbnailUrl).toBeUndefined();
-            expect(result.data.items[1].imageCaption).toBeUndefined();
+            expect(result.data.items[1].imageId).toBeNull();
+            expect(result.data.items[1].imageUrl).toBeNull();
+            expect(result.data.items[1].imageThumbnailUrl).toBeNull();
+            expect(result.data.items[1].imageCaption).toBeNull();
         });
     });
     
@@ -72,16 +72,16 @@ describe('Blog: Authors', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
+            expect(result).not.toBeNull();
 
             var author = result.data;
-            expect(author).toBeDefined();
+            expect(author).not.toBeNull();
             api.expectBasePropertiesAreNotNull(author);
             
             expect(author.name).toBe('_0000_Author_2');
-            expect(author.imageId).toBeDefined();
-            expect(author.imageUrl).toBeDefined();
-            expect(author.imageThumbnailUrl).toBeDefined();
+            expect(author.imageId).not.toBeNull();
+            expect(author.imageUrl).not.toBeNull();
+            expect(author.imageThumbnailUrl).not.toBeNull();
             expect(author.imageCaption).toBe('Image caption for _0000_Author_2');
         });
     });

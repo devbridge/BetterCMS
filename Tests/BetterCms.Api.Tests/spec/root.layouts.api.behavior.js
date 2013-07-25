@@ -48,8 +48,8 @@ describe('Root: Layouts', function() {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
             expect(result.data.totalCount).toBe(4);
             expect(result.data.items.length).toBe(2);
 
@@ -81,8 +81,8 @@ describe('Root: Layouts', function() {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
 
             // Layout
             api.expectBasePropertiesAreNotNull(result.data);
@@ -117,9 +117,9 @@ describe('Root: Layouts', function() {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
-            expect(result.data.items).toBeDefined();
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
+            expect(result.data.items).not.toBeNull();
             expect(result.data.items.length).toBe(3);
 
             api.expectBasePropertiesAreNotNull(result.data.items[0]);

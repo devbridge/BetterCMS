@@ -21,10 +21,10 @@ describe('Pages: Contents', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
+            expect(result).not.toBeNull();
 
             var content = result.data;
-            expect(content).toBeDefined();
+            expect(content).not.toBeNull();
 
             api.expectBasePropertiesAreNotNull(content);
             expect(content.name).toBe('MainContent1 - HTML');
@@ -58,10 +58,10 @@ describe('Pages: Contents', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
+            expect(result).not.toBeNull();
 
             var content = result.data;
-            expect(content).toBeDefined();
+            expect(content).not.toBeNull();
 
             api.expectBasePropertiesAreNotNull(content);
             expect(content.name).toBe('_0002_Blog_Post_For_Tests');
@@ -96,10 +96,10 @@ describe('Pages: Contents', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
+            expect(result).not.toBeNull();
 
             var history = result.data;
-            expect(history).toBeDefined();
+            expect(history).not.toBeNull();
             expect(history.length).toBe(3);
 
             var published = history[0];
@@ -115,25 +115,25 @@ describe('Pages: Contents', function () {
             expect(draft.status).toBe('Draft');
             
             // Original id
-            expect(published.originalContentId).toBeUndefined();
-            expect(archived.originalContentId).toBeDefined();
-            expect(draft.originalContentId).toBeDefined();
+            expect(published.originalContentId).toBeNull();
+            expect(archived.originalContentId).not.toBeNull();
+            expect(draft.originalContentId).not.toBeNull();
             
             // Publish info
-            expect(published.publishedOn).toBeDefined();
-            expect(published.publishedByUser).toBeDefined();
-            expect(archived.publishedOn).toBeUndefined();
-            expect(archived.publishedByUser).toBeUndefined();
-            expect(draft.publishedOn).toBeUndefined();
-            expect(draft.publishedByUser).toBeUndefined();
+            expect(published.publishedOn).not.toBeNull();
+            expect(published.publishedByUser).not.toBeNull();
+            expect(archived.publishedOn).toBeNull();
+            expect(archived.publishedByUser).toBeNull();
+            expect(draft.publishedOn).toBeNull();
+            expect(draft.publishedByUser).toBeNull();
             
             // Archivation info
-            expect(archived.archivedOn).toBeDefined();
-            expect(archived.archivedByUser).toBeDefined();
-            expect(published.archivedOn).toBeUndefined();
-            expect(published.archivedByUser).toBeUndefined();
-            expect(draft.archivedOn).toBeUndefined();
-            expect(draft.archivedByUser).toBeUndefined();
+            expect(archived.archivedOn).not.toBeNull();
+            expect(archived.archivedByUser).not.toBeNull();
+            expect(published.archivedOn).toBeNull();
+            expect(published.archivedByUser).toBeNull();
+            expect(draft.archivedOn).toBeNull();
+            expect(draft.archivedByUser).toBeNull();
         });
     });
 });

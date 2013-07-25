@@ -24,17 +24,25 @@ var api = (function() {
     * Checks if all properties of base model are not null
     */
     obj.expectBasePropertiesAreNotNull = function (entity) {
-        expect(entity.id).toBeDefined();
-        expect(entity.version).toBeDefined();
-        expect(entity.createdBy).toBeDefined();
-        expect(entity.lastModifiedBy).toBeDefined();
-        expect(entity.createdOn).toBeDefined();
-        expect(entity.lastModifiedOn).toBeDefined();
+        expect(entity.id).not.toBeNull();
+        expect(entity.version).not.toBeNull();
+        expect(entity.createdBy).not.toBeNull();
+        expect(entity.lastModifiedBy).not.toBeNull();
+        expect(entity.createdOn).not.toBeNull();
+        expect(entity.lastModifiedOn).not.toBeNull();
 
         expect(entity.version).toBeGreaterThan(0);
         expect(entity.createdOn.length).toBe(26);
         expect(entity.lastModifiedOn.length).toBe(26);
         expect(entity.id.length).toBe(32);
+    };
+
+    obj.getCountOfProperties = function (object) {
+        return Object.keys(object).length;
+    };
+
+    obj.expectPropertiesCountIsCorrect = function (object, count) {
+        expect(obj.getCountOfProperties(object)).toBe(count);
     };
 
     return obj;

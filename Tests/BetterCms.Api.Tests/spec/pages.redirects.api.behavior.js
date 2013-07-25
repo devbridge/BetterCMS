@@ -33,8 +33,8 @@ describe('Pages: Redirects', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
             expect(result.data.totalCount).toBe(4);
             expect(result.data.items.length).toBe(2);
 
@@ -64,10 +64,10 @@ describe('Pages: Redirects', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
+            expect(result).not.toBeNull();
 
             var redirect = result.data;
-            expect(redirect).toBeDefined();
+            expect(redirect).not.toBeNull();
             api.expectBasePropertiesAreNotNull(redirect);
             expect(redirect.pageUrl).toBe('/_0000_Redirect_From_3/');
             expect(redirect.redirectUrl).toBe('/_0000_Redirect_To_3/');

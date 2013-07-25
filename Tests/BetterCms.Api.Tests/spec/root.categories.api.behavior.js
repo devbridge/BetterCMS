@@ -36,8 +36,8 @@ describe('Root: Categories', function() {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
             expect(result.data.totalCount).toBe(5);
             expect(result.data.items.length).toBe(3);
 
@@ -64,11 +64,53 @@ describe('Root: Categories', function() {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
 
             api.expectBasePropertiesAreNotNull(result.data);
             expect(result.data.name).toBe('_0001_ - 3');
+        });
+    });
+    
+    it('00302: Should get a list with one category, filtered by all available columns', function () {
+        var url = '/bcms-api/categories/',
+            result,
+            ready = false,
+            data = {
+                filter: {
+                    where: [
+                        { field: 'Id', value: 'A60E08C1-9150-4DBE-BD32-A20601185796' },
+                        { field: 'CreatedOn', value: '2013-07-25 17:00:41.000' },
+                        { field: 'CreatedBy', value: 'Better CMS test user' },
+                        { field: 'LastModifiedOn', value: '2013-07-25 17:00:41.000' },
+                        { field: 'LastModifiedBy', value: 'Better CMS test user' },
+                        { field: 'Version', value: '1' },
+                        { field: 'Name', value: '00302' }
+                    ]
+                }
+            };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
+            expect(result.data.totalCount).toBe(1);
+            expect(result.data.items.length).toBe(1);
+
+            expect(result.data.items[0].id).toBe('a60e08c191504dbebd32a20601185796');
+
+            // Check if model count didn't changed. If so - update filter up there and another tests.
+            api.expectPropertiesCountIsCorrect(result.data.items[0], 7);
         });
     });
 });

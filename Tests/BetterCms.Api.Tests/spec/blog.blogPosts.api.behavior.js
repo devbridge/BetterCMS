@@ -28,8 +28,8 @@ describe('Blog: Blog Posts', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
             expect(result.data.totalCount).toBe(1);
             expect(result.data.items.length).toBe(1);
         });
@@ -53,8 +53,8 @@ describe('Blog: Blog Posts', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
             expect(result.data.totalCount).toBe(2);
             expect(result.data.items.length).toBe(1);
         });
@@ -78,8 +78,8 @@ describe('Blog: Blog Posts', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
             expect(result.data.totalCount).toBe(2);
             expect(result.data.items.length).toBe(1);
         });
@@ -103,8 +103,8 @@ describe('Blog: Blog Posts', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
             expect(result.data.totalCount).toBe(4);
             expect(result.data.items.length).toBe(2);
 
@@ -114,15 +114,15 @@ describe('Blog: Blog Posts', function () {
             expect(blogPost.blogPostUrl).toBe(constants.testPageUrl);
             expect(blogPost.introText).toBe('_0003_Blog_For_Tests_ intro text');
             expect(blogPost.isPublished).toBe(true);
-            expect(blogPost.publishedOn).toBeDefined();
-            expect(blogPost.layoutId).toBeDefined();
-            expect(blogPost.categoryId).toBeDefined();
+            expect(blogPost.publishedOn).not.toBeNull();
+            expect(blogPost.layoutId).not.toBeNull();
+            expect(blogPost.categoryId).not.toBeNull();
             expect(blogPost.categoryName).toBe('Category for _0003_Blog_For_Tests_');
-            expect(blogPost.authorId).toBeDefined();
+            expect(blogPost.authorId).not.toBeNull();
             expect(blogPost.authorName).toBe('Author for _0003_Blog_For_Tests_');
-            expect(blogPost.mainImageId).toBeDefined();
-            expect(blogPost.mainImageUrl).toBeDefined();
-            expect(blogPost.mainImageThumbnauilUrl).toBeDefined();
+            expect(blogPost.mainImageId).not.toBeNull();
+            expect(blogPost.mainImageUrl).not.toBeNull();
+            expect(blogPost.mainImageThumbnauilUrl).not.toBeNull();
             expect(blogPost.mainImageCaption).toBe('Image caption for _0003_Blog_For_Tests_');
             expect(blogPost.activationDate).toBe('/Date(1374613200000-0000)/');
             expect(blogPost.expirationDate).toBe('/Date(1974315599000-0000)/');
@@ -147,24 +147,24 @@ describe('Blog: Blog Posts', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
+            expect(result).not.toBeNull();
 
             var blogPost = result.data;
-            expect(blogPost).toBeDefined();
+            expect(blogPost).not.toBeNull();
             api.expectBasePropertiesAreNotNull(blogPost);
             expect(blogPost.title).toBe(constants.testPageTitle);
             expect(blogPost.blogPostUrl).toBe(constants.testPageUrl);
             expect(blogPost.introText).toBe('_0003_Blog_For_Tests_ intro text');
             expect(blogPost.isPublished).toBe(true);
-            expect(blogPost.publishedOn).toBeDefined();
-            expect(blogPost.layoutId).toBeDefined();
-            expect(blogPost.categoryId).toBeDefined();
+            expect(blogPost.publishedOn).not.toBeNull();
+            expect(blogPost.layoutId).not.toBeNull();
+            expect(blogPost.categoryId).not.toBeNull();
             expect(blogPost.categoryName).toBe('Category for _0003_Blog_For_Tests_');
-            expect(blogPost.authorId).toBeDefined();
+            expect(blogPost.authorId).not.toBeNull();
             expect(blogPost.authorName).toBe('Author for _0003_Blog_For_Tests_');
-            expect(blogPost.mainImageId).toBeDefined();
-            expect(blogPost.mainImageUrl).toBeDefined();
-            expect(blogPost.mainImageThumbnauilUrl).toBeDefined();
+            expect(blogPost.mainImageId).not.toBeNull();
+            expect(blogPost.mainImageUrl).not.toBeNull();
+            expect(blogPost.mainImageThumbnauilUrl).not.toBeNull();
             expect(blogPost.mainImageCaption).toBe('Image caption for _0003_Blog_For_Tests_');
             expect(blogPost.activationDate).toBe('/Date(1374613200000-0000)/');
             expect(blogPost.expirationDate).toBe('/Date(1974315599000-0000)/');
@@ -199,8 +199,8 @@ describe('Blog: Blog Posts', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
 
             // Page
             var blogPost = result.data;
@@ -209,13 +209,13 @@ describe('Blog: Blog Posts', function () {
             expect(blogPost.blogPostUrl).toBe(constants.testPageUrl);
             expect(blogPost.introText).toBe('_0003_Blog_For_Tests_ intro text');
             expect(blogPost.isPublished).toBe(true);
-            expect(blogPost.publishedOn).toBeDefined();
-            expect(blogPost.layoutId).toBeDefined();
-            expect(blogPost.categoryId).toBeDefined();
-            expect(blogPost.authorId).toBeDefined();
-            expect(blogPost.mainImageId).toBeDefined();
-            expect(blogPost.secondaryImageId).toBeDefined();
-            expect(blogPost.featuredImageId).toBeDefined();
+            expect(blogPost.publishedOn).not.toBeNull();
+            expect(blogPost.layoutId).not.toBeNull();
+            expect(blogPost.categoryId).not.toBeNull();
+            expect(blogPost.authorId).not.toBeNull();
+            expect(blogPost.mainImageId).not.toBeNull();
+            expect(blogPost.secondaryImageId).not.toBeNull();
+            expect(blogPost.featuredImageId).not.toBeNull();
             expect(blogPost.activationDate).toBe('/Date(1374613200000-0000)/');
             expect(blogPost.expirationDate).toBe('/Date(1974315599000-0000)/');
             expect(blogPost.isArchived).toBe(false);
@@ -225,7 +225,7 @@ describe('Blog: Blog Posts', function () {
 
             // layout
             var layout = result.layout;
-            expect(layout).toBeDefined();
+            expect(layout).not.toBeNull();
             api.expectBasePropertiesAreNotNull(layout);
             expect(layout.name).toBe('_0003_Layout for _0003_Blog_For_Tests_');
             expect(layout.layoutPath).toBe('~/Areas/bcms-installation/Views/Shared/DefaultLayout.cshtml');
@@ -233,19 +233,19 @@ describe('Blog: Blog Posts', function () {
 
             // category
             var category = result.category;
-            expect(category).toBeDefined();
+            expect(category).not.toBeNull();
             api.expectBasePropertiesAreNotNull(category);
             expect(category.name).toBe('Category for _0003_Blog_For_Tests_');
             
             // author
             var author = result.author;
-            expect(author).toBeDefined();
+            expect(author).not.toBeNull();
             api.expectBasePropertiesAreNotNull(author);
             expect(author.name).toBe('Author for _0003_Blog_For_Tests_');
 
             // tags
             var tags = result.tags;
-            expect(tags).toBeDefined();
+            expect(tags).not.toBeNull();
             expect(tags.length).toBe(2);
             expect(tags[0].name).toBe('tag1_0003_Blog_For_Tests_');
 
@@ -259,7 +259,7 @@ describe('Blog: Blog Posts', function () {
 
             // meta data
             var metadata = result.metaData;
-            expect(metadata).toBeDefined();
+            expect(metadata).not.toBeNull();
             expect(metadata.metaTitle).toBe('Test meta title');
             expect(metadata.metaKeywords).toBe('Test meta keywords');
             expect(metadata.metaDescription).toBe('Test meta description');
@@ -290,13 +290,13 @@ describe('Blog: Blog Posts', function () {
     }
     
     function expectImagePropertiesAreNotNull(image) {
-        expect(image).toBeDefined();
+        expect(image).not.toBeNull();
         api.expectBasePropertiesAreNotNull(image);
 
         expect(image.title).toBe('Image for _0003_Blog_For_Tests_');
         expect(image.caption).toBe('Image caption for _0003_Blog_For_Tests_');
-        expect(image.url).toBeDefined();
-        expect(image.thumbnailUrl).toBeDefined();
+        expect(image.url).not.toBeNull();
+        expect(image.thumbnailUrl).not.toBeNull();
     }
     
     function filterByTags(connector, expectedCount, expectedTitles) {
@@ -329,8 +329,8 @@ describe('Blog: Blog Posts', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
             expect(result.data.totalCount).toBe(expectedCount);
             expect(result.data.items.length).toBe(expectedCount);
 

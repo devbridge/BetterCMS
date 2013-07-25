@@ -134,12 +134,12 @@ describe('Media Manager: Tree', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
+            expect(result).not.toBeNull();
 
             var tree = result.data;
-            expect(tree).toBeDefined();
-            expect(tree.imagesTree).toBeDefined();
-            expect(tree.filesTree).toBeDefined();
+            expect(tree).not.toBeNull();
+            expect(tree.imagesTree).not.toBeNull();
+            expect(tree.filesTree).not.toBeNull();
 
             testParentIds(tree.imagesTree, null);
             testParentIds(tree.filesTree, null);
@@ -163,10 +163,10 @@ describe('Media Manager: Tree', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function() {
-            expect(result).toBeDefined();
+            expect(result).not.toBeNull();
 
             var tree = result.data;
-            expect(tree).toBeDefined();
+            expect(tree).not.toBeNull();
 
             var testResult = runListTest(tree.filesTree, data.includeFilesTree, data.includeFiles, expectingResults.filesTreeCount, expectingResults.filesFoldersCount);
             if (testResult.folder) {
@@ -197,7 +197,7 @@ describe('Media Manager: Tree', function () {
             result = {};
 
         if (includeTree) {
-            expect(allItems).toBeDefined();
+            expect(allItems).not.toBeNull();
 
             items = collectItems(allItems);
             expect(items.length).toBe(expectingCount);
@@ -214,7 +214,7 @@ describe('Media Manager: Tree', function () {
                 result.file = files[0];
             }
         } else {
-            expect(allItems).toBeUndefined();
+            expect(allItems).toBeNull();
         }
 
         return result;
@@ -275,7 +275,7 @@ describe('Media Manager: Tree', function () {
     function testBase(item) {
         api.expectBasePropertiesAreNotNull(item);
 
-        expect(item.parentFolderId).toBeUndefined();
+        expect(item.parentFolderId).toBeNull();
         expect(item.isArchived).toBe(false);
     }
 
@@ -283,7 +283,7 @@ describe('Media Manager: Tree', function () {
         testBase(file);
         
         expect(file.mediaContentType).toBe('File');
-        expect(file.url).toBeDefined();
+        expect(file.url).not.toBeNull();
         expect(file.children.length).toBe(0);
     }
 
@@ -291,7 +291,7 @@ describe('Media Manager: Tree', function () {
         testBase(folder);
         
         expect(folder.mediaContentType).toBe('Folder');
-        expect(folder.url).toBeUndefined();
+        expect(folder.url).toBeNull();
     }
     
     function testParentIds(items, parentFolderId) {
@@ -299,7 +299,7 @@ describe('Media Manager: Tree', function () {
             if (parentFolderId) {
                 expect(items[i].parentFolderId).toBe(parentFolderId);
             } else {
-                expect(items[i].parentFolderId).toBeUndefined();
+                expect(items[i].parentFolderId).toBeNull();
             }
             
             if (items[i].children) {

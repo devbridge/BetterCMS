@@ -141,8 +141,8 @@ describe('Root: Filtering', function() {
             }, 'The ' + url + ' timeout.');
             
             runs(function () {
-                expect(result).toBeDefined();
-                expect(result.data).toBeDefined();
+                expect(result).not.toBeNull();
+                expect(result.data).not.toBeNull();
                 expect(result.data.totalCount).toBe(test.count);
                 expect(result.data.items.length).toBe(1);
             });
