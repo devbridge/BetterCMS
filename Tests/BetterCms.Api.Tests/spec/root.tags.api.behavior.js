@@ -4,7 +4,7 @@
 describe('Root: Tags', function() {
     'use strict';
 
-    it('0000: Should get tags list', function () {
+    it('00200: Should get tags list', function () {
         var url = '/bcms-api/tags/',
             result,
             ready = false;
@@ -47,7 +47,7 @@ describe('Root: Tags', function() {
         });
     });
 
-    it('0001: Should get a tag by id', function () {
+    it('00201: Should get a tag by id', function () {
         var url = '/bcms-api/tags/7f6da39e75ae4718ad4ca2040113d40b',
             result,
             ready = false;

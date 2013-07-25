@@ -4,7 +4,7 @@
 describe('Pages: Contents', function () {
     'use strict';
 
-    it('0000: Should get html content by content id', function () {
+    it('01100: Should get html content by content id', function () {
         var url = '/bcms-api/contents/html/61263510-2810-4c6f-b7c5-a20400fe6877',
             result,
             ready = false;
@@ -41,7 +41,7 @@ describe('Pages: Contents', function () {
         });
     });
     
-    it('0001: Should get blog post content by id', function () {
+    it('01101: Should get blog post content by id', function () {
         var url = '/bcms-api/contents/blog-post/06182C92-E61E-4023-B3C9-A2050086598C',
             result,
             ready = false;
@@ -72,7 +72,7 @@ describe('Pages: Contents', function () {
         });
     });
     
-    it('0002: Should get content history by content id', function () {
+    it('01102: Should get content history by content id', function () {
         var url = '/bcms-api/contents/97A1C2CF-DC8A-4D3F-9DD1-A205008C3F36/history',
             result,
             ready = false,

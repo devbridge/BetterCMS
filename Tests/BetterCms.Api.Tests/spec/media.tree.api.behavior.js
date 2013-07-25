@@ -4,7 +4,7 @@
 describe('Media Manager: Tree', function () {
     'use strict';
 
-    it('0000: Should get a media tree: only image folders', function () {
+    it('03000: Should get a media tree: only image folders', function () {
         var data = {
             includeArchived: false,
             includeImagesTree: true,
@@ -21,7 +21,7 @@ describe('Media Manager: Tree', function () {
         runTreeTests(data, results);
     });
 
-    it('0001: Should get a media tree: only image folders and images', function () {
+    it('03001: Should get a media tree: only image folders and images', function () {
         var data = {
             includeArchived: false,
             includeImagesTree: true,
@@ -38,7 +38,7 @@ describe('Media Manager: Tree', function () {
         runTreeTests(data, results);
     });
     
-    it('0002: Should get a media tree: only files folders', function () {
+    it('03002: Should get a media tree: only files folders', function () {
         var data = {
             includeArchived: false,
             includeImagesTree: false,
@@ -55,7 +55,7 @@ describe('Media Manager: Tree', function () {
         runTreeTests(data, results);
     });
 
-    it('0003: Should get a media tree: only files folders and files', function () {
+    it('03003: Should get a media tree: only files folders and files', function () {
         var data = {
             includeArchived: false,
             includeImagesTree: false,
@@ -72,7 +72,7 @@ describe('Media Manager: Tree', function () {
         runTreeTests(data, results);
     });
 
-    it('0004: Should get a media tree: including everything (except archived)', function () {
+    it('03004: Should get a media tree: including everything (except archived)', function () {
         var data = {
             includeArchived: false,
             includeImagesTree: true,
@@ -92,7 +92,7 @@ describe('Media Manager: Tree', function () {
         runTreeTests(data, results);
     });
     
-    it('0005: Should get a media tree: including everything (folders / files / images / archived items)', function () {
+    it('03005: Should get a media tree: including everything (folders / files / images / archived items)', function () {
         var data = {
             includeArchived: true,
             includeImagesTree: true,
@@ -112,7 +112,7 @@ describe('Media Manager: Tree', function () {
         runTreeTests(data, results);
     });
 
-    it('0006: Should get a media tree with corrent parent ids set', function() {
+    it('03006: Should get a media tree with corrent parent ids set', function() {
         var url = '/bcms-api/media-tree/',
             result,
             ready = false,

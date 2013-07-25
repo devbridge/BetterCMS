@@ -4,7 +4,7 @@
 describe('Pages: Widgets', function () {
     'use strict';
 
-    it('0000: Should get a list of widgets', function () {
+    it('01200: Should get a list of widgets', function () {
         var url = '/bcms-api/widgets/',
             result,
             ready = false;
@@ -56,7 +56,7 @@ describe('Pages: Widgets', function () {
         });
     });
     
-    it('0001: Should get an html content widget by id', function () {
+    it('01201: Should get an html content widget by id', function () {
         var url = '/bcms-api/widgets/html-content/fa0cbcfb96454fcfa576a205009119c8',
             result,
             ready = false;
@@ -93,7 +93,7 @@ describe('Pages: Widgets', function () {
         });
     });
     
-    it('0002: Should get a server control widget by id', function () {
+    it('01202: Should get a server control widget by id', function () {
         var url = '/bcms-api/widgets/server-control/3ac115dfc5f34f148141a205009162cd',
             result,
             ready = false;

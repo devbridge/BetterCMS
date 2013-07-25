@@ -4,7 +4,7 @@
 describe('Root: Layouts', function() {
     'use strict';
 
-    it('0000: Should get a filtered, sorted and paged layout list', function () {
+    it('00100: Should get a filtered, sorted and paged layout list', function () {
         var url = '/bcms-api/layouts/',
             result,
             ready = false;
@@ -64,7 +64,7 @@ describe('Root: Layouts', function() {
         });
     });
 
-    it('0001: Should get a layout by id', function () {
+    it('00101: Should get a layout by id', function () {
         var url = '/bcms-api/layouts/d2f39fbd2c28401a8625a1fe0114e1eb',
             result,
             ready = false;
@@ -92,7 +92,7 @@ describe('Root: Layouts', function() {
         });
     });
     
-    it('0003: Should get layout regions by layout id', function () {
+    it('00102: Should get layout regions by layout id', function () {
         var url = '/bcms-api/layouts/d2f39fbd2c28401a8625a1fe0114e1eb/regions',
             result,
             ready = false;

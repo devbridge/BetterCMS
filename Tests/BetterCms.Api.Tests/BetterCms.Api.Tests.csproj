@@ -207,6 +207,7 @@
     <Content Include="runner.html" />
     <Content Include="spec\blog.authors.api.behavior.js" />
     <Content Include="spec\blog.blogPosts.api.behavior.js" />
+    <Content Include="spec\root.filtering.api.behavior.js" />
     <Content Include="spec\media.files.api.behavior.js" />
     <Content Include="spec\media.images.api.behavior.js" />
     <Content Include="spec\media.tree.api.behavior.js" />

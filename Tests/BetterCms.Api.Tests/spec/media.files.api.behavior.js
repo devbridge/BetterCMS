@@ -4,7 +4,7 @@
 describe('Media Manager: Files', function () {
     'use strict';
     
-    it('0000: Should get a list of file folders', function () {
+    it('03100: Should get a list of file folders', function () {
         var data = {
             filter: {
                 where: [{ field: 'Title', operation: 'StartsWith', value: '_0000_' }]
@@ -27,7 +27,7 @@ describe('Media Manager: Files', function () {
         runFilesListTests(data, results);
     });
 
-    it('0001: Should get a list of files without folders', function () {
+    it('03101: Should get a list of files without folders', function () {
         var data = {
             filter: {
                 where: [{ field: 'Title', operation: 'StartsWith', value: '_0000_' }]
@@ -50,7 +50,7 @@ describe('Media Manager: Files', function () {
         runFilesListTests(data, results);
     });
 
-    it('0002: Should get a list of not archived files and folders', function () {
+    it('03102: Should get a list of not archived files and folders', function () {
         var data = {
             filter: {
                 where: [{ field: 'Title', operation: 'StartsWith', value: '_0000_' }]
@@ -73,7 +73,7 @@ describe('Media Manager: Files', function () {
         runFilesListTests(data, results);
     });
 
-    it('0003: Should get a list of files and folders (including archived)', function () {
+    it('03103: Should get a list of files and folders (including archived)', function () {
         var data = {
             filter: {
                 where: [{ field: 'Title', operation: 'StartsWith', value: '_0000_' }]
@@ -96,7 +96,7 @@ describe('Media Manager: Files', function () {
         runFilesListTests(data, results);
     });
 
-    it('0004: Should get a list of files and folders (only archived)', function () {
+    it('03104: Should get a list of files and folders (only archived)', function () {
         var data = {
             filter: {
                 where: [
@@ -122,7 +122,7 @@ describe('Media Manager: Files', function () {
         runFilesListTests(data, results);
     });
 
-    it('0005: Should get a list from subfolder with specified file', function () {
+    it('03105: Should get a list from subfolder with specified file', function () {
         var url = '/bcms-api/files/',
             result,
             ready = false,
@@ -165,7 +165,7 @@ describe('Media Manager: Files', function () {
         });
     });
 
-    it('0006: Should get a list with specified folder', function () {
+    it('03106: Should get a list with specified folder', function () {
         var url = '/bcms-api/files/',
             result,
             ready = false,
@@ -207,7 +207,7 @@ describe('Media Manager: Files', function () {
         });
     });
 
-    it('0007: Should get file properties by file id', function () {
+    it('03107: Should get file properties by file id', function () {
         var url = '/bcms-api/files/4ef65c378a9f4a2f90b5a20600816711',
             result,
             ready = false,
@@ -260,11 +260,11 @@ describe('Media Manager: Files', function () {
         });
     });
 
-    it('0008: Should get files list, filtered by tags, using AND connector', function () {
+    it('03108: Should get files list, filtered by tags, using AND connector', function () {
         filterByTags('and', 1, ['IFilterByTags File 1']);
     });
 
-    it('0009: Should get files list, filtered by tags, using OR connector', function () {
+    it('03109: Should get files list, filtered by tags, using OR connector', function () {
         filterByTags('or', 2, ['IFilterByTags File 1', 'IFilterByTags File 3']);
     });
 

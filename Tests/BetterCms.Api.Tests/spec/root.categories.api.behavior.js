@@ -4,7 +4,7 @@
 describe('Root: Categories', function() {
     'use strict';
 
-    it('0000: Should get categories list', function () {
+    it('00300: Should get categories list', function () {
         var url = '/bcms-api/categories/',
             result,
             ready = false;
@@ -47,7 +47,7 @@ describe('Root: Categories', function() {
         });
     });
 
-    it('0001: Should get a category by id', function () {
+    it('00301: Should get a category by id', function () {
         var url = '/bcms-api/categories/e87bfb18cdf74fd3a5dfa2040115ed1d',
             result,
             ready = false;

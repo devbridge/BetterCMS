@@ -10,7 +10,7 @@ describe('Pages: Pages', function () {
         testPageUrl: '/0000-page-for-tests/'
     };
 
-    it('0000: Should get pages list', function() {
+    it('01000: Should get pages list', function() {
         var url = '/bcms-api/pages/',
             result,
             ready = false;
@@ -46,7 +46,7 @@ describe('Pages: Pages', function () {
         });
     });
     
-    it('0001: Should get one page in list', function () {
+    it('01001: Should get one page in list', function () {
         var url = '/bcms-api/pages/',
             result,
             ready = false;
@@ -79,7 +79,7 @@ describe('Pages: Pages', function () {
         });
     });
 
-    it('0002: Should get page by id', function() {
+    it('01002: Should get page by id', function() {
         var url = '/bcms-api/pages/' + constants.testPageId,
             result,
             ready = false;
@@ -103,7 +103,7 @@ describe('Pages: Pages', function () {
         });
     });
 
-    it('0003: Should get page by url', function () {
+    it('01003: Should get page by url', function () {
         var url = '/bcms-api/pages/by-url/' + constants.testPageUrl,
             result,
             ready = false;
@@ -127,7 +127,7 @@ describe('Pages: Pages', function () {
         });
     });
 
-    it('0004: Should get page properties by id', function () {
+    it('01004: Should get page properties by id', function () {
         var url = '/bcms-api/page-properties/' + constants.testPageId,
              result,
              ready = false;
@@ -160,7 +160,7 @@ describe('Pages: Pages', function () {
         });
     });
 
-    it('0005: Should get page properties by url', function () {
+    it('01005: Should get page properties by url', function () {
         var url = '/bcms-api/page-properties/by-url/' + constants.testPageUrl,
               result,
               ready = false;
@@ -193,7 +193,7 @@ describe('Pages: Pages', function () {
         });
     });
     
-    it('0006: Page should exist', function () {
+    it('01006: Page should exist', function () {
         var url = '/bcms-api/page-exists/' + constants.testPageUrl,
               result,
               ready = false;
@@ -217,7 +217,7 @@ describe('Pages: Pages', function () {
         });
     });
 
-    it('0007: Page should not exist', function () {
+    it('01007: Page should not exist', function () {
         var url = '/bcms-api/page-exists/7E78D59E-6747-46D1-B71D-852F44F99E71/',
               result,
               ready = false;
@@ -241,7 +241,7 @@ describe('Pages: Pages', function () {
         });
     });
 
-    it('0008: Should get page contents', function () {
+    it('01008: Should get page contents', function () {
         var url = '/bcms-api/pages/' + constants.testPageId + '/contents/',
               result,
               ready = false;
@@ -301,11 +301,11 @@ describe('Pages: Pages', function () {
         });
     });
 
-    it('0009: Should get pages list, filtered by tags, using AND connector', function () {
+    it('01009: Should get pages list, filtered by tags, using AND connector', function () {
         filterByTags('and', 1, ['IFilterByTags Page 1']);
     });
     
-    it('0010: Should get pages list, filtered by tags, using OR connector', function () {
+    it('01010: Should get pages list, filtered by tags, using OR connector', function () {
         filterByTags('or', 2, ['IFilterByTags Page 1', 'IFilterByTags Page 3']);
     });
 

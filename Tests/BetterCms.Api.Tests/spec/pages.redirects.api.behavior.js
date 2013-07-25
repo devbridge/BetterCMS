@@ -4,7 +4,7 @@
 describe('Pages: Redirects', function () {
     'use strict';
 
-    it('0000: Should get a list of redirects', function () {
+    it('01300: Should get a list of redirects', function () {
         var url = '/bcms-api/redirects/',
             result,
             ready = false;
@@ -47,7 +47,7 @@ describe('Pages: Redirects', function () {
         });
     });
     
-    it('0001: Should get a redirect by id', function () {
+    it('01301: Should get a redirect by id', function () {
         var url = '/bcms-api/redirects/72EC32B9-D5A4-4642-9D7A-A205009FE9B6',
             result,
             ready = false;

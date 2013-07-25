@@ -10,7 +10,7 @@ describe('Blog: Blog Posts', function () {
         testPageUrl: '/articles/0003-blog-for-tests/'
     };
 
-    it('0000: Should get a list blog posts, excluding archived and unpublished.', function () {
+    it('02100: Should get a list blog posts, excluding archived and unpublished.', function () {
         var url = '/bcms-api/blog-posts/',
             result,
             ready = false,
@@ -35,7 +35,7 @@ describe('Blog: Blog Posts', function () {
         });
     });
     
-    it('0001: Should get a list blog posts, excluding archived, including unpublished.', function () {
+    it('02101: Should get a list blog posts, excluding archived, including unpublished.', function () {
         var url = '/bcms-api/blog-posts/',
             result,
             ready = false,
@@ -60,7 +60,7 @@ describe('Blog: Blog Posts', function () {
         });
     });
     
-    it('0002: Should get a list blog posts, excluding unpublished, including archived.', function () {
+    it('02102: Should get a list blog posts, excluding unpublished, including archived.', function () {
         var url = '/bcms-api/blog-posts/',
             result,
             ready = false,
@@ -85,7 +85,7 @@ describe('Blog: Blog Posts', function () {
         });
     });
 
-    it('0003: Should get a list of all blog posts, including archived and unpublished.', function () {
+    it('02103: Should get a list of all blog posts, including archived and unpublished.', function () {
         var url = '/bcms-api/blog-posts/',
             result,
             ready = false,
@@ -130,7 +130,7 @@ describe('Blog: Blog Posts', function () {
         });
     });
 
-    it('0002: Should get a blog post by id.', function () {
+    it('02104: Should get a blog post by id.', function () {
         var url = '/bcms-api/blog-posts/' + constants.testPageId,
             result,
             ready = false;
@@ -172,7 +172,7 @@ describe('Blog: Blog Posts', function () {
         });
     });
     
-    it('0003: Should get blog post properties by id.', function () {
+    it('02105: Should get blog post properties by id.', function () {
         var url = '/bcms-api/blog-post-properties/' + constants.testPageId,
              result,
              ready = false;
@@ -266,11 +266,11 @@ describe('Blog: Blog Posts', function () {
         });
     });
     
-    it('0004: Should get blog post list, filtered by tags, using AND connector', function () {
+    it('02106: Should get blog post list, filtered by tags, using AND connector', function () {
         filterByTags('and', 1, ['IFilterByTags Page 1']);
     });
 
-    it('0005: Should get blog post list, filtered by tags, using OR connector', function () {
+    it('02107: Should get blog post list, filtered by tags, using OR connector', function () {
         filterByTags('or', 2, ['IFilterByTags Page 1', 'IFilterByTags Page 3']);
     });
     

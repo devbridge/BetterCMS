@@ -4,7 +4,7 @@
 describe('Blog: Authors', function () {
     'use strict';
 
-    it('0000: Should get a list of authors', function () {
+    it('02000: Should get a list of authors', function () {
         var url = '/bcms-api/authors/',
             result,
             ready = false;
@@ -55,7 +55,7 @@ describe('Blog: Authors', function () {
         });
     });
     
-    it('0001: Should get an author by id', function () {
+    it('02001: Should get an author by id', function () {
         var url = '/bcms-api/authors/b82a9428b40047c498a9a20500b7a276',
             result,
             ready = false;

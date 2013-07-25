@@ -4,7 +4,7 @@
 describe('Root: General', function() {
     'use strict';
 
-    it('0000: Should get a Better CMS current version', function () {
+    it('00000: Should get a Better CMS current version', function () {
         var url = '/bcms-api/current-version/',
             result,
             ready = false;
