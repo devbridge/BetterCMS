@@ -111,11 +111,11 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
                 foreach (var tagKeyValue in request.Tags)
                 {
                     var id = tagKeyValue.Key.ToGuidOrDefault();
-                    query = query.Where(m => m.MediaTags.Any(mt => mt.Tag.Id == id));
+                    query = query.Where(m => m is MediaFolder || m.MediaTags.Any(mt => mt.Tag.Id == id));
                 }
             }
 
-            if (!string.IsNullOrWhiteSpace(request.SearchQuery) || request.Tags != null)
+            if (!string.IsNullOrWhiteSpace(request.SearchQuery))
             {
                 var searchQuery = string.Format("%{0}%", request.SearchQuery);
                 query = query.Where(m => m.Title.Contains(searchQuery) || m.Description.Contains(searchQuery));
