@@ -18,6 +18,7 @@ using BetterCms.Module.Api.Operations.MediaManager.Images;
 using BetterCms.Module.Api.Operations.MediaManager.Images.Image;
 using BetterCms.Module.Api.Operations.MediaManager.MediaTree;
 using BetterCms.Module.Api.Operations.Pages;
+using BetterCms.Module.Api.Operations.Pages.Contents.Content;
 using BetterCms.Module.Api.Operations.Pages.Contents.Content.BlogPostContent;
 using BetterCms.Module.Api.Operations.Pages.Contents.Content.History;
 using BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent;
@@ -44,7 +45,6 @@ using BetterCms.Events;
 using BetterCms.Module.Api.Operations.Root.Tags;
 using BetterCms.Module.Api.Operations.Root.Tags.Tag;
 using BetterCms.Module.Api.Operations.Root.Version;
-using BetterCms.Module.Root.Services;
 
 using ContentService = BetterCms.Module.Api.Operations.Pages.Contents.Content.ContentService;
 

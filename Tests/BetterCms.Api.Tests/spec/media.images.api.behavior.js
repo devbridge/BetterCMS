@@ -234,6 +234,7 @@ describe('Media Manager: Images', function () {
             api.expectBasePropertiesAreNotNull(image);
             expect(image.title).toBe('_0001_Image_For_Tests');
             expect(image.caption).toBe('Image Caption');
+            expect(image.description).toBe('Image Description');
             expect(image.fileExtension).toBe('.png');
             expect(image.fileSize).toBe(26354);
             expect(image.imageUrl).toBe('http://bettercms.sandbox.mvc4.local/uploads/image/15f824b13a9e428fa013dc1940741295/__Tapir_9.png');
@@ -265,6 +266,14 @@ describe('Media Manager: Images', function () {
         });
     });
 
+    it('0008: Should get images list, filtered by tags, using AND connector', function () {
+        filterByTags('and', 1, ['IFilterByTags Image 1']);
+    });
+
+    it('0009: Should get images list, filtered by tags, using OR connector', function () {
+        filterByTags('or', 2, ['IFilterByTags Image 1', 'IFilterByTags Image 3']);
+    });
+
     function runImagesListTests(data, expectingResults) {
         var url = '/bcms-api/images/',
             result,
@@ -289,6 +298,44 @@ describe('Media Manager: Images', function () {
             expect(result.data.items.length).toBe(1);
             expect(result.data.items[0].title).toBe(expectingResults.title);
             expect(result.data.items[0].isArchived).toBe(expectingResults.isArchived);
+        });
+    }
+    
+    function filterByTags(connector, expectedCount, expectedTitles) {
+        var url = '/bcms-api/images/',
+            result,
+            ready = false;
+
+        var data = {
+            order: {
+                by: [{ field: 'Title' }]
+            },
+            folderId: 'e16c7e649d564e19946fa206008a198d',
+            filterByTagsConnector: connector,
+            filterByTags: ['IFilterByTags Tag 1', 'IFilterByTags Tag 2'],
+            includeArchived: true
+        };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefined();
+            expect(result.data).toBeDefined();
+            expect(result.data.totalCount).toBe(expectedCount);
+            expect(result.data.items.length).toBe(expectedCount);
+
+            for (var i = 0; i < result.data.items.length; i++) {
+                expect(result.data.items[i].title).toBe(expectedTitles[i]);
+            }
         });
     }
 });

@@ -5,7 +5,6 @@ using System.Text;
 
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Infrastructure.Enums;
-using BetterCms.Module.Api.Operations;
 
 namespace BetterCms.Module.Api.Helpers
 {
@@ -47,6 +46,8 @@ namespace BetterCms.Module.Api.Helpers
 
         private readonly IList<object> filterParameters;
 
+        private readonly Type modelType = typeof(TModel);
+
         private string orderQuery;
 
         private string filterQuery;
@@ -72,6 +73,7 @@ namespace BetterCms.Module.Api.Helpers
             {
                 CreateOrderQuery();
             }
+
             return orderQuery;
         }
 
@@ -85,6 +87,7 @@ namespace BetterCms.Module.Api.Helpers
             {
                 CreateFilterQuery();
             }
+
             return filterQuery;
         }
 
@@ -283,19 +286,10 @@ namespace BetterCms.Module.Api.Helpers
         /// <exception cref="System.InvalidOperationException">Model has no such property</exception>
         private System.Reflection.PropertyInfo GetAndValidateProperty(string propertyName)
         {
-            var modelType = typeof(TModel);
-
-            if (dataOptions.FieldExceptions.Contains(propertyName))
-            {
-                // TODO: validation exception ???
-                throw new InvalidOperationException(string.Format("Cannot filter by property {0} in object {1}", propertyName, modelType));
-            }
-
             var property = modelType.GetProperty(propertyName);
 
             if (property == null)
-            {
-                // TODO: validation exception ???
+            {                
                 throw new InvalidOperationException(string.Format("Property {0} doesn't exist in object {1}", propertyName, modelType));
             }
 

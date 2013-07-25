@@ -32,6 +32,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
                                          LastModifiedOn = media.ModifiedOn,
 
                                          Title = media.Title,
+                                         Description = media.Description,
                                          Caption = media.Caption,
                                          FileExtension = media.OriginalFileExtension,
                                          FileSize = media.Size,

@@ -266,6 +266,14 @@ describe('Blog: Blog Posts', function () {
         });
     });
     
+    it('0004: Should get blog post list, filtered by tags, using AND connector', function () {
+        filterByTags('and', 1, ['IFilterByTags Page 1']);
+    });
+
+    it('0005: Should get blog post list, filtered by tags, using OR connector', function () {
+        filterByTags('or', 2, ['IFilterByTags Page 1', 'IFilterByTags Page 3']);
+    });
+    
     function createDataForBlogPostsList(includeArchived, includeUnpublished, take, skip) {
         return {
             filter: {
@@ -289,5 +297,46 @@ describe('Blog: Blog Posts', function () {
         expect(image.caption).toBe('Image caption for _0003_Blog_For_Tests_');
         expect(image.url).toBeDefined();
         expect(image.thumbnailUrl).toBeDefined();
+    }
+    
+    function filterByTags(connector, expectedCount, expectedTitles) {
+        var url = '/bcms-api/blog-posts/',
+            result,
+            ready = false;
+
+        var data = {
+            filter: {
+                where: [{ field: 'Title', operation: 'StartsWith', value: 'IFilterByTags' }]
+            },
+            order: {
+                by: [{ field: 'Title' }]
+            },
+            filterByTagsConnector: connector,
+            filterByTags: ['IFilterByTags Tag 1', 'IFilterByTags Tag 2'],
+            includeUnpublished: true,
+            includeArchived: true
+        };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefined();
+            expect(result.data).toBeDefined();
+            expect(result.data.totalCount).toBe(expectedCount);
+            expect(result.data.items.length).toBe(expectedCount);
+
+            for (var i = 0; i < result.data.items.length; i++) {
+                expect(result.data.items[i].title).toBe(expectedTitles[i]);
+            }
+        });
     }
 });

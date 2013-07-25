@@ -2,6 +2,7 @@
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Module.Api.Helpers;
+using BetterCms.Module.Api.Infrastructure;
 
 using ServiceStack.ServiceInterface;
 
@@ -34,7 +35,8 @@ namespace BetterCms.Module.Api.Operations.Blog.Authors
                         Name = author.Name,
                         ImageId = author.Image != null ? author.Image.Id : (System.Guid?)null,
                         ImageUrl = author.Image != null ? author.Image.PublicUrl : null,
-                        ImageThumbnailUrl = author.Image != null ? author.Image.PublicThumbnailUrl : null
+                        ImageThumbnailUrl = author.Image != null ? author.Image.PublicThumbnailUrl : null,
+                        ImageCaption= author.Image != null ? author.Image.Caption : null
                     })
                 .ToDataListResponse(request);
 
