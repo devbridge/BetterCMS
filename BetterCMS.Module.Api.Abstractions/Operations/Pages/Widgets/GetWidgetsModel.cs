@@ -12,9 +12,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets
         /// </summary>
         public GetWidgetsModel()
         {
-            IncludeUnpublished = true;
-
-            FieldExceptions.Add("WidgetType");
+            IncludeUnpublished = true;           
         }
 
         /// <summary>

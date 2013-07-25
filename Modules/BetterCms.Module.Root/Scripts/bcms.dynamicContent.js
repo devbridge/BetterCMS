@@ -128,8 +128,9 @@ bettercms.define('bcms.dynamicContent', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
             forms.ajaxForm(form, {
                 beforeSubmit: function () {
                     if ($.isFunction(options.beforeSubmit)) {
-                        options.beforeSubmit(form);
+                        return options.beforeSubmit(form);
                     }
+                    return true;
                 },
                 
                 success: function (json) {

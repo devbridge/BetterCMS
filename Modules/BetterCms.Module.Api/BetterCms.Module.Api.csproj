@@ -156,7 +156,7 @@
     <Compile Include="DefaultApiFacade.cs" />
     <Compile Include="ApiApplicationHost.cs" />
     <Compile Include="AutofacContainerAdapter.cs" />
-    <Compile Include="Filters\CmsApiRequestFilter.cs" />
+    <Compile Include="Filters\GetRequestProcessor.cs" />
     <Compile Include="Helpers\ContentTypeExtensions.cs" />
     <Compile Include="Helpers\FilterByTagExtensions.cs" />
     <Compile Include="Helpers\QueryableExtensions.cs" />
@@ -168,7 +168,6 @@
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\BlogPostService.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\BlogPostPropertiesService.cs" />
     <Compile Include="Operations\Blog\DefaultBogApiOperations.cs" />
-    <Compile Include="Helpers\DataOptionsExtensions.cs" />
     <Compile Include="Operations\MediaManager\DefaultMediaManagerApiOperations.cs" />
     <Compile Include="Operations\MediaManager\Files\FilesService.cs" />
     <Compile Include="Operations\MediaManager\Files\File\FileService.cs" />

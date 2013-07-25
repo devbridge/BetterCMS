@@ -2,6 +2,7 @@
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Module.Api.Helpers;
+using BetterCms.Module.Api.Infrastructure;
 
 using ServiceStack.ServiceInterface;
 
