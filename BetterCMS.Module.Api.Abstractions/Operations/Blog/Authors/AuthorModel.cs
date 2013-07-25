@@ -42,5 +42,14 @@ namespace BetterCms.Module.Api.Operations.Blog.Authors
         /// </value>
         [DataMember]
         public string ImageThumbnailUrl { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the image caption.
+        /// </summary>
+        /// <value>
+        /// The image caption.
+        /// </value>
+        [DataMember]
+        public string ImageCaption { get; set; }
     }
 }

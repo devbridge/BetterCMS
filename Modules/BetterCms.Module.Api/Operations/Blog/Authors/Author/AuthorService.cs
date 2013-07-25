@@ -35,7 +35,8 @@ namespace BetterCms.Module.Api.Operations.Blog.Authors.Author
                         Name = author.Name,
                         ImageId = author.Image.Id,
                         ImageUrl = author.Image.PublicUrl,
-                        ImageThumbnailUrl = author.Image.PublicThumbnailUrl
+                        ImageThumbnailUrl = author.Image.PublicThumbnailUrl,
+                        ImageCaption = author.Image.Caption
                     })
                 .FirstOne();
 

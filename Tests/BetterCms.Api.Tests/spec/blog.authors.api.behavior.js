@@ -45,13 +45,13 @@ describe('Blog: Authors', function () {
             expect(result.data.items[0].imageId).toBeDefined();
             expect(result.data.items[0].imageUrl).toBeDefined();
             expect(result.data.items[0].imageThumbnailUrl).toBeDefined();
-            // TODO: add caption
+            expect(result.data.items[0].imageCaption).toBe('Image caption for _0000_Author_2');
             
             expect(result.data.items[1].name).toBe('_0000_Author_3');
             expect(result.data.items[1].imageId).toBeUndefined();
             expect(result.data.items[1].imageUrl).toBeUndefined();
             expect(result.data.items[1].imageThumbnailUrl).toBeUndefined();
-            // TODO: add caption
+            expect(result.data.items[1].imageCaption).toBeUndefined();
         });
     });
     
@@ -82,7 +82,7 @@ describe('Blog: Authors', function () {
             expect(author.imageId).toBeDefined();
             expect(author.imageUrl).toBeDefined();
             expect(author.imageThumbnailUrl).toBeDefined();
-            // TODO: add caption
+            expect(author.imageCaption).toBe('Image caption for _0000_Author_2');
         });
     });
 });
