@@ -8,14 +8,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents
     public class GetPageContentsModel : DataOptions
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetPageContentsModel" /> class.
-        /// </summary>
-        public GetPageContentsModel()
-        {
-            FieldExceptions.Add("ContentType");
-        }
-
-        /// <summary>
         /// Gets or sets the region id.
         /// </summary>
         /// <value>

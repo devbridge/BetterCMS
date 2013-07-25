@@ -77,6 +77,7 @@
     <Compile Include="Infrastructure\DataFilter.cs" />
     <Compile Include="Infrastructure\DataListResponse.cs" />
     <Compile Include="Infrastructure\DataOptions.cs" />
+    <Compile Include="Infrastructure\DataOptionsExtensions.cs" />
     <Compile Include="Infrastructure\DataOrder.cs" />
     <Compile Include="Infrastructure\FilterItem.cs" />
     <Compile Include="Infrastructure\IFilterByTags.cs" />
@@ -170,6 +171,7 @@
     <Compile Include="Operations\Pages\Pages\PageModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\GetPageContentsModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\GetPageContentsRequest.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Contents\GetPageContentsRequestValidator.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\GetPageContentsResponse.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\IPageContentsService.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\PageContentModel.cs" />
@@ -214,6 +216,7 @@
     <Compile Include="Operations\Pages\Sitemap\Tree\SitemapTreeNodeModel.cs" />
     <Compile Include="Operations\Pages\Widgets\GetWidgetsModel.cs" />
     <Compile Include="Operations\Pages\Widgets\GetWidgetsRequest.cs" />
+    <Compile Include="Operations\Pages\Widgets\GetWidgetsRequestValidator.cs" />
     <Compile Include="Operations\Pages\Widgets\GetWidgetsResponse.cs" />
     <Compile Include="Operations\Pages\Widgets\IWidgetsService.cs" />
     <Compile Include="Operations\Pages\Widgets\WidgetModel.cs" />
@@ -226,6 +229,7 @@
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\GetServerControlWidgetResponse.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\IServerControlWidgetService.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\ServerControlWidgetModel.cs" />
+    <Compile Include="Operations\Root\Tags\Tag\GetTagRequestValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Operations\Root\Categories\CategoryModel.cs" />
     <Compile Include="Operations\Root\Categories\Category\GetCategoryRequest.cs" />
