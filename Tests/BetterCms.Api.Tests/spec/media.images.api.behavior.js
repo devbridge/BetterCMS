@@ -234,6 +234,7 @@ describe('Media Manager: Images', function () {
             api.expectBasePropertiesAreNotNull(image);
             expect(image.title).toBe('_0001_Image_For_Tests');
             expect(image.caption).toBe('Image Caption');
+            expect(image.description).toBe('Image Description');
             expect(image.fileExtension).toBe('.png');
             expect(image.fileSize).toBe(26354);
             expect(image.imageUrl).toBe('http://bettercms.sandbox.mvc4.local/uploads/image/15f824b13a9e428fa013dc1940741295/__Tapir_9.png');

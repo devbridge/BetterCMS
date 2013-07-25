@@ -235,6 +235,7 @@ describe('Media Manager: Files', function () {
             expect(file).toBeDefined();
             api.expectBasePropertiesAreNotNull(file);
             expect(file.title).toBe('_0001_File_For_Tests');
+            expect(file.description).toBe('File Description');
             expect(file.fileExtension).toBe('.png');
             expect(file.fileSize).toBe(92217);
             expect(file.fileUrl).toBe('http://bettercms.sandbox.mvc4.local/uploads/file/8f46bc6b4fd74c10aba01bf1f7269b92/__Tapir.png');
