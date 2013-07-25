@@ -120,7 +120,10 @@ bettercms.define('bcms.forms', ['bcms.jquery', 'bcms', 'bcms.messages', 'bcms.ta
             form.data(submitting, true);
 
             if ($.isFunction(options.beforeSubmit)) {
-                options.beforeSubmit();
+                if (options.beforeSubmit() === false) {
+                    form.data(submitting, false);
+                    return false;
+                };
             }
 
             ajaxLoadingHide.hide();

@@ -358,7 +358,7 @@
     <value>Edit the privacy settings of this page. Selecting "No Follow" will tell search engines not to follow the links on this page, and "No Index" will tell search engines not to index this page.</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_Privacy_VisibleToEveryone" xml:space="preserve">
-    <value>This page is visible to everyone (PUBLISHED)</value>
+    <value>Page is published</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_Title" xml:space="preserve">
     <value>JavaScript &amp; CSS</value>
@@ -1091,5 +1091,11 @@
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_UseCanonicalUrl" xml:space="preserve">
     <value>Use canonical URL.</value>
+  </data>
+  <data name="EditPageProperties_PageStatusChange_ConfirmationMessage_Publish" xml:space="preserve">
+    <value>Do you really want to publish this page?</value>
+  </data>
+  <data name="EditPageProperties_PageStatusChange_ConfirmationMessage_UnPublish" xml:space="preserve">
+    <value>Do you really want to unpublish this page?</value>
   </data>
 </root>
