@@ -259,6 +259,14 @@ describe('Media Manager: Files', function () {
         });
     });
 
+    it('0008: Should get files list, filtered by tags, using AND connector', function () {
+        filterByTags('and', 1, ['IFilterByTags File 1']);
+    });
+
+    it('0009: Should get files list, filtered by tags, using OR connector', function () {
+        filterByTags('or', 2, ['IFilterByTags File 1', 'IFilterByTags File 3']);
+    });
+
     function runFilesListTests(data, expectingResults) {
         var url = '/bcms-api/files/',
             result,
@@ -283,6 +291,44 @@ describe('Media Manager: Files', function () {
             expect(result.data.items.length).toBe(1);
             expect(result.data.items[0].title).toBe(expectingResults.title);
             expect(result.data.items[0].isArchived).toBe(expectingResults.isArchived);
+        });
+    }
+    
+    function filterByTags(connector, expectedCount, expectedTitles) {
+        var url = '/bcms-api/files/',
+            result,
+            ready = false;
+
+        var data = {
+            order: {
+                by: [{ field: 'Title' }]
+            },
+            folderId: 'cf304a17091244c69740a206008a9e7e',
+            filterByTagsConnector: connector,
+            filterByTags: ['IFilterByTags Tag 1', 'IFilterByTags Tag 2'],
+            includeArchived: true
+        };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefined();
+            expect(result.data).toBeDefined();
+            expect(result.data.totalCount).toBe(expectedCount);
+            expect(result.data.items.length).toBe(expectedCount);
+
+            for (var i = 0; i < result.data.items.length; i++) {
+                expect(result.data.items[i].title).toBe(expectedTitles[i]);
+            }
         });
     }
 });
