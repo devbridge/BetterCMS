@@ -69,6 +69,8 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             insertFileFailureMessageMessage: null,
             insertFileDialogTitle: null,
             fileNotSelectedMessageMessage: null,
+            
+            searchedInPathPrefix: null,
 
             imagesTabTitle: null,
             audiosTabTitle: null,
@@ -171,8 +173,8 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.tags.applyTagList(options.GridOptions.Tags);
         };
 
-        self.isFilterSet = function() {
-            return self.searchQuery();
+        self.isSearchEmpty = function() {
+            return self.searchQuery() == null || self.searchQuery() == '';
         };
     }
 
@@ -228,7 +230,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             return self.isRootFolder() && self.medias().length == 0;
         };
 
-        self.showMediaParentFolderLink = ko.observable(false);
+        self.isSearchResults = ko.observable(false);
 
         self.addNewFolder = function () {
             if (!self.rowAdded) {
@@ -271,12 +273,16 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
         self.searchMedia = function () {
             self.gridOptions().paging.pageNumber(1);
-
+            self.gridOptions().closeFilter();
             self.loadMedia();
         };
 
         self.searchWithFilter = function() {
-            self.gridOptions().closeFilter();
+            self.searchMedia();
+        };
+
+        self.clearFilter = function () {
+            self.gridOptions().clearFilter();
             self.searchMedia();
         };
 
@@ -368,25 +374,27 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     function MediaPathViewModel(type) {
         var self = this;
 
+        self.isSearchResults = ko.observable(false);
         self.currentFolder = ko.observable();
         self.folders = ko.observableArray();
         self.type = type;
 
         self.pathFolders = ko.computed(function () {
-            var range = self.folders();
+            var range = self.folders(),
+                prefix = self.isSearchResults() ? globalization.searchedInPathPrefix + ' ' : '';
             if (range.length > 0) {
                 switch (self.type) {
                     case mediaTypes.image:
-                        range[0].name(globalization.imagesTabTitle);
+                        range[0].name(prefix + globalization.imagesTabTitle);
                         break;
                     case mediaTypes.audio:
-                        range[0].name(globalization.audiosTabTitle);
+                        range[0].name(prefix + globalization.audiosTabTitle);
                         break;
                     case mediaTypes.video:
-                        range[0].name(globalization.videosTabTitle);
+                        range[0].name(prefix + globalization.videosTabTitle);
                         break;
                     case mediaTypes.file:
-                        range[0].name(globalization.filesTabTitle);
+                        range[0].name(prefix + globalization.filesTabTitle);
                         break;
                 }
             }
@@ -540,7 +548,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             };
 
             self.showParentLink = function (mediaItemsViewModel, data) {
-                return mediaItemsViewModel.showMediaParentFolderLink();
+                return mediaItemsViewModel.isSearchResults();
             };
 
             self.openParent = function (mediaItemsViewModel, data) {
@@ -1387,6 +1395,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         // Clear search.
         if (folderViewModel != null && folderViewModel.gridOptions() != null) {
             folderViewModel.gridOptions().searchQuery('');
+            folderViewModel.gridOptions().closeFilter();
         }
         var params = createFolderParams(id, folderViewModel),
             onComplete = function (json) {
@@ -1443,7 +1452,8 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                     folderViewModel.gridOptions(new MediaItemsOptionsViewModel(folderViewModel.onOpenPage));
                 }
                 folderViewModel.gridOptions().fromJson(json.Data);
-                folderViewModel.showMediaParentFolderLink(folderViewModel.gridOptions().isFilterSet());
+                folderViewModel.isSearchResults(!folderViewModel.gridOptions().isSearchEmpty());
+                folderViewModel.path().isSearchResults(folderViewModel.isSearchResults());
 
                 // Replace unobtrusive validator
                 bcms.updateFormValidator(folderViewModel.container.find(selectors.firstForm));

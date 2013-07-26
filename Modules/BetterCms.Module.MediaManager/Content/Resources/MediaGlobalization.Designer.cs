@@ -1141,6 +1141,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to In folder.
+        /// </summary>
+        public static string MediaManager_ItemParentFolder_Prefix {
+            get {
+                return ResourceManager.GetString("MediaManager_ItemParentFolder_Prefix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You can select only one file to re-upload..
         /// </summary>
         public static string MediaManager_MultipleFilesWarning_Message {
@@ -1155,6 +1164,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         public static string MediaManager_NewFolder {
             get {
                 return ResourceManager.GetString("MediaManager_NewFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Searched in.
+        /// </summary>
+        public static string MediaManager_SearchedInPath_Prefix {
+            get {
+                return ResourceManager.GetString("MediaManager_SearchedInPath_Prefix", resourceCulture);
             }
         }
         
