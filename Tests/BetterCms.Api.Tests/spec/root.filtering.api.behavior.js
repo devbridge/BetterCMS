@@ -116,8 +116,8 @@ describe('Root: Filtering', function() {
             }
 
             // Construct data filter
-            expect(url).not.toBe(null);
-            expect(columnName).not.toBe(null);
+            expect(url).toBeDefinedAndNotNull('url value should be assigned');
+            expect(columnName).toBeDefinedAndNotNull('columnName value should be assigned');
 
             var filter = {
                 field: columnName,

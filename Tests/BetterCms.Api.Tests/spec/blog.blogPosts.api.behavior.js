@@ -168,7 +168,7 @@ describe('Blog: Blog Posts', function () {
             expect(blogPost.mainImageCaption).toBe('Image caption for _0003_Blog_For_Tests_', 'Correctly filtered mainImageCaption should be retrieved.');
             expect(blogPost.activationDate).toBe('/Date(1374613200000-0000)/', 'Correctly filtered activationDate should be retrieved.');
             expect(blogPost.expirationDate).toBe('/Date(1974315599000-0000)/', 'Correctly filtered expirationDate should be retrieved.');
-            expect(blogPost.isArchived).toBe(false);
+            expect(blogPost.isArchived).toBe(false, 'Correctly filtered isArchived should be retrieved.');
         });
     });
     
@@ -205,10 +205,10 @@ describe('Blog: Blog Posts', function () {
             // Page
             var blogPost = result.data;
             api.expectBasePropertiesAreNotNull(blogPost);
-            expect(blogPost.title).toBe(constants.testPageTitle);
-            expect(blogPost.blogPostUrl).toBe(constants.testPageUrl);
-            expect(blogPost.introText).toBe('_0003_Blog_For_Tests_ intro text');
-            expect(blogPost.isPublished).toBe(true);
+            expect(blogPost.title).toBe(constants.testPageTitle, 'Correctly filtered title should be retrieved.');
+            expect(blogPost.blogPostUrl).toBe(constants.testPageUrl, 'Correctly filtered blogPostUrl should be retrieved.');
+            expect(blogPost.introText).toBe('_0003_Blog_For_Tests_ intro text', 'Correctly filtered introText should be retrieved.');
+            expect(blogPost.isPublished).toBe(true, 'Correctly filtered isPublished should be retrieved.');
             expect(blogPost.publishedOn).toBeDefinedAndNotNull('publishedOn should be retrieved.');
             expect(blogPost.layoutId).toBeDefinedAndNotNull('layoutId should be retrieved.');
             expect(blogPost.categoryId).toBeDefinedAndNotNull('categoryId should be retrieved.');
@@ -216,41 +216,41 @@ describe('Blog: Blog Posts', function () {
             expect(blogPost.mainImageId).toBeDefinedAndNotNull('mainImageId should be retrieved.');
             expect(blogPost.secondaryImageId).toBeDefinedAndNotNull('secondaryImageId should be retrieved.');
             expect(blogPost.featuredImageId).toBeDefinedAndNotNull('featuredImageId should be retrieved.');
-            expect(blogPost.activationDate).toBe('/Date(1374613200000-0000)/');
-            expect(blogPost.expirationDate).toBe('/Date(1974315599000-0000)/');
-            expect(blogPost.isArchived).toBe(false);
+            expect(blogPost.activationDate).toBe('/Date(1374613200000-0000)/', 'Correctly filtered activationDate should be retrieved.');
+            expect(blogPost.expirationDate).toBe('/Date(1974315599000-0000)/', 'Correctly filtered expirationDate should be retrieved.');
+            expect(blogPost.isArchived).toBe(false, 'Correctly filtered isArchived should be retrieved.');
 
             // html
-            expect(result.htmlContent).toBe('<p>_0003_Blog_For_Tests_ HTML</p>');
+            expect(result.htmlContent).toBe('<p>_0003_Blog_For_Tests_ HTML</p>', 'Correctly filtered htmlContent should be retrieved.');
 
             // layout
             var layout = result.layout;
             expect(layout).toBeDefinedAndNotNull('JSON layout object should be retrieved.');
             api.expectBasePropertiesAreNotNull(layout);
-            expect(layout.name).toBe('_0003_Layout for _0003_Blog_For_Tests_');
-            expect(layout.layoutPath).toBe('~/Areas/bcms-installation/Views/Shared/DefaultLayout.cshtml');
-            expect(layout.previewUrl).toBe('http://www.devbridge.com/Content/styles/images/responsive/logo.png');
+            expect(layout.name).toBe('_0003_Layout for _0003_Blog_For_Tests_', 'Correctly filtered layout.name should be retrieved.');
+            expect(layout.layoutPath).toBe('~/Areas/bcms-installation/Views/Shared/DefaultLayout.cshtml', 'Correctly filtered layoutPath should be retrieved.');
+            expect(layout.previewUrl).toBe('http://www.devbridge.com/Content/styles/images/responsive/logo.png', 'Correctly filtered layout.previewUrl should be retrieved.');
 
             // category
             var category = result.category;
             expect(category).toBeDefinedAndNotNull('JSON category object should be retrieved.');
             api.expectBasePropertiesAreNotNull(category);
-            expect(category.name).toBe('Category for _0003_Blog_For_Tests_');
+            expect(category.name).toBe('Category for _0003_Blog_For_Tests_', 'Correctly filtered category.name should be retrieved.');
             
             // author
             var author = result.author;
             expect(author).toBeDefinedAndNotNull('JSON author object should be retrieved.');
             api.expectBasePropertiesAreNotNull(author);
-            expect(author.name).toBe('Author for _0003_Blog_For_Tests_');
+            expect(author.name).toBe('Author for _0003_Blog_For_Tests_', 'Correctly filtered author.name should be retrieved.');
 
             // tags
             var tags = result.tags;
             expect(tags).toBeDefinedAndNotNull('JSON tags object should be retrieved.');
             expect(tags.length).toBe(2, 'Returned array length should be 2.');
-            expect(tags[0].name).toBe('tag1_0003_Blog_For_Tests_');
+            expect(tags[0].name).toBe('tag1_0003_Blog_For_Tests_', 'Correctly filtered tags[0].name should be retrieved.');
 
             api.expectBasePropertiesAreNotNull(tags[1]);
-            expect(tags[1].name).toBe('tag2_0003_Blog_For_Tests_');
+            expect(tags[1].name).toBe('tag2_0003_Blog_For_Tests_', 'Correctly filtered tags[1].name should be retrieved.');
 
             // images
             expectImagePropertiesAreNotNull(result.mainImage, 'mainImage');
@@ -260,9 +260,9 @@ describe('Blog: Blog Posts', function () {
             // meta data
             var metadata = result.metaData;
             expect(metadata).toBeDefinedAndNotNull('JSON metadata object should be retrieved.');
-            expect(metadata.metaTitle).toBe('Test meta title');
-            expect(metadata.metaKeywords).toBe('Test meta keywords');
-            expect(metadata.metaDescription).toBe('Test meta description');
+            expect(metadata.metaTitle).toBe('Test meta title', 'Correctly filtered metaTitle should be retrieved.');
+            expect(metadata.metaKeywords).toBe('Test meta keywords', 'Correctly filtered metaKeywords should be retrieved.');
+            expect(metadata.metaDescription).toBe('Test meta description', 'Correctly filtered metaDescription should be retrieved.');
         });
     });
     
@@ -327,10 +327,10 @@ describe('Blog: Blog Posts', function () {
             expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
             expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
 
-            expect(result.data.items[0].id).toBe('c1efcb1107ed4901abb3a206012b0b87');
+            expect(result.data.items[0].id).toBe('c1efcb1107ed4901abb3a206012b0b87', 'Correctly filtered ____ should be retrieved.');
 
             // Check if model properties count didn't changed. If so - update current test filter and another tests.
-            expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]));
+            expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
         });
     });
 
@@ -353,8 +353,8 @@ describe('Blog: Blog Posts', function () {
         expect(image).toBeDefinedAndNotNull('JSON ' + name + ' object should be retrieved.');
         api.expectBasePropertiesAreNotNull(image);
 
-        expect(image.title).toBe('Image for _0003_Blog_For_Tests_');
-        expect(image.caption).toBe('Image caption for _0003_Blog_For_Tests_');
+        expect(image.title).toBe('Image for _0003_Blog_For_Tests_', 'Correctly filtered ' + name + '.title should be retrieved.');
+        expect(image.caption).toBe('Image caption for _0003_Blog_For_Tests_', 'Correctly filtered ' + name + '.caption should be retrieved.');
         expect(image.url).toBeDefinedAndNotNull('url should be retrieved.');
         expect(image.thumbnailUrl).toBeDefinedAndNotNull('thumbnailUrl should be retrieved.');
     }
@@ -395,7 +395,7 @@ describe('Blog: Blog Posts', function () {
             expect(result.data.items.length).toBe(expectedCount, 'Returned array length should be ' + expectedCount + '.');
 
             for (var i = 0; i < result.data.items.length; i++) {
-                expect(result.data.items[i].title).toBe(expectedTitles[i]);
+                expect(result.data.items[i].title).toBe(expectedTitles[i], 'Correctly filtered title should be retrieved.');
             }
         });
     }

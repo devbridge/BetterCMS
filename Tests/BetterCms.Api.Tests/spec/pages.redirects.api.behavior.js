@@ -40,10 +40,10 @@ describe('Pages: Redirects', function () {
 
             api.expectBasePropertiesAreNotNull(result.data.items[0]);
             api.expectBasePropertiesAreNotNull(result.data.items[1]);
-            expect(result.data.items[0].pageUrl).toBe('/_0000_Redirect_From_3/');
-            expect(result.data.items[0].redirectUrl).toBe('/_0000_Redirect_To_3/');
-            expect(result.data.items[1].pageUrl).toBe('/_0000_Redirect_From_4/');
-            expect(result.data.items[1].redirectUrl).toBe('/_0000_Redirect_To_4/');
+            expect(result.data.items[0].pageUrl).toBe('/_0000_Redirect_From_3/', 'Correctly filtered items[0].pageUrl should be retrieved.');
+            expect(result.data.items[0].redirectUrl).toBe('/_0000_Redirect_To_3/', 'Correctly filtered items[0].redirectUrl should be retrieved.');
+            expect(result.data.items[1].pageUrl).toBe('/_0000_Redirect_From_4/', 'Correctly filtered items[1].pageUrl should be retrieved.');
+            expect(result.data.items[1].redirectUrl).toBe('/_0000_Redirect_To_4/', 'Correctly filtered items[1].redirectUrl should be retrieved.');
         });
     });
     
@@ -69,8 +69,8 @@ describe('Pages: Redirects', function () {
             var redirect = result.data;
             expect(redirect).toBeDefinedAndNotNull('JSON data object should be retrieved.');
             api.expectBasePropertiesAreNotNull(redirect);
-            expect(redirect.pageUrl).toBe('/_0000_Redirect_From_3/');
-            expect(redirect.redirectUrl).toBe('/_0000_Redirect_To_3/');
+            expect(redirect.pageUrl).toBe('/_0000_Redirect_From_3/', 'Correctly filtered pageUrl should be retrieved.');
+            expect(redirect.redirectUrl).toBe('/_0000_Redirect_To_3/', 'Correctly filtered redirectUrl should be retrieved.');
         });
     });
 
@@ -112,10 +112,10 @@ describe('Pages: Redirects', function () {
             expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
             expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
 
-            expect(result.data.items[0].id).toBe('23574260f1984c9e98aba207008d08fe');
+            expect(result.data.items[0].id).toBe('23574260f1984c9e98aba207008d08fe', 'Correctly filtered id should be retrieved.');
 
             // Check if model properties count didn't changed. If so - update current test filter and another tests.
-            expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]));
+            expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
         });
     });
 });

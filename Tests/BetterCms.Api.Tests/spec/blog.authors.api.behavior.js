@@ -42,9 +42,9 @@ describe('Blog: Authors', function () {
             api.expectBasePropertiesAreNotNull(result.data.items[1]);
 
             expect(result.data.items[0].name).toBe('_0000_Author_2', 'Items[0] name should be _0000_Author_2');
-            expect(result.data.items[0].imageId).toBeDefinedAndNotNull('Items[0] image id should be retrieved');
-            expect(result.data.items[0].imageUrl).toBeDefinedAndNotNull('Items[0] image URL should be retrieved');
-            expect(result.data.items[0].imageThumbnailUrl).toBeDefinedAndNotNull('Items[0] image thumbnail URL should be retrieved');
+            expect(result.data.items[0].imageId).toBeDefinedAndNotNull('Items[0] image id should be retrieved.');
+            expect(result.data.items[0].imageUrl).toBeDefinedAndNotNull('Items[0] image URL should be retrieved.');
+            expect(result.data.items[0].imageThumbnailUrl).toBeDefinedAndNotNull('Items[0] image thumbnail URL should be retrieved.');
             expect(result.data.items[0].imageCaption).toBe('Image caption for _0000_Author_2', 'Items[0] image caption should be \"Image caption for _0000_Author_2\"');
             
             expect(result.data.items[1].name).toBe('_0000_Author_3', 'Items[1] name should be _0000_Author_3');
@@ -126,10 +126,10 @@ describe('Blog: Authors', function () {
             expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
             expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
 
-            expect(result.data.items[0].id).toBe('200f5ee252af47abb5bea20601210dd3', 'Correctly filtered ____ should be retrieved.');
+            expect(result.data.items[0].id).toBe('200f5ee252af47abb5bea20601210dd3', 'Correctly filtered id should be retrieved.');
 
             // Check if model properties count didn't changed. If so - update current test filter and another tests.
-            expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]));
+            expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
         });
     });
 });
