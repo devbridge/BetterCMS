@@ -360,7 +360,7 @@ describe('Pages: Pages', function () {
 
             expect(result.data.items[0].id).toBe('e81a87022bf4419688b4a2070081a57e');
 
-            // Check if model properties count didn't changed. If so - update filter current test filter and another tests.
+            // Check if model properties count didn't changed. If so - update current test filter and another tests.
             expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]));
         });
     });
@@ -409,7 +409,7 @@ describe('Pages: Pages', function () {
 
             expect(result.data.items[0].id).toBe('457c26ad2d654dc381e8a20700848027');
 
-            // Check if model properties count didn't changed. If so - update filter current test filter and another tests.
+            // Check if model properties count didn't changed. If so - update current test filter and another tests.
             // data.filter.where.length + 1 <-- Because field ContentType cannnot be filtered by
             expect(data.filter.where.length + 1).toBe(api.getCountOfProperties(result.data.items[0]));
         });

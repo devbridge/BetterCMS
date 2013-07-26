@@ -125,4 +125,54 @@ describe('Pages: Widgets', function () {
             expect(widget.categoryName).toBe('Category for _0004_Server_Widget_1');
         });
     });
+    
+    it('01203: Should get a list with one widget, filtered by all available columns', function () {
+        var url = '/bcms-api/widgets/',
+            result,
+            ready = false;
+
+        var data = {
+            filter: {
+                where: [
+                    { field: 'Id', value: 'd674977e193f4d858b83a20700ac13b6' },
+                    { field: 'CreatedOn', value: '2013-07-26 10:26:30.000' },
+                    { field: 'CreatedBy', value: 'Better CMS test user' },
+                    { field: 'LastModifiedOn', value: '2013-07-26 10:26:50.000' },
+                    { field: 'LastModifiedBy', value: 'Better CMS test user' },
+                    { field: 'Version', value: '2' },
+
+                    { field: 'Name', value: '01203' },
+                    { field: 'IsPublished', value: true },
+                    { field: 'PublishedOn', value: '2013-07-26 10:26:50.000' },
+                    { field: 'PublishedByUser', value: 'Better CMS test user' },
+                    { field: 'CategoryId', value: '1d8dbfbce4bf46c2acb7a20700ac186a' },
+                    { field: 'CategoryName', value: '01203' }
+                ]
+            }
+        };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
+            expect(result.data.totalCount).toBe(1);
+            expect(result.data.items.length).toBe(1);
+
+            expect(result.data.items[0].id).toBe('d674977e193f4d858b83a20700ac13b6');
+
+            // Check if model properties count didn't changed. If so - update current test filter and another tests.
+            // data.filter.where.length + 1 <-- Because field WidgetType cannnot be filtered by
+            expect(data.filter.where.length + 1).toBe(api.getCountOfProperties(result.data.items[0]));
+        });
+    });
 });

@@ -177,6 +177,53 @@ describe('Pages: Sitemap', function () {
             expect(node.displayOrder).not.toBeNull();
         });
     });
+    
+    it('01404: Should get a list with one siemap node, filtered by all available columns', function () {
+        var url = '/bcms-api/sitemap-nodes/',
+            result,
+            ready = false;
+
+        var data = {
+            filter: {
+                where: [
+                    { field: 'Id', value: '390d4ac846804fa4ab18a20700aae5e6' },
+                    { field: 'CreatedOn', value: '2013-07-26 10:22:13.000' },
+                    { field: 'CreatedBy', value: 'Better CMS test user' },
+                    { field: 'LastModifiedOn', value: '2013-07-26 10:22:13.000' },
+                    { field: 'LastModifiedBy', value: 'Better CMS test user' },
+                    { field: 'Version', value: '1' },
+
+                    { field: 'ParentId', value: '4f32940497ce4df199d1a20700aae5d8' },
+                    { field: 'Title', value: '01404' },
+                    { field: 'Url', value: '/01404/01404/' },
+                    { field: 'DisplayOrder', value: 0 }
+                ]
+            }
+        };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
+            expect(result.data.totalCount).toBe(1);
+            expect(result.data.items.length).toBe(1);
+
+            expect(result.data.items[0].id).toBe('390d4ac846804fa4ab18a20700aae5e6');
+
+            // Check if model properties count didn't changed. If so - update current test filter and another tests.
+            expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]));
+        });
+    });
 
     function findTreeChild(items, parentId, title, url, childrenCount) {
         var childFound = false,

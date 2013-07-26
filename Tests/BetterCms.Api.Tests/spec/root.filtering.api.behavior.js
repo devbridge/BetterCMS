@@ -92,9 +92,9 @@ describe('Root: Filtering', function() {
                     columnName = 'FileSize';
                     break;
                 case 'Int':
-                    url = '/bcms-api/sitemap-nodes';
-                    data.filter.where.push({ field: 'ParentId', value: '0c8872e5ed464b4c931ea20600ffccf2' });
-                    columnName = 'DisplayOrder';
+                    url = '/bcms-api/tags';
+                    data.filter.where.push({ field: 'Name', operation: 'StartsWith', value: '0905X: ' });
+                    columnName = 'Version';
                     break;
                 case 'String':
                     if (test.value) {

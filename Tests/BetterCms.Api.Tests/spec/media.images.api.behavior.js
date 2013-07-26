@@ -320,7 +320,7 @@ describe('Media Manager: Images', function () {
 
             expect(result.data.items[0].id).toBe('b53f6544cd6242a29a70a207007c75f8');
 
-            // Check if model properties count didn't changed. If so - update filter current test filter and another tests.
+            // Check if model properties count didn't changed. If so - update current test filter and another tests.
             expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]));
         });
     });

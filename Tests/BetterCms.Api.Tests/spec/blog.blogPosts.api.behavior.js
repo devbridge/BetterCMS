@@ -329,7 +329,7 @@ describe('Blog: Blog Posts', function () {
 
             expect(result.data.items[0].id).toBe('c1efcb1107ed4901abb3a206012b0b87');
 
-            // Check if model properties count didn't changed. If so - update filter current test filter and another tests.
+            // Check if model properties count didn't changed. If so - update current test filter and another tests.
             expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]));
         });
     });

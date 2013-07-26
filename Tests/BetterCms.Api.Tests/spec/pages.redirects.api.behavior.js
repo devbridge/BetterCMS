@@ -74,7 +74,7 @@ describe('Pages: Redirects', function () {
         });
     });
 
-    it('01302: Should get a list with one author, filtered by all available columns', function () {
+    it('01302: Should get a list with one redirect, filtered by all available columns', function () {
         var url = '/bcms-api/redirects/',
             result,
             ready = false;
@@ -114,7 +114,7 @@ describe('Pages: Redirects', function () {
 
             expect(result.data.items[0].id).toBe('23574260f1984c9e98aba207008d08fe');
 
-            // Check if model properties count didn't changed. If so - update filter current test filter and another tests.
+            // Check if model properties count didn't changed. If so - update current test filter and another tests.
             expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]));
         });
     });

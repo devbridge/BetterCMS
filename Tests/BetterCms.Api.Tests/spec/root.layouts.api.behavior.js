@@ -128,4 +128,95 @@ describe('Root: Layouts', function() {
             expect(result.data.items[2].regionIdentifier).toBe('CMSFooter');
         });
     });
+    
+    it('00103: Should get a list with one layout, filtered by all available columns', function () {
+        var url = '/bcms-api/layouts/',
+            result,
+            ready = false;
+
+        var data = {
+            filter: {
+                where: [
+                    { field: 'Id', value: '33d04bd9e37f40ecaad5a20700adbe11' },
+                    { field: 'CreatedOn', value: '2013-07-26 10:32:34.000' },
+                    { field: 'CreatedBy', value: 'Better CMS test user' },
+                    { field: 'LastModifiedOn', value: '2013-07-26 10:32:34.000' },
+                    { field: 'LastModifiedBy', value: 'Better CMS test user' },
+                    { field: 'Version', value: '1' },
+
+                    { field: 'Name', value: '00103' },
+                    { field: 'LayoutPath', value: '~/Areas/bcms-installation/Views/Shared/DefaultLayout.cshtml' },
+                    { field: 'PreviewUrl', value: 'http://www.devbridge.com/Content/styles/images/responsive/logo.png' }
+                ]
+            }
+        };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
+            expect(result.data.totalCount).toBe(1);
+            expect(result.data.items.length).toBe(1);
+
+            expect(result.data.items[0].id).toBe('33d04bd9e37f40ecaad5a20700adbe11');
+
+            // Check if model properties count didn't changed. If so - update current test filter and another tests.
+            expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]));
+        });
+    });
+    
+    it('00104: Should get a list with one layout region, filtered by all available columns', function () {
+        var url = '/bcms-api/layouts/1030da610baa40ccb484a20700b21ec2/regions/',
+            result,
+            ready = false;
+
+        var data = {
+            filter: {
+                where: [
+                    { field: 'Id', value: 'c0830f40833043c3b108a20700b21ec2' },
+                    { field: 'CreatedOn', value: '2013-07-26 10:48:30.000' },
+                    { field: 'CreatedBy', value: 'Better CMS test user' },
+                    { field: 'LastModifiedOn', value: '2013-07-26 10:48:30.000' },
+                    { field: 'LastModifiedBy', value: 'Better CMS test user' },
+                    { field: 'Version', value: '1' },
+
+                    { field: 'RegionIdentifier', value: '00104' },
+                    { field: 'Description', value: 'Region description' }
+                ]
+            }
+        };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
+            expect(result.data.totalCount).toBe(1);
+            expect(result.data.items.length).toBe(1);
+
+            expect(result.data.items[0].id).toBe('c0830f40833043c3b108a20700b21ec2');
+
+            // Check if model properties count didn't changed. If so - update current test filter and another tests.
+            expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]));
+        });
+    });
 });

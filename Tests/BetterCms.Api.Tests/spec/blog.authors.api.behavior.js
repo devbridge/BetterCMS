@@ -128,7 +128,7 @@ describe('Blog: Authors', function () {
 
             expect(result.data.items[0].id).toBe('200f5ee252af47abb5bea20601210dd3');
 
-            // Check if model properties count didn't changed. If so - update filter current test filter and another tests.
+            // Check if model properties count didn't changed. If so - update current test filter and another tests.
             expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]));
         });
     });

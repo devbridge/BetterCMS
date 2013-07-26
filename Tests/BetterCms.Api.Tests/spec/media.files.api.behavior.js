@@ -315,7 +315,7 @@ describe('Media Manager: Files', function () {
 
             expect(result.data.items[0].id).toBe('7f753def7d2647aaa36ca2070078465e');
 
-            // Check if model properties count didn't changed. If so - update filter current test filter and another tests.
+            // Check if model properties count didn't changed. If so - update current test filter and another tests.
             expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]));
         });
     });
