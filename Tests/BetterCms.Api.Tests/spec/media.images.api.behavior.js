@@ -274,6 +274,58 @@ describe('Media Manager: Images', function () {
         filterByTags('or', 2, ['IFilterByTags Image 1', 'IFilterByTags Image 3']);
     });
 
+    it('03210: Should get a list with one image, filtered by all available columns', function () {
+        var url = '/bcms-api/images/',
+            result,
+            ready = false;
+
+        var data = {
+            filter: {
+                where: [
+                    { field: 'Id', value: 'b53f6544cd6242a29a70a207007c75f8' },
+                    { field: 'CreatedOn', value: '2013-07-26 07:33:08.000' },
+                    { field: 'CreatedBy', value: 'Better CMS test user' },
+                    { field: 'LastModifiedOn', value: '2013-07-26 07:33:27.000' },
+                    { field: 'LastModifiedBy', value: 'Better CMS test user' },
+                    { field: 'Version', value: '6' },
+
+                    { field: 'Title', value: '03210' },
+                    { field: 'Caption', value: '03210 caption' },
+                    { field: 'MediaContentType', value: 'File' },
+                    { field: 'FileExtension', value: '.jpg' },
+                    { field: 'FileSize', value: 9901 },
+                    { field: 'ImageUrl', value: 'http://bettercms.sandbox.mvc4.local/uploads/image/c7371305555341ba9be1958aaca110e7/1_1.jpg' },
+                    { field: 'ThumbnailUrl', value: 'http://bettercms.sandbox.mvc4.local/uploads/image/c7371305555341ba9be1958aaca110e7/t_1_1.png' },
+                    { field: 'IsArchived', value: false }
+                ]
+            }
+        };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
+            expect(result.data.totalCount).toBe(1);
+            expect(result.data.items.length).toBe(1);
+
+            expect(result.data.items[0].id).toBe('b53f6544cd6242a29a70a207007c75f8');
+
+            // Check if model properties count didn't changed. If so - update filter current test filter and another tests.
+            expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]));
+        });
+    });
+
+
     function runImagesListTests(data, expectingResults) {
         var url = '/bcms-api/images/',
             result,

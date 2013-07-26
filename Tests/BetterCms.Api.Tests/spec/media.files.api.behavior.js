@@ -268,6 +268,58 @@ describe('Media Manager: Files', function () {
         filterByTags('or', 2, ['IFilterByTags File 1', 'IFilterByTags File 3']);
     });
 
+    it('03110: Should get a list with one file, filtered by all available columns', function () {
+        var url = '/bcms-api/files/',
+            result,
+            ready = false;
+
+        var data = {
+            filter: {
+                where: [
+                    { field: 'Id', value: '7f753def7d2647aaa36ca2070078465e' },
+                    { field: 'CreatedOn', value: '2013-07-26 07:17:54.000' },
+                    { field: 'CreatedBy', value: 'Better CMS test user' },
+                    { field: 'LastModifiedOn', value: '2013-07-26 07:27:44.000' },
+                    { field: 'LastModifiedBy', value: 'Better CMS test user' },
+                    { field: 'Version', value: '6' },
+                    
+                    { field: 'Title', value: '03110' },
+                    { field: 'MediaContentType', value: 'File' },
+                    { field: 'FileExtension', value: '.jpg' },
+                    { field: 'FileSize', value: 9901 },
+                    { field: 'FileUrl', value: 'http://bettercms.sandbox.mvc4.local/uploads/file/737256d2822d4c16b246d59fbfaa7f9b/1.jpg' },
+                    { field: 'ThumbnailUrl', value: 'http://bettercms.sandbox.mvc4.local/uploads/image/ea8be69ccb97474eae513454f5dec93e/t_1_1.png' },
+                    { field: 'ThumbnailCaption', value: '03110 caption' },
+                    { field: 'IsArchived', value: false },
+                    { field: 'ThumbnailId', value: '8a653450def8433c8298a20700786dad' }
+                ]
+            }
+        };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
+            expect(result.data.totalCount).toBe(1);
+            expect(result.data.items.length).toBe(1);
+
+            expect(result.data.items[0].id).toBe('7f753def7d2647aaa36ca2070078465e');
+
+            // Check if model properties count didn't changed. If so - update filter current test filter and another tests.
+            expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]));
+        });
+    });
+
     function runFilesListTests(data, expectingResults) {
         var url = '/bcms-api/files/',
             result,
