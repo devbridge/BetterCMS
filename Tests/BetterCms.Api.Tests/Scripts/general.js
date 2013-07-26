@@ -6,17 +6,23 @@ var api = (function() {
     obj.get = function (url, data, onSuccess, onError) {
         var options = {
             type: 'GET',
+            data: {},
             cache: false,
             async: false,
             contentType: 'application/json',
             dataType: 'json',
             success: onSuccess,
-            error: onError
+            error: onError,
+            beforeSend: function (request) {
+                // Hack for phantomjs runner (it ignores a regularly provided contentType).
+                request.setRequestHeader("X-Content-Type", "application/json");
+            },
         };
+
         if (data != null) {
             options.data = "data=" + JSON.stringify(data);
         }
-
+        
         $.ajax(url, options);
     };
 

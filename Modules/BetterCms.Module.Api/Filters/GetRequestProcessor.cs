@@ -30,9 +30,17 @@ namespace BetterCms.Module.Api.Filters
 
         private static bool IsJson(IHttpRequest req)
         {
-            if (!string.IsNullOrEmpty(req.ContentType))
+            string contentType = req.ContentType;
+
+            if (string.IsNullOrEmpty(contentType))
             {
-                return req.ContentType.Equals("application/json", StringComparison.OrdinalIgnoreCase) || req.ContentType.StartsWith("application/json;", StringComparison.OrdinalIgnoreCase);
+                // Hack for phantomjs runner (it ignores a regularly provided contentType).
+                contentType = req.Headers["X-Content-Type"];
+            }
+                
+            if (!string.IsNullOrEmpty(contentType))
+            {
+                return contentType.Equals("application/json", StringComparison.OrdinalIgnoreCase) || contentType.StartsWith("application/json;", StringComparison.OrdinalIgnoreCase);
             }
 
             return false;
