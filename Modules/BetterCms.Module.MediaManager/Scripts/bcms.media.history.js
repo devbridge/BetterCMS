@@ -35,7 +35,8 @@ bettercms.define('bcms.media.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         globalization = {
             mediaHistoryDialogTitle: null,
             mediaVersionRestoreConfirmation: null,
-            restoreButtonTitle: null
+            restoreButtonTitle: null,
+            closeButtonTitle: null
         };
 
     /**
@@ -169,6 +170,7 @@ bettercms.define('bcms.media.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
     history.openMediaHistoryDialog = function (mediaId, onClose) {
         modal.open({
             title: globalization.mediaHistoryDialogTitle,
+            cancelTitle: globalization.closeButtonTitle,
             disableAccept: true,
             onLoad: function (dialog) {
                 var url = $.format(links.loadMediaHistoryDialogUrl, mediaId);
