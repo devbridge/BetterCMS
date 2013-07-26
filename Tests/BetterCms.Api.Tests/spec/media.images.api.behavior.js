@@ -145,11 +145,11 @@ describe('Media Manager: Images', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
-            expect(result.data).not.toBeNull();
-            expect(result.data.items).not.toBeNull();
-            expect(result.data.totalCount).toBe(1);
-            expect(result.data.items.length).toBe(1);
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.items).not.toBeNull('JSON data.items object should be retrieved');
+            expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
+            expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
 
             var image = result.data.items[0];
             api.expectBasePropertiesAreNotNull(image);
@@ -186,11 +186,11 @@ describe('Media Manager: Images', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
-            expect(result.data).not.toBeNull();
-            expect(result.data.items).not.toBeNull();
-            expect(result.data.totalCount).toBe(1);
-            expect(result.data.items.length).toBe(1);
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.items).not.toBeNull('JSON data.items object should be retrieved');
+            expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
+            expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
 
             var folder = result.data.items[0];
             api.expectBasePropertiesAreNotNull(folder);
@@ -225,12 +225,11 @@ describe('Media Manager: Images', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
-            expect(result.data).not.toBeNull();
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
 
             // Image
             var image = result.data;
-            expect(image).not.toBeNull();
+            expect(image).toBeDefinedAndNotNull('JSON data object should be retrieved.');
             api.expectBasePropertiesAreNotNull(image);
             expect(image.title).toBe('_0001_Image_For_Tests');
             expect(image.caption).toBe('Image Caption');
@@ -245,9 +244,9 @@ describe('Media Manager: Images', function () {
             expect(image.thumbnailHeight).toBe(150);
             expect(image.thumbnailSize).toBe(15590);
             expect(image.isArchived).toBe(false);
-            expect(image.folderId).not.toBeNull();
+            expect(image.folderId).toBeDefinedAndNotNull('folderId should be retrieved.');
             expect(image.folderName).toBe('_0001_Images_Folder_For_Tests');
-            expect(image.publishedOn).not.toBeNull();
+            expect(image.publishedOn).toBeDefinedAndNotNull('publishedOn should be retrieved.');
             expect(image.originalFileName).toBe('__Tapir.png');
             expect(image.originalFileExtension).toBe('.png');
             expect(image.originalWidth).toBe(480);
@@ -257,8 +256,8 @@ describe('Media Manager: Images', function () {
 
             // Tags
             var tags = result.tags;
-            expect(tags).not.toBeNull();
-            expect(tags.length).toBe(2);
+            expect(tags).toBeDefinedAndNotNull('JSON tags object should be retrieved.');
+            expect(tags.length).toBe(2, 'Returned array length should be 2.');
 
             api.expectBasePropertiesAreNotNull(tags[0]);
             expect(tags[0].name).toBe('tag1_0001_Image_For_Tests');
@@ -313,10 +312,10 @@ describe('Media Manager: Images', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
-            expect(result.data).not.toBeNull();
-            expect(result.data.totalCount).toBe(1);
-            expect(result.data.items.length).toBe(1);
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
+            expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
 
             expect(result.data.items[0].id).toBe('b53f6544cd6242a29a70a207007c75f8');
 
@@ -343,11 +342,11 @@ describe('Media Manager: Images', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
-            expect(result.data).not.toBeNull();
-            expect(result.data.items).not.toBeNull();
-            expect(result.data.totalCount).toBe(expectingResults.totalCount);
-            expect(result.data.items.length).toBe(1);
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.items).not.toBeNull('JSON data.items object should be retrieved');
+            expect(result.data.totalCount).toBe(expectingResults.totalCount, 'Total count should be ' + expectingResults.totalCount + '.');
+            expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
             expect(result.data.items[0].title).toBe(expectingResults.title);
             expect(result.data.items[0].isArchived).toBe(expectingResults.isArchived);
         });
@@ -380,10 +379,10 @@ describe('Media Manager: Images', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
-            expect(result.data).not.toBeNull();
-            expect(result.data.totalCount).toBe(expectedCount);
-            expect(result.data.items.length).toBe(expectedCount);
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(expectedCount, 'Total count should be ' + expectedCount + '.');
+            expect(result.data.items.length).toBe(expectedCount, 'Returned array length should be ' + expectedCount + '.');
 
             for (var i = 0; i < result.data.items.length; i++) {
                 expect(result.data.items[i].title).toBe(expectedTitles[i]);

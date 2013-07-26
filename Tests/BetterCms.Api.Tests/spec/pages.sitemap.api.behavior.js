@@ -37,8 +37,8 @@ describe('Pages: Sitemap', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
-            expect(result.data).not.toBeNull();
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
             expect(result.data.length).toBeGreaterThan(0);
 
             var rootFound = false;
@@ -50,9 +50,9 @@ describe('Pages: Sitemap', function () {
                     api.expectBasePropertiesAreNotNull(rootNode);
                     expect(rootNode.parentId).toBeNull();
                     expect(rootNode.url).toBe(constants.rootUrl);
-                    expect(rootNode.displayOrder).not.toBeNull();
-                    expect(rootNode.childrenNodes).not.toBeNull();
-                    expect(rootNode.childrenNodes.length).toBe(2);
+                    expect(rootNode.displayOrder).toBeDefinedAndNotNull('displayOrder should be retrieved.');
+                    expect(rootNode.childrenNodes).toBeDefinedAndNotNull('childrenNodes should be retrieved.');
+                    expect(rootNode.childrenNodes.length).toBe(2, 'Returned childrenNodes array length should be 2.');
 
                     // /root/1/
                     var child1 = findTreeChild(rootNode.childrenNodes, rootNode.id, constants.child1Title, constants.child1Url, 3);
@@ -87,9 +87,9 @@ describe('Pages: Sitemap', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
-            expect(result.data).not.toBeNull();
-            expect(result.data.length).toBe(2);
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.length).toBe(2, 'Returned array length should be 2.');
 
             var child1 = result.data[0];
             expectTreeNodePropertiesAreCorrect(child1, constants.rootId, constants.child1Title, constants.child1Url, 3);
@@ -132,11 +132,11 @@ describe('Pages: Sitemap', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
-            expect(result.data).not.toBeNull();
-            expect(result.data.items).not.toBeNull();
-            expect(result.data.totalCount).toBe(3);
-            expect(result.data.items.length).toBe(2);
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.items).not.toBeNull('JSON data.items object should be retrieved');
+            expect(result.data.totalCount).toBe(3, 'Total count should be 3.');
+            expect(result.data.items.length).toBe(2, 'Returned array length should be 2.');
             
             expect(result.data.items[0].title).toBe('_Tree_2_');
             expect(result.data.items[1].title).toBe('_Tree_1_1_1_');
@@ -145,7 +145,7 @@ describe('Pages: Sitemap', function () {
             api.expectBasePropertiesAreNotNull(node);
             expect(node.parentId).toBe(constants.child11Id);
             expect(node.url).toBe(constants.child111Url);
-            expect(node.displayOrder).not.toBeNull();
+            expect(node.displayOrder).toBeDefinedAndNotNull('displayOrder should be retrieved.');
         });
     });
 
@@ -166,15 +166,15 @@ describe('Pages: Sitemap', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
 
             var node = result.data;
-            expect(node).not.toBeNull();
+            expect(node).toBeDefinedAndNotNull('JSON data object should be retrieved.');
             api.expectBasePropertiesAreNotNull(node);
             expect(node.title).toBe(constants.child11Title);
             expect(node.parentId).toBe(constants.child1Id);
             expect(node.url).toBe(constants.child11Url);
-            expect(node.displayOrder).not.toBeNull();
+            expect(node.displayOrder).toBeDefinedAndNotNull('displayOrder should be retrieved.');
         });
     });
     
@@ -213,10 +213,10 @@ describe('Pages: Sitemap', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
-            expect(result.data).not.toBeNull();
-            expect(result.data.totalCount).toBe(1);
-            expect(result.data.items.length).toBe(1);
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
+            expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
 
             expect(result.data.items[0].id).toBe('390d4ac846804fa4ab18a20700aae5e6');
 
@@ -248,7 +248,7 @@ describe('Pages: Sitemap', function () {
         expect(node.title).toBe(title);
         expect(node.parentId).toBe(parentId);
         expect(node.url).toBe(url);
-        expect(node.childrenNodes).not.toBeNull();
+        expect(node.childrenNodes).toBeDefinedAndNotNull('childrenNodes should be retrieved.');
         expect(node.childrenNodes.length).toBe(childrenCount);
     }
 });

@@ -48,10 +48,10 @@ describe('Root: Layouts', function() {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
-            expect(result.data).not.toBeNull();
-            expect(result.data.totalCount).toBe(4);
-            expect(result.data.items.length).toBe(2);
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(4, 'Total count should be 4.');
+            expect(result.data.items.length).toBe(2, 'Returned array length should be 2.');
 
             // Layout 1
             expect(result.data.items[1].name).toBe('_0001_Layout4');
@@ -81,8 +81,8 @@ describe('Root: Layouts', function() {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
-            expect(result.data).not.toBeNull();
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
 
             // Layout
             api.expectBasePropertiesAreNotNull(result.data);
@@ -117,10 +117,10 @@ describe('Root: Layouts', function() {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
-            expect(result.data).not.toBeNull();
-            expect(result.data.items).not.toBeNull();
-            expect(result.data.items.length).toBe(3);
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.items).not.toBeNull('JSON data.items object should be retrieved');
+            expect(result.data.items.length).toBe(3, 'Returned array length should be 3.');
 
             api.expectBasePropertiesAreNotNull(result.data.items[0]);
             expect(result.data.items[0].regionIdentifier).toBe('CMSMainContent');
@@ -163,10 +163,10 @@ describe('Root: Layouts', function() {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
-            expect(result.data).not.toBeNull();
-            expect(result.data.totalCount).toBe(1);
-            expect(result.data.items.length).toBe(1);
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
+            expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
 
             expect(result.data.items[0].id).toBe('33d04bd9e37f40ecaad5a20700adbe11');
 
@@ -208,10 +208,10 @@ describe('Root: Layouts', function() {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
-            expect(result.data).not.toBeNull();
-            expect(result.data.totalCount).toBe(1);
-            expect(result.data.items.length).toBe(1);
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
+            expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
 
             expect(result.data.items[0].id).toBe('c0830f40833043c3b108a20700b21ec2');
 

@@ -33,17 +33,17 @@ describe('Pages: Widgets', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
-            expect(result.data).not.toBeNull();
-            expect(result.data.totalCount).toBe(4);
-            expect(result.data.items.length).toBe(2);
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(4, 'Total count should be 4.');
+            expect(result.data.items.length).toBe(2, 'Returned array length should be 2.');
 
             var htmlWidget = result.data.items[0];
             api.expectBasePropertiesAreNotNull(htmlWidget);
             expect(htmlWidget.widgetType).toBe('html-widget');
             expect(htmlWidget.name).toBe('_0004_Html_Widget_2');
             expect(htmlWidget.isPublished).toBe(true);
-            expect(htmlWidget.publishedOn).not.toBeNull();
+            expect(htmlWidget.publishedOn).toBeDefinedAndNotNull('publishedOn should be retrieved.');
             expect(htmlWidget.publishedByUser).toBe('Better CMS test user');
             
             var serverWidget = result.data.items[1];
@@ -51,7 +51,7 @@ describe('Pages: Widgets', function () {
             expect(serverWidget.widgetType).toBe('server-widget');
             expect(serverWidget.name).toBe('_0004_Server_Widget_1');
             expect(serverWidget.isPublished).toBe(true);
-            expect(serverWidget.publishedOn).not.toBeNull();
+            expect(serverWidget.publishedOn).toBeDefinedAndNotNull('publishedOn should be retrieved.');
             expect(serverWidget.publishedByUser).toBe('Better CMS test user');
         });
     });
@@ -73,16 +73,16 @@ describe('Pages: Widgets', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
 
             var widget = result.data;
-            expect(widget).not.toBeNull();
+            expect(widget).toBeDefinedAndNotNull('JSON data object should be retrieved.');
             api.expectBasePropertiesAreNotNull(widget);
             expect(widget.name).toBe('_0004_Html_Widget_2');
             expect(widget.isPublished).toBe(true);
-            expect(widget.publishedOn).not.toBeNull();
+            expect(widget.publishedOn).toBeDefinedAndNotNull('publishedOn should be retrieved.');
             expect(widget.publishedByUser).toBe('Better CMS test user');
-            expect(widget.categoryId).not.toBeNull();
+            expect(widget.categoryId).toBeDefinedAndNotNull('categoryId should be retrieved.');
             expect(widget.categoryName).toBe('Category for _0004_Html_Widget_2');
             expect(widget.customCss).toBe('custom css');
             expect(widget.useCustomCss).toBe(true);
@@ -110,18 +110,18 @@ describe('Pages: Widgets', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
 
             var widget = result.data;
-            expect(widget).not.toBeNull();
+            expect(widget).toBeDefinedAndNotNull('JSON data object should be retrieved.');
             api.expectBasePropertiesAreNotNull(widget);
             expect(widget.name).toBe('_0004_Server_Widget_1');
             expect(widget.widgetUrl).toBe('~/Views/Widgets/TestWidget.cshtml');
             expect(widget.previewUrl).toBe('http://www.devbridge.com/Content/styles/images/responsive/logo.png');
             expect(widget.isPublished).toBe(true);
-            expect(widget.publishedOn).not.toBeNull();
+            expect(widget.publishedOn).toBeDefinedAndNotNull('publishedOn should be retrieved.');
             expect(widget.publishedByUser).toBe('Better CMS test user');
-            expect(widget.categoryId).not.toBeNull();
+            expect(widget.categoryId).toBeDefinedAndNotNull('categoryId should be retrieved.');
             expect(widget.categoryName).toBe('Category for _0004_Server_Widget_1');
         });
     });
@@ -163,10 +163,10 @@ describe('Pages: Widgets', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
-            expect(result.data).not.toBeNull();
-            expect(result.data.totalCount).toBe(1);
-            expect(result.data.items.length).toBe(1);
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
+            expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
 
             expect(result.data.items[0].id).toBe('d674977e193f4d858b83a20700ac13b6');
 

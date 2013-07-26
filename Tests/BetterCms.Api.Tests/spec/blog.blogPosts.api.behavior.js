@@ -28,10 +28,10 @@ describe('Blog: Blog Posts', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
-            expect(result.data).not.toBeNull();
-            expect(result.data.totalCount).toBe(1);
-            expect(result.data.items.length).toBe(1);
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
+            expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
         });
     });
     
@@ -53,10 +53,10 @@ describe('Blog: Blog Posts', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
-            expect(result.data).not.toBeNull();
-            expect(result.data.totalCount).toBe(2);
-            expect(result.data.items.length).toBe(1);
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(2, 'Total count should be 2.');
+            expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
         });
     });
     
@@ -78,10 +78,10 @@ describe('Blog: Blog Posts', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
-            expect(result.data).not.toBeNull();
-            expect(result.data.totalCount).toBe(2);
-            expect(result.data.items.length).toBe(1);
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(2, 'Total count should be 4.');
+            expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
         });
     });
 
@@ -103,29 +103,29 @@ describe('Blog: Blog Posts', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
-            expect(result.data).not.toBeNull();
-            expect(result.data.totalCount).toBe(4);
-            expect(result.data.items.length).toBe(2);
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(4, 'Total count should be 4.');
+            expect(result.data.items.length).toBe(2, 'Returned array length should be 2.');
 
             var blogPost = result.data.items[1];
             api.expectBasePropertiesAreNotNull(blogPost);
-            expect(blogPost.title).toBe(constants.testPageTitle);
-            expect(blogPost.blogPostUrl).toBe(constants.testPageUrl);
-            expect(blogPost.introText).toBe('_0003_Blog_For_Tests_ intro text');
-            expect(blogPost.isPublished).toBe(true);
-            expect(blogPost.publishedOn).not.toBeNull();
-            expect(blogPost.layoutId).not.toBeNull();
-            expect(blogPost.categoryId).not.toBeNull();
-            expect(blogPost.categoryName).toBe('Category for _0003_Blog_For_Tests_');
-            expect(blogPost.authorId).not.toBeNull();
-            expect(blogPost.authorName).toBe('Author for _0003_Blog_For_Tests_');
-            expect(blogPost.mainImageId).not.toBeNull();
-            expect(blogPost.mainImageUrl).not.toBeNull();
-            expect(blogPost.mainImageThumbnauilUrl).not.toBeNull();
-            expect(blogPost.mainImageCaption).toBe('Image caption for _0003_Blog_For_Tests_');
-            expect(blogPost.activationDate).toBe('/Date(1374613200000-0000)/');
-            expect(blogPost.expirationDate).toBe('/Date(1974315599000-0000)/');
+            expect(blogPost.title).toBe(constants.testPageTitle, 'Correctly filtered title should be retrieved.');
+            expect(blogPost.blogPostUrl).toBe(constants.testPageUrl, 'Correctly filtered blogPostUrl should be retrieved.');
+            expect(blogPost.introText).toBe('_0003_Blog_For_Tests_ intro text', 'Correctly filtered introText should be retrieved.');
+            expect(blogPost.isPublished).toBe(true, 'Correctly filtered isPublished should be retrieved.');
+            expect(blogPost.publishedOn).toBeDefinedAndNotNull('publishedOn should be retrieved.');
+            expect(blogPost.layoutId).toBeDefinedAndNotNull('layoutId should be retrieved.');
+            expect(blogPost.categoryId).toBeDefinedAndNotNull('categoryId should be retrieved.');
+            expect(blogPost.categoryName).toBe('Category for _0003_Blog_For_Tests_', 'Correctly filtered categoryName should be retrieved.');
+            expect(blogPost.authorId).toBeDefinedAndNotNull('authorId should be retrieved.');
+            expect(blogPost.authorName).toBe('Author for _0003_Blog_For_Tests_', 'Correctly filtered authorName should be retrieved.');
+            expect(blogPost.mainImageId).toBeDefinedAndNotNull('mainImageId should be retrieved.');
+            expect(blogPost.mainImageUrl).toBeDefinedAndNotNull('mainImageUrl should be retrieved.');
+            expect(blogPost.mainImageThumbnauilUrl).toBeDefinedAndNotNull('mainImageThumbnailUrl should be retrieved.');
+            expect(blogPost.mainImageCaption).toBe('Image caption for _0003_Blog_For_Tests_', 'Correctly filtered mainImageCaption should be retrieved.');
+            expect(blogPost.activationDate).toBe('/Date(1374613200000-0000)/', 'Correctly filtered activationDate should be retrieved.');
+            expect(blogPost.expirationDate).toBe('/Date(1974315599000-0000)/', 'Correctly filtered expirationDate should be retrieved.');
             expect(blogPost.isArchived).toBe(false);
         });
     });
@@ -147,27 +147,27 @@ describe('Blog: Blog Posts', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
 
             var blogPost = result.data;
-            expect(blogPost).not.toBeNull();
+            expect(blogPost).toBeDefinedAndNotNull('JSON data object should be retrieved.');
             api.expectBasePropertiesAreNotNull(blogPost);
-            expect(blogPost.title).toBe(constants.testPageTitle);
-            expect(blogPost.blogPostUrl).toBe(constants.testPageUrl);
-            expect(blogPost.introText).toBe('_0003_Blog_For_Tests_ intro text');
-            expect(blogPost.isPublished).toBe(true);
-            expect(blogPost.publishedOn).not.toBeNull();
-            expect(blogPost.layoutId).not.toBeNull();
-            expect(blogPost.categoryId).not.toBeNull();
-            expect(blogPost.categoryName).toBe('Category for _0003_Blog_For_Tests_');
-            expect(blogPost.authorId).not.toBeNull();
-            expect(blogPost.authorName).toBe('Author for _0003_Blog_For_Tests_');
-            expect(blogPost.mainImageId).not.toBeNull();
-            expect(blogPost.mainImageUrl).not.toBeNull();
-            expect(blogPost.mainImageThumbnauilUrl).not.toBeNull();
-            expect(blogPost.mainImageCaption).toBe('Image caption for _0003_Blog_For_Tests_');
-            expect(blogPost.activationDate).toBe('/Date(1374613200000-0000)/');
-            expect(blogPost.expirationDate).toBe('/Date(1974315599000-0000)/');
+            expect(blogPost.title).toBe(constants.testPageTitle, 'Correctly filtered title should be retrieved.');
+            expect(blogPost.blogPostUrl).toBe(constants.testPageUrl, 'Correctly filtered blogPostUrl should be retrieved.');
+            expect(blogPost.introText).toBe('_0003_Blog_For_Tests_ intro text', 'Correctly filtered introText should be retrieved.');
+            expect(blogPost.isPublished).toBe(true, 'Correctly filtered isPublished should be retrieved.');
+            expect(blogPost.publishedOn).toBeDefinedAndNotNull('publishedOn should be retrieved.');
+            expect(blogPost.layoutId).toBeDefinedAndNotNull('layoutId should be retrieved.');
+            expect(blogPost.categoryId).toBeDefinedAndNotNull('categoryId should be retrieved.');
+            expect(blogPost.categoryName).toBe('Category for _0003_Blog_For_Tests_', 'Correctly filtered categoryName should be retrieved.');
+            expect(blogPost.authorId).toBeDefinedAndNotNull('authorId should be retrieved.');
+            expect(blogPost.authorName).toBe('Author for _0003_Blog_For_Tests_', 'Correctly filtered authorName should be retrieved.');
+            expect(blogPost.mainImageId).toBeDefinedAndNotNull('mainImageId should be retrieved.');
+            expect(blogPost.mainImageUrl).toBeDefinedAndNotNull('mainImageUrl should be retrieved.');
+            expect(blogPost.mainImageThumbnauilUrl).toBeDefinedAndNotNull('mainImageThumbnailUrl should be retrieved.');
+            expect(blogPost.mainImageCaption).toBe('Image caption for _0003_Blog_For_Tests_', 'Correctly filtered mainImageCaption should be retrieved.');
+            expect(blogPost.activationDate).toBe('/Date(1374613200000-0000)/', 'Correctly filtered activationDate should be retrieved.');
+            expect(blogPost.expirationDate).toBe('/Date(1974315599000-0000)/', 'Correctly filtered expirationDate should be retrieved.');
             expect(blogPost.isArchived).toBe(false);
         });
     });
@@ -199,8 +199,8 @@ describe('Blog: Blog Posts', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
-            expect(result.data).not.toBeNull();
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
 
             // Page
             var blogPost = result.data;
@@ -209,13 +209,13 @@ describe('Blog: Blog Posts', function () {
             expect(blogPost.blogPostUrl).toBe(constants.testPageUrl);
             expect(blogPost.introText).toBe('_0003_Blog_For_Tests_ intro text');
             expect(blogPost.isPublished).toBe(true);
-            expect(blogPost.publishedOn).not.toBeNull();
-            expect(blogPost.layoutId).not.toBeNull();
-            expect(blogPost.categoryId).not.toBeNull();
-            expect(blogPost.authorId).not.toBeNull();
-            expect(blogPost.mainImageId).not.toBeNull();
-            expect(blogPost.secondaryImageId).not.toBeNull();
-            expect(blogPost.featuredImageId).not.toBeNull();
+            expect(blogPost.publishedOn).toBeDefinedAndNotNull('publishedOn should be retrieved.');
+            expect(blogPost.layoutId).toBeDefinedAndNotNull('layoutId should be retrieved.');
+            expect(blogPost.categoryId).toBeDefinedAndNotNull('categoryId should be retrieved.');
+            expect(blogPost.authorId).toBeDefinedAndNotNull('authorId should be retrieved.');
+            expect(blogPost.mainImageId).toBeDefinedAndNotNull('mainImageId should be retrieved.');
+            expect(blogPost.secondaryImageId).toBeDefinedAndNotNull('secondaryImageId should be retrieved.');
+            expect(blogPost.featuredImageId).toBeDefinedAndNotNull('featuredImageId should be retrieved.');
             expect(blogPost.activationDate).toBe('/Date(1374613200000-0000)/');
             expect(blogPost.expirationDate).toBe('/Date(1974315599000-0000)/');
             expect(blogPost.isArchived).toBe(false);
@@ -225,7 +225,7 @@ describe('Blog: Blog Posts', function () {
 
             // layout
             var layout = result.layout;
-            expect(layout).not.toBeNull();
+            expect(layout).toBeDefinedAndNotNull('JSON layout object should be retrieved.');
             api.expectBasePropertiesAreNotNull(layout);
             expect(layout.name).toBe('_0003_Layout for _0003_Blog_For_Tests_');
             expect(layout.layoutPath).toBe('~/Areas/bcms-installation/Views/Shared/DefaultLayout.cshtml');
@@ -233,33 +233,33 @@ describe('Blog: Blog Posts', function () {
 
             // category
             var category = result.category;
-            expect(category).not.toBeNull();
+            expect(category).toBeDefinedAndNotNull('JSON category object should be retrieved.');
             api.expectBasePropertiesAreNotNull(category);
             expect(category.name).toBe('Category for _0003_Blog_For_Tests_');
             
             // author
             var author = result.author;
-            expect(author).not.toBeNull();
+            expect(author).toBeDefinedAndNotNull('JSON author object should be retrieved.');
             api.expectBasePropertiesAreNotNull(author);
             expect(author.name).toBe('Author for _0003_Blog_For_Tests_');
 
             // tags
             var tags = result.tags;
-            expect(tags).not.toBeNull();
-            expect(tags.length).toBe(2);
+            expect(tags).toBeDefinedAndNotNull('JSON tags object should be retrieved.');
+            expect(tags.length).toBe(2, 'Returned array length should be 2.');
             expect(tags[0].name).toBe('tag1_0003_Blog_For_Tests_');
 
             api.expectBasePropertiesAreNotNull(tags[1]);
             expect(tags[1].name).toBe('tag2_0003_Blog_For_Tests_');
 
             // images
-            expectImagePropertiesAreNotNull(result.mainImage);
-            expectImagePropertiesAreNotNull(result.featuredImage);
-            expectImagePropertiesAreNotNull(result.secondaryImage);
+            expectImagePropertiesAreNotNull(result.mainImage, 'mainImage');
+            expectImagePropertiesAreNotNull(result.featuredImage, 'featuredImage');
+            expectImagePropertiesAreNotNull(result.secondaryImage, 'secondaryImage');
 
             // meta data
             var metadata = result.metaData;
-            expect(metadata).not.toBeNull();
+            expect(metadata).toBeDefinedAndNotNull('JSON metadata object should be retrieved.');
             expect(metadata.metaTitle).toBe('Test meta title');
             expect(metadata.metaKeywords).toBe('Test meta keywords');
             expect(metadata.metaDescription).toBe('Test meta description');
@@ -322,10 +322,10 @@ describe('Blog: Blog Posts', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
-            expect(result.data).not.toBeNull();
-            expect(result.data.totalCount).toBe(1);
-            expect(result.data.items.length).toBe(1);
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
+            expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
 
             expect(result.data.items[0].id).toBe('c1efcb1107ed4901abb3a206012b0b87');
 
@@ -349,14 +349,14 @@ describe('Blog: Blog Posts', function () {
         };
     }
     
-    function expectImagePropertiesAreNotNull(image) {
-        expect(image).not.toBeNull();
+    function expectImagePropertiesAreNotNull(image, name) {
+        expect(image).toBeDefinedAndNotNull('JSON ' + name + ' object should be retrieved.');
         api.expectBasePropertiesAreNotNull(image);
 
         expect(image.title).toBe('Image for _0003_Blog_For_Tests_');
         expect(image.caption).toBe('Image caption for _0003_Blog_For_Tests_');
-        expect(image.url).not.toBeNull();
-        expect(image.thumbnailUrl).not.toBeNull();
+        expect(image.url).toBeDefinedAndNotNull('url should be retrieved.');
+        expect(image.thumbnailUrl).toBeDefinedAndNotNull('thumbnailUrl should be retrieved.');
     }
     
     function filterByTags(connector, expectedCount, expectedTitles) {
@@ -389,10 +389,10 @@ describe('Blog: Blog Posts', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
-            expect(result.data).not.toBeNull();
-            expect(result.data.totalCount).toBe(expectedCount);
-            expect(result.data.items.length).toBe(expectedCount);
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(expectedCount, 'Total count should be ' + expectedCount + '.');
+            expect(result.data.items.length).toBe(expectedCount, 'Returned array length should be ' + expectedCount + '.');
 
             for (var i = 0; i < result.data.items.length; i++) {
                 expect(result.data.items[i].title).toBe(expectedTitles[i]);

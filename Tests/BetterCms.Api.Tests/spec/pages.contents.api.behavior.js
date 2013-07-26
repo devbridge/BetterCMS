@@ -21,10 +21,10 @@ describe('Pages: Contents', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
 
             var content = result.data;
-            expect(content).not.toBeNull();
+            expect(content).toBeDefinedAndNotNull('JSON data object should be retrieved.');
 
             api.expectBasePropertiesAreNotNull(content);
             expect(content.name).toBe('MainContent1 - HTML');
@@ -58,10 +58,10 @@ describe('Pages: Contents', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
 
             var content = result.data;
-            expect(content).not.toBeNull();
+            expect(content).toBeDefinedAndNotNull('JSON data object should be retrieved.');
 
             api.expectBasePropertiesAreNotNull(content);
             expect(content.name).toBe('_0002_Blog_Post_For_Tests');
@@ -96,11 +96,11 @@ describe('Pages: Contents', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
 
             var history = result.data;
-            expect(history).not.toBeNull();
-            expect(history.length).toBe(3);
+            expect(history).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(history.length).toBe(3, 'Returned array length should be 3.');
 
             var published = history[0];
             var archived = history[1];
@@ -116,20 +116,20 @@ describe('Pages: Contents', function () {
             
             // Original id
             expect(published.originalContentId).toBeNull();
-            expect(archived.originalContentId).not.toBeNull();
-            expect(draft.originalContentId).not.toBeNull();
+            expect(archived.originalContentId).toBeDefinedAndNotNull('archived originalContentId should be retrieved.');
+            expect(draft.originalContentId).toBeDefinedAndNotNull('draft originalContentId should be retrieved.');
             
             // Publish info
-            expect(published.publishedOn).not.toBeNull();
-            expect(published.publishedByUser).not.toBeNull();
+            expect(published.publishedOn).toBeDefinedAndNotNull('publishedOn should be retrieved.');
+            expect(published.publishedByUser).toBeDefinedAndNotNull('publishedByUser should be retrieved.');
             expect(archived.publishedOn).toBeNull();
             expect(archived.publishedByUser).toBeNull();
             expect(draft.publishedOn).toBeNull();
             expect(draft.publishedByUser).toBeNull();
             
             // Archivation info
-            expect(archived.archivedOn).not.toBeNull();
-            expect(archived.archivedByUser).not.toBeNull();
+            expect(archived.archivedOn).toBeDefinedAndNotNull('archivedOn should be retrieved.');
+            expect(archived.archivedByUser).toBeDefinedAndNotNull('archivedByUser should be retrieved.');
             expect(published.archivedOn).toBeNull();
             expect(published.archivedByUser).toBeNull();
             expect(draft.archivedOn).toBeNull();

@@ -134,12 +134,12 @@ describe('Media Manager: Tree', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
 
             var tree = result.data;
-            expect(tree).not.toBeNull();
-            expect(tree.imagesTree).not.toBeNull();
-            expect(tree.filesTree).not.toBeNull();
+            expect(tree).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(tree.imagesTree).toBeDefinedAndNotNull('JSON data.imagesTree object should be retrieved.');
+            expect(tree.filesTree).toBeDefinedAndNotNull('JSON data.filesTree object should be retrieved.');
 
             testParentIds(tree.imagesTree, null);
             testParentIds(tree.filesTree, null);
@@ -163,10 +163,10 @@ describe('Media Manager: Tree', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function() {
-            expect(result).not.toBeNull();
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
 
             var tree = result.data;
-            expect(tree).not.toBeNull();
+            expect(tree).toBeDefinedAndNotNull('JSON data object should be retrieved.');
 
             var testResult = runListTest(tree.filesTree, data.includeFilesTree, data.includeFiles, expectingResults.filesTreeCount, expectingResults.filesFoldersCount);
             if (testResult.folder) {
@@ -197,7 +197,7 @@ describe('Media Manager: Tree', function () {
             result = {};
 
         if (includeTree) {
-            expect(allItems).not.toBeNull();
+            expect(allItems).toBeDefinedAndNotNull('allItems object should be set');
 
             items = collectItems(allItems);
             expect(items.length).toBe(expectingCount);
@@ -283,8 +283,8 @@ describe('Media Manager: Tree', function () {
         testBase(file);
         
         expect(file.mediaContentType).toBe('File');
-        expect(file.url).not.toBeNull();
-        expect(file.children.length).toBe(0);
+        expect(file.url).toBeDefinedAndNotNull('url should be retrieved.');
+        expect(file.children.length).toBe(0, 'Returned children nodes array length should be 0.');
     }
 
     function testFolderBase(folder) {

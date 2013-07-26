@@ -145,11 +145,11 @@ describe('Media Manager: Files', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
-            expect(result.data).not.toBeNull();
-            expect(result.data.items).not.toBeNull();
-            expect(result.data.totalCount).toBe(1);
-            expect(result.data.items.length).toBe(1);
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.items).not.toBeNull('JSON data.items object should be retrieved');
+            expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
+            expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
 
             var file = result.data.items[0];
             api.expectBasePropertiesAreNotNull(file);
@@ -159,7 +159,7 @@ describe('Media Manager: Files', function () {
             expect(file.fileSize).toBe(92217);
             expect(file.fileUrl).toBe('http://bettercms.sandbox.mvc4.local/uploads/file/8f46bc6b4fd74c10aba01bf1f7269b92/__Tapir.png');
             expect(file.thumbnailUrl).toBe('http://bettercms.sandbox.mvc4.local/uploads/image/88247a8341184fc2be8c1761c7b86c02/t_1_1.png');
-            expect(file.thumbnailId).not.toBeNull();
+            expect(file.thumbnailId).toBeDefinedAndNotNull('thumbnailId should be retrieved.');
             expect(file.thumbnailCaption).toBe('Image caption for _0001_File_For_Tests');
             expect(file.isArchived).toBe(false);
         });
@@ -187,11 +187,11 @@ describe('Media Manager: Files', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
-            expect(result.data).not.toBeNull();
-            expect(result.data.items).not.toBeNull();
-            expect(result.data.totalCount).toBe(1);
-            expect(result.data.items.length).toBe(1);
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.items).not.toBeNull('JSON data.items object should be retrieved');
+            expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
+            expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
 
             var folder = result.data.items[0];
             api.expectBasePropertiesAreNotNull(folder);
@@ -227,12 +227,11 @@ describe('Media Manager: Files', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
-            expect(result.data).not.toBeNull();
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
 
             // File
             var file = result.data;
-            expect(file).not.toBeNull();
+            expect(file).toBeDefinedAndNotNull('JSON data object should be retrieved.');
             api.expectBasePropertiesAreNotNull(file);
             expect(file.title).toBe('_0001_File_For_Tests');
             expect(file.description).toBe('File Description');
@@ -240,19 +239,19 @@ describe('Media Manager: Files', function () {
             expect(file.fileSize).toBe(92217);
             expect(file.fileUrl).toBe('http://bettercms.sandbox.mvc4.local/uploads/file/8f46bc6b4fd74c10aba01bf1f7269b92/__Tapir.png');
             expect(file.isArchived).toBe(false);
-            expect(file.folderId).not.toBeNull();
+            expect(file.folderId).toBeDefinedAndNotNull('folderId should be retrieved.');
             expect(file.folderName).toBe('_0001_Files_Folder_For_Tests');
-            expect(file.publishedOn).not.toBeNull();
+            expect(file.publishedOn).toBeDefinedAndNotNull('publishedOn should be retrieved.');
             expect(file.originalFileName).toBe('__Tapir.png');
             expect(file.originalFileExtension).toBe('.png');
             expect(file.thumbnailUrl).toBe('http://bettercms.sandbox.mvc4.local/uploads/image/88247a8341184fc2be8c1761c7b86c02/t_1_1.png');
-            expect(file.thumbnailId).not.toBeNull();
+            expect(file.thumbnailId).toBeDefinedAndNotNull('thumbnailId should be retrieved.');
             expect(file.thumbnailCaption).toBe('Image caption for _0001_File_For_Tests');
             
             // Tags
             var tags = result.tags;
-            expect(tags).not.toBeNull();
-            expect(tags.length).toBe(2);
+            expect(tags).toBeDefinedAndNotNull('JSON tags object should be retrieved.');
+            expect(tags.length).toBe(2, 'Returned array length should be 2.');
 
             api.expectBasePropertiesAreNotNull(tags[0]);
             expect(tags[0].name).toBe('tag1_0001_File_For_Tests');
@@ -308,10 +307,10 @@ describe('Media Manager: Files', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
-            expect(result.data).not.toBeNull();
-            expect(result.data.totalCount).toBe(1);
-            expect(result.data.items.length).toBe(1);
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
+            expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
 
             expect(result.data.items[0].id).toBe('7f753def7d2647aaa36ca2070078465e');
 
@@ -337,11 +336,11 @@ describe('Media Manager: Files', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
-            expect(result.data).not.toBeNull();
-            expect(result.data.items).not.toBeNull();
-            expect(result.data.totalCount).toBe(expectingResults.totalCount);
-            expect(result.data.items.length).toBe(1);
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.items).not.toBeNull('JSON data.items object should be retrieved');
+            expect(result.data.totalCount).toBe(expectingResults.totalCount, 'Total count should be ' + expectingResults.totalCount + '.');
+            expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
             expect(result.data.items[0].title).toBe(expectingResults.title);
             expect(result.data.items[0].isArchived).toBe(expectingResults.isArchived);
         });
@@ -374,10 +373,10 @@ describe('Media Manager: Files', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
-            expect(result.data).not.toBeNull();
-            expect(result.data.totalCount).toBe(expectedCount);
-            expect(result.data.items.length).toBe(expectedCount);
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(expectedCount, 'Total count should be ' + expectedCount + '.');
+            expect(result.data.items.length).toBe(expectedCount, 'Returned array length should be ' + expectedCount + '.');
 
             for (var i = 0; i < result.data.items.length; i++) {
                 expect(result.data.items[i].title).toBe(expectedTitles[i]);

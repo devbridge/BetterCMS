@@ -141,10 +141,10 @@ describe('Root: Filtering', function() {
             }, 'The ' + url + ' timeout.');
             
             runs(function () {
-                expect(result).not.toBeNull();
-                expect(result.data).not.toBeNull();
-                expect(result.data.totalCount).toBe(test.count);
-                expect(result.data.items.length).toBe(1);
+                expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+                expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+                expect(result.data.totalCount).toBe(test.count, 'Total count should be ' + test.count + '.');
+                expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
             });
         });
     }

@@ -33,10 +33,10 @@ describe('Pages: Redirects', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
-            expect(result.data).not.toBeNull();
-            expect(result.data.totalCount).toBe(4);
-            expect(result.data.items.length).toBe(2);
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(4, 'Total count should be 4.');
+            expect(result.data.items.length).toBe(2, 'Returned array length should be 2.');
 
             api.expectBasePropertiesAreNotNull(result.data.items[0]);
             api.expectBasePropertiesAreNotNull(result.data.items[1]);
@@ -64,10 +64,10 @@ describe('Pages: Redirects', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
 
             var redirect = result.data;
-            expect(redirect).not.toBeNull();
+            expect(redirect).toBeDefinedAndNotNull('JSON data object should be retrieved.');
             api.expectBasePropertiesAreNotNull(redirect);
             expect(redirect.pageUrl).toBe('/_0000_Redirect_From_3/');
             expect(redirect.redirectUrl).toBe('/_0000_Redirect_To_3/');
@@ -107,10 +107,10 @@ describe('Pages: Redirects', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
-            expect(result.data).not.toBeNull();
-            expect(result.data.totalCount).toBe(1);
-            expect(result.data.items.length).toBe(1);
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
+            expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
 
             expect(result.data.items[0].id).toBe('23574260f1984c9e98aba207008d08fe');
 

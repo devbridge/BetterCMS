@@ -36,10 +36,10 @@ describe('Root: Categories', function() {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
-            expect(result.data).not.toBeNull();
-            expect(result.data.totalCount).toBe(5);
-            expect(result.data.items.length).toBe(3);
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(5, 'Total count should be 5.');
+            expect(result.data.items.length).toBe(3, 'Returned array length should be 3.');
 
             expect(result.data.items[0].name).toBe('_0001_ - 3');
             expect(result.data.items[1].name).toBe('_0001_ - 4');
@@ -64,8 +64,8 @@ describe('Root: Categories', function() {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
-            expect(result.data).not.toBeNull();
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
 
             api.expectBasePropertiesAreNotNull(result.data);
             expect(result.data.name).toBe('_0001_ - 3');
@@ -102,10 +102,10 @@ describe('Root: Categories', function() {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
-            expect(result.data).not.toBeNull();
-            expect(result.data.totalCount).toBe(1);
-            expect(result.data.items.length).toBe(1);
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
+            expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
 
             expect(result.data.items[0].id).toBe('a60e08c191504dbebd32a20601185796');
 
