@@ -1,7 +1,7 @@
 ﻿/*jslint vars: true*/
 /*global describe, it, expect, waits, waitsFor, runs, afterEach, spyOn, $*/
 
-describe('Pages: Contents', function () {
+describe('pages.contents.api.behavior', function () {
     'use strict';
 
     it('01100: Should get html content by content id', function () {

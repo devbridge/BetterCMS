@@ -1,1 +1,1 @@
-phantomjs\phantomjs.exe Scripts\phantomjs_jasminexml_runner.js http://localhost:55558/runner.html "C:\Program Files (x86)\CruiseControl.NET\server\MyFirstProject\Artifacts\"
+phantomjs\phantomjs.exe Scripts\jasmine.phantomjs.xml-runner.js %1 %2

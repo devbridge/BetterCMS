@@ -1,7 +1,7 @@
 ﻿/*jslint vars: true*/
 /*global api, describe, it, expect, waits, waitsFor, runs, afterEach, spyOn, jcsvSerialize, $ */
 
-describe('Root: Categories', function() {
+describe('root.categories.api.behavior', function () {
     'use strict';
 
     it('00300: Should get categories list', function () {

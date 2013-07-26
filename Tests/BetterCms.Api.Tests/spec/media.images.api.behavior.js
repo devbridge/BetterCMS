@@ -1,7 +1,7 @@
 ﻿/*jslint vars: true*/
 /*global describe, it, expect, waits, waitsFor, runs, afterEach, spyOn, $*/
 
-describe('Media Manager: Images', function () {
+describe('media.images.api.behavior', function () {
     'use strict';
 
     it('03200: Should get a list of image folders', function () {

@@ -1,7 +1,7 @@
 ﻿/*jslint vars: true*/
 /*global api, describe, it, expect, waits, waitsFor, runs, afterEach, spyOn, jcsvSerialize, $ */
 
-describe('Root: Filtering', function() {
+describe('root.filtering.api.behavior', function () {
     'use strict';
 
     // Types: Guid, DateTime, String, Boolean, Int, BigInt

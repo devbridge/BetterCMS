@@ -1,7 +1,7 @@
 ﻿/*jslint vars: true*/
 /*global describe, it, expect, waits, waitsFor, runs, afterEach, spyOn, $*/
 
-describe('Pages: Pages', function () {
+describe('pages.pages.api.behavior', function () {
     'use strict';
 
     var constants = {
@@ -10,7 +10,7 @@ describe('Pages: Pages', function () {
         testPageUrl: '/0000-page-for-tests/'
     };
 
-    it('01000: Should get pages list', function() {
+    it('01000: Should get list of pages', function() {
         var url = '/bcms-api/pages/',
             result,
             ready = false;
@@ -36,13 +36,13 @@ describe('Pages: Pages', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
-            expect(result.data).not.toBeNull();
-            expect(result.data.totalCount).toBe(4);
-            expect(result.data.items.length).toBe(2);
+            expect(result).not.toBeNull('JSON object should be retrieved.');
+            expect(result.data).not.toBeNull('json.data object should be retrieved.');
+            expect(result.data.totalCount).toBe(4, 'totalCount should be 4.');
+            expect(result.data.items.length).toBe(2, 'Returned array length should be 2.');
 
-            expect(result.data.items[0].title.substr(0, 6)).toBe('_0000_');
-            expect(result.data.items[1].title.substr(0, 6)).toBe('_0000_');
+            expect(result.data.items[0].title.substr(0, 6)).toBe('_0000_', 'Correctly filtered dataset[0] item should be retrieved.');
+            expect(result.data.items[1].title.substr(0, 6)).toBe('_0000_', 'Correctly filtered dataset[1] item should be retrieved.');
         });
     });
     

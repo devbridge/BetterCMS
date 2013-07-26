@@ -1,7 +1,7 @@
 ﻿/*jslint vars: true*/
 /*global describe, it, expect, waits, waitsFor, runs, afterEach, spyOn, $*/
 
-describe('Media Manager: Files', function () {
+describe('media.files.api.behavior', function () {
     'use strict';
     
     it('03100: Should get a list of file folders', function () {
