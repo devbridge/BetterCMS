@@ -2,7 +2,7 @@ var api = (function() {
     'use strict';
 
     var obj = {};
-
+    
     obj.get = function (url, data, onSuccess, onError) {
         var options = {
             type: 'GET',
@@ -30,17 +30,17 @@ var api = (function() {
     * Checks if all properties of base model are not null
     */
     obj.expectBasePropertiesAreNotNull = function (entity) {
-        expect(entity.id).not.toBeNull();
-        expect(entity.version).not.toBeNull();
-        expect(entity.createdBy).not.toBeNull();
-        expect(entity.lastModifiedBy).not.toBeNull();
-        expect(entity.createdOn).not.toBeNull();
-        expect(entity.lastModifiedOn).not.toBeNull();
+        expect(entity.id).toBeDefinedAndNotNull('Id should be retrieved.');
+        expect(entity.version).toBeDefinedAndNotNull('Version should be retrieved.');
+        expect(entity.createdBy).toBeDefinedAndNotNull('CreatedBy should be retrieved.');
+        expect(entity.lastModifiedBy).toBeDefinedAndNotNull('LastModifiedBy should be retrieved.');
+        expect(entity.createdOn).toBeDefinedAndNotNull('CreatedOn should be retrieved.');
+        expect(entity.lastModifiedOn).toBeDefinedAndNotNull('LastModifiedOn should be retrieved.');
 
-        expect(entity.version).toBeGreaterThan(0);
-        expect(entity.createdOn.length).toBe(26);
-        expect(entity.lastModifiedOn.length).toBe(26);
-        expect(entity.id.length).toBe(32);
+        expect(entity.version).toBeGreaterThan(0, 'Version should be greater than 0.');
+        expect(entity.createdOn.length).toBe(26, 'Invalid CreatedOn date.');
+        expect(entity.lastModifiedOn.length).toBe(26, 'Invalid LastModifiedOn date.');
+        expect(entity.id.length).toBe(32, 'Invalid Id.');
     };
 
     /**
@@ -49,6 +49,17 @@ var api = (function() {
     obj.getCountOfProperties = function (object) {
         return Object.keys(object).length;
     };
+
+    /**
+    * Create custom matchers
+    */
+    beforeEach(function () {
+        this.addMatchers({
+            toBeDefinedAndNotNull: function () {
+                return this.actual != jasmine.undefined && this.actual != null;
+            }
+        });
+    });
 
     return obj;
 })();

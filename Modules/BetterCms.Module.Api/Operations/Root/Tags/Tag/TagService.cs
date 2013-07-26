@@ -18,8 +18,6 @@ namespace BetterCms.Module.Api.Operations.Root.Tags.Tag
 
         public GetTagResponse Get(GetTagRequest request)
         {
-            // TODO: validate TagId or TagName - one must be required
-
             var query = repository.AsQueryable<Module.Root.Models.Tag>();
 
             if (request.TagId.HasValue)

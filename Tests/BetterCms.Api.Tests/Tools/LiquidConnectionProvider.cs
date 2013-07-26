@@ -10,7 +10,7 @@ namespace BetterCms.Api.Tests.Tools
 
         public LiquidConnectionProvider()
         {
-            DatabaseRefresher = new DatabaseRefresher(HostingEnvironment.MapPath("~/App_Data"));
+            DatabaseRefresher = new DatabaseRefresher(HostingEnvironment.MapPath("~/App_Data"), HostingEnvironment.MapPath("~/App_Data/Temp"));
             DatabaseRefresher.BindNewDatabase();
         }
 

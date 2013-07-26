@@ -127,11 +127,13 @@
     <Compile Include="Operations\MediaManager\Files\File\TagModel.cs" />
     <Compile Include="Operations\MediaManager\Files\GetFilesModel.cs" />
     <Compile Include="Operations\MediaManager\Files\GetFilesRequest.cs" />
+    <Compile Include="Operations\MediaManager\Files\GetFilesRequestValidator.cs" />
     <Compile Include="Operations\MediaManager\Files\GetFilesResponse.cs" />
     <Compile Include="Operations\MediaManager\Files\IFilesService.cs" />
     <Compile Include="Operations\MediaManager\Files\MediaModel.cs" />
     <Compile Include="Operations\MediaManager\Images\GetImagesModel.cs" />
     <Compile Include="Operations\MediaManager\Images\GetImagesRequest.cs" />
+    <Compile Include="Operations\MediaManager\Images\GetImagesRequestValidator.cs" />
     <Compile Include="Operations\MediaManager\Images\GetImagesResponse.cs" />
     <Compile Include="Operations\MediaManager\Images\IImagesService.cs" />
     <Compile Include="Operations\MediaManager\Images\Image\GetImageModel.cs" />
@@ -180,12 +182,14 @@
     <Compile Include="Operations\Pages\Pages\Page\Exists\PageExistsResponse.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Exists\PageModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\GetPageRequest.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\GetPageRequestValidator.cs" />
     <Compile Include="Operations\Pages\Pages\Page\GetPageResponse.cs" />
     <Compile Include="Operations\Pages\Pages\Page\IPageService.cs" />
     <Compile Include="Operations\Pages\Pages\Page\PageModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\CategoryModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\GetPagePropertiesModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\GetPagePropertiesRequest.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Properties\GetPagePropertiesRequestValidator.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\GetPagePropertiesResponse.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\ImageModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\IPagePropertiesService.cs" />
@@ -229,6 +233,7 @@
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\GetServerControlWidgetResponse.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\IServerControlWidgetService.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\ServerControlWidgetModel.cs" />
+    <Compile Include="Operations\Root\Categories\Category\GetCategoryRequestValidator.cs" />
     <Compile Include="Operations\Root\Tags\Tag\GetTagRequestValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Operations\Root\Categories\CategoryModel.cs" />

@@ -18,8 +18,6 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
 
         public GetCategoryResponse Get(GetCategoryRequest request)
         {
-            // TODO: validate CategoryId or CategoryName - one must be required
-
             var query = repository.AsQueryable<Module.Root.Models.Category>();
 
             if (request.CategoryId.HasValue)

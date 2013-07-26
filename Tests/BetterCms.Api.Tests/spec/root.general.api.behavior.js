@@ -21,9 +21,9 @@ describe('root.general.api.behavior', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).not.toBeNull();
-            expect(result.data).not.toBeNull();
-            expect(result.data.version).toBe("1.0.0-dev");
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.version).toBe("1.0.0-dev", 'Correctly filtered version should be retrieved.');
         });               
     });
 });

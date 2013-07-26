@@ -9,10 +9,10 @@ namespace BetterCms.Module.Api.Operations.Root.Tags.Tag
         public GetTagRequestValidator()
         {
             RuleFor(request => request.TagId).Must(TagNameMustBeNullIfTagIdProvided).WithMessage("A TagName field must be null if TagId is provided.");
-            RuleFor(request => request.TagName).Must(AtLeaseOneFieldShouldBeProvided).WithMessage("A TagId or TagName should be provided.");
+            RuleFor(request => request.TagName).Must(AtLeastOneFieldShouldBeProvided).WithMessage("A TagId or TagName should be provided.");
         }
 
-        private bool AtLeaseOneFieldShouldBeProvided(GetTagRequest getTagRequest, string tagName)
+        private bool AtLeastOneFieldShouldBeProvided(GetTagRequest getTagRequest, string tagName)
         {
             return getTagRequest.TagId != null || !string.IsNullOrEmpty(getTagRequest.TagName);
         }

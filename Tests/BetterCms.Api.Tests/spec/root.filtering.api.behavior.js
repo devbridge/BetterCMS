@@ -92,9 +92,9 @@ describe('root.filtering.api.behavior', function () {
                     columnName = 'FileSize';
                     break;
                 case 'Int':
-                    url = '/bcms-api/sitemap-nodes';
-                    data.filter.where.push({ field: 'ParentId', value: '0c8872e5ed464b4c931ea20600ffccf2' });
-                    columnName = 'DisplayOrder';
+                    url = '/bcms-api/tags';
+                    data.filter.where.push({ field: 'Name', operation: 'StartsWith', value: '0905X: ' });
+                    columnName = 'Version';
                     break;
                 case 'String':
                     if (test.value) {
@@ -116,8 +116,8 @@ describe('root.filtering.api.behavior', function () {
             }
 
             // Construct data filter
-            expect(url).not.toBe(null);
-            expect(columnName).not.toBe(null);
+            expect(url).toBeDefinedAndNotNull('url value should be assigned');
+            expect(columnName).toBeDefinedAndNotNull('columnName value should be assigned');
 
             var filter = {
                 field: columnName,
@@ -141,10 +141,10 @@ describe('root.filtering.api.behavior', function () {
             }, 'The ' + url + ' timeout.');
             
             runs(function () {
-                expect(result).not.toBeNull();
-                expect(result.data).not.toBeNull();
-                expect(result.data.totalCount).toBe(test.count);
-                expect(result.data.items.length).toBe(1);
+                expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+                expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+                expect(result.data.totalCount).toBe(test.count, 'Total count should be ' + test.count + '.');
+                expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
             });
         });
     }
