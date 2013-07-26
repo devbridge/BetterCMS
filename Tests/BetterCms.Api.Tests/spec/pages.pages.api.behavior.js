@@ -309,6 +309,112 @@ describe('Pages: Pages', function () {
         filterByTags('or', 2, ['IFilterByTags Page 1', 'IFilterByTags Page 3']);
     });
 
+    it('01011: Should get a list with one page, filtered by all available columns', function () {
+        var url = '/bcms-api/pages/',
+            result,
+            ready = false;
+
+        var data = {
+            filter: {
+                where: [
+                    { field: 'Id', value: 'e81a87022bf4419688b4a2070081a57e' },
+                    { field: 'CreatedOn', value: '2013-07-26 07:52:01.000' },
+                    { field: 'CreatedBy', value: 'Better CMS test user' },
+                    { field: 'LastModifiedOn', value: '2013-07-26 07:58:15.000' },
+                    { field: 'LastModifiedBy', value: 'Better CMS test user' },
+                    { field: 'Version', value: '4' },
+
+                    { field: 'PageUrl', value: '/01103/01011/' },
+                    { field: 'Title', value: '01011' },
+                    { field: 'Description' },
+                    { field: 'IsPublished', value: true },
+                    { field: 'PublishedOn', value: '2013-07-26 07:58:15.000' },
+                    { field: 'LayoutId', value: '9ab0bbe1e02a4a3bb842a2070082af10' },
+                    { field: 'CategoryId', value: '1427628c1e7e4beb9098a2070081d2dc' },
+                    { field: 'CategoryName', value: '01011' },
+                    { field: 'MainImageId', value: '389e059bcc6c4336a863a2070083436c' },
+                    { field: 'MainImageUrl', value: 'http://bettercms.sandbox.mvc4.local/uploads/image/6173795ceadc4b619d68005ef57c9ca8/1_1.jpg' },
+                    { field: 'MainImageThumbnauilUrl', value: 'http://bettercms.sandbox.mvc4.local/uploads/image/6173795ceadc4b619d68005ef57c9ca8/t_1_1.png' },
+                    { field: 'MainImageCaption', value: '01011 caption' },
+                    { field: 'IsArchived', value: false }
+                ]
+            }
+        };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
+            expect(result.data.totalCount).toBe(1);
+            expect(result.data.items.length).toBe(1);
+
+            expect(result.data.items[0].id).toBe('e81a87022bf4419688b4a2070081a57e');
+
+            // Check if model properties count didn't changed. If so - update filter current test filter and another tests.
+            expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]));
+        });
+    });
+    
+    it('01012: Should get a list with one page content, filtered by all available columns', function () {
+        var url = '/bcms-api/pages/1b13fcadc8714ba29a20a20700846ab2/contents/',
+            result,
+            ready = false;
+
+        var data = {
+            filter: {
+                where: [
+                    { field: 'Id', value: '457c26ad2d654dc381e8a20700848027' },
+                    { field: 'CreatedOn', value: '2013-07-26 08:02:25.000' },
+                    { field: 'CreatedBy', value: 'Better CMS test user' },
+                    { field: 'LastModifiedOn', value: '2013-07-26 08:02:25.000' },
+                    { field: 'LastModifiedBy', value: 'Better CMS test user' },
+                    { field: 'Version', value: '1' },
+
+                    { field: 'ContentId', value: '60b49f2c856649c5819ea20700848027' },
+                    { field: 'IsPublished', value: 'true' },
+                    { field: 'Name', value: '01012' },
+                    { field: 'RegionId', value: 'e3e2e7fe62df4ba683216fdcc1691d8a' },
+                    { field: 'RegionIdentifier', value: 'CMSMainContent' },
+                    { field: 'Order', value: '0' }
+                ]
+            }
+        };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
+            expect(result.data.totalCount).toBe(1);
+            expect(result.data.items.length).toBe(1);
+
+            expect(result.data.items[0].id).toBe('457c26ad2d654dc381e8a20700848027');
+
+            // Check if model properties count didn't changed. If so - update filter current test filter and another tests.
+            // data.filter.where.length + 1 <-- Because field ContentType cannnot be filtered by
+            expect(data.filter.where.length + 1).toBe(api.getCountOfProperties(result.data.items[0]));
+        });
+    });
+
     function expectPageListItemPropertiesAreNotNull(page) {
         api.expectBasePropertiesAreNotNull(page);
 
