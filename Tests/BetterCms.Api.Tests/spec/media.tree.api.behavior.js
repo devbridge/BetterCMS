@@ -172,7 +172,7 @@ describe('Media Manager: Tree', function () {
             if (testResult.folder) {
                 testFileFolder(testResult.folder);
                 
-                expect(testResult.folder.children.length).toBe(expectingResults.firstFilesFolderChildrenCount);
+                expect(testResult.folder.children.length).toBe(expectingResults.firstFilesFolderChildrenCount, 'Correct first files folder children count should be retrieved.');
             }
             if (testResult.file) {
                 testFile(testResult.file);
@@ -182,7 +182,7 @@ describe('Media Manager: Tree', function () {
             if (testResult.folder) {
                 testImageFolder(testResult.folder);
                 
-                expect(testResult.folder.children.length).toBe(expectingResults.firstImagesFolderChildrenCount);
+                expect(testResult.folder.children.length).toBe(expectingResults.firstImagesFolderChildrenCount, 'Correct first images folder children count should be retrieved.');
             }
             if (testResult.file) {
                 testImage(testResult.file);
@@ -200,21 +200,21 @@ describe('Media Manager: Tree', function () {
             expect(allItems).toBeDefinedAndNotNull('allItems object should be set');
 
             items = collectItems(allItems);
-            expect(items.length).toBe(expectingCount);
+            expect(items.length).toBe(expectingCount, 'Correct array items count should be retrieved.');
             
             folders = findByContentType('Folder', items);
-            expect(folders.length).toBe(expectingFolders);
+            expect(folders.length).toBe(expectingFolders, 'Correct count of folders should be retrieved.');
 
             result.folder = folders[0];
 
             if (includeFiles) {
                 files = findByContentType('File', items);
-                expect(files.length).toBe(expectingCount - expectingFolders);
+                expect(files.length).toBe(expectingCount - expectingFolders, 'Correct count of files should be retrieved.');
 
                 result.file = files[0];
             }
         } else {
-            expect(allItems).toBeNull();
+            expect(allItems).toBeNull('tree should be null.');
         }
 
         return result;
@@ -247,42 +247,42 @@ describe('Media Manager: Tree', function () {
     function testImage(image) {
         testFileBase(image);
         
-        expect(image.title).toBe('_0000_Image_1');
-        expect(image.isArchived).toBe(false);
+        expect(image.title).toBe('_0000_Image_1', 'Correctly filtered title should be retrieved.');
+        expect(image.isArchived).toBe(false, 'Correctly filtered isArchived should be retrieved.');
     }
 
     function testImageFolder(folder) {
         testFolderBase(folder);
         
-        expect(folder.title).toBe('_0000_Images_Folder_1');
-        expect(folder.isArchived).toBe(false);
+        expect(folder.title).toBe('_0000_Images_Folder_1', 'Correctly filtered title should be retrieved.');
+        expect(folder.isArchived).toBe(false, 'Correctly filtered isArchived should be retrieved.');
     }
     
     function testFile(file) {
         testFileBase(file);
         
-        expect(file.title).toBe('_0000_File_1');
-        expect(file.isArchived).toBe(false);
+        expect(file.title).toBe('_0000_File_1', 'Correctly filtered title should be retrieved.');
+        expect(file.isArchived).toBe(false, 'Correctly filtered isArchived should be retrieved.');
     }
 
     function testFileFolder(folder) {
         testFolderBase(folder);
         
-        expect(folder.title).toBe('_0000_Files_Folder_1');
-        expect(folder.isArchived).toBe(false);
+        expect(folder.title).toBe('_0000_Files_Folder_1', 'Correctly filtered title should be retrieved.');
+        expect(folder.isArchived).toBe(false, 'Correctly filtered isArchived should be retrieved.');
     }
     
     function testBase(item) {
         api.expectBasePropertiesAreNotNull(item);
 
-        expect(item.parentFolderId).toBeNull();
-        expect(item.isArchived).toBe(false);
+        expect(item.parentFolderId).toBeNull('parentFolderId should be null.');
+        expect(item.isArchived).toBe(false, 'Correctly filtered isArchived should be retrieved.');
     }
 
     function testFileBase(file) {
         testBase(file);
         
-        expect(file.mediaContentType).toBe('File');
+        expect(file.mediaContentType).toBe('File', 'Correctly filtered mediaContentType should be retrieved.');
         expect(file.url).toBeDefinedAndNotNull('url should be retrieved.');
         expect(file.children.length).toBe(0, 'Returned children nodes array length should be 0.');
     }
@@ -290,16 +290,16 @@ describe('Media Manager: Tree', function () {
     function testFolderBase(folder) {
         testBase(folder);
         
-        expect(folder.mediaContentType).toBe('Folder');
-        expect(folder.url).toBeNull();
+        expect(folder.mediaContentType).toBe('Folder', 'Correctly filtered mediaContentType should be retrieved.');
+        expect(folder.url).toBeNull('url should be null.');
     }
     
     function testParentIds(items, parentFolderId) {
         for (var i = 0; i < items.length; i++) {
             if (parentFolderId) {
-                expect(items[i].parentFolderId).toBe(parentFolderId);
+                expect(items[i].parentFolderId).toBe(parentFolderId, 'Correctly filtered parentFolderId should be retrieved.');
             } else {
-                expect(items[i].parentFolderId).toBeNull();
+                expect(items[i].parentFolderId).toBeNull('parentFolderId should be null.');
             }
             
             if (items[i].children) {

@@ -27,17 +27,17 @@ describe('Pages: Contents', function () {
             expect(content).toBeDefinedAndNotNull('JSON data object should be retrieved.');
 
             api.expectBasePropertiesAreNotNull(content);
-            expect(content.name).toBe('MainContent1 - HTML');
-            expect(content.activationDate).toBe('/Date(1374526800000-0000)/');
-            expect(content.expirationDate).toBe('/Date(1974229199000-0000)/');
-            expect(content.html).toBe('<p>MainContent1 - HTML</p>');
-            expect(content.customCss).toBe('custom css');
-            expect(content.useCustomCss).toBe(true);
-            expect(content.customJavaScript).toBe("console.log('test')");
-            expect(content.useCustomJavaScript).toBe(true);
-            expect(content.isPublished).toBe(true);
-            expect(content.publishedOn).toBe('/Date(1374642405000-0000)/');
-            expect(content.publishedByUser).toBe('Better CMS test user');
+            expect(content.name).toBe('MainContent1 - HTML', 'Correctly filtered name should be retrieved.');
+            expect(content.activationDate).toBe('/Date(1374526800000-0000)/', 'Correctly filtered activationDate should be retrieved.');
+            expect(content.expirationDate).toBe('/Date(1974229199000-0000)/', 'Correctly filtered expirationDate should be retrieved.');
+            expect(content.html).toBe('<p>MainContent1 - HTML</p>', 'Correctly filtered html should be retrieved.');
+            expect(content.customCss).toBe('custom css', 'Correctly filtered customCss should be retrieved.');
+            expect(content.useCustomCss).toBe(true, 'Correctly filtered useCustomCss should be retrieved.');
+            expect(content.customJavaScript).toBe("console.log('test')", 'Correctly filtered customJavaScript should be retrieved.');
+            expect(content.useCustomJavaScript).toBe(true, 'Correctly filtered useCustomJavaScipt should be retrieved.');
+            expect(content.isPublished).toBe(true, 'Correctly filtered isPublished should be retrieved.');
+            expect(content.publishedOn).toBe('/Date(1374642405000-0000)/', 'Correctly filtered publishedOn should be retrieved.');
+            expect(content.publishedByUser).toBe('Better CMS test user', 'Correctly filtered publishedByUser should be retrieved.');
         });
     });
     
@@ -64,11 +64,11 @@ describe('Pages: Contents', function () {
             expect(content).toBeDefinedAndNotNull('JSON data object should be retrieved.');
 
             api.expectBasePropertiesAreNotNull(content);
-            expect(content.name).toBe('_0002_Blog_Post_For_Tests');
-            expect(content.html).toBe('<p>_0002_Blog_Post_For_Tests Test HTML</p>');
-            expect(content.isPublished).toBe(true);
-            expect(content.publishedOn).toBe('/Date(1374643031000-0000)/');
-            expect(content.publishedByUser).toBe('Better CMS test user');
+            expect(content.name).toBe('_0002_Blog_Post_For_Tests', 'Correctly filtered name should be retrieved.');
+            expect(content.html).toBe('<p>_0002_Blog_Post_For_Tests Test HTML</p>', 'Correctly filtered html should be retrieved.');
+            expect(content.isPublished).toBe(true, 'Correctly filtered isPubslihed should be retrieved.');
+            expect(content.publishedOn).toBe('/Date(1374643031000-0000)/', 'Correctly filtered publishedOn should be retrieved.');
+            expect(content.publishedByUser).toBe('Better CMS test user', 'Correctly filtered publishedByUser should be retrieved.');
         });
     });
     
@@ -107,33 +107,33 @@ describe('Pages: Contents', function () {
             var draft = history[2];
 
             api.expectBasePropertiesAreNotNull(published);
-            expect(published.contentType).toBe('html-content');
+            expect(published.contentType).toBe('html-content', 'Correctly filtered contentType should be retrieved.');
 
             // Status
-            expect(published.status).toBe('Published');
-            expect(archived.status).toBe('Archived');
-            expect(draft.status).toBe('Draft');
+            expect(published.status).toBe('Published', 'Correctly filtered published status should be retrieved.');
+            expect(archived.status).toBe('Archived', 'Correctly filtered archived should be retrieved.');
+            expect(draft.status).toBe('Draft', 'Correctly filtered draft should be retrieved.');
             
             // Original id
-            expect(published.originalContentId).toBeNull();
+            expect(published.originalContentId).toBeNull('originalContentId for published content should be null.');
             expect(archived.originalContentId).toBeDefinedAndNotNull('archived originalContentId should be retrieved.');
             expect(draft.originalContentId).toBeDefinedAndNotNull('draft originalContentId should be retrieved.');
             
             // Publish info
             expect(published.publishedOn).toBeDefinedAndNotNull('publishedOn should be retrieved.');
             expect(published.publishedByUser).toBeDefinedAndNotNull('publishedByUser should be retrieved.');
-            expect(archived.publishedOn).toBeNull();
-            expect(archived.publishedByUser).toBeNull();
-            expect(draft.publishedOn).toBeNull();
-            expect(draft.publishedByUser).toBeNull();
+            expect(archived.publishedOn).toBeNull('publishedOn for archived content should be null.');
+            expect(archived.publishedByUser).toBeNull('publishedByUser for archived content should be null.');
+            expect(draft.publishedOn).toBeNull('publishedOn for draft content should be null.');
+            expect(draft.publishedByUser).toBeNull('publishedByUser for draft content should be null.');
             
             // Archivation info
             expect(archived.archivedOn).toBeDefinedAndNotNull('archivedOn should be retrieved.');
             expect(archived.archivedByUser).toBeDefinedAndNotNull('archivedByUser should be retrieved.');
-            expect(published.archivedOn).toBeNull();
-            expect(published.archivedByUser).toBeNull();
-            expect(draft.archivedOn).toBeNull();
-            expect(draft.archivedByUser).toBeNull();
+            expect(published.archivedOn).toBeNull('archivedOn for published content should be null.');
+            expect(published.archivedByUser).toBeNull('archivedByUser for published content should be null.');
+            expect(draft.archivedOn).toBeNull('archivedOn for draft content should be null.');
+            expect(draft.archivedByUser).toBeNull('archivedByUser for draft content should be null.');
         });
     });
 });

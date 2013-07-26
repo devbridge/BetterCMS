@@ -30,12 +30,12 @@ var api = (function() {
     * Checks if all properties of base model are not null
     */
     obj.expectBasePropertiesAreNotNull = function (entity) {
-        expect(entity.id).toBeDefinedAndNotNull('Id should be retrieved');
-        expect(entity.version).toBeDefinedAndNotNull('Version should be retrieved');
-        expect(entity.createdBy).toBeDefinedAndNotNull('CreatedBy should be retrieved');
-        expect(entity.lastModifiedBy).toBeDefinedAndNotNull('LastModifiedBy should be retrieved');
-        expect(entity.createdOn).toBeDefinedAndNotNull('CreatedOn should be retrieved');
-        expect(entity.lastModifiedOn).toBeDefinedAndNotNull('LastModifiedOn should be retrieved');
+        expect(entity.id).toBeDefinedAndNotNull('Id should be retrieved.');
+        expect(entity.version).toBeDefinedAndNotNull('Version should be retrieved.');
+        expect(entity.createdBy).toBeDefinedAndNotNull('CreatedBy should be retrieved.');
+        expect(entity.lastModifiedBy).toBeDefinedAndNotNull('LastModifiedBy should be retrieved.');
+        expect(entity.createdOn).toBeDefinedAndNotNull('CreatedOn should be retrieved.');
+        expect(entity.lastModifiedOn).toBeDefinedAndNotNull('LastModifiedOn should be retrieved.');
 
         expect(entity.version).toBeGreaterThan(0, 'Version should be greater than 0.');
         expect(entity.createdOn.length).toBe(26, 'Invalid CreatedOn date.');

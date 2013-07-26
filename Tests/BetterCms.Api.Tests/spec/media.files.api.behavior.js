@@ -147,21 +147,21 @@ describe('Media Manager: Files', function () {
         runs(function () {
             expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
             expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
-            expect(result.data.items).not.toBeNull('JSON data.items object should be retrieved');
+            expect(result.data.items).not.toBeNull('JSON data.items object should be retrieved.');
             expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
             expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
 
             var file = result.data.items[0];
             api.expectBasePropertiesAreNotNull(file);
-            expect(file.title).toBe('_0001_File_For_Tests');
-            expect(file.mediaContentType).toBe('File');
-            expect(file.fileExtension).toBe('.png');
-            expect(file.fileSize).toBe(92217);
-            expect(file.fileUrl).toBe('http://bettercms.sandbox.mvc4.local/uploads/file/8f46bc6b4fd74c10aba01bf1f7269b92/__Tapir.png');
-            expect(file.thumbnailUrl).toBe('http://bettercms.sandbox.mvc4.local/uploads/image/88247a8341184fc2be8c1761c7b86c02/t_1_1.png');
+            expect(file.title).toBe('_0001_File_For_Tests', 'Correctly filtered title should be retrieved.');
+            expect(file.mediaContentType).toBe('File', 'Correctly filtered mediaContentType should be retrieved.');
+            expect(file.fileExtension).toBe('.png', 'Correctly filtered fileExtension should be retrieved.');
+            expect(file.fileSize).toBe(92217, 'Correctly filtered fileSize should be retrieved.');
+            expect(file.fileUrl).toBe('http://bettercms.sandbox.mvc4.local/uploads/file/8f46bc6b4fd74c10aba01bf1f7269b92/__Tapir.png', 'Correctly filtered fileUrl should be retrieved.');
+            expect(file.thumbnailUrl).toBe('http://bettercms.sandbox.mvc4.local/uploads/image/88247a8341184fc2be8c1761c7b86c02/t_1_1.png', 'Correctly filtered thumbnailUrl should be retrieved.');
             expect(file.thumbnailId).toBeDefinedAndNotNull('thumbnailId should be retrieved.');
-            expect(file.thumbnailCaption).toBe('Image caption for _0001_File_For_Tests');
-            expect(file.isArchived).toBe(false);
+            expect(file.thumbnailCaption).toBe('Image caption for _0001_File_For_Tests', 'Correctly filtered thumbnailCaption should be retrieved.');
+            expect(file.isArchived).toBe(false, 'Correctly filtered isArchived should be retrieved.');
         });
     });
 
@@ -189,21 +189,21 @@ describe('Media Manager: Files', function () {
         runs(function () {
             expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
             expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
-            expect(result.data.items).not.toBeNull('JSON data.items object should be retrieved');
+            expect(result.data.items).not.toBeNull('JSON data.items object should be retrieved.');
             expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
             expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
 
             var folder = result.data.items[0];
             api.expectBasePropertiesAreNotNull(folder);
-            expect(folder.title).toBe('_0001_Files_Folder_For_Tests');
-            expect(folder.mediaContentType).toBe('Folder');
-            expect(folder.fileExtension).toBeNull();
-            expect(folder.fileSize).toBeNull();
-            expect(folder.fileUrl).toBeNull();
-            expect(folder.thumbnailUrl).toBeNull();
-            expect(folder.thumbnailId).toBeNull();
-            expect(folder.thumbnailCaption).toBeNull();
-            expect(folder.isArchived).toBe(false);
+            expect(folder.title).toBe('_0001_Files_Folder_For_Tests', 'Correctly filtered title should be retrieved.');
+            expect(folder.mediaContentType).toBe('Folder', 'Correctly filtered mediaContentType should be retrieved.');
+            expect(folder.fileExtension).toBeNull('fileExtension should be null.');
+            expect(folder.fileSize).toBeNull('fileSize should be null.');
+            expect(folder.fileUrl).toBeNull('fileUrl should be null.');;
+            expect(folder.thumbnailUrl).toBeNull('thumbnailUrl should be null.');;
+            expect(folder.thumbnailId).toBeNull('thumbnailId should be null.');;
+            expect(folder.thumbnailCaption).toBeNull('thumbnailCaption should be null.');;
+            expect(folder.isArchived).toBe(false, 'Correctly filtered isArchived should be retrieved.');
         });
     });
 
@@ -233,20 +233,20 @@ describe('Media Manager: Files', function () {
             var file = result.data;
             expect(file).toBeDefinedAndNotNull('JSON data object should be retrieved.');
             api.expectBasePropertiesAreNotNull(file);
-            expect(file.title).toBe('_0001_File_For_Tests');
-            expect(file.description).toBe('File Description');
-            expect(file.fileExtension).toBe('.png');
-            expect(file.fileSize).toBe(92217);
-            expect(file.fileUrl).toBe('http://bettercms.sandbox.mvc4.local/uploads/file/8f46bc6b4fd74c10aba01bf1f7269b92/__Tapir.png');
-            expect(file.isArchived).toBe(false);
-            expect(file.folderId).toBeDefinedAndNotNull('folderId should be retrieved.');
-            expect(file.folderName).toBe('_0001_Files_Folder_For_Tests');
-            expect(file.publishedOn).toBeDefinedAndNotNull('publishedOn should be retrieved.');
-            expect(file.originalFileName).toBe('__Tapir.png');
-            expect(file.originalFileExtension).toBe('.png');
-            expect(file.thumbnailUrl).toBe('http://bettercms.sandbox.mvc4.local/uploads/image/88247a8341184fc2be8c1761c7b86c02/t_1_1.png');
+            expect(file.title).toBe('_0001_File_For_Tests', 'Correctly filtered title should be retrieved.');
+            expect(file.description).toBe('File Description', 'Correctly filtered description should be retrieved.');
+            expect(file.fileExtension).toBe('.png', 'Correctly filtered fileExtension should be retrieved.');
+            expect(file.fileSize).toBe(92217, 'Correctly filtered fileSize should be retrieved.');
+            expect(file.fileUrl).toBe('http://bettercms.sandbox.mvc4.local/uploads/file/8f46bc6b4fd74c10aba01bf1f7269b92/__Tapir.png', 'Correctly filtered fileUrl should be retrieved.');
+            expect(file.isArchived).toBe(false, 'Correctly filtered isArchived should be retrieved.');
+            expect(file.folderId).toBeDefinedAndNotNull('folderId should be retrieved.', 'Correctly filtered folderId should be retrieved.');
+            expect(file.folderName).toBe('_0001_Files_Folder_For_Tests', 'Correctly filtered folderName should be retrieved.');
+            expect(file.publishedOn).toBeDefinedAndNotNull('publishedOn should be retrieved.', 'Correctly filtered publishedOn should be retrieved.');
+            expect(file.originalFileName).toBe('__Tapir.png', 'Correctly filtered originalFileName should be retrieved.');
+            expect(file.originalFileExtension).toBe('.png', 'Correctly filtered fileExtension should be retrieved.');
+            expect(file.thumbnailUrl).toBe('http://bettercms.sandbox.mvc4.local/uploads/image/88247a8341184fc2be8c1761c7b86c02/t_1_1.png', 'Correctly filtered thumbnailUrl should be retrieved.');
             expect(file.thumbnailId).toBeDefinedAndNotNull('thumbnailId should be retrieved.');
-            expect(file.thumbnailCaption).toBe('Image caption for _0001_File_For_Tests');
+            expect(file.thumbnailCaption).toBe('Image caption for _0001_File_For_Tests', 'Correctly filtered thumbnailCaption should be retrieved.');
             
             // Tags
             var tags = result.tags;
@@ -254,8 +254,8 @@ describe('Media Manager: Files', function () {
             expect(tags.length).toBe(2, 'Returned array length should be 2.');
 
             api.expectBasePropertiesAreNotNull(tags[0]);
-            expect(tags[0].name).toBe('tag1_0001_File_For_Tests');
-            expect(tags[1].name).toBe('tag2_0001_File_For_Tests');
+            expect(tags[0].name).toBe('tag1_0001_File_For_Tests', 'Correctly filtered tags[0].name should be retrieved.');
+            expect(tags[1].name).toBe('tag2_0001_File_For_Tests', 'Correctly filtered tags[1].name should be retrieved.');
         });
     });
 
@@ -312,10 +312,10 @@ describe('Media Manager: Files', function () {
             expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
             expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
 
-            expect(result.data.items[0].id).toBe('7f753def7d2647aaa36ca2070078465e');
+            expect(result.data.items[0].id).toBe('7f753def7d2647aaa36ca2070078465e', 'Correctly filtered id should be retrieved.');
 
             // Check if model properties count didn't changed. If so - update current test filter and another tests.
-            expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]));
+            expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
         });
     });
 
@@ -338,11 +338,11 @@ describe('Media Manager: Files', function () {
         runs(function () {
             expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
             expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
-            expect(result.data.items).not.toBeNull('JSON data.items object should be retrieved');
+            expect(result.data.items).not.toBeNull('JSON data.items object should be retrieved.');
             expect(result.data.totalCount).toBe(expectingResults.totalCount, 'Total count should be ' + expectingResults.totalCount + '.');
             expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
-            expect(result.data.items[0].title).toBe(expectingResults.title);
-            expect(result.data.items[0].isArchived).toBe(expectingResults.isArchived);
+            expect(result.data.items[0].title).toBe(expectingResults.title, 'Correctly filtered title should be retrieved.');
+            expect(result.data.items[0].isArchived).toBe(expectingResults.isArchived, 'Correctly filtered isArchived should be retrieved.');
         });
     }
     

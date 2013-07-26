@@ -54,13 +54,13 @@ describe('Root: Layouts', function() {
             expect(result.data.items.length).toBe(2, 'Returned array length should be 2.');
 
             // Layout 1
-            expect(result.data.items[1].name).toBe('_0001_Layout4');
+            expect(result.data.items[1].name).toBe('_0001_Layout4', 'Correctly filtered items[1].name should be retrieved.');
             
             // Layout 0
             api.expectBasePropertiesAreNotNull(result.data.items[0]);
-            expect(result.data.items[0].name).toBe('_0001_Layout3 for _0000_Page_For_Tests');
-            expect(result.data.items[0].layoutPath).toBe('~/Areas/bcms-installation/Views/Shared/DefaultLayout.cshtml');
-            expect(result.data.items[0].previewUrl).toBe('http://www.devbridge.com/Content/styles/images/responsive/logo.png');
+            expect(result.data.items[0].name).toBe('_0001_Layout3 for _0000_Page_For_Tests', 'Correctly filtered items[0].name should be retrieved.');
+            expect(result.data.items[0].layoutPath).toBe('~/Areas/bcms-installation/Views/Shared/DefaultLayout.cshtml', 'Correctly filtered layoutPath should be retrieved.');
+            expect(result.data.items[0].previewUrl).toBe('http://www.devbridge.com/Content/styles/images/responsive/logo.png', 'Correctly filtered previewUrl should be retrieved.');
         });
     });
 
@@ -86,9 +86,9 @@ describe('Root: Layouts', function() {
 
             // Layout
             api.expectBasePropertiesAreNotNull(result.data);
-            expect(result.data.name).toBe('_0001_Layout3 for _0000_Page_For_Tests');
-            expect(result.data.layoutPath).toBe('~/Areas/bcms-installation/Views/Shared/DefaultLayout.cshtml');
-            expect(result.data.previewUrl).toBe('http://www.devbridge.com/Content/styles/images/responsive/logo.png');
+            expect(result.data.name).toBe('_0001_Layout3 for _0000_Page_For_Tests', 'Correctly filtered name should be retrieved.');
+            expect(result.data.layoutPath).toBe('~/Areas/bcms-installation/Views/Shared/DefaultLayout.cshtml', 'Correctly filtered layoutPath should be retrieved.');
+            expect(result.data.previewUrl).toBe('http://www.devbridge.com/Content/styles/images/responsive/logo.png', 'Correctly filtered previewUrl should be retrieved.');
         });
     });
     
@@ -119,13 +119,13 @@ describe('Root: Layouts', function() {
         runs(function () {
             expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
             expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
-            expect(result.data.items).not.toBeNull('JSON data.items object should be retrieved');
+            expect(result.data.items).not.toBeNull('JSON data.items object should be retrieved.');
             expect(result.data.items.length).toBe(3, 'Returned array length should be 3.');
 
             api.expectBasePropertiesAreNotNull(result.data.items[0]);
-            expect(result.data.items[0].regionIdentifier).toBe('CMSMainContent');
-            expect(result.data.items[1].regionIdentifier).toBe('CMSHeader');
-            expect(result.data.items[2].regionIdentifier).toBe('CMSFooter');
+            expect(result.data.items[0].regionIdentifier).toBe('CMSMainContent', 'Correctly filtered items[0].regionIdentifier should be retrieved.');
+            expect(result.data.items[1].regionIdentifier).toBe('CMSHeader', 'Correctly filtered items[1].regionIdentifier should be retrieved.');
+            expect(result.data.items[2].regionIdentifier).toBe('CMSFooter', 'Correctly filtered items[2].regionIdentifier should be retrieved.');
         });
     });
     
@@ -168,10 +168,10 @@ describe('Root: Layouts', function() {
             expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
             expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
 
-            expect(result.data.items[0].id).toBe('33d04bd9e37f40ecaad5a20700adbe11');
+            expect(result.data.items[0].id).toBe('33d04bd9e37f40ecaad5a20700adbe11', 'Correctly filtered id should be retrieved.');
 
             // Check if model properties count didn't changed. If so - update current test filter and another tests.
-            expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]));
+            expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
         });
     });
     
@@ -213,10 +213,10 @@ describe('Root: Layouts', function() {
             expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
             expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
 
-            expect(result.data.items[0].id).toBe('c0830f40833043c3b108a20700b21ec2');
+            expect(result.data.items[0].id).toBe('c0830f40833043c3b108a20700b21ec2', 'Correctly filtered id should be retrieved.');
 
             // Check if model properties count didn't changed. If so - update current test filter and another tests.
-            expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]));
+            expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
         });
     });
 });

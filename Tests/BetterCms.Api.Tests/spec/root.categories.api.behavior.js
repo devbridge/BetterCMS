@@ -41,9 +41,9 @@ describe('Root: Categories', function() {
             expect(result.data.totalCount).toBe(5, 'Total count should be 5.');
             expect(result.data.items.length).toBe(3, 'Returned array length should be 3.');
 
-            expect(result.data.items[0].name).toBe('_0001_ - 3');
-            expect(result.data.items[1].name).toBe('_0001_ - 4');
-            expect(result.data.items[2].name).toBe('_0001_ - 5');
+            expect(result.data.items[0].name).toBe('_0001_ - 3', 'Correctly filtered items[0].name should be retrieved.');
+            expect(result.data.items[1].name).toBe('_0001_ - 4', 'Correctly filtered items[1].name should be retrieved.');
+            expect(result.data.items[2].name).toBe('_0001_ - 5', 'Correctly filtered items[2].name should be retrieved.');
         });
     });
 
@@ -68,7 +68,7 @@ describe('Root: Categories', function() {
             expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
 
             api.expectBasePropertiesAreNotNull(result.data);
-            expect(result.data.name).toBe('_0001_ - 3');
+            expect(result.data.name).toBe('_0001_ - 3', 'Correctly filtered name should be retrieved.');
         });
     });
     
@@ -107,10 +107,10 @@ describe('Root: Categories', function() {
             expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
             expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
 
-            expect(result.data.items[0].id).toBe('a60e08c191504dbebd32a20601185796');
+            expect(result.data.items[0].id).toBe('a60e08c191504dbebd32a20601185796', 'Correctly filtered id should be retrieved.');
 
             // Check if model properties count didn't changed. If so - update current test filter and another tests.
-            expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]));
+            expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
         });
     });
 });

@@ -20,8 +20,6 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
 
         public GetImagesResponse Get(GetImagesRequest request)
         {
-            // TODO: throw new validation exception if request.IncludeImages == false && request.IncludeFolders == false
-
             request.Data.SetDefaultOrder("Title");
 
             var query = repository
