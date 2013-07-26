@@ -26,6 +26,7 @@ namespace BetterCms.Module.Api
             RequestBinders.Clear();
 			
             JsConfig.EmitCamelCaseNames = true;
+            JsConfig.IncludeNullValues = true;
 		
             Plugins.Add(new ValidationFeature());
             

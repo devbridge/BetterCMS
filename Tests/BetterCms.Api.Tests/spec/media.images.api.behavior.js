@@ -4,7 +4,7 @@
 describe('Media Manager: Images', function () {
     'use strict';
 
-    it('0000: Should get a list of image folders', function () {
+    it('03200: Should get a list of image folders', function () {
         var data = {
             filter: {
                 where: [{ field: 'Title', operation: 'StartsWith', value: '_0000_' }]
@@ -27,7 +27,7 @@ describe('Media Manager: Images', function () {
         runImagesListTests(data, results);
     });
     
-    it('0001: Should get a list of images without folders', function () {
+    it('03201: Should get a list of images without folders', function () {
         var data = {
             filter: {
                 where: [{ field: 'Title', operation: 'StartsWith', value: '_0000_' }]
@@ -50,7 +50,7 @@ describe('Media Manager: Images', function () {
         runImagesListTests(data, results);
     });
     
-    it('0002: Should get a list of not archived images and folders', function () {
+    it('03202: Should get a list of not archived images and folders', function () {
         var data = {
             filter: {
                 where: [{ field: 'Title', operation: 'StartsWith', value: '_0000_' }]
@@ -73,7 +73,7 @@ describe('Media Manager: Images', function () {
         runImagesListTests(data, results);
     });
     
-    it('0003: Should get a list of images and folders (including archived)', function () {
+    it('03203: Should get a list of images and folders (including archived)', function () {
         var data = {
             filter: {
                 where: [{ field: 'Title', operation: 'StartsWith', value: '_0000_' }]
@@ -96,7 +96,7 @@ describe('Media Manager: Images', function () {
         runImagesListTests(data, results);
     });
 
-    it('0004: Should get a list of images and folders (only archived)', function () {
+    it('03204: Should get a list of images and folders (only archived)', function () {
         var data = {
             filter: {
                 where: [
@@ -122,7 +122,7 @@ describe('Media Manager: Images', function () {
         runImagesListTests(data, results);
     });
     
-    it('0005: Should get a list from subfolder with specified image', function () {
+    it('03205: Should get a list from subfolder with specified image', function () {
         var url = '/bcms-api/images/',
             result,
             ready = false,
@@ -145,11 +145,11 @@ describe('Media Manager: Images', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
-            expect(result.data.items).toBeDefined();
-            expect(result.data.totalCount).toBe(1);
-            expect(result.data.items.length).toBe(1);
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.items).not.toBeNull('JSON data.items object should be retrieved');
+            expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
+            expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
 
             var image = result.data.items[0];
             api.expectBasePropertiesAreNotNull(image);
@@ -164,7 +164,7 @@ describe('Media Manager: Images', function () {
         });
     });
     
-    it('0006: Should get a list with specified folder', function () {
+    it('03206: Should get a list with specified folder', function () {
         var url = '/bcms-api/images/',
             result,
             ready = false,
@@ -186,26 +186,26 @@ describe('Media Manager: Images', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
-            expect(result.data.items).toBeDefined();
-            expect(result.data.totalCount).toBe(1);
-            expect(result.data.items.length).toBe(1);
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.items).not.toBeNull('JSON data.items object should be retrieved');
+            expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
+            expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
 
             var folder = result.data.items[0];
             api.expectBasePropertiesAreNotNull(folder);
             expect(folder.title).toBe('_0001_Images_Folder_For_Tests');
-            expect(folder.caption).toBeUndefined();
+            expect(folder.caption).toBeNull();
             expect(folder.mediaContentType).toBe('Folder');
-            expect(folder.fileExtension).toBeUndefined();
-            expect(folder.fileSize).toBeUndefined();
-            expect(folder.imageUrl).toBeUndefined();
-            expect(folder.thumbnailUrl).toBeUndefined();
+            expect(folder.fileExtension).toBeNull();
+            expect(folder.fileSize).toBeNull();
+            expect(folder.imageUrl).toBeNull();
+            expect(folder.thumbnailUrl).toBeNull();
             expect(folder.isArchived).toBe(false);
         });
     });
 
-    it('0007: Should get image properties by image id', function () {
+    it('03207: Should get image properties by image id', function () {
         var url = '/bcms-api/images/5606d5be1b6347d88621a2050129ed3f',
             result,
             ready = false,
@@ -225,12 +225,11 @@ describe('Media Manager: Images', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
 
             // Image
             var image = result.data;
-            expect(image).toBeDefined();
+            expect(image).toBeDefinedAndNotNull('JSON data object should be retrieved.');
             api.expectBasePropertiesAreNotNull(image);
             expect(image.title).toBe('_0001_Image_For_Tests');
             expect(image.caption).toBe('Image Caption');
@@ -245,9 +244,9 @@ describe('Media Manager: Images', function () {
             expect(image.thumbnailHeight).toBe(150);
             expect(image.thumbnailSize).toBe(15590);
             expect(image.isArchived).toBe(false);
-            expect(image.folderId).toBeDefined();
+            expect(image.folderId).toBeDefinedAndNotNull('folderId should be retrieved.');
             expect(image.folderName).toBe('_0001_Images_Folder_For_Tests');
-            expect(image.publishedOn).toBeDefined();
+            expect(image.publishedOn).toBeDefinedAndNotNull('publishedOn should be retrieved.');
             expect(image.originalFileName).toBe('__Tapir.png');
             expect(image.originalFileExtension).toBe('.png');
             expect(image.originalWidth).toBe(480);
@@ -257,8 +256,8 @@ describe('Media Manager: Images', function () {
 
             // Tags
             var tags = result.tags;
-            expect(tags).toBeDefined();
-            expect(tags.length).toBe(2);
+            expect(tags).toBeDefinedAndNotNull('JSON tags object should be retrieved.');
+            expect(tags.length).toBe(2, 'Returned array length should be 2.');
 
             api.expectBasePropertiesAreNotNull(tags[0]);
             expect(tags[0].name).toBe('tag1_0001_Image_For_Tests');
@@ -266,13 +265,65 @@ describe('Media Manager: Images', function () {
         });
     });
 
-    it('0008: Should get images list, filtered by tags, using AND connector', function () {
+    it('03208: Should get images list, filtered by tags, using AND connector', function () {
         filterByTags('and', 1, ['IFilterByTags Image 1']);
     });
 
-    it('0009: Should get images list, filtered by tags, using OR connector', function () {
+    it('03209: Should get images list, filtered by tags, using OR connector', function () {
         filterByTags('or', 2, ['IFilterByTags Image 1', 'IFilterByTags Image 3']);
     });
+
+    it('03210: Should get a list with one image, filtered by all available columns', function () {
+        var url = '/bcms-api/images/',
+            result,
+            ready = false;
+
+        var data = {
+            filter: {
+                where: [
+                    { field: 'Id', value: 'b53f6544cd6242a29a70a207007c75f8' },
+                    { field: 'CreatedOn', value: '2013-07-26 07:33:08.000' },
+                    { field: 'CreatedBy', value: 'Better CMS test user' },
+                    { field: 'LastModifiedOn', value: '2013-07-26 07:33:27.000' },
+                    { field: 'LastModifiedBy', value: 'Better CMS test user' },
+                    { field: 'Version', value: '6' },
+
+                    { field: 'Title', value: '03210' },
+                    { field: 'Caption', value: '03210 caption' },
+                    { field: 'MediaContentType', value: 'File' },
+                    { field: 'FileExtension', value: '.jpg' },
+                    { field: 'FileSize', value: 9901 },
+                    { field: 'ImageUrl', value: 'http://bettercms.sandbox.mvc4.local/uploads/image/c7371305555341ba9be1958aaca110e7/1_1.jpg' },
+                    { field: 'ThumbnailUrl', value: 'http://bettercms.sandbox.mvc4.local/uploads/image/c7371305555341ba9be1958aaca110e7/t_1_1.png' },
+                    { field: 'IsArchived', value: false }
+                ]
+            }
+        };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
+            expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
+
+            expect(result.data.items[0].id).toBe('b53f6544cd6242a29a70a207007c75f8');
+
+            // Check if model properties count didn't changed. If so - update current test filter and another tests.
+            expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]));
+        });
+    });
+
 
     function runImagesListTests(data, expectingResults) {
         var url = '/bcms-api/images/',
@@ -291,11 +342,11 @@ describe('Media Manager: Images', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
-            expect(result.data.items).toBeDefined();
-            expect(result.data.totalCount).toBe(expectingResults.totalCount);
-            expect(result.data.items.length).toBe(1);
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.items).not.toBeNull('JSON data.items object should be retrieved');
+            expect(result.data.totalCount).toBe(expectingResults.totalCount, 'Total count should be ' + expectingResults.totalCount + '.');
+            expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
             expect(result.data.items[0].title).toBe(expectingResults.title);
             expect(result.data.items[0].isArchived).toBe(expectingResults.isArchived);
         });
@@ -328,10 +379,10 @@ describe('Media Manager: Images', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
-            expect(result.data.totalCount).toBe(expectedCount);
-            expect(result.data.items.length).toBe(expectedCount);
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(expectedCount, 'Total count should be ' + expectedCount + '.');
+            expect(result.data.items.length).toBe(expectedCount, 'Returned array length should be ' + expectedCount + '.');
 
             for (var i = 0; i < result.data.items.length; i++) {
                 expect(result.data.items[i].title).toBe(expectedTitles[i]);

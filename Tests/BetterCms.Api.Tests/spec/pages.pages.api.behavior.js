@@ -10,7 +10,7 @@ describe('Pages: Pages', function () {
         testPageUrl: '/0000-page-for-tests/'
     };
 
-    it('0000: Should get pages list', function() {
+    it('01000: Should get pages list', function() {
         var url = '/bcms-api/pages/',
             result,
             ready = false;
@@ -36,17 +36,17 @@ describe('Pages: Pages', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
-            expect(result.data.totalCount).toBe(4);
-            expect(result.data.items.length).toBe(2);
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(4, 'Total count should be 4.');
+            expect(result.data.items.length).toBe(2, 'Returned array length should be 2.');
 
             expect(result.data.items[0].title.substr(0, 6)).toBe('_0000_');
             expect(result.data.items[1].title.substr(0, 6)).toBe('_0000_');
         });
     });
     
-    it('0001: Should get one page in list', function () {
+    it('01001: Should get one page in list', function () {
         var url = '/bcms-api/pages/',
             result,
             ready = false;
@@ -70,16 +70,16 @@ describe('Pages: Pages', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
-            expect(result.data.totalCount).toBe(1);
-            expect(result.data.items.length).toBe(1);
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
+            expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
 
             expectPageListItemPropertiesAreNotNull(result.data.items[0]);
         });
     });
 
-    it('0002: Should get page by id', function() {
+    it('01002: Should get page by id', function() {
         var url = '/bcms-api/pages/' + constants.testPageId,
             result,
             ready = false;
@@ -96,14 +96,14 @@ describe('Pages: Pages', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
 
             expectPagePropertiesAreNotNull(result.data);
         });
     });
 
-    it('0003: Should get page by url', function () {
+    it('01003: Should get page by url', function () {
         var url = '/bcms-api/pages/by-url/' + constants.testPageUrl,
             result,
             ready = false;
@@ -120,14 +120,14 @@ describe('Pages: Pages', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
 
             expectPagePropertiesAreNotNull(result.data);
         });
     });
 
-    it('0004: Should get page properties by id', function () {
+    it('01004: Should get page properties by id', function () {
         var url = '/bcms-api/page-properties/' + constants.testPageId,
              result,
              ready = false;
@@ -153,14 +153,14 @@ describe('Pages: Pages', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
 
             expectPagePropertiesPropertiesAreNotNull(result);
         });
     });
 
-    it('0005: Should get page properties by url', function () {
+    it('01005: Should get page properties by url', function () {
         var url = '/bcms-api/page-properties/by-url/' + constants.testPageUrl,
               result,
               ready = false;
@@ -186,14 +186,14 @@ describe('Pages: Pages', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
 
             expectPagePropertiesPropertiesAreNotNull(result);
         });
     });
     
-    it('0006: Page should exist', function () {
+    it('01006: Page should exist', function () {
         var url = '/bcms-api/page-exists/' + constants.testPageUrl,
               result,
               ready = false;
@@ -210,14 +210,14 @@ describe('Pages: Pages', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
             expect(result.data.exists).toBe(true);
             expect(result.data.pageId).toBe(constants.testPageId);
         });
     });
 
-    it('0007: Page should not exist', function () {
+    it('01007: Page should not exist', function () {
         var url = '/bcms-api/page-exists/7E78D59E-6747-46D1-B71D-852F44F99E71/',
               result,
               ready = false;
@@ -234,14 +234,14 @@ describe('Pages: Pages', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
             expect(result.data.exists).toBe(false);
-            expect(result.data.pageId).toBeUndefined();
+            expect(result.data.pageId).toBeNull();
         });
     });
 
-    it('0008: Should get page contents', function () {
+    it('01008: Should get page contents', function () {
         var url = '/bcms-api/pages/' + constants.testPageId + '/contents/',
               result,
               ready = false;
@@ -258,12 +258,12 @@ describe('Pages: Pages', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
-            expect(result.data.items).toBeDefined();
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.items).not.toBeNull('JSON data.items object should be retrieved');
             
             var contents = result.data.items;
-            expect(contents.length).toBe(5);
+            expect(contents.length).toBe(5, 'Returned array length should be 5.');
             
             var contentsFound = 0;
             for (var i = 0; i < contents.length; i++) {
@@ -279,7 +279,7 @@ describe('Pages: Pages', function () {
                     expect(content.contentType).toBe('html-content');
                     expect(content.regionIdentifier).toBe('CMSMainContent');
                     expect(content.isPublished).toBe(true);
-                    expect(content.regionId).toBeDefined();
+                    expect(content.regionId).toBeDefinedAndNotNull('regionId should be retrieved.');
 
                     contentsFound++;
                 }
@@ -301,12 +301,118 @@ describe('Pages: Pages', function () {
         });
     });
 
-    it('0009: Should get pages list, filtered by tags, using AND connector', function () {
+    it('01009: Should get pages list, filtered by tags, using AND connector', function () {
         filterByTags('and', 1, ['IFilterByTags Page 1']);
     });
     
-    it('0010: Should get pages list, filtered by tags, using OR connector', function () {
+    it('01010: Should get pages list, filtered by tags, using OR connector', function () {
         filterByTags('or', 2, ['IFilterByTags Page 1', 'IFilterByTags Page 3']);
+    });
+
+    it('01011: Should get a list with one page, filtered by all available columns', function () {
+        var url = '/bcms-api/pages/',
+            result,
+            ready = false;
+
+        var data = {
+            filter: {
+                where: [
+                    { field: 'Id', value: 'e81a87022bf4419688b4a2070081a57e' },
+                    { field: 'CreatedOn', value: '2013-07-26 07:52:01.000' },
+                    { field: 'CreatedBy', value: 'Better CMS test user' },
+                    { field: 'LastModifiedOn', value: '2013-07-26 07:58:15.000' },
+                    { field: 'LastModifiedBy', value: 'Better CMS test user' },
+                    { field: 'Version', value: '4' },
+
+                    { field: 'PageUrl', value: '/01103/01011/' },
+                    { field: 'Title', value: '01011' },
+                    { field: 'Description' },
+                    { field: 'IsPublished', value: true },
+                    { field: 'PublishedOn', value: '2013-07-26 07:58:15.000' },
+                    { field: 'LayoutId', value: '9ab0bbe1e02a4a3bb842a2070082af10' },
+                    { field: 'CategoryId', value: '1427628c1e7e4beb9098a2070081d2dc' },
+                    { field: 'CategoryName', value: '01011' },
+                    { field: 'MainImageId', value: '389e059bcc6c4336a863a2070083436c' },
+                    { field: 'MainImageUrl', value: 'http://bettercms.sandbox.mvc4.local/uploads/image/6173795ceadc4b619d68005ef57c9ca8/1_1.jpg' },
+                    { field: 'MainImageThumbnauilUrl', value: 'http://bettercms.sandbox.mvc4.local/uploads/image/6173795ceadc4b619d68005ef57c9ca8/t_1_1.png' },
+                    { field: 'MainImageCaption', value: '01011 caption' },
+                    { field: 'IsArchived', value: false }
+                ]
+            }
+        };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
+            expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
+
+            expect(result.data.items[0].id).toBe('e81a87022bf4419688b4a2070081a57e');
+
+            // Check if model properties count didn't changed. If so - update current test filter and another tests.
+            expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]));
+        });
+    });
+    
+    it('01012: Should get a list with one page content, filtered by all available columns', function () {
+        var url = '/bcms-api/pages/1b13fcadc8714ba29a20a20700846ab2/contents/',
+            result,
+            ready = false;
+
+        var data = {
+            filter: {
+                where: [
+                    { field: 'Id', value: '457c26ad2d654dc381e8a20700848027' },
+                    { field: 'CreatedOn', value: '2013-07-26 08:02:25.000' },
+                    { field: 'CreatedBy', value: 'Better CMS test user' },
+                    { field: 'LastModifiedOn', value: '2013-07-26 08:02:25.000' },
+                    { field: 'LastModifiedBy', value: 'Better CMS test user' },
+                    { field: 'Version', value: '1' },
+
+                    { field: 'ContentId', value: '60b49f2c856649c5819ea20700848027' },
+                    { field: 'IsPublished', value: 'true' },
+                    { field: 'Name', value: '01012' },
+                    { field: 'RegionId', value: 'e3e2e7fe62df4ba683216fdcc1691d8a' },
+                    { field: 'RegionIdentifier', value: 'CMSMainContent' },
+                    { field: 'Order', value: '0' }
+                ]
+            }
+        };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
+            expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
+
+            expect(result.data.items[0].id).toBe('457c26ad2d654dc381e8a20700848027');
+
+            // Check if model properties count didn't changed. If so - update current test filter and another tests.
+            // data.filter.where.length + 1 <-- Because field ContentType cannnot be filtered by
+            expect(data.filter.where.length + 1).toBe(api.getCountOfProperties(result.data.items[0]));
+        });
     });
 
     function expectPageListItemPropertiesAreNotNull(page) {
@@ -316,12 +422,12 @@ describe('Pages: Pages', function () {
         expect(page.pageUrl).toBe(constants.testPageUrl);
         expect(page.description).toBe('Test page');
         expect(page.isPublished).toBe(true);
-        expect(page.publishedOn).toBeDefined();
-        expect(page.layoutId).toBeDefined();
-        expect(page.categoryId).toBeDefined();
+        expect(page.publishedOn).toBeDefinedAndNotNull('publishedOn should be retrieved.');
+        expect(page.layoutId).toBeDefinedAndNotNull('layoutId should be retrieved.');
+        expect(page.categoryId).toBeDefinedAndNotNull('categoryId should be retrieved.');
         expect(page.categoryName).toBe('Category for _0000_Page_For_Tests');
-        expect(page.mainImageId).toBeDefined();
-        expect(page.mainImageThumbnauilUrl).toBeDefined();
+        expect(page.mainImageId).toBeDefinedAndNotNull('mainImageId should be retrieved.');
+        expect(page.mainImageThumbnauilUrl).toBeDefinedAndNotNull('mainImageThumbnailUrl should be retrieved.');
         expect(page.mainImageCaption).toBe("Image for _0000_Page_For_Tests");
         expect(page.isArchived).toBe(true);
     }
@@ -333,12 +439,12 @@ describe('Pages: Pages', function () {
         expect(page.pageUrl).toBe(constants.testPageUrl);
         expect(page.description).toBe('Test page');
         expect(page.isPublished).toBe(true);
-        expect(page.publishedOn).toBeDefined();
-        expect(page.layoutId).toBeDefined();
-        expect(page.categoryId).toBeDefined();
+        expect(page.publishedOn).toBeDefinedAndNotNull('publishedOn should be retrieved.');
+        expect(page.layoutId).toBeDefinedAndNotNull('layoutId should be retrieved.');
+        expect(page.categoryId).toBeDefinedAndNotNull('categoryId should be retrieved.');
         expect(page.categoryName).toBe('Category for _0000_Page_For_Tests');
-        expect(page.mainImageId).toBeDefined();
-        expect(page.mainImageThumbnauilUrl).toBeDefined();
+        expect(page.mainImageId).toBeDefinedAndNotNull('mainImageId should be retrieved.');
+        expect(page.mainImageThumbnauilUrl).toBeDefinedAndNotNull('mainImageThumbnailUrl should be retrieved.');
         expect(page.mainImageCaption).toBe("Image for _0000_Page_For_Tests");
         expect(page.isArchived).toBe(true);
     }
@@ -351,12 +457,12 @@ describe('Pages: Pages', function () {
         expect(page.pageUrl).toBe(constants.testPageUrl);
         expect(page.description).toBe('Test page');
         expect(page.isPublished).toBe(true);
-        expect(page.publishedOn).toBeDefined();
-        expect(page.layoutId).toBeDefined();
-        expect(page.categoryId).toBeDefined();
-        expect(page.mainImageId).toBeDefined();
-        expect(page.featuredImageId).toBeDefined();
-        expect(page.secondaryImageId).toBeDefined();
+        expect(page.publishedOn).toBeDefinedAndNotNull('publishedOn should be retrieved.');
+        expect(page.layoutId).toBeDefinedAndNotNull('layoutId should be retrieved.');
+        expect(page.categoryId).toBeDefinedAndNotNull('categoryId should be retrieved.');
+        expect(page.mainImageId).toBeDefinedAndNotNull('mainImageId should be retrieved.');
+        expect(page.featuredImageId).toBeDefinedAndNotNull('featuredImageId should be retrieved.');
+        expect(page.secondaryImageId).toBeDefinedAndNotNull('secondaryImageId should be retrieved.');
         expect(page.canonicalUrl).toBe('canonical-url');
         expect(page.customCss).toBe('test page custom css');
         expect(page.customJavaScript).toBe('console.log("test");');
@@ -367,7 +473,7 @@ describe('Pages: Pages', function () {
         
         // layout
         var layout = response.layout;
-        expect(layout).toBeDefined();
+        expect(layout).toBeDefinedAndNotNull('JSON layout object should be retrieved.');
         api.expectBasePropertiesAreNotNull(layout);
         expect(layout.name).toBe('_0001_Layout3 for _0000_Page_For_Tests');
         expect(layout.layoutPath).toBe('~/Areas/bcms-installation/Views/Shared/DefaultLayout.cshtml');
@@ -375,35 +481,35 @@ describe('Pages: Pages', function () {
         
         // category
         var category = response.category;
-        expect(category).toBeDefined();
+        expect(category).toBeDefinedAndNotNull('JSON category object should be retrieved.');
         api.expectBasePropertiesAreNotNull(category);
         expect(category.name).toBe('Category for _0000_Page_For_Tests');
         
         // tags
         var tags = response.tags;
-        expect(tags).toBeDefined();
-        expect(tags.length).toBe(2);
+        expect(tags).toBeDefinedAndNotNull('JSON tags object should be retrieved.');
+        expect(tags.length).toBe(2, 'Returned tags array length should be 2.');
         expect(tags[0].name).toBe('tag1');
 
         api.expectBasePropertiesAreNotNull(tags[1]);
         expect(tags[1].name).toBe('tag2');
         
         // images
-        expectImagePropertiesAreNotNull(response.mainImage);
-        expectImagePropertiesAreNotNull(response.featuredImage);
-        expectImagePropertiesAreNotNull(response.secondaryImage);
+        expectImagePropertiesAreNotNull(response.mainImage, 'mainImage');
+        expectImagePropertiesAreNotNull(response.featuredImage, 'featuredImage');
+        expectImagePropertiesAreNotNull(response.secondaryImage, 'secondaryImage');
         
         // meta data
         var metadata = response.metaData;
-        expect(metadata).toBeDefined();
+        expect(metadata).toBeDefinedAndNotNull('JSON metadata object should be retrieved.');
         expect(metadata.metaTitle).toBe('Test meta title');
         expect(metadata.metaKeywords).toBe('Test meta keywords');
         expect(metadata.metaDescription).toBe('Test meta description');
         
         // page contents
         var contents = response.pageContents;
-        expect(contents).toBeDefined();
-        expect(contents.length).toBe(5);
+        expect(contents).toBeDefinedAndNotNull('JSON contents object should be retrieved.');
+        expect(contents.length).toBe(5, 'Returned contents array length should be 5.');
 
         var contentsFound = 0;
         for (var i = 0; i < contents.length; i ++)
@@ -420,7 +526,7 @@ describe('Pages: Pages', function () {
                 expect(content.contentType).toBe('html-content');
                 expect(content.regionIdentifier).toBe('CMSMainContent');
                 expect(content.isPublished).toBe(true);
-                expect(content.regionId).toBeDefined();
+                expect(content.regionId).toBeDefinedAndNotNull('regionId should be retrieved.');
                 
                 contentsFound++;
             }
@@ -441,14 +547,14 @@ describe('Pages: Pages', function () {
         expect(contentsFound).toBe(4);
     }
     
-    function expectImagePropertiesAreNotNull(image) {
-        expect(image).toBeDefined();
+    function expectImagePropertiesAreNotNull(image, name) {
+        expect(image).toBeDefinedAndNotNull('JSON ' + name + ' object should be retrieved.');
         api.expectBasePropertiesAreNotNull(image);
         
         expect(image.title).toBe('Image for _0000_Page_For_Tests');
         expect(image.caption).toBe('Image for _0000_Page_For_Tests');
-        expect(image.url).toBeDefined();
-        expect(image.thumbnailUrl).toBeDefined();
+        expect(image.url).toBeDefinedAndNotNull('url should be retrieved.');
+        expect(image.thumbnailUrl).toBeDefinedAndNotNull('thumbnailUrl should be retrieved.');
     }
     
     function filterByTags(connector, expectedCount, expectedTitles) {
@@ -481,10 +587,10 @@ describe('Pages: Pages', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
-            expect(result.data.totalCount).toBe(expectedCount);
-            expect(result.data.items.length).toBe(expectedCount);
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(expectedCount, 'Total count should be ' + expectedCount + '.');
+            expect(result.data.items.length).toBe(expectedCount, 'Returned array length should be ' + expectedCount + '.');
             
             for (var i = 0; i < result.data.items.length; i++) {
                 expect(result.data.items[i].title).toBe(expectedTitles[i]);

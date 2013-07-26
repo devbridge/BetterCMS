@@ -27,12 +27,13 @@ namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout.Regions
                     {
                         Id = lr.Region.Id,
                         Version = lr.Region.Version,
-                        CreatedBy = lr.Region.CreatedByUser,
-                        CreatedOn = lr.Region.CreatedOn,
-                        LastModifiedBy = lr.Region.ModifiedByUser,
-                        LastModifiedOn = lr.Region.ModifiedOn,
+                        CreatedBy = lr.CreatedByUser,
+                        CreatedOn = lr.CreatedOn,
+                        LastModifiedBy = lr.ModifiedByUser,
+                        LastModifiedOn = lr.ModifiedOn,
 
-                        RegionIdentifier = lr.Region.RegionIdentifier
+                        RegionIdentifier = lr.Region.RegionIdentifier,
+                        Description = lr.Description
                     })
                 .ToDataListResponse(request);
 

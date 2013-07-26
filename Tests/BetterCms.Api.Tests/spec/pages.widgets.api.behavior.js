@@ -4,7 +4,7 @@
 describe('Pages: Widgets', function () {
     'use strict';
 
-    it('0000: Should get a list of widgets', function () {
+    it('01200: Should get a list of widgets', function () {
         var url = '/bcms-api/widgets/',
             result,
             ready = false;
@@ -33,17 +33,17 @@ describe('Pages: Widgets', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
-            expect(result.data.totalCount).toBe(4);
-            expect(result.data.items.length).toBe(2);
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(4, 'Total count should be 4.');
+            expect(result.data.items.length).toBe(2, 'Returned array length should be 2.');
 
             var htmlWidget = result.data.items[0];
             api.expectBasePropertiesAreNotNull(htmlWidget);
             expect(htmlWidget.widgetType).toBe('html-widget');
             expect(htmlWidget.name).toBe('_0004_Html_Widget_2');
             expect(htmlWidget.isPublished).toBe(true);
-            expect(htmlWidget.publishedOn).toBeDefined();
+            expect(htmlWidget.publishedOn).toBeDefinedAndNotNull('publishedOn should be retrieved.');
             expect(htmlWidget.publishedByUser).toBe('Better CMS test user');
             
             var serverWidget = result.data.items[1];
@@ -51,12 +51,12 @@ describe('Pages: Widgets', function () {
             expect(serverWidget.widgetType).toBe('server-widget');
             expect(serverWidget.name).toBe('_0004_Server_Widget_1');
             expect(serverWidget.isPublished).toBe(true);
-            expect(serverWidget.publishedOn).toBeDefined();
+            expect(serverWidget.publishedOn).toBeDefinedAndNotNull('publishedOn should be retrieved.');
             expect(serverWidget.publishedByUser).toBe('Better CMS test user');
         });
     });
     
-    it('0001: Should get an html content widget by id', function () {
+    it('01201: Should get an html content widget by id', function () {
         var url = '/bcms-api/widgets/html-content/fa0cbcfb96454fcfa576a205009119c8',
             result,
             ready = false;
@@ -73,16 +73,16 @@ describe('Pages: Widgets', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
 
             var widget = result.data;
-            expect(widget).toBeDefined();
+            expect(widget).toBeDefinedAndNotNull('JSON data object should be retrieved.');
             api.expectBasePropertiesAreNotNull(widget);
             expect(widget.name).toBe('_0004_Html_Widget_2');
             expect(widget.isPublished).toBe(true);
-            expect(widget.publishedOn).toBeDefined();
+            expect(widget.publishedOn).toBeDefinedAndNotNull('publishedOn should be retrieved.');
             expect(widget.publishedByUser).toBe('Better CMS test user');
-            expect(widget.categoryId).toBeDefined();
+            expect(widget.categoryId).toBeDefinedAndNotNull('categoryId should be retrieved.');
             expect(widget.categoryName).toBe('Category for _0004_Html_Widget_2');
             expect(widget.customCss).toBe('custom css');
             expect(widget.useCustomCss).toBe(true);
@@ -93,7 +93,7 @@ describe('Pages: Widgets', function () {
         });
     });
     
-    it('0002: Should get a server control widget by id', function () {
+    it('01202: Should get a server control widget by id', function () {
         var url = '/bcms-api/widgets/server-control/3ac115dfc5f34f148141a205009162cd',
             result,
             ready = false;
@@ -110,19 +110,69 @@ describe('Pages: Widgets', function () {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
 
             var widget = result.data;
-            expect(widget).toBeDefined();
+            expect(widget).toBeDefinedAndNotNull('JSON data object should be retrieved.');
             api.expectBasePropertiesAreNotNull(widget);
             expect(widget.name).toBe('_0004_Server_Widget_1');
             expect(widget.widgetUrl).toBe('~/Views/Widgets/TestWidget.cshtml');
             expect(widget.previewUrl).toBe('http://www.devbridge.com/Content/styles/images/responsive/logo.png');
             expect(widget.isPublished).toBe(true);
-            expect(widget.publishedOn).toBeDefined();
+            expect(widget.publishedOn).toBeDefinedAndNotNull('publishedOn should be retrieved.');
             expect(widget.publishedByUser).toBe('Better CMS test user');
-            expect(widget.categoryId).toBeDefined();
+            expect(widget.categoryId).toBeDefinedAndNotNull('categoryId should be retrieved.');
             expect(widget.categoryName).toBe('Category for _0004_Server_Widget_1');
+        });
+    });
+    
+    it('01203: Should get a list with one widget, filtered by all available columns', function () {
+        var url = '/bcms-api/widgets/',
+            result,
+            ready = false;
+
+        var data = {
+            filter: {
+                where: [
+                    { field: 'Id', value: 'd674977e193f4d858b83a20700ac13b6' },
+                    { field: 'CreatedOn', value: '2013-07-26 10:26:30.000' },
+                    { field: 'CreatedBy', value: 'Better CMS test user' },
+                    { field: 'LastModifiedOn', value: '2013-07-26 10:26:50.000' },
+                    { field: 'LastModifiedBy', value: 'Better CMS test user' },
+                    { field: 'Version', value: '2' },
+
+                    { field: 'Name', value: '01203' },
+                    { field: 'IsPublished', value: true },
+                    { field: 'PublishedOn', value: '2013-07-26 10:26:50.000' },
+                    { field: 'PublishedByUser', value: 'Better CMS test user' },
+                    { field: 'CategoryId', value: '1d8dbfbce4bf46c2acb7a20700ac186a' },
+                    { field: 'CategoryName', value: '01203' }
+                ]
+            }
+        };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
+            expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
+
+            expect(result.data.items[0].id).toBe('d674977e193f4d858b83a20700ac13b6');
+
+            // Check if model properties count didn't changed. If so - update current test filter and another tests.
+            // data.filter.where.length + 1 <-- Because field WidgetType cannnot be filtered by
+            expect(data.filter.where.length + 1).toBe(api.getCountOfProperties(result.data.items[0]));
         });
     });
 });
