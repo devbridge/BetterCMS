@@ -37,8 +37,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
 
         public GetPageResponse Get(GetPageRequest request)
         {
-            // TODO: validate request - one and only one of these can be specified: PageUrl / PageId
-
             var query = repository.AsQueryable<Module.Pages.Models.PageProperties>();
             
             if (request.PageId.HasValue)

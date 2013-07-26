@@ -20,8 +20,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents
 
         public GetPageContentsResponse Get(GetPageContentsRequest request)
         {
-            // TODO add validation for only one of RegionId / RegionIdentifier specified
-
             request.Data.SetDefaultOrder("Order");
 
             var query = repository
