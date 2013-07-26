@@ -73,4 +73,49 @@ describe('Pages: Redirects', function () {
             expect(redirect.redirectUrl).toBe('/_0000_Redirect_To_3/');
         });
     });
+
+    it('01302: Should get a list with one author, filtered by all available columns', function () {
+        var url = '/bcms-api/redirects/',
+            result,
+            ready = false;
+
+        var data = {
+            filter: {
+                where: [
+                    { field: 'Id', value: '23574260f1984c9e98aba207008d08fe' },
+                    { field: 'CreatedOn', value: '2013-07-26 08:33:29.000' },
+                    { field: 'CreatedBy', value: 'Better CMS test user' },
+                    { field: 'LastModifiedOn', value: '2013-07-26 08:36:24.000' },
+                    { field: 'LastModifiedBy', value: 'Better CMS test user' },
+                    { field: 'Version', value: '2' },
+                    
+                    { field: 'PageUrl', value: '/01302-from/' },
+                    { field: 'RedirectUrl', value: '/01302-to/' }
+                ]
+            }
+        };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).not.toBeNull();
+            expect(result.data).not.toBeNull();
+            expect(result.data.totalCount).toBe(1);
+            expect(result.data.items.length).toBe(1);
+
+            expect(result.data.items[0].id).toBe('23574260f1984c9e98aba207008d08fe');
+
+            // Check if model properties count didn't changed. If so - update filter current test filter and another tests.
+            expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]));
+        });
+    });
 });
