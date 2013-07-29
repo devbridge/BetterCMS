@@ -841,8 +841,7 @@ input.bcms-grid-input:focus {
 
         .bcms-list .bcms-image-box .bcms-media-file-holder img {
             display: block;
-            width: 54px;
-            height: 40px;
+            max-width: 100%;
         }
 
     .bcms-list .bcms-image-box div.bcms-media-inner-controls {
@@ -1476,6 +1475,20 @@ input.bcms-grid-input:focus {
     display: block;
     font-size: 14px;
     line-height: 24px;
+}
+
+/*images history*/
+.bcms-media-history-holder {
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+    overflow: auto;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+.bcms-media-history-image-holder img {
+    max-width: 100%;
 }
 
 /*crop image*/

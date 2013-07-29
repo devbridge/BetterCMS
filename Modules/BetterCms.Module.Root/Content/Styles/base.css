@@ -873,7 +873,7 @@ a.bcms-remove-image {
     max-width: 830px;
 }
 
-div.bcms-noscroll body {
+html.bcms-noscroll {
     overflow: hidden;
 }
 
