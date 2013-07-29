@@ -324,6 +324,30 @@ describe('media.images.api.behavior', function () {
         });
     });
 
+    it('03211: Should throw validation exception for IncludeFolders/IncludeFiles, when getting images.', function () {
+        var url = '/bcms-api/files/',
+            result,
+            ready = false,
+            data = {
+                includeFiles: false,
+                includeFolders: false
+            };
+
+        runs(function () {
+            api.get(url, data, null, function (response) {
+                result = response.responseJSON;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            api.expectValidationExceptionIsThrown(result, 'Data.IncludeFolders');
+        });
+    });
 
     function runImagesListTests(data, expectingResults) {
         var url = '/bcms-api/images/',

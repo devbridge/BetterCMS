@@ -175,4 +175,30 @@ describe('pages.widgets.api.behavior', function () {
             expect(data.filter.where.length + 1).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
         });
     });
+    
+    it('01204: Should throw validation exception for filterting by WidgetType, when getting widgets.', function () {
+        var url = '/bcms-api/widgets/',
+            result,
+            ready = false,
+            data = {
+                filter: {
+                    where: [{ field: 'WidgetType', value: 'test' }]
+                }
+            };
+
+        runs(function () {
+            api.get(url, data, null, function (response) {
+                result = response.responseJSON;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            api.expectValidationExceptionIsThrown(result, 'Data');
+        });
+    });
 });

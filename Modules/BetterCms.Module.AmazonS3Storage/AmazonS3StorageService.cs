@@ -101,6 +101,8 @@ namespace BetterCms.Module.AmazonS3Storage
                         putRequest.WithMetaData(request.MetaData);
                     }
 
+                    putRequest.ContentType = MimeTypeUtility.DetermineContentType(request.Uri);
+
                     using (client.PutObject(putRequest))
                     {
                     }
