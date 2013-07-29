@@ -312,9 +312,34 @@ namespace BetterCms.Module.MediaManager.Services
                         {
                             using (Graphics g = Graphics.FromImage(resizedBitmap))
                             {
+                                var destination = source;
+
                                 g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
                                 g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-                                g.DrawImage(source, 0, 0, size.Width, size.Height);
+
+                                var diff = (image.Width - image.Height) / 2.0;
+                                if (diff > 0)
+                                {
+                                    var x1 = Convert.ToInt32(Math.Floor(diff));
+                                    var y1 = 0;
+                                    var x2 = image.Height;
+                                    var y2 = image.Height;
+                                    var rect = new Rectangle(x1, y1, x2, y2);
+                                    destination = CropImage(destination, rect);
+                                }
+                                else if (diff < 0)
+                                {
+                                    diff = Math.Abs(diff);
+
+                                    var x1 = 0;
+                                    var y1 = Convert.ToInt32(Math.Floor(diff));
+                                    var x2 = image.Width;
+                                    var y2 = image.Width;
+                                    var rect = new Rectangle(x1, y1, x2, y2);
+                                    destination = CropImage(destination, rect);
+                                }
+
+                                g.DrawImage(destination, 0, 0, size.Width, size.Height);
                             }
                         }
                         using (MemoryStream ms = new MemoryStream())
@@ -326,7 +351,6 @@ namespace BetterCms.Module.MediaManager.Services
                 }
                 else
                 {
-
                     var diff = (image.Width - image.Height) / 2.0;
                     if (diff > 0)
                     {
@@ -394,6 +418,18 @@ namespace BetterCms.Module.MediaManager.Services
                     session.Close();
                 }
             }
+        }
+
+        /// <summary>
+        /// Crops the image.
+        /// </summary>
+        /// <param name="img">The img.</param>
+        /// <param name="cropArea">The crop area.</param>
+        /// <returns>Cropped image</returns>
+        private static Bitmap CropImage(Bitmap img, Rectangle cropArea)
+        {
+            Bitmap bmpCrop = img.Clone(cropArea, img.PixelFormat);
+            return bmpCrop;
         }
     }
 }
