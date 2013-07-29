@@ -874,6 +874,7 @@ a.bcms-remove-image {
 .bcms-scroll-window {
     position: relative;
     overflow-y: auto;
+    overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
 }
 
@@ -2410,7 +2411,86 @@ span.bcms-tag-field-validation-error {
             margin-left: -11px;
         }
 
+/*user access controls*/
+.bcms-user-access {
+    padding: 0 0 0 30px;
+    margin: 0 0 20px -30px;
+    border-bottom: 1px solid #c6c6c6;
+}
 
+.bcms-access-table {
+}
+
+.bcms-access-title {
+    border-bottom: 1px solid #c6c6c6;
+}
+
+.bcms-access-title-text {
+    float: left;
+    width: 15%;
+    padding: 5px;
+    text-align: center;
+    font-weight: 700;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+    .bcms-access-title-text:first-child {
+        width: 55%;
+        text-align: left;
+    }
+
+.bcms-access-line {
+    line-height: 1.5em;
+    padding: 5px 0;
+    border-bottom: 1px solid #eeeeee;
+}
+
+    .bcms-access-line:last-child {
+        border-bottom: 0;
+    }
+
+.bcms-access-value {
+    float: left;
+    width: 15%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+    .bcms-access-value:first-child {
+        width: 55%;
+        text-align: left;
+    }
+
+    .bcms-access-value input[type="radio"] {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        cursor: pointer;
+    }
+
+.bcms-access-value-add {
+    font-weight: 700;
+    color: #0383DF;
+    cursor: pointer;
+}
+
+.btn-acces-plus, .btn-acces-minus {
+    display: inline-block;
+    vertical-align: middle;
+    width: 16px;
+    line-height: 16px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.btn-acces-plus {
+    background: url('images/sprite-base-2.png') no-repeat -44px -179px;
+}
+
+.btn-acces-minus {
+    background: url('images/sprite-base-2.png') no-repeat -64px -179px;
+}
 
 /*override jquery ui*/
 .ui-datepicker-trigger {
