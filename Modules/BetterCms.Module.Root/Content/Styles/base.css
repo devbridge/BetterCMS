@@ -7,6 +7,15 @@
     font-family: 'Open Sans', sans-serif !important;
 }
 
+.bcms-modal form {
+    width: auto !important;
+    height: auto !important;
+    color: inherit !important;
+    margin: auto !important;
+    padding: 0 !important;
+    background: none !important;
+}
+
 .bcms-version-number {
     line-height: 21px;
     margin-right: 10px;
