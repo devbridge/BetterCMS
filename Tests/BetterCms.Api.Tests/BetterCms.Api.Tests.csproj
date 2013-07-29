@@ -206,8 +206,8 @@
     <Content Include="Global.asax" />
     <Content Include="runner.html" />
     <Content Include="Scripts\core.js" />
-    <Content Include="Scripts\jasmine.phantomjs-reporter.js" />
-    <Content Include="Scripts\phantomjs_jasminexml_runner.js" />
+    <Content Include="Scripts\jasmine.phantomjs.reporter.js" />
+    <Content Include="Scripts\jasmine.phantomjs.xml-runner.js" />
     <Content Include="spec\blog.authors.api.behavior.js" />
     <Content Include="spec\blog.blogPosts.api.behavior.js" />
     <Content Include="spec\root.filtering.api.behavior.js" />

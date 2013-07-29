@@ -1,7 +1,7 @@
 ﻿/*jslint vars: true*/
 /*global api, describe, it, expect, waits, waitsFor, runs, afterEach, spyOn, jcsvSerialize, $ */
 
-describe('Root: General', function() {
+describe('root.general.api.behavior', function () {
     'use strict';
 
     it('00000: Should get a Better CMS current version', function () {

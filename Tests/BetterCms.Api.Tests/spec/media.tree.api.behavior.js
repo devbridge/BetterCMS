@@ -1,7 +1,7 @@
 ﻿/*jslint vars: true*/
 /*global describe, it, expect, waits, waitsFor, runs, afterEach, spyOn, $*/
 
-describe('Media Manager: Tree', function () {
+describe('media.tree.api.behavior', function () {
     'use strict';
 
     it('03000: Should get a media tree: only image folders', function () {

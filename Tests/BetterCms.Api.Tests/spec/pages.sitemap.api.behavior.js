@@ -1,7 +1,7 @@
 ﻿/*jslint vars: true*/
 /*global describe, it, expect, waits, waitsFor, runs, afterEach, spyOn, $*/
 
-describe('Pages: Sitemap', function () {
+describe('pages.sitemap.api.behavior', function () {
     'use strict';
 
     var constants = {

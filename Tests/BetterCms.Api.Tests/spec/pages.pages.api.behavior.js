@@ -1,7 +1,7 @@
 ﻿/*jslint vars: true*/
 /*global describe, it, expect, waits, waitsFor, runs, afterEach, spyOn, $*/
 
-describe('Pages: Pages', function () {
+describe('pages.pages.api.behavior', function () {
     'use strict';
 
     var constants = {
@@ -10,7 +10,7 @@ describe('Pages: Pages', function () {
         testPageUrl: '/0000-page-for-tests/'
     };
 
-    it('01000: Should get pages list', function() {
+    it('01000: Should get list of pages', function() {
         var url = '/bcms-api/pages/',
             result,
             ready = false;

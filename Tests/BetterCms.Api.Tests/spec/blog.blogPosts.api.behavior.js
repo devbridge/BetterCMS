@@ -1,7 +1,7 @@
 ﻿/*jslint vars: true*/
 /*global describe, it, expect, waits, waitsFor, runs, afterEach, spyOn, $*/
 
-describe('Blog: Blog Posts', function () {
+describe('blog.blogPosts.api.behavior', function () {
     'use strict';
 
     var constants = {

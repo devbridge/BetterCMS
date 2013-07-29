@@ -1,7 +1,7 @@
 ﻿/*jslint vars: true*/
 /*global describe, it, expect, waits, waitsFor, runs, afterEach, spyOn, $*/
 
-describe('Blog: Authors', function () {
+describe('blog.authors.api.behavior', function () {
     'use strict';
 
     it('02000: Should get a list of authors', function () {

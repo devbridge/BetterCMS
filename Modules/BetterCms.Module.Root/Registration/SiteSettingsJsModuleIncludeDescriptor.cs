@@ -19,6 +19,7 @@ namespace BetterCms.Module.Root.Registration
             Globalization = new IActionProjection[]
                 {
                     new JavaScriptModuleGlobalization(this, "siteSettingsTitle", () => RootGlobalization.SiteSettings_Title), 
+                    new JavaScriptModuleGlobalization(this, "closeButtonTitle", () => RootGlobalization.Button_Close), 
                 };
         }
     }

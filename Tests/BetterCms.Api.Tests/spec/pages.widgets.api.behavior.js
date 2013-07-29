@@ -1,7 +1,7 @@
 ﻿/*jslint vars: true*/
 /*global describe, it, expect, waits, waitsFor, runs, afterEach, spyOn, $*/
 
-describe('Pages: Widgets', function () {
+describe('pages.widgets.api.behavior', function () {
     'use strict';
 
     it('01200: Should get a list of widgets', function () {

@@ -1,7 +1,7 @@
 ﻿/*jslint vars: true*/
 /*global describe, it, expect, waits, waitsFor, runs, afterEach, spyOn, $*/
 
-describe('Pages: Redirects', function () {
+describe('pages.redirects.api.behavior', function () {
     'use strict';
 
     it('01300: Should get a list of redirects', function () {

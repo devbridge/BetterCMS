@@ -1,7 +1,7 @@
 ﻿/*jslint vars: true*/
 /*global api, describe, it, expect, waits, waitsFor, runs, afterEach, spyOn, jcsvSerialize, $ */
 
-describe('Root: Layouts', function() {
+describe('root.layouts.api.behavior', function () {
     'use strict';
 
     it('00100: Should get a filtered, sorted and paged layout list', function () {

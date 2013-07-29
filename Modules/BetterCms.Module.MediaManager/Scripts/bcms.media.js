@@ -455,7 +455,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.parentFolderId = ko.observable(item.ParentFolderId);
             self.parentFolderName = ko.observable(item.ParentFolderName);
 
-            self.tooltip = item.Tooltip;
+            self.tooltip = ko.observable(item.Tooltip);
             self.thumbnailUrl = ko.observable(item.ThumbnailUrl);
 
             self.getImageUrl = function () {
@@ -706,6 +706,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 var self = this;
                 imageEditor.onEditImage(self.id(), function (json) {
                     self.version(json.Version);
+                    self.tooltip(json.Caption);
                     self.thumbnailUrl(json.ThumbnailUrl);
                     self.publicUrl(json.Url);
                     self.name(json.Title);

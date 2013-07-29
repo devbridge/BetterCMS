@@ -1,7 +1,7 @@
 ﻿/*jslint vars: true*/
 /*global api, describe, it, expect, waits, waitsFor, runs, afterEach, spyOn, jcsvSerialize, $ */
 
-describe('Root: Tags', function() {
+describe('root.tags.api.behavior', function () {
     'use strict';
 
     it('00200: Should get tags list', function () {

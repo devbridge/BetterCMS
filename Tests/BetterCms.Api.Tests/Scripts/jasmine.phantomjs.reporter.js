@@ -32,8 +32,8 @@
     }
 
     /**
-     * PhantomJS Reporter generates JUnit XML for the given spec run.
-     * Allows the test results to be used in java based CI.
+     * PhantomJS Reporter generates NUnit XML for the given spec run.
+     * Allows the test results to be used in .NET based CI.
      * It appends some DOM elements/containers, so that a PhantomJS script can pick that up.
      *
      * @param {boolean} consolidate whether to save nested describes within the
@@ -42,12 +42,16 @@
      *                  dots rather than spaces (ie "Class.init" not
      *                  "Class init"); default: true
      */
-    var PhantomJSReporter = function (consolidate, useDotNotation) {
+    var PhantomJSReporter = function (consolidate, useDotNotation) {        
+        this.totalCount = 0;
+        this.totalSuccessCount = 0;
+        
         this.consolidate = consolidate === jasmine.undefined ? true : consolidate;
         this.useDotNotation = useDotNotation === jasmine.undefined ? true : useDotNotation;
     };
 
-    PhantomJSReporter.prototype = {
+    PhantomJSReporter.prototype = {        
+
         reportRunnerStarting: function (runner) {
             this.log("Runner Started.");
         },
@@ -57,46 +61,52 @@
 
             if (!spec.suite.startTime) {
                 spec.suite.startTime = spec.startTime;
-            }
-
-            this.log(spec.suite.description + ' : ' + spec.description + ' ... ');
+            }            
         },
 
         reportSpecResults: function (spec) {
             var results = spec.results();
             spec.didFail = !results.passed();
-            spec.status = spec.didFail ? 'Failed.' : 'Passed.';
+            spec.status = spec.didFail ? 'FAILED' : 'Pass';
+            
             if (results.skipped) {
-                spec.status = 'Skipped.';
+                spec.status = 'Skipped';
             }
-            this.log(spec.status);
+            
+            this.log(spec.status + ' - ' + spec.suite.description + ' : ' + spec.description);
 
             spec.duration = elapsed(spec.startTime, new Date());
-            spec.output = '<testcase classname="' + this.getFullName(spec.suite) +
-                '" name="' + escapeInvalidXmlChars(spec.description) + '" time="' + spec.duration + '">';
-
-            var failure = "";
-            var failures = 0;
+            
+            
+           
             var resultItems = results.getItems();
+            var resultType = "Success";
+            
             for (var i = 0; i < resultItems.length; i++) {
                 var result = resultItems[i];
-
-                if (result.type == 'expect' && result.passed && !result.passed()) {
-                    failures += 1;
-                    failure += (failures + ": " + escapeInvalidXmlChars(result.message) + " ");
+                if (result.type == 'expect' && result.passed) {                    
+                    if (!result.passed()) {
+                        resultType = escapeInvalidXmlChars(result.message);
+                        
+                        this.log(resultType);
+                        this.log(' ');
+                        
+                        
+                    }                  
                 }
             }
-            if (failure) {
-                spec.output += "<failure>" + trim(failure) + "</failure>";
-            }
-            spec.output += "</testcase>";
+            
+            spec.output = '\n      <test-case name="' + escapeInvalidXmlChars(spec.description) + '"' +
+                              ' executed="true" result="' + resultType + '"' +
+                              ' time="' + spec.duration + '"' +
+                              ' success="' + (resultType === "Success" ? "True" : "False") + '" />';
         },
 
         reportSuiteResults: function (suite) {
             var results = suite.results();
             var specs = suite.specs();
             var specOutput = "";
-            // for JUnit results, let's only include directly failed tests (not nested suites')
+            
             var failedCount = 0;
 
             suite.status = results.passed() ? 'Passed.' : 'Failed.';
@@ -114,12 +124,21 @@
                 failedCount += specs[i].didFail ? 1 : 0;
                 specOutput += "\n  " + specs[i].output;
             }
-            suite.output = '\n<testsuite name="' + this.getFullName(suite) +
-                '" errors="0" tests="' + specs.length + '" failures="' + failedCount +
-                '" time="' + suite.duration + '" timestamp="' + ISODateString(suite.startTime) + '">';
+            
+            suite.output = '\n<test-suite type="TestFixture"' +
+                           ' name="' + this.getFullName(suite) + '"' +
+                           ' result="' + (failedCount === 0 ? 'Success' : 'Failure') + '"' +
+                           ' success="' + (failedCount === 0 ? 'True' : 'False') + '"' +
+                           ' asserts="' + specs.length + '"' +                           
+                           ' time="' + suite.duration + '">';
+
+            suite.output += '\n   <results>';
             suite.output += specOutput;
-            suite.output += "\n</testsuite>";
-            this.log(suite.description + ": " + results.passedCount + " of " + results.totalCount + " expectations passed.");
+            suite.output += '\n    </results>';
+            suite.output += "\n</test-suite>";
+
+            this.totalCount += results.totalCount;
+            this.totalSuccessCount += results.passedCount;
         },
 
         reportRunnerResults: function (runner) {
@@ -128,8 +147,9 @@
                 passed = true;
             for (var i = 0; i < suites.length; i++) {
                 var suite = suites[i],
-                    filename = 'TEST-' + this.getFullName(suite, true) + '.xml',
-                    output = '<?xml version="1.0" encoding="UTF-8" ?>';
+                    fullName = this.getFullName(suite),
+                    filename = fullName + '-Results' + '.xml',
+                    output = '<?xml version="1.0" encoding="UTF-8" standalone="no" ?>';
 
                 passed = !suite.statusPassed ? false : passed;
 
@@ -138,9 +158,12 @@
                     continue;
                 }
                 else if (this.consolidate) {
-                    output += "\n<testsuites>";
-                    output += this.getNestedOutput(suite);
-                    output += "\n</testsuites>";
+                    output += '\n<test-results' +
+                                    ' name="' + fullName + '"' +
+                                    ' total="' + suites.length + '"' + '>';
+                    output += '\n<culture-info current-culture="en-US" current-uiculture="en-US" />\n';
+                    output += this.getNestedOutput(suite);                    
+                    output += "\n</test-results>";
                     this.createSuiteResultContainer(filename, output);
                 }
                 else {
@@ -148,6 +171,13 @@
                     this.createSuiteResultContainer(filename, output);
                 }
             }
+
+            if (this.totalSuccessCount < this.totalCount) {
+                this.log("Test run failed: " + this.totalSuccessCount + " of " + this.totalCount + " expectations passed and " + (this.totalCount - this.totalSuccessCount) + " expectations failed.");
+            } else {
+                this.log("Test run succeeded. All expectations " + this.totalSuccessCount + " passed.");
+            }
+
             this.createTestFinishedContainer(passed);
         },
 
@@ -156,6 +186,7 @@
             for (var i = 0; i < suite.suites().length; i++) {
                 output += this.getNestedOutput(suite.suites()[i]);
             }
+            
             return output;
         },
 
@@ -168,7 +199,7 @@
         },
 
         createTestFinishedContainer: function (passed) {
-            jasmine.phantomjsXMLReporterPassed = passed
+            jasmine.phantomjsXMLReporterPassed = passed;
         },
 
         getFullName: function (suite, isFilename) {
