@@ -415,6 +415,57 @@ describe('Pages: Pages', function () {
         });
     });
 
+    it('01013: Should throw validation exception for RegionId/RegionIdentifier, when getting page contents.', function () {
+        var url = '/bcms-api/pages/' + api.emptyGuid + '/contents/',
+            result,
+            ready = false,
+            data = {
+                regionId: api.emptyGuid,
+                regionIdentifier: 'test'
+            };
+
+        runs(function () {
+            api.get(url, data, null, function (response) {
+                result = response.responseJSON;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            api.expectValidationExceptionIsThrown(result, 'Data.RegionIdentifier');
+        });
+    });
+    
+    it('01014: Should throw validation exception for filterting by ContentType, when getting page contents.', function () {
+        var url = '/bcms-api/pages/' + api.emptyGuid + '/contents/',
+            result,
+            ready = false,
+            data = {
+                filter: {
+                    where: [{ field: 'ContentType', value: 'test' }]
+                }
+            };
+
+        runs(function () {
+            api.get(url, data, null, function (response) {
+                result = response.responseJSON;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            api.expectValidationExceptionIsThrown(result, 'Data');
+        });
+    });
+
     function expectPageListItemPropertiesAreNotNull(page) {
         api.expectBasePropertiesAreNotNull(page);
 

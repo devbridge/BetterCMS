@@ -113,4 +113,25 @@ describe('Root: Tags', function() {
             expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
         });
     });
+    
+    it('00203: Should throw validation exception for TagName/TagId, when getting tag.', function () {
+        var url = '/bcms-api/tags/' + api.emptyGuid + '/?tagName=test',
+            result,
+            ready = false;
+
+        runs(function () {
+            api.get(url, null, null, function (response) {
+                result = response.responseJSON;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            api.expectValidationExceptionIsThrown(result, 'TagId');
+        });
+    });
 });
