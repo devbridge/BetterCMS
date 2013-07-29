@@ -29,12 +29,12 @@ namespace BetterCms.Module.Api.Helpers
             public const string And = " and ";
             public const string Or = " or ";
             public const string Contains = "{0}.Contains(@{1})";
-            public const string NotContains = "!{0}.Contains(@{1})";
+            public const string NotContains = "(!{0}.Contains(@{1}) or {0} == null)";
             public const string StartsWith = "{0}.StartsWith(@{1})";
             public const string EndsWith = "{0}.EndsWith(@{1})";
             public const string Equal = "{0} == @{1}";
             public const string EqualNull = "{0} == null";
-            public const string NotEqual = "{0} != @{1}";
+            public const string NotEqual = "({0} != @{1} or {0} == null)";
             public const string NotEqualNull = "{0} != null";
             public const string Greater = "{0} > @{1}";
             public const string GreaterOrEqual = "{0} >= @{1}";

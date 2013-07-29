@@ -10,12 +10,12 @@ describe('root.filtering.api.behavior', function () {
     // Operators: Contains, NotContains, StartsWith, EndsWith
     var tests = [
         { id: '09000', type: 'Guid', operation: 'Equal', value: '07CF20A8-A53B-46F5-8A43-A20600E44B1E', count: 2 },
-        { id: '09001', type: 'Guid', operation: 'NotEqual', value: '07CF20A8-A53B-46F5-8A43-A20600E44B1E', count: 1 },
+        { id: '09001', type: 'Guid', operation: 'NotEqual', value: '07CF20A8-A53B-46F5-8A43-A20600E44B1E', count: 3 },
         { id: '09002', type: 'Guid', operation: 'Equal', value: null, count: 2 },
         { id: '09003', type: 'Guid', operation: 'NotEqual', value: null, count: 3 },
 
         { id: '09010', type: 'DateTime', operation: 'Equal', value: '2013-04-01', count: 1 },
-        { id: '09011', type: 'DateTime', operation: 'NotEqual', value: '2013-04-01', count: 2 },
+        { id: '09011', type: 'DateTime', operation: 'NotEqual', value: '2013-04-01', count: 4 },
         { id: '09012', type: 'DateTime', operation: 'Less', value: '2013-04-01', count: 1 },
         { id: '09013', type: 'DateTime', operation: 'LessOrEqual', value: '2013-04-01', count: 2 },
         { id: '09014', type: 'DateTime', operation: 'Greater', value: '2013-04-01', count: 1 },
@@ -33,8 +33,9 @@ describe('root.filtering.api.behavior', function () {
         { id: '09027', type: 'String', operation: 'NotContains', value: 'AAA', count: 3 },
         { id: '09028', type: 'String', operation: 'StartsWith', value: '0902X: AAA', count: 3 },
         { id: '09029', type: 'String', operation: 'EndsWith', value: 'CCC', count: 2 },
-        { id: '09030', type: 'String', operation: 'Equal', value: null, count: 1 },
-        { id: '09031', type: 'String', operation: 'NotEqual', value: null, count: 2 },
+        { id: '09030', type: 'String-null', operation: 'NotContains', value: '1', count: 2 },
+        { id: '09030', type: 'String-null', operation: 'Equal', value: null, count: 1 },
+        { id: '09031', type: 'String-null', operation: 'NotEqual', value: null, count: 2 },
 
         { id: '09040', type: 'Boolean', operation: 'Equal', value: 'true', count: 3 },
         { id: '09041', type: 'Boolean', operation: 'NotEqual', value: 'true', count: 2 },
@@ -97,15 +98,14 @@ describe('root.filtering.api.behavior', function () {
                     columnName = 'Version';
                     break;
                 case 'String':
-                    if (test.value) {
-                        url = '/bcms-api/tags';
-                        data.filter.where.push({ field: 'Name', operation: 'StartsWith', value: '0902X: ' });
-                        columnName = 'Name';
-                    } else {
-                        url = '/bcms-api/authors';
-                        data.filter.where.push({ field: 'Name', operation: 'StartsWith', value: '0902X: ' });
-                        columnName = 'ImageCaption';
-                    }
+                    url = '/bcms-api/tags';
+                    data.filter.where.push({ field: 'Name', operation: 'StartsWith', value: '0902X: ' });
+                    columnName = 'Name';
+                    break;
+                case 'String-null':
+                    url = '/bcms-api/authors';
+                    data.filter.where.push({ field: 'Name', operation: 'StartsWith', value: '0902X: ' });
+                    columnName = 'ImageCaption';
                     break;
                 case 'Boolean':
                     url = '/bcms-api/images';
