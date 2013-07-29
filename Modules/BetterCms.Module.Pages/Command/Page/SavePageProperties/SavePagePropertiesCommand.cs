@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using BetterCms.Api;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Mvc.Commands;
@@ -10,6 +9,7 @@ using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Mvc.Helpers;
 
 using CategoryEntity = BetterCms.Module.Root.Models.Category;
 
@@ -80,7 +80,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
 
             request.PageUrl = urlService.FixUrl(request.PageUrl);
 
-            if (!string.Equals(page.PageUrl, request.PageUrl, StringComparison.OrdinalIgnoreCase))
+            if (!string.Equals(page.PageUrl, request.PageUrl))
             {
                 pageService.ValidatePageUrl(request.PageUrl, request.Id);
                 if (request.RedirectFromOldUrl)
@@ -100,14 +100,26 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                 page.PageUrl = request.PageUrl;
             }
 
+            page.PageUrlLowerTrimmed = page.PageUrl.LowerTrimmedUrl();
             page.Layout = Repository.AsProxy<Root.Models.Layout>(request.TemplateId);
             page.Category = request.CategoryId.HasValue ? Repository.AsProxy<CategoryEntity>(request.CategoryId.Value) : null;
             page.Title = request.PageName;
             page.CustomCss = request.PageCSS;
             page.CustomJS = request.PageJavascript;
-            page.Status = request.IsVisibleToEveryone ? PageStatus.Published : PageStatus.Unpublished;
+
+            if (request.IsVisibleToEveryone)
+            {
+                page.Status = PageStatus.Published;
+                page.PublishedOn = DateTime.Now;
+            }
+            else
+            {
+                page.Status = PageStatus.Unpublished;
+            }
+
             page.UseNoFollow = request.UseNoFollow;
             page.UseNoIndex = request.UseNoIndex;
+            page.UseCanonicalUrl = request.UseCanonicalUrl;
             page.IsArchived = request.IsArchived;
             page.Version = request.Version;
 
@@ -124,22 +136,22 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             UnitOfWork.Commit();
 
             // Notify about page properties change.
-            PagesApiContext.Events.OnPagePropertiesChanged(page);
+            Events.PageEvents.Instance.OnPagePropertiesChanged(page);
 
             // Notify about redirect creation.
             if (redirectCreated != null)
             {
-                PagesApiContext.Events.OnRedirectCreated(redirectCreated);
+                Events.PageEvents.Instance.OnRedirectCreated(redirectCreated);
             }
 
             // Notify about SEO status change.
             if (initialSeoStatus != page.HasSEO)
             {
-                PagesApiContext.Events.OnPageSeoStatusChanged(page);
+                Events.PageEvents.Instance.OnPageSeoStatusChanged(page);
             }
 
             // Notify about new tags.
-            RootApiContext.Events.OnTagCreated(newTags);
+            Events.RootEvents.Instance.OnTagCreated(newTags);
 
             return new SavePageResponse(page);
         }

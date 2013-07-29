@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 
-using BetterCms.Api;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Content.Resources;
@@ -38,7 +37,7 @@ namespace BetterCms.Module.Pages.Command.Widget.DeleteWidget
             UnitOfWork.Commit();
 
             // Notify.
-            PagesApiContext.Events.OnWidgetDeleted(widget);
+            Events.PageEvents.Instance.OnWidgetDeleted(widget);
 
             return true;
         }

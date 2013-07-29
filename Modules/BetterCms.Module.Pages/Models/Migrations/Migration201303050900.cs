@@ -29,13 +29,5 @@ namespace BetterCms.Module.Pages.Models.Migrations
                 .OnTable("Pages").InSchema(SchemaName)
                 .AsBoolean().NotNullable().WithDefaultValue(false);
         }
-
-        /// <summary>
-        /// Migrate down.
-        /// </summary>
-        public override void Down()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

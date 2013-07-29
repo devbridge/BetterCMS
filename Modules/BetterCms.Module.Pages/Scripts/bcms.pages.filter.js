@@ -62,6 +62,7 @@ bettercms.define('bcms.pages.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                 if (self.dropDown) {
                     self.dropDown.selectedIndex = 0;
                 }
+                self.searchWithFilter();
             };
         }
 

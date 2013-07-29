@@ -4,15 +4,21 @@ using System.IO;
 using System.Web.Mvc;
 
 using BetterCms.Core.DataContracts;
-using BetterCms.Core.Models;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Root.ViewModels.Cms;
+
+using Common.Logging;
 
 namespace BetterCms.Module.Pages.Accessors
 {
     [Serializable]
     public class ServerControlWidgetAccessor : ContentAccessor<ServerControlWidget>
     {
+        private static readonly ILog logger = LogManager.GetCurrentClassLogger();
+
+        public const string ContentWrapperType = "server-widget";
+
         public ServerControlWidgetAccessor(ServerControlWidget content, IList<IOption> options)
             : base(content, options)
         {
@@ -54,7 +60,24 @@ namespace BetterCms.Module.Pages.Accessors
                     viewData["bcmsPageId"] = html.ViewContext.ViewData["pageId"];
 
                     var newViewContext = new ViewContext(html.ViewContext, view, viewData, html.ViewContext.TempData, sw);
-                    view.Render(newViewContext, sw);
+                    try
+                    {
+                        newViewContext.ViewData.Model = new RenderWidgetViewModel()
+                            {
+                                Page = (IPage)html.ViewData.Model,
+                                Widget = Content
+                            };
+                        view.Render(newViewContext, sw);
+                    }
+                    catch (InvalidOperationException ex)
+                    {
+                        logger.Warn(
+                            string.Format(
+                                "Server widget \"{0}\" rendering failed. Check if widget view model is BetterCms.Module.Root.ViewModels.Cms.WigetViewModel", GetTitle()),
+                            ex);
+                        newViewContext.ViewData.Model = null;
+                        view.Render(newViewContext, sw);
+                    }
 
                     return sw.GetStringBuilder().ToString();
                 }
@@ -67,7 +90,7 @@ namespace BetterCms.Module.Pages.Accessors
 
         public override string GetContentWrapperType()
         {
-            return "server-widget";
+            return ContentWrapperType;
         }
 
         public override string GetHtml(HtmlHelper html)

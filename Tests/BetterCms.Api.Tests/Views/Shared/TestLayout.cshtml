@@ -1,0 +1,38 @@
+﻿@using BetterCms.Module.Blog.Helpers.Extensions
+@using BetterCms.Module.Root.Mvc.Helpers
+@using BetterCms.Module.Pages.Helpers.Extensions
+@model BetterCms.Module.Root.ViewModels.Cms.RenderPageViewModel
+
+@{
+    Layout = "~/Areas/bcms-root/Views/Shared/BaseLayout.cshtml";
+}
+@section DoctypeTag
+{
+    <!DOCTYPE html>
+}
+
+@section HtmlTag
+{
+<!--[if lte IE 7]><html class="ie7"><![endif]-->  
+<!--[if IE 8]><html class="ie8"><![endif]-->  
+<!--[if IE 9]><html class="ie9"><![endif]-->  
+<!--[if !IE]><!--><html><!--<![endif]-->  
+}
+
+@section BodyAttributes
+{
+    test=1
+}
+@* NOTE: Obsolete. Left for compatibility reasons. *@
+
+@section Styles {    
+    @RenderSection("Styles", false)
+}
+    <div>
+        @RenderSection("RegionA", false)
+    </div>
+    @RenderBody()
+    <div>
+        @RenderSection("RegionB", false)
+    </div>
+    

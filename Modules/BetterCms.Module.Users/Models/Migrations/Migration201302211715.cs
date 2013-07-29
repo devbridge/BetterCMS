@@ -29,13 +29,5 @@ namespace BetterCms.Module.Users.Models.Migrations
             Alter.Table("Users").InSchema(SchemaName).AlterColumn("Password").AsAnsiString(MaxLength.Password).NotNullable();
             Alter.Table("Users").InSchema(SchemaName).AddColumn("Salt").AsAnsiString(MaxLength.Password).NotNullable();
         }
-
-        /// <summary>
-        /// Downs this instance.
-        /// </summary>
-        public override void Down()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

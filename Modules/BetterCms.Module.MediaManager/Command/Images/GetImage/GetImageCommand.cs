@@ -16,14 +16,6 @@ namespace BetterCms.Module.MediaManager.Command.Images.GetImage
     public class GetImageCommand : CommandBase, ICommand<Guid, ImageViewModel>
     {
         /// <summary>
-        /// Gets or sets the media file service.
-        /// </summary>
-        /// <value>
-        /// The media file service.
-        /// </value>
-        public IMediaFileService MediaFileService { get; set; }
-
-        /// <summary>
         /// The tag service.
         /// </summary>
         /// <value>
@@ -36,7 +28,7 @@ namespace BetterCms.Module.MediaManager.Command.Images.GetImage
         /// </summary>
         /// <param name="imageId">The image id.</param>
         /// <returns>The view model.</returns>
-        public virtual ImageViewModel Execute(Guid imageId)
+        public ImageViewModel Execute(Guid imageId)
         {
             var image = Repository.First<MediaImage>(imageId);
             return new ImageViewModel

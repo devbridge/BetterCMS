@@ -1,5 +1,4 @@
-﻿using BetterCms.Api;
-using BetterCms.Core.Mvc.Commands;
+﻿using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Root.Mvc;
 
 namespace BetterCms.Module.Root.Commands.Tag.DeleteTag
@@ -20,7 +19,7 @@ namespace BetterCms.Module.Root.Commands.Tag.DeleteTag
             UnitOfWork.Commit();
 
             // Notify.
-            RootApiContext.Events.OnTagDeleted(tag);
+            Events.RootEvents.Instance.OnTagDeleted(tag);
 
             return true;
         }

@@ -121,7 +121,7 @@
     <value>Add New Content</value>
   </data>
   <data name="PageProperties_PageUrl_InvalidMessage" xml:space="preserve">
-    <value>Page url is invalid. Link must start and end with "/", can contain only following characters: '0-9', 'a-z', '-', '/', '_' and no more than 260 alphanumeric characters between the '/'.</value>
+    <value>Page url is invalid. Link can contain only following characters: '0-9', 'a-z', '-', '/', '_' and no more than 260 alphanumeric characters between the '/'.</value>
   </data>
   <data name="AddNewPageProperties_PagePermalink_MaxLengthMessage" xml:space="preserve">
     <value>Page permalink max length exceeded.</value>
@@ -358,7 +358,7 @@
     <value>Edit the privacy settings of this page. Selecting "No Follow" will tell search engines not to follow the links on this page, and "No Index" will tell search engines not to index this page.</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_Privacy_VisibleToEveryone" xml:space="preserve">
-    <value>This page is visible to everyone (PUBLISHED)</value>
+    <value>Page is published</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_Title" xml:space="preserve">
     <value>JavaScript &amp; CSS</value>
@@ -388,10 +388,10 @@
     <value>Image will be displayed as a thumbnail with the page.</value>
   </data>
   <data name="EditPageProperties_BasicPropertiesTab_PageName_Title" xml:space="preserve">
-    <value>Page Name</value>
+    <value>Page Name (H1)</value>
   </data>
   <data name="EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Description" xml:space="preserve">
-    <value>Edit the title of this page. This is the title that will appear on the page.</value>
+    <value>Edit the title of this page. This is the title that will appear on the page (H1).</value>
   </data>
   <data name="EditPageProperties_BasicPropertiesTab_RemoveButton" xml:space="preserve">
     <value>Remove</value>
@@ -409,7 +409,7 @@
     <value>Layout</value>
   </data>
   <data name="EditPageProperties_PagePermalink_InvalidMessage" xml:space="preserve">
-    <value>Page permalink is invalid. Link must start and end with "/", can contain only following characters: '0-9', 'a-z', '-', '/', '_' and no more than 260 alphanumeric characters between the '/'.</value>
+    <value>Page permalink is invalid. Link can contain only following characters: '0-9', 'a-z', '-', '/', '_' and no more than 260 alphanumeric characters between the '/'.</value>
   </data>
   <data name="EditPageProperties_PagePermalink_MaxLengthMessage" xml:space="preserve">
     <value>Page URL max length exceeded.</value>
@@ -460,22 +460,22 @@
     <value>Meta Title</value>
   </data>
   <data name="EditSeo_MetaTitle_Tooltip_Description" xml:space="preserve">
-    <value>The Meta title should contain your keywords and concisely describe the content of the page.</value>
+    <value>Edit the title that will appear on search engine result pages.</value>
   </data>
   <data name="EditSeo_PageTitle" xml:space="preserve">
-    <value>Page Title</value>
+    <value>Page Name (H1)</value>
   </data>
   <data name="EditSeo_PageTitle_MaxLengthMessage" xml:space="preserve">
-    <value>Page title max length exceeded.</value>
+    <value>Page name max length exceeded.</value>
   </data>
   <data name="EditSeo_PageTitle_RequiredMessage" xml:space="preserve">
-    <value>Page title is required.</value>
+    <value>Page name is required.</value>
   </data>
   <data name="EditSeo_PageTitle_Tooltip_Description" xml:space="preserve">
-    <value>Edit the page title that will appear on search engine result pages.</value>
+    <value />
   </data>
   <data name="EditSeo_PageUrlPath_InvalidMessage" xml:space="preserve">
-    <value>Page URL path is invalid. Link must start and end with "/" and can contain only following characters: '0-9', 'a-z', '-', '/', '_'</value>
+    <value>Page URL path is invalid. Link can contain only following characters: '0-9', 'a-z', '-', '/', '_'</value>
   </data>
   <data name="EditSeo_Tooltip_MetaDescription_Title" xml:space="preserve">
     <value>Meta Description</value>
@@ -1030,7 +1030,7 @@
     <value>Type word DELETE to confirm deletion.</value>
   </data>
   <data name="RedirectUrl_InvalidMessage" xml:space="preserve">
-    <value>Redirect url is invalid. Link must start and end with "/", can contain only following characters: '0-9', 'a-z', '-', '/', '_' and no more than 260 alphanumeric characters between the '/'.</value>
+    <value>Redirect url is invalid. Link can contain only following characters: '0-9', 'a-z', '-', '/', '_' and no more than 260 alphanumeric characters between the '/'.</value>
   </data>
   <data name="DeletePage_RedirectUrl_Name" xml:space="preserve">
     <value>Redirect URL</value>
@@ -1085,5 +1085,17 @@
   </data>
   <data name="SiteSettings_Pages_FilterIsModified" xml:space="preserve">
     <value>modified</value>
+  </data>
+  <data name="EditSeo_EditUrlPath_UseCanonicalUrl" xml:space="preserve">
+    <value>Use canonical URL.</value>
+  </data>
+  <data name="EditPageProperties_AdvancedPropertiesTab_UseCanonicalUrl" xml:space="preserve">
+    <value>Use canonical URL.</value>
+  </data>
+  <data name="EditPageProperties_PageStatusChange_ConfirmationMessage_Publish" xml:space="preserve">
+    <value>Do you really want to publish this page?</value>
+  </data>
+  <data name="EditPageProperties_PageStatusChange_ConfirmationMessage_UnPublish" xml:space="preserve">
+    <value>Do you really want to unpublish this page?</value>
   </data>
 </root>

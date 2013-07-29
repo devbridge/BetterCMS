@@ -223,7 +223,7 @@
     <value>Image height is required.</value>
   </data>
   <data name="ImageEditor_Dialog_ImageName_Title" xml:space="preserve">
-    <value>Image</value>
+    <value>Title</value>
   </data>
   <data name="ImageEditor_Dialog_ImageTitle_Title" xml:space="preserve">
     <value>Change Image Name</value>
@@ -244,7 +244,7 @@
     <value>Image Information</value>
   </data>
   <data name="ImageEditor_Dialog_Title" xml:space="preserve">
-    <value>Edit Image</value>
+    <value>Image properties</value>
   </data>
   <data name="ImageEditor_InsertDialog_AcceptButton" xml:space="preserve">
     <value>Insert</value>
@@ -352,7 +352,7 @@
     <value>Folder you trying to save uploaded files is deleted.</value>
   </data>
   <data name="MultiFileUpload_SelectFolder" xml:space="preserve">
-    <value>Select Folder where to upload files:</value>
+    <value>Select folder where to upload files</value>
   </data>
   <data name="MultiFileUpload_SelectFolder_Help_Message" xml:space="preserve">
     <value>Select the folder where you would like to store your files.</value>
@@ -393,16 +393,7 @@
   <data name="MultiFileUpload_Processing_ServerSide" xml:space="preserve">
     <value>Upload completed. File is still processing in the server.</value>
   </data>
-  <data name="ImageProperties_Dialog_Title" xml:space="preserve">
-    <value>Image Properties</value>
-  </data>
-  <data name="MediaManager_ButtonImageProperties" xml:space="preserve">
-    <value>Properties</value>
-  </data>
-  <data name="ImageProperties_Dialog_ImageTitle_Title" xml:space="preserve">
-    <value>Image Title</value>
-  </data>
-  <data name="ImageProperties_Dialog_PublicUrl" xml:space="preserve">
+  <data name="ImageEditor_Dialog_PublicUrl" xml:space="preserve">
     <value>Public URL</value>
   </data>
   <data name="MediaManager_IncludeArchived_Message" xml:space="preserve">
@@ -499,7 +490,7 @@
     <value>Public Thumbnail Url</value>
   </data>
   <data name="MediaHistory_Preview_Properties_PublicUrl" xml:space="preserve">
-    <value>Public Url</value>
+    <value>Public URL</value>
   </data>
   <data name="MediaHistory_Preview_Properties_Title" xml:space="preserve">
     <value>Title</value>
@@ -517,7 +508,7 @@
     <value>You can select only one file to re-upload.</value>
   </data>
   <data name="FileEditor_Dialog_Title" xml:space="preserve">
-    <value>Title</value>
+    <value>File Properties</value>
   </data>
   <data name="FileEditor_UpdateFailureMessage_Message" xml:space="preserve">
     <value>Failed to save file properties.</value>
@@ -572,5 +563,14 @@
   </data>
   <data name="SiteSettings_Media_FilterIsModified" xml:space="preserve">
     <value>modified</value>
+  </data>
+  <data name="MediaManager_ButtonProperties" xml:space="preserve">
+    <value>Properties</value>
+  </data>
+  <data name="MediaManager_ItemParentFolder_Prefix" xml:space="preserve">
+    <value>In folder</value>
+  </data>
+  <data name="MediaManager_SearchedInPath_Prefix" xml:space="preserve">
+    <value>Searched in</value>
   </data>
 </root>

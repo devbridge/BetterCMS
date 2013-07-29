@@ -1,5 +1,4 @@
-﻿using BetterCms.Api;
-using BetterCms.Core.Mvc.Commands;
+﻿using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Newsletter.Models;
 using BetterCms.Module.Newsletter.ViewModels;
 using BetterCms.Module.Root.Mvc;
@@ -18,7 +17,7 @@ namespace BetterCms.Module.Newsletter.Command.DeleteSubscriber
             var subscriber = Repository.Delete<Subscriber>(request.Id, request.Version);
             UnitOfWork.Commit();
 
-            NewsletterApiContext.Events.OnSubscriberDeleted(subscriber);
+            Events.NewsletterEvents.Instance.OnSubscriberDeleted(subscriber);
 
             return true;
         }

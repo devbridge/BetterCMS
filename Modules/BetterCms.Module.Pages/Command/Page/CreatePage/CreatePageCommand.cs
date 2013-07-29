@@ -1,5 +1,4 @@
-﻿using BetterCms.Api;
-using BetterCms.Core.DataContracts.Enums;
+﻿using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.Pages.Command.Page.SavePageProperties;
@@ -7,6 +6,7 @@ using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Mvc.Helpers;
 
 namespace BetterCms.Module.Pages.Command.Page.CreatePage
 {
@@ -58,7 +58,9 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
             var page = new PageProperties
                 {
                     PageUrl = pageUrl,
+                    PageUrlLowerTrimmed = pageUrl.LowerTrimmedUrl(),
                     Title = request.PageTitle,
+                    MetaTitle = request.PageTitle,
                     Layout = Repository.First<Root.Models.Layout>(request.TemplateId),
                     Status = PageStatus.Unpublished
                 };
@@ -67,7 +69,7 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
             UnitOfWork.Commit();
 
             // Notifying, that page is created
-            PagesApiContext.Events.OnPageCreated(page);
+            Events.PageEvents.Instance.OnPageCreated(page);
 
             return new SavePageResponse(page);
         }

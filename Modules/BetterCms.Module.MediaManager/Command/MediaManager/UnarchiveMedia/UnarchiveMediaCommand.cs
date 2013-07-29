@@ -1,5 +1,4 @@
-﻿using BetterCms.Api;
-using BetterCms.Core.Mvc.Commands;
+﻿using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 using BetterCms.Module.Root.Mvc;
@@ -26,7 +25,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager.UnarchiveMedia
             Repository.Save(media);
             UnitOfWork.Commit();
 
-            MediaManagerApiContext.Events.OnMediaUnarchived(media);
+            Events.MediaManagerEvents.Instance.OnMediaUnarchived(media);
 
             return new MediaViewModel
             {

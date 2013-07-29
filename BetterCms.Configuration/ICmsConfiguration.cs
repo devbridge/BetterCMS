@@ -102,5 +102,10 @@ namespace BetterCms
         /// Gets the cache configuration.
         /// </summary>
         ICmsCacheConfiguration Cache { get; }
+
+        /// <summary>
+        /// Gets the URL mode.
+        /// </summary>
+        TrailingSlashBehaviorType UrlMode { get; }
     }
 }

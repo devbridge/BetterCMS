@@ -13,10 +13,5 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
         /// Runs migrations from the specified modules.
         /// </summary>
         void MigrateStructure(IList<ModuleDescriptor> moduleDescriptors);
-
-        /// <summary>
-        /// Runs content migrations for the specified modules.
-        /// </summary>
-        void MigrateContent(IList<ModuleDescriptor> moduleDescriptors);
     }
 }

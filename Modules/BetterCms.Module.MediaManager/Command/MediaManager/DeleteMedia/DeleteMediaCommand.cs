@@ -1,9 +1,6 @@
-﻿using BetterCms.Api;
-using BetterCms.Core.Mvc.Commands;
+﻿using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Mvc;
-
-using NHibernate.Proxy.DynamicProxy;
 
 namespace BetterCms.Module.MediaManager.Command.MediaManager.DeleteMedia
 {
@@ -25,11 +22,11 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager.DeleteMedia
             // Notify.
             if (media is MediaFolder)
             {
-                MediaManagerApiContext.Events.OnMediaFolderDeleted((MediaFolder)media);
+                Events.MediaManagerEvents.Instance.OnMediaFolderDeleted((MediaFolder)media);
             }
             else if (media is MediaFile)
             {
-                MediaManagerApiContext.Events.OnMediaFileDeleted((MediaFile)media);
+                Events.MediaManagerEvents.Instance.OnMediaFileDeleted((MediaFile)media);
             }        
 
             return true;

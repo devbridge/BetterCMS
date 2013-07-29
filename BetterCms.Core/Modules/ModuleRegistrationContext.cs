@@ -23,29 +23,29 @@ namespace BetterCms.Core.Modules
 
         public Route MapRoute(string name, string url)
         {
-            return this.MapRoute(name, url, null);
+            return MapRoute(name, url, null);
         }
 
         public Route MapRoute(string name, string url, string[] namespaces)
         {
-            return this.MapRoute(name, url, null, namespaces);
+            return MapRoute(name, url, null, namespaces);
         }
 
 
         public Route MapRoute(string name, string url, object defaults)
         {
-            return this.MapRoute(name, url, defaults, null);
+            return MapRoute(name, url, defaults, null);
         }
 
 
         public Route MapRoute(string name, string url, object defaults, string[] namespaces)
         {
-            return this.MapRoute(name, url, defaults, null, namespaces);
+            return MapRoute(name, url, defaults, null, namespaces);
         }
 
         public Route MapRoute(string name, string url, object defaults, object constraints)
         {
-            return this.MapRoute(name, url, defaults, constraints, null);
+            return MapRoute(name, url, defaults, constraints, null);
         }
 
         public Route MapRoute(string name, string url, object defaults, object constraints, string[] namespaces)
@@ -58,7 +58,18 @@ namespace BetterCms.Core.Modules
             route.DataTokens["area"] = ModuleDescriptor.AreaName;
             bool flag = (namespaces == null) || (namespaces.Length == 0);
             route.DataTokens["UseNamespaceFallback"] = flag;
+           
             return route;
         } 
+
+        public void IgnoreRoute(string url)
+        {
+            Routes.Ignore(url);
+        }
+
+        public void IgnoreRoute(string url, object constraints)
+        {
+            Routes.Ignore(url, constraints);
+        }
     }
 }

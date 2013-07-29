@@ -67,7 +67,9 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 pageDeletedMessage: null,
                 clonePageDialogTitle: null,
                 cloneButtonTitle: null,
-                deleteButtonTitle: null
+                deleteButtonTitle: null,
+                pageStatusChangeConfirmationMessagePublish: null,
+                pageStatusChangeConfirmationMessageUnPublish: null,
             },        
             keys = {
                 addNewPageInfoMessageClosed: 'bcms.addNewPageInfoBoxClosed'
@@ -230,32 +232,46 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
     };
 
     page.changePublishStatus = function (sender) {
-
-        var isPublished = sender.val() == "publish",
-            data = {PageId: bcms.pageId, IsPublished: isPublished},
+        var publish = sender.val() == "publish",
+            message = publish ? globalization.pageStatusChangeConfirmationMessagePublish : globalization.pageStatusChangeConfirmationMessageUnPublish,
+            data = { PageId: bcms.pageId, IsPublished: publish },
             onComplete = function (json) {
                 modal.showMessages(json);
                 if (json.Success) {
-                    setTimeout(function() {
+                    setTimeout(function () {
                         bcms.reload();
                     }, 500);
-                    
+
                 }
             };
-
-        $.ajax({
-            type: 'POST',
-            url: links.changePublishStatusUrl,
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            data: JSON.stringify(data)
-        })
-            .done(function(result) {
-                onComplete(result);
-            })
-            .fail(function(response) {
-                onComplete(bcms.parseFailedResponse(response));
-            });
+        
+        modal.confirm({
+            content: message,
+            onAccept: function () {
+                $.ajax({
+                    type: 'POST',
+                    url: links.changePublishStatusUrl,
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    data: JSON.stringify(data)
+                })
+                    .done(function (result) {
+                        onComplete(result);
+                    })
+                    .fail(function (response) {
+                        onComplete(bcms.parseFailedResponse(response));
+                    });
+                return true;
+            },
+            onClose: function () {
+                // Restore previous value.
+                if (publish) {
+                    sender.val("unpublished");
+                } else {
+                    sender.val("published");
+                }
+            }
+        });
     };
 
     page.openCreatePageDialog = function (postSuccess) {
@@ -349,9 +365,6 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
 
                         if (url.substr(0, 1) != '/') {
                             url = '/' + url;
-                        }
-                        if (url.substr(url.length-1, 1) != '/') {
-                            url = url + '/';
                         }
 
                         dialog.container.find(selectors.editPermalinkEditField).val(url);

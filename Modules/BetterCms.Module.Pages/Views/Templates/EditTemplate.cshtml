@@ -22,7 +22,7 @@
             <div class="bcms-padded-content">
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.Template_Title_Tooltip_Description)
-                    <div class="bcms-content-titles">@PagesGlobalization.Template_Title_Title:</div>
+                    <div class="bcms-content-titles">@PagesGlobalization.Template_Title_Title</div>
                     <div class="bcms-input-box" style="width: 523px;">
                         @Html.TextBoxFor(model => model.Name, new { @class = "bcms-editor-field-box" })
                         @Html.BcmsValidationMessageFor(m => m.Name)
@@ -31,7 +31,7 @@
 
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.Template_Url_Tooltip_Description)
-                    <div class="bcms-content-titles">@PagesGlobalization.Template_Url_Title:</div>
+                    <div class="bcms-content-titles">@PagesGlobalization.Template_Url_Title</div>
                     <div class="bcms-input-box" style="width: 523px;">
                         @Html.TextBoxFor(model => model.Url, new { @class = "bcms-editor-field-box" })
                         @Html.BcmsValidationMessageFor(m => m.Url)
@@ -40,7 +40,7 @@
 
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.TemplatePreviewImageUrl_Tooltip_Description)
-                    <div class="bcms-content-titles">@PagesGlobalization.TemplatePreviewImageUrl_Title:</div>
+                    <div class="bcms-content-titles">@PagesGlobalization.TemplatePreviewImageUrl_Title</div>
                     <div class="bcms-input-box" style="width: 523px;">
                         @Html.TextBoxFor(model => model.PreviewImageUrl, new { @class = "bcms-editor-field-box" })
                         @Html.BcmsValidationMessageFor(m => m.PreviewImageUrl)
@@ -49,7 +49,7 @@
 
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.TemplateImagePreview_Tooltip_Description)
-                    <div class="bcms-content-titles">@PagesGlobalization.TemplatePreviewImage_Title:</div>
+                    <div class="bcms-content-titles">@PagesGlobalization.TemplatePreviewImage_Title</div>
 
                     <div class="bcms-preview-module-image">
                         <img id="bcms-template-preview-image" src="@Model.PreviewImageUrl" alt="" style="display: none;" />

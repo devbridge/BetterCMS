@@ -9,7 +9,17 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
 {
     public class DefaultVersionChecker : IVersionChecker
     {
-        private readonly string FilePath = HostingEnvironment.MapPath(@"~/App_Data/BetterCMS/versions.info");
+        private readonly string FolderPath = HostingEnvironment.MapPath(@"~/App_Data/BetterCMS/");
+
+        private const string Filename = @"versions.info";
+
+        private string FilePath
+        {
+            get
+            {
+                return string.Concat(FolderPath, Filename);
+            }
+        }
 
         private static readonly ILog Log = LogManager.GetCurrentClassLogger();
 
@@ -126,6 +136,11 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
             StreamWriter file = null;
             try
             {
+                if (!Directory.Exists(FolderPath))
+                {
+                    Directory.CreateDirectory(FolderPath);
+                }
+
                 file = new StreamWriter(FilePath, true);
                 file.WriteLine("{0} {1}", version, moduleName);
                 file.Flush();

@@ -59,6 +59,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                                 PageJavascript = page.CustomJS,
                                 UseNoFollow = page.UseNoFollow,
                                 UseNoIndex = page.UseNoIndex,
+                                UseCanonicalUrl = page.UseCanonicalUrl,
                                 IsVisibleToEveryone = page.Status == PageStatus.Published,
                                 IsInSitemap = page.NodeCountInSitemap > 0,
                                 IsArchived = page.IsArchived,

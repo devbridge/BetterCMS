@@ -79,6 +79,7 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
                                 Version = bp.Version,
                                 Title = bp.Title,
                                 BlogUrl = bp.PageUrl,
+                                UseCanonicalUrl = bp.UseCanonicalUrl,
                                 IntroText = bp.Description,
                                 AuthorId = bp.Author.Id,
                                 CategoryId = bp.Category.Id,

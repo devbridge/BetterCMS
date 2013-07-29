@@ -81,6 +81,7 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="MimeTypeUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WindowsAzureStorageModuleDescriptor.cs" />
     <Compile Include="WindowsAzureStorageService.cs" />

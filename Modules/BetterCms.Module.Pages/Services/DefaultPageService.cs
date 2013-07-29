@@ -60,19 +60,20 @@ namespace BetterCms.Module.Pages.Services
         /// </returns>
         public IPage GetPageByVirtualPath(string virtualPath)
         {
-            if (temporaryPageCache.ContainsKey(virtualPath.ToLowerInvariant()))
+            var trimmed = virtualPath.LowerTrimmedUrl();
+            if (temporaryPageCache.ContainsKey(trimmed))
             {
-                return temporaryPageCache[virtualPath.ToLowerInvariant()];
+                return temporaryPageCache[trimmed];
             }
 
             var page = repository
-                .AsQueryable<PageProperties>(p => p.PageUrl == virtualPath)
+                .AsQueryable<PageProperties>(p => p.PageUrlLowerTrimmed == trimmed)
                 .Fetch(p => p.Layout)
                 .FirstOrDefault();
 
             if (page != null)
             {
-                temporaryPageCache.Add(virtualPath.ToLowerInvariant(), page);
+                temporaryPageCache.Add(trimmed, page);
             }
 
             return page;
@@ -193,10 +194,6 @@ namespace BetterCms.Module.Pages.Services
                 if (!string.IsNullOrWhiteSpace(rootPage.MetaKeywords))
                 {
                     metaData.Add(new MetaDataProjection("keywords", rootPage.MetaKeywords));
-                }
-                if (!string.IsNullOrWhiteSpace(rootPage.MetaTitle))
-                {
-                    metaData.Add(new MetaDataProjection("title", rootPage.MetaTitle));
                 }
             }
 

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Api;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
@@ -13,6 +12,7 @@ using BetterCms.Core.Services;
 
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Projections;
 using BetterCms.Module.Root.ViewModels.Cms;
 
@@ -110,11 +110,13 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             renderPageViewModel.Html5ShivJsPath = VirtualPath.Combine(rootModuleDescriptor.JsBasePath, "html5shiv.js");
 
             // Notify about retrieved page.
-            var result = RootApiContext.Events.OnPageRetrieved(renderPageViewModel, page);
+            var result = Events.RootEvents.Instance.OnPageRetrieved(renderPageViewModel, page);
+
             switch (result)
             {
                 case PageRetrievedEventResult.ForcePageNotFound:
                     return null;
+
                 default:
                     return new CmsRequestViewModel(renderPageViewModel);
             }
@@ -181,7 +183,8 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
             if (request.PageId == null)
             {
-                query = query.Where(f => f.PageUrl.ToLower() == request.PageUrl.ToLowerInvariant());
+                var requestUrl = request.PageUrl.LowerTrimmedUrl();
+                query = query.Where(f => f.PageUrlLowerTrimmed == requestUrl);
             }
             else
             {
@@ -210,7 +213,8 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
             if (request.PageId == null)
             {
-                pageContentsQuery = pageContentsQuery.Where(f => f.Page.PageUrl.ToLower() == request.PageUrl.ToLowerInvariant());
+                var requestUrl = request.PageUrl.LowerTrimmedUrl();
+                pageContentsQuery = pageContentsQuery.Where(f => f.Page.PageUrlLowerTrimmed == requestUrl);
             }
             else
             {
