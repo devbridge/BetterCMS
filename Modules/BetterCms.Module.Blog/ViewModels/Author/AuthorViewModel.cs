@@ -53,5 +53,16 @@ namespace BetterCms.Module.Blog.ViewModels.Author
         {
             Image = new ImageSelectorViewModel();
         }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format("Id: {0}, Version: {1}, Name: {2}", Id, Version, Name);
+        }
     }
 }

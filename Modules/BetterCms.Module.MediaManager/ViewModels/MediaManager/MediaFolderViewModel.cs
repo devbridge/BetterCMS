@@ -11,5 +11,10 @@ namespace BetterCms.Module.MediaManager.ViewModels.MediaManager
         {
             ContentType = MediaContentType.Folder;
         }
+
+        public override string ToString()
+        {
+            return base.ToString();
+        }
     }
 }

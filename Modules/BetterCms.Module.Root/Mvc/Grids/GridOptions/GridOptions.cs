@@ -67,5 +67,16 @@ namespace BetterCms.Module.Root.Mvc.Grids.GridOptions
                 PageSize = DefaultPageSize;
             }
         }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format("PageSize: {0}, PageNumber: {1}, TotalCount: {2}", PageSize, PageNumber, TotalCount);
+        }
     }
 }
