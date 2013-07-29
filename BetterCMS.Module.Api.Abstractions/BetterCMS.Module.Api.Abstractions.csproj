@@ -118,7 +118,6 @@
     <Compile Include="Infrastructure\Enums\FilterConnector.cs" />
     <Compile Include="Infrastructure\Enums\FilterOperation.cs" />
     <Compile Include="Infrastructure\Enums\OrderDirection.cs" />
-    <Compile Include="IApiFacade.cs" />
     <Compile Include="Operations\MediaManager\Files\File\FileModel.cs" />
     <Compile Include="Operations\MediaManager\Files\File\GetFileModel.cs" />
     <Compile Include="Operations\MediaManager\Files\File\GetFileRequest.cs" />

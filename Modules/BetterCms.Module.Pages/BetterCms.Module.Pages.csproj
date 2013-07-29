@@ -256,13 +256,11 @@
     <Compile Include="Services\DefaultSitemapService.cs" />
     <Compile Include="Services\DefaultTagService.cs" />
     <Compile Include="Services\DefaultUrlService.cs" />
-    <Compile Include="Services\DefaultWidgetsService.cs" />
     <Compile Include="Services\IHistoryService.cs" />
     <Compile Include="Services\IPageService.cs" />
     <Compile Include="Services\ISitemapService.cs" />
     <Compile Include="Services\ITagService.cs" />
     <Compile Include="Services\IUrlService.cs" />
-    <Compile Include="Services\IWidgetsService.cs" />
     <Compile Include="Services\DefaultCategoryService.cs" />
     <Compile Include="Services\DefaultRedirectService.cs" />
     <Compile Include="Services\ICategoryService.cs" />

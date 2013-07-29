@@ -4,7 +4,6 @@ using Autofac;
 
 using BetterCms.Core.Dependencies;
 using BetterCms.Core.Modules;
-using BetterCms.Core.Mvc.Extensions;
 using BetterCms.Module.Api.Operations.Blog;
 using BetterCms.Module.Api.Operations.Blog.Authors;
 using BetterCms.Module.Api.Operations.Blog.Authors.Author;
@@ -29,10 +28,12 @@ using BetterCms.Module.Api.Operations.Pages.Pages.Page.Exists;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties;
 using BetterCms.Module.Api.Operations.Pages.Redirects;
 using BetterCms.Module.Api.Operations.Pages.Redirects.Redirect;
+using BetterCms.Module.Api.Operations.Pages.Sitemap;
 using BetterCms.Module.Api.Operations.Pages.Sitemap.Nodes;
 using BetterCms.Module.Api.Operations.Pages.Sitemap.Nodes.Node;
 using BetterCms.Module.Api.Operations.Pages.Sitemap.Tree;
 using BetterCms.Module.Api.Operations.Pages.Widgets;
+using BetterCms.Module.Api.Operations.Pages.Widgets.Widget;
 using BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget;
 using BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidget;
 using BetterCms.Module.Api.Operations.Root;
@@ -66,19 +67,12 @@ namespace BetterCms.Module.Api
         internal const string ApiAreaName = "bcms-api";
 
         /// <summary>
-        /// Controller extensions.
-        /// </summary>
-        private readonly IControllerExtensions controllerExtensions;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="ApiModuleDescriptor" /> class.
         /// </summary>
         /// <param name="cmsConfiguration">The CMS configuration.</param>
-        /// <param name="controllerExtensions">The controller extensions.</param>
-        public ApiModuleDescriptor(ICmsConfiguration cmsConfiguration, IControllerExtensions controllerExtensions)
+        public ApiModuleDescriptor(ICmsConfiguration cmsConfiguration)
             : base(cmsConfiguration)
         {
-            this.controllerExtensions = controllerExtensions;
             CoreEvents.Instance.HostStart += ApplicationStart;
         }
 
@@ -159,18 +153,20 @@ namespace BetterCms.Module.Api
             containerBuilder.RegisterType<PageContentsService>().As<IPageContentsService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
 
             containerBuilder.RegisterType<RedirectsService>().As<IRedirectsService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
-            containerBuilder.RegisterType<RedirectService>().As<IRedirectService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
+            containerBuilder.RegisterType<RedirectService>().As<IRedirectService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);            
+            containerBuilder.RegisterType<SitemapService>().As<ISitemapService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<ContentService>().As<IContentService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<BlogPostContentService>().As<IBlogPostContentService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<HtmlContentService>().As<IHtmlContentService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<ContentHistoryService>().As<IContentHistoryService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
+            containerBuilder.RegisterType<WidgetService>().As<IWidgetService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);            
             containerBuilder.RegisterType<WidgetsService>().As<IWidgetsService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<HtmlContentWidgetService>().As<IHtmlContentWidgetService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<ServerControlWidgetService>().As<IServerControlWidgetService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<SitemapTreeService>().As<ISitemapTreeService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<NodesService>().As<INodesService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<NodeService>().As<INodeService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
-            
+
             containerBuilder.RegisterType<DefaultRootApiOperations>().As<IRootApiOperations>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<DefaultPagesApiOperations>().As<IPagesApiOperations>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<DefaultBlogApiOperations>().As<IBlogApiOperations>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
