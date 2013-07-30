@@ -710,7 +710,7 @@ a.bcms-remove-image {
     width: 100%;
     margin: -1px;
     min-height: 35px;
-    outline: 1px dashed #009AEB;
+    border: 1px dashed #009AEB;
     overflow: hidden;
 }
 
