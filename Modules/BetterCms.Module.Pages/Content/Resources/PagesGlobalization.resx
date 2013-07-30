@@ -247,7 +247,7 @@
     <value>You are going to copy all content and properties from the current page.</value>
   </data>
   <data name="ClonePage_Dialog_PageTitle" xml:space="preserve">
-    <value>New Page Title</value>
+    <value>New Page Title (H1)</value>
   </data>
   <data name="ClonePage_Dialog_PageTitle_Tooltip_Description" xml:space="preserve">
     <value>Create a title for your new page.</value>
@@ -472,7 +472,7 @@
     <value>Page name is required.</value>
   </data>
   <data name="EditSeo_PageTitle_Tooltip_Description" xml:space="preserve">
-    <value />
+    <value>Edit the page name that will appear on a page as the main title.</value>
   </data>
   <data name="EditSeo_PageUrlPath_InvalidMessage" xml:space="preserve">
     <value>Page URL path is invalid. Link can contain only following characters: '0-9', 'a-z', '-', '/', '_'</value>
