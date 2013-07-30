@@ -263,6 +263,8 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             mediaUpload.openReuploadFilesDialog(item.id(), self.path().currentFolder().id(), self.path().currentFolder().type, function (filesData) {
                 if (filesData && filesData.Data && filesData.Data.Medias && filesData.Data.Medias.length > 0) {
                     var mediaItem = convertToMediaModel(filesData.Data.Medias[0]);
+                    mediaItem.thumbnailUrl(item.thumbnailUrl());
+                    mediaItem.tooltip(item.tooltip());
                     var index = $.inArray(item, self.medias());
                     self.medias.splice(index, 1, mediaItem);
                     // Replace unobtrusive validator.
@@ -820,10 +822,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                     self.name(json.Title);
                     self.oldName = json.Title;
                     if (json.Image) {
-                        self.tooltip = json.Image.ImageTooltip;
+                        self.tooltip(json.Image.ImageTooltip);
                         self.thumbnailUrl(json.Image.ThumbnailUrl);
                     } else {
-                        self.tooltip = null;
+                        self.tooltip(null);
                         self.thumbnailUrl(null);
                     }
                 });
