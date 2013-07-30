@@ -28,7 +28,8 @@ namespace BetterCms.Module.Api
 			
             JsConfig.EmitCamelCaseNames = true;
             JsConfig.IncludeNullValues = true;
-		
+		    JsConfig.DateHandler = JsonDateHandler.DCJSCompatible;
+
             Plugins.Add(new ValidationFeature());
             
             // Add custom request filter
