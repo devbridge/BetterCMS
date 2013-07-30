@@ -163,6 +163,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         self.closeFilter = function () {
             self.isFilterVisible(false);
         };
+        
+        self.changeIncludeArchived = function () {
+            self.includeArchived(!(self.includeArchived()));
+        };
 
         self.fromJson = function (options) {
             self.searchQuery(options.GridOptions.SearchQuery);

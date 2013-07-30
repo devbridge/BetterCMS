@@ -53,7 +53,12 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
                 reuploadMediaId: reuploadMediaId
             };
 
-        options.uploads.filesToAccept(rootFolderType == 1 ? 'image/*' : '');
+        // Quick dirty IE10 fix: remove accept tag from upload box.
+        if ($.browser.msie && parseInt($.browser.version, 10) > 9) {
+            options.uploads.filesToAccept('');
+        } else {
+            options.uploads.filesToAccept(rootFolderType == 1 ? 'image/*' : '');
+        }
 
         if (html5Upload.fileApiSupported()) {
             modal.open({
