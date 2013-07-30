@@ -9,9 +9,9 @@ namespace BetterCms.Api.Tests.Tools
 
         private const string ConnectionStringPattern = @"Data Source=(LocalDb)\v11.0; Initial Catalog={0}; Integrated Security=SSPI; AttachDBFilename=|DataDirectory|\Temp\{0}.mdf";
 
-        private string originalDatabasePath;
+        private readonly string originalDatabasePath;
 
-        private string tempBasePath;
+        private readonly string tempBasePath;
 
         public string CurrentConnectionString
         {

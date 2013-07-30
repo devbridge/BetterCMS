@@ -10,7 +10,7 @@
 <script type="text/html" id="bcms-media-list-template">
     <div class="bcms-top-block-holder">
         <div class="bcms-breadcrumbs-holder">
-            <div data-bind="foreach: path().pathFolders()"><a class="bcms-breadcrumbs-root" href="#" data-bind="text: pathName(), click: openMedia.bind($data, $root)"></a></div>
+            <div data-bind="foreach: path().pathFolders()"><a class="bcms-breadcrumbs-root" href="#" data-bind="    text: pathName(), click: openMedia.bind($data, $root)"></a></div>
         </div>
         <div class="clearfix">
             <div class="bcms-media-controls-holder">
@@ -153,7 +153,7 @@
                     <input class="bcms-editor-field-box" type="text" readonly="readonly" data-bind="value: publicUrl(), click: selectThis.bind($data, $root, $element)" />
                     <!-- /ko -->
 
-                    <!-- ko if: !isFailed() && (isFolder() || isImage() || (@(canEdit ? "true" : "false") && !isFolder()) || (!isFolder() && publicUrl())) -->
+                    <!-- ko if: !isFailed() && (isFolder() || isImage() && !publicUrl() || (@(canEdit ? "true" : "false") && !isFolder() && !publicUrl()) || (!isFolder() && !publicUrl())) -->
                     <div class="bcms-settings-separator"></div>
                     <!-- /ko -->
 
@@ -200,7 +200,7 @@
                         <a class="bcms-media-content-link" data-bind="click: editMedia.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonProperties</a>
                         <!-- /ko -->
                     }
-                    
+
                     <!-- /ko -->
                 </div>
 

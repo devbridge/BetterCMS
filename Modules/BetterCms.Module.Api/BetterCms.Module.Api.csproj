@@ -153,6 +153,7 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ApiFactory.cs" />
     <Compile Include="DefaultApiFacade.cs" />
     <Compile Include="ApiApplicationHost.cs" />
     <Compile Include="AutofacContainerAdapter.cs" />
@@ -162,6 +163,7 @@
     <Compile Include="Helpers\QueryableExtensions.cs" />
     <Compile Include="Helpers\DataOptionsQueryCreator.cs" />
     <Compile Include="Helpers\DynamicLinqExtensions.cs" />
+    <Compile Include="IApiFacade.cs" />
     <Compile Include="Operations\Blog\Authors\AuthorsService.cs" />
     <Compile Include="Operations\Blog\Authors\Author\AuthorService.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPostsService.cs" />
@@ -174,7 +176,7 @@
     <Compile Include="Operations\MediaManager\Images\Image\ImageService.cs" />
     <Compile Include="Operations\MediaManager\Images\ImagesService.cs" />
     <Compile Include="Operations\MediaManager\MediaTree\MediaTreeService.cs" />
-    <Compile Include="Operations\Pages\Contents\Content\BlogPostContent\BlogPostContentService.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\BlogPost\Content\BlogPostContentService.cs" />
     <Compile Include="Operations\Pages\Contents\Content\ContentService.cs" />
     <Compile Include="Operations\Pages\Contents\Content\History\ContentHistoryService.cs" />
     <Compile Include="Operations\Pages\Contents\Content\HtmlContent\HtmlContentService.cs" />

@@ -95,5 +95,16 @@ namespace BetterCms.Module.MediaManager.ViewModels.File
         /// The image view model.
         /// </value>
         public ImageSelectorViewModel Image { get; set; }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format("Id: {0}, Title: {1}, Version: {2}, FileName: {3}, FileExtension: {4}", Id, Title, Version, FileName, FileExtension);
+        }
     }
 }

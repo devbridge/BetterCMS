@@ -190,5 +190,16 @@ namespace BetterCms.Module.MediaManager.ViewModels.Images
         /// The tags.
         /// </value>
         public IList<string> Tags { get; set; }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format("Id: {0}, Version: {1}, Title: {2}, Url: {3}, FileName: {4}, FileExtension: {5}", Id, Version, Title, Url, FileName, FileExtension);
+        }
     }
 }

@@ -212,5 +212,16 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
             Image = new ImageSelectorViewModel();
             UseCanonicalUrl = true;
         }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format("Id: {0}, Version: {1}, Title: {2}, ContentId: {3}, ContentVersion: {4}", Id, Version, Title, ContentId, ContentVersion);
+        }
     }
 }

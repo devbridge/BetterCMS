@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace BetterCms.Module.Users.ViewModels
 {
@@ -13,5 +12,16 @@ namespace BetterCms.Module.Users.ViewModels
         public string Password { get; set; }
 
         public bool RememberMe { get; set; }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format("UserName: {0}", UserName);
+        }
     }
 }

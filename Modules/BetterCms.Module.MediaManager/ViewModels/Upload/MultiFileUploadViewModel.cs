@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.MediaManager.Models;
 
 namespace BetterCms.Module.MediaManager.ViewModels.Upload
@@ -20,5 +19,16 @@ namespace BetterCms.Module.MediaManager.ViewModels.Upload
         public IList<Guid> UploadedFiles { get; set; }
 
         public Guid ReuploadMediaId { get; set; }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format("RootFolderId: {0}, RootFolderType: {1}, SelectedFolderId: {2}, ReuploadMediaId: {3}", RootFolderId, RootFolderType, SelectedFolderId, ReuploadMediaId);
+        }
     }
 }
