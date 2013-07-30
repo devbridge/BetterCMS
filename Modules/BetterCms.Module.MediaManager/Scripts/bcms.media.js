@@ -40,6 +40,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             saveFolderUrl: null,
             renameMediaUrl: null,
             getMediaUrl: null,
+            getFileUrl: null,
             downloadFileUrl: null,
             unarchiveMediaUrl: null,
             archiveMediaUrl: null
@@ -1240,7 +1241,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     * Called when file is selected from files list.
     */
     function insertFile(selectedMedia) {
-        addFileToEditor($.format(links.downloadFileUrl, selectedMedia.id()), selectedMedia.name());
+        addFileToEditor($.format(links.getFileUrl, selectedMedia.id()), selectedMedia.name());
 
         if (fileInsertDialog != null) {
             fileInsertDialog.close();
