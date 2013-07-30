@@ -78,7 +78,7 @@
                 <div class="clearfix">
                     <div class="bcms-check-field-holder">
                         <div class="bcms-check-field"><input type="checkbox" data-bind="checked: gridOptions().includeArchived" /></div>
-                        <div class="bcms-check-label">@MediaGlobalization.MediaManager_IncludeArchived_Message</div>
+                        <span class="bcms-pointer" data-bind="click: gridOptions().changeIncludeArchived">@MediaGlobalization.MediaManager_IncludeArchived_Message</span>
                     </div>
                     <div class="bcms-btn-field-holder">
                         <div class="bcms-btn-links-small" data-bind="click: clearFilter">@RootGlobalization.Button_Filter_Clear</div>

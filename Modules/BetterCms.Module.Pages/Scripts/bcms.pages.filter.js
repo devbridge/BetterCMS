@@ -68,6 +68,9 @@ bettercms.define('bcms.pages.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                 }
                 self.searchWithFilter();
             };
+            self.changeIncludeArchived = function () {
+                self.includeArchived(!(self.includeArchived()));
+            };
         }
 
         filter.bind = function (container, jsonData, onSearchClick) {
