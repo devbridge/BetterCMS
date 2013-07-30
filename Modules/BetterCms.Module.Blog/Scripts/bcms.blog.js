@@ -279,6 +279,13 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             return false;
         });
         
+        form.find(selectors.siteSettingsBlogsSearchInput).keypress(function (event) {
+            if (event.which == 13) {
+                bcms.stopEventPropagation(event);
+                searchSiteSettingsBlogs(container, form);
+            }
+        });
+
         form.find(selectors.siteSettingsBlogTitleCell).on('click', function (event) {
             bcms.stopEventPropagation(event);
         });

@@ -26,7 +26,11 @@ bettercms.define('bcms.blog.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders'
             self.tags = tagsViewModel;
             self.includeArchived = ko.observable(false);
             self.dropDown = container.find(selectors.filterCategory).get(0);
-            self.dropDownValue = ko.observable(0);
+            var dropDownValue = 0;
+            if ($(self.dropDown).get(0) && $(self.dropDown).get(0).selectedIndex) {
+                dropDownValue = $(self.dropDown).get(0).selectedIndex;
+            }
+            self.dropDownValue = ko.observable(dropDownValue);
             $(self.dropDown).change(function () {
                 self.dropDownValue(this.selectedIndex);
             });
@@ -63,6 +67,11 @@ bettercms.define('bcms.blog.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders'
                 if (self.dropDown) {
                     self.dropDown.selectedIndex = 0;
                 }
+                self.searchWithFilter();
+            };
+
+            self.changeIncludeArchived = function () {
+                self.includeArchived(!(self.includeArchived()));
             };
         }
 

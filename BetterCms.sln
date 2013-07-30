@@ -95,7 +95,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.Api.Tests", "Test
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{1CC5CC96-5CF1-4220-8559-7E129D30C628}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCMS.Module.Api.Abstractions", "BetterCMS.Module.Api.Abstractions\BetterCMS.Module.Api.Abstractions.csproj", "{073E257B-A6A0-42FC-9102-8E920BF54E50}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.Module.Api.Abstractions", "BetterCMS.Module.Api.Abstractions\BetterCms.Module.Api.Abstractions.csproj", "{073E257B-A6A0-42FC-9102-8E920BF54E50}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution

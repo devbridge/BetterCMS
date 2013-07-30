@@ -64,10 +64,22 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
                     if (!fileId.HasDefaultValue())
                     {
                         var originalMedia = Repository.First<MediaFile>(request.ReuploadMediaId);
-                        Repository.Save(originalMedia.CreateHistoryItem());
+                        var historyItem = originalMedia.CreateHistoryItem();
+                        Repository.Save(historyItem);
 
                         var file = Repository.FirstOrDefault<MediaFile>(fileId);
                         file.CopyDataTo(originalMedia);
+
+                        originalMedia.Description = historyItem.Description;
+                        originalMedia.IsArchived = historyItem.IsArchived;
+                        originalMedia.Folder = historyItem.Folder;
+                        originalMedia.Image = historyItem.Image;
+                        if (file is MediaImage && originalMedia is MediaImage)
+                        {
+                            ((MediaImage)originalMedia).Caption = ((MediaImage)historyItem).Caption;
+                            ((MediaImage)originalMedia).ImageAlign = ((MediaImage)historyItem).ImageAlign;
+                        }
+
                         originalMedia.IsTemporary = false;
                         originalMedia.PublishedOn = DateTime.Now;
                         files.Add(originalMedia);

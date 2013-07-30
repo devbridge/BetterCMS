@@ -12,5 +12,10 @@ namespace BetterCms.Module.MediaManager.ViewModels.MediaManager
         {
             Type = MediaType.Audio;            
         }
+
+        public override string ToString()
+        {
+            return base.ToString();
+        }
     }
 }

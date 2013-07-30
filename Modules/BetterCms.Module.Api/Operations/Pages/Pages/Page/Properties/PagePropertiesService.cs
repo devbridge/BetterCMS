@@ -24,17 +24,15 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
 
         public GetPagePropertiesResponse Get(GetPagePropertiesRequest request)
         {
-            // TODO: validate request - one and only one of these can be specified: PageUrl / PageId
-
             var query = repository.AsQueryable<Module.Pages.Models.PageProperties>();
 
-            if (request.Data.PageId.HasValue)
+            if (request.PageId.HasValue)
             {
-                query = query.Where(page => page.Id == request.Data.PageId.Value);
+                query = query.Where(page => page.Id == request.PageId.Value);
             }
             else
             {
-                var url = urlService.FixUrl(request.Data.PageUrl);
+                var url = urlService.FixUrl(request.PageUrl);
                 query = query.Where(page => page.PageUrl == url);
             }
 
@@ -63,7 +61,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                                 SecondaryImageId = page.SecondaryImage.Id,
                                 CustomCss = page.CustomCss,
                                 CustomJavaScript = page.CustomJS,
-                                CanonicalUrl = page.CanonicalUrl,
                                 UseCanonicalUrl = page.UseCanonicalUrl,
                                 UseNoFollow = page.UseNoFollow,
                                 UseNoIndex = page.UseNoIndex

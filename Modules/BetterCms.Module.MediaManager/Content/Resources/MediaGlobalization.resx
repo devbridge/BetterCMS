@@ -567,4 +567,10 @@
   <data name="MediaManager_ButtonProperties" xml:space="preserve">
     <value>Properties</value>
   </data>
+  <data name="MediaManager_ItemParentFolder_Prefix" xml:space="preserve">
+    <value>In folder</value>
+  </data>
+  <data name="MediaManager_SearchedInPath_Prefix" xml:space="preserve">
+    <value>Searched in</value>
+  </data>
 </root>

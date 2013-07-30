@@ -3,6 +3,7 @@
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Api.Helpers;
+using BetterCms.Module.Api.Infrastructure;
 
 using ServiceStack.ServiceInterface;
 

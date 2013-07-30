@@ -15,5 +15,16 @@ namespace BetterCms.Module.MediaManager.ViewModels.MediaManager
             base(items, options, totalCount)
         {
         }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format("{0}, Path: {1}", base.ToString(), Path);
+        }
     }
 }

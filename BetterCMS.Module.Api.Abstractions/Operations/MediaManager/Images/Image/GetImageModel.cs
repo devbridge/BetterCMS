@@ -6,15 +6,6 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
     public class GetImageModel
     {
         /// <summary>
-        /// Gets or sets the image id.
-        /// </summary>
-        /// <value>
-        /// The image id.
-        /// </value>
-        [DataMember]
-        public System.Guid ImageId { get; set; }
-
-        /// <summary>
         /// Gets or sets a value indicating whether to include tags to response.
         /// </summary>
         /// <value>

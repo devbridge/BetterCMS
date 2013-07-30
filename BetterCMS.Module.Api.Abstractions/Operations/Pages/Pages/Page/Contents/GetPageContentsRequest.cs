@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
 
@@ -11,16 +12,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents
     public class GetPageContentsRequest : RequestBase<GetPageContentsModel>, IReturn<GetPageContentsResponse>
     {
         [DataMember]
-        public System.Guid PageId
-        {
-            get
-            {
-                return Data.PageId;
-            }
-            set
-            {
-                Data.PageId = value;
-            }
-        }
+        public Guid PageId { get; set; }
     }
 }

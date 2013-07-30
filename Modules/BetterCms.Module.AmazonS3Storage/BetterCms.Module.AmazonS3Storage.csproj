@@ -69,6 +69,7 @@
     </Compile>
     <Compile Include="AmazonS3StorageModuleDescriptor.cs" />
     <Compile Include="AmazonS3StorageService.cs" />
+    <Compile Include="MimeTypeUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

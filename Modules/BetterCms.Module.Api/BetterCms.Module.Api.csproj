@@ -153,31 +153,30 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ApiFactory.cs" />
     <Compile Include="DefaultApiFacade.cs" />
     <Compile Include="ApiApplicationHost.cs" />
     <Compile Include="AutofacContainerAdapter.cs" />
-    <Compile Include="Filters\CmsApiRequestFilter.cs" />
+    <Compile Include="Filters\GetRequestProcessor.cs" />
     <Compile Include="Helpers\ContentTypeExtensions.cs" />
     <Compile Include="Helpers\FilterByTagExtensions.cs" />
     <Compile Include="Helpers\QueryableExtensions.cs" />
     <Compile Include="Helpers\DataOptionsQueryCreator.cs" />
     <Compile Include="Helpers\DynamicLinqExtensions.cs" />
+    <Compile Include="IApiFacade.cs" />
     <Compile Include="Operations\Blog\Authors\AuthorsService.cs" />
     <Compile Include="Operations\Blog\Authors\Author\AuthorService.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPostsService.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\BlogPostService.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\BlogPostPropertiesService.cs" />
     <Compile Include="Operations\Blog\DefaultBogApiOperations.cs" />
-    <Compile Include="Helpers\DataOptionsExtensions.cs" />
     <Compile Include="Operations\MediaManager\DefaultMediaManagerApiOperations.cs" />
     <Compile Include="Operations\MediaManager\Files\FilesService.cs" />
     <Compile Include="Operations\MediaManager\Files\File\FileService.cs" />
     <Compile Include="Operations\MediaManager\Images\Image\ImageService.cs" />
     <Compile Include="Operations\MediaManager\Images\ImagesService.cs" />
     <Compile Include="Operations\MediaManager\MediaTree\MediaTreeService.cs" />
-    <Compile Include="Operations\MediaManager\Videos\VideosService.cs" />
-    <Compile Include="Operations\MediaManager\Videos\Video\VideoService.cs" />
-    <Compile Include="Operations\Pages\Contents\Content\BlogPostContent\BlogPostContentService.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\BlogPost\Content\BlogPostContentService.cs" />
     <Compile Include="Operations\Pages\Contents\Content\ContentService.cs" />
     <Compile Include="Operations\Pages\Contents\Content\History\ContentHistoryService.cs" />
     <Compile Include="Operations\Pages\Contents\Content\HtmlContent\HtmlContentService.cs" />
@@ -191,7 +190,6 @@
     <Compile Include="Operations\Pages\Pages\Page\Contents\PageContentsService.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Exists\PageExistsService.cs" />
     <Compile Include="Operations\Pages\Pages\PagesService.cs" />
-    <Compile Include="Operations\Pages\Pages\Page\RenderedHtml\PageRenderedHtmlService.cs" />
     <Compile Include="Operations\Pages\Pages\Page\PageService.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\PagePropertiesService.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\HtmlContentWidgetService.cs" />

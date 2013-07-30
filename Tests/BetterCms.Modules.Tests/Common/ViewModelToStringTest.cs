@@ -38,7 +38,7 @@ namespace BetterCms.Test.Module.Common
                 }
             }
 
-            // Format view models name, which didn't have overrided ToString method:
+            // Format view models name, which didn't have overrided ToString() method:
             StringBuilder builder = new StringBuilder();
             foreach (string name in viewModelNames)
             {

@@ -107,15 +107,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         public System.Guid? SecondaryImageId { get; set; }
 
         /// <summary>
-        /// Gets or sets the canonical URL.
-        /// </summary>
-        /// <value>
-        /// The canonical URL.
-        /// </value>
-        [DataMember]
-        public string CanonicalUrl { get; set; }
-
-        /// <summary>
         /// Gets or sets the page custom CSS.
         /// </summary>
         /// <value>

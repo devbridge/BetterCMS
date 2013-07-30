@@ -3,6 +3,7 @@
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Api.Helpers;
+using BetterCms.Module.Api.Infrastructure;
 
 using ServiceStack.ServiceInterface;
 
@@ -19,12 +20,10 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents
 
         public GetPageContentsResponse Get(GetPageContentsRequest request)
         {
-            // TODO add validation for only one of RegionId / RegionIdentifier specified
-
             request.Data.SetDefaultOrder("Order");
 
             var query = repository
-                 .AsQueryable<Module.Root.Models.PageContent>(pageContent => pageContent.Page.Id == request.Data.PageId);
+                 .AsQueryable<Module.Root.Models.PageContent>(pageContent => pageContent.Page.Id == request.PageId);
 
             if (request.Data.RegionId.HasValue)
             {

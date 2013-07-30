@@ -20,7 +20,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
         public GetHtmlContentWidgetResponse Get(GetHtmlContentWidgetRequest request)
         {
             var model = repository
-                .AsQueryable<Module.Pages.Models.HtmlContentWidget>(widget => widget.Id == request.Data.WidgetId)
+                .AsQueryable<Module.Pages.Models.HtmlContentWidget>(widget => widget.Id == request.WidgetId)
                 .Select(widget => new HtmlContentWidgetModel
                     {
                         Id = widget.Id,

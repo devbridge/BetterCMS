@@ -122,7 +122,7 @@ namespace BetterCms.Api.Tests.UnitTests
 
             Assert.AreEqual(orderQuery, string.Empty);
 
-            Assert.AreEqual(filterQuery, "CreatedOn != @0");
+            Assert.AreEqual(filterQuery, "(CreatedOn != @0 or CreatedOn == null)");
             Assert.IsNotNull(filterParameters);
             Assert.AreEqual(filterParameters.Length, 1);
             Assert.AreEqual(filterParameters[0], Convert.ToDateTime(TestValueDate));
@@ -236,7 +236,7 @@ namespace BetterCms.Api.Tests.UnitTests
 
             Assert.AreEqual(orderQuery, string.Empty);
 
-            Assert.AreEqual(filterQuery, "!Title.Contains(@0)");
+            Assert.AreEqual(filterQuery, "(!Title.Contains(@0) or Title == null)");
             Assert.IsNotNull(filterParameters);
             Assert.AreEqual(filterParameters.Length, 1);
             Assert.AreEqual(filterParameters[0], TestValueString);
@@ -294,7 +294,7 @@ namespace BetterCms.Api.Tests.UnitTests
 
             Assert.AreEqual(orderQuery, string.Empty);
 
-            Assert.AreEqual(filterQuery, "!Title.Contains(@0) and !Title.Contains(@1)");
+            Assert.AreEqual(filterQuery, "(!Title.Contains(@0) or Title == null) and (!Title.Contains(@1) or Title == null)");
             Assert.IsNotNull(filterParameters);
             Assert.AreEqual(filterParameters.Length, 2);
             Assert.AreEqual(filterParameters[0], "Test1");
@@ -318,7 +318,7 @@ namespace BetterCms.Api.Tests.UnitTests
 
             Assert.AreEqual(orderQuery, string.Empty);
 
-            Assert.AreEqual(filterQuery, "!Title.Contains(@0) and Title == @1 and Title != @2 and Title.StartsWith(@3)");
+            Assert.AreEqual(filterQuery, "(!Title.Contains(@0) or Title == null) and Title == @1 and (Title != @2 or Title == null) and Title.StartsWith(@3)");
             Assert.IsNotNull(filterParameters);
             Assert.AreEqual(filterParameters.Length, 4);
             Assert.AreEqual(filterParameters[0], "Test1");
@@ -342,7 +342,7 @@ namespace BetterCms.Api.Tests.UnitTests
 
             Assert.AreEqual(orderQuery, string.Empty);
 
-            Assert.AreEqual(filterQuery, "!Title.Contains(@0) or !Title.Contains(@1)");
+            Assert.AreEqual(filterQuery, "(!Title.Contains(@0) or Title == null) or (!Title.Contains(@1) or Title == null)");
             Assert.IsNotNull(filterParameters);
             Assert.AreEqual(filterParameters.Length, 2);
             Assert.AreEqual(filterParameters[0], "Test1");
@@ -366,7 +366,7 @@ namespace BetterCms.Api.Tests.UnitTests
 
             Assert.AreEqual(orderQuery, string.Empty);
 
-            Assert.AreEqual(filterQuery, "!Title.Contains(@0) or Title == @1 or Title != @2 or Title.StartsWith(@3)");
+            Assert.AreEqual(filterQuery, "(!Title.Contains(@0) or Title == null) or Title == @1 or (Title != @2 or Title == null) or Title.StartsWith(@3)");
             Assert.IsNotNull(filterParameters);
             Assert.AreEqual(filterParameters.Length, 4);
             Assert.AreEqual(filterParameters[0], "Test1");
@@ -403,7 +403,7 @@ namespace BetterCms.Api.Tests.UnitTests
 
             Assert.AreEqual(orderQuery, string.Empty);
 
-            var result = "!Title.Contains(@0) and !Title.Contains(@1) and (CreatedOn > @2 or CreatedOn < @3 or CreatedOn == @4) and (ModifiedOn > @5 or ModifiedOn < @6 or ModifiedOn == @7)";
+            var result = "(!Title.Contains(@0) or Title == null) and (!Title.Contains(@1) or Title == null) and (CreatedOn > @2 or CreatedOn < @3 or CreatedOn == @4) and (ModifiedOn > @5 or ModifiedOn < @6 or ModifiedOn == @7)";
 
             Assert.AreEqual(filterQuery, result);
             Assert.IsNotNull(filterParameters);
@@ -450,7 +450,7 @@ namespace BetterCms.Api.Tests.UnitTests
 
             Assert.AreEqual(orderQuery, "CreatedOn desc, Title, Description desc");
 
-            var result = "!Title.Contains(@0) and !Title.Contains(@1) and (CreatedOn > @2 or CreatedOn < @3 or CreatedOn == @4) and (ModifiedOn > @5 or ModifiedOn < @6 or ModifiedOn == @7)";
+            var result = "(!Title.Contains(@0) or Title == null) and (!Title.Contains(@1) or Title == null) and (CreatedOn > @2 or CreatedOn < @3 or CreatedOn == @4) and (ModifiedOn > @5 or ModifiedOn < @6 or ModifiedOn == @7)";
 
             Assert.AreEqual(filterQuery, result);
             Assert.IsNotNull(filterParameters);

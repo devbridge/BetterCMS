@@ -1,10 +1,10 @@
 ﻿/*jslint vars: true*/
 /*global api, describe, it, expect, waits, waitsFor, runs, afterEach, spyOn, jcsvSerialize, $ */
 
-describe('Root: General', function() {
+describe('root.general.api.behavior', function () {
     'use strict';
 
-    it('0000: Should get a Better CMS current version', function () {
+    it('00000: Should get a Better CMS current version', function () {
         var url = '/bcms-api/current-version/',
             result,
             ready = false;
@@ -21,9 +21,9 @@ describe('Root: General', function() {
         }, 'The ' + url + ' timeout.');
 
         runs(function () {
-            expect(result).toBeDefined();
-            expect(result.data).toBeDefined();
-            expect(result.data.version).toBe("1.0.0-dev");
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.version).toBe("1.0.0-dev", 'Correctly filtered version should be retrieved.');
         });               
     });
 });

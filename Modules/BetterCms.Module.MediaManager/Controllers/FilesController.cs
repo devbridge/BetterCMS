@@ -107,9 +107,19 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// Downloads the specified id.
         /// </summary>
         /// <param name="id">The id.</param>
-        /// <returns>File to download.</returns>
-        public ActionResult Download(string id)
+        /// <param name="forceToDownlaod">if set to <c>true</c> force to downlaod.</param>
+        /// <returns>
+        /// File to download.
+        /// </returns>
+        /// <exception cref="System.Web.HttpException">404;Page Not Found</exception>
+        public ActionResult Download(string id, bool forceToDownlaod = false)
         {
+            if (!forceToDownlaod)
+            {
+                var file = GetCommand<GetFileCommand>().Execute(id.ToGuidOrDefault());
+                return Redirect(file.Url);
+            }
+
             var model = GetCommand<DownloadFileCommand>().ExecuteCommand(id.ToGuidOrDefault());
             if (model != null)
             {

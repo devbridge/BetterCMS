@@ -18,9 +18,11 @@
                 <a id="bcms-grid-view" class="bcms-select-grid" data-bind="click: switchViewStyle, css: { 'bcms-select-active': isGrid() }"></a>
                 @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
                 {
+                    <!-- ko if: !isSearchResults() -->
                     <div class="bcms-vertical-separator"></div>
                     <a class="bcms-media-new-folder" data-bind="click: addNewFolder">@MediaGlobalization.MediaManager_NewFolder</a>
                     <a class="bcms-media-new-file" data-bind="click: uploadMedia, text: uploadButtonTitle()"></a>
+                    <!-- /ko -->
                 }
             </div>
             <div class="bcms-search-block">
@@ -76,10 +78,10 @@
                 <div class="clearfix">
                     <div class="bcms-check-field-holder">
                         <div class="bcms-check-field"><input type="checkbox" data-bind="checked: gridOptions().includeArchived" /></div>
-                        <div class="bcms-check-label">@MediaGlobalization.MediaManager_IncludeArchived_Message</div>
+                        <span class="bcms-pointer" data-bind="click: gridOptions().changeIncludeArchived">@MediaGlobalization.MediaManager_IncludeArchived_Message</span>
                     </div>
                     <div class="bcms-btn-field-holder">
-                        <div class="bcms-btn-links-small" data-bind="click: gridOptions().clearFilter">@RootGlobalization.Button_Filter_Clear</div>
+                        <div class="bcms-btn-links-small" data-bind="click: clearFilter">@RootGlobalization.Button_Filter_Clear</div>
                         <div class="bcms-btn-small" data-bind="click: searchWithFilter">@RootGlobalization.Button_Filter_Search</div>
                     </div>
                 </div>
@@ -100,7 +102,7 @@
             </div>
         </div>
 
-        <!-- ko if: !isRootFolder() -->
+        <!-- ko if: !isRootFolder() && !isSearchResults() -->
         <div class="bcms-folder-box" data-bind="click: openParent">
             <div class="bcms-media-items-block">
                 <div class="bcms-system-folder"></div>
@@ -151,7 +153,7 @@
                     <input class="bcms-editor-field-box" type="text" readonly="readonly" data-bind="value: publicUrl(), click: selectThis.bind($data, $root, $element)" />
                     <!-- /ko -->
 
-                    <!-- ko if: !isFailed() && (isFolder() || isImage() || (@(canEdit ? "true" : "false") && !isFolder()) || (!isFolder() && publicUrl())) -->
+                    <!-- ko if: !isFailed() && (isFolder() || isImage() && !publicUrl() || (@(canEdit ? "true" : "false") && !isFolder() && !publicUrl()) || (!isFolder() && !publicUrl())) -->
                     <div class="bcms-settings-separator"></div>
                     <!-- /ko -->
 
@@ -198,14 +200,14 @@
                         <a class="bcms-media-content-link" data-bind="click: editMedia.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonProperties</a>
                         <!-- /ko -->
                     }
-                    
+
                     <!-- /ko -->
                 </div>
 
                 <div class="bcms-media-items-block">
                     <div data-bind="css: iconClassNames()">
                         <!-- ko if: getImageUrl() -->
-                        <img data-bind="attr: { alt: tooltip, src: getImageUrl() }" />
+                        <img data-bind="attr: { alt: tooltip(), src: getImageUrl() }" />
                         <!-- /ko -->
                     </div>
                     <div class="bcms-media-name">
@@ -225,7 +227,7 @@
                         <!-- /ko -->
                         <!-- ko if: showParentLink($root, $data) -->
                         <br />
-                        <span class="bcms-parent-folder">in folder: <a data-bind="click: openParent.bind($data, $root), clickBubble: false, text: parentFolderName()"></a></span>
+                        <span class="bcms-parent-folder">@MediaGlobalization.MediaManager_ItemParentFolder_Prefix: <a data-bind="click: openParent.bind($data, $root), clickBubble: false, text: parentFolderName()"></a></span>
                         <!-- /ko -->
                     </div>
                 </div>
@@ -267,12 +269,14 @@
         </div>
         @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
         {
+            <!-- ko if: !isSearchResults() -->
             <div class="bcms-add-folder">
                 <div class="bcms-media-items-block" data-bind="click: addNewFolder">
                     <div class="bcms-system-addfolder"></div>
                     <div class="bcms-media-name">@MediaGlobalization.MediaManager_AddNewFolder</div>
                 </div>
             </div>
+            <!-- /ko -->
         }
     </div>
 </script>

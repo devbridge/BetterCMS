@@ -21,7 +21,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         public GetFileResponse Get(GetFileRequest request)
         {
             var model = repository
-                .AsQueryable<MediaFile>(media => media.Id == request.Data.FileId && media.Type == MediaType.File)
+                .AsQueryable<MediaFile>(media => media.Id == request.FileId && media.Type == MediaType.File)
                 .Select(media => new FileModel
                     {
                         Id = media.Id,
@@ -32,6 +32,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
                         LastModifiedOn = media.ModifiedOn,
 
                         Title = media.Title,
+                        Description = media.Description,
                         FileExtension = media.OriginalFileExtension,
                         FileSize = media.Size,
                         FileUrl = media.PublicUrl,
@@ -51,7 +52,8 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
             if (request.Data.IncludeTags)
             {
                 tags =
-                    repository.AsQueryable<MediaTag>(mediaTag => mediaTag.Media.Id == request.Data.FileId)
+                    repository.AsQueryable<MediaTag>(mediaTag => mediaTag.Media.Id == request.FileId)
+                              .OrderBy(mediaTag => mediaTag.Tag.Name)
                               .Select(media => new TagModel
                                     {
                                         Id = media.Tag.Id,

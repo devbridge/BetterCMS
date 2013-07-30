@@ -51,7 +51,7 @@
         <div class="clearfix">
             <div class="bcms-check-field-holder">
                 @Html.CheckBoxFor(model => model.IncludeArchived, new { data_bind = "checked: includeArchived" })
-                @PagesGlobalization.SiteSettings_Pages_FilterIncludeArchived
+                <span class="bcms-pointer" data-bind="click: changeIncludeArchived">@PagesGlobalization.SiteSettings_Pages_FilterIncludeArchived</span>
             </div>
             <div class="bcms-btn-field-holder">
                 <div class="bcms-btn-links-small" data-bind="click: clearFilter">@PagesGlobalization.SiteSettings_Pages_FilterClear</div>

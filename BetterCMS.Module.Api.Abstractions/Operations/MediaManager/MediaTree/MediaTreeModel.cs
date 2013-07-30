@@ -16,15 +16,6 @@ namespace BetterCms.Module.Api.Operations.MediaManager.MediaTree
         public IList<MediaItemModel> ImagesTree { get; set; }
 
         /// <summary>
-        /// Gets or sets the tree of video medias.
-        /// </summary>
-        /// <value>
-        /// The tree of video medias.
-        /// </value>
-        [DataMember]
-        public IList<MediaItemModel> VideosTree { get; set; }
-
-        /// <summary>
         /// Gets or sets the tree of file medias.
         /// </summary>
         /// <value>

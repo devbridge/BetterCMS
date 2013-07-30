@@ -25,18 +25,22 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             pagePropertiesTemplatePreviewLink: '.bcms-preview-template',
 
             pagePropertiesForm: 'form:first',
+            pagePropertiesPageIsPublishedCheckbox: '#IsVisibleToEveryone',
         },
         links = {
             loadEditPropertiesDialogUrl: null        },
         globalization = {
-            editPagePropertiesModalTitle: null
+            editPagePropertiesModalTitle: null,
+            pageStatusChangeConfirmationMessagePublish: null,
+            pageStatusChangeConfirmationMessageUnPublish: null
         },
         keys = {
             editPagePropertiesInfoMessageClosed: 'bcms.EditPagePropertiesInfoBoxClosed'
         },
         classes = {
             pagePropertiesActiveTemplateBox: 'bcms-grid-box-active'
-        };
+        },
+        currentPageIsPublished;
 
     /**
     * Assign objects to module.
@@ -64,6 +68,8 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             pageViewModel = new PageViewModel(content.Data.Image, content.Data.SecondaryImage, content.Data.FeaturedImage, tagsViewModel),
             form = dialog.container.find(selectors.pagePropertiesForm);
         ko.applyBindings(pageViewModel, form.get(0));
+
+        currentPageIsPublished = dialog.container.find(selectors.pagePropertiesPageIsPublishedCheckbox).is(':checked');
 
         dialog.container.find(selectors.editPermalink).on('click', function () {
             page.showPagePropertiesEditPermalinkBox(dialog);
@@ -200,7 +206,22 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                     beforePost: function () {
                         if (!dialog.container.find(selectors.permalinkEditField).valid()) {
                             page.showAddNewPageEditPermalinkBox(dialog);
+                            return false;
                         }
+                        
+                        var newPageIsPublished = dialog.container.find(selectors.pagePropertiesPageIsPublishedCheckbox).is(':checked'),
+                            message = newPageIsPublished ? globalization.pageStatusChangeConfirmationMessagePublish : globalization.pageStatusChangeConfirmationMessageUnPublish;
+                        if (currentPageIsPublished != newPageIsPublished) {
+                            modal.confirm({
+                                content: message,
+                                onAccept: function () {
+                                    currentPageIsPublished = newPageIsPublished;
+                                    dialog.container.find(selectors.pagePropertiesForm).submit();
+                                }
+                            });
+                            return false;
+                        }
+                        return true;
                     },
 
                     postSuccess: postSuccess

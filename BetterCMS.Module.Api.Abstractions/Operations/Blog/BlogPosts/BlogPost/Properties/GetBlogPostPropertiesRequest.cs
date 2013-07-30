@@ -13,14 +13,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         [DataMember]
         public System.Guid BlogPostId
         {
-            get
-            {
-                return Data.BlogPostId;
-            }
-            set
-            {
-                Data.BlogPostId = value;
-            }
+            get; set;
         }
     }
 }

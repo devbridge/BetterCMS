@@ -2,6 +2,7 @@
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Module.Api.Helpers;
+using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.MediaManager.Models;
 
 using ServiceStack.ServiceInterface;
@@ -19,13 +20,11 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
 
         public GetFilesResponse Get(GetFilesRequest request)
         {
-            // TODO: throw new validation exception if request.IncludeFiles == false && request.IncludeFolders == false
-
             request.Data.SetDefaultOrder("Title");
 
             var query = repository
                 .AsQueryable<Media>()
-                .Where(m => m.Original == null && m.Folder.Id == request.Data.FolderId);
+                .Where(m => m.Original == null && m.Folder.Id == request.Data.FolderId && m.Type == MediaType.File);
 
             if (!request.Data.IncludeFolders)
             {

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
 namespace BetterCms.Module.Api.Infrastructure
 {
@@ -27,7 +26,6 @@ namespace BetterCms.Module.Api.Infrastructure
         {
             Filter = new DataFilter();
             Order = new DataOrder();
-            FieldExceptions = new List<string>();
 
             Skip = skip;
             Take = take;
@@ -68,13 +66,5 @@ namespace BetterCms.Module.Api.Infrastructure
         /// </value>
         [DataMember]
         public int? Take { get; set; }
-
-        /// <summary>
-        /// Gets the field exceptions - when there is prohibited filtering by field.
-        /// </summary>
-        /// <value>
-        /// The field exceptions.
-        /// </value>
-        public List<string> FieldExceptions { get; set; }
     }
 }

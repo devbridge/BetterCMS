@@ -13,14 +13,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
         [DataMember]
         public System.Guid ImageId
         {
-            get
-            {
-                return Data.ImageId;
-            }
-            set
-            {
-                Data.ImageId = value;
-            }
+            get; set;
         }
     }
 }

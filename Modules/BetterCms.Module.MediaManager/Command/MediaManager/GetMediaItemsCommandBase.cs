@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Models;
@@ -111,18 +112,18 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
                 foreach (var tagKeyValue in request.Tags)
                 {
                     var id = tagKeyValue.Key.ToGuidOrDefault();
-                    query = query.Where(m => m.MediaTags.Any(mt => mt.Tag.Id == id));
+                    query = query.Where(m => m is MediaFolder || m.MediaTags.Any(mt => mt.Tag.Id == id));
                 }
             }
 
-            if (!string.IsNullOrWhiteSpace(request.SearchQuery) || request.Tags != null)
+            if (!string.IsNullOrWhiteSpace(request.SearchQuery))
             {
                 var searchQuery = string.Format("%{0}%", request.SearchQuery);
-                query = query.Where(m => m.Title.Contains(searchQuery) || m.Description.Contains(searchQuery));
-
-                var result = new List<Media>();
+                query = query.Where(m => m.Title.Contains(searchQuery) || m.Description.Contains(searchQuery) || m.MediaTags.Any(mt => mt.Tag.Name.Contains(searchQuery)));
+                query = query.Fetch(f => f.Folder);
                 var mediaList = query.ToList();
 
+                var result = new List<Media>();
                 foreach (var media in mediaList)
                 {
                     if (IsChild(media, request.CurrentFolderId, request.IncludeArchivedItems))
@@ -143,7 +144,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
                 query = query.Where(m => m.Folder == null);
             }
 
-            return ToResponse(request, query);
+            return ToResponse(request, query, true);
         }
 
         private static bool IsChild(Media media, Guid currentFolderId, bool includeArchivedItems)
@@ -176,14 +177,17 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             return IsChild(media.Folder, currentFolderId, includeArchivedItems);
         }
 
-        private Tuple<IEnumerable<MediaViewModel>, int> ToResponse(MediaManagerViewModel request, IQueryable<Media> query)
+        private Tuple<IEnumerable<MediaViewModel>, int> ToResponse(MediaManagerViewModel request, IQueryable<Media> query, bool forceToFuture = false)
         {
             var count = query.ToRowCountFutureValue();
             query = AddOrder(query, request).AddPaging(request);
 
-            var items = query.Select(SelectItem).ToList();
+            var items = forceToFuture
+                            ? NHibernate.Linq.LinqExtensionMethods.ToFuture(query).ToList().Select(SelectItem).ToList()
+                            : query.Select(SelectItem).ToList();
+            var totalCount = count.Value;
 
-            return new Tuple<IEnumerable<MediaViewModel>, int>(items, count.Value);
+            return new Tuple<IEnumerable<MediaViewModel>, int>(items, totalCount);
         }
 
         /// <summary>

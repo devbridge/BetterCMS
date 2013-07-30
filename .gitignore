@@ -80,3 +80,7 @@ logs
 
 /Sandbox/BetterCms.Sandbox.Mvc4/App_Data/BetterCMS/versions.info
 /Tests/BetterCms.Api.Tests/App_Data/BetterCms/versions.info
+/Tests/BetterCms.Api.Tests/xml_output_dir
+/Tests/BetterCms.Api.Tests/App_Data/Temp/*.mdf
+/Tests/BetterCms.Api.Tests/App_Data/Temp/*.ldf
+

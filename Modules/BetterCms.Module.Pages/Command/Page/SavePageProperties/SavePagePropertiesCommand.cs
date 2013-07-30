@@ -106,7 +106,17 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             page.Title = request.PageName;
             page.CustomCss = request.PageCSS;
             page.CustomJS = request.PageJavascript;
-            page.Status = request.IsVisibleToEveryone ? PageStatus.Published : PageStatus.Unpublished;
+
+            if (request.IsVisibleToEveryone)
+            {
+                page.Status = PageStatus.Published;
+                page.PublishedOn = DateTime.Now;
+            }
+            else
+            {
+                page.Status = PageStatus.Unpublished;
+            }
+
             page.UseNoFollow = request.UseNoFollow;
             page.UseNoIndex = request.UseNoIndex;
             page.UseCanonicalUrl = request.UseCanonicalUrl;

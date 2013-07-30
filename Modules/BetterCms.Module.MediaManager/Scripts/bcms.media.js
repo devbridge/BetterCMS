@@ -40,6 +40,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             saveFolderUrl: null,
             renameMediaUrl: null,
             getMediaUrl: null,
+            getFileUrl: null,
             downloadFileUrl: null,
             unarchiveMediaUrl: null,
             archiveMediaUrl: null
@@ -69,6 +70,8 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             insertFileFailureMessageMessage: null,
             insertFileDialogTitle: null,
             fileNotSelectedMessageMessage: null,
+            
+            searchedInPathPrefix: null,
 
             imagesTabTitle: null,
             audiosTabTitle: null,
@@ -100,9 +103,9 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         fileExtensions = {
             officeFiles: '|thmx|pdf|txt|doc|dot|docx|dotx|dotm|docm|'
                 + 'xls|xlt|xlm|xlsx|xlsm|xltx|xltm|xlsb|xla|xlam|xll|xlw|'
-                + 'ppt|pptx|pptm|potx|potm|ppam|ppsx|ppsm|sldx|sldm|',
+                + 'ppt|pptx|pptm|potx|potm|ppam|ppsx|ppsm|sldx|sldm|csv|txt|rtf|msg|',
             archiveFiles: '|rar|zip|7z|tar|gz|bz2|ace|arc|arj|cab|pak|zoo|',
-            audioFiles: '|mp3|waw|aiif|aac|flac|m4a|m4p|ogg|ra|vox|wma|',
+            audioFiles: '|mp3|wav|aiif|aac|flac|m4a|m4p|ogg|ra|vox|wma|',
             imageFiles: '|gif|bmp|ico|jpg|jpeg|png|tif|tiff|raw|psd|svg|ai|cdr|',
             videoFiles: '|mp4|mp2v|mp4v|mpe|mpeg|mpg|mpg2|mts|avi|3gp|mov|wmv|rm|asf|flv|flc|m2t|m2v|m4v|ogv|ogx|swf|vob|xfl|'
         },
@@ -160,6 +163,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         self.closeFilter = function () {
             self.isFilterVisible(false);
         };
+        
+        self.changeIncludeArchived = function () {
+            self.includeArchived(!(self.includeArchived()));
+        };
 
         self.fromJson = function (options) {
             self.searchQuery(options.GridOptions.SearchQuery);
@@ -171,8 +178,8 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.tags.applyTagList(options.GridOptions.Tags);
         };
 
-        self.isFilterSet = function() {
-            return self.tags.tags().length > 0 || self.searchQuery();
+        self.isSearchEmpty = function() {
+            return self.searchQuery() == null || self.searchQuery() == '';
         };
     }
 
@@ -228,7 +235,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             return self.isRootFolder() && self.medias().length == 0;
         };
 
-        self.showMediaParentFolderLink = ko.observable(false);
+        self.isSearchResults = ko.observable(false);
 
         self.addNewFolder = function () {
             if (!self.rowAdded) {
@@ -260,6 +267,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             mediaUpload.openReuploadFilesDialog(item.id(), self.path().currentFolder().id(), self.path().currentFolder().type, function (filesData) {
                 if (filesData && filesData.Data && filesData.Data.Medias && filesData.Data.Medias.length > 0) {
                     var mediaItem = convertToMediaModel(filesData.Data.Medias[0]);
+                    if (self.path().currentFolder().type == mediaTypes.file) {
+                        mediaItem.thumbnailUrl(item.thumbnailUrl());
+                        mediaItem.tooltip(item.tooltip());
+                    }
                     var index = $.inArray(item, self.medias());
                     self.medias.splice(index, 1, mediaItem);
                     // Replace unobtrusive validator.
@@ -271,12 +282,16 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
         self.searchMedia = function () {
             self.gridOptions().paging.pageNumber(1);
-
+            self.gridOptions().closeFilter();
             self.loadMedia();
         };
 
         self.searchWithFilter = function() {
-            self.gridOptions().closeFilter();
+            self.searchMedia();
+        };
+
+        self.clearFilter = function () {
+            self.gridOptions().clearFilter();
             self.searchMedia();
         };
 
@@ -368,25 +383,27 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     function MediaPathViewModel(type) {
         var self = this;
 
+        self.isSearchResults = ko.observable(false);
         self.currentFolder = ko.observable();
         self.folders = ko.observableArray();
         self.type = type;
 
         self.pathFolders = ko.computed(function () {
-            var range = self.folders();
+            var range = self.folders(),
+                prefix = self.isSearchResults() ? globalization.searchedInPathPrefix + ' ' : '';
             if (range.length > 0) {
                 switch (self.type) {
                     case mediaTypes.image:
-                        range[0].name(globalization.imagesTabTitle);
+                        range[0].name(prefix + globalization.imagesTabTitle);
                         break;
                     case mediaTypes.audio:
-                        range[0].name(globalization.audiosTabTitle);
+                        range[0].name(prefix + globalization.audiosTabTitle);
                         break;
                     case mediaTypes.video:
-                        range[0].name(globalization.videosTabTitle);
+                        range[0].name(prefix + globalization.videosTabTitle);
                         break;
                     case mediaTypes.file:
-                        range[0].name(globalization.filesTabTitle);
+                        range[0].name(prefix + globalization.filesTabTitle);
                         break;
                 }
             }
@@ -447,7 +464,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.parentFolderId = ko.observable(item.ParentFolderId);
             self.parentFolderName = ko.observable(item.ParentFolderName);
 
-            self.tooltip = item.Tooltip;
+            self.tooltip = ko.observable(item.Tooltip);
             self.thumbnailUrl = ko.observable(item.ThumbnailUrl);
 
             self.getImageUrl = function () {
@@ -540,7 +557,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             };
 
             self.showParentLink = function (mediaItemsViewModel, data) {
-                return mediaItemsViewModel.showMediaParentFolderLink();
+                return mediaItemsViewModel.isSearchResults();
             };
 
             self.openParent = function (mediaItemsViewModel, data) {
@@ -698,6 +715,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 var self = this;
                 imageEditor.onEditImage(self.id(), function (json) {
                     self.version(json.Version);
+                    self.tooltip(json.Caption);
                     self.thumbnailUrl(json.ThumbnailUrl);
                     self.publicUrl(json.Url);
                     self.name(json.Title);
@@ -810,10 +828,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                     self.name(json.Title);
                     self.oldName = json.Title;
                     if (json.Image) {
-                        self.tooltip = json.Image.ImageTooltip;
+                        self.tooltip(json.Image.ImageTooltip);
                         self.thumbnailUrl(json.Image.ThumbnailUrl);
                     } else {
-                        self.tooltip = null;
+                        self.tooltip(null);
                         self.thumbnailUrl(null);
                     }
                 });
@@ -997,6 +1015,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     * Returns css class for given file extension
     */
     function getFileExtensionCssClassName(extension) {
+        extension = extension.toLowerCase();
         if (!extension) {
             return ' bcms-uknown-icn';
         }
@@ -1230,7 +1249,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     * Called when file is selected from files list.
     */
     function insertFile(selectedMedia) {
-        addFileToEditor($.format(links.downloadFileUrl, selectedMedia.id()), selectedMedia.name());
+        addFileToEditor($.format(links.getFileUrl, selectedMedia.id()), selectedMedia.name());
 
         if (fileInsertDialog != null) {
             fileInsertDialog.close();
@@ -1384,7 +1403,12 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     * Changes current folder.
     */
     function changeFolder(id, folderViewModel) {
-        var params = createFolderParams(id, null),
+        // Clear search.
+        if (folderViewModel != null && folderViewModel.gridOptions() != null) {
+            folderViewModel.gridOptions().searchQuery('');
+            folderViewModel.gridOptions().closeFilter();
+        }
+        var params = createFolderParams(id, folderViewModel),
             onComplete = function (json) {
                 messages.refreshBox(folderViewModel.container, {});
                 parseJsonResults(json, folderViewModel);
@@ -1439,7 +1463,8 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                     folderViewModel.gridOptions(new MediaItemsOptionsViewModel(folderViewModel.onOpenPage));
                 }
                 folderViewModel.gridOptions().fromJson(json.Data);
-                folderViewModel.showMediaParentFolderLink(folderViewModel.gridOptions().isFilterSet());
+                folderViewModel.isSearchResults(!folderViewModel.gridOptions().isSearchEmpty());
+                folderViewModel.path().isSearchResults(folderViewModel.isSearchResults());
 
                 // Replace unobtrusive validator
                 bcms.updateFormValidator(folderViewModel.container.find(selectors.firstForm));

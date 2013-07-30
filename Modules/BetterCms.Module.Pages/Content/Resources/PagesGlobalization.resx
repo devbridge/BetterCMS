@@ -247,7 +247,7 @@
     <value>You are going to copy all content and properties from the current page.</value>
   </data>
   <data name="ClonePage_Dialog_PageTitle" xml:space="preserve">
-    <value>New Page Title</value>
+    <value>New Page Title (H1)</value>
   </data>
   <data name="ClonePage_Dialog_PageTitle_Tooltip_Description" xml:space="preserve">
     <value>Create a title for your new page.</value>
@@ -358,7 +358,7 @@
     <value>Edit the privacy settings of this page. Selecting "No Follow" will tell search engines not to follow the links on this page, and "No Index" will tell search engines not to index this page.</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_Privacy_VisibleToEveryone" xml:space="preserve">
-    <value>This page is visible to everyone (PUBLISHED)</value>
+    <value>Page is published</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_Title" xml:space="preserve">
     <value>JavaScript &amp; CSS</value>
@@ -472,7 +472,7 @@
     <value>Page name is required.</value>
   </data>
   <data name="EditSeo_PageTitle_Tooltip_Description" xml:space="preserve">
-    <value />
+    <value>Edit the page name that will appear on a page as the main title.</value>
   </data>
   <data name="EditSeo_PageUrlPath_InvalidMessage" xml:space="preserve">
     <value>Page URL path is invalid. Link can contain only following characters: '0-9', 'a-z', '-', '/', '_'</value>
@@ -1091,5 +1091,11 @@
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_UseCanonicalUrl" xml:space="preserve">
     <value>Use canonical URL.</value>
+  </data>
+  <data name="EditPageProperties_PageStatusChange_ConfirmationMessage_Publish" xml:space="preserve">
+    <value>Do you really want to publish this page?</value>
+  </data>
+  <data name="EditPageProperties_PageStatusChange_ConfirmationMessage_UnPublish" xml:space="preserve">
+    <value>Do you really want to unpublish this page?</value>
   </data>
 </root>

@@ -119,6 +119,7 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
             var newPage = page.Duplicate();
 
             newPage.Title = newPageTitle;
+            newPage.MetaTitle = newPageTitle;
             newPage.PageUrl = newPageUrl;
             newPage.PageUrlLowerTrimmed = newPageUrl.LowerTrimmedUrl();
             newPage.Status = PageStatus.Unpublished;

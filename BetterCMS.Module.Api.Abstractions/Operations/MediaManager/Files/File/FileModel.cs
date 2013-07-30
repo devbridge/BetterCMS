@@ -17,6 +17,15 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         public string Title { get; set; }
 
         /// <summary>
+        /// Gets or sets the description.
+        /// </summary>
+        /// <value>
+        /// The description.
+        /// </value>
+        [DataMember]
+        public string Description { get; set; }
+
+        /// <summary>
         /// Gets or sets the file extension.
         /// </summary>
         /// <value>

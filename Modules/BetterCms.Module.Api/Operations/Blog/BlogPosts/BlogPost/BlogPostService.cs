@@ -3,6 +3,8 @@
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties;
+using BetterCms.Module.Api.Operations.Pages.Contents.Content.BlogPostContent;
 
 using ServiceStack.ServiceInterface;
 
@@ -12,15 +14,21 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
     {
         private readonly IRepository repository;
 
-        public BlogPostService(IRepository repository)
+        private readonly IBlogPostPropertiesService propertiesService;
+        
+        private readonly IBlogPostContentService contentService;
+
+        public BlogPostService(IBlogPostPropertiesService propertiesService, IBlogPostContentService contentService, IRepository repository)
         {
+            this.propertiesService = propertiesService;
+            this.contentService = contentService;
             this.repository = repository;
         }
 
         public GetBlogPostResponse Get(GetBlogPostRequest request)
         {
             var model = repository
-                .AsQueryable<Module.Blog.Models.BlogPost>(blogPost => blogPost.Id == request.Data.BlogPostId)
+                .AsQueryable<Module.Blog.Models.BlogPost>(blogPost => blogPost.Id == request.BlogPostId)
                 .Select(blogPost => new BlogPostModel
                     {
                         Id = blogPost.Id,
@@ -54,6 +62,22 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
                        {
                            Data = model
                        };
+        }
+
+        IBlogPostPropertiesService IBlogPostService.Properties
+        {
+            get
+            {
+                return propertiesService;
+            }
+        }
+
+        IBlogPostContentService IBlogPostService.Content
+        {
+            get
+            {
+                return contentService;
+            }
         }
     }
 }

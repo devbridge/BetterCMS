@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace BetterCms.Module.Users.ViewModels.Role
@@ -15,5 +12,16 @@ namespace BetterCms.Module.Users.ViewModels.Role
         public string Name { get; set; }
 
         public bool IsSelected { get; set; }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format("Id: {0}, Name: {1}, IsSelected: {2}", Id, Name, IsSelected);
+        }
     }
 }
