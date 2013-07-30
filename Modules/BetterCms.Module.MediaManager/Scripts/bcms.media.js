@@ -40,6 +40,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             saveFolderUrl: null,
             renameMediaUrl: null,
             getMediaUrl: null,
+            getFileUrl: null,
             downloadFileUrl: null,
             unarchiveMediaUrl: null,
             archiveMediaUrl: null
@@ -102,9 +103,9 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         fileExtensions = {
             officeFiles: '|thmx|pdf|txt|doc|dot|docx|dotx|dotm|docm|'
                 + 'xls|xlt|xlm|xlsx|xlsm|xltx|xltm|xlsb|xla|xlam|xll|xlw|'
-                + 'ppt|pptx|pptm|potx|potm|ppam|ppsx|ppsm|sldx|sldm|',
+                + 'ppt|pptx|pptm|potx|potm|ppam|ppsx|ppsm|sldx|sldm|csv|txt|rtf|msg|',
             archiveFiles: '|rar|zip|7z|tar|gz|bz2|ace|arc|arj|cab|pak|zoo|',
-            audioFiles: '|mp3|waw|aiif|aac|flac|m4a|m4p|ogg|ra|vox|wma|',
+            audioFiles: '|mp3|wav|aiif|aac|flac|m4a|m4p|ogg|ra|vox|wma|',
             imageFiles: '|gif|bmp|ico|jpg|jpeg|png|tif|tiff|raw|psd|svg|ai|cdr|',
             videoFiles: '|mp4|mp2v|mp4v|mpe|mpeg|mpg|mpg2|mts|avi|3gp|mov|wmv|rm|asf|flv|flc|m2t|m2v|m4v|ogv|ogx|swf|vob|xfl|'
         },
@@ -161,6 +162,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
         self.closeFilter = function () {
             self.isFilterVisible(false);
+        };
+        
+        self.changeIncludeArchived = function () {
+            self.includeArchived(!(self.includeArchived()));
         };
 
         self.fromJson = function (options) {
@@ -262,6 +267,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             mediaUpload.openReuploadFilesDialog(item.id(), self.path().currentFolder().id(), self.path().currentFolder().type, function (filesData) {
                 if (filesData && filesData.Data && filesData.Data.Medias && filesData.Data.Medias.length > 0) {
                     var mediaItem = convertToMediaModel(filesData.Data.Medias[0]);
+                    if (self.path().currentFolder().type == mediaTypes.file) {
+                        mediaItem.thumbnailUrl(item.thumbnailUrl());
+                        mediaItem.tooltip(item.tooltip());
+                    }
                     var index = $.inArray(item, self.medias());
                     self.medias.splice(index, 1, mediaItem);
                     // Replace unobtrusive validator.
@@ -819,10 +828,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                     self.name(json.Title);
                     self.oldName = json.Title;
                     if (json.Image) {
-                        self.tooltip = json.Image.ImageTooltip;
+                        self.tooltip(json.Image.ImageTooltip);
                         self.thumbnailUrl(json.Image.ThumbnailUrl);
                     } else {
-                        self.tooltip = null;
+                        self.tooltip(null);
                         self.thumbnailUrl(null);
                     }
                 });
@@ -1006,6 +1015,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     * Returns css class for given file extension
     */
     function getFileExtensionCssClassName(extension) {
+        extension = extension.toLowerCase();
         if (!extension) {
             return ' bcms-uknown-icn';
         }
@@ -1239,7 +1249,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     * Called when file is selected from files list.
     */
     function insertFile(selectedMedia) {
-        addFileToEditor($.format(links.downloadFileUrl, selectedMedia.id()), selectedMedia.name());
+        addFileToEditor($.format(links.getFileUrl, selectedMedia.id()), selectedMedia.name());
 
         if (fileInsertDialog != null) {
             fileInsertDialog.close();

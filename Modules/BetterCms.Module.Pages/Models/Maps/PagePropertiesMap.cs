@@ -9,7 +9,6 @@ namespace BetterCms.Module.Pages.Models.Maps
             Table("Pages");
             
             Map(x => x.Description).Nullable();
-            Map(x => x.CanonicalUrl).Nullable();
             Map(x => x.CustomJS).Nullable();
             Map(x => x.CustomCss).Nullable();
             Map(x => x.UseCanonicalUrl).Not.Nullable();

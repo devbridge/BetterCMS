@@ -4,7 +4,6 @@ using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
-using BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties;
 
 using ServiceStack.ServiceInterface;
 
@@ -12,13 +11,10 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
 {
     public class BlogPostsService : Service, IBlogPostsService
     {
-        private readonly IBlogPostPropertiesService propertiesService;
-        
         private readonly IRepository repository;
 
-        public BlogPostsService(IBlogPostPropertiesService propertiesService, IRepository repository)
+        public BlogPostsService(IRepository repository)
         {
-            this.propertiesService = propertiesService;
             this.repository = repository;
         }
 
@@ -76,14 +72,6 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
                        {
                            Data = listResponse
                        };
-        }
-
-        IBlogPostPropertiesService IBlogPostsService.Properties
-        {
-            get
-            {
-                return propertiesService;
-            }
         }
     }
 }

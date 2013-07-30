@@ -1,7 +1,10 @@
-﻿using BetterCms.Module.Pages.Models;
+﻿using System;
+
+using BetterCms.Module.Pages.Models;
 
 namespace BetterCms.Module.Blog.Models
 {
+    [Serializable]
     public class BlogPostContent : HtmlContent
     {
         public override Root.Models.Content CopyDataTo(Root.Models.Content content)

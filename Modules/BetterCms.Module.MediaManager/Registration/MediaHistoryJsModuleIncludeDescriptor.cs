@@ -23,7 +23,7 @@ namespace BetterCms.Module.MediaManager.Registration
                     new JavaScriptModuleLinkTo<HistoryController>(this, "loadMediaHistoryDialogUrl", c => c.MediaHistory("{0}")),
                     new JavaScriptModuleLinkTo<HistoryController>(this, "loadMediaVersionPreviewUrl", c => c.MediaVersion("{0}")),
                     new JavaScriptModuleLinkTo<HistoryController>(this, "restoreMediaVersionUrl", c => c.RestoreMediaVersion("{0}")),
-                    new JavaScriptModuleLinkTo<FilesController>(this, "downloadFileUrl", c => c.Download("{0}")),
+                    new JavaScriptModuleLinkTo<FilesController>(this, "downloadFileUrl", c => c.Download("{0}", true)),
                 };
 
             Globalization = new IActionProjection[]

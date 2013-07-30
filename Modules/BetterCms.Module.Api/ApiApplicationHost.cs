@@ -3,6 +3,7 @@ using System;
 using Autofac;
 
 using BetterCms.Module.Api.Filters;
+using BetterCms.Module.Api.Operations.Root.Tags.Tag;
 
 using ServiceStack.ServiceInterface.Validation;
 using ServiceStack.Text;
@@ -34,7 +35,7 @@ namespace BetterCms.Module.Api
             RequestFilters.Add(GetRequestProcessor.DeserializeJsonFromGet);
 
             container.Adapter = new AutofacContainerAdapter(containerProvider);
-            container.RegisterValidators(typeof(IApiFacade).Assembly);
+            container.RegisterValidators(typeof(GetTagRequestValidator).Assembly);
 		}
 	}
 }

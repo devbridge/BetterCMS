@@ -38,5 +38,16 @@ namespace BetterCms.Module.MediaManager.ViewModels.MediaManager
         {
             ContentType = MediaContentType.File;
         }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format("Id: {0}, Version: {1}, Name: {2}, Type: {3}, ContentType: {4}, IsArchived: {5}, ParentFolderId: {6}, ParentFolderName: {7}", Id, Version, Name, Type, ContentType, IsArchived, ParentFolderId, ParentFolderName);
+        }
     }
 }

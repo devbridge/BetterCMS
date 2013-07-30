@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace BetterCms.Module.MediaManager.ViewModels.MediaManager
 {
@@ -11,5 +9,16 @@ namespace BetterCms.Module.MediaManager.ViewModels.MediaManager
         public Guid CurrentFolderId { get; set; }
 
         public IDictionary<Guid, string> Folders { get; set; }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format("CurrentFolderId: {0}", CurrentFolderId);
+        }
     }
 }

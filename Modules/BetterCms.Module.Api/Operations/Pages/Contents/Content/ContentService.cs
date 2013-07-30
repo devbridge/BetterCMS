@@ -1,5 +1,4 @@
-﻿using BetterCms.Module.Api.Operations.Pages.Contents.Content.BlogPostContent;
-using BetterCms.Module.Api.Operations.Pages.Contents.Content.History;
+﻿using BetterCms.Module.Api.Operations.Pages.Contents.Content.History;
 using BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent;
 
 using ServiceStack.ServiceInterface;
@@ -10,14 +9,11 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content
     {
         private readonly IHtmlContentService htmlService;
 
-        private readonly IBlogPostContentService blogPostService;
-
         private readonly IContentHistoryService historyService;
 
-        public ContentService(IHtmlContentService htmlService, IBlogPostContentService blogPostService, IContentHistoryService historyService)
+        public ContentService(IHtmlContentService htmlService, IContentHistoryService historyService)
         {
             this.htmlService = htmlService;
-            this.blogPostService = blogPostService;
             this.historyService = historyService;
         }
 
@@ -26,14 +22,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content
             get
             {
                 return htmlService;
-            }
-        }
-
-        IBlogPostContentService IContentService.BlogPost
-        {
-            get
-            {
-                return blogPostService;
             }
         }
 

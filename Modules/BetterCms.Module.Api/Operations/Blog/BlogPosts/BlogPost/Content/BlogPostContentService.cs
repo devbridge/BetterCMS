@@ -3,10 +3,11 @@
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Module.Api.Operations.Pages.Contents.Content.BlogPostContent;
 
 using ServiceStack.ServiceInterface;
 
-namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.BlogPostContent
+namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Content
 {
     public class BlogPostContentService : Service, IBlogPostContentService
     {

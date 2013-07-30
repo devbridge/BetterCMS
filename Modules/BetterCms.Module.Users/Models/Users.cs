@@ -5,6 +5,7 @@ using BetterCms.Module.MediaManager.Models;
 
 namespace BetterCms.Module.Users.Models
 {
+    [Serializable]
     public class Users : EquatableEntity<Users>
     {
         public virtual string UserName { get; set; }
