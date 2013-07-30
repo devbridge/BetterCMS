@@ -124,10 +124,8 @@ describe('blog.blogPosts.api.behavior', function () {
             expect(blogPost.mainImageUrl).toBeDefinedAndNotNull('mainImageUrl should be retrieved.');
             expect(blogPost.mainImageThumbnauilUrl).toBeDefinedAndNotNull('mainImageThumbnailUrl should be retrieved.');
             expect(blogPost.mainImageCaption).toBe('Image caption for _0003_Blog_For_Tests_', 'Correctly filtered mainImageCaption should be retrieved.');
-            expect(blogPost.activationDate).toContain('1374613200000', 'Correctly filtered activationDate should be retrieved.');
-            expect(blogPost.activationDate).toContain(api.parseJsonDate(blogPost.activationDate).getTime(), 'Correctly filtered activationDate should be retrieved.');
-            expect(blogPost.expirationDate).toContain('1974315599000', 'Correctly filtered expirationDate should be retrieved.');
-            expect(blogPost.expirationDate).toContain(api.parseJsonDate(blogPost.expirationDate).getTime(), 'Correctly filtered expirationDate should be retrieved.');
+            expect(new Date(blogPost.activationDate).getTime()).toBe(new Date('2013-07-24T00:00:00').getTime(), 'Correctly filtered activationDate should be retrieved.');
+            expect(new Date(blogPost.expirationDate).getTime()).toBe(new Date('2032-07-24T23:59:59').getTime(), 'Correctly filtered expirationDate should be retrieved.');
             expect(blogPost.isArchived).toBe(false);
         });
     });
@@ -168,10 +166,8 @@ describe('blog.blogPosts.api.behavior', function () {
             expect(blogPost.mainImageUrl).toBeDefinedAndNotNull('mainImageUrl should be retrieved.');
             expect(blogPost.mainImageThumbnauilUrl).toBeDefinedAndNotNull('mainImageThumbnailUrl should be retrieved.');
             expect(blogPost.mainImageCaption).toBe('Image caption for _0003_Blog_For_Tests_', 'Correctly filtered mainImageCaption should be retrieved.');
-            expect(blogPost.activationDate).toContain('1374613200000', 'Correctly filtered activationDate should be retrieved.');
-            expect(blogPost.activationDate).toContain(api.parseJsonDate(blogPost.activationDate).getTime(), 'Correctly filtered activationDate should be retrieved.');
-            expect(blogPost.expirationDate).toContain('1974315599000', 'Correctly filtered expirationDate should be retrieved.');
-            expect(blogPost.expirationDate).toContain(api.parseJsonDate(blogPost.expirationDate).getTime(), 'Correctly filtered expirationDate should be retrieved.');
+            expect(new Date(blogPost.activationDate).getTime()).toBe(new Date('2013-07-24T00:00:00').getTime(), 'Correctly filtered activationDate should be retrieved.');
+            expect(new Date(blogPost.expirationDate).getTime()).toBe(new Date('2032-07-24T23:59:59').getTime(), 'Correctly filtered expirationDate should be retrieved.');            
             expect(blogPost.isArchived).toBe(false, 'Correctly filtered isArchived should be retrieved.');
         });
     });
@@ -220,10 +216,9 @@ describe('blog.blogPosts.api.behavior', function () {
             expect(blogPost.mainImageId).toBeDefinedAndNotNull('mainImageId should be retrieved.');
             expect(blogPost.secondaryImageId).toBeDefinedAndNotNull('secondaryImageId should be retrieved.');
             expect(blogPost.featuredImageId).toBeDefinedAndNotNull('featuredImageId should be retrieved.');
-            expect(blogPost.activationDate).toContain('1374613200000', 'Correctly filtered activationDate should be retrieved.');
-            expect(blogPost.activationDate).toContain(api.parseJsonDate(blogPost.activationDate).getTime(), 'Correctly filtered activationDate should be retrieved.');
-            expect(blogPost.expirationDate).toContain('1974315599000', 'Correctly filtered expirationDate should be retrieved.');
-            expect(blogPost.expirationDate).toContain(api.parseJsonDate(blogPost.expirationDate).getTime(), 'Correctly filtered expirationDate should be retrieved.');
+            expect(new Date(blogPost.activationDate).getTime()).toBe(new Date('2013-07-24T00:00:00').getTime(), 'Correctly filtered activationDate should be retrieved.');
+            expect(new Date(blogPost.expirationDate).getTime()).toBe(new Date('2032-07-24T23:59:59').getTime(), 'Correctly filtered expirationDate should be retrieved.');
+            
             expect(blogPost.isArchived).toBe(false, 'Correctly filtered isArchived should be retrieved.');
 
             // html
@@ -366,8 +361,7 @@ describe('blog.blogPosts.api.behavior', function () {
             expect(content.name).toBe('_0002_Blog_Post_For_Tests', 'Correctly filtered name should be retrieved.');
             expect(content.html).toBe('<p>_0002_Blog_Post_For_Tests Test HTML</p>', 'Correctly filtered html should be retrieved.');
             expect(content.isPublished).toBe(true, 'Correctly filtered isPubslihed should be retrieved.');
-            expect(content.publishedOn).toContain('1374643031000', 'Correctly filtered publishedOn should be retrieved.');
-            expect(content.publishedOn).toContain(api.parseJsonDate(content.publishedOn).getTime(), 'Correctly filtered publishedOn should be retrieved.');
+            expect(new Date(content.publishedOn).getTime()).toBe(new Date('2013-07-24T08:17:11').getTime(), 'Correctly filtered publishedOn should be retrieved.');
             expect(content.publishedByUser).toContain('Better CMS test user', 'Correctly filtered publishedByUser should be retrieved.');
         });
     });

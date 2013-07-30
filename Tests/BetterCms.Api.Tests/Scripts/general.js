@@ -28,7 +28,10 @@ var api = (function() {
         $.ajax(url, options);
     };
 
-    obj.parseJsonDate = function(jsonDate) {
+    obj.parseJsonDate = function (jsonDate) {
+        return new Date(jsonDate);
+        
+
         var offset = new Date().getTimezoneOffset() * 60000;
         var parts = /\/Date\((-?\d+)([+-]\d{2})?(\d{2})?.*/.exec(jsonDate);
 
@@ -38,7 +41,7 @@ var api = (function() {
         if (parts[3] == undefined)
             parts[3] = 0;
 
-        return new Date(+parts[1] + offset + parts[2] * 3600000 + parts[3] * 60000);
+        return new Date(+parts[1]);// + offset + parts[2] * 3600000 + parts[3] * 60000);
     };
     
     /**
@@ -57,8 +60,8 @@ var api = (function() {
         var createdOn = obj.parseJsonDate(entity.createdOn);
         var lastModifiedOn = obj.parseJsonDate(entity.lastModifiedOn);
         
-        expect(entity.createdOn).toContain(createdOn.getTime(), 'Invalid CreatedOn date.');
-        expect(entity.lastModifiedOn).toContain(lastModifiedOn.getTime(), 'Invalid LastModifiedOn date.');
+        expect(new Date(entity.createdOn).getTime()).toBe(new Date(createdOn.toJSON()).getTime(), 'Invalid CreatedOn date.');
+        expect(new Date(entity.lastModifiedOn).getTime()).toBe(new Date(lastModifiedOn.toJSON()).getTime(), 'Invalid LastModifiedOn date.');
         expect(entity.id.length).toBe(32, 'Invalid Id.');
     };
 
