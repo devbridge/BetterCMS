@@ -134,15 +134,6 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         public System.Guid? SecondaryImageId { get; set; }
 
         /// <summary>
-        /// Gets or sets the canonical URL.
-        /// </summary>
-        /// <value>
-        /// The canonical URL.
-        /// </value>
-        [DataMember]
-        public string CanonicalUrl { get; set; }
-
-        /// <summary>
         /// Gets or sets a value indicating whether to use canonical URL.
         /// </summary>
         /// <value>

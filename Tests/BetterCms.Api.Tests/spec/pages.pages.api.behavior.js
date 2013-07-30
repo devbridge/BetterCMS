@@ -514,7 +514,6 @@ describe('pages.pages.api.behavior', function () {
         expect(page.mainImageId).toBeDefinedAndNotNull('mainImageId should be retrieved.');
         expect(page.featuredImageId).toBeDefinedAndNotNull('featuredImageId should be retrieved.');
         expect(page.secondaryImageId).toBeDefinedAndNotNull('secondaryImageId should be retrieved.');
-        expect(page.canonicalUrl).toBe('canonical-url', 'Correctly filtered canonicalUrl should be retrieved.');
         expect(page.customCss).toBe('test page custom css', 'Correctly filtered customCss should be retrieved.');
         expect(page.customJavaScript).toBe('console.log("test");', 'Correctly filtered customJavaScript should be retrieved.');
         expect(page.useCanonicalUrl).toBe(true, 'Correctly filtered useCanonicalUrl should be retrieved.');
