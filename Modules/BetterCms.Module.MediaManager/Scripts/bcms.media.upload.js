@@ -199,6 +199,7 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
             if (fileName != null && fileName != "") {
                 // Do not allow multiple file upload on re-upload functionality.
                 if (options.reuploadMediaId && uploadsModel.uploads().length > 0) {
+                    messageBox.clearMessages();
                     messageBox.addWarningMessage(globalization.multipleFilesWarningMessageOnReupload);
                     var uploadedFiles = uploadsModel.uploads();
                     for (var i = 0; i < uploadedFiles.length; i++) {
@@ -481,6 +482,7 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
                 maxSimultaneousUploads: 4,
                 onFileAdded: function (file) {
                     if (options.reuploadMediaId && uploadsModel.uploads().length > 0) {
+                        messageBox.clearMessages();
                         messageBox.addWarningMessage(globalization.multipleFilesWarningMessageOnReupload);
                         var uploadedFiles = uploadsModel.uploads();
                         for (var i = 0; i < uploadedFiles.length; i++) {
