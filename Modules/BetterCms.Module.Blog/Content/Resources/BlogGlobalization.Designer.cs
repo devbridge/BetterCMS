@@ -232,7 +232,7 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Featured Image.
+        ///   Looks up a localized string similar to Main Image.
         /// </summary>
         public static string EditBlockPost_FeaturedImage_Title {
             get {

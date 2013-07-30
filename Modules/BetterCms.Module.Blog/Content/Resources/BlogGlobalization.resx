@@ -172,7 +172,7 @@
     <value>Image will be displayed as a thumbnail with your post.</value>
   </data>
   <data name="EditBlockPost_FeaturedImage_Title" xml:space="preserve">
-    <value>Featured Image</value>
+    <value>Main Image</value>
   </data>
   <data name="EditBlockPost_FeaturedImage_Tooltip_Description" xml:space="preserve">
     <value>Select an image that will accompany your post.</value>
