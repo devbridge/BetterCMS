@@ -7,7 +7,8 @@ namespace BetterCms.Module.Api.Operations.Blog
 {
     public class DefaultBlogApiOperations : IBlogApiOperations
     {
-        public DefaultBlogApiOperations(IBlogPostsService blogPosts, IBlogPostService blogPost, IAuthorsService authors, IAuthorService author)
+        public DefaultBlogApiOperations(IBlogPostsService blogPosts, IBlogPostService blogPost, IAuthorsService authors,
+            IAuthorService author)
         {
             BlogPost = blogPost;
             BlogPosts = blogPosts;
