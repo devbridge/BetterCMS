@@ -103,9 +103,9 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         fileExtensions = {
             officeFiles: '|thmx|pdf|txt|doc|dot|docx|dotx|dotm|docm|'
                 + 'xls|xlt|xlm|xlsx|xlsm|xltx|xltm|xlsb|xla|xlam|xll|xlw|'
-                + 'ppt|pptx|pptm|potx|potm|ppam|ppsx|ppsm|sldx|sldm|',
+                + 'ppt|pptx|pptm|potx|potm|ppam|ppsx|ppsm|sldx|sldm|csv|txt|rtf|msg|',
             archiveFiles: '|rar|zip|7z|tar|gz|bz2|ace|arc|arj|cab|pak|zoo|',
-            audioFiles: '|mp3|waw|aiif|aac|flac|m4a|m4p|ogg|ra|vox|wma|',
+            audioFiles: '|mp3|wav|aiif|aac|flac|m4a|m4p|ogg|ra|vox|wma|',
             imageFiles: '|gif|bmp|ico|jpg|jpeg|png|tif|tiff|raw|psd|svg|ai|cdr|',
             videoFiles: '|mp4|mp2v|mp4v|mpe|mpeg|mpg|mpg2|mts|avi|3gp|mov|wmv|rm|asf|flv|flc|m2t|m2v|m4v|ogv|ogx|swf|vob|xfl|'
         },
@@ -1007,6 +1007,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     * Returns css class for given file extension
     */
     function getFileExtensionCssClassName(extension) {
+        extension = extension.toLowerCase();
         if (!extension) {
             return ' bcms-uknown-icn';
         }
