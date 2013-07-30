@@ -414,11 +414,18 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             siteSettings.setContent(content);
             page.initializeSiteSettingsPagesList(content, data);
         });
-
+        
         form.on('submit', function (event) {
             event.preventDefault();
             page.searchSiteSettingsPages(form, container);
             return false;
+        });
+
+        form.find(selectors.siteSettingsPagesSearchField).keypress(function (event) {
+            if (event.which == 13) {
+                bcms.stopEventPropagation(event);
+                page.searchSiteSettingsPages(form, container);
+            }
         });
 
         form.find(selectors.siteSettingsPagesSearchButton).on('click', function () {
