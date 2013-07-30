@@ -61,7 +61,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                                 SecondaryImageId = page.SecondaryImage.Id,
                                 CustomCss = page.CustomCss,
                                 CustomJavaScript = page.CustomJS,
-                                CanonicalUrl = page.CanonicalUrl,
                                 UseCanonicalUrl = page.UseCanonicalUrl,
                                 UseNoFollow = page.UseNoFollow,
                                 UseNoIndex = page.UseNoIndex
