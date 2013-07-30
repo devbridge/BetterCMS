@@ -13,25 +13,12 @@
     <copyright>Better CMS is licensed under BETTER CMS LICENSE AGREEMENT (http://www.bettercms.com/license.txt).</copyright>
     <dependencies>
       <dependency id="BetterCms.Core" version="[@BetterCMSVersion@]" />
-      <!--<dependency id="Autofac" version="3.0.0" />
-      <dependency id="Common.Logging" version="2.1.2" />
-      <dependency id="Common.Logging.NLog" version="2.0.0" />
-      <dependency id="NHibernate" version="[3.3.3.4000]" />
-      <dependency id="NHibernate.Logging" version="1.3.1" />
-      <dependency id="FluentMigrator" version="[1.0.6.0]" />
-      <dependency id="FluentMigrator.Tools" version="[1.0.6.0]" />
-      <dependency id="FluentNHibernate" version="[1.3.0.733]" />
-      <dependency id="Iesi.Collections" version="3.2.0.4000" />-->
       <dependency id="Microsoft.AspNet.Mvc" version="4.0.20505.0" />
       <dependency id="Microsoft.AspNet.Razor" version="2.0.20505.0" />
       <dependency id="Microsoft.AspNet.WebPages" version="2.0.20505.0" />
       <dependency id="Microsoft.Net.Http" version="2.0.20505.0" />
-      <!--<dependency id="Microsoft.Web.Infrastructure" version="1.0.0.0" />-->      
       <dependency id="Mvc3Futures" version="3.0.20105.0" />
-      <!--<dependency id="MvcContrib.Mvc3-ci" version="3.0.100.0" />-->
       <dependency id="Newtonsoft.Json" version="4.5.1" />
-      <!--<dependency id="NLog" version="2.0.0.2000" />-->
-      <!--<dependency id="NuGet.Core" version="2.0.1" />-->
     </dependencies>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System.Web.WebPages.Razor" targetFramework="net40" />
