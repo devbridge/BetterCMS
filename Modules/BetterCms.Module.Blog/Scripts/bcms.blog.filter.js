@@ -26,7 +26,7 @@ bettercms.define('bcms.blog.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders'
             self.tags = tagsViewModel;
             self.includeArchived = ko.observable(false);
             self.dropDown = container.find(selectors.filterCategory).get(0);
-            self.dropDownValue = ko.observable(0);
+            self.dropDownValue = ko.observable($(self.dropDown).get(0).selectedIndex || 0);
             $(self.dropDown).change(function () {
                 self.dropDownValue(this.selectedIndex);
             });
