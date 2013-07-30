@@ -334,6 +334,37 @@ describe('blog.blogPosts.api.behavior', function () {
         });
     });
 
+    it('02109: Should get blog post content by id', function () {
+        var url = '/bcms-api/blog-posts/content/06182C92-E61E-4023-B3C9-A2050086598C',
+            result,
+            ready = false;
+
+        runs(function () {
+            api.get(url, null, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+
+            var content = result.data;
+            expect(content).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+
+            api.expectBasePropertiesAreNotNull(content);
+            expect(content.name).toBe('_0002_Blog_Post_For_Tests', 'Correctly filtered name should be retrieved.');
+            expect(content.html).toBe('<p>_0002_Blog_Post_For_Tests Test HTML</p>', 'Correctly filtered html should be retrieved.');
+            expect(content.isPublished).toBe(true, 'Correctly filtered isPubslihed should be retrieved.');
+            expect(content.publishedOn).toBe('/Date(1374643031000-0000)/', 'Correctly filtered publishedOn should be retrieved.');
+            expect(content.publishedByUser).toBe('Better CMS test user', 'Correctly filtered publishedByUser should be retrieved.');
+        });
+    });
+
     function createDataForBlogPostsList(includeArchived, includeUnpublished, take, skip) {
         return {
             filter: {

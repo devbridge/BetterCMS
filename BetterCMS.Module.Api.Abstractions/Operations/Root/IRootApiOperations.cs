@@ -1,4 +1,6 @@
-﻿using BetterCms.Module.Api.Operations.Root.Layouts;
+﻿using BetterCms.Module.Api.Operations.Root.Categories;
+using BetterCms.Module.Api.Operations.Root.Categories.Category;
+using BetterCms.Module.Api.Operations.Root.Layouts;
 using BetterCms.Module.Api.Operations.Root.Layouts.Layout;
 using BetterCms.Module.Api.Operations.Root.Tags;
 using BetterCms.Module.Api.Operations.Root.Tags.Tag;
@@ -15,6 +17,10 @@ namespace BetterCms.Module.Api.Operations.Root
         ITagsService Tags { get; }
 
         ITagService Tag { get; }
+        
+        ICategoriesService Categories { get; }
+
+        ICategoryService Category { get; }
 
         IVersionService Version { get; }
     }

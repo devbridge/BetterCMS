@@ -192,7 +192,6 @@
     <Compile Include="UnitTests\EnumMappingTests.cs" />
     <Compile Include="UnitTests\DynamicLinqExtensionsTests.cs" />
     <Compile Include="UnitTests\QueryCreatorTests.cs" />
-    <Compile Include="UnitTests\Root\GeneralTest.cs" />
     <Compile Include="UnitTests\SerializationTests.cs" />
   </ItemGroup>
   <ItemGroup>
