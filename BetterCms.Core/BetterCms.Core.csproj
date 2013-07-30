@@ -171,7 +171,9 @@
     <Compile Include="Modules\Projections\JavaScriptModuleLink.cs" />
     <Compile Include="Mvc\Attributes\NoCacheAttribute.cs" />
     <Compile Include="Mvc\Extensions\VirtualPath.cs" />
+    <Compile Include="Security\AccessLevel.cs" />
     <Compile Include="Security\BcmsAuthorizeAttribute.cs" />
+    <Compile Include="Security\IAccessControlService.cs" />
     <Compile Include="Security\IUserRole.cs" />
     <Compile Include="Modules\Projections\EmptyContentAccessor.cs" />
     <Compile Include="Mvc\Attributes\IgnoreAutoRouteAttribute.cs" />
