@@ -71,6 +71,7 @@ namespace BetterCms.Module.MediaManager.Models
             media.ContentType = ContentType;
             media.Folder = Folder;
             media.PublishedOn = PublishedOn;
+            media.Image = Image;
 
             return media;
         }

@@ -53,7 +53,12 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
                 reuploadMediaId: reuploadMediaId
             };
 
-        options.uploads.filesToAccept(rootFolderType == 1 ? 'image/*' : '');
+        // Quick dirty IE10 fix: remove accept tag from upload box.
+        if ($.browser.msie && parseInt($.browser.version, 10) > 9) {
+            options.uploads.filesToAccept('');
+        } else {
+            options.uploads.filesToAccept(rootFolderType == 1 ? 'image/*' : '');
+        }
 
         if (html5Upload.fileApiSupported()) {
             modal.open({
@@ -194,6 +199,7 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
             if (fileName != null && fileName != "") {
                 // Do not allow multiple file upload on re-upload functionality.
                 if (options.reuploadMediaId && uploadsModel.uploads().length > 0) {
+                    messageBox.clearMessages();
                     messageBox.addWarningMessage(globalization.multipleFilesWarningMessageOnReupload);
                     var uploadedFiles = uploadsModel.uploads();
                     for (var i = 0; i < uploadedFiles.length; i++) {
@@ -476,6 +482,7 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
                 maxSimultaneousUploads: 4,
                 onFileAdded: function (file) {
                     if (options.reuploadMediaId && uploadsModel.uploads().length > 0) {
+                        messageBox.clearMessages();
                         messageBox.addWarningMessage(globalization.multipleFilesWarningMessageOnReupload);
                         var uploadedFiles = uploadsModel.uploads();
                         for (var i = 0; i < uploadedFiles.length; i++) {
