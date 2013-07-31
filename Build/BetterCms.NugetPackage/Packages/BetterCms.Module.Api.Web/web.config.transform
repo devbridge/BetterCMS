@@ -1,0 +1,19 @@
+﻿<configuration>
+  <system.web>
+    <httpHandlers>
+      <add path="bcms-api*" type="ServiceStack.WebHost.Endpoints.ServiceStackHttpHandlerFactory, ServiceStack" verb="*" />
+    </httpHandlers>
+  </system.web>
+  <system.webServer>
+    <handlers>
+      <add path="bcms-api*" name="ServiceStack.Factory" type="ServiceStack.WebHost.Endpoints.ServiceStackHttpHandlerFactory, ServiceStack" verb="*" preCondition="integratedMode" resourceType="Unspecified" allowPathInfo="true" />
+    </handlers>
+  </system.webServer>
+  <location path="bcms-api">
+    <!-- Required for IIS 7.0 -->
+    <system.webServer>
+      <modules runAllManagedModulesForAllRequests="true" />
+      <validation validateIntegratedModeConfiguration="false" />
+    </system.webServer>
+  </location>
+</configuration>

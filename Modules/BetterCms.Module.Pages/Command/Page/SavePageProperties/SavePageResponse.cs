@@ -76,6 +76,14 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         public bool HasSEO { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether this instance is archived.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is archived; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsArchived { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SavePageResponse" /> class.
         /// </summary>
         /// <param name="page">The page.</param>
@@ -88,6 +96,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             PageStatus = page.Status;
             HasSEO = ((IPage)page).HasSEO;
             PageUrl = page.PageUrl;
+            IsArchived = page.IsArchived;
         }
     }
 }

@@ -67,11 +67,6 @@ namespace BetterCms
         ICmsSecurityConfiguration Security { get;  }
 
         /// <summary>
-        /// Gets the configuration of CMS API.
-        /// </summary>
-        ICmsApiConfiguration Api { get; }
-
-        /// <summary>
         /// Gets or sets the page not found url.
         /// </summary>
         /// <value>
