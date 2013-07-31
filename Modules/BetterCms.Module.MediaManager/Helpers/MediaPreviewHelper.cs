@@ -7,7 +7,7 @@ namespace BetterCms.Module.MediaManager.Helpers
     {
         private static void AppendProperty(this StringBuilder html, string title, string value)
         {
-            if (value.Length > 500)
+            if (!string.IsNullOrEmpty(value) && value.Length > 500)
             {
                 value = value.Substring(0, 497) + "...";
             }
