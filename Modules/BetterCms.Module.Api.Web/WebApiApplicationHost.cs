@@ -19,7 +19,7 @@ namespace BetterCms.Module.Api
 
         public WebApiApplicationHost(Func<ILifetimeScope> containerProvider)
             : base("Better CMS Web API Host", typeof(VersionService).Assembly)
-        {
+        {            
             this.containerProvider = containerProvider;
         }
 

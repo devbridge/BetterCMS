@@ -18,13 +18,11 @@
       <dependency id="BetterCms.Module.Pages" version="[@BetterCMSVersion@]" />
       <dependency id="BetterCms.Module.Blog" version="[@BetterCMSVersion@]" />
       <dependency id="BetterCms.Module.Api.Abstractions" version="[@BetterCMSVersion@]" />
-      <dependency id="ServiceStack" version="3.9.55" />
-      <dependency id="ServiceStack.Common" version="3.9.55" />
-      <dependency id="ServiceStack.Host.Mvc" version="3.9.54" />
-      <dependency id="ServiceStack.Mvc" version="3.9.55" />
-      <dependency id="ServiceStack.OrmLite.SqlServer" version="3.9.55" />
-      <dependency id="ServiceStack.Redis" version="3.9.55" />
-      <dependency id="ServiceStack.Text" version="3.9.55" />
+      <dependency id="ServiceStack" version="3.9.56" />
+      <dependency id="ServiceStack.Common" version="3.9.56" />
+      <dependency id="ServiceStack.OrmLite.SqlServer" version="3.9.56" />
+      <dependency id="ServiceStack.Redis" version="3.9.57" />
+      <dependency id="ServiceStack.Text" version="3.9.56" />
       <dependency id="Autofac" version="3.0.0" />
       <dependency id="Common.Logging" version="2.1.2" />
       <dependency id="Iesi.Collections" version="3.2.0.4000" />
