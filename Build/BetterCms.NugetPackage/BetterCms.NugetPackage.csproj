@@ -54,9 +54,6 @@
     <None Include="Packages\BetterCms.Module.Api\cms.config.transform">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Packages\BetterCms.Module.Api\web.config.transform">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Packages\BetterCMS\BetterCMS.nuspec.template">
       <SubType>Designer</SubType>
     </None>
@@ -336,7 +333,6 @@ mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Api\content\net40"
 copy "$(SolutionDir)license.txt" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Api\content\net40\betterCms.license.txt" /Y
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Api\content\net40\Config"
 copy "$(ProjectDir)Packages\BetterCms.Module.Api\cms.config.transform" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Api\content\net40\Config\cms.config.transform" /Y
-copy "$(ProjectDir)Packages\BetterCms.Module.Api\web.config.transform" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Api\content\net40\web.config.transform" /Y
 
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Api\lib"
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Api\lib\net40"
