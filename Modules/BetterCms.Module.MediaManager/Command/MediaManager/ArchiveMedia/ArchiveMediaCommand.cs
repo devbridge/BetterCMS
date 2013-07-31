@@ -1,4 +1,7 @@
-﻿using BetterCms.Core.Mvc.Commands;
+﻿using System.Linq;
+
+using BetterCms.Core.DataContracts;
+using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 using BetterCms.Module.Root.Mvc;
@@ -17,12 +20,14 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager.ArchiveMedia
         /// <returns></returns>
         public MediaViewModel Execute(ArchiveMediaCommandRequest request)
         {
-            Media media = Repository.AsProxy<Media>(request.Id);
+            UnitOfWork.BeginTransaction();
 
+            Media media = Repository.AsProxy<Media>(request.Id);
             media.Version = request.Version;
             media.IsArchived = true;
-
             Repository.Save(media);
+            ArchiveSubMedias(media);
+
             UnitOfWork.Commit();
 
             Events.MediaManagerEvents.Instance.OnMediaArchived(media);
@@ -32,6 +37,17 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager.ArchiveMedia
                 Id = media.Id,
                 Version = media.Version
             };
+        }
+
+        private void ArchiveSubMedias(IEntity media)
+        {
+            var subItems = Repository.AsQueryable<Media>().Where(m => !m.IsArchived && m.Folder != null && m.Folder.Id == media.Id).ToList();
+            foreach (var subItem in subItems)
+            {
+                subItem.IsArchived = true;
+                Repository.Save(subItem);
+                ArchiveSubMedias(subItem);
+            }
         }
     }
 }
