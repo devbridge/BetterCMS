@@ -17,6 +17,7 @@ namespace BetterCms.Configuration
         private const string StorageNode = "storage";
         private const string CacheNode = "cache";
         private const string SecurityNode = "security";
+        private const string ApiNode = "api";
         private const string ModuleGalleryNode = "moduleGallery";
         private const string WorkingDirectoryRootPathAttribute = "workingDirectoryRootPath";
         private const string ArticleUrlPatternAttribute = "articleUrlPattern";
@@ -220,6 +221,18 @@ namespace BetterCms.Configuration
         {
             get { return (CmsInstallationConfigurationElement)this[InstallationNode]; }
             set { this[InstallationNode] = value; }
+        }
+
+        [ConfigurationProperty(ApiNode, IsRequired = false)]
+        public CmsApiConfigurationElement Api
+        {
+            get { return (CmsApiConfigurationElement)this[ApiNode]; }
+            set { this[ApiNode] = value; }
+        }
+
+        ICmsApiConfiguration ICmsConfiguration.Api
+        {
+            get { return Api; }
         }
 
         ICmsStorageConfiguration ICmsConfiguration.Storage

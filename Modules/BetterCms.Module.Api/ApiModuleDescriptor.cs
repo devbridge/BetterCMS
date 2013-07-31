@@ -187,9 +187,14 @@ namespace BetterCms.Module.Api
 
         private void ApplicationStart(SingleItemEventArgs<HttpApplication> args)
         {
+            if (Configuration.Api.WebApiDisabled)
+            {
+                return;
+            }
+
             using (var container = ContextScopeProvider.CreateChildContainer())
             {
-                var containerProvider = container.Resolve<PerWebRequestContainerProvider>();                
+                var containerProvider = container.Resolve<PerWebRequestContainerProvider>();
                 new ApiApplicationHost(() => containerProvider.CurrentScope).Init();
             }
         }
