@@ -1,6 +1,7 @@
 ﻿@using BetterCms.Module.MediaManager.Command.History.GetMediaHistory
 @using BetterCms.Module.MediaManager.Content.Resources
 @using BetterCms.Module.MediaManager.Controllers
+@using BetterCms.Module.MediaManager.Models.Enum
 @using BetterCms.Module.MediaManager.ViewModels.History
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc
@@ -11,6 +12,7 @@
 @using MvcContrib.UI.Grid
 
 @model MediaHistoryViewModel
+
 @helper PreviewLink(MediaHistoryItem item)
 {
     <a class="bcms-icn-preview" data-id="@item.Id">@RootGlobalization.Button_Preview</a>
@@ -19,6 +21,7 @@
 @helper DownloadLink(MediaHistoryItem item){
     <a class="bcms-icn-download" data-id="@item.Id" data-version="@item.Version">@MediaGlobalization.MediaManager_ButtonDownload</a>
 }
+
 @helper RestoreLink(MediaHistoryItem item)
 {
     if (item.CanCurrentUserRestoreIt)
@@ -27,7 +30,27 @@
     }
     else
     {
-    @:&nbsp;
+        @:&nbsp;
+    }
+}
+
+@helper DisplayStatus(string statusName, MediaHistoryStatus status)
+{
+    switch (status)
+    {
+        case MediaHistoryStatus.Archived:
+            @:<div class="bcms-archived-state">@statusName</div>
+
+            break;
+
+        case MediaHistoryStatus.Active:
+            @:<div class="bcms-published-state">@statusName</div>
+        
+            break;
+
+        default:
+            @:statusName
+            break;
     }
 }
 
@@ -64,7 +87,7 @@
                .HeaderAttributes(@style => "width: 90px;")
                .Attributes(@style => "width: 90px;");
 
-        column.For(m => m.StatusName)
+        column.For(m => DisplayStatus(m.StatusName, m.Status))
                .Named(MediaGlobalization.MediaHistory_Column_Status)
                .SortColumnName("StatusName")
                .Encode(false)
