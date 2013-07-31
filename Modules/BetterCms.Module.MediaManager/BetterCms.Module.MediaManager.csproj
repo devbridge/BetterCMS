@@ -174,7 +174,9 @@
     <Compile Include="Models\Extensions\MediaImageExtensions.cs" />
     <Compile Include="Models\Extensions\MediaExtensions.cs" />
     <Compile Include="Models\Extensions\MediaFileExtensions.cs" />
+    <Compile Include="Models\Maps\MediaFolderDependencyMap.cs" />
     <Compile Include="Models\Maps\MediaTagMap.cs" />
+    <Compile Include="Models\MediaFolderDependency.cs" />
     <Compile Include="Models\MediaImageAlign.cs" />
     <Compile Include="Models\MediaType.cs" />
     <Compile Include="Models\Maps\MediaMap.cs" />
@@ -186,6 +188,7 @@
     <Compile Include="Models\MediaFolder.cs" />
     <Compile Include="Models\Media.cs" />
     <Compile Include="Models\MediaImage.cs" />
+    <Compile Include="Models\Migrations\Migration201307311530.cs" />
     <Compile Include="Models\Migrations\Migration201306071105.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -272,6 +275,7 @@
     <EmbeddedResource Include="Content\Styles\Images\sprite-media-3.png" />
     <EmbeddedResource Include="Models\Migrations\Migration201306071105.sqlserver.sql" />
     <EmbeddedResource Include="Models\Migrations\Migration201306201216.sqlserver.sql" />
+    <EmbeddedResource Include="Models\Migrations\Migration201307311530.sqlserver.sql" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
