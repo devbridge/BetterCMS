@@ -573,4 +573,7 @@
   <data name="MediaManager_SearchedInPath_Prefix" xml:space="preserve">
     <value>Searched in</value>
   </data>
+  <data name="ImageEditor_Dialog_Tags_Title" xml:space="preserve">
+    <value>Tags</value>
+  </data>
 </root>
