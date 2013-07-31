@@ -4,6 +4,7 @@ using Autofac;
 
 using BetterCms.Module.Api.Filters;
 using BetterCms.Module.Api.Operations.Root.Tags.Tag;
+using BetterCms.Module.Api.Operations.Root.Version;
 
 using ServiceStack.ServiceInterface.Validation;
 using ServiceStack.Text;
@@ -11,13 +12,13 @@ using ServiceStack.WebHost.Endpoints;
 
 namespace BetterCms.Module.Api
 {
-	public class ApiApplicationHost
+	public class WebApiApplicationHost
 		: AppHostBase
 	{
         private readonly Func<ILifetimeScope> containerProvider;
 
-        public ApiApplicationHost(Func<ILifetimeScope> containerProvider)
-            : base("Better CMS Web API Host", typeof(ApiModuleDescriptor).Assembly)
+        public WebApiApplicationHost(Func<ILifetimeScope> containerProvider)
+            : base("Better CMS Web API Host", typeof(VersionService).Assembly)
         {
             this.containerProvider = containerProvider;
         }

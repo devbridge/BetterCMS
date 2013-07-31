@@ -223,18 +223,6 @@ namespace BetterCms.Configuration
             set { this[InstallationNode] = value; }
         }
 
-        [ConfigurationProperty(ApiNode, IsRequired = false)]
-        public CmsApiConfigurationElement Api
-        {
-            get { return (CmsApiConfigurationElement)this[ApiNode]; }
-            set { this[ApiNode] = value; }
-        }
-
-        ICmsApiConfiguration ICmsConfiguration.Api
-        {
-            get { return Api; }
-        }
-
         ICmsStorageConfiguration ICmsConfiguration.Storage
         {
             get { return Storage; }

@@ -7,12 +7,12 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{5FF9D100-CF25-4899-8D23-8EB9F0C0E102}</ProjectGuid>
+    <ProjectGuid>{D12C4811-066A-49EA-9AE7-5E64B128779F}</ProjectGuid>
     <ProjectTypeGuids>{E53F8FEA-EAE0-44A6-8774-FFD645390401};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BetterCms.Module.Api</RootNamespace>
-    <AssemblyName>BetterCms.Module.Api</AssemblyName>
+    <AssemblyName>BetterCms.Module.Api.Web</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>false</UseIISExpress>
@@ -153,57 +153,10 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="ApiFactory.cs" />
-    <Compile Include="DefaultApiFacade.cs" />
+    <Compile Include="WebApiApplicationHost.cs" />
+    <Compile Include="AutofacContainerAdapter.cs" />
     <Compile Include="Filters\GetRequestProcessor.cs" />
-    <Compile Include="Helpers\ContentTypeExtensions.cs" />
-    <Compile Include="Helpers\FilterByTagExtensions.cs" />
-    <Compile Include="Helpers\QueryableExtensions.cs" />
-    <Compile Include="Helpers\DataOptionsQueryCreator.cs" />
-    <Compile Include="Helpers\DynamicLinqExtensions.cs" />
-    <Compile Include="IApiFacade.cs" />
-    <Compile Include="Operations\Blog\Authors\AuthorsService.cs" />
-    <Compile Include="Operations\Blog\Authors\Author\AuthorService.cs" />
-    <Compile Include="Operations\Blog\BlogPosts\BlogPostsService.cs" />
-    <Compile Include="Operations\Blog\BlogPosts\BlogPost\BlogPostService.cs" />
-    <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\BlogPostPropertiesService.cs" />
-    <Compile Include="Operations\Blog\DefaultBogApiOperations.cs" />
-    <Compile Include="Operations\MediaManager\DefaultMediaManagerApiOperations.cs" />
-    <Compile Include="Operations\MediaManager\Files\FilesService.cs" />
-    <Compile Include="Operations\MediaManager\Files\File\FileService.cs" />
-    <Compile Include="Operations\MediaManager\Images\Image\ImageService.cs" />
-    <Compile Include="Operations\MediaManager\Images\ImagesService.cs" />
-    <Compile Include="Operations\MediaManager\MediaTree\MediaTreeService.cs" />
-    <Compile Include="Operations\Blog\BlogPosts\BlogPost\Content\BlogPostContentService.cs" />
-    <Compile Include="Operations\Pages\Contents\Content\ContentService.cs" />
-    <Compile Include="Operations\Pages\Contents\Content\History\ContentHistoryService.cs" />
-    <Compile Include="Operations\Pages\Contents\Content\HtmlContent\HtmlContentService.cs" />
-    <Compile Include="Operations\Pages\Redirects\RedirectsService.cs" />
-    <Compile Include="Operations\Pages\Redirects\Redirect\RedirectService.cs" />
-    <Compile Include="Operations\Pages\Sitemap\Nodes\NodesService.cs" />
-    <Compile Include="Operations\Pages\Sitemap\Nodes\Node\NodeService.cs" />
-    <Compile Include="Operations\Pages\Sitemap\SitemapService.cs" />
-    <Compile Include="Operations\Pages\Sitemap\Tree\SitemapTreeService.cs" />
-    <Compile Include="Operations\Pages\DefaultPagesApiOperations.cs" />
-    <Compile Include="Operations\Pages\Pages\Page\Contents\PageContentsService.cs" />
-    <Compile Include="Operations\Pages\Pages\Page\Exists\PageExistsService.cs" />
-    <Compile Include="Operations\Pages\Pages\PagesService.cs" />
-    <Compile Include="Operations\Pages\Pages\Page\PageService.cs" />
-    <Compile Include="Operations\Pages\Pages\Page\Properties\PagePropertiesService.cs" />
-    <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\HtmlContentWidgetService.cs" />
-    <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\ServerControlWidgetService.cs" />
-    <Compile Include="Operations\Pages\Widgets\WidgetsService.cs" />
-    <Compile Include="Operations\Pages\Widgets\Widget\WidgetService.cs" />
-    <Compile Include="Operations\Root\Categories\CategoriesService.cs" />
-    <Compile Include="Operations\Root\Categories\Category\CategoryService.cs" />
-    <Compile Include="Operations\Root\DefaultRootApiOperations.cs" />
-    <Compile Include="Operations\Root\Layouts\LayoutsService.cs" />
-    <Compile Include="Operations\Root\Layouts\Layout\LayoutService.cs" />
-    <Compile Include="Operations\Root\Layouts\Layout\Regions\LayoutRegionsService.cs" />
-    <Compile Include="Operations\Root\Tags\TagsService.cs" />
-    <Compile Include="Operations\Root\Version\VersionService.cs" />
-    <Compile Include="ApiModuleDescriptor.cs" />
-    <Compile Include="Operations\Root\Tags\Tag\TagService.cs" />
+    <Compile Include="WebApiModuleDescriptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -219,21 +172,9 @@
       <Project>{073e257b-a6a0-42fc-9102-8e920bf54e50}</Project>
       <Name>BetterCMS.Module.Api.Abstractions</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BetterCMS.Module.Blog\BetterCms.Module.Blog.csproj">
-      <Project>{a66a3046-ef60-4c51-ada7-eb055763419b}</Project>
-      <Name>BetterCms.Module.Blog</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BetterCms.Module.MediaManager\BetterCms.Module.MediaManager.csproj">
-      <Project>{f3e41793-e8ed-4ba8-a1ab-cba1e47b0786}</Project>
-      <Name>BetterCms.Module.MediaManager</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BetterCms.Module.Pages\BetterCms.Module.Pages.csproj">
-      <Project>{fc04d4c2-8688-498f-b546-292c7e3688a9}</Project>
-      <Name>BetterCms.Module.Pages</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BetterCms.Module.Root\BetterCms.Module.Root.csproj">
-      <Project>{66e7e4df-eeea-4b1e-8663-a1b430eb7375}</Project>
-      <Name>BetterCms.Module.Root</Name>
+    <ProjectReference Include="..\BetterCms.Module.Api\BetterCms.Module.Api.csproj">
+      <Project>{5ff9d100-cf25-4899-8d23-8eb9f0c0e102}</Project>
+      <Name>BetterCms.Module.Api</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

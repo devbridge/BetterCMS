@@ -51,9 +51,6 @@
     <None Include="Packages\BetterCms.Module.Api\BetterCms.Module.Api.nuspec.template">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Packages\BetterCms.Module.Api\cms.config.transform">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Packages\BetterCMS\BetterCMS.nuspec.template">
       <SubType>Designer</SubType>
     </None>
@@ -103,10 +100,6 @@
     <ProjectReference Include="..\..\BetterCMS.Core\BetterCms.Core.csproj">
       <Project>{694ca5ca-a0e2-4578-a249-648498b058d7}</Project>
       <Name>BetterCms.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\BetterCMS.Module.Api.Abstractions\BetterCms.Module.Api.Abstractions.csproj">
-      <Project>{073e257b-a6a0-42fc-9102-8e920bf54e50}</Project>
-      <Name>BetterCms.Module.Api.Abstractions</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCms.Module.AmazonS3Storage\BetterCms.Module.AmazonS3Storage.csproj">
       <Project>{42698e7b-a9b1-4c23-8bb0-fc363a3f8b94}</Project>
@@ -331,8 +324,6 @@ mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Api"
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Api\content"
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Api\content\net40"
 copy "$(SolutionDir)license.txt" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Api\content\net40\betterCms.license.txt" /Y
-mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Api\content\net40\Config"
-copy "$(ProjectDir)Packages\BetterCms.Module.Api\cms.config.transform" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Api\content\net40\Config\cms.config.transform" /Y
 
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Api\lib"
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Api\lib\net40"
