@@ -28,7 +28,7 @@ namespace BetterCms.Module.Api
 			
             JsConfig.EmitCamelCaseNames = true;
             JsConfig.IncludeNullValues = true;
-		    JsConfig.DateHandler = JsonDateHandler.DCJSCompatible;
+		    JsConfig.DateHandler = JsonDateHandler.ISO8601;
 
             Plugins.Add(new ValidationFeature());
             

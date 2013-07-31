@@ -28,18 +28,17 @@ describe('pages.contents.api.behavior', function () {
 
             api.expectBasePropertiesAreNotNull(content);
             expect(content.name).toBe('MainContent1 - HTML', 'Correctly filtered name should be retrieved.');
-            expect(content.activationDate).toContain('1374526800000', 'Correctly filtered activationDate should be retrieved.');
-            expect(content.activationDate).toContain(api.parseJsonDate(content.activationDate).getTime(), 'Correctly filtered activationDate should be retrieved.');
-            expect(content.expirationDate).toContain('1974229199000', 'Correctly filtered expirationDate should be retrieved.');
-            expect(content.expirationDate).toContain(api.parseJsonDate(content.expirationDate).getTime(), 'Correctly filtered expirationDate should be retrieved.');
+            expect(new Date(content.activationDate).getTime()).toBe(new Date('2013-07-23T00:00:00.0000000').getTime(), 'Correctly filtered activationDate should be retrieved.');
+            
+            expect(new Date(content.expirationDate).getTime()).toBe(new Date('2032-07-23T23:59:59.0000000').getTime(), 'Correctly filtered expirationDate should be retrieved.');
+            
             expect(content.html).toBe('<p>MainContent1 - HTML</p>', 'Correctly filtered html should be retrieved.');
             expect(content.customCss).toBe('custom css', 'Correctly filtered customCss should be retrieved.');
             expect(content.useCustomCss).toBe(true, 'Correctly filtered useCustomCss should be retrieved.');
             expect(content.customJavaScript).toBe("console.log('test')", 'Correctly filtered customJavaScript should be retrieved.');
             expect(content.useCustomJavaScript).toBe(true, 'Correctly filtered useCustomJavaScipt should be retrieved.');
             expect(content.isPublished).toBe(true, 'Correctly filtered isPublished should be retrieved.');
-            expect(content.publishedOn).toContain('1374642405000', 'Correctly filtered publishedOn should be retrieved.');
-            expect(content.publishedOn).toContain(api.parseJsonDate(content.publishedOn).getTime(), 'Correctly filtered publishedOn should be retrieved.');
+            expect(new Date(content.publishedOn).getTime()).toBe(new Date('2013-07-24T08:06:45.0000000').getTime(), 'Correctly filtered publishedOn should be retrieved.');
             expect(content.publishedByUser).toBe('Better CMS test user', 'Correctly filtered publishedByUser should be retrieved.');
         });
     });
