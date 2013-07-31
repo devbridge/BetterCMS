@@ -51,14 +51,9 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
                 rootFolderId: rootFolderId,
                 rootFolderType: rootFolderType,
                 reuploadMediaId: reuploadMediaId
-            };
+        };
 
-        // Quick dirty IE10 fix: remove accept tag from upload box.
-        if ($.browser.msie && parseInt($.browser.version, 10) > 9) {
-            options.uploads.filesToAccept('');
-        } else {
-            options.uploads.filesToAccept(rootFolderType == 1 ? 'image/*' : '');
-        }
+        options.uploads.filesToAccept(rootFolderType == 1 ? 'image/*' : '');
 
         if (html5Upload.fileApiSupported()) {
             modal.open({
@@ -84,12 +79,20 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
 
                         postComplete: function() {
                             dialog.container.hideLoading();
+                        },
+                        
+                        postError: function () {
+                            options.uploads.filesToAccept(rootFolderType == 1 ? 'image/*' : '');
                         }
                     });
                 },
                 onCloseClick: function () {
                     options.uploads.removeAllUploads();
                     options.uploads.stopStatusChecking();
+                },
+                onAcceptClick: function() {
+                    // IE10 fix: remove accept tag from upload box.
+                    options.uploads.filesToAccept('');
                 }
             });
         } else {
