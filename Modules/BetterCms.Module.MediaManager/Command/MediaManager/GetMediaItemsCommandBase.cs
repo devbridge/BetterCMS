@@ -169,7 +169,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
                 return true;
             }
 
-            if (media.Folder != null && !media.Folder.IsDeleted && media.Folder.Id == currentFolderId)
+            if (media.Folder != null && media.Folder.Id == currentFolderId)
             {
                 return true;
             }
