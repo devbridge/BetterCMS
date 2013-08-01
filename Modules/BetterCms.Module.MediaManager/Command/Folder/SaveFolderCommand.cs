@@ -15,8 +15,9 @@ namespace BetterCms.Module.MediaManager.Command.Folder
         public MediaFolderViewModel Execute(MediaFolderViewModel request)
         {
             MediaFolder folder;
+            var creating = request.Id == default(Guid);
 
-            if (request.Id == default(Guid))
+            if (creating)
             {
                 folder = new MediaFolder();
             }
@@ -33,6 +34,12 @@ namespace BetterCms.Module.MediaManager.Command.Folder
             folder.Type = request.Type;
 
             Repository.Save(folder);
+
+            if (creating)
+            {
+                PopulateDependecies(folder, folder);
+            }
+
             UnitOfWork.Commit();
 
             if (request.Id == default(Guid))
@@ -50,6 +57,21 @@ namespace BetterCms.Module.MediaManager.Command.Folder
                            Version = folder.Version, 
                            Name = folder.Title
                        };
+        }
+
+        private void PopulateDependecies(MediaFolder child, MediaFolder parent)
+        {
+            var dependecy = new MediaFolderDependency
+                                {
+                                    Parent = parent,
+                                    Child = child
+                                };
+            Repository.Save(dependecy);
+
+            if (parent != null)
+            {
+                PopulateDependecies(child, parent.Folder);
+            }
         }
     }
 }
