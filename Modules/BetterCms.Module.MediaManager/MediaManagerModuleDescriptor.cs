@@ -130,6 +130,7 @@ namespace BetterCms.Module.MediaManager
             containerBuilder.RegisterType<DefaultMediaImageService>().AsImplementedInterfaces().InstancePerLifetimeScope();            
             containerBuilder.RegisterType<DefaultMediaHistoryService>().AsImplementedInterfaces().InstancePerLifetimeScope();            
             containerBuilder.RegisterType<DefaultTagService>().AsImplementedInterfaces().InstancePerLifetimeScope();            
+            containerBuilder.RegisterType<DefaultMediaService>().AsImplementedInterfaces().InstancePerLifetimeScope();            
         }
 
         /// <summary>

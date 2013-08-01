@@ -1,8 +1,6 @@
-﻿using System.Linq;
-
-using BetterCms.Core.DataContracts;
-using BetterCms.Core.Mvc.Commands;
+﻿using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Root.Mvc;
 
 namespace BetterCms.Module.MediaManager.Command.Folder
@@ -13,6 +11,14 @@ namespace BetterCms.Module.MediaManager.Command.Folder
     public class DeleteFolderCommand : CommandBase, ICommand<DeleteFolderCommandRequest, bool>
     {
         /// <summary>
+        /// Gets or sets the media service.
+        /// </summary>
+        /// <value>
+        /// The media service.
+        /// </value>
+        public IMediaService MediaService { get; set; }
+
+        /// <summary>
         /// Executes this command.
         /// </summary>
         /// <param name="request">The request.</param>
@@ -20,27 +26,16 @@ namespace BetterCms.Module.MediaManager.Command.Folder
         public bool Execute(DeleteFolderCommandRequest request)
         {
             UnitOfWork.BeginTransaction();
+
             var mediaFolder = Repository.Delete<MediaFolder>(request.FolderId, request.Version);
-            DeleteSubMedias(mediaFolder);
+            var deletedSubMedias = MediaService.DeleteSubMedias(mediaFolder);
+
             UnitOfWork.Commit();
 
-            Events.MediaManagerEvents.Instance.OnMediaFolderDeleted(mediaFolder);
+            deletedSubMedias.Add(mediaFolder);
+            MediaService.NotifiyMediaDeleted(deletedSubMedias);
 
             return true;
-        }
-
-        /// <summary>
-        /// Deletes the sub medias.
-        /// </summary>
-        /// <param name="media">The parent media.</param>
-        private void DeleteSubMedias(IEntity media)
-        {
-            var subItems = Repository.AsQueryable<Media>().Where(m => !m.IsDeleted && m.Folder != null && m.Folder.Id == media.Id).ToList();
-            foreach (var subItem in subItems)
-            {
-                Repository.Delete(subItem);
-                DeleteSubMedias(subItem);
-            }
         }
     }
 }

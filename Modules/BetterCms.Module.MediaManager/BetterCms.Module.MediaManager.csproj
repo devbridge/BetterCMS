@@ -212,9 +212,11 @@
     <Compile Include="Registration\ImageEditorJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\MediaUploadJsModuleIncludeDescriptor.cs" />
     <Compile Include="Services\DefaultMediaHistoryService.cs" />
+    <Compile Include="Services\DefaultMediaService.cs" />
     <Compile Include="Services\DefaultTagService.cs" />
     <Compile Include="Services\IMediaAudioService.cs" />
     <Compile Include="Services\IMediaHistoryService.cs" />
+    <Compile Include="Services\IMediaService.cs" />
     <Compile Include="Services\IMediaVideoService.cs" />
     <Compile Include="Services\DefaultMediaFileService.cs" />
     <Compile Include="Services\IMediaFileService.cs" />
