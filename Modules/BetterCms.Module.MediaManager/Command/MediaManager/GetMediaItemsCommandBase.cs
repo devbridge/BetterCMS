@@ -9,6 +9,7 @@ using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
 
@@ -107,12 +108,14 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
                 query = query.Where(m => !m.IsArchived);
             }
 
+            var removeEmptyFolders = false;
             if (request.Tags != null)
             {
                 foreach (var tagKeyValue in request.Tags)
                 {
                     var id = tagKeyValue.Key.ToGuidOrDefault();
                     query = query.Where(m => m is MediaFolder || m.MediaTags.Any(mt => mt.Tag.Id == id));
+                    removeEmptyFolders = true;
                 }
             }
 
@@ -144,7 +147,80 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
                 query = query.Where(m => m.Folder == null);
             }
 
-            return ToResponse(request, query, true);
+            return removeEmptyFolders
+                ? RemoveEmptyFolders(query, request)
+                : ToResponse(request, query, true);
+        }
+
+        private Tuple<IEnumerable<MediaViewModel>, int> RemoveEmptyFolders(IQueryable<Media> query, MediaManagerViewModel request)
+        {
+            var mediaList = query.ToList();
+
+            var result = new List<Media>();
+            foreach (var media in mediaList)
+            {
+                var folder = media as MediaFolder;
+                if (folder == null)
+                {
+                    result.Add(media);
+                }
+                else
+                {
+                    if (HasTaggedSubItems(folder, request))
+                    {
+                        result.Add(media);
+                    }
+                }
+            }
+
+            return ToResponse(request, result.AsQueryable());
+        }
+
+        private bool HasTaggedSubItems(MediaFolder folder, MediaManagerViewModel request)
+        {
+            if (folder == null)
+            {
+                return false;
+            }
+
+            var query = Repository
+                            .AsQueryable<Media>()
+                            .Where(m => !m.IsDeleted
+                                && m.Original == null
+                                && m.Type == MediaType
+                                && m.Folder != null && m.Folder.Id == folder.Id
+                                && (m is MediaFolder || m is TEntity && !((TEntity)m).IsTemporary));
+
+            if (!request.IncludeArchivedItems)
+            {
+                query = query.Where(m => !m.IsArchived);
+            }
+
+            if (request.Tags != null)
+            {
+                foreach (var tagKeyValue in request.Tags)
+                {
+                    var id = tagKeyValue.Key.ToGuidOrDefault();
+                    query = query.Where(m => m is MediaFolder || m.MediaTags.Any(mt => mt.Tag.Id == id));
+                }
+            }
+
+            var medias = query.ToList();
+            if (medias.Any(m => m is TEntity))
+            {
+                return true;
+            }
+
+
+            foreach (var media in medias)
+            {
+                if (HasTaggedSubItems(media as MediaFolder, request))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private static bool IsChild(Media media, Guid currentFolderId, bool includeArchivedItems)
