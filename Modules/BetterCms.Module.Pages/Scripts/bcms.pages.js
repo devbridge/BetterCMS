@@ -28,6 +28,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 addNewPageForm: 'form:first',
 
                 siteSettingsPagesListForm: '#bcms-pages-form',
+                siteSettingsPagesListFormFilterIncludeArchived: "#IncludeArchived",
                 siteSettingsPagesSearchButton: '#bcms-pages-search-btn',
                 siteSettingsPagesSearchField: '.bcms-search-query',
                 siteSettingsPageCreateButton: '#bcms-create-page-button',
@@ -449,7 +450,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
 
         container.find(selectors.siteSettingsRowCells).on('click', function () {
             var editButton = $(this).parents(selectors.siteSettingsPageParentRow).find(selectors.siteSettingsPageEditButton);
-            page.editSiteSettingsPage(editButton);
+            page.editSiteSettingsPage(editButton, container);
         });
 
         container.find(selectors.siteSettingPageTitleCell).on('click', function (event) {
@@ -536,13 +537,22 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
     /**
     * Opens page edit form from site settings pages list
     */
-    page.editSiteSettingsPage = function (self) {
+    page.editSiteSettingsPage = function (self, container) {
         var id = self.data('id');
 
         pageProperties.openEditPageDialog(id, function (data) {
             if (data.Data != null) {
+                if (data.Data.IsArchived) {
+                    var form = container.find(selectors.siteSettingsPagesListForm),
+                        includeArchivedField = form.find(selectors.siteSettingsPagesListFormFilterIncludeArchived);
+                    if (!includeArchivedField.is(":checked")) {
+                        self.parents(selectors.siteSettingsPageParentRow).remove();
+                        grid.showHideEmptyRow(container);
+                        return;
+                    }
+                }
+                
                 var row = self.parents(selectors.siteSettingsPageParentRow);
-
                 row.find(selectors.siteSettingPageTitleCell).html(data.Data.Title);
                 row.find(selectors.siteSettingPageCreatedCell).html(data.Data.CreatedOn);
                 row.find(selectors.siteSettingPageModifiedCell).html(data.Data.ModifiedOn);

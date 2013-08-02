@@ -39,11 +39,11 @@ namespace BetterCms.Module.Root.Controllers
         /// <param name="cmsConfiguration">The configuration loader.</param>
         /// <param name="cacheService">The cache service.</param>
         /// <param name="accessControlService">The access control service.</param>
-        public CmsController(ICmsConfiguration cmsConfiguration, ICacheService cacheService, IAccessControlService accessControlService)
+        public CmsController(ICmsConfiguration cmsConfiguration, ICacheService cacheService/*, IAccessControlService accessControlService*/)
         {
             this.cmsConfiguration = cmsConfiguration;
             this.cacheService = cacheService;
-            this.accessControlService = accessControlService;
+            //this.accessControlService = accessControlService;
         }
 
         /// <summary>

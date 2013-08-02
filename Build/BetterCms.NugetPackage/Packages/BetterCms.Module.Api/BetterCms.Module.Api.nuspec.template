@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>BetterCms.Module.Api</id>
+    <version>@BetterCMSVersion@</version>
+    <authors>DevBridge</authors>
+    <owners>DevBridge</owners>
+    <licenseUrl>http://www.bettercms.com/license.txt</licenseUrl>
+    <projectUrl>http://www.bettercms.com</projectUrl>
+    <iconUrl>http://www.bettercms.com/nuget-logo.png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>API module for BetterCMS. Better CMS is publishing focused and developer friendly .NET Open source CMS.</description>
+    <copyright>Better CMS is licensed under BETTER CMS LICENSE AGREEMENT (http://www.bettercms.com/license.txt).</copyright>
+    <dependencies>
+      <dependency id="BetterCms.Core" version="[@BetterCMSVersion@]" />
+      <dependency id="BetterCms.Module.Root" version="[@BetterCMSVersion@]" />
+      <dependency id="BetterCms.Module.MediaManager" version="[@BetterCMSVersion@]" />
+      <dependency id="BetterCms.Module.Pages" version="[@BetterCMSVersion@]" />
+      <dependency id="BetterCms.Module.Blog" version="[@BetterCMSVersion@]" />
+      <dependency id="BetterCms.Module.Api.Abstractions" version="[@BetterCMSVersion@]" />
+      <dependency id="ServiceStack" version="3.9.56" />
+      <dependency id="ServiceStack.Common" version="3.9.56" />
+      <dependency id="ServiceStack.OrmLite.SqlServer" version="3.9.56" />
+      <dependency id="ServiceStack.Redis" version="3.9.57" />
+      <dependency id="ServiceStack.Text" version="3.9.56" />
+      <dependency id="Autofac" version="3.0.0" />
+      <dependency id="Common.Logging" version="2.1.2" />
+      <dependency id="Iesi.Collections" version="3.2.0.4000" />
+      <dependency id="Microsoft.Net.Http" version="2.0.20710.0" />
+      <dependency id="Microsoft.Web.Infrastructure" version="1.0.0.0" />
+      <dependency id="Mvc3Futures" version="3.0.20105.0" />
+      <dependency id="MvcContrib.Mvc3-ci" version="3.0.100.0" />
+      <dependency id="Newtonsoft.Json" version="4.5.11" />
+      <dependency id="NHibernate" version="[3.3.3.4000]" />
+    </dependencies>
+  </metadata>
+</package>
