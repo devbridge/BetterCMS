@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Module.MediaManager.Content.Resources;
@@ -40,13 +39,6 @@ namespace BetterCms.Module.MediaManager.Services
             var medias = repository
                 .AsQueryable<Media>()
                 .Where(media => !media.IsDeleted && (media.Id == mediaId || (media.Original != null && media.Original.Id == mediaId)));
-
-            if (!string.IsNullOrEmpty(gridOptions.SearchQuery))
-            {
-                var searchQuery = (gridOptions.SearchQuery ?? string.Empty).ToLower();
-                medias = medias
-                    .Where(media => media.Title.Contains(searchQuery) || (media.Original != null && media.Original.Title.Contains(searchQuery)));
-            }
 
             switch (gridOptions.Column)
             {
@@ -93,9 +85,27 @@ namespace BetterCms.Module.MediaManager.Services
                     break;
             }
 
-            medias = medias.AddPaging(gridOptions);
+            var searchQuery = (gridOptions.SearchQuery ?? string.Empty).ToLower();
+            medias = medias
+                .ToList()
+                .Where(media => ContainsSearchQuery(media, searchQuery))
+                .AsQueryable()
+                .AddPaging(gridOptions);
 
             return medias.ToList();
+        }
+
+        private bool ContainsSearchQuery(Media media, string searchQuery)
+        {
+            if (!string.IsNullOrWhiteSpace(searchQuery))
+            {
+                var statusName = media.Original != null ? MediaGlobalization.MediaHistory_Status_Archived : MediaGlobalization.MediaHistory_Status_Active;
+
+                return (media.Original == null && media.ModifiedByUser.ToLower().Contains(searchQuery))
+                    || media.CreatedByUser.ToLower().Contains(searchQuery)
+                    || (!string.IsNullOrEmpty(statusName) && statusName.ToLower().Contains(searchQuery));
+            }
+            return true;
         }
     }
 }

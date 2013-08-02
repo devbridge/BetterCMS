@@ -61,7 +61,7 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to pull out file {0} from archive?.
+        ///   Looks up a localized string similar to Are you sure you want to send the file {0} to archive?.
         /// </summary>
         public static string ArchiveFile_ConfirmationMessage {
             get {
@@ -88,7 +88,7 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to send the media {0} to archive?.
+        ///   Looks up a localized string similar to Are you sure you want to send the folder {0} to archive?.
         /// </summary>
         public static string ArchiveMedia_ConfirmationMessage {
             get {
@@ -97,7 +97,7 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to pull out video {0} from archive?.
+        ///   Looks up a localized string similar to Are you sure you want to send the video {0} to archive?.
         /// </summary>
         public static string ArchiveVideo_ConfirmationMessage {
             get {
@@ -651,6 +651,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         public static string ImageEditor_Dialog_SubTitle {
             get {
                 return ResourceManager.GetString("ImageEditor_Dialog_SubTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tags.
+        /// </summary>
+        public static string ImageEditor_Dialog_Tags_Title {
+            get {
+                return ResourceManager.GetString("ImageEditor_Dialog_Tags_Title", resourceCulture);
             }
         }
         
@@ -1366,7 +1375,7 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to send the video {0} to archive?.
+        ///   Looks up a localized string similar to Are you sure you want to pull out file {0} from archive?.
         /// </summary>
         public static string UnarchiveFile_ConfirmationMessage {
             get {
@@ -1384,7 +1393,7 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to pull out media {0} from archive?.
+        ///   Looks up a localized string similar to Are you sure you want to pull out folder {0} from archive?.
         /// </summary>
         public static string UnarchiveMedia_ConfirmationMessage {
             get {
@@ -1402,7 +1411,7 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to send the video {0} to archive?.
+        ///   Looks up a localized string similar to Are you sure you want to pull out video {0} from archive?.
         /// </summary>
         public static string UnarchiveVideo_ConfirmationMessage {
             get {

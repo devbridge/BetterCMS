@@ -1,5 +1,6 @@
 ﻿using System;
 
+using BetterCms.Module.MediaManager.Models.Enum;
 using BetterCms.Module.Root.Mvc.Grids;
 
 namespace BetterCms.Module.MediaManager.ViewModels.History
@@ -72,5 +73,13 @@ namespace BetterCms.Module.MediaManager.ViewModels.History
         /// The name of the status.
         /// </value>
         public string StatusName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the media item status.
+        /// </summary>
+        /// <value>
+        /// The media item status.
+        /// </value>
+        public MediaHistoryStatus Status { get; set; }
     }
 }

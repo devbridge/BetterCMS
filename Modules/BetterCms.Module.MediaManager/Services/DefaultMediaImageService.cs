@@ -300,79 +300,51 @@ namespace BetterCms.Module.MediaManager.Services
 
                 var image = new WebImage(tempStream);
                
-                // Make image rectangular.
-                WebImage croppedImage;
-
-                ImageFormat format = null;
-                if (transparencyFormats.TryGetValue(image.ImageFormat, out format))
+                using (Image resizedBitmap = new Bitmap(size.Width, size.Height))
                 {
-                    using (Image resizedBitmap = new Bitmap(size.Width, size.Height))
+                    using (Bitmap source = new Bitmap(new MemoryStream(image.GetBytes())))
                     {
-                        using (Bitmap source = new Bitmap(new MemoryStream(image.GetBytes())))
+                        using (Graphics g = Graphics.FromImage(resizedBitmap))
                         {
-                            using (Graphics g = Graphics.FromImage(resizedBitmap))
+                            var destination = source;
+
+                            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+
+                            var diff = (image.Width - image.Height) / 2.0;
+                            if (diff > 0)
                             {
-                                var destination = source;
-
-                                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-                                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-
-                                var diff = (image.Width - image.Height) / 2.0;
-                                if (diff > 0)
-                                {
-                                    var x1 = Convert.ToInt32(Math.Floor(diff));
-                                    var y1 = 0;
-                                    var x2 = image.Height;
-                                    var y2 = image.Height;
-                                    var rect = new Rectangle(x1, y1, x2, y2);
-                                    destination = CropImage(destination, rect);
-                                }
-                                else if (diff < 0)
-                                {
-                                    diff = Math.Abs(diff);
-
-                                    var x1 = 0;
-                                    var y1 = Convert.ToInt32(Math.Floor(diff));
-                                    var x2 = image.Width;
-                                    var y2 = image.Width;
-                                    var rect = new Rectangle(x1, y1, x2, y2);
-                                    destination = CropImage(destination, rect);
-                                }
-
-                                g.DrawImage(destination, 0, 0, size.Width, size.Height);
+                                var x1 = Convert.ToInt32(Math.Floor(diff));
+                                var y1 = 0;
+                                var x2 = image.Height;
+                                var y2 = image.Height;
+                                var rect = new Rectangle(x1, y1, x2, y2);
+                                destination = CropImage(destination, rect);
                             }
+                            else if (diff < 0)
+                            {
+                                diff = Math.Abs(diff);
+
+                                var x1 = 0;
+                                var y1 = Convert.ToInt32(Math.Floor(diff));
+                                var x2 = image.Width;
+                                var y2 = image.Width;
+                                var rect = new Rectangle(x1, y1, x2, y2);
+                                destination = CropImage(destination, rect);
+                            }
+
+                            g.DrawImage(destination, 0, 0, size.Width, size.Height);
                         }
-                        using (MemoryStream ms = new MemoryStream())
-                        {
-                            resizedBitmap.Save(ms, ImageFormat.Png);
-                            croppedImage = new WebImage(ms);
-                        }
+                    }
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        resizedBitmap.Save(ms, ImageFormat.Png);
+
+                        var resizedImage = new WebImage(ms);
+                        var bytes = resizedImage.GetBytes();
+                        destinationStream.Write(bytes, 0, bytes.Length);      
                     }
                 }
-                else
-                {
-                    var diff = (image.Width - image.Height) / 2.0;
-                    if (diff > 0)
-                    {
-                        croppedImage = image.Crop(0, Convert.ToInt32(Math.Floor(diff)), 0, Convert.ToInt32(Math.Ceiling(diff)));
-                    }
-                    else if (diff < 0)
-                    {
-                        diff = Math.Abs(diff);
-                        croppedImage = image.Crop(Convert.ToInt32(Math.Floor(diff)), 0, Convert.ToInt32(Math.Ceiling(diff)));
-                    }
-                    else
-                    {
-                        croppedImage = image;
-                    }
-                    croppedImage = croppedImage.Resize(size.Width, size.Height);
-                }
-
-
-                var resizedImage = croppedImage;
-
-                var bytes = resizedImage.GetBytes();
-                destinationStream.Write(bytes, 0, bytes.Length);                
             }
         }
 
