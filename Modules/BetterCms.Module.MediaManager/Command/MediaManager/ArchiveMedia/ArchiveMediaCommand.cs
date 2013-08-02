@@ -41,11 +41,14 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager.ArchiveMedia
 
         private void ArchiveSubMedias(IEntity media)
         {
-            var subItems = Repository.AsQueryable<Media>().Where(m => !m.IsArchived && m.Folder != null && m.Folder.Id == media.Id).ToList();
+            var subItems = Repository.AsQueryable<Media>().Where(m => m.Folder != null && m.Folder.Id == media.Id).ToList();
             foreach (var subItem in subItems)
             {
-                subItem.IsArchived = true;
-                Repository.Save(subItem);
+                if (!subItem.IsArchived)
+                {
+                    subItem.IsArchived = true;
+                    Repository.Save(subItem);
+                }
                 ArchiveSubMedias(subItem);
             }
         }
