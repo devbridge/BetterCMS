@@ -17,7 +17,7 @@ namespace BetterCms.Module.AccessControl.Models.Migrations
         /// Initializes a new instance of the <see cref="InitialSetup"/> class.
         /// </summary>
         public InitialSetup()
-            : base("security")
+            : base(UserAccessModuleDescriptor.ModuleName.ToLowerInvariant())
         {
         }
 

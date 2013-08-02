@@ -56,6 +56,7 @@
     <Compile Include="AccessControlService.cs" />
     <Compile Include="Models\Maps\UserAccessMap.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
+    <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\UserAccess.cs" />
     <Compile Include="UserAccessModuleDescriptor.cs" />
