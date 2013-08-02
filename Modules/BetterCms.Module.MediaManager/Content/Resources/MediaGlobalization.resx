@@ -400,7 +400,7 @@
     <value>Include archived items</value>
   </data>
   <data name="ArchiveFile_ConfirmationMessage" xml:space="preserve">
-    <value>Are you sure you want to pull out file {0} from archive?</value>
+    <value>Are you sure you want to send the file {0} to archive?</value>
   </data>
   <data name="ArchiveImage_ConfirmationMessage" xml:space="preserve">
     <value>Are you sure you want to send the image {0} to archive?</value>
@@ -409,10 +409,10 @@
     <value>Media sent to archive successfully.</value>
   </data>
   <data name="ArchiveMedia_ConfirmationMessage" xml:space="preserve">
-    <value>Are you sure you want to send the media {0} to archive?</value>
+    <value>Are you sure you want to send the folder {0} to archive?</value>
   </data>
   <data name="ArchiveVideo_ConfirmationMessage" xml:space="preserve">
-    <value>Are you sure you want to pull out video {0} from archive?</value>
+    <value>Are you sure you want to send the video {0} to archive?</value>
   </data>
   <data name="MediaManager_ButtonArchive" xml:space="preserve">
     <value>Archive</value>
@@ -421,19 +421,19 @@
     <value>Unarchive</value>
   </data>
   <data name="UnarchiveFile_ConfirmationMessage" xml:space="preserve">
-    <value>Are you sure you want to send the video {0} to archive?</value>
+    <value>Are you sure you want to pull out file {0} from archive?</value>
   </data>
   <data name="UnarchiveImage_ConfirmationMessage" xml:space="preserve">
     <value>Are you sure you want to pull out image {0} from archive?</value>
   </data>
   <data name="UnarchiveMedia_ConfirmationMessage" xml:space="preserve">
-    <value>Are you sure you want to pull out media {0} from archive?</value>
+    <value>Are you sure you want to pull out folder {0} from archive?</value>
   </data>
   <data name="UnarchiveMedia_UnarchivedSuccessfully_Message" xml:space="preserve">
     <value>Media pulled out from archive successfully.</value>
   </data>
   <data name="UnarchiveVideo_ConfirmationMessage" xml:space="preserve">
-    <value>Are you sure you want to send the video {0} to archive?</value>
+    <value>Are you sure you want to pull out video {0} from archive?</value>
   </data>
   <data name="Button_Reupload" xml:space="preserve">
     <value>Re-upload</value>
@@ -572,5 +572,8 @@
   </data>
   <data name="MediaManager_SearchedInPath_Prefix" xml:space="preserve">
     <value>Searched in</value>
+  </data>
+  <data name="ImageEditor_Dialog_Tags_Title" xml:space="preserve">
+    <value>Tags</value>
   </data>
 </root>

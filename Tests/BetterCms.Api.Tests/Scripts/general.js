@@ -28,6 +28,22 @@ var api = (function() {
         $.ajax(url, options);
     };
 
+    obj.parseJsonDate = function (jsonDate) {
+        return new Date(jsonDate);
+        
+
+        var offset = new Date().getTimezoneOffset() * 60000;
+        var parts = /\/Date\((-?\d+)([+-]\d{2})?(\d{2})?.*/.exec(jsonDate);
+
+        if (parts[2] == undefined)
+            parts[2] = 0;
+
+        if (parts[3] == undefined)
+            parts[3] = 0;
+
+        return new Date(+parts[1]);// + offset + parts[2] * 3600000 + parts[3] * 60000);
+    };
+    
     /**
     * Checks if all properties of base model are not null
     */
@@ -40,8 +56,12 @@ var api = (function() {
         expect(entity.lastModifiedOn).toBeDefinedAndNotNull('LastModifiedOn should be retrieved.');
 
         expect(entity.version).toBeGreaterThan(0, 'Version should be greater than 0.');
-        expect(entity.createdOn.length).toBe(26, 'Invalid CreatedOn date.');
-        expect(entity.lastModifiedOn.length).toBe(26, 'Invalid LastModifiedOn date.');
+
+        var createdOn = obj.parseJsonDate(entity.createdOn);
+        var lastModifiedOn = obj.parseJsonDate(entity.lastModifiedOn);
+        
+        expect(new Date(entity.createdOn).getTime()).toBe(new Date(createdOn.toJSON()).getTime(), 'Invalid CreatedOn date.');
+        expect(new Date(entity.lastModifiedOn).getTime()).toBe(new Date(lastModifiedOn.toJSON()).getTime(), 'Invalid LastModifiedOn date.');
         expect(entity.id.length).toBe(32, 'Invalid Id.');
     };
 

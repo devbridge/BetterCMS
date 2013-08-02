@@ -199,7 +199,7 @@
     <value>Add tags to this post to identify it with related posts.</value>
   </data>
   <data name="EditBlockPost_Title_Title" xml:space="preserve">
-    <value>Title of the Post</value>
+    <value>Title of the Post (H1)</value>
   </data>
   <data name="EditBlockPost_Title_Tooltip_Description" xml:space="preserve">
     <value>Edit the title of this post.</value>

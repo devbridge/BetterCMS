@@ -17,6 +17,7 @@ namespace BetterCms.Configuration
         private const string StorageNode = "storage";
         private const string CacheNode = "cache";
         private const string SecurityNode = "security";
+        private const string ApiNode = "api";
         private const string ModuleGalleryNode = "moduleGallery";
         private const string WorkingDirectoryRootPathAttribute = "workingDirectoryRootPath";
         private const string ArticleUrlPatternAttribute = "articleUrlPattern";

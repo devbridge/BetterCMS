@@ -385,7 +385,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New Page Title.
+        ///   Looks up a localized string similar to New Page Title (H1).
         /// </summary>
         public static string ClonePage_Dialog_PageTitle {
             get {
@@ -1672,7 +1672,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Edit the page name that will appear on a page as the main title..
         /// </summary>
         public static string EditSeo_PageTitle_Tooltip_Description {
             get {

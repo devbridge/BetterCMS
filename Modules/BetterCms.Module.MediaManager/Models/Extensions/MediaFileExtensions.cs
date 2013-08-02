@@ -159,7 +159,7 @@ namespace BetterCms.Module.MediaManager.Models.Extensions
             {
                 properties.Add(MediaGlobalization.MediaHistory_Preview_Properties_Thumbnail, string.Format("<img src=\"{0}\" alt=\"{1}\"/>", media.Image.PublicThumbnailUrl, media.Image.Caption));
             }
-            MediaPreviewHelper.RenderProperties(html, "Properties", properties);
+            MediaPreviewHelper.RenderProperties(html, properties);
 
             // Wrapping div end.
             html.Append("</div>");

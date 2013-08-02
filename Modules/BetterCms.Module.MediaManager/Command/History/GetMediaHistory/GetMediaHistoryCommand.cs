@@ -4,6 +4,7 @@ using System.Linq;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Models.Enum;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels.History;
 using BetterCms.Module.Root;
@@ -79,6 +80,9 @@ namespace BetterCms.Module.MediaManager.Command.History.GetMediaHistory
                            StatusName = media.Original != null
                                 ? MediaGlobalization.MediaHistory_Status_Archived
                                 : MediaGlobalization.MediaHistory_Status_Active,
+                           Status = media.Original != null
+                                ? MediaHistoryStatus.Archived
+                                : MediaHistoryStatus.Active,
                            PublishedOn = media.PublishedOn,
                            PublishedByUser = media.ModifiedByUser,
                            ArchivedOn = media.Original != null ? media.ModifiedOn : (DateTime?)null,

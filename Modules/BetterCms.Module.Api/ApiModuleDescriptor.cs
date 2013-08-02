@@ -43,7 +43,6 @@ using BetterCms.Module.Api.Operations.Root.Categories.Category;
 using BetterCms.Module.Api.Operations.Root.Layouts;
 using BetterCms.Module.Api.Operations.Root.Layouts.Layout;
 using BetterCms.Module.Api.Operations.Root.Layouts.Layout.Regions;
-using BetterCms.Events;
 using BetterCms.Module.Api.Operations.Root.Tags;
 using BetterCms.Module.Api.Operations.Root.Tags.Tag;
 using BetterCms.Module.Api.Operations.Root.Version;
@@ -58,23 +57,12 @@ namespace BetterCms.Module.Api
     public class ApiModuleDescriptor : ModuleDescriptor
     {
         /// <summary>
-        /// The module name.
-        /// </summary>
-        internal const string ModuleName = "api";
-
-        /// <summary>
-        /// The API area name.
-        /// </summary>
-        internal const string ApiAreaName = "bcms-api";
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="ApiModuleDescriptor" /> class.
         /// </summary>
         /// <param name="cmsConfiguration">The CMS configuration.</param>
         public ApiModuleDescriptor(ICmsConfiguration cmsConfiguration)
             : base(cmsConfiguration)
         {
-            CoreEvents.Instance.HostStart += ApplicationStart;
         }
 
         /// <summary>
@@ -87,7 +75,7 @@ namespace BetterCms.Module.Api
         {
             get
             {
-                return ModuleName;
+                return "api";
             }
         }
 
@@ -102,20 +90,6 @@ namespace BetterCms.Module.Api
             get
             {
                 return "An API module for Better CMS.";
-            }
-        }
-
-        /// <summary>
-        /// Gets the name of the module area.
-        /// </summary>
-        /// <value>
-        /// The name of the module area.
-        /// </value>
-        public override string AreaName
-        {
-            get
-            {
-                return ApiAreaName;
             }
         }
 
@@ -173,25 +147,6 @@ namespace BetterCms.Module.Api
             containerBuilder.RegisterType<DefaultBlogApiOperations>().As<IBlogApiOperations>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<DefaultMediaManagerApiOperations>().As<IMediaManagerApiOperations>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<DefaultApiFacade>().As<IApiFacade>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
-        }
-
-        /// <summary>
-        /// Registers module custom routes.
-        /// </summary>
-        /// <param name="context">The area registration context.</param>
-        /// <param name="containerBuilder">The container builder.</param>
-        public override void RegisterCustomRoutes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
-        {
-            context.IgnoreRoute(string.Format("{0}/{{*pathInfo}}", ApiAreaName));
-        }
-
-        private void ApplicationStart(SingleItemEventArgs<HttpApplication> args)
-        {
-            using (var container = ContextScopeProvider.CreateChildContainer())
-            {
-                var containerProvider = container.Resolve<PerWebRequestContainerProvider>();                
-                new ApiApplicationHost(() => containerProvider.CurrentScope).Init();
-            }
         }
     }
 }
