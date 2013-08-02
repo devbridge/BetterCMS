@@ -54,7 +54,7 @@ namespace BetterCms.Module.MediaManager.Services
             this.repository = repository;
         }
 
-        public virtual void RemoveFile(Guid fileId, int version)
+        public virtual void RemoveFile(Guid fileId, int version, bool doNotCheckVersion = false)
         {
             var file = repository.AsQueryable<MediaFile>()
                           .Where(f => f.Id == fileId)
@@ -89,7 +89,15 @@ namespace BetterCms.Module.MediaManager.Services
             }
             finally
             {
-                repository.Delete<MediaFile>(fileId, version);
+                if (doNotCheckVersion)
+                {
+                    var media = repository.AsQueryable<MediaFile>().FirstOrDefault(f => f.Id == fileId);
+                    repository.Delete(media);
+                }
+                else
+                {
+                    repository.Delete<MediaFile>(fileId, version);
+                }
                 unitOfWork.Commit();   
             }
         }

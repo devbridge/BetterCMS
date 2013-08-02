@@ -89,7 +89,7 @@ namespace BetterCms.Module.MediaManager.Services
         /// </summary>
         /// <param name="mediaImageId">The media image id.</param>
         /// <param name="version">The version.</param>
-        public void RemoveImageWithFiles(Guid mediaImageId, int version)
+        public void RemoveImageWithFiles(Guid mediaImageId, int version, bool doNotCheckVersion = false)
         {   
             var removeImageFileTasks = new List<Task>();
             var image = repository.AsQueryable<MediaImage>()
@@ -148,7 +148,15 @@ namespace BetterCms.Module.MediaManager.Services
             }
             finally
             {
-                repository.Delete<MediaImage>(mediaImageId, version);
+                if (doNotCheckVersion)
+                {
+                    var media = repository.AsQueryable<MediaImage>().FirstOrDefault(f => f.Id == mediaImageId);
+                    repository.Delete(media);
+                }
+                else
+                {
+                    repository.Delete<MediaImage>(mediaImageId, version);
+                }
                 unitOfWork.Commit();                
             }
         }

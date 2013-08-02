@@ -8,7 +8,7 @@ namespace BetterCms.Module.MediaManager.Services
 {
     public interface IMediaFileService
     {
-        void RemoveFile(Guid fileId, int version);
+        void RemoveFile(Guid fileId, int version, bool doNotCheckVersion = false);
 
         MediaFile UploadFile(MediaType type, Guid rootFolderId, string fileName, long fileLength, Stream fileStream);
 

@@ -206,7 +206,7 @@
 
                 <div class="bcms-media-items-block">
                     <div data-bind="css: iconClassNames()">
-                        <!-- ko if: getImageUrl() -->
+                        <!-- ko if: getImageUrl() && !isProcessing() -->
                         <img data-bind="attr: { alt: tooltip(), src: getImageUrl() }" />
                         <!-- /ko -->
                     </div>
