@@ -46,12 +46,13 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
     mediaUpload.globalization = globalization;    
 
     mediaUpload.openUploadFilesDialog = function (rootFolderId, rootFolderType, onSaveCallback, reuploadMediaId) {
+        reuploadMediaId = reuploadMediaId || '00000000-0000-0000-0000-000000000000';
         var options = {
                 uploads: new UploadsViewModel(),
                 rootFolderId: rootFolderId,
                 rootFolderType: rootFolderType,
                 reuploadMediaId: reuploadMediaId
-        };
+            };
 
         options.uploads.filesToAccept(rootFolderType == 1 ? 'image/*' : '');
 
