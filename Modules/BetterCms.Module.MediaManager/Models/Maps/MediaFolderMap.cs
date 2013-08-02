@@ -10,6 +10,8 @@ namespace BetterCms.Module.MediaManager.Models.Maps
             Table("MediaFolders");
 
             HasMany(f => f.Medias).KeyColumn("FolderId").Inverse().Cascade.SaveUpdate().LazyLoad().Where("IsDeleted = 0");
+            HasMany(f => f.ChildFolders).KeyColumn("ParentId").Inverse().Cascade.SaveUpdate().LazyLoad().Where("IsDeleted = 0");
+            HasMany(f => f.ParentFolders).KeyColumn("ChildId").Inverse().Cascade.SaveUpdate().LazyLoad().Where("IsDeleted = 0");
         }
     }
 }

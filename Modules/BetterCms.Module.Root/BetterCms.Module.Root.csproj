@@ -202,6 +202,7 @@
     <Compile Include="Mvc\Helpers\DynamicDictionary.cs" />
     <Compile Include="Mvc\Helpers\LayoutHelper.cs" />
     <Compile Include="Mvc\Helpers\LayoutRegionWrapper.cs" />
+    <Compile Include="Mvc\Helpers\PredicateBuilder.cs" />
     <Compile Include="Mvc\Helpers\PreviewHelper.cs" />
     <Compile Include="Mvc\Helpers\RegionContentWrapper.cs" />
     <Compile Include="Mvc\Helpers\StringHelper.cs" />

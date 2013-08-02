@@ -8,6 +8,10 @@ namespace BetterCms.Module.MediaManager.Models
     {
         public virtual IList<Media> Medias { get; set; }
 
+        public virtual IList<MediaFolderDependency> ChildFolders { get; set; }
+        
+        public virtual IList<MediaFolderDependency> ParentFolders { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MediaFolder" /> class.
         /// </summary>
