@@ -125,6 +125,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccessControl\AccessControlServiceTests.cs" />
+    <Compile Include="AccessControl\ModelTests\MapTests\UserAccessMapTest.cs" />
     <Compile Include="AmazonS3Storage\AmazonS3StorageServiceTest.cs" />
     <Compile Include="ApiTestBase.cs" />
     <Compile Include="Api\ApiFacadeTests.cs" />
@@ -241,6 +243,10 @@
     <ProjectReference Include="..\..\BetterCMS.Core\BetterCms.Core.csproj">
       <Project>{694CA5CA-A0E2-4578-A249-648498B058D7}</Project>
       <Name>BetterCms.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\BetterCms.Module.AccessControl\BetterCms.Module.AccessControl.csproj">
+      <Project>{CBAFF601-0A79-4150-9D38-A44C907F98C5}</Project>
+      <Name>BetterCms.Module.AccessControl</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCms.Module.AmazonS3Storage\BetterCms.Module.AmazonS3Storage.csproj">
       <Project>{42698E7B-A9B1-4C23-8BB0-FC363A3F8B94}</Project>

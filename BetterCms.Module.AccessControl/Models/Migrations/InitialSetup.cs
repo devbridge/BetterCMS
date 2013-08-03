@@ -10,7 +10,7 @@ namespace BetterCms.Module.AccessControl.Models.Migrations
     /// <summary>
     /// Module initial database structure creation.
     /// </summary>
-    [Migration(201307302059)]
+    [Migration(201308021600)]
     public class InitialSetup : DefaultMigration
     {
         /// <summary>
@@ -47,7 +47,7 @@ namespace BetterCms.Module.AccessControl.Models.Migrations
                 .InSchema(SchemaName)
                 .WithCmsBaseColumns()
                 .WithColumn("ObjectId").AsGuid().NotNullable()
-                .WithColumn("User").AsString(MaxLength.Name).NotNullable()
+                .WithColumn("RoleOrUser").AsString(MaxLength.Name).NotNullable()
                 .WithColumn("AccessLevel").AsInt32().NotNullable();
         }
     }

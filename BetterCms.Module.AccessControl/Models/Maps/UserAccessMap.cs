@@ -2,7 +2,7 @@
 
 namespace BetterCms.Module.AccessControl.Models.Maps
 {
-    public class UserAccessMap : EntitySubClassMapBase<UserAccess>
+    public class UserAccessMap : EntityMapBase<UserAccess>
     {
         public UserAccessMap()
             : base(UserAccessModuleDescriptor.ModuleName)
@@ -10,7 +10,7 @@ namespace BetterCms.Module.AccessControl.Models.Maps
             Table("UserAccess");
 
             Map(x => x.ObjectId).Not.Nullable();
-            Map(x => x.User).Length(MaxLength.Name).Not.Nullable();
+            Map(x => x.RoleOrUser).Length(MaxLength.Name).Not.Nullable();
             Map(x => x.AccessLevel).Not.Nullable();
         }
     }
