@@ -31,7 +31,7 @@ namespace BetterCms.Module.Root.Controllers
         /// <summary>
         /// The cache service
         /// </summary>
-        private IAccessControlService accessControlService;
+        private readonly IAccessControlService accessControlService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CmsController" /> class.
@@ -113,6 +113,11 @@ namespace BetterCms.Module.Root.Controllers
 
         private bool HasAccess(Guid pageId)
         {
+            if (!cmsConfiguration.AccessControlEnabled)
+            {
+                return true;
+            }
+
             if (accessControlService == null)
             {
                 return true;

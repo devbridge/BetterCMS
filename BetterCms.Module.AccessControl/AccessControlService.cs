@@ -4,6 +4,7 @@ using System.Security.Principal;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.Security;
+using BetterCms.Core.Services.Caching;
 using BetterCms.Module.AccessControl.Models;
 
 namespace BetterCms.Module.AccessControl
@@ -15,13 +16,17 @@ namespace BetterCms.Module.AccessControl
     {
         private readonly IRepository repository;
 
+        private readonly ICacheService cacheService;
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="AccessControlService"/> class.
+        /// Initializes a new instance of the <see cref="AccessControlService" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
-        public AccessControlService(IRepository repository)
+        /// <param name="cacheService">The cache service.</param>
+        public AccessControlService(IRepository repository, ICacheService cacheService)
         {
             this.repository = repository;
+            this.cacheService = cacheService;
         }
 
         /// <summary>
@@ -32,7 +37,9 @@ namespace BetterCms.Module.AccessControl
         /// <returns></returns>
         public AccessLevel GetAccessLevel(Guid objectId, IPrincipal principal)
         {
-            var accessList = repository.AsQueryable<UserAccess>().Where(x => x.ObjectId == objectId);
+            // TODO: Make cache length configurable value
+            var accessList = cacheService.Get("bcms-useraccess-" + objectId, TimeSpan.FromMinutes(2),
+                () => repository.AsQueryable<UserAccess>().Where(x => x.ObjectId == objectId).ToList());
 
             var accessLevel = AccessLevel.NoPermissions;
 
