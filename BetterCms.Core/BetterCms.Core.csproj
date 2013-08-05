@@ -119,6 +119,8 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="DataContracts\IOptionValues.cs" />
+    <Compile Include="DataContracts\IOptions.cs" />
     <Compile Include="Events\EventBase.cs" />
     <Compile Include="Events\CoreEvents.cs" />
     <Compile Include="Events\SingleItemEventArgs.cs" />
@@ -147,7 +149,6 @@
     <Compile Include="DataContracts\Enums\OptionType.cs" />
     <Compile Include="DataContracts\ICategory.cs" />
     <Compile Include="DataContracts\IContent.cs" />
-    <Compile Include="DataContracts\IContentOption.cs" />
     <Compile Include="DataContracts\IEntity.cs" />
     <Compile Include="DataContracts\IHistorical.cs" />
     <Compile Include="DataContracts\IHtmlContent.cs" />
@@ -155,7 +156,6 @@
     <Compile Include="DataContracts\IOption.cs" />
     <Compile Include="DataContracts\IPage.cs" />
     <Compile Include="DataContracts\IPageContent.cs" />
-    <Compile Include="DataContracts\IPageContentOption.cs" />
     <Compile Include="DataContracts\IRegion.cs" />
     <Compile Include="DataContracts\IWidget.cs" />
     <Compile Include="Dependencies\ContextScopeProvider.cs" />
@@ -171,7 +171,9 @@
     <Compile Include="Modules\Projections\JavaScriptModuleLink.cs" />
     <Compile Include="Mvc\Attributes\NoCacheAttribute.cs" />
     <Compile Include="Mvc\Extensions\VirtualPath.cs" />
+    <Compile Include="Security\AccessLevel.cs" />
     <Compile Include="Security\BcmsAuthorizeAttribute.cs" />
+    <Compile Include="Security\IAccessControlService.cs" />
     <Compile Include="Security\IUserRole.cs" />
     <Compile Include="Modules\Projections\EmptyContentAccessor.cs" />
     <Compile Include="Mvc\Attributes\IgnoreAutoRouteAttribute.cs" />

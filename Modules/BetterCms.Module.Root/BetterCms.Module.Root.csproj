@@ -155,9 +155,15 @@
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Content.cs" />
     <Compile Include="Models\ContentOption.cs" />
-    <Compile Include="Models\ContentBase.cs" />
     <Compile Include="Models\ComboWireJson.cs" />
+    <Compile Include="Models\Maps\PageOptionMap.cs" />
+    <Compile Include="Models\Migrations\Migration201308051530.cs" />
+    <Compile Include="Models\PageOption.cs" />
+    <Compile Include="Models\LayoutOption.cs" />
+    <Compile Include="Models\Maps\LayoutOptionMap.cs" />
     <Compile Include="Models\Maps\ModuleContentVersionMap.cs" />
+    <Compile Include="Models\Migrations\Migration201308021300.cs" />
+    <Compile Include="Models\Migrations\Migration201308021130.cs" />
     <Compile Include="Models\Migrations\Migration201307191431.cs" />
     <Compile Include="Models\Migrations\Migration201306101421.cs" />
     <Compile Include="Models\ModuleContentVersion.cs" />

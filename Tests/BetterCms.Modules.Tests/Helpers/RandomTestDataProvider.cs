@@ -3,7 +3,8 @@ using System.Text;
 
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;
-
+using BetterCms.Core.Security;
+using BetterCms.Module.AccessControl.Models;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Models;
@@ -653,6 +654,19 @@ namespace BetterCms.Tests.Helpers
             entity.Salt = ProvideRandomString(MaxLength.Password);
             entity.Image = CreateNewMediaImage();
 
+            return entity;
+        }
+
+        public UserAccess CreateNewUserAccess()
+        {
+            var entity = new UserAccess();
+
+            PopulateBaseFields(entity);
+
+            entity.ObjectId = Guid.NewGuid();
+            entity.RoleOrUser = ProvideRandomString(MaxLength.Name);
+            entity.AccessLevel = ProvideRandomEnumValue<AccessLevel>();
+            
             return entity;
         }
     }

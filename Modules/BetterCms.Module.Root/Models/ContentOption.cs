@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
@@ -8,7 +7,7 @@ using BetterCms.Core.Models;
 namespace BetterCms.Module.Root.Models
 {
     [Serializable]
-    public class ContentOption : EquatableEntity<ContentOption>, IContentOption
+    public class ContentOption : EquatableEntity<ContentOption>, IOption
     {
         public virtual Content Content { get; set; }
 
@@ -16,15 +15,7 @@ namespace BetterCms.Module.Root.Models
 
         public virtual OptionType Type { get; set; }
 
-        public virtual string DefaultValue { get; set; }        
-
-        IContent IContentOption.Content
-        {
-            get
-            {
-                return Content;
-            }
-        }
+        public virtual string DefaultValue { get; set; }
 
         string IOption.Value
         {

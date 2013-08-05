@@ -40,18 +40,18 @@ namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
 
                 // Should return 4 options: 2 with assigned values, 1 without parent option and 1 unassigned
                 Assert.IsNotNull(result);
-                Assert.IsNotNull(result.WidgetOptions);
-                Assert.AreEqual(result.WidgetOptions.Count, 4);
-                Assert.IsNotNull(result.WidgetOptions.FirstOrDefault(o => o.OptionKey == content.ContentOptions[0].Key 
+                Assert.IsNotNull(result.OptionValues);
+                Assert.AreEqual(result.OptionValues.Count, 4);
+                Assert.IsNotNull(result.OptionValues.FirstOrDefault(o => o.OptionKey == content.ContentOptions[0].Key 
                     && o.OptionValue == pageContent.Options[0].Value
                     && o.OptionDefaultValue == content.ContentOptions[0].DefaultValue));
-                Assert.IsNotNull(result.WidgetOptions.FirstOrDefault(o => o.OptionKey == content.ContentOptions[1].Key
+                Assert.IsNotNull(result.OptionValues.FirstOrDefault(o => o.OptionKey == content.ContentOptions[1].Key
                     && o.OptionValue == pageContent.Options[1].Value
                     && o.OptionDefaultValue == content.ContentOptions[1].DefaultValue));
-                Assert.IsNotNull(result.WidgetOptions.FirstOrDefault(o => o.OptionKey == content.ContentOptions[2].Key
+                Assert.IsNotNull(result.OptionValues.FirstOrDefault(o => o.OptionKey == content.ContentOptions[2].Key
                     && o.OptionValue == null
                     && o.OptionDefaultValue == content.ContentOptions[2].DefaultValue));
-                Assert.IsNotNull(result.WidgetOptions.FirstOrDefault(o => o.OptionKey == pageContent.Options[2].Key
+                Assert.IsNotNull(result.OptionValues.FirstOrDefault(o => o.OptionKey == pageContent.Options[2].Key
                     && o.OptionValue == pageContent.Options[2].Value
                     && o.OptionDefaultValue == null));
             });

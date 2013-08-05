@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
-
+using BetterCms.Module.Pages.ViewModels.Option;
 using BetterCms.Module.Pages.ViewModels.Templates;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
@@ -47,8 +47,8 @@ namespace BetterCms.Module.Pages.Command.Layout.SaveTemplate
             {
                 foreach (var region in template.LayoutRegions)
                 {
-                    var requestRegion = request.RegionOptions != null
-                                                   ? request.RegionOptions.FirstOrDefault(f => f.Identifier == region.Region.RegionIdentifier)
+                    var requestRegion = request.Regions != null
+                                                   ? request.Regions.FirstOrDefault(f => f.Identifier == region.Region.RegionIdentifier)
                                                    : null;
 
                     if (requestRegion != null && region.Region.RegionIdentifier == requestRegion.Identifier)
@@ -64,16 +64,16 @@ namespace BetterCms.Module.Pages.Command.Layout.SaveTemplate
             }
             
             // Adds new region.
-            if (request.RegionOptions != null)
+            if (request.Regions != null)
             {
                 if (template.LayoutRegions == null)
                 {
                     template.LayoutRegions = new List<LayoutRegion>();
                 }
 
-                var regions = GetRegions(request.RegionOptions);
+                var regions = GetRegions(request.Regions);
 
-                foreach (var requestRegionOption in request.RegionOptions)
+                foreach (var requestRegionOption in request.Regions)
                 {
                     if (!template.LayoutRegions.Any(f => f.Region.RegionIdentifier.Equals(requestRegionOption.Identifier, StringComparison.InvariantCultureIgnoreCase)))
                     {
@@ -114,6 +114,8 @@ namespace BetterCms.Module.Pages.Command.Layout.SaveTemplate
                 }
             }
 
+            SetOptions(template, request.Options);
+
             Repository.Save(template);
             UnitOfWork.Commit();
 
@@ -134,6 +136,37 @@ namespace BetterCms.Module.Pages.Command.Layout.SaveTemplate
                                     .ToList(); 
 
             return regions;
+        }
+
+        private void SetOptions(Root.Models.Layout template, IList<OptionViewModel> options)
+        {
+            // Delete old ones
+            foreach (var option in template.LayoutOptions.Distinct())
+            {
+                if (options == null || options.All(o => o.OptionKey != option.Key))
+                {
+                    Repository.Delete(option);
+                }
+            }
+
+            // Add new ones
+            if (options != null)
+            {
+                foreach (var requestLayoutOption in options)
+                {
+                    var option = template.LayoutOptions.FirstOrDefault(o => o.Key == requestLayoutOption.OptionKey);
+                    if (option == null)
+                    {
+                        option = new LayoutOption();
+                        template.LayoutOptions.Add(option);
+                    }
+
+                    option.Key = requestLayoutOption.OptionKey;
+                    option.DefaultValue = requestLayoutOption.OptionDefaultValue;
+                    option.Type = requestLayoutOption.Type;
+                    option.Layout = template;
+                }
+            }
         }
     }
 }

@@ -5,7 +5,7 @@ using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
-using BetterCms.Module.Pages.ViewModels.Content;
+using BetterCms.Module.Pages.ViewModels.Option;
 using BetterCms.Module.Pages.ViewModels.Widgets;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
@@ -64,10 +64,10 @@ namespace BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit
                                                                      CategoryId = serverControlWidget.Category != null ? serverControlWidget.Category.Id : (Guid?)null
                                                                  };
 
-                    model.ContentOptions = serverControlWidget.ContentOptions.Distinct()
+                    model.Options = serverControlWidget.ContentOptions.Distinct()
                         .Select(
                             f => 
-                                new ContentOptionViewModel
+                                new OptionViewModel
                                  {
                                      Type = f.Type,
                                      OptionDefaultValue = f.DefaultValue,

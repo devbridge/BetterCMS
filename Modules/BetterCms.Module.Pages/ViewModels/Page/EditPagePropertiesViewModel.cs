@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using BetterCms.Core.Models;
 using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Content.Resources;
-
+using BetterCms.Module.Pages.ViewModels.Option;
 using BetterCms.Module.Root.Models;
 
 namespace BetterCms.Module.Pages.ViewModels.Page
@@ -13,7 +13,7 @@ namespace BetterCms.Module.Pages.ViewModels.Page
     /// <summary>
     /// Edit basic page properties view model.
     /// </summary>
-    public class EditPagePropertiesViewModel
+    public class EditPagePropertiesViewModel : IOptionValuesContainer
     {
         /// <summary>
         /// Gets or sets the page id.
@@ -203,6 +203,14 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// <c>true</c> if this instance is archived; otherwise, <c>false</c>.
         /// </value>
         public bool IsArchived { get; set; }
+
+        /// <summary>
+        /// Gets or sets the page option values.
+        /// </summary>
+        /// <value>
+        /// The page option values.
+        /// </value>
+        public IList<OptionValueViewModel> OptionValues { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

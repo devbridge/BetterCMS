@@ -1,7 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepicker', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages', 'bcms.preview', 'bcms.grid', 'bcms.inlineEdit', 'bcms.slides.jquery'],
+bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepicker', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages',
+        'bcms.preview', 'bcms.grid', 'bcms.inlineEdit', 'bcms.slides.jquery'],
     function ($, bcms, modal, datepicker, dynamicContent, siteSettings, messages, preview, grid, editor) {
         'use strict';
 
@@ -20,7 +21,8 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
                 deleteRegionConfirmMessage: null,
                 editTemplateRegionTitle: null,
                 previewImageNotFoundMessage: null,
-                deletingMessage: null
+                deletingMessage: null,
+                deleteOptionConfirmMessage: null
             },
             selectors = {
                 templatePreviewImageUrl: '#PreviewImageUrl',
@@ -47,14 +49,19 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
                 templateTableFirstRow: 'table.bcms-tables > tbody > tr:first',
                 templateInsertButtons: '.bcms-template-insert-button',
 
-                addNewRegionButton: '#bcms-template-options-add-region',
+                addNewRegionButton: '#bcms-add-region-button',
                 templatesListForm: '#bcms-templates-form',
+                templateEditForm: '#bcms-template-form',
 
-                addOptionLink: '#bcms-add-option-button',
+                regionsTable: '#bcms-regions-grid',
+                regionsTab: '#bcms-tab-2',
+                
+                optionsTab: '#bcms-tab-3',
+                addNewOptionButton: '#bcms-add-option-button',
                 optionsTable: '#bcms-options-grid'
             },
-            classes = {
-            };
+            editorRegions,
+            editorOptions;
 
         /**
         * Assign objects to module.
@@ -74,8 +81,11 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
                         contentAvailable: initializeEditTemplateForm,
 
                         beforePost: function (form) {
-                            editor.resetAutoGenerateNameId();
-                            editor.setInputNames(form);
+                            editorOptions.resetAutoGenerateNameId();
+                            editorOptions.setInputNames(form.find(selectors.optionsTab));
+                            
+                            editorRegions.resetAutoGenerateNameId();
+                            editorRegions.setInputNames(form.find(selectors.regionsTab));
                         },
 
                         postSuccess: onSaveCallback
@@ -95,8 +105,11 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
                         contentAvailable: initializeEditTemplateForm,
 
                         beforePost: function (form) {
-                            editor.resetAutoGenerateNameId();
-                            editor.setInputNames(form);
+                            editorOptions.resetAutoGenerateNameId();
+                            editorOptions.setInputNames(form.find(selectors.optionsTab));
+
+                            editorRegions.resetAutoGenerateNameId();
+                            editorRegions.setInputNames(form.find(selectors.regionsTab));
                         },
 
                         postSuccess: onSaveCallback
@@ -109,18 +122,35 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
         * Initializes template form
         */
         function initializeEditTemplateForm(dialog) {
-            editor.initialize(dialog.container, {
-                deleteRowMessageExtractor: function () {
+            var regionsContainer = dialog.container.find(selectors.regionsTab),
+                optionsContainer = dialog.container.find(selectors.optionsTab),
+                form = dialog.container.find(selectors.templateEditForm);
+            
+            editorRegions = $.extend(true, {}, editor),
+            editorOptions = $.extend(true, {}, editor);
+
+            // Initialize regions tab
+            editorRegions.initialize(regionsContainer, {
+                deleteRowMessageExtractor: function() {
                     return globalization.deleteRegionConfirmMessage;
-                }
+                },
+                form: form
+            });
+            
+            regionsContainer.find(selectors.addNewRegionButton).on('click', function () {
+                editorRegions.addNewRow(regionsContainer, $(selectors.regionsTable));
             });
 
-            dialog.container.find(selectors.addOptionLink).on('click', function () {
-                editor.addNewRow(dialog.container, $(selectors.optionsTable));
+            // Initialize options tab
+            editorOptions.initialize(optionsContainer, {
+                deleteRowMessageExtractor: function() {
+                    return globalization.deleteOptionConfirmMessage;
+                },
+                form: form
             });
-
-            dialog.container.find(selectors.addNewRegionButton).on('click', function () {
-                editor.addNewRow(dialog.container, $(selectors.optionsTable));
+            
+            optionsContainer.find(selectors.addNewOptionButton).on('click', function () {
+                editorOptions.addNewRow(optionsContainer, $(selectors.optionsTable));
             });
 
             dialog.container.find(selectors.templatePreviewImage).error(function () {

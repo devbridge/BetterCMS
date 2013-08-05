@@ -35,6 +35,7 @@ namespace BetterCms.Module.Pages.Registration
                                     new JavaScriptModuleGlobalization(this, "deleteRegionConfirmMessage", () => PagesGlobalization.DeleteRegion_Confirmation_Message),
                                     new JavaScriptModuleGlobalization(this, "previewImageNotFoundMessage", () => PagesGlobalization.EditTemplate_PreviewImageNotFound_Message),
                                     new JavaScriptModuleGlobalization(this, "deletingMessage", () => RootGlobalization.Message_Deleting),
+                                    new JavaScriptModuleGlobalization(this, "deleteOptionConfirmMessage", () => PagesGlobalization.DeleteOption_Confirmation_Message),
                                 };
         }
     }

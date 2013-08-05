@@ -5,6 +5,7 @@ using System.Web.Mvc;
 
 using BetterCms.Configuration;
 using BetterCms.Core.Mvc.Attributes;
+using BetterCms.Core.Security;
 using BetterCms.Core.Services.Caching;
 using BetterCms.Module.Root.Commands.GetPageToRender;
 using BetterCms.Module.Root.Mvc;
@@ -28,14 +29,21 @@ namespace BetterCms.Module.Root.Controllers
         private readonly ICacheService cacheService;
 
         /// <summary>
+        /// The cache service
+        /// </summary>
+        private readonly IAccessControlService accessControlService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="CmsController" /> class.
         /// </summary>
         /// <param name="cmsConfiguration">The configuration loader.</param>
         /// <param name="cacheService">The cache service.</param>
-        public CmsController(ICmsConfiguration cmsConfiguration, ICacheService cacheService)
+        /// <param name="accessControlService">The access control service.</param>
+        public CmsController(ICmsConfiguration cmsConfiguration, ICacheService cacheService, IAccessControlService accessControlService)
         {
             this.cmsConfiguration = cmsConfiguration;
             this.cacheService = cacheService;
+            this.accessControlService = accessControlService;
         }
 
         /// <summary>
@@ -77,6 +85,13 @@ namespace BetterCms.Module.Root.Controllers
 
                         ViewBag.pageId = model.RenderPage.Id;
 
+                        if (!HasAccess(model.RenderPage.Id))
+                        {
+                            Response.StatusCode = 403;
+                            // throw new HttpException(403, "Access to the page forbidden.");
+                            return Content("403 Access Forbidden", "text/plain");
+                        }
+
                         // Notify.
                         Events.RootEvents.Instance.OnPageRendering(model.RenderPage);
 
@@ -84,12 +99,34 @@ namespace BetterCms.Module.Root.Controllers
                     }
                 }
             }
+            catch (HttpException)
+            {
+                throw;
+            }
             catch (Exception ex)
             {
                 throw new HttpException(500, "Failed to load a CMS page.", ex);
             }
 
             throw new HttpException(404, "Page Not Found");
+        }
+
+        private bool HasAccess(Guid pageId)
+        {
+            if (!cmsConfiguration.AccessControlEnabled)
+            {
+                return true;
+            }
+
+            if (accessControlService == null)
+            {
+                return true;
+            }
+
+            var principal = SecurityService.GetCurrentPrincipal();
+            var accessLevel = accessControlService.GetAccessLevel(pageId, principal);
+
+            return accessLevel != AccessLevel.Deny;
         }
 
         private CmsRequestViewModel GetRequestModel(string virtualPath)
@@ -114,15 +151,16 @@ namespace BetterCms.Module.Root.Controllers
                 RootModuleConstants.UserRoles.MultipleRoles(SecurityService.GetAllRoles()));
 
             var useCaching = cmsConfiguration.Cache.Enabled && !canManageContent;
-            var request = new GetPageToRenderRequest {
-                                                         PageUrl = virtualPath,
-                                                         CanManageContent = canManageContent,
-                                                         IsAuthenticated = principal != null && principal.Identity.IsAuthenticated
-                                                     };
+            var request = new GetPageToRenderRequest
+            {
+                PageUrl = virtualPath,
+                CanManageContent = canManageContent,
+                IsAuthenticated = principal != null && principal.Identity.IsAuthenticated
+            };
             if (useCaching)
             {
                 string cacheKey = "CMS_" + CalculateHash(virtualPath) + "_050cc001f75942648e57e58359140d1a";
-                
+
                 model = cacheService.Get(cacheKey, cmsConfiguration.Cache.Timeout, () => GetCommand<GetPageToRenderCommand>().ExecuteCommand(request));
             }
             else

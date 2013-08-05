@@ -11,7 +11,7 @@ namespace BetterCms.Module.Root.Models
     /// A generic page entity.
     /// </summary>
     [Serializable]
-    public class Page : EquatableEntity<Page>, IPage
+    public class Page : EquatableEntity<Page>, IPage, IOptions, IOptionValues
     {
         /// <summary>
         /// Gets or sets the page URL.
@@ -110,6 +110,14 @@ namespace BetterCms.Module.Root.Models
         public virtual IList<PageContent> PageContents { get; set; }
 
         /// <summary>
+        /// Gets or sets the options.
+        /// </summary>
+        /// <value>
+        /// The options.
+        /// </value>
+        public virtual IList<PageOption> Options { get; set; }      
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>
@@ -118,6 +126,22 @@ namespace BetterCms.Module.Root.Models
         public override string ToString()
         {
             return string.Format("{0}, Title={1}", base.ToString(), Title);
+        }
+
+        IEnumerable<IOption> IOptions.Options
+        {
+            get
+            {
+                return Layout.LayoutOptions;
+            }
+        }
+
+        IEnumerable<IOption> IOptionValues.OptionValues
+        {
+            get
+            {
+                return Options;
+            }
         }
     }
 }
