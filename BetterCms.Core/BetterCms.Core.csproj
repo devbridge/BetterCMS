@@ -154,7 +154,6 @@
     <Compile Include="DataContracts\IOption.cs" />
     <Compile Include="DataContracts\IPage.cs" />
     <Compile Include="DataContracts\IPageContent.cs" />
-    <Compile Include="DataContracts\IPageContentOption.cs" />
     <Compile Include="DataContracts\IRegion.cs" />
     <Compile Include="DataContracts\IWidget.cs" />
     <Compile Include="Dependencies\ContextScopeProvider.cs" />

@@ -59,7 +59,9 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
                 optionsTab: '#bcms-tab-3',
                 addNewOptionButton: '#bcms-add-option-button',
                 optionsTable: '#bcms-options-grid'
-            };
+            },
+            editorRegions,
+            editorOptions;
 
         /**
         * Assign objects to module.
@@ -79,8 +81,11 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
                         contentAvailable: initializeEditTemplateForm,
 
                         beforePost: function (form) {
-                            editor.resetAutoGenerateNameId();
-                            editor.setInputNames(form);
+                            editorOptions.resetAutoGenerateNameId();
+                            editorOptions.setInputNames(form.find(selectors.optionsTab));
+                            
+                            editorRegions.resetAutoGenerateNameId();
+                            editorRegions.setInputNames(form.find(selectors.regionsTab));
                         },
 
                         postSuccess: onSaveCallback
@@ -100,8 +105,11 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
                         contentAvailable: initializeEditTemplateForm,
 
                         beforePost: function (form) {
-                            editor.resetAutoGenerateNameId();
-                            editor.setInputNames(form);
+                            editorOptions.resetAutoGenerateNameId();
+                            editorOptions.setInputNames(form.find(selectors.optionsTab));
+
+                            editorRegions.resetAutoGenerateNameId();
+                            editorRegions.setInputNames(form.find(selectors.regionsTab));
                         },
 
                         postSuccess: onSaveCallback
@@ -116,9 +124,10 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
         function initializeEditTemplateForm(dialog) {
             var regionsContainer = dialog.container.find(selectors.regionsTab),
                 optionsContainer = dialog.container.find(selectors.optionsTab),
-                form = dialog.container.find(selectors.templateEditForm),
-                editorRegions = $.extend(true, {}, editor),
-                editorOptions = $.extend(true, {}, editor);
+                form = dialog.container.find(selectors.templateEditForm);
+            
+            editorRegions = $.extend(true, {}, editor),
+            editorOptions = $.extend(true, {}, editor);
 
             // Initialize regions tab
             editorRegions.initialize(regionsContainer, {

@@ -7,9 +7,12 @@ bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bc
     var editor = {
         // Prevents to add two or more new rows
         rowAdded: false,
-        
+
         // Editor options
-        options: {}
+        options: {},
+        
+        // Auto generated name sequence id
+        autoGenerateNameId: 0
     },
         selectors = {},
         defaultSelectors = {
@@ -39,17 +42,13 @@ bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bc
             firstInvalidField: '.bcms-input-validation-error:first'
         },
         links = {
+            
         },
         globalization = {
             messageSaving: null,
             messageDeleting: null,
             confirmDeleteMessage: null
-        },
-
-        /**
-        * Auto generated name sequence id
-        */
-        autoGenerateNameId = 0;
+        };
 
     /**
     * Assign objects to module.
@@ -540,7 +539,7 @@ bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bc
     * Resets auto generated name sequence number
     */
     editor.resetAutoGenerateNameId = function () {
-        autoGenerateNameId = 0;
+        this.autoGenerateNameId = 0;
     };
 
     /**
@@ -563,14 +562,15 @@ bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bc
     */
     editor.setRowInputNames = function (row) {
         var counterSet = false,
-            index = null;
+            index = null,
+            self = this;
         row.find(selectors.allInputs).each(function () {
             var input = $(this),
                 pattern = input.data('namePattern');
             if (pattern) {
                 if (!counterSet) {
                     counterSet = true;
-                    index = autoGenerateNameId++;
+                    index = self.autoGenerateNameId++;
                 }
                 var name = $.format(pattern, index);
                 input.attr('name', name);
