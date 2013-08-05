@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 using BetterCms.Core.Models;
+using BetterCms.Module.Pages.ViewModels.Option;
 using BetterCms.Module.Root.Content.Resources;
 
 namespace BetterCms.Module.Pages.ViewModels.Content
 {
-    public class ContentViewModel
+    public class ContentViewModel : IOptionsContainer
     {        
         /// <summary>
         /// Gets or sets the widget id.
@@ -67,7 +68,7 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// <value>
         /// The list of content options.
         /// </value>
-        public IList<ContentOptionViewModel> ContentOptions { get; set; }
+        public IList<OptionViewModel> Options { get; set; }
 
         public override string ToString()
         {

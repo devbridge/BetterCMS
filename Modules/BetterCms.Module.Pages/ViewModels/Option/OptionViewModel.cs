@@ -4,17 +4,17 @@ using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;
 using BetterCms.Module.Root.Content.Resources;
 
-namespace BetterCms.Module.Pages.ViewModels.Content
+namespace BetterCms.Module.Pages.ViewModels.Option
 {
     /// <summary>
-    /// Content option view model
+    /// Option view model
     /// </summary>
-    public class ContentOptionViewModel
+    public class OptionViewModel
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ContentOptionViewModel" /> class.
+        /// Initializes a new instance of the <see cref="OptionViewModel" /> class.
         /// </summary>
-        public ContentOptionViewModel()
+        public OptionViewModel()
         {
             Type = OptionType.Text;
         }

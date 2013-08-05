@@ -7,15 +7,15 @@ using BetterCms.Core.Models;
 namespace BetterCms.Module.Root.Models
 {
     [Serializable]
-    public class ContentOption : EquatableEntity<ContentOption>, IOption
+    public class LayoutOption : EquatableEntity<LayoutOption>, IOption
     {
-        public virtual Content Content { get; set; }
+        public virtual Layout Layout { get; set; }
 
         public virtual string Key { get; set; }
 
         public virtual OptionType Type { get; set; }
 
-        public virtual string DefaultValue { get; set; }        
+        public virtual string DefaultValue { get; set; }
 
         string IOption.Value
         {

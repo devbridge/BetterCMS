@@ -147,7 +147,6 @@
     <Compile Include="DataContracts\Enums\OptionType.cs" />
     <Compile Include="DataContracts\ICategory.cs" />
     <Compile Include="DataContracts\IContent.cs" />
-    <Compile Include="DataContracts\IContentOption.cs" />
     <Compile Include="DataContracts\IEntity.cs" />
     <Compile Include="DataContracts\IHistorical.cs" />
     <Compile Include="DataContracts\IHtmlContent.cs" />

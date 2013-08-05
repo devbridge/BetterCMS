@@ -87,11 +87,11 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
             widget.Version = request.Version;
             widget.PreviewUrl = request.PreviewImageUrl;            
 
-            if (request.ContentOptions != null)
+            if (request.Options != null)
             {
                 widget.ContentOptions = new List<ContentOption>();
 
-                foreach (var requestContentOption in request.ContentOptions)
+                foreach (var requestContentOption in request.Options)
                 {
                     var contentOption = new ContentOption {
                                                               Content = widget,

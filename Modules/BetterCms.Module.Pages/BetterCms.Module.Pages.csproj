@@ -149,8 +149,7 @@
     <Compile Include="Command\Layout\DeleteTemplate\DeleteTemplateCommand.cs" />
     <Compile Include="Command\Layout\DeleteTemplate\DeleteTemplateCommandRequest.cs" />
     <Compile Include="Command\Layout\GetSiteSettingsTemplates\GetSiteSettingsTemplatesCommand.cs" />
-    <Compile Include="Command\Layout\GetTemplatesForEdit\GetTemplatesForEditCommand.cs" />
-    <Compile Include="Command\Layout\GetTemplate\GetTemplateCommand.cs" />
+    <Compile Include="Command\Layout\GetTemplateForEdit\GetTemplateForEditCommand.cs" />
     <Compile Include="Command\Layout\SaveTemplate\SaveTemplateCommand.cs" />
     <Compile Include="Command\Layout\SaveTemplate\SaveTemplateResponse.cs" />
     <Compile Include="Command\Page\ClonePage\ClonePageCommand.cs" />
@@ -266,7 +265,6 @@
     <Compile Include="Services\DefaultRedirectService.cs" />
     <Compile Include="Services\ICategoryService.cs" />
     <Compile Include="Services\IRedirectService.cs" />
-    <Compile Include="ViewModels\Content\ContentOptionViewModel.cs" />
     <Compile Include="ViewModels\Content\ContentViewModel.cs" />
     <Compile Include="ViewModels\Content\ContentSortViewModel.cs" />
     <Compile Include="ViewModels\Content\PageContentSortViewModel.cs" />
@@ -274,6 +272,8 @@
     <Compile Include="ViewModels\Filter\PagesFilter.cs" />
     <Compile Include="ViewModels\History\ContentHistoryItem.cs" />
     <Compile Include="ViewModels\History\ContentHistoryViewModel.cs" />
+    <Compile Include="ViewModels\Option\IOptionsContainer.cs" />
+    <Compile Include="ViewModels\Option\OptionViewModel.cs" />
     <Compile Include="ViewModels\Sitemap\PageLinkViewModel.cs" />
     <Compile Include="ViewModels\Sitemap\SearchableSitemapViewModel.cs" />
     <Compile Include="ViewModels\Sitemap\SitemapAndPageLinksViewModel.cs" />
@@ -463,9 +463,6 @@
     <EmbeddedResource Include="Views\Widgets\EditServerControlWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Widgets\Partial\EditContentOptions.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Views\Widgets\Partial\Widget.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -501,7 +498,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Views\Seo\Partial\WarnMessageAboutSitemap.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Option\EditOptions.cshtml" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Filter\PagesFilterTemplate.cshtml" />
   </ItemGroup>

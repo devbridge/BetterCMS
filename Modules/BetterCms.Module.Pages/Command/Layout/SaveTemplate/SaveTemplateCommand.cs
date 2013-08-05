@@ -47,8 +47,8 @@ namespace BetterCms.Module.Pages.Command.Layout.SaveTemplate
             {
                 foreach (var region in template.LayoutRegions)
                 {
-                    var requestRegion = request.RegionOptions != null
-                                                   ? request.RegionOptions.FirstOrDefault(f => f.Identifier == region.Region.RegionIdentifier)
+                    var requestRegion = request.Regions != null
+                                                   ? request.Regions.FirstOrDefault(f => f.Identifier == region.Region.RegionIdentifier)
                                                    : null;
 
                     if (requestRegion != null && region.Region.RegionIdentifier == requestRegion.Identifier)
@@ -64,16 +64,16 @@ namespace BetterCms.Module.Pages.Command.Layout.SaveTemplate
             }
             
             // Adds new region.
-            if (request.RegionOptions != null)
+            if (request.Regions != null)
             {
                 if (template.LayoutRegions == null)
                 {
                     template.LayoutRegions = new List<LayoutRegion>();
                 }
 
-                var regions = GetRegions(request.RegionOptions);
+                var regions = GetRegions(request.Regions);
 
-                foreach (var requestRegionOption in request.RegionOptions)
+                foreach (var requestRegionOption in request.Regions)
                 {
                     if (!template.LayoutRegions.Any(f => f.Region.RegionIdentifier.Equals(requestRegionOption.Identifier, StringComparison.InvariantCultureIgnoreCase)))
                     {

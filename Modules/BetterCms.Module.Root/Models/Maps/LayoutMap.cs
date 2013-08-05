@@ -17,6 +17,7 @@ namespace BetterCms.Module.Root.Models.Maps
 
             HasMany(x => x.Pages).Inverse().Cascade.SaveUpdate().LazyLoad().Where("IsDeleted = 0");
             HasMany(x => x.LayoutRegions).Inverse().Cascade.SaveUpdate().LazyLoad().Where("IsDeleted = 0");
+            HasMany(x => x.LayoutOptions).Inverse().Cascade.SaveUpdate().LazyLoad().Where("IsDeleted = 0");
         }
     }
 }

@@ -8,6 +8,11 @@ namespace BetterCms.Module.Pages
 
         public const string SiteMapUrlRegularExpression = @"^/?[\w\-/].*/?";
 
+        /// <summary>
+        /// The options grid template.
+        /// </summary>
+        public const string OptionsGridTemplate = "~/Areas/bcms-pages/Views/Option/EditOptions.cshtml";
+
         public static class PageIds
         {
             public static Guid PageDefault = new Guid("B638896E-B8BB-472F-8DFF-A0B83FF1F36F");
