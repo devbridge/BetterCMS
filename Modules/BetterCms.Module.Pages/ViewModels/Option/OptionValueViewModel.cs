@@ -1,11 +1,6 @@
-﻿using BetterCms.Module.Pages.ViewModels.Option;
-
-namespace BetterCms.Module.Pages.ViewModels.Content
+﻿namespace BetterCms.Module.Pages.ViewModels.Option
 {
-    /// <summary>
-    /// Page widget option view model
-    /// </summary>
-    public class PageContentOptionViewModel : OptionViewModel
+    public class OptionValueViewModel : OptionViewModel
     {
         /// <summary>
         /// Gets or sets the option value.

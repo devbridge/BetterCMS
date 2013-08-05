@@ -21,7 +21,7 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageContentOptions
         /// <returns></returns>
         public bool Execute(PageContentOptionsViewModel model)
         {
-            if (model != null && !model.PageContentId.HasDefaultValue()  && model.WidgetOptions != null)
+            if (model != null && !model.PageContentId.HasDefaultValue() && model.OptionValues != null)
             {
                 var pageContent = Repository.AsQueryable<PageContent>()
                               .Where(f => f.Id == model.PageContentId && !f.IsDeleted && !f.Content.IsDeleted)
@@ -35,7 +35,7 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageContentOptions
                 {
                     UnitOfWork.BeginTransaction();
 
-                    foreach (var widgetOption in model.WidgetOptions)
+                    foreach (var widgetOption in model.OptionValues)
                     {
                         var pageContentOption = pageContent.Options.FirstOrDefault(f => f.Key.Trim().Equals(widgetOption.OptionKey.Trim(), StringComparison.OrdinalIgnoreCase));
 

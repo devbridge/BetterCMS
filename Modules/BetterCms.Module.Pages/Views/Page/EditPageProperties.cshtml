@@ -1,4 +1,5 @@
-﻿@using BetterCms.Module.Pages.Content.Resources
+﻿@using BetterCms.Module.Pages
+@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.Page
 @using BetterCms.Module.Root.Content.Resources
@@ -22,14 +23,15 @@
     <a class="bcms-tab bcms-tab-active" data-name="#bcms-tab-1">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_Title</a>
     <a class="bcms-tab" data-name="#bcms-tab-2">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Title</a>
     <a class="bcms-tab" data-name="#bcms-tab-3">@PagesGlobalization.EditPageProperties_LayoutPropertiesTab_Title</a>
+    <a class="bcms-tab" data-name="#bcms-tab-4">@PagesGlobalization.EditPageProperties_OptionsTab_Title</a>
 </div>
 
 <div class="bcms-scroll-window">
     @Html.TabbedContentMessagesBox()
-    <div class="bcms-padded-content">
-        @using (Html.BeginForm<PageController>(f => f.EditPageProperties((EditPagePropertiesViewModel)null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
-        {
-            <div id="bcms-tab-1" class="bcms-tab-single">
+    @using (Html.BeginForm<PageController>(f => f.EditPageProperties((EditPagePropertiesViewModel)null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
+    {
+        <div id="bcms-tab-1" class="bcms-tab-single">
+            <div class="bcms-padded-content">
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageName_Title</div>
@@ -94,6 +96,7 @@
                 </div>
 
                 @* CODE BELOW CAN BE REUSED *@
+                @* TODO: NEED IMPLEMENTATION
                 <div class="bcms-user-access">
                     <div class="bcms-input-list-holder">
                         <div class="bcms-tooltip-mark" data-message="Set user access"></div>
@@ -146,6 +149,7 @@
                         </div>
                     </div>
                 </div>
+                *@
 
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_Tooltip_Description)
@@ -174,8 +178,10 @@
                 @Html.HiddenFor(model => model.SecondaryImage.ImageId, new { data_bind = "value: secondaryImage().id()" })
                 @Html.HiddenFor(model => model.FeaturedImage.ImageId, new { data_bind = "value: featuredImage().id()" })
             </div>
+        </div>
 
-            <div id="bcms-tab-2" class="bcms-tab-single">
+        <div id="bcms-tab-2" class="bcms-tab-single">
+            <div class="bcms-padded-content">
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageCss_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageCss_Title</div>
@@ -188,9 +194,10 @@
                     @Html.TextAreaFor(model => model.PageJavascript, new { @class = "bcms-editor-field-area" })
                 </div>
             </div>
+        </div>
 
-            <div id="bcms-tab-3" class="bcms-tab-single">
-
+        <div id="bcms-tab-3" class="bcms-tab-single">
+            <div class="bcms-padded-content">
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.EditPageProperties_LayoutPropertiesTab_Layout_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_LayoutPropertiesTab_ChooseLayout_Title</div>
@@ -202,10 +209,13 @@
                 </div>
 
                 @Html.Partial("Partial/TemplatesList", Model.Templates)
-
             </div>
+        </div>
             
-            @Html.HiddenSubmit()
-        }
-    </div>
+        <div id="bcms-tab-4" class="bcms-tab-single">
+            @Html.Partial(PagesConstants.OptionValuesGridTemplate)
+        </div>
+            
+        @Html.HiddenSubmit()
+    }
 </div>

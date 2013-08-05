@@ -253,10 +253,12 @@
     <Compile Include="Registration\PagesContentJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\RedirectsJsModuleIncludeDescriptor.cs" />
     <Compile Include="Services\DefaultHistoryService.cs" />
+    <Compile Include="Services\DefaultOptionService.cs" />
     <Compile Include="Services\DefaultSitemapService.cs" />
     <Compile Include="Services\DefaultTagService.cs" />
     <Compile Include="Services\DefaultUrlService.cs" />
     <Compile Include="Services\IHistoryService.cs" />
+    <Compile Include="Services\IOptionService.cs" />
     <Compile Include="Services\IPageService.cs" />
     <Compile Include="Services\ISitemapService.cs" />
     <Compile Include="Services\ITagService.cs" />
@@ -272,7 +274,9 @@
     <Compile Include="ViewModels\Filter\PagesFilter.cs" />
     <Compile Include="ViewModels\History\ContentHistoryItem.cs" />
     <Compile Include="ViewModels\History\ContentHistoryViewModel.cs" />
+    <Compile Include="ViewModels\Option\IOptionValuesContainer.cs" />
     <Compile Include="ViewModels\Option\IOptionsContainer.cs" />
+    <Compile Include="ViewModels\Option\OptionValueViewModel.cs" />
     <Compile Include="ViewModels\Option\OptionViewModel.cs" />
     <Compile Include="ViewModels\Sitemap\PageLinkViewModel.cs" />
     <Compile Include="ViewModels\Sitemap\SearchableSitemapViewModel.cs" />
@@ -285,7 +289,6 @@
     <Compile Include="ViewModels\Widgets\EditHtmlContentWidgetViewModel.cs" />
     <Compile Include="ViewModels\Widgets\EditServerControlWidgetViewModel.cs" />
     <Compile Include="ViewModels\Widgets\HtmlContentWidgetViewModel.cs" />
-    <Compile Include="ViewModels\Content\PageContentOptionViewModel.cs" />
     <Compile Include="ViewModels\Content\PageContentOptionsViewModel.cs" />
     <Compile Include="ViewModels\Page\AddNewPageViewModel.cs" />
     <Compile Include="ViewModels\Page\ClonePageViewModel.cs" />
@@ -503,6 +506,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Filter\PagesFilterTemplate.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Option\EditOptionValues.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

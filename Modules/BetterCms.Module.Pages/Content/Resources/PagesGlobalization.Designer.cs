@@ -1015,6 +1015,33 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Default Option Value.
+        /// </summary>
+        public static string EditOptionsValues_OptionDefaultValueColumn {
+            get {
+                return ResourceManager.GetString("EditOptionsValues_OptionDefaultValueColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Option Name.
+        /// </summary>
+        public static string EditOptionsValues_OptionKeyColumn {
+            get {
+                return ResourceManager.GetString("EditOptionsValues_OptionKeyColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Option Value.
+        /// </summary>
+        public static string EditOptionsValues_OptionValueColumn {
+            get {
+                return ResourceManager.GetString("EditOptionsValues_OptionValueColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This is DRAFT version of the content. This copy currently is not live..
         /// </summary>
         public static string EditPageContent_Messages_DraftStatusWarnMessage {
@@ -1398,6 +1425,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string EditPageProperties_LayoutPropertiesTab_Title {
             get {
                 return ResourceManager.GetString("EditPageProperties_LayoutPropertiesTab_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Options.
+        /// </summary>
+        public static string EditPageProperties_OptionsTab_Title {
+            get {
+                return ResourceManager.GetString("EditPageProperties_OptionsTab_Title", resourceCulture);
             }
         }
         
@@ -2037,33 +2073,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string PageWidgetOptions_Dialog_Title {
             get {
                 return ResourceManager.GetString("PageWidgetOptions_Dialog_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Default Option Value.
-        /// </summary>
-        public static string PageWidgetOptions_OptionDefaultValueColumn {
-            get {
-                return ResourceManager.GetString("PageWidgetOptions_OptionDefaultValueColumn", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Option Name.
-        /// </summary>
-        public static string PageWidgetOptions_OptionKeyColumn {
-            get {
-                return ResourceManager.GetString("PageWidgetOptions_OptionKeyColumn", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Option Value.
-        /// </summary>
-        public static string PageWidgetOptions_OptionValueColumn {
-            get {
-                return ResourceManager.GetString("PageWidgetOptions_OptionValueColumn", resourceCulture);
             }
         }
         

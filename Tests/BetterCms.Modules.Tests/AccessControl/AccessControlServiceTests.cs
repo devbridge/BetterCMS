@@ -96,7 +96,7 @@ namespace BetterCms.Test.Module.AccessControl
         {
             var repository = GetRepositoryMock(objectId);
 
-            var service = new AccessControlService(repository.Object);
+            var service = new AccessControlService(repository.Object, null /* TODO: add service or mock instead of null */);
 
             return service;
         }

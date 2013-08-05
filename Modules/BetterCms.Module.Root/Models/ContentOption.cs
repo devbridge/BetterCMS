@@ -15,7 +15,7 @@ namespace BetterCms.Module.Root.Models
 
         public virtual OptionType Type { get; set; }
 
-        public virtual string DefaultValue { get; set; }        
+        public virtual string DefaultValue { get; set; }
 
         string IOption.Value
         {

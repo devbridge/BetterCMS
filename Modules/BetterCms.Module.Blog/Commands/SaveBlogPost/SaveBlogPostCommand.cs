@@ -42,7 +42,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         /// <summary>
         /// The option service
         /// </summary>
-        private readonly IOptionService optionService;
+        private readonly Services.IOptionService optionService;
 
         /// <summary>
         /// The content service
@@ -79,7 +79,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         /// <param name="blogService">The blog service.</param>
         /// <param name="redirectService">The redirect service.</param>
         /// <param name="urlService">The URL service.</param>
-        public SaveBlogPostCommand(ITagService tagService, IOptionService optionService, IContentService contentService, 
+        public SaveBlogPostCommand(ITagService tagService, Services.IOptionService optionService, IContentService contentService, 
                                     IPageService pageService, IBlogService blogService, 
                                     IRedirectService redirectService, IUrlService urlService)
         {

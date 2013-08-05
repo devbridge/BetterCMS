@@ -1,0 +1,33 @@
+﻿@using BetterCms.Module.Pages.Content.Resources
+@using BetterCms.Module.Pages.ViewModels.Option
+@using BetterCms.Module.Root.Mvc.Grids.Extensions
+@using BetterCms.Module.Root.Mvc.Grids.TableRenderers
+@using MvcContrib.UI.Grid
+
+@model IOptionValuesContainer
+
+@{
+    Action<ColumnBuilder<OptionValueViewModel>> columns = column =>
+    {
+        column.EditButtonColumn();
+
+        column.For(model => Html.ColumnWithHiddenField(m => model.OptionKey, "OptionValues[{0}].OptionKey"))
+            .Named(PagesGlobalization.EditOptionsValues_OptionKeyColumn)
+            .Sortable(false)
+            .HeaderAttributes(@style => "width: 160px;")
+            .Attributes(@class => "bcms-option-key");
+
+        column.For(model => Html.InlineEditColumnWithNamePattern(m => model.OptionValue, "bcms-option-value", "bcms-old-option-value", "OptionValues[{0}].OptionValue"))
+            .Named(PagesGlobalization.EditOptionsValues_OptionValueColumn)
+            .Sortable(false)
+            .Attributes(@class => "bcms-option-value");
+
+        column.For(model => model.OptionDefaultValue)
+              .Named(PagesGlobalization.EditOptionsValues_OptionDefaultValueColumn)
+              .Sortable(false)
+              .HeaderAttributes(@style => "width: 160px; text-align: left")
+              .Attributes(@class => "bcms-option-key", @style => "text-align: left");
+    };
+}
+
+@Html.Grid(Model.OptionValues).Columns(columns).Attributes(@class => "bcms-tables", @id => "bcms-options-grid").RenderUsing(new EditableHtmlTableGridRenderer<OptionValueViewModel>())
