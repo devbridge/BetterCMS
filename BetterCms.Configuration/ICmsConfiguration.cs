@@ -107,5 +107,13 @@ namespace BetterCms
         /// Gets the URL mode.
         /// </summary>
         TrailingSlashBehaviorType UrlMode { get; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [access control enabled].
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if [access control enabled]; otherwise, <c>false</c>.
+        /// </value>
+        bool AccessControlEnabled { get; set; }
     }
 }

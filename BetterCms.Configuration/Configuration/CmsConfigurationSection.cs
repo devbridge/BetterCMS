@@ -23,6 +23,7 @@ namespace BetterCms.Configuration
         private const string ArticleUrlPatternAttribute = "articleUrlPattern";
         private const string UrlPatternsNode = "urlPatterns";
         private const string InstallationNode = "installation";
+        private const string AccessControlEnabledAttribute = "accessControlEnabled";
 
         /// <summary>
         /// The version backing field.
@@ -144,6 +145,19 @@ namespace BetterCms.Configuration
         {
             get { return (TrailingSlashBehaviorType)this[UrlModeAttribute]; }
             set { this[UrlModeAttribute] = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [access control enabled].
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if [access control enabled]; otherwise, <c>false</c>.
+        /// </value>
+        [ConfigurationProperty(AccessControlEnabledAttribute, IsRequired = false, DefaultValue = false)]
+        public bool AccessControlEnabled
+        {
+            get { return (bool)this[AccessControlEnabledAttribute]; }
+            set { this[AccessControlEnabledAttribute] = value; }
         }
 
         /// <summary>

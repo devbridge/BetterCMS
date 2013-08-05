@@ -25,7 +25,7 @@ namespace BetterCms.Module.AccessControl.Models
         /// <value>
         /// The user/role.
         /// </value>
-        public virtual string User { get; set; }
+        public virtual string RoleOrUser { get; set; }
 
         /// <summary>
         /// Gets or sets the access level.
