@@ -33,9 +33,10 @@ namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
                 // Create command
                 var unitOfWork = new DefaultUnitOfWork(session);
                 var command = new GetPageContentOptionsCommand();
+                var repository = new DefaultRepository(unitOfWork);
                 command.UnitOfWork = unitOfWork;
-                command.Repository = new DefaultRepository(unitOfWork);                        
-                command.OptionService = new DefaultOptionService();
+                command.Repository = repository;
+                command.OptionService = new DefaultOptionService(repository);
 
                 // Execute command
                 var result = command.Execute(pageContent.Id);
