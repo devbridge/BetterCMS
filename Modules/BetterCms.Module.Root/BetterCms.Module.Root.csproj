@@ -157,6 +157,7 @@
     <Compile Include="Models\ContentOption.cs" />
     <Compile Include="Models\ComboWireJson.cs" />
     <Compile Include="Models\Maps\PageOptionMap.cs" />
+    <Compile Include="Models\Migrations\Migration201308060930.cs" />
     <Compile Include="Models\Migrations\Migration201308051530.cs" />
     <Compile Include="Models\PageOption.cs" />
     <Compile Include="Models\LayoutOption.cs" />
