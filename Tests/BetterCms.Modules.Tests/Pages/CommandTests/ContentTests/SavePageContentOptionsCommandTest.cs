@@ -7,6 +7,7 @@ using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Module.Pages.Command.Content.SavePageContentOptions;
 using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Option;
 
 using NUnit.Framework;
@@ -74,6 +75,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
                 var command = new SavePageContentOptionsCommand();
                 command.UnitOfWork = unitOfWork;
                 command.Repository = repository;
+                command.OptionService = new DefaultOptionService(repository);
                 var result = command.Execute(request);
 
                 Assert.IsTrue(result);
