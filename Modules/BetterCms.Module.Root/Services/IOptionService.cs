@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Models;
-using BetterCms.Module.Pages.ViewModels.Option;
+using BetterCms.Module.Root.ViewModels.Option;
 
-namespace BetterCms.Module.Pages.Services
+namespace BetterCms.Module.Root.Services
 {
     public interface IOptionService
     {
@@ -14,8 +14,11 @@ namespace BetterCms.Module.Pages.Services
         /// </summary>
         /// <param name="options">The options.</param>
         /// <param name="optionValues">The option values.</param>
-        /// <returns>List of option values view models, merged from options and option values</returns>
-        IList<OptionValueViewModel> MergeOptionsAndValues(IEnumerable<IOption> options, IEnumerable<IOption> optionValues);
+        /// <param name="forEdit">if set to <c>true</c> values are merged for edit.</param>
+        /// <returns>
+        /// List of option values view models, merged from options and option values
+        /// </returns>
+        IList<OptionValueViewModel> MergeOptionsAndValues(IEnumerable<IOption> options, IEnumerable<IOption> optionValues, bool forEdit);
 
         /// <summary>
         /// Saves the option values: adds new option values and empty values.

@@ -1,4 +1,6 @@
-﻿namespace BetterCms.Module.Pages.ViewModels.Option
+﻿using BetterCms.Module.Root.ViewModels.Option;
+
+namespace BetterCms.Module.Pages.ViewModels.Option
 {
     public interface IOptionsContainer
     {

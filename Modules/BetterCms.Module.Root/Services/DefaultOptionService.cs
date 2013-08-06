@@ -5,9 +5,9 @@ using System.Linq;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Models;
-using BetterCms.Module.Pages.ViewModels.Option;
+using BetterCms.Module.Root.ViewModels.Option;
 
-namespace BetterCms.Module.Pages.Services
+namespace BetterCms.Module.Root.Services
 {
     public class DefaultOptionService : IOptionService
     {
@@ -30,10 +30,11 @@ namespace BetterCms.Module.Pages.Services
         /// </summary>
         /// <param name="options">The options.</param>
         /// <param name="optionValues">The option values.</param>
+        /// <param name="forEdit">if set to <c>true</c> values are merged for edit.</param>
         /// <returns>
         /// List of option values view models, merged from options and option values
         /// </returns>
-        public IList<OptionValueViewModel> MergeOptionsAndValues(IEnumerable<IOption> options, IEnumerable<IOption> optionValues)
+        public IList<OptionValueViewModel> MergeOptionsAndValues(IEnumerable<IOption> options, IEnumerable<IOption> optionValues, bool forEdit)
         {
             var optionModels = new List<OptionValueViewModel>();
 
@@ -47,13 +48,15 @@ namespace BetterCms.Module.Pages.Services
                         option = options.FirstOrDefault(f => f.Key.Trim().Equals(optionValue.Key.Trim(), StringComparison.OrdinalIgnoreCase));
                     }
 
-                    optionModels.Add(new OptionValueViewModel
-                    {
-                        Type = optionValue.Type,
-                        OptionKey = optionValue.Key.Trim(),
-                        OptionValue = optionValue.Value,
-                        OptionDefaultValue = option != null ? option.Value : null
-                    });
+                    var optionViewModel = new OptionValueViewModel
+                                              {
+                                                  Type = optionValue.Type,
+                                                  OptionKey = optionValue.Key.Trim(),
+                                                  OptionValue = optionValue.Value,
+                                                  OptionDefaultValue = option != null ? option.Value : null
+                                              };
+
+                    optionModels.Add(optionViewModel);
                 }
             }
 
@@ -61,13 +64,18 @@ namespace BetterCms.Module.Pages.Services
             {
                 foreach (var option in options.Distinct())
                 {
+                    if (!forEdit && string.IsNullOrWhiteSpace(option.Value))
+                    {
+                        continue;
+                    }
+
                     if (!optionModels.Any(f => f.OptionKey.Equals(option.Key.Trim(), StringComparison.OrdinalIgnoreCase)))
                     {
                         optionModels.Add(new OptionValueViewModel
                         {
                             Type = option.Type,
                             OptionKey = option.Key.Trim(),
-                            OptionValue = null,
+                            OptionValue = forEdit ? null : option.Value,
                             OptionDefaultValue = option.Value
                         });
                     }

@@ -5,8 +5,8 @@ using System.Linq;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Module.Pages.Command.Content.GetPageContentOptions;
-using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Services;
 
 using NUnit.Framework;
 

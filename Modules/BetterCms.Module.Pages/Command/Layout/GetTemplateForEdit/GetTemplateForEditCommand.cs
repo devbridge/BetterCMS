@@ -3,10 +3,11 @@ using System.Linq;
 
 using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Mvc.Commands;
-using BetterCms.Module.Pages.ViewModels.Option;
+
 using BetterCms.Module.Pages.ViewModels.Templates;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.ViewModels.Option;
 
 using NHibernate.Transform;
 

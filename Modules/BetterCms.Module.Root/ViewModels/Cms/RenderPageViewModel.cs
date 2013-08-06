@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Web.Mvc;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
@@ -8,6 +7,7 @@ using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Projections;
+using BetterCms.Module.Root.ViewModels.Option;
 
 namespace BetterCms.Module.Root.ViewModels.Cms
 {
@@ -103,6 +103,14 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         /// The layout regions.
         /// </value>
         public List<PageRegionViewModel> Regions { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the page options.
+        /// </summary>
+        /// <value>
+        /// The page options.
+        /// </value>
+        public List<OptionValueViewModel> Options { get; set; }
 
         /// <summary>
         /// Gets or sets the list of meta data projections.

@@ -253,12 +253,10 @@
     <Compile Include="Registration\PagesContentJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\RedirectsJsModuleIncludeDescriptor.cs" />
     <Compile Include="Services\DefaultHistoryService.cs" />
-    <Compile Include="Services\DefaultOptionService.cs" />
     <Compile Include="Services\DefaultSitemapService.cs" />
     <Compile Include="Services\DefaultTagService.cs" />
     <Compile Include="Services\DefaultUrlService.cs" />
     <Compile Include="Services\IHistoryService.cs" />
-    <Compile Include="Services\IOptionService.cs" />
     <Compile Include="Services\IPageService.cs" />
     <Compile Include="Services\ISitemapService.cs" />
     <Compile Include="Services\ITagService.cs" />
@@ -276,8 +274,6 @@
     <Compile Include="ViewModels\History\ContentHistoryViewModel.cs" />
     <Compile Include="ViewModels\Option\IOptionValuesContainer.cs" />
     <Compile Include="ViewModels\Option\IOptionsContainer.cs" />
-    <Compile Include="ViewModels\Option\OptionValueViewModel.cs" />
-    <Compile Include="ViewModels\Option\OptionViewModel.cs" />
     <Compile Include="ViewModels\Sitemap\PageLinkViewModel.cs" />
     <Compile Include="ViewModels\Sitemap\SearchableSitemapViewModel.cs" />
     <Compile Include="ViewModels\Sitemap\SitemapAndPageLinksViewModel.cs" />

@@ -251,9 +251,11 @@
     <Compile Include="Registration\TabsJsModuleIncludeDescriptor.cs" />
     <Compile Include="RootModuleConstants.cs" />
     <Compile Include="Services\DefaultContentService.cs" />
+    <Compile Include="Services\DefaultOptionService.cs" />
     <Compile Include="Services\DefaultRenderingService.cs" />
     <Compile Include="Services\DefaultSecurityService.cs" />
     <Compile Include="Services\IContentService.cs" />
+    <Compile Include="Services\IOptionService.cs" />
     <Compile Include="Services\IRenderingService.cs" />
     <Compile Include="ViewModels\Authentication\InfoViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryItemViewModel.cs" />
@@ -263,6 +265,8 @@
     <Compile Include="ViewModels\Cms\RedirectViewModel.cs" />
     <Compile Include="ViewModels\Cms\RenderPageViewModel.cs" />
     <Compile Include="ViewModels\Cms\RenderWidgetViewModel.cs" />
+    <Compile Include="ViewModels\Option\OptionValueViewModel.cs" />
+    <Compile Include="ViewModels\Option\OptionViewModel.cs" />
     <Compile Include="ViewModels\PageProjectionsViewModel.cs" />
     <Compile Include="ViewModels\Rendering\RenderProcessorJsViewModel.cs" />
     <Compile Include="ViewModels\Rendering\JavaScriptModuleInclude.cs" />

@@ -3,10 +3,11 @@ using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+
 using BetterCms.Module.Pages.Command.Content.SavePageContentOptions;
 using BetterCms.Module.Pages.ViewModels.Content;
-using BetterCms.Module.Pages.ViewModels.Option;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.ViewModels.Option;
 
 using NUnit.Framework;
 

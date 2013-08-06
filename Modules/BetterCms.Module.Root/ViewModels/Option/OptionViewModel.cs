@@ -4,7 +4,7 @@ using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;
 using BetterCms.Module.Root.Content.Resources;
 
-namespace BetterCms.Module.Pages.ViewModels.Option
+namespace BetterCms.Module.Root.ViewModels.Option
 {
     /// <summary>
     /// Option view model

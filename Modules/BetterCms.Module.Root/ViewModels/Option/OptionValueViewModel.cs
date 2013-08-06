@@ -1,4 +1,4 @@
-﻿namespace BetterCms.Module.Pages.ViewModels.Option
+﻿namespace BetterCms.Module.Root.ViewModels.Option
 {
     public class OptionValueViewModel : OptionViewModel
     {

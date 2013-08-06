@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 using BetterCms.Core.Models;
+
 using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.ViewModels.Option;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.ViewModels.Option;
 
 namespace BetterCms.Module.Pages.ViewModels.Page
 {
