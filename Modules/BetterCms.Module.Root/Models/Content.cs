@@ -8,7 +8,7 @@ using BetterCms.Core.Models;
 namespace BetterCms.Module.Root.Models
 {
     [Serializable]
-    public class Content : EquatableEntity<Content>, IContent
+    public class Content : EquatableEntity<Content>, IContent, IOptions
     {
         public virtual string Name { get; set; }
 
@@ -63,6 +63,14 @@ namespace BetterCms.Module.Root.Models
             }
 
             return content;
+        }
+
+        IEnumerable<IOption> IOptions.Options
+        {
+            get
+            {
+                return ContentOptions;
+            }
         }
     }
 }

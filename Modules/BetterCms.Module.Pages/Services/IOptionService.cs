@@ -5,6 +5,6 @@ namespace BetterCms.Module.Pages.Services
 {
     public interface IOptionService
     {
-        void SetOptionValues(IOptionValuesContainer viewModel, IOptions optionsContainer, IOptionValues optionValuesContainer);
+        void MergeOptionsAndValues(IOptionValuesContainer viewModel, IOptions optionsContainer, IOptions optionValuesContainer);
     }
 }

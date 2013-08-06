@@ -11,7 +11,7 @@ namespace BetterCms.Module.Root.Models
     /// A generic page entity.
     /// </summary>
     [Serializable]
-    public class Page : EquatableEntity<Page>, IPage, IOptions, IOptionValues
+    public class Page : EquatableEntity<Page>, IPage, IOptions
     {
         /// <summary>
         /// Gets or sets the page URL.
@@ -129,14 +129,6 @@ namespace BetterCms.Module.Root.Models
         }
 
         IEnumerable<IOption> IOptions.Options
-        {
-            get
-            {
-                return Layout.LayoutOptions;
-            }
-        }
-
-        IEnumerable<IOption> IOptionValues.OptionValues
         {
             get
             {

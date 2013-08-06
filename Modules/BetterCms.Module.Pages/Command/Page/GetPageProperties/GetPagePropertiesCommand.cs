@@ -114,15 +114,18 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                 model.Model.Categories = categoryService.GetCategories();
                 model.Model.UpdateSitemap = true;
 
-                var fakePage = new Root.Models.Page { Layout = new Root.Models.Layout() };
-                fakePage.Layout.LayoutOptions = Repository
-                    .AsQueryable<LayoutOption>(lo => lo.Layout.Id == model.Model.TemplateId)
-                    .ToList();
-                fakePage.Options = Repository
+                // Get layout options
+                var layoutOptions = Repository.AsQueryable<LayoutOption>(lo => lo.Layout.Id == model.Model.TemplateId).ToList();
+                var fakeLayout = new Root.Models.Layout { LayoutOptions = layoutOptions };
+
+                // Get page options
+                var pageOptions = Repository
                     .AsQueryable<PageOption>()
                     .ToList();
+                var fakePage = new Root.Models.Page { Options = pageOptions };
 
-                optionService.SetOptionValues(model.Model, fakePage, fakePage);
+                // Merge options and values
+                optionService.MergeOptionsAndValues(model.Model, fakeLayout, fakePage);
             }
 
             return model != null ? model.Model : null;

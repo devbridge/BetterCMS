@@ -9,13 +9,13 @@ namespace BetterCms.Module.Pages.Services
 {
     public class DefaultOptionService : IOptionService
     {
-        public void SetOptionValues(IOptionValuesContainer viewModel, IOptions optionsContainer, IOptionValues optionValuesContainer)
+        public void MergeOptionsAndValues(IOptionValuesContainer viewModel, IOptions optionsContainer, IOptions optionValuesContainer)
         {
             IList<OptionValueViewModel> options = new List<OptionValueViewModel>();
 
             if (optionValuesContainer != null)
             {
-                foreach (var optionValue in optionValuesContainer.OptionValues.Distinct())
+                foreach (var optionValue in optionValuesContainer.Options.Distinct())
                 {
                     IOption option = null;
                     if (optionsContainer.Options != null)

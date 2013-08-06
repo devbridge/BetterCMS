@@ -111,7 +111,7 @@ namespace BetterCms.Module.Pages.Command.Content.GetPageContentOptions
 
                 if (pageContent != null)
                 {
-                    OptionService.SetOptionValues(model, pageContent, pageContent);
+                    OptionService.MergeOptionsAndValues(model, pageContent.Content, pageContent);
                 }
             }
 

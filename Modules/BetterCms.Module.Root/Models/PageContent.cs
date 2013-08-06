@@ -7,7 +7,7 @@ using BetterCms.Core.Models;
 namespace BetterCms.Module.Root.Models
 {
     [Serializable]
-    public class PageContent : EquatableEntity<PageContent>, IPageContent, IOptions, IOptionValues
+    public class PageContent : EquatableEntity<PageContent>, IPageContent, IOptions
     {
         public virtual int Order { get; set; }
 
@@ -44,14 +44,6 @@ namespace BetterCms.Module.Root.Models
         }
 
         IEnumerable<IOption> IOptions.Options
-        {
-            get
-            {
-                return Content.ContentOptions;
-            }
-        }
-
-        IEnumerable<IOption> IOptionValues.OptionValues
         {
             get
             {

@@ -5,6 +5,7 @@ using System.Linq;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Module.Pages.Command.Content.GetPageContentOptions;
+using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Models;
 
 using NUnit.Framework;
@@ -34,6 +35,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
                 var command = new GetPageContentOptionsCommand();
                 command.UnitOfWork = unitOfWork;
                 command.Repository = new DefaultRepository(unitOfWork);                        
+                command.OptionService = new DefaultOptionService();
 
                 // Execute command
                 var result = command.Execute(pageContent.Id);
