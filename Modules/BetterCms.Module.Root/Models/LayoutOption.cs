@@ -23,6 +23,10 @@ namespace BetterCms.Module.Root.Models
             {
                 return DefaultValue;
             }
+            set
+            {
+                DefaultValue = value;
+            }
         }
     }
 }

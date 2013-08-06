@@ -11,7 +11,7 @@ namespace BetterCms.Module.Root.Models
     /// A generic page entity.
     /// </summary>
     [Serializable]
-    public class Page : EquatableEntity<Page>, IPage, IOptions
+    public class Page : EquatableEntity<Page>, IPage
     {
         /// <summary>
         /// Gets or sets the page URL.
@@ -126,14 +126,6 @@ namespace BetterCms.Module.Root.Models
         public override string ToString()
         {
             return string.Format("{0}, Title={1}", base.ToString(), Title);
-        }
-
-        IEnumerable<IOption> IOptions.Options
-        {
-            get
-            {
-                return Options;
-            }
         }
     }
 }

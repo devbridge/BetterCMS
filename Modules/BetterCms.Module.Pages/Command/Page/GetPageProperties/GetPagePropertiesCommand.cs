@@ -4,6 +4,7 @@ using System.Linq;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Commands;
+
 using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
@@ -51,7 +52,6 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
         /// </summary>
         /// <param name="id">The page id.</param>
         /// <returns></returns>
-        /// <exception cref="System.NotImplementedException"></exception>
         public EditPagePropertiesViewModel Execute(Guid id)
         {
             var model = Repository
@@ -114,18 +114,13 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                 model.Model.Categories = categoryService.GetCategories();
                 model.Model.UpdateSitemap = true;
 
-                // Get layout options
+                // Get layout options, page options and merge them
                 var layoutOptions = Repository.AsQueryable<LayoutOption>(lo => lo.Layout.Id == model.Model.TemplateId).ToList();
-                var fakeLayout = new Root.Models.Layout { LayoutOptions = layoutOptions };
-
-                // Get page options
                 var pageOptions = Repository
                     .AsQueryable<PageOption>()
                     .ToList();
-                var fakePage = new Root.Models.Page { Options = pageOptions };
 
-                // Merge options and values
-                optionService.MergeOptionsAndValues(model.Model, fakeLayout, fakePage);
+                model.Model.OptionValues = optionService.MergeOptionsAndValues(layoutOptions, pageOptions);
             }
 
             return model != null ? model.Model : null;

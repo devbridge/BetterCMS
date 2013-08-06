@@ -2,28 +2,52 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataContracts;
+using BetterCms.Core.Models;
 using BetterCms.Module.Pages.ViewModels.Option;
 
 namespace BetterCms.Module.Pages.Services
 {
     public class DefaultOptionService : IOptionService
     {
-        public void MergeOptionsAndValues(IOptionValuesContainer viewModel, IOptions optionsContainer, IOptions optionValuesContainer)
-        {
-            IList<OptionValueViewModel> options = new List<OptionValueViewModel>();
+        /// <summary>
+        /// The repository
+        /// </summary>
+        private IRepository repository;
 
-            if (optionValuesContainer != null)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DefaultOptionService" /> class.
+        /// </summary>
+        /// <param name="repository">The repository.</param>
+        public DefaultOptionService(IRepository repository)
+        {
+            this.repository = repository;
+        }
+
+        /// <summary>
+        /// Merges the options and values to one lsit of option value view models.
+        /// </summary>
+        /// <param name="options">The options.</param>
+        /// <param name="optionValues">The option values.</param>
+        /// <returns>
+        /// List of option values view models, merged from options and option values
+        /// </returns>
+        public IList<OptionValueViewModel> MergeOptionsAndValues(IEnumerable<IOption> options, IEnumerable<IOption> optionValues)
+        {
+            var optionModels = new List<OptionValueViewModel>();
+
+            if (optionValues != null)
             {
-                foreach (var optionValue in optionValuesContainer.Options.Distinct())
+                foreach (var optionValue in optionValues.Distinct())
                 {
                     IOption option = null;
-                    if (optionsContainer.Options != null)
+                    if (options != null)
                     {
-                        option = optionsContainer.Options.FirstOrDefault(f => f.Key.Trim().Equals(optionValue.Key.Trim(), StringComparison.OrdinalIgnoreCase));
+                        option = options.FirstOrDefault(f => f.Key.Trim().Equals(optionValue.Key.Trim(), StringComparison.OrdinalIgnoreCase));
                     }
 
-                    options.Add(new OptionValueViewModel
+                    optionModels.Add(new OptionValueViewModel
                     {
                         Type = optionValue.Type,
                         OptionKey = optionValue.Key.Trim(),
@@ -33,13 +57,13 @@ namespace BetterCms.Module.Pages.Services
                 }
             }
 
-            if (optionsContainer.Options != null)
+            if (options != null)
             {
-                foreach (var option in optionsContainer.Options.Distinct())
+                foreach (var option in options.Distinct())
                 {
-                    if (!options.Any(f => f.OptionKey.Equals(option.Key.Trim(), StringComparison.OrdinalIgnoreCase)))
+                    if (!optionModels.Any(f => f.OptionKey.Equals(option.Key.Trim(), StringComparison.OrdinalIgnoreCase)))
                     {
-                        options.Add(new OptionValueViewModel
+                        optionModels.Add(new OptionValueViewModel
                         {
                             Type = option.Type,
                             OptionKey = option.Key.Trim(),
@@ -50,7 +74,41 @@ namespace BetterCms.Module.Pages.Services
                 }
             }
 
-            viewModel.OptionValues = options.OrderBy(o => o.OptionKey).ToList();
+            return optionModels.OrderBy(o => o.OptionKey).ToList();
+        }
+
+        /// <summary>
+        /// Saves the option values: adds new option values and empty values.
+        /// </summary>
+        /// <typeparam name="TEntity">The type of the entity.</typeparam>
+        /// <param name="optionViewModels">The option view models.</param>
+        /// <param name="savedOptions">The saved options.</param>
+        /// <param name="entityCreator">The entity creator.</param>
+        public void SaveOptionValues<TEntity>(IEnumerable<OptionValueViewModel> optionViewModels, IEnumerable<TEntity> savedOptions,
+            Func<TEntity> entityCreator)
+            where TEntity : Entity, IOption
+        {
+            foreach (var optionViewModel in optionViewModels)
+            {
+                var savedOption = savedOptions.FirstOrDefault(f => f.Key.Trim().Equals(optionViewModel.OptionKey.Trim(), StringComparison.OrdinalIgnoreCase));
+
+                if (!string.IsNullOrEmpty(optionViewModel.OptionValue) && optionViewModel.OptionValue != optionViewModel.OptionDefaultValue)
+                {
+                    if (savedOption == null)
+                    {
+                        savedOption = entityCreator();
+                        savedOption.Key = optionViewModel.OptionKey;
+                    }
+                    savedOption.Value = optionViewModel.OptionValue;
+                    savedOption.Type = optionViewModel.Type;
+
+                    repository.Save(savedOption);
+                }
+                else if (savedOption != null)
+                {
+                    repository.Delete(savedOption);
+                }
+            }
         }
     }
 }

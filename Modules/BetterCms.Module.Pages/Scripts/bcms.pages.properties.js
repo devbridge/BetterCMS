@@ -1,8 +1,9 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bcms.dynamicContent', 'bcms.tags', 'bcms.ko.extenders', 'bcms.media', 'bcms.redirect'],
-    function ($, bcms, modal, forms, dynamicContent, tags, ko, media, redirect) {
+bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bcms.dynamicContent', 'bcms.tags', 'bcms.ko.extenders',
+        'bcms.media', 'bcms.redirect', 'bcms.inlineEdit'],
+    function ($, bcms, modal, forms, dynamicContent, tags, ko, media, redirect, editor) {
     'use strict';
 
     var page = {},
@@ -26,6 +27,8 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
 
             pagePropertiesForm: 'form:first',
             pagePropertiesPageIsPublishedCheckbox: '#IsVisibleToEveryone',
+            
+            optionsTab: '#bcms-tab-4'
         },
         links = {
             loadEditPropertiesDialogUrl: null        },
@@ -121,6 +124,8 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 page.closePagePropertiesEditPermalinkBox(dialog);
             }
         });
+        
+        editor.initialize(dialog.container.find(selectors.optionsTab), {});
     };
 
     /**
