@@ -94,22 +94,6 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Config\nlog.Debug.config">
-      <DependentUpon>nlog.config</DependentUpon>
-      <IsTransformFile>True</IsTransformFile>
-    </None>
-    <None Include="Config\nlog.Dev.config">
-      <DependentUpon>nlog.config</DependentUpon>
-      <IsTransformFile>True</IsTransformFile>
-    </None>
-    <None Include="Config\nlog.Release.config">
-      <DependentUpon>nlog.config</DependentUpon>
-      <IsTransformFile>True</IsTransformFile>
-    </None>
-    <None Include="Config\nlog.Staging.config">
-      <DependentUpon>nlog.config</DependentUpon>
-      <IsTransformFile>True</IsTransformFile>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
