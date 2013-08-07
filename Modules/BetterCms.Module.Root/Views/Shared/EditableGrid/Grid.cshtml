@@ -81,3 +81,17 @@
         <!-- /ko -->
     </tbody>
 </table>
+
+@if (Model.AddHiddenFields)
+{
+    <!-- ko foreach: items -->
+        foreach (var column in Model.Columns)
+        {
+            if (!string.IsNullOrWhiteSpace(column.HiddenFieldName))
+            {
+                <input type="hidden" name="" data-bind="value: @(column.ValueBind)
+                    , attr: {name: hiddenFieldName('@(column.HiddenFieldName)', $index()) }">
+            }
+        }
+    <!-- /ko -->
+}

@@ -2,8 +2,8 @@
 /*global define, console */
 
 bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepicker', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages',
-        'bcms.preview', 'bcms.grid', 'bcms.inlineEdit', 'bcms.slides.jquery'],
-    function ($, bcms, modal, datepicker, dynamicContent, siteSettings, messages, preview, grid, editor, slides) {
+        'bcms.preview', 'bcms.grid', 'bcms.inlineEdit', 'bcms.slides.jquery', 'bcms.options', 'bcms.ko.extenders'],
+    function ($, bcms, modal, datepicker, dynamicContent, siteSettings, messages, preview, grid, editor, slides, options, ko) {
         'use strict';
 
         var template = {},
@@ -21,8 +21,7 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
                 deleteRegionConfirmMessage: null,
                 editTemplateRegionTitle: null,
                 previewImageNotFoundMessage: null,
-                deletingMessage: null,
-                deleteOptionConfirmMessage: null
+                deletingMessage: null
             },
             selectors = {
                 templatePreviewImageUrl: '#PreviewImageUrl',
@@ -56,19 +55,14 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
                 regionsTable: '#bcms-regions-grid',
                 regionsTab: '#bcms-tab-2',
                 
-                optionsTab: '#bcms-tab-3',
-                addNewOptionButton: '#bcms-add-option-button',
-                optionsTable: '#bcms-options-grid'
-            },
-            editorRegions,
-            editorOptions;
+                optionsTab: '#bcms-tab-3'
+            };
 
         /**
         * Assign objects to module.
         */
         template.links = links;
         template.globalization = globalization;
-
 
         /**
         * Opens template edit dialog.
@@ -81,11 +75,8 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
                         contentAvailable: initializeEditTemplateForm,
 
                         beforePost: function (form) {
-                            editorOptions.resetAutoGenerateNameId();
-                            editorOptions.setInputNames(form.find(selectors.optionsTab));
-                            
-                            editorRegions.resetAutoGenerateNameId();
-                            editorRegions.setInputNames(form.find(selectors.regionsTab));
+                            editor.resetAutoGenerateNameId();
+                            editor.setInputNames(form.find(selectors.regionsTab));
                         },
 
                         postSuccess: onSaveCallback
@@ -105,11 +96,8 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
                         contentAvailable: initializeEditTemplateForm,
 
                         beforePost: function (form) {
-                            editorOptions.resetAutoGenerateNameId();
-                            editorOptions.setInputNames(form.find(selectors.optionsTab));
-
-                            editorRegions.resetAutoGenerateNameId();
-                            editorRegions.setInputNames(form.find(selectors.regionsTab));
+                            editor.resetAutoGenerateNameId();
+                            editor.setInputNames(form.find(selectors.regionsTab));
                         },
 
                         postSuccess: onSaveCallback
@@ -121,16 +109,14 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
         /**
         * Initializes template form
         */
-        function initializeEditTemplateForm(dialog) {
+        function initializeEditTemplateForm(dialog, content) {
             var regionsContainer = dialog.container.find(selectors.regionsTab),
                 optionsContainer = dialog.container.find(selectors.optionsTab),
-                form = dialog.container.find(selectors.templateEditForm);
-            
-            editorRegions = $.extend(true, {}, editor),
-            editorOptions = $.extend(true, {}, editor);
+                form = dialog.container.find(selectors.templateEditForm),
+                optionListViewModel = options.createOptionsViewModel(optionsContainer, content.Data.Options);
 
             // Initialize regions tab
-            editorRegions.initialize(regionsContainer, {
+            editor.initialize(regionsContainer, {
                 deleteRowMessageExtractor: function() {
                     return globalization.deleteRegionConfirmMessage;
                 },
@@ -138,20 +124,11 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
             });
             
             regionsContainer.find(selectors.addNewRegionButton).on('click', function () {
-                editorRegions.addNewRow(regionsContainer, $(selectors.regionsTable));
+                editor.addNewRow(regionsContainer, $(selectors.regionsTable));
             });
 
-            // Initialize options tab
-            editorOptions.initialize(optionsContainer, {
-                deleteRowMessageExtractor: function() {
-                    return globalization.deleteOptionConfirmMessage;
-                },
-                form: form
-            });
-            
-            optionsContainer.find(selectors.addNewOptionButton).on('click', function () {
-                editorOptions.addNewRow(optionsContainer, $(selectors.optionsTable));
-            });
+            // Init options tab
+            ko.applyBindings(optionListViewModel, optionsContainer.get(0));
 
             dialog.container.find(selectors.templatePreviewImage).error(function () {
                 var image = dialog.container.find(selectors.templatePreviewImage);

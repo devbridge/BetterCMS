@@ -221,6 +221,7 @@ namespace BetterCms.Module.Root
                     new JsIncludeDescriptor(this, "knockout", "bcms.knockout-2.2.1.js", "bcms.knockout-2.2.1.min.js"), 
                     new JsIncludeDescriptor(this, "ckeditor", "ckeditor/ckeditor.js", "ckeditor/ckeditor.js"),
                     tagsJsModuleIncludeDescriptor,
+                    new OptionsJsModuleIncludeDescriptor(this)
                 };
         }
 
