@@ -324,6 +324,9 @@
   <data name="OptionTypes_Text_Title" xml:space="preserve">
     <value>Text</value>
   </data>
+  <data name="Option_Invalid_Message" xml:space="preserve">
+    <value>Option {0} value is invalid. Should be of type: {1}.</value>
+  </data>
   <data name="Paging_Page_Title" xml:space="preserve">
     <value>Page</value>
   </data>

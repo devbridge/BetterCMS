@@ -67,6 +67,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.defaultValue = ko.observable();
                 self.type = ko.observable();
                 self.typeName = ko.observable();
+                self.lastType = null;
 
                 self.optionTypes = [];
                 self.optionTypes.push({ id: optionTypes.textType, name: globalization.optionTypeText });
@@ -77,14 +78,28 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             
                 self.registerFields(self.key, self.defaultValue, self.type);
 
-                self.type.subscribe(function (newValue) {
-                    var i;
-                    
-                    for (i = 0; i < self.optionTypes.length; i++) {
-                        if (self.optionTypes[i].id == newValue) {
-                            self.typeName(self.optionTypes[i].name);
+                self.type.subscribe(function (newType) {
+                    var i,
+                        oldType = self.lastType;
 
-                            return;
+                    // Fix boolean value
+                    if (oldType == optionTypes.boolType) {
+                        self.defaultValue('');
+                    }
+                    if (newType == optionTypes.boolType) {
+                        if (self.defaultValue() !== 'true' && self.defaultValue() !== true) {
+                            self.defaultValue(false);
+                        }
+                    }
+
+                    // Save new value
+                    self.lastType = newType;
+
+                    // Set type name
+                    for (i = 0; i < self.optionTypes.length; i++) {
+                        if (self.optionTypes[i].id == newType) {
+                            self.typeName(self.optionTypes[i].name);
+                            break;
                         }
                     }
                 });
@@ -115,7 +130,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
         options.init = function () {
             console.log('Initializing bcms.options module.');
         };
-    
+
         /**
         * Register initialization
         */

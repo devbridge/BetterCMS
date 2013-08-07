@@ -76,7 +76,7 @@ namespace BetterCms.Module.Pages.Command.Layout.GetTemplateForEdit
                 }
 
                 templateModel.Regions = regions.ToList();
-                templateModel.Options = options.ToList();
+                templateModel.Options = options.OrderBy(o => o.OptionKey).ToList();
             }
 
             return templateModel;

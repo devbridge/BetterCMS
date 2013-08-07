@@ -29,5 +29,11 @@ namespace BetterCms.Module.Root.Services
         /// <param name="entityCreator">The entity creator.</param>
         void SaveOptionValues<TEntity>(IEnumerable<OptionValueViewModel> optionViewModels, IEnumerable<TEntity> savedOptions, Func<TEntity> entityCreator)
             where TEntity : Entity, IOption;
+
+        /// <summary>
+        /// Validates the option value.
+        /// </summary>
+        /// <param name="option">The option.</param>
+        void ValidateOptionValue(IOption option);
     }
 }

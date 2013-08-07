@@ -637,6 +637,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Option {0} value is invalid. Should be of type: {1}..
+        /// </summary>
+        public static string Option_Invalid_Message {
+            get {
+                return ResourceManager.GetString("Option_Invalid_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Boolean.
         /// </summary>
         public static string OptionTypes_Boolean_Title {

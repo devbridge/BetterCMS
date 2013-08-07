@@ -73,6 +73,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit
                                      OptionDefaultValue = f.DefaultValue,
                                      OptionKey = f.Key
                                  })
+                        .OrderBy(o => o.OptionKey)
                         .ToList();
                 }
 

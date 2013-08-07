@@ -1,5 +1,6 @@
 ﻿@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.ViewModels.Option
+@using BetterCms.Module.Root.Models.Extensions
 @using BetterCms.Module.Root.Mvc.Grids.Extensions
 @using BetterCms.Module.Root.Mvc.Grids.TableRenderers
 @using BetterCms.Module.Root.ViewModels.Option
@@ -27,7 +28,12 @@
               .Named(PagesGlobalization.EditOptionsValues_OptionDefaultValueColumn)
               .Sortable(false)
               .HeaderAttributes(@style => "width: 160px; text-align: left")
-              .Attributes(@class => "bcms-option-key", @style => "text-align: left");
+              .Attributes(@style => "text-align: left");
+        
+        column.For(model => model.Type.ToGlobalizationString())
+              .Named(PagesGlobalization.EditOptionsValues_OptionTypeColumn)
+              .Sortable(false)
+              .Attributes(@style => "text-align: left");
     };
 }
 

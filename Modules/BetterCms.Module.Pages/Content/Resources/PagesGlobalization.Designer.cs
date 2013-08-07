@@ -1024,6 +1024,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        public static string EditOptionsValues_OptionTypeColumn {
+            get {
+                return ResourceManager.GetString("EditOptionsValues_OptionTypeColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Option Value.
         /// </summary>
         public static string EditOptionsValues_OptionValueColumn {

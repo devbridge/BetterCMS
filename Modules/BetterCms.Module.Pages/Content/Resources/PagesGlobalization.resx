@@ -1104,4 +1104,7 @@
   <data name="Options_OptionTypeColumn" xml:space="preserve">
     <value>Type</value>
   </data>
+  <data name="EditOptionsValues_OptionTypeColumn" xml:space="preserve">
+    <value>Type</value>
+  </data>
 </root>

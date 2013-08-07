@@ -1,0 +1,24 @@
+﻿@using BetterCms.Module.Root
+
+@* Text type *@
+<!-- ko if: type() != 5 -->
+    @Html.Partial(RootModuleConstants.EditableGridCellTemplate)
+<!-- /ko -->
+
+@* Boolean *@
+<!-- ko if: type() == 5  -->
+<td @Html.Raw(Model.Attributes)>
+    <div class="bcms-input-box">
+        <!-- ko if: isActive() -->
+        <input type="checkbox" class="bcms-editor-field-box" data-bind="
+            checked: @(Model.ValueBind),
+            click: onStopCheckboxEvent,
+            attr: { 'readonly': isActive() ? '' : 'readonly' },
+            event: {blur: onBlurField}" />
+        <!-- /ko -->
+        <!-- ko ifnot: isActive() -->
+        <input type="checkbox" class="bcms-editor-field-box" data-bind="checked: @(Model.ValueBind)(), click: onOpen" />
+        <!-- /ko -->
+    </div>
+</td>
+<!-- /ko -->

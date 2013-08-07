@@ -304,8 +304,12 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             });
 
             self.onOpen = function (data, event) {
-                bcms.stopEventPropagation(event);
-                self.openItem();
+                if (!this.isActive()) {
+                    bcms.stopEventPropagation(event);
+                    self.openItem();
+                }
+
+                return true;
             };
 
             self.onEdit = function (data, event) {
@@ -332,6 +336,12 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             self.onStopEvent = function (data, event) {
                 self.isSelected = true;
                 bcms.stopEventPropagation(event);
+            };
+
+            self.onStopCheckboxEvent = function (data, event) {
+                self.isSelected = true;
+                
+                return true;
             };
 
             self.onBlurField = function (data, event) {

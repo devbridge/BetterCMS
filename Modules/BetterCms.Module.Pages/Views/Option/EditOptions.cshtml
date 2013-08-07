@@ -21,7 +21,8 @@
                 new EditableGridColumn(PagesGlobalization.Options_OptionDefaultValueColumn, null, "defaultValue")
                     {
                         HeaderAttributes = "style=\"width: 250px;\"",
-                        HiddenFieldName = "Options[{0}].OptionDefaultValue"
+                        HiddenFieldName = "Options[{0}].OptionDefaultValue",
+                        CellView = RootModuleConstants.EditableOptionValueCellTemplate
                     },
                 
                 new EditableGridDropDownColumn(PagesGlobalization.Options_OptionTypeColumn, null, "type")
