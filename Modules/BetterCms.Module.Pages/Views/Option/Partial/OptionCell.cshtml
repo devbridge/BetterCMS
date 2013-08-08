@@ -1,0 +1,39 @@
+﻿@using BetterCms.Module.Root
+
+@* Text type *@
+<!-- ko if: type() != 5 && type() != 4  -->
+    @Html.Partial(RootModuleConstants.EditableGridCellTemplate)
+<!-- /ko -->
+
+@* Boolean *@
+<!-- ko if: type() == 5  -->
+<td @Html.Raw(Model.Attributes)>
+    <!-- ko if: isActive() -->
+    <input type="checkbox" class="bcms-checkbox-holder" data-bind="
+        checked: @(Model.ValueBind),
+        click: onItemSelect,
+        event: {blur: onBlurField}" />
+    <!-- /ko -->
+    <!-- ko ifnot: isActive() -->
+    <input type="checkbox" class="bcms-checkbox-holder" data-bind="checked: @(Model.ValueBind)(), click: onOpen" />
+    <!-- /ko -->
+</td>
+<!-- /ko -->
+
+@* DateTime *@
+<!-- ko if: type() == 4  -->
+<td @Html.Raw(Model.Attributes)>
+    <!-- ko if: isActive() -->
+    <div class="bcms-date-input-box">
+        <input class="bcms-editor-field-box bcms-datepicker" data-bind="
+            value: @(Model.ValueBind),
+            click: onItemSelect,
+            event: {blur: onBlurField}" />
+    </div>
+    <!-- ko if: initDatePickers() --><!-- /ko -->
+    <!-- /ko -->
+    <!-- ko ifnot: isActive() -->
+    <a class="bcms-tables-link" data-bind="text: @(Model.ValueBind)()"></a>    
+    <!-- /ko -->
+</td>
+<!-- /ko -->

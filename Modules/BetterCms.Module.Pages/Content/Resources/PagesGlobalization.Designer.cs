@@ -718,24 +718,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Calendar.
-        /// </summary>
-        public static string Date_Picker_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("Date_Picker_Tooltip_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to delete this option?.
-        /// </summary>
-        public static string DeleteOption_Confirmation_Message {
-            get {
-                return ResourceManager.GetString("DeleteOption_Confirmation_Message", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Page deleted successfully..
         /// </summary>
         public static string DeletePage_DeletedSuccessfully_Message {
@@ -1029,6 +1011,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string EditOptionsValues_OptionKeyColumn {
             get {
                 return ResourceManager.GetString("EditOptionsValues_OptionKeyColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        public static string EditOptionsValues_OptionTypeColumn {
+            get {
+                return ResourceManager.GetString("EditOptionsValues_OptionTypeColumn", resourceCulture);
             }
         }
         
@@ -1983,6 +1974,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string Options_OptionKeyColumn {
             get {
                 return ResourceManager.GetString("Options_OptionKeyColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        public static string Options_OptionTypeColumn {
+            get {
+                return ResourceManager.GetString("Options_OptionTypeColumn", resourceCulture);
             }
         }
         

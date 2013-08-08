@@ -362,13 +362,13 @@
     <EmbeddedResource Include="Scripts\bcms.pages.properties.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.redirects.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.seo.js" />
-    <EmbeddedResource Include="Scripts\bcms.pages.template.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.history.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.sitemap.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.content.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.js" />
-    <EmbeddedResource Include="Scripts\bcms.pages.widgets.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.filter.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.template.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.widgets.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -498,13 +498,16 @@
     <EmbeddedResource Include="Views\Seo\Partial\WarnMessageAboutSitemap.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Option\EditOptions.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Views\Filter\PagesFilterTemplate.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Views\Option\EditOptions.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="Views\Option\EditOptionValues.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Option\Partial\OptionCell.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -19,6 +19,8 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
     {
         public virtual IContentService ContentService { get; set; }
 
+        public virtual IOptionService OptionService { get; set; }
+
         /// <summary>
         /// Executes the specified request.
         /// </summary>
@@ -99,6 +101,8 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
                                                               DefaultValue = requestContentOption.OptionDefaultValue,
                                                               Type = requestContentOption.Type
                                                           };
+
+                    OptionService.ValidateOptionValue(contentOption);
 
                     widget.ContentOptions.Add(contentOption);
                 }

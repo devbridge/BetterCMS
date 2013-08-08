@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
+
 using BetterCms.Module.Pages.ViewModels.Templates;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Option;
 
 using NHibernate.Linq;
@@ -14,6 +16,8 @@ namespace BetterCms.Module.Pages.Command.Layout.SaveTemplate
 {
     public class SaveTemplateCommand : CommandBase, ICommand<TemplateEditViewModel, SaveTemplateResponse>
     {
+        public IOptionService OptionService { get; set; }
+
         /// <summary>
         /// Executes the specified request.
         /// </summary>
@@ -165,6 +169,8 @@ namespace BetterCms.Module.Pages.Command.Layout.SaveTemplate
                     option.DefaultValue = requestLayoutOption.OptionDefaultValue;
                     option.Type = requestLayoutOption.Type;
                     option.Layout = template;
+
+                    OptionService.ValidateOptionValue(option);
                 }
             }
         }

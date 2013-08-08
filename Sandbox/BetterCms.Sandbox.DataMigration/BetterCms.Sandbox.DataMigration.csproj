@@ -83,6 +83,7 @@
     <Content Include="Config\nlog.config">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TransformOnBuild>true</TransformOnBuild>
     </Content>
     <Content Include="Config\connectionStrings.config">
       <TransformOnBuild>true</TransformOnBuild>
@@ -103,6 +104,10 @@
     <ProjectReference Include="..\..\BetterCMS.Core\BetterCms.Core.csproj">
       <Project>{694CA5CA-A0E2-4578-A249-648498B058D7}</Project>
       <Name>BetterCms.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\BetterCms.Module.AccessControl\BetterCms.Module.AccessControl.csproj">
+      <Project>{cbaff601-0a79-4150-9d38-a44c907f98c5}</Project>
+      <Name>BetterCms.Module.AccessControl</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCMS.Module.Blog\BetterCms.Module.Blog.csproj">
       <Project>{a66a3046-ef60-4c51-ada7-eb055763419b}</Project>

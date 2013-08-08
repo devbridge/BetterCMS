@@ -696,9 +696,6 @@
   <data name="Options_OptionKeyColumn" xml:space="preserve">
     <value>Option Name</value>
   </data>
-  <data name="DeleteOption_Confirmation_Message" xml:space="preserve">
-    <value>Are you sure you want to delete this option?</value>
-  </data>
   <data name="EditOptionsValues_OptionDefaultValueColumn" xml:space="preserve">
     <value>Default Option Value</value>
   </data>
@@ -978,9 +975,6 @@
   <data name="EditSeo_MetaTitle_MaxLengthMessage" xml:space="preserve">
     <value>Meta title max length exceeded.</value>
   </data>
-  <data name="Date_Picker_Tooltip_Title" xml:space="preserve">
-    <value>Calendar</value>
-  </data>
   <data name="ValidatePageUrlCommand_SameUrlPath_Message" xml:space="preserve">
     <value>Redirect URL belongs page which you want to delete. Please update URL (path) and try again.</value>
   </data>
@@ -1103,5 +1097,11 @@
   </data>
   <data name="EditPageProperties_OptionsTab_Title" xml:space="preserve">
     <value>Options</value>
+  </data>
+  <data name="Options_OptionTypeColumn" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="EditOptionsValues_OptionTypeColumn" xml:space="preserve">
+    <value>Type</value>
   </data>
 </root>
