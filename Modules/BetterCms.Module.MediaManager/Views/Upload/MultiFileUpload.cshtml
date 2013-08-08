@@ -8,13 +8,14 @@
            
 <div class="bcms-scroll-window">
     @Html.TabbedContentMessagesBox("bcms-multi-file-upload-messages")
-    <div class="bcms-file-manager-inner" id="bcms-media-uploads">
+    <div class="bcms-file-manager-inner">
 
         @using (Html.BeginForm<UploadController>(f => f.SaveUploads(null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
         {
             <div class="bcms-input-list-holder">                
                 @Html.HiddenFor(f => f.ReuploadMediaId)
                 @Html.HiddenFor(f => f.RootFolderId)
+                @Html.HiddenFor(f => f.AccessControlEnabled)
                 @if (Model.RootFolderId.HasDefaultValue() && Model.ReuploadMediaId.HasDefaultValue())
                 {
                     @Html.Tooltip(MediaGlobalization.MultiFileUpload_SelectFolder_Help_Message)            
@@ -27,26 +28,67 @@
                 }
             </div>
 
-            <div id="bcms-files-dropzone" class="bcms-dropzone">
-                @if (Model.ReuploadMediaId.HasDefaultValue())
-                {
-                    <div class="bcms-dropzone-infotext">@MediaGlobalization.MultiFileUpload_DragDropBox</div>
-                }
-                else
-                {
-                    <div class="bcms-dropzone-infotext">@MediaGlobalization.MultiFileUpload_DragDropBox_Reupload</div>
-                }
-                <div class="bcms-btn-upload-files">
-                    <label for="bcms-files-upload-input" class="bcms-btn-upload-files-text">@MediaGlobalization.MultiFileUpload_UploadButton</label>
-                    <input type="file" 
-                        @(Model.ReuploadMediaId.HasDefaultValue() ? "multiple=\"multiple\"" : string.Empty) 
-                           name="uploadFiles" id="bcms-files-upload-input" style="position: absolute; left: -999em; top: -999em;"
-                           data-bind="attr: { accept : filesToAccept() }" />
+            <div id="bcms-media-uploads">
+                <div id="bcms-files-dropzone" class="bcms-dropzone">
+                    @if (Model.ReuploadMediaId.HasDefaultValue())
+                    {
+                        <div class="bcms-dropzone-infotext">@MediaGlobalization.MultiFileUpload_DragDropBox</div>
+                    }
+                    else
+                    {
+                        <div class="bcms-dropzone-infotext">@MediaGlobalization.MultiFileUpload_DragDropBox_Reupload</div>
+                    }
+                    <div class="bcms-btn-upload-files">
+                        <label for="bcms-files-upload-input" class="bcms-btn-upload-files-text">@MediaGlobalization.MultiFileUpload_UploadButton</label>
+                        <input type="file" 
+                            @(Model.ReuploadMediaId.HasDefaultValue() ? "multiple=\"multiple\"" : string.Empty) 
+                               name="uploadFiles" id="bcms-files-upload-input" style="position: absolute; left: -999em; top: -999em;"
+                               data-bind="attr: { accept : filesToAccept() }" />
+                    </div>
+                </div>
+        
+                <div class="bcms-upload-holder" data-bind="template: { name: 'bcms-file-upload-template' }">
                 </div>
             </div>
-        
-            <div class="bcms-upload-holder" data-bind="template: { name: 'bcms-file-upload-template' }">
+
+            if (Model.AccessControlEnabled)
+            {
+            <div class="bcms-user-access" id="bcms-accesscontrol-context">
+                <div class="bcms-input-list-holder">
+                    <div class="bcms-tooltip-mark" data-message="Set user access"></div>
+                    <div class="bcms-content-titles">Users Access</div>
+                    <div class="bcms-access-table">
+                        <div class="bcms-access-title clearfix">
+                            <div class="bcms-access-title-text">User</div>
+                            <div class="bcms-access-title-text">Read & Edit</div>
+                            <div class="bcms-access-title-text">Only Read</div>
+                            <div class="bcms-access-title-text">No Access</div>
+                        </div>
+                        <div data-bind="foreach: UserAccessList">
+                            <div class="bcms-access-line clearfix">
+                                <div class="bcms-access-value">
+                                    <div class="btn-acces-minus" data-bind="click: $root.removeUser">&nbsp;</div>
+                                    <span data-bind="text: RoleOrUser">Administrator</span>
+                                </div>
+                                <div class="bcms-access-value"><input type="radio" value="3" data-bind="checked: AccessLevel, attr: { name: RadioGroup }" /></div>
+                                <div class="bcms-access-value"><input type="radio" value="2" data-bind="checked: AccessLevel, attr: { name: RadioGroup }" /></div>
+                                <div class="bcms-access-value"><input type="radio" value="1" data-bind="checked: AccessLevel, attr: { name: RadioGroup }" /></div>
+                            </div>
+                            <input type="hidden" data-bind="attr: { name: $root.getPropertyIndexer($index(), 'AccessLevel'), value: AccessLevel }" />
+                            <input type="hidden" data-bind="attr: { name: $root.getPropertyIndexer($index(), 'RoleOrUser'), value: RoleOrUser }" />
+                        </div>
+
+                        <div class="bcms-access-line clearfix">
+                            <div class="bcms-access-value-add">
+                                <div class="btn-acces-plus">&nbsp;</div>
+                                Add New User
+                                <input type="text" value="" data-bind="value: newUser, valueUpdate: 'afterkeydown', enterPress: addNewUser" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+            }
         }
         <script type="text/html" id="bcms-file-upload-template">
             <div data-bind="visible: activeUploads().length > 0">

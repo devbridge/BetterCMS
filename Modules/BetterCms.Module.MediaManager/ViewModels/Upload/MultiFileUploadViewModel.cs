@@ -20,6 +20,15 @@ namespace BetterCms.Module.MediaManager.ViewModels.Upload
 
         public Guid ReuploadMediaId { get; set; }
 
+        public List<UserAccessViewModel> UserAccessList { get; set; }
+
+        public bool AccessControlEnabled { get; set; }
+
+        public MultiFileUploadViewModel()
+        {
+            UserAccessList = new List<UserAccessViewModel>();
+        }
+
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>

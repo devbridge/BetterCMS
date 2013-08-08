@@ -4,6 +4,7 @@ using System.Web;
 using System.Web.Mvc;
 
 using BetterCms.Core.Security;
+using BetterCms.Module.AccessControl.Models;
 using BetterCms.Module.MediaManager.Command.Upload;
 using BetterCms.Module.MediaManager.Command.Upload.CheckFileStatuses;
 using BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload;
@@ -34,7 +35,10 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// </summary>
         /// <param name="folderId">The folder id.</param>
         /// <param name="folderType">Type of the folder.</param>
-        /// <returns>File upload html.</returns>
+        /// <param name="reuploadMediaId">The reupload media id.</param>
+        /// <returns>
+        /// File upload html.
+        /// </returns>
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         [HttpGet]
         public ActionResult MultiFileUpload(string folderId, string folderType, string reuploadMediaId)
@@ -47,7 +51,10 @@ namespace BetterCms.Module.MediaManager.Controllers
                         ReuploadMediaId = reuploadMediaId.ToGuidOrDefault()
                     });
 
-            return View(model);
+            var success = model != null;
+            var view = RenderView("MultiFileUpload", model);
+
+            return ComboWireJson(success, view, model, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -55,7 +62,10 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// </summary>
         /// <param name="folderId">The folder id.</param>
         /// <param name="folderType">Type of the folder.</param>
-        /// <returns>File upload html.</returns>
+        /// <param name="reuploadMediaId">The reupload media id.</param>
+        /// <returns>
+        /// File upload html.
+        /// </returns>
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         [HttpGet]
         public ActionResult SingleFileUpload(string folderId, string folderType, string reuploadMediaId)
@@ -63,7 +73,7 @@ namespace BetterCms.Module.MediaManager.Controllers
             var model = GetCommand<GetMultiFileUploadCommand>().ExecuteCommand(
                 new GetMultiFileUploadRequest
                 {
-                    FolderId = folderId.ToGuidOrDefault(), 
+                    FolderId = folderId.ToGuidOrDefault(),
                     Type = (MediaType)Enum.Parse(typeof(MediaType), folderType),
                     ReuploadMediaId = reuploadMediaId.ToGuidOrDefault()
                 });
@@ -157,9 +167,9 @@ namespace BetterCms.Module.MediaManager.Controllers
                 {
                     return WireJson(true, new
                                               {
-                                                  FileId = media.Id, 
-                                                  Version = media.Version, 
-                                                  Type = (int)rootFolderType, 
+                                                  FileId = media.Id,
+                                                  Version = media.Version,
+                                                  Type = (int)rootFolderType,
                                                   IsProcessing = !media.IsUploaded.HasValue,
                                                   IsFailed = media.IsUploaded == false,
                                               });

@@ -1,9 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Core.Security;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.MediaManager.ViewModels.Upload;
 using BetterCms.Module.Root.Mvc;
 
@@ -11,6 +12,8 @@ namespace BetterCms.Module.MediaManager.Command.Upload.GetMultiFileUpload
 {
     public class GetMultiFileUploadCommand : CommandBase, ICommand<GetMultiFileUploadRequest, MultiFileUploadViewModel>
     {
+        public ICmsConfiguration CmsConfiguration { get; set; }
+
         public MultiFileUploadViewModel Execute(GetMultiFileUploadRequest request)
         {
             var model = new MultiFileUploadViewModel();
@@ -36,6 +39,17 @@ namespace BetterCms.Module.MediaManager.Command.Upload.GetMultiFileUpload
                 .ToList();
 
             model.Folders.Insert(0, new Tuple<Guid, string>(Guid.Empty, ".."));
+
+            // TODO: Generate default access based on configuration
+            var defaultAccessLevel = new UserAccessViewModel
+                                         {
+                                             RoleOrUser = "Anonymous",
+                                             AccessLevel = AccessLevel.Deny
+                                         };
+
+            model.UserAccessList.Add(defaultAccessLevel);
+
+            model.AccessControlEnabled = CmsConfiguration.AccessControlEnabled;
 
             return model;
         }
