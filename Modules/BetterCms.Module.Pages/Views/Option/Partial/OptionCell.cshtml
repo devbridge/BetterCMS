@@ -11,8 +11,7 @@
     <!-- ko if: isActive() -->
     <input type="checkbox" class="bcms-checkbox-holder" data-bind="
         checked: @(Model.ValueBind),
-        click: onItemSelect,
-        event: {blur: onBlurField}" />
+        event: {blur: onBlurField, focus: onItemSelect}" />
     <!-- /ko -->
     <!-- ko ifnot: isActive() -->
     <input type="checkbox" class="bcms-checkbox-holder" data-bind="checked: @(Model.ValueBind)(), click: onOpen" />
@@ -27,8 +26,10 @@
     <div class="bcms-date-input-box">
         <input class="bcms-editor-field-box bcms-datepicker" data-bind="
             value: @(Model.ValueBind),
-            click: onItemSelect,
-            event: {blur: onBlurField}" />
+            event: {blur: onBlurField, focus: onItemSelect},
+            enterPress: onSave, 
+            escPress: onCancelEdit
+            " />
     </div>
     <!-- ko if: initDatePickers() --><!-- /ko -->
     <!-- /ko -->

@@ -10,7 +10,6 @@
             optionsText: '@(Model.OptionsText)',
             optionsValue: '@(Model.OptionsValue)',
             value: @Model.ValueBind, 
-            click: onStopEvent,
-            event: {blur: onBlurField}"></select>
+            event: {blur: onBlurField, focus: onStopEvent}"></select>
         <!-- /ko -->
 </td>

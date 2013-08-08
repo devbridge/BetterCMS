@@ -18,7 +18,8 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 optionTypeBoolean: null,
                 optionTypeDateTime: null,
                 optionTypeFloat: null,
-                datePickerTooltipTitle: null
+                datePickerTooltipTitle: null,
+                optionValidationMessage: null
             },
             optionTypes = {
                 textType: 1,
@@ -68,7 +69,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 var self = this;
 
                 self.key = ko.observable().extend({ required: "", maxLength: { maxLength: ko.maxLength.name } });
-                self.defaultValue = ko.observable();
+                self.defaultValue = ko.observable().extend({ optionValue: { self: self } }).extend({ notify: 'always' });
                 self.type = ko.observable();
                 self.typeName = ko.observable();
                 self.lastType = null;
@@ -82,9 +83,21 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             
                 self.registerFields(self.key, self.defaultValue, self.type);
 
-                self.type.subscribe(function (newType) {
+                self.getOptionTypeName = function() {
                     var i,
-                        oldType = self.lastType;
+                        type = self.type();
+
+                    for (i = 0; i < self.optionTypes.length; i++) {
+                        if (self.optionTypes[i].id == type) {
+                            return self.optionTypes[i].name;
+                        }
+                    }
+
+                    return '';
+                };
+
+                self.type.subscribe(function (newType) {
+                    var oldType = self.lastType;
 
                     // Entering boolean mode
                     if (oldType == optionTypes.boolType) {
@@ -102,12 +115,10 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     self.lastType = newType;
 
                     // Set type name
-                    for (i = 0; i < self.optionTypes.length; i++) {
-                        if (self.optionTypes[i].id == newType) {
-                            self.typeName(self.optionTypes[i].name);
-                            break;
-                        }
-                    }
+                    self.typeName(self.getOptionTypeName());
+                    
+                    // Notify value to be re-validated
+                    self.defaultValue(self.defaultValue());
                 });
 
                 self.key(item.OptionKey);
@@ -143,6 +154,32 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             return new OptionsListViewModel(container, items);
         };
 
+        ko.extenders.optionValue = function (target, opts) {
+            var ruleName = 'optionValue',
+                self = opts.self;
+
+            return ko.extenders.koValidationExtender(ruleName, target, function (newValue) {
+                if (!self.type) {
+                    return;
+                }
+
+                var type = self.type(),
+                    mustBeNumber = type == optionTypes.floatType || type == optionTypes.integerType,
+                    hasError = mustBeNumber && newValue && isNaN(Number(newValue)),
+                    showMessage,
+                    regExp;
+                
+                if (!hasError && type == optionTypes.integerType) {
+                    regExp = new RegExp(/^-?\d*$/);
+                    hasError = !regExp.test(newValue);
+                }
+
+                showMessage = hasError ? $.format(globalization.optionValidationMessage, self.key(), self.getOptionTypeName()) : '';
+
+                target.validator.setError(ruleName, hasError, showMessage);
+            });
+        };
+
         /**
         * Initializes bcms options module.
         */
@@ -154,6 +191,6 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
         * Register initialization
         */
         bcms.registerInit(options.init);
-    
+
         return options;
 });
