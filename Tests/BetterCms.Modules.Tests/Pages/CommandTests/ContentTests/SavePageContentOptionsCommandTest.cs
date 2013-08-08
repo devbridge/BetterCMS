@@ -3,7 +3,7 @@ using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
-
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Pages.Command.Content.SavePageContentOptions;
 using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Root.Models;
@@ -62,7 +62,8 @@ namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
                                       {
                                           // Random value
                                           OptionValue = randomOptionValue.Value,
-                                          OptionKey = randomOptionValue.Key
+                                          OptionKey = randomOptionValue.Key,
+                                          Type = OptionType.Text,
                                       }
 
                             },

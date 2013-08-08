@@ -4,6 +4,7 @@ using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Pages.Command.Content.GetPageContentOptions;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Services;
@@ -66,6 +67,10 @@ namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
             var option2 = TestDataProvider.CreateNewContentOption(content);
             var option3 = TestDataProvider.CreateNewContentOption(content);
 
+            option1.Type = OptionType.Text;
+            option2.Type = OptionType.Text;
+            option3.Type = OptionType.Text;
+
             content.ContentOptions = new List<ContentOption>();
             content.ContentOptions.Add(option1);
             content.ContentOptions.Add(option2);
@@ -76,10 +81,13 @@ namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
         {
             var po1 = TestDataProvider.CreateNewPageContentOption(pageContent);
             po1.Key = content.ContentOptions[0].Key;
+            po1.Type = OptionType.Text;
             var po2 = TestDataProvider.CreateNewPageContentOption(pageContent);
             po2.Key = content.ContentOptions[1].Key;
+            po2.Type = OptionType.Text;
             var po3 = TestDataProvider.CreateNewPageContentOption(pageContent);
             po3.Key = Guid.NewGuid().ToString();
+            po3.Type = OptionType.Text;
 
             pageContent.Options = new List<PageContentOption>();
             pageContent.Options.Add(po1);
