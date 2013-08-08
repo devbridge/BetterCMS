@@ -104,7 +104,7 @@ namespace BetterCms.Module.Root.Services
             {
                 var savedOption = savedOptions.FirstOrDefault(f => f.Key.Trim().Equals(optionViewModel.OptionKey.Trim(), StringComparison.OrdinalIgnoreCase));
 
-                if (!string.IsNullOrEmpty(optionViewModel.OptionValue))
+                if (!string.IsNullOrEmpty(optionViewModel.OptionValue) && optionViewModel.OptionValue != optionViewModel.OptionDefaultValue)
                 {
                     if (savedOption == null)
                     {
@@ -116,10 +116,7 @@ namespace BetterCms.Module.Root.Services
 
                     ValidateOptionValue(savedOption);
 
-                    if (optionViewModel.OptionValue != optionViewModel.OptionDefaultValue)
-                    {
-                        repository.Save(savedOption);
-                    }
+                    repository.Save(savedOption);
                 }
                 else if (savedOption != null)
                 {
