@@ -243,6 +243,9 @@
   <data name="CreateTag_CreatedSuccessfully_Message" xml:space="preserve">
     <value>Tag created successfully.</value>
   </data>
+  <data name="Date_Picker_Tooltip_Title" xml:space="preserve">
+    <value>Calendar</value>
+  </data>
   <data name="DeleteCategory_DeletedSuccessfully_Message" xml:space="preserve">
     <value>Category deleted successfully.</value>
   </data>
@@ -313,7 +316,7 @@
     <value>Boolean</value>
   </data>
   <data name="OptionTypes_DateTime_Title" xml:space="preserve">
-    <value>Date and time</value>
+    <value>Date</value>
   </data>
   <data name="OptionTypes_Float_Title" xml:space="preserve">
     <value>Float</value>

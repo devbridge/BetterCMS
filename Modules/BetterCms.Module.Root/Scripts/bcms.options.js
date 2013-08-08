@@ -1,12 +1,15 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.ko.grid'],
-    function ($, bcms, ko, kogrid) {
+bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.ko.grid', 'bcms.datepicker'],
+    function ($, bcms, ko, kogrid, datePicker) {
         'use strict';
 
         var options = {},
-            selectors = {},
+            selectors = {
+                datePickers: '.bcms-datepicker',
+                datePickerBoxes: '.ui-datepicker-trigger, .ui-datepicker'
+            },
             links = {},
             globalization = {
                 deleteOptionConfirmMessage: null,
@@ -14,7 +17,8 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 optionTypeInteger: null,
                 optionTypeBoolean: null,
                 optionTypeDateTime: null,
-                optionTypeFloat: null
+                optionTypeFloat: null,
+                datePickerTooltipTitle: null
             },
             optionTypes = {
                 textType: 1,
@@ -82,10 +86,12 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     var i,
                         oldType = self.lastType;
 
-                    // Fix boolean value
+                    // Entering boolean mode
                     if (oldType == optionTypes.boolType) {
                         self.defaultValue('');
                     }
+                    
+                    // Leaving boolean mode
                     if (newType == optionTypes.boolType) {
                         if (self.defaultValue() !== 'true' && self.defaultValue() !== true) {
                             self.defaultValue(false);
@@ -107,6 +113,19 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.key(item.OptionKey);
                 self.defaultValue(item.OptionDefaultValue);
                 self.type(item.Type);
+
+                self.initDatePickers = function () {
+                    var datePickerOpts = {
+                        onSelect: function (newDate) {
+                            self.isSelected = true;
+                            self.defaultValue(newDate);
+                        }
+                    };
+
+                    $(selectors.datePickers).initializeDatepicker(globalization.datePickerTooltipTitle, datePickerOpts);
+                    $(selectors.datePickerBoxes).on('click', self.onItemSelect);
+                    $(selectors.datePickerBoxes).on('blur', self.onBlurField);
+                };
             };
 
             OptionViewModel.prototype.getDeleteConfirmationMessage = function () {

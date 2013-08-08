@@ -338,7 +338,7 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 bcms.stopEventPropagation(event);
             };
 
-            self.onStopCheckboxEvent = function (data, event) {
+            self.onItemSelect = function (data, event) {
                 self.isSelected = true;
                 
                 return true;

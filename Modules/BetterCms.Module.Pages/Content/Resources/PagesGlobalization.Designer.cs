@@ -718,15 +718,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Calendar.
-        /// </summary>
-        public static string Date_Picker_Tooltip_Title {
-            get {
-                return ResourceManager.GetString("Date_Picker_Tooltip_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Page deleted successfully..
         /// </summary>
         public static string DeletePage_DeletedSuccessfully_Message {

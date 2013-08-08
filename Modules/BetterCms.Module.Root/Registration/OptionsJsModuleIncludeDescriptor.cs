@@ -17,6 +17,7 @@ namespace BetterCms.Module.Root.Registration
             Globalization = new IActionProjection[]
                 {                    
                     new JavaScriptModuleGlobalization(this, "deleteOptionConfirmMessage", () => RootGlobalization.DeleteOption_Confirmation_Message),
+                    new JavaScriptModuleGlobalization(this, "datePickerTooltipTitle", () => RootGlobalization.Date_Picker_Tooltip_Title),
 
                     new JavaScriptModuleGlobalization(this, "optionTypeText", () => RootGlobalization.OptionTypes_Text_Title),
                     new JavaScriptModuleGlobalization(this, "optionTypeInteger", () => RootGlobalization.OptionTypes_Integer_Title),
