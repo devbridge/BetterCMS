@@ -18,7 +18,7 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// <value>
         /// The list of page content options.
         /// </value>
-        public IList<OptionValueViewModel> OptionValues { get; set; }
+        public IList<OptionValueEditViewModel> OptionValues { get; set; }
 
         /// <summary>
         /// Gets or sets the page content id.
@@ -36,7 +36,7 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// </returns>
         public override string ToString()
         {
-            return string.Format("WidgetOptions: " + string.Join(", ", OptionValues ?? Enumerable.Empty<OptionValueViewModel>()));
+            return string.Format("WidgetOptions: " + string.Join(", ", OptionValues ?? Enumerable.Empty<OptionValueEditViewModel>()));
         }
     }
 }

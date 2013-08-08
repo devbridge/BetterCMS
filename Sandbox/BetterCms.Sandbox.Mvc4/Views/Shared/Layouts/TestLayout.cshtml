@@ -67,6 +67,14 @@
         var liveTo = Model.GetBlogPostLiveToDate();
         <p><b>Live From:</b> @(liveFrom.HasValue ? liveFrom.ToString() : "(none)")</p>
         <p><b>Live To:</b> @(liveTo.HasValue ? liveTo.ToString() : "(none)")</p>
+        
+        foreach (var option in Model.Options)
+        {
+            <p>
+                <strong>Option "@option.Key" Type:</strong> @option.Value.GetType()
+                <strong>Value</strong>: @option.Value
+            </p>
+        }
     }
 
     <div class="page-block">

@@ -1,6 +1,8 @@
-﻿using System.Text;
+﻿using System.Collections.Generic;
+using System.Text;
 
 using BetterCms.Core.DataContracts;
+using BetterCms.Module.Root.ViewModels.Option;
 
 namespace BetterCms.Module.Root.ViewModels.Cms
 {
@@ -24,6 +26,14 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         /// The widget.
         /// </value>
         public IWidget Widget { get; set; }
+
+        /// <summary>
+        /// Gets or sets the widget options.
+        /// </summary>
+        /// <value>
+        /// The widget options.
+        /// </value>
+        public IList<IOptionValue> Options { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

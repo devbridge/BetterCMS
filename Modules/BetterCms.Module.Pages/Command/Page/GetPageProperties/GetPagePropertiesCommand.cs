@@ -121,7 +121,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                     .AsQueryable<PageOption>()
                     .ToList();
 
-                model.Model.OptionValues = optionService.MergeOptionsAndValues(layoutOptions, pageOptions, true);
+                model.Model.OptionValues = optionService.GetMergedOptionValuesForEdit(layoutOptions, pageOptions);
             }
 
             return model != null ? model.Model : null;

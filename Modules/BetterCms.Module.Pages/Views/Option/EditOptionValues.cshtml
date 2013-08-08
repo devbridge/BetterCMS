@@ -9,7 +9,7 @@
 @model IOptionValuesContainer
 
 @{
-    Action<ColumnBuilder<OptionValueViewModel>> columns = column =>
+    Action<ColumnBuilder<OptionValueEditViewModel>> columns = column =>
     {
         column.EditButtonColumn();
 
@@ -37,4 +37,4 @@
     };
 }
 
-@Html.Grid(Model.OptionValues).Columns(columns).Attributes(@class => "bcms-tables", @id => "bcms-options-grid").RenderUsing(new EditableHtmlTableGridRenderer<OptionValueViewModel>())
+@Html.Grid(Model.OptionValues).Columns(columns).Attributes(@class => "bcms-tables", @id => "bcms-options-grid").RenderUsing(new EditableHtmlTableGridRenderer<OptionValueEditViewModel>())

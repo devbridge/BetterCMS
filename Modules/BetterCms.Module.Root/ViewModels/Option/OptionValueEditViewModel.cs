@@ -1,17 +1,14 @@
 ﻿namespace BetterCms.Module.Root.ViewModels.Option
 {
-    /// <summary>
-    /// Option view model
-    /// </summary>
-    public class OptionViewModel : OptionViewModelBase
+    public class OptionValueEditViewModel : OptionViewModel
     {
         /// <summary>
-        /// Gets or sets the option default value.
+        /// Gets or sets the option value.
         /// </summary>
         /// <value>
-        /// The option default value.
+        /// The option value.
         /// </value>
-        public string OptionDefaultValue { get; set; }
+        public string OptionValue { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
@@ -21,7 +18,7 @@
         /// </returns>
         public override string ToString()
         {
-            return string.Format("OptionKey: {0}, OptionDefaultValue: {1}, Type: {2}", OptionKey, OptionDefaultValue, Type);
+            return string.Format("{0}, OptionValue: {1}", base.ToString(), OptionValue);
         }
     }
 }

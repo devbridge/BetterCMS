@@ -45,7 +45,7 @@ namespace BetterCms.Module.Pages.Command.Content.GetPageContentOptions
 
                 if (pageContent != null)
                 {
-                    model.OptionValues = OptionService.MergeOptionsAndValues(pageContent.Content.ContentOptions, pageContent.Options, true);
+                    model.OptionValues = OptionService.GetMergedOptionValuesForEdit(pageContent.Content.ContentOptions, pageContent.Options);
                 }
             }
 

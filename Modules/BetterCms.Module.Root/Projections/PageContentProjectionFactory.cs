@@ -6,9 +6,9 @@ using Autofac.Core;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Dependencies;
-using BetterCms.Core.Models;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Root.Content.Resources;
+using BetterCms.Module.Root.ViewModels.Option;
 
 using Common.Logging;
 
@@ -27,7 +27,7 @@ namespace BetterCms.Module.Root.Projections
             this.containerProvider = containerProvider;
         }
 
-        public PageContentProjection Create(IPageContent pageContent, IContent content, IList<IOption> options)
+        public PageContentProjection Create(IPageContent pageContent, IContent content, IList<IOptionValue> options)
         {
             IContentAccessor contentAccessor = null;            
             Type contentType;
