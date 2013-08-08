@@ -4,7 +4,8 @@ using System.Linq;
 
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Mvc.Commands;
-
+using BetterCms.Core.Security;
+using BetterCms.Module.AccessControl.Models;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Models.Extensions;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
@@ -15,6 +16,8 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
 {
     public class ConfirmUploadCommand : CommandBase, ICommand<MultiFileUploadViewModel, ConfirmUploadResponse>
     {
+        public IAccessControlService AccessControlService { get; set; }
+
         /// <summary>
         /// Executes this command.
         /// </summary>
@@ -86,6 +89,19 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
                     }
                 }
 
+                if (request.AccessControlEnabled)
+                {
+                    foreach (var userAccess in files.SelectMany(x => request.UserAccessList.Select(model => new UserAccess
+                    {
+                        ObjectId = x.Id,
+                        AccessLevel = model.AccessLevel,
+                        RoleOrUser = model.RoleOrUser
+                    })))
+                    {
+                        Repository.Save(userAccess);
+                    }
+                }
+
                 UnitOfWork.Commit();
 
                 response.Medias = files.Select(Convert).ToList();
@@ -121,12 +137,13 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
             else if (file.Type == MediaType.Image)
             {
                 var imageFile = (MediaImage)file;
-                model = new MediaImageViewModel {
-                                                    ThumbnailUrl = imageFile.PublicThumbnailUrl,
-                                                    Tooltip = imageFile.Title
-                                                };
+                model = new MediaImageViewModel
+                {
+                    ThumbnailUrl = imageFile.PublicThumbnailUrl,
+                    Tooltip = imageFile.Title
+                };
                 isProcessing = isProcessing || !imageFile.IsOriginalUploaded.HasValue || !imageFile.IsThumbnailUploaded.HasValue;
-                isFailed = isFailed 
+                isFailed = isFailed
                     || (imageFile.IsOriginalUploaded.HasValue && !imageFile.IsOriginalUploaded.Value)
                     || (imageFile.IsThumbnailUploaded.HasValue && !imageFile.IsThumbnailUploaded.Value);
             }
