@@ -359,6 +359,20 @@ namespace BetterCms.Tests.Helpers
             entity.DefaultValue = ProvideRandomString(100);
 
             return entity;
+        }
+        
+        public LayoutOption CreateNewLayoutOption(Layout layout = null)
+        {
+            var entity = new LayoutOption();
+
+            PopulateBaseFields(entity);
+
+            entity.Key = ProvideRandomString(MaxLength.Name);
+            entity.Layout = layout ?? CreateNewLayout();
+            entity.Type = ProvideRandomEnumValue<OptionType>();
+            entity.DefaultValue = ProvideRandomString(100);
+
+            return entity;
         }  
 
         public PageContentOption CreateNewPageContentOption(PageContent pageContent = null)
@@ -368,6 +382,20 @@ namespace BetterCms.Tests.Helpers
             PopulateBaseFields(entity);
 
             entity.PageContent = pageContent ?? CreateNewPageContent();
+            entity.Key = ProvideRandomString(MaxLength.Name);
+            entity.Value = ProvideRandomString(100);
+            entity.Type = ProvideRandomEnumValue<OptionType>();
+            
+            return entity;
+        }
+
+        public PageOption CreateNewPageOption(Page page = null)
+        {
+            var entity = new PageOption();
+
+            PopulateBaseFields(entity);
+
+            entity.Page = page ?? CreateNewPage();
             entity.Key = ProvideRandomString(MaxLength.Name);
             entity.Value = ProvideRandomString(100);
             entity.Type = ProvideRandomEnumValue<OptionType>();

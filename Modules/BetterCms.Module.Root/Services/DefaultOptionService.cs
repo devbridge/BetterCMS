@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 using BetterCms.Core.DataAccess;
@@ -248,10 +249,10 @@ namespace BetterCms.Module.Root.Services
                     return value;
 
                 case OptionType.Integer:
-                    return Convert.ToInt64(value);
+                    return Convert.ToInt64(value, CultureInfo.InvariantCulture);
 
                 case OptionType.Float:
-                    return Convert.ToDecimal(value);
+                    return Convert.ToDecimal(value, CultureInfo.InvariantCulture);
 
                 case OptionType.DateTime:
                     return Convert.ToDateTime(value);
