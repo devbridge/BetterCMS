@@ -180,7 +180,8 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         * Opens ServerControlWidget edit dialog.
         */
         widgets.openEditServerControlWidgetDialog = function (widgetId, onSaveCallback, availablePreviewOnPageContentId, onCloseCallback) {
-
+            var optionsViewModel;
+            
             modal.edit({
                 isPreviewAvailable: availablePreviewOnPageContentId != null,
                 disableSaveDraft: true,
@@ -189,7 +190,11 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 onLoad: function(childDialog) {
                     dynamicContent.bindDialog(childDialog, $.format(links.loadEditServerControlWidgetDialogUrl, widgetId), {
                         contentAvailable: function (dialog, content) {
-                            initializeEditServerControlWidgetForm(dialog, availablePreviewOnPageContentId, onSaveCallback, content.Data);
+                            optionsViewModel = initializeEditServerControlWidgetForm(dialog, availablePreviewOnPageContentId, onSaveCallback, content.Data);
+                        },
+
+                        beforePost: function () {
+                            return optionsViewModel.isValid(true);
                         },
 
                         postSuccess: onSaveCallback
@@ -202,6 +207,8 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         * Opens widget create form from site settings widgets list
         */
         widgets.openCreateServerControlWidgetDialog = function (onSaveCallback, availablePreviewOnPageContentId) {
+            var optionsViewModel;
+
             modal.edit({
                 isPreviewAvailable: availablePreviewOnPageContentId != null,
                 disableSaveDraft: true,
@@ -209,7 +216,11 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 onLoad: function (childDialog) {
                     dynamicContent.bindDialog(childDialog, links.loadCreateServerControlWidgetDialogUrl, {
                         contentAvailable: function (dialog, content) {
-                            initializeEditServerControlWidgetForm(dialog, availablePreviewOnPageContentId, onSaveCallback, content.Data);
+                            optionsViewModel = initializeEditServerControlWidgetForm(dialog, availablePreviewOnPageContentId, onSaveCallback, content.Data);
+                        },
+                        
+                        beforePost: function () {
+                            return optionsViewModel.isValid(true);
                         },
 
                         postSuccess: onSaveCallback
@@ -272,7 +283,8 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             }
 
             var optionsContainer = dialog.container.find(selectors.optionsTab),
-                optionListViewModel = options.createOptionsViewModel(optionsContainer, data.Options);
+                widgetOptions = data != null ? data.Options : null,
+                optionListViewModel = options.createOptionsViewModel(optionsContainer, widgetOptions);
             ko.applyBindings(optionListViewModel, optionsContainer.get(0));
 
             dialog.container.find(selectors.widgetPreviewImage).error(function() {
@@ -317,6 +329,8 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             if (previewImage.attr('src')) {
                 previewImage.show();
             }
+
+            return optionListViewModel;
         };
 
         /*
@@ -388,7 +402,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         },
 
                         beforePost: function() {
-                            return optionListViewModel.isValid();
+                            return optionListViewModel.isValid(true);
                         },
 
                         postSuccess: function () {

@@ -12,13 +12,14 @@
             <!-- /ko -->
             <!-- ko if: isActive() && (!@(Model.ValueBind).editingIsDisabled || !@(Model.ValueBind).editingIsDisabled()) -->
             <input type="text" class="bcms-editor-field-box" data-bind="
-            css: { 'bcms-input-validation-error': !isNew() && @(Model.ValueBind).hasError && @(Model.ValueBind).hasError() },
-            value: @Model.ValueBind, 
-            valueUpdate: 'afterkeydown', 
-            enterPress: onSave, 
-            escPress: onCancelEdit, 
-            event: {blur: onBlurField, focus: onStopEvent, click: onStopEvent}
-            @(Model.AutoFocus ? ", hasfocus: isActive() && hasFocus" : "") " />
+                css: { 'bcms-input-validation-error': !isNew() && @(Model.ValueBind).hasError && @(Model.ValueBind).hasError() },
+                value: @Model.ValueBind, 
+                valueUpdate: 'afterkeydown', 
+                enterPress: onSave, 
+                escPress: onCancelEdit, 
+                afterRender: initInput($element, @Model.ValueBind),
+                event: {blur: onBlurField, focus: onStopEvent, click: onStopEvent}
+                @(Model.AutoFocus ? ", hasfocus: isActive() && hasFocus" : "") " />
             <!-- ko if: !isNew() &&  @(Model.ValueBind).hasError && @(Model.ValueBind).hasError() -->
             <span class="bcms-field-validation-error">
                 <span data-bind="html: @(Model.ValueBind).validationMessage()"></span>

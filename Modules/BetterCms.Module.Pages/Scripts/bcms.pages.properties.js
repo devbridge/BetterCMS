@@ -205,12 +205,16 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
     * Opens modal window for given page with page properties
     */
     page.openEditPageDialog = function (id, postSuccess) {
+        var pageViewModel;
+
         modal.open({
             title: globalization.editPagePropertiesModalTitle,
             onLoad: function (dialog) {
                 var url = $.format(links.loadEditPropertiesDialogUrl, id);
                 dynamicContent.bindDialog(dialog, url, {
-                    contentAvailable: page.initEditPagePropertiesDialogEvents,
+                    contentAvailable: function(childDialog, content) {
+                        pageViewModel = page.initEditPagePropertiesDialogEvents(childDialog, content);
+                    },
 
                     beforePost: function () {
                         if (!dialog.container.find(selectors.permalinkEditField).valid()) {
@@ -230,7 +234,8 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                             });
                             return false;
                         }
-                        return true;
+                        
+                        return pageViewModel.options.isValid(true);
                     },
 
                     postSuccess: postSuccess
