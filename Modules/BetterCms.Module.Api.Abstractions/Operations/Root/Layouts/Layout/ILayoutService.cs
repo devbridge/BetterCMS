@@ -1,4 +1,5 @@
-﻿using BetterCms.Module.Api.Operations.Root.Layouts.Layout.Regions;
+﻿using BetterCms.Module.Api.Operations.Root.Layouts.Layout.Options;
+using BetterCms.Module.Api.Operations.Root.Layouts.Layout.Regions;
 
 namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout
 {
@@ -6,6 +7,8 @@ namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout
     {
         GetLayoutResponse Get(GetLayoutRequest request);
 
-        ILayoutRegionService Regions { get; }
+        ILayoutRegionsService Regions { get; }
+        
+        ILayoutOptionsService Options { get; }
     }
 }

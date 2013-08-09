@@ -58,5 +58,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         /// </value>
         [DataMember]
         public bool IncludePageContents { get; set; }
+        
+        /// <summary>
+        /// Gets or sets a value indicating whether to include page options.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if to include page options; otherwise, <c>false</c>.
+        /// </value>
+        [DataMember]
+        public bool IncludePageOptions { get; set; }
     }
 }

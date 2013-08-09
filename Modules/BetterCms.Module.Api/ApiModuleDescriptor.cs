@@ -1,9 +1,7 @@
-﻿using System.Web;
+﻿using Autofac;
 
-using Autofac;
-
-using BetterCms.Core.Dependencies;
 using BetterCms.Core.Modules;
+
 using BetterCms.Module.Api.Operations.Blog;
 using BetterCms.Module.Api.Operations.Blog.Authors;
 using BetterCms.Module.Api.Operations.Blog.Authors.Author;
@@ -25,6 +23,8 @@ using BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent;
 using BetterCms.Module.Api.Operations.Pages.Pages;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents;
+using BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content;
+using BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content.Options;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page.Exists;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties;
 using BetterCms.Module.Api.Operations.Pages.Redirects;
@@ -37,11 +37,13 @@ using BetterCms.Module.Api.Operations.Pages.Widgets;
 using BetterCms.Module.Api.Operations.Pages.Widgets.Widget;
 using BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget;
 using BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidget;
+using BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidget.Options;
 using BetterCms.Module.Api.Operations.Root;
 using BetterCms.Module.Api.Operations.Root.Categories;
 using BetterCms.Module.Api.Operations.Root.Categories.Category;
 using BetterCms.Module.Api.Operations.Root.Layouts;
 using BetterCms.Module.Api.Operations.Root.Layouts.Layout;
+using BetterCms.Module.Api.Operations.Root.Layouts.Layout.Options;
 using BetterCms.Module.Api.Operations.Root.Layouts.Layout.Regions;
 using BetterCms.Module.Api.Operations.Root.Tags;
 using BetterCms.Module.Api.Operations.Root.Tags.Tag;
@@ -118,7 +120,8 @@ namespace BetterCms.Module.Api
             containerBuilder.RegisterType<TagService>().As<ITagService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<LayoutService>().As<ILayoutService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<LayoutsService>().As<ILayoutsService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
-            containerBuilder.RegisterType<LayoutRegionsService>().As<ILayoutRegionService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
+            containerBuilder.RegisterType<LayoutRegionsService>().As<ILayoutRegionsService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
+            containerBuilder.RegisterType<LayoutOptionsService>().As<ILayoutOptionsService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<VersionService>().As<IVersionService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
 
             containerBuilder.RegisterType<PagesService>().As<IPagesService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
@@ -126,6 +129,8 @@ namespace BetterCms.Module.Api
             containerBuilder.RegisterType<PageExistsService>().As<IPageExistsService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<PagePropertiesService>().As<IPagePropertiesService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<PageContentsService>().As<IPageContentsService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
+            containerBuilder.RegisterType<PageContentService>().As<IPageContentService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
+            containerBuilder.RegisterType<PageContentOptionsService>().As<IPageContentOptionsService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
 
             containerBuilder.RegisterType<RedirectsService>().As<IRedirectsService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<RedirectService>().As<IRedirectService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);            
@@ -138,6 +143,7 @@ namespace BetterCms.Module.Api
             containerBuilder.RegisterType<WidgetsService>().As<IWidgetsService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<HtmlContentWidgetService>().As<IHtmlContentWidgetService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<ServerControlWidgetService>().As<IServerControlWidgetService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
+            containerBuilder.RegisterType<ServerControlWidgetOptionsService>().As<IServerControlWidgetOptionsService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<SitemapTreeService>().As<ISitemapTreeService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<NodesService>().As<INodesService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<NodeService>().As<INodeService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);

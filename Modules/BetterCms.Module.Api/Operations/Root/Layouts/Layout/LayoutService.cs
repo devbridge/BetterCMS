@@ -2,6 +2,7 @@
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Module.Api.Operations.Root.Layouts.Layout.Options;
 using BetterCms.Module.Api.Operations.Root.Layouts.Layout.Regions;
 
 using ServiceStack.ServiceInterface;
@@ -10,13 +11,16 @@ namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout
 {
     public class LayoutService : Service, ILayoutService
     {
-        private readonly ILayoutRegionService layoutRegionService;
+        private readonly ILayoutRegionsService layoutRegionService;
+        
+        private readonly ILayoutOptionsService layoutOptionsService;
 
         private readonly IRepository repository;
 
-        public LayoutService(ILayoutRegionService layoutRegionService, IRepository repository)
+        public LayoutService(ILayoutRegionsService layoutRegionService, IRepository repository, ILayoutOptionsService layoutOptionsService)
         {
             this.layoutRegionService = layoutRegionService;
+            this.layoutOptionsService = layoutOptionsService;
             this.repository = repository;
         }
 
@@ -45,11 +49,19 @@ namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout
                        };
         }
 
-        ILayoutRegionService ILayoutService.Regions
+        ILayoutRegionsService ILayoutService.Regions
         {
             get
             {
                 return layoutRegionService;
+            }
+        }
+        
+        ILayoutOptionsService ILayoutService.Options
+        {
+            get
+            {
+                return layoutOptionsService;
             }
         }
     }

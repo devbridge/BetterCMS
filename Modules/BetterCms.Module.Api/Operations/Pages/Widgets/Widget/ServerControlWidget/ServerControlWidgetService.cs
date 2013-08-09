@@ -3,6 +3,7 @@
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidget.Options;
 
 using ServiceStack.ServiceInterface;
 
@@ -12,9 +13,12 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidg
     {
         private readonly IRepository repository;
 
-        public ServerControlWidgetService(IRepository repository)
+        private readonly IServerControlWidgetOptionsService optionsService;
+
+        public ServerControlWidgetService(IRepository repository, IServerControlWidgetOptionsService optionsService)
         {
             this.repository = repository;
+            this.optionsService = optionsService;
         }
 
         public GetServerControlWidgetResponse Get(GetServerControlWidgetRequest request)
@@ -42,6 +46,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidg
                 .FirstOne();
 
             return new GetServerControlWidgetResponse { Data = model };
+        }
+
+        IServerControlWidgetOptionsService IServerControlWidgetService.Options
+        {
+            get
+            {
+                return optionsService;
+            }
         }
     }
 }

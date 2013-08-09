@@ -175,6 +175,8 @@
     <Compile Include="Operations\Pages\Contents\Content\ContentService.cs" />
     <Compile Include="Operations\Pages\Contents\Content\History\ContentHistoryService.cs" />
     <Compile Include="Operations\Pages\Contents\Content\HtmlContent\HtmlContentService.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Contents\Content\Options\PageContentOptionsService.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Contents\Content\PageContentService.cs" />
     <Compile Include="Operations\Pages\Redirects\RedirectsService.cs" />
     <Compile Include="Operations\Pages\Redirects\Redirect\RedirectService.cs" />
     <Compile Include="Operations\Pages\Sitemap\Nodes\NodesService.cs" />
@@ -188,6 +190,7 @@
     <Compile Include="Operations\Pages\Pages\Page\PageService.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\PagePropertiesService.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\HtmlContentWidgetService.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\Options\ServerControlWidgetOptionsService.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\ServerControlWidgetService.cs" />
     <Compile Include="Operations\Pages\Widgets\WidgetsService.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\WidgetService.cs" />
@@ -196,6 +199,7 @@
     <Compile Include="Operations\Root\DefaultRootApiOperations.cs" />
     <Compile Include="Operations\Root\Layouts\LayoutsService.cs" />
     <Compile Include="Operations\Root\Layouts\Layout\LayoutService.cs" />
+    <Compile Include="Operations\Root\Layouts\Layout\Options\LayoutOptionsService.cs" />
     <Compile Include="Operations\Root\Layouts\Layout\Regions\LayoutRegionsService.cs" />
     <Compile Include="Operations\Root\Tags\TagsService.cs" />
     <Compile Include="Operations\Root\Version\VersionService.cs" />

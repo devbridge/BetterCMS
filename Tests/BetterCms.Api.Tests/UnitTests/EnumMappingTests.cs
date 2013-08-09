@@ -6,6 +6,9 @@ using ApiContentStatus = BetterCms.Module.Api.Operations.Pages.Contents.Content.
 using MediaManagerMediaContentType = BetterCms.Module.MediaManager.Models.MediaContentType;
 using ApiMediaContentType = BetterCms.Module.Api.Operations.MediaManager.MediaContentType;
 
+using CoreOptionType = BetterCms.Core.DataContracts.Enums.OptionType;
+using ApiOptionType = BetterCms.Module.Api.Operations.Root.OptionType;
+
 using NUnit.Framework;
 
 namespace BetterCms.Api.Tests.UnitTests
@@ -30,6 +33,19 @@ namespace BetterCms.Api.Tests.UnitTests
         {
             Assert.AreEqual((int)MediaManagerMediaContentType.File, (int)ApiMediaContentType.File);
             Assert.AreEqual((int)MediaManagerMediaContentType.Folder, (int)ApiMediaContentType.Folder);
+
+            Assert.AreEqual(Enum.GetValues(typeof(MediaManagerMediaContentType)).Length, 2, "Not all MediaManager.MediaContentType values are mapped.");
+            Assert.AreEqual(Enum.GetValues(typeof(ApiMediaContentType)).Length, 2, "Not all Api.MediaContentTypevalues are mapped.");
+        }
+        
+        [Test]
+        public void ShouldMapOptionTypeValues()
+        {
+            Assert.AreEqual((int)CoreOptionType.Text, (int)ApiOptionType.Text);
+            Assert.AreEqual((int)CoreOptionType.Float, (int)ApiOptionType.Float);
+            Assert.AreEqual((int)CoreOptionType.Integer, (int)ApiOptionType.Integer);
+            Assert.AreEqual((int)CoreOptionType.DateTime, (int)ApiOptionType.DateTime);
+            Assert.AreEqual((int)CoreOptionType.Boolean, (int)ApiOptionType.Boolean);
 
             Assert.AreEqual(Enum.GetValues(typeof(MediaManagerMediaContentType)).Length, 2, "Not all MediaManager.MediaContentType values are mapped.");
             Assert.AreEqual(Enum.GetValues(typeof(ApiMediaContentType)).Length, 2, "Not all Api.MediaContentTypevalues are mapped.");
