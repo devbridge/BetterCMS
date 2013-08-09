@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Mvc.Commands;
+
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
+using BetterCms.Module.Root.Services;
 
 using CategoryEntity = BetterCms.Module.Root.Models.Category;
 
@@ -46,6 +48,11 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         private readonly IUrlService urlService;
 
         /// <summary>
+        /// The options service
+        /// </summary>
+        private readonly IOptionService optionService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SavePagePropertiesCommand" /> class.
         /// </summary>
         /// <param name="pageService">The page service.</param>
@@ -53,14 +60,16 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         /// <param name="tagService">The tag service.</param>
         /// <param name="sitemapService">The sitemap service.</param>
         /// <param name="urlService">The URL service.</param>
+        /// <param name="optionService">The option service.</param>
         public SavePagePropertiesCommand(IPageService pageService, IRedirectService redirectService, ITagService tagService,
-            ISitemapService sitemapService, IUrlService urlService)
+            ISitemapService sitemapService, IUrlService urlService, IOptionService optionService)
         {
             this.pageService = pageService;
             this.redirectService = redirectService;
             this.tagService = tagService;
             this.sitemapService = sitemapService;
             this.urlService = urlService;
+            this.optionService = optionService;
         }
 
         /// <summary>
@@ -126,6 +135,8 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             page.Image = request.Image != null && request.Image.ImageId.HasValue ? Repository.AsProxy<MediaImage>(request.Image.ImageId.Value) : null;
             page.SecondaryImage = request.SecondaryImage != null && request.SecondaryImage.ImageId.HasValue ? Repository.AsProxy<MediaImage>(request.SecondaryImage.ImageId.Value) : null;
             page.FeaturedImage = request.FeaturedImage != null && request.FeaturedImage.ImageId.HasValue ? Repository.AsProxy<MediaImage>(request.FeaturedImage.ImageId.Value) : null;
+
+            optionService.SaveOptionValues(request.OptionValues, page.Options, () => new Root.Models.PageOption { Page = page });
 
             Repository.Save(page);
 

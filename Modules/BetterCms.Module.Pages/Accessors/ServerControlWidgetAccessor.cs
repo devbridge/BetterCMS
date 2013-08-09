@@ -19,7 +19,7 @@ namespace BetterCms.Module.Pages.Accessors
 
         public const string ContentWrapperType = "server-widget";
 
-        public ServerControlWidgetAccessor(ServerControlWidget content, IList<IOption> options)
+        public ServerControlWidgetAccessor(ServerControlWidget content, IList<IOptionValue> options)
             : base(content, options)
         {
         }
@@ -46,26 +46,14 @@ namespace BetterCms.Module.Pages.Accessors
                 {
                     var viewData = new ViewDataDictionary();
 
-                    if (Options != null && Options.Count > 0)
-                    {
-                        foreach (var option in Options)
-                        {
-                            if (option.Value != null)
-                            {
-                                viewData[option.Key] = option.Value;
-                            }                             
-                        }
-                    }
-
-                    viewData["bcmsPageId"] = html.ViewContext.ViewData["pageId"];
-
                     var newViewContext = new ViewContext(html.ViewContext, view, viewData, html.ViewContext.TempData, sw);
                     try
                     {
-                        newViewContext.ViewData.Model = new RenderWidgetViewModel()
+                        newViewContext.ViewData.Model = new RenderWidgetViewModel
                             {
                                 Page = (IPage)html.ViewData.Model,
-                                Widget = Content
+                                Widget = Content,
+                                Options = Options
                             };
                         view.Render(newViewContext, sw);
                     }

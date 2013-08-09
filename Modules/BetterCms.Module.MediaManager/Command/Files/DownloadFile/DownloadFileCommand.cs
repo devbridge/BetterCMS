@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Web;
 
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Core.Security;
 using BetterCms.Core.Services.Storage;
 using BetterCms.Module.MediaManager.Command.MediaManager.DownloadMedia;
 using BetterCms.Module.MediaManager.Models;
@@ -21,13 +23,21 @@ namespace BetterCms.Module.MediaManager.Command.Files.DownloadFile
         /// </value>
         private readonly IStorageService storageService;
 
+        private readonly ICmsConfiguration cmsConfiguration;
+
+        private readonly IAccessControlService accessControlService;
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="DownloadFileCommand"/> class.
+        /// Initializes a new instance of the <see cref="DownloadFileCommand" /> class.
         /// </summary>
         /// <param name="storageService">The storage service.</param>
-        public DownloadFileCommand(IStorageService storageService)
+        /// <param name="cmsConfiguration">The CMS configuration.</param>
+        /// <param name="accessControlService">The access control service.</param>
+        public DownloadFileCommand(IStorageService storageService, ICmsConfiguration cmsConfiguration, IAccessControlService accessControlService)
         {
             this.storageService = storageService;
+            this.cmsConfiguration = cmsConfiguration;
+            this.accessControlService = accessControlService;
         }
 
         /// <summary>
@@ -37,6 +47,17 @@ namespace BetterCms.Module.MediaManager.Command.Files.DownloadFile
         /// <returns>Response type of <see cref="DownloadFileCommandResponse"/></returns>
         public DownloadFileCommandResponse Execute(Guid id)
         {
+            if (cmsConfiguration.AccessControlEnabled)
+            {
+                var principal = SecurityService.GetCurrentPrincipal();
+                var accessLevel = accessControlService.GetAccessLevel(id, principal);
+
+                if (accessLevel == AccessLevel.Deny)
+                {
+                    throw new HttpException(403, "Access Forbidden");
+                }
+            }
+
             var file = Repository.FirstOrDefault<MediaFile>(f => f.Id == id && !f.IsDeleted);
             if (file != null)
             {
@@ -46,6 +67,7 @@ namespace BetterCms.Module.MediaManager.Command.Files.DownloadFile
                     return new DownloadFileCommandResponse
                         {
                             FileStream = response.ResponseStream,
+                            // TODO: Change so that content type is determined from file extension or stored in the database
                             ContentMimeType = System.Net.Mime.MediaTypeNames.Application.Octet, // Specify the generic octet-stream MIME type.
                             FileDownloadName = string.Format("{0}{1}", System.IO.Path.GetFileNameWithoutExtension(file.Title), file.OriginalFileExtension)
                         };

@@ -1,8 +1,9 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepicker', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages', 'bcms.preview', 'bcms.grid', 'bcms.inlineEdit', 'bcms.slides.jquery'],
-    function ($, bcms, modal, datepicker, dynamicContent, siteSettings, messages, preview, grid, editor) {
+bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepicker', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages',
+        'bcms.preview', 'bcms.grid', 'bcms.inlineEdit', 'bcms.slides.jquery', 'bcms.options', 'bcms.ko.extenders'],
+    function ($, bcms, modal, datepicker, dynamicContent, siteSettings, messages, preview, grid, editor, slides, options, ko) {
         'use strict';
 
         var template = {},
@@ -47,13 +48,14 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
                 templateTableFirstRow: 'table.bcms-tables > tbody > tr:first',
                 templateInsertButtons: '.bcms-template-insert-button',
 
-                addNewRegionButton: '#bcms-template-options-add-region',
+                addNewRegionButton: '#bcms-add-region-button',
                 templatesListForm: '#bcms-templates-form',
+                templateEditForm: '#bcms-template-form',
 
-                addOptionLink: '#bcms-add-option-button',
-                optionsTable: '#bcms-options-grid'
-            },
-            classes = {
+                regionsTable: '#bcms-regions-grid',
+                regionsTab: '#bcms-tab-2',
+                
+                optionsTab: '#bcms-tab-3'
             };
 
         /**
@@ -62,20 +64,25 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
         template.links = links;
         template.globalization = globalization;
 
-
         /**
         * Opens template edit dialog.
         */
         template.openEditTemplateDialog = function (templateId, onSaveCallback) {
+            var optionsViewModel;
+
             modal.open({
                 title: globalization.editTemplateDialogTitle,
                 onLoad: function (childDialog) {
                     dynamicContent.bindDialog(childDialog, $.format(links.loadEditTemplateDialogUrl, templateId), {
-                        contentAvailable: initializeEditTemplateForm,
+                        contentAvailable: function (dialog, content) {
+                            optionsViewModel = initializeEditTemplateForm(dialog, content);
+                        },
 
                         beforePost: function (form) {
                             editor.resetAutoGenerateNameId();
-                            editor.setInputNames(form);
+                            editor.setInputNames(form.find(selectors.regionsTab));
+
+                            return optionsViewModel.isValid(true);
                         },
 
                         postSuccess: onSaveCallback
@@ -88,15 +95,21 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
         * Opens template create form from site settings template list
         */
         template.openRegisterTemplateDialog = function (onSaveCallback) {
+            var optionsViewModel;
+
             modal.open({
                 title: globalization.createTemplateDialogTitle,
                 onLoad: function (childDialog) {
                     dynamicContent.bindDialog(childDialog, links.loadRegisterTemplateDialogUrl, {
-                        contentAvailable: initializeEditTemplateForm,
+                        contentAvailable: function(dialog, content) {
+                            optionsViewModel = initializeEditTemplateForm(dialog, content);
+                        },
 
                         beforePost: function (form) {
                             editor.resetAutoGenerateNameId();
-                            editor.setInputNames(form);
+                            editor.setInputNames(form.find(selectors.regionsTab));
+                            
+                            return optionsViewModel.isValid(true);
                         },
 
                         postSuccess: onSaveCallback
@@ -108,20 +121,27 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
         /**
         * Initializes template form
         */
-        function initializeEditTemplateForm(dialog) {
-            editor.initialize(dialog.container, {
-                deleteRowMessageExtractor: function () {
+        function initializeEditTemplateForm(dialog, content) {
+            var regionsContainer = dialog.container.find(selectors.regionsTab),
+                optionsContainer = dialog.container.find(selectors.optionsTab),
+                form = dialog.container.find(selectors.templateEditForm),
+                templateOptions = content && content.Data ? content.Data.Options : null,
+                optionListViewModel = options.createOptionsViewModel(optionsContainer, templateOptions);
+
+            // Initialize regions tab
+            editor.initialize(regionsContainer, {
+                deleteRowMessageExtractor: function() {
                     return globalization.deleteRegionConfirmMessage;
-                }
+                },
+                form: form
+            });
+            
+            regionsContainer.find(selectors.addNewRegionButton).on('click', function () {
+                editor.addNewRow(regionsContainer, $(selectors.regionsTable));
             });
 
-            dialog.container.find(selectors.addOptionLink).on('click', function () {
-                editor.addNewRow(dialog.container, $(selectors.optionsTable));
-            });
-
-            dialog.container.find(selectors.addNewRegionButton).on('click', function () {
-                editor.addNewRow(dialog.container, $(selectors.optionsTable));
-            });
+            // Init options tab
+            ko.applyBindings(optionListViewModel, optionsContainer.get(0));
 
             dialog.container.find(selectors.templatePreviewImage).error(function () {
                 var image = dialog.container.find(selectors.templatePreviewImage);
@@ -150,6 +170,8 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
             if (previewImage.attr('src')) {
                 previewImage.show();
             }
+
+            return optionListViewModel;
         };
 
         /*

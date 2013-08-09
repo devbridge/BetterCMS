@@ -11,7 +11,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             htmlEditor: 'bcms-contenthtml',
             firstForm: 'form:first',
             siteSettingsBlogsListForm: '#bcms-blogs-form',
-            siteSettingsBlogsSearchButton: '#bcms-blogs-search-btn',
+            siteSettingsBlogsSearchButton: '#bcms-blogs-search-kobtn',
             siteSettingsBlogsSearchInput: '.bcms-search-query',
             siteSettingsBlogCreateButton: '#bcms-create-blog-button',
             siteSettingsBlogDeleteButton: '.bcms-grid-item-delete-button',

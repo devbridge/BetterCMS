@@ -14,7 +14,7 @@ namespace BetterCms.Module.Pages.Accessors
     {
         public const string ContentWrapperType = "html-widget";
 
-        public HtmlContentWidgetAccessor(HtmlContentWidget content, IList<IOption> options)
+        public HtmlContentWidgetAccessor(HtmlContentWidget content, IList<IOptionValue> options)
             : base(content, options)
         {
         }

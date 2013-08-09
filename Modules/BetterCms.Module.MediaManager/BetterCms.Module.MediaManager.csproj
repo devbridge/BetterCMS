@@ -237,6 +237,7 @@
     <Compile Include="ViewModels\MediaManager\MediaManagerViewModel.cs" />
     <Compile Include="ViewModels\MediaManager\UploadViewModel.cs" />
     <Compile Include="ViewModels\Upload\MultiFileUploadViewModel.cs" />
+    <Compile Include="ViewModels\UserAccessViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Content\Resources\MediaGlobalization.resx">
@@ -260,6 +261,10 @@
     <ProjectReference Include="..\..\BetterCMS.Core\BetterCms.Core.csproj">
       <Project>{694ca5ca-a0e2-4578-a249-648498b058d7}</Project>
       <Name>BetterCms.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\BetterCms.Module.AccessControl\BetterCms.Module.AccessControl.csproj">
+      <Project>{CBAFF601-0A79-4150-9D38-A44C907F98C5}</Project>
+      <Name>BetterCms.Module.AccessControl</Name>
     </ProjectReference>
     <ProjectReference Include="..\BetterCms.Module.Root\BetterCms.Module.Root.csproj">
       <Project>{66e7e4df-eeea-4b1e-8663-a1b430eb7375}</Project>
@@ -297,9 +302,6 @@
     <EmbeddedResource Include="Views\Images\ImageInsert.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Upload\MultiFileUpload.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -331,6 +333,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Files\FileEditor.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Upload\MultiFileUpload.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

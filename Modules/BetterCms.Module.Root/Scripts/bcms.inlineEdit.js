@@ -4,7 +4,16 @@
 bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcms.grid'], function ($, bcms, messages, modal, grid) {
     'use strict';
 
-    var editor = {},
+    var editor = {
+        // Prevents to add two or more new rows
+        rowAdded: false,
+
+        // Editor options
+        options: {},
+        
+        // Auto generated name sequence id
+        autoGenerateNameId: 0
+    },
         selectors = {},
         defaultSelectors = {
             row: 'tr',
@@ -33,34 +42,21 @@ bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bc
             firstInvalidField: '.bcms-input-validation-error:first'
         },
         links = {
+            
         },
         globalization = {
             messageSaving: null,
             messageDeleting: null,
             confirmDeleteMessage: null
-        },
-        options = {},
-
-        /**
-        * Form container
-        */
-        formContainer = null,
-        
-        /**
-        * Prevents to add two or more new rows
-        */
-        rowAdded = false,
-
-        /**
-        * Auto generated name sequence id
-        */
-        autoGenerateNameId = 0;
+        };
 
     /**
     * Assign objects to module.
     */
     editor.links = links;
     editor.globalization = globalization;
+    editor.selectors = selectors;
+    editor.defaultSelectors = defaultSelectors;
     
     /**
     * Checks if row is in edit mode.
@@ -68,8 +64,8 @@ bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bc
     editor.isRowInEditMode = function(row) {
         var activeElement = $(document.activeElement);
 
-        return row.is(':visible')
-            && row.find(selectors.firstEditableInput).is(':visible')
+        // Checking if display != 'none', because when tab changes, ':visible' always returns false
+        return row.css('display') != 'none'
             && !row.data('saving')
             && activeElement.parents(selectors.firstRow).get(0) != row.get(0);
     };
@@ -78,28 +74,29 @@ bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bc
     * Initializes inline editor
     */
     editor.initialize = function (container, opts, selectorOpts) {
-        options = $.extend({
+        this.options = $.extend({
             saveUrl: null,
             deleteUrl: null,
             newRowAdder: null,
             onSaveSuccess: function () { },
             rowDataExtractor: function () { return {}; },
             deleteRowMessageExtractor: function () { return ""; },
-            switchRowToEdit: editor.switchRowToEdit,
-            switchRowToView: editor.switchRowToView,
-            showHideEmptyRow: grid.showHideEmptyRow
+            switchRowToEdit: this.switchRowToEdit,
+            switchRowToView: this.switchRowToView,
+            showHideEmptyRow: grid.showHideEmptyRow,
+            formContainer: container,
+            form: container.find(selectors.firstForm)
         }, opts);
 
-        editor.initializeSelectors(selectorOpts);
-
-        formContainer = container;
-        rowAdded = false;
-
-        editor.initRowEvents(container);
-
-        editor.resetAutoGenerateNameId();
+        this.initializeSelectors(selectorOpts);
         
-        editor.setInputNames(container);
+        this.rowAdded = false;
+
+        this.initRowEvents(container);
+
+        this.resetAutoGenerateNameId();
+        
+        this.setInputNames(container);
     };
 
     /**
@@ -133,13 +130,15 @@ bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bc
     /**
     * Initializes rows events
     */
-    editor.initRowEvents = function(initContainer) {
+    editor.initRowEvents = function (initContainer) {
+        var self = this;
+
         initContainer.find(selectors.rowCells).on('click', function (event) {
             bcms.stopEventPropagation(event);
             
             var row = $(this).parents(selectors.firstRow);
             setRowSelectedStatus(row, true);
-            editor.editRow(row);
+            self.editRow(row);
         });
 
         initContainer.find(selectors.saveRowLink).on('click', function (event) {
@@ -148,7 +147,7 @@ bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bc
             var row = $(this).parents(selectors.firstRow);
             setRowSelectedStatus(row, true);
             row.data('savePressed', true);
-            editor.saveRow(row);
+            self.saveRow(row);
         });
 
         initContainer.find(selectors.cancelLink).on('click', function (event) {
@@ -156,7 +155,7 @@ bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bc
             
             var row = $(this).parents(selectors.firstRow);
             setRowSelectedStatus(row, true);
-            editor.cancelRowEdit(row);
+            self.cancelRowEdit(row);
         });
         
         initContainer.find(selectors.deleteRowLink).on('click', function (event) {
@@ -164,18 +163,18 @@ bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bc
             
             var row = $(this).parents(selectors.firstRow);
             setRowSelectedStatus(row, true);
-            editor.deleteRow(row);
+            self.deleteRow(row);
         });
 
         bcms.preventInputFromSubmittingForm(initContainer.find(selectors.fieldInputs), {
-            preventedEnter: function (self) {
-                var row = self.parents(selectors.firstRow);
+            preventedEnter: function (which) {
+                var row = which.parents(selectors.firstRow);
 
-                editor.saveRow(row);
+                self.saveRow(row);
             },
-            preventedEsc: function (self) {
-                var row = self.parents(selectors.firstRow);
-                editor.cancelRowEdit(row);
+            preventedEsc: function (which) {
+                var row = which.parents(selectors.firstRow);
+                self.cancelRowEdit(row);
             }
         });
     };
@@ -236,8 +235,8 @@ bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bc
         if (row.data('new')) {
             row.find(selectors.editableInput).blur();
             row.remove();
-            options.showHideEmptyRow(formContainer);
-            rowAdded = false;
+            this.options.showHideEmptyRow(this.options.formContainer);
+            this.rowAdded = false;
         } else {
             row.find(selectors.fieldInputs).each(function () {
                 var input = $(this),
@@ -245,10 +244,10 @@ bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bc
                     hidden = cell.find(selectors.fieldHiddenValue);
 
                 input.val(hidden.val());
-                input.valid();
+                //input.valid();
             });
             
-            options.switchRowToView(row);
+            this.options.switchRowToView(row);
         }
     };
 
@@ -256,8 +255,10 @@ bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bc
     * Bind input fields to blur event
     */
     editor.bindBlurEvents = function (row) {
+        var self = this;
+
         row.find(selectors.fieldInputs).bind('blur', function (event) {
-            editor.onRowInputBlur(event, $(this), row);
+            self.onRowInputBlur(event, row);
         });
     };
 
@@ -271,23 +272,25 @@ bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bc
     /**
     * Function is called when focus lost, when inline editing mode is on
     */
-    editor.onRowInputBlur = function (event, self, row) {
+    editor.onRowInputBlur = function (event, row) {
+        var self = this;
         row.data('blurred', true);
+        
         setTimeout(function () {
             var unbind = false;
 
-            if (editor.isRowInEditMode(row)) {
+            if (self.isRowInEditMode(row)) {
                
-                var valueChanged = editor.hasAnyValueChanged(row);
+                var valueChanged = self.hasAnyValueChanged(row);
                 
                 if (valueChanged) {
-                    if (editor.isRowValid(row) && row.data('blurred')) {
-                        editor.saveRow(row);
+                    if (self.isRowValid(row) && row.data('blurred')) {
+                        self.saveRow(row);
                         unbind = true;
                     }
                 } else {
                     if (!row.data('new') || !row.data('isSelected')) {
-                        editor.cancelRowEdit(row);
+                        self.cancelRowEdit(row);
                         unbind = true;
                     }
                 }
@@ -297,7 +300,7 @@ bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bc
 
             if (unbind) {
                 // Unbind, and later bind  back again
-                editor.unbindBlurEvents(row);
+                self.unbindBlurEvents(row);
             }
             
             row.data('blurred', false);
@@ -308,35 +311,34 @@ bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bc
     * Add new row to table and enter inline edit mode
     */
     editor.addNewRow = function (container, table) {
-        if (!rowAdded) {
+        if (!this.rowAdded) {
             var template = container.find(selectors.template),
-                newRow = $(template.html()).find(selectors.templateFirstRow),
-                form = $(container).find(selectors.firstForm);
+                newRow = $(template.html()).find(selectors.templateFirstRow);
             
             if (!table) {
                 table = container.find(selectors.firstTable);
             }
 
             newRow.data('new', true);
-            editor.setRowInputNames(newRow);
+            this.setRowInputNames(newRow);
 
-            if ($.isFunction(options.newRowAdder)) {
-                options.newRowAdder(newRow, table);
+            if ($.isFunction(this.options.newRowAdder)) {
+                this.options.newRowAdder(newRow, table);
             } else {
                 newRow.prependTo(table.find(selectors.prependNewRowTo));
             }
 
-            options.switchRowToEdit(newRow);
+            this.options.switchRowToEdit(newRow);
 
-            bcms.updateFormValidator(form);
+            bcms.updateFormValidator(this.options.form);
 
-            editor.initRowEvents(newRow, container);
+            this.initRowEvents(newRow, container);
 
-            editor.bindBlurEvents(newRow);
+            this.bindBlurEvents(newRow);
 
-            rowAdded = true;
+            this.rowAdded = true;
 
-            options.showHideEmptyRow(container);
+            this.options.showHideEmptyRow(container);
         }
     };
 
@@ -358,19 +360,21 @@ bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bc
     * Saves the row
     */
     editor.saveRow = function (row) {
-        if (editor.isRowValid(row)) {
+        var self = this;
+
+        if (self.isRowValid(row)) {
 
             //
             // If saveUrl is set, saving by AJAX. Else just setting visible values from editable fields.
             //
-            if (options.saveUrl) {
-                var rowData = options.rowDataExtractor(row),
+            if (self.options.saveUrl) {
+                var rowData = self.options.rowDataExtractor(row),
                     saveLink = row.find(selectors.saveRowLink),
                     cancelLink = row.find(selectors.cancelLink),
-                    url = options.saveUrl,
+                    url = self.options.saveUrl,
                     onComplete = function(json) {
                         messages.refreshBox(row, json);
-                        editor.hideRowLoading(row);
+                        self.hideRowLoading(row);
                         row.data('saving', false);
                         row.data('blurred', false);
                         if (json.Success) {
@@ -384,21 +388,21 @@ bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bc
                                     row.find(selectors.deleteRowLink).data('id', json.Data.Id);
                                     row.find(selectors.editRowLink).data('id', json.Data.Id);   
                                 }
-                                rowAdded = false;
+                                self.rowAdded = false;
                                 row.data('new', false);
                             }
-                            if ($.isFunction(options.onSaveSuccess)) {
-                                options.onSaveSuccess(row, json);
+                            if ($.isFunction(self.options.onSaveSuccess)) {
+                                self.options.onSaveSuccess(row, json);
                             }
-                            options.switchRowToView(row);
+                            self.options.switchRowToView(row);
                         } else {
                             // Bind back to item blur event
-                            editor.bindBlurEvents(row);
+                            self.bindBlurEvents(row);
                         }
                     };
 
                 row.data('saving', true);
-                editor.showRowLoading(row, globalization.messageSaving);
+                self.showRowLoading(row, globalization.messageSaving);
 
                 $.ajax({
                     type: 'POST',
@@ -413,7 +417,7 @@ bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bc
                         onComplete(bcms.parseFailedResponse(response));
                     });
             } else {
-                rowAdded = false;
+                self.rowAdded = false;
                 row.data('new', false);
 
                 row.find(selectors.fieldInputs).each(function () {
@@ -428,7 +432,7 @@ bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bc
                     return true;
                 });
 
-                options.switchRowToView(row);
+                self.options.switchRowToView(row);
             }
         }
 
@@ -439,20 +443,21 @@ bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bc
     * Enters row inline edit mode.
     */
     editor.editRow = function (row) {
-        editor.bindBlurEvents(row);
+        this.bindBlurEvents(row);
 
-        options.switchRowToEdit(row);
+        this.options.switchRowToEdit(row);
     };
 
     /**
     * Deletes the row
     */
     editor.deleteRow = function (row) {
-        var rowData = options.rowDataExtractor(row),
-            message;
+        var rowData = this.options.rowDataExtractor(row),
+            message,
+            self = this;
 
-        if ($.isFunction(options.deleteRowMessageExtractor)) {
-            message = options.deleteRowMessageExtractor(rowData);
+        if ($.isFunction(this.options.deleteRowMessageExtractor)) {
+            message = this.options.deleteRowMessageExtractor(rowData);
         } else {
             message = globalization.confirmDeleteMessage;
         }
@@ -460,22 +465,22 @@ bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bc
         modal.confirm({
             content: message,
             onAccept: function () {
-                if (options.deleteUrl) {
-                    var url = options.deleteUrl,
+                if (self.options.deleteUrl) {
+                    var url = self.options.deleteUrl,
                         deleteLink = row.find(selectors.deleteRowLink),
                         onComplete = function(json) {
                             messages.refreshBox(row, json);
-                            editor.hideRowLoading(row);
+                            self.hideRowLoading(row);
                             if (json.Success) {
                                 row.remove();
-                                options.showHideEmptyRow(formContainer);
+                                self.options.showHideEmptyRow(self.options.formContainer);
                             } else {
                                 deleteLink.show();
                             }
                         };
 
                     deleteLink.hide();
-                    editor.showRowLoading(row, globalization.messageDeleting);
+                    self.showRowLoading(row, globalization.messageDeleting);
                     $.ajax({
                         type: 'POST',
                         cache: false,
@@ -490,7 +495,7 @@ bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bc
                         });
                 } else {
                     row.remove();
-                    options.showHideEmptyRow(formContainer);
+                    self.options.showHideEmptyRow(self.options.formContainer);
                 }
             }
         });
@@ -534,20 +539,22 @@ bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bc
     * Resets auto generated name sequence number
     */
     editor.resetAutoGenerateNameId = function () {
-        autoGenerateNameId = 0;
+        this.autoGenerateNameId = 0;
     };
 
     /**
     * Add names for each given container row inputs, if name patterns are set
     */
     editor.setInputNames = function (container) {
+        var self = this;
+
         container.find(selectors.row).each(function () {
             var row = $(this);
 
-            editor.setRowInputNames(row);
+            self.setRowInputNames(row);
         });
         
-        bcms.updateFormValidator($(container).find(selectors.firstForm));
+        bcms.updateFormValidator(self.options.form);
     };
 
     /**
@@ -555,14 +562,15 @@ bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bc
     */
     editor.setRowInputNames = function (row) {
         var counterSet = false,
-            index = null;
+            index = null,
+            self = this;
         row.find(selectors.allInputs).each(function () {
             var input = $(this),
                 pattern = input.data('namePattern');
             if (pattern) {
                 if (!counterSet) {
                     counterSet = true;
-                    index = autoGenerateNameId++;
+                    index = self.autoGenerateNameId++;
                 }
                 var name = $.format(pattern, index);
                 input.attr('name', name);

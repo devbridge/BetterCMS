@@ -1,4 +1,5 @@
-﻿@using BetterCms.Module.Pages.Content.Resources
+﻿@using BetterCms.Module.Pages
+@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.Templates
 @using BetterCms.Module.Root.Mvc.Helpers
@@ -11,7 +12,8 @@
 }
 <div class="bcms-tab-header">
     <a class="bcms-tab bcms-tab-active" data-name="#bcms-tab-1">@PagesGlobalization.EditTemplate_BasicPropertiesTab_Title</a>
-    <a class="bcms-tab" data-name="#bcms-tab-2">@PagesGlobalization.EditTemplate_OptionsTab_Title</a>
+    <a class="bcms-tab" data-name="#bcms-tab-2">@PagesGlobalization.EditTemplate_RegionsTab_Title</a>
+    <a class="bcms-tab" data-name="#bcms-tab-3">@PagesGlobalization.EditTemplate_OptionsTab_Title</a>
 </div>
 
 <div class="bcms-scroll-window">
@@ -61,6 +63,10 @@
               
         <div id="bcms-tab-2" class="bcms-tab-single">
             @Html.Partial("Partial/EditTemplateRegions")
+        </div>
+        
+        <div id="bcms-tab-3" class="bcms-tab-single">
+            @Html.Partial(PagesConstants.OptionsGridTemplate)
         </div>
             
         @Html.HiddenFor(model => model.Id)

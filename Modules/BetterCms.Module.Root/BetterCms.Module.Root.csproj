@@ -155,9 +155,16 @@
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Content.cs" />
     <Compile Include="Models\ContentOption.cs" />
-    <Compile Include="Models\ContentBase.cs" />
     <Compile Include="Models\ComboWireJson.cs" />
+    <Compile Include="Models\Maps\PageOptionMap.cs" />
+    <Compile Include="Models\Migrations\Migration201308060930.cs" />
+    <Compile Include="Models\Migrations\Migration201308051530.cs" />
+    <Compile Include="Models\PageOption.cs" />
+    <Compile Include="Models\LayoutOption.cs" />
+    <Compile Include="Models\Maps\LayoutOptionMap.cs" />
     <Compile Include="Models\Maps\ModuleContentVersionMap.cs" />
+    <Compile Include="Models\Migrations\Migration201308021300.cs" />
+    <Compile Include="Models\Migrations\Migration201308021130.cs" />
     <Compile Include="Models\Migrations\Migration201307191431.cs" />
     <Compile Include="Models\Migrations\Migration201306101421.cs" />
     <Compile Include="Models\ModuleContentVersion.cs" />
@@ -187,6 +194,7 @@
     <Compile Include="Mvc\CommandBase.cs" />
     <Compile Include="Mvc\CommandHandler.cs" />
     <Compile Include="Mvc\Converters.cs" />
+    <Compile Include="Mvc\Grids\EditableGridDropDownColumn.cs" />
     <Compile Include="Mvc\Grids\Extensions\PagingExtensions.cs" />
     <Compile Include="Mvc\Grids\Extensions\QueryableExtensions.cs" />
     <Compile Include="Mvc\Grids\Extensions\QueryOverExtensions.cs" />
@@ -202,6 +210,7 @@
     <Compile Include="Mvc\Helpers\DynamicDictionary.cs" />
     <Compile Include="Mvc\Helpers\LayoutHelper.cs" />
     <Compile Include="Mvc\Helpers\LayoutRegionWrapper.cs" />
+    <Compile Include="Models\Extensions\OptionTypeExtensions.cs" />
     <Compile Include="Mvc\Helpers\PreviewHelper.cs" />
     <Compile Include="Mvc\Helpers\RegionContentWrapper.cs" />
     <Compile Include="Mvc\Helpers\StringHelper.cs" />
@@ -215,6 +224,7 @@
     <Compile Include="Registration\AuthenticationJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\ContentJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\BcmsJsModuleIncludeDescriptor.cs" />
+    <Compile Include="Registration\OptionsJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\TagsJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\SecurityJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\KnockoutExtendersJsModuleIncludeDescriptor.cs" />
@@ -244,9 +254,11 @@
     <Compile Include="Registration\TabsJsModuleIncludeDescriptor.cs" />
     <Compile Include="RootModuleConstants.cs" />
     <Compile Include="Services\DefaultContentService.cs" />
+    <Compile Include="Services\DefaultOptionService.cs" />
     <Compile Include="Services\DefaultRenderingService.cs" />
     <Compile Include="Services\DefaultSecurityService.cs" />
     <Compile Include="Services\IContentService.cs" />
+    <Compile Include="Services\IOptionService.cs" />
     <Compile Include="Services\IRenderingService.cs" />
     <Compile Include="ViewModels\Authentication\InfoViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryItemViewModel.cs" />
@@ -256,6 +268,10 @@
     <Compile Include="ViewModels\Cms\RedirectViewModel.cs" />
     <Compile Include="ViewModels\Cms\RenderPageViewModel.cs" />
     <Compile Include="ViewModels\Cms\RenderWidgetViewModel.cs" />
+    <Compile Include="ViewModels\Option\OptionValueEditViewModel.cs" />
+    <Compile Include="ViewModels\Option\OptionValueViewModel.cs" />
+    <Compile Include="ViewModels\Option\OptionViewModel.cs" />
+    <Compile Include="ViewModels\Option\OptionViewModelBase.cs" />
     <Compile Include="ViewModels\PageProjectionsViewModel.cs" />
     <Compile Include="ViewModels\Rendering\RenderProcessorJsViewModel.cs" />
     <Compile Include="ViewModels\Rendering\JavaScriptModuleInclude.cs" />
@@ -561,10 +577,11 @@
     <EmbeddedResource Include="Scripts\bcms.grid.js" />
     <EmbeddedResource Include="Scripts\bcms.jquery.autocomplete.js" />
     <EmbeddedResource Include="Scripts\bcms.ko.extenders.js" />
-    <EmbeddedResource Include="Scripts\bcms.ko.grid.js" />
     <EmbeddedResource Include="Scripts\bcms.tags.js" />
     <EmbeddedResource Include="Content\Styles\images\bcms-arrows-sprite.png" />
     <EmbeddedResource Include="Models\Migrations\Migration201307191431.sqlserver.sql" />
+    <EmbeddedResource Include="Scripts\bcms.ko.grid.js" />
+    <EmbeddedResource Include="Scripts\bcms.options.js" />
     <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\es.js" />
     <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\ja.js" />
     <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\km.js" />
@@ -682,18 +699,6 @@
     <EmbeddedResource Include="Views\Shared\BaseLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\EditableGrid\Grid.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\Cell.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\Header.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\TopBlock.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Views\Shared\Layouts\OneColumnLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -755,6 +760,21 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Category\Categories.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\EditableGrid\Grid.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\Cell.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\DropDownCell.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\Header.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\TopBlock.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

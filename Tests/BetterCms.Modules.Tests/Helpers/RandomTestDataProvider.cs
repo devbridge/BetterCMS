@@ -3,7 +3,8 @@ using System.Text;
 
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;
-
+using BetterCms.Core.Security;
+using BetterCms.Module.AccessControl.Models;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Models;
@@ -358,6 +359,20 @@ namespace BetterCms.Tests.Helpers
             entity.DefaultValue = ProvideRandomString(100);
 
             return entity;
+        }
+        
+        public LayoutOption CreateNewLayoutOption(Layout layout = null)
+        {
+            var entity = new LayoutOption();
+
+            PopulateBaseFields(entity);
+
+            entity.Key = ProvideRandomString(MaxLength.Name);
+            entity.Layout = layout ?? CreateNewLayout();
+            entity.Type = ProvideRandomEnumValue<OptionType>();
+            entity.DefaultValue = ProvideRandomString(100);
+
+            return entity;
         }  
 
         public PageContentOption CreateNewPageContentOption(PageContent pageContent = null)
@@ -367,6 +382,20 @@ namespace BetterCms.Tests.Helpers
             PopulateBaseFields(entity);
 
             entity.PageContent = pageContent ?? CreateNewPageContent();
+            entity.Key = ProvideRandomString(MaxLength.Name);
+            entity.Value = ProvideRandomString(100);
+            entity.Type = ProvideRandomEnumValue<OptionType>();
+            
+            return entity;
+        }
+
+        public PageOption CreateNewPageOption(Page page = null)
+        {
+            var entity = new PageOption();
+
+            PopulateBaseFields(entity);
+
+            entity.Page = page ?? CreateNewPage();
             entity.Key = ProvideRandomString(MaxLength.Name);
             entity.Value = ProvideRandomString(100);
             entity.Type = ProvideRandomEnumValue<OptionType>();
@@ -653,6 +682,19 @@ namespace BetterCms.Tests.Helpers
             entity.Salt = ProvideRandomString(MaxLength.Password);
             entity.Image = CreateNewMediaImage();
 
+            return entity;
+        }
+
+        public UserAccess CreateNewUserAccess()
+        {
+            var entity = new UserAccess();
+
+            PopulateBaseFields(entity);
+
+            entity.ObjectId = Guid.NewGuid();
+            entity.RoleOrUser = ProvideRandomString(MaxLength.Name);
+            entity.AccessLevel = ProvideRandomEnumValue<AccessLevel>();
+            
             return entity;
         }
     }

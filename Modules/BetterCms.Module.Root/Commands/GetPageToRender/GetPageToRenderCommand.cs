@@ -14,7 +14,9 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Projections;
+using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Cms;
+using BetterCms.Module.Root.ViewModels.Option;
 
 using NHibernate.Linq;
 
@@ -33,10 +35,12 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
         private readonly ICmsConfiguration cmsConfiguration;
 
         private readonly RootModuleDescriptor rootModuleDescriptor;
+        
+        private readonly IOptionService optionService;
 
         public GetPageToRenderCommand(IPageAccessor pageAccessor, PageContentProjectionFactory pageContentProjectionFactory,
             PageStylesheetProjectionFactory pageStylesheetProjectionFactory, PageJavaScriptProjectionFactory pageJavaScriptProjectionFactory,
-            ICmsConfiguration cmsConfiguration, RootModuleDescriptor rootModuleDescriptor)
+            ICmsConfiguration cmsConfiguration, RootModuleDescriptor rootModuleDescriptor, IOptionService optionService)
         {
             this.rootModuleDescriptor = rootModuleDescriptor;
             this.pageContentProjectionFactory = pageContentProjectionFactory;
@@ -44,6 +48,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             this.pageJavaScriptProjectionFactory = pageJavaScriptProjectionFactory;
             this.pageAccessor = pageAccessor;
             this.cmsConfiguration = cmsConfiguration;
+            this.optionService = optionService;
         }
 
         /// <summary>
@@ -88,6 +93,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
             renderPageViewModel.Contents = contentProjections;
             renderPageViewModel.Metadata = pageAccessor.GetPageMetaData(page).ToList();
+            renderPageViewModel.Options = optionService.GetMergedOptionValues(page.Layout.LayoutOptions, page.Options).ToList();
 
             // Attach styles.
             var styles = new List<IStylesheetAccessor>();
@@ -170,10 +176,8 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                 throw new CmsException(string.Format("A content version was not found to project on the page. PageContent={0}; Request={1};", pageContent, request));
             }
 
-            List<IOption> options = new List<IOption>();
-            options.AddRange(pageContent.Options);
-            options.AddRange(pageContent.Content.ContentOptions.Where(f => !pageContent.Options.Any(g => g.Key.Trim().Equals(f.Key.Trim(), StringComparison.OrdinalIgnoreCase))));
-
+            var options = optionService.GetMergedOptionValues(pageContent.Options, pageContent.Content.ContentOptions);
+            
             return pageContentProjectionFactory.Create(pageContent, contentToProject, options);
         }
 

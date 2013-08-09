@@ -2,9 +2,9 @@
 /*global define, console */
 
 bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepicker', 'bcms.htmlEditor',
-                              'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages', 'bcms.preview', 'bcms.grid', 'bcms.inlineEdit', 'bcms.slides.jquery', 'bcms.redirect',
-                              'bcms.pages.history', 'bcms.security'],
-    function ($, bcms, modal, datepicker, htmlEditor, dynamicContent, siteSettings, messages, preview, grid, editor, slides, redirect, contentHistory, security) {
+        'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages', 'bcms.preview', 'bcms.grid',
+        'bcms.slides.jquery', 'bcms.redirect', 'bcms.pages.history', 'bcms.security', 'bcms.options', 'bcms.ko.extenders'],
+    function ($, bcms, modal, datepicker, htmlEditor, dynamicContent, siteSettings, messages, preview, grid, slides, redirect, contentHistory, security, options, ko) {
         'use strict';
 
         var widgets = {},
@@ -23,7 +23,6 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 createWidgetDialogTitle: null,
                 editWidgetDialogTitle: null,
                 deleteWidgetConfirmMessage: null,
-                deleteOptionConfirdestroymMessage: null,
                 editPageWidgetOptionsTitle: null,
                 previewImageNotFoundMessage: null,
                 widgetStatusPublished: null,
@@ -76,8 +75,8 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
                 siteSettingsWidgetsListForm: '#bcms-widgets-form',
 
-                addOptionLink: '#bcms-add-option-button',
-                optionsTable: '#bcms-options-grid',
+                optionsTab: '#bcms-tab-2',
+                pageContentOptionsForm: '#bcms-options-form',
 
                 editInSourceModeHiddenField: '#bcms-edit-in-source-mode'
             },
@@ -181,7 +180,8 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         * Opens ServerControlWidget edit dialog.
         */
         widgets.openEditServerControlWidgetDialog = function (widgetId, onSaveCallback, availablePreviewOnPageContentId, onCloseCallback) {
-
+            var optionsViewModel;
+            
             modal.edit({
                 isPreviewAvailable: availablePreviewOnPageContentId != null,
                 disableSaveDraft: true,
@@ -189,13 +189,12 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 onClose: onCloseCallback,
                 onLoad: function(childDialog) {
                     dynamicContent.bindDialog(childDialog, $.format(links.loadEditServerControlWidgetDialogUrl, widgetId), {
-                        contentAvailable: function (dialog) {
-                            initializeEditServerControlWidgetForm(dialog, availablePreviewOnPageContentId, onSaveCallback);
+                        contentAvailable: function (dialog, content) {
+                            optionsViewModel = initializeEditServerControlWidgetForm(dialog, availablePreviewOnPageContentId, onSaveCallback, content.Data);
                         },
 
-                        beforePost: function(form) {
-                            editor.resetAutoGenerateNameId();
-                            editor.setInputNames(form);
+                        beforePost: function () {
+                            return optionsViewModel.isValid(true);
                         },
 
                         postSuccess: onSaveCallback
@@ -208,19 +207,20 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         * Opens widget create form from site settings widgets list
         */
         widgets.openCreateServerControlWidgetDialog = function (onSaveCallback, availablePreviewOnPageContentId) {
+            var optionsViewModel;
+
             modal.edit({
                 isPreviewAvailable: availablePreviewOnPageContentId != null,
                 disableSaveDraft: true,
                 title: globalization.createWidgetDialogTitle,
                 onLoad: function (childDialog) {
                     dynamicContent.bindDialog(childDialog, links.loadCreateServerControlWidgetDialogUrl, {
-                        contentAvailable: function (dialog) {
-                            initializeEditServerControlWidgetForm(dialog, availablePreviewOnPageContentId, onSaveCallback);
+                        contentAvailable: function (dialog, content) {
+                            optionsViewModel = initializeEditServerControlWidgetForm(dialog, availablePreviewOnPageContentId, onSaveCallback, content.Data);
                         },
-
-                        beforePost: function (form) {
-                            editor.resetAutoGenerateNameId();
-                            editor.setInputNames(form);
+                        
+                        beforePost: function () {
+                            return optionsViewModel.isValid(true);
                         },
 
                         postSuccess: onSaveCallback
@@ -277,20 +277,15 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Initializes widget form
         */
-        function initializeEditServerControlWidgetForm(dialog, availablePreviewOnPageContentId, onSaveCallback) {
+        function initializeEditServerControlWidgetForm(dialog, availablePreviewOnPageContentId, onSaveCallback, data) {
             if (availablePreviewOnPageContentId !== null) {
                 dialog.container.find(selectors.widgetPreviewPageContentId).val(availablePreviewOnPageContentId);
             }
-            
-            editor.initialize(dialog.container, {
-                deleteRowMessageExtractor: function () {
-                    return globalization.deleteOptionConfirmMessage;
-                }
-            });
 
-            dialog.container.find(selectors.addOptionLink).on('click', function () {
-                editor.addNewRow(dialog.container, $(selectors.optionsTable));
-            });
+            var optionsContainer = dialog.container.find(selectors.optionsTab),
+                widgetOptions = data != null ? data.Options : null,
+                optionListViewModel = options.createOptionsViewModel(optionsContainer, widgetOptions);
+            ko.applyBindings(optionListViewModel, optionsContainer.get(0));
 
             dialog.container.find(selectors.widgetPreviewImage).error(function() {
                 var image = dialog.container.find(selectors.widgetPreviewImage);
@@ -334,6 +329,8 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             if (previewImage.attr('src')) {
                 previewImage.show();
             }
+
+            return optionListViewModel;
         };
 
         /*
@@ -391,13 +388,21 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         * Opens dialog for editing widget options 
         */
         widgets.configureWidget = function (pageContentId, onSaveCallback) {
+            var optionListViewModel;
             modal.open({
                 title: globalization.editPageWidgetOptionsTitle,
                 onLoad: function (dialog) {
                     var url = $.format(links.loadPageContentOptionsDialogUrl, pageContentId);
                     dynamicContent.bindDialog(dialog, url, {
-                        contentAvailable: function (contentDialog) {
-                            editor.initialize(contentDialog.container, {});
+                        contentAvailable: function (contentDialog, content) {
+                            var optionsContainer = contentDialog.container.find(selectors.pageContentOptionsForm);
+
+                            optionListViewModel = options.createOptionValuesViewModel(optionsContainer, content.Data.OptionValues);
+                            ko.applyBindings(optionListViewModel, optionsContainer.get(0));
+                        },
+
+                        beforePost: function() {
+                            return optionListViewModel.isValid(true);
                         },
 
                         postSuccess: function () {

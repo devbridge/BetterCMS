@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messages', 'bcms.modal'],
-    function ($, bcms, ko, messages, modal) {
+bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messages', 'bcms.modal', 'bcms.tabs'],
+    function ($, bcms, ko, messages, modal, tabs) {
     'use strict';
 
     var grid = {},
@@ -30,12 +30,28 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
         function OptionsViewModel(options, onOpenPage) {
             var self = this;
 
-            self.searchQuery = ko.observable(options.SearchQuery || '');
-            self.column = ko.observable(options.Column);
-            self.isDescending = ko.observable(options.Direction == sortDirections.descending);
-            self.paging = new ko.PagingViewModel(options.PageSize, options.PageNumber, options.TotalCount, onOpenPage);
+            self.searchQuery = ko.observable('');
+            self.column = ko.observable();
+            self.isDescending = ko.observable(false);
+
+            self.setOptions = function(newOptions) {
+                self.searchQuery(newOptions.SearchQuery || '');
+                self.column(options.Column);
+                self.isDescending(options.Direction == sortDirections.descending);
+
+                self.paging = new ko.PagingViewModel(options.PageSize, options.PageNumber, options.TotalCount, onOpenPage);
+            };
             
             self.hasFocus = ko.observable(false);
+            
+            if (options) {
+                self.setOptions(options);
+
+                self.hasPaging = true;
+                self.paging = new ko.PagingViewModel(options.PageSize, options.PageNumber, options.TotalCount, onOpenPage);
+            } else {
+                self.hasPaging = false;
+            }
         }
 
         return OptionsViewModel;
@@ -64,14 +80,11 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             };
             
             self.setOptions = function (newGridOptions) {
-                if (!newGridOptions) {
-                    return;
-                }
                 var options = new grid.OptionsViewModel(newGridOptions, self.openPage);
                 self.options(options);
             };
 
-            self.openPage = function(pageNr) {
+            self.openPage = function() {
                 var params = self.toJson();
                 self.load(params);
             };
@@ -201,16 +214,24 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     }
                 }
             };
-            
+
+            self.isValid = function(setFocus) {
+                for (var i = 0; i < self.items().length; i++) {
+                    if (!self.items()[i].isValid(setFocus)) {
+                        return false;
+                    }
+                }
+                
+                return true;
+            };
+
             // Set items
             if (items && $.isArray(items)) {
                 self.setItems(items);
             }
 
             // Set options
-            if (gridOptions) {
-                self.setOptions(gridOptions, totalItemsCount);
-            }
+            self.setOptions(gridOptions, totalItemsCount);
         };
 
         grid.ListViewModel.prototype.createItem = function(item) {
@@ -252,11 +273,22 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             self.field(oldValue);
         };
 
-        self.isValid = function () {
+        self.isValid = function (setFocus) {
             if (self.field.hasError && self.field.hasError()) {
+                if (setFocus) {
+                    if (self.field.domElement) {
+                        var domElement = $(self.field.domElement);
+                        if (domElement) {
+                            var tabPanel = tabs.getTabPanelOfElement(domElement);
+                            if (tabPanel) {
+                                tabPanel.selectTabOfElement(domElement);
+                            }
+                            domElement.focus();
+                        }
+                    }
+                }
                 return false;
             }
-
             return true;
         };
     };
@@ -279,17 +311,27 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             self.hasFocus = ko.observable(true);
             self.hasError = ko.observable(false);
             self.isSelected = false;
-            self.isNew = ko.observable(item.IsNew || false);
             self.registeredFields = [];
             self.savePressed = false;
+            self.deletingIsDisabled = false;
+
+            // Indicates, if item is still in add new phase
+            self.isNew = ko.observable(item.IsNew || false);
+            
+            // Indicates, if item was added as new and has changed witout saving to DB
+            self.wasSaved = !self.isNew();
 
             self.hasFocus.subscribe(function(value) {
                 self.isSelected = value;
             });
 
             self.onOpen = function (data, event) {
-                bcms.stopEventPropagation(event);
-                self.openItem();
+                if (!this.isActive()) {
+                    bcms.stopEventPropagation(event);
+                    self.openItem();
+                }
+
+                return true;
             };
 
             self.onEdit = function (data, event) {
@@ -318,6 +360,12 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 bcms.stopEventPropagation(event);
             };
 
+            self.onItemSelect = function (data, event) {
+                self.isSelected = true;
+                
+                return true;
+            };
+
             self.onBlurField = function (data, event) {
                 self.isSelected = false;
                 self.blurField();
@@ -341,11 +389,11 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 }
             };
 
-            self.isValid = function () {
+            self.isValid = function (setFocus) {
                 for (var i = 0; i < self.registeredFields.length; i++) {
                     var field = self.registeredFields[i];
                     
-                    if (!field.isValid()) {
+                    if (!field.isValid(setFocus)) {
                         return false;
                     }
                 }
@@ -356,6 +404,16 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 // Set false and then back true, else value will not change
                 self.parent.options().hasFocus(false);
                 self.parent.options().hasFocus(true);
+            };
+
+            self.hiddenFieldName = function (pattern, index) {
+                return $.format(pattern, index);
+            };
+
+            self.initInput = function (element, field) {
+                if (element && field && $.isFunction(field)) {
+                    field.domElement = element;
+                }
             };
         };
 
@@ -388,13 +446,13 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 saveTimer = setTimeout(function () {
                     removeSaveTimer(self);
                     if (!self.isSelected && self.isActive()) {
-                        if (!self.id() && !self.hasChanges()) {
+                        if (self.isNew() && !self.hasChanges()) {
                             self.cancelEditItem();
                         } else {
                             self.saveItem();
                         }
                     }
-                }, 500);
+                }, 100);
 
             saveTimers.push({id: self.id, timer: saveTimer});
         };
@@ -421,11 +479,6 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             var self = this,
                 url = self.parent.deleteUrl;
 
-            if (!url) {
-                console.log("Delete url is not specified");
-                return;
-            }
-
             var container = self.parent.container,
                 items = self.parent.items,
                 message = self.getDeleteConfirmationMessage(),
@@ -441,27 +494,38 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 },
                 confirmDialog = modal.confirm({
                     content: message || '',
-                    onAccept: function () {
+                    onAccept: function() {
                         confirmDialog.close();
                         self.deleting(true);
-                        $.ajax({
-                            type: 'POST',
-                            url: url,
-                            cache: false,
-                            data: params
-                        })
-                        .done(function (json) {
+                        
+                        if (url) {
+                            // Call ajax method, if URL is specified
+                            $.ajax({
+                                type: 'POST',
+                                url: url,
+                                cache: false,
+                                data: params
+                            })
+                                .done(function(json) {
+                                    onDeleteCompleted(json);
+                                    self.onAfterItemDeleted(json);
+                                })
+                                .fail(function(response) {
+                                    var result = bcms.parseFailedResponse(response);
+                                    onDeleteCompleted(result);
+                                    self.onAfterItemDeleted(result);
+                                });
+                        } else {
+                            // Remove from list if URL is not specified
+                            var json = {
+                                Success: true
+                            };
                             onDeleteCompleted(json);
                             self.onAfterItemDeleted(json);
-                        })
-                        .fail(function (response) {
-                            var result = bcms.parseFailedResponse(response);
-                            onDeleteCompleted(result);
-                            self.onAfterItemDeleted(result);
-                        });
+                        }
                         return true;
                     },
-                    onClose: function () {
+                    onClose: function() {
                         self.deleting(false);
                     }
                 });
@@ -481,8 +545,8 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             removeSaveTimer(self, true);
             
             var url = self.parent.saveUrl,
-                canSave = url && this.isActive() && this.hasChanges() && this.isValid(),
-                removeFromList = this.isActive() && !this.hasChanges() && this.isValid() && !this.id(),
+                canSave = this.isActive() && this.hasChanges() && this.isValid(),
+                removeFromList = this.isActive() && !this.hasChanges() && this.isValid() && this.isNew(),
                 keepActive = !this.isValid(),
                 keepFocus = !canSave && !removeFromList && keepActive && self.savePressed;
 
@@ -492,28 +556,36 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             self.isNew(false);
             self.parent.rowAdded = false;
 
-            if (!url) {
-                console.log("Save url is not specified");
-            }
-
             if (canSave) {
                 var params = self.getSaveParams();
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
-                    cache: false,
-                    data: JSON.stringify(params)
-                })
-                    .done(function(json) {
-                        self.onAfterItemSaved(json);
-                        self.saving(false);
+                if (url) {
+                    // Save to server if URL is specified
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+                        cache: false,
+                        data: JSON.stringify(params)
                     })
-                    .fail(function(response) {
-                        self.onAfterItemSaved(bcms.parseFailedResponse(response));
-                        self.saving(false);
-                    });
+                        .done(function(json) {
+                            self.onAfterItemSaved(json);
+                            self.saving(false);
+                            self.wasSaved = true;
+                        })
+                        .fail(function(response) {
+                            self.onAfterItemSaved(bcms.parseFailedResponse(response));
+                            self.saving(false);
+                        });
+                } else {
+                    // Save locally if URL is NOT specified
+                    var result = {
+                        Success: true
+                    };
+                    self.onAfterItemSaved(result);
+                    self.saving(false);
+                    self.wasSaved = true;
+                }
             } else {
                 if (!keepActive) {
                     this.isActive(false);
@@ -563,7 +635,7 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
         };
 
         grid.ItemViewModel.prototype.cancelEditItem = function () {
-            if (!this.id()) {
+            if (this.isNew() || !this.wasSaved) {
                 this.parent.items.remove(this);
                 this.parent.rowAdded = false;
             } else {

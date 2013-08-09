@@ -14,7 +14,7 @@ namespace BetterCms.Module.Pages.Accessors
     {
         public const string ContentWrapperType = "html-content";
 
-        public HtmlContentAccessor(HtmlContent content, IList<IOption> options)
+        public HtmlContentAccessor(HtmlContent content, IList<IOptionValue> options)
             : base(content, options)
         {
         }

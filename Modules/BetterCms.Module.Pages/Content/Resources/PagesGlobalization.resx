@@ -687,25 +687,22 @@
   <data name="ClonePage_Dialog_Success" xml:space="preserve">
     <value>A page successfully cloned. Redirecting to {0}.</value>
   </data>
-  <data name="ContentOptions_AddNew" xml:space="preserve">
+  <data name="Options_AddNew" xml:space="preserve">
     <value>Add New +</value>
   </data>
-  <data name="ContentOptions_OptionDefaultValueColumn" xml:space="preserve">
+  <data name="Options_OptionDefaultValueColumn" xml:space="preserve">
     <value>Default Value</value>
   </data>
-  <data name="ContentOptions_OptionKeyColumn" xml:space="preserve">
+  <data name="Options_OptionKeyColumn" xml:space="preserve">
     <value>Option Name</value>
   </data>
-  <data name="DeleteOption_Confirmation_Message" xml:space="preserve">
-    <value>Are you sure you want to delete this option?</value>
-  </data>
-  <data name="PageWidgetOptions_OptionDefaultValueColumn" xml:space="preserve">
+  <data name="EditOptionsValues_OptionDefaultValueColumn" xml:space="preserve">
     <value>Default Option Value</value>
   </data>
-  <data name="PageWidgetOptions_OptionKeyColumn" xml:space="preserve">
+  <data name="EditOptionsValues_OptionKeyColumn" xml:space="preserve">
     <value>Option Name</value>
   </data>
-  <data name="PageWidgetOptions_OptionValueColumn" xml:space="preserve">
+  <data name="EditOptionsValues_OptionValueColumn" xml:space="preserve">
     <value>Option Value</value>
   </data>
   <data name="PageWidgetOptions_Dialog_Title" xml:space="preserve">
@@ -778,7 +775,7 @@
     <value>Basic Properties</value>
   </data>
   <data name="EditTemplate_OptionsTab_Title" xml:space="preserve">
-    <value>Regions</value>
+    <value>Options</value>
   </data>
   <data name="TemplatePreviewImageUrl_Title" xml:space="preserve">
     <value>Preview Image URL</value>
@@ -807,10 +804,10 @@
   <data name="EditTemplate_Dialog_Title" xml:space="preserve">
     <value>Edit Template</value>
   </data>
-  <data name="TemplateOptions_AddNewRegion" xml:space="preserve">
+  <data name="TemplateRegions_AddNewRegion" xml:space="preserve">
     <value>Add New Region +</value>
   </data>
-  <data name="TemplateOptions_IndetificatorColumn" xml:space="preserve">
+  <data name="TemplateRegions_IdentificatorColumn" xml:space="preserve">
     <value>Identificator</value>
   </data>
   <data name="TemplateOptions_Region_Search" xml:space="preserve">
@@ -834,7 +831,7 @@
   <data name="SiteSettings_Template_Search" xml:space="preserve">
     <value>Search</value>
   </data>
-  <data name="TemplateOptions_DescriptionColumn" xml:space="preserve">
+  <data name="TemplateRegions_DescriptionColumn" xml:space="preserve">
     <value>Description</value>
   </data>
   <data name="SaveTemplate_VirtualPathNotExists_Message" xml:space="preserve">
@@ -978,9 +975,6 @@
   <data name="EditSeo_MetaTitle_MaxLengthMessage" xml:space="preserve">
     <value>Meta title max length exceeded.</value>
   </data>
-  <data name="Date_Picker_Tooltip_Title" xml:space="preserve">
-    <value>Calendar</value>
-  </data>
   <data name="ValidatePageUrlCommand_SameUrlPath_Message" xml:space="preserve">
     <value>Redirect URL belongs page which you want to delete. Please update URL (path) and try again.</value>
   </data>
@@ -1097,5 +1091,17 @@
   </data>
   <data name="EditPageProperties_PageStatusChange_ConfirmationMessage_UnPublish" xml:space="preserve">
     <value>Do you really want to unpublish this page?</value>
+  </data>
+  <data name="EditTemplate_RegionsTab_Title" xml:space="preserve">
+    <value>Regions</value>
+  </data>
+  <data name="EditPageProperties_OptionsTab_Title" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="Options_OptionTypeColumn" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="EditOptionsValues_OptionTypeColumn" xml:space="preserve">
+    <value>Type</value>
   </data>
 </root>

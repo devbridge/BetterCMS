@@ -10,3 +10,11 @@ else
 {
     <p>Widget Preview...</p>
 }
+
+@foreach (var option in Model.Options)
+{
+    <p>
+        <strong>Option "@option.Key" Type:</strong> @option.Value.GetType()
+        <strong>Value</strong>: @option.Value
+    </p>
+}

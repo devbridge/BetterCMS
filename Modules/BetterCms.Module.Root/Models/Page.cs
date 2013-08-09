@@ -110,6 +110,14 @@ namespace BetterCms.Module.Root.Models
         public virtual IList<PageContent> PageContents { get; set; }
 
         /// <summary>
+        /// Gets or sets the options.
+        /// </summary>
+        /// <value>
+        /// The options.
+        /// </value>
+        public virtual IList<PageOption> Options { get; set; }      
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>

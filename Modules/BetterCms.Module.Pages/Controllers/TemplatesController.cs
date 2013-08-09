@@ -4,8 +4,7 @@ using System.Web.Mvc;
 using BetterCms.Core.Security;
 using BetterCms.Module.Pages.Command.Layout.DeleteTemplate;
 using BetterCms.Module.Pages.Command.Layout.GetSiteSettingsTemplates;
-using BetterCms.Module.Pages.Command.Layout.GetTemplate;
-using BetterCms.Module.Pages.Command.Layout.GetTemplatesForEdit;
+using BetterCms.Module.Pages.Command.Layout.GetTemplateForEdit;
 using BetterCms.Module.Pages.Command.Layout.SaveTemplate;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.ViewModels.Templates;
@@ -42,13 +41,6 @@ namespace BetterCms.Module.Pages.Controllers
                 Version = version.ToIntOrDefault()
             };
 
-            var template = GetCommand<GetTemplateCommand>().ExecuteCommand(request.TemplateId);
-            if (template != null && template.Pages.Any())
-            {
-                Messages.AddError(PagesGlobalization.DeleteTemplate_TemplateIsInUse_Message);
-                return Json(new WireJson { Success = false });
-            }
-
             if (GetCommand<DeleteTemplateCommand>().ExecuteCommand(request))
             {
                 Messages.AddSuccess(PagesGlobalization.DeleteTemplate_DeletedSuccessfully_Message);
@@ -69,7 +61,7 @@ namespace BetterCms.Module.Pages.Controllers
         [HttpGet]
         public ActionResult RegisterTemplate()
         {
-            var model = GetCommand<GetTemplatesForEditCommand>().ExecuteCommand(null);
+            var model = GetCommand<GetTemplateForEditCommand>().ExecuteCommand(null);
             return PartialView("EditTemplate", model);
         }
 
@@ -85,7 +77,7 @@ namespace BetterCms.Module.Pages.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (model.RegionOptions != null && model.RegionOptions.GroupBy(r => r.Identifier).SelectMany(g => g.Skip(1)).Any())
+                if (model.Regions != null && model.Regions.GroupBy(r => r.Identifier).SelectMany(g => g.Skip(1)).Any())
                 {
                     Messages.AddError(PagesGlobalization.SaveTemplate_DublicateRegionIdentificator_Message);
                     return Json(new WireJson { Success = false });
@@ -114,7 +106,7 @@ namespace BetterCms.Module.Pages.Controllers
         [HttpGet]
         public ActionResult EditTemplate(string id)
         {
-            var model = GetCommand<GetTemplatesForEditCommand>().ExecuteCommand(id.ToGuidOrDefault());
+            var model = GetCommand<GetTemplateForEditCommand>().ExecuteCommand(id.ToGuidOrDefault());
             var view = RenderView("EditTemplate", model);
             return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
         }

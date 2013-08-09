@@ -35,9 +35,9 @@ namespace BetterCms.Core.Modules.Projections
     {
         protected TContent Content { get; private set; }
 
-        protected IList<IOption> Options { get; private set; }
+        protected IList<IOptionValue> Options { get; private set; }
         
-        protected ContentAccessor(TContent content, IList<IOption> options)
+        protected ContentAccessor(TContent content, IList<IOptionValue> options)
         {
             Content = content;
             Options = options;

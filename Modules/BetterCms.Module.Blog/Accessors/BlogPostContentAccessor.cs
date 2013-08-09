@@ -14,7 +14,7 @@ namespace BetterCms.Module.Blog.Accessors
     {
         public const string ContentWrapperType = "blog-post-content";
 
-        public BlogPostContentAccessor(BlogPostContent content, IList<IOption> options)
+        public BlogPostContentAccessor(BlogPostContent content, IList<IOptionValue> options)
             : base(content, options)
         {
         }

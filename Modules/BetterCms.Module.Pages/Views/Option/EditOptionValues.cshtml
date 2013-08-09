@@ -1,0 +1,47 @@
+﻿@using BetterCms.Module.Pages.Content.Resources
+@using BetterCms.Module.Root;
+@using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Mvc.Grids;
+@using BetterCms.Module.Root.ViewModels.Shared;
+
+@{
+    var gridViewModel = new EditableGridViewModel
+    {
+        ShowSearch = false,
+        TopBlockClass = "bcms-top-block-holder",
+        AddHiddenFields = true,
+        SaveButtonTitle = RootGlobalization.Button_Ok,
+        Columns = new List<EditableGridColumn>
+            {
+                new EditableGridColumn(PagesGlobalization.EditOptionsValues_OptionKeyColumn, null, "key")
+                    {
+                        HeaderAttributes = "style=\"width: 200px;\"",
+                        HiddenFieldName = "OptionValues[{0}].OptionKey"
+                    },
+                    
+                new EditableGridColumn(PagesGlobalization.EditOptionsValues_OptionValueColumn, null, "value")
+                    {
+                        HeaderAttributes = "style=\"width: 200px;\"",
+                        HiddenFieldName = "OptionValues[{0}].OptionValue",
+                        CellView = RootModuleConstants.EditableOptionValueCellTemplate,
+                        AutoFocus = true,
+                    },
+                    
+                new EditableGridColumn(PagesGlobalization.EditOptionsValues_OptionDefaultValueColumn, null, "defaultValue")
+                    {
+                        CanBeEdited = false,
+                        HeaderAttributes = "style=\"width: 130px;\"",
+                    },
+                
+                new EditableGridDropDownColumn(PagesGlobalization.EditOptionsValues_OptionTypeColumn, null, "type")
+                    {
+                        OptionsBind = "optionTypes",
+                        ValueTextBind = "typeName",
+                        HiddenFieldName = "OptionValues[{0}].Type",
+                        HeaderAttributes = "style=\"width: 130px;\"",
+                    },
+            }
+    };
+}
+
+@Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel)

@@ -54,14 +54,14 @@
             <td>
                 @if (Model.CanDeleteItems)
                 {
-                    <!-- ko ifnot: isActive()-->
+                    <!-- ko if: !isActive() && !deletingIsDisabled -->
                     <a class="bcms-icn-delete" data-bind="click: onDelete">@RootGlobalization.Button_Delete</a>
                     <!-- /ko -->
                 }
                 @if (Model.CanEditItems)
                 {
                     <!-- ko if: isActive() -->
-                    <div class="bcms-btn-small" data-bind="click: onSave">@RootGlobalization.Button_Save</div>
+                    <div class="bcms-btn-small" data-bind="click: onSave">@Model.SaveButtonTitle</div>
                     <div class="bcms-btn-links-small" data-bind="click: onCancelEdit">@RootGlobalization.Button_Cancel</div>
                     <!-- /ko -->
                 }
@@ -81,3 +81,17 @@
         <!-- /ko -->
     </tbody>
 </table>
+
+@if (Model.AddHiddenFields)
+{
+    <!-- ko foreach: items -->
+        foreach (var column in Model.Columns)
+        {
+            if (!string.IsNullOrWhiteSpace(column.HiddenFieldName))
+            {
+                <input type="hidden" name="" data-bind="value: @(column.ValueBind)
+                    , attr: {name: hiddenFieldName('@(column.HiddenFieldName)', $index()) }">
+            }
+        }
+    <!-- /ko -->
+}

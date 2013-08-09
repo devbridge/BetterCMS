@@ -1,6 +1,5 @@
-﻿/*j
-nt unparam: true, white: true, browser: true, devel: true */
-/*global define, console */
+﻿/*jslint unparam: true, white: true, browser: true, devel: true, vars: true */
+/*global bettercms, define, console */
 
 bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms.modal', 'bcms.html5Upload', 'bcms.ko.extenders', 'bcms.messages'],
     function ($, bcms, dynamicContent, modal, html5Upload, ko, messages) {
@@ -56,17 +55,56 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
 
         options.uploads.filesToAccept(rootFolderType == 1 ? 'image/*' : '');
 
+        function UserAccessViewModel(item) {
+            this.RoleOrUser = ko.observable(item.RoleOrUser);
+            this.AccessLevel = ko.observable(item.AccessLevel || 1);
+            this.RadioGroup = 'radio-' + item.RoleOrUser;
+        }
+
+        function createUserAccessViewModel(accessList) {
+            var model = {
+                UserAccessList: ko.observableArray(),
+                newUser: ko.observable(''),
+                addNewUser: function () {
+                    if (!model.newUser()) {
+                        return;
+                    }
+                    model.UserAccessList.push(new UserAccessViewModel({ RoleOrUser: model.newUser() }));
+                    model.newUser('');
+                },
+                removeUser: function (userAccessViewModel) {
+                    model.UserAccessList.remove(userAccessViewModel);
+                },
+                getPropertyIndexer: function (i, propName) {
+                    return 'UserAccessList[' + i + '].' + propName;
+                }
+            };
+
+            $.each(accessList, function (i, item) {
+                model.UserAccessList.push(new UserAccessViewModel(item));
+            });
+
+            return model;
+        }
+
         if (html5Upload.fileApiSupported()) {
             modal.open({
                 title: globalization.uploadFilesDialogTitle,
-                onLoad: function(dialog) {
+                onLoad: function (dialog) {
                     var url = $.format(links.loadUploadFilesDialogUrl, rootFolderId, rootFolderType, reuploadMediaId);
                     dynamicContent.bindDialog(dialog, url, {
-                        contentAvailable: function() {
+                        contentAvailable: function (dialogRef, content) {
                             initUploadFilesDialogEvents(dialog, options);
+
+                            var context = $('#bcms-accesscontrol-context').get(0);
+                            
+                            if (context) {
+                                var viewModel = createUserAccessViewModel(content.Data.UserAccessList);
+                                ko.applyBindings(viewModel, context);
+                            }
                         },
 
-                        beforePost: function() {
+                        beforePost: function () {
                             dialog.container.showLoading();
                         },
 

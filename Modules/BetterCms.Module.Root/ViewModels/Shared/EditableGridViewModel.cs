@@ -11,6 +11,8 @@ namespace BetterCms.Module.Root.ViewModels.Shared
         
         public virtual string TopBlockTitle { get; set; }
 
+        public virtual string SaveButtonTitle { get; set; }
+
         public virtual string TopBlockView { get; set; }
         
         public virtual string PagingView { get; set; }
@@ -19,11 +21,15 @@ namespace BetterCms.Module.Root.ViewModels.Shared
 
         public virtual bool CanAddNewItems { get; set; }
         
+        public virtual bool ShowSearch { get; set; }
+        
         public virtual bool CanEditItems { get; set; }
         
         public virtual bool CanDeleteItems { get; set; }
         
         public virtual bool AddPaging { get; set; }
+
+        public virtual bool AddHiddenFields { get; set; }
 
         public virtual IList<EditableGridColumn> Columns { get; set; }
 
@@ -33,13 +39,15 @@ namespace BetterCms.Module.Root.ViewModels.Shared
             PagingView = RootModuleConstants.EditableGridPagingTemplate;
             TopBlockClass = RootModuleConstants.EditableGridTopBlockClassName;
             AddNewTitle = RootGlobalization.Button_AddNew;
+            SaveButtonTitle = RootGlobalization.Button_Save;
             Columns = new List<EditableGridColumn>();
-            
+
+            ShowSearch = true;
             CanAddNewItems = true;
             CanEditItems = true;
             CanDeleteItems = true;
-
             AddPaging = true;
+            AddHiddenFields = false;
         }
 
         public override string ToString()
