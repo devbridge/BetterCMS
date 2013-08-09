@@ -61,7 +61,7 @@
                 @if (Model.CanEditItems)
                 {
                     <!-- ko if: isActive() -->
-                    <div class="bcms-btn-small" data-bind="click: onSave">@RootGlobalization.Button_Save</div>
+                    <div class="bcms-btn-small" data-bind="click: onSave">@Model.SaveButtonTitle</div>
                     <div class="bcms-btn-links-small" data-bind="click: onCancelEdit">@RootGlobalization.Button_Cancel</div>
                     <!-- /ko -->
                 }

@@ -435,7 +435,7 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                             self.saveItem();
                         }
                     }
-                }, 50);
+                }, 100);
 
             saveTimers.push({id: self.id, timer: saveTimer});
         };

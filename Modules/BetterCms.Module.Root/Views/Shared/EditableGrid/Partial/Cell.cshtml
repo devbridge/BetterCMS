@@ -17,7 +17,7 @@
             valueUpdate: 'afterkeydown', 
             enterPress: onSave, 
             escPress: onCancelEdit, 
-            event: {blur: onBlurField, focus: onStopEvent}
+            event: {blur: onBlurField, focus: onStopEvent, click: onStopEvent}
             @(Model.AutoFocus ? ", hasfocus: isActive() && hasFocus" : "") " />
             <!-- ko if: !isNew() &&  @(Model.ValueBind).hasError && @(Model.ValueBind).hasError() -->
             <span class="bcms-field-validation-error">

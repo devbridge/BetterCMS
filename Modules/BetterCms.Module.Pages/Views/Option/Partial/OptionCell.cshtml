@@ -13,7 +13,11 @@
         <!-- ko if: isActive() -->
         <input type="checkbox" class="bcms-checkbox-holder" data-bind="
             checked: @(Model.ValueBind),
-            event: {blur: onBlurField, focus: onItemSelect}" />
+            click: onItemSelect,
+            event: {blur: onBlurField, focus: onStopEvent},
+            enterPress: onSave, 
+            escPress: onCancelEdit
+            @(Model.AutoFocus ? ", hasfocus: isActive() && hasFocus" : "") " />
         <!-- /ko -->
         <!-- ko ifnot: isActive() -->
     }
@@ -33,13 +37,14 @@
         <!-- ko if: isActive() -->
         <div class="bcms-date-input-box">
             <input class="bcms-editor-field-box bcms-datepicker" data-bind="
-            value: @(Model.ValueBind),
-            event: {blur: onBlurField, focus: onItemSelect},
-            enterPress: onSave, 
-            escPress: onCancelEdit" />
+                value: @(Model.ValueBind),
+                click: onItemSelect,
+                event: {blur: onBlurField, focus: onStopEvent},
+                enterPress: onSave, 
+                escPress: onCancelEdit,
+                afterRender: initDatePickers()
+                @(Model.AutoFocus ? ", hasfocus: isActive() && hasFocus" : "") " />
         </div>
-        @* HACK: Next line is required for calling JavaScript method, when div is rendered to the browser *@
-        <!-- ko if: initDatePickers() --><!-- /ko -->
         <!-- /ko -->
         <!-- ko ifnot: isActive() -->
     }

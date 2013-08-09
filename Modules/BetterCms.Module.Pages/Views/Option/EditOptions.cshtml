@@ -1,5 +1,6 @@
 ﻿@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Root;
+@using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc.Grids;
 @using BetterCms.Module.Root.ViewModels.Shared;
 
@@ -8,6 +9,7 @@
     {
         ShowSearch = false,
         TopBlockClass = "bcms-top-block-holder",
+        SaveButtonTitle = RootGlobalization.Button_Ok,
         AddHiddenFields = true,
         Columns = new List<EditableGridColumn>
             {

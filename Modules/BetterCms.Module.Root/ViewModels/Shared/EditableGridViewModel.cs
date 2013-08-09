@@ -11,6 +11,8 @@ namespace BetterCms.Module.Root.ViewModels.Shared
         
         public virtual string TopBlockTitle { get; set; }
 
+        public virtual string SaveButtonTitle { get; set; }
+
         public virtual string TopBlockView { get; set; }
         
         public virtual string PagingView { get; set; }
@@ -37,6 +39,7 @@ namespace BetterCms.Module.Root.ViewModels.Shared
             PagingView = RootModuleConstants.EditableGridPagingTemplate;
             TopBlockClass = RootModuleConstants.EditableGridTopBlockClassName;
             AddNewTitle = RootGlobalization.Button_AddNew;
+            SaveButtonTitle = RootGlobalization.Button_Save;
             Columns = new List<EditableGridColumn>();
 
             ShowSearch = true;

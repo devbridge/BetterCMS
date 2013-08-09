@@ -27,7 +27,8 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 floatType: 3,
                 dateTimeType: 4,
                 boolType: 5
-            };
+            },
+            rowId = 0;
 
         /**
         * Assign objects to module.
@@ -95,6 +96,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.typeName = ko.observable();
                 self.lastType = null;
                 self.editableValue = self.getValueField();
+                self.rowId = null;
 
                 self.optionTypes = [];
                 self.optionTypes.push({ id: optionTypes.textType, name: globalization.optionTypeText });
@@ -149,11 +151,16 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                             self.isSelected = true;
                             self.editableValue(newDate);
                         }
-                    };
+                    },
+                        row = $('#' + self.rowId),
+                        datePickerBoxes;
 
-                    $(selectors.datePickers).initializeDatepicker(globalization.datePickerTooltipTitle, datePickerOpts);
-                    $(selectors.datePickerBoxes).on('click', self.onItemSelect);
-                    $(selectors.datePickerBoxes).on('blur', self.onBlurField);
+                    row.find(selectors.datePickers).initializeDatepicker(globalization.datePickerTooltipTitle, datePickerOpts);
+
+                    datePickerBoxes = row.find(selectors.datePickerBoxes);
+                    datePickerBoxes.on('click', self.onItemSelect);
+                    datePickerBoxes.on('focus', self.onItemSelect);
+                    datePickerBoxes.on('blur', self.onBlurField);
                 };
                 
                 // Set values
@@ -175,6 +182,13 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
 
             OptionViewModel.prototype.disableFieldsEditing = function () {
                 return;
+            };
+            
+            OptionViewModel.prototype.getRowId = function () {
+                if (!this.rowId) {
+                    this.rowId = 'bcms-option-row-' + rowId++;
+                }
+                return this.rowId;
             };
 
             return OptionViewModel;
