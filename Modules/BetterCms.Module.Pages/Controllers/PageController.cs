@@ -149,6 +149,7 @@ namespace BetterCms.Module.Pages.Controllers
                                Image = success ? model.Image : new ImageSelectorViewModel(),
                                SecondaryImage = success ? model.SecondaryImage : new ImageSelectorViewModel(),
                                FeaturedImage = success ? model.FeaturedImage : new ImageSelectorViewModel(),
+                               OptionValues = success ? model.OptionValues : null
                            };
 
             return ComboWireJson(success, view, json, JsonRequestBehavior.AllowGet);

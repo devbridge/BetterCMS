@@ -1,40 +1,45 @@
 ﻿@using BetterCms.Module.Pages.Content.Resources
-@using BetterCms.Module.Pages.ViewModels.Option
-@using BetterCms.Module.Root.Models.Extensions
-@using BetterCms.Module.Root.Mvc.Grids.Extensions
-@using BetterCms.Module.Root.Mvc.Grids.TableRenderers
-@using BetterCms.Module.Root.ViewModels.Option
-@using MvcContrib.UI.Grid
-
-@model IOptionValuesContainer
+@using BetterCms.Module.Root;
+@using BetterCms.Module.Root.Mvc.Grids;
+@using BetterCms.Module.Root.ViewModels.Shared;
 
 @{
-    Action<ColumnBuilder<OptionValueEditViewModel>> columns = column =>
+    var gridViewModel = new EditableGridViewModel
     {
-        column.EditButtonColumn();
-
-        column.For(model => Html.ColumnWithHiddenField(m => model.OptionKey, "OptionValues[{0}].OptionKey"))
-            .Named(PagesGlobalization.EditOptionsValues_OptionKeyColumn)
-            .Sortable(false)
-            .HeaderAttributes(@style => "width: 160px;")
-            .Attributes(@class => "bcms-option-key");
-
-        column.For(model => Html.InlineEditColumnWithNamePattern(m => model.OptionValue, "bcms-option-value", "bcms-old-option-value", "OptionValues[{0}].OptionValue"))
-            .Named(PagesGlobalization.EditOptionsValues_OptionValueColumn)
-            .Sortable(false)
-            .Attributes(@class => "bcms-option-value");
-
-        column.For(model => model.OptionDefaultValue)
-              .Named(PagesGlobalization.EditOptionsValues_OptionDefaultValueColumn)
-              .Sortable(false)
-              .HeaderAttributes(@style => "width: 160px; text-align: left")
-              .Attributes(@style => "text-align: left");
-        
-        column.For(model => model.Type.ToGlobalizationString())
-              .Named(PagesGlobalization.EditOptionsValues_OptionTypeColumn)
-              .Sortable(false)
-              .Attributes(@style => "text-align: left");
+        ShowSearch = false,
+        TopBlockClass = "bcms-top-block-holder",
+        AddHiddenFields = true,
+        Columns = new List<EditableGridColumn>
+            {
+                new EditableGridColumn(PagesGlobalization.EditOptionsValues_OptionKeyColumn, null, "key")
+                    {
+                        HeaderAttributes = "style=\"width: 200px;\"",
+                        HiddenFieldName = "OptionValues[{0}].OptionKey"
+                    },
+                    
+                new EditableGridColumn(PagesGlobalization.EditOptionsValues_OptionValueColumn, null, "value")
+                    {
+                        HeaderAttributes = "style=\"width: 200px;\"",
+                        HiddenFieldName = "OptionValues[{0}].OptionValue",
+                        CellView = RootModuleConstants.EditableOptionValueCellTemplate,
+                        AutoFocus = true,
+                    },
+                    
+                new EditableGridColumn(PagesGlobalization.EditOptionsValues_OptionDefaultValueColumn, null, "defaultValue")
+                    {
+                        CanBeEdited = false,
+                        HeaderAttributes = "style=\"width: 130px;\"",
+                    },
+                
+                new EditableGridDropDownColumn(PagesGlobalization.EditOptionsValues_OptionTypeColumn, null, "type")
+                    {
+                        OptionsBind = "optionTypes",
+                        ValueTextBind = "typeName",
+                        HiddenFieldName = "OptionValues[{0}].Type",
+                        HeaderAttributes = "style=\"width: 130px;\"",
+                    },
+            }
     };
 }
 
-@Html.Grid(Model.OptionValues).Columns(columns).Attributes(@class => "bcms-tables", @id => "bcms-options-grid").RenderUsing(new EditableHtmlTableGridRenderer<OptionValueEditViewModel>())
+@Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel)

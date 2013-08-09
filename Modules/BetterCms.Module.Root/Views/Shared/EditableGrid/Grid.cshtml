@@ -54,7 +54,7 @@
             <td>
                 @if (Model.CanDeleteItems)
                 {
-                    <!-- ko ifnot: isActive()-->
+                    <!-- ko if: !isActive() && !deletingIsDisabled -->
                     <a class="bcms-icn-delete" data-bind="click: onDelete">@RootGlobalization.Button_Delete</a>
                     <!-- /ko -->
                 }

@@ -11,6 +11,14 @@
         public string OptionValue { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether option is editable.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if option is editable; otherwise, <c>false</c>.
+        /// </value>
+        public bool CanEditOption { get; set; }
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>

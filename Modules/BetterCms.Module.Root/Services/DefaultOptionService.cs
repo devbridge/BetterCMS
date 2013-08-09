@@ -60,6 +60,11 @@ namespace BetterCms.Module.Root.Services
                                                   OptionDefaultValue = option != null ? option.Value : null
                                               };
 
+                    if (option == null)
+                    {
+                        optionViewModel.CanEditOption = true;
+                    }
+
                     optionModels.Add(optionViewModel);
                 }
             }

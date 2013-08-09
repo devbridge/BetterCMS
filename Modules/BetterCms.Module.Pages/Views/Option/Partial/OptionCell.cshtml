@@ -8,33 +8,45 @@
 @* Boolean *@
 <!-- ko if: type() == 5  -->
 <td @Html.Raw(Model.Attributes)>
-    <!-- ko if: isActive() -->
-    <input type="checkbox" class="bcms-checkbox-holder" data-bind="
-        checked: @(Model.ValueBind),
-        event: {blur: onBlurField, focus: onItemSelect}" />
-    <!-- /ko -->
-    <!-- ko ifnot: isActive() -->
+    @if (Model.CanBeEdited)
+    {
+        <!-- ko if: isActive() -->
+        <input type="checkbox" class="bcms-checkbox-holder" data-bind="
+            checked: @(Model.ValueBind),
+            event: {blur: onBlurField, focus: onItemSelect}" />
+        <!-- /ko -->
+        <!-- ko ifnot: isActive() -->
+    }
     <input type="checkbox" class="bcms-checkbox-holder" data-bind="checked: @(Model.ValueBind)(), click: onOpen" />
-    <!-- /ko -->
+    @if (Model.CanBeEdited)
+    {
+        <!-- /ko -->
+    }
 </td>
 <!-- /ko -->
 
 @* DateTime *@
 <!-- ko if: type() == 4  -->
 <td @Html.Raw(Model.Attributes)>
-    <!-- ko if: isActive() -->
-    <div class="bcms-date-input-box">
-        <input class="bcms-editor-field-box bcms-datepicker" data-bind="
+    @if (Model.CanBeEdited)
+    {
+        <!-- ko if: isActive() -->
+        <div class="bcms-date-input-box">
+            <input class="bcms-editor-field-box bcms-datepicker" data-bind="
             value: @(Model.ValueBind),
             event: {blur: onBlurField, focus: onItemSelect},
             enterPress: onSave, 
-            escPress: onCancelEdit
-            " />
-    </div>
-    <!-- ko if: initDatePickers() --><!-- /ko -->
-    <!-- /ko -->
-    <!-- ko ifnot: isActive() -->
+            escPress: onCancelEdit" />
+        </div>
+        @* HACK: Next line is required for calling JavaScript method, when div is rendered to the browser *@
+        <!-- ko if: initDatePickers() --><!-- /ko -->
+        <!-- /ko -->
+        <!-- ko ifnot: isActive() -->
+    }
     <a class="bcms-tables-link" data-bind="text: @(Model.ValueBind)()"></a>    
-    <!-- /ko -->
+    @if (Model.CanBeEdited)
+    {
+        <!-- /ko -->
+    }
 </td>
 <!-- /ko -->

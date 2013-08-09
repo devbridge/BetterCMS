@@ -214,7 +214,17 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     }
                 }
             };
-            
+
+            self.isValid = function() {
+                for (var i = 0; i < self.items().length; i++) {
+                    if (!self.items()[i].isValid()) {
+                        return false;
+                    }
+                }
+                
+                return true;
+            };
+
             // Set items
             if (items && $.isArray(items)) {
                 self.setItems(items);
@@ -292,6 +302,7 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             self.isSelected = false;
             self.registeredFields = [];
             self.savePressed = false;
+            self.deletingIsDisabled = false;
 
             // Indicates, if item is still in add new phase
             self.isNew = ko.observable(item.IsNew || false);
@@ -424,7 +435,7 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                             self.saveItem();
                         }
                     }
-                }, 500);
+                }, 50);
 
             saveTimers.push({id: self.id, timer: saveTimer});
         };

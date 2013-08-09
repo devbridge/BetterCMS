@@ -2,9 +2,9 @@
 /*global define, console */
 
 bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepicker', 'bcms.htmlEditor',
-                              'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages', 'bcms.preview', 'bcms.grid', 'bcms.inlineEdit', 'bcms.slides.jquery', 'bcms.redirect',
-                              'bcms.pages.history', 'bcms.security', 'bcms.options', 'bcms.ko.extenders'],
-    function ($, bcms, modal, datepicker, htmlEditor, dynamicContent, siteSettings, messages, preview, grid, editor, slides, redirect, contentHistory, security, options, ko) {
+        'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages', 'bcms.preview', 'bcms.grid',
+        'bcms.slides.jquery', 'bcms.redirect', 'bcms.pages.history', 'bcms.security', 'bcms.options', 'bcms.ko.extenders'],
+    function ($, bcms, modal, datepicker, htmlEditor, dynamicContent, siteSettings, messages, preview, grid, slides, redirect, contentHistory, security, options, ko) {
         'use strict';
 
         var widgets = {},
@@ -76,6 +76,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 siteSettingsWidgetsListForm: '#bcms-widgets-form',
 
                 optionsTab: '#bcms-tab-2',
+                pageContentOptionsForm: '#bcms-options-form',
 
                 editInSourceModeHiddenField: '#bcms-edit-in-source-mode'
             },
@@ -373,13 +374,21 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         * Opens dialog for editing widget options 
         */
         widgets.configureWidget = function (pageContentId, onSaveCallback) {
+            var optionListViewModel;
             modal.open({
                 title: globalization.editPageWidgetOptionsTitle,
                 onLoad: function (dialog) {
                     var url = $.format(links.loadPageContentOptionsDialogUrl, pageContentId);
                     dynamicContent.bindDialog(dialog, url, {
-                        contentAvailable: function (contentDialog) {
-                            editor.initialize(contentDialog.container, {});
+                        contentAvailable: function (contentDialog, content) {
+                            var optionsContainer = contentDialog.container.find(selectors.pageContentOptionsForm);
+
+                            optionListViewModel = options.createOptionValuesViewModel(optionsContainer, content.Data.OptionValues);
+                            ko.applyBindings(optionListViewModel, optionsContainer.get(0));
+                        },
+
+                        beforePost: function() {
+                            return optionListViewModel.isValid();
                         },
 
                         postSuccess: function () {

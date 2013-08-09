@@ -2,11 +2,16 @@
 
 <td @Html.Raw(Model.Attributes)>
     <div class="bcms-input-box">
-        <!-- ko ifnot: isActive() -->
+        @if (Model.CanBeEdited)
+        {
+            <!-- ko if: !isActive() || (@(Model.ValueBind).editingIsDisabled && @(Model.ValueBind).editingIsDisabled()) -->
+        }
         <a class="bcms-tables-link" data-bind="text: @(Model.ValueBind)()"></a>
-        <!-- /ko -->
-        <!-- ko if: isActive() -->
-        <input type="text" class="bcms-editor-field-box" data-bind="
+        @if (Model.CanBeEdited)
+        {
+            <!-- /ko -->
+            <!-- ko if: isActive() && (!@(Model.ValueBind).editingIsDisabled || !@(Model.ValueBind).editingIsDisabled()) -->
+            <input type="text" class="bcms-editor-field-box" data-bind="
             css: { 'bcms-input-validation-error': !isNew() && @(Model.ValueBind).hasError && @(Model.ValueBind).hasError() },
             value: @Model.ValueBind, 
             valueUpdate: 'afterkeydown', 
@@ -19,6 +24,7 @@
                 <span data-bind="html: @(Model.ValueBind).validationMessage()"></span>
             </span>
             <!-- /ko -->
-        <!-- /ko -->
+            <!-- /ko -->
+        }
     </div>
 </td>
