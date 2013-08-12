@@ -4,6 +4,7 @@ using System.Web.Mvc;
 
 using BetterCms.Core.Security;
 using BetterCms.Module.MediaManager.ViewModels;
+using BetterCms.Module.Pages.Command.Page.AddNewPage;
 using BetterCms.Module.Pages.Command.Page.ClonePage;
 using BetterCms.Module.Pages.Command.Page.CreatePage;
 using BetterCms.Module.Pages.Command.Page.DeletePage;
@@ -21,7 +22,6 @@ using BetterCms.Module.Pages.ViewModels.Page;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
-using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 using BetterCms.Module.Root.ViewModels.Security;
 
 using Microsoft.Web.Mvc;
@@ -84,16 +84,8 @@ namespace BetterCms.Module.Pages.Controllers
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         public ActionResult AddNewPage(string parentPageUrl)
         {
-            AddNewPageViewModel model = new AddNewPageViewModel { ParentPageUrl = parentPageUrl };
-            model.Templates = GetCommand<GetTemplatesCommand>().ExecuteCommand(new GetTemplatesRequest()).Templates;
-
-            // Select first template as active
-            if (model.Templates.Count > 0)
-            {
-                model.Templates.ToList().ForEach(x => x.IsActive = false);
-                model.Templates.First().IsActive = true;
-                model.TemplateId = model.Templates.First().TemplateId;
-            }
+            var request = new AddNewPageCommandRequest { ParentPageUrl = parentPageUrl };
+            var model = GetCommand<AddNewPageCommand>().ExecuteCommand(request);
 
             return View(model);
         }

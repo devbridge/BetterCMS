@@ -5,13 +5,15 @@ using System.ComponentModel.DataAnnotations;
 using BetterCms.Core.Models;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Mvc.Attributes;
+using BetterCms.Module.Pages.ViewModels.Option;
+using BetterCms.Module.Root.ViewModels.Option;
 
 namespace BetterCms.Module.Pages.ViewModels.Page
 {
     /// <summary>
     /// Add new page view model.
     /// </summary>
-    public class AddNewPageViewModel
+    public class AddNewPageViewModel : IOptionValuesContainer
     {
         /// <summary>
         /// Gets or sets the page title.
@@ -57,6 +59,14 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// </value>
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "AddNewPageProperties_TemplateId_RequiredMessage")]
         public Guid TemplateId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the page option values.
+        /// </summary>
+        /// <value>
+        /// The page option values.
+        /// </value>
+        public IList<OptionValueEditViewModel> OptionValues { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

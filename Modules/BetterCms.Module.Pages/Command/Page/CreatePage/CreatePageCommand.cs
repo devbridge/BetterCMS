@@ -64,7 +64,17 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
                     Layout = Repository.First<Root.Models.Layout>(request.TemplateId),
                     Status = PageStatus.Unpublished
                 };
-                
+
+            /*
+            // Get layout options, page options and merge them
+            var layoutOptions = Repository.AsQueryable<LayoutOption>(lo => lo.Layout.Id == model.Model.TemplateId).ToList();
+            var pageOptions = Repository
+                .AsQueryable<PageOption>(p => p.Page.Id == id)
+                .ToList();
+
+            model.Model.OptionValues = optionService.GetMergedOptionValuesForEdit(layoutOptions, pageOptions); 
+            */
+
             Repository.Save(page);
             UnitOfWork.Commit();
 
