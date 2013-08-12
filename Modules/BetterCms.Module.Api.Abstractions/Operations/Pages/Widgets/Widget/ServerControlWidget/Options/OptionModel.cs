@@ -1,12 +1,11 @@
 ﻿using System.Runtime.Serialization;
 
-using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Root;
 
 namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidget.Options
 {
     [DataContract]
-    public class OptionModel : ModelBase
+    public class OptionModel
     {
         /// <summary>
         /// Gets or sets the option key.

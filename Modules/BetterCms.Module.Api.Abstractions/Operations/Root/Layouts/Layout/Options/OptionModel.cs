@@ -5,7 +5,7 @@ using BetterCms.Module.Api.Infrastructure;
 namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout.Options
 {
     [DataContract]
-    public class OptionModel : ModelBase
+    public class OptionModel
     {
         /// <summary>
         /// Gets or sets the option key.

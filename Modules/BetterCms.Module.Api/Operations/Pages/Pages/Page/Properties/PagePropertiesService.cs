@@ -3,8 +3,11 @@
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
+
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Pages.Services;
+using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Services;
 
 using ServiceStack.ServiceInterface;
 
@@ -15,11 +18,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         private readonly IRepository repository;
 
         private readonly IUrlService urlService;
+        
+        private readonly IOptionService optionService;
 
-        public PagePropertiesService(IRepository repository, IUrlService urlService)
+        public PagePropertiesService(IRepository repository, IUrlService urlService, IOptionService optionService)
         {
             this.repository = repository;
             this.urlService = urlService;
+            this.optionService = optionService;
         }
 
         public GetPagePropertiesResponse Get(GetPagePropertiesRequest request)
@@ -150,6 +156,27 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                 response.PageContents = LoadPageContents(response.Data.Id);
             }
 
+            if (request.Data.IncludePageOptions)
+            {
+                // Get layout options, page options and merge them
+                var layoutOptions = repository
+                    .AsQueryable<LayoutOption>(lo => lo.Layout.Id == response.Data.LayoutId).ToList();
+                var pageOptions = repository
+                    .AsQueryable<PageOption>(p => p.Id == response.Data.Id)
+                    .ToList();
+
+                response.PageOptions = optionService
+                    .GetMergedOptionValuesForEdit(layoutOptions, pageOptions)
+                    .Select(o => new OptionModel
+                            {
+                                Key = o.OptionKey,
+                                Value = o.OptionValue,
+                                DefaultValue = o.OptionDefaultValue,
+                                Type = ((Root.OptionType)(int)o.Type)
+                            })
+                    .ToList();
+            }
+
             return response;
         }
 
@@ -173,7 +200,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         private System.Collections.Generic.List<PageContentModel> LoadPageContents(System.Guid blogPostId)
         {
             var results = repository
-                 .AsQueryable<Module.Root.Models.PageContent>(pageContent => pageContent.Page.Id == blogPostId)
+                 .AsQueryable<PageContent>(pageContent => pageContent.Page.Id == blogPostId)
                  .OrderBy(pageContent => pageContent.Order)
                  .Select(pageContent => new
                     {
