@@ -335,7 +335,7 @@
     <EmbeddedResource Include="Views\Upload\MultiFileUpload.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Files\FileEditor.cshtml" />
+    <EmbeddedResource Include="Views\Files\FileEditor.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
