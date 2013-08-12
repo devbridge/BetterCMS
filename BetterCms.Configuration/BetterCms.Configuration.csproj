@@ -100,12 +100,14 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Configuration\AccessControlElement.cs" />
     <Compile Include="Configuration\CmsConfigurationSection.cs" />
     <Compile Include="Configuration\CmsDatabaseConfigurationElement.cs" />
     <Compile Include="Configuration\CmsModuleGalleryConfigurationElement.cs" />
     <Compile Include="Configuration\CmsCacheConfigurationElement.cs" />
     <Compile Include="Configuration\CacheServiceType.cs" />
     <Compile Include="Configuration\CmsInstallationConfigurationElement.cs" />
+    <Compile Include="Configuration\AccessControlCollection.cs" />
     <Compile Include="Configuration\CustomRoleElement.cs" />
     <Compile Include="Configuration\CustomRolesCollection.cs" />
     <Compile Include="Configuration\DatabaseType.cs" />

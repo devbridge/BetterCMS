@@ -1,6 +1,7 @@
 ﻿@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.Page
+@using BetterCms.Module.Root
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
@@ -31,6 +32,11 @@
                 <a class="bcms-btn-close" id="bcms-addnewpage-closeinfomessage">@RootGlobalization.Button_Close</a>
                 @Html.Raw(PagesGlobalization.AddNewPage_Template_InfoMessage_Text)
             </div>
+            
+             if(Model.AccessControlEnabled)
+             {
+                 @Html.Partial(RootModuleConstants.AccessControlTemplate)
+             }
 
             @Html.Partial("Partial/TemplatesList", Model.Templates)
             @Html.HiddenFor(f => f.TemplateId, new { @id = "TemplateId" })

@@ -24,6 +24,7 @@ namespace BetterCms.Configuration
         private const string UrlPatternsNode = "urlPatterns";
         private const string InstallationNode = "installation";
         private const string AccessControlEnabledAttribute = "accessControlEnabled";
+        private const string DefaultAccessControlListNode = "accessControlList";
 
         /// <summary>
         /// The version backing field.
@@ -221,6 +222,16 @@ namespace BetterCms.Configuration
         {
             get { return (CmsSecurityConfigurationElement)this[SecurityNode]; }
             set { this[SecurityNode] = value; }
+        }
+
+        [ConfigurationProperty(DefaultAccessControlListNode, IsDefaultCollection = false)]
+        [ConfigurationCollection(typeof(AccessControlCollection))]
+        public AccessControlCollection DefaultAccessControlList
+        {
+            get
+            {
+                return this[DefaultAccessControlListNode] as AccessControlCollection;
+            }
         }
 
         [ConfigurationProperty(ModuleGalleryNode, IsRequired = true)]

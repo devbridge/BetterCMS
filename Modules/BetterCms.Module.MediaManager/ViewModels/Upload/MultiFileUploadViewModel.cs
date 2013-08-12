@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using BetterCms.Core.Security;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.ViewModels.Security;
 
@@ -21,13 +22,13 @@ namespace BetterCms.Module.MediaManager.ViewModels.Upload
 
         public Guid ReuploadMediaId { get; set; }
 
-        public List<UserAccessViewModel> UserAccessList { get; set; }
+        public List<IUserAccess> UserAccessList { get; set; }
 
         public bool AccessControlEnabled { get; set; }
 
         public MultiFileUploadViewModel()
         {
-            UserAccessList = new List<UserAccessViewModel>();
+            UserAccessList = new List<IUserAccess>();
         }
 
         /// <summary>
