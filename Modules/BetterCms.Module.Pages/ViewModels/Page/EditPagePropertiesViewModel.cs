@@ -212,7 +212,7 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// <value>
         /// The page option values.
         /// </value>
-        public IList<OptionValueViewModel> OptionValues { get; set; }
+        public IList<OptionValueEditViewModel> OptionValues { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

@@ -166,6 +166,11 @@
     <Compile Include="Operations\Pages\Pages\GetPagesResponse.cs" />
     <Compile Include="Operations\Pages\Pages\IPagesService.cs" />
     <Compile Include="Operations\Pages\Pages\PageModel.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Contents\Content\IPageContentService.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Contents\Content\Options\GetPageContentOptionsRequest.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Contents\Content\Options\GetPageContentOptionsResponse.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Contents\Content\Options\IGetPageContentOptionsService.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Contents\Content\Options\OptionModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\GetPageContentsModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\GetPageContentsRequest.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\GetPageContentsRequestValidator.cs" />
@@ -190,6 +195,7 @@
     <Compile Include="Operations\Pages\Pages\Page\Properties\IPagePropertiesService.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\LayoutModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\MetadataModel.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Properties\OptionModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\PageContentModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\PagePropertiesModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\TagModel.cs" />
@@ -227,8 +233,17 @@
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\GetServerControlWidgetRequest.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\GetServerControlWidgetResponse.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\IServerControlWidgetService.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\Options\GetServerControlWidgetOptionsRequest.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\Options\GetServerControlWidgetOptionsResponse.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\Options\IServerControlWidgetOptionsService.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\Options\OptionModel.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\ServerControlWidgetModel.cs" />
     <Compile Include="Operations\Root\Categories\Category\GetCategoryRequestValidator.cs" />
+    <Compile Include="Operations\Root\Layouts\Layout\Options\GetLayoutOptionsRequest.cs" />
+    <Compile Include="Operations\Root\Layouts\Layout\Options\GetLayoutOptionsResponse.cs" />
+    <Compile Include="Operations\Root\Layouts\Layout\Options\ILayoutOptionsService.cs" />
+    <Compile Include="Operations\Root\Layouts\Layout\Options\OptionModel.cs" />
+    <Compile Include="Operations\Root\OptionType.cs" />
     <Compile Include="Operations\Root\Tags\Tag\GetTagRequestValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Operations\Root\Categories\CategoryModel.cs" />

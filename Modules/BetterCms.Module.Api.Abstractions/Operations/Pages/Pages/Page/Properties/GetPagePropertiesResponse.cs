@@ -77,6 +77,15 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         /// The list of page contents.
         /// </value>
         [DataMember]
-        public System.Collections.Generic.IList<PageContentModel> PageContents { get; set; }   
+        public System.Collections.Generic.IList<PageContentModel> PageContents { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the list of page options.
+        /// </summary>
+        /// <value>
+        /// The list of page options.
+        /// </value>
+        [DataMember]
+        public System.Collections.Generic.IList<OptionModel> PageOptions { get; set; }   
     }
 }

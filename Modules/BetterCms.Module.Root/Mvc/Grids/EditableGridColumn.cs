@@ -17,6 +17,8 @@
         public virtual string CellView { get; set; }
         
         public virtual bool AutoFocus { get; set; }
+        
+        public virtual bool CanBeEdited { get; set; }
 
         public virtual string HiddenFieldName { get; set; }
 
@@ -33,6 +35,7 @@
             ValueBind = valueBind ?? "''";
             HeaderView = RootModuleConstants.EditableGridHeaderTemplate;
             CellView = RootModuleConstants.EditableGridCellTemplate;
+            CanBeEdited = true;
         }
     }
 }

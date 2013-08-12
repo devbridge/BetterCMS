@@ -2,8 +2,8 @@
 /*global define, console */
 
 bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bcms.dynamicContent', 'bcms.tags', 'bcms.ko.extenders',
-        'bcms.media', 'bcms.redirect', 'bcms.inlineEdit'],
-    function ($, bcms, modal, forms, dynamicContent, tags, ko, media, redirect, editor) {
+        'bcms.media', 'bcms.redirect', 'bcms.options'],
+    function ($, bcms, modal, forms, dynamicContent, tags, ko, media, redirect, options) {
     'use strict';
 
     var page = {},
@@ -54,10 +54,11 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
     /**
     * Page view model
     */
-    function PageViewModel(image, secondaryImage, featuredImage, tagsViewModel) {
+    function PageViewModel(image, secondaryImage, featuredImage, tagsViewModel, optionListViewModel) {
         var self = this;
 
         self.tags = tagsViewModel;
+        self.options = optionListViewModel;
         self.image = ko.observable(new media.ImageSelectorViewModel(image));
         self.secondaryImage = ko.observable(new media.ImageSelectorViewModel(secondaryImage));
         self.featuredImage = ko.observable(new media.ImageSelectorViewModel(featuredImage));
@@ -67,9 +68,12 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
     * Initializes EditPageProperties dialog events.
     */
     page.initEditPagePropertiesDialogEvents = function (dialog, content) {
-        var tagsViewModel = new tags.TagsListViewModel(content.Data.Tags),
-            pageViewModel = new PageViewModel(content.Data.Image, content.Data.SecondaryImage, content.Data.FeaturedImage, tagsViewModel),
+        var optionsContainer = dialog.container.find(selectors.optionsTab),
+            optionListViewModel = options.createOptionValuesViewModel(optionsContainer, content.Data.OptionValues),
+            tagsViewModel = new tags.TagsListViewModel(content.Data.Tags),
+            pageViewModel = new PageViewModel(content.Data.Image, content.Data.SecondaryImage, content.Data.FeaturedImage, tagsViewModel, optionListViewModel),
             form = dialog.container.find(selectors.pagePropertiesForm);
+        
         ko.applyBindings(pageViewModel, form.get(0));
 
         currentPageIsPublished = dialog.container.find(selectors.pagePropertiesPageIsPublishedCheckbox).is(':checked');
@@ -124,8 +128,8 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 page.closePagePropertiesEditPermalinkBox(dialog);
             }
         });
-        
-        editor.initialize(dialog.container.find(selectors.optionsTab), {});
+
+        return pageViewModel;
     };
 
     /**
@@ -201,12 +205,16 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
     * Opens modal window for given page with page properties
     */
     page.openEditPageDialog = function (id, postSuccess) {
+        var pageViewModel;
+
         modal.open({
             title: globalization.editPagePropertiesModalTitle,
             onLoad: function (dialog) {
                 var url = $.format(links.loadEditPropertiesDialogUrl, id);
                 dynamicContent.bindDialog(dialog, url, {
-                    contentAvailable: page.initEditPagePropertiesDialogEvents,
+                    contentAvailable: function(childDialog, content) {
+                        pageViewModel = page.initEditPagePropertiesDialogEvents(childDialog, content);
+                    },
 
                     beforePost: function () {
                         if (!dialog.container.find(selectors.permalinkEditField).valid()) {
@@ -226,7 +234,8 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                             });
                             return false;
                         }
-                        return true;
+                        
+                        return pageViewModel.options.isValid(true);
                     },
 
                     postSuccess: postSuccess

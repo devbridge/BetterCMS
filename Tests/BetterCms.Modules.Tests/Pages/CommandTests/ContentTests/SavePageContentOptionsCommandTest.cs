@@ -38,27 +38,27 @@ namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
                 // Create request
                 var request = new PageContentOptionsViewModel
                     {
-                        OptionValues = new List<OptionValueViewModel>
+                        OptionValues = new List<OptionValueEditViewModel>
                             {
-                                  new OptionValueViewModel
+                                  new OptionValueEditViewModel
                                       {
                                           // Will be deleted because of default value
                                           OptionValue = content.ContentOptions[0].DefaultValue,
                                           OptionKey = pageContent.Options[0].Key,
                                           OptionDefaultValue = content.ContentOptions[0].DefaultValue
                                       },
-                                  new OptionValueViewModel
+                                  new OptionValueEditViewModel
                                       {
                                           // Will be deleted because of null value
                                           OptionValue = null,
                                           OptionKey = pageContent.Options[1].Key
                                       },
-                                  new OptionValueViewModel
+                                  new OptionValueEditViewModel
                                       {
                                           OptionValue = pageContent.Options[2].Value,
                                           OptionKey = pageContent.Options[2].Key
                                       },
-                                  new OptionValueViewModel
+                                  new OptionValueEditViewModel
                                       {
                                           // Random value
                                           OptionValue = randomOptionValue.Value,

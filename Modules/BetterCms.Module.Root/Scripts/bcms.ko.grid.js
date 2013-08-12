@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messages', 'bcms.modal'],
-    function ($, bcms, ko, messages, modal) {
+bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messages', 'bcms.modal', 'bcms.tabs'],
+    function ($, bcms, ko, messages, modal, tabs) {
     'use strict';
 
     var grid = {},
@@ -214,7 +214,17 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     }
                 }
             };
-            
+
+            self.isValid = function(setFocus) {
+                for (var i = 0; i < self.items().length; i++) {
+                    if (!self.items()[i].isValid(setFocus)) {
+                        return false;
+                    }
+                }
+                
+                return true;
+            };
+
             // Set items
             if (items && $.isArray(items)) {
                 self.setItems(items);
@@ -263,11 +273,22 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             self.field(oldValue);
         };
 
-        self.isValid = function () {
+        self.isValid = function (setFocus) {
             if (self.field.hasError && self.field.hasError()) {
+                if (setFocus) {
+                    if (self.field.domElement) {
+                        var domElement = $(self.field.domElement);
+                        if (domElement) {
+                            var tabPanel = tabs.getTabPanelOfElement(domElement);
+                            if (tabPanel) {
+                                tabPanel.selectTabOfElement(domElement);
+                            }
+                            domElement.focus();
+                        }
+                    }
+                }
                 return false;
             }
-
             return true;
         };
     };
@@ -292,6 +313,7 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             self.isSelected = false;
             self.registeredFields = [];
             self.savePressed = false;
+            self.deletingIsDisabled = false;
 
             // Indicates, if item is still in add new phase
             self.isNew = ko.observable(item.IsNew || false);
@@ -367,11 +389,11 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 }
             };
 
-            self.isValid = function () {
+            self.isValid = function (setFocus) {
                 for (var i = 0; i < self.registeredFields.length; i++) {
                     var field = self.registeredFields[i];
                     
-                    if (!field.isValid()) {
+                    if (!field.isValid(setFocus)) {
                         return false;
                     }
                 }
@@ -386,6 +408,12 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
 
             self.hiddenFieldName = function (pattern, index) {
                 return $.format(pattern, index);
+            };
+
+            self.initInput = function (element, field) {
+                if (element && field && $.isFunction(field)) {
+                    field.domElement = element;
+                }
             };
         };
 
@@ -424,7 +452,7 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                             self.saveItem();
                         }
                     }
-                }, 500);
+                }, 100);
 
             saveTimers.push({id: self.id, timer: saveTimer});
         };

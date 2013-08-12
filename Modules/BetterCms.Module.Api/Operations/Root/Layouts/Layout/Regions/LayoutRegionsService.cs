@@ -8,7 +8,7 @@ using ServiceStack.ServiceInterface;
 
 namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout.Regions
 {
-    public class LayoutRegionsService : Service, ILayoutRegionService
+    public class LayoutRegionsService : Service, ILayoutRegionsService
     {
         private readonly IRepository repository;
 

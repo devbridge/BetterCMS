@@ -118,10 +118,10 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                 // Get layout options, page options and merge them
                 var layoutOptions = Repository.AsQueryable<LayoutOption>(lo => lo.Layout.Id == model.Model.TemplateId).ToList();
                 var pageOptions = Repository
-                    .AsQueryable<PageOption>()
+                    .AsQueryable<PageOption>(p => p.Id == id)
                     .ToList();
 
-                model.Model.OptionValues = optionService.MergeOptionsAndValues(layoutOptions, pageOptions, true);
+                model.Model.OptionValues = optionService.GetMergedOptionValuesForEdit(layoutOptions, pageOptions);
             }
 
             return model != null ? model.Model : null;

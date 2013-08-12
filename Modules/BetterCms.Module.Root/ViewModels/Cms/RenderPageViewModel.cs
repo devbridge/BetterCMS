@@ -110,7 +110,7 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         /// <value>
         /// The page options.
         /// </value>
-        public List<OptionValueViewModel> Options { get; set; }
+        public List<IOptionValue> Options { get; set; }
 
         /// <summary>
         /// Gets or sets the list of meta data projections.

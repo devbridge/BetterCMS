@@ -5,6 +5,7 @@ using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 
 using BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents;
+using BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page.Exists;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties;
 using BetterCms.Module.Pages.Services;
@@ -21,14 +22,17 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
 
         private readonly IPageContentsService pageContentsService;
 
+        private readonly IPageContentService pageContentService;
+
         private readonly IRepository repository;
 
         private readonly IUrlService urlService;
 
-        public PageService(IRepository repository, IPagePropertiesService pagePropertiesService, 
-            IPageExistsService pageExistsService, IPageContentsService pageContentsService, IUrlService urlService)
+        public PageService(IRepository repository, IPagePropertiesService pagePropertiesService, IPageExistsService pageExistsService, 
+            IPageContentsService pageContentsService, IPageContentService pageContentService, IUrlService urlService)
         {
             this.pageContentsService = pageContentsService;
+            this.pageContentService = pageContentService;
             this.pagePropertiesService = pagePropertiesService;
             this.pageExistsService = pageExistsService;
             this.repository = repository;
@@ -96,6 +100,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
             get
             {
                 return pageContentsService;
+            }
+        }
+
+        IPageContentService IPageService.Content
+        {
+            get
+            {
+                return pageContentService;
             }
         }
     }

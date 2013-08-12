@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 using BetterCms.Core.DataAccess;
@@ -7,6 +8,7 @@ using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Models;
+
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models.Extensions;
 using BetterCms.Module.Root.ViewModels.Option;
@@ -30,17 +32,16 @@ namespace BetterCms.Module.Root.Services
         }
 
         /// <summary>
-        /// Merges the options and values to one lsit of option value view models.
+        /// Merges options and values and returns one list with option value view models for edit (values are returned as strings).
         /// </summary>
         /// <param name="options">The options.</param>
         /// <param name="optionValues">The option values.</param>
-        /// <param name="forEdit">if set to <c>true</c> values are merged for edit.</param>
         /// <returns>
         /// List of option values view models, merged from options and option values
         /// </returns>
-        public IList<OptionValueViewModel> MergeOptionsAndValues(IEnumerable<IOption> options, IEnumerable<IOption> optionValues, bool forEdit)
+        public List<OptionValueEditViewModel> GetMergedOptionValuesForEdit(IEnumerable<IOption> options, IEnumerable<IOption> optionValues)
         {
-            var optionModels = new List<OptionValueViewModel>();
+            var optionModels = new List<OptionValueEditViewModel>();
 
             if (optionValues != null)
             {
@@ -52,13 +53,18 @@ namespace BetterCms.Module.Root.Services
                         option = options.FirstOrDefault(f => f.Key.Trim().Equals(optionValue.Key.Trim(), StringComparison.OrdinalIgnoreCase));
                     }
 
-                    var optionViewModel = new OptionValueViewModel
+                    var optionViewModel = new OptionValueEditViewModel
                                               {
                                                   Type = optionValue.Type,
                                                   OptionKey = optionValue.Key.Trim(),
                                                   OptionValue = optionValue.Value,
                                                   OptionDefaultValue = option != null ? option.Value : null
                                               };
+
+                    if (option == null)
+                    {
+                        optionViewModel.CanEditOption = true;
+                    }
 
                     optionModels.Add(optionViewModel);
                 }
@@ -68,18 +74,13 @@ namespace BetterCms.Module.Root.Services
             {
                 foreach (var option in options.Distinct())
                 {
-                    if (!forEdit && string.IsNullOrWhiteSpace(option.Value))
-                    {
-                        continue;
-                    }
-
                     if (!optionModels.Any(f => f.OptionKey.Equals(option.Key.Trim(), StringComparison.OrdinalIgnoreCase)))
                     {
-                        optionModels.Add(new OptionValueViewModel
+                        optionModels.Add(new OptionValueEditViewModel
                         {
                             Type = option.Type,
                             OptionKey = option.Key.Trim(),
-                            OptionValue = forEdit ? null : option.Value,
+                            OptionValue = null,
                             OptionDefaultValue = option.Value
                         });
                     }
@@ -90,13 +91,74 @@ namespace BetterCms.Module.Root.Services
         }
 
         /// <summary>
+        /// Merges options and values and returns one list with option value view models for use (values are returned as objects).
+        /// </summary>
+        /// <param name="options">The options.</param>
+        /// <param name="optionValues">The option values.</param>
+        /// <returns>
+        /// List of option values view models, merged from options and option values
+        /// </returns>
+        public List<IOptionValue> GetMergedOptionValues(IEnumerable<IOption> options, IEnumerable<IOption> optionValues)
+        {
+            var optionModels = new List<IOptionValue>();
+
+            if (optionValues != null)
+            {
+                foreach (var optionValue in optionValues.Distinct())
+                {
+                    var value = GetValueSafe(optionValue);
+
+                    if (value != null)
+                    {
+                        var optionViewModel = new OptionValueViewModel
+                        {
+                            Type = optionValue.Type,
+                            OptionKey = optionValue.Key.Trim(),
+                            OptionValue = value
+                        };
+                        optionModels.Add(optionViewModel);
+                    }
+                }
+            }
+
+            if (options != null)
+            {
+                foreach (var option in options.Distinct())
+                {
+                    if (string.IsNullOrWhiteSpace(option.Value))
+                    {
+                        continue;
+                    }
+
+                    if (!optionModels.Any(f => f.Key.Equals(option.Key.Trim(), StringComparison.OrdinalIgnoreCase)))
+                    {
+                        var value = GetValueSafe(option);
+
+                        if (value != null)
+                        {
+                            var optionViewModel = new OptionValueViewModel
+                            {
+                                Type = option.Type,
+                                OptionKey = option.Key.Trim(),
+                                OptionValue = value
+                            };
+                            optionModels.Add(optionViewModel);
+                        }
+                    }
+                }
+            }
+
+            return optionModels.OrderBy(o => o.Key).ToList();
+        }
+
+        /// <summary>
         /// Saves the option values: adds new option values and empty values.
         /// </summary>
         /// <typeparam name="TEntity">The type of the entity.</typeparam>
         /// <param name="optionViewModels">The option view models.</param>
         /// <param name="savedOptions">The saved options.</param>
         /// <param name="entityCreator">The entity creator.</param>
-        public void SaveOptionValues<TEntity>(IEnumerable<OptionValueViewModel> optionViewModels, IEnumerable<TEntity> savedOptions,
+        public void SaveOptionValues<TEntity>(IEnumerable<OptionValueEditViewModel> optionViewModels, IEnumerable<TEntity> savedOptions,
             Func<TEntity> entityCreator)
             where TEntity : Entity, IOption
         {
@@ -149,6 +211,26 @@ namespace BetterCms.Module.Root.Services
         }
 
         /// <summary>
+        /// Gets the safe value (doesn't fail on exception).
+        /// </summary>
+        /// <param name="option">The option.</param>
+        /// <returns>Value, converted to correct type or null, if conversion is impossible</returns>
+        private object GetValueSafe(IOption option)
+        {
+            var value = option.Value;
+            var type = option.Type;
+
+            try
+            {
+                return ConvertValueToCorrectType(value, type);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Converts option value to the correct value type.
         /// </summary>
         /// <param name="value">The value.</param>
@@ -167,10 +249,10 @@ namespace BetterCms.Module.Root.Services
                     return value;
 
                 case OptionType.Integer:
-                    return Convert.ToInt64(value);
+                    return Convert.ToInt64(value, CultureInfo.InvariantCulture);
 
                 case OptionType.Float:
-                    return Convert.ToDecimal(value);
+                    return Convert.ToDecimal(value, CultureInfo.InvariantCulture);
 
                 case OptionType.DateTime:
                     return Convert.ToDateTime(value);

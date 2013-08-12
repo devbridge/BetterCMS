@@ -68,15 +68,21 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
         * Opens template edit dialog.
         */
         template.openEditTemplateDialog = function (templateId, onSaveCallback) {
+            var optionsViewModel;
+
             modal.open({
                 title: globalization.editTemplateDialogTitle,
                 onLoad: function (childDialog) {
                     dynamicContent.bindDialog(childDialog, $.format(links.loadEditTemplateDialogUrl, templateId), {
-                        contentAvailable: initializeEditTemplateForm,
+                        contentAvailable: function (dialog, content) {
+                            optionsViewModel = initializeEditTemplateForm(dialog, content);
+                        },
 
                         beforePost: function (form) {
                             editor.resetAutoGenerateNameId();
                             editor.setInputNames(form.find(selectors.regionsTab));
+
+                            return optionsViewModel.isValid(true);
                         },
 
                         postSuccess: onSaveCallback
@@ -89,15 +95,21 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
         * Opens template create form from site settings template list
         */
         template.openRegisterTemplateDialog = function (onSaveCallback) {
+            var optionsViewModel;
+
             modal.open({
                 title: globalization.createTemplateDialogTitle,
                 onLoad: function (childDialog) {
                     dynamicContent.bindDialog(childDialog, links.loadRegisterTemplateDialogUrl, {
-                        contentAvailable: initializeEditTemplateForm,
+                        contentAvailable: function(dialog, content) {
+                            optionsViewModel = initializeEditTemplateForm(dialog, content);
+                        },
 
                         beforePost: function (form) {
                             editor.resetAutoGenerateNameId();
                             editor.setInputNames(form.find(selectors.regionsTab));
+                            
+                            return optionsViewModel.isValid(true);
                         },
 
                         postSuccess: onSaveCallback
@@ -113,7 +125,8 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
             var regionsContainer = dialog.container.find(selectors.regionsTab),
                 optionsContainer = dialog.container.find(selectors.optionsTab),
                 form = dialog.container.find(selectors.templateEditForm),
-                optionListViewModel = options.createOptionsViewModel(optionsContainer, content.Data.Options);
+                templateOptions = content && content.Data ? content.Data.Options : null,
+                optionListViewModel = options.createOptionsViewModel(optionsContainer, templateOptions);
 
             // Initialize regions tab
             editor.initialize(regionsContainer, {
@@ -157,6 +170,8 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
             if (previewImage.attr('src')) {
                 previewImage.show();
             }
+
+            return optionListViewModel;
         };
 
         /*

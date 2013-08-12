@@ -93,7 +93,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
             renderPageViewModel.Contents = contentProjections;
             renderPageViewModel.Metadata = pageAccessor.GetPageMetaData(page).ToList();
-            renderPageViewModel.Options = optionService.MergeOptionsAndValues(page.Layout.LayoutOptions, page.Options, false).ToList();
+            renderPageViewModel.Options = optionService.GetMergedOptionValues(page.Layout.LayoutOptions, page.Options).ToList();
 
             // Attach styles.
             var styles = new List<IStylesheetAccessor>();
@@ -176,10 +176,8 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                 throw new CmsException(string.Format("A content version was not found to project on the page. PageContent={0}; Request={1};", pageContent, request));
             }
 
-            var options = new List<IOption>();
-            options.AddRange(pageContent.Options);
-            options.AddRange(pageContent.Content.ContentOptions.Where(f => !pageContent.Options.Any(g => g.Key.Trim().Equals(f.Key.Trim(), StringComparison.OrdinalIgnoreCase))));
-
+            var options = optionService.GetMergedOptionValues(pageContent.Options, pageContent.Content.ContentOptions);
+            
             return pageContentProjectionFactory.Create(pageContent, contentToProject, options);
         }
 
