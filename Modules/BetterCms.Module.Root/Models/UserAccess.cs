@@ -3,7 +3,7 @@
 using BetterCms.Core.Models;
 using BetterCms.Core.Security;
 
-namespace BetterCms.Module.AccessControl.Models
+namespace BetterCms.Module.Root.Models
 {
     /// <summary>
     /// UserAccess entity.

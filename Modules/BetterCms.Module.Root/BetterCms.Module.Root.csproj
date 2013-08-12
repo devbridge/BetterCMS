@@ -157,6 +157,8 @@
     <Compile Include="Models\ContentOption.cs" />
     <Compile Include="Models\ComboWireJson.cs" />
     <Compile Include="Models\Maps\PageOptionMap.cs" />
+    <Compile Include="Models\Maps\UserAccessMap.cs" />
+    <Compile Include="Models\Migrations\Migration201308121549.cs" />
     <Compile Include="Models\Migrations\Migration201308060930.cs" />
     <Compile Include="Models\Migrations\Migration201308051530.cs" />
     <Compile Include="Models\PageOption.cs" />
@@ -190,6 +192,7 @@
     <Compile Include="Models\PageContent.cs" />
     <Compile Include="Models\Region.cs" />
     <Compile Include="Models\Tag.cs" />
+    <Compile Include="Models\UserAccess.cs" />
     <Compile Include="Models\Widget.cs" />
     <Compile Include="Mvc\CommandBase.cs" />
     <Compile Include="Mvc\CommandHandler.cs" />
@@ -253,6 +256,7 @@
     <Compile Include="Mvc\Helpers\MessagesHelper.cs" />
     <Compile Include="Registration\TabsJsModuleIncludeDescriptor.cs" />
     <Compile Include="RootModuleConstants.cs" />
+    <Compile Include="Services\AccessControlService.cs" />
     <Compile Include="Services\DefaultContentService.cs" />
     <Compile Include="Services\DefaultOptionService.cs" />
     <Compile Include="Services\DefaultRenderingService.cs" />
@@ -281,6 +285,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Mvc\Grids\EditableGridColumn.cs" />
+    <Compile Include="ViewModels\Security\UserAccessViewModel.cs" />
     <Compile Include="ViewModels\Shared\EditableGridViewModel.cs" />
     <Compile Include="ViewModels\Sidebar\SidebarContainerViewModel.cs" />
     <Compile Include="ViewModels\ProjectionsViewModel.cs" />
@@ -775,6 +780,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\TopBlock.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Security\AccessControlTemplate.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

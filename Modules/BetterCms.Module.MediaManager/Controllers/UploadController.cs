@@ -4,7 +4,6 @@ using System.Web;
 using System.Web.Mvc;
 
 using BetterCms.Core.Security;
-using BetterCms.Module.AccessControl.Models;
 using BetterCms.Module.MediaManager.Command.Upload;
 using BetterCms.Module.MediaManager.Command.Upload.CheckFileStatuses;
 using BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload;

@@ -2,10 +2,10 @@
 
 using BetterCms.Core.Security;
 
-namespace BetterCms.Module.MediaManager.ViewModels
+namespace BetterCms.Module.Root.ViewModels.Security
 {
     [Serializable]
-    public class UserAccessViewModel
+    public class UserAccessViewModel : IUserAccess
     {
         public Guid Id { get; set; }
 

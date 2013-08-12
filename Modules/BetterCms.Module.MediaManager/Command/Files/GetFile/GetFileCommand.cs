@@ -3,13 +3,14 @@ using System.Globalization;
 using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
-using BetterCms.Module.AccessControl.Models;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Models.Extensions;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.MediaManager.ViewModels.File;
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.ViewModels.Security;
 
 namespace BetterCms.Module.MediaManager.Command.Files.GetFile
 {

@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Emit;
 
 using BetterCms.Configuration;
 using BetterCms.Core.DataAccess.DataContext.Migrations;
 using BetterCms.Core.Environment.Assemblies;
 using BetterCms.Core.Modules;
-using BetterCms.Module.AccessControl;
 using BetterCms.Module.Blog;
 using BetterCms.Module.MediaManager;
 using BetterCms.Module.Newsletter;
@@ -51,7 +49,6 @@ namespace BetterCms.Sandbox.DataMigration
                         new RootModuleDescriptor(configuration),
                         new UsersModuleDescriptor(configuration),
                         new NewsletterModuleDescriptor(configuration),
-                        new UserAccessModuleDescriptor(configuration), 
                     })
                     .ToList();
         }

@@ -1,13 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services.Caching;
-using BetterCms.Module.AccessControl.Models;
+using BetterCms.Module.Root.Models;
 
-namespace BetterCms.Module.AccessControl
+namespace BetterCms.Module.Root.Services
 {
     /// <summary>
     /// Implements access control for objects.
@@ -70,6 +71,61 @@ namespace BetterCms.Module.AccessControl
             }
 
             return accessLevel;
+        }
+
+        public void UpdateAccessControl(IEnumerable<IUserAccess> userAccessList, Guid objectId)
+        {
+            var accessList = userAccessList.ToList();
+
+            // Ensure that each object has ObjectId:
+            accessList.ForEach(x => x.ObjectId = objectId);
+
+            var entities = repository.AsQueryable<UserAccess>()
+                                .Where(x => x.ObjectId == objectId)
+                                .ToList();
+
+            var entitiesToDelete = entities.Where(x => accessList.All(model => model.RoleOrUser != x.RoleOrUser)).ToList();
+
+            var entitesToAdd = accessList
+                                  .Where(x => entities.All(entity => entity.RoleOrUser != x.RoleOrUser))
+                                  .Select(ModelToEntity)
+                                  .ToList();
+
+            var entitiesToUpdate = GetEntitiesToUpdate(accessList, entities);
+
+            entitiesToDelete.ForEach(entity => repository.Delete(entity));
+            entitiesToUpdate.ForEach(entity => repository.Save(entity));
+            entitesToAdd.ForEach(entity => repository.Save(entity));
+        }
+
+        private static UserAccess ModelToEntity(IUserAccess model)
+        {
+            return new UserAccess
+            {
+                ObjectId = model.ObjectId,
+                RoleOrUser = model.RoleOrUser,
+                AccessLevel = model.AccessLevel
+            };
+        }
+
+        private static List<UserAccess> GetEntitiesToUpdate(List<IUserAccess> accessList, List<UserAccess> entities)
+        {
+            var entitiesToUpdate = new List<UserAccess>();
+
+            foreach (var entity in entities)
+            {
+                // Find user access object with the same Role and diferrent AccessLevel:
+                var userAccess = accessList.FirstOrDefault(x => x.RoleOrUser == entity.RoleOrUser && x.AccessLevel != entity.AccessLevel);
+
+                // If found, add to updatables list:
+                if (userAccess != null)
+                {
+                    entity.AccessLevel = userAccess.AccessLevel;
+                    entitiesToUpdate.Add(entity);
+                }
+            }
+
+            return entitiesToUpdate;
         }
     }
 }

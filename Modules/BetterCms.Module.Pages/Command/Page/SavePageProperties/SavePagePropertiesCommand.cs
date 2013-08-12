@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Mvc.Commands;
-
+using BetterCms.Core.Security;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
@@ -52,6 +52,10 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         /// </summary>
         private readonly IOptionService optionService;
 
+        private readonly ICmsConfiguration cmsConfiguration;
+
+        private readonly IAccessControlService accessControlService;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SavePagePropertiesCommand" /> class.
         /// </summary>
@@ -61,8 +65,11 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         /// <param name="sitemapService">The sitemap service.</param>
         /// <param name="urlService">The URL service.</param>
         /// <param name="optionService">The option service.</param>
+        /// <param name="cmsConfiguration">The CMS configuration.</param>
+        /// <param name="accessControlService">The access control service.</param>
         public SavePagePropertiesCommand(IPageService pageService, IRedirectService redirectService, ITagService tagService,
-            ISitemapService sitemapService, IUrlService urlService, IOptionService optionService)
+            ISitemapService sitemapService, IUrlService urlService, IOptionService optionService,
+            ICmsConfiguration cmsConfiguration, IAccessControlService accessControlService)
         {
             this.pageService = pageService;
             this.redirectService = redirectService;
@@ -70,6 +77,8 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             this.sitemapService = sitemapService;
             this.urlService = urlService;
             this.optionService = optionService;
+            this.cmsConfiguration = cmsConfiguration;
+            this.accessControlService = accessControlService;
         }
 
         /// <summary>
@@ -137,6 +146,11 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             page.FeaturedImage = request.FeaturedImage != null && request.FeaturedImage.ImageId.HasValue ? Repository.AsProxy<MediaImage>(request.FeaturedImage.ImageId.Value) : null;
 
             optionService.SaveOptionValues(request.OptionValues, page.Options, () => new Root.Models.PageOption { Page = page });
+
+            if (cmsConfiguration.AccessControlEnabled)
+            {
+                accessControlService.UpdateAccessControl(request.UserAccessList, request.Id);
+            }
 
             Repository.Save(page);
 

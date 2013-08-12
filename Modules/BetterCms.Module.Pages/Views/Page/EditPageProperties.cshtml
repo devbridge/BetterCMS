@@ -95,61 +95,10 @@
                     @Html.Partial("~/Areas/bcms-root/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel)
                 </div>
 
-                @* CODE BELOW CAN BE REUSED *@
-                @* TODO: NEED IMPLEMENTATION
-                <div class="bcms-user-access">
-                    <div class="bcms-input-list-holder">
-                        <div class="bcms-tooltip-mark" data-message="Set user access"></div>
-                        <div class="bcms-content-titles">Users Access</div>
-
-                        <div class="bcms-access-table">
-                            <div class="bcms-access-title clearfix">
-                                <div class="bcms-access-title-text">User</div>
-                                <div class="bcms-access-title-text">Read & Edit</div>
-                                <div class="bcms-access-title-text">Only Read</div>
-                                <div class="bcms-access-title-text">No Access</div>
-                            </div>
-
-                            <div class="bcms-access-line clearfix">
-                                <div class="bcms-access-value">
-                                    <div class="btn-acces-minus">&nbsp;</div>
-                                    Administrator
-                                </div>
-                                <div class="bcms-access-value"><input type="radio" value="readedit" name="administrator" /></div>
-                                <div class="bcms-access-value"><input type="radio" value="readonly" name="administrator" /></div>
-                                <div class="bcms-access-value"><input type="radio" value="noaccess" name="administrator" /></div>
-                            </div>
-
-                            <div class="bcms-access-line clearfix">
-                                <div class="bcms-access-value">
-                                    <div class="btn-acces-minus">&nbsp;</div>
-                                    Developers
-                                </div>
-                                <div class="bcms-access-value"><input type="radio" value="readedit" name="developers" /></div>
-                                <div class="bcms-access-value"><input type="radio" value="readonly" name="developers" /></div>
-                                <div class="bcms-access-value"><input type="radio" value="noaccess" name="developers" /></div>
-                            </div>
-
-                            <div class="bcms-access-line clearfix">
-                                <div class="bcms-access-value">
-                                    <div class="btn-acces-minus">&nbsp;</div>
-                                    Creative
-                                </div>
-                                <div class="bcms-access-value"><input type="radio" value="readedit" name="creative" /></div>
-                                <div class="bcms-access-value"><input type="radio" value="readonly" name="creative" /></div>
-                                <div class="bcms-access-value"><input type="radio" value="noaccess" name="creative" /></div>
-                            </div>
-
-                            <div class="bcms-access-line clearfix">
-                                <div class="bcms-access-value-add">
-                                    <div class="btn-acces-plus">&nbsp;</div>
-                                    Add New User
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                *@
+                @if (Model.AccessControlEnabled)
+                {
+                    @Html.Partial("~/Areas/bcms-root/Views/Security/AccessControlTemplate.cshtml")
+                }
 
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_Tooltip_Description)

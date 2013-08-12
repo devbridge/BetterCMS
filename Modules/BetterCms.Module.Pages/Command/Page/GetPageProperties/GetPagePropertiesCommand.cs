@@ -4,7 +4,6 @@ using System.Linq;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Commands;
-
 using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
@@ -12,6 +11,7 @@ using BetterCms.Module.Pages.ViewModels.Page;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
+using BetterCms.Module.Root.ViewModels.Security;
 
 namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
 {
@@ -35,17 +35,21 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
         /// </summary>
         private readonly IOptionService optionService;
 
+        private readonly ICmsConfiguration cmsConfiguration;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GetPagePropertiesCommand" /> class.
         /// </summary>
         /// <param name="tagService">The tag service.</param>
         /// <param name="categoryService">The category service.</param>
         /// <param name="optionService">The option service.</param>
-        public GetPagePropertiesCommand(ITagService tagService, ICategoryService categoryService, IOptionService optionService)
+        /// <param name="cmsConfiguration">The CMS configuration.</param>
+        public GetPagePropertiesCommand(ITagService tagService, ICategoryService categoryService, IOptionService optionService, ICmsConfiguration cmsConfiguration)
         {
             this.tagService = tagService;
             this.categoryService = categoryService;
             this.optionService = optionService;
+            this.cmsConfiguration = cmsConfiguration;
         }
 
         /// <summary>
@@ -77,6 +81,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                               IsArchived = page.IsArchived,
                               TemplateId = page.Layout.Id,
                               CategoryId = page.Category.Id,
+                              AccessControlEnabled = cmsConfiguration.AccessControlEnabled,
                               Image = page.Image == null ? null :
                                   new ImageSelectorViewModel
                                           {
@@ -122,6 +127,20 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                     .ToList();
 
                 model.Model.OptionValues = optionService.GetMergedOptionValuesForEdit(layoutOptions, pageOptions);
+
+                if (cmsConfiguration.AccessControlEnabled)
+                {
+                    model.Model.UserAccessList = Repository.AsQueryable<UserAccess>()
+                                                .Where(x => x.ObjectId == id)
+                                                .OrderBy(x => x.RoleOrUser)
+                                                .Select(x => new UserAccessViewModel
+                                                {
+                                                    Id = x.Id,
+                                                    AccessLevel = x.AccessLevel,
+                                                    ObjectId = x.ObjectId,
+                                                    RoleOrUser = x.RoleOrUser
+                                                }).ToList();
+                }
             }
 
             return model != null ? model.Model : null;

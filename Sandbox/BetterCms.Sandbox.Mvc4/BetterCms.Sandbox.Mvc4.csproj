@@ -268,10 +268,6 @@
       <Project>{694ca5ca-a0e2-4578-a249-648498b058d7}</Project>
       <Name>BetterCms.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\BetterCms.Module.AccessControl\BetterCms.Module.AccessControl.csproj">
-      <Project>{cbaff601-0a79-4150-9d38-a44c907f98c5}</Project>
-      <Name>BetterCms.Module.AccessControl</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCMS.Module.Blog\BetterCms.Module.Blog.csproj">
       <Project>{a66a3046-ef60-4c51-ada7-eb055763419b}</Project>
       <Name>BetterCms.Module.Blog</Name>
@@ -339,6 +335,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\Layouts\TestLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\bcms-pages\Views\Page\Pages.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

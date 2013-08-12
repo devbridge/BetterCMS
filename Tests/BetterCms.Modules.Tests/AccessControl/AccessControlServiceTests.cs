@@ -5,8 +5,8 @@ using System.Security.Principal;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.Security;
-using BetterCms.Module.AccessControl;
-using BetterCms.Module.AccessControl.Models;
+using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Services;
 
 using Moq;
 

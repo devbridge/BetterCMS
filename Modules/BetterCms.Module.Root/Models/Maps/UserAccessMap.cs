@@ -1,11 +1,11 @@
 ﻿using BetterCms.Core.Models;
 
-namespace BetterCms.Module.AccessControl.Models.Maps
+namespace BetterCms.Module.Root.Models.Maps
 {
     public class UserAccessMap : EntityMapBase<UserAccess>
     {
         public UserAccessMap()
-            : base(UserAccessModuleDescriptor.ModuleName)
+            : base(RootModuleDescriptor.ModuleName)
         {
             Table("UserAccess");
 

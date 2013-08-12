@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.Root.ViewModels.Security;
 
 namespace BetterCms.Module.MediaManager.ViewModels.Upload
 {

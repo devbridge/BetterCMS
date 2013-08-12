@@ -117,7 +117,9 @@ namespace BetterCms.Module.Root
             containerBuilder.RegisterType<DefaultRenderingService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<PageStylesheetProjectionFactory>().AsSelf().InstancePerLifetimeScope();
             containerBuilder.RegisterType<PageJavaScriptProjectionFactory>().AsSelf().InstancePerLifetimeScope();
-            containerBuilder.RegisterType<DefaultOptionService>().AsImplementedInterfaces().InstancePerLifetimeScope();            
+            containerBuilder.RegisterType<DefaultOptionService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<AccessControlService>().AsImplementedInterfaces().InstancePerDependency();
+
         }
 
         /// <summary>
@@ -284,7 +286,7 @@ namespace BetterCms.Module.Root
                             Title = () => RootGlobalization.SiteSettings_TagsMenuItem,
                             CssClass = page => "bcms-sidebar-link",
                             AccessRole = RootModuleConstants.UserRoles.EditContent
-                        },
+                        }
 
                 };
         }

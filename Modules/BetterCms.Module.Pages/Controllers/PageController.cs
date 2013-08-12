@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
 using BetterCms.Core.Security;
@@ -21,6 +22,7 @@ using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
+using BetterCms.Module.Root.ViewModels.Security;
 
 using Microsoft.Web.Mvc;
 
@@ -149,7 +151,8 @@ namespace BetterCms.Module.Pages.Controllers
                                Image = success ? model.Image : new ImageSelectorViewModel(),
                                SecondaryImage = success ? model.SecondaryImage : new ImageSelectorViewModel(),
                                FeaturedImage = success ? model.FeaturedImage : new ImageSelectorViewModel(),
-                               OptionValues = success ? model.OptionValues : null
+                               OptionValues = success ? model.OptionValues : null,
+                               UserAccessList = success ? model.UserAccessList : new List<UserAccessViewModel>()
                            };
 
             return ComboWireJson(success, view, json, JsonRequestBehavior.AllowGet);

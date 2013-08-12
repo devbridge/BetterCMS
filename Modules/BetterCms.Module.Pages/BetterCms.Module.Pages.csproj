@@ -359,7 +359,6 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Scripts\bcms.pages.properties.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.redirects.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.seo.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.history.js" />
@@ -369,6 +368,7 @@
     <EmbeddedResource Include="Scripts\bcms.pages.filter.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.template.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.widgets.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.properties.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -412,9 +412,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Page\EditPageProperties.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Page\Pages.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Page\Partial\AddNewPageEditPermalink.cshtml" />
@@ -509,6 +506,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Views\Option\Partial\OptionCell.cshtml" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

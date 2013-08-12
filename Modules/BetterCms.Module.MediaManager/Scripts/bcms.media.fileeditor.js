@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global define, console */
+/*global bettercms */
 
-bettercms.define('bcms.media.fileeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.ko.extenders', 'bcms.tags'],
-    function($, bcms, modal, siteSettings, forms, dynamicContent, ko, tags) {
+bettercms.define('bcms.media.fileeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.ko.extenders', 'bcms.tags', 'bcms.security'],
+    function ($, bcms, modal, siteSettings, forms, dynamicContent, ko, tags, security) {
         'use strict';
 
         var editor = {},
@@ -19,12 +19,12 @@ bettercms.define('bcms.media.fileeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 selectableInputs: 'input.bcms-editor-selectable-field-box'
             },
             links = {
-                fileEditorDialogUrl: null,
+                fileEditorDialogUrl: null
             },
             globalization = {
                 fileEditorDialogTitle: null,
                 fileEditorUpdateFailureMessageTitle: null,
-                fileEditorUpdateFailureMessageMessage: null,
+                fileEditorUpdateFailureMessageMessage: null
             },
             media = null;
 
@@ -33,7 +33,7 @@ bettercms.define('bcms.media.fileeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 
         */
         editor.links = links;
         editor.globalization = globalization;
-        editor.SetMedia = function(mediaModule) {
+        editor.SetMedia = function (mediaModule) {
             media = mediaModule;
         };
 
@@ -86,37 +86,6 @@ bettercms.define('bcms.media.fileeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 
             self.image = ko.observable(new media.ImageSelectorViewModel(image));
             self.accessControl = accessControl;
         }
-        
-        function UserAccessViewModel(item) {
-            this.RoleOrUser = ko.observable(item.RoleOrUser);
-            this.AccessLevel = ko.observable(item.AccessLevel || 1);
-        }
-
-        function createUserAccessViewModel(accessList) {
-            var model = {
-                UserAccessList: ko.observableArray(),
-                newUser: ko.observable(''),
-                addNewUser: function () {
-                    if (!model.newUser()) {
-                        return;
-                    }
-                    model.UserAccessList.push(new UserAccessViewModel({ RoleOrUser: model.newUser() }));
-                    model.newUser('');
-                },
-                removeUser: function (userAccessViewModel) {
-                    model.UserAccessList.remove(userAccessViewModel);
-                },
-                getPropertyIndexer: function (i, propName) {
-                    return 'UserAccessList[' + i + '].' + propName;
-                }
-            };
-
-            $.each(accessList, function (i, item) {
-                model.UserAccessList.push(new UserAccessViewModel(item));
-            });
-
-            return model;
-        }
 
         /**
         * Initializes dialog events.
@@ -124,9 +93,9 @@ bettercms.define('bcms.media.fileeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 
         function initFileEditorDialogEvents(dialog, content) {
 
             var tagsViewModel = new tags.TagsListViewModel(content.Data.Tags),
-                accessControl = createUserAccessViewModel(content.Data.UserAccessList),
+                accessControl = security.createUserAccessViewModel(content.Data.UserAccessList),
                 viewModel = new FileEditViewModel(tagsViewModel, content.Data.Image, accessControl);
-            
+
             ko.applyBindings(viewModel, dialog.container.find(selectors.fileEditorForm).get(0));
 
             dialog.container.find(selectors.selectableInputs).on('click', function () {
