@@ -71,45 +71,5 @@ namespace BetterCms.Module.AccessControl
 
             return accessLevel;
         }
-
-        /// <summary>
-        /// Updates the access control.
-        /// </summary>
-        /// <param name="objectId">The object id.</param>
-        /// <param name="roleOrUser">The user.</param>
-        /// <param name="accessLevel">The access level.</param>
-        public void UpdateAccessControl(Guid objectId, string roleOrUser, AccessLevel accessLevel)
-        {
-            var userAccess = repository.FirstOrDefault<UserAccess>(x => x.ObjectId == objectId && x.RoleOrUser == roleOrUser);
-
-            if (userAccess == null)
-            {
-                userAccess = new UserAccess
-                                 {
-                                     ObjectId = objectId,
-                                     RoleOrUser = roleOrUser,
-                                     AccessLevel = accessLevel
-                                 };
-            }
-
-            repository.Save(userAccess);
-        }
-
-        /// <summary>
-        /// Removes the access control.
-        /// </summary>
-        /// <param name="objectId">The object id.</param>
-        /// <param name="roleOrUser">The user.</param>
-        public void RemoveAccessControl(Guid objectId, string roleOrUser)
-        {
-            var userAccess = repository.FirstOrDefault<UserAccess>(x => x.ObjectId == objectId && x.RoleOrUser == roleOrUser);
-
-            if (userAccess == null)
-            {
-                return;
-            }
-
-            repository.Delete(userAccess);
-        }
     }
 }

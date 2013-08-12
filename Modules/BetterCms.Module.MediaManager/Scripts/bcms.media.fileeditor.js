@@ -80,10 +80,42 @@ bettercms.define('bcms.media.fileeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 
         /**
         * File edit form view model
         */
-        function FileEditViewModel(tagsViewModel, image) {
+        function FileEditViewModel(tagsViewModel, image, accessControl) {
             var self = this;
             self.tags = tagsViewModel;
             self.image = ko.observable(new media.ImageSelectorViewModel(image));
+            self.accessControl = accessControl;
+        }
+        
+        function UserAccessViewModel(item) {
+            this.RoleOrUser = ko.observable(item.RoleOrUser);
+            this.AccessLevel = ko.observable(item.AccessLevel || 1);
+        }
+
+        function createUserAccessViewModel(accessList) {
+            var model = {
+                UserAccessList: ko.observableArray(),
+                newUser: ko.observable(''),
+                addNewUser: function () {
+                    if (!model.newUser()) {
+                        return;
+                    }
+                    model.UserAccessList.push(new UserAccessViewModel({ RoleOrUser: model.newUser() }));
+                    model.newUser('');
+                },
+                removeUser: function (userAccessViewModel) {
+                    model.UserAccessList.remove(userAccessViewModel);
+                },
+                getPropertyIndexer: function (i, propName) {
+                    return 'UserAccessList[' + i + '].' + propName;
+                }
+            };
+
+            $.each(accessList, function (i, item) {
+                model.UserAccessList.push(new UserAccessViewModel(item));
+            });
+
+            return model;
         }
 
         /**
@@ -91,9 +123,10 @@ bettercms.define('bcms.media.fileeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 
         */
         function initFileEditorDialogEvents(dialog, content) {
 
-            var data = content.Data ? content.Data : { };
             var tagsViewModel = new tags.TagsListViewModel(content.Data.Tags),
-                viewModel = new FileEditViewModel(tagsViewModel, content.Data.Image);
+                accessControl = createUserAccessViewModel(content.Data.UserAccessList),
+                viewModel = new FileEditViewModel(tagsViewModel, content.Data.Image, accessControl);
+            
             ko.applyBindings(viewModel, dialog.container.find(selectors.fileEditorForm).get(0));
 
             dialog.container.find(selectors.selectableInputs).on('click', function () {

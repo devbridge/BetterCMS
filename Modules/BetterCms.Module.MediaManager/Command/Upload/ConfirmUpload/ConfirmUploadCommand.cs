@@ -4,7 +4,6 @@ using System.Linq;
 
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Mvc.Commands;
-using BetterCms.Core.Security;
 using BetterCms.Module.AccessControl.Models;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Models.Extensions;
@@ -16,7 +15,16 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
 {
     public class ConfirmUploadCommand : CommandBase, ICommand<MultiFileUploadViewModel, ConfirmUploadResponse>
     {
-        public IAccessControlService AccessControlService { get; set; }
+        private readonly ICmsConfiguration cmsConfiguration;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConfirmUploadCommand"/> class.
+        /// </summary>
+        /// <param name="cmsConfiguration">The CMS configuration.</param>
+        public ConfirmUploadCommand(ICmsConfiguration cmsConfiguration)
+        {
+            this.cmsConfiguration = cmsConfiguration;
+        }
 
         /// <summary>
         /// Executes this command.
@@ -89,7 +97,7 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
                     }
                 }
 
-                if (request.AccessControlEnabled)
+                if (cmsConfiguration.AccessControlEnabled)
                 {
                     foreach (var userAccess in files.SelectMany(x => request.UserAccessList.Select(model => new UserAccess
                     {

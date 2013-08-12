@@ -9,9 +9,5 @@ namespace BetterCms.Core.Security
     public interface IAccessControlService
     {
         AccessLevel GetAccessLevel(Guid objectId, IPrincipal principal);
-
-        void UpdateAccessControl(Guid objectId, string roleOrUser, AccessLevel accessLevel);
-
-        void RemoveAccessControl(Guid objectId, string roleOrUser);
     }
 }
