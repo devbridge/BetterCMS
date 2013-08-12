@@ -291,8 +291,8 @@
     <EmbeddedResource Include="Scripts\bcms.jquery.jcrop.js" />
     <EmbeddedResource Include="Scripts\bcms.media.imageeditor.js" />
     <EmbeddedResource Include="Scripts\bcms.media.history.js" />
-    <EmbeddedResource Include="Scripts\bcms.media.fileeditor.js" />
     <EmbeddedResource Include="Scripts\bcms.media.js" />
+    <EmbeddedResource Include="Scripts\bcms.media.fileeditor.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -332,10 +332,10 @@
     <EmbeddedResource Include="Views\History\MediaVersion.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Files\FileEditor.cshtml" />
+    <EmbeddedResource Include="Views\Upload\MultiFileUpload.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Upload\MultiFileUpload.cshtml" />
+    <EmbeddedResource Include="Views\Files\FileEditor.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

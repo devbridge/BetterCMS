@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Module.AccessControl.Models;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Models.Extensions;
 using BetterCms.Module.MediaManager.Services;
@@ -21,13 +23,17 @@ namespace BetterCms.Module.MediaManager.Command.Files.GetFile
         /// </summary>
         private readonly ITagService tagService;
 
+        private readonly ICmsConfiguration cmsConfiguration;
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetFileCommand"/> class.
+        /// Initializes a new instance of the <see cref="GetFileCommand" /> class.
         /// </summary>
         /// <param name="tagService">The tag service.</param>
-        public GetFileCommand(ITagService tagService)
+        /// <param name="cmsConfiguration">The CMS configuration.</param>
+        public GetFileCommand(ITagService tagService, ICmsConfiguration cmsConfiguration)
         {
             this.tagService = tagService;
+            this.cmsConfiguration = cmsConfiguration;
         }
 
         /// <summary>
@@ -38,7 +44,8 @@ namespace BetterCms.Module.MediaManager.Command.Files.GetFile
         public virtual FileViewModel Execute(Guid fileId)
         {
             var file = Repository.First<MediaFile>(fileId);
-            return new FileViewModel
+
+            var model = new FileViewModel
                 {
                     Id = file.Id.ToString(),
                     Title = file.Title,
@@ -58,7 +65,25 @@ namespace BetterCms.Module.MediaManager.Command.Files.GetFile
                             ThumbnailUrl = file.Image.PublicThumbnailUrl,
                             ImageTooltip = file.Image.Caption
                         },
+                    AccessControlEnabled = cmsConfiguration.AccessControlEnabled
                 };
+
+            if (cmsConfiguration.AccessControlEnabled)
+            {
+                model.UserAccessList = Repository.AsQueryable<UserAccess>()
+                                            .Where(x => x.ObjectId == fileId)
+                                            .OrderBy(x => x.RoleOrUser)
+                                            .Select(x => new UserAccessViewModel
+                                            {
+                                                Id = x.Id,
+                                                AccessLevel = x.AccessLevel,
+                                                ObjectId = x.ObjectId,
+                                                RoleOrUser = x.RoleOrUser
+                                            }).ToList();
+            }
+
+
+            return model;
         }
     }
 }

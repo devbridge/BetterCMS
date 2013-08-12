@@ -17,6 +17,7 @@ namespace BetterCms.Module.MediaManager.ViewModels.File
         public FileViewModel()
         {
             Image = new ImageSelectorViewModel();
+            UserAccessList = new List<UserAccessViewModel>();
         }
 
         /// <summary>
@@ -95,6 +96,22 @@ namespace BetterCms.Module.MediaManager.ViewModels.File
         /// The image view model.
         /// </value>
         public ImageSelectorViewModel Image { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user access list.
+        /// </summary>
+        /// <value>
+        /// The user access list.
+        /// </value>
+        public List<UserAccessViewModel> UserAccessList { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [access control enabled].
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if [access control enabled]; otherwise, <c>false</c>.
+        /// </value>
+        public bool AccessControlEnabled { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
