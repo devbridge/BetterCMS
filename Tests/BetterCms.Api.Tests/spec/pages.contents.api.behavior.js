@@ -107,4 +107,51 @@ describe('pages.contents.api.behavior', function () {
             expect(draft.archivedByUser).toBeNull('archivedByUser for draft content should be null.');
         });
     });
+    
+    it('01103: Should get page content options by content id', function () {
+        var url = '/bcms-api/pages/contents/D0E1D935-C15D-4984-9220-A21800B84EE3/options',
+            result,
+            ready = false,
+            data = {
+                order: {
+                    by: [
+                        { field: 'Key', direction: 'desc' }
+                    ]
+                }
+            };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.items).not.toBeNull('JSON data.items object should be retrieved.');
+            expect(result.data.items.length).toBe(3, 'Returned array length should be 3.');
+            
+            expect(result.data.items[0].key).toBe('Option 3', 'Correctly filtered items[0].key should be retrieved.');
+            expect(result.data.items[1].key).toBe('Option 2', 'Correctly filtered items[1].key should be retrieved.');
+            expect(result.data.items[2].key).toBe('Option 1', 'Correctly filtered items[2].key should be retrieved.');
+
+            expect(result.data.items[0].value).toBe('12.5', 'Correctly filtered items[0].key should be retrieved.');
+            expect(result.data.items[1].value).toBe('A', 'Correctly filtered items[1].key should be retrieved.');
+            expect(result.data.items[2].value).toBe('200', 'Correctly filtered items[2].key should be retrieved.');
+
+            expect(result.data.items[0].defaultValue).toBeNull('Correctly filtered items[0].key should be retrieved.');
+            expect(result.data.items[1].defaultValue).toBeNull('Correctly filtered items[1].key should be retrieved.');
+            expect(result.data.items[2].defaultValue).toBe('15', 'Correctly filtered items[2].key should be retrieved.');
+
+            expect(result.data.items[0].type).toBe('Float', 'Correctly filtered items[0].key should be retrieved.');
+            expect(result.data.items[1].type).toBe('Text', 'Correctly filtered items[1].key should be retrieved.');
+            expect(result.data.items[2].type).toBe('Integer', 'Correctly filtered items[2].key should be retrieved.');
+        });
+    });
 });

@@ -145,11 +145,14 @@ namespace BetterCms.Module.Pages.Command.Layout.SaveTemplate
         private void SetOptions(Root.Models.Layout template, IList<OptionViewModel> options)
         {
             // Delete old ones
-            foreach (var option in template.LayoutOptions.Distinct())
+            if (template.LayoutOptions != null)
             {
-                if (options == null || options.All(o => o.OptionKey != option.Key))
+                foreach (var option in template.LayoutOptions.Distinct())
                 {
-                    Repository.Delete(option);
+                    if (options == null || options.All(o => o.OptionKey != option.Key))
+                    {
+                        Repository.Delete(option);
+                    }
                 }
             }
 
@@ -158,10 +161,18 @@ namespace BetterCms.Module.Pages.Command.Layout.SaveTemplate
             {
                 foreach (var requestLayoutOption in options)
                 {
-                    var option = template.LayoutOptions.FirstOrDefault(o => o.Key == requestLayoutOption.OptionKey);
+                    LayoutOption option = null;
+                    if (template.LayoutOptions != null)
+                    {
+                        option = template.LayoutOptions.FirstOrDefault(o => o.Key == requestLayoutOption.OptionKey);
+                    }
                     if (option == null)
                     {
                         option = new LayoutOption();
+                        if (template.LayoutOptions == null)
+                        {
+                            template.LayoutOptions = new List<LayoutOption>();
+                        }
                         template.LayoutOptions.Add(option);
                     }
 

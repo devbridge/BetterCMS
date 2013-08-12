@@ -7,9 +7,11 @@ using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Services;
 
+using ServiceStack.ServiceInterface;
+
 namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content.Options
 {
-    public class PageContentOptionsService : IPageContentOptionsService
+    public class PageContentOptionsService : Service, IPageContentOptionsService
     {
         private readonly IRepository repository;
         

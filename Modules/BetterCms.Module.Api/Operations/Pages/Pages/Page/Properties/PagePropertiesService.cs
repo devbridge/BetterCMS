@@ -162,7 +162,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                 var layoutOptions = repository
                     .AsQueryable<LayoutOption>(lo => lo.Layout.Id == response.Data.LayoutId).ToList();
                 var pageOptions = repository
-                    .AsQueryable<PageOption>(p => p.Id == response.Data.Id)
+                    .AsQueryable<PageOption>(p => p.Page.Id == response.Data.Id)
                     .ToList();
 
                 response.PageOptions = optionService

@@ -201,4 +201,87 @@ describe('pages.widgets.api.behavior', function () {
             api.expectValidationExceptionIsThrown(result, 'Data');
         });
     });
+    
+    it('01205: Should get widget options by widget id', function () {
+        var url = '/bcms-api/widgets/server-control/f34c1135dc364f49a674a21800aadbff/options',
+            result,
+            ready = false;
+
+        var data = {
+            order: {
+                by: [
+                    { field: 'Key', direction: 'desc' }
+                ]
+            }
+        };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.items).not.toBeNull('JSON data.items object should be retrieved.');
+            expect(result.data.items.length).toBe(3, 'Returned array length should be 3.');
+
+            expect(result.data.items[0].key).toBe('Option 3', 'Correctly filtered items[0].key should be retrieved.');
+            expect(result.data.items[1].key).toBe('Option 2', 'Correctly filtered items[1].key should be retrieved.');
+            expect(result.data.items[2].key).toBe('Option 1', 'Correctly filtered items[2].key should be retrieved.');
+
+            expect(result.data.items[0].defaultValue).toBe('A', 'Correctly filtered items[0].key should be retrieved.');
+            expect(result.data.items[1].defaultValue).toBe('18', 'Correctly filtered items[1].key should be retrieved.');
+            expect(result.data.items[2].defaultValue).toBe('12.5', 'Correctly filtered items[2].key should be retrieved.');
+
+            expect(result.data.items[0].type).toBe('Text', 'Correctly filtered items[0].key should be retrieved.');
+            expect(result.data.items[1].type).toBe('Integer', 'Correctly filtered items[1].key should be retrieved.');
+            expect(result.data.items[2].type).toBe('Float', 'Correctly filtered items[2].key should be retrieved.');
+        });
+    });
+    
+    it('01206: Should get a list with one layout option, filtered by all available columns', function () {
+        var url = '/bcms-api/widgets/server-control/f34c1135dc364f49a674a21800aadbff/options/',
+            result,
+            ready = false;
+
+        var data = {
+            filter: {
+                where: [
+                    { field: 'Key', value: 'Option 2' },
+                    { field: 'DefaultValue', value: '18' },
+                    { field: 'Type', value: 'Integer' }
+                ]
+            }
+        };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
+            expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
+
+            expect(result.data.items[0].key).toBe('Option 2', 'Correctly filtered key should be retrieved.');
+
+            // Check if model properties count didn't changed. If so - update current test filter and another tests.
+            expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
+        });
+    });
 });
