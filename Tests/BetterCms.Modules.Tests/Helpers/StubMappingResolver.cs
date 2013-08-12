@@ -20,7 +20,6 @@ namespace BetterCms.Tests.Helpers
             fluentConfiguration.Mappings(mc => mc.FluentMappings.AddFromAssemblyOf<BlogPostMap>());
             fluentConfiguration.Mappings(mc => mc.FluentMappings.AddFromAssemblyOf<RoleMap>());
             fluentConfiguration.Mappings(mc => mc.FluentMappings.AddFromAssemblyOf<SubscriberMap>());
-            fluentConfiguration.Mappings(mc => mc.FluentMappings.AddFromAssemblyOf<UserAccessMap>());
         }
     }
 }
