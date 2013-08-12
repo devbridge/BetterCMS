@@ -42,7 +42,6 @@ namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
                             {
                                   new OptionValueEditViewModel
                                       {
-                                          // Will be deleted because of default value
                                           OptionValue = content.ContentOptions[0].DefaultValue,
                                           OptionKey = pageContent.Options[0].Key,
                                           OptionDefaultValue = content.ContentOptions[0].DefaultValue
@@ -87,7 +86,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
                         && !pco.IsDeleted
                         && !pco.PageContent.IsDeleted)
                     .ToList();
-                Assert.AreEqual(results.Count, 2);
+                Assert.AreEqual(results.Count, 3);
                 Assert.IsNotNull(results.FirstOrDefault(pco => pco.Key == pageContent.Options[2].Key
                     && pco.Value == pageContent.Options[2].Value));
                 Assert.IsNotNull(results.FirstOrDefault(pco => pco.Key == randomOptionValue.Key

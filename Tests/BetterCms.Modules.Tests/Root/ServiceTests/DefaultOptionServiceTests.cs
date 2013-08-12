@@ -34,7 +34,6 @@ namespace BetterCms.Test.Module.Root.ServiceTests
 
             optionValue1.Type = optionValue2.Type = optionValue3.Type = OptionType.Text;
             
-            // Null values should be eliminated
             optionValue3.Value = null;
 
             var service = new DefaultOptionService(null);
@@ -43,8 +42,8 @@ namespace BetterCms.Test.Module.Root.ServiceTests
 
             var result = service.GetMergedOptionValues(options, optionValues);
             Assert.NotNull(result);
-            Assert.AreEqual(result.Count, 2);
-            Assert.AreEqual(result.Count, result.Count(o => o.Value != null));
+            Assert.AreEqual(result.Count, 3);
+            Assert.AreEqual(2, result.Count(o => o.Value != null));
         }
 
         [Test]
@@ -56,7 +55,6 @@ namespace BetterCms.Test.Module.Root.ServiceTests
 
             option1.Type = option2.Type = option3.Type = OptionType.Text;
             
-            // Null values should be eliminated
             option3.DefaultValue = null;
 
             var service = new DefaultOptionService(null);
@@ -65,8 +63,8 @@ namespace BetterCms.Test.Module.Root.ServiceTests
 
             var result = service.GetMergedOptionValues(options, optionValues);
             Assert.NotNull(result);
-            Assert.AreEqual(result.Count, 2);
-            Assert.AreEqual(result.Count, result.Count(o => o.Value != null));
+            Assert.AreEqual(result.Count, 3);
+            Assert.AreEqual(2, result.Count(o => o.Value != null));
         }
 
         [Test]
@@ -89,7 +87,6 @@ namespace BetterCms.Test.Module.Root.ServiceTests
             option1.Type = option2.Type = option3.Type = option4.Type = option5.Type = OptionType.Text;
             optionValue1.Type = optionValue2.Type = optionValue3.Type = optionValue4.Type = optionValue5.Type = OptionType.Text;
 
-            // Null values should be eliminated
             option3.DefaultValue = null;
             optionValue4.Value = null;
 
@@ -99,8 +96,8 @@ namespace BetterCms.Test.Module.Root.ServiceTests
 
             var result = service.GetMergedOptionValues(options, optionValues);
             Assert.NotNull(result);
-            Assert.AreEqual(result.Count, 6);
-            Assert.AreEqual(result.Count, result.Count(o => o.Value != null));
+            Assert.AreEqual(result.Count, 8);
+            Assert.AreEqual(6, result.Count(o => o.Value != null));
         }
 
         [Test]
@@ -193,7 +190,7 @@ namespace BetterCms.Test.Module.Root.ServiceTests
 
             var result = service.GetMergedOptionValues(options, optionValues);
             Assert.NotNull(result);
-            Assert.IsEmpty(result);
+            Assert.IsNull(result[0].Value);
         }
         
         [Test]
@@ -210,7 +207,7 @@ namespace BetterCms.Test.Module.Root.ServiceTests
 
             var result = service.GetMergedOptionValues(options, optionValues);
             Assert.NotNull(result);
-            Assert.IsEmpty(result);
+            Assert.IsNull(result[0].Value);
         }
         
         [Test]
@@ -227,7 +224,8 @@ namespace BetterCms.Test.Module.Root.ServiceTests
 
             var result = service.GetMergedOptionValues(options, optionValues);
             Assert.NotNull(result);
-            Assert.IsEmpty(result);
+            Assert.AreEqual(result.Count, 1);
+            Assert.IsNull(result[0].Value);
         }
         
         [Test]
@@ -244,7 +242,8 @@ namespace BetterCms.Test.Module.Root.ServiceTests
 
             var result = service.GetMergedOptionValues(options, optionValues);
             Assert.NotNull(result);
-            Assert.IsEmpty(result);
+            Assert.AreEqual(result.Count, 1);
+            Assert.IsNull(result[0].Value);
         }
 
         [Test]
