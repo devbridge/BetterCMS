@@ -250,6 +250,7 @@
   <ItemGroup>
     <Folder Include="Areas\bcms-media\Views\Files\" />
     <Folder Include="Areas\bcms-media\Views\Upload\" />
+    <Folder Include="Areas\bcms-pages\Views\Page\" />
     <Folder Include="file\bcms-blog\scripts\" />
     <Folder Include="file\bcms-media\Content\Css\Images\" />
     <Folder Include="file\bcms-media\scripts\" />
@@ -335,9 +336,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\Layouts\TestLayout.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\bcms-pages\Views\Page\Pages.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
