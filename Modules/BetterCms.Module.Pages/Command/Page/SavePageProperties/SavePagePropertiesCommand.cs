@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
+using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Mvc.Commands;
@@ -91,7 +93,12 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         {            
             UnitOfWork.BeginTransaction();
 
-            var page = Repository.First<PageProperties>(request.Id);
+            var page = Repository
+                .AsQueryable<PageProperties>(p => p.Id == request.Id)
+                .FetchMany(p => p.Options)
+                .Fetch(p => p.Layout).ThenFetchMany(l => l.LayoutOptions)
+                .ToList()
+                .FirstOrDefault();
 
             Models.Redirect redirectCreated = null;
             bool initialSeoStatus = page.HasSEO;
@@ -145,7 +152,9 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             page.SecondaryImage = request.SecondaryImage != null && request.SecondaryImage.ImageId.HasValue ? Repository.AsProxy<MediaImage>(request.SecondaryImage.ImageId.Value) : null;
             page.FeaturedImage = request.FeaturedImage != null && request.FeaturedImage.ImageId.HasValue ? Repository.AsProxy<MediaImage>(request.FeaturedImage.ImageId.Value) : null;
 
-            optionService.SaveOptionValues(request.OptionValues, page.Options, () => new Root.Models.PageOption { Page = page });
+            var optionValues = page.Options.Distinct();
+            var parentOptions = page.Layout.LayoutOptions.Distinct();
+            optionService.SaveOptionValues(request.OptionValues, optionValues, parentOptions, () => new Root.Models.PageOption { Page = page });
 
             if (cmsConfiguration.AccessControlEnabled)
             {

@@ -71,7 +71,7 @@
         foreach (var option in Model.Options)
         {
             <p>
-                <strong>Option "@option.Key" Type:</strong> @option.Value.GetType()
+                <strong>Option "@option.Key" Type:</strong> @(option.Value != null ? option.Value.GetType().ToString() : string.Empty)
                 <strong>Value</strong>: @option.Value
             </p>
         }

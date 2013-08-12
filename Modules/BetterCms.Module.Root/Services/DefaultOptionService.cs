@@ -108,16 +108,13 @@ namespace BetterCms.Module.Root.Services
                 {
                     var value = GetValueSafe(optionValue);
 
-                    if (value != null)
-                    {
-                        var optionViewModel = new OptionValueViewModel
+                    var optionViewModel = new OptionValueViewModel
                         {
                             Type = optionValue.Type,
                             OptionKey = optionValue.Key.Trim(),
                             OptionValue = value
                         };
-                        optionModels.Add(optionViewModel);
-                    }
+                    optionModels.Add(optionViewModel);
                 }
             }
 
@@ -125,25 +122,17 @@ namespace BetterCms.Module.Root.Services
             {
                 foreach (var option in options.Distinct())
                 {
-                    if (string.IsNullOrWhiteSpace(option.Value))
-                    {
-                        continue;
-                    }
-
                     if (!optionModels.Any(f => f.Key.Equals(option.Key.Trim(), StringComparison.OrdinalIgnoreCase)))
                     {
                         var value = GetValueSafe(option);
 
-                        if (value != null)
-                        {
-                            var optionViewModel = new OptionValueViewModel
+                        var optionViewModel = new OptionValueViewModel
                             {
                                 Type = option.Type,
                                 OptionKey = option.Key.Trim(),
                                 OptionValue = value
                             };
-                            optionModels.Add(optionViewModel);
-                        }
+                        optionModels.Add(optionViewModel);
                     }
                 }
             }
@@ -156,33 +145,37 @@ namespace BetterCms.Module.Root.Services
         /// </summary>
         /// <typeparam name="TEntity">The type of the entity.</typeparam>
         /// <param name="optionViewModels">The option view models.</param>
-        /// <param name="savedOptions">The saved options.</param>
+        /// <param name="savedOptionValues">The saved options.</param>
+        /// <param name="parentOptions">The parent options.</param>
         /// <param name="entityCreator">The entity creator.</param>
-        public void SaveOptionValues<TEntity>(IEnumerable<OptionValueEditViewModel> optionViewModels, IEnumerable<TEntity> savedOptions,
-            Func<TEntity> entityCreator)
+        public void SaveOptionValues<TEntity>(IEnumerable<OptionValueEditViewModel> optionViewModels, IEnumerable<TEntity> savedOptionValues,
+            IEnumerable<IOption> parentOptions, Func<TEntity> entityCreator)
             where TEntity : Entity, IOption
         {
             foreach (var optionViewModel in optionViewModels)
             {
-                var savedOption = savedOptions.FirstOrDefault(f => f.Key.Trim().Equals(optionViewModel.OptionKey.Trim(), StringComparison.OrdinalIgnoreCase));
+                var savedOptionValue = savedOptionValues.FirstOrDefault(f => f.Key.Trim().Equals(optionViewModel.OptionKey.Trim(), StringComparison.OrdinalIgnoreCase));
+                var parentOption = parentOptions.FirstOrDefault(f => f.Key.Trim().Equals(optionViewModel.OptionKey.Trim(), StringComparison.OrdinalIgnoreCase));
+                var save = parentOption == null
+                    || !string.IsNullOrEmpty(optionViewModel.OptionValue);
 
-                if (!string.IsNullOrEmpty(optionViewModel.OptionValue) && optionViewModel.OptionValue != optionViewModel.OptionDefaultValue)
+                if (save)
                 {
-                    if (savedOption == null)
+                    if (savedOptionValue == null)
                     {
-                        savedOption = entityCreator();
-                        savedOption.Key = optionViewModel.OptionKey;
+                        savedOptionValue = entityCreator();
+                        savedOptionValue.Key = optionViewModel.OptionKey;
                     }
-                    savedOption.Value = optionViewModel.OptionValue;
-                    savedOption.Type = optionViewModel.Type;
+                    savedOptionValue.Value = optionViewModel.OptionValue;
+                    savedOptionValue.Type = optionViewModel.Type;
 
-                    ValidateOptionValue(savedOption);
+                    ValidateOptionValue(savedOptionValue);
 
-                    repository.Save(savedOption);
+                    repository.Save(savedOptionValue);
                 }
-                else if (savedOption != null)
+                else if (savedOptionValue != null)
                 {
-                    repository.Delete(savedOption);
+                    repository.Delete(savedOptionValue);
                 }
             }
         }

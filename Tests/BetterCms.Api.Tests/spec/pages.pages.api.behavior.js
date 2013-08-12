@@ -139,6 +139,7 @@ describe('pages.pages.api.behavior', function () {
             includeImages: true,
             includeMetaData: true,
             includePageContents: true,
+            includePageOptions: true
         };
 
         runs(function () {
@@ -172,6 +173,7 @@ describe('pages.pages.api.behavior', function () {
             includeImages: true,
             includeMetaData: true,
             includePageContents: true,
+            includePageOptions: true
         };
 
         runs(function () {
@@ -556,6 +558,20 @@ describe('pages.pages.api.behavior', function () {
         expect(metadata.metaKeywords).toBe('Test meta keywords', 'Correctly filtered metaKeywords should be retrieved.');
         expect(metadata.metaDescription).toBe('Test meta description', 'Correctly filtered metaDescription should be retrieved.');
         
+        // options
+        var options = response.pageOptions;
+        expect(options).toBeDefinedAndNotNull('JSON pageOptions object should be retrieved.');
+        expect(options.length).toBe(2, 'Returned pageOptions array length should be 2.');
+        expect(options[0].key).toBe('Option 1', 'Correctly filtered pageOptions[0].key should be retrieved.');
+        expect(options[1].key).toBe('Option 2', 'Correctly filtered pageOptions[1].key should be retrieved.');
+        expect(options[0].type).toBe('Text', 'Correctly filtered pageOptions[0].type should be retrieved.');
+        expect(options[1].type).toBe('Integer', 'Correctly filtered pageOptions[1].type should be retrieved.');
+        expect(options[0].value).toBe('Value 1', 'Correctly filtered pageOptions[0].value should be retrieved.');
+        expect(options[1].value).toBe('60', 'Correctly filtered pageOptions[1].value should be retrieved.');
+        expect(options[0].defaultValue).toBe('Default 1', 'Correctly filtered pageOptions[0].defaultValue should be retrieved.');
+        expect(options[1].defaultValue).toBe('50', 'Correctly filtered pageOptions[1].defaultValue should be retrieved.');
+        
+
         // page contents
         var contents = response.pageContents;
         expect(contents).toBeDefinedAndNotNull('JSON contents object should be retrieved.');

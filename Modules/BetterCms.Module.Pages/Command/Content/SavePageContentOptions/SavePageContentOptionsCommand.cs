@@ -35,6 +35,7 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageContentOptions
                 var pageContent = Repository.AsQueryable<PageContent>()
                               .Where(f => f.Id == model.PageContentId && !f.IsDeleted && !f.Content.IsDeleted)
                               .FetchMany(f => f.Options)
+                              .Fetch(f => f.Content).ThenFetchMany(f => f.ContentOptions)
                               .ToList()
                               .FirstOrDefault();
 
@@ -42,7 +43,10 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageContentOptions
                 {
                     UnitOfWork.BeginTransaction();
 
-                    OptionService.SaveOptionValues(model.OptionValues, pageContent.Options, () => new PageContentOption { PageContent = pageContent });
+                    var optionValues = pageContent.Options.Distinct();
+                    var parentOptions = pageContent.Content.ContentOptions.Distinct();
+
+                    OptionService.SaveOptionValues(model.OptionValues, optionValues, parentOptions, () => new PageContentOption { PageContent = pageContent });
 
                     UnitOfWork.Commit();   
                 }                
