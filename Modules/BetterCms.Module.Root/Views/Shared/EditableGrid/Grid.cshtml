@@ -5,7 +5,10 @@
 
 @Html.Partial(Model.TopBlockView, Model)
 
-@Html.SiteSettingsMessagesBox(null, new Dictionary<string, string> {{ "data-bind", "attr: { id: messagesDomId() }" }})
+@if (Model.ShowMessages)
+{
+    @Html.SiteSettingsMessagesBox(null, new Dictionary<string, string> { { "data-bind", "attr: { id: messagesDomId() }" } })
+}
 
 <table class="bcms-tables">
     <thead>
