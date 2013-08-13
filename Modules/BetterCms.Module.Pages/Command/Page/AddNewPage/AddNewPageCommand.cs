@@ -14,13 +14,15 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
         public AddNewPageViewModel Execute(AddNewPageCommandRequest request)
         {
             var model = new AddNewPageViewModel { ParentPageUrl = request.ParentPageUrl };
-            model.Templates = LayoutService.GetTemplates();
+            model.Templates = LayoutService.GetLayouts();
 
             if (model.Templates.Count > 0)
             {
                 model.Templates.ToList().ForEach(x => x.IsActive = false);
                 model.Templates.First().IsActive = true;
-                model.TemplateId = model.Templates.First().TemplateId;
+                model.TemplateId = model.Templates.First(t => t.IsActive).TemplateId;
+
+                model.OptionValues = LayoutService.GetLayoutOptionValues(model.TemplateId);
             }
 
             return model;

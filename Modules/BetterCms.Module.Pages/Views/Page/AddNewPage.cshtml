@@ -16,10 +16,11 @@
 
 <div class="bcms-scroll-window">
     @Html.TabbedContentMessagesBox()
-    <div class="bcms-padded-content">
-        @using (Html.BeginForm<PageController>(f => f.AddNewPage((string)null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
-        {
-            <div id="bcms-tab-1" class="bcms-tab-single">
+
+    @using (Html.BeginForm<PageController>(f => f.AddNewPage((string)null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
+    {
+        <div id="bcms-tab-1" class="bcms-tab-single">
+            <div class="bcms-padded-content">
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.AddNewPage_PageTitle_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_PageTitle</div>
@@ -51,10 +52,10 @@
                     @Html.Partial(RootModuleConstants.AccessControlTemplate)
                 }
             </div>
+        </div>
             
-            <div id="bcms-tab-2" class="bcms-tab-single">
-                @Html.Partial(PagesConstants.OptionValuesGridTemplate)
-            </div>
-        }
-    </div>
+        <div id="bcms-tab-2" class="bcms-tab-single">
+            @Html.Partial(PagesConstants.OptionValuesGridTemplate)
+        </div>
+    }
 </div>

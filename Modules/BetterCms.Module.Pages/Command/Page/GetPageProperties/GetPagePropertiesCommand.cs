@@ -4,6 +4,7 @@ using System.Linq;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Commands;
+
 using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
@@ -154,7 +155,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                 }
 
                 // Get templates
-                model.Model.Templates = layoutService.GetTemplates();
+                model.Model.Templates = layoutService.GetLayouts();
                 if (!model.Model.TemplateId.HasDefaultValue())
                 {
                     model.Model.Templates.Where(x => x.TemplateId == model.Model.TemplateId).ToList().ForEach(x => x.IsActive = true);
