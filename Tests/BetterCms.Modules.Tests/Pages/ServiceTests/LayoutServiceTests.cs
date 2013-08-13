@@ -21,7 +21,7 @@ namespace BetterCms.Test.Module.Pages.ServiceTests
                 .Returns(new[] { layout1, layout2 }.AsQueryable());
 
             var service = new DefaultLayoutService(repositoryMock.Object);
-            var response = service.GetTemplates();
+            var response = service.GetLayouts();
 
             Assert.IsNotNull(response);
             Assert.AreEqual(response.Count, 2);
@@ -42,7 +42,7 @@ namespace BetterCms.Test.Module.Pages.ServiceTests
                 .Returns(new BetterCms.Module.Root.Models.Layout[] { }.AsQueryable());
 
             var service = new DefaultLayoutService(repositoryMock.Object);
-            var response = service.GetTemplates();
+            var response = service.GetLayouts();
 
             Assert.IsNotNull(response);
             Assert.IsEmpty(response);
