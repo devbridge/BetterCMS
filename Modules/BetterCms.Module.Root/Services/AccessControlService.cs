@@ -50,28 +50,49 @@ namespace BetterCms.Module.Root.Services
 
             var accessLevel = AccessLevel.NoPermissions;
 
-            // If use is not authenticated, check if anonymous user has access:
-            if (!principal.Identity.IsAuthenticated)
+            // If there are no permissions, object is accessible to everyone:
+            if (accessList.Count == 0)
             {
-                var userAccess = accessList.FirstOrDefault(x => string.Equals(x.RoleOrUser, "Anonymous", StringComparison.OrdinalIgnoreCase));
-
-                if (userAccess != null)
-                {
-                    accessLevel = userAccess.AccessLevel;
-                }
-
-                return accessLevel;
+                return AccessLevel.ReadWrite;
             }
 
-            // Check user or role access level:
-            foreach (var userAccess in accessList)
+            // If user is not authenticated, check access level for "Everyone":
+            var everyone = accessList.FirstOrDefault(x => string.Equals(x.RoleOrUser, SpecialIdentities.Everyone, StringComparison.OrdinalIgnoreCase));
+
+            if (everyone != null)
             {
-                if (principal.IsInRole(userAccess.RoleOrUser) || principal.Identity.Name == userAccess.RoleOrUser)
+                accessLevel = everyone.AccessLevel;
+            }
+
+            // First check if there are explicit permissions for the user:
+            if (principal.Identity.IsAuthenticated)
+            {
+                var identityName = principal.Identity.Name;
+                var identityAccess = accessList.FirstOrDefault(x => string.Equals(x.RoleOrUser, identityName, StringComparison.OrdinalIgnoreCase));
+
+                if (identityAccess != null)
                 {
-                    // Highest available privilege wins:
-                    if (userAccess.AccessLevel > accessLevel)
+                    return identityAccess.AccessLevel;
+                }
+
+                // Check access level for "Authenticated User":
+                var authenticated = accessList.FirstOrDefault(x => string.Equals(x.RoleOrUser, SpecialIdentities.AuthenticatedUser, StringComparison.OrdinalIgnoreCase));
+
+                if (authenticated != null && authenticated.AccessLevel > accessLevel)
+                {
+                    accessLevel = authenticated.AccessLevel;
+                }
+
+                // Check user or role access level:
+                foreach (var userAccess in accessList)
+                {
+                    if (principal.IsInRole(userAccess.RoleOrUser))
                     {
-                        accessLevel = userAccess.AccessLevel;
+                        // Highest available privilege wins:
+                        if (userAccess.AccessLevel > accessLevel)
+                        {
+                            accessLevel = userAccess.AccessLevel;
+                        }
                     }
                 }
             }

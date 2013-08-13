@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 using BetterCms.Core.Models;
-
+using BetterCms.Core.Security;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Mvc.Attributes;
 using BetterCms.Module.Pages.ViewModels.Option;
-
-using BetterCms.Module.Root.ViewModels.Security;
 using BetterCms.Module.Root.ViewModels.Option;
 
 namespace BetterCms.Module.Pages.ViewModels.Page
@@ -77,7 +75,7 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// <value>
         /// The user access list.
         /// </value>
-        public List<UserAccessViewModel> UserAccessList { get; set; }
+        public List<IUserAccess> UserAccessList { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether access control is enabled.
@@ -92,7 +90,7 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// </summary>
         public AddNewPageViewModel()
         {
-            UserAccessList = new List<UserAccessViewModel>();
+            UserAccessList = new List<IUserAccess>();
         }
 
         /// <summary>
