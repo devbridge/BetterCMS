@@ -54,9 +54,7 @@
 
             if (Model.AccessControlEnabled)
             {
-                <div id="bcms-accesscontrol-context">
-                    @Html.Partial(RootModuleConstants.AccessControlTemplate)
-                </div>
+                @Html.Partial(RootModuleConstants.AccessControlTemplate)
             }
         }
         <script type="text/html" id="bcms-file-upload-template">

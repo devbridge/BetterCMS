@@ -89,12 +89,8 @@ namespace BetterCms.Module.Pages.Controllers
             var request = new AddNewPageCommandRequest { ParentPageUrl = parentPageUrl };
             var model = GetCommand<AddNewPageCommand>().ExecuteCommand(request);
             var view = RenderView("AddNewPage", model);
-            var json = new
-            {
-                OptionValues = model.OptionValues
-            };
 
-            return ComboWireJson(true, view, json, JsonRequestBehavior.AllowGet);
+            return ComboWireJson(true, view, model, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
