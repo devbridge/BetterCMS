@@ -1,9 +1,9 @@
-﻿/*jslint unparam: true, white: true, browser: true, devel: true, vars: true, plusplus: true */
+﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms, console */
 
 bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent',
-        'bcms.pages.properties', 'bcms.grid', 'bcms.redirect', 'bcms.messages', 'bcms.pages.filter', 'bcms.options', 'bcms.ko.extenders', 'bcms.security'],
-    function ($, bcms, modal, siteSettings, forms, dynamicContent, pageProperties, grid, redirect, messages, filter, options, ko, security) {
+        'bcms.pages.properties', 'bcms.grid', 'bcms.redirect', 'bcms.messages', 'bcms.pages.filter', 'bcms.options', 'bcms.ko.extenders'],
+    function ($, bcms, modal, siteSettings, forms, dynamicContent, pageProperties, grid, redirect, messages, filter, options, ko) {
     'use strict';
 
         var page = { },            
@@ -72,7 +72,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 cloneButtonTitle: null,
                 deleteButtonTitle: null,
                 pageStatusChangeConfirmationMessagePublish: null,
-                pageStatusChangeConfirmationMessageUnPublish: null
+                pageStatusChangeConfirmationMessageUnPublish: null,
             },        
             keys = {
                 addNewPageInfoMessageClosed: 'bcms.addNewPageInfoBoxClosed'
@@ -139,9 +139,12 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
     * Initializes AddNewPage dialog events.
     */
     page.initAddNewPageDialogEvents = function (dialog, content) {
+        var infoMessageClosed = localStorage.getItem(keys.addNewPageInfoMessageClosed),
+            optionsContainer = dialog.container.find(selectors.addNewPageOptionsTab),
+            optionListViewModel = options.createOptionValuesViewModel(optionsContainer, content.Data.OptionValues);
+
         page.initializePermalinkBox(dialog, true, links.convertStringToSlugUrl, selectors.addNewPageTitleInput, true);
 
-        var infoMessageClosed = localStorage.getItem(keys.addNewPageInfoMessageClosed);
         if (infoMessageClosed && infoMessageClosed === '1') {
             page.hideAddNewPageInfoMessage(dialog);
         } else {
@@ -152,7 +155,9 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         }
 
         dialog.container.find(selectors.addNewPageTemplateSelect).on('click', function () {
-            page.highlightAddNewPageActiveTemplate(dialog, this);
+            page.highlightAddNewPageActiveTemplate(dialog, this, function(id) {
+                pageProperties.loadLayoutOptions(id, dialog.container, content.Data.TemplateId, optionsContainer, optionListViewModel);
+            });
         });
         
         dialog.container.find(selectors.addNewPageTemplatePreviewLink).on('click', function () {
@@ -163,17 +168,6 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             modal.imagePreview(url, alt);
         });
 
-        var optionsContainer = dialog.container.find(selectors.addNewPageOptionsTab),
-            optionListViewModel = options.createOptionValuesViewModel(optionsContainer, content.Data.OptionValues),
-            accessControlContext = $('#bcms-accesscontrol-context').get(0),
-            accessControlViewModel = {
-                accessControl: security.createUserAccessViewModel(content.Data.UserAccessList)
-            };
-
-        if (accessControlContext) {
-            ko.applyBindings(accessControlViewModel, accessControlContext);
-        }
-        
         ko.applyBindings(optionListViewModel, optionsContainer.get(0));
 
         return optionListViewModel;
@@ -195,7 +189,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         if ($(selectors.editPermalinkEditField).valid()) {
             var value = dialog.container.find(selectors.editPermalinkEditField).val();
             dialog.container.find(selectors.editPermalinkHiddenField).val(value);
-            dialog.container.find(selectors.editPermalinkInfoField).html(value || "&nbsp;");
+            dialog.container.find(selectors.editPermalinkInfoField).html(value ? value : "&nbsp;");
 
             page.hideAddNewPageEditPermalinkBox(dialog);
         }
@@ -231,26 +225,29 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
     /**
     * Highlights active template box in AddNewPage dialog.
     */
-    page.highlightAddNewPageActiveTemplate = function (dialog, selectButton)
+    page.highlightAddNewPageActiveTemplate = function (dialog, selectButton, onChangeCallback)
     {
         var active = dialog.container.find(selectors.addNewPageActiveTemplateBox),
-            template = $(selectButton).parents(selectors.addNewPageTemplateBox);
+            template = $(selectButton).parents(selectors.addNewPageTemplateBox),
+            id = $(template).data('id');
         
         active.removeClass(classes.addNewPageActiveTemplateBox);
         active.find(selectors.addNewPageTemplateSelect).show();
         active.find(selectors.addNewPageActiveTemplateMessage).hide();
 
         if (template) {
-            dialog.container.find(selectors.addNewPageTemplateId).val($(template).data('id'));
+            dialog.container.find(selectors.addNewPageTemplateId).val(id);
             $(template).addClass(classes.addNewPageActiveTemplateBox);
             $(template).find(selectors.addNewPageActiveTemplateMessage).show();
+
+            onChangeCallback.call(this, id);
         }
 
         $(selectButton).hide();
     };
 
     page.changePublishStatus = function (sender) {
-        var publish = sender.val() === "publish",
+        var publish = sender.val() == "publish",
             message = publish ? globalization.pageStatusChangeConfirmationMessagePublish : globalization.pageStatusChangeConfirmationMessageUnPublish,
             data = { PageId: bcms.pageId, IsPublished: publish },
             onComplete = function (json) {
@@ -384,7 +381,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 onComplete = function (json) {
                     if (json && json.SenderId == senderId && json.Url) {
                         var slug = json.Url,
-                            url = (slug || '');
+                            url = (slug ? slug : '');
 
                         if (url.substr(0, 1) != '/') {
                             url = '/' + url;
@@ -398,7 +395,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                     }
                 };
 
-            if (text && oldText === text) {
+            if (text && oldText == text) {
                 var prefix = (addPrefix) ? encodeURIComponent(window.location.pathname) : '';
 
                 $.ajax({

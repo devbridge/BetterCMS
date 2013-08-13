@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
 
 using BetterCms.Core.Security;
 
 using BetterCms.Module.MediaManager.ViewModels;
-
+using BetterCms.Module.Pages.Command.Layout.GetLayoutOptions;
 using BetterCms.Module.Pages.Command.Page.AddNewPage;
 using BetterCms.Module.Pages.Command.Page.ClonePage;
 using BetterCms.Module.Pages.Command.Page.CreatePage;
@@ -283,6 +282,19 @@ namespace BetterCms.Module.Pages.Controllers
             var slug = pageService.CreatePagePermalink(text, parentPageUrl);
 
             return Json(new { Text = text, Url = slug, SenderId = senderId }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Loads the layout options.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+        public ActionResult LoadLayoutOptions(string id)
+        {
+            var model = GetCommand<GetLayoutOptionsCommand>().ExecuteCommand(id.ToGuidOrDefault());
+            return WireJson(model != null, model, JsonRequestBehavior.AllowGet);
         }
     }
 }

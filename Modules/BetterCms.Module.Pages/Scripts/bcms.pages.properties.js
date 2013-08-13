@@ -2,8 +2,8 @@
 /*global bettercms, console */
 
 bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bcms.dynamicContent', 'bcms.tags', 'bcms.ko.extenders',
-        'bcms.media', 'bcms.redirect', 'bcms.options', 'bcms.security'],
-    function ($, bcms, modal, forms, dynamicContent, tags, ko, media, redirect, options, security) {
+        'bcms.media', 'bcms.redirect', 'bcms.options', 'bcms.security', 'bcms.messages'],
+    function ($, bcms, modal, forms, dynamicContent, tags, ko, media, redirect, options, security, messages) {
         'use strict';
 
         var page = {},
@@ -31,7 +31,8 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 optionsTab: '#bcms-tab-4'
             },
             links = {
-                loadEditPropertiesDialogUrl: null
+                loadEditPropertiesDialogUrl: null,
+                loadLayoutOptionsUrl: null
             },
             globalization = {
                 editPagePropertiesModalTitle: null,
@@ -110,7 +111,9 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             }
 
             dialog.container.find(selectors.pagePropertiesTemplateSelect).on('click', function () {
-                page.highlightPagePropertiesActiveTemplate(dialog, this);
+                page.highlightPagePropertiesActiveTemplate(dialog, this, function(id) {
+                    page.loadLayoutOptions(id, dialog.container, content.Data.TemplateId, optionsContainer, optionListViewModel);
+                });
             });
 
             dialog.container.find(selectors.pagePropertiesTemplatePreviewLink).on('click', function () {
@@ -133,6 +136,70 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             });
 
             return pageViewModel;
+        };
+
+        /**
+        * Loads layout options: when user changes layout, options are reloaded
+        */
+        page.loadLayoutOptions = function (id, mainContainer, layoutId, optionsContainer, optionListViewModel) {
+            var onComplete = function(json) {
+                var i,
+                    j,
+                    items = optionListViewModel.items,
+                    item,
+                    itemExists,
+                    itemsToRemove = [],
+                    length;
+                        
+                optionsContainer.hideLoading();
+                messages.refreshBox(mainContainer, json);
+                if (json.Success) {
+                    // Remove items with no value
+                    for (i = 0, length = items().length; i < length; i++) {
+                        item = items()[i];
+                        if (!item.value() && item.canEditOption === false) {
+                            itemsToRemove.push(item);
+                        }
+                    }
+                    for (i = 0, length = itemsToRemove.length; i < length; i++) {
+                        item = itemsToRemove[i];
+                        items.remove(item);
+                    }
+                            
+                    // Add new items
+                    for (i = 0, length = json.Data.length; i < length; i++) {
+                        itemExists = false;
+                                
+                        for (j = 0; j < items().length; j++) {
+                            if (items()[j].key() == json.Data[i].OptionKey) {
+                                itemExists = true;
+                                break;
+                            }
+                        }
+                                
+                        // Do not add option if such already exists
+                        if (itemExists) {
+                            continue;
+                        }
+
+                        item = optionListViewModel.createItem(json.Data[i]);
+                        optionListViewModel.items.push(item);
+                    }
+                }
+            };
+
+            optionsContainer.showLoading();
+
+            $.ajax({
+                type: 'GET',
+                url: $.format(links.loadLayoutOptionsUrl, id)
+            })
+            .done(function (result) {
+                onComplete(result);
+            })
+            .fail(function (response) {
+                onComplete(bcms.parseFailedResponse(response));
+            });
         };
 
         /**
@@ -187,18 +254,21 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
         /**
         * highlights active template box in PageProperties dialog.
         */
-        page.highlightPagePropertiesActiveTemplate = function (dialog, selectButton) {
+        page.highlightPagePropertiesActiveTemplate = function (dialog, selectButton, onChangeCallback) {
             var active = dialog.container.find(selectors.pagePropertiesActiveTemplateBox),
-                template = $(selectButton).parents(selectors.pagePropertiesTemplateBox);
+                template = $(selectButton).parents(selectors.pagePropertiesTemplateBox),
+                id = $(template).data('id');
 
             active.removeClass(classes.pagePropertiesActiveTemplateBox);
             active.find(selectors.pagePropertiesTemplateSelect).show();
             active.find(selectors.pagePropertiesActiveTemplateMessage).hide();
 
             if (template) {
-                dialog.container.find(selectors.pagePropertiesTemplateId).val($(template).data('id'));
+                dialog.container.find(selectors.pagePropertiesTemplateId).val(id);
                 $(template).addClass(classes.pagePropertiesActiveTemplateBox);
                 $(template).find(selectors.pagePropertiesActiveTemplateMessage).show();
+
+                onChangeCallback.call(this, id);
             }
 
             $(selectButton).hide();
