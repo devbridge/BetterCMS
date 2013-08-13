@@ -1,5 +1,6 @@
 ﻿@using BetterCms.Module.MediaManager.Content.Resources
 @using BetterCms.Module.MediaManager.Controllers
+@using BetterCms.Module.Root
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc
 @using BetterCms.Module.Root.Mvc.Helpers
@@ -54,7 +55,7 @@
             if (Model.AccessControlEnabled)
             {
                 <div id="bcms-accesscontrol-context">
-                    @Html.Partial("~/Areas/bcms-root/Views/Security/AccessControlTemplate.cshtml")
+                    @Html.Partial(RootModuleConstants.AccessControlTemplate)
                 </div>
             }
         }

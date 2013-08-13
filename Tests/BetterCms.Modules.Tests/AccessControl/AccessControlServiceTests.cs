@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
 
+using BetterCms.Configuration;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.Security;
+using BetterCms.Core.Services.Caching;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Services;
 
@@ -15,7 +17,7 @@ using NUnit.Framework;
 namespace BetterCms.Test.Module.AccessControl
 {
     [TestFixture]
-    [Ignore("Will be fixed in the near future")]
+    // [Ignore("Will be fixed in the near future")]
     public class AccessControlServiceTests
     {
         [Test]
@@ -93,11 +95,33 @@ namespace BetterCms.Test.Module.AccessControl
             Assert.AreEqual(AccessLevel.Deny, accessLevel);
         }
 
+        [Test]
+        public void Should_Return_Default_List()
+        {
+            var objectId = Guid.NewGuid();
+
+            var service = CreateAccessControlService(objectId);
+
+            var accessLevel = service.GetDefaultAccessList();
+
+            Assert.AreEqual(0, accessLevel.Count);
+        }
+
         private static AccessControlService CreateAccessControlService(Guid objectId)
         {
             var repository = GetRepositoryMock(objectId);
+            var cacheService = new Mock<ICacheService>();
+            var cmsConfiguration = new Mock<ICmsConfiguration>();
 
-            var service = new AccessControlService(repository.Object, null /* TODO: add service or mock instead of null */);
+            cmsConfiguration.Setup(x => x.DefaultAccessControlList).Returns(() => new AccessControlCollection());
+
+            List<UserAccess> accessList = null;
+
+            cacheService.Setup(x => x.Get(It.IsAny<string>(), It.IsAny<TimeSpan>(), It.IsAny<Func<List<UserAccess>>>()))
+                        .Callback((string cacheKey, TimeSpan timeSpan, Func<List<UserAccess>> callback) => accessList = callback())
+                        .Returns(() => accessList);
+
+            var service = new AccessControlService(repository.Object, cacheService.Object, cmsConfiguration.Object);
 
             return service;
         }

@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
 
+using BetterCms.Configuration;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services.Caching;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.ViewModels.Security;
 
 namespace BetterCms.Module.Root.Services
 {
@@ -19,15 +21,19 @@ namespace BetterCms.Module.Root.Services
 
         private readonly ICacheService cacheService;
 
+        private readonly ICmsConfiguration cmsConfiguration;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AccessControlService" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="cacheService">The cache service.</param>
-        public AccessControlService(IRepository repository, ICacheService cacheService)
+        /// <param name="cmsConfiguration">The CMS configuration.</param>
+        public AccessControlService(IRepository repository, ICacheService cacheService, ICmsConfiguration cmsConfiguration)
         {
             this.repository = repository;
             this.cacheService = cacheService;
+            this.cmsConfiguration = cmsConfiguration;
         }
 
         /// <summary>
@@ -73,6 +79,11 @@ namespace BetterCms.Module.Root.Services
             return accessLevel;
         }
 
+        /// <summary>
+        /// Updates the access control.
+        /// </summary>
+        /// <param name="userAccessList">The user access list.</param>
+        /// <param name="objectId">The object id.</param>
         public void UpdateAccessControl(IEnumerable<IUserAccess> userAccessList, Guid objectId)
         {
             var accessList = userAccessList.ToList();
@@ -98,6 +109,31 @@ namespace BetterCms.Module.Root.Services
             entitesToAdd.ForEach(entity => repository.Save(entity));
         }
 
+        /// <summary>
+        /// Gets the default access list.
+        /// </summary>
+        /// <returns></returns>
+        public List<IUserAccess> GetDefaultAccessList()
+        {
+            var list = new List<IUserAccess>();
+
+            foreach (AccessControlElement userAccess in cmsConfiguration.DefaultAccessControlList)
+            {
+                list.Add(new UserAccessViewModel
+                             {
+                                 RoleOrUser = userAccess.RoleOrUser,
+                                 AccessLevel = (AccessLevel)Enum.Parse(typeof(AccessLevel), userAccess.AccessLevel)
+                             });
+            }
+
+            return list;
+        }
+
+        /// <summary>
+        /// Models to entity.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
         private static UserAccess ModelToEntity(IUserAccess model)
         {
             return new UserAccess
@@ -108,6 +144,12 @@ namespace BetterCms.Module.Root.Services
             };
         }
 
+        /// <summary>
+        /// Gets the entities to update.
+        /// </summary>
+        /// <param name="accessList">The access list.</param>
+        /// <param name="entities">The entities.</param>
+        /// <returns></returns>
         private static List<UserAccess> GetEntitiesToUpdate(List<IUserAccess> accessList, List<UserAccess> entities)
         {
             var entitiesToUpdate = new List<UserAccess>();

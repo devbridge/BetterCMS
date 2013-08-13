@@ -3,7 +3,9 @@ using System.Linq;
 using System.Web.Mvc;
 
 using BetterCms.Core.Security;
+
 using BetterCms.Module.MediaManager.ViewModels;
+
 using BetterCms.Module.Pages.Command.Page.AddNewPage;
 using BetterCms.Module.Pages.Command.Page.ClonePage;
 using BetterCms.Module.Pages.Command.Page.CreatePage;
@@ -14,11 +16,11 @@ using BetterCms.Module.Pages.Command.Page.GetPageProperties;
 using BetterCms.Module.Pages.Command.Page.GetPagesList;
 using BetterCms.Module.Pages.Command.Page.SavePageProperties;
 using BetterCms.Module.Pages.Command.Page.SavePagePublishStatus;
-using BetterCms.Module.Pages.Commands.GetTemplates;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Filter;
 using BetterCms.Module.Pages.ViewModels.Page;
+
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
@@ -126,15 +128,6 @@ namespace BetterCms.Module.Pages.Controllers
         {
             var model = GetCommand<GetPagePropertiesCommand>().ExecuteCommand(pageId.ToGuidOrDefault());
             var success = model != null;
-
-            if (success)
-            {
-                model.Templates = GetCommand<GetTemplatesCommand>().ExecuteCommand(new GetTemplatesRequest()).Templates;
-                if (!model.TemplateId.HasDefaultValue())
-                {
-                    model.Templates.Where(x => x.TemplateId == model.TemplateId).ToList().ForEach(x => x.IsActive = true);
-                }
-            }
 
             var view = RenderView("EditPageProperties", model);
             var json = new

@@ -16,6 +16,11 @@
         public const string EditableGridTemplate = "~/Areas/bcms-root/Views/Shared/EditableGrid/Grid.cshtml";
 
         /// <summary>
+        /// The editable grid template.
+        /// </summary>
+        public const string AccessControlTemplate = "~/Areas/bcms-root/Views/Security/AccessControlTemplate.cshtml";
+
+        /// <summary>
         /// The editable grid cell template.
         /// </summary>
         public const string EditableGridCellTemplate = "~/Areas/bcms-root/Views/Shared/EditableGrid/Partial/Cell.cshtml";

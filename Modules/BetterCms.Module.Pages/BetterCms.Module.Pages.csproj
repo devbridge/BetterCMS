@@ -172,7 +172,6 @@
     <Compile Include="Command\Page\GetPageForDelete\GetPageForDeleteCommand.cs" />
     <Compile Include="Command\Page\GetPagesList\GetPagesListCommand.cs" />
     <Compile Include="Command\Redirect\GetRedirectsList\GetRedirectsListCommand.cs" />
-    <Compile Include="Command\Layout\GetTemplates\GetTemplatesResponse.cs" />
     <Compile Include="Command\Widget\GetServerControlWidgetForEdit\GetServerControlWidgetForEditCommand.cs" />
     <Compile Include="Command\Page\SavePageProperties\SavePageResponse.cs" />
     <Compile Include="Command\Page\SavePagePublishStatus\SavePagePublishStatusRequest.cs" />
@@ -184,8 +183,6 @@
     <Compile Include="Command\Widget\GetWidgetCategory\GetWidgetCategoryRequest.cs" />
     <Compile Include="Command\Page\GetPageProperties\GetPagePropertiesCommand.cs" />
     <Compile Include="Command\Page\GetPageSeo\GetPageSeoCommand.cs" />
-    <Compile Include="Command\Layout\GetTemplates\GetTemplatesCommand.cs" />
-    <Compile Include="Command\Layout\GetTemplates\GetTemplatesRequest.cs" />
     <Compile Include="Command\Content\InsertContent\InsertContentToPageCommand.cs" />
     <Compile Include="Command\Content\InsertContent\InsertContentToPageRequest.cs" />
     <Compile Include="Command\Widget\SaveWidget\SaveHtmlContentWidgetCommand.cs" />

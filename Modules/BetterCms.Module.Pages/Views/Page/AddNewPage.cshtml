@@ -2,6 +2,7 @@
 @using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.Page
+@using BetterCms.Module.Root
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
@@ -44,6 +45,11 @@
                 @Html.HiddenFor(f => f.TemplateId, new { @id = "TemplateId" })
                 @Html.HiddenFor(f => f.ParentPageUrl)
                 @Html.HiddenSubmit()
+                
+                @if (Model.AccessControlEnabled)
+                {
+                    @Html.Partial(RootModuleConstants.AccessControlTemplate)
+                }
             </div>
             
             <div id="bcms-tab-2" class="bcms-tab-single">

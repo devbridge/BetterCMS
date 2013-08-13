@@ -1,6 +1,6 @@
 ﻿using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Commands;
-
+using BetterCms.Core.Security;
 using BetterCms.Module.Pages.Command.Page.SavePageProperties;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
@@ -22,15 +22,23 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
         /// </summary>
         private readonly IUrlService urlService;
 
+        private readonly ICmsConfiguration cmsConfiguration;
+
+        private readonly IAccessControlService accessControlService;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="CreatePageCommand" /> class.
         /// </summary>
         /// <param name="pageService">The page service.</param>
         /// <param name="urlService">The URL service.</param>
-        public CreatePageCommand(IPageService pageService, IUrlService urlService)
+        /// <param name="cmsConfiguration">The CMS configuration.</param>
+        /// <param name="accessControlService">The access control service.</param>
+        public CreatePageCommand(IPageService pageService, IUrlService urlService, ICmsConfiguration cmsConfiguration, IAccessControlService accessControlService)
         {
             this.pageService = pageService;
             this.urlService = urlService;
+            this.cmsConfiguration = cmsConfiguration;
+            this.accessControlService = accessControlService;
         }
 
         /// <summary>
@@ -76,6 +84,13 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
             */
 
             Repository.Save(page);
+
+            // Update access control if enabled:
+            if (cmsConfiguration.AccessControlEnabled)
+            {
+                accessControlService.UpdateAccessControl(request.UserAccessList, page.Id);
+            }
+
             UnitOfWork.Commit();
 
             // Notifying, that page is created

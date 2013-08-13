@@ -1,4 +1,5 @@
 using System;
+using System.Configuration;
 
 using BetterCms.Configuration;
 
@@ -115,5 +116,13 @@ namespace BetterCms
         /// <c>true</c> if [access control enabled]; otherwise, <c>false</c>.
         /// </value>
         bool AccessControlEnabled { get; set; }
+
+        /// <summary>
+        /// Gets the default access control list.
+        /// </summary>
+        /// <value>
+        /// The default access control list.
+        /// </value>
+        AccessControlCollection DefaultAccessControlList { get; }
     }
 }

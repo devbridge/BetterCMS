@@ -1,4 +1,5 @@
 ﻿@using BetterCms.Module.MediaManager.ViewModels.File
+@using BetterCms.Module.Root
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.ViewModels.Tags
 @using Microsoft.Web.Mvc
@@ -60,7 +61,7 @@
             
             if (Model.AccessControlEnabled)
             {
-                @Html.Partial("~/Areas/bcms-root/Views/Security/AccessControlTemplate.cshtml")
+                @Html.Partial(RootModuleConstants.AccessControlTemplate)
             }
             
             <div class="bcms-page-images-holder">
