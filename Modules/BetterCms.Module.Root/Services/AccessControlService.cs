@@ -57,13 +57,12 @@ namespace BetterCms.Module.Root.Services
             }
 
             // If user is not authenticated, check access level for "Everyone":
-            var everyone = accessList.FirstOrDefault(x => string.Equals(x.RoleOrUser, "Everyone", StringComparison.OrdinalIgnoreCase));
+            var everyone = accessList.FirstOrDefault(x => string.Equals(x.RoleOrUser, SpecialIdentities.Everyone, StringComparison.OrdinalIgnoreCase));
 
             if (everyone != null)
             {
                 accessLevel = everyone.AccessLevel;
             }
-
 
             // First check if there are explicit permissions for the user:
             if (principal.Identity.IsAuthenticated)
@@ -77,7 +76,7 @@ namespace BetterCms.Module.Root.Services
                 }
 
                 // Check access level for "Authenticated User":
-                var authenticated = accessList.FirstOrDefault(x => string.Equals(x.RoleOrUser, "Authenticated User", StringComparison.OrdinalIgnoreCase));
+                var authenticated = accessList.FirstOrDefault(x => string.Equals(x.RoleOrUser, SpecialIdentities.AuthenticatedUser, StringComparison.OrdinalIgnoreCase));
 
                 if (authenticated != null && authenticated.AccessLevel > accessLevel)
                 {

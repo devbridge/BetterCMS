@@ -151,6 +151,21 @@ namespace BetterCms.Test.Module.AccessControl
         }
 
         [Test]
+        public void Should_Return_ReadWrite_If_There_Are_No_UserAccess()
+        {
+            var objectId = Guid.NewGuid();
+            var accesses = new List<IUserAccess>();
+
+            var service = CreateAccessControlService(objectId, accesses);
+
+            var principal = new GenericPrincipal(new GenericIdentity("Any Authenticated User"), new string[] { });
+
+            var accessLevel = service.GetAccessLevel(objectId, principal);
+
+            Assert.AreEqual(AccessLevel.ReadWrite, accessLevel);
+        }
+
+        [Test]
         public void Should_Return_Default_List()
         {
             var objectId = Guid.NewGuid();
