@@ -71,6 +71,12 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 return newItem;
             };
 
+            OptionValuesListViewModel.prototype.onAfterNewItemAdded = function (item) {
+                if (item.canEditOption !== false && item.key.domElement) {
+                    $(item.key.domElement).focus();
+                }
+            };
+
             return OptionValuesListViewModel;
         })(OptionsListViewModel);
 

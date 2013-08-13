@@ -114,6 +114,8 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     });
                     self.items.unshift(newItem);
                     self.isSelected = true;
+
+                    self.onAfterNewItemAdded(newItem);
                 }
             };
             
@@ -237,6 +239,9 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
         grid.ListViewModel.prototype.createItem = function(item) {
             var newItem = new grid.ItemViewModel(this, item);
             return newItem;
+        };
+
+        grid.ListViewModel.prototype.onAfterNewItemAdded = function (item) {
         };
 
         return grid.ListViewModel;
