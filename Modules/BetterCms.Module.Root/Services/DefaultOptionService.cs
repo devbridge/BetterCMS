@@ -152,6 +152,11 @@ namespace BetterCms.Module.Root.Services
             IEnumerable<IOption> parentOptions, Func<TEntity> entityCreator)
             where TEntity : Entity, IOption
         {
+            if (optionViewModels == null)
+            {
+                return;
+            }
+
             if (savedOptionValues != null)
             {
                 savedOptionValues.

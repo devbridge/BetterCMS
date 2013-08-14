@@ -363,7 +363,8 @@ describe('pages.pages.api.behavior', function () {
             expect(result.data.items[0].id).toBe('e81a87022bf4419688b4a2070081a57e', 'Correctly filtered id should be retrieved.');
 
             // Check if model properties count didn't changed. If so - update current test filter and another tests.
-            expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
+            // data.filter.where.length + 1 <-- Because field options cannnot be filtered by
+            expect(data.filter.where.length + 1).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
         });
     });
     
@@ -449,6 +450,90 @@ describe('pages.pages.api.behavior', function () {
             data = {
                 filter: {
                     where: [{ field: 'ContentType', value: 'test' }]
+                }
+            };
+
+        runs(function () {
+            api.get(url, data, null, function (response) {
+                result = response.responseJSON;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            api.expectValidationExceptionIsThrown(result, 'Data');
+        });
+    });
+    
+    it('01015: Should get filtered pages list with included option values', function () {
+        var url = '/bcms-api/pages/',
+            result,
+            ready = false;
+
+        var data = {
+            filter: {
+                where: [{ field: 'Title', operation: 'StartsWith', value: '01015' }]
+            },
+            order: {
+                by: [{field: 'Title', direction: 'asc'}]  
+            },
+            includeUnpublished: true,
+            includeArchived: true,
+            includePageOptions: true
+        };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(2, 'Total count should be 2.');
+            expect(result.data.items.length).toBe(2, 'Returned array length should be 2.');
+
+            expect(result.data.items[0].title).toBe('01015 - With Options', 'Correctly filtered items[0].title should be retrieved.');
+            expect(result.data.items[1].title).toBe('01015 - Without Options', 'Correctly filtered items[1].title should be retrieved.');
+            
+            expect(result.data.items[1].options).toBeNull('Correctly filtered items[1].options should be null.');
+            expect(result.data.items[0].options).toBeDefinedAndNotNull('Correctly filtered items[0].options should be defined and not null.');
+            expect(result.data.items[0].options.length).toBe(3, 'Correctly filtered items[0].options.length should be 3.');
+            
+            expect(result.data.items[0].options[0].key).toBe('Option 1 With Default Value', 'Correctly filtered items[0].options[0].key should be retrieved.');
+            expect(result.data.items[0].options[0].value).toBeNull('Correctly filtered items[0].options[0].value should be retrieved.');
+            expect(result.data.items[0].options[0].defaultValue).toBe('Default Value', 'Correctly filtered items[0].options[0].defaultValue should be retrieved.');
+            expect(result.data.items[0].options[0].type).toBe('Text', 'Correctly filtered items[0].options[0].type should be retrieved.');
+            
+            expect(result.data.items[0].options[1].key).toBe('Option 2 Without Default Value', 'Correctly filtered items[0].options[1].key should be retrieved.');
+            expect(result.data.items[0].options[1].value).toBe('Value 2', 'Correctly filtered items[0].options[1].value should be retrieved.');
+            expect(result.data.items[0].options[1].defaultValue).toBeNull('Correctly filtered items[0].options[1].defaultValue should be retrieved.');
+            expect(result.data.items[0].options[1].type).toBe('Text', 'Correctly filtered items[0].options[1].type should be retrieved.');
+            
+            expect(result.data.items[0].options[2].key).toBe('Option 3 with Custom Value', 'Correctly filtered items[0].options[2].key should be retrieved.');
+            expect(result.data.items[0].options[2].value).toBe('Custom Value', 'Correctly filtered items[0].options[2].value should be retrieved.');
+            expect(result.data.items[0].options[2].defaultValue).toBeNull('Correctly filtered items[0].options[2].defaultValue should be retrieved.');
+            expect(result.data.items[0].options[2].type).toBe('Text', 'Correctly filtered items[0].options[2].type should be retrieved.');
+        });
+    });
+    
+    it('01016: Should throw validation exception for filtering by Options, when getting pages.', function () {
+        var url = '/bcms-api/pages/',
+            result,
+            ready = false,
+            data = {
+                filter: {
+                    where: [{ field: 'Options', value: 'test' }]
                 }
             };
 

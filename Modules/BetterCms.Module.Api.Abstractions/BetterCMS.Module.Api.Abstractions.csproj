@@ -163,8 +163,10 @@
     <Compile Include="Operations\Pages\IPagesApiOperations.cs" />
     <Compile Include="Operations\Pages\Pages\GetPagesModel.cs" />
     <Compile Include="Operations\Pages\Pages\GetPagesRequest.cs" />
+    <Compile Include="Operations\Pages\Pages\GetPagesRequestValidator.cs" />
     <Compile Include="Operations\Pages\Pages\GetPagesResponse.cs" />
     <Compile Include="Operations\Pages\Pages\IPagesService.cs" />
+    <Compile Include="Operations\Pages\Pages\OptionModel.cs" />
     <Compile Include="Operations\Pages\Pages\PageModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\Content\IPageContentService.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\Content\Options\GetPageContentOptionsRequest.cs" />
