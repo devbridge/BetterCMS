@@ -114,7 +114,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// <exception cref="System.Web.HttpException">404;Page Not Found</exception>
         public ActionResult Download(string id, bool forceToDownload = false)
         {
-            if (!forceToDownload)
+            if (!forceToDownload && !CmsConfiguration.AccessControlEnabled)
             {
                 var file = GetCommand<GetFileCommand>().Execute(id.ToGuidOrDefault());
                 return Redirect(file.Url);
@@ -123,6 +123,11 @@ namespace BetterCms.Module.MediaManager.Controllers
             var model = GetCommand<DownloadFileCommand>().ExecuteCommand(id.ToGuidOrDefault());
             if (model != null)
             {
+                if (!string.IsNullOrWhiteSpace(model.RedirectUrl))
+                {
+                    return Redirect(model.RedirectUrl);
+                }
+
                 model.FileStream.Position = 0;
                 return File(model.FileStream, model.ContentMimeType, model.FileDownloadName);
             }

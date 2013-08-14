@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Linq;
 using System.Web;
 
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services.Storage;
-using BetterCms.Module.MediaManager.Command.MediaManager.DownloadMedia;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Mvc;
 
@@ -56,6 +56,14 @@ namespace BetterCms.Module.MediaManager.Command.Files.DownloadFile
                 {
                     throw new HttpException(403, "Access Forbidden");
                 }
+
+                var fileUri = Repository
+                    .AsQueryable<MediaFile>(f => f.Id == id && !f.IsDeleted)
+                    .Select(f => f.FileUri)
+                    .FirstOrDefault();
+
+                var url = storageService.GetSecuredUrl(fileUri);
+                return new DownloadFileCommandResponse { RedirectUrl = url };
             }
 
             var file = Repository.FirstOrDefault<MediaFile>(f => f.Id == id && !f.IsDeleted);

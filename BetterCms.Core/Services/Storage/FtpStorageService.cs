@@ -295,5 +295,10 @@ namespace BetterCms.Core.Services.Storage
 
             return ftpRequest;
         }
+
+        public string GetSecuredUrl(Uri uri)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

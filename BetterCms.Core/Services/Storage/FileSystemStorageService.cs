@@ -97,6 +97,12 @@ namespace BetterCms.Core.Services.Storage
             {
                 throw new StorageException(string.Format("An Uri scheme {0} is invalid. Uri {1} can't be processed with a {2} storage service.", uri.Scheme, uri, GetType().Name));
             }
-        }       
+        }
+
+
+        public string GetSecuredUrl(Uri uri)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
