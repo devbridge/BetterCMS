@@ -18,6 +18,10 @@ namespace BetterCms.Module.AmazonS3Storage
         private readonly string secretKey;
         private readonly string bucketName;
 
+        private readonly bool accessControlEnabled;
+
+        private readonly TimeSpan tokenExpiryTime;
+
         public AmazonS3StorageService(ICmsConfiguration config)
         {
             try
@@ -27,6 +31,9 @@ namespace BetterCms.Module.AmazonS3Storage
                 accessKey = serviceSection.GetValue("AmazonAccessKey");
                 secretKey = serviceSection.GetValue("AmazonSecretKey");
                 bucketName = serviceSection.GetValue("AmazonBucketName");
+
+                tokenExpiryTime = TimeSpan.Parse(serviceSection.GetValue("AmazonTokenExpiryTime"));
+                accessControlEnabled = config.AccessControlEnabled;
             }
             catch (Exception e)
             {
@@ -88,8 +95,16 @@ namespace BetterCms.Module.AmazonS3Storage
 
                     putRequest.WithBucketName(bucketName)
                         .WithKey(key)
-                        .WithCannedACL(S3CannedACL.PublicRead)
                         .WithInputStream(request.InputStream);
+
+                    if (accessControlEnabled)
+                    {
+                        putRequest.WithCannedACL(S3CannedACL.Private);
+                    }
+                    else
+                    {
+                        putRequest.WithCannedACL(S3CannedACL.PublicRead);
+                    }
 
                     if (request.Headers != null && request.Headers.Count > 0)
                     {
@@ -233,7 +248,28 @@ namespace BetterCms.Module.AmazonS3Storage
 
         public string GetSecuredUrl(Uri uri)
         {
-            throw new NotImplementedException();
+            CheckUri(uri);
+
+            try
+            {
+                using (var client = CreateAmazonS3Client())
+                {
+                    var absolutePath = HttpUtility.UrlDecode(uri.AbsolutePath);
+                    var key = absolutePath.TrimStart('/');
+                    var request = new GetPreSignedUrlRequest();
+
+                    request.WithBucketName(bucketName)
+                        .WithKey(key)
+                        .WithExpires(DateTime.UtcNow.Add(tokenExpiryTime));
+
+                    var url = client.GetPreSignedURL(request);
+                    return url;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new StorageException(string.Format("Failed to get signed URL for file. Uri: {0}.", uri), e);
+            }
         }
     }
 }
