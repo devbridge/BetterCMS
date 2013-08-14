@@ -32,7 +32,10 @@ namespace BetterCms.Module.AmazonS3Storage
                 secretKey = serviceSection.GetValue("AmazonSecretKey");
                 bucketName = serviceSection.GetValue("AmazonBucketName");
 
-                tokenExpiryTime = TimeSpan.Parse(serviceSection.GetValue("AmazonTokenExpiryTime"));
+                if (!TimeSpan.TryParse(serviceSection.GetValue("AmazonTokenExpiryTime"), out tokenExpiryTime))
+                {
+                    tokenExpiryTime = TimeSpan.FromMinutes(10);
+                }
                 accessControlEnabled = config.AccessControlEnabled;
             }
             catch (Exception e)

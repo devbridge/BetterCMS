@@ -33,8 +33,11 @@ namespace BetterCms.Module.WindowsAzureStorage
                 string accountName = serviceSection.GetValue("AzureAccountName");
                 string secretKey = serviceSection.GetValue("AzureSecondaryKey");
                 bool useHttps = bool.Parse(serviceSection.GetValue("AzureUseHttps"));
-                
-                tokenExpiryTime = TimeSpan.Parse(serviceSection.GetValue("AzureTokenExpiryTime"));
+
+                if (!TimeSpan.TryParse(serviceSection.GetValue("AzureTokenExpiryTime"), out tokenExpiryTime))
+                {
+                    tokenExpiryTime = TimeSpan.FromMinutes(10);
+                }
                 accessControlEnabled = config.AccessControlEnabled;
                 containerName = serviceSection.GetValue("AzureContainerName");
 

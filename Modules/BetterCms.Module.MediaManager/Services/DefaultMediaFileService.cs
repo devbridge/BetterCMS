@@ -7,10 +7,10 @@ using System.Web;
 using BetterCms.Configuration;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
-using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Services.Storage;
 using BetterCms.Core.Web;
+
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Mvc;
 
