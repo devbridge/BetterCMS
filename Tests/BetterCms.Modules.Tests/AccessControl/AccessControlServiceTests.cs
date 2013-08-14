@@ -136,7 +136,7 @@ namespace BetterCms.Test.Module.AccessControl
             var accesses = new List<IUserAccess>
             {
                 new UserAccess { RoleOrUser = "RoleA", AccessLevel = AccessLevel.Deny },
-                new UserAccess { RoleOrUser = "Authenticated User", AccessLevel = AccessLevel.ReadWrite },
+                new UserAccess { RoleOrUser = "Authenticated Users", AccessLevel = AccessLevel.ReadWrite },
                 new UserAccess { RoleOrUser = "Admin", AccessLevel = AccessLevel.Read },
                 new UserAccess { RoleOrUser = "RoleB", AccessLevel = AccessLevel.Read }
             };
@@ -166,7 +166,7 @@ namespace BetterCms.Test.Module.AccessControl
         }
 
         [Test]
-        public void Should_Return_Default_List()
+        public void Should_Return_Empty_Default_List()
         {
             var objectId = Guid.NewGuid();
             var accesses = new List<IUserAccess>();
@@ -178,22 +178,88 @@ namespace BetterCms.Test.Module.AccessControl
             Assert.AreEqual(0, accessLevel.Count);
         }
 
-        private static AccessControlService CreateAccessControlService(Guid objectId, IEnumerable<IUserAccess> accesses)
+        [Test]
+        public void Should_Return_Default_List_Without_Principal()
+        {
+            var objectId = Guid.NewGuid();
+            var accesses = new List<IUserAccess>();
+
+            var collection = new AccessControlCollection();
+            collection.Add(new AccessControlElement { AccessLevel = AccessLevel.Deny.ToString(), RoleOrUser = SpecialIdentities.Everyone });
+            collection.Add(new AccessControlElement { AccessLevel = AccessLevel.Read.ToString(), RoleOrUser = SpecialIdentities.AuthenticatedUsers });
+
+            var service = CreateAccessControlService(objectId, accesses, collection);
+
+            var accessLevels = service.GetDefaultAccessList();
+
+            Assert.AreEqual(2, accessLevels.Count);
+            Assert.AreEqual(accessLevels.First(a => a.RoleOrUser == collection[0].RoleOrUser).AccessLevel.ToString(), collection[0].AccessLevel);
+            Assert.AreEqual(accessLevels.First(a => a.RoleOrUser == collection[1].RoleOrUser).AccessLevel.ToString(), collection[1].AccessLevel);
+        }
+
+        /// <summary>
+        /// Should add principal with read/write role (as owner)
+        /// </summary>
+        [Test]
+        public void Should_Return_Default_List_Wit_Principal_Added()
+        {
+            var objectId = Guid.NewGuid();
+            var accesses = new List<IUserAccess>();
+
+            var collection = new AccessControlCollection();
+            collection.Add(new AccessControlElement { AccessLevel = AccessLevel.Deny.ToString(), RoleOrUser = SpecialIdentities.Everyone });
+            collection.Add(new AccessControlElement { AccessLevel = AccessLevel.Read.ToString(), RoleOrUser = SpecialIdentities.AuthenticatedUsers });
+
+            var service = CreateAccessControlService(objectId, accesses, collection);
+
+            var principal = new GenericPrincipal(new GenericIdentity("John Doe"), new string[] { });
+            var accessLevels = service.GetDefaultAccessList(principal);
+
+            Assert.AreEqual(3, accessLevels.Count);
+            Assert.AreEqual(accessLevels.First(a => a.RoleOrUser == collection[0].RoleOrUser).AccessLevel.ToString(), collection[0].AccessLevel);
+            Assert.AreEqual(accessLevels.First(a => a.RoleOrUser == collection[1].RoleOrUser).AccessLevel.ToString(), collection[1].AccessLevel);
+            Assert.AreEqual(accessLevels.First(a => a.RoleOrUser == principal.Identity.Name).AccessLevel, AccessLevel.ReadWrite);
+        }
+
+        /// <summary>
+        /// Should not add principal with read/write role, because authenticated users have read/write role
+        /// </summary>
+        [Test]
+        public void Should_Return_Default_List_Wit_Principal_Added_And_Ignored()
+        {
+            var objectId = Guid.NewGuid();
+            var accesses = new List<IUserAccess>();
+
+            var collection = new AccessControlCollection();
+            collection.Add(new AccessControlElement { AccessLevel = AccessLevel.Deny.ToString(), RoleOrUser = SpecialIdentities.Everyone });
+            collection.Add(new AccessControlElement { AccessLevel = AccessLevel.ReadWrite.ToString(), RoleOrUser = SpecialIdentities.AuthenticatedUsers });
+
+            var service = CreateAccessControlService(objectId, accesses, collection);
+
+            var principal = new GenericPrincipal(new GenericIdentity("John Doe"), new string[] { });
+            var accessLevels = service.GetDefaultAccessList(principal);
+
+            Assert.AreEqual(2, accessLevels.Count);
+            Assert.AreEqual(accessLevels.First(a => a.RoleOrUser == collection[0].RoleOrUser).AccessLevel.ToString(), collection[0].AccessLevel);
+            Assert.AreEqual(accessLevels.First(a => a.RoleOrUser == collection[1].RoleOrUser).AccessLevel.ToString(), collection[1].AccessLevel);
+        }
+
+        private static AccessControlService CreateAccessControlService(Guid objectId, IEnumerable<IUserAccess> accesses, AccessControlCollection defaults = null)
         {
             var repository = GetRepositoryMock(objectId, accesses);
             var cacheService = GetCacheServiceMock();
-            var cmsConfiguration = GetCmsConfigurationMock();
+            var cmsConfiguration = GetCmsConfigurationMock(defaults);
 
             var service = new AccessControlService(repository.Object, cacheService.Object, cmsConfiguration.Object);
 
             return service;
         }
 
-        private static Mock<ICmsConfiguration> GetCmsConfigurationMock()
+        private static Mock<ICmsConfiguration> GetCmsConfigurationMock(AccessControlCollection defaults)
         {
             var cmsConfiguration = new Mock<ICmsConfiguration>();
 
-            cmsConfiguration.Setup(x => x.DefaultAccessControlList).Returns(() => new AccessControlCollection());
+            cmsConfiguration.Setup(x => x.DefaultAccessControlList).Returns(() => defaults ?? new AccessControlCollection());
             return cmsConfiguration;
         }
 

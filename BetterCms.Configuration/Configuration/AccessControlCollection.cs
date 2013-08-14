@@ -35,6 +35,15 @@ namespace BetterCms.Configuration
         #endregion
 
         /// <summary>
+        /// Adds the specified element to collection.
+        /// </summary>
+        /// <param name="element">The element.</param>
+        public void Add(AccessControlElement element)
+        {
+            BaseAdd(element);
+        }
+
+        /// <summary>
         /// Gets the element by key.
         /// </summary>
         /// <param name="key">The key.</param>
