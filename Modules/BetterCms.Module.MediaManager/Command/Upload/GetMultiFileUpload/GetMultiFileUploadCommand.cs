@@ -3,9 +3,12 @@ using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
+using BetterCms.Core.Services;
+
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.ViewModels.Upload;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.ViewModels.Security;
 
 namespace BetterCms.Module.MediaManager.Command.Upload.GetMultiFileUpload
 {
@@ -15,10 +18,13 @@ namespace BetterCms.Module.MediaManager.Command.Upload.GetMultiFileUpload
 
         private readonly IAccessControlService accessControlService;
 
-        public GetMultiFileUploadCommand(ICmsConfiguration cmsConfiguration, IAccessControlService accessControlService)
+        private readonly ISecurityService securityService;
+
+        public GetMultiFileUploadCommand(ICmsConfiguration cmsConfiguration, IAccessControlService accessControlService, ISecurityService securityService)
         {
             this.cmsConfiguration = cmsConfiguration;
             this.accessControlService = accessControlService;
+            this.securityService = securityService;
         }
 
         public MultiFileUploadViewModel Execute(GetMultiFileUploadRequest request)
@@ -47,7 +53,8 @@ namespace BetterCms.Module.MediaManager.Command.Upload.GetMultiFileUpload
 
             model.Folders.Insert(0, new Tuple<Guid, string>(Guid.Empty, ".."));
 
-            model.UserAccessList = accessControlService.GetDefaultAccessList();
+            var principal = securityService.GetCurrentPrincipal();
+            model.UserAccessList = accessControlService.GetDefaultAccessList(principal).Cast<UserAccessViewModel>().ToList();
 
             model.AccessControlEnabled = cmsConfiguration.AccessControlEnabled;
 

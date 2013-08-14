@@ -4,6 +4,6 @@
     {
         public const string Everyone = "Everyone";
 
-        public const string AuthenticatedUser = "Authenticated User";
+        public const string AuthenticatedUsers = "Authenticated Users";
     }
 }

@@ -2,8 +2,8 @@
 /*global bettercms, console */
 
 bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent',
-        'bcms.pages.properties', 'bcms.grid', 'bcms.redirect', 'bcms.messages', 'bcms.pages.filter', 'bcms.options', 'bcms.ko.extenders'],
-    function ($, bcms, modal, siteSettings, forms, dynamicContent, pageProperties, grid, redirect, messages, filter, options, ko) {
+        'bcms.pages.properties', 'bcms.grid', 'bcms.redirect', 'bcms.messages', 'bcms.pages.filter', 'bcms.options', 'bcms.ko.extenders', 'bcms.security'],
+    function ($, bcms, modal, siteSettings, forms, dynamicContent, pageProperties, grid, redirect, messages, filter, options, ko, security) {
     'use strict';
 
         var page = { },            
@@ -141,7 +141,10 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
     page.initAddNewPageDialogEvents = function (dialog, content) {
         var infoMessageClosed = localStorage.getItem(keys.addNewPageInfoMessageClosed),
             optionsContainer = dialog.container.find(selectors.addNewPageOptionsTab),
-            optionListViewModel = options.createOptionValuesViewModel(optionsContainer, content.Data.OptionValues);
+            viewModel = {
+                accessControl: security.createUserAccessViewModel(content.Data.UserAccessList),
+                options: options.createOptionValuesViewModel(optionsContainer, content.Data.OptionValues)
+            };
 
         page.initializePermalinkBox(dialog, true, links.convertStringToSlugUrl, selectors.addNewPageTitleInput, true);
 
@@ -156,7 +159,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
 
         dialog.container.find(selectors.addNewPageTemplateSelect).on('click', function () {
             page.highlightAddNewPageActiveTemplate(dialog, this, function(id) {
-                pageProperties.loadLayoutOptions(id, dialog.container, content.Data.TemplateId, optionsContainer, optionListViewModel);
+                pageProperties.loadLayoutOptions(id, dialog.container, content.Data.TemplateId, optionsContainer, viewModel.options);
             });
         });
         
@@ -168,9 +171,9 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             modal.imagePreview(url, alt);
         });
 
-        ko.applyBindings(optionListViewModel, optionsContainer.get(0));
+        ko.applyBindings(viewModel, dialog.container.find(selectors.addNewPageForm).get(0));
 
-        return optionListViewModel;
+        return viewModel;
     };
 
     /**
@@ -292,14 +295,14 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
     page.openCreatePageDialog = function (postSuccess) {
         var permalinkValue,
             url = $.format(links.loadAddNewPageDialogUrl, window.location.pathname),
-            optionsViewModel;
+            viewModel;
 
         modal.open({
             title: globalization.addNewPageDialogTitle,
             onLoad: function (dialog) {
                 dynamicContent.bindDialog(dialog, url, {
                     contentAvailable: function(childDialog, content) {
-                        optionsViewModel = page.initAddNewPageDialogEvents(childDialog, content);
+                        viewModel = page.initAddNewPageDialogEvents(childDialog, content);
                     },
 
                     beforePost: function () {
@@ -309,7 +312,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                             pageUrlField.val(null);
                         }
 
-                        return optionsViewModel.isValid(true);
+                        return viewModel.options.isValid(true);
                     },
 
                     postError: function () {

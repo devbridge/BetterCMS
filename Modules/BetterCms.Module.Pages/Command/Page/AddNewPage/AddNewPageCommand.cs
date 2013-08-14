@@ -2,9 +2,12 @@
 
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
+using BetterCms.Core.Services;
+
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.ViewModels.Security;
 
 namespace BetterCms.Module.Pages.Command.Page.AddNewPage
 {
@@ -16,17 +19,21 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
 
         private readonly IAccessControlService accessControlService;
 
+        private readonly ISecurityService securityService;
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="AddNewPageCommand"/> class.
+        /// Initializes a new instance of the <see cref="AddNewPageCommand" /> class.
         /// </summary>
         /// <param name="LayoutService">The layout service.</param>
         /// <param name="cmsConfiguration">The CMS configuration.</param>
         /// <param name="accessControlService">The access control service.</param>
-        public AddNewPageCommand(ILayoutService LayoutService, ICmsConfiguration cmsConfiguration, IAccessControlService accessControlService)
+        /// <param name="securityService">The security service.</param>
+        public AddNewPageCommand(ILayoutService LayoutService, ICmsConfiguration cmsConfiguration, IAccessControlService accessControlService, ISecurityService securityService)
         {
             layoutService = LayoutService;
             this.cmsConfiguration = cmsConfiguration;
             this.accessControlService = accessControlService;
+            this.securityService = securityService;
         }
 
         /// <summary>
@@ -36,12 +43,13 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
         /// <returns>AddNewPage view model</returns>
         public AddNewPageViewModel Execute(AddNewPageCommandRequest request)
         {
+            var principal = securityService.GetCurrentPrincipal();
             var model = new AddNewPageViewModel
                             {
                                 ParentPageUrl = request.ParentPageUrl,
                                 Templates = layoutService.GetLayouts(),
                                 AccessControlEnabled = cmsConfiguration.AccessControlEnabled,
-                                UserAccessList = accessControlService.GetDefaultAccessList()
+                                UserAccessList = accessControlService.GetDefaultAccessList(principal).Cast<UserAccessViewModel>().ToList()
                             };
 
             if (model.Templates.Count > 0)

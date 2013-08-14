@@ -28,6 +28,6 @@ namespace BetterCms.Core.Security
         /// Gets the default access list.
         /// </summary>
         /// <returns></returns>
-        List<IUserAccess> GetDefaultAccessList();
+        List<IUserAccess> GetDefaultAccessList(IPrincipal principal = null);
     }
 }
