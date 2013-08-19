@@ -10,9 +10,10 @@ using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Services.Storage;
 using BetterCms.Core.Web;
-
+using BetterCms.Module.MediaManager.Controllers;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Mvc.Helpers;
 
 using Common.Logging;
 
@@ -267,6 +268,16 @@ namespace BetterCms.Module.MediaManager.Services
             }
 
             return rootPath;
+        }
+
+        public string GetDownloadFileUrl(MediaType type, Guid id, string fileUrl)
+        {
+            if (type == MediaType.Image || !configuration.AccessControlEnabled || !storageService.SecuredUrlsEnabled)
+            {
+                return fileUrl;
+            }
+
+            return CmsUrlHelper.GetFullActionUrl<FilesController>(f => f.Download(id.ToString()));
         }
     }
 }

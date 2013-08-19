@@ -32,5 +32,7 @@ namespace BetterCms.Module.MediaManager.Services
         /// Upload file task.
         /// </returns>
         Task UploadMediaFileToStorage<TMedia>(Stream sourceStream, Uri fileUri, Guid mediaId, Action<TMedia> updateMediaAfterUpload, Action<TMedia> updateMediaAfterFail, bool ignoreAccessControl) where TMedia : MediaFile;
+
+        string GetDownloadFileUrl(MediaType type, Guid id, string fileUrl);
     }
 }

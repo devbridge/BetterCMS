@@ -1,17 +1,16 @@
 ﻿using BetterCms.Module.MediaManager.Command.MediaManager;
-using BetterCms.Module.MediaManager.Controllers;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
-using BetterCms.Module.Root.Mvc.Helpers;
 
 namespace BetterCms.Module.MediaManager.Command.Files.GetFiles
 {
     public class GetFilesCommand : GetMediaItemsCommandBase<MediaFile>
     {
         /// <summary>
-        /// The files download URL
+        /// The file service
         /// </summary>
-        private static string filesDownloadUrl;
+        public IMediaFileService FileService { get; set; }
 
         /// <summary>
         /// Gets the type of the current media items.
@@ -25,20 +24,6 @@ namespace BetterCms.Module.MediaManager.Command.Files.GetFiles
         }
 
         /// <summary>
-        /// Gets the files download URL.
-        /// </summary>
-        /// <returns></returns>
-        private string GetFilesDownloadUrl()
-        {
-            if (filesDownloadUrl == null)
-            {
-                filesDownloadUrl = CmsUrlHelper.GetActionUrl<FilesController>(f => f.Download("{0}"));
-            }
-
-            return filesDownloadUrl;
-        }
-
-        /// <summary>
         /// Creates the image view model.
         /// </summary>
         /// <param name="media">The media.</param>
@@ -47,13 +32,10 @@ namespace BetterCms.Module.MediaManager.Command.Files.GetFiles
         {
             var model = base.ToViewModel(media);
 
-            if (CmsConfiguration.AccessControlEnabled)
+            var fileModel = model as MediaFileViewModel;
+            if (fileModel != null)
             {
-                var fileModel = model as MediaFileViewModel;
-                if (fileModel != null)
-                {
-                    fileModel.PublicUrl = string.Format(GetFilesDownloadUrl(), fileModel.Id);
-                }
+                fileModel.PublicUrl = FileService.GetDownloadFileUrl(MediaType.File, fileModel.Id, fileModel.PublicUrl);
             }
 
             return model;

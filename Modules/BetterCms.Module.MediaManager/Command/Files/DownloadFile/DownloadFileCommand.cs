@@ -79,21 +79,16 @@ namespace BetterCms.Module.MediaManager.Command.Files.DownloadFile
             }
 
             // Get download URL with security token
-            if (storageService.SecuredUrlsEnabled)
+            var principal = SecurityService.GetCurrentPrincipal();
+            var accessLevel = accessControlService.GetAccessLevel(id, principal);
+
+            if (accessLevel == AccessLevel.Deny)
             {
-                var principal = SecurityService.GetCurrentPrincipal();
-                var accessLevel = accessControlService.GetAccessLevel(id, principal);
-
-                if (accessLevel == AccessLevel.Deny)
-                {
-                    throw new HttpException(403, "Access Forbidden");
-                }
-
-                var url = storageService.GetSecuredUrl(file.FileUri);
-                return new DownloadFileCommandResponse { RedirectUrl = url };
+                throw new HttpException(403, "Access Forbidden");
             }
 
-            return null;
+            var url = storageService.GetSecuredUrl(file.FileUri);
+            return new DownloadFileCommandResponse { RedirectUrl = url };
         }
     }
 }
