@@ -6,10 +6,10 @@ using System.Linq.Expressions;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.Mvc.Commands;
-using BetterCms.Core.Services.Storage;
 
 using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
@@ -22,17 +22,9 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
         where TEntity: MediaFile
     {
         /// <summary>
-        /// The CMS configuration
+        /// The file service
         /// </summary>
-        public ICmsConfiguration CmsConfiguration { get; set; }
-
-        /// <summary>
-        /// Gets or sets the storage service.
-        /// </summary>
-        /// <value>
-        /// The storage service.
-        /// </value>
-        public IStorageService StorageService { get; set; }
+        public IMediaFileService FileService { get; set; }
 
         /// <summary>
         /// Gets the type of the current media items.
@@ -382,7 +374,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
         {
             FillMediaViewModel(model, media);
 
-            model.PublicUrl = media.PublicUrl;
+            model.PublicUrl = FileService.GetDownloadFileUrl(MediaType.File, media.Id, media.PublicUrl);
             model.FileExtension = media.OriginalFileExtension;
             model.Size = media.Size;
             model.IsProcessing = media.IsUploaded == null;
