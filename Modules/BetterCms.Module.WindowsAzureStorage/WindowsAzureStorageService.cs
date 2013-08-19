@@ -18,7 +18,7 @@ namespace BetterCms.Module.WindowsAzureStorage
 
         private readonly string containerName;
 
-        private readonly bool accessControlEnabled;
+        private readonly bool accessControlEnabledGlobally;
         
         private readonly TimeSpan tokenExpiryTime;
 
@@ -38,7 +38,7 @@ namespace BetterCms.Module.WindowsAzureStorage
                 {
                     tokenExpiryTime = TimeSpan.FromMinutes(10);
                 }
-                accessControlEnabled = config.AccessControlEnabled;
+                accessControlEnabledGlobally = config.AccessControlEnabled;
                 containerName = serviceSection.GetValue("AzureContainerName");
 
                 cloudStorageAccount = new CloudStorageAccount(new StorageCredentials(accountName, secretKey), useHttps);
@@ -96,7 +96,7 @@ namespace BetterCms.Module.WindowsAzureStorage
                 }
 
                 var permissions = new BlobContainerPermissions();
-                if (accessControlEnabled)
+                if (accessControlEnabledGlobally && !request.IgnoreAccessControl)
                 {
                     permissions.PublicAccess = BlobContainerPublicAccessType.Off;
                 }

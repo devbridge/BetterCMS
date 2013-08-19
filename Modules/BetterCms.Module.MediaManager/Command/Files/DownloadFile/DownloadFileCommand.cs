@@ -2,9 +2,11 @@
 using System.Linq;
 using System.Web;
 
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services.Storage;
+
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Mvc;
 
@@ -44,10 +46,36 @@ namespace BetterCms.Module.MediaManager.Command.Files.DownloadFile
         /// Executes the specified id.
         /// </summary>
         /// <param name="id">The id.</param>
-        /// <returns>Response type of <see cref="DownloadFileCommandResponse"/></returns>
+        /// <returns>
+        /// Response type of <see cref="DownloadFileCommandResponse" />
+        /// </returns>
+        /// <exception cref="System.Web.HttpException">403;Access Forbidden</exception>
         public DownloadFileCommandResponse Execute(Guid id)
         {
-            if (cmsConfiguration.AccessControlEnabled)
+            // Load file
+            var file = Repository
+                .AsQueryable<MediaFile>(f => f.Id == id && !f.IsDeleted)
+                .Select(f => new
+                        {
+                            FileUri = f.FileUri,
+                            Title = f.Title,
+                            OriginalFileExtension = f.OriginalFileExtension,
+                            Type = f.Type,
+                            PublicUrl = f.PublicUrl
+                        })
+                .FirstOne();
+
+            // Access control is ALWAYS disabled for images
+            var accesControlEnabled = cmsConfiguration.AccessControlEnabled && file.Type != MediaType.Image;
+
+            if (!accesControlEnabled)
+            {
+                return new DownloadFileCommandResponse { RedirectUrl = file.PublicUrl };
+            }
+
+            // TODO: Ftp / File storage solution with secured URLs
+            // TODO: `if` checking can be removed ????
+            if (file.Type != MediaType.Image && cmsConfiguration.AccessControlEnabled)
             {
                 var principal = SecurityService.GetCurrentPrincipal();
                 var accessLevel = accessControlService.GetAccessLevel(id, principal);
@@ -57,29 +85,22 @@ namespace BetterCms.Module.MediaManager.Command.Files.DownloadFile
                     throw new HttpException(403, "Access Forbidden");
                 }
 
-                var fileUri = Repository
-                    .AsQueryable<MediaFile>(f => f.Id == id && !f.IsDeleted)
-                    .Select(f => f.FileUri)
-                    .FirstOrDefault();
-
-                var url = storageService.GetSecuredUrl(fileUri);
+                var url = storageService.GetSecuredUrl(file.FileUri);
                 return new DownloadFileCommandResponse { RedirectUrl = url };
             }
 
-            var file = Repository.FirstOrDefault<MediaFile>(f => f.Id == id && !f.IsDeleted);
-            if (file != null)
+            // TODO: can remove the next block ?????
+            // Download object from storage
+            var response = storageService.DownloadObject(file.FileUri);
+            if (response != null)
             {
-                var response = storageService.DownloadObject(file.FileUri);
-                if (response != null)
-                {
-                    return new DownloadFileCommandResponse
-                        {
-                            FileStream = response.ResponseStream,
-                            // TODO: Change so that content type is determined from file extension or stored in the database
-                            ContentMimeType = System.Net.Mime.MediaTypeNames.Application.Octet, // Specify the generic octet-stream MIME type.
-                            FileDownloadName = string.Format("{0}{1}", System.IO.Path.GetFileNameWithoutExtension(file.Title), file.OriginalFileExtension)
-                        };
-                }
+                return new DownloadFileCommandResponse
+                    {
+                        FileStream = response.ResponseStream,
+                        // TODO: Change so that content type is determined from file extension or stored in the database
+                        ContentMimeType = System.Net.Mime.MediaTypeNames.Application.Octet, // Specify the generic octet-stream MIME type.
+                        FileDownloadName = string.Format("{0}{1}", System.IO.Path.GetFileNameWithoutExtension(file.Title), file.OriginalFileExtension)
+                    };
             }
 
             return null;

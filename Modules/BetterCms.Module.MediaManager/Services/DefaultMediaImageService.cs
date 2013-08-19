@@ -236,9 +236,9 @@ namespace BetterCms.Module.MediaManager.Services
                 repository.Save(image);
                 unitOfWork.Commit();
 
-                Task imageUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(fileStream, image.FileUri, image.Id, img => { img.IsUploaded = true; }, img => { img.IsUploaded = false; });
-                Task originalUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(fileStream, image.OriginalUri, image.Id, img => { img.IsOriginalUploaded = true; }, img => { img.IsOriginalUploaded = false; });
-                Task thumbnailUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(thumbnailImage, image.ThumbnailUri, image.Id, img => { img.IsThumbnailUploaded = true; }, img => { img.IsThumbnailUploaded = false; });
+                Task imageUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(fileStream, image.FileUri, image.Id, img => { img.IsUploaded = true; }, img => { img.IsUploaded = false; }, true);
+                Task originalUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(fileStream, image.OriginalUri, image.Id, img => { img.IsOriginalUploaded = true; }, img => { img.IsOriginalUploaded = false; }, true);
+                Task thumbnailUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(thumbnailImage, image.ThumbnailUri, image.Id, img => { img.IsThumbnailUploaded = true; }, img => { img.IsThumbnailUploaded = false; }, true);
 
                 Task.Factory.ContinueWhenAll(
                     new[]
@@ -378,7 +378,7 @@ namespace BetterCms.Module.MediaManager.Services
                 mediaImage.ThumbnailHeight = size.Height;
                 mediaImage.ThumbnailSize = memoryStream.Length;
 
-                storageService.UploadObject(new UploadRequest { InputStream = memoryStream, Uri = mediaImage.ThumbnailUri });
+                storageService.UploadObject(new UploadRequest { InputStream = memoryStream, Uri = mediaImage.ThumbnailUri, IgnoreAccessControl = true});
             }
         }
 

@@ -18,7 +18,7 @@ namespace BetterCms.Module.AmazonS3Storage
         private readonly string secretKey;
         private readonly string bucketName;
 
-        private readonly bool accessControlEnabled;
+        private readonly bool accessControlEnabledGlobally;
 
         private readonly TimeSpan tokenExpiryTime;
 
@@ -36,7 +36,7 @@ namespace BetterCms.Module.AmazonS3Storage
                 {
                     tokenExpiryTime = TimeSpan.FromMinutes(10);
                 }
-                accessControlEnabled = config.AccessControlEnabled;
+                accessControlEnabledGlobally = config.AccessControlEnabled;
             }
             catch (Exception e)
             {
@@ -100,7 +100,7 @@ namespace BetterCms.Module.AmazonS3Storage
                         .WithKey(key)
                         .WithInputStream(request.InputStream);
 
-                    if (accessControlEnabled)
+                    if (accessControlEnabledGlobally && !request.IgnoreAccessControl)
                     {
                         putRequest.WithCannedACL(S3CannedACL.Private);
                     }
