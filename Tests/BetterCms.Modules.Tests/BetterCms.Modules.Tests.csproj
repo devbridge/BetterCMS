@@ -128,7 +128,6 @@
     <Compile Include="AccessControl\AccessControlServiceTests.cs" />
     <Compile Include="AccessControl\ModelTests\MapTests\UserAccessMapTest.cs" />
     <Compile Include="AmazonS3Storage\AmazonS3StorageServiceTest.cs" />
-    <Compile Include="ApiTestBase.cs" />
     <Compile Include="Api\ApiFacadeTests.cs" />
     <Compile Include="Blog\CommandTests\GetAuthorListCommandTest.cs" />
     <Compile Include="Blog\ModelTests\MapTests\BlogPostMapTest.cs" />
@@ -144,6 +143,7 @@
     <Compile Include="MediaManager\ModelTests\MapTests\MediaFolderMapTest.cs" />
     <Compile Include="MediaManager\ModelTests\MapTests\MediaImageMapTest.cs" />
     <Compile Include="MediaManager\ModelTests\MapTests\MediaMapTest.cs" />
+    <Compile Include="MediaManager\ServiceTests\DefaultMediaFileServiceTests.cs" />
     <Compile Include="Pages\CommandTests\ContentTests\DeletePageContentCommandTest.cs" />
     <Compile Include="Pages\CommandTests\ContentTests\GetPageContentOptionsTest.cs" />
     <Compile Include="Pages\CommandTests\ContentTests\GetPageHtmlContentCommandTest.cs" />
@@ -292,9 +292,7 @@
       <Name>BetterCms.Module.WindowsAzureStorage</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Api\Root\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <PropertyGroup>

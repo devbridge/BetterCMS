@@ -16,3 +16,5 @@ using System.Web;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("51E17925-57DC-4C4B-A648-217BFE49E0A1")]
+
+[assembly: InternalsVisibleTo("BetterCms.Modules.Tests")]
