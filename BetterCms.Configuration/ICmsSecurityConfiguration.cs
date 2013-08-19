@@ -8,6 +8,22 @@ namespace BetterCms
     public interface ICmsSecurityConfiguration
     {
         /// <summary>
+        /// Gets a value indicating whether to a content encryption is enabled.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if a content encryption is enabled; otherwise, <c>false</c>.
+        /// </value>
+        bool EnableContentEncryption { get; }
+
+        /// <summary>
+        /// Gets the content encryption key.
+        /// </summary>
+        /// <value>
+        /// The content encryption key.
+        /// </value>
+        string ContentEncryptionKey { get; }
+
+        /// <summary>
         /// Gets or sets the full access roles.
         /// </summary>
         /// <value>

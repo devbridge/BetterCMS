@@ -1,4 +1,5 @@
 using BetterCms.Core.Models;
+using BetterCms.Core.Security;
 
 namespace BetterCms.Module.Pages.Models.Maps
 {
@@ -9,7 +10,7 @@ namespace BetterCms.Module.Pages.Models.Maps
         {
             Table("HtmlContentWidgets");
 
-            Map(x => x.Html).Not.Nullable().Length(int.MaxValue);
+            Map(x => x.Html).Not.Nullable().Length(int.MaxValue).CustomType<EncryptableString>();
             Map(x => x.UseHtml).Not.Nullable();
             Map(x => x.CustomCss).Nullable().Length(int.MaxValue);
             Map(x => x.UseCustomCss).Not.Nullable();

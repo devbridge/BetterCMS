@@ -172,11 +172,15 @@
     <Compile Include="Mvc\Extensions\VirtualPath.cs" />
     <Compile Include="Security\AccessLevel.cs" />
     <Compile Include="Security\BcmsAuthorizeAttribute.cs" />
+    <Compile Include="Security\EncryptableString.cs" />
     <Compile Include="Security\IAccessControlService.cs" />
+    <Compile Include="Security\IEncryptable.cs" />
+    <Compile Include="Security\ITextEncryptor.cs" />
     <Compile Include="Security\IUserAccess.cs" />
     <Compile Include="Security\IUserRole.cs" />
     <Compile Include="Modules\Projections\EmptyContentAccessor.cs" />
     <Compile Include="Mvc\Attributes\IgnoreAutoRouteAttribute.cs" />
+    <Compile Include="Security\DefaultTextEncryptor.cs" />
     <Compile Include="Security\UserRole.cs" />
     <Compile Include="Services\Storage\FtpStorageService.cs" />
     <Compile Include="Services\Storage\DownloadResponse.cs" />
