@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 
+using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Service;
 
 namespace BetterCms.Core.Services.Storage
@@ -99,10 +100,14 @@ namespace BetterCms.Core.Services.Storage
             }
         }
 
+        public bool SecuredUrlsEnabled
+        {
+            get { return false; }
+        }
 
         public string GetSecuredUrl(Uri uri)
         {
-            throw new NotImplementedException();
+            throw new CmsException("File system storage doesn't support token based security.");
         }
     }
 }

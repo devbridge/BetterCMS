@@ -212,6 +212,11 @@ namespace BetterCms.Module.WindowsAzureStorage
             }
         }
 
+        public bool SecuredUrlsEnabled
+        {
+            get { return true; }
+        }
+
         public string GetSecuredUrl(Uri uri)
         {
             CheckUri(uri);

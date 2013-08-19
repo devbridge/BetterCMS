@@ -2,6 +2,8 @@
 using System.Web.Mvc;
 
 using BetterCms.Core.Security;
+using BetterCms.Core.Services.Storage;
+
 using BetterCms.Module.MediaManager.Command.Files.DownloadFile;
 using BetterCms.Module.MediaManager.Command.Files.GetFile;
 using BetterCms.Module.MediaManager.Command.Files.GetFiles;
@@ -10,6 +12,7 @@ using BetterCms.Module.MediaManager.Command.MediaManager.DeleteMedia;
 using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.ViewModels.File;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
+
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
@@ -31,6 +34,14 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// The CMS configuration.
         /// </value>
         public ICmsConfiguration CmsConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets the storage service.
+        /// </summary>
+        /// <value>
+        /// The storage service.
+        /// </value>
+        public IStorageService StorageService { get; set; }
 
         /// <summary>
         /// Gets the files list.
@@ -55,7 +66,7 @@ namespace BetterCms.Module.MediaManager.Controllers
                 success = false;
             }
 
-            return Json(new WireJson { Success = success, Data = model });
+            return WireJson(success, model);
         }
 
         /// <summary>

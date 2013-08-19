@@ -6,10 +6,11 @@ using System.Linq.Expressions;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Core.Services.Storage;
+
 using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
-using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
 
@@ -19,7 +20,20 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
 {
     public abstract class GetMediaItemsCommandBase<TEntity> : CommandBase, ICommand<MediaManagerViewModel, MediaManagerItemsViewModel>
         where TEntity: MediaFile
-    {       
+    {
+        /// <summary>
+        /// The CMS configuration
+        /// </summary>
+        public ICmsConfiguration CmsConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets the storage service.
+        /// </summary>
+        /// <value>
+        /// The storage service.
+        /// </value>
+        public IStorageService StorageService { get; set; }
+
         /// <summary>
         /// Gets the type of the current media items.
         /// </summary>

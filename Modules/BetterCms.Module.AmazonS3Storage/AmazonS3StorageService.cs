@@ -249,6 +249,11 @@ namespace BetterCms.Module.AmazonS3Storage
             }
         }
 
+        public bool SecuredUrlsEnabled
+        {
+            get { return true; }
+        }
+
         public string GetSecuredUrl(Uri uri)
         {
             CheckUri(uri);

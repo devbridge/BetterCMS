@@ -17,5 +17,7 @@ namespace BetterCms.Core.Services.Storage
         void RemoveFolder(Uri uri);
 
         string GetSecuredUrl(Uri uri);
+        
+        bool SecuredUrlsEnabled { get; }
     }
 }

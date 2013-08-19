@@ -2,6 +2,7 @@
 using System.IO;
 using System.Net;
 
+using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Service;
 
 namespace BetterCms.Core.Services.Storage
@@ -296,9 +297,14 @@ namespace BetterCms.Core.Services.Storage
             return ftpRequest;
         }
 
+        public bool SecuredUrlsEnabled
+        {
+            get { return false; }
+        }
+
         public string GetSecuredUrl(Uri uri)
         {
-            throw new NotImplementedException();
+            throw new CmsException("FTP storage doesn't support token based security.");
         }
     }
 }

@@ -3,10 +3,12 @@ using System.Linq;
 using System.Web;
 
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services.Storage;
 
+using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Mvc;
 
@@ -18,15 +20,18 @@ namespace BetterCms.Module.MediaManager.Command.Files.DownloadFile
     public class DownloadFileCommand : CommandBase, ICommand<Guid, DownloadFileCommandResponse>
     {
         /// <summary>
-        /// Gets or sets the storage.
+        /// The storage service
         /// </summary>
-        /// <value>
-        /// The storage.
-        /// </value>
         private readonly IStorageService storageService;
 
+        /// <summary>
+        /// The CMS configuration
+        /// </summary>
         private readonly ICmsConfiguration cmsConfiguration;
 
+        /// <summary>
+        /// The access control service
+        /// </summary>
         private readonly IAccessControlService accessControlService;
 
         /// <summary>
@@ -68,14 +73,13 @@ namespace BetterCms.Module.MediaManager.Command.Files.DownloadFile
             // Access control is ALWAYS disabled for images
             var accesControlEnabled = cmsConfiguration.AccessControlEnabled && file.Type != MediaType.Image;
 
-            if (!accesControlEnabled)
+            if (!accesControlEnabled || !storageService.SecuredUrlsEnabled)
             {
                 return new DownloadFileCommandResponse { RedirectUrl = file.PublicUrl };
             }
 
-            // TODO: Ftp / File storage solution with secured URLs
-            // TODO: `if` checking can be removed ????
-            if (file.Type != MediaType.Image && cmsConfiguration.AccessControlEnabled)
+            // Get download URL with security token
+            if (storageService.SecuredUrlsEnabled)
             {
                 var principal = SecurityService.GetCurrentPrincipal();
                 var accessLevel = accessControlService.GetAccessLevel(id, principal);
@@ -87,20 +91,6 @@ namespace BetterCms.Module.MediaManager.Command.Files.DownloadFile
 
                 var url = storageService.GetSecuredUrl(file.FileUri);
                 return new DownloadFileCommandResponse { RedirectUrl = url };
-            }
-
-            // TODO: can remove the next block ?????
-            // Download object from storage
-            var response = storageService.DownloadObject(file.FileUri);
-            if (response != null)
-            {
-                return new DownloadFileCommandResponse
-                    {
-                        FileStream = response.ResponseStream,
-                        // TODO: Change so that content type is determined from file extension or stored in the database
-                        ContentMimeType = System.Net.Mime.MediaTypeNames.Application.Octet, // Specify the generic octet-stream MIME type.
-                        FileDownloadName = string.Format("{0}{1}", System.IO.Path.GetFileNameWithoutExtension(file.Title), file.OriginalFileExtension)
-                    };
             }
 
             return null;
