@@ -13,5 +13,10 @@ namespace BetterCms.Module.Root.ViewModels.Security
         public string Title { get; set; }
 
         public string Tooltip { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("Title: {0}, Tooltip: {1}", Title, Tooltip);
+        }
     }
 }
