@@ -25,7 +25,8 @@ bettercms.define('bcms.siteSettings', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcm
         },
 
         globalization = {
-            siteSettingsTitle: null
+            siteSettingsTitle: null,
+            closeButtonTitle: null
         },
 
         siteSettingsModalWindow = null;
@@ -45,6 +46,7 @@ bettercms.define('bcms.siteSettings', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcm
     siteSettings.openSiteSettings = function () {
         siteSettingsModalWindow = modal.open({
             title: siteSettings.globalization.siteSettingsTitle,
+            cancelTitle: globalization.closeButtonTitle,
             disableAccept: true,
             onLoad: function (dialog) {
                 dynamicContent.setContentFromUrl(dialog, siteSettings.links.loadSiteSettingsUrl, {

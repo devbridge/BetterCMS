@@ -4,11 +4,11 @@ using System.Diagnostics.CodeAnalysis;
 
 using Autofac;
 
-using BetterCms.Api;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
+using BetterCms.Events;
 using BetterCms.Module.Pages.Accessors;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Helpers.Extensions;
@@ -16,7 +16,6 @@ using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Registration;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root;
-using BetterCms.Module.Root.Api.Events;
 
 namespace BetterCms.Module.Pages
 {
@@ -46,11 +45,6 @@ namespace BetterCms.Module.Pages
         /// bcms.pages.seo.js java script module descriptor.
         /// </summary>
         private readonly SeoJsModuleIncludeDescriptor seoJsModuleIncludeDescriptor;
-
-        /// <summary>
-        /// bcms.pages.tags.js java script module descriptor.
-        /// </summary>
-        private readonly TagsJsModuleIncludeDescriptor tagsJsModuleIncludeDescriptor;
 
         /// <summary>
         /// bcms.pages.content.js java script module descriptor.
@@ -92,13 +86,12 @@ namespace BetterCms.Module.Pages
             seoJsModuleIncludeDescriptor = new SeoJsModuleIncludeDescriptor(this);
             pagesContentJsModuleIncludeDescriptor = new PagesContentJsModuleIncludeDescriptor(this);
             widgetsJsModuleIncludeDescriptor = new WidgetsJsModuleIncludeDescriptor(this);
-            tagsJsModuleIncludeDescriptor = new TagsJsModuleIncludeDescriptor(this);
             redirectsJsModuleIncludeDescriptor = new RedirectsJsModuleIncludeDescriptor(this);
             templatesJsModuleIncludeDescriptor = new TemplatesJsModuleIncludeDescriptor(this);
             historyJsModuleIncludeDescriptor = new HistoryJsModuleIncludeDescriptor(this);
             sitemapJsModuleIncludeDescriptor = new SitemapJsModuleIncludeDescriptor(this);
 
-            RootApiContext.Events.PageRetrieved += Events_PageRetrieved;
+            RootEvents.Instance.PageRetrieved += Events_PageRetrieved;
         }
 
         /// <summary>
@@ -174,12 +167,12 @@ namespace BetterCms.Module.Pages
 
             containerBuilder.RegisterType<DefaultPageService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultRedirectService>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            containerBuilder.RegisterType<DefaultCategoryService>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            containerBuilder.RegisterType<DefaultWidgetsService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultCategoryService>().AsImplementedInterfaces().InstancePerLifetimeScope();            
             containerBuilder.RegisterType<DefaultTagService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultHistoryService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultSitemapService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultUrlService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultLayoutService>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
 
         /// <summary>
@@ -209,7 +202,6 @@ namespace BetterCms.Module.Pages
                     pagesContentJsModuleIncludeDescriptor,
                     redirectsJsModuleIncludeDescriptor,
                     seoJsModuleIncludeDescriptor,
-                    tagsJsModuleIncludeDescriptor,
                     widgetsJsModuleIncludeDescriptor,
                     templatesJsModuleIncludeDescriptor,
                     historyJsModuleIncludeDescriptor,
@@ -366,21 +358,6 @@ namespace BetterCms.Module.Pages
                         },
                     
                     new SeparatorProjection(1500), 
-
-                    new LinkActionProjection(tagsJsModuleIncludeDescriptor, page => "loadSiteSettingsCategoryList")
-                        {
-                            Order = 2000,
-                            Title = () => PagesGlobalization.SiteSettings_CategoriesMenuItem,
-                            CssClass = page => "bcms-sidebar-link",
-                            AccessRole = RootModuleConstants.UserRoles.EditContent
-                        },
-                   new LinkActionProjection(tagsJsModuleIncludeDescriptor, page => "loadSiteSettingsTagList")
-                        {
-                            Order = 2100,
-                            Title = () => PagesGlobalization.SiteSettings_TagsMenuItem,
-                            CssClass = page => "bcms-sidebar-link",
-                            AccessRole = RootModuleConstants.UserRoles.EditContent
-                        },
 
                     new SeparatorProjection(2500), 
 

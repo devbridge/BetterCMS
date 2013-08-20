@@ -22,9 +22,9 @@ namespace BetterCms.Module.Pages.Helpers
             {
                 var viewData = new ViewDataDictionary();
 
-                if (model != null && model.ContentOptions != null && model.ContentOptions.Count > 0)
+                if (model != null && model.Options != null && model.Options.Count > 0)
                 {
-                    foreach (var option in model.ContentOptions)
+                    foreach (var option in model.Options)
                     {
                         if (option.OptionDefaultValue != null)
                         {

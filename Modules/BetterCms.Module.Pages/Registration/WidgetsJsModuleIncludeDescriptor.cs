@@ -39,7 +39,6 @@ namespace BetterCms.Module.Pages.Registration
                                     new JavaScriptModuleGlobalization(this, "editWidgetDialogTitle", () => PagesGlobalization.EditWidget_Dialog_Title),
                                     new JavaScriptModuleGlobalization(this, "editPageWidgetOptionsTitle", () => PagesGlobalization.PageWidgetOptions_Dialog_Title),
                                     new JavaScriptModuleGlobalization(this, "deleteWidgetConfirmMessage", () => PagesGlobalization.DeleteWidget_Confirmation_Message),
-                                    new JavaScriptModuleGlobalization(this, "deleteOptionConfirmMessage", () => PagesGlobalization.DeleteOption_Confirmation_Message),
                                     new JavaScriptModuleGlobalization(this, "widgetStatusPublished", () => RootGlobalization.ContentStatus_Published),
                                     new JavaScriptModuleGlobalization(this, "widgetStatusDraft", () => RootGlobalization.ContentStatus_Draft),
                                     new JavaScriptModuleGlobalization(this, "widgetStatusPublishedWithDraft", () => RootGlobalization.ContentStatus_PublishedWithDraft),

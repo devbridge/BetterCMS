@@ -22,6 +22,14 @@ namespace BetterCms.Module.Root.Models
         public virtual string PageUrl { get; set; }
 
         /// <summary>
+        /// Gets or sets the lower trimmed page URL.
+        /// </summary>
+        /// <value>
+        /// The lower trimmed page URL.
+        /// </value>
+        public virtual string PageUrlLowerTrimmed { get; set; }
+
+        /// <summary>
         /// Gets or sets the title.
         /// </summary>
         /// <value>
@@ -99,6 +107,25 @@ namespace BetterCms.Module.Root.Models
         /// <value>
         /// The page contents.
         /// </value>
-        public virtual IList<PageContent> PageContents { get; set; }        
+        public virtual IList<PageContent> PageContents { get; set; }
+
+        /// <summary>
+        /// Gets or sets the options.
+        /// </summary>
+        /// <value>
+        /// The options.
+        /// </value>
+        public virtual IList<PageOption> Options { get; set; }      
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format("{0}, Title={1}", base.ToString(), Title);
+        }
     }
 }

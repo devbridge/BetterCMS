@@ -10,6 +10,7 @@ namespace BetterCms.Module.Root.Models.Maps
             Table("Pages");
 
             Map(x => x.PageUrl).Not.Nullable().Length(MaxLength.Url);
+            Map(x => x.PageUrlLowerTrimmed).Not.Nullable().Length(MaxLength.Url);
             Map(x => x.Title).Not.Nullable().Length(MaxLength.Name);
             Map(x => x.Status).Not.Nullable();
             Map(x => x.PublishedOn).Nullable();
@@ -20,6 +21,7 @@ namespace BetterCms.Module.Root.Models.Maps
             References(x => x.Layout).Not.Nullable().Cascade.SaveUpdate().LazyLoad();
             
             HasMany(x => x.PageContents).Inverse().Cascade.SaveUpdate().LazyLoad().Where("IsDeleted = 0");
+            HasMany(x => x.Options).KeyColumn("PageId").Cascade.SaveUpdate().Inverse().LazyLoad().Where("IsDeleted = 0");
         }
     }
 }

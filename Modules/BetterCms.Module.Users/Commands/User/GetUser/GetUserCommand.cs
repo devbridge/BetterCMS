@@ -42,8 +42,6 @@ namespace BetterCms.Module.Users.Commands.User.GetUser
 
             if (!userId.HasDefaultValue())
             {
-                EditUserViewModel userModelAlias = null;
-
                 model =
                     Repository.AsQueryable<Models.Users>()
                               .Where(bp => bp.Id == userId)

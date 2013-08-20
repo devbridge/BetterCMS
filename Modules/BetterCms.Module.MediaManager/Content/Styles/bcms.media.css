@@ -81,7 +81,7 @@
 
 .bcms-edit-file-info {
     display: inline-block;
-    width: 410px;
+    width: 405px;
     padding-right: 30px;
     border-right: 1px solid #c6c6c6;
     vertical-align: top;
@@ -169,6 +169,15 @@ div.bcms-align-center-active {
 div.bcms-align-right-active {
     background-position: -260px 0;
 }
+
+.bcms-media-tags-box-holder {
+    border-top: 1px solid #C6C6C6;
+    border-bottom: 1px solid #C6C6C6;
+}
+
+    .bcms-media-tags-box-holder .bcms-content-titles {
+        display: inline-block;
+    }
 
 /*file uploader*/
 .bcms-dropzone {
@@ -416,10 +425,10 @@ div.bcms-upload-success {
 
 /*breadcrumbs*/
 .bcms-breadcrumbs-holder {
-    height: 20px;
-    margin: -15px 0 10px;
-    padding-left: 30px;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
     line-height: 15px;
+    border-bottom: 1px solid #E3E3E3;
     font-size: 14px;
     font-weight: 700;
 }
@@ -605,11 +614,22 @@ input.bcms-grid-input:focus {
     vertical-align: middle;
 }
 
+    .bcms-system-file img {
+        display: block;
+        width: 54px;
+        height: 42px;
+    }
+
 .bcms-media-name {
     line-height: 16px;
     font-size: 11px;
     color: #0383df;
 }
+
+    .bcms-media-name .bcms-parent-folder {
+        color: #808080;
+        font-size: 10px;
+    }
 
 .bcms-list div.bcms-media-click-active {
     background-color: #effcfe;
@@ -821,8 +841,7 @@ input.bcms-grid-input:focus {
 
         .bcms-list .bcms-image-box .bcms-media-file-holder img {
             display: block;
-            width: 54px;
-            height: 40px;
+            max-width: 100%;
         }
 
     .bcms-list .bcms-image-box div.bcms-media-inner-controls {
@@ -1456,6 +1475,20 @@ input.bcms-grid-input:focus {
     display: block;
     font-size: 14px;
     line-height: 24px;
+}
+
+/*images history*/
+.bcms-media-history-holder {
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+    overflow: auto;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+.bcms-media-history-image-holder img {
+    max-width: 100%;
 }
 
 /*crop image*/

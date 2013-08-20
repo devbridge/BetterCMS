@@ -36,7 +36,8 @@ bettercms.define('bcms.pages.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             contentHistoryDialogTitle: null,
             contentVersionRestoreConfirmation: null,
             contentVersionDestroyDraftConfirmation: null,
-            restoreButtonTitle: null
+            restoreButtonTitle: null,
+            closeButtonTitle: null
         };
 
     /**
@@ -156,6 +157,7 @@ bettercms.define('bcms.pages.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
     history.openPageContentHistoryDialog = function (contentId, pageContentId) {
         modal.open({
             title: globalization.contentHistoryDialogTitle,
+            cancelTitle: globalization.closeButtonTitle,
             disableAccept: true,
             onLoad: function (dialog) {
                 var url = $.format(links.loadContentHistoryDialogUrl, contentId, pageContentId);

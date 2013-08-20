@@ -5,15 +5,17 @@ using System.ComponentModel.DataAnnotations;
 using BetterCms.Core.Models;
 using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Content.Resources;
-
+using BetterCms.Module.Pages.ViewModels.Option;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.ViewModels.Option;
+using BetterCms.Module.Root.ViewModels.Security;
 
 namespace BetterCms.Module.Pages.ViewModels.Page
 {
     /// <summary>
     /// Edit basic page properties view model.
     /// </summary>
-    public class EditPagePropertiesViewModel
+    public class EditPagePropertiesViewModel : IOptionValuesContainer
     {
         /// <summary>
         /// Gets or sets the page id.
@@ -133,6 +135,14 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public bool UseNoIndex { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether use canonical URL.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if use canonical URL; otherwise, <c>false</c>.
+        /// </value>
+        public bool UseCanonicalUrl { get; set; }
+
+        /// <summary>
         /// Gets or sets the templates.
         /// </summary>
         /// <value>
@@ -178,6 +188,7 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public EditPagePropertiesViewModel()
         {
             Image = new ImageSelectorViewModel();
+            UserAccessList = new List<UserAccessViewModel>();
         }
 
         /// <summary>
@@ -187,6 +198,38 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// <c>true</c> if this instance is in sitemap; otherwise, <c>false</c>.
         /// </value>
         public bool IsInSitemap { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is archived.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is archived; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsArchived { get; set; }
+
+        /// <summary>
+        /// Gets or sets the page option values.
+        /// </summary>
+        /// <value>
+        /// The page option values.
+        /// </value>
+        public IList<OptionValueEditViewModel> OptionValues { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [access control enabled].
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if [access control enabled]; otherwise, <c>false</c>.
+        /// </value>
+        public bool AccessControlEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user access list.
+        /// </summary>
+        /// <value>
+        /// The user access list.
+        /// </value>
+        public List<UserAccessViewModel> UserAccessList { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

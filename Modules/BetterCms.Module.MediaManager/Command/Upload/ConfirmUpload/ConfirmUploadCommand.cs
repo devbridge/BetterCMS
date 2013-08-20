@@ -2,25 +2,42 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Api;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Models.Extensions;
+using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 using BetterCms.Module.MediaManager.ViewModels.Upload;
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
 namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
 {
     public class ConfirmUploadCommand : CommandBase, ICommand<MultiFileUploadViewModel, ConfirmUploadResponse>
     {
+        private readonly ICmsConfiguration cmsConfiguration;
+        
+        private readonly IMediaFileService fileService;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConfirmUploadCommand" /> class.
+        /// </summary>
+        /// <param name="cmsConfiguration">The CMS configuration.</param>
+        /// <param name="fileService">The file service.</param>
+        public ConfirmUploadCommand(ICmsConfiguration cmsConfiguration, IMediaFileService fileService)
+        {
+            this.cmsConfiguration = cmsConfiguration;
+            this.fileService = fileService;
+        }
+
         /// <summary>
         /// Executes this command.
         /// </summary>
         public ConfirmUploadResponse Execute(MultiFileUploadViewModel request)
         {
-            ConfirmUploadResponse response = new ConfirmUploadResponse { SelectedFolderId = request.SelectedFolderId ?? Guid.Empty };
+            ConfirmUploadResponse response = new ConfirmUploadResponse { SelectedFolderId = request.SelectedFolderId ?? Guid.Empty, ReuploadMediaId = request.ReuploadMediaId };
 
             if (request.UploadedFiles != null && request.UploadedFiles.Count > 0)
             {
@@ -36,19 +53,66 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
                     }
                 }
 
+                UnitOfWork.BeginTransaction();
+
                 List<MediaFile> files = new List<MediaFile>();
-                foreach (var fileId in request.UploadedFiles)
+                if (request.ReuploadMediaId.HasDefaultValue())
                 {
+                    foreach (var fileId in request.UploadedFiles)
+                    {
+                        if (!fileId.HasDefaultValue())
+                        {
+                            var file = Repository.FirstOrDefault<MediaFile>(fileId);
+                            if (folder != null && (file.Folder == null || file.Folder.Id != folder.Id))
+                            {
+                                file.Folder = folder;
+                            }
+                            file.IsTemporary = false;
+                            file.PublishedOn = DateTime.Now;
+                            Repository.Save(file);
+                            files.Add(file);
+                        }
+                    }
+                }
+                else
+                {
+                    // Re-upload performed.
+                    var fileId = request.UploadedFiles.FirstOrDefault();
                     if (!fileId.HasDefaultValue())
                     {
+                        var originalMedia = Repository.First<MediaFile>(request.ReuploadMediaId);
+                        var historyItem = originalMedia.CreateHistoryItem();
+                        Repository.Save(historyItem);
+
                         var file = Repository.FirstOrDefault<MediaFile>(fileId);
-                        if (folder != null && (file.Folder == null || file.Folder.Id != folder.Id))
+                        file.CopyDataTo(originalMedia);
+
+                        originalMedia.Description = historyItem.Description;
+                        originalMedia.IsArchived = historyItem.IsArchived;
+                        originalMedia.Folder = historyItem.Folder;
+                        originalMedia.Image = historyItem.Image;
+                        if (file is MediaImage && originalMedia is MediaImage)
                         {
-                            file.Folder = folder;
+                            ((MediaImage)originalMedia).Caption = ((MediaImage)historyItem).Caption;
+                            ((MediaImage)originalMedia).ImageAlign = ((MediaImage)historyItem).ImageAlign;
                         }
-                        file.IsTemporary = false;
-                        Repository.Save(file);
-                        files.Add(file);
+
+                        originalMedia.IsTemporary = false;
+                        originalMedia.PublishedOn = DateTime.Now;
+                        files.Add(originalMedia);
+                    }
+                }
+
+                if (cmsConfiguration.AccessControlEnabled)
+                {
+                    foreach (var userAccess in files.SelectMany(x => request.UserAccessList.Select(model => new UserAccess
+                    {
+                        ObjectId = x.Id,
+                        AccessLevel = model.AccessLevel,
+                        RoleOrUser = model.RoleOrUser
+                    })))
+                    {
+                        Repository.Save(userAccess);
                     }
                 }
 
@@ -59,7 +123,7 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
                 // Notify.
                 foreach (var mediaFile in files)
                 {
-                    MediaManagerApiContext.Events.OnMediaFileUpdated(mediaFile);
+                    Events.MediaManagerEvents.Instance.OnMediaFileUpdated(mediaFile);
                 }
             }
 
@@ -87,12 +151,13 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
             else if (file.Type == MediaType.Image)
             {
                 var imageFile = (MediaImage)file;
-                model = new MediaImageViewModel {
-                                                    ThumbnailUrl = imageFile.PublicThumbnailUrl,
-                                                    Tooltip = imageFile.Title
-                                                };
+                model = new MediaImageViewModel
+                {
+                    ThumbnailUrl = imageFile.PublicThumbnailUrl,
+                    Tooltip = imageFile.Title
+                };
                 isProcessing = isProcessing || !imageFile.IsOriginalUploaded.HasValue || !imageFile.IsThumbnailUploaded.HasValue;
-                isFailed = isFailed 
+                isFailed = isFailed
                     || (imageFile.IsOriginalUploaded.HasValue && !imageFile.IsOriginalUploaded.Value)
                     || (imageFile.IsThumbnailUploaded.HasValue && !imageFile.IsThumbnailUploaded.Value);
             }
@@ -106,7 +171,7 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
             model.Type = file.Type;
             model.Version = file.Version;
             model.ContentType = MediaContentType.File;
-            model.PublicUrl = file.PublicUrl;
+            model.PublicUrl = fileService.GetDownloadFileUrl(file.Type, file.Id, file.PublicUrl);
             model.FileExtension = file.OriginalFileExtension;
             model.IsProcessing = isProcessing;
             model.IsFailed = isFailed;

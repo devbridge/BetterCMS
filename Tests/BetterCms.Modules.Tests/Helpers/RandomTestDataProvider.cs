@@ -3,7 +3,7 @@ using System.Text;
 
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;
-
+using BetterCms.Core.Security;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Models;
@@ -104,6 +104,7 @@ namespace BetterCms.Tests.Helpers
 
             entity.Title = ProvideRandomString(MaxLength.Name);
             entity.PageUrl = ProvideRandomString(MaxLength.Url);
+            entity.PageUrlLowerTrimmed = ProvideRandomString(MaxLength.Url);
             entity.Status = PageStatus.Published;
             entity.PublishedOn = ProvideRandomDateTime();
             entity.Layout = layout ?? CreateNewLayout();
@@ -159,9 +160,9 @@ namespace BetterCms.Tests.Helpers
 
             entity.Status = ProvideRandomEnumValue<PageStatus>();
             entity.PageUrl = ProvideRandomString(MaxLength.Url);
+            entity.PageUrlLowerTrimmed = ProvideRandomString(MaxLength.Url);
             entity.Title = ProvideRandomString(MaxLength.Name);
             entity.Description = ProvideRandomString(2000);
-            entity.CanonicalUrl = ProvideRandomString(MaxLength.Url);
             entity.CustomCss = ProvideRandomString(2000);
             entity.CustomJS = ProvideRandomString(2000);
             entity.MetaTitle = ProvideRandomString(MaxLength.Name);
@@ -357,6 +358,20 @@ namespace BetterCms.Tests.Helpers
             entity.DefaultValue = ProvideRandomString(100);
 
             return entity;
+        }
+        
+        public LayoutOption CreateNewLayoutOption(Layout layout = null)
+        {
+            var entity = new LayoutOption();
+
+            PopulateBaseFields(entity);
+
+            entity.Key = ProvideRandomString(MaxLength.Name);
+            entity.Layout = layout ?? CreateNewLayout();
+            entity.Type = ProvideRandomEnumValue<OptionType>();
+            entity.DefaultValue = ProvideRandomString(100);
+
+            return entity;
         }  
 
         public PageContentOption CreateNewPageContentOption(PageContent pageContent = null)
@@ -366,6 +381,20 @@ namespace BetterCms.Tests.Helpers
             PopulateBaseFields(entity);
 
             entity.PageContent = pageContent ?? CreateNewPageContent();
+            entity.Key = ProvideRandomString(MaxLength.Name);
+            entity.Value = ProvideRandomString(100);
+            entity.Type = ProvideRandomEnumValue<OptionType>();
+            
+            return entity;
+        }
+
+        public PageOption CreateNewPageOption(Page page = null)
+        {
+            var entity = new PageOption();
+
+            PopulateBaseFields(entity);
+
+            entity.Page = page ?? CreateNewPage();
             entity.Key = ProvideRandomString(MaxLength.Name);
             entity.Value = ProvideRandomString(100);
             entity.Type = ProvideRandomEnumValue<OptionType>();
@@ -487,6 +516,7 @@ namespace BetterCms.Tests.Helpers
 
             entity.Type = type;
             entity.Title = ProvideRandomString(MaxLength.Name);
+            entity.PublishedOn = ProvideRandomDateTime();
 
             return entity;
         }
@@ -499,15 +529,16 @@ namespace BetterCms.Tests.Helpers
 
             if (createParentFolder)
             {
-                entity.ParentFolder = CreateNewMediaFolder(false);
+                entity.Folder = CreateNewMediaFolder(false);
             }
             else
             {
-                entity.ParentFolder = null;
+                entity.Folder = null;
             }
 
             entity.Type = type;
             entity.Title = ProvideRandomString(MaxLength.Name);
+            entity.PublishedOn = ProvideRandomDateTime();
 
             return entity;
         }
@@ -522,6 +553,7 @@ namespace BetterCms.Tests.Helpers
             entity.Title = ProvideRandomString(MaxLength.Name);
             entity.OriginalFileName = ProvideRandomString(MaxLength.Name);
             entity.OriginalFileExtension = ProvideRandomString(10);
+            entity.PublishedOn = ProvideRandomDateTime();
             entity.FileUri = new Uri(@"C:\web\test\content\100200\file.png");
             entity.PublicUrl = "http://bettercms.com/files/file?id=100200";
             entity.Size = ProvideRandomNumber(10, 2000);
@@ -544,6 +576,7 @@ namespace BetterCms.Tests.Helpers
             entity.Title = ProvideRandomString(MaxLength.Name);
             entity.OriginalFileName = ProvideRandomString(MaxLength.Name);
             entity.OriginalFileExtension = ProvideRandomString(10);
+            entity.PublishedOn = ProvideRandomDateTime();
             entity.FileUri = new Uri(@"C:\Projects\BetterCMS\file100.png");
             entity.PublicUrl = "http://bettercms.com/files/image?id=100200&t=image;";
             entity.Size = ProvideRandomNumber(10, 2000);
@@ -648,6 +681,19 @@ namespace BetterCms.Tests.Helpers
             entity.Salt = ProvideRandomString(MaxLength.Password);
             entity.Image = CreateNewMediaImage();
 
+            return entity;
+        }
+
+        public UserAccess CreateNewUserAccess()
+        {
+            var entity = new UserAccess();
+
+            PopulateBaseFields(entity);
+
+            entity.ObjectId = Guid.NewGuid();
+            entity.RoleOrUser = ProvideRandomString(MaxLength.Name);
+            entity.AccessLevel = ProvideRandomEnumValue<AccessLevel>();
+            
             return entity;
         }
     }

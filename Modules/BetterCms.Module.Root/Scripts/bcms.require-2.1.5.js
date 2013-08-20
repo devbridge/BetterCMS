@@ -1923,7 +1923,7 @@ var bettercms = {};
                 //Look for a data-main attribute to set main script for the page
                 //to load. If it is there, the path to data main becomes the
                 //baseUrl, if it is not already set.
-                dataMain = script.getAttribute('data-main');
+                dataMain = script.getAttribute('data-ignore');
                 if (dataMain) {
                     //Set final baseUrl if there is not already an explicit one.
                     if (!cfg.baseUrl) {

@@ -172,7 +172,7 @@
     <value>Image will be displayed as a thumbnail with your post.</value>
   </data>
   <data name="EditBlockPost_FeaturedImage_Title" xml:space="preserve">
-    <value>Featured Image</value>
+    <value>Main Image</value>
   </data>
   <data name="EditBlockPost_FeaturedImage_Tooltip_Description" xml:space="preserve">
     <value>Select an image that will accompany your post.</value>
@@ -199,7 +199,7 @@
     <value>Add tags to this post to identify it with related posts.</value>
   </data>
   <data name="EditBlockPost_Title_Title" xml:space="preserve">
-    <value>Title of the Post</value>
+    <value>Title of the Post (H1)</value>
   </data>
   <data name="EditBlockPost_Title_Tooltip_Description" xml:space="preserve">
     <value>Edit the title of this post.</value>
@@ -299,5 +299,14 @@
   </data>
   <data name="SiteSettings_Blogs_Filter" xml:space="preserve">
     <value>Filter</value>
+  </data>
+  <data name="SiteSettings_Blogs_FilterIncludeArchived" xml:space="preserve">
+    <value>Include archived items</value>
+  </data>
+  <data name="SiteSettings_Blogs_FilterIsModified" xml:space="preserve">
+    <value>modified</value>
+  </data>
+  <data name="EditBlogPost_UseCanonicalUrl" xml:space="preserve">
+    <value>Use canonical URL.</value>
   </data>
 </root>

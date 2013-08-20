@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define, console */
 
-bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.grid', 'bcms.pages', 'bcms.ko.extenders', 'bcms.media', 'bcms.pages.tags', 'bcms.ko.grid', 'bcms.messages', 'bcms.redirect', 'bcms.pages.history', 'bcms.preview', 'bcms.security', 'bcms.blog.filter'],
+bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.grid', 'bcms.pages', 'bcms.ko.extenders', 'bcms.media', 'bcms.tags', 'bcms.ko.grid', 'bcms.messages', 'bcms.redirect', 'bcms.pages.history', 'bcms.preview', 'bcms.security', 'bcms.blog.filter'],
     function ($, bcms, modal, siteSettings, dynamicContent, datepicker, htmlEditor, grid, pages, ko, media, tags, kogrid, messages, redirect, history, preview, security, filter) {
     'use strict';
 
@@ -11,7 +11,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             htmlEditor: 'bcms-contenthtml',
             firstForm: 'form:first',
             siteSettingsBlogsListForm: '#bcms-blogs-form',
-            siteSettingsBlogsSearchButton: '#bcms-blogs-search-btn',
+            siteSettingsBlogsSearchButton: '#bcms-blogs-search-kobtn',
             siteSettingsBlogsSearchInput: '.bcms-search-query',
             siteSettingsBlogCreateButton: '#bcms-create-blog-button',
             siteSettingsBlogDeleteButton: '.bcms-grid-item-delete-button',
@@ -268,9 +268,9 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
     function initializeSiteSettingsBlogsList(container, content, jsonData) {
         
         var form = container.find(selectors.siteSettingsBlogsListForm);
-        grid.bindGridForm(form, function (data) {
-            container.html(data);
-            initializeSiteSettingsBlogsList(container, data);
+        grid.bindGridForm(form, function (html, data) {
+            container.html(html);
+            initializeSiteSettingsBlogsList(container, html, data);
         });
 
         form.on('submit', function (event) {
@@ -279,6 +279,13 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             return false;
         });
         
+        form.find(selectors.siteSettingsBlogsSearchInput).keypress(function (event) {
+            if (event.which == 13) {
+                bcms.stopEventPropagation(event);
+                searchSiteSettingsBlogs(container, form);
+            }
+        });
+
         form.find(selectors.siteSettingsBlogTitleCell).on('click', function (event) {
             bcms.stopEventPropagation(event);
         });

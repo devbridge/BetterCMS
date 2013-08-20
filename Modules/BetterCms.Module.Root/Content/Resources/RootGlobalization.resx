@@ -117,6 +117,27 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AccessControl_UserAccess_AddNewUser" xml:space="preserve">
+    <value>Add New User</value>
+  </data>
+  <data name="AccessControl_UserAccess_NoAccess" xml:space="preserve">
+    <value>No Access</value>
+  </data>
+  <data name="AccessControl_UserAccess_Read" xml:space="preserve">
+    <value>Only Read</value>
+  </data>
+  <data name="AccessControl_UserAccess_ReadAndEdit" xml:space="preserve">
+    <value>Read &amp; Edit</value>
+  </data>
+  <data name="AccessControl_UserAccess_Title" xml:space="preserve">
+    <value>Users Access</value>
+  </data>
+  <data name="AccessControl_UserAccess_Tooltip_Description" xml:space="preserve">
+    <value>Set user access</value>
+  </data>
+  <data name="AccessControl_UserAccess_User" xml:space="preserve">
+    <value>User</value>
+  </data>
   <data name="Alert_DefaultTitle" xml:space="preserve">
     <value>Attention!</value>
   </data>
@@ -237,6 +258,24 @@
   <data name="CookieSupport_MustBeEnabled_Message_SecondLine" xml:space="preserve">
     <value>Cookies must be enabled.</value>
   </data>
+  <data name="CreateCategory_CreatedSuccessfully_Message" xml:space="preserve">
+    <value>Category created successfully.</value>
+  </data>
+  <data name="CreateTag_CreatedSuccessfully_Message" xml:space="preserve">
+    <value>Tag created successfully.</value>
+  </data>
+  <data name="Date_Picker_Tooltip_Title" xml:space="preserve">
+    <value>Calendar</value>
+  </data>
+  <data name="DeleteCategory_DeletedSuccessfully_Message" xml:space="preserve">
+    <value>Category deleted successfully.</value>
+  </data>
+  <data name="DeleteOption_Confirmation_Message" xml:space="preserve">
+    <value>Are you sure you want to delete option {0}?</value>
+  </data>
+  <data name="DeleteTag_DeletedSuccessfully_Message" xml:space="preserve">
+    <value>Tag removed successfully.</value>
+  </data>
   <data name="DynamicContent_DialogForbidden_Message" xml:space="preserve">
     <value>Forbidden: Access is denied.</value>
   </data>
@@ -294,6 +333,24 @@
   <data name="Message_SessionExpiredLoginToContinue_Message" xml:space="preserve">
     <value>Your session has expired. Please login to continue.</value>
   </data>
+  <data name="OptionTypes_Boolean_Title" xml:space="preserve">
+    <value>Boolean</value>
+  </data>
+  <data name="OptionTypes_DateTime_Title" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="OptionTypes_Float_Title" xml:space="preserve">
+    <value>Float</value>
+  </data>
+  <data name="OptionTypes_Integer_Title" xml:space="preserve">
+    <value>Integer</value>
+  </data>
+  <data name="OptionTypes_Text_Title" xml:space="preserve">
+    <value>Text</value>
+  </data>
+  <data name="Option_Invalid_Message" xml:space="preserve">
+    <value>Option {0} value is invalid. Should be of type: {1}.</value>
+  </data>
   <data name="Paging_Page_Title" xml:space="preserve">
     <value>Page</value>
   </data>
@@ -308,6 +365,12 @@
   </data>
   <data name="Reload_Title" xml:space="preserve">
     <value>Reloading page</value>
+  </data>
+  <data name="SaveCategory_CategoryExists_Message" xml:space="preserve">
+    <value>Category already exists. </value>
+  </data>
+  <data name="SaveTag_TagExists_Message" xml:space="preserve">
+    <value>Tag already exists.</value>
   </data>
   <data name="Sidebar_DragTitle" xml:space="preserve">
     <value>Drag to adjust sidebar position</value>
@@ -341,6 +404,42 @@
   </data>
   <data name="Sidebar_SiteSettingsButtonTitle" xml:space="preserve">
     <value>Site settings</value>
+  </data>
+  <data name="SiteSettings_CategoriesMenuItem" xml:space="preserve">
+    <value>Categories</value>
+  </data>
+  <data name="SiteSettings_Categories_AddNewCategory" xml:space="preserve">
+    <value>Add New +</value>
+  </data>
+  <data name="SiteSettings_Categories_DeleteCategoryMessage" xml:space="preserve">
+    <value>Are you sure you want to delete the {0} category?</value>
+  </data>
+  <data name="SiteSettings_Categories_NameColumn" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="SiteSettings_Categories_Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="SiteSettings_Categories_Title" xml:space="preserve">
+    <value>Categories</value>
+  </data>
+  <data name="SiteSettings_TagsMenuItem" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="SiteSettings_Tags_AddNewTag" xml:space="preserve">
+    <value>Add New +</value>
+  </data>
+  <data name="SiteSettings_Tags_DeleteTagMessage" xml:space="preserve">
+    <value>Are you sure you want to delete the {0} tag?</value>
+  </data>
+  <data name="SiteSettings_Tags_Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="SiteSettings_Tags_TagColumn" xml:space="preserve">
+    <value>Tag</value>
+  </data>
+  <data name="SiteSettings_Tags_Title" xml:space="preserve">
+    <value>Tags</value>
   </data>
   <data name="SiteSettings_Title" xml:space="preserve">
     <value>Site Settings</value>

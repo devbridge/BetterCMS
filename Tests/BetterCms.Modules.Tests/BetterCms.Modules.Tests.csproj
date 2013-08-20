@@ -53,9 +53,8 @@
     <Reference Include="Autofac.Configuration">
       <HintPath>..\..\packages\Autofac.3.0.0\lib\net40\Autofac.Configuration.dll</HintPath>
     </Reference>
-    <Reference Include="Common.Logging, Version=2.1.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Common.Logging.2.1.1\lib\net40\Common.Logging.dll</HintPath>
+    <Reference Include="Common.Logging">
+      <HintPath>..\..\packages\Common.Logging.2.1.2\lib\net40\Common.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Common.Logging.NLog">
       <HintPath>..\..\packages\Common.Logging.NLog.2.0.0\lib\2.0\Common.Logging.NLog.dll</HintPath>
@@ -74,9 +73,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Microsoft.Data.OData.5.2.0\lib\net40\Microsoft.Data.OData.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Web.Mvc, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Web.Mvc, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Mvc2Futures.2.0.50217.0\lib\Microsoft.Web.Mvc.dll</HintPath>
+      <HintPath>..\..\packages\Mvc3Futures.3.0.20105.0\lib\Microsoft.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.Configuration">
       <HintPath>..\..\packages\Microsoft.WindowsAzure.ConfigurationManager.1.8.0.0\lib\net35-full\Microsoft.WindowsAzure.Configuration.dll</HintPath>
@@ -126,14 +125,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccessControl\AccessControlServiceTests.cs" />
+    <Compile Include="AccessControl\ModelTests\MapTests\UserAccessMapTest.cs" />
     <Compile Include="AmazonS3Storage\AmazonS3StorageServiceTest.cs" />
-    <Compile Include="ApiTestBase.cs" />
+    <Compile Include="Api\ApiFacadeTests.cs" />
     <Compile Include="Blog\CommandTests\GetAuthorListCommandTest.cs" />
     <Compile Include="Blog\ModelTests\MapTests\BlogPostMapTest.cs" />
     <Compile Include="Blog\ModelTests\MapTests\BlogPostContentMapTest.cs" />
     <Compile Include="Blog\ModelTests\MapTests\OptionMapTest.cs" />
-    <Compile Include="Blog\ApiTests\BlogPostApiTests.cs" />
-    <Compile Include="Blog\ApiTests\AuthorApiTests.cs" />
     <Compile Include="Common\SecurityTest.cs" />
     <Compile Include="Common\SerializationTest.cs" />
     <Compile Include="Configuration\CmsTestConfigurationSection.cs" />
@@ -144,29 +143,24 @@
     <Compile Include="MediaManager\ModelTests\MapTests\MediaFolderMapTest.cs" />
     <Compile Include="MediaManager\ModelTests\MapTests\MediaImageMapTest.cs" />
     <Compile Include="MediaManager\ModelTests\MapTests\MediaMapTest.cs" />
-    <Compile Include="MediaManager\ApiTests\MediaApiTests.cs" />
+    <Compile Include="MediaManager\ServiceTests\DefaultMediaFileServiceTests.cs" />
     <Compile Include="Pages\CommandTests\ContentTests\DeletePageContentCommandTest.cs" />
     <Compile Include="Pages\CommandTests\ContentTests\GetPageContentOptionsTest.cs" />
     <Compile Include="Pages\CommandTests\ContentTests\GetPageHtmlContentCommandTest.cs" />
     <Compile Include="Pages\CommandTests\ContentTests\InsertContentToPageCommandTest.cs" />
     <Compile Include="Pages\CommandTests\ContentTests\SavePageContentOptionsCommandTest.cs" />
-    <Compile Include="Pages\ApiTests\WidgetApiTests.cs" />
-    <Compile Include="Pages\ApiTests\SitemapApiTests.cs" />
     <Compile Include="Pages\CommandTests\ContentTests\SortPageContentCommandIntegrationTest.cs" />
     <Compile Include="Pages\CommandTests\WidgetTests\DeleteWidgetCommandTest.cs" />
     <Compile Include="Pages\CommandTests\WidgetTests\GetSiteSettingsWidgetsIntegrationTest.cs" />
     <Compile Include="Pages\EventTests\PageEventTests.cs" />
     <Compile Include="Pages\HelperTests\StringHelperTests.cs" />
     <Compile Include="Pages\ModelTests\ConcurrencyTests\ConcurrencyTests.cs" />
-    <Compile Include="Pages\ApiTests\HistoryApiTests.cs" />
-    <Compile Include="Pages\ApiTests\LayoutApiTests.cs" />
-    <Compile Include="Pages\ApiTests\CategoryApiTests.cs" />
-    <Compile Include="Pages\ApiTests\RedirectApiTests.cs" />
-    <Compile Include="Pages\ApiTests\ContentApiTests.cs" />
-    <Compile Include="Pages\ApiTests\TagApiTests.cs" />
     <Compile Include="Root\CommandTests\GetMainJsDataCommandTest.cs" />
     <Compile Include="Root\CommandTests\GetProcessorJsDataCommandTest.cs" />
     <Compile Include="Root\CommandTests\GetStyleSheetsToRenderCommandTest.cs" />
+    <Compile Include="Root\ModelTests\MapTests\PageOptionMapTest.cs" />
+    <Compile Include="Root\ModelTests\MapTests\LayoutOptionMapTest.cs" />
+    <Compile Include="Root\ServiceTests\DefaultOptionServiceTests.cs" />
     <Compile Include="SerializationTestBase.cs" />
     <Compile Include="DatabaseTestBase.cs" />
     <Compile Include="Helpers\HttpContextExtensionMethods.cs" />
@@ -178,7 +172,7 @@
     <Compile Include="Helpers\Utils.cs" />
     <Compile Include="Pages\CommandTests\PageTests\GetPageSeoCommandTest.cs" />
     <Compile Include="Pages\CommandTests\RedirectTests\GetRedirectsListCommandTest.cs" />
-    <Compile Include="Pages\CommandTests\LayoutTests\GetTemplatesCommandTest.cs" />
+    <Compile Include="Pages\ServiceTests\LayoutServiceTests.cs" />
     <Compile Include="Pages\CommandTests\WidgetTests\GetSiteSettingsWidgetsCommandTest.cs" />
     <Compile Include="Pages\ControllerTests\SeoControllerTest.cs" />
     <Compile Include="Blog\ModelTests\MapTests\AuthorMapTest.cs" />
@@ -217,6 +211,7 @@
     <Compile Include="Users\ModelTests\MapTests\PermissionMapTest.cs" />
     <Compile Include="Users\ModelTests\MapTests\RoleMapTest.cs" />
     <Compile Include="Users\ModelTests\MapTests\RolePermissionMapTest.cs" />
+    <Compile Include="WindowsAzureStorage\MimeTypeUtilityTest.cs" />
     <Compile Include="WindowsAzureStorage\WindowsAzureStorageServiceTest.cs" />
     <Compile Include="Users\ModelTests\MapTests\UserRolesMapTest.cs" />
     <Compile Include="Users\ModelTests\MapTests\UsersMapTest.cs" />
@@ -255,6 +250,14 @@
     <ProjectReference Include="..\..\Modules\BetterCms.Module.AmazonS3Storage\BetterCms.Module.AmazonS3Storage.csproj">
       <Project>{42698E7B-A9B1-4C23-8BB0-FC363A3F8B94}</Project>
       <Name>BetterCms.Module.AmazonS3Storage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.Api.Abstractions\BetterCMS.Module.Api.Abstractions.csproj">
+      <Project>{073e257b-a6a0-42fc-9102-8e920bf54e50}</Project>
+      <Name>BetterCMS.Module.Api.Abstractions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.Api\BetterCms.Module.Api.csproj">
+      <Project>{5ff9d100-cf25-4899-8d23-8eb9f0c0e102}</Project>
+      <Name>BetterCms.Module.Api</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCMS.Module.Blog\BetterCms.Module.Blog.csproj">
       <Project>{a66a3046-ef60-4c51-ada7-eb055763419b}</Project>

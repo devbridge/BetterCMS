@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Transactions;
+﻿using System.Collections.Generic;
 
-using BetterCms.Api;
-using BetterCms.Core;
-using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Modules;
-using BetterCms.Module.Pages.Models;
-using BetterCms.Module.Root.Models;
 
 namespace BetterCms.Module.Installation
 {
@@ -24,7 +16,7 @@ namespace BetterCms.Module.Installation
         /// </summary>
         /// <param name="configuration">The configuration.</param>
         public InstallationModuleDescriptor(ICmsConfiguration configuration) : base(configuration)
-        {
+        {            
         }
 
         /// <summary>

@@ -14,5 +14,16 @@ namespace BetterCms.Module.Users.ViewModels.User
         public string UserName { get; set; }
 
         public IList<Models.Role> Roles { get; set; }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format("Id: {0}, Version: {1}, UserName: {2}", Id, Version, UserName);
+        }
     }
 }

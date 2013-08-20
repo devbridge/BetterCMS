@@ -10,8 +10,10 @@ namespace BetterCms.Configuration
         private const string VersionAttribute = "version";
         private const string UseMinifiedResourcesAttribute = "useMinifiedResources";
         private const string ResourcesBasePathAttribute = "resourcesBasePath";
-        private const string LoginUrlAttribute = "loginUrl";        
-        private const string PageNotFoundUrlAttribute = "pageNotFoundUrl";        
+        private const string LoginUrlAttribute = "loginUrl";
+        private const string WebSiteUrlAttribute = "webSiteUrl";
+        private const string PageNotFoundUrlAttribute = "pageNotFoundUrl";
+        private const string UrlModeAttribute = "urlMode";
         private const string DatabaseNode = "database";
         private const string StorageNode = "storage";
         private const string CacheNode = "cache";
@@ -21,6 +23,8 @@ namespace BetterCms.Configuration
         private const string ArticleUrlPatternAttribute = "articleUrlPattern";
         private const string UrlPatternsNode = "urlPatterns";
         private const string InstallationNode = "installation";
+        private const string AccessControlEnabledAttribute = "accessControlEnabled";
+        private const string DefaultAccessControlListNode = "accessControlList";
 
         /// <summary>
         /// The version backing field.
@@ -80,6 +84,19 @@ namespace BetterCms.Configuration
         }
 
         /// <summary>
+        /// Gets or sets the web site URL.
+        /// </summary>
+        /// <value>
+        /// The web site URL.
+        /// </value>
+        [ConfigurationProperty(WebSiteUrlAttribute, DefaultValue = "Auto", IsRequired = false)]
+        public string WebSiteUrl
+        {
+            get { return Convert.ToString(this[WebSiteUrlAttribute]); }
+            set { this[WebSiteUrlAttribute] = value; }
+        }
+
+        /// <summary>
         /// Gets the virtual root path (like "~/App_Data") of BetterCMS working directory. 
         /// </summary>
         /// <value>
@@ -129,6 +146,32 @@ namespace BetterCms.Configuration
         {
             get { return Convert.ToString(this[PageNotFoundUrlAttribute]); }
             set { this[PageNotFoundUrlAttribute] = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the URL mode.
+        /// </summary>
+        /// <value>
+        /// The URL mode.
+        /// </value>
+        [ConfigurationProperty(UrlModeAttribute, IsRequired = false, DefaultValue = TrailingSlashBehaviorType.TrailingSlash)]
+        public TrailingSlashBehaviorType UrlMode
+        {
+            get { return (TrailingSlashBehaviorType)this[UrlModeAttribute]; }
+            set { this[UrlModeAttribute] = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [access control enabled].
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if [access control enabled]; otherwise, <c>false</c>.
+        /// </value>
+        [ConfigurationProperty(AccessControlEnabledAttribute, IsRequired = false, DefaultValue = false)]
+        public bool AccessControlEnabled
+        {
+            get { return (bool)this[AccessControlEnabledAttribute]; }
+            set { this[AccessControlEnabledAttribute] = value; }
         }
 
         /// <summary>
@@ -192,6 +235,16 @@ namespace BetterCms.Configuration
         {
             get { return (CmsSecurityConfigurationElement)this[SecurityNode]; }
             set { this[SecurityNode] = value; }
+        }
+
+        [ConfigurationProperty(DefaultAccessControlListNode, IsDefaultCollection = false)]
+        [ConfigurationCollection(typeof(AccessControlCollection))]
+        public AccessControlCollection DefaultAccessControlList
+        {
+            get
+            {
+                return this[DefaultAccessControlListNode] as AccessControlCollection;
+            }
         }
 
         [ConfigurationProperty(ModuleGalleryNode, IsRequired = true)]

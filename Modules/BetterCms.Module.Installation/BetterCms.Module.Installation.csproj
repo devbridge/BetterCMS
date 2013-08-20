@@ -59,18 +59,18 @@
     <Reference Include="Autofac.Configuration">
       <HintPath>..\..\packages\Autofac.3.0.0\lib\net40\Autofac.Configuration.dll</HintPath>
     </Reference>
-    <Reference Include="Common.Logging, Version=2.1.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+    <Reference Include="Common.Logging, Version=2.1.2.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Common.Logging.2.1.1\lib\net40\Common.Logging.dll</HintPath>
+      <HintPath>..\..\packages\Common.Logging.2.1.2\lib\net40\Common.Logging.dll</HintPath>
     </Reference>
     <Reference Include="FluentMigrator, Version=1.0.6.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\FluentMigrator.1.0.6.0\lib\40\FluentMigrator.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Web.Mvc, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Web.Mvc, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Mvc2Futures.2.0.50217.0\lib\Microsoft.Web.Mvc.dll</HintPath>
+      <HintPath>..\..\packages\Mvc3Futures.3.0.20105.0\lib\Microsoft.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Transactions" />
@@ -105,7 +105,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>UsersGlobalization.resx</DependentUpon>
     </Compile>
-    <Compile Include="Models\MigrationsContent\Migration201305231042.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="InstallationModuleDescriptor.cs" />
@@ -164,6 +163,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\DefaultLayout.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

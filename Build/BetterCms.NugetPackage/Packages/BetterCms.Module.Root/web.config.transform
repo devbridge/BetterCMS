@@ -1,0 +1,26 @@
+﻿<configuration>
+  <configSections>
+    <section name="cms" type="BetterCms.Configuration.CmsConfigurationSection, BetterCms.Configuration" requirePermission="false" />
+  </configSections>
+  <cms configSource="Config\cms.config" />
+  <appSettings>
+    <add key="aspnet:MaxJsonDeserializerMembers" value="10000" />
+  </appSettings>
+  <system.web>
+    <globalization uiCulture="auto" />
+    <!-- maxRequestLength=200MB, URL max length 2000 -->
+    <httpRuntime requestValidationMode="2.0" relaxedUrlToFileSystemMapping="true" maxRequestLength="204800" maxUrlLength="2000" maxQueryStringLength="2000" />
+  </system.web>
+  <system.webServer>
+    <httpErrors existingResponse="PassThrough"/>
+    <validation validateIntegratedModeConfiguration="false" />
+    <modules runAllManagedModulesForAllRequests="true" />
+    <security>
+      <requestFiltering>
+        <!-- maxAllowedContentLength=200MB, URL max length 2000 -->
+        <requestLimits maxUrl="2000" maxAllowedContentLength="209715200" maxQueryString="2000"></requestLimits>
+      </requestFiltering>
+    </security>
+    <caching enabled="false" enableKernelCache="false" />
+  </system.webServer>
+</configuration>

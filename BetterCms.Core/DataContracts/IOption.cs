@@ -7,10 +7,10 @@ namespace BetterCms.Core.DataContracts
     /// </summary>
     public interface IOption : IEntity
     {
-        string Key { get; }
+        string Key { get; set; }
 
-        OptionType Type { get; }
-        
-        string Value { get; }    
+        OptionType Type { get; set; }
+
+        string Value { get; set; }    
     }
 }

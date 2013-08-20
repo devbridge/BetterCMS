@@ -7,6 +7,15 @@
     font-family: 'Open Sans', sans-serif !important;
 }
 
+.bcms-modal form {
+    width: auto !important;
+    height: auto !important;
+    color: inherit !important;
+    margin: auto !important;
+    padding: 0 !important;
+    background: none !important;
+}
+
 .bcms-version-number {
     line-height: 21px;
     margin-right: 10px;
@@ -38,11 +47,6 @@
 /*browser compatibility support*/
 a:focus {
     outline: none;
-}
-
-input[type="text"] {
-    -webkit-appearance: none;
-    border-radius: 0;
 }
 
 /* Hidden form submit. Can't set display:none because we need to submit form. */
@@ -870,6 +874,7 @@ a.bcms-remove-image {
 .bcms-scroll-window {
     position: relative;
     overflow-y: auto;
+    overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
 }
 
@@ -878,7 +883,7 @@ a.bcms-remove-image {
     max-width: 830px;
 }
 
-div.bcms-noscroll body {
+html.bcms-noscroll {
     overflow: hidden;
 }
 
@@ -1419,6 +1424,8 @@ a.bcms-btn-close {
     border-radius: 0;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
+    -webkit-appearance: none;
+    border-radius: 0;
 }
 
     .bcms-editor-field-box:focus {
@@ -1443,6 +1450,8 @@ a.bcms-btn-close {
     border-radius: 0;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
+    -webkit-appearance: none;
+    border-radius: 0;
 }
 
     .bcms-editor-field-area:focus {
@@ -2029,44 +2038,83 @@ a.bcms-sort-arrow-top:hover {
     }
 
 .bcms-pager {
-    float:right;
+    float: right;
     text-align: right;
 }
 
 .bcms-pager-no {
-    color: #0383df;
+    float: left;
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    margin-left: -1px;
     cursor: pointer;
-    vertical-align: middle;
+    color: #6d7076;
+    font-size: 13px;
+    background-color: #f5f5f5;
+    border: 1px solid #dcdcdc;
+    text-align: center;
 }
 
-.bcms-active-pager {
-    text-shadow: 0 0 1px #0383DF;
+    .bcms-pager-no:hover {
+        text-decoration: none;
+        color: #000;
+        border-color: #c6c6c6;
+        background-color: #fff;
+    }
+
+a.bcms-active-pager {
+    color: #000;
+    border-color: #c6c6c6;
+    background-color: #fff;
 }
+
+    a.bcms-active-pager:hover {
+        text-decoration: none;
+    }
 
 .bcms-pager-text {
-    vertical-align: middle;
+    float: left;
+    line-height: 30px;
+    padding: 0 6px 0 5px;
+    color: #aaaaaa;
+    font-size: 13px;
 }
 
 .bcms-pager-prev, .bcms-pager-next {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    line-height: 15px;
+    width: 28px;
+    height: 28px;
     cursor: pointer;
     overflow: hidden;
-    vertical-align: middle;
+    border: 1px solid #dcdcdc;
     text-indent: 9999px;
+    background: #f5f5f5 url('images/bcms-arrows-sprite.png') no-repeat;
 }
+
+    .bcms-pager-prev:hover, .bcms-pager-next:hover {
+        background-color: #383838;
+        border-color: #383838;
+    }
 
 .bcms-pager-prev {
-    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAARCAYAAADkIz3lAAAAb0lEQVQoz7XSuw5AQBSE4X0DlU6ppHAJj0+rEpSUOpUn+BU2sZG92cTUX3NmjhCWAC0wA5ULndzpTahW0AJEOpQDh4LiYJQpaDWhFNgl2oAkDEk48qSw9eU+QMHNq7fYd4n/8KSdz4CHL7gTnv9YXmR2GKHroxZOAAAAAElFTkSuQmCC') no-repeat center #383838;
-    background-size: 40%;
+    float: left;
+    margin-left: 9px;
+    background-position: 9px center;
 }
 
+    .bcms-pager-prev:hover {
+        background-position: -56px center;
+    }
+
 .bcms-pager-next {
-    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAARCAYAAADkIz3lAAAAbElEQVQoz63SoQ6CUACFYd7gJhvRqAFw8PhaSUyJEG0mnuAz6OYd4XrHOPkrZ/sLNHigK1LDzWdLEiNgjPAlhQ8RfuG8K54ifErhEvMXP3HcDVd+G7YfW6EFbQ7qNqOAew7q/4aBa249dU6Pb+nPGKFxjQIDAAAAAElFTkSuQmCC') no-repeat center #383838;
-    background-size: 40%;
+    float: right;
+    margin-left: 1px;
+    background-position: -23px center;
 }
+
+    .bcms-pager-next:hover {
+        background-position: -89px center;
+    }
 
 /*forms & input fields validation, error messages*/
 
@@ -2298,9 +2346,9 @@ ul.bcms-info-messages {
 
 /*tag validation errors*/
 .bcms-tag-validation-error {
-    background-color: #fcecec;
-    border: 1px solid #e64343;
-    box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
+    background-color: #fcecec !important;
+    border: 1px solid #e64343 !important;
+    box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4) !important;
 }
 
     .bcms-tag-validation-error:focus {
@@ -2321,6 +2369,7 @@ span.bcms-tag-field-validation-error {
     height: 22px;
     margin-top: -11px;
     background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAJCAYAAAF8oY2FAAAAZElEQVQY02N45uw8DYi/MsAZ////Z0AQQKH/YA6QYYcsuhxD5D8QO0LpTOyCIAtAElBJO5ClIEYmskoUW2ACMDdgqsRlZgtU5Rcg9kZS4A0VA8m1MCBJZEAlkHEG3G6iFRJrNQAfBNhPNe12LwAAAABJRU5ErkJggg==') no-repeat center center #FCECEC;
+    z-index: 1;
 }
 
     span.bcms-tag-field-validation-error > span {
@@ -2362,7 +2411,86 @@ span.bcms-tag-field-validation-error {
             margin-left: -11px;
         }
 
+/*user access controls*/
+.bcms-user-access {
+    padding: 0 0 0 30px;
+    margin: 0 0 20px -30px;
+    border-bottom: 1px solid #c6c6c6;
+}
 
+.bcms-access-table {
+}
+
+.bcms-access-title {
+    border-bottom: 1px solid #c6c6c6;
+}
+
+.bcms-access-title-text {
+    float: left;
+    width: 15%;
+    padding: 5px;
+    text-align: center;
+    font-weight: 700;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+    .bcms-access-title-text:first-child {
+        width: 55%;
+        text-align: left;
+    }
+
+.bcms-access-line {
+    line-height: 1.5em;
+    padding: 5px 0;
+    border-bottom: 1px solid #eeeeee;
+}
+
+    .bcms-access-line:last-child {
+        border-bottom: 0;
+    }
+
+.bcms-access-value {
+    float: left;
+    width: 15%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+    .bcms-access-value:first-child {
+        width: 55%;
+        text-align: left;
+    }
+
+    .bcms-access-value input[type="radio"] {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        cursor: pointer;
+    }
+
+.bcms-access-value-add {
+    font-weight: 700;
+    color: #0383DF;
+    cursor: pointer;
+}
+
+.btn-acces-plus, .btn-acces-minus {
+    display: inline-block;
+    vertical-align: middle;
+    width: 16px;
+    line-height: 16px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.btn-acces-plus {
+    background: url('images/sprite-base-2.png') no-repeat -44px -179px;
+}
+
+.btn-acces-minus {
+    background: url('images/sprite-base-2.png') no-repeat -64px -179px;
+}
 
 /*override jquery ui*/
 .ui-datepicker-trigger {
@@ -2558,3 +2686,25 @@ a.ui-state-default:hover {
 .bcms-pointer {
     cursor: pointer;
 }
+
+/*autocomplete styles*/
+.autocomplete-suggestions {
+    margin-top: -1px;
+    overflow: auto;
+    background-color: #FFF;
+    border: 1px solid #D1D1D1;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+.autocomplete-suggestion {
+    padding: 4px 7px 3px;
+    color: #787878;
+    cursor: pointer;
+    font-weight: 400;
+}
+
+    .autocomplete-suggestion:hover, .autocomplete-selected {
+        color: #000;
+        background-color: #f5f5f5;
+    }

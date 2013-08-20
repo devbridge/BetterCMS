@@ -6,6 +6,7 @@ using BetterCms.Core.Services.Storage;
 
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Auth;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 using StorageException = BetterCms.Core.Exceptions.Service.StorageException;
 
@@ -17,18 +18,30 @@ namespace BetterCms.Module.WindowsAzureStorage
 
         private readonly string containerName;
 
+        private readonly bool accessControlEnabledGlobally;
+        
+        private readonly TimeSpan tokenExpiryTime;
+
+        // Allow resource to be cached by any cache for 7 days:
+        private const string CacheControl = "public, max-age=604800";
+
         public WindowsAzureStorageService(ICmsConfiguration config)
         {
             try
             {
                 var serviceSection = config.Storage;
                 string accountName = serviceSection.GetValue("AzureAccountName");
-                string secretKey = serviceSection.GetValue("AzureSecondaryKey");                               
+                string secretKey = serviceSection.GetValue("AzureSecondaryKey");
                 bool useHttps = bool.Parse(serviceSection.GetValue("AzureUseHttps"));
 
+                if (!TimeSpan.TryParse(serviceSection.GetValue("AzureTokenExpiryTime"), out tokenExpiryTime))
+                {
+                    tokenExpiryTime = TimeSpan.FromMinutes(10);
+                }
+                accessControlEnabledGlobally = config.AccessControlEnabled;
                 containerName = serviceSection.GetValue("AzureContainerName");
 
-                cloudStorageAccount = new CloudStorageAccount(new StorageCredentials(accountName, secretKey), useHttps);                
+                cloudStorageAccount = new CloudStorageAccount(new StorageCredentials(accountName, secretKey), useHttps);
             }
             catch (Exception e)
             {
@@ -48,7 +61,7 @@ namespace BetterCms.Module.WindowsAzureStorage
                 try
                 {
                     var blob = client.GetBlobReferenceFromServer(uri);
-                    return blob.Exists();                    
+                    return blob.Exists();
                 }
                 catch (Microsoft.WindowsAzure.Storage.StorageException ex)
                 {
@@ -82,8 +95,22 @@ namespace BetterCms.Module.WindowsAzureStorage
                     container.CreateIfNotExists();
                 }
 
+                var permissions = new BlobContainerPermissions();
+                if (accessControlEnabledGlobally && !request.IgnoreAccessControl)
+                {
+                    permissions.PublicAccess = BlobContainerPublicAccessType.Off;
+                }
+                else
+                {
+                    permissions.PublicAccess = BlobContainerPublicAccessType.Blob;
+                }
+                container.SetPermissions(permissions);
+
                 var blob = container.GetBlockBlobReference(request.Uri.AbsoluteUri);
-             
+
+                blob.Properties.ContentType = MimeTypeUtility.DetermineContentType(request.Uri);
+                blob.Properties.CacheControl = CacheControl;
+
                 if (request.InputStream.Position != 0)
                 {
                     request.InputStream.Position = 0;
@@ -185,6 +212,36 @@ namespace BetterCms.Module.WindowsAzureStorage
             }
         }
 
+        public bool SecuredUrlsEnabled
+        {
+            get { return true; }
+        }
+
+        public string GetSecuredUrl(Uri uri)
+        {
+            CheckUri(uri);
+
+            try
+            {
+                var client = cloudStorageAccount.CreateCloudBlobClient();
+                client.ParallelOperationThreadCount = 1;
+
+                var blob = client.GetBlobReferenceFromServer(uri);
+
+                var sharedAccessPolicy = new SharedAccessBlobPolicy();
+                sharedAccessPolicy.Permissions = SharedAccessBlobPermissions.Read;
+                sharedAccessPolicy.SharedAccessStartTime = DateTime.UtcNow.AddMinutes(-1);
+                sharedAccessPolicy.SharedAccessExpiryTime = DateTime.UtcNow.Add(tokenExpiryTime);
+                
+                var sas = blob.GetSharedAccessSignature(sharedAccessPolicy);
+                return string.Concat(uri, sas);
+            }
+            catch (Exception e)
+            {
+                throw new StorageException(string.Format("Failed to get shared access signature for. Uri: {0}.", uri), e);
+            }
+        }
+
         private string GetBlobDirectory(string path)
         {
             var index = path.LastIndexOf('/');
@@ -194,7 +251,7 @@ namespace BetterCms.Module.WindowsAzureStorage
             result = result.Substring(index + 1);
 
             return result;
-        }  
+        }
 
         private void CheckUri(Uri uri)
         {

@@ -36,13 +36,5 @@ namespace BetterCms.Module.Root.Models.Migrations
                 .FromTable("Pages")
                 .InSchema(SchemaName);
         }
-
-        /// <summary>
-        /// Migrate down.
-        /// </summary>
-        public override void Down()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

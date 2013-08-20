@@ -18,6 +18,10 @@ namespace BetterCms.Module.AmazonS3Storage
         private readonly string secretKey;
         private readonly string bucketName;
 
+        private readonly bool accessControlEnabledGlobally;
+
+        private readonly TimeSpan tokenExpiryTime;
+
         public AmazonS3StorageService(ICmsConfiguration config)
         {
             try
@@ -27,6 +31,12 @@ namespace BetterCms.Module.AmazonS3Storage
                 accessKey = serviceSection.GetValue("AmazonAccessKey");
                 secretKey = serviceSection.GetValue("AmazonSecretKey");
                 bucketName = serviceSection.GetValue("AmazonBucketName");
+
+                if (!TimeSpan.TryParse(serviceSection.GetValue("AmazonTokenExpiryTime"), out tokenExpiryTime))
+                {
+                    tokenExpiryTime = TimeSpan.FromMinutes(10);
+                }
+                accessControlEnabledGlobally = config.AccessControlEnabled;
             }
             catch (Exception e)
             {
@@ -88,8 +98,16 @@ namespace BetterCms.Module.AmazonS3Storage
 
                     putRequest.WithBucketName(bucketName)
                         .WithKey(key)
-                        .WithCannedACL(S3CannedACL.PublicRead)
                         .WithInputStream(request.InputStream);
+
+                    if (accessControlEnabledGlobally && !request.IgnoreAccessControl)
+                    {
+                        putRequest.WithCannedACL(S3CannedACL.Private);
+                    }
+                    else
+                    {
+                        putRequest.WithCannedACL(S3CannedACL.PublicRead);
+                    }
 
                     if (request.Headers != null && request.Headers.Count > 0)
                     {
@@ -100,6 +118,8 @@ namespace BetterCms.Module.AmazonS3Storage
                     {
                         putRequest.WithMetaData(request.MetaData);
                     }
+
+                    putRequest.ContentType = MimeTypeUtility.DetermineContentType(request.Uri);
 
                     using (client.PutObject(putRequest))
                     {
@@ -227,6 +247,37 @@ namespace BetterCms.Module.AmazonS3Storage
             {
                 throw new StorageException(string.Format("An Uri scheme {0} is invalid. Uri {1} can't be processed with a {2} storage service.", uri.Scheme, uri, GetType().Name));
             }
-        } 
+        }
+
+        public bool SecuredUrlsEnabled
+        {
+            get { return true; }
+        }
+
+        public string GetSecuredUrl(Uri uri)
+        {
+            CheckUri(uri);
+
+            try
+            {
+                using (var client = CreateAmazonS3Client())
+                {
+                    var absolutePath = HttpUtility.UrlDecode(uri.AbsolutePath);
+                    var key = absolutePath.TrimStart('/');
+                    var request = new GetPreSignedUrlRequest();
+
+                    request.WithBucketName(bucketName)
+                        .WithKey(key)
+                        .WithExpires(DateTime.UtcNow.Add(tokenExpiryTime));
+
+                    var url = client.GetPreSignedURL(request);
+                    return url;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new StorageException(string.Format("Failed to get signed URL for file. Uri: {0}.", uri), e);
+            }
+        }
     }
 }

@@ -1,18 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
+
 using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Services;
 
 using NHibernate.Linq;
 
 namespace BetterCms.Module.Pages.Command.Content.GetPageContentOptions
 {
     public class GetPageContentOptionsCommand : CommandBase, ICommand<Guid, PageContentOptionsViewModel>
-    {        
+    {
+        /// <summary>
+        /// Gets or sets the option service.
+        /// </summary>
+        /// <value>
+        /// The option service.
+        /// </value>
+        public IOptionService OptionService { get; set; }
+
         /// <summary>
         /// Executes the specified request.
         /// </summary>
@@ -20,7 +29,10 @@ namespace BetterCms.Module.Pages.Command.Content.GetPageContentOptions
         /// <returns></returns>        
         public PageContentOptionsViewModel Execute(Guid pageContentId)
         {
-            IList<PageContentOptionViewModel> options = null;
+            var model = new PageContentOptionsViewModel
+            {
+                PageContentId = pageContentId
+            };
 
             if (!pageContentId.HasDefaultValue())
             {
@@ -33,57 +45,11 @@ namespace BetterCms.Module.Pages.Command.Content.GetPageContentOptions
 
                 if (pageContent != null)
                 {
-                    options = new List<PageContentOptionViewModel>();
-
-                    if (pageContent.Options != null)
-                    {
-                        foreach (var pageContentOption in pageContent.Options.Distinct())
-                        {
-                            ContentOption contentOption = null;
-                            if (pageContent.Content.ContentOptions != null)
-                            {
-                                contentOption = pageContent.Content.ContentOptions.FirstOrDefault(f => f.Key.Trim().Equals(pageContentOption.Key.Trim(), StringComparison.OrdinalIgnoreCase));
-                            }
-                            
-                            options.Add(new PageContentOptionViewModel
-                                            {                                                
-                                                Type = pageContentOption.Type,
-                                                OptionKey = pageContentOption.Key.Trim(),
-                                                OptionValue = pageContentOption.Value,
-                                                OptionDefaultValue = contentOption != null ? contentOption.DefaultValue : null
-                                            });
-                        }
-                    }
-
-                    if (pageContent.Content.ContentOptions != null)
-                    {
-                        foreach (var contentOption in pageContent.Content.ContentOptions.Distinct())
-                        {
-                            if (!options.Any(f => f.OptionKey.Equals(contentOption.Key.Trim(), StringComparison.OrdinalIgnoreCase)))
-                            {
-                                options.Add(new PageContentOptionViewModel
-                                                {
-                                                    Type = contentOption.Type,                                                    
-                                                    OptionKey = contentOption.Key.Trim(),
-                                                    OptionValue = null,
-                                                    OptionDefaultValue = contentOption.DefaultValue
-                                                });
-                            }
-                        }
-                    }
+                    model.OptionValues = OptionService.GetMergedOptionValuesForEdit(pageContent.Content.ContentOptions, pageContent.Options);
                 }
             }
-            
-            if (options == null)
-            {
-                options = new List<PageContentOptionViewModel>();
-            }
 
-            return new PageContentOptionsViewModel
-                       {
-                           WidgetOptions = options.OrderBy(o => o.OptionKey).ToList(),
-                           PageContentId = pageContentId
-                       };
+            return model;
         }        
     }
 }

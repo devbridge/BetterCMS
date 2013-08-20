@@ -4,9 +4,9 @@ using System.Web;
 
 using Autofac;
 
-using BetterCms.Api;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
+using BetterCms.Events;
 using BetterCms.Module.Root;
 using BetterCms.Module.Users.Content.Resources;
 using BetterCms.Module.Users.Registration;
@@ -40,7 +40,7 @@ namespace BetterCms.Module.Users
         public UsersModuleDescriptor(ICmsConfiguration configuration) : base(configuration)
         {
             userJsModuleIncludeDescriptor = new UserJsModuleIncludeDescriptor(this);
-            ApiContext.Events.HostStart += Core_HostStart;
+            CoreEvents.Instance.HostStart += Core_HostStart;
         }
 
         /// <summary>

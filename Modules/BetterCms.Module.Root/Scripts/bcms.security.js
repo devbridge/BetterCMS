@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global define */
+/*global bettercms */
 
-bettercms.define('bcms.security', ['bcms.jquery'], function($) {
+bettercms.define('bcms.security', ['bcms.jquery', 'bcms.ko.extenders'], function ($, ko) {
     'use strict';
 
     var security = {},
@@ -58,6 +58,37 @@ bettercms.define('bcms.security', ['bcms.jquery'], function($) {
             }
         }
         return false;
+    };
+
+    function UserAccessViewModel(item) {
+        this.RoleOrUser = ko.observable(item.RoleOrUser);
+        this.AccessLevel = ko.observable(item.AccessLevel || 3);
+    }
+
+    security.createUserAccessViewModel = function(accessList) {
+        var model = {
+            UserAccessList: ko.observableArray(),
+            newUser: ko.observable(''),
+            addNewUser: function() {
+                if (!model.newUser()) {
+                    return;
+                }
+                model.UserAccessList.push(new UserAccessViewModel({ RoleOrUser: model.newUser() }));
+                model.newUser('');
+            },
+            removeUser: function(userAccessViewModel) {
+                model.UserAccessList.remove(userAccessViewModel);
+            },
+            getPropertyIndexer: function(i, propName) {
+                return 'UserAccessList[' + i + '].' + propName;
+            }
+        };
+
+        $.each(accessList, function(i, item) {
+            model.UserAccessList.push(new UserAccessViewModel(item));
+        });
+
+        return model;
     };
 
     return security;

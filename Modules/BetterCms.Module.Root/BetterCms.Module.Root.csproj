@@ -59,9 +59,9 @@
     <Reference Include="Autofac.Configuration">
       <HintPath>..\..\packages\Autofac.3.0.0\lib\net40\Autofac.Configuration.dll</HintPath>
     </Reference>
-    <Reference Include="Common.Logging, Version=2.1.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+    <Reference Include="Common.Logging, Version=2.1.2.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Common.Logging.2.1.1\lib\net40\Common.Logging.dll</HintPath>
+      <HintPath>..\..\packages\Common.Logging.2.1.2\lib\net40\Common.Logging.dll</HintPath>
     </Reference>
     <Reference Include="FluentMigrator, Version=1.0.6.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -76,13 +76,13 @@
       <HintPath>..\..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Web.Mvc, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Web.Mvc, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Mvc2Futures.2.0.50217.0\lib\Microsoft.Web.Mvc.dll</HintPath>
+      <HintPath>..\..\packages\Mvc3Futures.3.0.20105.0\lib\Microsoft.Web.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="MvcContrib, Version=2.0.95.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="MvcContrib, Version=3.0.100.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\MvcContrib.2.0.95.0\lib\MvcContrib.dll</HintPath>
+      <HintPath>..\..\packages\MvcContrib.Mvc3-ci.3.0.100.0\lib\MvcContrib.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate, Version=3.3.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -117,36 +117,57 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Api\Attributes\AllowableValuesValidationAttribute.cs" />
-    <Compile Include="Api\Attributes\EmptyGuidValidationAttribute.cs" />
-    <Compile Include="Api\Events\PageRetrievedEventArgs.cs" />
-    <Compile Include="Api\Events\RootEvents.cs" />
-    <Compile Include="Api\Events\PageRenderingEventArgs.cs" />
-    <Compile Include="Api\RootApiContext.cs" />
+    <Compile Include="Events\CategoryEvents.cs" />
+    <Compile Include="Events\PageRetrievedEventArgs.cs" />
+    <Compile Include="Events\RootEvents.cs" />
+    <Compile Include="Events\PageRenderingEventArgs.cs" />
+    <Compile Include="Events\TagEvents.cs" />
+    <Compile Include="Commands\Category\DeleteCategory\DeleteCategoryCommand.cs" />
+    <Compile Include="Commands\Category\DeleteCategory\DeleteCategoryCommandRequest.cs" />
+    <Compile Include="Commands\Category\GetCategoryList\GetCategoryListCommand.cs" />
+    <Compile Include="Commands\Category\SaveCategory\SaveCategoryCommand.cs" />
     <Compile Include="Commands\GetMainJsData\GetMainJsDataCommand.cs" />
     <Compile Include="Commands\GetProcessorJsData\GetProcessorJsDataCommand.cs" />
     <Compile Include="Commands\GetPageToRender\GetPageToRenderRequest.cs" />
     <Compile Include="Commands\GetPageToRender\GetPageToRenderCommand.cs" />
     <Compile Include="Commands\GetStyleSheetsToRender\GetStyleSheetsToRenderCommand.cs" />
     <Compile Include="Commands\GetStyleSheetsToRender\GetStyleSheetsToRenderRequest.cs" />
+    <Compile Include="Commands\Tag\DeleteTag\DeleteTagCommand.cs" />
+    <Compile Include="Commands\Tag\DeleteTag\DeleteTagCommandRequest.cs" />
+    <Compile Include="Commands\Tag\GetTagList\GetTagListCommand.cs" />
+    <Compile Include="Commands\Tag\GetTag\GetTagCommand.cs" />
+    <Compile Include="Commands\Tag\SaveTag\SaveTagCommand.cs" />
+    <Compile Include="Commands\Tag\SearchTags\SearchTagsCommand.cs" />
     <Compile Include="Content\Resources\RootGlobalization.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RootGlobalization.resx</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AuthenticationController.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CmsController.cs" />
     <Compile Include="Controllers\PreviewController.cs" />
     <Compile Include="Controllers\EmbeddedResourcesController.cs" />
     <Compile Include="Controllers\RenderingController.cs" />
     <Compile Include="Controllers\SidebarController.cs" />
     <Compile Include="Controllers\SiteSettingsController.cs" />
+    <Compile Include="Controllers\TagsController.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Content.cs" />
     <Compile Include="Models\ContentOption.cs" />
-    <Compile Include="Models\ContentBase.cs" />
     <Compile Include="Models\ComboWireJson.cs" />
+    <Compile Include="Models\Maps\PageOptionMap.cs" />
+    <Compile Include="Models\Maps\UserAccessMap.cs" />
+    <Compile Include="Models\Migrations\Migration201308121549.cs" />
+    <Compile Include="Models\Migrations\Migration201308060930.cs" />
+    <Compile Include="Models\Migrations\Migration201308051530.cs" />
+    <Compile Include="Models\PageOption.cs" />
+    <Compile Include="Models\LayoutOption.cs" />
+    <Compile Include="Models\Maps\LayoutOptionMap.cs" />
     <Compile Include="Models\Maps\ModuleContentVersionMap.cs" />
+    <Compile Include="Models\Migrations\Migration201308021300.cs" />
+    <Compile Include="Models\Migrations\Migration201308021130.cs" />
+    <Compile Include="Models\Migrations\Migration201307191431.cs" />
     <Compile Include="Models\Migrations\Migration201306101421.cs" />
     <Compile Include="Models\ModuleContentVersion.cs" />
     <Compile Include="Models\LayoutRegion.cs" />
@@ -158,7 +179,6 @@
     <Compile Include="Models\Maps\ContentOptionMap.cs" />
     <Compile Include="Models\Maps\RegionMap.cs" />
     <Compile Include="Models\Maps\TagMap.cs" />
-    <Compile Include="Models\MigrationsContent\BaseContentMigration.cs" />
     <Compile Include="Models\Migrations\Migration201305230800.cs" />
     <Compile Include="Models\Migrations\Migration201303261100.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
@@ -172,10 +192,12 @@
     <Compile Include="Models\PageContent.cs" />
     <Compile Include="Models\Region.cs" />
     <Compile Include="Models\Tag.cs" />
+    <Compile Include="Models\UserAccess.cs" />
     <Compile Include="Models\Widget.cs" />
     <Compile Include="Mvc\CommandBase.cs" />
     <Compile Include="Mvc\CommandHandler.cs" />
     <Compile Include="Mvc\Converters.cs" />
+    <Compile Include="Mvc\Grids\EditableGridDropDownColumn.cs" />
     <Compile Include="Mvc\Grids\Extensions\PagingExtensions.cs" />
     <Compile Include="Mvc\Grids\Extensions\QueryableExtensions.cs" />
     <Compile Include="Mvc\Grids\Extensions\QueryOverExtensions.cs" />
@@ -191,6 +213,7 @@
     <Compile Include="Mvc\Helpers\DynamicDictionary.cs" />
     <Compile Include="Mvc\Helpers\LayoutHelper.cs" />
     <Compile Include="Mvc\Helpers\LayoutRegionWrapper.cs" />
+    <Compile Include="Models\Extensions\OptionTypeExtensions.cs" />
     <Compile Include="Mvc\Helpers\PreviewHelper.cs" />
     <Compile Include="Mvc\Helpers\RegionContentWrapper.cs" />
     <Compile Include="Mvc\Helpers\StringHelper.cs" />
@@ -204,6 +227,8 @@
     <Compile Include="Registration\AuthenticationJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\ContentJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\BcmsJsModuleIncludeDescriptor.cs" />
+    <Compile Include="Registration\OptionsJsModuleIncludeDescriptor.cs" />
+    <Compile Include="Registration\TagsJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\SecurityJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\KnockoutExtendersJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\PreviewJsModuleIncludeDescriptor.cs" />
@@ -231,17 +256,26 @@
     <Compile Include="Mvc\Helpers\MessagesHelper.cs" />
     <Compile Include="Registration\TabsJsModuleIncludeDescriptor.cs" />
     <Compile Include="RootModuleConstants.cs" />
+    <Compile Include="Services\AccessControlService.cs" />
     <Compile Include="Services\DefaultContentService.cs" />
+    <Compile Include="Services\DefaultOptionService.cs" />
     <Compile Include="Services\DefaultRenderingService.cs" />
     <Compile Include="Services\DefaultSecurityService.cs" />
     <Compile Include="Services\IContentService.cs" />
+    <Compile Include="Services\IOptionService.cs" />
     <Compile Include="Services\IRenderingService.cs" />
     <Compile Include="ViewModels\Authentication\InfoViewModel.cs" />
+    <Compile Include="ViewModels\Category\CategoryItemViewModel.cs" />
     <Compile Include="ViewModels\Cms\CmsRequestViewModel.cs" />
     <Compile Include="ViewModels\Cms\PageRegionViewModel.cs" />
     <Compile Include="DataContracts\Enums\PageRetrievedEventResults.cs" />
     <Compile Include="ViewModels\Cms\RedirectViewModel.cs" />
     <Compile Include="ViewModels\Cms\RenderPageViewModel.cs" />
+    <Compile Include="ViewModels\Cms\RenderWidgetViewModel.cs" />
+    <Compile Include="ViewModels\Option\OptionValueEditViewModel.cs" />
+    <Compile Include="ViewModels\Option\OptionValueViewModel.cs" />
+    <Compile Include="ViewModels\Option\OptionViewModel.cs" />
+    <Compile Include="ViewModels\Option\OptionViewModelBase.cs" />
     <Compile Include="ViewModels\PageProjectionsViewModel.cs" />
     <Compile Include="ViewModels\Rendering\RenderProcessorJsViewModel.cs" />
     <Compile Include="ViewModels\Rendering\JavaScriptModuleInclude.cs" />
@@ -251,6 +285,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Mvc\Grids\EditableGridColumn.cs" />
+    <Compile Include="ViewModels\Security\UserAccessTemplateViewModel.cs" />
+    <Compile Include="ViewModels\Security\UserAccessViewModel.cs" />
     <Compile Include="ViewModels\Shared\EditableGridViewModel.cs" />
     <Compile Include="ViewModels\Sidebar\SidebarContainerViewModel.cs" />
     <Compile Include="ViewModels\ProjectionsViewModel.cs" />
@@ -264,6 +300,8 @@
     <Compile Include="Mvc\Helpers\TooltipHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RootModuleRegistration.cs" />
+    <Compile Include="ViewModels\Tags\TagItemViewModel.cs" />
+    <Compile Include="ViewModels\Tags\TagsTemplateViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Content\Resources\RootGlobalization.resx">
@@ -545,7 +583,11 @@
     <EmbeddedResource Include="Scripts\bcms.grid.js" />
     <EmbeddedResource Include="Scripts\bcms.jquery.autocomplete.js" />
     <EmbeddedResource Include="Scripts\bcms.ko.extenders.js" />
+    <EmbeddedResource Include="Scripts\bcms.tags.js" />
+    <EmbeddedResource Include="Content\Styles\images\bcms-arrows-sprite.png" />
+    <EmbeddedResource Include="Models\Migrations\Migration201307191431.sqlserver.sql" />
     <EmbeddedResource Include="Scripts\bcms.ko.grid.js" />
+    <EmbeddedResource Include="Scripts\bcms.options.js" />
     <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\es.js" />
     <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\ja.js" />
     <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\km.js" />
@@ -663,18 +705,6 @@
     <EmbeddedResource Include="Views\Shared\BaseLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\EditableGrid\Grid.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\Cell.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\Header.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\TopBlock.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Views\Shared\Layouts\OneColumnLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -727,6 +757,33 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Shared\Partial\Paging.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Tags\ListTags.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Tags\TagsTemplate.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Category\Categories.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\EditableGrid\Grid.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\Cell.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\DropDownCell.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\Header.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\TopBlock.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Security\AccessControlTemplate.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

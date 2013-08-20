@@ -17,6 +17,10 @@
         public virtual string CellView { get; set; }
         
         public virtual bool AutoFocus { get; set; }
+        
+        public virtual bool CanBeEdited { get; set; }
+
+        public virtual string HiddenFieldName { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EditableGridColumn" /> class.
@@ -31,6 +35,7 @@
             ValueBind = valueBind ?? "''";
             HeaderView = RootModuleConstants.EditableGridHeaderTemplate;
             CellView = RootModuleConstants.EditableGridCellTemplate;
+            CanBeEdited = true;
         }
     }
 }

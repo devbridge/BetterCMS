@@ -3,6 +3,7 @@ using System.Globalization;
 
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Models.Extensions;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels.Images;
 using BetterCms.Module.Root.Mvc;
@@ -15,19 +16,19 @@ namespace BetterCms.Module.MediaManager.Command.Images.GetImage
     public class GetImageCommand : CommandBase, ICommand<Guid, ImageViewModel>
     {
         /// <summary>
-        /// Gets or sets the media file service.
+        /// The tag service.
         /// </summary>
         /// <value>
-        /// The media file service.
+        /// The tag service.
         /// </value>
-        public IMediaFileService MediaFileService { get; set; }
+        public ITagService TagService { get; set; }
 
         /// <summary>
         /// Executes this command.
         /// </summary>
         /// <param name="imageId">The image id.</param>
         /// <returns>The view model.</returns>
-        public virtual ImageViewModel Execute(Guid imageId)
+        public ImageViewModel Execute(Guid imageId)
         {
             var image = Repository.First<MediaImage>(imageId);
             return new ImageViewModel
@@ -35,22 +36,24 @@ namespace BetterCms.Module.MediaManager.Command.Images.GetImage
                     Id = image.Id.ToString(),
                     Caption = image.Caption,
                     Title = image.Title,
+                    Description = image.Description,
                     Url = image.PublicUrl,
                     ThumbnailUrl = image.PublicThumbnailUrl,
                     Version = image.Version.ToString(CultureInfo.InvariantCulture),
                     FileName = image.OriginalFileName,
                     FileExtension = image.OriginalFileExtension,
-                    FileSize = MediaFileService.GetFileSizeText(image.Size),
+                    FileSize = image.SizeAsText(),
                     ImageWidth = image.Width,
                     ImageHeight = image.Height,
                     OriginalImageWidth = image.OriginalWidth,
                     OriginalImageHeight = image.OriginalHeight,
-                    ImageAlign = image.ImageAlign.HasValue ? image.ImageAlign.Value : MediaImageAlign.Left,
+                    ImageAlign = image.ImageAlign.HasValue ? image.ImageAlign.Value : MediaImageAlign.Center,
                     CropCoordX1 = image.CropCoordX1.HasValue ? image.CropCoordX1.Value : 0,
                     CropCoordY1 = image.CropCoordY1.HasValue ? image.CropCoordY1.Value : 0,
                     CropCoordX2 = image.CropCoordX2.HasValue ? image.CropCoordX2.Value : image.OriginalWidth,
                     CropCoordY2 = image.CropCoordY2.HasValue ? image.CropCoordY2.Value : image.OriginalHeight,
-                    OriginalImageUrl = image.PublicOriginallUrl
+                    OriginalImageUrl = image.PublicOriginallUrl,
+                    Tags = TagService.GetMediaTagNames(imageId)
                 };
         }
     }

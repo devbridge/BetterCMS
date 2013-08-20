@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 using BetterCms.Core.Models;
+
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Mvc.Attributes;
+using BetterCms.Module.Pages.ViewModels.Option;
+using BetterCms.Module.Root.ViewModels.Option;
+using BetterCms.Module.Root.ViewModels.Security;
 
 namespace BetterCms.Module.Pages.ViewModels.Page
 {
     /// <summary>
     /// Add new page view model.
     /// </summary>
-    public class AddNewPageViewModel
+    public class AddNewPageViewModel : IOptionValuesContainer
     {
         /// <summary>
         /// Gets or sets the page title.
@@ -57,6 +61,38 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// </value>
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "AddNewPageProperties_TemplateId_RequiredMessage")]
         public Guid TemplateId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the page option values.
+        /// </summary>
+        /// <value>
+        /// The page option values.
+        /// </value>
+        public IList<OptionValueEditViewModel> OptionValues { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user access list.
+        /// </summary>
+        /// <value>
+        /// The user access list.
+        /// </value>
+        public List<UserAccessViewModel> UserAccessList { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether access control is enabled.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if access control is enabled; otherwise, <c>false</c>.
+        /// </value>
+        public bool AccessControlEnabled { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AddNewPageViewModel"/> class.
+        /// </summary>
+        public AddNewPageViewModel()
+        {
+            UserAccessList = new List<UserAccessViewModel>();
+        }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

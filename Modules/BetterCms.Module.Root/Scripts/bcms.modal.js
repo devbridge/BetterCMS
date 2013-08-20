@@ -682,7 +682,10 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
             var imgContainer = dialog.container.find(selectors.previewImageContainer),
                 width = img.width(),
                 visibleWidth = $(window).width() - 150,
-                margin;
+                margin,
+                previewFailure = imgContainer.find(selectors.previewFailure);
+            
+            previewFailure.hide();
 
             if (width > visibleWidth) {
                 width = visibleWidth;

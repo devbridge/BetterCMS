@@ -42,6 +42,33 @@ namespace BetterCms.Test.Module.WindowsAzureStorage
             ShouldCopyObject(configuration, azureClient);
         }
 
+        [Test]
+        public void Should_Download_Url_Unsecured()
+        {
+            var configuration = MockConfiguration();
+            var azureClient = new WindowsAzureStorageService(configuration);
+
+            ShouldDownloadUrlUnsecured(configuration, azureClient);
+        }
+        
+        [Test]
+        public void Should_Not_Download_Url_Secured()
+        {
+            var configuration = MockConfiguration(true);
+            var azureClient = new WindowsAzureStorageService(configuration);
+
+            ShouldNotDownloadUrlSecured(configuration, azureClient);
+        }
+        
+        [Test]
+        public void Should_Download_Url_Secured()
+        {
+            var configuration = MockConfiguration(true);
+            var azureClient = new WindowsAzureStorageService(configuration);
+
+            ShouldDownloadUrl(configuration, azureClient);
+        }
+
         protected override ICmsStorageConfiguration GetStorageConfiguration(Configuration.CmsTestConfigurationSection serviceSection)
         {
             var accountName = serviceSection.AzureStorage.GetValue(AzureAccountName);

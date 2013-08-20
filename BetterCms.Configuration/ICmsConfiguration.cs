@@ -1,5 +1,3 @@
-using System;
-
 using BetterCms.Configuration;
 
 namespace BetterCms
@@ -39,6 +37,14 @@ namespace BetterCms
         /// The login URL.
         /// </value>
         string LoginUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the web site URL.
+        /// </summary>
+        /// <value>
+        /// The web site URL.
+        /// </value>
+        string WebSiteUrl { get; set; }
 
         /// <summary>
         /// Gets the virtual root path (like "~/App_Data") of BetterCMS working directory. 
@@ -102,5 +108,26 @@ namespace BetterCms
         /// Gets the cache configuration.
         /// </summary>
         ICmsCacheConfiguration Cache { get; }
+
+        /// <summary>
+        /// Gets the URL mode.
+        /// </summary>
+        TrailingSlashBehaviorType UrlMode { get; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [access control enabled].
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if [access control enabled]; otherwise, <c>false</c>.
+        /// </value>
+        bool AccessControlEnabled { get; set; }
+
+        /// <summary>
+        /// Gets the default access control list.
+        /// </summary>
+        /// <value>
+        /// The default access control list.
+        /// </value>
+        AccessControlCollection DefaultAccessControlList { get; }
     }
 }

@@ -244,8 +244,7 @@ namespace BetterCms.Core.Modules.Registration
             ModuleRegistrationContext registrationContext = new ModuleRegistrationContext(moduleDescriptor);            
            
             moduleDescriptor.RegisterModuleTypes(registrationContext, containerBuilder);            
-            moduleDescriptor.RegisterModuleCommands(registrationContext, containerBuilder);
-            moduleDescriptor.RegisterModuleApiContexts(registrationContext, containerBuilder);
+            moduleDescriptor.RegisterModuleCommands(registrationContext, containerBuilder);            
             moduleDescriptor.RegisterModuleControllers(registrationContext, containerBuilder, controllerExtensions);
             moduleDescriptor.RegisterCustomRoutes(registrationContext, containerBuilder);
 

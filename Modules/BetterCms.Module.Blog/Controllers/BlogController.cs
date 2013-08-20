@@ -12,7 +12,6 @@ using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.Blog.ViewModels.Filter;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Mvc;
-using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
 using Microsoft.Web.Mvc;
 
@@ -54,7 +53,8 @@ namespace BetterCms.Module.Blog.Controllers
             var view = RenderView("Index", model);
             var json = new
             {
-                Tags = request.Tags
+                Tags = request.Tags,
+                IncludeArchived = request.IncludeArchived
             };
 
             return ComboWireJson(success, view, json, JsonRequestBehavior.AllowGet);

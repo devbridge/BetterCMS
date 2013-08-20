@@ -1,14 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Web.Helpers;
 
-using BetterCms.Api;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Services.Storage;
 using BetterCms.Module.MediaManager.Helpers;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Models.Extensions;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels.Images;
 using BetterCms.Module.Root.Mvc;
@@ -37,6 +38,14 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
         public IStorageService StorageService { get; set; }
 
         /// <summary>
+        /// The tag service.
+        /// </summary>
+        /// <value>
+        /// The tag service.
+        /// </value>
+        public ITagService TagService { get; set; }
+
+        /// <summary>
         /// Executes this command.
         /// </summary>
         /// <param name="request">The request.</param>
@@ -44,8 +53,13 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
         {
             var mediaImage = Repository.First<MediaImage>(request.Id.ToGuidOrDefault());
 
+            UnitOfWork.BeginTransaction();
+            Repository.Save(mediaImage.CreateHistoryItem());
+            mediaImage.PublishedOn = DateTime.Now;
+
             mediaImage.Caption = request.Caption;
             mediaImage.Title = request.Title;
+            mediaImage.Description = request.Description;
             mediaImage.ImageAlign = request.ImageAlign;
             mediaImage.Version = request.Version.ToIntOrDefault();
 
@@ -53,9 +67,15 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
             ResizeAndCropImage(mediaImage, request);
 
             Repository.Save(mediaImage);
+
+            // Save tags
+            IList<Root.Models.Tag> newTags;
+            TagService.SaveMediaTags(mediaImage, request.Tags, out newTags);
+
             UnitOfWork.Commit();
 
-            MediaManagerApiContext.Events.OnMediaFileUpdated(mediaImage);
+            // Notify.
+            Events.MediaManagerEvents.Instance.OnMediaFileUpdated(mediaImage);
         }
 
         /// <summary>
@@ -176,7 +196,7 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
                 // Upload image to storage
                 bytes = image.GetBytes();
                 var memoryStream = new MemoryStream(bytes);
-                StorageService.UploadObject(new UploadRequest { InputStream = memoryStream, Uri = mediaImage.FileUri });
+                StorageService.UploadObject(new UploadRequest { InputStream = memoryStream, Uri = mediaImage.FileUri, IgnoreAccessControl = true });
                 
                 mediaImage.Size = bytes.Length;
 

@@ -181,8 +181,9 @@ namespace BetterCms.Module.Pages.Controllers
         public ActionResult PageContentOptions(string pageContentId)
         {
             var model = GetCommand<GetPageContentOptionsCommand>().ExecuteCommand(pageContentId.ToGuidOrDefault());
+            var view = RenderView("PageContentOptions", model);
 
-            return View(model);
+            return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>

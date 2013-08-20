@@ -1,0 +1,41 @@
+﻿@using BetterCms.Module.Pages.Content.Resources
+@using BetterCms.Module.Root;
+@using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Mvc.Grids;
+@using BetterCms.Module.Root.ViewModels.Shared;
+
+@{
+    var gridViewModel = new EditableGridViewModel
+    {
+        ShowSearch = false,
+        TopBlockClass = "bcms-top-block-holder",
+        SaveButtonTitle = RootGlobalization.Button_Ok,
+        AddHiddenFields = true,
+        ShowMessages = false,
+        Columns = new List<EditableGridColumn>
+            {
+                new EditableGridColumn(PagesGlobalization.Options_OptionKeyColumn, null, "key")
+                    {
+                        HeaderAttributes = "style=\"width: 250px;\"",
+                        AutoFocus = true,
+                        HiddenFieldName = "Options[{0}].OptionKey"
+                    },
+                    
+                new EditableGridColumn(PagesGlobalization.Options_OptionDefaultValueColumn, null, "defaultValue")
+                    {
+                        HeaderAttributes = "style=\"width: 250px;\"",
+                        HiddenFieldName = "Options[{0}].OptionDefaultValue",
+                        CellView = RootModuleConstants.EditableOptionValueCellTemplate
+                    },
+                
+                new EditableGridDropDownColumn(PagesGlobalization.Options_OptionTypeColumn, null, "type")
+                    {
+                        OptionsBind = "optionTypes",
+                        ValueTextBind = "typeName",
+                        HiddenFieldName = "Options[{0}].Type"
+                    },
+            }
+    };
+}
+
+@Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel)

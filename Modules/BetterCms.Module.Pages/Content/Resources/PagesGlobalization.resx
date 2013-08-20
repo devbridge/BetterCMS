@@ -121,7 +121,7 @@
     <value>Add New Content</value>
   </data>
   <data name="PageProperties_PageUrl_InvalidMessage" xml:space="preserve">
-    <value>Page url is invalid. Link must start and end with "/", can contain only following characters: '0-9', 'a-z', '-', '/', '_' and no more than 260 alphanumeric characters between the '/'.</value>
+    <value>Page url is invalid. Link can contain only following characters: '0-9', 'a-z', '-', '/', '_' and no more than 260 alphanumeric characters between the '/'.</value>
   </data>
   <data name="AddNewPageProperties_PagePermalink_MaxLengthMessage" xml:space="preserve">
     <value>Page permalink max length exceeded.</value>
@@ -247,7 +247,7 @@
     <value>You are going to copy all content and properties from the current page.</value>
   </data>
   <data name="ClonePage_Dialog_PageTitle" xml:space="preserve">
-    <value>New Page Title</value>
+    <value>New Page Title (H1)</value>
   </data>
   <data name="ClonePage_Dialog_PageTitle_Tooltip_Description" xml:space="preserve">
     <value>Create a title for your new page.</value>
@@ -285,20 +285,11 @@
   <data name="CreateHtmlContentWidget_Dialog_Title" xml:space="preserve">
     <value>Create Widget</value>
   </data>
-  <data name="CreateCategory_CreatedSuccessfully_Message" xml:space="preserve">
-    <value>Category created successfully.</value>
-  </data>
   <data name="CreateRedirect_CreatedSuccessfully_Message" xml:space="preserve">
     <value>Redirect created successfully.</value>
   </data>
-  <data name="CreateTag_CreatedSuccessfully_Message" xml:space="preserve">
-    <value>Tag created successfully.</value>
-  </data>
   <data name="CreateWidget_Dialog_Title" xml:space="preserve">
     <value>Create Widget</value>
-  </data>
-  <data name="DeleteCategory_DeletedSuccessfully_Message" xml:space="preserve">
-    <value>Category deleted successfully.</value>
   </data>
   <data name="DeletePage_DeletedSuccessfully_Message" xml:space="preserve">
     <value>Page deleted successfully.</value>
@@ -336,9 +327,6 @@
   <data name="DeleteRedirect_DeletedSuccessfully_Message" xml:space="preserve">
     <value>Redirect deleted successfully.</value>
   </data>
-  <data name="DeleteTag_DeletedSuccessfully_Message" xml:space="preserve">
-    <value>Tag removed successfully.</value>
-  </data>
   <data name="DeleteWidget_Confirmation_Message" xml:space="preserve">
     <value>Are you sure you want to delete {0} widget?</value>
   </data>
@@ -363,14 +351,14 @@
   <data name="EditPageProperties_AdvancedPropertiesTab_PageUrl_Tooltip_Description" xml:space="preserve">
     <value>Edit the URL visitors will use to navigate to this post.</value>
   </data>
-  <data name="EditPageProperties_AdvancedPropertiesTab_Privacy_Title" xml:space="preserve">
-    <value>Privacy</value>
+  <data name="EditPageProperties_Properties_Title" xml:space="preserve">
+    <value>Properties</value>
   </data>
-  <data name="EditPageProperties_AdvancedPropertiesTab_Privacy_Tooltip_Description" xml:space="preserve">
+  <data name="EditPageProperties_Properties_Tooltip_Description" xml:space="preserve">
     <value>Edit the privacy settings of this page. Selecting "No Follow" will tell search engines not to follow the links on this page, and "No Index" will tell search engines not to index this page.</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_Privacy_VisibleToEveryone" xml:space="preserve">
-    <value>This page is visible to everyone (PUBLISHED)</value>
+    <value>Page is published</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_Title" xml:space="preserve">
     <value>JavaScript &amp; CSS</value>
@@ -400,10 +388,10 @@
     <value>Image will be displayed as a thumbnail with the page.</value>
   </data>
   <data name="EditPageProperties_BasicPropertiesTab_PageName_Title" xml:space="preserve">
-    <value>Page Name</value>
+    <value>Page Name (H1)</value>
   </data>
   <data name="EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Description" xml:space="preserve">
-    <value>Edit the title of this page. This is the title that will appear on the page.</value>
+    <value>Edit the title of this page. This is the title that will appear on the page (H1).</value>
   </data>
   <data name="EditPageProperties_BasicPropertiesTab_RemoveButton" xml:space="preserve">
     <value>Remove</value>
@@ -421,7 +409,7 @@
     <value>Layout</value>
   </data>
   <data name="EditPageProperties_PagePermalink_InvalidMessage" xml:space="preserve">
-    <value>Page permalink is invalid. Link must start and end with "/", can contain only following characters: '0-9', 'a-z', '-', '/', '_' and no more than 260 alphanumeric characters between the '/'.</value>
+    <value>Page permalink is invalid. Link can contain only following characters: '0-9', 'a-z', '-', '/', '_' and no more than 260 alphanumeric characters between the '/'.</value>
   </data>
   <data name="EditPageProperties_PagePermalink_MaxLengthMessage" xml:space="preserve">
     <value>Page URL max length exceeded.</value>
@@ -472,22 +460,22 @@
     <value>Meta Title</value>
   </data>
   <data name="EditSeo_MetaTitle_Tooltip_Description" xml:space="preserve">
-    <value>The Meta title should contain your keywords and concisely describe the content of the page.</value>
+    <value>Edit the title that will appear on search engine result pages.</value>
   </data>
   <data name="EditSeo_PageTitle" xml:space="preserve">
-    <value>Page Title</value>
+    <value>Page Name (H1)</value>
   </data>
   <data name="EditSeo_PageTitle_MaxLengthMessage" xml:space="preserve">
-    <value>Page title max length exceeded.</value>
+    <value>Page name max length exceeded.</value>
   </data>
   <data name="EditSeo_PageTitle_RequiredMessage" xml:space="preserve">
-    <value>Page title is required.</value>
+    <value>Page name is required.</value>
   </data>
   <data name="EditSeo_PageTitle_Tooltip_Description" xml:space="preserve">
-    <value>Edit the page title that will appear on search engine result pages.</value>
+    <value>Edit the page name that will appear on a page as the main title.</value>
   </data>
   <data name="EditSeo_PageUrlPath_InvalidMessage" xml:space="preserve">
-    <value>Page URL path is invalid. Link must start and end with "/" and can contain only following characters: '0-9', 'a-z', '-', '/', '_'</value>
+    <value>Page URL path is invalid. Link can contain only following characters: '0-9', 'a-z', '-', '/', '_'</value>
   </data>
   <data name="EditSeo_Tooltip_MetaDescription_Title" xml:space="preserve">
     <value>Meta Description</value>
@@ -588,24 +576,6 @@
   <data name="Siderbar_ClonePageButtonTitle" xml:space="preserve">
     <value>Clone page</value>
   </data>
-  <data name="SiteSettings_CategoriesMenuItem" xml:space="preserve">
-    <value>Categories</value>
-  </data>
-  <data name="SiteSettings_Categories_AddNewCategory" xml:space="preserve">
-    <value>Add New +</value>
-  </data>
-  <data name="SiteSettings_Categories_DeleteCategoryMessage" xml:space="preserve">
-    <value>Are you sure you want to delete the {0} category?</value>
-  </data>
-  <data name="SiteSettings_Categories_NameColumn" xml:space="preserve">
-    <value>Category</value>
-  </data>
-  <data name="SiteSettings_Categories_Search" xml:space="preserve">
-    <value>Search</value>
-  </data>
-  <data name="SiteSettings_Categories_Title" xml:space="preserve">
-    <value>Categories</value>
-  </data>
   <data name="SiteSettings_PagesMenuItem" xml:space="preserve">
     <value>Pages</value>
   </data>
@@ -654,26 +624,11 @@
   <data name="SiteSettings_TagsMenuItem" xml:space="preserve">
     <value>Tags</value>
   </data>
-  <data name="SiteSettings_Tags_AddNewTag" xml:space="preserve">
-    <value>Add New +</value>
-  </data>
-  <data name="SiteSettings_Tags_DeleteTagMessage" xml:space="preserve">
-    <value>Are you sure you want to delete the {0} tag?</value>
-  </data>
   <data name="SiteSettings_Tags_NewTagCreatedMessage" xml:space="preserve">
     <value>A tag {0} was saved.</value>
   </data>
-  <data name="SiteSettings_Tags_Search" xml:space="preserve">
-    <value>Search</value>
-  </data>
-  <data name="SiteSettings_Tags_TagColumn" xml:space="preserve">
-    <value>Tag</value>
-  </data>
   <data name="SiteSettings_Tags_TagRemovedMessage" xml:space="preserve">
     <value>A tag {0} was removed.</value>
-  </data>
-  <data name="SiteSettings_Tags_Title" xml:space="preserve">
-    <value>Tags</value>
   </data>
   <data name="SiteSettings_WidgetsMenuItem" xml:space="preserve">
     <value>Widgets</value>
@@ -732,25 +687,22 @@
   <data name="ClonePage_Dialog_Success" xml:space="preserve">
     <value>A page successfully cloned. Redirecting to {0}.</value>
   </data>
-  <data name="ContentOptions_AddNew" xml:space="preserve">
+  <data name="Options_AddNew" xml:space="preserve">
     <value>Add New +</value>
   </data>
-  <data name="ContentOptions_OptionDefaultValueColumn" xml:space="preserve">
+  <data name="Options_OptionDefaultValueColumn" xml:space="preserve">
     <value>Default Value</value>
   </data>
-  <data name="ContentOptions_OptionKeyColumn" xml:space="preserve">
+  <data name="Options_OptionKeyColumn" xml:space="preserve">
     <value>Option Name</value>
   </data>
-  <data name="DeleteOption_Confirmation_Message" xml:space="preserve">
-    <value>Are you sure you want to delete this option?</value>
-  </data>
-  <data name="PageWidgetOptions_OptionDefaultValueColumn" xml:space="preserve">
+  <data name="EditOptionsValues_OptionDefaultValueColumn" xml:space="preserve">
     <value>Default Option Value</value>
   </data>
-  <data name="PageWidgetOptions_OptionKeyColumn" xml:space="preserve">
+  <data name="EditOptionsValues_OptionKeyColumn" xml:space="preserve">
     <value>Option Name</value>
   </data>
-  <data name="PageWidgetOptions_OptionValueColumn" xml:space="preserve">
+  <data name="EditOptionsValues_OptionValueColumn" xml:space="preserve">
     <value>Option Value</value>
   </data>
   <data name="PageWidgetOptions_Dialog_Title" xml:space="preserve">
@@ -823,7 +775,7 @@
     <value>Basic Properties</value>
   </data>
   <data name="EditTemplate_OptionsTab_Title" xml:space="preserve">
-    <value>Regions</value>
+    <value>Options</value>
   </data>
   <data name="TemplatePreviewImageUrl_Title" xml:space="preserve">
     <value>Preview Image URL</value>
@@ -852,10 +804,10 @@
   <data name="EditTemplate_Dialog_Title" xml:space="preserve">
     <value>Edit Template</value>
   </data>
-  <data name="TemplateOptions_AddNewRegion" xml:space="preserve">
+  <data name="TemplateRegions_AddNewRegion" xml:space="preserve">
     <value>Add New Region +</value>
   </data>
-  <data name="TemplateOptions_IndetificatorColumn" xml:space="preserve">
+  <data name="TemplateRegions_IdentificatorColumn" xml:space="preserve">
     <value>Identificator</value>
   </data>
   <data name="TemplateOptions_Region_Search" xml:space="preserve">
@@ -879,7 +831,7 @@
   <data name="SiteSettings_Template_Search" xml:space="preserve">
     <value>Search</value>
   </data>
-  <data name="TemplateOptions_DescriptionColumn" xml:space="preserve">
+  <data name="TemplateRegions_DescriptionColumn" xml:space="preserve">
     <value>Description</value>
   </data>
   <data name="SaveTemplate_VirtualPathNotExists_Message" xml:space="preserve">
@@ -993,12 +945,6 @@
   <data name="EditWidget_PreviewImageNotFound_Message" xml:space="preserve">
     <value>Preview image not found.</value>
   </data>
-  <data name="SaveCategory_CategoryExists_Message" xml:space="preserve">
-    <value>Category already exists. </value>
-  </data>
-  <data name="SaveTag_TagExists_Message" xml:space="preserve">
-    <value>Tag already exists.</value>
-  </data>
   <data name="ClonePage_EditNewUrl_Title" xml:space="preserve">
     <value>New Page URL</value>
   </data>
@@ -1028,9 +974,6 @@
   </data>
   <data name="EditSeo_MetaTitle_MaxLengthMessage" xml:space="preserve">
     <value>Meta title max length exceeded.</value>
-  </data>
-  <data name="Date_Picker_Tooltip_Title" xml:space="preserve">
-    <value>Calendar</value>
   </data>
   <data name="ValidatePageUrlCommand_SameUrlPath_Message" xml:space="preserve">
     <value>Redirect URL belongs page which you want to delete. Please update URL (path) and try again.</value>
@@ -1081,7 +1024,7 @@
     <value>Type word DELETE to confirm deletion.</value>
   </data>
   <data name="RedirectUrl_InvalidMessage" xml:space="preserve">
-    <value>Redirect url is invalid. Link must start and end with "/", can contain only following characters: '0-9', 'a-z', '-', '/', '_' and no more than 260 alphanumeric characters between the '/'.</value>
+    <value>Redirect url is invalid. Link can contain only following characters: '0-9', 'a-z', '-', '/', '_' and no more than 260 alphanumeric characters between the '/'.</value>
   </data>
   <data name="DeletePage_RedirectUrl_Name" xml:space="preserve">
     <value>Redirect URL</value>
@@ -1127,5 +1070,50 @@
   </data>
   <data name="EditPageProperties_BasicPropertiesTab_PageSecondaryImage_Tooltip_Description" xml:space="preserve">
     <value>Image will be displayed as a secondary image with the page.</value>
+  </data>
+  <data name="SiteSettings_Pages_FilterIncludeArchived" xml:space="preserve">
+    <value>Include archived items</value>
+  </data>
+  <data name="EditPageProperties_AdvancedPropertiesTab_IsArchived" xml:space="preserve">
+    <value>Archived</value>
+  </data>
+  <data name="SiteSettings_Pages_FilterIsModified" xml:space="preserve">
+    <value>modified</value>
+  </data>
+  <data name="EditSeo_EditUrlPath_UseCanonicalUrl" xml:space="preserve">
+    <value>Use canonical URL.</value>
+  </data>
+  <data name="EditPageProperties_AdvancedPropertiesTab_UseCanonicalUrl" xml:space="preserve">
+    <value>Use canonical URL.</value>
+  </data>
+  <data name="EditPageProperties_PageStatusChange_ConfirmationMessage_Publish" xml:space="preserve">
+    <value>Do you really want to publish this page?</value>
+  </data>
+  <data name="EditPageProperties_PageStatusChange_ConfirmationMessage_UnPublish" xml:space="preserve">
+    <value>Do you really want to unpublish this page?</value>
+  </data>
+  <data name="EditTemplate_RegionsTab_Title" xml:space="preserve">
+    <value>Regions</value>
+  </data>
+  <data name="EditPageProperties_OptionsTab_Title" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="Options_OptionTypeColumn" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="EditOptionsValues_OptionTypeColumn" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="AddNewPage_Options" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="AddNewPage_Title" xml:space="preserve">
+    <value>Page</value>
+  </data>
+  <data name="AddNewPage_UserAccess" xml:space="preserve">
+    <value>4. Define security level</value>
+  </data>
+  <data name="AddNewPage_UserAccess_Tooltip_Description" xml:space="preserve">
+    <value>Set users and/or roles, which can later read / modify created page.</value>
   </data>
 </root>

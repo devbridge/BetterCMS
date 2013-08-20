@@ -10,7 +10,7 @@ namespace BetterCms.Module.MediaManager.Services
     {
         MediaImage UploadImage(Guid rootFolderId, string fileName, long fileLength, Stream file);
 
-        void RemoveImageWithFiles(Guid mediaImageId, int version);
+        void RemoveImageWithFiles(Guid mediaImageId, int version, bool doNotCheckVersion = false);
 
         void UpdateThumbnail(MediaImage mediaImage, Size size);
     }

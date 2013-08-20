@@ -194,34 +194,23 @@ a.bcms-slider-next {
         background: #f5f5f5;
     }
 
-.bcms-upload-info {
-    display: inline-block;
-    width: 140px;
-    padding-left: 20px;
-    vertical-align: top;
-}
-
-    .bcms-upload-info .bcms-btn-small {
-        margin-top: 10px;
-    }
-
-.bcms-upload-info-text {
-    height: 86px;
-    font-size: 12px;
-    overflow: hidden;
-}
-
 .bcms-page-images-holder {
     width: 875px;
 }
 
-.bcms-page-images-holder .bcms-input-list-holder {
-    display: inline-block;
-}
+    .bcms-page-images-holder .bcms-input-list-holder {
+        display: inline-block;
+        margin-right: 50px;
+    }
+
+    .bcms-page-images-holder .bcms-btn-small {
+        display: block;
+        text-align: center;
+    }
 
 .bcms-tags-box-holder {
     padding: 10px 0 0 30px;
-    margin: 0 0 20px -30px;
+    margin: 0 0 10px -30px;
     border-top: 1px solid #c6c6c6;
     border-bottom: 1px solid #c6c6c6;
 }
@@ -279,7 +268,7 @@ a.bcms-slider-next {
 
 /* Site settings page */
 /*sidebar*/
-hr.bcms-settings-separator {
+.bcms-settings-separator {
     padding: 0;
     margin: 0;
     border-style: solid none solid none;
@@ -307,7 +296,7 @@ hr.bcms-settings-separator {
 
 /*content*/
 .bcms-top-block-holder {
-    padding: 20px 20px 10px 30px;
+    padding: 10px 20px 5px 20px;
     min-height: 40px;
 }
 
@@ -333,112 +322,134 @@ hr.bcms-settings-separator {
 
 .bcms-featured-grid {
     position: relative;
+    line-height: 1.5em;
+    padding-bottom: 5px;
     z-index: 5;
 }
 
 .bcms-top-block-holder .bcms-featured-grid {
-    padding-top: 7px;
+    margin-top: 8px;
 }
 
 .bcms-grid-filtering {
     position: relative;
     float: left;
+    height: 30px;
+    z-index: 1;
 }
 
-    .bcms-grid-filtering .bcms-btn-links-main {
-        height: 25px;
-        line-height: 25px;
-        font-size: 13px;
+.bcms-filterbox {
+    position: relative;
+    height: 28px;
+    line-height: 28px;
+    padding: 0 15px 0 30px;
+    color: #0383df;
+    cursor: pointer;
+    border: 1px solid #c6c6c6;
+    background: #fff url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAAEhcmxxAAAAkElEQVQoz2NgaXy0FIj/MwAJMGaA82BC/4H4GIzxHybNDOVwIiuD6/mDrByIL8HNB+IoqOAeIN6LLAE3Bu4QLHgpSMIKi4QizIhjSIIgZ/5EN78CiL8CsQJWi5H9gVWCD4jv43AdMgap4Uc2qQGP4hYgrgbiw+gBogDEH9EUtwIxD9Qj+9E1ILv7PzY52msAAM8HDCs6JdPsAAAAAElFTkSuQmCC") no-repeat 12px center;
+    font-size: 13px;
+}
+
+.bcms-filter-modified {
+    display: none;
+    padding: 0 10px 0 5px;
+    color: #c6c6c6;
+    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAKCAYAAAH+wC8WAAAAg0lEQVQY02M4cOAAAwOQ+A8iPBhgXLgQCIuDiB8wqb3IahiBmAeIP4E4M0CagNgKWQUIb0YWsAbiKUCsAuLoQ7VMhbsDiP/AtMIEmJEFkDHI+mNQRa+B2BlZMh8qsQiIhYBYBGYCFxBfg0qC8H0g5ke3E4Zr0awEKzgKxH5AzIQuCcIAI1rOzpfB0RIAAAAASUVORK5CYII=") no-repeat right center;
+    font-size: 11px;
+}
+
+.bcms-filterbox:after {
+    content: "";
+    position: absolute;
+    top: -1px;
+    right: -29px;
+    width: 30px;
+    height: 30px;
+    background: #383838 url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAKCAYAAAHKue4KAAAApUlEQVQoz32QWwrCQAxFM511ij/iTkSkaClFRaoiIq5SPP1JSkzHBgIhObl5CCCAiAZYUMmkBGRDNg5dCdADjVLJKp3X6LVau9asuTEhwJlfGxUWATS/GlBSe2juJEByUAJeGrf+0BTm7+MnPLTz4wRYAp9SseAZuCv7BdYCVMDt3wqu8RmYzn/eVrwEqAXeIdcoO7nRCx2ZWl06a+7eBByA7dxfBpwRF+lAPpFNAAAAAElFTkSuQmCC") no-repeat center center;
+}
+
+.bcms-active-filter .bcms-filterbox {
+    color: #000;
+    background: #f5f5f5 url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAAEhcmxxAAAAfUlEQVQoz2NgYGBYCsT/GZABJu8YjAHDDMxQBidWTX/QlF9CloyCCu4B4r0MaOA/Ogcdg5zLYIVFQhGm6xiSIMiZP9GNrADir0CsgNvT+CT4gPg+DtchY5AafmSNDXgUtwBxNRAfRrcN5MiPaIpbgZgH6pH9+NyN01O01QAAj6tCLJBd9KEAAAAASUVORK5CYII=") no-repeat 12px center;
+    border-bottom-color: #f5f5f5;
+}
+
+    .bcms-active-filter .bcms-filterbox:after {
+        background: #383838 url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAKCAYAAAHKue4KAAAAo0lEQVQoz3WQWwrCQAxF73TWKf6IOxEptWgpKOIDEXGV4vFnUkPoBAJ5nNxJRoCArYAlIJXKFNwtAHgDeyskjyb+JsON/Molnuy8ROMlij9LPnoFAbuQyyfjjNIEnE3SQcmAWyn0Bc4eEvAB2vC2Qeu4pD95cEpthdPc4Im69TWBBFwCfCj1DLxCb/CfEAe7yroZeAT2aM0FsKndGbwBrsAK0A/44hfmqu5IrwAAAABJRU5ErkJggg==") no-repeat center center;
     }
+
+.bcms-active-filter .bcms-filter-modified {
+    display: inline-block;
+}
 
 .bcms-tags-block {
     position: absolute;
-    top: 35px;
+    top: 29px;
     left: 0;
-    width: 100%;
-    padding: 20px 20px 40px;
-    background: #eff9fd;
+    width: 440px;
+    padding: 15px;
+    background: #f5f5f5;
     border: 1px solid #c6c6c6;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
-    box-shadow: 1px 1px 5px 0 rgba(0,0,0,0.4);
 }
 
-    .bcms-tags-block:after, .bcms-tags-block:before {
-        bottom: 100%;
-        border: solid transparent;
-        content: " ";
-        height: 0;
-        width: 0;
-        position: absolute;
-        pointer-events: none;
-    }
+.bcms-featured-tags {
+    padding: 0 0 5px;
+    margin: 0 0 8px;
+    border-bottom: 1px solid #e3e3e3;
+}
 
-    .bcms-tags-block:after {
-        border-color: rgba(239, 249, 253, 0);
-        border-bottom-color: #eff9fd;
-        border-width: 10px;
-        left: 30px;
-        margin-left: -10px;
-    }
+.bcms-filter-options {
+    float: left;
+    padding-bottom: 5px;
+}
 
-    .bcms-tags-block:before {
-        border-color: rgba(198, 198, 198, 0);
-        border-bottom-color: #c6c6c6;
-        border-width: 11px;
-        left: 30px;
-        margin-left: -11px;
+    .bcms-filter-options:first-child {
+        margin-right: 15px;
     }
 
 .bcms-filter-text {
-    float: left;
     color: #000;
     line-height: 20px;
     font-size: 12px;
     font-weight: 700;
 }
 
-.bcms-filter-options-1 {
-    position: relative;
-    float: left;
-    height: 30px;
-    padding-right: 125px;
-    margin-right: 40px;
+.bcms-filter-options .bcms-global-select {
+    width: 200px;
+    height: 28px;
+    padding-top: 2px;
 }
 
-.bcms-filter-options-2 {
+.bcms-filter-field-holder {
     position: relative;
-    float: left;
-    height: 30px;
-    padding-right: 210px;
 }
 
-    .bcms-filter-options-2 .bcms-global-select {
-        width: 200px;
-        height: 26px;
-        padding-top: 2px;
-        position: absolute;
-        right: 0;
-        top: 0;
+    .bcms-filter-field-holder .bcms-add-tags-field {
+        width: 180px;
+        height: 20px;
+        line-height: 20px;
+        background-color: #fff;
     }
 
-.bcms-tags-block .bcms-btn-search {
-    position: absolute;
-    top: 100%;
-    right: -1px;
-    margin-top: -29px;
+.bcms-check-field-holder {
+    float: left;
+    margin: 4px 0 0 -3px;
 }
 
-.bcms-featured-tags .bcms-tags-field-holder {
-    right: 0;
+.bcms-check-field {
+    display: inline-block;
+    vertical-align: middle;
 }
 
-.bcms-filter-search {
-    position: absolute;
-    bottom: 5px;
-    left: 0;
-    width: 100%;
-    text-align: right;
+.bcms-check-label {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.bcms-btn-field-holder {
+    float: right;
 }
 
 /*history page*/

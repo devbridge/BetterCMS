@@ -1,8 +1,11 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
 
 using BetterCms.Core.Security;
+
 using BetterCms.Module.MediaManager.ViewModels;
+using BetterCms.Module.Pages.Command.Layout.GetLayoutOptions;
+using BetterCms.Module.Pages.Command.Page.AddNewPage;
 using BetterCms.Module.Pages.Command.Page.ClonePage;
 using BetterCms.Module.Pages.Command.Page.CreatePage;
 using BetterCms.Module.Pages.Command.Page.DeletePage;
@@ -12,15 +15,15 @@ using BetterCms.Module.Pages.Command.Page.GetPageProperties;
 using BetterCms.Module.Pages.Command.Page.GetPagesList;
 using BetterCms.Module.Pages.Command.Page.SavePageProperties;
 using BetterCms.Module.Pages.Command.Page.SavePagePublishStatus;
-using BetterCms.Module.Pages.Commands.GetTemplates;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Filter;
 using BetterCms.Module.Pages.ViewModels.Page;
+
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
-using BetterCms.Module.Root.Mvc.Grids.GridOptions;
+using BetterCms.Module.Root.ViewModels.Security;
 
 using Microsoft.Web.Mvc;
 
@@ -64,7 +67,8 @@ namespace BetterCms.Module.Pages.Controllers
             var view = RenderView("Pages", model);
             var json = new
             {
-                Tags = request.Tags
+                Tags = request.Tags,
+                IncludeArchived = request.IncludeArchived
             };
 
             return ComboWireJson(success, view, json, JsonRequestBehavior.AllowGet);
@@ -81,18 +85,11 @@ namespace BetterCms.Module.Pages.Controllers
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         public ActionResult AddNewPage(string parentPageUrl)
         {
-            AddNewPageViewModel model = new AddNewPageViewModel { ParentPageUrl = parentPageUrl };
-            model.Templates = GetCommand<GetTemplatesCommand>().ExecuteCommand(new GetTemplatesRequest()).Templates;
+            var request = new AddNewPageCommandRequest { ParentPageUrl = parentPageUrl };
+            var model = GetCommand<AddNewPageCommand>().ExecuteCommand(request);
+            var view = RenderView("AddNewPage", model);
 
-            // Select first template as active
-            if (model.Templates.Count > 0)
-            {
-                model.Templates.ToList().ForEach(x => x.IsActive = false);
-                model.Templates.First().IsActive = true;
-                model.TemplateId = model.Templates.First().TemplateId;
-            }
-
-            return View(model);
+            return ComboWireJson(true, view, model, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -132,15 +129,6 @@ namespace BetterCms.Module.Pages.Controllers
             var model = GetCommand<GetPagePropertiesCommand>().ExecuteCommand(pageId.ToGuidOrDefault());
             var success = model != null;
 
-            if (success)
-            {
-                model.Templates = GetCommand<GetTemplatesCommand>().ExecuteCommand(new GetTemplatesRequest()).Templates;
-                if (!model.TemplateId.HasDefaultValue())
-                {
-                    model.Templates.Where(x => x.TemplateId == model.TemplateId).ToList().ForEach(x => x.IsActive = true);
-                }
-            }
-
             var view = RenderView("EditPageProperties", model);
             var json = new
                            {
@@ -148,6 +136,8 @@ namespace BetterCms.Module.Pages.Controllers
                                Image = success ? model.Image : new ImageSelectorViewModel(),
                                SecondaryImage = success ? model.SecondaryImage : new ImageSelectorViewModel(),
                                FeaturedImage = success ? model.FeaturedImage : new ImageSelectorViewModel(),
+                               OptionValues = success ? model.OptionValues : null,
+                               UserAccessList = success ? model.UserAccessList : new List<UserAccessViewModel>()
                            };
 
             return ComboWireJson(success, view, json, JsonRequestBehavior.AllowGet);
@@ -292,6 +282,19 @@ namespace BetterCms.Module.Pages.Controllers
             var slug = pageService.CreatePagePermalink(text, parentPageUrl);
 
             return Json(new { Text = text, Url = slug, SenderId = senderId }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Loads the layout options.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+        public ActionResult LoadLayoutOptions(string id)
+        {
+            var model = GetCommand<GetLayoutOptionsCommand>().ExecuteCommand(id.ToGuidOrDefault());
+            return WireJson(model != null, model, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.DataContracts;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Core.Mvc.Commands;
+
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Projections;
+using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Cms;
+using BetterCms.Module.Root.ViewModels.Option;
 
 using NHibernate.Linq;
 
@@ -40,6 +42,14 @@ namespace BetterCms.Module.Pages.Command.History.GetContentVersion
         /// The page content projection factory.
         /// </value>
         public PageContentProjectionFactory PageContentProjectionFactory { get; set; }
+
+        /// <summary>
+        /// Gets or sets the option service.
+        /// </summary>
+        /// <value>
+        /// The option service.
+        /// </value>
+        public IOptionService OptionService { get; set; }
 
         /// <summary>
         /// Executes the specified request.
@@ -78,8 +88,7 @@ namespace BetterCms.Module.Pages.Command.History.GetContentVersion
                 }
             }
 
-            List<IOption> options = new List<IOption>();
-            options.AddRange(pageContent.Options);
+            var options = OptionService.GetMergedOptionValues(pageContent.Options, pageContent.Content.ContentOptions);
 
             var contentProjection = PageContentProjectionFactory.Create(pageContent, pageContent.Content, options);
 

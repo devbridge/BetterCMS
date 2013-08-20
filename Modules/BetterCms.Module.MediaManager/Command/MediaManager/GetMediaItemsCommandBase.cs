@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-using BetterCms.Core.Api.DataContracts;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.Mvc.Commands;
 
+using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
 
 using MvcContrib.Sorting;
-
-using NHibernate.Transform;
 
 namespace BetterCms.Module.MediaManager.Command.MediaManager
 {
@@ -22,12 +22,9 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
         where TEntity: MediaFile
     {
         /// <summary>
-        /// Gets or sets the configuration.
+        /// The file service
         /// </summary>
-        /// <value>
-        /// The configuration.
-        /// </value>
-        public ICmsConfiguration Configuration { get; set; }
+        public IMediaFileService FileService { get; set; }
 
         /// <summary>
         /// Gets the type of the current media items.
@@ -47,7 +44,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             request.SetDefaultSortingOptions("Title");
 
             var items = GetAllItemsList(request);
-            var model = new MediaManagerItemsViewModel(items.Items, request, items.TotalCount);
+            var model = new MediaManagerItemsViewModel(items.Item1, request, items.Item2);
             model.Path = LoadMediaFolder(request);
 
             return model;
@@ -68,25 +65,29 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
 
             if (!request.CurrentFolderId.HasDefaultValue())
             {
-                MediaFolder folderAlias = null;
-                MediaFolderViewModel folderModelAlias = null;
-
-                var folder = UnitOfWork.Session
-                    .QueryOver(() => folderAlias)
-                    .Where(() => !folderAlias.IsDeleted && folderAlias.Id == request.CurrentFolderId)
-                    .SelectList(select => select
-                        .Select(() => folderAlias.Id).WithAlias(() => folderModelAlias.Id)
-                        .Select(() => folderAlias.Title).WithAlias(() => folderModelAlias.Name)
-                        .Select(() => folderAlias.Version).WithAlias(() => folderModelAlias.Version)
-                        .Select(() => folderAlias.Type).WithAlias(() => folderModelAlias.Type))
-                    .TransformUsing(Transformers.AliasToBean<MediaFolderViewModel>())
-                    .First<MediaFolderViewModel, MediaFolder>();
-
-                model.CurrentFolder = folder ?? new MediaFolderViewModel();
-
-                if (folder != null)
+                var mediaFolder = Repository.FirstOrDefault<MediaFolder>(e => e.Id == request.CurrentFolderId && e.Original == null);
+                model.CurrentFolder = mediaFolder != null
+                    ? new MediaFolderViewModel
+                        {
+                            Id = mediaFolder.Id,
+                            Name = mediaFolder.Title,
+                            Version = mediaFolder.Version,
+                            Type = mediaFolder.Type,
+                            ParentFolderId = mediaFolder.Folder != null ? mediaFolder.Folder.Id : Guid.Empty
+                        }
+                    : new MediaFolderViewModel();
+                while (mediaFolder != null)
                 {
-                    folders.Add(new MediaFolderViewModel { Id = folder.Id, Name = folder.Name, Type = folder.Type });
+                    folders.Insert(
+                        1,
+                        new MediaFolderViewModel
+                            {
+                                Id = mediaFolder.Id,
+                                Name = mediaFolder.Title,
+                                Type = mediaFolder.Type,
+                                ParentFolderId = mediaFolder.Folder != null ? mediaFolder.Folder.Id : Guid.Empty
+                            });
+                    mediaFolder = mediaFolder.Folder;
                 }
             }
 
@@ -99,11 +100,12 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns>Media items list</returns>
-        private DataListResponse<MediaViewModel> GetAllItemsList(MediaManagerViewModel request)
+        private Tuple<IEnumerable<MediaViewModel>, int> GetAllItemsList(MediaManagerViewModel request)
         {
             var query = Repository
                 .AsQueryable<Media>()
                 .Where(m => !m.IsDeleted
+                    && m.Original == null
                     && m.Type == MediaType
                     && (m is MediaFolder || m is TEntity && !((TEntity)m).IsTemporary));
 
@@ -112,10 +114,34 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
                 query = query.Where(m => !m.IsArchived);
             }
 
+            var removeEmptyFolders = false;
+            if (request.Tags != null)
+            {
+                foreach (var tagKeyValue in request.Tags)
+                {
+                    var id = tagKeyValue.Key.ToGuidOrDefault();
+                    query = query.Where(m => m is MediaFolder || m.MediaTags.Any(mt => mt.Tag.Id == id));
+                    removeEmptyFolders = true;
+                }
+            }
+
             if (!string.IsNullOrWhiteSpace(request.SearchQuery))
             {
                 var searchQuery = string.Format("%{0}%", request.SearchQuery);
-                query = query.Where(m => m.Title.Contains(searchQuery));
+                query = query.Where(m => m.Title.Contains(searchQuery) || m.Description.Contains(searchQuery) || m.MediaTags.Any(mt => mt.Tag.Name.Contains(searchQuery)));
+                query = query.Fetch(f => f.Folder);
+                var mediaList = query.ToList();
+
+                var result = new List<Media>();
+                foreach (var media in mediaList)
+                {
+                    if (IsChild(media, request.CurrentFolderId, request.IncludeArchivedItems))
+                    {
+                        result.Add(media);
+                    }
+                }
+
+                return ToResponse(request, result.AsQueryable());
             }
 
             if (!request.CurrentFolderId.HasDefaultValue())
@@ -127,12 +153,123 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
                 query = query.Where(m => m.Folder == null);
             }
 
+            return removeEmptyFolders
+                ? RemoveEmptyFolders(query, request)
+                : ToResponse(request, query, true);
+        }
+
+        private Tuple<IEnumerable<MediaViewModel>, int> RemoveEmptyFolders(IQueryable<Media> query, MediaManagerViewModel request)
+        {
+            var mediaList = query.ToList();
+
+            var result = new List<Media>();
+            foreach (var media in mediaList)
+            {
+                var folder = media as MediaFolder;
+                if (folder == null)
+                {
+                    result.Add(media);
+                }
+                else
+                {
+                    if (HasTaggedSubItems(folder, request))
+                    {
+                        result.Add(media);
+                    }
+                }
+            }
+
+            return ToResponse(request, result.AsQueryable());
+        }
+
+        private bool HasTaggedSubItems(MediaFolder folder, MediaManagerViewModel request)
+        {
+            if (folder == null)
+            {
+                return false;
+            }
+
+            var query = Repository
+                            .AsQueryable<Media>()
+                            .Where(m => !m.IsDeleted
+                                && m.Original == null
+                                && m.Type == MediaType
+                                && m.Folder != null && m.Folder.Id == folder.Id
+                                && (m is MediaFolder || m is TEntity && !((TEntity)m).IsTemporary));
+
+            if (!request.IncludeArchivedItems)
+            {
+                query = query.Where(m => !m.IsArchived);
+            }
+
+            if (request.Tags != null)
+            {
+                foreach (var tagKeyValue in request.Tags)
+                {
+                    var id = tagKeyValue.Key.ToGuidOrDefault();
+                    query = query.Where(m => m is MediaFolder || m.MediaTags.Any(mt => mt.Tag.Id == id));
+                }
+            }
+
+            var medias = query.ToList();
+            if (medias.Any(m => m is TEntity))
+            {
+                return true;
+            }
+
+
+            foreach (var media in medias)
+            {
+                if (HasTaggedSubItems(media as MediaFolder, request))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private static bool IsChild(Media media, Guid currentFolderId, bool includeArchivedItems)
+        {
+            if (media == null)
+            {
+                return false;
+            }
+
+            if (media.IsDeleted || (media.Folder != null && media.Folder.IsDeleted))
+            {
+                return false;
+            }
+
+            if (!includeArchivedItems && (media.IsArchived || (media.Folder != null && media.Folder.IsArchived)))
+            {
+                return false;
+            }
+
+            if (currentFolderId.HasDefaultValue())
+            {
+                return true;
+            }
+
+            if (media.Folder != null && media.Folder.Id == currentFolderId)
+            {
+                return true;
+            }
+
+            return IsChild(media.Folder, currentFolderId, includeArchivedItems);
+        }
+
+        private Tuple<IEnumerable<MediaViewModel>, int> ToResponse(MediaManagerViewModel request, IQueryable<Media> query, bool forceToFuture = false)
+        {
             var count = query.ToRowCountFutureValue();
             query = AddOrder(query, request).AddPaging(request);
 
-            var items = query.Select(SelectItem).ToList();
-            
-            return new DataListResponse<MediaViewModel>(items, count.Value);
+            var items = forceToFuture
+                            ? NHibernate.Linq.LinqExtensionMethods.ToFuture(query).ToList().Select(SelectItem).ToList()
+                            : query.Select(SelectItem).ToList();
+            var totalCount = count.Value;
+
+            return new Tuple<IEnumerable<MediaViewModel>, int>(items, totalCount);
         }
 
         /// <summary>
@@ -222,6 +359,10 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             model.CreatedOn = media.CreatedOn;
             model.Type = media.Type;
             model.IsArchived = media.IsArchived;
+            model.ParentFolderId = media.Folder != null ? media.Folder.Id : Guid.Empty;
+            model.ParentFolderName = media.Folder != null ? media.Folder.Title : MediaGlobalization.MediaList_RootFolderName;
+            model.Tooltip = media.Image != null ? media.Image.Caption : null;
+            model.ThumbnailUrl = media.Image != null ? media.Image.PublicThumbnailUrl : null;
         }
 
         /// <summary>
@@ -233,7 +374,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
         {
             FillMediaViewModel(model, media);
 
-            model.PublicUrl = media.PublicUrl;
+            model.PublicUrl = FileService.GetDownloadFileUrl(MediaType.File, media.Id, media.PublicUrl);
             model.FileExtension = media.OriginalFileExtension;
             model.Size = media.Size;
             model.IsProcessing = media.IsUploaded == null;

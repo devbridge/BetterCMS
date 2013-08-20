@@ -133,7 +133,7 @@ bettercms.define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout'], funct
     */
     ko.extenders.required = function (target, overrideMessage) {
         var ruleName = 'required';
-        return koValidationExtender(ruleName, target, function (newValue) {
+        return ko.extenders.koValidationExtender(ruleName, target, function (newValue) {
             newValue = $.trim(newValue);
 
             var hasError = (!newValue),
@@ -150,7 +150,7 @@ bettercms.define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout'], funct
         var ruleName = 'maxLength',
             maxLength = options.maxLength,
             message = options.message || ko.globalization.maximumLengthMessage;
-        return koValidationExtender(ruleName, target, function (newValue) {
+        return ko.extenders.koValidationExtender(ruleName, target, function (newValue) {
             var hasError = (newValue != null && newValue.length > maxLength),
                 showMessage = hasError ? $.format(message, maxLength) : '';
             
@@ -176,7 +176,7 @@ bettercms.define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout'], funct
         var ruleName = 'regularExpression',
             pattern = options.pattern || '',
             message = options.message || ko.globalization.regularExpressionMessage;
-        return koValidationExtender(ruleName, target, function (newValue) {
+        return ko.extenders.koValidationExtender(ruleName, target, function (newValue) {
             var hasError = (newValue != null && pattern && !newValue.match(new RegExp(pattern, "i"))),
                 showMessage = hasError ? $.format(message, pattern) : '';
             
@@ -187,7 +187,7 @@ bettercms.define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout'], funct
     /**
     * Knockout validation extender
     */
-    function koValidationExtender(ruleName, target, validate) {
+    ko.extenders.koValidationExtender = function(ruleName, target, validate) {
         // add some sub-observables to our observable
         if (!target.hasError) {
             target.hasError = ko.observable(false);
@@ -204,7 +204,7 @@ bettercms.define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout'], funct
 
         // return the original observable
         return target;
-    }
+    };
 
     ko.PagingViewModel = (function () {
         function PagingViewModel(pageSize, pageNumber, totalCount, onOpenPage) {
@@ -216,8 +216,8 @@ bettercms.define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout'], funct
             self.pageSize = 0;
             self.pageNumber = ko.observable(1);
             self.totalPages = ko.observable(1);
-            self.pagingUpperBound = ko.observable();
-            self.pagingLowerBound = ko.observable();
+            self.pagingUpperBound = ko.observable(1);
+            self.pagingLowerBound = ko.observable(1);
             self.totalCount = 0;
 
             self.pages = ko.computed(function () {
@@ -237,7 +237,7 @@ bettercms.define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout'], funct
             };
 
             self.setPaging = function (newPageSize, newPageNumber, newTotalCount) {
-                self.totalCount = newTotalCount >= 0 ? newTotalCount : 0;
+                self.totalCount = newTotalCount > 0 ? newTotalCount : 1;
                 
                 if (newPageSize > 0) {
                     if (newPageNumber <= 0) {
@@ -247,6 +247,7 @@ bettercms.define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout'], funct
                         newTotalCount = 0;
                     }
                     var totalPages = parseInt(Math.ceil(newTotalCount / newPageSize));
+                    totalPages = totalPages > 0 ? totalPages : 1;
 
                     self.pageSize = newPageSize;
                     self.pageNumber(newPageNumber);

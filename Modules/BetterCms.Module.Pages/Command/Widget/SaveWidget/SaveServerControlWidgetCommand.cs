@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Api;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 
@@ -19,6 +18,8 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
     public class SaveServerControlWidgetCommand : SaveWidgetCommandBase<EditServerControlWidgetViewModel>
     {
         public virtual IContentService ContentService { get; set; }
+
+        public virtual IOptionService OptionService { get; set; }
 
         /// <summary>
         /// Executes the specified request.
@@ -45,11 +46,11 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
             {
                 if (request.Id == default(Guid))
                 {
-                    PagesApiContext.Events.OnWidgetCreated(widget);
+                    Events.PageEvents.Instance.OnWidgetCreated(widget);
                 }
                 else
                 {
-                    PagesApiContext.Events.OnWidgetUpdated(widget);
+                    Events.PageEvents.Instance.OnWidgetUpdated(widget);
                 }
             }
 
@@ -88,11 +89,11 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
             widget.Version = request.Version;
             widget.PreviewUrl = request.PreviewImageUrl;            
 
-            if (request.ContentOptions != null)
+            if (request.Options != null)
             {
                 widget.ContentOptions = new List<ContentOption>();
 
-                foreach (var requestContentOption in request.ContentOptions)
+                foreach (var requestContentOption in request.Options)
                 {
                     var contentOption = new ContentOption {
                                                               Content = widget,
@@ -100,6 +101,8 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
                                                               DefaultValue = requestContentOption.OptionDefaultValue,
                                                               Type = requestContentOption.Type
                                                           };
+
+                    OptionService.ValidateOptionValue(contentOption);
 
                     widget.ContentOptions.Add(contentOption);
                 }

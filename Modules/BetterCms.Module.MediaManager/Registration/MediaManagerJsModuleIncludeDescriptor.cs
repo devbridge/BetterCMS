@@ -32,6 +32,7 @@ namespace BetterCms.Module.MediaManager.Registration
                     new JavaScriptModuleLinkTo<FilesController>(this, "deleteFileUrl", c => c.FileDelete("{0}", "{1}")),
                     new JavaScriptModuleLinkTo<ImagesController>(this, "getImageUrl", c => c.GetImage("{0}")),
                     new JavaScriptModuleLinkTo<FilesController>(this, "downloadFileUrl", c => c.Download("{0}")),
+                    new JavaScriptModuleLinkTo<FilesController>(this, "getFileUrl", c => c.Download("{0}")),
                     new JavaScriptModuleLinkTo<FolderController>(this, "saveFolderUrl", c => c.SaveFolder(null)),
                     new JavaScriptModuleLinkTo<FolderController>(this, "deleteFolderUrl", c => c.DeleteFolder("{0}", "{1}")),
                     new JavaScriptModuleLinkTo<MediaManagerController>(this, "renameMediaUrl", c => c.RenameMedia(null)),
@@ -50,6 +51,8 @@ namespace BetterCms.Module.MediaManager.Registration
                     new JavaScriptModuleGlobalization(this, "insertFileFailureMessageTitle", () => MediaGlobalization.InsertFile_FailureMessage_Title),
                     new JavaScriptModuleGlobalization(this, "insertFileFailureMessageMessage", () => MediaGlobalization.InsertFile_FailureMessage_Message),
                     new JavaScriptModuleGlobalization(this, "fileNotSelectedMessageMessage", () => MediaGlobalization.FileNotSelected_MessageMessage),
+
+                    new JavaScriptModuleGlobalization(this, "searchedInPathPrefix", () => MediaGlobalization.MediaManager_SearchedInPath_Prefix),
 
                     new JavaScriptModuleGlobalization(this, "deleteImageConfirmMessage", () => MediaGlobalization.DeleteImage_Confirmation_Message),
                     new JavaScriptModuleGlobalization(this, "deleteAudioConfirmMessage", () => MediaGlobalization.DeleteAudio_Confirmation_Message),

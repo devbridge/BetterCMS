@@ -27,6 +27,15 @@ namespace BetterCms.Test.Module.Root.ModelTests.MapTests
                 };
 
             page.PageContents = pageContents;
+            
+            var pageOptions = new[]
+                {
+                    TestDataProvider.CreateNewPageOption(page),
+                    TestDataProvider.CreateNewPageOption(page),
+                    TestDataProvider.CreateNewPageOption(page)
+                };
+
+            page.Options = pageOptions;
 
             SaveEntityAndRunAssertionsInTransaction(
                 page,

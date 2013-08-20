@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Web.Mvc;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Modules.Projections;
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Projections;
+using BetterCms.Module.Root.ViewModels.Option;
 
 namespace BetterCms.Module.Root.ViewModels.Cms
 {
@@ -15,11 +16,14 @@ namespace BetterCms.Module.Root.ViewModels.Cms
     {
         public RenderPageViewModel(IPage page)
         {
+            var rootPage = page as Page;
+
             Id = page.Id;
             IsDeleted = page.IsDeleted;
             Version = page.Version;
             HasSEO = page.HasSEO;
             Title = page.Title;
+            MetaTitle = rootPage != null && !string.IsNullOrEmpty(rootPage.MetaTitle) ? rootPage.MetaTitle : Title;
             PageUrl = page.PageUrl;
             Status = page.Status;
             CreatedOn = page.CreatedOn;
@@ -72,6 +76,8 @@ namespace BetterCms.Module.Root.ViewModels.Cms
 
         public string Title { get; private set; }
 
+        public string MetaTitle { get; private set; }
+
         public string PageUrl { get; private set; }
 
         /// <summary>
@@ -97,6 +103,14 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         /// The layout regions.
         /// </value>
         public List<PageRegionViewModel> Regions { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the page options.
+        /// </summary>
+        /// <value>
+        /// The page options.
+        /// </value>
+        public List<IOptionValue> Options { get; set; }
 
         /// <summary>
         /// Gets or sets the list of meta data projections.

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Models;
@@ -21,5 +20,7 @@ namespace BetterCms.Module.Root.Models
         public virtual IList<Page> Pages { get; set; }
 
         public virtual IList<LayoutRegion> LayoutRegions { get; set; }
+
+        public virtual IList<LayoutOption> LayoutOptions { get; set; }
     }
 }

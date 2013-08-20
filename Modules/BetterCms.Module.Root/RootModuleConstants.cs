@@ -16,9 +16,19 @@
         public const string EditableGridTemplate = "~/Areas/bcms-root/Views/Shared/EditableGrid/Grid.cshtml";
 
         /// <summary>
+        /// The editable grid template.
+        /// </summary>
+        public const string AccessControlTemplate = "~/Areas/bcms-root/Views/Security/AccessControlTemplate.cshtml";
+
+        /// <summary>
         /// The editable grid cell template.
         /// </summary>
         public const string EditableGridCellTemplate = "~/Areas/bcms-root/Views/Shared/EditableGrid/Partial/Cell.cshtml";
+        
+        /// <summary>
+        /// The editable grid drop down cell template.
+        /// </summary>
+        public const string EditableGridDropDownCellTemplate = "~/Areas/bcms-root/Views/Shared/EditableGrid/Partial/DropDownCell.cshtml";
 
         /// <summary>
         /// The editable grid header template.
@@ -44,6 +54,11 @@
         /// The email regular expression
         /// </summary>
         public const string EmailRegularExpression = @"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$";
+
+        /// <summary>
+        /// The editable grid option cell template.
+        /// </summary>
+        public const string EditableOptionValueCellTemplate = "~/Areas/bcms-pages/Views/Option/Partial/OptionCell.cshtml";
 
         /// <summary>
         /// Module permissions.

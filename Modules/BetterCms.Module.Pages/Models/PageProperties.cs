@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using BetterCms.Core.Models;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Models;
 
@@ -11,7 +10,6 @@ namespace BetterCms.Module.Pages.Models
     public class PageProperties : Page
     {
         public virtual string Description { get; set; }
-        public virtual string CanonicalUrl { get; set; }
         public virtual string CustomCss { get; set; }
         public virtual string CustomJS { get; set; }
 
@@ -35,6 +33,12 @@ namespace BetterCms.Module.Pages.Models
         public virtual MediaImage Image { get; set; }
         public virtual MediaImage SecondaryImage { get; set; }
         public virtual MediaImage FeaturedImage { get; set; }
+        public virtual bool IsArchived { get; set; }
+
+        public PageProperties()
+        {
+            UseCanonicalUrl = true;
+        }
 
         public virtual PageProperties Duplicate()
         {
@@ -57,6 +61,7 @@ namespace BetterCms.Module.Pages.Models
             duplicate.SecondaryImage = SecondaryImage;
             duplicate.FeaturedImage = FeaturedImage;
             duplicate.Category = Category;
+            duplicate.IsArchived = IsArchived;
 
             return duplicate;
         }

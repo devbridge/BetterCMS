@@ -1,41 +1,43 @@
-﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global define, console */
+﻿/*jslint unparam: true, white: true, browser: true, devel: true, vars: true */
+/*global bettercms, define, console */
 
-bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms.modal', 'bcms.html5Upload', 'bcms.ko.extenders', 'bcms.messages'],
-    function ($, bcms, dynamicContent, modal, html5Upload, ko, messages) {
+bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms.modal', 'bcms.html5Upload', 'bcms.ko.extenders', 'bcms.messages', 'bcms.security'],
+    function ($, bcms, dynamicContent, modal, html5Upload, ko, messages, security) {
     'use strict';
 
-    var mediaUpload = {},
-
-        selectors = {
-            dragZone: '#bcms-files-dropzone',
-            messageBox: "#bcms-multi-file-upload-messages",
-            fileUploadingContext: '#bcms-media-uploads',
-            fileUploadingMasterForm: '#SaveForm',
-            fileUploadingForm: '#ImgForm',
-            fileUploadingTarget: '#UploadTarget',
-            fileUploadingInput: '#uploadFile',
-            fileUploadingResult: '#jsonResult',
-            folderDropDown: '#SelectedFolderId',
-            uploadButtonLabel: '.bcms-btn-upload-files-text'
-        },
-
-        classes = {
-            dragZoneActive: 'bcms-dropzone-active'
-        },
-
-        links = {
-            loadUploadFilesDialogUrl: null,
-            uploadFileToServerUrl: null,
-            undoFileUploadUrl: null,
-            loadUploadSingleFileDialogUrl: null,
-            checkUploadedFileStatuses: null
-        },
-
-        globalization = {
-            uploadFilesDialogTitle: null,
-            failedToProcessFile: null
-        };
+        var mediaUpload = {},
+            selectors = {
+                dragZone: '#bcms-files-dropzone',
+                messageBox: "#bcms-multi-file-upload-messages",
+                fileUploadingContext: '#bcms-media-uploads',
+                fileUploadingMasterForm: '#SaveForm',
+                fileUploadingForm: '#ImgForm',
+                fileUploadingTarget: '#UploadTarget',
+                fileUploadingInput: '#uploadFile',
+                fileUploadingResult: '#jsonResult',
+                folderDropDown: '#SelectedFolderId',
+                uploadButtonLabel: '.bcms-btn-upload-files-text',
+                userAccessControlContainer: '#bcms-accesscontrol-context'
+            },
+            classes = {
+                dragZoneActive: 'bcms-dropzone-active'
+            },
+            links = {
+                loadUploadFilesDialogUrl: null,
+                uploadFileToServerUrl: null,
+                undoFileUploadUrl: null,
+                loadUploadSingleFileDialogUrl: null,
+                checkUploadedFileStatuses: null
+            },
+            globalization = {
+                uploadFilesDialogTitle: null,
+                failedToProcessFile: null,
+                multipleFilesWarningMessageOnReupload: null
+            },
+            constants = {
+                defaultReuploadMediaId: '00000000-0000-0000-0000-000000000000'
+            },
+            fileApiSupported = html5Upload.fileApiSupported();
 
     /**
     * Assign objects to module.
@@ -43,26 +45,36 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
     mediaUpload.links = links;
     mediaUpload.globalization = globalization;    
 
-    mediaUpload.openUploadFilesDialog = function (rootFolderId, rootFolderType, onSaveCallback) {
+    mediaUpload.openUploadFilesDialog = function (rootFolderId, rootFolderType, onSaveCallback, reuploadMediaId) {
+        reuploadMediaId = reuploadMediaId || constants.defaultReuploadMediaId;
         var options = {
                 uploads: new UploadsViewModel(),
                 rootFolderId: rootFolderId,
-                rootFolderType: rootFolderType
+                rootFolderType: rootFolderType,
+                reuploadMediaId: reuploadMediaId
             };
 
         options.uploads.filesToAccept(rootFolderType == 1 ? 'image/*' : '');
 
-        if (html5Upload.fileApiSupported()) {
+        if (fileApiSupported) {
             modal.open({
                 title: globalization.uploadFilesDialogTitle,
-                onLoad: function(dialog) {
-                    var url = $.format(links.loadUploadFilesDialogUrl, rootFolderId, rootFolderType);
+                onLoad: function (dialog) {
+                    var url = $.format(links.loadUploadFilesDialogUrl, rootFolderId, rootFolderType, reuploadMediaId);
                     dynamicContent.bindDialog(dialog, url, {
-                        contentAvailable: function() {
+                        contentAvailable: function (dialogRef, content) {
                             initUploadFilesDialogEvents(dialog, options);
+                            
+                            var context = $(selectors.userAccessControlContainer).get(0);
+                            if (context) {
+                                var viewModel = {
+                                    accessControl: security.createUserAccessViewModel(content.Data.UserAccessList)
+                                };
+                                ko.applyBindings(viewModel, context);
+                            }
                         },
 
-                        beforePost: function() {
+                        beforePost: function () {
                             dialog.container.showLoading();
                         },
 
@@ -76,21 +88,31 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
 
                         postComplete: function() {
                             dialog.container.hideLoading();
+                        },
+                        
+                        postError: function () {
+                            options.uploads.filesToAccept(rootFolderType == 1 ? 'image/*' : '');
                         }
                     });
                 },
                 onCloseClick: function () {
                     options.uploads.removeAllUploads();
                     options.uploads.stopStatusChecking();
+                },
+                onAcceptClick: function() {
+                    // IE10 fix: remove accept tag from upload box.
+                    options.uploads.filesToAccept('');
                 }
             });
         } else {
             modal.open({
                 title: globalization.uploadFilesDialogTitle,
                 onLoad: function(dialog) {
-                    var url = $.format(links.loadUploadSingleFileDialogUrl, rootFolderId, rootFolderType);
+                    var url = $.format(links.loadUploadSingleFileDialogUrl, rootFolderId, rootFolderType, reuploadMediaId);
+
                     dynamicContent.setContentFromUrl(dialog, url, {
-                        done: function() {
+                        done: function (content) {
+                            options.uploads.accessControl = security.createUserAccessViewModel(content.Data.UserAccessList);
                             SingleFileUpload(dialog, options);
                         }
                     });
@@ -118,7 +140,6 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
                         data: formToSubmit.serialize()
                     })
                         .done(function(response) {
-
                             onComplete(response);
                         })
                         .fail(function(response) {
@@ -135,8 +156,13 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
         }
     };
 
+    mediaUpload.openReuploadFilesDialog = function (mediaId, rootFolderId, rootFolderType, onSaveCallback) {
+        mediaUpload.openUploadFilesDialog(rootFolderId, rootFolderType, onSaveCallback, mediaId);
+    };
+
     function SingleFileUpload(dialog, options) {
         var context = dialog.container.find(selectors.fileUploadingContext).get(0),
+            messageBox = messages.box({ container: dialog.container }),
             uploadsModel = options.uploads,
             fakeData = {
                 fileName: "Uploading",
@@ -185,6 +211,16 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
         dialog.container.find(selectors.fileUploadingInput).change(function () {
             var fileName = dialog.container.find(selectors.fileUploadingInput).val();
             if (fileName != null && fileName != "") {
+                // Do not allow multiple file upload on re-upload functionality.
+                if (options.reuploadMediaId && options.reuploadMediaId != constants.defaultReuploadMediaId && uploadsModel.uploads().length > 0) {
+                    messageBox.clearMessages();
+                    messageBox.addWarningMessage(globalization.multipleFilesWarningMessageOnReupload);
+                    var uploadedFiles = uploadsModel.uploads();
+                    for (var i = 0; i < uploadedFiles.length; i++) {
+                        uploadedFiles[i].activate();
+                    }
+                    return;
+                }
                 // Add fake file model for upload indication.
                 uploadFile.uploadCompleted(false);
                 uploadFile.fileName = fileName;
@@ -406,17 +442,26 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
         self.fileName = file.fileName;
         self.fileSizeFormated = formatFileSize(file.fileSize);
         self.isProgressVisible = ko.observable(true);
+        self.isActive = ko.observable(false);
 
         self.uploadCompleted.subscribe(function (newValue) {
             if (newValue === true) {
                 self.uploadProgress(100);
             }
         });
+
+        self.activate = function() {
+            self.isActive(true);
+            setTimeout(function() {
+                self.isActive(false);
+            }, 4000);
+        };
     }
         
     function initUploadFilesDialogEvents(dialog, options) {
         var uploadsModel = options.uploads,
             dragZone = dialog.container.find(selectors.dragZone),
+            messageBox = messages.box({ container: dialog.container }),
             cancelEvent = function (e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -438,7 +483,7 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
 
         dialog.container.find(selectors.uploadButtonLabel).on('click', fixUploadButtonForMozilla);
 
-        if (html5Upload.fileApiSupported()) {
+        if (fileApiSupported) {
 
             var context = document.getElementById('bcms-media-uploads');
 
@@ -449,7 +494,16 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
                 key: 'File',
                 data: { rootFolderId: options.rootFolderId, rootFolderType: options.rootFolderType },
                 maxSimultaneousUploads: 4,
-                onFileAdded: function(file) {
+                onFileAdded: function (file) {
+                    if (options.reuploadMediaId && options.reuploadMediaId != constants.defaultReuploadMediaId && uploadsModel.uploads().length > 0) {
+                        messageBox.clearMessages();
+                        messageBox.addWarningMessage(globalization.multipleFilesWarningMessageOnReupload);
+                        var uploadedFiles = uploadsModel.uploads();
+                        for (var i = 0; i < uploadedFiles.length; i++) {
+                            uploadedFiles[i].activate();
+                        }
+                        return;
+                    }
                     var fileModel = new FileViewModel(file);
                     uploadsModel.activeUploads.push(fileModel);
                     uploadsModel.uploads.push(fileModel);

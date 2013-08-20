@@ -19,5 +19,16 @@ namespace BetterCms.Module.Users.ViewModels
         /// The root nodes.
         /// </value>
         public IList<UserViewModel> Users { get; set; }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format("SearchQuery: {0}", SearchQuery);
+        }
     }
 }
