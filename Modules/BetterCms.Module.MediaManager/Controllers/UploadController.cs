@@ -93,15 +93,25 @@ namespace BetterCms.Module.MediaManager.Controllers
         [HttpGet]
         public ActionResult SingleFileUpload(string folderId, string folderType, string reuploadMediaId)
         {
+            var type = (MediaType)Enum.Parse(typeof(MediaType), folderType);
+
+            if (type != MediaType.Image && CmsConfiguration.AccessControlEnabled && !StorageService.SecuredUrlsEnabled)
+            {
+                Messages.AddWarn(MediaGlobalization.TokenBasedSecurity_NotSupported_Message);
+            }
+
             var model = GetCommand<GetMultiFileUploadCommand>().ExecuteCommand(
                 new GetMultiFileUploadRequest
                 {
                     FolderId = folderId.ToGuidOrDefault(),
-                    Type = (MediaType)Enum.Parse(typeof(MediaType), folderType),
+                    Type = type,
                     ReuploadMediaId = reuploadMediaId.ToGuidOrDefault()
                 });
 
-            return View("SingleFileUpload", model);
+            var success = model != null;
+            var view = RenderView("SingleFileUpload", model);
+
+            return ComboWireJson(success, view, model, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>

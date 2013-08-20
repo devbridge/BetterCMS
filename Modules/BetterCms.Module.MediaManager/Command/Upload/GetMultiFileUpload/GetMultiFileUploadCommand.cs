@@ -53,10 +53,13 @@ namespace BetterCms.Module.MediaManager.Command.Upload.GetMultiFileUpload
 
             model.Folders.Insert(0, new Tuple<Guid, string>(Guid.Empty, ".."));
 
-            var principal = securityService.GetCurrentPrincipal();
-            model.UserAccessList = accessControlService.GetDefaultAccessList(principal).Cast<UserAccessViewModel>().ToList();
+            if (request.Type != MediaType.Image && cmsConfiguration.AccessControlEnabled && request.ReuploadMediaId.HasDefaultValue())
+            {
+                var principal = securityService.GetCurrentPrincipal();
+                model.UserAccessList = accessControlService.GetDefaultAccessList(principal).Cast<UserAccessViewModel>().ToList();
 
-            model.AccessControlEnabled = cmsConfiguration.AccessControlEnabled;
+                model.AccessControlEnabled = cmsConfiguration.AccessControlEnabled;
+            }
 
             return model;
         }

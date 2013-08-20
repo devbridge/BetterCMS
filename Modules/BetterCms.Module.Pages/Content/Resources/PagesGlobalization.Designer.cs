@@ -196,7 +196,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 4. Set user access.
+        ///   Looks up a localized string similar to 4. Define security level.
         /// </summary>
         public static string AddNewPage_UserAccess {
             get {
@@ -1177,24 +1177,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Privacy.
-        /// </summary>
-        public static string EditPageProperties_AdvancedPropertiesTab_Privacy_Title {
-            get {
-                return ResourceManager.GetString("EditPageProperties_AdvancedPropertiesTab_Privacy_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Edit the privacy settings of this page. Selecting &quot;No Follow&quot; will tell search engines not to follow the links on this page, and &quot;No Index&quot; will tell search engines not to index this page..
-        /// </summary>
-        public static string EditPageProperties_AdvancedPropertiesTab_Privacy_Tooltip_Description {
-            get {
-                return ResourceManager.GetString("EditPageProperties_AdvancedPropertiesTab_Privacy_Tooltip_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Page is published.
         /// </summary>
         public static string EditPageProperties_AdvancedPropertiesTab_Privacy_VisibleToEveryone {
@@ -1533,6 +1515,24 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string EditPageProperties_PageTitle_RequiredMessage {
             get {
                 return ResourceManager.GetString("EditPageProperties_PageTitle_RequiredMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Properties.
+        /// </summary>
+        public static string EditPageProperties_Properties_Title {
+            get {
+                return ResourceManager.GetString("EditPageProperties_Properties_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit the privacy settings of this page. Selecting &quot;No Follow&quot; will tell search engines not to follow the links on this page, and &quot;No Index&quot; will tell search engines not to index this page..
+        /// </summary>
+        public static string EditPageProperties_Properties_Tooltip_Description {
+            get {
+                return ResourceManager.GetString("EditPageProperties_Properties_Tooltip_Description", resourceCulture);
             }
         }
         

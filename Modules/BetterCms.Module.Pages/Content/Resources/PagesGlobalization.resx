@@ -351,10 +351,10 @@
   <data name="EditPageProperties_AdvancedPropertiesTab_PageUrl_Tooltip_Description" xml:space="preserve">
     <value>Edit the URL visitors will use to navigate to this post.</value>
   </data>
-  <data name="EditPageProperties_AdvancedPropertiesTab_Privacy_Title" xml:space="preserve">
-    <value>Privacy</value>
+  <data name="EditPageProperties_Properties_Title" xml:space="preserve">
+    <value>Properties</value>
   </data>
-  <data name="EditPageProperties_AdvancedPropertiesTab_Privacy_Tooltip_Description" xml:space="preserve">
+  <data name="EditPageProperties_Properties_Tooltip_Description" xml:space="preserve">
     <value>Edit the privacy settings of this page. Selecting "No Follow" will tell search engines not to follow the links on this page, and "No Index" will tell search engines not to index this page.</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_Privacy_VisibleToEveryone" xml:space="preserve">
@@ -1111,7 +1111,7 @@
     <value>Page</value>
   </data>
   <data name="AddNewPage_UserAccess" xml:space="preserve">
-    <value>4. Set user access</value>
+    <value>4. Define security level</value>
   </data>
   <data name="AddNewPage_UserAccess_Tooltip_Description" xml:space="preserve">
     <value>Set users and/or roles, which can later read / modify created page.</value>
