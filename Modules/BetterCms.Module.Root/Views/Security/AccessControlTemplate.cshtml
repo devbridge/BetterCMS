@@ -1,10 +1,18 @@
 ﻿@using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Mvc.Helpers
+@using BetterCms.Module.Root.ViewModels.Security
+
+@{
+    UserAccessTemplateViewModel viewModel = (Model is UserAccessTemplateViewModel)
+        ? (UserAccessTemplateViewModel)Model
+        : new UserAccessTemplateViewModel();
+}
 
 <div id="bcms-accesscontrol-context">
     <div class="bcms-user-access" data-bind="with: accessControl">
         <div class="bcms-input-list-holder">
-            <div class="bcms-tooltip-mark" data-message="Set user access"></div>
-            <div class="bcms-content-titles">@RootGlobalization.AccessControl_UserAccess_Title</div>
+            @Html.Tooltip(@viewModel.Tooltip)
+            <div class="bcms-content-titles">@viewModel.Title</div>
             <div class="bcms-access-table">
                 <div class="bcms-access-title clearfix">
                     <div class="bcms-access-title-text">@RootGlobalization.AccessControl_UserAccess_User</div>

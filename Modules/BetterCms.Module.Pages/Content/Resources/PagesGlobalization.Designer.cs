@@ -196,6 +196,24 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 4. Set user access.
+        /// </summary>
+        public static string AddNewPage_UserAccess {
+            get {
+                return ResourceManager.GetString("AddNewPage_UserAccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set users and/or roles, which can later read / modify created page..
+        /// </summary>
+        public static string AddNewPage_UserAccess_Tooltip_Description {
+            get {
+                return ResourceManager.GetString("AddNewPage_UserAccess_Tooltip_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Page permalink max length exceeded..
         /// </summary>
         public static string AddNewPageProperties_PagePermalink_MaxLengthMessage {

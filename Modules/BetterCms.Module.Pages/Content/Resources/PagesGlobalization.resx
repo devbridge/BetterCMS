@@ -1110,4 +1110,10 @@
   <data name="AddNewPage_Title" xml:space="preserve">
     <value>Page</value>
   </data>
+  <data name="AddNewPage_UserAccess" xml:space="preserve">
+    <value>4. Set user access</value>
+  </data>
+  <data name="AddNewPage_UserAccess_Tooltip_Description" xml:space="preserve">
+    <value>Set users and/or roles, which can later read / modify created page.</value>
+  </data>
 </root>

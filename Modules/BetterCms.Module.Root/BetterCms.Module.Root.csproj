@@ -285,6 +285,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Mvc\Grids\EditableGridColumn.cs" />
+    <Compile Include="ViewModels\Security\UserAccessTemplateViewModel.cs" />
     <Compile Include="ViewModels\Security\UserAccessViewModel.cs" />
     <Compile Include="ViewModels\Shared\EditableGridViewModel.cs" />
     <Compile Include="ViewModels\Sidebar\SidebarContainerViewModel.cs" />
