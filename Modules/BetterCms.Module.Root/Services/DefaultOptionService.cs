@@ -262,6 +262,7 @@ namespace BetterCms.Module.Root.Services
                     return Convert.ToInt64(value, CultureInfo.InvariantCulture);
 
                 case OptionType.Float:
+                    value = value.Replace(",", ".");
                     return Convert.ToDecimal(value, CultureInfo.InvariantCulture);
 
                 case OptionType.DateTime:

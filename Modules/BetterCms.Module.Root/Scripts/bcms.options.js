@@ -280,7 +280,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
 
                 var type = self.type(),
                     mustBeNumber = type == optionTypes.floatType || type == optionTypes.integerType,
-                    hasError = mustBeNumber && newValue && isNaN(Number(newValue)),
+                    hasError = mustBeNumber && newValue && isNaN(Number(newValue.replace(',', '.'))),
                     showMessage,
                     regExp;
                 
