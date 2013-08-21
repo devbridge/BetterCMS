@@ -36,15 +36,15 @@ namespace BetterCms.Module.Users.ViewModels
         [StringLength(MaxLength.Email, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_Email_MaxLengthMessage")]
         public string Email { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_Password_RequiredMessage")]
-        [RegularExpression(UsersModuleConstants.PasswordRegularExpression, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_Password_LengthMessage")]
-        [StringLength(MaxLength.Password, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_Password_MaxLengthMessage")]
+        //[Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_Password_RequiredMessage")]
+        //[RegularExpression(UsersModuleConstants.PasswordRegularExpression, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_Password_LengthMessage")]
+        //[StringLength(MaxLength.Password, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_Password_MaxLengthMessage")]
         public string Password { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_RetypePassword_RequiredMessage")]
-        [RegularExpression(UsersModuleConstants.PasswordRegularExpression, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_Password_LengthMessage")]
-        [DataType(DataType.Password, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_RetypePassword_EqualMessage")]
-        [StringLength(MaxLength.Password, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_Password_MaxLengthMessage")]
+        //[Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_RetypePassword_RequiredMessage")]
+        //[RegularExpression(UsersModuleConstants.PasswordRegularExpression, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_Password_LengthMessage")]
+        //[DataType(DataType.Password, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_RetypePassword_EqualMessage")]
+        //[StringLength(MaxLength.Password, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_Password_MaxLengthMessage")]
         public string RetypedPassword { get; set; }
 
         public ImageSelectorViewModel Image { get; set; }

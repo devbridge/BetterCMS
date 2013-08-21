@@ -19,7 +19,7 @@ namespace BetterCms.Module.Users.Registration
         {
             Links = new IActionProjection[]
                         {
-                            new JavaScriptModuleLinkTo<RoleController>(this, "loadCreatRoleUrl", c => c.CreatRoleView()),
+                            new JavaScriptModuleLinkTo<RoleController>(this, "loadCreateRoleUrl", c => c.CreateRoleView()),
                             new JavaScriptModuleLinkTo<RoleController>(this, "loadEditRoleUrl", c => c.EditRoleView("{0}")),
                             new JavaScriptModuleLinkTo<RoleController>(this, "loadSiteSettingsRoleUrl", c => c.RolesListView(null)),
                             new JavaScriptModuleLinkTo<RoleController>(this, "deleteRoleUrl", c=> c.DeleteRole("{0}", "{1}"))

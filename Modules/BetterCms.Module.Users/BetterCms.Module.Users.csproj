@@ -173,12 +173,10 @@
     <EmbeddedResource Include="Content\Resources\UsersGlobalization.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>UsersGlobalization.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Content\Styles\bcms.users.css" />
-    <EmbeddedResource Include="Scripts\bcms.user.js" />
-    <EmbeddedResource Include="Scripts\bcms.role.js" />
     <Content Include="BuildConfiguration.xml" />
-    <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Styles\Images\" />
@@ -214,16 +212,9 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Scripts\bcms.role.js" />
+    <EmbeddedResource Include="Scripts\bcms.user.js" />
     <Content Include="web.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\User\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\User\EditUserView.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Role\RolesListView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Role\EditRoleView.cshtml" />
@@ -232,7 +223,19 @@
     <EmbeddedResource Include="Views\Role\Partial\PermissionsView.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\EditorTemplates\PermissionViewModel.cshtml" />
+    <EmbeddedResource Include="Views\Role\RolesListView.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\EditorTemplates\PermissionViewModel.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\User\EditUserView.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\User\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Widgets\Login.cshtml" />

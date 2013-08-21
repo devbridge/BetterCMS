@@ -5,14 +5,13 @@ using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
-using BetterCms.Module.Root.ViewModels.SiteSettings;
+
 using BetterCms.Module.Users.Commands.User;
 using BetterCms.Module.Users.Commands.User.DeleteUser;
 using BetterCms.Module.Users.Commands.User.GetUser;
 using BetterCms.Module.Users.Commands.User.GetUsersList;
 using BetterCms.Module.Users.Content.Resources;
 using BetterCms.Module.Users.ViewModels;
-using BetterCms.Module.Users.ViewModels.User;
 
 using Microsoft.Web.Mvc;
 
@@ -58,11 +57,14 @@ namespace BetterCms.Module.Users.Controllers
             var response = GetCommand<SaveUserCommand>().ExecuteCommand(model);
             if (response != null)
             {
-                Messages.AddSuccess(UsersGlobalization.SaveUser_CreatedSuccessfully_Message);
-                return Json(new WireJson { Success = true, Data = response });
+                if (!model.Id.HasDefaultValue())
+                {
+                    Messages.AddSuccess(UsersGlobalization.SaveUser_CreatedSuccessfully_Message);
+                }
+                return WireJson(true, response);
             }
 
-            return Json(new WireJson { Success = false });
+            return WireJson(false);
         }
 
         /// <summary>

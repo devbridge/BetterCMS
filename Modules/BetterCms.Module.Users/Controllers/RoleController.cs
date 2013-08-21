@@ -51,7 +51,7 @@ namespace BetterCms.Module.Users.Controllers
         /// Creates the role view.
         /// </summary>
         /// <returns>Role create view.</returns>
-        public ActionResult CreatRoleView()
+        public ActionResult CreateRoleView()
         {
             var model = GetCommand<GetRoleForEditCommand>().ExecuteCommand(null);
             return PartialView("EditRoleView", model);

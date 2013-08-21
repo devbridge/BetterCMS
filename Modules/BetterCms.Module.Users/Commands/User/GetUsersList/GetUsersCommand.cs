@@ -10,16 +10,17 @@ using BetterCms.Module.Root.ViewModels.SiteSettings;
 
 using BetterCms.Module.Users.ViewModels.User;
 
+using NHibernate.Linq;
+
 namespace BetterCms.Module.Users.Commands.User.GetUsersList
 {
     public class GetUsersCommand : CommandBase, ICommand<SearchableGridOptions, SearchableGridViewModel<UserItemViewModel>>
     {
-        public SearchableGridViewModel<UserItemViewModel> Execute(SearchableGridOptions gridOptions)
+        public SearchableGridViewModel<UserItemViewModel> Execute(SearchableGridOptions request)
         {
-            gridOptions.SetDefaultSortingOptions("UserName");
+            request.SetDefaultSortingOptions("UserName");
 
-           // var role = new List<Models.Role>().Add(new Models.Role(){ Name = "name" });
-            var users = Repository.AsQueryable<Models.Users>()
+            var query = Repository.AsQueryable<Models.Users>()
                 .Select(t => new UserItemViewModel()
                                  {
                                      Id = t.Id,
@@ -27,10 +28,16 @@ namespace BetterCms.Module.Users.Commands.User.GetUsersList
                                      UserName = t.UserName,
                                  });
 
-            var count = users.ToRowCountFutureValue();
-            users = users.AddSortingAndPaging(gridOptions);
+            if (!string.IsNullOrWhiteSpace(request.SearchQuery))
+            {
+                query = query.Where(user => user.UserName.Contains(request.SearchQuery) 
+                    || user.Roles.Any(role => role.Name.Contains(request.SearchQuery)));
+            }
 
-            return new SearchableGridViewModel<UserItemViewModel>(users.ToList(), gridOptions, count.Value);
+            var count = query.ToRowCountFutureValue();
+            query = query.AddSortingAndPaging(request);
+
+            return new SearchableGridViewModel<UserItemViewModel>(query.ToFuture().ToList(), request, count.Value);
         }
     }
 }
