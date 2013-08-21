@@ -70,7 +70,7 @@ namespace BetterCms.Module.Users.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to delete this role?.
+        ///   Looks up a localized string similar to Are you sure you want to delete role {0}?.
         /// </summary>
         public static string DeleteRole_Confirmation_Message {
             get {
@@ -367,7 +367,7 @@ namespace BetterCms.Module.Users.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Roles.
+        ///   Looks up a localized string similar to Role Name.
         /// </summary>
         public static string SiteSettings_Roles_RoleColumn {
             get {
@@ -394,7 +394,7 @@ namespace BetterCms.Module.Users.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Users.
+        ///   Looks up a localized string similar to User Name.
         /// </summary>
         public static string SiteSettings_Users_NameColumn {
             get {

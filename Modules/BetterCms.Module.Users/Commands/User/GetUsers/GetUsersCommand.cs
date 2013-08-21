@@ -2,17 +2,15 @@
 
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
-
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 using BetterCms.Module.Root.ViewModels.SiteSettings;
-
 using BetterCms.Module.Users.ViewModels.User;
 
 using NHibernate.Linq;
 
-namespace BetterCms.Module.Users.Commands.User.GetUsersList
+namespace BetterCms.Module.Users.Commands.User.GetUsers
 {
     public class GetUsersCommand : CommandBase, ICommand<SearchableGridOptions, SearchableGridViewModel<UserItemViewModel>>
     {

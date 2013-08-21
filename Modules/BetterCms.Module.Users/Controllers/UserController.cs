@@ -7,10 +7,10 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
-using BetterCms.Module.Users.Commands.User;
 using BetterCms.Module.Users.Commands.User.DeleteUser;
 using BetterCms.Module.Users.Commands.User.GetUser;
-using BetterCms.Module.Users.Commands.User.GetUsersList;
+using BetterCms.Module.Users.Commands.User.GetUsers;
+using BetterCms.Module.Users.Commands.User.SaveUser;
 using BetterCms.Module.Users.Content.Resources;
 using BetterCms.Module.Users.ViewModels;
 

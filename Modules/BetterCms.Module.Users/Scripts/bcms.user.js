@@ -114,7 +114,7 @@ bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
 
                     initializeSiteSettingsUsersList();
                 }),
-                roles = new siteSettings.TabViewModel(role.globalization.rolesListTabTitle, role.links.loadSiteSettingsRoleUrl, role.initializeRoleListForm);
+                roles = new siteSettings.TabViewModel(role.globalization.rolesListTabTitle, role.links.loadSiteSettingsRoleUrl, role.initializeRolesList);
 
             tabs.push(users);
             tabs.push(roles);
@@ -184,7 +184,7 @@ bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                 rolesData = content.Data.Roles,
                 userViewModel = {
                     image: ko.observable(new media.ImageSelectorViewModel(imageData)),
-                    roles: new role.RolesListViewModel(rolesData)
+                    roles: new role.RolesAutocompleteListViewModel(rolesData)
                 },
                 form = dialog.container.find(selectors.userForm);
 

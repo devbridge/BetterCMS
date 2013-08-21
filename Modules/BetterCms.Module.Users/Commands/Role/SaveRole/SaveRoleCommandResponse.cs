@@ -1,15 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-using BetterCms.Core.Mvc.Commands;
-using BetterCms.Module.Root.Mvc;
-using BetterCms.Module.Users.ViewModels.Role;
-
-namespace BetterCms.Module.Users.Commands.Role.EditRole
+﻿namespace BetterCms.Module.Users.Commands.Role.SaveRole
 {
-    public class SaveRoleResponse 
+    public class SaveRoleCommandResponse 
     {
         /// <summary>
         /// Gets or sets the role id.
@@ -17,7 +8,7 @@ namespace BetterCms.Module.Users.Commands.Role.EditRole
         /// <value>
         /// The role id.
         /// </value>
-        public Guid Id { get; set; }
+        public System.Guid Id { get; set; }
 
         /// <summary>
         /// Gets or sets the version.
@@ -33,6 +24,6 @@ namespace BetterCms.Module.Users.Commands.Role.EditRole
         /// <value>
         /// The name of the role.
         /// </value>
-        public string RoleName { get; set; }
+        public string Name { get; set; }
     }
 }

@@ -190,7 +190,7 @@
     <value>Roles</value>
   </data>
   <data name="SiteSettings_Roles_RoleColumn" xml:space="preserve">
-    <value>Roles</value>
+    <value>Role Name</value>
   </data>
   <data name="SiteSettings_UserMenuItem" xml:space="preserve">
     <value>Users</value>
@@ -199,7 +199,7 @@
     <value>Users</value>
   </data>
   <data name="SiteSettings_Users_NameColumn" xml:space="preserve">
-    <value>Users</value>
+    <value>User Name</value>
   </data>
   <data name="SiteSettings_Users_RoleColumn" xml:space="preserve">
     <value>Roles</value>
@@ -220,7 +220,7 @@
     <value>Role deleted successfully.</value>
   </data>
   <data name="DeleteRole_Confirmation_Message" xml:space="preserve">
-    <value>Are you sure you want to delete this role?</value>
+    <value>Are you sure you want to delete role {0}?</value>
   </data>
   <data name="DeleteUser_Confirmation_Message" xml:space="preserve">
     <value>Are you sure you want to delete user {0}?</value>

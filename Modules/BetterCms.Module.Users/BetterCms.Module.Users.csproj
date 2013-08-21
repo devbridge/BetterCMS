@@ -114,17 +114,16 @@
     </Compile>
     <Compile Include="Commands\Role\DeleteRole\DeleteRoleCommand.cs" />
     <Compile Include="Commands\Role\DeleteRole\DeleteRoleCommandRequest.cs" />
-    <Compile Include="Commands\Role\GetRoleForEdit\GetRoleForEditCommand.cs" />
     <Compile Include="Commands\Role\GetRoles\GetRolesCommand.cs" />
     <Compile Include="Commands\Role\SaveRole\SaveRoleCommand.cs" />
-    <Compile Include="Commands\Role\SaveRole\SaveRoleResponse.cs" />
+    <Compile Include="Commands\Role\SaveRole\SaveRoleCommandResponse.cs" />
     <Compile Include="Commands\Role\SearchRoles\SearchRolesCommand.cs" />
     <Compile Include="Commands\User\DeleteUser\DeleteUserCommand.cs" />
     <Compile Include="Commands\User\DeleteUser\DeleteUserCommandRequest.cs" />
-    <Compile Include="Commands\User\GetUsersList\GetUsersCommand.cs" />
+    <Compile Include="Commands\User\GetUsers\GetUsersCommand.cs" />
     <Compile Include="Commands\User\GetUser\GetUserCommand.cs" />
-    <Compile Include="Commands\User\SaveUserCommand.cs" />
-    <Compile Include="Commands\User\SaveUserResponse.cs" />
+    <Compile Include="Commands\User\SaveUser\SaveUserCommand.cs" />
+    <Compile Include="Commands\User\SaveUser\SaveUserCommandResponse.cs" />
     <Compile Include="Content\Resources\UsersGlobalization.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -153,10 +152,7 @@
     <Compile Include="UsersModuleDescriptor.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\EditUserViewModel.cs" />
-    <Compile Include="ViewModels\Role\EditRoleViewModel.cs" />
-    <Compile Include="ViewModels\Role\PermissionViewModel.cs" />
-    <Compile Include="ViewModels\Role\RoleItemViewModel.cs" />
-    <Compile Include="ViewModels\Role\SiteSettingRoleListViewModel.cs" />
+    <Compile Include="ViewModels\Role\RoleViewModel.cs" />
     <Compile Include="ViewModels\SearchableUserViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="ViewModels\User\UserItemViewModel.cs" />
@@ -204,21 +200,12 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Scripts\bcms.user.js" />
     <EmbeddedResource Include="Scripts\bcms.role.js" />
+    <EmbeddedResource Include="Scripts\bcms.user.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Role\EditRoleView.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Role\Partial\PermissionsView.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Role\RolesListView.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\EditorTemplates\PermissionViewModel.cshtml" />
+    <EmbeddedResource Include="Views\Role\Partial\ListTemplate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\User\EditUser.cshtml" />

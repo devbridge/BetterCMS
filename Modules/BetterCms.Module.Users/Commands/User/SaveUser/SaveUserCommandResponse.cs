@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
-namespace BetterCms.Module.Users.Commands.User
+namespace BetterCms.Module.Users.Commands.User.SaveUser
 {
-    public class SaveUserResponse
+    public class SaveUserCommandResponse
     {
         /// <summary>
         /// Gets or sets the user id.

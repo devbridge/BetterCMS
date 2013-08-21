@@ -11,12 +11,12 @@ using BetterCms.Module.Users.Models;
 using BetterCms.Module.Users.Services;
 using BetterCms.Module.Users.ViewModels;
 
-namespace BetterCms.Module.Users.Commands.User
+namespace BetterCms.Module.Users.Commands.User.SaveUser
 {
     /// <summary>
     /// A command to save user item.
     /// </summary>
-    public class SaveUserCommand: CommandBase, ICommand<EditUserViewModel, SaveUserResponse>
+    public class SaveUserCommand : CommandBase, ICommand<EditUserViewModel, SaveUserCommandResponse>
     {
         private IAuthenticationService authenticationService;
 
@@ -31,7 +31,7 @@ namespace BetterCms.Module.Users.Commands.User
         /// <returns>
         /// true if user saved successfully; false otherwise.
         /// </returns>
-        public SaveUserResponse Execute(EditUserViewModel request)
+        public SaveUserCommandResponse Execute(EditUserViewModel request)
         {
             UnitOfWork.BeginTransaction();
 
@@ -77,7 +77,7 @@ namespace BetterCms.Module.Users.Commands.User
             Repository.Save(user);
             UnitOfWork.Commit();
 
-            return new SaveUserResponse { Id = user.Id, UserName = user.UserName, Version = user.Version };
+            return new SaveUserCommandResponse { Id = user.Id, UserName = user.UserName, Version = user.Version };
         }
 
         private void SaveUserRoles(Models.User user, EditUserViewModel request)

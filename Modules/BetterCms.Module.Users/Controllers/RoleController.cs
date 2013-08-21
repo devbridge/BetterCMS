@@ -8,9 +8,8 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
 using BetterCms.Module.Users.Commands.Role.DeleteRole;
-using BetterCms.Module.Users.Commands.Role.EditRole;
-using BetterCms.Module.Users.Commands.Role.GetRoleForEdit;
 using BetterCms.Module.Users.Commands.Role.GetRoles;
+using BetterCms.Module.Users.Commands.Role.SaveRole;
 using BetterCms.Module.Users.Commands.Role.SearchRoles;
 using BetterCms.Module.Users.Content.Resources;
 using BetterCms.Module.Users.ViewModels.Role;
@@ -26,6 +25,35 @@ namespace BetterCms.Module.Users.Controllers
     [ActionLinkArea(UsersModuleDescriptor.UsersAreaName)]
     public class RoleController : CmsControllerBase
     {
+        /// <summary>
+        /// Lists the template.
+        /// </summary>
+        /// <returns>Json result.</returns>
+        [HttpGet]
+        public ActionResult ListTemplate()
+        {
+            var request = new SearchableGridOptions();
+            request.SetDefaultPaging();
+
+            var view = RenderView("Partial/ListTemplate", null);
+            var roles = GetCommand<GetRolesCommand>().ExecuteCommand(request);
+
+            return ComboWireJson(roles != null, view, roles, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Gets the list of roles.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>Json result.</returns>
+        public ActionResult RolesList(SearchableGridOptions request)
+        {
+            request.SetDefaultPaging();
+            var model = GetCommand<GetRolesCommand>().ExecuteCommand(request);
+
+            return WireJson(model != null, model);
+        }
+
         /// <summary>
         /// An action to delete a given role.
         /// </summary>
@@ -51,61 +79,28 @@ namespace BetterCms.Module.Users.Controllers
         }
 
         /// <summary>
-        /// Creates the role view.
-        /// </summary>
-        /// <returns>Role create view.</returns>
-        public ActionResult CreateRoleView()
-        {
-            var model = GetCommand<GetRoleForEditCommand>().ExecuteCommand(null);
-            return PartialView("EditRoleView", model);
-        }
-
-        /// <summary>
-        /// Edits the role view.
-        /// </summary>
-        /// <param name="id">The id.</param>
-        /// <returns>Role edit view.</returns>
-        public ActionResult EditRoleView(string id)
-        {
-            var model = GetCommand<GetRoleForEditCommand>().ExecuteCommand(id.ToGuidOrDefault());
-            return PartialView(model);
-        }
-
-        /// <summary>
-        /// Creates the role.
+        /// Saves the role.
         /// </summary>
         /// <param name="model">The model.</param>
-        /// <returns>Json with status.</returns>
+        /// <returns></returns>
         [HttpPost]
-        public ActionResult CreateRole(EditRoleViewModel model)
+        public ActionResult SaveRole(RoleViewModel model)
         {
             if (ModelState.IsValid)
             {
                 var response = GetCommand<SaveRoleCommand>().ExecuteCommand(model);
                 if (response != null)
                 {
-                   if (model.Id.HasDefaultValue())
+                    if (model.Id.HasDefaultValue())
                     {
                         Messages.AddSuccess(UsersGlobalization.SaveRole_CreatedSuccessfully_Message);
                     }
 
-                    return Json(new WireJson { Success = true, Data = response });
+                    return WireJson(true, response);
                 }
             }
 
-            return Json(new WireJson { Success = false });
-        }
-
-        /// <summary>
-        /// Roles list for Site Settings.
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <returns>Role list view.</returns>
-        public ActionResult RolesListView(SearchableGridOptions request)
-        {
-            var roleList = GetCommand<GetRolesCommand>().ExecuteCommand(request);            
-            var model = new SiteSettingRoleListViewModel(roleList, new SearchableGridOptions(), roleList.Count);
-            return View(model);
+            return WireJson(false);
         }
 
         /// <summary>
@@ -116,6 +111,7 @@ namespace BetterCms.Module.Users.Controllers
         public ActionResult SuggestRoles(string query)
         {
             var suggestedRoles = GetCommand<SearchRolesCommand>().ExecuteCommand(query);
+
             return Json(new { suggestions = suggestedRoles });
         }
     }
