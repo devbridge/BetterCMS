@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+
 using BetterCms.Core.Models;
 
 namespace BetterCms.Module.Users.Models
@@ -7,5 +9,7 @@ namespace BetterCms.Module.Users.Models
     public class Role : EquatableEntity<Role>
     {
         public virtual string Name { get; set; }
+
+        public virtual IList<UserRole> UserRoles { get; set; }
     }
 }

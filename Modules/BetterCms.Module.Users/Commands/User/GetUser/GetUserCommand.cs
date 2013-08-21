@@ -9,6 +9,8 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Users.Services;
 using BetterCms.Module.Users.ViewModels;
 
+using NHibernate.Linq;
+
 namespace BetterCms.Module.Users.Commands.User.GetUser
 {
     /// <summary>
@@ -41,36 +43,42 @@ namespace BetterCms.Module.Users.Commands.User.GetUser
             
             if (!userId.HasDefaultValue())
             {
-                model =
-                    Repository.AsQueryable<Models.Users>()
-                              .Where(bp => bp.Id == userId)
-                              .Select(
-                                  bp =>
-                                  new EditUserViewModel
-                                      {
-                                          Id = bp.Id,
-                                          Version = bp.Version,
-                                          FirstName = bp.FirstName,
-                                          Email = bp.Email,
-                                          LastName = bp.LastName,
-                                          UserName = bp.UserName,
-                                          Image =
-                                              new ImageSelectorViewModel
-                                                  {
-                                                      ImageId = bp.Image.Id,
-                                                      ImageUrl = bp.Image.PublicUrl,
-                                                      ThumbnailUrl = bp.Image.PublicThumbnailUrl,
-                                                      ImageTooltip = bp.Image.Caption
-                                                  }
-                                      })
-                              .FirstOne();
+                var listFuture = Repository.AsQueryable<Models.User>()
+                    .Where(bp => bp.Id == userId)
+                    .Select(
+                        bp =>
+                        new EditUserViewModel
+                            {
+                                Id = bp.Id,
+                                Version = bp.Version,
+                                FirstName = bp.FirstName,
+                                Email = bp.Email,
+                                LastName = bp.LastName,
+                                UserName = bp.UserName,
+                                Image =
+                                    new ImageSelectorViewModel
+                                        {
+                                            ImageId = bp.Image.Id,
+                                            ImageUrl = bp.Image.PublicUrl,
+                                            ThumbnailUrl = bp.Image.PublicThumbnailUrl,
+                                            ImageTooltip = bp.Image.Caption
+                                        }
+                            })
+                    .ToFuture();
+
+                var roles = Repository
+                    .AsQueryable<Models.UserRole>()
+                    .Where(ur => ur.User.Id == userId)
+                    .Select(ur => ur.Role.Name)
+                    .ToFuture();
+
+                model = listFuture.FirstOne();
+                model.Roles = roles.ToList();
             }
             else
             {
                 model = new EditUserViewModel();
             }
-
-            model.Roles = roleService.GetUserRoles();
 
             return model;
         }

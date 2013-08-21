@@ -188,19 +188,6 @@ namespace BetterCms.Tests.Helpers
             return content;
         }
 
-        public User CreateNewUser()
-        {
-            var entity = new User();
-
-            PopulateBaseFields(entity);
-
-            entity.UserName = ProvideRandomString(MaxLength.Name);
-            entity.Email = ProvideRandomString(MaxLength.Email);
-            entity.DisplayName = ProvideRandomString(MaxLength.Name);
-
-            return entity;
-        }
-
         public Layout CreateNewLayout()
         {
             var entity = new Layout();
@@ -631,55 +618,32 @@ namespace BetterCms.Tests.Helpers
             return entity;
         }
 
-        public Permission CreateNewPermission()
+        public User CreateNewUser()
         {
-            var entity = new Permission();
-
-            PopulateBaseFields(entity);
-
-            entity.Name = ProvideRandomString(MaxLength.Name);
-            entity.Description = ProvideRandomString(MaxLength.Name);
-
-            return entity;
-        }
-
-        public RolePermissions CreateNewRolePermission(Role role = null, Permission permission = null)
-        {
-            var entity = new RolePermissions();
-
-            PopulateBaseFields(entity);
-
-            entity.Role = role ?? CreateNewRole();
-            entity.Permission = permission ?? CreateNewPermission();
-
-            return entity;
-        }
-
-        public UserRoles CreateNewUserRoles(Role role = null, Users user = null)
-        {
-            var entity = new UserRoles();
-
-            PopulateBaseFields(entity);
-
-            entity.Role = role ?? CreateNewRole();
-            entity.User = user ?? CreateNewUsers();
-
-            return entity;
-        }
-
-        public Users CreateNewUsers()
-        {
-            var entity = new Users();
+            var entity = new User();
 
             PopulateBaseFields(entity);
 
             entity.UserName = ProvideRandomString(MaxLength.Name);
+            entity.Email = ProvideRandomString(MaxLength.Email);
             entity.FirstName = ProvideRandomString(MaxLength.Name);
             entity.LastName = ProvideRandomString(MaxLength.Name);
-            entity.Email = ProvideRandomString(MaxLength.Email);
             entity.Password = ProvideRandomString(MaxLength.Password);
             entity.Salt = ProvideRandomString(MaxLength.Password);
+
             entity.Image = CreateNewMediaImage();
+
+            return entity;
+        }
+
+        public Module.Users.Models.UserRole CreateNewUserRoles(Role role = null, User user = null)
+        {
+            var entity = new Module.Users.Models.UserRole();
+
+            PopulateBaseFields(entity);
+
+            entity.Role = role ?? CreateNewRole();
+            entity.User = user ?? CreateNewUser();
 
             return entity;
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using BetterCms.Core.Models;
 using BetterCms.Module.MediaManager.Models;
@@ -6,7 +7,7 @@ using BetterCms.Module.MediaManager.Models;
 namespace BetterCms.Module.Users.Models
 {
     [Serializable]
-    public class Users : EquatableEntity<Users>
+    public class User : EquatableEntity<User>
     {
         public virtual string UserName { get; set; }
 
@@ -22,5 +23,6 @@ namespace BetterCms.Module.Users.Models
 
         public virtual MediaImage Image { get; set; }
 
+        public virtual IList<UserRole> UserRoles { get; set; }
     }
 }

@@ -1,14 +1,17 @@
 ﻿using System.Web.Mvc;
 
 using BetterCms.Core.Security;
+
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
+
 using BetterCms.Module.Users.Commands.Role.DeleteRole;
 using BetterCms.Module.Users.Commands.Role.EditRole;
 using BetterCms.Module.Users.Commands.Role.GetRoleForEdit;
 using BetterCms.Module.Users.Commands.Role.GetRoles;
+using BetterCms.Module.Users.Commands.Role.SearchRoles;
 using BetterCms.Module.Users.Content.Resources;
 using BetterCms.Module.Users.ViewModels.Role;
 
@@ -103,6 +106,17 @@ namespace BetterCms.Module.Users.Controllers
             var roleList = GetCommand<GetRolesCommand>().ExecuteCommand(request);            
             var model = new SiteSettingRoleListViewModel(roleList, new SearchableGridOptions(), roleList.Count);
             return View(model);
+        }
+
+        /// <summary>
+        /// Suggests the tags.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        public ActionResult SuggestRoles(string query)
+        {
+            var suggestedRoles = GetCommand<SearchRolesCommand>().ExecuteCommand(query);
+            return Json(new { suggestions = suggestedRoles });
         }
     }
 }

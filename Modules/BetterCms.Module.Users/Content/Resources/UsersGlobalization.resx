@@ -276,4 +276,7 @@
   <data name="EditUser_Window_Title" xml:space="preserve">
     <value>Edit user</value>
   </data>
+  <data name="EditUser_Add_Role_Title" xml:space="preserve">
+    <value>Add user role</value>
+  </data>
 </root>

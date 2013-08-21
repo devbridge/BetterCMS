@@ -16,6 +16,7 @@
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.jquery.validate.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.jquery.validate.unobtrusive.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.jquery.autocomplete.js" />
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.autocomplete.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.slides.jquery.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.spinner.jquery.js" />      
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.authentication.js" />

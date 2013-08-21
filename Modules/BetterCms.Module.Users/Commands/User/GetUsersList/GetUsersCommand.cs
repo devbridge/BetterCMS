@@ -20,8 +20,8 @@ namespace BetterCms.Module.Users.Commands.User.GetUsersList
         {
             request.SetDefaultSortingOptions("UserName");
 
-            var query = Repository.AsQueryable<Models.Users>()
-                .Select(t => new UserItemViewModel()
+            var query = Repository.AsQueryable<Models.User>()
+                .Select(t => new UserItemViewModel
                                  {
                                      Id = t.Id,
                                      Version = t.Version,

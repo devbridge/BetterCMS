@@ -3,13 +3,13 @@
 namespace BetterCms.Test.Module.Users.ModelTests.MapTests
 {
     [TestFixture]
-    class UsersMapTest : DatabaseTestBase
+    class UserMapTest : DatabaseTestBase
     {
         [Test]
         [Ignore]
         public void Should_Insert_And_Retrieve_User_Successfully()
         {
-            var entity = TestDataProvider.CreateNewUsers();
+            var entity = TestDataProvider.CreateNewUser();
             RunEntityMapTestsInTransaction(entity);
         }
     }

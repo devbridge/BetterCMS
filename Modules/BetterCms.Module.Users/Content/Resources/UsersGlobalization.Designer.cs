@@ -106,6 +106,15 @@ namespace BetterCms.Module.Users.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add user role.
+        /// </summary>
+        public static string EditUser_Add_Role_Title {
+            get {
+                return ResourceManager.GetString("EditUser_Add_Role_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email.
         /// </summary>
         public static string EditUser_Email_Title {

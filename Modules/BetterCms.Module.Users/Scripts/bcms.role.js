@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define */
 
-bettercms.define('bcms.role', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.inlineEdit', 'bcms.dynamicContent', 'bcms.messages', 'bcms.grid'],
-    function($, bcms, modal, siteSettings, editor, dynamicContent, messages, grid) {
+bettercms.define('bcms.role', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.inlineEdit', 'bcms.dynamicContent', 'bcms.messages', 'bcms.grid', 'bcms.autocomplete'],
+    function($, bcms, modal, siteSettings, editor, dynamicContent, messages, grid, autocomplete) {
         'use strict';
 
         var role = {},
@@ -21,7 +21,8 @@ bettercms.define('bcms.role', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                 loadSiteSettingsRoleUrl: null,
                 loadCreateRoleUrl: null,
                 loadEditRoleUrl: null,
-                deleteRoleUrl: null
+                deleteRoleUrl: null,
+                roleSuggestionSeviceUrl: null
             },
             globalization = {
                 rolesListTabTitle: null,
@@ -187,6 +188,26 @@ bettercms.define('bcms.role', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             row.data('version', json.Data.Version);
             row.find(selectors.roleNameCell).html(json.Data.RoleName);
         }
+
+        /**
+        * Roles autocomplete list view model
+        */
+        var RolesListViewModel = (function (_super) {
+            bcms.extendsClass(RolesListViewModel, _super);
+
+            function RolesListViewModel(tagsList) {
+                var options = {
+                    serviceUrl: links.roleSuggestionSeviceUrl,
+                    pattern: 'Roles[{0}]'
+                };
+
+                _super.call(this, tagsList, options);
+            }
+
+            return RolesListViewModel;
+        })(autocomplete.AutocompleteListViewModel);
+
+        role.RolesListViewModel = RolesListViewModel;
 
         /**
         * Initializes role module.

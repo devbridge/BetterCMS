@@ -118,6 +118,7 @@
     <Compile Include="Commands\Role\GetRoles\GetRolesCommand.cs" />
     <Compile Include="Commands\Role\SaveRole\SaveRoleCommand.cs" />
     <Compile Include="Commands\Role\SaveRole\SaveRoleResponse.cs" />
+    <Compile Include="Commands\Role\SearchRoles\SearchRolesCommand.cs" />
     <Compile Include="Commands\User\DeleteUser\DeleteUserCommand.cs" />
     <Compile Include="Commands\User\DeleteUser\DeleteUserCommandRequest.cs" />
     <Compile Include="Commands\User\GetUsersList\GetUsersCommand.cs" />
@@ -131,24 +132,15 @@
     </Compile>
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Models\Maps\PermissionMap.cs" />
     <Compile Include="Models\Maps\RoleMap.cs" />
-    <Compile Include="Models\Maps\RolePermissionMap.cs" />
-    <Compile Include="Models\Maps\UserRolesMap.cs" />
-    <Compile Include="Models\Maps\UsersMap.cs" />
-    <Compile Include="Models\Migrations\Migration201302211715.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Models\Maps\UserRoleMap.cs" />
+    <Compile Include="Models\Maps\UserMap.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
-    <Compile Include="Models\Migrations\Migration201302011135.cs" />
-    <Compile Include="Models\Migrations\Migration201302061720.cs" />
     <Compile Include="Models\Migrations\Migration201302281111.cs" />
     <Compile Include="Models\Migrations\UsersVersionTableMetaData.cs" />
-    <Compile Include="Models\Permission.cs" />
     <Compile Include="Models\Role.cs" />
-    <Compile Include="Models\RolePermissions.cs" />
-    <Compile Include="Models\UserRoles.cs" />
-    <Compile Include="Models\Users.cs" />
+    <Compile Include="Models\UserRole.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registration\RoleJsModuleIncludeDescriptor.cs" />
     <Compile Include="Provider\RoleProvider.cs" />
@@ -233,6 +225,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\User\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\User\Partial\EditUserRoles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />

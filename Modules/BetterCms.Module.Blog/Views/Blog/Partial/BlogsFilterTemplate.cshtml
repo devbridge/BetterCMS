@@ -20,14 +20,14 @@
                     <div class="bcms-filter-text">@BlogGlobalization.SiteSettings_Blogs_FilterByTags</div>
                     <div class="bcms-filter-field-holder">
                         <input type="text" class="bcms-add-tags-field" data-bind="
-    css: { 'bcms-tag-validation-error': newTag.hasError() },
-    value: newTag,
+    css: { 'bcms-tag-validation-error': newItem.hasError() },
+    value: newItem,
     valueUpdate: 'afterkeydown',
-    escPress: clearTag,
-    tagautocomplete: 'onlyExisting'" />
-                        <!-- ko if: newTag.hasError()  -->
+    escPress: clearItem,
+    autocomplete: 'onlyExisting'" />
+                        <!-- ko if: newItem.hasError()  -->
                         <span class="bcms-tag-field-validation-error">
-                            <span data-bind="text: newTag.validationMessage()"></span>
+                            <span data-bind="text: newItem.validationMessage()"></span>
                         </span>
                         <!-- /ko -->
                     </div>
@@ -40,12 +40,12 @@
 
             </div>
 
-            <div class="bcms-single-tag-holder" data-bind="foreach: tags.tags()">
+            <div class="bcms-single-tag-holder" data-bind="foreach: tags.items()">
                 <div class="bcms-single-tag" data-bind="css: { 'bcms-single-tag-active': isActive() }">
                     <span data-bind="text: name()"></span><a data-bind="    click: remove">@RootGlobalization.Button_Remove</a>
                 </div>
-                <input type="hidden" data-bind="attr: { name: getTagInputName($index()) + '.Key', value: id() }" />
-                <input type="hidden" data-bind="attr: { name: getTagInputName($index()) + '.Value', value: name() }" />
+                <input type="hidden" data-bind="attr: { name: getItemInputName($index()) + '.Key', value: id() }" />
+                <input type="hidden" data-bind="attr: { name: getItemInputName($index()) + '.Value', value: name() }" />
             </div>
 
         </div>

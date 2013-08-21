@@ -2,9 +2,9 @@
 
 namespace BetterCms.Module.Users.Models.Maps
 {
-    public class UserRolesMap : EntityMapBase<UserRoles>
+    public class UserRoleMap : EntityMapBase<UserRole>
     {
-        public UserRolesMap()
+        public UserRoleMap()
             : base(UsersModuleDescriptor.ModuleName)
         {
             Table("UserRoles");

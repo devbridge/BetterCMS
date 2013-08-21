@@ -208,13 +208,11 @@
     <Compile Include="StorageTestBase.cs" />
     <Compile Include="TestBase.cs" />
     <Compile Include="Common\ViewModelToStringTest.cs" />
-    <Compile Include="Users\ModelTests\MapTests\PermissionMapTest.cs" />
     <Compile Include="Users\ModelTests\MapTests\RoleMapTest.cs" />
-    <Compile Include="Users\ModelTests\MapTests\RolePermissionMapTest.cs" />
     <Compile Include="WindowsAzureStorage\MimeTypeUtilityTest.cs" />
     <Compile Include="WindowsAzureStorage\WindowsAzureStorageServiceTest.cs" />
     <Compile Include="Users\ModelTests\MapTests\UserRolesMapTest.cs" />
-    <Compile Include="Users\ModelTests\MapTests\UsersMapTest.cs" />
+    <Compile Include="Users\ModelTests\MapTests\UserMapTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Contents\Images\logo.png" />

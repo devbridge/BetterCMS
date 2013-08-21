@@ -181,8 +181,10 @@ bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         function initializeEditUserForm(dialog, content) {
 
             var imageData = content.Data.Image,
+                rolesData = content.Data.Roles,
                 userViewModel = {
-                    image: ko.observable(new media.ImageSelectorViewModel(imageData))
+                    image: ko.observable(new media.ImageSelectorViewModel(imageData)),
+                    roles: new role.RolesListViewModel(rolesData)
                 },
                 form = dialog.container.find(selectors.userForm);
 

@@ -3,9 +3,9 @@ using BetterCms.Core.Models;
 
 namespace BetterCms.Module.Users.Models.Maps
 {
-    public class UsersMap : EntityMapBase<Users>
+    public class UserMap : EntityMapBase<User>
     {
-        public UsersMap()
+        public UserMap()
             : base(UsersModuleDescriptor.ModuleName)
         {
             Table("Users");
@@ -16,7 +16,10 @@ namespace BetterCms.Module.Users.Models.Maps
             Map(x => x.Password).Length(MaxLength.Password).Not.Nullable();
             Map(x => x.Email).Length(MaxLength.Email).Not.Nullable();
             Map(x => x.Salt).Length(MaxLength.Password).Not.Nullable();
-            References(x => x.Image).Cascade.SaveUpdate().LazyLoad();            
+            
+            References(x => x.Image).Cascade.SaveUpdate().LazyLoad();
+
+            HasMany(x => x.UserRoles).KeyColumn("UserId").Cascade.SaveUpdate().Inverse().LazyLoad().Where("IsDeleted = 0");
         }
     }
 }
