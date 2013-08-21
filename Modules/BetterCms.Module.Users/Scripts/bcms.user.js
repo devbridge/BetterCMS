@@ -1,19 +1,17 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define */
 
-bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.inlineEdit', 'bcms.dynamicContent', 'bcms.role', 'bcms.media', 'bcms.messages', 'bcms.grid'],
-    function($, bcms, modal, siteSettings, editor, dynamicContent, role, media, messages, grid) {
+bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.role', 'bcms.media', 'bcms.messages', 'bcms.grid', 'bcms.ko.extenders'],
+    function($, bcms, modal, siteSettings, dynamicContent, role, media, messages, grid, ko) {
         'use strict';
 
         var user = {},
             selectors = {
                 siteSettingsUserCreateButton: "#bcms-create-user-button",
                 usersForm: '#bcms-users-form',
+                userForm: 'form:first',
                 usersSearchButton: '#bcms-users-search-btn',
                 usersSearchField: '.bcms-search-block input.bcms-editor-field-box',
-                userUploadImageButton: "#bcms-open-uploader-button",
-                userImageId: ".bcms-user-image-id",
-                userImage: ".bcms-user-image-url",
                 userCells: 'td',
                 userEditButton: '.bcms-icn-edit',
                 userRowDeleteButton: '.bcms-grid-item-delete-button',
@@ -25,6 +23,7 @@ bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             },
             links = {
                 loadSiteSettingsUsersUrl: null,
+                loadCreateUserUrl: null,
                 loadEditUserUrl: null,
                 deleteUserUrl: null
             },
@@ -82,20 +81,9 @@ bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                 searchSiteSettingsUsers(form);
             });
 
-            var onUserCreated = function (json) {
-                if (json.Success && json.Data != null) {
-                    var rowtemplate = $(selectors.userRowTemplate),
-                        newRow = $(rowtemplate.html()).find(selectors.userRowTemplateFirstRow);
-                    setUserFields(newRow, json.Data);
-                    newRow.insertBefore($(selectors.userTableFirstRow, usersContainer));
-                    initializeSiteSettingsUsersListItem(newRow);
-                    messages.refreshBox(usersContainer, json);
-                    grid.showHideEmptyRow(usersContainer);
-                }
-            };
-
             usersContainer.find(selectors.siteSettingsUserCreateButton).on('click', function () {
-                user.openCreateUserDialog(onUserCreated);
+                createUser();
+                
             });
 
             initializeSiteSettingsUsersListItem(usersContainer);
@@ -106,12 +94,12 @@ bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         */
         function initializeSiteSettingsUsersListItem(container) {
             container.find(selectors.userCells).on('click', function () {
-                editUser(container, $(this));
+                editUser($(this));
                 return false;
             });
 
             container.find(selectors.userRowDeleteButton).on('click', function () {
-                deleteUser(container, $(this));
+                deleteUser($(this));
                 return false;
             });
         }
@@ -134,48 +122,51 @@ bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             siteSettings.initContentTabs(tabs);
         };
 
-        user.openCreateUserDialog = function(onSaveCallback) {
-            modal.open({
-                title: globalization.usersAddNewTitle,
-                onLoad: function(childDialog) {
-                    dynamicContent.bindDialog(childDialog, links.loadEditUserUrl, {
-                        contentAvailable: initUserCreateEvents,
-
-                        postSuccess: onSaveCallback
-                    });
+        /**
+        * Opens dialog for creating a user.
+        */
+        function createUser() {
+            var onSaveCallback = function (json) {
+                messages.refreshBox(usersContainer, json);
+                if (json.Success) {
+                    var rowtemplate = $(selectors.userRowTemplate),
+                        newRow = $(rowtemplate.html()).find(selectors.userRowTemplateFirstRow);
+                    
+                    setUserFields(newRow, json.Data);
+                    newRow.insertBefore(usersContainer.find(selectors.userTableFirstRow));
+                    initializeSiteSettingsUsersListItem(newRow);
+                    grid.showHideEmptyRow(usersContainer);
                 }
-            });
-        };
-
-        function initUserCreateEvents(dialog) {
-            var onImageInsert = function(image) {
-                dialog.container.find(selectors.userImageId).val(image.id());
-                dialog.container.find(selectors.userImage).attr('src', image.thumbnailUrl());
             };
             
-            dialog.container.find(selectors.userUploadImageButton).on('click', function() {
-                media.openImageInsertDialog(onImageInsert);
-            });
+            openUserEditForm(globalization.usersAddNewTitle, links.loadCreateUserUrl, onSaveCallback);
         }
 
         /**
-        * Calls function, which opens dialog for a user editing.
+        * Opens dialog for editing a user.
         */
-        function editUser(container, self) {
+        function editUser(self) {
             var row = self.parents(selectors.userParentRow),
                 id = row.find(selectors.userEditButton).data('id'),
                 onSaveCallback = function(json) {
-                    messages.refreshBox(container, json);
+                    messages.refreshBox(usersContainer, json);
                     if (json.Success) {
                         setUserFields(row, json.Data);
-                        grid.showHideEmptyRow(container);
+                        grid.showHideEmptyRow(usersContainer);
                     }
                 };
 
+            openUserEditForm(globalization.editUserTitle, $.format(links.loadEditUserUrl, id), onSaveCallback);
+        }
+        
+        /**
+        * Open dialog for edit/create a user
+        */
+        function openUserEditForm(title, url, onSaveCallback) {
             modal.open({
-                title: globalization.editUserTitle,
-                onLoad: function (childDialog) {
-                    dynamicContent.bindDialog(childDialog, $.format(links.loadEditUserUrl, id), {
+                title: title,
+                onLoad: function (dialog) {
+                    dynamicContent.bindDialog(dialog, url, {
                         contentAvailable: initializeEditUserForm,
 
                         postSuccess: onSaveCallback
@@ -184,16 +175,18 @@ bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             });
         }
 
-        function initializeEditUserForm() {
-            var dialog = siteSettings.getModalDialog(),
-                container = dialog.container;
+        /**
+        * Initializes edit/create user form
+        */
+        function initializeEditUserForm(dialog, content) {
 
-            var form = container.find(selectors.userForm);
+            var imageData = content.Data.Image,
+                userViewModel = {
+                    image: ko.observable(new media.ImageSelectorViewModel(imageData))
+                },
+                form = dialog.container.find(selectors.userForm);
 
-            form.on('submit', function(event) {
-                event.preventDefault();
-                return false;
-            });
+            ko.applyBindings(userViewModel, form.get(0));
         }
 
         /**
@@ -207,9 +200,9 @@ bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         }
 
         /**
-        * Delete user from site settings users list.
+        * Deletes user from site settings users list.
         */
-        function deleteUser(container, self) {
+        function deleteUser(self) {
             var row = self.parents(selectors.userParentRow),
                 id = self.data('id'),
                 version = self.data('version'),
@@ -218,10 +211,10 @@ bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                 message = $.format(globalization.deleteUserConfirmMessage, name),
                 onDeleteCompleted = function(json) {
                     try {
-                        messages.refreshBox(container, json);
+                        messages.refreshBox(usersContainer, json);
                         if (json.Success) {
                             row.remove();
-                            grid.showHideEmptyRow(container);
+                            grid.showHideEmptyRow(usersContainer);
                         }
                     } finally {
                         confirmDialog.close();

@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 
 using BetterCms.Core.Security;
+
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
@@ -33,7 +34,23 @@ namespace BetterCms.Module.Users.Controllers
         {
             request.SetDefaultPaging();
             var model = GetCommand<GetUsersCommand>().ExecuteCommand(request);
+
             return View(model);
+        }
+
+        /// <summary>
+        /// Creates the user.
+        /// </summary>
+        /// <returns>
+        /// Create user view
+        /// </returns>
+        [HttpGet]
+        public ActionResult CreateUser()
+        {
+            var model = GetCommand<GetUserCommand>().ExecuteCommand(System.Guid.Empty);
+            var view = RenderView("EditUser", model);
+
+            return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -41,10 +58,13 @@ namespace BetterCms.Module.Users.Controllers
         /// </summary>
         /// <param name="id">The id.</param>
         /// <returns>User edit view.</returns>
+        [HttpGet]
         public ActionResult EditUser(string id)
         {
             var model = GetCommand<GetUserCommand>().ExecuteCommand(id.ToGuidOrDefault());
-            return PartialView("EditUserView", model);
+            var view = RenderView("EditUser", model);
+
+            return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -52,6 +72,7 @@ namespace BetterCms.Module.Users.Controllers
         /// </summary>
         /// <param name="model">The model.</param>
         /// <returns>Json status result.</returns>
+        [HttpPost]
         public ActionResult SaveUser(EditUserViewModel model)
         {
             var response = GetCommand<SaveUserCommand>().ExecuteCommand(model);
@@ -73,6 +94,7 @@ namespace BetterCms.Module.Users.Controllers
         /// <param name="id">The id.</param>
         /// <param name="version">The version.</param>
         /// <returns>Json status result.</returns>
+        [HttpPost]
         public ActionResult DeleteUser(string id, string version)
         {
             var success = GetCommand<DeleteUserCommand>().ExecuteCommand(

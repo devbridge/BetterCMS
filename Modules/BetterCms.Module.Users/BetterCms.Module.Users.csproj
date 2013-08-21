@@ -212,8 +212,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Scripts\bcms.role.js" />
     <EmbeddedResource Include="Scripts\bcms.user.js" />
+    <EmbeddedResource Include="Scripts\bcms.role.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -229,7 +229,7 @@
     <EmbeddedResource Include="Views\Shared\EditorTemplates\PermissionViewModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\User\EditUserView.cshtml" />
+    <EmbeddedResource Include="Views\User\EditUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\User\Index.cshtml" />

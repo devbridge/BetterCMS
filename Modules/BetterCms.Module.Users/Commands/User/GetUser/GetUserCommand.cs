@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
+
 using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Users.Services;
@@ -33,13 +33,12 @@ namespace BetterCms.Module.Users.Commands.User.GetUser
         /// <summary>
         /// Executes the specified request.
         /// </summary>
-        /// <param name="id">The user id.</param>
+        /// <param name="userId">The user id.</param>
         /// <returns></returns>
-        /// <exception cref="System.NotImplementedException"></exception>
         public EditUserViewModel Execute(Guid userId)
         {
-            var model = new EditUserViewModel();
-
+            EditUserViewModel model;
+            
             if (!userId.HasDefaultValue())
             {
                 model =
@@ -64,12 +63,14 @@ namespace BetterCms.Module.Users.Commands.User.GetUser
                                                       ImageTooltip = bp.Image.Caption
                                                   }
                                       })
-                              .FirstOrDefault();
+                              .FirstOne();
             }
-            if (model != null)
+            else
             {
-                model.Roles = roleService.GetUserRoles();
+                model = new EditUserViewModel();
             }
+
+            model.Roles = roleService.GetUserRoles();
 
             return model;
         }

@@ -160,10 +160,10 @@
     <value>Select Image</value>
   </data>
   <data name="EditUser_UploadImage_Info" xml:space="preserve">
-    <value>Make sure to size this image to 200x125 pixels. It will be displayed as a thumbnail with your post.</value>
+    <value>Image will be displayed as a thumbnail with user.</value>
   </data>
   <data name="EditUser_UserImage_Tooltip_Description" xml:space="preserve">
-    <value />
+    <value>Select an image that will be shown as user thumbnail.</value>
   </data>
   <data name="EditUser_UserName_Title" xml:space="preserve">
     <value>User name</value>
@@ -171,7 +171,7 @@
   <data name="EditUser_UserName_Tooltip_Description" xml:space="preserve">
     <value>User name</value>
   </data>
-  <data name="EditUser_Window_Title" xml:space="preserve">
+  <data name="CreateUser_Window_Title" xml:space="preserve">
     <value>Add New User</value>
   </data>
   <data name="Role_AddNeww_Dialog_Title" xml:space="preserve">
@@ -272,5 +272,8 @@
   </data>
   <data name="SaveUser_CreatedSuccessfully_Message" xml:space="preserve">
     <value>User created successfully.</value>
+  </data>
+  <data name="EditUser_Window_Title" xml:space="preserve">
+    <value>Edit user</value>
   </data>
 </root>

@@ -61,6 +61,15 @@ namespace BetterCms.Module.Users.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add New User.
+        /// </summary>
+        public static string CreateUser_Window_Title {
+            get {
+                return ResourceManager.GetString("CreateUser_Window_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to delete this role?.
         /// </summary>
         public static string DeleteRole_Confirmation_Message {
@@ -223,7 +232,7 @@ namespace BetterCms.Module.Users.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Make sure to size this image to 200x125 pixels. It will be displayed as a thumbnail with your post..
+        ///   Looks up a localized string similar to Image will be displayed as a thumbnail with user..
         /// </summary>
         public static string EditUser_UploadImage_Info {
             get {
@@ -232,7 +241,7 @@ namespace BetterCms.Module.Users.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Select an image that will be shown as user thumbnail..
         /// </summary>
         public static string EditUser_UserImage_Tooltip_Description {
             get {
@@ -259,7 +268,7 @@ namespace BetterCms.Module.Users.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add New User.
+        ///   Looks up a localized string similar to Edit user.
         /// </summary>
         public static string EditUser_Window_Title {
             get {
