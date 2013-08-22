@@ -248,14 +248,14 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\bcms-media\Views\Files\" />
-    <Folder Include="Areas\bcms-media\Views\Upload\" />
-    <Folder Include="Areas\bcms-pages\Views\Page\" />
-    <Folder Include="file\bcms-blog\scripts\" />
+    <Folder Include="Areas\bcms-media\Views\" />
+    <Folder Include="Areas\bcms-root\Views\Shared\" />
+    <Folder Include="Areas\bcms-users\" />
     <Folder Include="file\bcms-media\Content\Css\Images\" />
     <Folder Include="file\bcms-media\scripts\" />
     <Folder Include="file\bcms-pages\scripts\" />
     <Folder Include="file\bcms-root\scripts\" />
+    <Folder Include="file\bcms-users\scripts\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -292,6 +292,10 @@
     <ProjectReference Include="..\..\Modules\BetterCms.Module.Root\BetterCms.Module.Root.csproj">
       <Project>{66e7e4df-eeea-4b1e-8663-a1b430eb7375}</Project>
       <Name>BetterCms.Module.Root</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.Users\BetterCms.Module.Users.csproj">
+      <Project>{c530025b-8ab7-402d-b60c-000c9a5d0446}</Project>
+      <Name>BetterCms.Module.Users</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

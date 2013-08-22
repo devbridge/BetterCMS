@@ -6,8 +6,7 @@ using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Root.Mvc;
-using BetterCms.Module.Users.Services;
-using BetterCms.Module.Users.ViewModels;
+using BetterCms.Module.Users.ViewModels.User;
 
 using NHibernate.Linq;
 
@@ -18,20 +17,6 @@ namespace BetterCms.Module.Users.Commands.User.GetUser
     /// </summary>
     public class GetUserCommand : CommandBase, ICommand<Guid, EditUserViewModel>
     {
-        /// <summary>
-        /// The role service
-        /// </summary>
-        private IRoleService roleService;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GetUserCommand" /> class.
-        /// </summary>
-        /// <param name="roleService">The role service.</param>
-        public GetUserCommand(IRoleService roleService)
-        {
-            this.roleService = roleService;
-        }
-
         /// <summary>
         /// Executes the specified request.
         /// </summary>

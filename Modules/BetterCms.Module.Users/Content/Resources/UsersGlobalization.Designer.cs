@@ -304,33 +304,6 @@ namespace BetterCms.Module.Users.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Role Name.
-        /// </summary>
-        public static string Role_AddNew_Dialog_RoleName_Title {
-            get {
-                return ResourceManager.GetString("Role_AddNew_Dialog_RoleName_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Purpose of role name.
-        /// </summary>
-        public static string Role_AddNew_Dialog_Tooltip_Description {
-            get {
-                return ResourceManager.GetString("Role_AddNew_Dialog_Tooltip_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Set Role Permissions.
-        /// </summary>
-        public static string Role_AddNeww_Dialog_Title {
-            get {
-                return ResourceManager.GetString("Role_AddNeww_Dialog_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Add New +.
         /// </summary>
         public static string Role_Dialog_AddNew {

@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using BetterCms.Module.Root.Mvc;
 
 using BetterCms.Module.Users.Content.Resources;
-using BetterCms.Module.Users.ViewModels;
+using BetterCms.Module.Users.ViewModels.User;
 
 namespace BetterCms.Module.Users.Mvc.Attributes
 {

@@ -28,8 +28,12 @@ namespace BetterCms.Module.Users.Commands.Role.DeleteRole
                 throw new ValidationException(() => message, logMessage);
             }
 
-            Repository.Delete<Models.Role>(role);
+            Repository.Delete(role);
             UnitOfWork.Commit();
+
+            // Notify.
+            Events.UserEvents.Instance.OnRoleDeleted(role);
+
             return true;
         }
     }

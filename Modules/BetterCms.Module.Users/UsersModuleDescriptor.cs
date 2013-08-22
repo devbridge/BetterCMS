@@ -1,12 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Web;
 
 using Autofac;
 
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
-using BetterCms.Events;
 using BetterCms.Module.Root;
 using BetterCms.Module.Users.Content.Resources;
 using BetterCms.Module.Users.Registration;
@@ -40,7 +38,6 @@ namespace BetterCms.Module.Users
         public UsersModuleDescriptor(ICmsConfiguration configuration) : base(configuration)
         {
             userJsModuleIncludeDescriptor = new UserJsModuleIncludeDescriptor(this);
-            CoreEvents.Instance.HostStart += Core_HostStart;
         }
 
         /// <summary>
@@ -151,17 +148,7 @@ namespace BetterCms.Module.Users
         /// <param name="containerBuilder">The container builder.</param>
         public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
-            containerBuilder.RegisterType<DefaultRoleService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultAuthenticationService>().AsImplementedInterfaces().InstancePerLifetimeScope();
-        }
-
-        /// <summary>
-        /// On host start.
-        /// </summary>
-        /// <param name="args">The args.</param>
-        private void Core_HostStart(SingleItemEventArgs<HttpApplication> args)
-        {
-            // TODO: get permissions from all the modules and ensure all of them are in the database.
         }
     }
 }

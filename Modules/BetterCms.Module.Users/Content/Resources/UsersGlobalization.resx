@@ -174,15 +174,6 @@
   <data name="CreateUser_Window_Title" xml:space="preserve">
     <value>Add New User</value>
   </data>
-  <data name="Role_AddNeww_Dialog_Title" xml:space="preserve">
-    <value>Set Role Permissions</value>
-  </data>
-  <data name="Role_AddNew_Dialog_RoleName_Title" xml:space="preserve">
-    <value>Role Name</value>
-  </data>
-  <data name="Role_AddNew_Dialog_Tooltip_Description" xml:space="preserve">
-    <value>Purpose of role name</value>
-  </data>
   <data name="Role_Dialog_AddNew" xml:space="preserve">
     <value>Add New +</value>
   </data>

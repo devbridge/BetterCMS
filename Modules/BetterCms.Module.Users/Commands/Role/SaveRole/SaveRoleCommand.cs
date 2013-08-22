@@ -51,6 +51,16 @@ namespace BetterCms.Module.Users.Commands.Role.SaveRole
             Repository.Save(role);
             UnitOfWork.Commit();
 
+            // Notify.
+            if (request.Id.HasDefaultValue())
+            {
+                Events.UserEvents.Instance.OnRoleCreated(role);
+            }
+            else
+            {
+                Events.UserEvents.Instance.OnRoleUpdated(role);
+            }
+
             return new SaveRoleCommandResponse { Id = role.Id, Name = role.Name, Version = role.Version };
         }
 

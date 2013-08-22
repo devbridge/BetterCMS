@@ -131,6 +131,8 @@
     </Compile>
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Events\RoleEvents.cs" />
+    <Compile Include="Events\UserEvents.cs" />
     <Compile Include="Models\Maps\RoleMap.cs" />
     <Compile Include="Models\Maps\UserRoleMap.cs" />
     <Compile Include="Models\Maps\UserMap.cs" />
@@ -146,16 +148,12 @@
     <Compile Include="Provider\RoleProvider.cs" />
     <Compile Include="Registration\UserJsModuleIncludeDescriptor.cs" />
     <Compile Include="Services\DefaultAuthenticationService.cs" />
-    <Compile Include="Services\DefaultRoleService.cs" />
     <Compile Include="Services\IAuthenticationService.cs" />
-    <Compile Include="Services\IRoleService.cs" />
     <Compile Include="UsersModuleConstants.cs" />
     <Compile Include="UsersModuleDescriptor.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
-    <Compile Include="ViewModels\EditUserViewModel.cs" />
+    <Compile Include="ViewModels\User\EditUserViewModel.cs" />
     <Compile Include="ViewModels\Role\RoleViewModel.cs" />
-    <Compile Include="ViewModels\SearchableUserViewModel.cs" />
-    <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="ViewModels\User\UserItemViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

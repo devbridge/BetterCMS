@@ -11,7 +11,7 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Users.Content.Resources;
 using BetterCms.Module.Users.Models;
 using BetterCms.Module.Users.Services;
-using BetterCms.Module.Users.ViewModels;
+using BetterCms.Module.Users.ViewModels.User;
 
 namespace BetterCms.Module.Users.Commands.User.SaveUser
 {
@@ -81,6 +81,16 @@ namespace BetterCms.Module.Users.Commands.User.SaveUser
 
             Repository.Save(user);
             UnitOfWork.Commit();
+
+            // Notify.
+            if (request.Id.HasDefaultValue())
+            {
+                Events.UserEvents.Instance.OnUserCreated(user);
+            }
+            else
+            {
+                Events.UserEvents.Instance.OnUserUpdated(user);
+            }
 
             return new SaveUserCommandResponse { Id = user.Id, UserName = user.UserName, Version = user.Version };
         }
