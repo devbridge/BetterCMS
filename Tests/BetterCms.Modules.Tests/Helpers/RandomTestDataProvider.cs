@@ -614,6 +614,8 @@ namespace BetterCms.Tests.Helpers
             PopulateBaseFields(entity);
 
             entity.Name = ProvideRandomString(MaxLength.Name);
+            entity.DisplayName = ProvideRandomString(MaxLength.Name);
+            entity.IsSystematic = ProvideRandomBooleanValue();
 
             return entity;
         }

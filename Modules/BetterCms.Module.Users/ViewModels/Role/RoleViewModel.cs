@@ -29,6 +29,14 @@ namespace BetterCms.Module.Users.ViewModels.Role
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether role is systematic CMS role.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is systematic CMS role; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsSystematic { get; set; }
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>

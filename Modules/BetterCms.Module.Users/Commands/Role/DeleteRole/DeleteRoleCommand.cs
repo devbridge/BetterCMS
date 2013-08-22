@@ -1,5 +1,7 @@
-﻿using BetterCms.Core.Mvc.Commands;
+﻿using BetterCms.Core.Exceptions.Mvc;
+using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Users.Content.Resources;
 
 namespace BetterCms.Module.Users.Commands.Role.DeleteRole
 {
@@ -15,7 +17,18 @@ namespace BetterCms.Module.Users.Commands.Role.DeleteRole
         /// <returns>Executed command result.</returns>
         public bool Execute(DeleteRoleCommandRequest request)
         {
-            Repository.Delete<Models.Role>(request.RoleId, request.Version);
+            var role = Repository.First<Models.Role>(request.RoleId);
+            role.Version = request.Version;
+
+            if (role.IsSystematic)
+            {
+                var logMessage = string.Format("Cannot delete systematic role: {0} {1}", role.Name, role.DisplayName);
+                var message = string.Format(UsersGlobalization.DeleteRole_Cannot_Delete_Systematic_Role, role.DisplayName ?? role.Name);
+
+                throw new ValidationException(() => message, logMessage);
+            }
+
+            Repository.Delete<Models.Role>(role);
             UnitOfWork.Commit();
             return true;
         }

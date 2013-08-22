@@ -70,6 +70,15 @@ namespace BetterCms.Module.Users.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to delete the role. Role {0} is CMS role and cannot be deleted..
+        /// </summary>
+        public static string DeleteRole_Cannot_Delete_Systematic_Role {
+            get {
+                return ResourceManager.GetString("DeleteRole_Cannot_Delete_Systematic_Role", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to delete role {0}?.
         /// </summary>
         public static string DeleteRole_Confirmation_Message {
@@ -340,11 +349,38 @@ namespace BetterCms.Module.Users.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to save the role. Role {0} is CMS role and cannot be modified..
+        /// </summary>
+        public static string SaveRole_Cannot_Save_Systematic_Role {
+            get {
+                return ResourceManager.GetString("SaveRole_Cannot_Save_Systematic_Role", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Role created successfully..
         /// </summary>
         public static string SaveRole_CreatedSuccessfully_Message {
             get {
                 return ResourceManager.GetString("SaveRole_CreatedSuccessfully_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Role {0} already exists. Please specify another role name..
+        /// </summary>
+        public static string SaveRole_RoleExists_Message {
+            get {
+                return ResourceManager.GetString("SaveRole_RoleExists_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User with name {0} already exists. Please specify another user name..
+        /// </summary>
+        public static string SaveUse_UserNameExists_Message {
+            get {
+                return ResourceManager.GetString("SaveUse_UserNameExists_Message", resourceCulture);
             }
         }
         

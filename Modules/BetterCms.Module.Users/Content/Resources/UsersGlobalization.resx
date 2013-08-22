@@ -279,4 +279,16 @@
   <data name="EditUser_Add_Role_Title" xml:space="preserve">
     <value>Add user role</value>
   </data>
+  <data name="DeleteRole_Cannot_Delete_Systematic_Role" xml:space="preserve">
+    <value>Failed to delete the role. Role {0} is CMS role and cannot be deleted.</value>
+  </data>
+  <data name="SaveRole_Cannot_Save_Systematic_Role" xml:space="preserve">
+    <value>Failed to save the role. Role {0} is CMS role and cannot be modified.</value>
+  </data>
+  <data name="SaveRole_RoleExists_Message" xml:space="preserve">
+    <value>Role {0} already exists. Please specify another role name.</value>
+  </data>
+  <data name="SaveUse_UserNameExists_Message" xml:space="preserve">
+    <value>User with name {0} already exists. Please specify another user name.</value>
+  </data>
 </root>

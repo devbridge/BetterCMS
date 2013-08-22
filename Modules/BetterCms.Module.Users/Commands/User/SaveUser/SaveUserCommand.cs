@@ -3,10 +3,12 @@ using System.Linq;
 
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataAccess.DataContext.Fetching;
+using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Users.Content.Resources;
 using BetterCms.Module.Users.Models;
 using BetterCms.Module.Users.Services;
 using BetterCms.Module.Users.ViewModels;
@@ -33,6 +35,8 @@ namespace BetterCms.Module.Users.Commands.User.SaveUser
         /// </returns>
         public SaveUserCommandResponse Execute(EditUserViewModel request)
         {
+            ValidateUser(request);
+
             UnitOfWork.BeginTransaction();
 
             Models.User user;
@@ -85,21 +89,28 @@ namespace BetterCms.Module.Users.Commands.User.SaveUser
             var dbRoles = user.UserRoles ?? new List<UserRole>();
             var requestRoles = request.Roles ?? new List<string>();
 
+            var test = dbRoles.Where(
+                dbRole => !requestRoles.Any(requestRole => (dbRole.Role.DisplayName == null && requestRole == dbRole.Role.Name) || requestRole == dbRole.Role.DisplayName))
+                   .ToList();
+
             // Delete removed roles
             dbRoles
-                .Where(dbRole => requestRoles.All(requestRole => requestRole != dbRole.Role.Name))
+                .Where(dbRole => !requestRoles.Any(requestRole => (dbRole.Role.DisplayName == null && requestRole == dbRole.Role.Name)
+                    || requestRole == dbRole.Role.DisplayName))
                 .ToList()
                 .ForEach(del => Repository.Delete(del));
 
             // Insert new roles
             var rolesToInsert = requestRoles
-                .Where(requestRole => dbRoles.All(dbRole => requestRole != dbRole.Role.Name))
+                .Where(requestRole => !dbRoles.Any(dbRole => (dbRole.Role.DisplayName == null && requestRole == dbRole.Role.Name)
+                    || requestRole == dbRole.Role.DisplayName))
                 .ToList();
 
             if (rolesToInsert.Count > 0)
             {
                 var roles = Repository
-                    .AsQueryable<Models.Role>(role => rolesToInsert.Contains(role.Name))
+                    .AsQueryable<Models.Role>(role => (role.DisplayName == null && rolesToInsert.Contains(role.Name))
+                        || rolesToInsert.Contains(role.DisplayName))
                     .ToList();
 
                 rolesToInsert
@@ -107,8 +118,30 @@ namespace BetterCms.Module.Users.Commands.User.SaveUser
                         Repository.Save(new UserRole
                             {
                                 User = user,
-                                Role = roles.Where(role => role.Name == roleName).FirstOne()
+                                Role = roles.Where(role => (role.DisplayName == null && role.Name == roleName)
+                                    || role.DisplayName == roleName).FirstOne()
                             }));
+            }
+        }
+
+        /// <summary>
+        /// Validates the user.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <exception cref="System.ComponentModel.DataAnnotations.ValidationException"></exception>
+        private void ValidateUser(EditUserViewModel request)
+        {
+            var existIngId = Repository
+                .AsQueryable<Models.User>(c => c.UserName == request.UserName.Trim() && c.Id != request.Id)
+                .Select(r => r.Id)
+                .FirstOrDefault();
+
+            if (!existIngId.HasDefaultValue())
+            {
+                var message = string.Format(UsersGlobalization.SaveUse_UserNameExists_Message, request.UserName);
+                var logMessage = string.Format("User already exists. User name: {0}, Id: {1}", request.UserName, request.Id);
+
+                throw new ValidationException(() => message, logMessage);
             }
         }
     }

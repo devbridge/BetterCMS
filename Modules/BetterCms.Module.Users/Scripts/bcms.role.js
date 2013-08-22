@@ -72,6 +72,11 @@ bettercms.define('bcms.role', ['bcms.jquery', 'bcms', 'bcms.autocomplete', 'bcms
                 self.name = ko.observable().extend({ required: "", maxLength: { maxLength: ko.maxLength.name } });
                 self.registerFields(self.name);
                 self.name(item.Name);
+                
+                if (item.IsSystematic === true) {
+                    self.editingIsDisabled = true;
+                    self.deletingIsDisabled = true;
+                }
             }
 
             RoleViewModel.prototype.getDeleteConfirmationMessage = function () {

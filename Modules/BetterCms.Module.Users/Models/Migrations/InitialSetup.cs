@@ -29,6 +29,8 @@ namespace BetterCms.Module.Users.Models.Migrations
             CreateUsersTable();
             CreateRolesTable();
             CreateUserRolesTable();
+
+            PopulateDefaultRoles();
         }
 
         /// <summary>
@@ -51,6 +53,11 @@ namespace BetterCms.Module.Users.Models.Migrations
                 .ForeignColumn("ImageId")
                 .ToTable("MediaFiles").InSchema(mediaModuleSchemaName)
                 .PrimaryColumn("Id");
+
+            Create
+                .UniqueConstraint("UX_Cms_Users_UserName")
+                .OnTable("Users").WithSchema(SchemaName)
+                .Columns(new[] { "UserName", "DeletedOn" });
         }
 
         /// <summary>
@@ -61,7 +68,14 @@ namespace BetterCms.Module.Users.Models.Migrations
             Create
                 .Table("Roles").InSchema(SchemaName)
                 .WithCmsBaseColumns()
-                .WithColumn("Name").AsAnsiString(MaxLength.Name).NotNullable();
+                .WithColumn("Name").AsAnsiString(MaxLength.Name).NotNullable()
+                .WithColumn("DisplayName").AsAnsiString(MaxLength.Name).Nullable()
+                .WithColumn("IsSystematic").AsBoolean().NotNullable().WithDefaultValue(false);
+
+            Create
+                .UniqueConstraint("UX_Cms_Roles_Name")
+                .OnTable("Roles").WithSchema(SchemaName)
+                .Columns(new[] { "Name", "DeletedOn" });
         }
 
         /// <summary>
@@ -85,6 +99,59 @@ namespace BetterCms.Module.Users.Models.Migrations
                 .ForeignColumn("UserId")
                 .ToTable("Users").InSchema(SchemaName)
                 .PrimaryColumn("Id");
+        }
+
+        /// <summary>
+        /// Populates the default roles.
+        /// </summary>
+        private void PopulateDefaultRoles()
+        {
+            Insert.IntoTable("Roles")
+                  .InSchema(SchemaName)
+                  .Row(new {
+                              Version = 1,
+                              IsDeleted = false,
+                              CreatedOn = System.DateTime.Now,
+                              CreatedByUser = "Better CMS",
+                              ModifiedOn = System.DateTime.Now,
+                              ModifiedByUser = "Better CMS",
+                              Name = "BcmsEditContent",
+                              DisplayName = "Better CMS: edit content",
+                              IsSystematic = true
+                          })
+                  .Row(new {
+                              Version = 1,
+                              IsDeleted = false,
+                              CreatedOn = System.DateTime.Now,
+                              CreatedByUser = "Better CMS",
+                              ModifiedOn = System.DateTime.Now,
+                              ModifiedByUser = "Better CMS",
+                              Name = "BcmsPublishContent",
+                              DisplayName = "Better CMS: publish content",
+                              IsSystematic = true
+                          })
+                  .Row(new {
+                              Version = 1,
+                              IsDeleted = false,
+                              CreatedOn = System.DateTime.Now,
+                              CreatedByUser = "Better CMS",
+                              ModifiedOn = System.DateTime.Now,
+                              ModifiedByUser = "Better CMS",
+                              Name = "BcmsDeleteContent",
+                              DisplayName = "Better CMS: delete content",
+                              IsSystematic = true
+                          })
+                  .Row(new {
+                              Version = 1,
+                              IsDeleted = false,
+                              CreatedOn = System.DateTime.Now,
+                              CreatedByUser = "Better CMS",
+                              ModifiedOn = System.DateTime.Now,
+                              ModifiedByUser = "Better CMS",
+                              Name = "BcmsAdministration",
+                              DisplayName = "Better CMS: administrator",
+                              IsSystematic = true
+                          });
         }
     }
 }

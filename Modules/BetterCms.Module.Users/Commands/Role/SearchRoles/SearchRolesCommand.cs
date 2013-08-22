@@ -15,14 +15,17 @@ namespace BetterCms.Module.Users.Commands.Role.SearchRoles
         /// <summary>
         /// Executes this command.
         /// </summary>
-        /// <param name="request">A filter to search for specific roles.</param>
-        /// <returns>A list of roles.</returns>
-        public List<LookupKeyValue> Execute(string request)
+        /// <param name="roleName">Name of the role.</param>
+        /// <returns>
+        /// A list of roles.
+        /// </returns>
+        public List<LookupKeyValue> Execute(string roleName)
         {
             return Repository.AsQueryable<Models.Role>()
-                    .Where(role => role.Name.Contains(request))
+                    .Where(role => (role.DisplayName == null && role.Name.Contains(roleName)) 
+                        || role.DisplayName.Contains(roleName))
                     .OrderBy(role => role.Name)
-                    .Select(role => new LookupKeyValue { Key = role.Id.ToString(), Value = role.Name })
+                    .Select(role => new LookupKeyValue { Key = role.Id.ToString(), Value = role.DisplayName ?? role.Name })
                     .ToList();
         }
     }

@@ -7,6 +7,7 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 using BetterCms.Module.Root.ViewModels.SiteSettings;
+
 using BetterCms.Module.Users.ViewModels.Role;
 
 using NHibernate.Linq;
@@ -19,11 +20,12 @@ namespace BetterCms.Module.Users.Commands.Role.GetRoles
         {
             var roles = Repository
                .AsQueryable<Models.Role>()
-               .Select(t => new RoleViewModel()
+               .Select(role => new RoleViewModel
                    {
-                       Id = t.Id,
-                       Version = t.Version,
-                       Name = t.Name
+                       Id = role.Id,
+                       Version = role.Version,
+                       Name = role.DisplayName ?? role.Name,
+                       IsSystematic = role.IsSystematic
                    });
 
             if (!string.IsNullOrWhiteSpace(request.SearchQuery))
