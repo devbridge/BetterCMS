@@ -55,7 +55,7 @@
     valueUpdate: 'afterkeydown',
     escPress: clearItem,
     autocomplete: 'onlyExisting'" />
-                                <!-- ko if: newTag.hasError()  -->
+                                <!-- ko if: newItem.hasError()  -->
                                 <span class="bcms-tag-field-validation-error">
                                     <span data-bind="text: newItem.validationMessage()"></span>
                                 </span>

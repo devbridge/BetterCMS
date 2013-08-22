@@ -4,10 +4,12 @@ using System.Text;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;
 using BetterCms.Core.Security;
+
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Users;
 using BetterCms.Module.Users.Models;
 
 using BlogOption = BetterCms.Module.Blog.Models.Option;
@@ -626,7 +628,7 @@ namespace BetterCms.Tests.Helpers
 
             PopulateBaseFields(entity);
 
-            entity.UserName = ProvideRandomString(MaxLength.Name);
+            entity.UserName = ProvideRandomString(UsersModuleConstants.UserNameMaxLength);
             entity.Email = ProvideRandomString(MaxLength.Email);
             entity.FirstName = ProvideRandomString(MaxLength.Name);
             entity.LastName = ProvideRandomString(MaxLength.Name);

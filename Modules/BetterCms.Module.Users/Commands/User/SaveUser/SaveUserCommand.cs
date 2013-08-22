@@ -60,12 +60,13 @@ namespace BetterCms.Module.Users.Commands.User.SaveUser
             user.FirstName = request.FirstName;
             user.LastName = request.LastName;
             user.Email = request.Email;
-            //TODO: var salt = authenticationService.GeneratePasswordSalt();
-            //TODO: user.Password = authenticationService.CreatePasswordHash(request.Password, salt);
-            //TODO: user.Salt = salt;
 
-            user.Password = "TEST";
-            user.Salt = "TEST";
+            if (!string.IsNullOrWhiteSpace(request.Password))
+            {
+                var salt = authenticationService.GeneratePasswordSalt();
+                user.Password = authenticationService.CreatePasswordHash(request.Password, salt);
+                user.Salt = salt;
+            }
 
             if (request.Image != null && request.Image.ImageId.HasValue)
             {
@@ -139,7 +140,20 @@ namespace BetterCms.Module.Users.Commands.User.SaveUser
             if (!existIngId.HasDefaultValue())
             {
                 var message = string.Format(UsersGlobalization.SaveUse_UserNameExists_Message, request.UserName);
-                var logMessage = string.Format("User already exists. User name: {0}, Id: {1}", request.UserName, request.Id);
+                var logMessage = string.Format("User Name already exists. User Name: {0}, User Email: {1}, Id: {2}", request.UserName, request.Email, request.Id);
+
+                throw new ValidationException(() => message, logMessage);
+            }
+            
+            existIngId = Repository
+                .AsQueryable<Models.User>(c => c.Email == request.Email.Trim() && c.Id != request.Id)
+                .Select(r => r.Id)
+                .FirstOrDefault();
+
+            if (!existIngId.HasDefaultValue())
+            {
+                var message = string.Format(UsersGlobalization.SaveUse_UserEmailExists_Message, request.UserName);
+                var logMessage = string.Format("User Email already exists. User Name: {0}, User Email: {1}, Id: {2}", request.UserName, request.Email, request.Id);
 
                 throw new ValidationException(() => message, logMessage);
             }

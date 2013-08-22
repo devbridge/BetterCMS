@@ -33,7 +33,8 @@ bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                 editUserTitle: null,
                 deleteUserConfirmMessage: null
             },
-            usersContainer = null;
+            usersContainer = null,
+            userViewModel = null;
 
         // Assign objects to module.
         user.links = links;
@@ -175,6 +176,49 @@ bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             });
         }
 
+        function UserViewModel(imageData, rolesData, userData) {
+            var self = this;
+
+            self.image = ko.observable(new media.ImageSelectorViewModel(imageData));
+            self.roles = new role.RolesAutocompleteListViewModel(rolesData);
+            self.id = userData.Id;
+            self.firstName = ko.observable(userData.FirstName);
+            self.lastName = ko.observable(userData.LastName);
+            self.userName = ko.observable(userData.UserName);
+            self.userNameManuallyEdited = false;
+
+            self.changeUserName = function() {
+                if (bcms.isEmptyGuid(self.id) && !self.userNameManuallyEdited) {
+                    var userName = '',
+                        firstName = self.firstName(),
+                        lastName = self.lastName();
+
+                    if (firstName) {
+                        userName += firstName;
+                    }
+                    if (firstName && lastName) {
+                        userName += '.';
+                    }
+                    if (lastName) {
+                        userName += lastName;
+                    }
+                    userName = userName.toLowerCase().replace(/ /g, '');
+
+                    self.userName(userName);
+                }
+            };
+
+            self.userNameOnKeyUp = function () {
+                self.userNameManuallyEdited = true;
+                return true;
+            };
+            
+            self.firstName.subscribe(self.changeUserName);
+            self.lastName.subscribe(self.changeUserName);
+
+            return self;
+        }
+
         /**
         * Initializes edit/create user form
         */
@@ -182,12 +226,10 @@ bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
 
             var imageData = content.Data.Image,
                 rolesData = content.Data.Roles,
-                userViewModel = {
-                    image: ko.observable(new media.ImageSelectorViewModel(imageData)),
-                    roles: new role.RolesAutocompleteListViewModel(rolesData)
-                },
+                userData = content.Data,
                 form = dialog.container.find(selectors.userForm);
 
+            userViewModel = new UserViewModel(imageData, rolesData, userData);
             ko.applyBindings(userViewModel, form.get(0));
         }
 
@@ -244,9 +286,29 @@ bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         }
 
         /**
+        * Initialize custom jQuery validators
+        */
+        function initializeCustomValidation() {
+            $.validator.addMethod("jqpasswordrequired", function (value) {
+                
+                return !bcms.isEmptyGuid(userViewModel.id) || value;
+            }, function (params) {
+                
+                return params.message;
+            });
+
+            $.validator.unobtrusive.adapters.add("passwordrequired", ['pattern'], function (opts) {
+                opts.rules["jqpasswordrequired"] = { message: opts.message, pattern: opts.params.pattern };
+            });
+        }
+
+        /**
         * Initializes user module
         */
-        user.init = function() {
+        user.init = function () {
+            console.log('Initializing bcms.user module.');
+
+            initializeCustomValidation();
         };
 
         bcms.registerInit(user.init);

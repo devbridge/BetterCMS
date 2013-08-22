@@ -291,4 +291,19 @@
   <data name="SaveUse_UserNameExists_Message" xml:space="preserve">
     <value>User with name {0} already exists. Please specify another user name.</value>
   </data>
+  <data name="User_Password_ShouldMatchMessage" xml:space="preserve">
+    <value>Password and retyped password should match.</value>
+  </data>
+  <data name="CreateUser_Password_IsRequired" xml:space="preserve">
+    <value>Password is required when creating new user.</value>
+  </data>
+  <data name="SaveUse_UserEmailExists_Message" xml:space="preserve">
+    <value>User with email {0} already exists. Please specify another user email.</value>
+  </data>
+  <data name="User_FirstName_RequiredMessage" xml:space="preserve">
+    <value>First name is requried.</value>
+  </data>
+  <data name="User_LastName_RequiredMessage" xml:space="preserve">
+    <value>Last name is requried.</value>
+  </data>
 </root>

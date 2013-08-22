@@ -26,11 +26,11 @@ bettercms.define('bcms', ['bcms.jquery'], function ($) {
         eventListeners = {},
 
         contentStatus = {
-             published: 3,
-             draft: 2,
-             preview: 1
-         },
-    
+            published: 3,
+            draft: 2,
+            preview: 1
+        },
+
          globalization = {
              sessionHasExpired: null,
              failedToProcessRequest: null
@@ -57,11 +57,11 @@ bettercms.define('bcms', ['bcms.jquery'], function ($) {
     * Contains available content statuses.
     */
     app.contentStatus = contentStatus;
-    
+
     /**
     */
     app.previewWindow = '__bcmsPreview';
-    
+
     /**
     * Indicates if edit mode is ON:
     */
@@ -234,7 +234,7 @@ bettercms.define('bcms', ['bcms.jquery'], function ($) {
     /**
     * Helper method for JavaScript classes inheritance
     */
-    app.extendsClass = function(d, b) {
+    app.extendsClass = function (d, b) {
 
         function __() { this.constructor = d; }
 
@@ -259,14 +259,21 @@ bettercms.define('bcms', ['bcms.jquery'], function ($) {
     /**
     * Recreates form's uobtrusive validator
     */
-    app.updateFormValidator = function(form) {
+    app.updateFormValidator = function (form) {
         if (form && $.validator && $.validator.unobtrusive) {
             form.removeData("validator");
             form.removeData("unobtrusiveValidation");
             $.validator.unobtrusive.parse(form);
         }
     };
-    
+
+    /**
+    * Helper method, tests, if given Guid is empty guid
+    */
+    app.isEmptyGuid = function (guid) {
+        return guid === '00000000-0000-0000-0000-000000000000' || guid === '00000000000000000000000000000000';
+    };
+
     /**
     * Initiliazes web page: checks browser version
     */
@@ -275,7 +282,7 @@ bettercms.define('bcms', ['bcms.jquery'], function ($) {
         if ($.browser.msie && parseInt($.browser.version, 10) <= 7) {
             var browserInfo = $(selectors.browserInfo);
 
-            browserInfo.find(selectors.browserInfoClose).on('click', function() {
+            browserInfo.find(selectors.browserInfoClose).on('click', function () {
                 browserInfo.hide();
             });
             browserInfo.css('display', 'block');

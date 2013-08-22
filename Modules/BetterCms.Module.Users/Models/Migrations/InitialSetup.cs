@@ -39,9 +39,9 @@ namespace BetterCms.Module.Users.Models.Migrations
         private void CreateUsersTable()
         {
             Create.Table("Users").InSchema(SchemaName).WithCmsBaseColumns()
-                .WithColumn("UserName").AsAnsiString(MaxLength.Name).NotNullable()
-                .WithColumn("FirstName").AsAnsiString(MaxLength.Name).Nullable()
-                .WithColumn("LastName").AsAnsiString(MaxLength.Name).Nullable()
+                .WithColumn("UserName").AsAnsiString(UsersModuleConstants.UserNameMaxLength).NotNullable()
+                .WithColumn("FirstName").AsAnsiString(MaxLength.Name).NotNullable()
+                .WithColumn("LastName").AsAnsiString(MaxLength.Name).NotNullable()
                 .WithColumn("Email").AsAnsiString(MaxLength.Email).NotNullable()
                 .WithColumn("Password").AsAnsiString(MaxLength.Password).NotNullable()
                 .WithColumn("Salt").AsAnsiString(MaxLength.Password).NotNullable()
@@ -58,6 +58,11 @@ namespace BetterCms.Module.Users.Models.Migrations
                 .UniqueConstraint("UX_Cms_Users_UserName")
                 .OnTable("Users").WithSchema(SchemaName)
                 .Columns(new[] { "UserName", "DeletedOn" });
+
+            Create
+                .UniqueConstraint("UX_Cms_Users_Email")
+                .OnTable("Users").WithSchema(SchemaName)
+                .Columns(new[] { "Email", "DeletedOn" });
         }
 
         /// <summary>

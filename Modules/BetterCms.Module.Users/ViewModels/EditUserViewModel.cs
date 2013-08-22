@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 using BetterCms.Core.Models;
 
 using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Root;
 using BetterCms.Module.Users.Content.Resources;
+using BetterCms.Module.Users.Mvc.Attributes;
 
 namespace BetterCms.Module.Users.ViewModels
 {
@@ -43,7 +45,7 @@ namespace BetterCms.Module.Users.ViewModels
         /// The name of the user.
         /// </value>
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_UserName_RequiredMessage")]
-        [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_UserName_MaxLengthMessage")]
+        [StringLength(UsersModuleConstants.UserNameMaxLength, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_UserName_MaxLengthMessage")]
         public string UserName { get; set; }
 
         /// <summary>
@@ -52,6 +54,7 @@ namespace BetterCms.Module.Users.ViewModels
         /// <value>
         /// The first name.
         /// </value>
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_FirstName_RequiredMessage")]
         [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_FirstName_MaxLengthMessage")]
         public string FirstName { get; set; }
 
@@ -61,6 +64,7 @@ namespace BetterCms.Module.Users.ViewModels
         /// <value>
         /// The last name.
         /// </value>
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_LastName_RequiredMessage")]
         [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_LastName_MaxLengthMessage")]
         public string LastName { get; set; }
 
@@ -81,9 +85,9 @@ namespace BetterCms.Module.Users.ViewModels
         /// <value>
         /// The password.
         /// </value>
-        //[Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_Password_RequiredMessage")]
-        //[RegularExpression(UsersModuleConstants.PasswordRegularExpression, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_Password_LengthMessage")]
-        //[StringLength(MaxLength.Password, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_Password_MaxLengthMessage")]
+        [RegularExpression(UsersModuleConstants.PasswordRegularExpression, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_Password_LengthMessage")]
+        [StringLength(MaxLength.Password, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_Password_MaxLengthMessage")]
+        [PasswordValidation]
         public string Password { get; set; }
 
         /// <summary>
@@ -92,10 +96,7 @@ namespace BetterCms.Module.Users.ViewModels
         /// <value>
         /// The retyped password.
         /// </value>
-        //[Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_RetypePassword_RequiredMessage")]
-        //[RegularExpression(UsersModuleConstants.PasswordRegularExpression, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_Password_LengthMessage")]
-        //[DataType(DataType.Password, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_RetypePassword_EqualMessage")]
-        //[StringLength(MaxLength.Password, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_Password_MaxLengthMessage")]
+        [Compare("Password", ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_Password_ShouldMatchMessage")]
         public string RetypedPassword { get; set; }
 
         /// <summary>

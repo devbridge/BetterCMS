@@ -75,14 +75,17 @@ namespace BetterCms.Module.Users.Controllers
         [HttpPost]
         public ActionResult SaveUser(EditUserViewModel model)
         {
-            var response = GetCommand<SaveUserCommand>().ExecuteCommand(model);
-            if (response != null)
+            if (ModelState.IsValid)
             {
-                if (!model.Id.HasDefaultValue())
+                var response = GetCommand<SaveUserCommand>().ExecuteCommand(model);
+                if (response != null)
                 {
-                    Messages.AddSuccess(UsersGlobalization.SaveUser_CreatedSuccessfully_Message);
+                    if (model.Id.HasDefaultValue())
+                    {
+                        Messages.AddSuccess(UsersGlobalization.SaveUser_CreatedSuccessfully_Message);
+                    }
+                    return WireJson(true, response);
                 }
-                return WireJson(true, response);
             }
 
             return WireJson(false);

@@ -140,6 +140,7 @@
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\UserRole.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Mvc\Attributes\PasswordValidationAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registration\RoleJsModuleIncludeDescriptor.cs" />
     <Compile Include="Provider\RoleProvider.cs" />
