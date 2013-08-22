@@ -99,6 +99,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCMS.Module.Api.Abstra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.Module.Api.Web", "Modules\BetterCms.Module.Api.Web\BetterCms.Module.Api.Web.csproj", "{D12C4811-066A-49EA-9AE7-5E64B128779F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.Module.Users.Api", "Modules\BetterCms.Module.Users.Api\BetterCms.Module.Users.Api.csproj", "{FCC9127A-74D2-41B1-8DEE-0415DB7A6C76}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = DevBridge.Cms31.vsmdi
@@ -279,6 +281,14 @@ Global
 		{D12C4811-066A-49EA-9AE7-5E64B128779F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D12C4811-066A-49EA-9AE7-5E64B128779F}.Staging|Any CPU.ActiveCfg = Staging|Any CPU
 		{D12C4811-066A-49EA-9AE7-5E64B128779F}.Staging|Any CPU.Build.0 = Staging|Any CPU
+		{FCC9127A-74D2-41B1-8DEE-0415DB7A6C76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCC9127A-74D2-41B1-8DEE-0415DB7A6C76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCC9127A-74D2-41B1-8DEE-0415DB7A6C76}.Dev|Any CPU.ActiveCfg = Dev|Any CPU
+		{FCC9127A-74D2-41B1-8DEE-0415DB7A6C76}.Dev|Any CPU.Build.0 = Dev|Any CPU
+		{FCC9127A-74D2-41B1-8DEE-0415DB7A6C76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCC9127A-74D2-41B1-8DEE-0415DB7A6C76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCC9127A-74D2-41B1-8DEE-0415DB7A6C76}.Staging|Any CPU.ActiveCfg = Staging|Any CPU
+		{FCC9127A-74D2-41B1-8DEE-0415DB7A6C76}.Staging|Any CPU.Build.0 = Staging|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -306,6 +316,7 @@ Global
 		{5FF9D100-CF25-4899-8D23-8EB9F0C0E102} = {1CC5CC96-5CF1-4220-8559-7E129D30C628}
 		{073E257B-A6A0-42FC-9102-8E920BF54E50} = {1CC5CC96-5CF1-4220-8559-7E129D30C628}
 		{D12C4811-066A-49EA-9AE7-5E64B128779F} = {1CC5CC96-5CF1-4220-8559-7E129D30C628}
+		{FCC9127A-74D2-41B1-8DEE-0415DB7A6C76} = {1CC5CC96-5CF1-4220-8559-7E129D30C628}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35
