@@ -9,8 +9,8 @@
     <ItemGroup>      
       <CssFiles Include="$(ProjectDir)Content\Styles\bcms.users.css" />
 
-      <!--JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.role.js" />
-      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.user.js" /-->
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.role.js" />
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.user.js" />
 
     </ItemGroup>
 
@@ -19,7 +19,7 @@
           OutputFile="$(ProjectDir)Content\Styles\bcms.users.min.css"
        />
 
-    <!--<JavaScriptCompressorTask
+    <JavaScriptCompressorTask
           SourceFiles="@(JavaScriptFiles)"
           OutputFile="$(ProjectDir)Scripts\bcms.users.min.js"
           CompressionType="Standard"
@@ -31,7 +31,7 @@
           LoggingType="Info"
           ThreadCulture="en-au"
           IsEvalIgnored="false"
-       />-->
+       />
 
   </Target>
 </Project>
