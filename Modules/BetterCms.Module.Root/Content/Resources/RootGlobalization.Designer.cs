@@ -106,6 +106,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Set user access.
+        /// </summary>
+        public static string AccessControl_UserAccess_Tooltip_Description {
+            get {
+                return ResourceManager.GetString("AccessControl_UserAccess_Tooltip_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to User.
         /// </summary>
         public static string AccessControl_UserAccess_User {

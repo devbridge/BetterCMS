@@ -1,5 +1,6 @@
 ﻿@using BetterCms.Module.MediaManager.Content.Resources
 @using BetterCms.Module.MediaManager.Controllers
+@using BetterCms.Module.Root
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc
 @using BetterCms.Module.Root.Mvc.Helpers
@@ -55,6 +56,12 @@
             {
                 @Html.HiddenFor(m => m.SelectedFolderId, new { @Value = Model.RootFolderId })
             }
+            
+            if (Model.AccessControlEnabled)
+            {
+                @Html.Partial(RootModuleConstants.AccessControlTemplate)
+            }
+            
             <div class="bcms-upload-holder" data-bind="template: { name: 'bcms-file-upload-template' }"></div>
         }
         <iframe id="UploadTarget" name="UploadTarget" style="position: absolute; left: -999em; top: -999em;"></iframe>

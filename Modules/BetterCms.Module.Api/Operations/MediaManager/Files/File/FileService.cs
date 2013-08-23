@@ -25,7 +25,8 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         public GetFileResponse Get(GetFileRequest request)
         {
             var model = repository
-                .AsQueryable<MediaFile>(media => media.Id == request.FileId && media.Type == MediaType.File)
+                .AsQueryable<MediaFile>()
+                .Where(media => media.Id == request.FileId && media.Type == MediaType.File)
                 .Select(media => new FileModel
                     {
                         Id = media.Id,
@@ -46,9 +47,9 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
                         PublishedOn = media.PublishedOn,
                         OriginalFileName = media.OriginalFileName,
                         OriginalFileExtension = media.OriginalFileExtension,
-                        ThumbnailCaption = media.Image.Caption,
-                        ThumbnailUrl = media.Image.PublicThumbnailUrl,
-                        ThumbnailId = media.Image.Id
+                        ThumbnailCaption = media.Image != null ? media.Image.Caption : null,
+                        ThumbnailUrl = media.Image != null ? media.Image.PublicThumbnailUrl : null,
+                        ThumbnailId = media.Image != null ? media.Image.Id : (System.Guid?)null
                     })
                 .FirstOne();
 

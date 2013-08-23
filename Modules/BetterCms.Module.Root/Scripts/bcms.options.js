@@ -1,5 +1,5 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global define, console */
+/*global bettercms, console */
 
 bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.ko.grid', 'bcms.datepicker'],
     function ($, bcms, ko, kogrid) {
@@ -8,7 +8,9 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
         var options = {},
             selectors = {
                 datePickers: '.bcms-datepicker',
-                datePickerBoxes: '.ui-datepicker-trigger, .ui-datepicker'
+                datePickerTrigger: '.ui-datepicker-trigger',
+                datePickerBox: '#ui-datepicker-div:first',
+                focusedElements: ':focus'
             },
             links = {},
             globalization = {
@@ -28,6 +30,9 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 dateTimeType: 4,
                 boolType: 5
             },
+            classes = {
+                hasDatePicker: 'hasDatepicker'
+            },
             rowId = 0;
 
         /**
@@ -46,6 +51,12 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
 
             function OptionsListViewModel(container, items) {
                 _super.call(this, container, null, items, null);
+
+                var self = this;
+
+                self.attachDatePickers = function() {
+                    attachDatePickers(self);
+                };
             };
 
             OptionsListViewModel.prototype.createItem = function (item) {
@@ -63,6 +74,12 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             
             function OptionValuesListViewModel(container, items) {
                 _super.call(this, container, items);
+                
+                var self = this;
+                
+                self.attachDatePickers = function () {
+                    attachDatePickers(self);
+                };
             };
 
             OptionValuesListViewModel.prototype.createItem = function (item) {
@@ -79,6 +96,28 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
 
             return OptionValuesListViewModel;
         })(OptionsListViewModel);
+
+        function attachDatePickers(self) {
+            var i,
+                item,
+                len, 
+                datePickerBox = $(selectors.datePickerBox),
+                dataKey = 'bcmsEventsAttached';
+
+            if (!datePickerBox.data(dataKey)) {
+                datePickerBox.data(dataKey, true);
+
+                $(selectors.datePickerBox).on('click', function () {
+                    for (i = 0, len = self.items().length; i < len; i++) {
+                        item = self.items()[i];
+                        
+                        if (item.isActive()) {
+                            item.isSelected = true;
+                        }
+                    }
+                });
+            }
+        }
 
         /**
         * Option view model
@@ -151,26 +190,38 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     self.editableValue(self.editableValue());
                 });
 
-                self.initDatePickers = function () {
-                    if (!self.datePickersRendered) {
-                        self.datePickersRendered = true;
+                self.initDatePickers = function() {
+                    self.parent.attachDatePickers();
 
-                        var datePickerOpts = {
-                            onSelect: function(newDate) {
-                                self.isSelected = true;
-                                self.editableValue(newDate);
-                            }
+                    var datePickerOpts = {
+                        onSelect: function (newDate, datePicker) {
+                            self.isSelected = true;
+                            self.editableValue(newDate);
+
+                            datePicker.input.focus();
                         },
-                            row = $('#' + self.rowId),
-                            datePickerBoxes,
-                            datePickers = row.find(selectors.datePickers);
+                        onChangeMonthYear: function() {
+                            self.isSelected = true;
+                        },
+                        onClose: function (selectedDate, datePicker) {
+                            setTimeout(function() {
+                                var focusedElement = datePicker.input.parents('#' + self.rowId).find(selectors.focusedElements);
+                                if (focusedElement.length === 0) {
+                                    self.onBlurField();
+                                }
+                            }, 10);
+                        }
+                    },
+                        row = $('#' + self.rowId),
+                        datePickerTrigger,
+                        datePickers = row.find(selectors.datePickers);
 
+                    if (!datePickers.hasClass(classes.hasDatePicker)) {
                         datePickers.initializeDatepicker(globalization.datePickerTooltipTitle, datePickerOpts);
 
-                        datePickerBoxes = row.find(selectors.datePickerBoxes);
-                        datePickerBoxes.on('click', self.onItemSelect);
-                        datePickerBoxes.on('focus', self.onItemSelect);
-                        datePickerBoxes.on('blur', self.onBlurField);
+                        datePickerTrigger = row.find(selectors.datePickerTrigger);
+                        datePickerTrigger.on('click', self.onItemSelect);
+                        datePickerTrigger.on('focus', self.onItemSelect);
                     }
                 };
                 
@@ -181,18 +232,6 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.type(item.Type);
                 self.canEditOption = item.CanEditOption;
                 self.disableFieldsEditing();
-
-                self.isActive.subscribe(function(newValue) {
-                    if (!newValue) {
-                        self.datePickersRendered = false;
-                    }
-                });
-                
-                self.type.subscribe(function (newValue) {
-                    if (newValue != optionTypes.dateTimeType) {
-                        self.datePickersRendered = false;
-                    }
-                });
             };
 
             OptionViewModel.prototype.getValueField = function() {
@@ -280,7 +319,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
 
                 var type = self.type(),
                     mustBeNumber = type == optionTypes.floatType || type == optionTypes.integerType,
-                    hasError = mustBeNumber && newValue && isNaN(Number(newValue)),
+                    hasError = mustBeNumber && newValue && isNaN(Number(newValue.replace(',', '.'))),
                     showMessage,
                     regExp;
                 

@@ -217,7 +217,6 @@
     <Compile Include="Mvc\Helpers\PreviewHelper.cs" />
     <Compile Include="Mvc\Helpers\RegionContentWrapper.cs" />
     <Compile Include="Mvc\Helpers\StringHelper.cs" />
-    <Compile Include="Mvc\Helpers\CmsUrlHelper.cs" />
     <Compile Include="Mvc\Helpers\ValidationExtensions.cs" />
     <Compile Include="Projections\PageStylesheetProjectionFactory.cs" />
     <Compile Include="Projections\PageJavaScriptProjectionFactory.cs" />
@@ -286,6 +285,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Mvc\Grids\EditableGridColumn.cs" />
+    <Compile Include="ViewModels\Security\UserAccessTemplateViewModel.cs" />
     <Compile Include="ViewModels\Security\UserAccessViewModel.cs" />
     <Compile Include="ViewModels\Shared\EditableGridViewModel.cs" />
     <Compile Include="ViewModels\Sidebar\SidebarContainerViewModel.cs" />

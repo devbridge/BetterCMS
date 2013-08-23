@@ -26,8 +26,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
         {
             request.Data.SetDefaultOrder("Title");
 
-            var query = repository
-                .AsQueryable<Media>()
+            var query = repository.AsQueryable<Media>()
                 .Where(m => m.Original == null && m.Folder.Id == request.Data.FolderId && m.Type == MediaType.File);
 
             if (!request.Data.IncludeFolders)
@@ -49,8 +48,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
                 request.Data,
                 tagName => { return media => media.MediaTags.Any(tag => tag.Tag.Name == tagName); });
 
-            var listResponse = query.Select(media =>
-                    new MediaModel
+            var listResponse = query.Select(media => new MediaModel
                         {
                             Id = media.Id,
                             Version = media.Version,
@@ -67,9 +65,9 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
                             FileSize = media is MediaFile ? ((MediaFile)media).Size : (long?)null,
                             FileUrl = media is MediaFile ? ((MediaFile)media).PublicUrl : null,
                             IsArchived = media.IsArchived,
-                            ThumbnailCaption = media.Image.Caption,
-                            ThumbnailUrl = media.Image.PublicThumbnailUrl,
-                            ThumbnailId = media.Image.Id
+                            ThumbnailCaption = media.Image != null ? media.Image.Caption : null,
+                            ThumbnailUrl = media.Image != null ? media.Image.PublicThumbnailUrl : null,
+                            ThumbnailId = media.Image != null ? media.Image.Id : (System.Guid?)null
 
                         }).ToDataListResponse(request);
 

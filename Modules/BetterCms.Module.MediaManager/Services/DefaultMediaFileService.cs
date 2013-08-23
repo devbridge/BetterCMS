@@ -3,8 +3,10 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Mvc;
 
 using BetterCms.Configuration;
+using BetterCms.Core;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions;
@@ -13,7 +15,6 @@ using BetterCms.Core.Web;
 using BetterCms.Module.MediaManager.Controllers;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Mvc;
-using BetterCms.Module.Root.Mvc.Helpers;
 
 using Common.Logging;
 
@@ -33,7 +34,9 @@ namespace BetterCms.Module.MediaManager.Services
 
         private readonly IHttpContextAccessor httpContextAccessor;
 
-        private ISessionFactoryProvider sessionFactoryProvider;
+        private readonly ISessionFactoryProvider sessionFactoryProvider;
+
+        private readonly IMediaFileUrlResolver mediaFileUrlResolver;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultMediaFileService" /> class.
@@ -44,8 +47,10 @@ namespace BetterCms.Module.MediaManager.Services
         /// <param name="configuration">The configuration.</param>
         /// <param name="httpContextAccessor">The HTTP context accessor.</param>
         /// <param name="sessionFactoryProvider">The session factory provider.</param>
+        /// <param name="mediaFileUrlResolver">The media file URL resolver.</param>
         public DefaultMediaFileService(IStorageService storageService, IRepository repository, IUnitOfWork unitOfWork,
-            ICmsConfiguration configuration, IHttpContextAccessor httpContextAccessor, ISessionFactoryProvider sessionFactoryProvider)
+            ICmsConfiguration configuration, IHttpContextAccessor httpContextAccessor, ISessionFactoryProvider sessionFactoryProvider,
+            IMediaFileUrlResolver mediaFileUrlResolver)
         {
             this.sessionFactoryProvider = sessionFactoryProvider;
             this.httpContextAccessor = httpContextAccessor;
@@ -53,6 +58,7 @@ namespace BetterCms.Module.MediaManager.Services
             this.unitOfWork = unitOfWork;
             this.storageService = storageService;
             this.repository = repository;
+            this.mediaFileUrlResolver = mediaFileUrlResolver;
         }
 
         public virtual void RemoveFile(Guid fileId, int version, bool doNotCheckVersion = false)
@@ -277,7 +283,7 @@ namespace BetterCms.Module.MediaManager.Services
                 return fileUrl;
             }
 
-            return CmsUrlHelper.GetFullActionUrl<FilesController>(f => f.Download(id.ToString()));
+            return mediaFileUrlResolver.GetMediaFileFullUrl(id, fileUrl);
         }
     }
 }

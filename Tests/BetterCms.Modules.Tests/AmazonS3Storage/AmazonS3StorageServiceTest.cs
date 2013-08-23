@@ -42,6 +42,33 @@ namespace BetterCms.Test.Module.AmazonS3Storage
             ShouldCopyObject(configuration, amazonStorageService);
         }
 
+        [Test]
+        public void Should_Download_Url_Unsecured()
+        {
+            var configuration = MockConfiguration();
+            var amazonStorageService = new AmazonS3StorageService(configuration);
+
+            ShouldDownloadUrlUnsecured(configuration, amazonStorageService);
+        }
+
+        [Test]
+        public void Should_Not_Download_Url_Secured()
+        {
+            var configuration = MockConfiguration(true);
+            var amazonStorageService = new AmazonS3StorageService(configuration);
+
+            ShouldNotDownloadUrlSecured(configuration, amazonStorageService);
+        }
+
+        [Test]
+        public void Should_Download_Url_Secured()
+        {
+            var configuration = MockConfiguration(true);
+            var amazonStorageService = new AmazonS3StorageService(configuration);
+
+            ShouldDownloadUrl(configuration, amazonStorageService);
+        }
+
         /// <summary>
         /// Gets the storage configuration.
         /// </summary>
