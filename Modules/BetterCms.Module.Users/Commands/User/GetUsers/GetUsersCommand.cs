@@ -8,6 +8,8 @@ using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 using BetterCms.Module.Root.ViewModels.SiteSettings;
 using BetterCms.Module.Users.ViewModels.User;
 
+using MvcContrib.Sorting;
+
 using NHibernate.Linq;
 
 namespace BetterCms.Module.Users.Commands.User.GetUsers
@@ -18,21 +20,29 @@ namespace BetterCms.Module.Users.Commands.User.GetUsers
         {
             request.SetDefaultSortingOptions("UserName");
 
-            var query = Repository.AsQueryable<Models.User>()
-                .Select(t => new UserItemViewModel
-                                 {
-                                     Id = t.Id,
-                                     Version = t.Version,
-                                     UserName = t.UserName,
-                                 });
+            var query = Repository
+                .AsQueryable<Models.User>()
+                .Select(user => new UserItemViewModel
+                    {
+                        Id = user.Id,
+                        Version = user.Version,
+                        UserName = user.UserName,
+                        FullName = user.FirstName + " " + user.LastName,
+                        Email = user.Email
+                    });
 
+            // Search
             if (!string.IsNullOrWhiteSpace(request.SearchQuery))
             {
                 query = query.Where(user => user.UserName.Contains(request.SearchQuery) 
-                    || user.Roles.Any(role => role.Name.Contains(request.SearchQuery)));
+                    || user.Email.Contains(request.SearchQuery)
+                    || user.FullName.Contains(request.SearchQuery));
             }
 
+            // Total count
             var count = query.ToRowCountFutureValue();
+            
+            // Sorting, Paging
             query = query.AddSortingAndPaging(request);
 
             return new SearchableGridViewModel<UserItemViewModel>(query.ToFuture().ToList(), request, count.Value);

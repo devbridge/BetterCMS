@@ -20,10 +20,15 @@
             .SortColumnName("UserName")
             .Encode(false);
 
-        column.For(m => m.Roles)
-           .Named(UsersGlobalization.SiteSettings_Users_RoleColumn)
-           .Sortable(false)
-           .Attributes(@class => "bcms-blog-CreatedOn");
+        column.For(m => m.FullName)
+           .Named(UsersGlobalization.SiteSettings_Users_FullNameColumn)
+           .SortColumnName("FullName")
+           .Attributes(@class => "bcms-user-fullName");
+        
+        column.For(m => m.Email)
+           .Named(UsersGlobalization.SiteSettings_Users_EmailColumn)
+           .SortColumnName("Email")
+           .Attributes(@class => "bcms-user-email");
       
 
         column.DeleteButtonColumn();

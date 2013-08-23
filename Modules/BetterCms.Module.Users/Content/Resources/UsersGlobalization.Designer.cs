@@ -412,6 +412,24 @@ namespace BetterCms.Module.Users.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email.
+        /// </summary>
+        public static string SiteSettings_Users_EmailColumn {
+            get {
+                return ResourceManager.GetString("SiteSettings_Users_EmailColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Full Name.
+        /// </summary>
+        public static string SiteSettings_Users_FullNameColumn {
+            get {
+                return ResourceManager.GetString("SiteSettings_Users_FullNameColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Users.
         /// </summary>
         public static string SiteSettings_Users_ListTab_Title {
@@ -426,15 +444,6 @@ namespace BetterCms.Module.Users.Content.Resources {
         public static string SiteSettings_Users_NameColumn {
             get {
                 return ResourceManager.GetString("SiteSettings_Users_NameColumn", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Roles.
-        /// </summary>
-        public static string SiteSettings_Users_RoleColumn {
-            get {
-                return ResourceManager.GetString("SiteSettings_Users_RoleColumn", resourceCulture);
             }
         }
         

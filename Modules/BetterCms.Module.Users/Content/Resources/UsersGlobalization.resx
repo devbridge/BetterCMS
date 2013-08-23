@@ -192,9 +192,6 @@
   <data name="SiteSettings_Users_NameColumn" xml:space="preserve">
     <value>User Name</value>
   </data>
-  <data name="SiteSettings_Users_RoleColumn" xml:space="preserve">
-    <value>Roles</value>
-  </data>
   <data name="User_Dialog_AddNew" xml:space="preserve">
     <value>Add New +</value>
   </data>
@@ -296,5 +293,11 @@
   </data>
   <data name="User_LastName_RequiredMessage" xml:space="preserve">
     <value>Last name is requried.</value>
+  </data>
+  <data name="SiteSettings_Users_EmailColumn" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="SiteSettings_Users_FullNameColumn" xml:space="preserve">
+    <value>Full Name</value>
   </data>
 </root>
